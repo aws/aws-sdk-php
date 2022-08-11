@@ -3,16 +3,13 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\Operation;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\Operation
  */
 class OperationTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testCreatesDefaultMethodAndUri()
     {
         $o = new Operation([], new ShapeMap([]));

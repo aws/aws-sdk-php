@@ -7,21 +7,18 @@ use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\TraceMiddleware;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\TraceMiddleware
  */
 class TraceMiddlewareTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testEmitsDebugInfo()
     {
         $str = '';

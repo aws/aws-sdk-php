@@ -4,17 +4,15 @@ namespace Aws\Test\Api;
 use Aws\Api\Parser\QueryParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\TestServiceTrait;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\Service
  */
 class ServiceTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
     use TestServiceTrait;
 
@@ -219,7 +217,7 @@ class ServiceTest extends TestCase
         if ($parser instanceof QueryParser) {
             $this->assertInstanceOf(
                 'Aws\Api\Parser\XmlParser',
-                $this->readAttribute($parser, 'parser')
+                $this->getPropertyValue($parser, 'parser')
             );
         }
     }

@@ -5,16 +5,14 @@ use Aws\CommandInterface;
 use Aws\DynamoDb\StandardSessionConnection;
 use Aws\Middleware;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\DynamoDb\StandardSessionConnection
  */
 class StandardSessionConnectionTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testStandardConfig()

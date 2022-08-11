@@ -3,16 +3,13 @@ namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Endpoint\EndpointProvider
  */
 class EndpointProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testThrowsWhenUnresolved()
     {
         $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);

@@ -15,18 +15,16 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Signature\SignatureV4;
 use Aws\Sts\StsClient;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\AwsClient
  */
 class AwsClientTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function getApiProvider()
@@ -57,7 +55,7 @@ class AwsClientTest extends TestCase
         ];
 
         $client = new AwsClient($config);
-        $this->assertSame($config['handler'], $this->readAttribute($client->getHandlerList(), 'handler'));
+        $this->assertSame($config['handler'], $this->getPropertyValue($client->getHandlerList(), 'handler'));
         $this->assertSame($config['credentials'], $client->getCredentials()->wait());
         $this->assertSame($config['region'], $client->getRegion());
         $this->assertSame('foo', $client->getApi()->getEndpointPrefix());

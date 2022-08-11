@@ -5,15 +5,13 @@ use Aws\Command;
 use Aws\CommandPool;
 use Aws\Exception\AwsException;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\CommandPool
  */
 class CommandPoolTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testEnsuresEachIsCommand()

@@ -9,13 +9,12 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Sdk;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -23,17 +22,15 @@ use Psr\Http\Message\RequestInterface;
  */
 class InstanceProfileProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     static $originalFlag;
 
-    public static function _setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalFlag = getenv(InstanceProfileProvider::ENV_DISABLE) ?: '';
         putenv(InstanceProfileProvider::ENV_DISABLE. '=false');
     }
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(InstanceProfileProvider::ENV_DISABLE. '=' . self::$originalFlag);
     }
@@ -330,7 +327,7 @@ class InstanceProfileProviderTest extends TestCase
             $credentials->getExpiration()
         );
         if ($expectedAttempts) {
-            $this->assertEquals($expectedAttempts, $this->readAttribute($provider, 'attempts'));
+            $this->assertEquals($expectedAttempts, $this->getPropertyValue($provider, 'attempts'));
         }
     }
 
@@ -1018,7 +1015,7 @@ class InstanceProfileProviderTest extends TestCase
         $result = $s3Client->listBuckets();
 
         $this->assertEquals('Request sent', $result['message']);
-        $this->assertLessThanOrEqual(3,$this->readAttribute($provider,'attempts'));
+        $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
     }
 
     public function returnsExpiredCredsProvider()
@@ -1104,7 +1101,7 @@ class InstanceProfileProviderTest extends TestCase
         $result = $s3Client->listBuckets();
 
         $this->assertEquals('Request sent', $result['message']);
-        $this->assertLessThanOrEqual(3,$this->readAttribute($provider,'attempts'));
+        $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
     }
 
     public function imdsUnavailableProvider()
@@ -1206,6 +1203,6 @@ class InstanceProfileProviderTest extends TestCase
 
         $provider()->wait();
         $provider()->wait();
-        $this->assertLessThanOrEqual(3, $this->readAttribute($provider, 'attempts'));
+        $this->assertLessThanOrEqual(3, $this->getPropertyValue($provider, 'attempts'));
     }
 }

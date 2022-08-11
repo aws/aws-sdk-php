@@ -5,16 +5,13 @@ use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionInterface;
 use Aws\Endpoint\UseDualstackEndpoint;
 use Aws\Endpoint\UseFipsEndpoint;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Endpoint\Partition
  */
 class PartitionTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     /**
      * @dataProvider partitionDefinitionProvider
      *

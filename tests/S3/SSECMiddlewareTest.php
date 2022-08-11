@@ -3,16 +3,14 @@ namespace Aws\Test\S3;
 
 use Aws\Middleware;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\S3\SSECMiddleware
  */
 class SSECMiddlewareTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /**

@@ -3,8 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\Shape
@@ -12,8 +11,6 @@ use PHPUnit\Framework\TestCase;
  */
 class ShapeTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testImplementsArray()
     {
         $s = new Shape(['metadata' => ['foo' => 'bar']], new ShapeMap([]));

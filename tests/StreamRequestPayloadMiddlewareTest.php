@@ -9,10 +9,10 @@ use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\StreamRequestPayloadMiddleware;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -20,7 +20,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class StreamRequestPayloadMiddlewareTest extends TestCase
 {
-    use PHPUnitCompatTrait;
+    use ArraySubsetAsserts;
 
     /**
      * @dataProvider generateTestCases

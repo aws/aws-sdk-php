@@ -3,16 +3,13 @@ namespace Aws\Test\Polly;
 
 use Aws\Credentials\Credentials;
 use Aws\Polly\PollyClient;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Polly\PollyClient
  */
 class PollyClientTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testCanGeneratePreSignedUrlForSynthesizeSpeech()
     {
         $polly = new PollyClient([

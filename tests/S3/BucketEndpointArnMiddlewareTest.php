@@ -9,10 +9,9 @@ use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -20,7 +19,6 @@ use Psr\Http\Message\RequestInterface;
  */
 class BucketEndpointArnMiddlewareTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /**

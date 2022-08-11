@@ -15,18 +15,16 @@ use Aws\S3\S3Client;
 use Aws\S3\Crypto\HeadersMetadataStrategy;
 use Aws\S3\Crypto\InstructionFileMetadataStrategy;
 use Aws\Test\Crypto\UsesCryptoParamsTrait;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class S3EncryptionClientTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use S3EncryptionClientTestingTrait;
     use UsesCryptoParamsTrait;
     use UsesMetadataEnvelopeTrait;

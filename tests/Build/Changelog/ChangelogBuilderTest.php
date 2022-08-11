@@ -2,16 +2,13 @@
 namespace Aws\Test\Build\Changelog;
 
 use Aws\Build\Changelog\ChangelogBuilder;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Build\Changelog\ChangelogBuilder
  */
 class ChangelogBuilderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private $RESOURCE_DIR = "tests/Build/Changelog/resources/";
 
     public function testBuildChangelogNoDirectory()

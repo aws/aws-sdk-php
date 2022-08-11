@@ -4,25 +4,23 @@ namespace Aws\Test\S3;
 use Aws\S3\MultipartUploader;
 use Aws\Result;
 use Aws\S3\S3Client;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\S3\MultipartUploader
  */
 class MultipartUploaderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     const MB = 1048576;
     const FILENAME = '_aws-sdk-php-s3-mup-test-dots.txt';
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         @unlink(sys_get_temp_dir() . '/' . self::FILENAME);
     }

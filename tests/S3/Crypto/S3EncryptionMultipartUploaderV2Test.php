@@ -8,16 +8,15 @@ use Aws\Result;
 use Aws\Crypto\KmsMaterialsProviderV2;
 use Aws\S3\Crypto\InstructionFileMetadataStrategy;
 use Aws\Test\Crypto\UsesCryptoParamsTraitV2;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Psr7;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 class S3EncryptionMultipartUploaderV2Test extends TestCase
 {
-    use PHPUnitCompatTrait, UsesServiceTrait, UsesMetadataEnvelopeTrait, UsesCryptoParamsTraitV2;
+    use UsesServiceTrait, UsesMetadataEnvelopeTrait, UsesCryptoParamsTraitV2;
 
     const MB = 1048576;
     const TEST_URL = 'http://foo.s3.amazonaws.com/bar';

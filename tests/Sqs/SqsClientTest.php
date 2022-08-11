@@ -4,16 +4,14 @@ namespace Aws\Test\Sqs;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\Sqs\SqsClient;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Sqs\SqsClient
  */
 class SqsClientTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testGetQueueArn()

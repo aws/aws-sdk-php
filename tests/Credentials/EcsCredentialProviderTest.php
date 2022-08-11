@@ -2,22 +2,19 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\EcsCredentialProvider;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Ring\Future\CompletedFutureArray;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Credentials\EcsCredentialProvider
  */
 class EcsCredentialProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private $uripath;
 
     private function clearEnv()
@@ -32,14 +29,14 @@ class EcsCredentialProviderTest extends TestCase
         unset($_SERVER[EcsCredentialProvider::ENV_AUTH_TOKEN]);
     }
 
-    public function _setUp()
+    public function set_up()
     {
         $this->uripath = getenv(EcsCredentialProvider::ENV_URI);
         $this->fulluripath = getenv(EcsCredentialProvider::ENV_FULL_URI);
         $this->authtokenpath = getenv(EcsCredentialProvider::ENV_AUTH_TOKEN);
     }
 
-    public function _tearDown()
+    public function tear_down()
     {
         $this->uripath = getenv(EcsCredentialProvider::ENV_URI);
         $this->fulluripath = getenv(EcsCredentialProvider::ENV_FULL_URI);

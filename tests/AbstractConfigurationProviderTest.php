@@ -5,17 +5,14 @@ namespace Aws\Test;
 use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\ResultInterface;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\AbstractConfigurationProvider
  */
 class AbstractConfigurationProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $provider;
 

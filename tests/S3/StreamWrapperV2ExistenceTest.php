@@ -9,11 +9,10 @@ use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\S3\StreamWrapper;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -21,7 +20,6 @@ use Psr\Http\Message\RequestInterface;
  */
 class StreamWrapperV2ExistenceTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /** @var S3Client */
@@ -30,7 +28,7 @@ class StreamWrapperV2ExistenceTest extends TestCase
     /** @var LruArrayCache */
     private $cache;
 
-    public function _setUp()
+    public function set_up()
     {
         // use a fresh LRU cache for each test.
         $this->cache = new LruArrayCache();
@@ -39,7 +37,7 @@ class StreamWrapperV2ExistenceTest extends TestCase
         $this->client->registerStreamWrapperV2();
     }
 
-    public function _tearDown()
+    public function tear_down()
     {
         stream_wrapper_unregister('s3');
         $this->client = null;

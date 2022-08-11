@@ -13,12 +13,11 @@ use Aws\Exception\UnresolvedEndpointException;
 use Aws\Result;
 use Aws\ResultInterface;
 use Aws\Sdk;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -26,7 +25,6 @@ use Psr\Http\Message\RequestInterface;
  */
 class EndpointDiscoveryMiddlewareTest extends TestCase
 {
-    use PHPUnitCompatTrait;
 
     /**
      * @backupStaticAttributes enabled

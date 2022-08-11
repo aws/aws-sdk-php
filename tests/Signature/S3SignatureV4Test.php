@@ -3,25 +3,21 @@ namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\S3SignatureV4;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7\Request;
 
 require_once __DIR__ . '/sig_hack.php';
-use PHPUnit\Framework\TestCase;
-
 /**
  * @covers Aws\Signature\S3SignatureV4
  */
 class S3SignatureV4Test extends TestCase
 {
-    use PHPUnitCompatTrait;
-
-    public static function _setUpBeforeClass()
+    public static function set_up_before_class()
     {
         $_SERVER['aws_time'] = strtotime('December 5, 2013 00:00:00 UTC');
     }
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         unset($_SERVER['aws_time']);
     }

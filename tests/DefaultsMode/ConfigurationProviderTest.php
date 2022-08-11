@@ -6,17 +6,14 @@ use Aws\DefaultsMode\Configuration;
 use Aws\DefaultsMode\ConfigurationInterface;
 use Aws\DefaultsMode\ConfigurationProvider;
 use Aws\DefaultsMode\Exception\ConfigurationException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\DefaultsMode\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -33,7 +30,7 @@ defaults_mode = in-region
 defaults_mode = cross-region
 EOT;
 
-    public static function _setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'mode' => getenv(ConfigurationProvider::ENV_MODE) ?: '',
@@ -58,7 +55,7 @@ EOT;
         return $dir;
     }
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_MODE . '=' .
             self::$originalEnv['mode']);

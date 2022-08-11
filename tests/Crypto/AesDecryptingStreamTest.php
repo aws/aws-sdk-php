@@ -4,17 +4,15 @@ namespace Aws\Test\Crypto;
 use Aws\Crypto\AesDecryptingStream;
 use Aws\Crypto\Cipher\Cbc;
 use Aws\Crypto\Cipher\CipherMethod;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class AesDecryptingStreamTest extends TestCase
 {
     const KB = 1024;
     const MB = 1048576;
 
-    use PHPUnitCompatTrait;
     use AesEncryptionStreamTestTrait;
 
     /**

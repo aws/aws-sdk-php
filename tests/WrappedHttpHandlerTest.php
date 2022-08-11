@@ -10,21 +10,19 @@ use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\WrappedHttpHandler
  */
 class WrappedHttpHandlerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use TestServiceTrait;
 
     public function testParsesResponses()

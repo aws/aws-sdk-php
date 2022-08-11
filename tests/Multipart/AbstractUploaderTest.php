@@ -6,17 +6,15 @@ use Aws\Exception\AwsException;
 use Aws\Exception\MultipartUploadException;
 use Aws\Multipart\UploadState;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Multipart\AbstractUploader
  */
 class AbstractUploaderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function getUploaderWithState($status, array $results = [], $source = null)
@@ -170,7 +168,7 @@ class AbstractUploaderTest extends TestCase
         $uploader = $this->getTestUploader(__FILE__, $config);
         $this->assertInstanceOf(
             'Psr\Http\Message\StreamInterface',
-            $this->readAttribute($uploader, 'source')
+            $this->getPropertyValue($uploader, 'source')
         );
 
         // CASE 2: Filename does not exist.

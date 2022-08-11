@@ -3,17 +3,14 @@ namespace Aws\Test\Rds;
 
 use Aws\Credentials\Credentials;
 use Aws\Rds\AuthTokenGenerator;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Rds\AuthTokenGenerator
  */
 class AuthTokenGeneratorTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testCanCreateAuthTokenWthCredentialInstance()
     {
         $creds = new Credentials('foo', 'bar', 'baz');

@@ -15,21 +15,18 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\ResultInterface;
 use Aws\Signature\SignatureV4;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Middleware
  */
 class MiddlewareTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
-    public function _setUp()
+    public function set_up()
     {
         \GuzzleHttp\Promise\queue()->run();
     }

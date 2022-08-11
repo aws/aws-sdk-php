@@ -3,16 +3,13 @@
 namespace Aws\Test\S3\RegionalEndpoint;
 
 use Aws\Sts\RegionalEndpoints\Configuration;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\S3\RegionalEndpoint\Configuration
  */
 class ConfigurationTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testGetsCorrectValues()
     {
         $config = new Configuration('regional');

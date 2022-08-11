@@ -9,18 +9,15 @@ use Aws\Api\Service;
 use Aws\Api\ShapeMap;
 use Aws\Api\StructureShape;
 use Aws\Exception\EventStreamDataException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\Parser\EventParsingIterator
  */
 class EventParsingIteratorTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     /** @var array */
     private static $successEventNames = [
         'end_event',
@@ -32,7 +29,7 @@ class EventParsingIteratorTest extends TestCase
     /** @var StructureShape */
     private $eventstreamShape;
 
-    public function _setUp()
+    public function set_up()
     {
         $shape = json_decode(
             file_get_contents(

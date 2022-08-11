@@ -5,17 +5,15 @@ use Aws\Api\ApiProvider;
 use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\ResultPaginator
  */
 class ResultPaginatorTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function getCustomClientProvider(array $config)
@@ -107,13 +105,13 @@ class ResultPaginatorTest extends TestCase
         $this->addMockResults($client, $results);
         $paginator = $client->getPaginator('ListTables', [], $config);
         $this->assertEquals(['test1', 'test2'], $paginator->current()['TableNames']);
-        $this->assertEquals(['NextToken' => 'test2'], $this->readAttribute($paginator, 'nextToken'), '[1]');
+        $this->assertEquals(['NextToken' => 'test2'], $this->getPropertyValue($paginator, 'nextToken'), '[1]');
         $paginator->next();
         $this->assertEquals([], $paginator->current()['TableNames']);
-        $this->assertEquals(['NextToken' => 'test2'], $this->readAttribute($paginator, 'nextToken'), '[2]');
+        $this->assertEquals(['NextToken' => 'test2'], $this->getPropertyValue($paginator, 'nextToken'), '[2]');
         $paginator->next();
         $this->assertEquals(['test3'], $paginator->current()['TableNames']);
-        $this->assertEmpty($this->readAttribute($paginator, 'nextToken'), '[3]');
+        $this->assertEmpty($this->getPropertyValue($paginator, 'nextToken'), '[3]');
     }
 
     /**

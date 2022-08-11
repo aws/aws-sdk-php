@@ -8,17 +8,14 @@ use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointDiscovery\Exception\ConfigurationException;
 use Aws\LruArrayCache;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\EndpointDiscovery\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -37,7 +34,7 @@ endpoint_discovery_enabled = true
 endpoint_discovery_enabled = false
 EOT;
 
-    public static function _setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'enabled' => getenv(ConfigurationProvider::ENV_ENABLED) ?: '',
@@ -64,7 +61,7 @@ EOT;
         return $dir;
     }
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=' .
             self::$originalEnv['enabled']);

@@ -4,16 +4,14 @@ namespace Aws\Test\Api\Serializer;
 use Aws\Api\Service;
 use Aws\Command;
 use Aws\Api\Serializer\RestJsonSerializer;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\Serializer\RestJsonSerializer
  */
 class RestJsonSerializerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function getTestService()

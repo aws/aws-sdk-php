@@ -2,16 +2,14 @@
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Serializer\RestXmlSerializer;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\Serializer\RestXmlSerializer
  */
 class RestXmlSerializerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function getRequest($commandName, $input)

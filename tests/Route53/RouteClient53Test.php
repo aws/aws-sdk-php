@@ -2,16 +2,13 @@
 namespace Aws\Test\Route53;
 
 use Aws\Route53\Route53Client;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Route53\Route53Client
  */
 class RouteClient53Test extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testCleansIds()
     {
         $client = new Route53Client([

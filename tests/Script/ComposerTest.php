@@ -3,14 +3,11 @@ namespace Aws\Test\Script;
 
 use Aws;
 use Aws\Script\Composer\Composer;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ComposerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function invalidServiceNameProvider()
     {
         return [

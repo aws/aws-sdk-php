@@ -3,33 +3,30 @@ namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\NoSeekStream;
 
 require_once __DIR__ . '/sig_hack.php';
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Signature\SignatureV4
  */
 class SignatureV4Test extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     const DEFAULT_KEY = 'AKIDEXAMPLE';
     const DEFAULT_SECRET = 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY';
     const DEFAULT_DATETIME = 'Mon, 09 Sep 2011 23:36:00 GMT';
 
-    public function _setUp()
+    public function set_up()
     {
         $_SERVER['aws_time'] = strtotime('December 5, 2013 00:00:00 UTC');
     }
 
-    public function _tearDown()
+    public function tear_down()
     {
-        parent::tearDown();
+        parent::tear_down();
 
         unset($_SERVER['aws_time']);
     }
@@ -37,8 +34,8 @@ class SignatureV4Test extends TestCase
     public function testReturnsRegionAndService()
     {
         $s = new SignatureV4('foo', 'bar');
-        $this->assertSame('foo', $this->readAttribute($s, 'service'));
-        $this->assertSame('bar', $this->readAttribute($s, 'region'));
+        $this->assertSame('foo', $this->getPropertyValue($s, 'service'));
+        $this->assertSame('bar', $this->getPropertyValue($s, 'region'));
     }
 
     public function testAddsSecurityTokenIfPresent()
@@ -86,19 +83,19 @@ class SignatureV4Test extends TestCase
         $request = new Request('GET', 'http://www.example.com');
         $credentials = new Credentials('fizz', 'buzz');
         $sig->signRequest($request, $credentials);
-        $this->assertCount(1, $this->readAttribute($sig, 'cache'));
+        $this->assertCount(1, $this->getPropertyValue($sig, 'cache'));
 
         $credentials = new Credentials('fizz', 'baz');
         $sig->signRequest($request, $credentials);
-        $this->assertCount(2, $this->readAttribute($sig, 'cache'));
+        $this->assertCount(2, $this->getPropertyValue($sig, 'cache'));
 
         $credentials = new Credentials('fizz', 'paz');
         $sig->signRequest($request, $credentials);
-        $this->assertCount(3, $this->readAttribute($sig, 'cache'));
+        $this->assertCount(3, $this->getPropertyValue($sig, 'cache'));
 
         $credentials = new Credentials('fizz', 'foobar');
         $sig->signRequest($request, $credentials);
-        $this->assertCount(1, $this->readAttribute($sig, 'cache'));
+        $this->assertCount(1, $this->getPropertyValue($sig, 'cache'));
     }
 
     private function getFixtures()

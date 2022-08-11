@@ -2,13 +2,10 @@
 namespace Aws\Test\Glacier;
 
 use Aws\Glacier\TreeHash;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class TreeHashTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     /**
      * @covers Aws\Glacier\TreeHash::__construct
      * @covers Aws\Glacier\TreeHash::update

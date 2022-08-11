@@ -15,7 +15,6 @@ use Aws\S3\RegionalEndpoint\Configuration;
 use Aws\S3\S3Client;
 use Aws\S3\UseArnRegion\Configuration as UseArnRegionConfiguration;
 use Aws\Signature\SignatureV4;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
@@ -27,7 +26,7 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 use http\Exception\InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Aws\Exception\UnresolvedEndpointException;
 
 /**
@@ -36,7 +35,6 @@ use Aws\Exception\UnresolvedEndpointException;
  */
 class S3ClientTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testCanUseBucketEndpoint()

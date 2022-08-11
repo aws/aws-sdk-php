@@ -4,15 +4,13 @@ namespace Aws\Test\EventBridge;
 use Aws\CommandInterface;
 use Aws\Result;
 use Aws\EventBridge\EventBridgeClient;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class EventBridgeEndpointMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
-    use PHPUnitCompatTrait;
 
     public function putEventsEndpointSuccessProvider()
     {

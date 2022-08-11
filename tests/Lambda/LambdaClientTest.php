@@ -3,13 +3,13 @@ namespace Aws\Test\Lambda;
 
 use Aws\Lambda\LambdaClient;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class LambdaClientTest extends TestCase
 {
-    use PHPUnitCompatTrait;
+    use ArraySubsetAsserts;
 
     function testsAddsDefaultCurlOptions()
     {

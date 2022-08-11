@@ -7,17 +7,14 @@ use Aws\S3\RegionalEndpoint\Configuration;
 use Aws\S3\RegionalEndpoint\ConfigurationInterface;
 use Aws\S3\RegionalEndpoint\ConfigurationProvider;
 use Aws\S3\RegionalEndpoint\Exception\ConfigurationException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\S3\RegionalEndpoint\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -36,7 +33,7 @@ s3_us_east_1_regional_endpoint = legacy
 s3_us_east_1_regional_endpoint = regional
 EOT;
 
-    public static function _setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'endpoints_type' => getenv(ConfigurationProvider::ENV_ENDPOINTS_TYPE) ?: '',
@@ -61,7 +58,7 @@ EOT;
         return $dir;
     }
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_ENDPOINTS_TYPE . '=' .
             self::$originalEnv['endpoints_type']);

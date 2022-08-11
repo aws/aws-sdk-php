@@ -7,18 +7,15 @@ use Aws\Command;
 use Aws\CommandInterface;
 use Aws\S3\AmbiguousSuccessParser;
 use Aws\S3\Exception\S3Exception;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class AmbiguousSuccessParserTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private $instance;
 
-    public function _setUp()
+    public function set_up()
     {
         $parser = function () {};
         $errorParser = function () {

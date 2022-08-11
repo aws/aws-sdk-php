@@ -6,17 +6,14 @@ use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationInterface;
 use Aws\Retry\ConfigurationProvider;
 use Aws\Retry\Exception\ConfigurationException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Retry\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -37,7 +34,7 @@ max_attempts = 20
 retry_mode = adaptive
 EOT;
 
-    public static function _setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'max_attempts' => getenv(ConfigurationProvider::ENV_MAX_ATTEMPTS) ?: '',
@@ -64,7 +61,7 @@ EOT;
         return $dir;
     }
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_MAX_ATTEMPTS . '=' .
             self::$originalEnv['max_attempts']);

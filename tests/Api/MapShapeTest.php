@@ -3,16 +3,13 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\MapShape;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\MapShape
  */
 class MapShapeTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testReturnsValue()
     {
         $s = new MapShape(['value' => ['type' => 'string']], new ShapeMap([]));

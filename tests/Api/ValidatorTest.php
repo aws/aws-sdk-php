@@ -4,17 +4,14 @@ namespace Aws\Test\Api;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\Validator;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Validator
  */
 class ValidatorTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function validationProvider()
     {
         return [

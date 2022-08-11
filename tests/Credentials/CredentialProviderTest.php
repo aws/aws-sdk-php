@@ -9,10 +9,9 @@ use Aws\LruArrayCache;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\Sts\StsClient;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 
 /**
@@ -29,7 +28,6 @@ aws_secret_access_key = bar
 aws_session_token = baz
 EOT;
 
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function clearEnv()
@@ -67,7 +65,7 @@ EOT;
         return $dir;
     }
 
-    public function _setUp()
+    public function set_up()
     {
         $this->home = getenv('HOME');
         $this->homedrive = getenv('HOMEDRIVE');
@@ -77,7 +75,7 @@ EOT;
         $this->profile = getenv(CredentialProvider::ENV_PROFILE);
     }
 
-    public function _tearDown()
+    public function tear_down()
     {
         putenv('HOME=' . $this->home);
         putenv('HOMEDRIVE=' . $this->homedrive);

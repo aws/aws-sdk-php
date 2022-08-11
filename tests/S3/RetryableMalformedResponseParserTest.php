@@ -6,14 +6,11 @@ use Aws\Api\Parser\Exception\ParserException;
 use Aws\CommandInterface;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\RetryableMalformedResponseParser;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Psr\Http\Message\ResponseInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class RetryableMalformedResponseParserTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testConvertsParserExceptionsToRetryableExceptions()
     {
         $this->expectExceptionMessage("Sorry!");

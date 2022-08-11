@@ -8,7 +8,6 @@ use Aws\LruArrayCache;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3MultiRegionClient;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
@@ -16,11 +15,10 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class S3MultiRegionClientTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testWillRecoverFromPermanentRedirect()
@@ -286,7 +284,7 @@ EOXML;
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
-        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
+        $this->assertSame('us-west-2', $this->getPropertyValue($client, 'cache')->get('aws:s3:foo:location'));
     }
 
     public function testRethrowsAwsExceptionViaMiddleware()
@@ -363,7 +361,7 @@ EOXML;
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
-        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
+        $this->assertSame('us-west-2', $this->getPropertyValue($client, 'cache')->get('aws:s3:foo:location'));
     }
 
     public function testCachesBucketLocationWithPathStyle()
@@ -385,7 +383,7 @@ EOXML;
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
-        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
+        $this->assertSame('us-west-2', $this->getPropertyValue($client, 'cache')->get('aws:s3:foo:location'));
     }
 
     public function testReadsBucketLocationFromCache()

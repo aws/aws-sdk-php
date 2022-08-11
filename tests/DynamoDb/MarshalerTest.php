@@ -5,17 +5,14 @@ use Aws\DynamoDb\Marshaler;
 use Aws\DynamoDb\BinaryValue;
 use Aws\DynamoDb\NumberValue;
 use Aws\DynamoDb\SetValue;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\DynamoDb\Marshaler
  */
 class MarshalerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     const ERROR = 'ERROR';
 
     /**

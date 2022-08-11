@@ -2,16 +2,13 @@
 namespace Aws\Test;
 
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Result
  */
 class ResultTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testHasData()
     {
         $c = new Result(['a' => 'b', 'c' => 'd']);

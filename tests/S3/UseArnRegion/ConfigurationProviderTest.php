@@ -6,17 +6,14 @@ use Aws\S3\UseArnRegion\Configuration;
 use Aws\S3\UseArnRegion\ConfigurationInterface;
 use Aws\S3\UseArnRegion\ConfigurationProvider;
 use Aws\S3\UseArnRegion\Exception\ConfigurationException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\S3\UseArnRegion\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -33,7 +30,7 @@ s3_use_arn_region = false
 s3_use_arn_region = true
 EOT;
 
-    public static function _setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'use_arn_region' => getenv(ConfigurationProvider::ENV_USE_ARN_REGION) ?: '',
@@ -58,7 +55,7 @@ EOT;
         return $dir;
     }
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_USE_ARN_REGION . '=' .
             self::$originalEnv['use_arn_region']);

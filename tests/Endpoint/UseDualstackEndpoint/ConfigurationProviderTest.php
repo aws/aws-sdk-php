@@ -7,17 +7,14 @@ use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider;
 use Aws\Endpoint\UseDualstackEndpoint\Configuration;
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface;
 use Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -34,7 +31,7 @@ use_dualstack_endpoint = false
 use_dualstack_endpoint = true
 EOT;
 
-    public static function _setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'use_dualstack_endpoint' => getenv(ConfigurationProvider::ENV_USE_DUAL_STACK_ENDPOINT) ?: '',
@@ -59,7 +56,7 @@ EOT;
         return $dir;
     }
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_USE_DUAL_STACK_ENDPOINT . '=' .
             self::$originalEnv['use_dualstack_endpoint']);

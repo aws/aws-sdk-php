@@ -5,8 +5,7 @@ use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
 use Aws\Neptune\NeptuneClient;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 require_once __DIR__ . '/../Signature/sig_hack.php';
 
@@ -15,15 +14,13 @@ require_once __DIR__ . '/../Signature/sig_hack.php';
  */
 class NeptuneClientTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
-    public static function _setUpBeforeClass()
+    public static function set_up_before_class()
     {
         $_SERVER['aws_time'] = 1598486400;
         $_SERVER['formatAwsTime'] = true;
     }
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         $_SERVER['aws_time'] = null;
         $_SERVER['formatAwsTime'] = null;

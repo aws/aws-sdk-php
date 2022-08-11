@@ -5,17 +5,14 @@ use Aws\Command;
 use Aws\CommandInterface;
 use Aws\HandlerList;
 use Aws\Middleware;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\HandlerList
  */
 class HandlerListTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testEnsuresHandlerIsSet()
     {
         $this->expectException(\LogicException::class);

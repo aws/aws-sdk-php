@@ -3,8 +3,7 @@
 namespace Aws\Test\EndpointDiscovery;
 
 use Aws\EndpointDiscovery\Configuration;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Log\InvalidArgumentException;
 
 /**
@@ -12,8 +11,6 @@ use Psr\Log\InvalidArgumentException;
  */
 class ConfigurationTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testGetsCorrectValues()
     {
         $config = new Configuration(true, 2000);

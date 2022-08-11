@@ -3,16 +3,13 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ApiProvider;
 use Aws\Exception\UnresolvedApiException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\ApiProvider
  */
 class ApiProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     /**
      * @return ApiProvider;
      */
@@ -56,7 +53,7 @@ class ApiProviderTest extends TestCase
     public function testCanGetDefaultProvider()
     {
         $p = ApiProvider::defaultProvider();
-        $this->assertArrayHasKey('s3', $this->readAttribute($p, 'manifest'));
+        $this->assertArrayHasKey('s3', $this->getPropertyValue($p, 'manifest'));
     }
 
     public function testManifestProviderReturnsNullForMissingService()

@@ -3,16 +3,13 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\ListShape;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\ListShape
  */
 class ListShapeTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testReturnsMember()
     {
         $s = new ListShape(

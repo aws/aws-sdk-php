@@ -2,16 +2,13 @@
 namespace Aws\Test\Signature;
 
 use Aws\Signature\SignatureProvider;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Signature\SignatureProvider
  */
 class SignatureProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function versionProvider()
     {
         return [

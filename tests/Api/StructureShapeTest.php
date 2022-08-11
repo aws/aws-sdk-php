@@ -3,16 +3,13 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\StructureShape;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\StructureShape
  */
 class StructureShapeTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testReturnsWhenMembersAreEmpty()
     {
         $s = new StructureShape([], new ShapeMap([]));

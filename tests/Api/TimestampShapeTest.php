@@ -3,16 +3,13 @@ namespace Aws\Test\Api;
 
 use Aws\Api\TimestampShape;
 use Aws\Api\ShapeMap;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\TimestampShape
  */
 class TimestampShapeTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function formatProvider()
     {
         $t = strtotime('january 5, 1999');

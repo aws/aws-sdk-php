@@ -6,17 +6,14 @@ use Aws\LruArrayCache;
 use Aws\Endpoint\UseFipsEndpoint\Configuration;
 use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface;
 use Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -33,7 +30,7 @@ use_fips_endpoint = false
 use_fips_endpoint = true
 EOT;
 
-    public static function _setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'use_fips_endpoint' => getenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT) ?: '',
@@ -58,7 +55,7 @@ EOT;
         return $dir;
     }
 
-    public static function _tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT . '=' .
             self::$originalEnv['use_fips_endpoint']);

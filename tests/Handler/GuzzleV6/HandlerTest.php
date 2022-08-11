@@ -2,7 +2,6 @@
 namespace Aws\Test\Handler\GuzzleV6;
 
 use Aws\Handler\GuzzleV6\GuzzleHandler;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Handler\MockHandler;
@@ -11,16 +10,14 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\TransferStats;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Handler\GuzzleV6\GuzzleHandler
  */
 class HandlerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
-    public function _setUp()
+    public function set_up()
     {
         if (!class_exists('GuzzleHttp\HandlerStack')) {
             $this->markTestSkipped();

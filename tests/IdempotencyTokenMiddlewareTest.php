@@ -3,22 +3,19 @@ namespace Aws\Test;
 
 use Aws\IdempotencyTokenMiddleware;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use Aws\HandlerList;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Command;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\IdempotencyTokenMiddleware
  */
 class IdempotencyTokenMiddlewareTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testAutoFillsMemberWithIdempotencyTrait()
     {
         $list = new HandlerList();

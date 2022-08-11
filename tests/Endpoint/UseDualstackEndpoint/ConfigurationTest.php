@@ -2,16 +2,13 @@
 namespace Aws\Test\Endpoint\UseDualstackEndpoint;
 
 use Aws\Endpoint\UseDualstackEndpoint\Configuration;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Endpoint\UseDualstackEndpoint\Configuration
  */
 class ConfigurationTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     /**
      * @dataProvider correctValueCases
      *

@@ -3,16 +3,13 @@ namespace Aws\Test\S3;
 
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\S3\S3UriParser;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\S3\S3UriParser
  */
 class S3UriParserTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function uriProvider()
     {
         return [

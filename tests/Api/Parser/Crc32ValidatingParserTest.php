@@ -7,17 +7,14 @@ use Aws\Api\Parser\JsonRpcParser;
 use Aws\Api\Service;
 use Aws\Command;
 use Aws\Exception\AwsException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\Parser\Crc32ValidatingParser
  */
 class Crc32ValidatingParserTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private function getWrapped()
     {
         $provider = ApiProvider::defaultProvider();

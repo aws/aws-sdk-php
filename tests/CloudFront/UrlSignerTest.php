@@ -4,21 +4,19 @@ namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\UrlSigner;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7\Uri;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\CloudFront\UrlSigner
  */
 class UrlSignerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
 
     protected $key;
     protected $kp;
 
-    public function _setUp()
+    public function set_up()
     {
         openssl_pkey_export(openssl_pkey_new(),$this->key);
         $this->kp  = 'test';

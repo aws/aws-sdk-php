@@ -8,17 +8,14 @@ use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\Sts\RegionalEndpoints\Configuration;
 use Aws\Sts\StsClient;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7\Uri;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Sts\StsClient
  */
 class StsClientTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testCanCreateCredentialsObjectFromStsResult()
     {
         $result = new Result([

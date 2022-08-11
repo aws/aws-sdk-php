@@ -6,16 +6,14 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\BatchDelete;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\S3\BatchDelete
  */
 class BatchDeleteTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testValidatesBatchSizeIsGreatherThanZero()

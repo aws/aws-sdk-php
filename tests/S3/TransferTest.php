@@ -6,11 +6,10 @@ use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\S3\Transfer;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SplFileInfo;
 
 /**
@@ -18,7 +17,6 @@ use SplFileInfo;
  */
 class TransferTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testEnsuresBaseDirIsAvailable()

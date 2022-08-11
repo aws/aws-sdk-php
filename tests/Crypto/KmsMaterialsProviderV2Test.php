@@ -5,16 +5,14 @@ use Aws\Crypto\KmsMaterialsProviderV2;
 use Aws\Kms\KmsClient;
 use Aws\Middleware;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Crypto\KmsMaterialsProviderV2
  */
 class KmsMaterialsProviderV2Test extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testProviderBasics()

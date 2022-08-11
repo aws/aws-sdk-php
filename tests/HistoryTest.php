@@ -6,15 +6,13 @@ use Aws\Command;
 use Aws\History;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\History
  */
 class HistoryTest extends TestCase
 {
-    use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-
     public function testIsCountable()
     {
         $h = new History();

@@ -2,16 +2,14 @@
 namespace Aws\Test\DynamoDb;
 
 use Aws\DynamoDb\SessionHandler;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\DynamoDb\SessionHandler
  */
 class SessionHandlerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testCanCreateSessionHandler()
@@ -22,11 +20,11 @@ class SessionHandlerTest extends TestCase
 
         $this->assertInstanceOf(
             'Aws\DynamoDb\StandardSessionConnection',
-            $this->readAttribute($sh1, 'connection')
+            $this->getPropertyValue($sh1, 'connection')
         );
         $this->assertInstanceOf(
             'Aws\DynamoDb\LockingSessionConnection',
-            $this->readAttribute($sh2, 'connection')
+            $this->getPropertyValue($sh2, 'connection')
         );
     }
 

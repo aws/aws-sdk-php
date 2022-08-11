@@ -2,13 +2,10 @@
 namespace Aws\Test\Crypto\Cipher;
 
 use Aws\Crypto\Cipher\Cbc;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class CbcTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testShouldReportCipherMethodOfCBC()
     {
         $ivString = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));

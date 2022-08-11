@@ -2,15 +2,13 @@
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\MetadataEnvelope;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Crypto\MetadataEnvelope
  */
 class MetadataEnvelopeTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesMetadataEnvelopeTrait;
 
     /**

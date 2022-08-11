@@ -2,20 +2,17 @@
 namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\Signer;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class SignerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     /** @var Signer */
     private $instance;
     private $testKeyFile;
 
     const PASSPHRASE = "1234";
 
-    public function _setUp()
+    public function set_up()
     {
         $this->testKeyFile =__DIR__ . '/fixtures/test.pem';
         $this->instance = new Signer(

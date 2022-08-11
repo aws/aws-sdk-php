@@ -4,24 +4,22 @@ namespace Aws\Test\S3;
 use Aws\Credentials\Credentials;
 use Aws\S3\PostObjectV4;
 use Aws\S3\S3Client;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Aws\Test\UsesServiceTrait;
 
 require_once __DIR__ . '/sig_hack.php';
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\PostObjectV4
  */
 class PostObjectV4Test extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /** @var S3Client */
     protected $client;
 
-    public function _setUp()
+    public function set_up()
     {
         $this->client = new S3Client([
             'version' => 'latest',
@@ -33,9 +31,9 @@ class PostObjectV4Test extends TestCase
         ]);
     }
 
-    public function _tearDown()
+    public function tear_down()
     {
-        parent::tearDown();
+        parent::tear_down();
 
         unset($_SERVER['aws_time']);
     }

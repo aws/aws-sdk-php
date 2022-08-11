@@ -16,16 +16,14 @@ use Aws\S3\S3Client;
 use Aws\HandlerList;
 use Aws\Sdk;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\ClientResolver
  */
 class ClientResolverTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testEnsuresRequiredArgumentsAreProvided()
@@ -795,7 +793,7 @@ EOT;
             'version'     => 'latest',
             'debug'       => ['logfn' => function ($value) use (&$str) { $str .= $value; }]
         ], $list);
-        $value = $this->readAttribute($list, 'interposeFn');
+        $value = $this->getPropertyValue($list, 'interposeFn');
         $this->assertIsCallable($value);
     }
 

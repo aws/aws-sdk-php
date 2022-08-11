@@ -29,8 +29,6 @@ JmesPath\Env::cleanCompileDir();
 $version = class_exists('PHPUnit_Runner_Version') ? PHPUnit_Runner_Version::id() : PHPUnit\Runner\Version::id();
 $versionData = explode('.', $version);
 
-include_once(sprintf("%s/Polyfill/PHPUnit%s/PHPUnitCompatTrait.php", __DIR__, $versionData[0]));
-
 if (PHP_VERSION_ID >= 70400 && $versionData[0] == 5) {
     $vendorGeneratorPath = __DIR__ . '/../vendor/phpunit/phpunit-mock-objects/src/Framework/MockObject/Generator.php';
     $patchGeneratorPath = __DIR__ . '/bootstrap/PHPUnit_Framework_MockObject_Generator_7.4.php';

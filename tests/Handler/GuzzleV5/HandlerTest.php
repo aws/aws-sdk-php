@@ -2,7 +2,6 @@
 namespace Aws\Test\Handler\GuzzleV5;
 
 use Aws\Handler\GuzzleV5\GuzzleHandler;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
@@ -18,16 +17,14 @@ use GuzzleHttp\Psr7\Response as PsrResponse;
 use GuzzleHttp\Ring\Client\MockHandler;
 use GuzzleHttp\Stream\Stream;
 use React\Promise\Deferred;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Handler\GuzzleV5\GuzzleHandler
  */
 class HandlerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
-    public function _setUp()
+    public function set_up()
     {
         if (!class_exists('GuzzleHttp\Ring\Core')) {
             $this->markTestSkipped();

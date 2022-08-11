@@ -10,22 +10,19 @@ use Aws\HandlerList;
 use Aws\MockHandler;
 use Aws\MultiRegionClient;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class MultiRegionClientTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     /** @var MultiRegionClient */
     private $instance;
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $mockRegionalClient;
 
-    public function _setUp()
+    public function set_up()
     {
         $this->mockRegionalClient = $this->getMockBuilder(AwsClient::class)
             ->disableOriginalConstructor()

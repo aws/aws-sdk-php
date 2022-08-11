@@ -6,11 +6,10 @@ use Aws\CommandInterface;
 use Aws\Exception\InvalidRegionException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\Middleware;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\S3Control\S3ControlTestingTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -18,7 +17,6 @@ use Psr\Http\Message\RequestInterface;
  */
 class EndpointArnMiddlewareTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use S3ControlTestingTrait;
 
     /**

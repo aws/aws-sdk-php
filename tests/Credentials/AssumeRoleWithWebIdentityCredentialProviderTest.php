@@ -9,11 +9,10 @@ use Aws\Result;
 use Aws\Sts\StsClient;
 use Aws\Sts\Exception\StsException;
 use Aws\Api\DateTimeResult;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider
@@ -22,7 +21,6 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
 {
     const SAMPLE_ROLE_ARN = 'arn:aws:iam::012345678910:role/role_name';
 
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function clearEnv()

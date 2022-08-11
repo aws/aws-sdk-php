@@ -2,14 +2,12 @@
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\AesGcmDecryptingStream;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class AesGcmDecryptingStreamTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use AesEncryptionStreamTestTrait;
 
     /**

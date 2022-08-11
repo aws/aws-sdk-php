@@ -8,16 +8,14 @@ use Aws\Ec2\Ec2Client;
 use Aws\Neptune\NeptuneClient;
 use Aws\Rds\RdsClient;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\PresignUrlMiddleware
  */
 class PresignUrlMiddlewareTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testDoesNotAddPresignedUrlForNonRequiredOperations()

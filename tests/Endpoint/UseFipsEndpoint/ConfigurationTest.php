@@ -2,16 +2,13 @@
 namespace Aws\Test\Endpoint\UseFipsEndpoint;
 
 use Aws\Endpoint\UseFipsEndpoint\Configuration;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Endpoint\UseFipsEndpoint\Configuration
  */
 class ConfigurationTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     /**
      * @dataProvider correctValueCases
      *

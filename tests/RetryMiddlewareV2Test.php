@@ -12,20 +12,18 @@ use Aws\Retry\Configuration;
 use Aws\Retry\QuotaManager;
 use Aws\Retry\RateLimiter;
 use Aws\RetryMiddlewareV2;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\RetryMiddlewareV2
  */
 class RetryMiddlewareV2Test extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /**

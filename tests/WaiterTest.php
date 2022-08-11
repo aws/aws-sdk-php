@@ -6,7 +6,6 @@ use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -15,14 +14,13 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Waiter
  */
 class WaiterTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testErrorOnBadConfig()

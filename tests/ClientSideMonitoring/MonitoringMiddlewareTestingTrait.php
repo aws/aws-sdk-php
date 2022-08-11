@@ -5,12 +5,14 @@ namespace Aws\Test\ClientSideMonitoring;
 use Aws\HandlerList;
 use Aws\MonitoringEventsInterface;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Promise;
+use Yoast\PHPUnitPolyfills\Polyfills\AssertIsType;
 
 trait MonitoringMiddlewareTestingTrait
 {
-    use PHPUnitCompatTrait;
+    use AssertIsType;
+    use ArraySubsetAsserts;
 
     /**
      * @dataProvider getMonitoringDataTests

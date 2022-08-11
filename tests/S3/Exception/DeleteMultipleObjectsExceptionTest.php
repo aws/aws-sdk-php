@@ -2,16 +2,13 @@
 namespace Aws\Test\S3\Exception;
 
 use Aws\S3\Exception\DeleteMultipleObjectsException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\S3\Exception\DeleteMultipleObjectsException
  */
 class DeleteMultipleObjectsExceptionTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testReturnsData()
     {
         $del = [['Key' => 'foo']];

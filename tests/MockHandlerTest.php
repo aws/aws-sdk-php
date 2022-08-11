@@ -6,19 +6,16 @@ use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\MockHandler
  */
 class MockHandlerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testValidatesEachResult()
     {
         $this->expectExceptionMessage("Expected an Aws\ResultInterface or Exception");

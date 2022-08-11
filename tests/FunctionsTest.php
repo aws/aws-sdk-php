@@ -5,13 +5,10 @@ use Aws;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class FunctionsTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     /**
      * @covers Aws\recursive_dir_iterator()
      */

@@ -6,17 +6,15 @@ use Aws\CloudTrail\CloudTrailClient;
 use Aws\CloudTrail\LogFileIterator;
 use Aws\Result;
 use Aws\S3\S3Client;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\CloudTrail\LogFileIterator
  */
 class LogFileIteratorTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testFactoryCanCreateForTrail()

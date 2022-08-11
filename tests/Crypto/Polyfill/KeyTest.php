@@ -2,8 +2,7 @@
 namespace Aws\Test\Crypto\Polyfill;
 
 use Aws\Crypto\Polyfill\Key;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * Class KeyTest
@@ -11,8 +10,6 @@ use PHPUnit\Framework\TestCase;
  */
 class KeyTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testConstructor()
     {
         $this->assertInstanceOf(Key::class, new Key('test'));

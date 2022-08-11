@@ -3,16 +3,13 @@
 namespace Aws\Test\Retry;
 
 use Aws\Retry\Configuration;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Retry\Configuration
  */
 class ConfigurationTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testGetsCorrectValues()
     {
         $config = new Configuration('adaptive', 8);

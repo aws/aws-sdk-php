@@ -2,16 +2,13 @@
 namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\ShapeMap
  */
 class ShapeMapTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     public function testReturnsShapeName()
     {
         $sm = new ShapeMap(['foo' => [], 'baz' => []]);

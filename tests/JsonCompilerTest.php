@@ -2,19 +2,16 @@
 namespace Aws\Test;
 
 use Aws\JsonCompiler;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\JsonCompiler
  */
 class JsonCompilerTest extends TestCase
 {
-    use PHPUnitCompatTrait;
-
     private $models;
 
-    public function _setUp()
+    public function set_up()
     {
         $this->models = realpath(__DIR__ . '/../src/data');
     }

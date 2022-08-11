@@ -2,8 +2,7 @@
 namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\Exception\ParserException;
-use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * This class tests the custom functionality of the JsonParser;
@@ -13,7 +12,6 @@ use PHPUnit\Framework\TestCase;
  */
 class JsonParserTest extends TestCase
 {
-    use PHPUnitCompatTrait;
     use ParserTestServiceTrait;
 
     public function timeStampModelProvider()
