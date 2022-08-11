@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BackupStorage` - This is the first public release of AWS Backup Storage. We are exposing some previously-internal APIs for use by external services. These APIs are not meant to be used directly by customers.
+* `Aws\Glue` - Add support for Python 3.9 AWS Glue Python Shell jobs
+* `Aws\PrivateNetworks` - This is the initial SDK release for AWS Private 5G. AWS Private 5G is a managed service that makes it easy to deploy, operate, and scale your own private mobile network at your on-premises location.
+
 ## 3.232.5 - 2022-08-10
 
 * `Aws\DLM` - This release adds support for excluding specific data (non-boot) volumes from multi-volume snapshot sets created by snapshot lifecycle policies
