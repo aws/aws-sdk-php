@@ -619,7 +619,7 @@ class ValidatorTest extends TestCase
 
         try {
             $validator->validate('Foo', $shape, $input);
-            $this->expectNotToPerformAssertions();
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
             if ($result !== true) {
                 $this->fail('Should have failed with ' . $result);
             }

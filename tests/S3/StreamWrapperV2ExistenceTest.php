@@ -875,7 +875,7 @@ class StreamWrapperV2ExistenceTest extends TestCase
 
     public function testCanSetDelimiterStreamContext()
     {
-        $this->expectNotToPerformAssertions();
+        $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
         $this->addMockResults($this->client, [
             [
                 'IsTruncated' => false,

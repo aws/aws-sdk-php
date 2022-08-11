@@ -273,7 +273,7 @@ class S3EncryptionClientV2Test extends TestCase
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         } else {
-            $this->expectNotToPerformAssertions();
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
         }
 
         $s3 = $this->getS3Client();
@@ -314,7 +314,7 @@ class S3EncryptionClientV2Test extends TestCase
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         } else {
-            $this->expectNotToPerformAssertions();
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
         }
 
         $cipherOptions = [

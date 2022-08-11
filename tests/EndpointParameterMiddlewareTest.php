@@ -78,7 +78,7 @@ class EndpointParameterMiddlewareTest extends TestCase
         $expectedHost
     ) {
         if ($cmdName === 'NoEndpointOp') {
-            $this->expectNotToPerformAssertions();
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
         }
         $client = $this->generateTestClient($service, $clientArgs);
         $command = $client->getCommand($cmdName, $params);

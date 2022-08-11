@@ -101,12 +101,12 @@ class S3UriParserTest extends TestCase
             ksort($actual);
             $this->assertSame($result, $actual);
         } catch (\InvalidArgumentException $e) {
-            $this->expectNotToPerformAssertions();
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
             if (!$isError) {
                 throw $e;
             }
         } catch (InvalidArnException $e) {
-            $this->expectNotToPerformAssertions();
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
             if (!$isError) {
                 throw $e;
             }
