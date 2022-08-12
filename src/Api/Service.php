@@ -28,6 +28,9 @@ class Service extends AbstractModel
     /** @var array */
     private $waiters = null;
 
+    /** @var array */
+    private $awsQueryCompatible = null;
+
     /**
      * @param array    $definition
      * @param callable $provider
@@ -464,5 +467,76 @@ class Service extends AbstractModel
     public function getShapeMap()
     {
         return $this->shapeMap;
+    }
+
+    /**
+     * Gets the associative array of errorCode Mapping of the description,
+     * where key is the name of the awsQueryCompatible mapping, and
+     * the value is the awsQueryCompatible mapping
+     *
+     * @return array
+     */
+    public function getAwsQueryCompatible()
+    {
+        if (!isset($this->awsQueryCompatible)) {
+            $res = call_user_func(
+                $this->apiProvider,
+                'awsQueryCompatible',
+                $this->serviceName,
+                $this->apiVersion
+            );
+            $this->awsQueryCompatible = isset($res['awsQueryCompatible'])
+                ? $res['awsQueryCompatible']
+                : [];
+        }
+
+        return $this->awsQueryCompatible;
+    }
+
+    /**
+     * Determines if the service has an awsQueryCompatible error mapping by name.
+     *
+     * @param string $name name of the awsQueryCompatible error mapping.
+     *
+     * @return bool
+     */
+    public function hasAwsQueryCompatible($name)
+    {
+        return isset($this->getAwsQueryCompatible()[$name]);
+    }
+
+    /**
+     * Get an awsQueryCompatible error mapping by name.
+     *
+     * @param string $name name of the awsQueryCompatible error mapping.
+     *
+     * @return array
+     * @throws \UnexpectedValueException if the waiter does not exist.
+     */
+    public function getAwsQueryCompatibleErrorMapping($name)
+    {
+        // Error if the awsQueryCompatible is not defined
+        if ($this->hasAwsQueryCompatible($name)) {
+            return $this->awsQueryCompatible[$name];
+        }
+
+        throw new \UnexpectedValueException("There is no {$name} awsQueryCompatible error mapping "
+            . "defined for the {$this->serviceName} service.");
+    }
+
+    /**
+     * Get an awsQueryCompatible error code by error code.
+     *
+     * @param string $name name of the awsQueryCompatible error mapping.
+     * @param string $error error code parsed.
+     *
+     * @return string
+     */
+    public function getAwsQueryCompatibleErrorCode($name, $error)
+    {
+        if ($this->getAwsQueryCompatible() !== null && $this->hasAwsQueryCompatible($name)) {
+            return $this->awsQueryCompatible[$name][$error];
+        }
+        return $error;
     }
 }

@@ -220,4 +220,29 @@ class ServiceTest extends TestCase
             );
         }
     }
+
+    public function testLoadAwsQueryCompatibleErrorMapping()
+    {
+        $api = new Service([], function () {
+            return ['awsQueryCompatible' => ['Foo' => ['fooInvalid' => 'fizzInvalid']]];
+        });
+
+        $this->assertTrue($api->hasAwsQueryCompatible('Foo'));
+        $mapping = $api->getAwsQueryCompatibleErrorMapping('Foo');
+        $this->assertEquals(['fooInvalid' => 'fizzInvalid'], $mapping);
+
+        $this->assertFalse($api->hasAwsQueryCompatible('Fizz'));
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(\UnexpectedValueException::class);
+        } else {
+            $this->setExpectedException(\UnexpectedValueException::class);
+        }
+        $api->getAwsQueryCompatibleErrorMapping('Fizz');
+
+        $error = $this->assertTrue($api->getAwsQueryCompatibleErrorCode('Foo', 'fooInvalid'));
+        $this->assertEquals('fizzInvalid', $error);
+
+        $anotherError = $this->assertTrue($api->getAwsQueryCompatibleErrorCode('Foo', 'fooOverLimit'));
+        $this->assertEquals('fooInvalid', $anotherError);
+    }
 }
