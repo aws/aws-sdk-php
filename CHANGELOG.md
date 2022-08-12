@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.233.1 - 2022-08-12
 
 * `Aws\ChimeSDKMessaging` - The Amazon Chime SDK now supports channels with up to one million participants with elastic channels.
 * `Aws\IVS` - Updates various list api MaxResults ranges
