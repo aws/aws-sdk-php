@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.233.2 - 2022-08-15
 
 * `Aws\CloudFront` - Adds Http 3 support to distributions
 * `Aws\ConnectWisdomService` - This release introduces a new API PutFeedback that allows submitting feedback to Wisdom on content relevance.
