@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Rekognition` - This release adds APIs which support copying an Amazon Rekognition Custom Labels model and managing project policies across AWS account.
+* `Aws\ServiceCatalog` - Documentation updates for Service Catalog
+
 ## 3.233.2 - 2022-08-15
 
 * `Aws\CloudFront` - Adds Http 3 support to distributions
