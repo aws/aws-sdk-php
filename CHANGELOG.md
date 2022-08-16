@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.233.3 - 2022-08-16
 
 * `Aws\Rekognition` - This release adds APIs which support copying an Amazon Rekognition Custom Labels model and managing project policies across AWS account.
 * `Aws\ServiceCatalog` - Documentation updates for Service Catalog
