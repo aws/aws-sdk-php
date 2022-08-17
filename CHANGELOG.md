@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppMesh` - AWS App Mesh release to support Multiple Listener and Access Log Format feature
+* `Aws\ConnectCampaignService` - Updated exceptions for Amazon Connect Outbound Campaign api's.
+* `Aws\LakeFormation` - This release adds a new API support "AssumeDecoratedRoleWithSAML" and also release updates the corresponding documentation.
+* `Aws\Lambda` - Added support for customization of Consumer Group ID for MSK and Kafka Event Source Mappings.
+* `Aws\LexModelsV2` - This release introduces support for enhanced conversation design with the ability to define custom conversation flows with conditional branching and new bot responses.
+* `Aws\RDS` - Adds support for Internet Protocol Version 6 (IPv6) for RDS Aurora database clusters.
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager.
+* `Aws\kendra` - This release adds Zendesk connector (which allows you to specify Zendesk SAAS platform as data source), Proxy Support for Sharepoint and Confluence Server (which allows you to specify the proxy configuration if proxy is required to connect to your Sharepoint/Confluence Server as data source).
+
 ## 3.233.3 - 2022-08-16
 
 * `Aws\Rekognition` - This release adds APIs which support copying an Amazon Rekognition Custom Labels model and managing project policies across AWS account.

@@ -1506,7 +1506,8 @@
         "AttachmentConfiguration":{"shape":"ConfluenceAttachmentConfiguration"},
         "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"},
         "InclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
-        "ExclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"}
+        "ExclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "ProxyConfiguration":{"shape":"ProxyConfiguration"}
       }
     },
     "ConfluencePageConfiguration":{
@@ -1687,6 +1688,7 @@
         "IndexId":{"shape":"IndexId"},
         "Type":{"shape":"DataSourceType"},
         "Configuration":{"shape":"DataSourceConfiguration"},
+        "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"},
         "Description":{"shape":"Description"},
         "Schedule":{"shape":"ScanSchedule"},
         "RoleArn":{"shape":"RoleArn"},
@@ -1870,7 +1872,8 @@
         "QuipConfiguration":{"shape":"QuipConfiguration"},
         "JiraConfiguration":{"shape":"JiraConfiguration"},
         "GitHubConfiguration":{"shape":"GitHubConfiguration"},
-        "AlfrescoConfiguration":{"shape":"AlfrescoConfiguration"}
+        "AlfrescoConfiguration":{"shape":"AlfrescoConfiguration"},
+        "TemplateConfiguration":{"shape":"TemplateConfiguration"}
       }
     },
     "DataSourceDateFieldFormat":{
@@ -2048,7 +2051,8 @@
         "QUIP",
         "JIRA",
         "GITHUB",
-        "ALFRESCO"
+        "ALFRESCO",
+        "TEMPLATE"
       ]
     },
     "DataSourceVpcConfiguration":{
@@ -2240,6 +2244,7 @@
         "Name":{"shape":"DataSourceName"},
         "Type":{"shape":"DataSourceType"},
         "Configuration":{"shape":"DataSourceConfiguration"},
+        "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"},
         "CreatedAt":{"shape":"Timestamp"},
         "UpdatedAt":{"shape":"Timestamp"},
         "Description":{"shape":"Description"},
@@ -4573,7 +4578,8 @@
         "DocumentTitleFieldName":{"shape":"DataSourceFieldName"},
         "DisableLocalGroups":{"shape":"Boolean"},
         "SslCertificateS3Path":{"shape":"S3Path"},
-        "AuthenticationType":{"shape":"SharePointOnlineAuthenticationType"}
+        "AuthenticationType":{"shape":"SharePointOnlineAuthenticationType"},
+        "ProxyConfiguration":{"shape":"ProxyConfiguration"}
       }
     },
     "SharePointOnlineAuthenticationType":{
@@ -4914,6 +4920,18 @@
       "min":1,
       "pattern":"[A-Z0-9]*"
     },
+    "Template":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
+    "TemplateConfiguration":{
+      "type":"structure",
+      "members":{
+        "Template":{"shape":"Template"}
+      }
+    },
     "TenantDomain":{
       "type":"string",
       "max":256,
@@ -5056,6 +5074,7 @@
         "Name":{"shape":"DataSourceName"},
         "IndexId":{"shape":"IndexId"},
         "Configuration":{"shape":"DataSourceConfiguration"},
+        "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"},
         "Description":{"shape":"Description"},
         "Schedule":{"shape":"ScanSchedule"},
         "RoleArn":{"shape":"RoleArn"},
