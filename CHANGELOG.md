@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.233.4 - 2022-08-17
 
 * `Aws\AppMesh` - AWS App Mesh release to support Multiple Listener and Access Log Format feature
 * `Aws\ConnectCampaignService` - Updated exceptions for Amazon Connect Outbound Campaign api's.
