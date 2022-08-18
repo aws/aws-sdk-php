@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKMediaPipelines` - The Amazon Chime SDK now supports live streaming of real-time video from the Amazon Chime SDK sessions to streaming platforms such as Amazon IVS and Amazon Elemental MediaLive. We have also added support for concatenation to create a single media capture file.
+* `Aws\CloudWatch` - Add support for managed Contributor Insights Rules
+* `Aws\CognitoIdentityProvider` - This change is being made simply to fix the public documentation based on the models. We have included the PasswordChange and ResendCode events, along with the Pass, Fail and InProgress status. We have removed the Success and Failure status which are never returned by our APIs.
+* `Aws\DynamoDB` - This release adds support for importing data from S3 into a new DynamoDB table
+* `Aws\EC2` - This release adds support for VPN log options , a new feature allowing S2S VPN connections to send IKE activity logs to CloudWatch Logs
+* `Aws\NetworkManager` - Add TransitGatewayPeeringAttachmentId property to TransitGatewayPeering Model
+
 ## 3.233.4 - 2022-08-17
 
 * `Aws\AppMesh` - AWS App Mesh release to support Multiple Listener and Access Log Format feature
