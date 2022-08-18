@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.233.5 - 2022-08-18
 
 * `Aws\ChimeSDKMediaPipelines` - The Amazon Chime SDK now supports live streaming of real-time video from the Amazon Chime SDK sessions to streaming platforms such as Amazon IVS and Amazon Elemental MediaLive. We have also added support for concatenation to create a single media capture file.
 * `Aws\CloudWatch` - Add support for managed Contributor Insights Rules
