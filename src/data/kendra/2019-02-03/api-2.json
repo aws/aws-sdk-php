@@ -1455,6 +1455,13 @@
         "IndexFieldName":{"shape":"IndexFieldName"}
       }
     },
+    "ConfluenceAuthenticationType":{
+      "type":"string",
+      "enum":[
+        "HTTP_BASIC",
+        "PAT"
+      ]
+    },
     "ConfluenceBlogConfiguration":{
       "type":"structure",
       "members":{
@@ -1507,7 +1514,8 @@
         "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"},
         "InclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
         "ExclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
-        "ProxyConfiguration":{"shape":"ProxyConfiguration"}
+        "ProxyConfiguration":{"shape":"ProxyConfiguration"},
+        "AuthenticationType":{"shape":"ConfluenceAuthenticationType"}
       }
     },
     "ConfluencePageConfiguration":{

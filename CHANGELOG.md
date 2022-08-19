@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This release adds SearchSecurityProfiles API which can be used to search for Security Profile resources within a Connect Instance.
+* `Aws\LookoutMetrics` - This release is to make GetDataQualityMetrics API publicly available.
+* `Aws\ivschat` - Documentation Change for IVS Chat API Reference - Doc-only update to change text/description for tags field.
+* `Aws\kendra` - This release adds support for a new authentication type - Personal Access Token (PAT) for confluence server.
+
 ## 3.233.5 - 2022-08-18
 
 * `Aws\ChimeSDKMediaPipelines` - The Amazon Chime SDK now supports live streaming of real-time video from the Amazon Chime SDK sessions to streaming platforms such as Amazon IVS and Amazon Elemental MediaLive. We have also added support for concatenation to create a single media capture file.
