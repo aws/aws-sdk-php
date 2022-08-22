@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.234.0 - 2022-08-22
 
 * `Aws\DocDB` - Update document for volume clone
 * `Aws\EC2` - R6a instances are powered by 3rd generation AMD EPYC (Milan) processors delivering all-core turbo frequency of 3.6 GHz. C6id, M6id, and R6id instances are powered by 3rd generation Intel Xeon Scalable processor (Ice Lake) delivering all-core turbo frequency of 3.5 GHz.
