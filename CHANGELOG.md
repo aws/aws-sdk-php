@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DocDB` - Update document for volume clone
+* `Aws\EC2` - R6a instances are powered by 3rd generation AMD EPYC (Milan) processors delivering all-core turbo frequency of 3.6 GHz. C6id, M6id, and R6id instances are powered by 3rd generation Intel Xeon Scalable processor (Ice Lake) delivering all-core turbo frequency of 3.5 GHz.
+* `Aws\ForecastQueryService` - releasing What-If Analysis APIs
+* `Aws\ForecastService` - releasing What-If Analysis APIs and update ARN regex pattern to be more strict in accordance with security recommendation
+* `Aws\IoTSiteWise` - Enable non-unique asset names under different hierarchies
+* `Aws\LexModelsV2` - This release introduces a new feature to stop a running BotRecommendation Job for Automated Chatbot Designer.
+* `Aws\SecurityHub` - Added new resource details objects to ASFF, including resources for AwsBackupBackupVault, AwsBackupBackupPlan and AwsBackupRecoveryPoint. Added FixAvailable, FixedInVersion and Remediation to Vulnerability.
+* `Aws\SupportApp` - This is the initial SDK release for the AWS Support App in Slack.
+
 ## 3.233.6 - 2022-08-19
 
 * `Aws\Connect` - This release adds SearchSecurityProfiles API which can be used to search for Security Profile resources within a Connect Instance.

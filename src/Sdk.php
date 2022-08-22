@@ -574,6 +574,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSts(array $args = [])
  * @method \Aws\Support\SupportClient createSupport(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSupport(array $args = [])
+ * @method \Aws\SupportApp\SupportAppClient createSupportApp(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSupportApp(array $args = [])
  * @method \Aws\Swf\SwfClient createSwf(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSwf(array $args = [])
  * @method \Aws\Synthetics\SyntheticsClient createSynthetics(array $args = [])
