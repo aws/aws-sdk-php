@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.234.1 - 2022-08-23
 
 * `Aws\RDS` - RDS for Oracle supports Oracle Data Guard switchover and read replica backups.
 * `Aws\SSOAdmin` - Documentation updates to reflect service rename - AWS IAM Identity Center (successor to AWS Single Sign-On)
