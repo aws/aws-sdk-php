@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.234.2 - 2022-08-24
 
 * `Aws\CloudFront` - Adds support for CloudFront origin access control (OAC), making it possible to restrict public access to S3 bucket origins in all AWS Regions, those with SSE-KMS, and more.
 * `Aws\ConfigService` - AWS Config now supports ConformancePackTemplate documents in SSM Docs for the deployment and update of conformance packs.
