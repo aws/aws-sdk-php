@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.234.3 - 2022-08-25
 
 * `Aws\ElasticLoadBalancingv2` - Documentation updates for ELBv2. Gateway Load Balancer now supports Configurable Flow Stickiness, enabling you to configure the hashing used to maintain stickiness of flows to a specific target appliance.
 * `Aws\GameLift` - This release adds support for eight EC2 local zones as fleet locations; Atlanta, Chicago, Dallas, Denver, Houston, Kansas City (us-east-1-mci-1a), Los Angeles, and Phoenix. It also adds support for C5d, C6a, C6i, and R5d EC2 instance families.
