@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.234.4 - 2022-08-26
 
 * `Aws\MediaPackage` - This release adds Ads AdTriggers and AdsOnDeliveryRestrictions to describe calls for CMAF endpoints on MediaPackage.
 * `Aws\RDS` - Removes support for RDS Custom from DBInstanceClass in ModifyDBInstance
