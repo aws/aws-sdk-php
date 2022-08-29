@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.234.5 - 2022-08-29
 
 * `Aws\FSx` - Documentation updates for Amazon FSx for NetApp ONTAP.
 * `Aws\VoiceID` - Amazon Connect Voice ID now detects voice spoofing. When a prospective fraudster tries to spoof caller audio using audio playback or synthesized speech, Voice ID will return a risk score and outcome to indicate the how likely it is that the voice is spoofed.
