@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\FSx` - Documentation updates for Amazon FSx for NetApp ONTAP.
+* `Aws\VoiceID` - Amazon Connect Voice ID now detects voice spoofing. When a prospective fraudster tries to spoof caller audio using audio playback or synthesized speech, Voice ID will return a risk score and outcome to indicate the how likely it is that the voice is spoofed.
+
 ## 3.234.4 - 2022-08-26
 
 * `Aws\MediaPackage` - This release adds Ads AdTriggers and AdsOnDeliveryRestrictions to describe calls for CMAF endpoints on MediaPackage.
