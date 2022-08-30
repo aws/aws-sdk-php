@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.234.6 - 2022-08-30
 
 * `Aws\GreengrassV2` - Adds topologyFilter to ListInstalledComponentsRequest which allows filtration of components by ROOT or ALL (including root and dependency components). Adds lastStatusChangeTimestamp to ListInstalledComponents response to show the last time a component changed state on a device.
 * `Aws\IdentityStore` - Documentation updates for the Identity Store CLI Reference.
