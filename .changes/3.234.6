@@ -2,6 +2,6 @@
     {
         "type": "enhancement",
         "category": "Signature",
-        "description": "Allow Override of SignatureV4::getHeaderBlacklist by changing private visibility to protected. Overriding this method is only for specific purposes, you can see usecases on issue #2451 on github. By default, headers are not signed because signing these headers would potentially cause a signature mismatch when sending a request through a proxy or if modified at the HTTP client level.have to be careful with Documentation updates for Database Migration Service (DMS)."
+        "description": "The visibility of the SignatureV4::getHeaderBlacklist() method has been changed from private to protected to allow overriding the method in extending classes. By default this method prevents headers from being signed to avoid issues with signature mismatches when sending requests through proxies; however you may want to be able to force some headers to be signed for request integrity reasons."
     }
 ]
