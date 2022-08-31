@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.234.7 - 2022-08-31
 
 * `Aws\CloudFront` - Update API documentation for CloudFront origin access control (OAC)
 * `Aws\IVS` - IVS Merge Fragmented Streams. This release adds support for recordingReconnectWindow field in IVS recordingConfigurations. For more information see https://docs.aws.amazon.com/ivs/latest/APIReference/Welcome.html
