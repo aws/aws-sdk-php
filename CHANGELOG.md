@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Update API documentation for CloudFront origin access control (OAC)
+* `Aws\IVS` - IVS Merge Fragmented Streams. This release adds support for recordingReconnectWindow field in IVS recordingConfigurations. For more information see https://docs.aws.amazon.com/ivs/latest/APIReference/Welcome.html
+* `Aws\IdentityStore` - Expand IdentityStore API to support Create, Read, Update, Delete and Get operations for User, Group and GroupMembership resources.
+* `Aws\IoTThingsGraph` - This release deprecates all APIs of the ThingsGraph service
+* `Aws\RDSDataService` - Documentation updates for RDS Data API
+* `Aws\SageMaker` - SageMaker Inference Recommender now accepts Inference Recommender fields: Domain, Task, Framework, SamplePayloadUrl, SupportedContentTypes, SupportedInstanceTypes, directly in our CreateInferenceRecommendationsJob API through ContainerConfig
+
 ## 3.234.6 - 2022-08-30
 
 * `Aws\GreengrassV2` - Adds topologyFilter to ListInstalledComponentsRequest which allows filtration of components by ROOT or ALL (including root and dependency components). Adds lastStatusChangeTimestamp to ListInstalledComponents response to show the last time a component changed state on a device.
