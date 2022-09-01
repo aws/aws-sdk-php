@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.0 - 2022-09-01
 
 * `Aws\CodeGuruReviewer` - Documentation updates to fix formatting issues in CLI and SDK documentation.
 * `Aws\ControlTower` - This release contains the first SDK for AWS Control Tower. It introduces a new set of APIs: EnableControl, DisableControl, GetControlOperation, and ListEnabledControls.
