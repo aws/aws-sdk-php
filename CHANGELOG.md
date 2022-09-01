@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeGuruReviewer` - Documentation updates to fix formatting issues in CLI and SDK documentation.
+* `Aws\ControlTower` - This release contains the first SDK for AWS Control Tower. It introduces a new set of APIs: EnableControl, DisableControl, GetControlOperation, and ListEnabledControls.
+* `Aws\Route53` - Documentation updates for Amazon Route 53.
+
 ## 3.234.7 - 2022-08-31
 
 * `Aws\CloudFront` - Update API documentation for CloudFront origin access control (OAC)
