@@ -9575,7 +9575,6 @@
         "AlgorithmSpecification",
         "RoleArn",
         "OutputDataConfig",
-        "ResourceConfig",
         "StoppingCondition"
       ],
       "members":{
@@ -9594,7 +9593,8 @@
         "EnableInterContainerTrafficEncryption":{"shape":"Boolean"},
         "EnableManagedSpotTraining":{"shape":"Boolean"},
         "CheckpointConfig":{"shape":"CheckpointConfig"},
-        "RetryStrategy":{"shape":"RetryStrategy"}
+        "RetryStrategy":{"shape":"RetryStrategy"},
+        "HyperParameterTuningResourceConfig":{"shape":"HyperParameterTuningResourceConfig"}
       }
     },
     "HyperParameterTrainingJobDefinitionName":{
@@ -9636,6 +9636,29 @@
         "FinalHyperParameterTuningJobObjectiveMetric":{"shape":"FinalHyperParameterTuningJobObjectiveMetric"},
         "ObjectiveStatus":{"shape":"ObjectiveStatus"}
       }
+    },
+    "HyperParameterTuningAllocationStrategy":{
+      "type":"string",
+      "enum":["Prioritized"]
+    },
+    "HyperParameterTuningInstanceConfig":{
+      "type":"structure",
+      "required":[
+        "InstanceType",
+        "InstanceCount",
+        "VolumeSizeInGB"
+      ],
+      "members":{
+        "InstanceType":{"shape":"TrainingInstanceType"},
+        "InstanceCount":{"shape":"TrainingInstanceCount"},
+        "VolumeSizeInGB":{"shape":"VolumeSizeInGB"}
+      }
+    },
+    "HyperParameterTuningInstanceConfigs":{
+      "type":"list",
+      "member":{"shape":"HyperParameterTuningInstanceConfig"},
+      "max":6,
+      "min":1
     },
     "HyperParameterTuningJobArn":{
       "type":"string",
@@ -9755,6 +9778,17 @@
         "IdenticalDataAndAlgorithm",
         "TransferLearning"
       ]
+    },
+    "HyperParameterTuningResourceConfig":{
+      "type":"structure",
+      "members":{
+        "InstanceType":{"shape":"TrainingInstanceType"},
+        "InstanceCount":{"shape":"TrainingInstanceCount"},
+        "VolumeSizeInGB":{"shape":"OptionalVolumeSizeInGB"},
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"},
+        "AllocationStrategy":{"shape":"HyperParameterTuningAllocationStrategy"},
+        "InstanceConfigs":{"shape":"HyperParameterTuningInstanceConfigs"}
+      }
     },
     "HyperParameterValue":{
       "type":"string",
@@ -14605,6 +14639,18 @@
         "S3OutputUri":{"shape":"S3Uri"}
       }
     },
+    "RecommendationJobContainerConfig":{
+      "type":"structure",
+      "members":{
+        "Domain":{"shape":"String"},
+        "Task":{"shape":"String"},
+        "Framework":{"shape":"String"},
+        "FrameworkVersion":{"shape":"String"},
+        "PayloadConfig":{"shape":"RecommendationJobPayloadConfig"},
+        "NearestModelName":{"shape":"String"},
+        "SupportedInstanceTypes":{"shape":"RecommendationJobSupportedInstanceTypes"}
+      }
+    },
     "RecommendationJobDescription":{
       "type":"string",
       "max":128
@@ -14618,7 +14664,8 @@
         "TrafficPattern":{"shape":"TrafficPattern"},
         "ResourceLimit":{"shape":"RecommendationJobResourceLimit"},
         "EndpointConfigurations":{"shape":"EndpointInputConfigurations"},
-        "VolumeKmsKeyId":{"shape":"KmsKeyId"}
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"},
+        "ContainerConfig":{"shape":"RecommendationJobContainerConfig"}
       }
     },
     "RecommendationJobName":{
@@ -14632,6 +14679,13 @@
       "members":{
         "KmsKeyId":{"shape":"KmsKeyId"},
         "CompiledOutputConfig":{"shape":"RecommendationJobCompiledOutputConfig"}
+      }
+    },
+    "RecommendationJobPayloadConfig":{
+      "type":"structure",
+      "members":{
+        "SamplePayloadUrl":{"shape":"String"},
+        "SupportedContentTypes":{"shape":"RecommendationJobSupportedContentTypes"}
       }
     },
     "RecommendationJobResourceLimit":{
@@ -14658,6 +14712,14 @@
         "MaxInvocations":{"shape":"Integer"},
         "ModelLatencyThresholds":{"shape":"ModelLatencyThresholds"}
       }
+    },
+    "RecommendationJobSupportedContentTypes":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "RecommendationJobSupportedInstanceTypes":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "RecommendationJobType":{
       "type":"string",

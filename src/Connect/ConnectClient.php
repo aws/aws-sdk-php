@@ -213,6 +213,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise resumeContactRecordingAsync(array $args = [])
  * @method \Aws\Result searchAvailablePhoneNumbers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchAvailablePhoneNumbersAsync(array $args = [])
+ * @method \Aws\Result searchSecurityProfiles(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchSecurityProfilesAsync(array $args = [])
  * @method \Aws\Result searchUsers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchUsersAsync(array $args = [])
  * @method \Aws\Result searchVocabularies(array $args = [])
