@@ -704,7 +704,7 @@ class CredentialProvider
 
         $sourceProfileName = "";
         if (!empty($roleProfile['source_profile'])) {
-            $sourceProfileName = $roleProfile['source_profile'];
+            $sourceProfileName = "profile " . $roleProfile['source_profile'];
             if (!isset($profiles[$sourceProfileName])) {
                 return self::reject("source_profile " . $sourceProfileName
                     . " using profile " . $profileName . " does not exist"
