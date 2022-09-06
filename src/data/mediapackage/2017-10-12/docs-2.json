@@ -80,6 +80,12 @@
         "CmafPackageCreateOrUpdateParameters$Encryption" : null
       }
     },
+    "CmafEncryptionMethod" : {
+      "base" : "The encryption method to use.",
+      "refs" : {
+        "CmafEncryption$EncryptionMethod" : null
+      }
+    },
     "CmafPackage" : {
       "base" : "A Common Media Application Format (CMAF) packaging configuration.",
       "refs" : {
@@ -339,6 +345,7 @@
     "__boolean" : {
       "base" : null,
       "refs" : {
+        "DashPackage$IncludeIframeOnlyStream" : "When enabled, an I-Frame only stream will be included in the output.",
         "HlsEncryption$RepeatExtXKey" : "When enabled, the EXT-X-KEY tag will be repeated in output manifests.",
         "HlsManifest$IncludeIframeOnlyStream" : "When enabled, an I-Frame only stream will be included in the output.",
         "HlsManifestCreateOrUpdateParameters$IncludeIframeOnlyStream" : "When enabled, an I-Frame only stream will be included in the output.",

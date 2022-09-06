@@ -1446,6 +1446,23 @@
         {"shape":"DBProxyTargetGroupNotFoundFault"}
       ]
     },
+    "ModifyActivityStream":{
+      "name":"ModifyActivityStream",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyActivityStreamRequest"},
+      "output":{
+        "shape":"ModifyActivityStreamResponse",
+        "resultWrapper":"ModifyActivityStreamResult"
+      },
+      "errors":[
+        {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"DBInstanceNotFoundFault"}
+      ]
+    },
     "ModifyCertificates":{
       "name":"ModifyCertificates",
       "http":{
@@ -2378,6 +2395,22 @@
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"InvalidDBInstanceStateFault"}
       ]
+    },
+    "SwitchoverReadReplica":{
+      "name":"SwitchoverReadReplica",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SwitchoverReadReplicaMessage"},
+      "output":{
+        "shape":"SwitchoverReadReplicaResult",
+        "resultWrapper":"SwitchoverReadReplicaResult"
+      },
+      "errors":[
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"InvalidDBInstanceStateFault"}
+      ]
     }
   },
   "shapes":{
@@ -2413,6 +2446,15 @@
     "ActivityStreamModeList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "ActivityStreamPolicyStatus":{
+      "type":"string",
+      "enum":[
+        "locked",
+        "unlocked",
+        "locking-policy",
+        "unlocking-policy"
+      ]
     },
     "ActivityStreamStatus":{
       "type":"string",
@@ -2508,6 +2550,13 @@
         "shape":"String",
         "locationName":"AttributeValue"
       }
+    },
+    "AuditPolicyState":{
+      "type":"string",
+      "enum":[
+        "locked",
+        "unlocked"
+      ]
     },
     "AuthScheme":{
       "type":"string",
@@ -2930,7 +2979,8 @@
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
-        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"}
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -3422,7 +3472,8 @@
         "PerformanceInsightsEnabled":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
-        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfigurationInfo"}
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfigurationInfo"},
+        "NetworkType":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -3922,7 +3973,8 @@
         "ResumeFullAutomationModeTime":{"shape":"TStamp"},
         "CustomIamInstanceProfile":{"shape":"String"},
         "BackupTarget":{"shape":"String"},
-        "NetworkType":{"shape":"String"}
+        "NetworkType":{"shape":"String"},
+        "ActivityStreamPolicyStatus":{"shape":"ActivityStreamPolicyStatus"}
       },
       "wrapper":true
     },
@@ -4541,6 +4593,7 @@
         "DbiResourceId":{"shape":"String"},
         "TagList":{"shape":"TagList"},
         "OriginalSnapshotCreateTime":{"shape":"TStamp"},
+        "SnapshotDatabaseTime":{"shape":"TStamp"},
         "SnapshotTarget":{"shape":"String"}
       },
       "wrapper":true
@@ -6229,6 +6282,24 @@
         "locationName":"MinimumEngineVersionPerAllowedValue"
       }
     },
+    "ModifyActivityStreamRequest":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"String"},
+        "AuditPolicyState":{"shape":"AuditPolicyState"}
+      }
+    },
+    "ModifyActivityStreamResponse":{
+      "type":"structure",
+      "members":{
+        "KmsKeyId":{"shape":"String"},
+        "KinesisStreamName":{"shape":"String"},
+        "Status":{"shape":"ActivityStreamStatus"},
+        "Mode":{"shape":"ActivityStreamMode"},
+        "EngineNativeAuditFieldsIncluded":{"shape":"BooleanOptional"},
+        "PolicyStatus":{"shape":"ActivityStreamPolicyStatus"}
+      }
+    },
     "ModifyCertificatesMessage":{
       "type":"structure",
       "members":{
@@ -6313,7 +6384,8 @@
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
-        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"}
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -7402,7 +7474,8 @@
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
         "Domain":{"shape":"String"},
         "DomainIAMRoleName":{"shape":"String"},
-        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"}
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "RestoreDBClusterFromS3Result":{
@@ -7445,7 +7518,8 @@
         "StorageType":{"shape":"String"},
         "Iops":{"shape":"IntegerOptional"},
         "PubliclyAccessible":{"shape":"BooleanOptional"},
-        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"}
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "RestoreDBClusterFromSnapshotResult":{
@@ -7486,7 +7560,8 @@
         "StorageType":{"shape":"String"},
         "PubliclyAccessible":{"shape":"BooleanOptional"},
         "Iops":{"shape":"IntegerOptional"},
-        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"}
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{
@@ -8080,6 +8155,19 @@
       "member":{
         "shape":"Timezone",
         "locationName":"Timezone"
+      }
+    },
+    "SwitchoverReadReplicaMessage":{
+      "type":"structure",
+      "required":["DBInstanceIdentifier"],
+      "members":{
+        "DBInstanceIdentifier":{"shape":"String"}
+      }
+    },
+    "SwitchoverReadReplicaResult":{
+      "type":"structure",
+      "members":{
+        "DBInstance":{"shape":"DBInstance"}
       }
     },
     "TStamp":{"type":"timestamp"},
