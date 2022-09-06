@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.2 - 2022-09-06
 
 * `Aws\IdentityStore` - Documentation updates for the Identity Store CLI Reference.
 * `Aws\SageMaker` - This release adds HyperParameterTuningJob type in Search API.
