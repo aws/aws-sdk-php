@@ -1685,6 +1685,54 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "SearchQueues":{
+      "name":"SearchQueues",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-queues"
+      },
+      "input":{"shape":"SearchQueuesRequest"},
+      "output":{"shape":"SearchQueuesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchRoutingProfiles":{
+      "name":"SearchRoutingProfiles",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-routing-profiles"
+      },
+      "input":{"shape":"SearchRoutingProfilesRequest"},
+      "output":{"shape":"SearchRoutingProfilesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchSecurityProfiles":{
+      "name":"SearchSecurityProfiles",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-security-profiles"
+      },
+      "input":{"shape":"SearchSecurityProfilesRequest"},
+      "output":{"shape":"SearchSecurityProfilesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "SearchUsers":{
       "name":"SearchUsers",
       "http":{
@@ -6296,6 +6344,7 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "Long":{"type":"long"},
     "MaxResult10":{
       "type":"integer",
       "max":10,
@@ -6919,6 +6968,29 @@
         "Arn":{"shape":"ARN"}
       }
     },
+    "QueueSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"QueueSearchCriteria"}
+    },
+    "QueueSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"QueueSearchConditionList"},
+        "AndConditions":{"shape":"QueueSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"},
+        "QueueTypeCondition":{"shape":"SearchableQueueType"}
+      }
+    },
+    "QueueSearchFilter":{
+      "type":"structure",
+      "members":{
+        "TagFilter":{"shape":"ControlPlaneTagFilter"}
+      }
+    },
+    "QueueSearchSummaryList":{
+      "type":"list",
+      "member":{"shape":"Queue"}
+    },
     "QueueStatus":{
       "type":"string",
       "enum":[
@@ -7184,7 +7256,9 @@
         "Description":{"shape":"RoutingProfileDescription"},
         "MediaConcurrencies":{"shape":"MediaConcurrencies"},
         "DefaultOutboundQueueId":{"shape":"QueueId"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "NumberOfAssociatedQueues":{"shape":"Long"},
+        "NumberOfAssociatedUsers":{"shape":"Long"}
       }
     },
     "RoutingProfileDescription":{
@@ -7193,6 +7267,10 @@
       "min":1
     },
     "RoutingProfileId":{"type":"string"},
+    "RoutingProfileList":{
+      "type":"list",
+      "member":{"shape":"RoutingProfile"}
+    },
     "RoutingProfileName":{
       "type":"string",
       "max":127,
@@ -7268,6 +7346,24 @@
         "Arn":{"shape":"ARN"}
       }
     },
+    "RoutingProfileSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"RoutingProfileSearchCriteria"}
+    },
+    "RoutingProfileSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"RoutingProfileSearchConditionList"},
+        "AndConditions":{"shape":"RoutingProfileSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "RoutingProfileSearchFilter":{
+      "type":"structure",
+      "members":{
+        "TagFilter":{"shape":"ControlPlaneTagFilter"}
+      }
+    },
     "RoutingProfileSummary":{
       "type":"structure",
       "members":{
@@ -7318,6 +7414,72 @@
         "AvailableNumbersList":{"shape":"AvailableNumbersList"}
       }
     },
+    "SearchQueuesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"QueueSearchFilter"},
+        "SearchCriteria":{"shape":"QueueSearchCriteria"}
+      }
+    },
+    "SearchQueuesResponse":{
+      "type":"structure",
+      "members":{
+        "Queues":{"shape":"QueueSearchSummaryList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchRoutingProfilesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"RoutingProfileSearchFilter"},
+        "SearchCriteria":{"shape":"RoutingProfileSearchCriteria"}
+      }
+    },
+    "SearchRoutingProfilesResponse":{
+      "type":"structure",
+      "members":{
+        "RoutingProfiles":{"shape":"RoutingProfileList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchSecurityProfilesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchCriteria":{"shape":"SecurityProfileSearchCriteria"},
+        "SearchFilter":{"shape":"SecurityProfilesSearchFilter"}
+      }
+    },
+    "SearchSecurityProfilesResponse":{
+      "type":"structure",
+      "members":{
+        "SecurityProfiles":{"shape":"SecurityProfilesSearchSummaryList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
     "SearchUsersRequest":{
       "type":"structure",
       "members":{
@@ -7362,6 +7524,10 @@
         "NextToken":{"shape":"VocabularyNextToken"}
       }
     },
+    "SearchableQueueType":{
+      "type":"string",
+      "enum":["STANDARD"]
+    },
     "SecurityKey":{
       "type":"structure",
       "members":{
@@ -7402,6 +7568,29 @@
       "max":128,
       "min":1
     },
+    "SecurityProfileSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"SecurityProfileSearchCriteria"}
+    },
+    "SecurityProfileSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"SecurityProfileSearchConditionList"},
+        "AndConditions":{"shape":"SecurityProfileSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "SecurityProfileSearchSummary":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"SecurityProfileId"},
+        "OrganizationResourceId":{"shape":"InstanceId"},
+        "Arn":{"shape":"ARN"},
+        "SecurityProfileName":{"shape":"SecurityProfileName"},
+        "Description":{"shape":"SecurityProfileDescription"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "SecurityProfileSummary":{
       "type":"structure",
       "members":{
@@ -7413,6 +7602,16 @@
     "SecurityProfileSummaryList":{
       "type":"list",
       "member":{"shape":"SecurityProfileSummary"}
+    },
+    "SecurityProfilesSearchFilter":{
+      "type":"structure",
+      "members":{
+        "TagFilter":{"shape":"ControlPlaneTagFilter"}
+      }
+    },
+    "SecurityProfilesSearchSummaryList":{
+      "type":"list",
+      "member":{"shape":"SecurityProfileSearchSummary"}
     },
     "SecurityToken":{
       "type":"string",

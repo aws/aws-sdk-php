@@ -201,6 +201,29 @@
         {"shape":"ResourceInUse"}
       ]
     },
+    "CreateEdgeDeploymentPlan":{
+      "name":"CreateEdgeDeploymentPlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateEdgeDeploymentPlanRequest"},
+      "output":{"shape":"CreateEdgeDeploymentPlanResponse"},
+      "errors":[
+        {"shape":"ResourceLimitExceeded"}
+      ]
+    },
+    "CreateEdgeDeploymentStage":{
+      "name":"CreateEdgeDeploymentStage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateEdgeDeploymentStageRequest"},
+      "errors":[
+        {"shape":"ResourceLimitExceeded"}
+      ]
+    },
     "CreateEdgePackagingJob":{
       "name":"CreateEdgePackagingJob",
       "http":{
@@ -747,6 +770,28 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "DeleteEdgeDeploymentPlan":{
+      "name":"DeleteEdgeDeploymentPlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteEdgeDeploymentPlanRequest"},
+      "errors":[
+        {"shape":"ResourceInUse"}
+      ]
+    },
+    "DeleteEdgeDeploymentStage":{
+      "name":"DeleteEdgeDeploymentStage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteEdgeDeploymentStageRequest"},
+      "errors":[
+        {"shape":"ResourceInUse"}
+      ]
+    },
     "DeleteEndpoint":{
       "name":"DeleteEndpoint",
       "http":{
@@ -1190,6 +1235,18 @@
       },
       "input":{"shape":"DescribeDomainRequest"},
       "output":{"shape":"DescribeDomainResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
+    "DescribeEdgeDeploymentPlan":{
+      "name":"DescribeEdgeDeploymentPlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeEdgeDeploymentPlanRequest"},
+      "output":{"shape":"DescribeEdgeDeploymentPlanResponse"},
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
@@ -1833,6 +1890,15 @@
       "input":{"shape":"ListDomainsRequest"},
       "output":{"shape":"ListDomainsResponse"}
     },
+    "ListEdgeDeploymentPlans":{
+      "name":"ListEdgeDeploymentPlans",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListEdgeDeploymentPlansRequest"},
+      "output":{"shape":"ListEdgeDeploymentPlansResponse"}
+    },
     "ListEdgePackagingJobs":{
       "name":"ListEdgePackagingJobs",
       "http":{
@@ -2127,6 +2193,15 @@
       "input":{"shape":"ListProjectsInput"},
       "output":{"shape":"ListProjectsOutput"}
     },
+    "ListStageDevices":{
+      "name":"ListStageDevices",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListStageDevicesRequest"},
+      "output":{"shape":"ListStageDevicesResponse"}
+    },
     "ListStudioLifecycleConfigs":{
       "name":"ListStudioLifecycleConfigs",
       "http":{
@@ -2331,6 +2406,14 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "StartEdgeDeploymentStage":{
+      "name":"StartEdgeDeploymentStage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartEdgeDeploymentStageRequest"}
+    },
     "StartMonitoringSchedule":{
       "name":"StartMonitoringSchedule",
       "http":{
@@ -2387,6 +2470,14 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "StopEdgeDeploymentStage":{
+      "name":"StopEdgeDeploymentStage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopEdgeDeploymentStageRequest"}
     },
     "StopEdgePackagingJob":{
       "name":"StopEdgePackagingJob",
@@ -4098,7 +4189,7 @@
     "CategoricalParameterRanges":{
       "type":"list",
       "member":{"shape":"CategoricalParameterRange"},
-      "max":20,
+      "max":30,
       "min":0
     },
     "CategoricalParameters":{
@@ -4557,7 +4648,7 @@
     "ContinuousParameterRanges":{
       "type":"list",
       "member":{"shape":"ContinuousParameterRange"},
-      "max":20,
+      "max":30,
       "min":0
     },
     "CreateActionRequest":{
@@ -4838,6 +4929,39 @@
       "members":{
         "DomainArn":{"shape":"DomainArn"},
         "Url":{"shape":"String1024"}
+      }
+    },
+    "CreateEdgeDeploymentPlanRequest":{
+      "type":"structure",
+      "required":[
+        "EdgeDeploymentPlanName",
+        "ModelConfigs",
+        "DeviceFleetName"
+      ],
+      "members":{
+        "EdgeDeploymentPlanName":{"shape":"EntityName"},
+        "ModelConfigs":{"shape":"EdgeDeploymentModelConfigs"},
+        "DeviceFleetName":{"shape":"EntityName"},
+        "Stages":{"shape":"DeploymentStages"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateEdgeDeploymentPlanResponse":{
+      "type":"structure",
+      "required":["EdgeDeploymentPlanArn"],
+      "members":{
+        "EdgeDeploymentPlanArn":{"shape":"EdgeDeploymentPlanArn"}
+      }
+    },
+    "CreateEdgeDeploymentStageRequest":{
+      "type":"structure",
+      "required":[
+        "EdgeDeploymentPlanName",
+        "Stages"
+      ],
+      "members":{
+        "EdgeDeploymentPlanName":{"shape":"EntityName"},
+        "Stages":{"shape":"DeploymentStages"}
       }
     },
     "CreateEdgePackagingJobRequest":{
@@ -6001,6 +6125,24 @@
         "RetentionPolicy":{"shape":"RetentionPolicy"}
       }
     },
+    "DeleteEdgeDeploymentPlanRequest":{
+      "type":"structure",
+      "required":["EdgeDeploymentPlanName"],
+      "members":{
+        "EdgeDeploymentPlanName":{"shape":"EntityName"}
+      }
+    },
+    "DeleteEdgeDeploymentStageRequest":{
+      "type":"structure",
+      "required":[
+        "EdgeDeploymentPlanName",
+        "StageName"
+      ],
+      "members":{
+        "EdgeDeploymentPlanName":{"shape":"EntityName"},
+        "StageName":{"shape":"EntityName"}
+      }
+    },
     "DeleteEndpointConfigInput":{
       "type":"structure",
       "required":["EndpointConfigName"],
@@ -6289,6 +6431,45 @@
         "BlueGreenUpdatePolicy":{"shape":"BlueGreenUpdatePolicy"},
         "AutoRollbackConfiguration":{"shape":"AutoRollbackConfig"}
       }
+    },
+    "DeploymentStage":{
+      "type":"structure",
+      "required":[
+        "StageName",
+        "DeviceSelectionConfig"
+      ],
+      "members":{
+        "StageName":{"shape":"EntityName"},
+        "DeviceSelectionConfig":{"shape":"DeviceSelectionConfig"},
+        "DeploymentConfig":{"shape":"EdgeDeploymentConfig"}
+      }
+    },
+    "DeploymentStageMaxResults":{
+      "type":"integer",
+      "max":10
+    },
+    "DeploymentStageStatusSummaries":{
+      "type":"list",
+      "member":{"shape":"DeploymentStageStatusSummary"}
+    },
+    "DeploymentStageStatusSummary":{
+      "type":"structure",
+      "required":[
+        "StageName",
+        "DeviceSelectionConfig",
+        "DeploymentConfig",
+        "DeploymentStatus"
+      ],
+      "members":{
+        "StageName":{"shape":"EntityName"},
+        "DeviceSelectionConfig":{"shape":"DeviceSelectionConfig"},
+        "DeploymentConfig":{"shape":"EdgeDeploymentConfig"},
+        "DeploymentStatus":{"shape":"EdgeDeploymentStatus"}
+      }
+    },
+    "DeploymentStages":{
+      "type":"list",
+      "member":{"shape":"DeploymentStage"}
     },
     "DeregisterDevicesRequest":{
       "type":"structure",
@@ -6687,6 +6868,38 @@
         "DomainSettings":{"shape":"DomainSettings"},
         "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
         "SecurityGroupIdForDomainBoundary":{"shape":"SecurityGroupId"}
+      }
+    },
+    "DescribeEdgeDeploymentPlanRequest":{
+      "type":"structure",
+      "required":["EdgeDeploymentPlanName"],
+      "members":{
+        "EdgeDeploymentPlanName":{"shape":"EntityName"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"DeploymentStageMaxResults"}
+      }
+    },
+    "DescribeEdgeDeploymentPlanResponse":{
+      "type":"structure",
+      "required":[
+        "EdgeDeploymentPlanArn",
+        "EdgeDeploymentPlanName",
+        "ModelConfigs",
+        "DeviceFleetName",
+        "Stages"
+      ],
+      "members":{
+        "EdgeDeploymentPlanArn":{"shape":"EdgeDeploymentPlanArn"},
+        "EdgeDeploymentPlanName":{"shape":"EntityName"},
+        "ModelConfigs":{"shape":"EdgeDeploymentModelConfigs"},
+        "DeviceFleetName":{"shape":"EntityName"},
+        "EdgeDeploymentSuccess":{"shape":"Integer"},
+        "EdgeDeploymentPending":{"shape":"Integer"},
+        "EdgeDeploymentFailed":{"shape":"Integer"},
+        "Stages":{"shape":"DeploymentStageStatusSummaries"},
+        "NextToken":{"shape":"NextToken"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"}
       }
     },
     "DescribeEdgePackagingJobRequest":{
@@ -7811,6 +8024,44 @@
       "min":20,
       "pattern":"^arn:aws[a-z\\-]*:[a-z\\-]*:[a-z\\-]*:\\d{12}:[a-z\\-]*/?[a-zA-Z_0-9+=,.@\\-_/]+$"
     },
+    "DeviceDeploymentStatus":{
+      "type":"string",
+      "enum":[
+        "READYTODEPLOY",
+        "INPROGRESS",
+        "DEPLOYED",
+        "FAILED",
+        "STOPPING",
+        "STOPPED"
+      ]
+    },
+    "DeviceDeploymentSummaries":{
+      "type":"list",
+      "member":{"shape":"DeviceDeploymentSummary"}
+    },
+    "DeviceDeploymentSummary":{
+      "type":"structure",
+      "required":[
+        "EdgeDeploymentPlanArn",
+        "EdgeDeploymentPlanName",
+        "StageName",
+        "DeviceName",
+        "DeviceArn"
+      ],
+      "members":{
+        "EdgeDeploymentPlanArn":{"shape":"EdgeDeploymentPlanArn"},
+        "EdgeDeploymentPlanName":{"shape":"EntityName"},
+        "StageName":{"shape":"EntityName"},
+        "DeployedStageName":{"shape":"EntityName"},
+        "DeviceFleetName":{"shape":"EntityName"},
+        "DeviceName":{"shape":"DeviceName"},
+        "DeviceArn":{"shape":"DeviceArn"},
+        "DeviceDeploymentStatus":{"shape":"DeviceDeploymentStatus"},
+        "DeviceDeploymentStatusMessage":{"shape":"String"},
+        "Description":{"shape":"DeviceDescription"},
+        "DeploymentStartTime":{"shape":"Timestamp"}
+      }
+    },
     "DeviceDescription":{
       "type":"string",
       "max":40,
@@ -7854,6 +8105,16 @@
       "type":"list",
       "member":{"shape":"DeviceName"}
     },
+    "DeviceSelectionConfig":{
+      "type":"structure",
+      "required":["DeviceSubsetType"],
+      "members":{
+        "DeviceSubsetType":{"shape":"DeviceSubsetType"},
+        "Percentage":{"shape":"Percentage"},
+        "DeviceNames":{"shape":"DeviceNames"},
+        "DeviceNameContains":{"shape":"DeviceName"}
+      }
+    },
     "DeviceStats":{
       "type":"structure",
       "required":[
@@ -7864,6 +8125,14 @@
         "ConnectedDeviceCount":{"shape":"Long"},
         "RegisteredDeviceCount":{"shape":"Long"}
       }
+    },
+    "DeviceSubsetType":{
+      "type":"string",
+      "enum":[
+        "PERCENTAGE",
+        "SELECTION",
+        "NAMECONTAINS"
+      ]
     },
     "DeviceSummaries":{
       "type":"list",
@@ -7988,13 +8257,15 @@
       "type":"structure",
       "members":{
         "SecurityGroupIds":{"shape":"DomainSecurityGroupIds"},
-        "RStudioServerProDomainSettings":{"shape":"RStudioServerProDomainSettings"}
+        "RStudioServerProDomainSettings":{"shape":"RStudioServerProDomainSettings"},
+        "ExecutionRoleIdentityConfig":{"shape":"ExecutionRoleIdentityConfig"}
       }
     },
     "DomainSettingsForUpdate":{
       "type":"structure",
       "members":{
-        "RStudioServerProDomainSettingsForUpdate":{"shape":"RStudioServerProDomainSettingsForUpdate"}
+        "RStudioServerProDomainSettingsForUpdate":{"shape":"RStudioServerProDomainSettingsForUpdate"},
+        "ExecutionRoleIdentityConfig":{"shape":"ExecutionRoleIdentityConfig"}
       }
     },
     "DomainStatus":{
@@ -8063,6 +8334,76 @@
         "SourceArn":{"shape":"AssociationEntityArn"},
         "DestinationArn":{"shape":"AssociationEntityArn"},
         "AssociationType":{"shape":"AssociationEdgeType"}
+      }
+    },
+    "EdgeDeploymentConfig":{
+      "type":"structure",
+      "required":["FailureHandlingPolicy"],
+      "members":{
+        "FailureHandlingPolicy":{"shape":"FailureHandlingPolicy"}
+      }
+    },
+    "EdgeDeploymentModelConfig":{
+      "type":"structure",
+      "required":[
+        "ModelHandle",
+        "EdgePackagingJobName"
+      ],
+      "members":{
+        "ModelHandle":{"shape":"EntityName"},
+        "EdgePackagingJobName":{"shape":"EntityName"}
+      }
+    },
+    "EdgeDeploymentModelConfigs":{
+      "type":"list",
+      "member":{"shape":"EdgeDeploymentModelConfig"}
+    },
+    "EdgeDeploymentPlanArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\-]*:sagemaker:[a-z\\-]*:\\d{12}:edge-deployment/?[a-zA-Z_0-9+=,.@\\-_/]+$"
+    },
+    "EdgeDeploymentPlanSummaries":{
+      "type":"list",
+      "member":{"shape":"EdgeDeploymentPlanSummary"}
+    },
+    "EdgeDeploymentPlanSummary":{
+      "type":"structure",
+      "required":[
+        "EdgeDeploymentPlanArn",
+        "EdgeDeploymentPlanName",
+        "DeviceFleetName",
+        "EdgeDeploymentSuccess",
+        "EdgeDeploymentPending",
+        "EdgeDeploymentFailed"
+      ],
+      "members":{
+        "EdgeDeploymentPlanArn":{"shape":"EdgeDeploymentPlanArn"},
+        "EdgeDeploymentPlanName":{"shape":"EntityName"},
+        "DeviceFleetName":{"shape":"EntityName"},
+        "EdgeDeploymentSuccess":{"shape":"Integer"},
+        "EdgeDeploymentPending":{"shape":"Integer"},
+        "EdgeDeploymentFailed":{"shape":"Integer"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "EdgeDeploymentStatus":{
+      "type":"structure",
+      "required":[
+        "StageStatus",
+        "EdgeDeploymentSuccessInStage",
+        "EdgeDeploymentPendingInStage",
+        "EdgeDeploymentFailedInStage"
+      ],
+      "members":{
+        "StageStatus":{"shape":"StageStatus"},
+        "EdgeDeploymentSuccessInStage":{"shape":"Integer"},
+        "EdgeDeploymentPendingInStage":{"shape":"Integer"},
+        "EdgeDeploymentFailedInStage":{"shape":"Integer"},
+        "EdgeDeploymentStatusMessage":{"shape":"String"},
+        "EdgeDeploymentStageStartTime":{"shape":"Timestamp"}
       }
     },
     "EdgeModel":{
@@ -8445,6 +8786,13 @@
       "max":1024,
       "pattern":"[\\S\\s]*"
     },
+    "ExecutionRoleIdentityConfig":{
+      "type":"string",
+      "enum":[
+        "USER_PROFILE_NAME",
+        "DISABLED"
+      ]
+    },
     "ExecutionStatus":{
       "type":"string",
       "enum":[
@@ -8555,6 +8903,13 @@
       "members":{
         "ErrorMessage":{"shape":"String3072"}
       }
+    },
+    "FailureHandlingPolicy":{
+      "type":"string",
+      "enum":[
+        "ROLLBACK_ON_FAILURE",
+        "DO_NOTHING"
+      ]
     },
     "FailureReason":{
       "type":"string",
@@ -9229,7 +9584,6 @@
         "AlgorithmSpecification",
         "RoleArn",
         "OutputDataConfig",
-        "ResourceConfig",
         "StoppingCondition"
       ],
       "members":{
@@ -9248,7 +9602,8 @@
         "EnableInterContainerTrafficEncryption":{"shape":"Boolean"},
         "EnableManagedSpotTraining":{"shape":"Boolean"},
         "CheckpointConfig":{"shape":"CheckpointConfig"},
-        "RetryStrategy":{"shape":"RetryStrategy"}
+        "RetryStrategy":{"shape":"RetryStrategy"},
+        "HyperParameterTuningResourceConfig":{"shape":"HyperParameterTuningResourceConfig"}
       }
     },
     "HyperParameterTrainingJobDefinitionName":{
@@ -9290,6 +9645,29 @@
         "FinalHyperParameterTuningJobObjectiveMetric":{"shape":"FinalHyperParameterTuningJobObjectiveMetric"},
         "ObjectiveStatus":{"shape":"ObjectiveStatus"}
       }
+    },
+    "HyperParameterTuningAllocationStrategy":{
+      "type":"string",
+      "enum":["Prioritized"]
+    },
+    "HyperParameterTuningInstanceConfig":{
+      "type":"structure",
+      "required":[
+        "InstanceType",
+        "InstanceCount",
+        "VolumeSizeInGB"
+      ],
+      "members":{
+        "InstanceType":{"shape":"TrainingInstanceType"},
+        "InstanceCount":{"shape":"TrainingInstanceCount"},
+        "VolumeSizeInGB":{"shape":"VolumeSizeInGB"}
+      }
+    },
+    "HyperParameterTuningInstanceConfigs":{
+      "type":"list",
+      "member":{"shape":"HyperParameterTuningInstanceConfig"},
+      "max":6,
+      "min":1
     },
     "HyperParameterTuningJobArn":{
       "type":"string",
@@ -9409,6 +9787,17 @@
         "IdenticalDataAndAlgorithm",
         "TransferLearning"
       ]
+    },
+    "HyperParameterTuningResourceConfig":{
+      "type":"structure",
+      "members":{
+        "InstanceType":{"shape":"TrainingInstanceType"},
+        "InstanceCount":{"shape":"TrainingInstanceCount"},
+        "VolumeSizeInGB":{"shape":"OptionalVolumeSizeInGB"},
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"},
+        "AllocationStrategy":{"shape":"HyperParameterTuningAllocationStrategy"},
+        "InstanceConfigs":{"shape":"HyperParameterTuningInstanceConfigs"}
+      }
     },
     "HyperParameterValue":{
       "type":"string",
@@ -9870,7 +10259,7 @@
     "IntegerParameterRanges":{
       "type":"list",
       "member":{"shape":"IntegerParameterRange"},
-      "max":20,
+      "max":30,
       "min":0
     },
     "IntegerValue":{"type":"integer"},
@@ -10574,6 +10963,41 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListEdgeDeploymentPlansRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{
+          "shape":"ListMaxResults",
+          "box":true
+        },
+        "CreationTimeAfter":{"shape":"Timestamp"},
+        "CreationTimeBefore":{"shape":"Timestamp"},
+        "LastModifiedTimeAfter":{"shape":"Timestamp"},
+        "LastModifiedTimeBefore":{"shape":"Timestamp"},
+        "NameContains":{"shape":"NameContains"},
+        "DeviceFleetNameContains":{"shape":"NameContains"},
+        "SortBy":{"shape":"ListEdgeDeploymentPlansSortBy"},
+        "SortOrder":{"shape":"SortOrder"}
+      }
+    },
+    "ListEdgeDeploymentPlansResponse":{
+      "type":"structure",
+      "required":["EdgeDeploymentPlanSummaries"],
+      "members":{
+        "EdgeDeploymentPlanSummaries":{"shape":"EdgeDeploymentPlanSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListEdgeDeploymentPlansSortBy":{
+      "type":"string",
+      "enum":[
+        "NAME",
+        "DEVICE_FLEET_NAME",
+        "CREATION_TIME",
+        "LAST_MODIFIED_TIME"
+      ]
+    },
     "ListEdgePackagingJobsRequest":{
       "type":"structure",
       "members":{
@@ -11269,6 +11693,31 @@
       "required":["ProjectSummaryList"],
       "members":{
         "ProjectSummaryList":{"shape":"ProjectSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListStageDevicesRequest":{
+      "type":"structure",
+      "required":[
+        "EdgeDeploymentPlanName",
+        "StageName"
+      ],
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{
+          "shape":"ListMaxResults",
+          "box":true
+        },
+        "EdgeDeploymentPlanName":{"shape":"EntityName"},
+        "ExcludeDevicesDeployedInOtherStage":{"shape":"Boolean"},
+        "StageName":{"shape":"EntityName"}
+      }
+    },
+    "ListStageDevicesResponse":{
+      "type":"structure",
+      "required":["DeviceDeploymentSummaries"],
+      "members":{
+        "DeviceDeploymentSummaries":{"shape":"DeviceDeploymentSummaries"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -13055,7 +13504,7 @@
     "ParameterValues":{
       "type":"list",
       "member":{"shape":"ParameterValue"},
-      "max":20,
+      "max":30,
       "min":1
     },
     "Parent":{
@@ -13111,6 +13560,10 @@
       "type":"list",
       "member":{"shape":"PendingProductionVariantSummary"},
       "min":1
+    },
+    "Percentage":{
+      "type":"integer",
+      "max":100
     },
     "Phase":{
       "type":"structure",
@@ -13754,7 +14207,25 @@
         "ml.inf1.xlarge",
         "ml.inf1.2xlarge",
         "ml.inf1.6xlarge",
-        "ml.inf1.24xlarge"
+        "ml.inf1.24xlarge",
+        "ml.c6i.large",
+        "ml.c6i.xlarge",
+        "ml.c6i.2xlarge",
+        "ml.c6i.4xlarge",
+        "ml.c6i.8xlarge",
+        "ml.c6i.12xlarge",
+        "ml.c6i.16xlarge",
+        "ml.c6i.24xlarge",
+        "ml.c6i.32xlarge",
+        "ml.g5.xlarge",
+        "ml.g5.2xlarge",
+        "ml.g5.4xlarge",
+        "ml.g5.8xlarge",
+        "ml.g5.12xlarge",
+        "ml.g5.16xlarge",
+        "ml.g5.24xlarge",
+        "ml.g5.48xlarge",
+        "ml.p4d.24xlarge"
       ]
     },
     "ProductionVariantList":{
@@ -14076,7 +14547,6 @@
     },
     "QueryLineageRequest":{
       "type":"structure",
-      "required":["StartArns"],
       "members":{
         "StartArns":{"shape":"QueryLineageStartArns"},
         "Direction":{"shape":"Direction"},
@@ -14099,7 +14569,7 @@
       "type":"list",
       "member":{"shape":"AssociationEntityArn"},
       "max":1,
-      "min":1
+      "min":0
     },
     "QueryLineageTypes":{
       "type":"list",
@@ -14178,6 +14648,18 @@
         "S3OutputUri":{"shape":"S3Uri"}
       }
     },
+    "RecommendationJobContainerConfig":{
+      "type":"structure",
+      "members":{
+        "Domain":{"shape":"String"},
+        "Task":{"shape":"String"},
+        "Framework":{"shape":"String"},
+        "FrameworkVersion":{"shape":"String"},
+        "PayloadConfig":{"shape":"RecommendationJobPayloadConfig"},
+        "NearestModelName":{"shape":"String"},
+        "SupportedInstanceTypes":{"shape":"RecommendationJobSupportedInstanceTypes"}
+      }
+    },
     "RecommendationJobDescription":{
       "type":"string",
       "max":128
@@ -14191,7 +14673,8 @@
         "TrafficPattern":{"shape":"TrafficPattern"},
         "ResourceLimit":{"shape":"RecommendationJobResourceLimit"},
         "EndpointConfigurations":{"shape":"EndpointInputConfigurations"},
-        "VolumeKmsKeyId":{"shape":"KmsKeyId"}
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"},
+        "ContainerConfig":{"shape":"RecommendationJobContainerConfig"}
       }
     },
     "RecommendationJobName":{
@@ -14205,6 +14688,13 @@
       "members":{
         "KmsKeyId":{"shape":"KmsKeyId"},
         "CompiledOutputConfig":{"shape":"RecommendationJobCompiledOutputConfig"}
+      }
+    },
+    "RecommendationJobPayloadConfig":{
+      "type":"structure",
+      "members":{
+        "SamplePayloadUrl":{"shape":"String"},
+        "SupportedContentTypes":{"shape":"RecommendationJobSupportedContentTypes"}
       }
     },
     "RecommendationJobResourceLimit":{
@@ -14231,6 +14721,14 @@
         "MaxInvocations":{"shape":"Integer"},
         "ModelLatencyThresholds":{"shape":"ModelLatencyThresholds"}
       }
+    },
+    "RecommendationJobSupportedContentTypes":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "RecommendationJobSupportedInstanceTypes":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "RecommendationJobType":{
       "type":"string",
@@ -15029,6 +15527,30 @@
         "TFRecord"
       ]
     },
+    "StageStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "READYTODEPLOY",
+        "STARTING",
+        "INPROGRESS",
+        "DEPLOYED",
+        "FAILED",
+        "STOPPING",
+        "STOPPED"
+      ]
+    },
+    "StartEdgeDeploymentStageRequest":{
+      "type":"structure",
+      "required":[
+        "EdgeDeploymentPlanName",
+        "StageName"
+      ],
+      "members":{
+        "EdgeDeploymentPlanName":{"shape":"EntityName"},
+        "StageName":{"shape":"EntityName"}
+      }
+    },
     "StartMonitoringScheduleRequest":{
       "type":"structure",
       "required":["MonitoringScheduleName"],
@@ -15113,6 +15635,17 @@
       "required":["CompilationJobName"],
       "members":{
         "CompilationJobName":{"shape":"EntityName"}
+      }
+    },
+    "StopEdgeDeploymentStageRequest":{
+      "type":"structure",
+      "required":[
+        "EdgeDeploymentPlanName",
+        "StageName"
+      ],
+      "members":{
+        "EdgeDeploymentPlanName":{"shape":"EntityName"},
+        "StageName":{"shape":"EntityName"}
       }
     },
     "StopEdgePackagingJobRequest":{

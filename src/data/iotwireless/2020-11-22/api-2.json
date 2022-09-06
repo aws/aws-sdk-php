@@ -1688,6 +1688,11 @@
         "VerticalAccuracy":{"shape":"VerticalAccuracy"}
       }
     },
+    "AckModeRetryDurationSecs":{
+      "type":"integer",
+      "max":604800,
+      "min":0
+    },
     "AddGwMetadata":{"type":"boolean"},
     "AmazonId":{
       "type":"string",
@@ -1865,6 +1870,29 @@
         "low",
         "critical"
       ]
+    },
+    "Beaconing":{
+      "type":"structure",
+      "members":{
+        "DataRate":{"shape":"BeaconingDataRate"},
+        "Frequencies":{"shape":"BeaconingFrequencies"}
+      }
+    },
+    "BeaconingDataRate":{
+      "type":"integer",
+      "max":15,
+      "min":0
+    },
+    "BeaconingFrequencies":{
+      "type":"list",
+      "member":{"shape":"BeaconingFrequency"},
+      "max":10,
+      "min":0
+    },
+    "BeaconingFrequency":{
+      "type":"integer",
+      "max":1000000000,
+      "min":100000000
     },
     "CancelMulticastGroupSessionRequest":{
       "type":"structure",
@@ -2637,6 +2665,19 @@
       "max":256
     },
     "Double":{"type":"double"},
+    "DownlinkFrequency":{
+      "type":"integer",
+      "max":1000000000,
+      "min":100000000
+    },
+    "DownlinkMode":{
+      "type":"string",
+      "enum":[
+        "SEQUENTIAL",
+        "CONCURRENT",
+        "USING_UPLINK_GATEWAY"
+      ]
+    },
     "DownlinkQueueMessage":{
       "type":"structure",
       "members":{
@@ -2655,7 +2696,17 @@
       "max":15,
       "min":0
     },
+    "DrMaxBox":{
+      "type":"integer",
+      "max":15,
+      "min":0
+    },
     "DrMin":{
+      "type":"integer",
+      "max":15,
+      "min":0
+    },
+    "DrMinBox":{
       "type":"integer",
       "max":15,
       "min":0
@@ -2694,7 +2745,8 @@
         "DeviceRegistrationState":{"shape":"DeviceRegistrationStateEventConfiguration"},
         "Proximity":{"shape":"ProximityEventConfiguration"},
         "Join":{"shape":"JoinEventConfiguration"},
-        "ConnectionStatus":{"shape":"ConnectionStatusEventConfiguration"}
+        "ConnectionStatus":{"shape":"ConnectionStatusEventConfiguration"},
+        "MessageDeliveryStatus":{"shape":"MessageDeliveryStatusEventConfiguration"}
       }
     },
     "EventNotificationPartnerType":{
@@ -2827,6 +2879,21 @@
       "type":"string",
       "pattern":"^(([0-9A-Fa-f]{2}-){7}|([0-9A-Fa-f]{2}:){7}|([0-9A-Fa-f]{2}\\s){7}|([0-9A-Fa-f]{2}){7})([0-9A-Fa-f]{2})$"
     },
+    "GatewayList":{
+      "type":"list",
+      "member":{"shape":"GatewayListItem"}
+    },
+    "GatewayListItem":{
+      "type":"structure",
+      "required":[
+        "GatewayId",
+        "DownlinkFrequency"
+      ],
+      "members":{
+        "GatewayId":{"shape":"WirelessGatewayId"},
+        "DownlinkFrequency":{"shape":"DownlinkFrequency"}
+      }
+    },
     "GenAppKey":{
       "type":"string",
       "pattern":"[a-fA-F0-9]{32}"
@@ -2884,7 +2951,8 @@
         "DeviceRegistrationState":{"shape":"DeviceRegistrationStateResourceTypeEventConfiguration"},
         "Proximity":{"shape":"ProximityResourceTypeEventConfiguration"},
         "Join":{"shape":"JoinResourceTypeEventConfiguration"},
-        "ConnectionStatus":{"shape":"ConnectionStatusResourceTypeEventConfiguration"}
+        "ConnectionStatus":{"shape":"ConnectionStatusResourceTypeEventConfiguration"},
+        "MessageDeliveryStatus":{"shape":"MessageDeliveryStatusResourceTypeEventConfiguration"}
       }
     },
     "GetFuotaTaskRequest":{
@@ -3099,7 +3167,8 @@
         "DeviceRegistrationState":{"shape":"DeviceRegistrationStateEventConfiguration"},
         "Proximity":{"shape":"ProximityEventConfiguration"},
         "Join":{"shape":"JoinEventConfiguration"},
-        "ConnectionStatus":{"shape":"ConnectionStatusEventConfiguration"}
+        "ConnectionStatus":{"shape":"ConnectionStatusEventConfiguration"},
+        "MessageDeliveryStatus":{"shape":"MessageDeliveryStatusEventConfiguration"}
       }
     },
     "GetResourceLogLevelRequest":{
@@ -3879,7 +3948,8 @@
         "RfRegion":{"shape":"RfRegion"},
         "JoinEuiFilters":{"shape":"JoinEuiFilters"},
         "NetIdFilters":{"shape":"NetIdFilters"},
-        "SubBands":{"shape":"SubBands"}
+        "SubBands":{"shape":"SubBands"},
+        "Beaconing":{"shape":"Beaconing"}
       }
     },
     "LoRaWANGatewayCurrentVersion":{
@@ -3984,13 +4054,16 @@
     "LoRaWANSendDataToDevice":{
       "type":"structure",
       "members":{
-        "FPort":{"shape":"FPort"}
+        "FPort":{"shape":"FPort"},
+        "ParticipatingGateways":{"shape":"ParticipatingGateways"}
       }
     },
     "LoRaWANServiceProfile":{
       "type":"structure",
       "members":{
-        "AddGwMetadata":{"shape":"AddGwMetadata"}
+        "AddGwMetadata":{"shape":"AddGwMetadata"},
+        "DrMin":{"shape":"DrMinBox"},
+        "DrMax":{"shape":"DrMaxBox"}
       }
     },
     "LoRaWANStartFuotaTask":{
@@ -4060,6 +4133,19 @@
     "Message":{
       "type":"string",
       "max":2048
+    },
+    "MessageDeliveryStatusEventConfiguration":{
+      "type":"structure",
+      "members":{
+        "Sidewalk":{"shape":"SidewalkEventNotificationConfigurations"},
+        "WirelessDeviceIdEventTopic":{"shape":"EventNotificationTopicStatus"}
+      }
+    },
+    "MessageDeliveryStatusResourceTypeEventConfiguration":{
+      "type":"structure",
+      "members":{
+        "Sidewalk":{"shape":"SidewalkResourceTypeEventConfiguration"}
+      }
     },
     "MessageId":{"type":"string"},
     "MessageType":{
@@ -4203,6 +4289,19 @@
       "type":"string",
       "max":32,
       "min":1
+    },
+    "ParticipatingGateways":{
+      "type":"structure",
+      "required":[
+        "DownlinkMode",
+        "GatewayList",
+        "TransmissionInterval"
+      ],
+      "members":{
+        "DownlinkMode":{"shape":"DownlinkMode"},
+        "GatewayList":{"shape":"GatewayList"},
+        "TransmissionInterval":{"shape":"TransmissionInterval"}
+      }
     },
     "PartnerAccountArn":{"type":"string"},
     "PartnerAccountId":{
@@ -4666,7 +4765,8 @@
       "type":"structure",
       "members":{
         "Seq":{"shape":"Seq"},
-        "MessageType":{"shape":"MessageType"}
+        "MessageType":{"shape":"MessageType"},
+        "AckModeRetryDurationSecs":{"shape":"AckModeRetryDurationSecs"}
       }
     },
     "SidewalkUpdateAccount":{
@@ -4889,6 +4989,11 @@
         "LogLevel":{"shape":"LogLevel"}
       }
     },
+    "TransmissionInterval":{
+      "type":"integer",
+      "max":604800,
+      "min":1
+    },
     "TransmitMode":{
       "type":"integer",
       "max":1,
@@ -4975,7 +5080,8 @@
         "DeviceRegistrationState":{"shape":"DeviceRegistrationStateResourceTypeEventConfiguration"},
         "Proximity":{"shape":"ProximityResourceTypeEventConfiguration"},
         "Join":{"shape":"JoinResourceTypeEventConfiguration"},
-        "ConnectionStatus":{"shape":"ConnectionStatusResourceTypeEventConfiguration"}
+        "ConnectionStatus":{"shape":"ConnectionStatusResourceTypeEventConfiguration"},
+        "MessageDeliveryStatus":{"shape":"MessageDeliveryStatusResourceTypeEventConfiguration"}
       }
     },
     "UpdateEventConfigurationByResourceTypesResponse":{
@@ -5141,7 +5247,8 @@
         "DeviceRegistrationState":{"shape":"DeviceRegistrationStateEventConfiguration"},
         "Proximity":{"shape":"ProximityEventConfiguration"},
         "Join":{"shape":"JoinEventConfiguration"},
-        "ConnectionStatus":{"shape":"ConnectionStatusEventConfiguration"}
+        "ConnectionStatus":{"shape":"ConnectionStatusEventConfiguration"},
+        "MessageDeliveryStatus":{"shape":"MessageDeliveryStatusEventConfiguration"}
       }
     },
     "UpdateResourceEventConfigurationResponse":{

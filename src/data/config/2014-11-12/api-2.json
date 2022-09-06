@@ -846,6 +846,20 @@
         {"shape":"NoSuchConfigurationAggregatorException"}
       ]
     },
+    "ListConformancePackComplianceScores":{
+      "name":"ListConformancePackComplianceScores",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListConformancePackComplianceScoresRequest"},
+      "output":{"shape":"ListConformancePackComplianceScoresResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidLimitException"},
+        {"shape":"InvalidNextTokenException"}
+      ]
+    },
     "ListDiscoveredResources":{
       "name":"ListDiscoveredResources",
       "http":{
@@ -1564,6 +1578,7 @@
       "max":100,
       "min":0
     },
+    "ComplianceScore":{"type":"string"},
     "ComplianceSummariesByResourceType":{
       "type":"list",
       "member":{"shape":"ComplianceSummaryByResourceType"}
@@ -1836,6 +1851,25 @@
       "max":5,
       "min":0
     },
+    "ConformancePackComplianceScore":{
+      "type":"structure",
+      "members":{
+        "Score":{"shape":"ComplianceScore"},
+        "ConformancePackName":{"shape":"ConformancePackName"},
+        "LastUpdatedTime":{"shape":"LastUpdatedTime"}
+      }
+    },
+    "ConformancePackComplianceScores":{
+      "type":"list",
+      "member":{"shape":"ConformancePackComplianceScore"}
+    },
+    "ConformancePackComplianceScoresFilters":{
+      "type":"structure",
+      "required":["ConformancePackNames"],
+      "members":{
+        "ConformancePackNames":{"shape":"ConformancePackNameFilter"}
+      }
+    },
     "ConformancePackComplianceSummary":{
       "type":"structure",
       "required":[
@@ -1882,7 +1916,8 @@
         "DeliveryS3KeyPrefix":{"shape":"DeliveryS3KeyPrefix"},
         "ConformancePackInputParameters":{"shape":"ConformancePackInputParameters"},
         "LastUpdateRequestedTime":{"shape":"Date"},
-        "CreatedBy":{"shape":"StringWithCharLimit256"}
+        "CreatedBy":{"shape":"StringWithCharLimit256"},
+        "TemplateSSMDocumentDetails":{"shape":"TemplateSSMDocumentDetails"}
       }
     },
     "ConformancePackDetailList":{
@@ -1943,6 +1978,12 @@
       "max":256,
       "min":1,
       "pattern":"[a-zA-Z][-a-zA-Z0-9]*"
+    },
+    "ConformancePackNameFilter":{
+      "type":"list",
+      "member":{"shape":"ConformancePackName"},
+      "max":25,
+      "min":1
     },
     "ConformancePackNamesList":{
       "type":"list",
@@ -3215,6 +3256,7 @@
       },
       "exception":true
     },
+    "LastUpdatedTime":{"type":"timestamp"},
     "LaterTime":{"type":"timestamp"},
     "Limit":{
       "type":"integer",
@@ -3246,6 +3288,24 @@
       "members":{
         "ResourceIdentifiers":{"shape":"DiscoveredResourceIdentifierList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListConformancePackComplianceScoresRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"ConformancePackComplianceScoresFilters"},
+        "SortOrder":{"shape":"SortOrder"},
+        "SortBy":{"shape":"SortBy"},
+        "Limit":{"shape":"PageSizeLimit"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListConformancePackComplianceScoresResponse":{
+      "type":"structure",
+      "required":["ConformancePackComplianceScores"],
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "ConformancePackComplianceScores":{"shape":"ConformancePackComplianceScores"}
       }
     },
     "ListDiscoveredResourcesRequest":{
@@ -3906,7 +3966,8 @@
         "TemplateBody":{"shape":"TemplateBody"},
         "DeliveryS3Bucket":{"shape":"DeliveryS3Bucket"},
         "DeliveryS3KeyPrefix":{"shape":"DeliveryS3KeyPrefix"},
-        "ConformancePackInputParameters":{"shape":"ConformancePackInputParameters"}
+        "ConformancePackInputParameters":{"shape":"ConformancePackInputParameters"},
+        "TemplateSSMDocumentDetails":{"shape":"TemplateSSMDocumentDetails"}
       }
     },
     "PutConformancePackResponse":{
@@ -4509,7 +4570,31 @@
         "AWS::ECR::PublicRepository",
         "AWS::GuardDuty::Detector",
         "AWS::EMR::SecurityConfiguration",
-        "AWS::SageMaker::CodeRepository"
+        "AWS::SageMaker::CodeRepository",
+        "AWS::Route53Resolver::ResolverEndpoint",
+        "AWS::Route53Resolver::ResolverRule",
+        "AWS::Route53Resolver::ResolverRuleAssociation",
+        "AWS::DMS::ReplicationSubnetGroup",
+        "AWS::DMS::EventSubscription",
+        "AWS::MSK::Cluster",
+        "AWS::StepFunctions::Activity",
+        "AWS::WorkSpaces::Workspace",
+        "AWS::WorkSpaces::ConnectionAlias",
+        "AWS::SageMaker::Model",
+        "AWS::ElasticLoadBalancingV2::Listener",
+        "AWS::StepFunctions::StateMachine",
+        "AWS::Batch::JobQueue",
+        "AWS::Batch::ComputeEnvironment",
+        "AWS::AccessAnalyzer::Analyzer",
+        "AWS::Athena::WorkGroup",
+        "AWS::Athena::DataCatalog",
+        "AWS::Detective::Graph",
+        "AWS::GlobalAccelerator::Accelerator",
+        "AWS::GlobalAccelerator::EndpointGroup",
+        "AWS::GlobalAccelerator::Listener",
+        "AWS::EC2::TransitGatewayAttachment",
+        "AWS::EC2::TransitGatewayRouteTable",
+        "AWS::DMS::Certificate"
       ]
     },
     "ResourceTypeList":{
@@ -4585,6 +4670,14 @@
       "max":50,
       "min":0
     },
+    "SSMDocumentName":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_\\-.:/]{3,200}$"
+    },
+    "SSMDocumentVersion":{
+      "type":"string",
+      "pattern":"([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)"
+    },
     "SchemaVersionId":{
       "type":"string",
       "max":128,
@@ -4638,6 +4731,17 @@
         "QueryInfo":{"shape":"QueryInfo"},
         "NextToken":{"shape":"NextToken"}
       }
+    },
+    "SortBy":{
+      "type":"string",
+      "enum":["SCORE"]
+    },
+    "SortOrder":{
+      "type":"string",
+      "enum":[
+        "ASCENDING",
+        "DESCENDING"
+      ]
     },
     "Source":{
       "type":"structure",
@@ -4883,6 +4987,14 @@
       "max":1024,
       "min":1,
       "pattern":"s3://.*"
+    },
+    "TemplateSSMDocumentDetails":{
+      "type":"structure",
+      "required":["DocumentName"],
+      "members":{
+        "DocumentName":{"shape":"SSMDocumentName"},
+        "DocumentVersion":{"shape":"SSMDocumentVersion"}
+      }
     },
     "TooManyTagsException":{
       "type":"structure",

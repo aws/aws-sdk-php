@@ -45,7 +45,8 @@
         {"shape":"WAFInvalidResourceException"},
         {"shape":"WAFUnavailableEntityException"},
         {"shape":"WAFSubscriptionNotFoundException"},
-        {"shape":"WAFExpiredManagedRuleGroupVersionException"}
+        {"shape":"WAFExpiredManagedRuleGroupVersionException"},
+        {"shape":"WAFInvalidOperationException"}
       ]
     },
     "CreateIPSet":{
@@ -2901,7 +2902,8 @@
       "enum":[
         "APPLICATION_LOAD_BALANCER",
         "API_GATEWAY",
-        "APPSYNC"
+        "APPSYNC",
+        "COGNITO_USER_POOL"
       ]
     },
     "ResponseCode":{"type":"integer"},
@@ -3050,6 +3052,13 @@
       ]
     },
     "SearchString":{"type":"blob"},
+    "SensitivityLevel":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "HIGH"
+      ]
+    },
     "SingleCookieName":{
       "type":"string",
       "max":60,
@@ -3099,7 +3108,8 @@
       ],
       "members":{
         "FieldToMatch":{"shape":"FieldToMatch"},
-        "TextTransformations":{"shape":"TextTransformations"}
+        "TextTransformations":{"shape":"TextTransformations"},
+        "SensitivityLevel":{"shape":"SensitivityLevel"}
       }
     },
     "Statement":{
