@@ -1027,7 +1027,6 @@ class StreamWrapperTest extends TestCase
         stream_wrapper_unregister('foo');
     }
 
-
     public function contentProvider()
     {
         return [

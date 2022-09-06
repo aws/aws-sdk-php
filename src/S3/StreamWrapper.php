@@ -178,7 +178,7 @@ class StreamWrapper
                 "Unable to determine stream size. Did you forget to close or flush the stream?"
             );
         }
-        
+
         $this->isFlushed = true;
         if ($this->mode == 'r') {
             return false;
