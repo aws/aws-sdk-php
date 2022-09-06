@@ -564,7 +564,7 @@ class ClientResolver
             $args['token'] = TokenProvider::fromToken(
                 new Token(
                     $value['token'],
-                    isset($value['expires']) ? $value['expires'] : null,
+                    isset($value['expires']) ? $value['expires'] : null
                 )
             );
         } elseif ($value instanceof CacheInterface) {
