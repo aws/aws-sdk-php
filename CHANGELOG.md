@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.3 - 2022-09-07
 
 * `Aws\DataExchange` - Documentation updates for AWS Data Exchange.
 * `Aws\EC2` - Documentation updates for Amazon EC2.
