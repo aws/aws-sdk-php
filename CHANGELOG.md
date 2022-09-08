@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.4 - 2022-09-08
 
 * `Aws\EC2` - This release adds support to send VPC Flow Logs to kinesis-data-firehose as new destination type
 * `Aws\EMRContainers` - EMR on EKS now allows running Spark SQL using the newly introduced Spark SQL Job Driver in the Start Job Run API
