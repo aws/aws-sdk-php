@@ -566,6 +566,9 @@
                 },
                 "slotElicitationStyle": {
                     "shape": "StyleType"
+                },
+                "subSlotToElicit": {
+                    "shape": "ElicitSubSlot"
                 }
             }
         },
@@ -594,6 +597,20 @@
         },
         "Double": {
             "type": "double"
+        },
+        "ElicitSubSlot": {
+            "type": "structure",
+            "required": [
+                "name"
+            ],
+            "members": {
+                "name": {
+                    "shape": "NonEmptyString"
+                },
+                "subSlotToElicit": {
+                    "shape": "ElicitSubSlot"
+                }
+            }
         },
         "EpochMillis": {
             "type": "long"
@@ -1131,12 +1148,12 @@
         },
         "RuntimeHintDetails": {
             "type": "structure",
-            "required": [
-                "runtimeHintValues"
-            ],
             "members": {
                 "runtimeHintValues": {
                     "shape": "RuntimeHintValuesList"
+                },
+                "subSlotHints": {
+                    "shape": "SlotHintsSlotMap"
                 }
             }
         },
@@ -1246,7 +1263,8 @@
             "type": "string",
             "enum": [
                 "Scalar",
-                "List"
+                "List",
+                "Composite"
             ]
         },
         "Slot": {
@@ -1260,6 +1278,9 @@
                 },
                 "values": {
                     "shape": "Values"
+                },
+                "subSlots": {
+                    "shape": "Slots"
                 }
             }
         },
