@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EKS` - Adding support for local Amazon EKS clusters on Outposts
+
 ## 3.235.5 - 2022-09-09
 
 * `Aws\CloudTrail` - This release adds CloudTrail getChannel and listChannels APIs to allow customer to view the ServiceLinkedChannel configurations.
