@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.6 - 2022-09-12
 
 * `Aws\EKS` - Adding support for local Amazon EKS clusters on Outposts
 
