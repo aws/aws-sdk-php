@@ -332,7 +332,7 @@ class S3ClientTest extends TestCase
                 } else {
                     $this->assertSame($exists, $s3->doesBucketExistV2($bucket, $accept403));
                 }
-            }else {
+            } else {
                 if ($key) {
                     $this->assertSame($exists, $s3->doesObjectExist($bucket, $key));
                 } else {
