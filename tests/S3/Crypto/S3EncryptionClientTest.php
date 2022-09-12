@@ -21,7 +21,7 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class S3EncryptionClientTest extends TestCase
 {
@@ -264,6 +264,8 @@ class S3EncryptionClientTest extends TestCase
 
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
+        } else {
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
         }
 
         $s3 = $this->getS3Client();
@@ -299,6 +301,8 @@ class S3EncryptionClientTest extends TestCase
     ) {
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
+        } else {
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
         }
 
         $cipherOptions = [
@@ -422,12 +426,10 @@ EOXML;
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Unrecognized or unsupported AESName for reverse lookup.
-     */
     public function testGetObjectThrowsOnInvalidCipher()
     {
+        $this->expectExceptionMessage("Unrecognized or unsupported AESName for reverse lookup.");
+        $this->expectException(\RuntimeException::class);
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProvider($kms);
         $this->addMockResults($kms, [
@@ -457,12 +459,10 @@ EOXML;
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
     }
 
-    /**
-     * @expectedException        RuntimeException
-     * @expectedExceptionMessage Not able to detect the materials description.
-     */
     public function testFromDecryptionEnvelopeEmptyKmsMaterialException()
     {
+        $this->expectExceptionMessage("Not able to detect the materials description.");
+        $this->expectException(\RuntimeException::class);
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProvider($kms, $keyId);
@@ -471,12 +471,10 @@ EOXML;
         $provider->fromDecryptionEnvelope($envelope);
     }
 
-    /**
-     * @expectedException        RuntimeException
-     * @expectedExceptionMessage Not able to detect kms_cmk_id (legacy implementation)
-     */
     public function testFromDecryptionEnvelopeInvalidKmsMaterialException()
     {
+        $this->expectExceptionMessage("Not able to detect kms_cmk_id (legacy implementation)");
+        $this->expectException(\RuntimeException::class);
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProvider($kms, $keyId);
@@ -727,12 +725,11 @@ EOXML;
      * Note that outside of PHPUnit, normal code execution will continue through
      * this warning unless configured otherwise. PHPUnit throws it as an
      * exception here for testing.
-     *
-     * @expectedException PHPUnit_Framework_Error_Warning
-     * @expectedExceptionMessage 'Aad' has been supplied for content encryption with AES/GCM/NoPadding
      */
     public function testTriggersWarningForGcmEncryptionWithAad()
     {
+        $this->expectExceptionMessage("'Aad' has been supplied for content encryption with AES/GCM/NoPadding");
+        $this->expectWarning();
         $s3 = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
@@ -781,7 +778,7 @@ EOXML;
             'region' => 'us-west-2',
             'version' => 'latest',
             'http_handler' => function (RequestInterface $req) use ($provider) {
-                $this->assertContains(
+                $this->assertStringContainsString(
                     'feat/s3-encrypt/' . S3EncryptionClient::CRYPTO_VERSION,
                     $req->getHeaderLine('User-Agent')
                 );

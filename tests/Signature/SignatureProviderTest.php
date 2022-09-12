@@ -2,7 +2,7 @@
 namespace Aws\Test\Signature;
 
 use Aws\Signature\SignatureProvider;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Signature\SignatureProvider
@@ -53,11 +53,9 @@ class SignatureProviderTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Aws\Exception\UnresolvedSignatureException
-     */
     public function testResolvesSignaturesWithException()
     {
+        $this->expectException(\Aws\Exception\UnresolvedSignatureException::class);
         $fn = SignatureProvider::defaultProvider();
         SignatureProvider::resolve($fn, 'foooo', '', '');
     }

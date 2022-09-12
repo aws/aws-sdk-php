@@ -1,19 +1,27 @@
 <?php
+
 namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CloudFrontClient;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\CloudFront\CloudFrontClient
  */
 class CloudFrontClientTest extends TestCase
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     */
+    protected $key;
+    protected $kp;
+
+    public function set_up()
+    {
+        openssl_pkey_export(openssl_pkey_new(),$this->key);
+        $this->kp  = 'test';
+    }
+
     public function testEnsuresKeysArePassed()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $c = new CloudFrontClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
@@ -21,45 +29,33 @@ class CloudFrontClientTest extends TestCase
         $c->getSignedUrl([]);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCreatesSignedUrl()
     {
-        foreach (['CF_PRIVATE_KEY', 'CF_KEY_PAIR_ID'] as $k) {
-            if (!isset($_SERVER[$k]) || $_SERVER[$k] == 'change_me') {
-                $this->markTestSkipped('$_SERVER[\'' . $k . '\'] not set in '
-                    . 'phpunit.xml');
-            }
-        }
-
         $c = new CloudFrontClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
 
         $c->getSignedUrl([
-            'private_key' => $_SERVER['CF_PRIVATE_KEY'],
-            'key_pair_id' => $_SERVER['CF_KEY_PAIR_ID'],
+            'private_key' => $this->key,
+            'key_pair_id' => $this->kp,
             'url'         => 'https://foo.bar.com',
             'expires'     => strtotime('+10 minutes'),
         ]);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCreatesSignedCookie()
     {
-        foreach (['CF_PRIVATE_KEY', 'CF_KEY_PAIR_ID'] as $k) {
-            if (!isset($_SERVER[$k]) || $_SERVER[$k] == 'change_me') {
-                $this->markTestSkipped('$_SERVER[\'' . $k . '\'] not set in '
-                    . 'phpunit.xml');
-            }
-        }
-
         $c = new CloudFrontClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
 
         $c->getSignedCookie([
-            'private_key' => $_SERVER['CF_PRIVATE_KEY'],
-            'key_pair_id' => $_SERVER['CF_KEY_PAIR_ID'],
+            'private_key' => $this->key,
+            'key_pair_id' => $this->kp,
             'url'         => 'https://foo.bar.com',
             'expires'     => strtotime('+10 minutes'),
         ]);

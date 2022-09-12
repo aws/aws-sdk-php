@@ -3,7 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\StructureShape;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\StructureShape
@@ -36,18 +36,16 @@ class StructureShapeTest extends TestCase
             ]
         ], new ShapeMap([]));
         $members = $s->getMembers();
-        $this->assertInternalType('array', $members);
+        $this->assertIsArray($members);
         $this->assertInstanceOf('Aws\Api\Shape', $members['foo']);
         $this->assertInstanceOf('Aws\Api\Shape', $members['baz']);
         $this->assertSame('string', $members['foo']->getType());
         $this->assertSame('integer', $members['baz']->getType());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testEnsuresMemberExists()
     {
+        $this->expectException(\InvalidArgumentException::class);
         (new StructureShape([], new ShapeMap([])))->getMember('foo');
     }
 }

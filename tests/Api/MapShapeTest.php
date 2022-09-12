@@ -3,7 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\MapShape;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\MapShape
@@ -19,11 +19,9 @@ class MapShapeTest extends TestCase
         $this->assertSame($v, $s->getValue());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testFailsWhenValueIsMissing()
     {
+        $this->expectException(\RuntimeException::class);
         (new MapShape([], new ShapeMap([])))->getValue();
     }
 

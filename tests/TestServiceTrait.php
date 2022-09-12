@@ -39,12 +39,17 @@ trait TestServiceTrait
      */
     private function generateTestService($protocol)
     {
+        $metadata = [
+            "protocol" => $protocol,
+            "apiVersion" => "2019-05-01"
+        ];
+        if ($protocol === 'json') {
+            $metadata['jsonVersion'] = "1.1";
+        }
+
         return new Service(
             [
-                'metadata' => [
-                    "protocol" => $protocol,
-                    "apiVersion" => "2019-05-01"
-                ],
+                'metadata' => $metadata,
                 'shapes' => [
                     "HeaderMap"=> [
                         "type"=> "map",

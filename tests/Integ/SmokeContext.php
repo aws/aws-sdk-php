@@ -15,9 +15,9 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use JmesPath\Env;
-use PHPUnit_Framework_Assert;
+use PHPUnit\Framework\Assert;
 
-class SmokeContext extends PHPUnit_Framework_Assert implements
+class SmokeContext extends Assert implements
     Context,
     SnippetAcceptingContext
 {
@@ -350,7 +350,7 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
     public function theValueAtShouldBeAList($key)
     {
         $this->assertInstanceOf(Result::class, $this->response);
-        $this->assertInternalType('array', $this->response->search($key));
+        $this->assertIsArray($this->response->search($key));
     }
 
     /**

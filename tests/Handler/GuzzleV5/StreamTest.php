@@ -5,7 +5,7 @@ use Aws\Handler\GuzzleV5\GuzzleStream as GuzzleStreamAdapter;
 use Aws\Handler\GuzzleV5\PsrStream as PsrStreamAdapter;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Stream\Stream as GuzzleStream;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Handler\GuzzleV5\GuzzleStream
@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StreamTest extends TestCase
 {
-    public function setUp()
+    public function set_up()
     {
         if (!class_exists('GuzzleHttp\Ring\Core')) {
             $this->markTestSkipped();

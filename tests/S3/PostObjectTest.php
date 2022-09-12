@@ -5,7 +5,7 @@ use Aws\Credentials\Credentials;
 use Aws\S3\PostObject;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\S3\PostObject
@@ -17,7 +17,7 @@ class PostObjectTest extends TestCase
     /** @var S3Client */
     protected $client;
 
-    public function setUp()
+    public function set_up()
     {
         $this->client = $this->getTestClient(
             's3',

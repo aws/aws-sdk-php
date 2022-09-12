@@ -3,7 +3,7 @@
 namespace Aws\Test\Retry;
 
 use Aws\Retry\Configuration;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Retry\Configuration
@@ -27,21 +27,17 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->toArray());
     }
 
-    /**
-     * @expectedException \Aws\Retry\Exception\ConfigurationException
-     * @expectedExceptionMessage The 'maxAttempts' parameter has to be an integer >= 1
-     */
     public function testHandlesInvalidMaxAttempts()
     {
+        $this->expectExceptionMessage("The 'maxAttempts' parameter has to be an integer >= 1");
+        $this->expectException(\Aws\Retry\Exception\ConfigurationException::class);
         new Configuration('standard', 0);
     }
 
-    /**
-     * @expectedException \Aws\Retry\Exception\ConfigurationException
-     * @expectedExceptionMessage 'foo' is not a valid mode
-     */
     public function testHandlesInvalidMode()
     {
+        $this->expectExceptionMessage("'foo' is not a valid mode");
+        $this->expectException(\Aws\Retry\Exception\ConfigurationException::class);
         new Configuration('foo', 5);
     }
 }
