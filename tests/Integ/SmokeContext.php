@@ -350,7 +350,11 @@ class SmokeContext extends Assert implements
     public function theValueAtShouldBeAList($key)
     {
         $this->assertInstanceOf(Result::class, $this->response);
-        $this->assertIsArray($this->response->search($key));
+        if (method_exists($this, 'assertIsArray')) {
+            $this->assertIsArray($this->response->search($key));
+        } else {
+            $this->assertInternalType('array', $this->response->search($key));
+        }
     }
 
     /**
