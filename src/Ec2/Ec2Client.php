@@ -968,6 +968,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyIpamScopeAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyLaunchTemplate(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyLaunchTemplateAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyLocalGatewayRoute(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyLocalGatewayRouteAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyManagedPrefixList(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyManagedPrefixListAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyPrivateDnsNameOptions(array $args = []) (supported in versions 2016-11-15)
