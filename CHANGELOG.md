@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.7 - 2022-09-13
 
 * `Aws\` - Add support for php 8.0 and 8.1
 * `Aws\CloudWatchEvidently` - This release adds support for the client-side evaluation - powered by AWS AppConfig feature.
