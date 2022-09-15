@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.9 - 2022-09-15
 
 * `Aws\DynamoDB` - Increased DynamoDB transaction limit from 25 to 100.
 * `Aws\EC2` - This feature allows customers to create tags for vpc-endpoint-connections and vpc-endpoint-service-permissions.
