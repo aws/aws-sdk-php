@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Increased DynamoDB transaction limit from 25 to 100.
+* `Aws\EC2` - This feature allows customers to create tags for vpc-endpoint-connections and vpc-endpoint-service-permissions.
+* `Aws\SageMaker` - Amazon SageMaker Automatic Model Tuning now supports specifying Hyperband strategy for tuning jobs, which uses a multi-fidelity based tuning strategy to stop underperforming hyperparameter configurations early.
+
 ## 3.235.8 - 2022-09-14
 
 * `Aws\AmplifyUIBuilder` - Amplify Studio UIBuilder is introducing forms functionality. Forms can be configured from Data Store models, JSON, or from scratch. These forms can then be generated in your project and used like any other React components.
