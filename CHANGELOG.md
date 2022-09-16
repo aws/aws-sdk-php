@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.10 - 2022-09-16
 
 * `Aws\CodeStarNotifications` - This release adds tag based access control for the UntagResource API.
 * `Aws\ECS` - This release supports new task definition sizes.
