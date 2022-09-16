@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeStarNotifications` - This release adds tag based access control for the UntagResource API.
+* `Aws\ECS` - This release supports new task definition sizes.
+
 ## 3.235.9 - 2022-09-15
 
 * `Aws\DynamoDB` - Increased DynamoDB transaction limit from 25 to 100.
