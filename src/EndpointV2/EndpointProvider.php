@@ -15,7 +15,7 @@ class EndpointProvider
     /** @var Ruleset */
     private $ruleSet;
 
-    public function __construct(array $ruleSet, array $partitions = null)
+    public function __construct(array $ruleSet, array $partitions)
     {
         $this->ruleSet = new Ruleset($ruleSet, $partitions);
     }

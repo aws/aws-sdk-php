@@ -17,7 +17,7 @@ class RulesetEndpoint
     /** @var array */
     private $headers;
 
-    public function __construct(string $url, $properties = null, $headers = null)
+    public function __construct($url, $properties = null, $headers = null)
     {
         $this->url = $url;
         $this->properties = $properties;
