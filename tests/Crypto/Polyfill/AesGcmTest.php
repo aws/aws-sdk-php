@@ -2644,8 +2644,16 @@ class AesGcmTest extends TestCase
                 $aad,
                 $tag2
             );
-            $this->assertSame(bin2hex($exp), bin2hex($got));
-            $this->assertSame(bin2hex($tag1), bin2hex($tag2));
+
+            $failureMessage = sprintf("Failed with parameters:\n\tplaintext: %s\n\taad: %s\n\tkey: %s\n\tnonce: %s",
+                bin2hex($plaintext),
+                bin2hex($aad),
+                bin2hex($key),
+                bin2hex($nonce)
+            );
+
+            $this->assertSame(bin2hex($exp), bin2hex($got),$failureMessage);
+            $this->assertSame(bin2hex($tag1), bin2hex($tag2),$failureMessage);
         }
     }
 }
