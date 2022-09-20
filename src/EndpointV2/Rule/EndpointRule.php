@@ -35,7 +35,6 @@ Class EndpointRule extends Rule
         if ($this->evaluateConditions($inputParameters, $standardLibrary)) {
             return $this->resolve($inputParameters, $standardLibrary);
         }
-
         return null;
     }
 
@@ -44,7 +43,7 @@ Class EndpointRule extends Rule
      *
      * @return RulesetEndpoint
      */
-    public function resolve(
+    private function resolve(
         array $inputParameters,
         RulesetStandardLibrary $standardLibrary
     )
@@ -64,7 +63,7 @@ Class EndpointRule extends Rule
      *
      * @return array
      */
-    public function resolveProperties(
+    private function resolveProperties(
         $properties,
         array $inputParameters,
         RulesetStandardLibrary $standardLibrary
@@ -88,7 +87,7 @@ Class EndpointRule extends Rule
      *
      * @return array
      */
-    public function resolveHeaders(
+    private function resolveHeaders(
         array $inputParameters,
         RulesetStandardLibrary $standardLibrary
     )

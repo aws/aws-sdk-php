@@ -185,7 +185,9 @@ class RulesetStandardLibrary
         $urlInfo['normalizedPath'] = !empty($parsed['path'])
             ? rtrim($urlInfo['path'] ?: '', '/' .  "/") . '/'
             : '/';
-        $urlInfo['isIp'] = !isset($parsed['host']) ? 'false' : $this->isValidIp($parsed['host']);
+        $urlInfo['isIp'] = !isset($parsed['host']) ?
+            'false' : $this->isValidIp($parsed['host']);
+
         return $urlInfo;
     }
 
@@ -281,7 +283,6 @@ class RulesetStandardLibrary
             }
             return !in_array(false, $results);
         }
-
         return $this->isValidHostLabel($bucketName, false);
     }
 
@@ -327,7 +328,6 @@ class RulesetStandardLibrary
         } else if ($this->isTemplate($value)) {
             return $this->resolveTemplateString($value, $inputParameters);
         }
-
         return $value;
     }
 

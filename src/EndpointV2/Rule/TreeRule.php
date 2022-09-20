@@ -58,7 +58,6 @@ class TreeRule extends Rule
             $ruleType = RuleCreator::create($rule['type'], $rule);
             $rulesList[] = $ruleType;
         }
-
         return $rulesList;
     }
 }

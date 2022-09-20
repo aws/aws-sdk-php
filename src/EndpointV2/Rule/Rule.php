@@ -40,7 +40,10 @@ abstract Class Rule
      *
      * @return boolean
      */
-    protected function evaluateConditions(array &$inputParameters, RulesetStandardLibrary $standardLibrary)
+    protected function evaluateConditions(
+        array &$inputParameters,
+        RulesetStandardLibrary $standardLibrary
+    )
     {
         foreach($this->getConditions() as $condition) {
             $result = $standardLibrary->callFunction($condition, $inputParameters);

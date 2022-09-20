@@ -324,3 +324,4 @@ class RulesetStandardLibraryTest extends TestCase
         $this->standardLibrary->callFunction($condition, $inputParameters);
     }
 }
+

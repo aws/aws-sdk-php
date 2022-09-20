@@ -114,7 +114,7 @@ Class Ruleset
             $ruleObj = RuleCreator::create($rule['type'], $rule);
             $rulesList[] = $ruleObj;
         }
-
         return $rulesList;
     }
 }
+
