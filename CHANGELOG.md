@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.12 - 2022-09-20
 
 * `Aws\EC2` - This release adds support for blocked paths to Amazon VPC Reachability Analyzer.
 
