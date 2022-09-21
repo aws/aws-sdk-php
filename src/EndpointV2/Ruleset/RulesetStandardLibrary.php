@@ -251,7 +251,9 @@ class RulesetStandardLibrary
 
         $partitions = $this->partitions;
         foreach ($partitions['partitions'] as $partition) {
-            if (array_key_exists($region, $partition['regions'])) {
+            if (array_key_exists($region, $partition['regions'])
+                || preg_match("/{$partition['regionRegex']}/", $region)
+            ) {
                 return $partition['outputs'];
             }
         }
