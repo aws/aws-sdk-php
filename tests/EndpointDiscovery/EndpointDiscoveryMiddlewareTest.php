@@ -17,7 +17,7 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -55,7 +55,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             }
             $expectedUserAgentParts = explode(' ', $expected->getHeader('User-Agent')[0]);
             foreach ($expectedUserAgentParts as $expectedUserAgentPart) {
-                $this->assertContains(
+                $this->assertStringContainsString(
                     $expectedUserAgentPart,
                     $req->getHeader('User-Agent')[0]
                 );
@@ -751,11 +751,11 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     /**
      * @backupStaticAttributes enabled
-     * @expectedException \Aws\Exception\UnresolvedEndpointException
-     * @expectedExceptionMessage This operation requires the use of endpoint discovery, but this has been disabled
      */
     public function testThrowsExceptionForRequiredOpWhenDisabled()
     {
+        $this->expectExceptionMessage("This operation requires the use of endpoint discovery, but this has been disabled");
+        $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);
         $client = $this->generateTestClient(
             $this->generateTestService(),
             [

@@ -48,12 +48,17 @@ trait ParserTestServiceTrait
      */
     private function generateTestService($protocol)
     {
+        $metadata = [
+            "protocol" => "{$protocol}",
+            "apiVersion" => "2014-01-01"
+        ];
+        if ($protocol === 'json') {
+            $metadata['jsonVersion'] = "1.1";
+        }
+
         return new Service(
             [
-                'metadata' => [
-                    "protocol" => "{$protocol}",
-                    "apiVersion" => "2014-01-01"
-                ],
+                'metadata' => $metadata,
                 'shapes' => [
                     "ParseIso8601Response" => [
                         "type" => "structure",

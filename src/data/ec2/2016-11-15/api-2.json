@@ -485,6 +485,24 @@
       "input":{"shape":"CreateClientVpnRouteRequest"},
       "output":{"shape":"CreateClientVpnRouteResult"}
     },
+    "CreateCoipCidr":{
+      "name":"CreateCoipCidr",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCoipCidrRequest"},
+      "output":{"shape":"CreateCoipCidrResult"}
+    },
+    "CreateCoipPool":{
+      "name":"CreateCoipPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCoipPoolRequest"},
+      "output":{"shape":"CreateCoipPoolResult"}
+    },
     "CreateCustomerGateway":{
       "name":"CreateCustomerGateway",
       "http":{
@@ -655,6 +673,24 @@
       },
       "input":{"shape":"CreateLocalGatewayRouteRequest"},
       "output":{"shape":"CreateLocalGatewayRouteResult"}
+    },
+    "CreateLocalGatewayRouteTable":{
+      "name":"CreateLocalGatewayRouteTable",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateLocalGatewayRouteTableRequest"},
+      "output":{"shape":"CreateLocalGatewayRouteTableResult"}
+    },
+    "CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociation":{
+      "name":"CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociationRequest"},
+      "output":{"shape":"CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociationResult"}
     },
     "CreateLocalGatewayRouteTableVpcAssociation":{
       "name":"CreateLocalGatewayRouteTableVpcAssociation",
@@ -1112,6 +1148,24 @@
       "input":{"shape":"DeleteClientVpnRouteRequest"},
       "output":{"shape":"DeleteClientVpnRouteResult"}
     },
+    "DeleteCoipCidr":{
+      "name":"DeleteCoipCidr",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCoipCidrRequest"},
+      "output":{"shape":"DeleteCoipCidrResult"}
+    },
+    "DeleteCoipPool":{
+      "name":"DeleteCoipPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCoipPoolRequest"},
+      "output":{"shape":"DeleteCoipPoolResult"}
+    },
     "DeleteCustomerGateway":{
       "name":"DeleteCustomerGateway",
       "http":{
@@ -1242,6 +1296,24 @@
       },
       "input":{"shape":"DeleteLocalGatewayRouteRequest"},
       "output":{"shape":"DeleteLocalGatewayRouteResult"}
+    },
+    "DeleteLocalGatewayRouteTable":{
+      "name":"DeleteLocalGatewayRouteTable",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteLocalGatewayRouteTableRequest"},
+      "output":{"shape":"DeleteLocalGatewayRouteTableResult"}
+    },
+    "DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociation":{
+      "name":"DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationRequest"},
+      "output":{"shape":"DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationResult"}
     },
     "DeleteLocalGatewayRouteTableVpcAssociation":{
       "name":"DeleteLocalGatewayRouteTableVpcAssociation",
@@ -3923,6 +3995,15 @@
       "input":{"shape":"ModifyLaunchTemplateRequest"},
       "output":{"shape":"ModifyLaunchTemplateResult"}
     },
+    "ModifyLocalGatewayRoute":{
+      "name":"ModifyLocalGatewayRoute",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyLocalGatewayRouteRequest"},
+      "output":{"shape":"ModifyLocalGatewayRouteResult"}
+    },
     "ModifyManagedPrefixList":{
       "name":"ModifyManagedPrefixList",
       "http":{
@@ -4800,7 +4881,9 @@
         "t4",
         "m60",
         "radeon-pro-v520",
-        "vu9p"
+        "vu9p",
+        "inferentia",
+        "k520"
       ]
     },
     "AcceleratorNameSet":{
@@ -5150,6 +5233,34 @@
         "Description":{"shape":"String"}
       }
     },
+    "AddedPrincipal":{
+      "type":"structure",
+      "members":{
+        "PrincipalType":{
+          "shape":"PrincipalType",
+          "locationName":"principalType"
+        },
+        "Principal":{
+          "shape":"String",
+          "locationName":"principal"
+        },
+        "ServicePermissionId":{
+          "shape":"String",
+          "locationName":"servicePermissionId"
+        },
+        "ServiceId":{
+          "shape":"String",
+          "locationName":"serviceId"
+        }
+      }
+    },
+    "AddedPrincipalSet":{
+      "type":"list",
+      "member":{
+        "shape":"AddedPrincipal",
+        "locationName":"item"
+      }
+    },
     "AdditionalDetail":{
       "type":"structure",
       "members":{
@@ -5470,6 +5581,10 @@
         "capacityOptimizedPrioritized"
       ]
     },
+    "AllocationType":{
+      "type":"string",
+      "enum":["used"]
+    },
     "AllowedPrincipal":{
       "type":"structure",
       "members":{
@@ -5480,6 +5595,18 @@
         "Principal":{
           "shape":"String",
           "locationName":"principal"
+        },
+        "ServicePermissionId":{
+          "shape":"String",
+          "locationName":"servicePermissionId"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        },
+        "ServiceId":{
+          "shape":"String",
+          "locationName":"serviceId"
         }
       }
     },
@@ -5671,6 +5798,10 @@
         "VpcPeeringConnectionId":{
           "shape":"String",
           "locationName":"vpcPeeringConnectionId"
+        },
+        "State":{
+          "shape":"String",
+          "locationName":"state"
         }
       }
     },
@@ -7362,6 +7493,26 @@
         "locationName":"item"
       }
     },
+    "CapacityAllocation":{
+      "type":"structure",
+      "members":{
+        "AllocationType":{
+          "shape":"AllocationType",
+          "locationName":"allocationType"
+        },
+        "Count":{
+          "shape":"Integer",
+          "locationName":"count"
+        }
+      }
+    },
+    "CapacityAllocations":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityAllocation",
+        "locationName":"item"
+      }
+    },
     "CapacityReservation":{
       "type":"structure",
       "members":{
@@ -7452,6 +7603,10 @@
         "PlacementGroupArn":{
           "shape":"PlacementGroupArn",
           "locationName":"placementGroupArn"
+        },
+        "CapacityAllocations":{
+          "shape":"CapacityAllocations",
+          "locationName":"capacityAllocationSet"
         }
       }
     },
@@ -8372,6 +8527,23 @@
         "locationName":"item"
       }
     },
+    "CoipCidr":{
+      "type":"structure",
+      "members":{
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        },
+        "CoipPoolId":{
+          "shape":"Ipv4PoolCoipId",
+          "locationName":"coipPoolId"
+        },
+        "LocalGatewayRouteTableId":{
+          "shape":"String",
+          "locationName":"localGatewayRouteTableId"
+        }
+      }
+    },
     "CoipPool":{
       "type":"structure",
       "members":{
@@ -8416,6 +8588,14 @@
         "shape":"CoipPool",
         "locationName":"item"
       }
+    },
+    "ComponentAccount":{
+      "type":"string",
+      "pattern":"\\d{12}"
+    },
+    "ComponentRegion":{
+      "type":"string",
+      "pattern":"[a-z]{2}-[a-z]+-[1-9]+"
     },
     "ConfirmProductInstanceRequest":{
       "type":"structure",
@@ -8962,6 +9142,48 @@
         }
       }
     },
+    "CreateCoipCidrRequest":{
+      "type":"structure",
+      "required":[
+        "Cidr",
+        "CoipPoolId"
+      ],
+      "members":{
+        "Cidr":{"shape":"String"},
+        "CoipPoolId":{"shape":"Ipv4PoolCoipId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateCoipCidrResult":{
+      "type":"structure",
+      "members":{
+        "CoipCidr":{
+          "shape":"CoipCidr",
+          "locationName":"coipCidr"
+        }
+      }
+    },
+    "CreateCoipPoolRequest":{
+      "type":"structure",
+      "required":["LocalGatewayRouteTableId"],
+      "members":{
+        "LocalGatewayRouteTableId":{"shape":"LocalGatewayRoutetableId"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateCoipPoolResult":{
+      "type":"structure",
+      "members":{
+        "CoipPool":{
+          "shape":"CoipPool",
+          "locationName":"coipPool"
+        }
+      }
+    },
     "CreateCustomerGatewayRequest":{
       "type":"structure",
       "required":[
@@ -9193,6 +9415,7 @@
         "DryRun":{"shape":"Boolean"},
         "ClientToken":{"shape":"String"},
         "DeliverLogsPermissionArn":{"shape":"String"},
+        "DeliverCrossAccountRole":{"shape":"String"},
         "LogGroupName":{"shape":"String"},
         "ResourceIds":{
           "shape":"FlowLogResourceIds",
@@ -9563,14 +9786,14 @@
       "type":"structure",
       "required":[
         "DestinationCidrBlock",
-        "LocalGatewayRouteTableId",
-        "LocalGatewayVirtualInterfaceGroupId"
+        "LocalGatewayRouteTableId"
       ],
       "members":{
         "DestinationCidrBlock":{"shape":"String"},
         "LocalGatewayRouteTableId":{"shape":"LocalGatewayRoutetableId"},
         "LocalGatewayVirtualInterfaceGroupId":{"shape":"LocalGatewayVirtualInterfaceGroupId"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "NetworkInterfaceId":{"shape":"NetworkInterfaceId"}
       }
     },
     "CreateLocalGatewayRouteResult":{
@@ -9579,6 +9802,53 @@
         "Route":{
           "shape":"LocalGatewayRoute",
           "locationName":"route"
+        }
+      }
+    },
+    "CreateLocalGatewayRouteTableRequest":{
+      "type":"structure",
+      "required":["LocalGatewayId"],
+      "members":{
+        "LocalGatewayId":{"shape":"LocalGatewayId"},
+        "Mode":{"shape":"LocalGatewayRouteTableMode"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateLocalGatewayRouteTableResult":{
+      "type":"structure",
+      "members":{
+        "LocalGatewayRouteTable":{
+          "shape":"LocalGatewayRouteTable",
+          "locationName":"localGatewayRouteTable"
+        }
+      }
+    },
+    "CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "LocalGatewayRouteTableId",
+        "LocalGatewayVirtualInterfaceGroupId"
+      ],
+      "members":{
+        "LocalGatewayRouteTableId":{"shape":"LocalGatewayRoutetableId"},
+        "LocalGatewayVirtualInterfaceGroupId":{"shape":"LocalGatewayVirtualInterfaceGroupId"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociationResult":{
+      "type":"structure",
+      "members":{
+        "LocalGatewayRouteTableVirtualInterfaceGroupAssociation":{
+          "shape":"LocalGatewayRouteTableVirtualInterfaceGroupAssociation",
+          "locationName":"localGatewayRouteTableVirtualInterfaceGroupAssociation"
         }
       }
     },
@@ -11277,6 +11547,44 @@
         }
       }
     },
+    "DeleteCoipCidrRequest":{
+      "type":"structure",
+      "required":[
+        "Cidr",
+        "CoipPoolId"
+      ],
+      "members":{
+        "Cidr":{"shape":"String"},
+        "CoipPoolId":{"shape":"Ipv4PoolCoipId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteCoipCidrResult":{
+      "type":"structure",
+      "members":{
+        "CoipCidr":{
+          "shape":"CoipCidr",
+          "locationName":"coipCidr"
+        }
+      }
+    },
+    "DeleteCoipPoolRequest":{
+      "type":"structure",
+      "required":["CoipPoolId"],
+      "members":{
+        "CoipPoolId":{"shape":"Ipv4PoolCoipId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteCoipPoolResult":{
+      "type":"structure",
+      "members":{
+        "CoipPool":{
+          "shape":"CoipPool",
+          "locationName":"coipPool"
+        }
+      }
+    },
     "DeleteCustomerGatewayRequest":{
       "type":"structure",
       "required":["CustomerGatewayId"],
@@ -11655,6 +11963,40 @@
         "Route":{
           "shape":"LocalGatewayRoute",
           "locationName":"route"
+        }
+      }
+    },
+    "DeleteLocalGatewayRouteTableRequest":{
+      "type":"structure",
+      "required":["LocalGatewayRouteTableId"],
+      "members":{
+        "LocalGatewayRouteTableId":{"shape":"LocalGatewayRoutetableId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteLocalGatewayRouteTableResult":{
+      "type":"structure",
+      "members":{
+        "LocalGatewayRouteTable":{
+          "shape":"LocalGatewayRouteTable",
+          "locationName":"localGatewayRouteTable"
+        }
+      }
+    },
+    "DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationRequest":{
+      "type":"structure",
+      "required":["LocalGatewayRouteTableVirtualInterfaceGroupAssociationId"],
+      "members":{
+        "LocalGatewayRouteTableVirtualInterfaceGroupAssociationId":{"shape":"LocalGatewayRouteTableVirtualInterfaceGroupAssociationId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationResult":{
+      "type":"structure",
+      "members":{
+        "LocalGatewayRouteTableVirtualInterfaceGroupAssociation":{
+          "shape":"LocalGatewayRouteTableVirtualInterfaceGroupAssociation",
+          "locationName":"localGatewayRouteTableVirtualInterfaceGroupAssociation"
         }
       }
     },
@@ -18924,6 +19266,14 @@
         "TransitGatewayAttachment":{
           "shape":"AnalysisComponent",
           "locationName":"transitGatewayAttachment"
+        },
+        "ComponentAccount":{
+          "shape":"ComponentAccount",
+          "locationName":"componentAccount"
+        },
+        "ComponentRegion":{
+          "shape":"ComponentRegion",
+          "locationName":"componentRegion"
         }
       }
     },
@@ -19807,6 +20157,10 @@
         "DeliverLogsPermissionArn":{
           "shape":"String",
           "locationName":"deliverLogsPermissionArn"
+        },
+        "DeliverCrossAccountRole":{
+          "shape":"String",
+          "locationName":"deliverCrossAccountRole"
         },
         "DeliverLogsStatus":{
           "shape":"String",
@@ -27148,6 +27502,18 @@
         "OwnerId":{
           "shape":"String",
           "locationName":"ownerId"
+        },
+        "SubnetId":{
+          "shape":"SubnetId",
+          "locationName":"subnetId"
+        },
+        "CoipPoolId":{
+          "shape":"CoipPoolId",
+          "locationName":"coipPoolId"
+        },
+        "NetworkInterfaceId":{
+          "shape":"NetworkInterfaceId",
+          "locationName":"networkInterfaceId"
         }
       }
     },
@@ -27198,6 +27564,14 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "Mode":{
+          "shape":"LocalGatewayRouteTableMode",
+          "locationName":"mode"
+        },
+        "StateReason":{
+          "shape":"StateReason",
+          "locationName":"stateReason"
         }
       }
     },
@@ -27207,6 +27581,13 @@
         "shape":"LocalGatewayRoutetableId",
         "locationName":"item"
       }
+    },
+    "LocalGatewayRouteTableMode":{
+      "type":"string",
+      "enum":[
+        "direct-vpc-routing",
+        "coip"
+      ]
     },
     "LocalGatewayRouteTableSet":{
       "type":"list",
@@ -27465,7 +27846,8 @@
       "type":"string",
       "enum":[
         "cloud-watch-logs",
-        "s3"
+        "s3",
+        "kinesis-data-firehose"
       ]
     },
     "Long":{"type":"long"},
@@ -28275,6 +28657,29 @@
         }
       }
     },
+    "ModifyLocalGatewayRouteRequest":{
+      "type":"structure",
+      "required":[
+        "DestinationCidrBlock",
+        "LocalGatewayRouteTableId"
+      ],
+      "members":{
+        "DestinationCidrBlock":{"shape":"String"},
+        "LocalGatewayRouteTableId":{"shape":"LocalGatewayRoutetableId"},
+        "LocalGatewayVirtualInterfaceGroupId":{"shape":"LocalGatewayVirtualInterfaceGroupId"},
+        "NetworkInterfaceId":{"shape":"NetworkInterfaceId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifyLocalGatewayRouteResult":{
+      "type":"structure",
+      "members":{
+        "Route":{
+          "shape":"LocalGatewayRoute",
+          "locationName":"route"
+        }
+      }
+    },
     "ModifyManagedPrefixListRequest":{
       "type":"structure",
       "required":["PrefixListId"],
@@ -28859,6 +29264,10 @@
     "ModifyVpcEndpointServicePermissionsResult":{
       "type":"structure",
       "members":{
+        "AddedPrincipals":{
+          "shape":"AddedPrincipalSet",
+          "locationName":"addedPrincipalSet"
+        },
         "ReturnValue":{
           "shape":"Boolean",
           "locationName":"return"
@@ -30384,6 +30793,14 @@
         "TransitGatewayRouteTableRoute":{
           "shape":"TransitGatewayRouteTableRoute",
           "locationName":"transitGatewayRouteTableRoute"
+        },
+        "Explanations":{
+          "shape":"ExplanationList",
+          "locationName":"explanationSet"
+        },
+        "ElasticLoadBalancerListener":{
+          "shape":"AnalysisComponent",
+          "locationName":"elasticLoadBalancerListener"
         }
       }
     },
@@ -33329,6 +33746,7 @@
         "client-vpn-endpoint",
         "customer-gateway",
         "carrier-gateway",
+        "coip-pool",
         "dedicated-host",
         "dhcp-options",
         "egress-only-internet-gateway",
@@ -33390,14 +33808,17 @@
         "volume",
         "vpc",
         "vpc-endpoint",
+        "vpc-endpoint-connection",
         "vpc-endpoint-service",
+        "vpc-endpoint-service-permission",
         "vpc-peering-connection",
         "vpn-connection",
         "vpn-gateway",
         "vpc-flow-log",
         "capacity-reservation-fleet",
         "traffic-mirror-filter-rule",
-        "vpc-endpoint-connection-device-type"
+        "vpc-endpoint-connection-device-type",
+        "vpn-connection-device-type"
       ]
     },
     "ResponseError":{
@@ -40087,6 +40508,14 @@
         "IpAddressType":{
           "shape":"IpAddressType",
           "locationName":"ipAddressType"
+        },
+        "VpcEndpointConnectionId":{
+          "shape":"String",
+          "locationName":"vpcEndpointConnectionId"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
         }
       }
     },

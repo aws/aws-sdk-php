@@ -26,7 +26,7 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 use http\Exception\InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Aws\Exception\UnresolvedEndpointException;
 
 /**
@@ -67,7 +67,14 @@ class S3ClientTest extends TestCase
             ['my.bucket.com', true],
             ['test-fooCaps', false],
             ['w-w', true],
-            ['w------', false]
+            ['w------', false],
+            ['', false],
+            [null,false],
+            [false,false],
+            [true,false],
+            [1,false],
+            [[],false],
+            [new \stdClass(),false]
         ];
     }
 
@@ -89,9 +96,9 @@ class S3ClientTest extends TestCase
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://foo.s3.amazonaws.com/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testCreatesPresignedRequestsWithAccessPointArn()
@@ -110,9 +117,9 @@ class S3ClientTest extends TestCase
         );
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://myendpoint-123456789012.s3-accesspoint.us-east-1.amazonaws.com/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testCreatesPresignedRequestsWithStartTime()
@@ -129,9 +136,9 @@ class S3ClientTest extends TestCase
             ['start_time' => 1562349366]
         )->getUri();
         $this->assertStringStartsWith('https://foo.s3.amazonaws.com/bar?', $url);
-        $this->assertContains('X-Amz-Expires=1200', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=61a9940ecdd901be8e36833f6d47123c0c719fc6aa82042144a6c5cf44a25988', $url);
+        $this->assertStringContainsString('X-Amz-Expires=1200', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=61a9940ecdd901be8e36833f6d47123c0c719fc6aa82042144a6c5cf44a25988', $url);
     }
 
     public function testCreatesPresignedRequestsWithPathStyleFallback()
@@ -144,9 +151,9 @@ class S3ClientTest extends TestCase
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo.baz', 'Key' => 'bar']);
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://s3.amazonaws.com/foo.baz/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testCreatesPresignedRequestsWithPathStyle()
@@ -160,9 +167,9 @@ class S3ClientTest extends TestCase
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://s3.amazonaws.com/foo/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testCreatingPresignedUrlDoesNotPermanentlyRemoveSigner()
@@ -239,9 +246,9 @@ class S3ClientTest extends TestCase
         );
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://lambda-access-point-123456789012.s3-object-lambda.us-east-1.amazonaws.com/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testRegistersStreamWrapper()
@@ -325,7 +332,7 @@ class S3ClientTest extends TestCase
                 } else {
                     $this->assertSame($exists, $s3->doesBucketExistV2($bucket, $accept403));
                 }
-            }else {
+            } else {
                 if ($key) {
                     $this->assertSame($exists, $s3->doesObjectExist($bucket, $key));
                 } else {
@@ -414,12 +421,10 @@ class S3ClientTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The DeleteObject operation requires non-empty parameter: Bucket
-     */
     public function testEnsuresMandatoryInputVariables()
     {
+        $this->expectExceptionMessage("The DeleteObject operation requires non-empty parameter: Bucket");
+        $this->expectException(\InvalidArgumentException::class);
         /** @var S3Client $client */
         $client = $this->getTestClient('S3');
         $client->deleteObject([
@@ -428,11 +433,9 @@ class S3ClientTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testEnsuresPrefixOrRegexSuppliedForDeleteMatchingObjects()
     {
+        $this->expectException(\RuntimeException::class);
         /** @var S3Client $client */
         $client = $this->getTestClient('S3');
         $client->deleteMatchingObjects('foo');
@@ -470,42 +473,34 @@ class S3ClientTest extends TestCase
         $this->assertEquals(['foo/bar/baz', 'foo/bar/bam'], $agg);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Mock queue is empty. Trying to send a PutObject
-     */
     public function testProxiesToTransferObjectPut()
     {
+        $this->expectExceptionMessage("Mock queue is empty. Trying to send a PutObject");
+        $this->expectException(\RuntimeException::class);
         $client = $this->getTestClient('S3');
         $client->uploadDirectory(__DIR__, 'test');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Mock queue is empty. Trying to send a ListObjects
-     */
     public function testProxiesToTransferObjectGet()
     {
+        $this->expectExceptionMessage("Mock queue is empty. Trying to send a ListObjects");
+        $this->expectException(\RuntimeException::class);
         $client = $this->getTestClient('S3');
         $client->downloadBucket(__DIR__, 'test');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Mock queue is empty. Trying to send a PutObject
-     */
     public function testProxiesToObjectUpload()
     {
+        $this->expectExceptionMessage("Mock queue is empty. Trying to send a PutObject");
+        $this->expectException(\RuntimeException::class);
         $client = $this->getTestClient('S3');
         $client->upload('bucket', 'key', 'body');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Mock queue is empty. Trying to send a HeadObject
-     */
     public function testProxiesToObjectCopy()
     {
+        $this->expectExceptionMessage("Mock queue is empty. Trying to send a HeadObject");
+        $this->expectException(\RuntimeException::class);
         $client = $this->getTestClient('S3');
         $client->copy('from-bucket', 'fromKey', 'to-bucket', 'toKey');
     }
@@ -525,9 +520,9 @@ class S3ClientTest extends TestCase
         $text = "<LocationConstraint>{$target}</LocationConstraint>";
         $body = (string) \Aws\serialize($command)->getBody();
         if ($contains) {
-            $this->assertContains($text, $body);
+            $this->assertStringContainsString($text, $body);
         } else {
-            $this->assertNotContains($text, $body);
+            $this->assertStringNotContainsString($text, $body);
         }
     }
 
@@ -567,7 +562,7 @@ class S3ClientTest extends TestCase
         $key = 'aaa:bbb';
         $s3 = $this->getTestClient('S3', [
             'http_handler' => function (RequestInterface $request) use ($key) {
-                $this->assertContains(
+                $this->assertStringContainsString(
                     urlencode($key),
                     (string) $request->getUri()
                 );
@@ -880,12 +875,11 @@ EOXML;
      * @dataProvider clientRetrySettingsProvider
      *
      * @param array $retrySettings
-     *
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessageRegExp /Your socket connection to the server/
      */
     public function testClientSocketTimeoutErrorsAreNotRetriedIndefinitely($retrySettings)
     {
+        $this->expectExceptionMessageMatches("/Your socket connection to the server/");
+        $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
@@ -963,12 +957,11 @@ EOXML;
      * @dataProvider clientRetrySettingsProvider
      *
      * @param array $retrySettings
-     *
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessageRegExp /CompleteMultipartUpload/
      */
     public function testNetworkingErrorsAreNotRetriedOnNonIdempotentCommands($retrySettings)
     {
+        $this->expectExceptionMessageMatches("/CompleteMultipartUpload/");
+        $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $networkingError = $this->getMockBuilder(RequestException::class)
             ->disableOriginalConstructor()
             ->setMethods([])
@@ -1232,11 +1225,9 @@ EOXML;
         $this->assertSame('us-west-2', $client->determineBucketRegion('bucket'));
     }
 
-    /**
-     * @expectedException \Aws\Exception\AwsException
-     */
     public function testDetermineBucketRegionExposeException()
     {
+        $this->expectException(\Aws\Exception\AwsException::class);
         $client = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
@@ -1477,12 +1468,10 @@ EOXML;
         ]);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid configuration value provided for "use_arn_region"
-     */
     public function testAddsUseArnRegionArgument()
     {
+        $this->expectExceptionMessage("Invalid configuration value provided for \"use_arn_region\"");
+        $this->expectException(\InvalidArgumentException::class);
         new S3Client([
             'region' => 'us-east-1',
             'version' => 'latest',
@@ -1557,12 +1546,10 @@ EOXML;
         $client->execute($command);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Configuration parameter must either be 'legacy' or 'regional'.
-     */
     public function testAddsS3RegionalEndpointArgument()
     {
+        $this->expectExceptionMessage("Configuration parameter must either be 'legacy' or 'regional'.");
+        $this->expectException(\InvalidArgumentException::class);
         new S3Client([
             'region' => 'us-east-1',
             'version' => 'latest',
@@ -1695,12 +1682,10 @@ EOXML;
         ];
     }
 
-    /**
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessage An error connecting to the service occurred while performing the CopyObject operation
-     */
     public function testAppliesAmbiguousSuccessParsing()
     {
+        $this->expectExceptionMessage("An error connecting to the service occurred while performing the CopyObject operation");
+        $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $httpHandler = function ($request, array $options) {
             return Promise\Create::promiseFor(
                 new Psr7\Response(200, [], "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n\n")
@@ -1856,7 +1841,7 @@ EOXML;
                 $e instanceof  UnresolvedEndpointException
                 || $e instanceof S3Exception
             );
-            self::assertContains($expectedException, $e->getMessage());
+            self::assertStringContainsString($expectedException, $e->getMessage());
         }
     }
 
@@ -1900,7 +1885,7 @@ EOXML;
                 $e instanceof  UnresolvedEndpointException
                 || $e instanceof S3Exception
             );
-            self::assertContains($expectedException, $e->getMessage());
+            self::assertStringContainsString($expectedException, $e->getMessage());
         }
     }
     public function AccessPointFailureProvider()
@@ -1958,7 +1943,7 @@ EOXML;
             self::fail("exception should have been thrown");
         } catch (\Exception $e) {
             self::assertTrue($e instanceof  UnresolvedEndpointException);
-            self::assertContains($expectedException, $e->getMessage());
+            self::assertStringContainsString($expectedException, $e->getMessage());
         }
     }
 

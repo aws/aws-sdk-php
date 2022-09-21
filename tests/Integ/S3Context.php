@@ -411,7 +411,7 @@ class S3Context implements Context, SnippetAcceptingContext
                     throw $e;
                 }
                 $attempts++;
-                sleep(pow(1.2, $attempts));
+                sleep((int) pow(1.2, $attempts));
             }
         }
     }

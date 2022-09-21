@@ -5,7 +5,7 @@ use Aws\Command;
 use Aws\CommandPool;
 use Aws\Exception\AwsException;
 use Aws\Result;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\CommandPool
@@ -14,24 +14,20 @@ class CommandPoolTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Each value yielded by the iterator must be an Aws\CommandInterface
-     */
     public function testEnsuresEachIsCommand()
     {
+        $this->expectExceptionMessage("Each value yielded by the iterator must be an Aws\CommandInterface");
+        $this->expectException(\InvalidArgumentException::class);
         $client = $this->getTestClient('s3');
         $iter = ['a'];
         $pool = new CommandPool($client, $iter);
         $pool->promise()->wait();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage before must be callable
-     */
     public function testEnsuresBeforeIsCallable()
     {
+        $this->expectExceptionMessage("before must be callable");
+        $this->expectException(\InvalidArgumentException::class);
         $client = $this->getTestClient('s3');
         new CommandPool($client, [], ['before' => 'foo']);
     }

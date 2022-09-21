@@ -3708,7 +3708,8 @@
         "CompletionCriteria":{"shape":"AutoMLJobCompletionCriteria"},
         "SecurityConfig":{"shape":"AutoMLSecurityConfig"},
         "DataSplitConfig":{"shape":"AutoMLDataSplitConfig"},
-        "CandidateGenerationConfig":{"shape":"AutoMLCandidateGenerationConfig"}
+        "CandidateGenerationConfig":{"shape":"AutoMLCandidateGenerationConfig"},
+        "Mode":{"shape":"AutoMLMode"}
       }
     },
     "AutoMLJobName":{
@@ -3821,6 +3822,14 @@
         "Recall",
         "RecallMacro",
         "LogLoss"
+      ]
+    },
+    "AutoMLMode":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "ENSEMBLING",
+        "HYPERPARAMETER_TUNING"
       ]
     },
     "AutoMLNameContains":{
@@ -4088,6 +4097,12 @@
     "CandidateSteps":{
       "type":"list",
       "member":{"shape":"AutoMLCandidateStep"}
+    },
+    "CanvasAppSettings":{
+      "type":"structure",
+      "members":{
+        "TimeSeriesForecastingSettings":{"shape":"TimeSeriesForecastingSettings"}
+      }
     },
     "CapacitySize":{
       "type":"structure",
@@ -9081,6 +9096,13 @@
       "max":25,
       "min":0
     },
+    "FeatureStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "FeatureType":{
       "type":"string",
       "enum":[
@@ -9682,6 +9704,7 @@
       ],
       "members":{
         "Strategy":{"shape":"HyperParameterTuningJobStrategyType"},
+        "StrategyConfig":{"shape":"HyperParameterTuningJobStrategyConfig"},
         "HyperParameterTuningJobObjective":{"shape":"HyperParameterTuningJobObjective"},
         "ResourceLimits":{"shape":"ResourceLimits"},
         "ParameterRanges":{"shape":"ParameterRanges"},
@@ -9717,6 +9740,27 @@
       "type":"list",
       "member":{"shape":"HyperParameterTuningJobObjective"}
     },
+    "HyperParameterTuningJobSearchEntity":{
+      "type":"structure",
+      "members":{
+        "HyperParameterTuningJobName":{"shape":"HyperParameterTuningJobName"},
+        "HyperParameterTuningJobArn":{"shape":"HyperParameterTuningJobArn"},
+        "HyperParameterTuningJobConfig":{"shape":"HyperParameterTuningJobConfig"},
+        "TrainingJobDefinition":{"shape":"HyperParameterTrainingJobDefinition"},
+        "TrainingJobDefinitions":{"shape":"HyperParameterTrainingJobDefinitions"},
+        "HyperParameterTuningJobStatus":{"shape":"HyperParameterTuningJobStatus"},
+        "CreationTime":{"shape":"Timestamp"},
+        "HyperParameterTuningEndTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "TrainingJobStatusCounters":{"shape":"TrainingJobStatusCounters"},
+        "ObjectiveStatusCounters":{"shape":"ObjectiveStatusCounters"},
+        "BestTrainingJob":{"shape":"HyperParameterTrainingJobSummary"},
+        "OverallBestTrainingJob":{"shape":"HyperParameterTrainingJobSummary"},
+        "WarmStartConfig":{"shape":"HyperParameterTuningJobWarmStartConfig"},
+        "FailureReason":{"shape":"FailureReason"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
     "HyperParameterTuningJobSortByOptions":{
       "type":"string",
       "enum":[
@@ -9735,11 +9779,18 @@
         "Stopping"
       ]
     },
+    "HyperParameterTuningJobStrategyConfig":{
+      "type":"structure",
+      "members":{
+        "HyperbandStrategyConfig":{"shape":"HyperbandStrategyConfig"}
+      }
+    },
     "HyperParameterTuningJobStrategyType":{
       "type":"string",
       "enum":[
         "Bayesian",
-        "Random"
+        "Random",
+        "Hyperband"
       ]
     },
     "HyperParameterTuningJobSummaries":{
@@ -9810,6 +9861,21 @@
       "value":{"shape":"HyperParameterValue"},
       "max":100,
       "min":0
+    },
+    "HyperbandStrategyConfig":{
+      "type":"structure",
+      "members":{
+        "MinResource":{"shape":"HyperbandStrategyMinResource"},
+        "MaxResource":{"shape":"HyperbandStrategyMaxResource"}
+      }
+    },
+    "HyperbandStrategyMaxResource":{
+      "type":"integer",
+      "min":1
+    },
+    "HyperbandStrategyMinResource":{
+      "type":"integer",
+      "min":1
     },
     "IdempotencyToken":{
       "type":"string",
@@ -11989,7 +12055,7 @@
     },
     "MaxConcurrentTaskCount":{
       "type":"integer",
-      "max":1000,
+      "max":5000,
       "min":1
     },
     "MaxConcurrentTransforms":{
@@ -14117,7 +14183,10 @@
         "InitialVariantWeight":{"shape":"VariantWeight"},
         "AcceleratorType":{"shape":"ProductionVariantAcceleratorType"},
         "CoreDumpConfig":{"shape":"ProductionVariantCoreDumpConfig"},
-        "ServerlessConfig":{"shape":"ProductionVariantServerlessConfig"}
+        "ServerlessConfig":{"shape":"ProductionVariantServerlessConfig"},
+        "VolumeSizeInGB":{"shape":"ProductionVariantVolumeSizeInGB"},
+        "ModelDataDownloadTimeoutInSeconds":{"shape":"ProductionVariantModelDataDownloadTimeoutInSeconds"},
+        "ContainerStartupHealthCheckTimeoutInSeconds":{"shape":"ProductionVariantContainerStartupHealthCheckTimeoutInSeconds"}
       }
     },
     "ProductionVariantAcceleratorType":{
@@ -14130,6 +14199,11 @@
         "ml.eia2.large",
         "ml.eia2.xlarge"
       ]
+    },
+    "ProductionVariantContainerStartupHealthCheckTimeoutInSeconds":{
+      "type":"integer",
+      "max":3600,
+      "min":60
     },
     "ProductionVariantCoreDumpConfig":{
       "type":"structure",
@@ -14234,6 +14308,11 @@
       "max":10,
       "min":1
     },
+    "ProductionVariantModelDataDownloadTimeoutInSeconds":{
+      "type":"integer",
+      "max":3600,
+      "min":60
+    },
     "ProductionVariantServerlessConfig":{
       "type":"structure",
       "required":[
@@ -14278,6 +14357,11 @@
     "ProductionVariantSummaryList":{
       "type":"list",
       "member":{"shape":"ProductionVariantSummary"},
+      "min":1
+    },
+    "ProductionVariantVolumeSizeInGB":{
+      "type":"integer",
+      "max":512,
       "min":1
     },
     "ProfilerConfig":{
@@ -15001,7 +15085,8 @@
         "PipelineExecution",
         "FeatureGroup",
         "Project",
-        "FeatureMetadata"
+        "FeatureMetadata",
+        "HyperParameterTuningJob"
       ]
     },
     "ResponseMIMEType":{
@@ -15196,7 +15281,8 @@
         "PipelineExecution":{"shape":"PipelineExecution"},
         "FeatureGroup":{"shape":"FeatureGroup"},
         "Project":{"shape":"Project"},
-        "FeatureMetadata":{"shape":"FeatureMetadata"}
+        "FeatureMetadata":{"shape":"FeatureMetadata"},
+        "HyperParameterTuningJob":{"shape":"HyperParameterTuningJobSearchEntity"}
       }
     },
     "SearchRequest":{
@@ -16067,6 +16153,13 @@
       "type":"string",
       "max":128,
       "pattern":"[a-zA-Z0-9:_-]+"
+    },
+    "TimeSeriesForecastingSettings":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"FeatureStatus"},
+        "AmazonForecastRoleArn":{"shape":"RoleArn"}
+      }
     },
     "Timestamp":{"type":"timestamp"},
     "TrafficDurationInSeconds":{
@@ -17331,7 +17424,8 @@
         "KernelGatewayAppSettings":{"shape":"KernelGatewayAppSettings"},
         "TensorBoardAppSettings":{"shape":"TensorBoardAppSettings"},
         "RStudioServerProAppSettings":{"shape":"RStudioServerProAppSettings"},
-        "RSessionAppSettings":{"shape":"RSessionAppSettings"}
+        "RSessionAppSettings":{"shape":"RSessionAppSettings"},
+        "CanvasAppSettings":{"shape":"CanvasAppSettings"}
       }
     },
     "ValidationFraction":{

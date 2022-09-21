@@ -644,7 +644,8 @@
         "UPDATING",
         "DELETING",
         "DELETE_FAILED",
-        "DEGRADED"
+        "DEGRADED",
+        "UPDATE_FAILED"
       ]
     },
     "AddonVersionInfo":{
@@ -790,8 +791,40 @@
         "platformVersion":{"shape":"String"},
         "tags":{"shape":"TagMap"},
         "encryptionConfig":{"shape":"EncryptionConfigList"},
-        "connectorConfig":{"shape":"ConnectorConfigResponse"}
+        "connectorConfig":{"shape":"ConnectorConfigResponse"},
+        "id":{"shape":"String"},
+        "health":{"shape":"ClusterHealth"},
+        "outpostConfig":{"shape":"OutpostConfigResponse"}
       }
+    },
+    "ClusterHealth":{
+      "type":"structure",
+      "members":{
+        "issues":{"shape":"ClusterIssueList"}
+      }
+    },
+    "ClusterIssue":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"ClusterIssueCode"},
+        "message":{"shape":"String"},
+        "resourceIds":{"shape":"StringList"}
+      }
+    },
+    "ClusterIssueCode":{
+      "type":"string",
+      "enum":[
+        "AccessDenied",
+        "ClusterUnreachable",
+        "ConfigurationConflict",
+        "InternalFailure",
+        "ResourceLimitExceeded",
+        "ResourceNotFound"
+      ]
+    },
+    "ClusterIssueList":{
+      "type":"list",
+      "member":{"shape":"ClusterIssue"}
     },
     "ClusterName":{
       "type":"string",
@@ -905,7 +938,8 @@
           "idempotencyToken":true
         },
         "tags":{"shape":"TagMap"},
-        "encryptionConfig":{"shape":"EncryptionConfigList"}
+        "encryptionConfig":{"shape":"EncryptionConfigList"},
+        "outpostConfig":{"shape":"OutpostConfigRequest"}
       }
     },
     "CreateClusterResponse":{
@@ -1900,6 +1934,28 @@
         "requiredClaims":{"shape":"requiredClaimsMap"}
       }
     },
+    "OutpostConfigRequest":{
+      "type":"structure",
+      "required":[
+        "outpostArns",
+        "controlPlaneInstanceType"
+      ],
+      "members":{
+        "outpostArns":{"shape":"StringList"},
+        "controlPlaneInstanceType":{"shape":"String"}
+      }
+    },
+    "OutpostConfigResponse":{
+      "type":"structure",
+      "required":[
+        "outpostArns",
+        "controlPlaneInstanceType"
+      ],
+      "members":{
+        "outpostArns":{"shape":"StringList"},
+        "controlPlaneInstanceType":{"shape":"String"}
+      }
+    },
     "PercentCapacity":{
       "type":"integer",
       "box":true,
@@ -1945,7 +2001,8 @@
       "type":"string",
       "enum":[
         "OVERWRITE",
-        "NONE"
+        "NONE",
+        "PRESERVE"
       ]
     },
     "ResourceInUseException":{

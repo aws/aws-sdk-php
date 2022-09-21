@@ -11,7 +11,7 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -71,7 +71,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     );
                 }
 
-                $this->assertContains(
+                $this->assertStringContainsString(
                     "/{$signingRegion}/s3",
                     $req->getHeader('Authorization')[0]
                 );

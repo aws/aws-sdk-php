@@ -3,7 +3,7 @@ namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Serializer\RestXmlSerializer;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\Serializer\RestXmlSerializer
@@ -42,7 +42,7 @@ class RestXmlSerializerTest extends TestCase
             ],
         ]);
         $contents = $request->getBody()->getContents();
-        $this->assertContains(
+        $this->assertStringContainsString(
             "<Key>/@/#/=/;/:/ /,/?/&apos;/&quot;/&lt;/&gt;/&amp;/&#13;/&#10;/",
             $contents
         );

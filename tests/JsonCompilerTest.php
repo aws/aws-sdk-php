@@ -2,7 +2,7 @@
 namespace Aws\Test;
 
 use Aws\JsonCompiler;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\JsonCompiler
@@ -11,7 +11,7 @@ class JsonCompilerTest extends TestCase
 {
     private $models;
 
-    public function setup()
+    public function set_up()
     {
         $this->models = realpath(__DIR__ . '/../src/data');
     }
@@ -20,14 +20,12 @@ class JsonCompilerTest extends TestCase
     {
         $c = new JsonCompiler();
         $data = $c->load($this->models . '/endpoints.json');
-        $this->assertInternalType('array', $data);
+        $this->assertIsArray($data);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testEnsuresFileExists()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $c = new JsonCompiler();
         $c->load($this->models . '/not_there.json');
     }

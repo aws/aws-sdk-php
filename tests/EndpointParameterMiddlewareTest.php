@@ -6,14 +6,13 @@ use Aws\EndpointParameterMiddleware;
 use Aws\HandlerList;
 use Aws\Api\Service;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\EndpointParameterMiddleware
  */
 class EndpointParameterMiddlewareTest extends TestCase
 {
-
     public function testThrowsExceptionForMissingParameter()
     {
         $service = $this->generateTestService();
@@ -78,6 +77,9 @@ class EndpointParameterMiddlewareTest extends TestCase
         $endpoint,
         $expectedHost
     ) {
+        if ($cmdName === 'NoEndpointOp') {
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
+        }
         $client = $this->generateTestClient($service, $clientArgs);
         $command = $client->getCommand($cmdName, $params);
 
@@ -182,7 +184,8 @@ class EndpointParameterMiddlewareTest extends TestCase
             [
                 'metadata' => [
                     "protocol" => "json",
-                    "apiVersion" => "2014-01-01"
+                    "apiVersion" => "2014-01-01",
+                    'jsonVersion' => "1.1"
                 ],
                 'shapes' => [
                     "StaticInputShape" => [

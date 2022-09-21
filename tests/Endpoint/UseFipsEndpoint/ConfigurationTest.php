@@ -2,7 +2,7 @@
 namespace Aws\Test\Endpoint\UseFipsEndpoint;
 
 use Aws\Endpoint\UseFipsEndpoint\Configuration;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Endpoint\UseFipsEndpoint\Configuration
@@ -44,12 +44,10 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->toArray());
     }
 
-    /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
-     * @expectedExceptionMessage 'use_fips_endpoint' config option must be a boolean value.
-     */
     public function testThrowsOnInvalidEndpointsType()
     {
+        $this->expectException(\Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException::class);
+        $this->expectExceptionMessage("'use_fips_endpoint' config option must be a boolean value.");
         new Configuration('not a boolean');
     }
 }
