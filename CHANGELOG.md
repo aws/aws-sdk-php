@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Comprehend` - Amazon Comprehend now supports synchronous mode for targeted sentiment API operations.
+* `Aws\S3Control` - S3 on Outposts launches support for object versioning for Outposts buckets. With S3 Versioning, you can preserve, retrieve, and restore every version of every object stored in your buckets. You can recover from both unintended user actions and application failures.
+* `Aws\SageMaker` - SageMaker now allows customization on Canvas Application settings, including enabling/disabling time-series forecasting and specifying an Amazon Forecast execution role at both the Domain and UserProfile levels.
+
 ## 3.235.12 - 2022-09-20
 
 * `Aws\EC2` - This release adds support for blocked paths to Amazon VPC Reachability Analyzer.
