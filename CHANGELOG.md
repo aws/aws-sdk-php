@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.13 - 2022-09-21
 
 * `Aws\Comprehend` - Amazon Comprehend now supports synchronous mode for targeted sentiment API operations.
 * `Aws\S3Control` - S3 on Outposts launches support for object versioning for Outposts buckets. With S3 Versioning, you can preserve, retrieve, and restore every version of every object stored in your buckets. You can recover from both unintended user actions and application failures.
