@@ -245,19 +245,19 @@ class Validator
         }
     }
 
-    private function checkArray($arr)
+    private function checkArray(array $arr)
     {
         return $this->isIndexed($arr) || $this->isAssociative($arr);
     }
 
-    private function isAssociative($arr)
+    private function isAssociative(array $arr)
     {
-        return count(array_filter(array_keys($arr), "is_string")) == count($arr);
+        return count(array_filter(array_keys($arr), "is_string")) === count($arr);
     }
 
     private function isIndexed(array $arr)
     {
-        return $arr == array_values($arr);
+        return $arr === array_values($arr);
     }
 
     private function checkCanString($value)
@@ -272,7 +272,7 @@ class Validator
         $type = gettype($value);
 
         return isset($valid[$type]) ||
-            ($type == 'object' && method_exists($value, '__toString'));
+            ($type === 'object' && method_exists($value, '__toString'));
     }
 
     private function checkAssociativeArray($value)
@@ -325,7 +325,7 @@ class Validator
                     $nonNullCount++;
                 }
             }
-            return $nonNullCount == 1;
+            return $nonNullCount === 1;
         }
         return !is_null($value);
     }
