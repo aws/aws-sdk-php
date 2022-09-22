@@ -15,7 +15,7 @@ use Aws\Exception\UnresolvedEndpointException;
 class RulesetStandardLibrary
 {
     const IPV4_RE = '/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/';
-    const IPV6_RE = "/([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|
+    const IPV6_RE = '/([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|
                     . ([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]
                     . {1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:)
                     . {1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|
@@ -23,11 +23,11 @@ class RulesetStandardLibrary
                     . (:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|
                     . 1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]
                     . {1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]
-                    . |1{0,1}[0-9]){0,1}[0-9])/";
-    const TEMPLATE_ESCAPE_RE = "/{\{\s*(.*?)\s*\}\}/";
-    const TEMPLATE_SEARCH_RE = "/\{[a-zA-Z#]+\}/";
-    const TEMPLATE_PARSE_RE = "#\{((?>[^\{\}]+)|(?R))*\}#x";
-    const HOST_LABEL_RE = "/^(?!-)[a-zA-Z\d-]{1,63}(?<!-)$/";
+                    . |1{0,1}[0-9]){0,1}[0-9])/';
+    const TEMPLATE_ESCAPE_RE = '/{\{\s*(.*?)\s*\}\}/';
+    const TEMPLATE_SEARCH_RE = '/\{[a-zA-Z#]+\}/';
+    const TEMPLATE_PARSE_RE = '#\{((?>[^\{\}]+)|(?R))*\}#x';
+    const HOST_LABEL_RE = '/^(?!-)[a-zA-Z\d-]{1,63}(?<!-)$/';
 
     private $partitions;
 
@@ -176,12 +176,12 @@ class RulesetStandardLibrary
         }
 
         $urlInfo = [];
-        $urlInfo['scheme'] = isset($parsed['scheme']) ? $parsed['scheme'] : "";
-        $urlInfo['authority'] = isset($parsed['host']) ? $parsed['host'] : "";
+        $urlInfo['scheme'] = isset($parsed['scheme']) ? $parsed['scheme'] : '';
+        $urlInfo['authority'] = isset($parsed['host']) ? $parsed['host'] : '';
         if (isset($parsed['port'])) {
             $urlInfo['authority'] = $urlInfo['authority'] . ":" . $parsed['port'];
         }
-        $urlInfo['path'] = isset($parsed['path']) ? $parsed['path'] : '/';
+        $urlInfo['path'] = isset($parsed['path']) ? $parsed['path'] : '';
         $urlInfo['normalizedPath'] = !empty($parsed['path'])
             ? rtrim($urlInfo['path'] ?: '', '/' .  "/") . '/'
             : '/';
@@ -221,19 +221,39 @@ class RulesetStandardLibrary
     /**
      * Parse and validate string for ARN components.
      *
-     * @return mixed
+     * @return array|null
      */
-    public function parseArn($arn)
+    public function parseArn($arnString)
     {
-        try {
-            $arn = ArnParser::parse($arn)->toArray();
-            $arn['resourceId'] = preg_split('#[:/]#', $arn['resource']);
-            $arn['accountId'] = $arn['account_id'];
-            unset($arn['resource'], $arn['account_id']);
-            return $arn;
-        } catch (InvalidArnException $e) {
+        if (is_null($arnString)
+            || substr( $arnString, 0, 3 ) !== "arn"
+        ) {
             return null;
         }
+
+            $arn = [];
+        $parts = explode(':', $arnString, 6);
+        if (sizeof($parts) > 6) {
+            return null;
+        }
+
+        $arn['partition'] = isset($parts[1]) ? $parts[1] : null;
+        $arn['service'] = isset($parts[2]) ? $parts[2] : null;
+        $arn['region'] = isset($parts[3]) ? $parts[3] : null;
+        $arn['accountId'] = isset($parts[4]) ? $parts[4] : null;
+        $arn['resourceId'] = isset($parts[5]) ? $parts[5] : null;
+
+        if (empty($arn['partition'])
+            || empty($arn['service'])
+            || empty($arn['resourceId'])
+        ) {
+            return null;
+        }
+        $resource = $arn['resourceId'];
+        $delimiter = str_contains($resource, ':') ? ':' : '/';
+        $arn['resourceId'] = explode($delimiter, $resource);
+
+        return $arn;
     }
 
     /**
