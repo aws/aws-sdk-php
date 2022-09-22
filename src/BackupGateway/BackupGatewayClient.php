@@ -17,6 +17,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disassociateGatewayFromServerAsync(array $args = [])
  * @method \Aws\Result getGateway(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getGatewayAsync(array $args = [])
+ * @method \Aws\Result getVirtualMachine(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getVirtualMachineAsync(array $args = [])
  * @method \Aws\Result importHypervisorConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise importHypervisorConfigurationAsync(array $args = [])
  * @method \Aws\Result listGateways(array $args = [])
