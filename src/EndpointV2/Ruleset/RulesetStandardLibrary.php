@@ -250,7 +250,7 @@ class RulesetStandardLibrary
             return null;
         }
         $resource = $arn['resourceId'];
-        $delimiter = str_contains($resource, ':') ? ':' : '/';
+        $delimiter = strpos($resource, ':') !== false ? ':' : '/';
         $arn['resourceId'] = explode($delimiter, $resource);
 
         return $arn;
