@@ -36,7 +36,7 @@ class TreeRule extends Rule
         RulesetStandardLibrary $standardLibrary
     )
     {
-        if($this->evaluateConditions($inputParameters, $standardLibrary)) {
+        if ($this->evaluateConditions($inputParameters, $standardLibrary)) {
             foreach($this->rules as $rule) {
                 //newly set parameters via "assign" cannot be shared
                 //between adjacent rules
