@@ -19,6 +19,9 @@ class Service extends AbstractModel
     /** @var string */
     private $apiVersion;
 
+    /** @var array */
+    private $clientContextParams = [];
+
     /** @var Operation[] */
     private $operations = [];
 
@@ -39,7 +42,8 @@ class Service extends AbstractModel
         static $defaults = [
             'operations' => [],
             'shapes'     => [],
-            'metadata'   => []
+            'metadata'   => [],
+            'clientContextParams' => []
         ], $defaultMeta = [
             'apiVersion'       => null,
             'serviceFullName'  => null,
@@ -464,5 +468,15 @@ class Service extends AbstractModel
     public function getShapeMap()
     {
         return $this->shapeMap;
+    }
+
+    /**
+     * Get all of the context params of the description.
+     *
+     * @return Operation[]
+     */
+    public function getClientContextParams()
+    {
+        return $this->definition['clientContextParams'];
     }
 }

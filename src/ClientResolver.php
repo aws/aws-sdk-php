@@ -44,6 +44,7 @@ class ClientResolver
         'callable' => 'is_callable',
         'int'      => 'is_int',
         'bool'     => 'is_bool',
+        'boolean'  => 'is_bool',
         'string'   => 'is_string',
         'object'   => 'is_object',
         'array'    => 'is_array',
