@@ -5,7 +5,7 @@ use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionInterface;
 use Aws\Endpoint\UseDualstackEndpoint;
 use Aws\Endpoint\UseFipsEndpoint;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Endpoint\Partition
@@ -29,12 +29,11 @@ class PartitionTest extends TestCase
      * @dataProvider invalidPartitionDefinitionProvider
      *
      * @param array $invalidDefinition
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp /missing required \w+ field/
      */
     public function testRejectsInvalidDefinitions(array $invalidDefinition)
     {
+        $this->expectExceptionMessageMatches("/missing required \w+ field/");
+        $this->expectException(\InvalidArgumentException::class);
         new Partition($invalidDefinition);
     }
 
@@ -63,7 +62,7 @@ class PartitionTest extends TestCase
     {
         $partition = new Partition($definition);
         $resolved = $partition(['region' => 'fips-aws-global', 'service' => 'service']);
-        self::assertContains('service-fips.amazonaws.com', $resolved['endpoint']);
+        self::assertStringContainsString('service-fips.amazonaws.com', $resolved['endpoint']);
     }
 
     public function partitionDefinitionProvider()
@@ -689,7 +688,7 @@ class PartitionTest extends TestCase
             ]
         ]);
 
-        self::assertContains('testsuffix.com', $resolved['endpoint']);
+        $this->assertStringContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
     public function variantTagProvider()
@@ -839,7 +838,7 @@ class PartitionTest extends TestCase
             ]
         ]);
 
-        self::assertNotContains('testsuffix.com', $resolved['endpoint']);
+        $this->assertStringNotContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
     public function variantTagEmptyProvider()

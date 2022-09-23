@@ -3,7 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\ListShape;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\ListShape
@@ -23,11 +23,9 @@ class ListShapeTest extends TestCase
         $this->assertSame('string', $m->getType());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testFailsWhenMemberIsMissing()
     {
+        $this->expectException(\RuntimeException::class);
         (new ListShape([], new ShapeMap([])))->getMember();
     }
 }

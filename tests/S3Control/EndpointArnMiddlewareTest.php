@@ -9,7 +9,7 @@ use Aws\Middleware;
 use Aws\Test\S3Control\S3ControlTestingTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -58,7 +58,7 @@ class EndpointArnMiddlewareTest extends TestCase
                     $req->getUri()->getHost()
                 );
                 $this->assertSame("/{$target}", $req->getRequestTarget());
-                $this->assertContains(
+                $this->assertStringContainsString(
                     "/{$signingRegion}/{$signingService}",
                     $req->getHeader('Authorization')[0]
                 );

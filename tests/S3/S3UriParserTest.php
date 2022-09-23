@@ -3,7 +3,7 @@ namespace Aws\Test\S3;
 
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\S3\S3UriParser;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\S3\S3UriParser
@@ -101,10 +101,12 @@ class S3UriParserTest extends TestCase
             ksort($actual);
             $this->assertSame($result, $actual);
         } catch (\InvalidArgumentException $e) {
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
             if (!$isError) {
                 throw $e;
             }
         } catch (InvalidArnException $e) {
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
             if (!$isError) {
                 throw $e;
             }

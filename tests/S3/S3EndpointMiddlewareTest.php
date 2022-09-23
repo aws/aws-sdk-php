@@ -11,7 +11,7 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class S3EndpointMiddlewareTest extends TestCase
 {
@@ -396,8 +396,8 @@ class S3EndpointMiddlewareTest extends TestCase
             CommandInterface $toHandle,
             RequestInterface $req
         ) use ($command, $pattern) {
-            $this->assertNotContains($pattern, (string)$req->getUri());
-            $this->assertContains($command['Bucket'], $req->getUri()->getHost());
+            $this->assertStringNotContainsString($pattern, (string)$req->getUri());
+            $this->assertStringContainsString($command['Bucket'], $req->getUri()->getHost());
         };
     }
 
@@ -411,7 +411,7 @@ class S3EndpointMiddlewareTest extends TestCase
                 "{$command['Bucket']}.{$pattern}.amazonaws.com",
                 $req->getUri()->getHost()
             );
-            $this->assertNotContains($command['Bucket'], $req->getUri()->getPath());
+            $this->assertStringNotContainsString($command['Bucket'], $req->getUri()->getPath());
         };
     }
 
@@ -425,8 +425,8 @@ class S3EndpointMiddlewareTest extends TestCase
                 "bucket.s3.dualstack.us-west-2.amazonaws.com",
                 $req->getUri()->getHost()
             );
-            $this->assertNotContains($command['Bucket'], $req->getUri()->getPath());
-            $this->assertContains('key=query', $req->getUri()->getQuery());
+            $this->assertStringNotContainsString($command['Bucket'], $req->getUri()->getPath());
+            $this->assertStringContainsString('key=query', $req->getUri()->getQuery());
         };
     }
 
@@ -440,8 +440,8 @@ class S3EndpointMiddlewareTest extends TestCase
                 "s3.dualstack.us-west-2.amazonaws.com",
                 $req->getUri()->getHost()
             );
-            $this->assertContains($command['Bucket'], $req->getUri()->getPath());
-            $this->assertContains('key=query', $req->getUri()->getQuery());
+            $this->assertStringContainsString($command['Bucket'], $req->getUri()->getPath());
+            $this->assertStringContainsString('key=query', $req->getUri()->getQuery());
         };
     }
 
@@ -455,8 +455,8 @@ class S3EndpointMiddlewareTest extends TestCase
                 "s3.dualstack.us-west-2.amazonaws.com",
                 $req->getUri()->getHost()
             );
-            $this->assertContains($command['Bucket'], $req->getUri()->getPath());
-            $this->assertContains('key=query', $req->getUri()->getQuery());
+            $this->assertStringContainsString($command['Bucket'], $req->getUri()->getPath());
+            $this->assertStringContainsString('key=query', $req->getUri()->getQuery());
         };
     }
 
@@ -466,9 +466,9 @@ class S3EndpointMiddlewareTest extends TestCase
             CommandInterface $cmd,
             RequestInterface $req
         ) use ($command) {
-            $this->assertNotContains('s3.dualstack', (string)$req->getUri());
-            $this->assertContains($command['Bucket'], $req->getUri()->getHost());
-            $this->assertContains('key=query', $req->getUri()->getQuery());
+            $this->assertStringNotContainsString('s3.dualstack', (string)$req->getUri());
+            $this->assertStringContainsString($command['Bucket'], $req->getUri()->getHost());
+            $this->assertStringContainsString('key=query', $req->getUri()->getQuery());
         };
     }
 
@@ -482,8 +482,8 @@ class S3EndpointMiddlewareTest extends TestCase
                 "127.250.250.250",
                 $req->getUri()->getHost()
             );
-            $this->assertContains($command['Bucket'], $req->getUri()->getPath());
-            $this->assertContains('key=query', $req->getUri()->getQuery());
+            $this->assertStringContainsString($command['Bucket'], $req->getUri()->getPath());
+            $this->assertStringContainsString('key=query', $req->getUri()->getQuery());
         };
     }
 
@@ -660,7 +660,7 @@ class S3EndpointMiddlewareTest extends TestCase
             $client->execute($command);
             $this->fail("did not catch exception: " . $expectedException);
         } catch (\Exception $e) {
-            $this->assertContains($expectedException, $e->getMessage());
+            $this->assertStringContainsString($expectedException, $e->getMessage());
         }
     }
 

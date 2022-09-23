@@ -3,7 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\Operation;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\Operation
@@ -22,7 +22,7 @@ class OperationTest extends TestCase
         $o = new Operation([], new ShapeMap([]));
         $this->assertInstanceOf('Aws\Api\Shape', $o->getInput());
         $this->assertInstanceOf('Aws\Api\Shape', $o->getOutput());
-        $this->assertInternalType('array', $o->getErrors());
+        $this->assertIsArray($o->getErrors());
     }
 
     public function testReturnsInputShape()
@@ -60,7 +60,7 @@ class OperationTest extends TestCase
             'b' => ['type' => 'list'],
         ]));
         $e = $o->getErrors();
-        $this->assertInternalType('array', $e);
+        $this->assertIsArray($e);
         $this->assertInstanceOf('Aws\Api\Shape', $e[0]);
         $this->assertInstanceOf('Aws\Api\Shape', $e[1]);
         $this->assertSame('structure', $e[0]->getType());

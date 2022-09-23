@@ -2,7 +2,7 @@
 namespace Aws\Test\Route53;
 
 use Aws\Route53\Route53Client;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Route53\Route53Client
@@ -34,8 +34,8 @@ class RouteClient53Test extends TestCase
 
         $request = \Aws\serialize($command);
         $requestUri = (string) $request->getUri();
-        $this->assertContains('/hostedzone/foo/rrset/', $requestUri);
-        $this->assertNotContains('/hostedzone/hostedzone', $requestUri);
+        $this->assertStringContainsString('/hostedzone/foo/rrset/', $requestUri);
+        $this->assertStringNotContainsString('/hostedzone/hostedzone', $requestUri);
 
         $command = $client->getCommand('GetReusableDelegationSet', [
             'Id' => '/delegationset/foo',
@@ -43,8 +43,8 @@ class RouteClient53Test extends TestCase
 
         $request = \Aws\serialize($command);
         $requestUri = (string) $request->getUri();
-        $this->assertContains('/delegationset/foo', $requestUri);
-        $this->assertNotContains('/delegationset/delegationset', $requestUri);
+        $this->assertStringContainsString('/delegationset/foo', $requestUri);
+        $this->assertStringNotContainsString('/delegationset/delegationset', $requestUri);
 
         $command = $client->getCommand('CreateHostedZone', [
             'Name' => 'foo',
@@ -53,7 +53,7 @@ class RouteClient53Test extends TestCase
         ]);
 
         $request = \Aws\serialize($command);
-        $this->assertContains(
+        $this->assertStringContainsString(
             '<DelegationSetId>bar</DelegationSetId>',
             $request->getBody()->getContents()
         );

@@ -3,7 +3,7 @@
 namespace Aws\Test\DefaultsMode;
 
 use Aws\DefaultsMode\Configuration;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\DefaultsMode\Configuration
@@ -42,12 +42,10 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->toArray());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage 'foo' is not a valid mode
-     */
     public function testHandlesInvalidMode()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("'foo' is not a valid mode");
         new Configuration('foo');
     }
 }

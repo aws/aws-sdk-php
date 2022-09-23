@@ -3,7 +3,7 @@ namespace Aws\Test\Polly;
 
 use Aws\Credentials\Credentials;
 use Aws\Polly\PollyClient;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Polly\PollyClient
@@ -26,19 +26,19 @@ class PollyClientTest extends TestCase
             'VoiceId' => 'Ewa'
         ];
         $url = $polly->createSynthesizeSpeechPreSignedUrl($args);
-        $this->assertContains('https://polly.us-west-2.amazonaws.com/v1/speech', $url);
-        $this->assertContains('LexiconNames=mno&LexiconNames=abc', $url);
-        $this->assertContains('OutputFormat=mp3', $url);
-        $this->assertContains('SampleRate=128', $url);
-        $this->assertContains('Text=Hello%20World', $url);
-        $this->assertContains('TextType=text', $url);
-        $this->assertContains('VoiceId=Ewa', $url);
-        $this->assertContains('X-Amz-Algorithm=AWS4-HMAC-SHA256', $url);
-        $this->assertContains('X-Amz-Credential=akid', $url);
-        $this->assertContains('X-Amz-Date=', $url);
-        $this->assertContains('X-Amz-Expires=900', $url);
-        $this->assertContains('X-Amz-SignedHeaders=host', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
-        $this->assertContains('X-Amz-Date=', $url);
+        $this->assertStringContainsString('https://polly.us-west-2.amazonaws.com/v1/speech', $url);
+        $this->assertStringContainsString('LexiconNames=mno&LexiconNames=abc', $url);
+        $this->assertStringContainsString('OutputFormat=mp3', $url);
+        $this->assertStringContainsString('SampleRate=128', $url);
+        $this->assertStringContainsString('Text=Hello%20World', $url);
+        $this->assertStringContainsString('TextType=text', $url);
+        $this->assertStringContainsString('VoiceId=Ewa', $url);
+        $this->assertStringContainsString('X-Amz-Algorithm=AWS4-HMAC-SHA256', $url);
+        $this->assertStringContainsString('X-Amz-Credential=akid', $url);
+        $this->assertStringContainsString('X-Amz-Date=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=900', $url);
+        $this->assertStringContainsString('X-Amz-SignedHeaders=host', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Date=', $url);
     }
 }

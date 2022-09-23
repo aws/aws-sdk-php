@@ -8,7 +8,7 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\S3\MultipartUploader
@@ -20,7 +20,7 @@ class MultipartUploaderTest extends TestCase
     const MB = 1048576;
     const FILENAME = '_aws-sdk-php-s3-mup-test-dots.txt';
 
-    public static function tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         @unlink(sys_get_temp_dir() . '/' . self::FILENAME);
     }
@@ -31,7 +31,7 @@ class MultipartUploaderTest extends TestCase
     public function testS3MultipartUploadWorkflow(
         array $clientOptions = [],
         array $uploadOptions = [],
-        StreamInterface $source,
+        StreamInterface $source = null,
         $error = false
     ) {
         $client = $this->getTestClient('s3', $clientOptions);
@@ -135,6 +135,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
     }
 
+    /** @doesNotPerformAssertions */
     public function testMultipartSuccessStreams()
     {
         $size = 12 * self::MB;
@@ -265,12 +266,10 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    /**
-     * @expectedException \Aws\S3\Exception\S3MultipartUploadException
-     * @expectedExceptionMessage An exception occurred while uploading parts to a multipart upload
-     */
     public function testAppliesAmbiguousSuccessParsing()
     {
+        $this->expectExceptionMessage("An exception occurred while uploading parts to a multipart upload");
+        $this->expectException(\Aws\S3\Exception\S3MultipartUploadException::class);
         $counter = 0;
 
         $httpHandler = function ($request, array $options) use (&$counter) {
