@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.235.15 - 2022-09-23
 
 * `Aws\AppRunner` - AWS App Runner adds a Node.js 16 runtime.
 * `Aws\EC2` - Letting external AWS customers provide ImageId as a Launch Template override in FleetLaunchTemplateOverridesRequest
