@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.236.0 - 2022-09-26
 
 * `Aws\CostandUsageReportService` - This release adds two new support regions(me-central-1/eu-south-2) for OSG.
 * `Aws\IoTFleetWise` - General availability (GA) for AWS IoT Fleetwise. It adds AWS IoT Fleetwise to AWS SDK. For more information, see https://docs.aws.amazon.com/iot-fleetwise/latest/APIReference/Welcome.html.
