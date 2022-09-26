@@ -154,7 +154,7 @@ class SsoTokenProvider extends Token implements RefreshableTokenProviderInterfac
         }
         try {
             //try to reload from disk
-            $token = TokenProvider::sso()();
+            $token = TokenProvider::sso();
             if (
                 $token instanceof SsoTokenProvider
                 && !$token->getExpiration()
@@ -179,7 +179,7 @@ class SsoTokenProvider extends Token implements RefreshableTokenProviderInterfac
        return strtotime("-10 minutes") >= $previousToken->getExpiration()
            && $previousToken->getRegistrationExpiration() < time();
     }
-    
+
     /**
      * @param $sso_session
      * @return string
