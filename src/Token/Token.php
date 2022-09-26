@@ -9,8 +9,8 @@ use Aws\Token\TokenInterface;
  */
 class Token implements TokenInterface, \Serializable
 {
-    private $token;
-    private $expires;
+    protected $token;
+    protected $expires;
 
     /**
      * Constructs a new basic token object, with the specified AWS

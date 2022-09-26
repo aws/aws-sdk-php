@@ -154,7 +154,7 @@ class SsoTokenProvider extends Token implements RefreshableTokenProviderInterfac
         }
         try {
             //try to reload from disk
-            $token = TokenProvider::sso();
+            $token = $this();
             if (
                 $token instanceof SsoTokenProvider
                 && !$token->getExpiration()
@@ -164,10 +164,10 @@ class SsoTokenProvider extends Token implements RefreshableTokenProviderInterfac
         } finally {
             //if reload from disk fails, try refreshing
             $response = $this->ssoOidcClient->createToken([
-                'clientId' => $this->clientId,
-                'clientSecret' => $this->clientSecret,
+                'clientId' => $token->clientId,
+                'clientSecret' => $token->clientSecret,
                 'grantType' => 'refresh_token', // REQUIRED
-                'refreshToken' => $this->refreshToken,
+                'refreshToken' => $token->refreshToken,
             ]);
             return $token;
             echo "hi";
