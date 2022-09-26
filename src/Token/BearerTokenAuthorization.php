@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Token;
 
+use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -21,6 +22,11 @@ class BearerTokenAuthorization implements TokenAuthorization
         RequestInterface $request,
         TokenInterface $token
     ) {
+        if (empty($token) || empty($token->getToken())) {
+            throw new InvalidArgumentException(
+                "Cannot authorize a request with an empty token"
+            );
+        }
         $accessToken = $token->getToken();
         return $request->withHeader('Authorization', "Bearer {$accessToken}");
     }

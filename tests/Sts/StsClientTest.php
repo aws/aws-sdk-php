@@ -2,7 +2,6 @@
 namespace Aws\Test\Sts;
 
 use Aws\Api\DateTimeResult;
-use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\LruArrayCache;
 use Aws\Result;

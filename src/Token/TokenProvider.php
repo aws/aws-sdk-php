@@ -6,7 +6,6 @@ use Aws\Api\DateTimeResult;
 use Aws\CacheInterface;
 use Aws\Exception\TokenException;
 use GuzzleHttp\Promise;
-use Nette\Neon\Exception;
 
 /**
  * Token providers are functions that accept no arguments and return a
@@ -29,11 +28,12 @@ use Nette\Neon\Exception;
  */
 class TokenProvider
 {
+    use ParsesIniTrait;
     const ENV_PROFILE = 'AWS_PROFILE';
 
     /**
-     * Create a default token provider that
-     * first checks for cached a SSO token from the CLI,
+     * Create a default token provider tha checks for cached a SSO token from
+     * the CLI
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided tokens.
@@ -44,20 +44,21 @@ class TokenProvider
      */
     public static function defaultProvider(array $config = [])
     {
+
         $cacheable = [
             'sso',
         ];
 
-        $profileName = getenv(self::ENV_PROFILE) ?: 'default';
-
         $defaultChain = [
         ];
+
         if (
             !isset($config['use_aws_shared_config_files'])
             || $config['use_aws_shared_config_files'] !== false
         ) {
+            $profileName = getenv(self::ENV_PROFILE) ?: 'default';
             $defaultChain['sso'] = self::sso(
-                'profile '. $profileName,
+                $profileName,
                 self::getHomeDir() . '/.aws/config',
                 $config
             );
@@ -112,20 +113,29 @@ class TokenProvider
     public static function chain()
     {
         $links = func_get_args();
-        //This is a common use
+        //Common use case for when aws_shared_config_files is false
         if (empty($links)) {
             return function () {
                 return Promise\Create::promiseFor(false);
             };
         }
 
-        return function () use ($links) {
+        return function ($previousToken = null) use ($links) {
             /** @var callable $parent */
             $parent = array_shift($links);
             $promise = $parent();
             while ($next = array_shift($links)) {
-                $promise = $promise->otherwise($next);
+                if ($next instanceof RefreshableTokenProviderInterface
+                    && $previousToken instanceof Token
+                ) {
+                    $promise = $promise->otherwise(
+                        function () use ($next, $previousToken) {return $next->refresh($previousToken);}
+                    );
+                } else {
+                    $promise = $promise->otherwise($next);
+                }
             }
+            return $promise;
         };
     }
 
@@ -164,7 +174,7 @@ class TokenProvider
                         return $token;
                     }
 
-                    // Refresh an expired token.
+                    // Refresh a token in the expiration window
                     if (!$token->isExpired()) {
                         return $token;
                     }
@@ -199,9 +209,14 @@ class TokenProvider
 
         return function () use ($provider, $cache, $cacheKey) {
             $found = $cache->get($cacheKey);
-            if ($found instanceof TokenInterface && !$found->isExpired()) {
+            if (
+                $found instanceof TokenInterface
+                && !$found->isExpired()
+                && !(strtotime("-10 minutes") >= $found->getExpiration())
+            ) {
                 return Promise\Create::promiseFor($found);
             }
+
             return $provider()
                 ->then(function (TokenInterface $token) use (
                     $cache,
@@ -217,116 +232,6 @@ class TokenProvider
                     return $token;
                 });
         };
-    }
-
-    /**
-     * Token provider that retrieves a cached SSO token from the disk
-     *
-     * @return callable
-     */
-    public static function sso($ssoProfileName, $filename = null, $config = [])
-    {
-        $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
-
-        return function () use ($ssoProfileName, $filename, $config) {
-            $ssoProfileName = $ssoProfileName;
-            if (!@is_readable($filename)) {
-                return self::reject("Cannot read token from $filename");
-            }
-            $profiles = self::loadProfiles($filename);
-            if (!isset($profiles[$ssoProfileName])) {
-                return self::reject("Profile {$ssoProfileName} does not exist in {$filename}.");
-            }
-            $ssoProfile = $profiles[$ssoProfileName];
-            if (empty($ssoProfile['sso_session'])) {
-                return self::reject(
-                    "Profile {$ssoProfileName} in {$filename} must contain an sso_session."
-                );
-            }
-
-            $sessionProfileName = 'sso-session ' . $ssoProfile['sso_session'];
-            $sessionProfileData = $profiles[$sessionProfileName];
-            if (empty($sessionProfileData['sso_start_url'])
-                || empty($sessionProfileData['sso_region'])
-            ) {
-                return self::reject(
-                    "Profile {$ssoProfileName} in {$filename} must contain the following keys: "
-                    . "sso_start_url and sso_region."
-                );
-            }
-
-            $tokenLocation = self::getHomeDir()
-                . '/.aws/sso/cache/'
-                . utf8_encode(sha1($ssoProfile['sso_session']))
-                . ".json";
-
-            if (!@is_readable($tokenLocation)) {
-                return self::reject("Unable to read token file at $tokenLocation");
-            }
-
-            $tokenData = json_decode(file_get_contents($tokenLocation), true);
-            if (empty($tokenData['accessToken']) || empty($tokenData['expiresAt'])) {
-                return self::reject(
-                    "Token file at {$tokenLocation} must contain an access token and an expiration"
-                );
-            }
-
-            try {
-                $expiration = (new DateTimeResult($tokenData['expiresAt']))->getTimestamp();
-            } catch (\Exception $e) {
-                return self::reject("Cached SSO token returned an invalid expiration");
-            }
-            $refreshWindow = strtotime('+5 minutes');;
-            if ($expiration < $refreshWindow) {
-                return self::reject("Cached SSO token returned an expired token");
-            }
-
-            return Promise\Create::promiseFor(
-                new Token(
-                    $tokenData['accessToken'],
-                    $tokenData['expiresAt']
-                )
-            );
-        };
-    }
-
-    /**
-     * Gets the environment's HOME directory if available.
-     *
-     * @return null|string
-     */
-    private static function getHomeDir()
-    {
-        // On Linux/Unix-like systems, use the HOME environment variable
-        if ($homeDir = getenv('HOME')) {
-            return $homeDir;
-        }
-
-        // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
-        $homeDrive = getenv('HOMEDRIVE');
-        $homePath = getenv('HOMEPATH');
-
-        return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
-    }
-
-    /**
-     * Gets profiles from specified $filename, or default ini files.
-     */
-    private static function loadProfiles($filename)
-    {
-        $profileData = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
-
-        $configFilename = self::getHomeDir() . '/.aws/config';
-        $configProfileData = \Aws\parse_ini_file($configFilename, true, INI_SCANNER_RAW);
-        foreach ($configProfileData as $name => $profile) {
-            // standardize config profile names
-            $name = str_replace('profile ', '', $name);
-            if (!isset($profileData[$name])) {
-                $profileData[$name] = $profile;
-            }
-        }
-
-        return $profileData;
     }
 
     /**
@@ -354,5 +259,21 @@ class TokenProvider
     {
         return new Promise\RejectedPromise(new TokenException($msg));
     }
+
+    /**
+     * Token provider that creates a token from cached sso credentials
+     *
+     * @param string $ssoProfileName the name of the ini profile name
+     * @param string $filename the location of the ini file
+     * @param array $config configuration options
+     *
+     * @return SsoTokenProvider
+     * @see Aws\Token\SsoTokenProvider for $config details.
+     */
+    public static function sso($profileName, $filename, $config = [])
+    {
+        return new SsoTokenProvider($profileName, $filename, $config);
+    }
+
 }
 
