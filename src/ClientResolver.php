@@ -836,9 +836,7 @@ class ClientResolver
 
         $args['ua_append'] = $userAgent;
 
-        $list->appendBuild(static function (callable $handler) use (
-            $userAgent,
-        ) {
+        $list->appendBuild(static function (callable $handler) use ($userAgent) {
             return function (
                 CommandInterface $command,
                 RequestInterface $request
