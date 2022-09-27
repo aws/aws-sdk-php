@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.236.1 - 2022-09-27
 
 * `Aws\CostExplorer` - This release is to support retroactive Cost Categories. The new field will enable you to retroactively apply new and existing cost category rules to previous months.
 * `Aws\LocationService` - This release adds place IDs, which are unique identifiers of places, along with a new GetPlace operation, which can be used with place IDs to find a place again later. UnitNumber and UnitType are also added as new properties of places.
