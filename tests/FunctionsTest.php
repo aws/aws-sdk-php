@@ -5,7 +5,7 @@ use Aws;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class FunctionsTest extends TestCase
 {
@@ -67,12 +67,11 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     *
      * @covers Aws\load_compiled_json()
      */
     public function testUsesJsonCompiler()
     {
+        $this->expectException(\InvalidArgumentException::class);
         Aws\load_compiled_json('/path/to/not/here.json');
     }
 
@@ -317,10 +316,10 @@ class FunctionsTest extends TestCase
 
     /**
      * @covers Aws\manifest()
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidManifest()
     {
+        $this->expectException(\InvalidArgumentException::class);
         Aws\manifest('notarealservicename');
     }
 

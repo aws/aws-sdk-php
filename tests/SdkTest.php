@@ -5,18 +5,17 @@ use Aws\AwsClientInterface;
 use Aws\MultiRegionClient;
 use Aws\S3\S3MultiRegionClient;
 use Aws\Sdk;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Sdk
  */
 class SdkTest extends TestCase
 {
-    /**
-     * @expectedException \BadMethodCallException
-     */
+
     public function testEnsuresMissingMethodThrowsException()
     {
+        $this->expectException(\BadMethodCallException::class);
         (new Sdk)->foo();
     }
 

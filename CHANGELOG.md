@@ -1,5 +1,110 @@
 # CHANGELOG
 
+## 3.236.0 - 2022-09-26
+
+* `Aws\CostandUsageReportService` - This release adds two new support regions(me-central-1/eu-south-2) for OSG.
+* `Aws\IoTFleetWise` - General availability (GA) for AWS IoT Fleetwise. It adds AWS IoT Fleetwise to AWS SDK. For more information, see https://docs.aws.amazon.com/iot-fleetwise/latest/APIReference/Welcome.html.
+* `Aws\SSM` - This release includes support for applying a CloudWatch alarm to Systems Manager capabilities like Automation, Run Command, State Manager, and Maintenance Windows.
+
+## 3.235.15 - 2022-09-23
+
+* `Aws\AppRunner` - AWS App Runner adds a Node.js 16 runtime.
+* `Aws\EC2` - Letting external AWS customers provide ImageId as a Launch Template override in FleetLaunchTemplateOverridesRequest
+* `Aws\LexModelsV2` - This release introduces additional optional parameters promptAttemptsSpecification to PromptSpecification, which enables the users to configure interrupt setting and Audio, DTMF and Text input configuration for the initial and retry prompt played by the Bot
+* `Aws\Lightsail` - This release adds Instance Metadata Service (IMDS) support for Lightsail instances.
+* `Aws\NimbleStudio` - Amazon Nimble Studio adds support for on-demand Amazon Elastic Compute Cloud (EC2) G3 and G5 instances, allowing customers to utilize additional GPU instance types for their creative projects.
+* `Aws\SSM` - This release adds new SSM document types ConformancePackTemplate and CloudFormation
+* `Aws\WAFV2` - Add the default specification for ResourceType in ListResourcesForWebACL.
+
+## 3.235.14 - 2022-09-22
+
+* `Aws\BackupGateway` - Changes include: new GetVirtualMachineApi to fetch a single user's VM, improving ListVirtualMachines to fetch filtered VMs as well as all VMs, and improving GetGatewayApi to now also return the gateway's MaintenanceStartTime.
+* `Aws\DeviceFarm` - This release adds the support for VPC-ENI based connectivity for private devices on AWS Device Farm.
+* `Aws\EC2` - Documentation updates for Amazon EC2.
+* `Aws\Glue` - Added support for S3 Event Notifications for Catalog Target Crawlers.
+* `Aws\IdentityStore` - Documentation updates for the Identity Store CLI Reference.
+
+## 3.235.13 - 2022-09-21
+
+* `Aws\Comprehend` - Amazon Comprehend now supports synchronous mode for targeted sentiment API operations.
+* `Aws\S3Control` - S3 on Outposts launches support for object versioning for Outposts buckets. With S3 Versioning, you can preserve, retrieve, and restore every version of every object stored in your buckets. You can recover from both unintended user actions and application failures.
+* `Aws\SageMaker` - SageMaker now allows customization on Canvas Application settings, including enabling/disabling time-series forecasting and specifying an Amazon Forecast execution role at both the Domain and UserProfile levels.
+
+## 3.235.12 - 2022-09-20
+
+* `Aws\EC2` - This release adds support for blocked paths to Amazon VPC Reachability Analyzer.
+
+## 3.235.11 - 2022-09-19
+
+* `Aws\CloudTrail` - This release includes support for importing existing trails into CloudTrail Lake.
+* `Aws\EC2` - This release adds CapacityAllocations field to DescribeCapacityReservations
+* `Aws\MediaConnect` - This change allows the customer to use the SRT Caller protocol as part of their flows
+* `Aws\RDS` - This release adds support for Amazon RDS Proxy with SQL Server compatibility.
+
+## 3.235.10 - 2022-09-16
+
+* `Aws\CodeStarNotifications` - This release adds tag based access control for the UntagResource API.
+* `Aws\ECS` - This release supports new task definition sizes.
+
+## 3.235.9 - 2022-09-15
+
+* `Aws\DynamoDB` - Increased DynamoDB transaction limit from 25 to 100.
+* `Aws\EC2` - This feature allows customers to create tags for vpc-endpoint-connections and vpc-endpoint-service-permissions.
+* `Aws\SageMaker` - Amazon SageMaker Automatic Model Tuning now supports specifying Hyperband strategy for tuning jobs, which uses a multi-fidelity based tuning strategy to stop underperforming hyperparameter configurations early.
+
+## 3.235.8 - 2022-09-14
+
+* `Aws\AmplifyUIBuilder` - Amplify Studio UIBuilder is introducing forms functionality. Forms can be configured from Data Store models, JSON, or from scratch. These forms can then be generated in your project and used like any other React components.
+* `Aws\EC2` - This update introduces API operations to manage and create local gateway route tables, CoIP pools, and VIF group associations.
+
+## 3.235.7 - 2022-09-13
+
+* `Aws\` - Add support for php 8.0 and 8.1
+* `Aws\CloudWatchEvidently` - This release adds support for the client-side evaluation - powered by AWS AppConfig feature.
+* `Aws\CustomerProfiles` - Added isUnstructured in response for Customer Profiles Integration APIs
+* `Aws\EC2` - Two new features for local gateway route tables: support for static routes targeting Elastic Network Interfaces and direct VPC routing.
+* `Aws\Transfer` - This release introduces the ability to have multiple server host keys for any of your Transfer Family servers that use the SFTP protocol.
+* `Aws\drs` - Fixed the data type of lagDuration that is returned in Describe Source Server API
+* `Aws\kendra` - This release enables our customer to choose the option of Sharepoint 2019 for the on-premise Sharepoint connector.
+
+## 3.235.6 - 2022-09-12
+
+* `Aws\EKS` - Adding support for local Amazon EKS clusters on Outposts
+
+## 3.235.5 - 2022-09-09
+
+* `Aws\CloudTrail` - This release adds CloudTrail getChannel and listChannels APIs to allow customer to view the ServiceLinkedChannel configurations.
+* `Aws\LexModelsV2` - This release is for supporting Composite Slot Type feature in AWS Lex V2. Composite Slot Type will help developer to logically group coherent slots and maintain their inter-relationships in runtime conversation.
+* `Aws\LexRuntimeV2` - This release is for supporting Composite Slot Type feature in AWS Lex V2. Composite Slot Type will help developer to logically group coherent slots and maintain their inter-relationships in runtime conversation.
+* `Aws\PI` - Increases the maximum values of two RDS Performance Insights APIs. The maximum value of the Limit parameter of DimensionGroup is 25. The MaxResult maximum is now 25 for the following APIs: DescribeDimensionKeys, GetResourceMetrics, ListAvailableResourceDimensions, and ListAvailableResourceMetrics.
+* `Aws\Redshift` - This release updates documentation for AQUA features and other description updates.
+
+## 3.235.4 - 2022-09-08
+
+* `Aws\EC2` - This release adds support to send VPC Flow Logs to kinesis-data-firehose as new destination type
+* `Aws\EMRContainers` - EMR on EKS now allows running Spark SQL using the newly introduced Spark SQL Job Driver in the Start Job Run API
+* `Aws\LookoutMetrics` - Release dimension value filtering feature to allow customers to define dimension filters for including only a subset of their dataset to be used by LookoutMetrics.
+* `Aws\MediaLive` - This change exposes API settings which allow Dolby Atmos and Dolby Vision to be used when running a channel using Elemental Media Live
+* `Aws\Route53` - Amazon Route 53 now supports the Middle East (UAE) Region (me-central-1) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+* `Aws\SSM` - This release adds support for Systems Manager State Manager Association tagging.
+* `Aws\SageMaker` - This release adds Mode to AutoMLJobConfig.
+
+## 3.235.3 - 2022-09-07
+
+* `Aws\DataExchange` - Documentation updates for AWS Data Exchange.
+* `Aws\EC2` - Documentation updates for Amazon EC2.
+* `Aws\EKS` - Adds support for EKS Addons ResolveConflicts "preserve" flag. Also adds new update failed status for EKS Addons.
+* `Aws\FSx` - Documentation update for Amazon FSx.
+* `Aws\Inspector2` - This release adds new fields like fixAvailable, fixedInVersion and remediation to the finding model. The requirement to have vulnerablePackages in the finding model has also been removed. The documentation has been updated to reflect these changes.
+* `Aws\IoTSiteWise` - Allow specifying units in Asset Properties
+* `Aws\SNS` - Amazon SNS introduces the Data Protection Policy APIs, which enable customers to attach a data protection policy to an SNS topic. This allows topic owners to enable the new message data protection feature to audit and block sensitive data that is exchanged through their topics.
+* `Aws\SageMaker` - SageMaker Hosting now allows customization on ML instance storage volume size, model data download timeout and inference container startup ping health check timeout for each ProductionVariant in CreateEndpointConfig API.
+
+## 3.235.2 - 2022-09-06
+
+* `Aws\IdentityStore` - Documentation updates for the Identity Store CLI Reference.
+* `Aws\SageMaker` - This release adds HyperParameterTuningJob type in Search API.
+
 ## 3.235.1 - 2022-09-02
 
 * `Aws\CognitoIdentityProvider` - This release adds a new "AuthSessionValidity" field to the UserPoolClient in Cognito. Application admins can configure this value for their users' authentication duration, which is currently fixed at 3 minutes, up to 15 minutes. Setting this field will also apply to the SMS MFA authentication flow.

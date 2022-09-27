@@ -1231,6 +1231,17 @@
       "type":"list",
       "member":{"shape":"AggregatedUtterancesSummary"}
     },
+    "AllowedInputTypes":{
+      "type":"structure",
+      "required":[
+        "allowAudioInput",
+        "allowDTMFInput"
+      ],
+      "members":{
+        "allowAudioInput":{"shape":"BoxedBoolean"},
+        "allowDTMFInput":{"shape":"BoxedBoolean"}
+      }
+    },
     "AmazonResourceName":{
       "type":"string",
       "max":1011,
@@ -1280,6 +1291,15 @@
       "max":250,
       "min":1
     },
+    "AudioAndDTMFInputSpecification":{
+      "type":"structure",
+      "required":["startTimeoutMs"],
+      "members":{
+        "startTimeoutMs":{"shape":"TimeInMilliSeconds"},
+        "audioSpecification":{"shape":"AudioSpecification"},
+        "dtmfSpecification":{"shape":"DTMFSpecification"}
+      }
+    },
     "AudioLogDestination":{
       "type":"structure",
       "required":["s3Bucket"],
@@ -1307,6 +1327,17 @@
     "AudioRecognitionStrategy":{
       "type":"string",
       "enum":["UseSlotValuesAsCustomVocabulary"]
+    },
+    "AudioSpecification":{
+      "type":"structure",
+      "required":[
+        "maxLengthMs",
+        "endTimeoutMs"
+      ],
+      "members":{
+        "maxLengthMs":{"shape":"TimeInMilliSeconds"},
+        "endTimeoutMs":{"shape":"TimeInMilliSeconds"}
+      }
     },
     "Boolean":{"type":"boolean"},
     "BotAliasHistoryEvent":{
@@ -1837,6 +1868,12 @@
         "lambdaCodeHook":{"shape":"LambdaCodeHook"}
       }
     },
+    "CompositeSlotTypeSetting":{
+      "type":"structure",
+      "members":{
+        "subSlots":{"shape":"SubSlotTypeList"}
+      }
+    },
     "Condition":{
       "type":"structure",
       "required":["expressionString"],
@@ -2251,7 +2288,8 @@
           "location":"uri",
           "locationName":"intentId"
         },
-        "multipleValuesSetting":{"shape":"MultipleValuesSetting"}
+        "multipleValuesSetting":{"shape":"MultipleValuesSetting"},
+        "subSlotSetting":{"shape":"SubSlotSetting"}
       }
     },
     "CreateSlotResponse":{
@@ -2268,7 +2306,8 @@
         "localeId":{"shape":"LocaleId"},
         "intentId":{"shape":"Id"},
         "creationDateTime":{"shape":"Timestamp"},
-        "multipleValuesSetting":{"shape":"MultipleValuesSetting"}
+        "multipleValuesSetting":{"shape":"MultipleValuesSetting"},
+        "subSlotSetting":{"shape":"SubSlotSetting"}
       }
     },
     "CreateSlotTypeRequest":{
@@ -2300,7 +2339,8 @@
           "location":"uri",
           "locationName":"localeId"
         },
-        "externalSourceSetting":{"shape":"ExternalSourceSetting"}
+        "externalSourceSetting":{"shape":"ExternalSourceSetting"},
+        "compositeSlotTypeSetting":{"shape":"CompositeSlotTypeSetting"}
       }
     },
     "CreateSlotTypeResponse":{
@@ -2316,7 +2356,8 @@
         "botVersion":{"shape":"DraftBotVersion"},
         "localeId":{"shape":"LocaleId"},
         "creationDateTime":{"shape":"Timestamp"},
-        "externalSourceSetting":{"shape":"ExternalSourceSetting"}
+        "externalSourceSetting":{"shape":"ExternalSourceSetting"},
+        "compositeSlotTypeSetting":{"shape":"CompositeSlotTypeSetting"}
       }
     },
     "CreateUploadUrlRequest":{
@@ -2378,6 +2419,25 @@
         "Importing",
         "Creating"
       ]
+    },
+    "DTMFCharacter":{
+      "type":"string",
+      "pattern":"^[A-D0-9#*]{1}$"
+    },
+    "DTMFSpecification":{
+      "type":"structure",
+      "required":[
+        "maxLength",
+        "endTimeoutMs",
+        "deletionCharacter",
+        "endCharacter"
+      ],
+      "members":{
+        "maxLength":{"shape":"MaxUtteranceDigits"},
+        "endTimeoutMs":{"shape":"TimeInMilliSeconds"},
+        "deletionCharacter":{"shape":"DTMFCharacter"},
+        "endCharacter":{"shape":"DTMFCharacter"}
+      }
     },
     "DataPrivacy":{
       "type":"structure",
@@ -3178,7 +3238,8 @@
         "intentId":{"shape":"Id"},
         "creationDateTime":{"shape":"Timestamp"},
         "lastUpdatedDateTime":{"shape":"Timestamp"},
-        "multipleValuesSetting":{"shape":"MultipleValuesSetting"}
+        "multipleValuesSetting":{"shape":"MultipleValuesSetting"},
+        "subSlotSetting":{"shape":"SubSlotSetting"}
       }
     },
     "DescribeSlotTypeRequest":{
@@ -3226,7 +3287,8 @@
         "localeId":{"shape":"LocaleId"},
         "creationDateTime":{"shape":"Timestamp"},
         "lastUpdatedDateTime":{"shape":"Timestamp"},
-        "externalSourceSetting":{"shape":"ExternalSourceSetting"}
+        "externalSourceSetting":{"shape":"ExternalSourceSetting"},
+        "compositeSlotTypeSetting":{"shape":"CompositeSlotTypeSetting"}
       }
     },
     "Description":{
@@ -4254,6 +4316,11 @@
       "max":1000,
       "min":1
     },
+    "MaxUtteranceDigits":{
+      "type":"integer",
+      "max":1024,
+      "min":1
+    },
     "MergeStrategy":{
       "type":"string",
       "enum":[
@@ -4467,6 +4534,32 @@
       "max":100,
       "min":0
     },
+    "PromptAttempt":{
+      "type":"string",
+      "enum":[
+        "Initial",
+        "Retry1",
+        "Retry2",
+        "Retry3",
+        "Retry4",
+        "Retry5"
+      ]
+    },
+    "PromptAttemptSpecification":{
+      "type":"structure",
+      "required":["allowedInputTypes"],
+      "members":{
+        "allowInterrupt":{"shape":"BoxedBoolean"},
+        "allowedInputTypes":{"shape":"AllowedInputTypes"},
+        "audioAndDTMFInputSpecification":{"shape":"AudioAndDTMFInputSpecification"},
+        "textInputSpecification":{"shape":"TextInputSpecification"}
+      }
+    },
+    "PromptAttemptsSpecificationMap":{
+      "type":"map",
+      "key":{"shape":"PromptAttempt"},
+      "value":{"shape":"PromptAttemptSpecification"}
+    },
     "PromptMaxRetries":{
       "type":"integer",
       "max":5,
@@ -4482,7 +4575,8 @@
         "messageGroups":{"shape":"MessageGroupsList"},
         "maxRetries":{"shape":"PromptMaxRetries"},
         "allowInterrupt":{"shape":"BoxedBoolean"},
-        "messageSelectionStrategy":{"shape":"MessageSelectionStrategy"}
+        "messageSelectionStrategy":{"shape":"MessageSelectionStrategy"},
+        "promptAttemptsSpecification":{"shape":"PromptAttemptsSpecificationMap"}
       }
     },
     "QueryFilterString":{
@@ -4852,7 +4946,8 @@
       "enum":[
         "Custom",
         "Extended",
-        "ExternalGrammar"
+        "ExternalGrammar",
+        "Composite"
       ]
     },
     "SlotTypeFilter":{
@@ -4983,7 +5078,8 @@
       "type":"string",
       "enum":[
         "OriginalValue",
-        "TopResolution"
+        "TopResolution",
+        "Concatenation"
       ]
     },
     "SlotValueSelectionSetting":{
@@ -5005,6 +5101,17 @@
         "Ascending",
         "Descending"
       ]
+    },
+    "Specifications":{
+      "type":"structure",
+      "required":[
+        "slotTypeId",
+        "valueElicitationSetting"
+      ],
+      "members":{
+        "slotTypeId":{"shape":"BuiltInOrCustomSlotTypeId"},
+        "valueElicitationSetting":{"shape":"SubSlotValueElicitationSetting"}
+      }
     },
     "StartBotRecommendationRequest":{
       "type":"structure",
@@ -5142,6 +5249,53 @@
       "key":{"shape":"NonEmptyString"},
       "value":{"shape":"String"}
     },
+    "SubSlotExpression":{
+      "type":"string",
+      "max":640,
+      "min":0,
+      "pattern":"[0-9A-Za-z_\\-\\s\\(\\)]+"
+    },
+    "SubSlotSetting":{
+      "type":"structure",
+      "members":{
+        "expression":{"shape":"SubSlotExpression"},
+        "slotSpecifications":{"shape":"SubSlotSpecificationMap"}
+      }
+    },
+    "SubSlotSpecificationMap":{
+      "type":"map",
+      "key":{"shape":"Name"},
+      "value":{"shape":"Specifications"},
+      "max":6,
+      "min":0
+    },
+    "SubSlotTypeComposition":{
+      "type":"structure",
+      "required":[
+        "name",
+        "slotTypeId"
+      ],
+      "members":{
+        "name":{"shape":"Name"},
+        "slotTypeId":{"shape":"BuiltInOrCustomSlotTypeId"}
+      }
+    },
+    "SubSlotTypeList":{
+      "type":"list",
+      "member":{"shape":"SubSlotTypeComposition"},
+      "max":6,
+      "min":0
+    },
+    "SubSlotValueElicitationSetting":{
+      "type":"structure",
+      "required":["promptSpecification"],
+      "members":{
+        "defaultValueSpecification":{"shape":"SlotDefaultValueSpecification"},
+        "promptSpecification":{"shape":"PromptSpecification"},
+        "sampleUtterances":{"shape":"SampleUtterancesList"},
+        "waitAndContinueSpecification":{"shape":"WaitAndContinueSpecification"}
+      }
+    },
     "SynonymList":{
       "type":"list",
       "member":{"shape":"SampleValue"},
@@ -5191,6 +5345,13 @@
       "max":256,
       "min":0
     },
+    "TextInputSpecification":{
+      "type":"structure",
+      "required":["startTimeoutMs"],
+      "members":{
+        "startTimeoutMs":{"shape":"TimeInMilliSeconds"}
+      }
+    },
     "TextLogDestination":{
       "type":"structure",
       "required":["cloudWatch"],
@@ -5235,6 +5396,10 @@
         "Days",
         "Weeks"
       ]
+    },
+    "TimeInMilliSeconds":{
+      "type":"integer",
+      "min":1
     },
     "TimeValue":{
       "type":"integer",
@@ -5620,7 +5785,8 @@
           "location":"uri",
           "locationName":"intentId"
         },
-        "multipleValuesSetting":{"shape":"MultipleValuesSetting"}
+        "multipleValuesSetting":{"shape":"MultipleValuesSetting"},
+        "subSlotSetting":{"shape":"SubSlotSetting"}
       }
     },
     "UpdateSlotResponse":{
@@ -5638,7 +5804,8 @@
         "intentId":{"shape":"Id"},
         "creationDateTime":{"shape":"Timestamp"},
         "lastUpdatedDateTime":{"shape":"Timestamp"},
-        "multipleValuesSetting":{"shape":"MultipleValuesSetting"}
+        "multipleValuesSetting":{"shape":"MultipleValuesSetting"},
+        "subSlotSetting":{"shape":"SubSlotSetting"}
       }
     },
     "UpdateSlotTypeRequest":{
@@ -5676,7 +5843,8 @@
           "location":"uri",
           "locationName":"localeId"
         },
-        "externalSourceSetting":{"shape":"ExternalSourceSetting"}
+        "externalSourceSetting":{"shape":"ExternalSourceSetting"},
+        "compositeSlotTypeSetting":{"shape":"CompositeSlotTypeSetting"}
       }
     },
     "UpdateSlotTypeResponse":{
@@ -5693,7 +5861,8 @@
         "localeId":{"shape":"LocaleId"},
         "creationDateTime":{"shape":"Timestamp"},
         "lastUpdatedDateTime":{"shape":"Timestamp"},
-        "externalSourceSetting":{"shape":"ExternalSourceSetting"}
+        "externalSourceSetting":{"shape":"ExternalSourceSetting"},
+        "compositeSlotTypeSetting":{"shape":"CompositeSlotTypeSetting"}
       }
     },
     "Utterance":{"type":"string"},

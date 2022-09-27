@@ -2,7 +2,7 @@
 namespace Aws\Test;
 
 use Aws\Result;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Result
@@ -18,7 +18,7 @@ class ResultTest extends TestCase
         $this->assertTrue($c->hasKey('c'));
         $this->assertFalse($c->hasKey('f'));
         $this->assertSame('b', $c->search('a'));
-        $this->assertContains('Model Data', (string) $c);
+        $this->assertStringContainsString('Model Data', (string) $c);
     }
 
     public function testCanIndirectlyModifyLikeAnArray()

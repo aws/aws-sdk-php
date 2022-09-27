@@ -4,16 +4,17 @@ namespace Aws\Test;
 use Aws\PsrCacheAdapter;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class PsrCacheAdapterTest extends TestCase
 {
+
     /** @var CacheItemPoolInterface|\PHPUnit_Framework_MockObject_MockObject $wrappedCache */
     private $wrapped;
     /** @var PsrCacheAdapter */
     private $instance;
 
-    public function setUp()
+    public function set_up()
     {
         $this->wrapped = $this->getMockBuilder(CacheItemPoolInterface::class)->getMock();
         $this->instance = new PsrCacheAdapter($this->wrapped);

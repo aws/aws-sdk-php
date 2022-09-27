@@ -3,7 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\Shape
@@ -27,11 +27,9 @@ class ShapeTest extends TestCase
         $this->assertArrayNotHasKey('abc', $s);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testValidatesShapeAt()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s = new Shape([], new ShapeMap([]));
         $m = new \ReflectionMethod($s, 'shapeAt');
         $m->setAccessible(true);
@@ -69,12 +67,10 @@ class ShapeTest extends TestCase
         $this->assertSame('float', $s->getType());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Invalid type
-     */
     public function testValidatesShapeTypes()
     {
+        $this->expectExceptionMessage("Invalid type");
+        $this->expectException(\RuntimeException::class);
         $s = new Shape(
             ['foo' => ['type' => 'what?']],
             new ShapeMap([])

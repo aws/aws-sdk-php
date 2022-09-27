@@ -302,6 +302,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionIoTEventsData(array $args = [])
  * @method \Aws\IoTFleetHub\IoTFleetHubClient createIoTFleetHub(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTFleetHub(array $args = [])
+ * @method \Aws\IoTFleetWise\IoTFleetWiseClient createIoTFleetWise(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionIoTFleetWise(array $args = [])
  * @method \Aws\IoTJobsDataPlane\IoTJobsDataPlaneClient createIoTJobsDataPlane(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTJobsDataPlane(array $args = [])
  * @method \Aws\IoTSecureTunneling\IoTSecureTunnelingClient createIoTSecureTunneling(array $args = [])
@@ -635,7 +637,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.235.1';
+    const VERSION = '3.236.0';
 
     /** @var array Arguments for creating clients */
     private $args;

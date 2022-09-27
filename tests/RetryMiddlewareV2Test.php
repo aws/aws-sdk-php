@@ -17,7 +17,7 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\RetryMiddlewareV2
@@ -764,7 +764,7 @@ class RetryMiddlewareV2Test extends TestCase
             $this->fail();
         } catch (AwsException $e) {
             $this->assertSame(3, $attempts);
-            $this->assertContains('foo', $e->getMessage());
+            $this->assertStringContainsString('foo', $e->getMessage());
         }
     }
 
@@ -885,7 +885,7 @@ class RetryMiddlewareV2Test extends TestCase
             $this->fail();
         } catch (AwsException $e) {
             $this->assertCount(1, $called);
-            $this->assertContains('foo', $e->getMessage());
+            $this->assertStringContainsString('foo', $e->getMessage());
         }
     }
 

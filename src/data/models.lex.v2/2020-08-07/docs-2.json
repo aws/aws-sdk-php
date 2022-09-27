@@ -125,6 +125,12 @@
         "ListAggregatedUtterancesResponse$aggregatedUtterancesSummaries": "<p>Summaries of the aggregated utterance data. Each response contains information about the number of times that the utterance was seen during the time period, whether it was detected or missed, and when it was seen during the time period.</p>"
       }
     },
+    "AllowedInputTypes": {
+      "base": "<p>Specifies the allowed input types.</p>",
+      "refs": {
+        "PromptAttemptSpecification$allowedInputTypes": "<p>Indicates the allowed input types of the prompt attempt.</p>"
+      }
+    },
     "AmazonResourceName": {
       "base": null,
       "refs": {
@@ -188,6 +194,12 @@
         "ImageResponseCard$imageUrl": "<p>The URL of an image to display on the response card. The image URL must be publicly available so that the platform displaying the response card has access to the image.</p>"
       }
     },
+    "AudioAndDTMFInputSpecification": {
+      "base": "<p>Specifies the audio and DTMF input specification.</p>",
+      "refs": {
+        "PromptAttemptSpecification$audioAndDTMFInputSpecification": "<p>Specifies the settings on audio and DTMF input.</p>"
+      }
+    },
     "AudioLogDestination": {
       "base": "<p>The location of audio log files collected when conversation logging is enabled for a bot.</p>",
       "refs": {
@@ -210,6 +222,12 @@
       "base": null,
       "refs": {
         "AdvancedRecognitionSetting$audioRecognitionStrategy": "<p>Enables using the slot values as a custom vocabulary for recognizing user utterances.</p>"
+      }
+    },
+    "AudioSpecification": {
+      "base": "<p>Specifies the audio input specifications.</p>",
+      "refs": {
+        "AudioAndDTMFInputSpecification$audioSpecification": "<p>Specifies the settings on audio input.</p>"
       }
     },
     "Boolean": {
@@ -566,6 +584,8 @@
       "base": null,
       "refs": {
         "AggregatedUtterancesSummary$containsDataFromDeletedResources": "<p>Aggregated utterance data may contain utterances from versions of your bot that have since been deleted. When the aggregated contains this kind of data, this field is set to true.</p>",
+        "AllowedInputTypes$allowAudioInput": "<p>Indicates whether audio input is allowed.</p>",
+        "AllowedInputTypes$allowDTMFInput": "<p>Indicates whether DTMF input is allowed.</p>",
         "ConditionalSpecification$active": "<p>Determines whether a conditional branch is active. When <code>active</code> is false, the conditions are not evaluated.</p>",
         "DialogAction$suppressNextMessage": "<p>When true the next message for the intent is not used.</p>",
         "DialogCodeHookInvocationSetting$enableCodeHookInvocation": "<p>Indicates whether a Lambda function should be invoked for the dialog.</p>",
@@ -577,6 +597,7 @@
         "FulfillmentUpdatesSpecification$active": "<p>Determines whether fulfillment updates are sent to the user. When this field is true, updates are sent.</p> <p>If the <code>active</code> field is set to true, the <code>startResponse</code>, <code>updateResponse</code>, and <code>timeoutInSeconds</code> fields are required.</p>",
         "IntentClosingSetting$active": "<p>Specifies whether an intent's closing response is used. When this field is false, the closing response isn't sent to the user. If the <code>active</code> field isn't specified, the default is true.</p>",
         "IntentConfirmationSetting$active": "<p>Specifies whether the intent's confirmation is sent to the user. When this field is false, confirmation and declination responses aren't sent. If the <code>active</code> field isn't specified, the default is true.</p>",
+        "PromptAttemptSpecification$allowInterrupt": "<p>Indicates whether the user can interrupt a speech prompt attempt from the bot.</p>",
         "PromptSpecification$allowInterrupt": "<p>Indicates whether the user can interrupt a speech prompt from the bot.</p>",
         "ResponseSpecification$allowInterrupt": "<p>Indicates whether the user can interrupt a speech response from Amazon Lex.</p>",
         "StillWaitingResponseSpecification$allowInterrupt": "<p>Indicates that the user can interrupt the response by speaking while the message is being played.</p>",
@@ -624,6 +645,8 @@
         "CreateSlotResponse$slotTypeId": "<p>The unique identifier of the slot type associated with this slot.</p>",
         "DescribeSlotResponse$slotTypeId": "<p>The identifier of the slot type that determines the values entered into the slot.</p>",
         "SlotSummary$slotTypeId": "<p>The unique identifier for the slot type that defines the values for the slot.</p>",
+        "Specifications$slotTypeId": "<p>The unique identifier assigned to the slot type.</p>",
+        "SubSlotTypeComposition$slotTypeId": "<p>The unique identifier assigned to a slot type. This refers to either a built-in slot type or the unique slotTypeId of a custom slot type.</p>",
         "UpdateSlotRequest$slotTypeId": "<p>The unique identifier of the new slot type to associate with this slot. </p>",
         "UpdateSlotResponse$slotTypeId": "<p>The updated identifier of the slot type that provides values for the slot.</p>"
       }
@@ -711,6 +734,16 @@
       "base": "<p>Contains information about code hooks that Amazon Lex calls during a conversation.</p>",
       "refs": {
         "BotAliasLocaleSettings$codeHookSpecification": "<p>Specifies the Lambda function that should be used in the locale.</p>"
+      }
+    },
+    "CompositeSlotTypeSetting": {
+      "base": "<p>A composite slot is a combination of two or more slots that capture multiple pieces of information in a single user input.</p>",
+      "refs": {
+        "CreateSlotTypeRequest$compositeSlotTypeSetting": "<p>Specifications for a composite slot type.</p>",
+        "CreateSlotTypeResponse$compositeSlotTypeSetting": "<p>Specifications for a composite slot type.</p>",
+        "DescribeSlotTypeResponse$compositeSlotTypeSetting": "<p>Specifications for a composite slot type.</p>",
+        "UpdateSlotTypeRequest$compositeSlotTypeSetting": "<p>Specifications for a composite slot type.</p>",
+        "UpdateSlotTypeResponse$compositeSlotTypeSetting": "<p>Specifications for a composite slot type.</p>"
       }
     },
     "Condition": {
@@ -969,6 +1002,19 @@
       "refs": {
         "DeleteCustomVocabularyResponse$customVocabularyStatus": "<p>The status of removing the custom vocabulary.</p>",
         "DescribeCustomVocabularyMetadataResponse$customVocabularyStatus": "<p>The status of the custom vocabulary. If the status is <code>Ready</code> the custom vocabulary is ready to use.</p>"
+      }
+    },
+    "DTMFCharacter": {
+      "base": null,
+      "refs": {
+        "DTMFSpecification$deletionCharacter": "<p>The DTMF character that clears the accumulated DTMF digits and immediately ends the input.</p>",
+        "DTMFSpecification$endCharacter": "<p>The DTMF character that immediately ends input. If the user does not press this character, the input ends after the end timeout.</p>"
+      }
+    },
+    "DTMFSpecification": {
+      "base": "<p>Specifies the DTMF input specifications.</p>",
+      "refs": {
+        "AudioAndDTMFInputSpecification$dtmfSpecification": "<p>Specifies the settings on DTMF input.</p>"
       }
     },
     "DataPrivacy": {
@@ -2287,6 +2333,12 @@
         "SearchAssociatedTranscriptsResponse$totalResults": "<p>The total number of transcripts returned by the search.</p>"
       }
     },
+    "MaxUtteranceDigits": {
+      "base": null,
+      "refs": {
+        "DTMFSpecification$maxLength": "<p>The maximum number of DTMF digits allowed in an utterance.</p>"
+      }
+    },
     "MergeStrategy": {
       "base": null,
       "refs": {
@@ -2386,6 +2438,8 @@
         "SlotSummary$slotName": "<p>The name given to the slot.</p>",
         "SlotTypeSummary$slotTypeName": "<p>The name of the slot type.</p>",
         "SlotValueOverrideMap$key": null,
+        "SubSlotSpecificationMap$key": null,
+        "SubSlotTypeComposition$name": "<p>Name of a constituent sub slot inside a composite slot.</p>",
         "UpdateBotAliasRequest$botAliasName": "<p>The new name to assign to the bot alias.</p>",
         "UpdateBotAliasResponse$botAliasName": "<p>The updated name of the bot alias.</p>",
         "UpdateBotRequest$botName": "<p>The new name of the bot. The name must be unique in the account that creates the bot.</p>",
@@ -2591,6 +2645,24 @@
         "SlotPriority$priority": "<p>The priority that a slot should be elicited.</p>"
       }
     },
+    "PromptAttempt": {
+      "base": "<p>The attempt name of attempts of a prompt.</p>",
+      "refs": {
+        "PromptAttemptsSpecificationMap$key": null
+      }
+    },
+    "PromptAttemptSpecification": {
+      "base": "<p>Specifies the settings on a prompt attempt.</p>",
+      "refs": {
+        "PromptAttemptsSpecificationMap$value": null
+      }
+    },
+    "PromptAttemptsSpecificationMap": {
+      "base": null,
+      "refs": {
+        "PromptSpecification$promptAttemptsSpecification": "<p>Specifies the advanced settings on each attempt of the prompt.</p>"
+      }
+    },
     "PromptMaxRetries": {
       "base": null,
       "refs": {
@@ -2602,7 +2674,8 @@
       "refs": {
         "IntentConfirmationSetting$promptSpecification": "<p>Prompts the user to confirm the intent. This question should have a yes or no answer.</p> <p>Amazon Lex uses this prompt to ensure that the user acknowledges that the intent is ready for fulfillment. For example, with the <code>OrderPizza</code> intent, you might want to confirm that the order is correct before placing it. For other intents, such as intents that simply respond to user questions, you might not need to ask the user for confirmation before providing the information. </p>",
         "SlotSummary$valueElicitationPromptSpecification": "<p>Prompts that are sent to the user to elicit a value for the slot.</p>",
-        "SlotValueElicitationSetting$promptSpecification": "<p>The prompt that Amazon Lex uses to elicit the slot value from the user.</p>"
+        "SlotValueElicitationSetting$promptSpecification": "<p>The prompt that Amazon Lex uses to elicit the slot value from the user.</p>",
+        "SubSlotValueElicitationSetting$promptSpecification": null
       }
     },
     "QueryFilterString": {
@@ -2777,6 +2850,7 @@
         "CreateIntentResponse$sampleUtterances": "<p>The sample utterances specified for the intent.</p>",
         "DescribeIntentResponse$sampleUtterances": "<p>User utterances that trigger this intent.</p>",
         "SlotValueElicitationSetting$sampleUtterances": "<p>If you know a specific pattern that users might respond to an Amazon Lex request for a slot value, you can provide those utterances to improve accuracy. This is optional. In most cases, Amazon Lex is capable of understanding user utterances.</p>",
+        "SubSlotValueElicitationSetting$sampleUtterances": "<p>If you know a specific pattern that users might respond to an Amazon Lex request for a sub slot value, you can provide those utterances to improve accuracy. This is optional. In most cases Amazon Lex is capable of understanding user utterances. This is similar to <code>SampleUtterances</code> for slots.</p>",
         "UpdateIntentRequest$sampleUtterances": "<p>New utterances used to invoke the intent.</p>",
         "UpdateIntentResponse$sampleUtterances": "<p>The updated list of sample utterances for the intent.</p>"
       }
@@ -2880,7 +2954,8 @@
     "SlotDefaultValueSpecification": {
       "base": "<p>Defines a list of values that Amazon Lex should use as the default value for a slot.</p>",
       "refs": {
-        "SlotValueElicitationSetting$defaultValueSpecification": "<p>A list of default values for a slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, session attributes, and defined values.</p>"
+        "SlotValueElicitationSetting$defaultValueSpecification": "<p>A list of default values for a slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, session attributes, and defined values.</p>",
+        "SubSlotValueElicitationSetting$defaultValueSpecification": null
       }
     },
     "SlotDefaultValueString": {
@@ -3052,7 +3127,7 @@
       }
     },
     "SlotValueElicitationSetting": {
-      "base": "<p>Settings that you can use for eliciting a slot value.</p>",
+      "base": "<p>Specifies the elicitation setting details for constituent sub slots of a composite slot.</p>",
       "refs": {
         "CreateSlotRequest$valueElicitationSetting": "<p>Specifies prompts that Amazon Lex sends to the user to elicit a response that provides the value for the slot. </p>",
         "CreateSlotResponse$valueElicitationSetting": "<p>The value elicitation settings specified for the slot.</p>",
@@ -3118,6 +3193,12 @@
         "SlotTypeSortBy$order": "<p>The order to sort the list. You can say ascending or descending.</p>"
       }
     },
+    "Specifications": {
+      "base": "<p>Subslot specifications.</p>",
+      "refs": {
+        "SubSlotSpecificationMap$value": null
+      }
+    },
     "StartBotRecommendationRequest": {
       "base": null,
       "refs": {
@@ -3178,6 +3259,46 @@
         "DialogState$sessionAttributes": "<p>Map of key/value pairs representing session-specific context information. It contains application information passed between Amazon Lex and a client application.</p>"
       }
     },
+    "SubSlotExpression": {
+      "base": null,
+      "refs": {
+        "SubSlotSetting$expression": "<p>The expression text for defining the constituent sub slots in the composite slot using logical AND and OR operators.</p>"
+      }
+    },
+    "SubSlotSetting": {
+      "base": "<p>Specifications for the constituent sub slots and the expression for the composite slot.</p>",
+      "refs": {
+        "CreateSlotRequest$subSlotSetting": "<p>Specifications for the constituent sub slots and the expression for the composite slot.</p>",
+        "CreateSlotResponse$subSlotSetting": "<p>Specifications for the constituent sub slots and the expression for the composite slot.</p>",
+        "DescribeSlotResponse$subSlotSetting": "<p>Specifications for the constituent sub slots and the expression for the composite slot.</p>",
+        "UpdateSlotRequest$subSlotSetting": "<p>Specifications for the constituent sub slots and the expression for the composite slot.</p>",
+        "UpdateSlotResponse$subSlotSetting": "<p>Specifications for the constituent sub slots and the expression for the composite slot.</p>"
+      }
+    },
+    "SubSlotSpecificationMap": {
+      "base": null,
+      "refs": {
+        "SubSlotSetting$slotSpecifications": "<p>Specifications for the constituent sub slots of a composite slot.</p>"
+      }
+    },
+    "SubSlotTypeComposition": {
+      "base": "<p>Subslot type composition.</p>",
+      "refs": {
+        "SubSlotTypeList$member": null
+      }
+    },
+    "SubSlotTypeList": {
+      "base": null,
+      "refs": {
+        "CompositeSlotTypeSetting$subSlots": "<p>Subslots in the composite slot.</p>"
+      }
+    },
+    "SubSlotValueElicitationSetting": {
+      "base": "<p>Subslot elicitation settings.</p> <p> <code>DefaultValueSpecification</code> is a list of default values for a constituent sub slot in a composite slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, session attributes, and defined values. This is similar to <code>DefaultValueSpecification</code> for slots.</p> <p> <code>PromptSpecification</code> is the prompt that Amazon Lex uses to elicit the sub slot value from the user. This is similar to <code>PromptSpecification</code> for slots.</p>",
+      "refs": {
+        "Specifications$valueElicitationSetting": "<p>Specifies the elicitation setting details for constituent sub slots of a composite slot.</p>"
+      }
+    },
     "SynonymList": {
       "base": null,
       "refs": {
@@ -3228,6 +3349,12 @@
         "TagMap$value": null
       }
     },
+    "TextInputSpecification": {
+      "base": "<p>Specifies the text input specifications.</p>",
+      "refs": {
+        "PromptAttemptSpecification$textInputSpecification": "<p>Specifies the settings on text input.</p>"
+      }
+    },
     "TextLogDestination": {
       "base": "<p>Defines the Amazon CloudWatch Logs destination log group for conversation text logs.</p>",
       "refs": {
@@ -3255,6 +3382,16 @@
       "base": null,
       "refs": {
         "RelativeAggregationDuration$timeDimension": "<p>The type of time period that the <code>timeValue</code> field represents. </p>"
+      }
+    },
+    "TimeInMilliSeconds": {
+      "base": null,
+      "refs": {
+        "AudioAndDTMFInputSpecification$startTimeoutMs": "<p>Time for which a bot waits before assuming that the customer isn't going to speak or press a key. This timeout is shared between Audio and DTMF inputs.</p>",
+        "AudioSpecification$maxLengthMs": "<p>Time for how long Amazon Lex waits before speech input is truncated and the speech is returned to application.</p>",
+        "AudioSpecification$endTimeoutMs": "<p>Time for which a bot waits after the customer stops speaking to assume the utterance is finished.</p>",
+        "DTMFSpecification$endTimeoutMs": "<p>How long the bot should wait after the last DTMF character input before assuming that the input has concluded.</p>",
+        "TextInputSpecification$startTimeoutMs": "<p>Time for which a bot waits before re-prompting a customer for text input.</p>"
       }
     },
     "TimeValue": {
@@ -3520,7 +3657,8 @@
     "WaitAndContinueSpecification": {
       "base": "<p>Specifies the prompts that Amazon Lex uses while a bot is waiting for customer input. </p>",
       "refs": {
-        "SlotValueElicitationSetting$waitAndContinueSpecification": null
+        "SlotValueElicitationSetting$waitAndContinueSpecification": null,
+        "SubSlotValueElicitationSetting$waitAndContinueSpecification": null
       }
     }
   }

@@ -5,7 +5,7 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class CognitoSyncClientTest extends TestCase
 {
@@ -21,7 +21,7 @@ class CognitoSyncClientTest extends TestCase
                 $identityPoolId
             ) {
                 foreach ([$identityId, $identityPoolId] as $unencodedString) {
-                    $this->assertContains(
+                    $this->assertStringContainsString(
                         urlencode($unencodedString),
                         (string) $request->getUri()
                     );

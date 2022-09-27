@@ -6,12 +6,11 @@ use Aws\Result;
 use Aws\EventBridge\EventBridgeClient;
 use Aws\Test\UsesServiceTrait;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class EventBridgeEndpointMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
-
 
     public function putEventsEndpointSuccessProvider()
     {
@@ -199,7 +198,7 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
             self::fail("this test should have thrown an exception");
         } catch (\Exception $exception) {
             self::assertSame("InvalidArgumentException", get_class($exception));
-            self::assertContains($expectedException, $exception->getMessage());
+            self::assertStringContainsString($expectedException, $exception->getMessage());
         }
     }
 

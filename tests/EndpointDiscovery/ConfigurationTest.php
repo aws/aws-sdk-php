@@ -3,7 +3,7 @@
 namespace Aws\Test\EndpointDiscovery;
 
 use Aws\EndpointDiscovery\Configuration;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Log\InvalidArgumentException;
 
 /**
@@ -28,11 +28,9 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->toArray());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testHandlesInvalidCacheLimit()
     {
+        $this->expectException(\InvalidArgumentException::class);
         new Configuration(true, 'not_a_cache_limit');
     }
 

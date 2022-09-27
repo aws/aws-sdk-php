@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Endpoint\UseFipsEndpoint;
+namespace Aws\Test\Endpoint\UseFipsEndpoint;
 
 use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider;
 use Aws\LruArrayCache;
@@ -7,7 +7,7 @@ use Aws\Endpoint\UseFipsEndpoint\Configuration;
 use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface;
 use Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider
@@ -30,18 +30,20 @@ use_fips_endpoint = false
 use_fips_endpoint = true
 EOT;
 
-    public static function setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'use_fips_endpoint' => getenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT) ?: '',
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
+            'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
         ];
     }
 
     private function clearEnv()
     {
         putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT . '=');
+        putenv(ConfigurationProvider::ENV_PROFILE . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
@@ -53,13 +55,15 @@ EOT;
         return $dir;
     }
 
-    public static function tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT . '=' .
             self::$originalEnv['use_fips_endpoint']);
+        putenv('HOME=' . self::$originalEnv['home']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
-        putenv('HOME=' . self::$originalEnv['home']);
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
+            self::$originalEnv['config_file']);
     }
 
     public function testCreatesFromEnvironmentVariables()
@@ -177,21 +181,17 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
-     */
     public function testEnsuresIniFileExists()
     {
+        $this->expectException(\Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException::class);
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
         call_user_func(ConfigurationProvider::ini())->wait();
     }
 
-    /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
-     */
     public function testEnsuresProfileIsNotEmpty()
     {
+        $this->expectException(\Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         $ini = "[custom]";
         file_put_contents($dir . '/config', $ini);
@@ -205,12 +205,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
-     * @expectedExceptionMessage 'foo' not found in
-     */
     public function testEnsuresFileIsNotEmpty()
     {
+        $this->expectException(\Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException::class);
+        $this->expectExceptionMessage("'foo' not found in");
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', '');
         putenv('HOME=' . dirname($dir));
@@ -223,12 +221,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
-     * @expectedExceptionMessage Invalid config file:
-     */
     public function testEnsuresIniFileIsValid()
     {
+        $this->expectException(\Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException::class);
+        $this->expectExceptionMessage("Invalid config file:");
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
@@ -297,11 +293,9 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testChainThrowsExceptionOnEmptyArgs()
     {
+        $this->expectException(\InvalidArgumentException::class);
         ConfigurationProvider::chain();
     }
 

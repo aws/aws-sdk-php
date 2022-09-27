@@ -10,14 +10,14 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\TransferStats;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Handler\GuzzleV6\GuzzleHandler
  */
 class HandlerTest extends TestCase
 {
-    public function setUp()
+    public function set_up()
     {
         if (!class_exists('GuzzleHttp\HandlerStack')) {
             $this->markTestSkipped();
@@ -140,7 +140,7 @@ class HandlerTest extends TestCase
             $error = $e->getReason();
             $this->assertInstanceOf(\Error::class, $error['exception']);
             $this->assertFalse($error['connection_error']);
-            $this->assertContains("error message", $error['exception']->getMessage());
+            $this->assertStringContainsString("error message", $error['exception']->getMessage());
         }
 
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');

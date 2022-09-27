@@ -9,7 +9,7 @@ use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Command;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\IdempotencyTokenMiddleware
@@ -23,7 +23,7 @@ class IdempotencyTokenMiddlewareTest extends TestCase
             $called = true;
             $this->assertNotNull($command['ClientToken']);
             $regex = '/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/';
-            $this->assertRegExp($regex, $command['ClientToken']);
+            $this->assertMatchesRegularExpression($regex, $command['ClientToken']);
             return Promise\Create::promiseFor(new Result([]));
         });
 

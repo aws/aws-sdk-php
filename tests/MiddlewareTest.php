@@ -19,14 +19,14 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Middleware
  */
 class MiddlewareTest extends TestCase
 {
-    public function setup()
+    public function set_up()
     {
         \GuzzleHttp\Promise\queue()->run();
     }
@@ -123,12 +123,10 @@ class MiddlewareTest extends TestCase
         $this->assertTrue($called);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage [a] is missing and is a required parameter
-     */
     public function testValidatesCommands()
     {
+        $this->expectExceptionMessage("[a] is missing and is a required parameter");
+        $this->expectException(\InvalidArgumentException::class);
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
         $api = new Service(
