@@ -795,15 +795,12 @@ class ClientResolver
     public static function _apply_user_agent($inputUserAgent, array &$args, HandlerList $list)
     {
         //Add SDK version
-        $xAmzUserAgent = ['aws-sdk-php/' . Sdk::VERSION];
+        $userAgent = ['aws-sdk-php/' . Sdk::VERSION];
 
         //If on HHVM add the HHVM version
         if (defined('HHVM_VERSION')) {
-            $xAmzUserAgent []= 'HHVM/' . HHVM_VERSION;
+            $userAgent []= 'HHVM/' . HHVM_VERSION;
         }
-
-        //Set up the updated user agent
-        $legacyUserAgent = $xAmzUserAgent;
 
         //Add OS version
         $disabledFunctions = explode(',', ini_get('disable_functions'));
@@ -812,16 +809,16 @@ class ClientResolver
         ) {
             $osName = "OS/" . php_uname('s') . '/' . php_uname('r');
             if (!empty($osName)) {
-                $legacyUserAgent []= $osName;
+                $userAgent []= $osName;
             }
         }
 
         //Add the language version
-        $legacyUserAgent []= 'lang/php/' . phpversion();
+        $userAgent []= 'lang/php/' . phpversion();
 
         //Add exec environment if present
         if ($executionEnvironment = getenv('AWS_EXECUTION_ENV')) {
-            $legacyUserAgent []= $executionEnvironment;
+            $userAgent []= $executionEnvironment;
         }
 
         //Add the input to the end
@@ -830,32 +827,28 @@ class ClientResolver
                 $inputUserAgent = [$inputUserAgent];
             }
             $inputUserAgent = array_map('strval', $inputUserAgent);
-            $legacyUserAgent = array_merge($legacyUserAgent, $inputUserAgent);
-            $xAmzUserAgent = array_merge($xAmzUserAgent, $inputUserAgent);
+            $userAgent = array_merge($userAgent, $inputUserAgent);
         }
 
-        $args['ua_append'] = $legacyUserAgent;
+        $args['ua_append'] = $userAgent;
 
-        $list->appendBuild(static function (callable $handler) use (
-            $xAmzUserAgent,
-            $legacyUserAgent
-        ) {
+        $list->appendBuild(static function (callable $handler) use ($userAgent) {
             return function (
                 CommandInterface $command,
                 RequestInterface $request
-            ) use ($handler, $legacyUserAgent, $xAmzUserAgent) {
+            ) use ($handler, $userAgent) {
                 return $handler(
                     $command,
                     $request->withHeader(
                         'X-Amz-User-Agent',
                         implode(' ', array_merge(
-                            $xAmzUserAgent,
+                            $userAgent,
                             $request->getHeader('X-Amz-User-Agent')
                         ))
                     )->withHeader(
                         'User-Agent',
                         implode(' ', array_merge(
-                            $legacyUserAgent,
+                            $userAgent,
                             $request->getHeader('User-Agent')
                         ))
                     )
