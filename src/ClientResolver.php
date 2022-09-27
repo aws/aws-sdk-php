@@ -802,9 +802,6 @@ class ClientResolver
             $userAgent []= 'HHVM/' . HHVM_VERSION;
         }
 
-        //Set up the updated user agent
-        $legacyUserAgent = $userAgent;
-
         //Add OS version
         $disabledFunctions = explode(',', ini_get('disable_functions'));
         if (function_exists('php_uname')
@@ -830,7 +827,6 @@ class ClientResolver
                 $inputUserAgent = [$inputUserAgent];
             }
             $inputUserAgent = array_map('strval', $inputUserAgent);
-            $legacyUserAgent = array_merge($legacyUserAgent, $inputUserAgent);
             $userAgent = array_merge($userAgent, $inputUserAgent);
         }
 
