@@ -307,6 +307,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateDistributionBundleAsync(array $args = [])
  * @method \Aws\Result updateDomainEntry(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDomainEntryAsync(array $args = [])
+ * @method \Aws\Result updateInstanceMetadataOptions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateInstanceMetadataOptionsAsync(array $args = [])
  * @method \Aws\Result updateLoadBalancerAttribute(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLoadBalancerAttributeAsync(array $args = [])
  * @method \Aws\Result updateRelationalDatabase(array $args = [])
