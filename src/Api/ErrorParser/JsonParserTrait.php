@@ -15,10 +15,14 @@ trait JsonParserTrait
     private function genericHandler(ResponseInterface $response)
     {
         $code = (string) $response->getStatusCode();
+        if ($queryError = $response->getHeaderLine('x-amzn-query-error')) {
+            $parts = explode(';', $queryError);
+            $error = (isset($parts) and !empty(trim($parts[0]))) ? $parts[0] : null;
+        }
 
         return [
             'request_id'  => (string) $response->getHeaderLine('x-amzn-requestid'),
-            'code'        => null,
+            'code'        => isset($error) ? $error : null,
             'message'     => null,
             'type'        => $code[0] == '4' ? 'client' : 'server',
             'parsed'      => $this->parseJson($response->getBody(), $response)
