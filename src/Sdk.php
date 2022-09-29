@@ -416,6 +416,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHub(array $args = [])
  * @method \Aws\MigrationHubConfig\MigrationHubConfigClient createMigrationHubConfig(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHubConfig(array $args = [])
+ * @method \Aws\MigrationHubOrchestrator\MigrationHubOrchestratorClient createMigrationHubOrchestrator(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMigrationHubOrchestrator(array $args = [])
  * @method \Aws\MigrationHubRefactorSpaces\MigrationHubRefactorSpacesClient createMigrationHubRefactorSpaces(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHubRefactorSpaces(array $args = [])
  * @method \Aws\MigrationHubStrategyRecommendations\MigrationHubStrategyRecommendationsClient createMigrationHubStrategyRecommendations(array $args = [])

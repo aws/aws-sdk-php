@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - This update returns additional certificate details such as certificate SANs and allows sorting in the ListCertificates API.
+* `Aws\EC2` - u-3tb1 instances are powered by Intel Xeon Platinum 8176M (Skylake) processors and are purpose-built to run large in-memory databases.
+* `Aws\EMRServerless` - This release adds API support to debug Amazon EMR Serverless jobs in real-time with live application UIs
+* `Aws\FSx` - This release adds support for Amazon File Cache.
+* `Aws\MigrationHubOrchestrator` - Introducing AWS MigrationHubOrchestrator. This is the first public release of AWS MigrationHubOrchestrator.
+* `Aws\Polly` - Added support for the new Cantonese voice - Hiujin. Hiujin is available as a Neural voice only.
+* `Aws\Proton` - This release adds an option to delete pipeline provisioning repositories using the UpdateAccountSettings API
+* `Aws\SageMaker` - SageMaker Training Managed Warm Pools let you retain provisioned infrastructure to reduce latency for repetitive training workloads.
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+* `Aws\Translate` - This release enables customers to access control rights on Translate resources like Parallel Data and Custom Terminology using Tag Based Authorization.
+* `Aws\WorkSpaces` - This release includes diagnostic log uploading feature. If it is enabled, the log files of WorkSpaces Windows client will be sent to Amazon WorkSpaces automatically for troubleshooting. You can use modifyClientProperty api to enable/disable this feature.
+
 ## 3.236.1 - 2022-09-27
 
 * `Aws\CostExplorer` - This release is to support retroactive Cost Categories. The new field will enable you to retroactively apply new and existing cost category rules to previous months.
