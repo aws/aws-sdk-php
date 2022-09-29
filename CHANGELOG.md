@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.237.0 - 2022-09-29
 
 * `Aws\ACM` - This update returns additional certificate details such as certificate SANs and allows sorting in the ListCertificates API.
 * `Aws\EC2` - u-3tb1 instances are powered by Intel Xeon Platinum 8176M (Skylake) processors and are purpose-built to run large in-memory databases.
