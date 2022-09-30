@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeDeploy` - This release allows you to override the alarm configurations when creating a deployment.
+* `Aws\DLM` - This release adds support for archival of single-volume snapshots created by Amazon Data Lifecycle Manager policies
+* `Aws\DevOpsGuru` - This release adds filter feature on AddNotificationChannel API, enable customer to configure the SNS notification messages by Severity or MessageTypes
+* `Aws\SSOOIDC` - Documentation updates for the IAM Identity Center OIDC CLI Reference.
+* `Aws\SageMaker` - A new parameter called ExplainerConfig is added to CreateEndpointConfig API to enable SageMaker Clarify online explainability feature.
+* `Aws\SageMakerRuntime` - A new parameter called EnableExplanations is added to InvokeEndpoint API to enable on-demand SageMaker Clarify online explainability requests.
+
 ## 3.237.0 - 2022-09-29
 
 * `Aws\ACM` - This update returns additional certificate details such as certificate SANs and allows sorting in the ListCertificates API.
