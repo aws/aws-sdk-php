@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.237.1 - 2022-09-30
 
 * `Aws\CodeDeploy` - This release allows you to override the alarm configurations when creating a deployment.
 * `Aws\DLM` - This release adds support for archival of single-volume snapshots created by Amazon Data Lifecycle Manager policies
