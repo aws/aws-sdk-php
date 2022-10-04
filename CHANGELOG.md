@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Updated the CreateIntegrationAssociation API to support the CASES_DOMAIN IntegrationType.
+* `Aws\ConnectCases` - This release adds APIs for Amazon Connect Cases. Cases allows your agents to quickly track and manage customer issues that require multiple interactions, follow-up tasks, and teams in your contact center. For more information, see https://docs.aws.amazon.com/cases/latest/APIReference/Welcome.html
+* `Aws\EC2` - Added EnableNetworkAddressUsageMetrics flag for ModifyVpcAttribute, DescribeVpcAttribute APIs.
+* `Aws\ECS` - Documentation updates to address various Amazon ECS tickets.
+* `Aws\S3Control` - S3 Object Lambda adds support to allow customers to intercept HeadObject and ListObjects requests and introduce their own compute. These requests were previously proxied to S3.
+* `Aws\WorkMail` - This release adds support for impersonation roles in Amazon WorkMail.
+
 ## 3.237.2 - 2022-10-03
 
 * `Aws\AccessAnalyzer` - AWS IAM Access Analyzer policy validation introduces new checks for role trust policies. As customers author a policy, IAM Access Analyzer policy validation evaluates the policy for any issues to make it easier for customers to author secure policies.
