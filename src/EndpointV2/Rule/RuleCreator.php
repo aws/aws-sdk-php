@@ -16,28 +16,14 @@ class RuleCreator
             );
         }
 
-        if ($type === 'endpoint') {
-            return self::createEndpointRule($spec);
-        } else if ($type === 'error') {
-            return self::createErrorRule($spec);
-        } else if ($type === 'tree') {
-            return self::createTreeRule($spec);
+        switch ($type) {
+            case 'endpoint':
+                return new EndpointRule($spec);
+            case 'error':
+                return new ErrorRule($spec);
+            case 'tree':
+                return new TreeRule($spec);
         }
-    }
-
-    private static function createEndpointRule($spec)
-    {
-        return new EndpointRule($spec);
-    }
-
-    private static function createErrorRule($spec)
-    {
-        return new ErrorRule($spec);
-    }
-
-    private static function createTreeRule($spec)
-    {
-        return new TreeRule($spec);
     }
 }
 

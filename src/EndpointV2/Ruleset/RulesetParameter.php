@@ -32,8 +32,8 @@ class RulesetParameter
 
     public function __construct($name, array $spec)
     {
-        if ($this->isValidType($spec['type'])) {
-            $this->type = $spec['type'];
+        if ($this->isValidType(ucfirst($spec['type']))) {
+            $this->type = ucfirst($spec['type']);
         } else {
             throw new UnresolvedEndpointException(
                 'Unknown parameter type ' . "`{$spec['type']}`" .
@@ -113,8 +113,8 @@ class RulesetParameter
     public function validateInputParam($inputParam)
     {
         $typeMap = [
-            'string' => 'is_string',
-            'boolean' => 'is_bool'
+            'String' => 'is_string',
+            'Boolean' => 'is_bool'
         ];
 
         if ($typeMap[$this->type]($inputParam) === false) {
@@ -139,6 +139,6 @@ class RulesetParameter
 
     private function isValidType($type)
     {
-        return in_array($type, ['string', 'boolean']);
+        return in_array($type, ['String', 'Boolean']);
     }
 }

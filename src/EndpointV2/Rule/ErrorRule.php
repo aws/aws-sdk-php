@@ -40,6 +40,6 @@ class ErrorRule extends Rule
             $message = $standardLibrary->resolveValue($this->error, $inputParameters);
             throw new UnresolvedEndpointException($message);
         }
-        return null;
+        return false;
     }
 }

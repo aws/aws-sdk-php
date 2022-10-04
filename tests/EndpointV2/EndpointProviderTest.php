@@ -95,9 +95,7 @@ class EndpointProviderTest extends TestCase
         
         $this->expectException(UnresolvedEndpointException::class);
         $this->expectExceptionMessage(
-            'Unable to resolve an endpoint using the provider arguments: {"Bucket":"someBucket"}.' .
-            ' Note: you can provide an "endpoint" option to a client constructor to bypass' .
-             ' the use of an endpoint provider.'
+            'Unable to resolve an endpoint using the provider arguments: {"Bucket":"someBucket"}'
         );
         $provider->resolveEndpoint(['Bucket' => 'someBucket']);
     }

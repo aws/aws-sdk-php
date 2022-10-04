@@ -38,16 +38,14 @@ class TreeRule extends Rule
     {
         if ($this->evaluateConditions($inputParameters, $standardLibrary)) {
             foreach($this->rules as $rule) {
-                //newly set parameters via "assign" cannot be shared
-                //between adjacent rules
                 $inputParametersCopy = $inputParameters;
                 $evaluation = $rule->evaluate($inputParametersCopy, $standardLibrary);
-                if (!is_null($evaluation)) {
+                if ($evaluation !== false) {
                     return $evaluation;
                 }
             }
         }
-        return null;
+        return false;
     }
 
     private function createRules(array $rules)

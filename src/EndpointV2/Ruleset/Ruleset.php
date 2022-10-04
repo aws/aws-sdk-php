@@ -65,15 +65,13 @@ Class Ruleset
         $this->validateInputParameters($inputParameters);
 
         foreach($this->rules as $rule) {
-            // newly set parameters via "assign" cannot be shared between
-            // adjacent rules
             $inputParametersCopy = $inputParameters;
             $evaluation = $rule->evaluate($inputParametersCopy, $this->standardLibrary);
-            if (!is_null($evaluation)) {
+            if ($evaluation !== false) {
                 return $evaluation;
             }
         }
-        return null;
+        return false;
     }
 
     /**
@@ -89,7 +87,7 @@ Class Ruleset
 
             if (is_null($inputParam) && !is_null($paramSpec->getDefault())) {
                 $inputParameters[$paramName] = $paramSpec->getDefault();
-            } else if (!is_null($inputParam)) {
+            } elseif (!is_null($inputParam)) {
                 $paramSpec->validateInputParam($inputParam);
             }
         }

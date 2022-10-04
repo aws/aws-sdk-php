@@ -97,7 +97,7 @@ class RulesetStandardLibrary
             );
         }
 
-        if(preg_match('/[^\x00-\x7F]/', $input)) {
+        if (preg_match('/[^\x00-\x7F]/', $input)) {
             return null;
         }
         if ($start >= $stop or strlen($input) < $stop) {
@@ -167,7 +167,7 @@ class RulesetStandardLibrary
 
         if ($parsed === false || !empty($parsed['query'])) {
             return null;
-        } else if (isset($parsed['scheme'])) {
+        } elseif (isset($parsed['scheme'])) {
             if ($parsed['scheme'] !== 'http'
                 && $parsed['scheme'] !== 'https'
             ) {
@@ -231,7 +231,7 @@ class RulesetStandardLibrary
             return null;
         }
 
-            $arn = [];
+        $arn = [];
         $parts = explode(':', $arnString, 6);
         if (sizeof($parts) > 6) {
             return null;
@@ -345,9 +345,9 @@ class RulesetStandardLibrary
         //returns resolved value
         if ($this->isFunc($value)) {
             return $this->callFunction($value, $inputParameters);
-        } else if ($this->isRef($value)) {
+        } elseif ($this->isRef($value)) {
             return isset($inputParameters[$value['ref']]) ? $inputParameters[$value['ref']] : null;
-        } else if ($this->isTemplate($value)) {
+        } elseif ($this->isTemplate($value)) {
             return $this->resolveTemplateString($value, $inputParameters);
         }
         return $value;

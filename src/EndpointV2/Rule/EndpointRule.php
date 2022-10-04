@@ -35,7 +35,7 @@ Class EndpointRule extends Rule
         if ($this->evaluateConditions($inputParameters, $standardLibrary)) {
             return $this->resolve($inputParameters, $standardLibrary);
         }
-        return null;
+        return false;
     }
 
     /**
@@ -75,7 +75,7 @@ Class EndpointRule extends Rule
                $propertiesArr[$key] = $this->resolveProperties($val, $inputParameters, $standardLibrary);
            }
            return $propertiesArr;
-        }else if ($standardLibrary->isTemplate($properties)) {
+        } elseif ($standardLibrary->isTemplate($properties)) {
             return $standardLibrary->resolveTemplateString($properties, $inputParameters);
         }
         return $properties;

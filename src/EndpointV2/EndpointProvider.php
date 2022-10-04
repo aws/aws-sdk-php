@@ -40,12 +40,11 @@ class EndpointProvider
         $errorParams = $inputParameters;
         $endpoint = $this->ruleSet->evaluate($inputParameters);
 
-        if (is_null($endpoint)) {
+        if ($endpoint === false) {
             throw new UnresolvedEndpointException(
                 'Unable to resolve an endpoint using the provider arguments: '
-                . json_encode($errorParams) . '. Note: you can provide an "endpoint" '
-                . 'option to a client constructor to bypass the use of an endpoint '
-                . 'provider.');
+                . json_encode($errorParams)
+            );
         }
         return $endpoint;
     }
