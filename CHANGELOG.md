@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.238.1 - 2022-10-05
 
 * `Aws\Glue` - This SDK release adds support to sync glue jobs with source control provider. Additionally, a new parameter called SourceControlDetails will be added to Job model.
 * `Aws\NetworkFirewall` - StreamExceptionPolicy configures how AWS Network Firewall processes traffic when a network connection breaks midstream
