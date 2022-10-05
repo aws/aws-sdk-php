@@ -16905,6 +16905,10 @@
         "EnableDnsSupport":{
           "shape":"AttributeBooleanValue",
           "locationName":"enableDnsSupport"
+        },
+        "EnableNetworkAddressUsageMetrics":{
+          "shape":"AttributeBooleanValue",
+          "locationName":"enableNetworkAddressUsageMetrics"
         }
       }
     },
@@ -20014,6 +20018,10 @@
         "InstanceRequirements":{
           "shape":"InstanceRequirements",
           "locationName":"instanceRequirements"
+        },
+        "ImageId":{
+          "shape":"ImageId",
+          "locationName":"imageId"
         }
       }
     },
@@ -20041,7 +20049,8 @@
         "WeightedCapacity":{"shape":"Double"},
         "Priority":{"shape":"Double"},
         "Placement":{"shape":"Placement"},
-        "InstanceRequirements":{"shape":"InstanceRequirementsRequest"}
+        "InstanceRequirements":{"shape":"InstanceRequirementsRequest"},
+        "ImageId":{"shape":"ImageId"}
       }
     },
     "FleetLaunchTemplateSpecification":{
@@ -22163,6 +22172,10 @@
         "DeprecationTime":{
           "shape":"String",
           "locationName":"deprecationTime"
+        },
+        "ImdsSupport":{
+          "shape":"ImdsSupportValues",
+          "locationName":"imdsSupport"
         }
       }
     },
@@ -22216,6 +22229,10 @@
         "LastLaunchedTime":{
           "shape":"AttributeValue",
           "locationName":"lastLaunchedTime"
+        },
+        "ImdsSupport":{
+          "shape":"AttributeValue",
+          "locationName":"imdsSupport"
         }
       }
     },
@@ -22232,7 +22249,8 @@
         "bootMode",
         "tpmSupport",
         "uefiData",
-        "lastLaunchedTime"
+        "lastLaunchedTime",
+        "imdsSupport"
       ]
     },
     "ImageDiskContainer":{
@@ -22326,6 +22344,10 @@
         "kernel",
         "ramdisk"
       ]
+    },
+    "ImdsSupportValues":{
+      "type":"string",
+      "enum":["v2.0"]
     },
     "ImportClientVpnClientCertificateRevocationListRequest":{
       "type":"structure",
@@ -25013,7 +25035,8 @@
         "r6a.32xlarge",
         "r6a.48xlarge",
         "r6a.metal",
-        "p4de.24xlarge"
+        "p4de.24xlarge",
+        "u-3tb1.56xlarge"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -29121,7 +29144,8 @@
         "VpcId":{
           "shape":"VpcId",
           "locationName":"vpcId"
-        }
+        },
+        "EnableNetworkAddressUsageMetrics":{"shape":"AttributeBooleanValue"}
       }
     },
     "ModifyVpcEndpointConnectionNotificationRequest":{
@@ -31268,7 +31292,7 @@
     "Port":{
       "type":"integer",
       "max":65535,
-      "min":1
+      "min":0
     },
     "PortRange":{
       "type":"structure",
@@ -32247,7 +32271,8 @@
         },
         "BootMode":{"shape":"BootModeValues"},
         "TpmSupport":{"shape":"TpmSupportValues"},
-        "UefiData":{"shape":"StringType"}
+        "UefiData":{"shape":"StringType"},
+        "ImdsSupport":{"shape":"ImdsSupportValues"}
       }
     },
     "RegisterImageResult":{
@@ -40309,7 +40334,8 @@
       "type":"string",
       "enum":[
         "enableDnsSupport",
-        "enableDnsHostnames"
+        "enableDnsHostnames",
+        "enableNetworkAddressUsageMetrics"
       ]
     },
     "VpcCidrAssociationId":{"type":"string"},
