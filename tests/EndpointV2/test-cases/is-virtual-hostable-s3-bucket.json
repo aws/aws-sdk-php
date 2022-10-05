@@ -116,6 +116,33 @@
       "expect": {
         "error": "not isVirtualHostableS3Bucket"
       }
+    },
+    {
+      "documentation": "192.168.5.4: not isVirtualHostable (formatted like an ip address)",
+      "params": {
+        "BucketName": "192.168.5.4"
+      },
+      "expect": {
+        "error": "not isVirtualHostableS3Bucket"
+      }
+    },
+    {
+      "documentation": "bucket-.name: not isVirtualHostable (invalid label, ends with a -)",
+      "params": {
+        "BucketName": "bucket-.name"
+      },
+      "expect": {
+        "error": "not isVirtualHostableS3Bucket"
+      }
+    },
+    {
+      "documentation": "bucket.-name: not isVirtualHostable (invalid label, starts with a -)",
+      "params": {
+        "BucketName": "bucket.-name"
+      },
+      "expect": {
+        "error": "not isVirtualHostableS3Bucket"
+      }
     }
   ]
 }
