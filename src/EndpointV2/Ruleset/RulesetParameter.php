@@ -32,12 +32,13 @@ class RulesetParameter
 
     public function __construct($name, array $spec)
     {
-        if ($this->isValidType(ucfirst($spec['type']))) {
-            $this->type = ucfirst($spec['type']);
+        $type = ucfirst($spec['type']);
+        if ($this->isValidType($type)) {
+            $this->type = $type;
         } else {
             throw new UnresolvedEndpointException(
-                'Unknown parameter type ' . "`{$spec['type']}`" .
-                '. Parameters must be of type `string` or `boolean`.'
+                'Unknown parameter type ' . "`{$type}`" .
+                '. Parameters must be of type `String` or `Boolean`.'
             );
         }
         $this->name = $name;

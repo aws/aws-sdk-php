@@ -43,7 +43,7 @@ class RulesetParameterTest extends TestCase
     {
         $this->expectException(UnresolvedEndpointException::class);
         $this->expectExceptionMessage(
-            "Input parameter `Region` is the wrong type. Must be a string."
+            "Input parameter `Region` is the wrong type. Must be a String."
         );
 
         $this->rulesetParameter->validateInputParam($inputParameter);
@@ -64,8 +64,8 @@ class RulesetParameterTest extends TestCase
         ];
         $this->expectException(UnresolvedEndpointException::class);
         $this->expectExceptionMessage(
-            'Unknown parameter type `tuple`. ' .
-                'Parameters must be of type `string` or `boolean`.'
+            'Unknown parameter type `Tuple`. ' .
+                'Parameters must be of type `String` or `Boolean`.'
         );
 
         $rulesetParameter = new RulesetParameter('invalidType', $parameterSpec);
