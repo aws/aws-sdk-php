@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.238.2 - 2022-10-06
 
 * `Aws\ResilienceHub` - Documentation change for AWS Resilience Hub. Doc-only update to fix Documentation layout
 
