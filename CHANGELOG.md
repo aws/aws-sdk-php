@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.238.3 - 2022-10-07
 
 * `Aws\CodeGuruReviewer` - Documentation update to replace broken link.
 * `Aws\ElasticLoadBalancingv2` - Gateway Load Balancer adds a new feature (target_failover) for customers to rebalance existing flows to a healthy target after marked unhealthy or deregistered. This allows graceful patching/upgrades of target appliances during maintenance windows, and helps reduce unhealthy target failover time.
