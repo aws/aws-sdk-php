@@ -45,6 +45,7 @@ trait TestServiceTrait
         ];
         if ($protocol === 'json') {
             $metadata['jsonVersion'] = "1.1";
+            $metadata['awsQueryCompatible'] = "String";
         }
 
         return new Service(

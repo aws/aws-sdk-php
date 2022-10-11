@@ -144,11 +144,11 @@ class JsonRpcErrorParserTest extends TestCase
                 "x-amzn-query-error: NonExistentException;Sender\r\n\r\n" .
                 '{ "__Type": "foo", "Message": "lorem ipsum" }',
                 null,
-                new JsonRpcErrorParser(),
+                new JsonRpcErrorParser($service),
                 [
                     'code'       => 'NonExistentException',
                     'message'    => 'lorem ipsum',
-                    'type'       => 'client',
+                    'type'       => 'Sender',
                     'request_id' => 'xyz',
                     'parsed'     => [
                         'message' => 'lorem ipsum',
@@ -164,7 +164,7 @@ class JsonRpcErrorParserTest extends TestCase
                 "x-amzn-query-error: ;Sender\r\n\r\n" .
                 '{ "__Type": "foo", "Message": "lorem ipsum" }',
                 null,
-                new JsonRpcErrorParser(),
+                new JsonRpcErrorParser($service),
                 [
                     'code'       => 'foo',
                     'message'    => 'lorem ipsum',
