@@ -30,6 +30,12 @@ class MockHandlerTest extends TestCase
         $this->assertCount(3, $h);
     }
 
+    public function testCanCountEmpty()
+    {
+        $h = new Mockhandler();
+        $this->assertCount(0, $h);
+    }
+
     public function testReturnsMockResultsFromQueue()
     {
         $h = new MockHandler();
