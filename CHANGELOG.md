@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.238.4 - 2022-10-13
 
 * `Aws\AmplifyUIBuilder` - We are releasing the ability for fields to be configured as arrays.
 * `Aws\Appflow` - With this update, you can choose which Salesforce API is used by Amazon AppFlow to transfer data to or from your Salesforce account. You can choose the Salesforce REST API or Bulk API 2.0. You can also choose for Amazon AppFlow to pick the API automatically.
