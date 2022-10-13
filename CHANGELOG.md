@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AmplifyUIBuilder` - We are releasing the ability for fields to be configured as arrays.
+* `Aws\Appflow` - With this update, you can choose which Salesforce API is used by Amazon AppFlow to transfer data to or from your Salesforce account. You can choose the Salesforce REST API or Bulk API 2.0. You can also choose for Amazon AppFlow to pick the API automatically.
+* `Aws\Connect` - This release adds support for a secondary email and a mobile number for Amazon Connect instance users.
+* `Aws\ConnectWisdomService` - This release updates the GetRecommendations API to include a trigger event list for classifying and grouping recommendations.
+* `Aws\DirectoryService` - This release adds support for describing and updating AWS Managed Microsoft AD set up.
+* `Aws\ECS` - Documentation update to address tickets.
+* `Aws\GuardDuty` - Add UnprocessedDataSources to CreateDetectorResponse which specifies the data sources that couldn't be enabled during the CreateDetector request. In addition, update documentations.
+* `Aws\IAM` - Documentation updates for the AWS Identity and Access Management API Reference.
+* `Aws\IoTFleetWise` - Documentation update for AWS IoT FleetWise
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports forwarding SCTE-35 messages through the Event Signaling and Management (ESAM) API, and can read those SCTE-35 messages from an inactive source.
+* `Aws\MediaPackageVod` - This release adds SPEKE v2 support for MediaPackage VOD. Speke v2 is an upgrade to the existing SPEKE API to support multiple encryption keys, based on an encryption contract selected by the customer.
+* `Aws\Panorama` - Pause and resume camera stream processing with SignalApplicationInstanceNodeInstances. Reboot an appliance with CreateJobForDevices. More application state information in DescribeApplicationInstance response.
+* `Aws\RDSDataService` - Doc update to reflect no support for schema parameter on BatchExecuteStatement API
+* `Aws\SSM` - Support of AmazonLinux2022 by Patch Manager
+* `Aws\SSMIncidents` - Update RelatedItem enum to support Tasks
+* `Aws\Transfer` - This release adds an option for customers to configure workflows that are triggered when files are only partially received from a client due to premature session disconnect.
+* `Aws\Translate` - This release enables customers to specify multiple target languages in asynchronous batch translation requests.
+
 ## 3.238.3 - 2022-10-07
 
 * `Aws\CodeGuruReviewer` - Documentation update to replace broken link.
