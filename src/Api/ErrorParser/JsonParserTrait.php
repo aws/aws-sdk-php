@@ -21,9 +21,9 @@ trait JsonParserTrait
         ) {
             $queryError = $response->getHeaderLine('x-amzn-query-error');
             $parts = explode(';', $queryError);
-            if (isset($parts) && count($parts) == 2 && $parts[0] && $parts[1]) {
-                $error_code = $parts[0];
-                $error_type = $parts[1];
+            if (isset($parts) && count($parts) == 2 && trim($parts[0]) && trim($parts[1])) {
+                $error_code = trim($parts[0]);
+                $error_type = trim($parts[1]);
             }
         }
         if (!isset($error_type)) {
