@@ -69,6 +69,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getMapStyleDescriptorAsync(array $args = [])
  * @method \Aws\Result getMapTile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getMapTileAsync(array $args = [])
+ * @method \Aws\Result getPlace(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPlaceAsync(array $args = [])
  * @method \Aws\Result listDevicePositions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDevicePositionsAsync(array $args = [])
  * @method \Aws\Result listGeofenceCollections(array $args = [])

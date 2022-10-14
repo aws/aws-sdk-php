@@ -1404,6 +1404,7 @@
         "DescribeVolumeAttributeResult$AutoEnableIO": "<p>The state of <code>autoEnableIO</code> attribute.</p>",
         "DescribeVpcAttributeResult$EnableDnsHostnames": "<p>Indicates whether the instances launched in the VPC get DNS hostnames. If this attribute is <code>true</code>, instances in the VPC get DNS hostnames; otherwise, they do not.</p>",
         "DescribeVpcAttributeResult$EnableDnsSupport": "<p>Indicates whether DNS resolution is enabled for the VPC. If this attribute is <code>true</code>, the Amazon DNS server resolves DNS hostnames for your instances to their corresponding IP addresses; otherwise, it does not.</p>",
+        "DescribeVpcAttributeResult$EnableNetworkAddressUsageMetrics": "<p>Indicates whether Network Address Usage metrics are enabled for your VPC.</p>",
         "InstanceAttribute$DisableApiTermination": "<p>If the value is <code>true</code>, you can't terminate the instance through the Amazon EC2 console, CLI, or API; otherwise, you can.</p>",
         "InstanceAttribute$EnaSupport": "<p>Indicates whether enhanced networking with ENA is enabled.</p>",
         "InstanceAttribute$EbsOptimized": "<p>Indicates whether the instance is optimized for Amazon EBS I/O.</p>",
@@ -1424,7 +1425,8 @@
         "ModifySubnetAttributeRequest$DisableLniAtDeviceIndex": "<p> Specify <code>true</code> to indicate that local network interfaces at the current position should be disabled. </p>",
         "ModifyVolumeAttributeRequest$AutoEnableIO": "<p>Indicates whether the volume should be auto-enabled for I/O operations.</p>",
         "ModifyVpcAttributeRequest$EnableDnsHostnames": "<p>Indicates whether the instances launched in the VPC get DNS hostnames. If enabled, instances in the VPC get DNS hostnames; otherwise, they do not.</p> <p>You cannot modify the DNS resolution and DNS hostnames attributes in the same request. Use separate requests for each attribute. You can only enable DNS hostnames if you've enabled DNS support.</p>",
-        "ModifyVpcAttributeRequest$EnableDnsSupport": "<p>Indicates whether the DNS resolution is supported for the VPC. If enabled, queries to the Amazon provided DNS server at the 169.254.169.253 IP address, or the reserved IP address at the base of the VPC network range \"plus two\" succeed. If disabled, the Amazon provided DNS service in the VPC that resolves public DNS hostnames to IP addresses is not enabled.</p> <p>You cannot modify the DNS resolution and DNS hostnames attributes in the same request. Use separate requests for each attribute.</p>"
+        "ModifyVpcAttributeRequest$EnableDnsSupport": "<p>Indicates whether the DNS resolution is supported for the VPC. If enabled, queries to the Amazon provided DNS server at the 169.254.169.253 IP address, or the reserved IP address at the base of the VPC network range \"plus two\" succeed. If disabled, the Amazon provided DNS service in the VPC that resolves public DNS hostnames to IP addresses is not enabled.</p> <p>You cannot modify the DNS resolution and DNS hostnames attributes in the same request. Use separate requests for each attribute.</p>",
+        "ModifyVpcAttributeRequest$EnableNetworkAddressUsageMetrics": "<p>Indicates whether Network Address Usage metrics are enabled for your VPC.</p>"
       }
     },
     "AttributeValue": {
@@ -1440,6 +1442,7 @@
         "ImageAttribute$TpmSupport": "<p>If the image is configured for NitroTPM support, the value is <code>v2.0</code>.</p>",
         "ImageAttribute$UefiData": "<p>Base64 representation of the non-volatile UEFI variable store. To retrieve the UEFI data, use the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetInstanceUefiData\">GetInstanceUefiData</a> command. You can inspect and modify the UEFI data by using the <a href=\"https://github.com/awslabs/python-uefivars\">python-uefivars tool</a> on GitHub. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/uefi-secure-boot.html\">UEFI Secure Boot</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
         "ImageAttribute$LastLaunchedTime": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the AMI was last used to launch an EC2 instance. When the AMI is used to launch an instance, there is a 24-hour delay before that usage is reported.</p> <note> <p> <code>lastLaunchedTime</code> data is available starting April 2017.</p> </note>",
+        "ImageAttribute$ImdsSupport": "<p>If <code>v2.0</code>, it indicates that IMDSv2 is specified in the AMI. Instances launched from this AMI will have <code>HttpTokens</code> automatically set to <code>required</code> so that, by default, the instance requires that IMDSv2 is used when requesting instance metadata. In addition, <code>HttpPutResponseHopLimit</code> is set to <code>2</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-IMDS-new-instances.html#configure-IMDS-new-instances-ami-configuration\">Configure the AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
         "InstanceAttribute$InstanceInitiatedShutdownBehavior": "<p>Indicates whether an instance stops or terminates when you initiate shutdown from the instance (using the operating system command for system shutdown).</p>",
         "InstanceAttribute$InstanceType": "<p>The instance type.</p>",
         "InstanceAttribute$KernelId": "<p>The kernel ID.</p>",
@@ -9598,6 +9601,13 @@
       "base": null,
       "refs": {
         "Image$ImageType": "<p>The type of image.</p>"
+      }
+    },
+    "ImdsSupportValues": {
+      "base": null,
+      "refs": {
+        "Image$ImdsSupport": "<p>If <code>v2.0</code>, it indicates that IMDSv2 is specified in the AMI. Instances launched from this AMI will have <code>HttpTokens</code> automatically set to <code>required</code> so that, by default, the instance requires that IMDSv2 is used when requesting instance metadata. In addition, <code>HttpPutResponseHopLimit</code> is set to <code>2</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-IMDS-new-instances.html#configure-IMDS-new-instances-ami-configuration\">Configure the AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
+        "RegisterImageRequest$ImdsSupport": "<p>Set to <code>v2.0</code> to indicate that IMDSv2 is specified in the AMI. Instances launched from this AMI will have <code>HttpTokens</code> automatically set to <code>required</code> so that, by default, the instance requires that IMDSv2 is used when requesting instance metadata. In addition, <code>HttpPutResponseHopLimit</code> is set to <code>2</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-IMDS-new-instances.html#configure-IMDS-new-instances-ami-configuration\">Configure the AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <note> <p>If you set the value to <code>v2.0</code>, make sure that your AMI software can support IMDSv2.</p> </note>"
       }
     },
     "ImportClientVpnClientCertificateRevocationListRequest": {
