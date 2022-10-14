@@ -37,7 +37,7 @@ trait TestServiceTrait
      * @param string $protocol
      * @return Service
      */
-    private function generateTestService($protocol)
+    private function generateTestService($protocol, $args = [])
     {
         $metadata = [
             "protocol" => $protocol,
@@ -45,7 +45,9 @@ trait TestServiceTrait
         ];
         if ($protocol === 'json') {
             $metadata['jsonVersion'] = "1.1";
-            $metadata['awsQueryCompatible'] = "String";
+            if (array_key_exists('awsQueryCompatible', $args) && $args['awsQueryCompatible']) {
+                $metadata['awsQueryCompatible'] = "String";
+            }
         }
 
         return new Service(

@@ -52,6 +52,7 @@ class JsonRpcErrorParserTest extends TestCase
     public function errorResponsesProvider()
     {
         $service = $this->generateTestService('json');
+        $awsQueryCompatibleService = $this->generateTestService('json', ['awsQueryCompatible' => true]);
         $shapes = $service->getErrorShapes();
         $errorShape = $shapes[0];
         $client = $this->generateTestClient($service);
@@ -144,7 +145,7 @@ class JsonRpcErrorParserTest extends TestCase
                 "x-amzn-query-error: NonExistentException;Sender\r\n\r\n" .
                 '{ "__Type": "foo", "Message": "lorem ipsum" }',
                 null,
-                new JsonRpcErrorParser($service),
+                new JsonRpcErrorParser($awsQueryCompatibleService),
                 [
                     'code'       => 'NonExistentException',
                     'message'    => 'lorem ipsum',
@@ -164,7 +165,7 @@ class JsonRpcErrorParserTest extends TestCase
                 "x-amzn-query-error: ;Sender\r\n\r\n" .
                 '{ "__Type": "foo", "Message": "lorem ipsum" }',
                 null,
-                new JsonRpcErrorParser($service),
+                new JsonRpcErrorParser($awsQueryCompatibleService),
                 [
                     'code'       => 'foo',
                     'message'    => 'lorem ipsum',
