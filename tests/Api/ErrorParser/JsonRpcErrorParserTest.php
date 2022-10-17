@@ -52,7 +52,10 @@ class JsonRpcErrorParserTest extends TestCase
     public function errorResponsesProvider()
     {
         $service = $this->generateTestService('json');
-        $awsQueryCompatibleService = $this->generateTestService('json', ['awsQueryCompatible' => true]);
+        $awsQueryCompatibleService = $this->generateTestService(
+            'json',
+            ['awsQueryCompatible' => true]
+        );
         $shapes = $service->getErrorShapes();
         $errorShape = $shapes[0];
         $client = $this->generateTestClient($service);

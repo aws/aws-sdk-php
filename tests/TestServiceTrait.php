@@ -45,7 +45,7 @@ trait TestServiceTrait
         ];
         if ($protocol === 'json') {
             $metadata['jsonVersion'] = "1.1";
-            if (array_key_exists('awsQueryCompatible', $args) && $args['awsQueryCompatible']) {
+            if (isset($args['awsQueryCompatible']) && $args['awsQueryCompatible'] === true) {
                 $metadata['awsQueryCompatible'] = "String";
             }
         }
