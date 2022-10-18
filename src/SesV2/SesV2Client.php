@@ -63,6 +63,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getCustomVerificationEmailTemplateAsync(array $args = [])
  * @method \Aws\Result getDedicatedIp(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDedicatedIpAsync(array $args = [])
+ * @method \Aws\Result getDedicatedIpPool(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDedicatedIpPoolAsync(array $args = [])
  * @method \Aws\Result getDedicatedIps(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDedicatedIpsAsync(array $args = [])
  * @method \Aws\Result getDeliverabilityDashboardOptions(array $args = [])

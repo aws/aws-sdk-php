@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Parse json error code if it is present in HTTP response header
+* `Aws\FraudDetector` - Documentation Updates for Amazon Fraud Detector
+* `Aws\SESv2` - This release allows subscribers to enable Dedicated IPs (managed) to send email via a fully managed dedicated IP experience. It also adds identities' VerificationStatus in the response of GetEmailIdentity and ListEmailIdentities APIs, and ImportJobs counts in the response of ListImportJobs API.
+* `Aws\SageMaker` - This change allows customers to enable data capturing while running a batch transform job, and configure monitoring schedule to monitoring the captured data.
+* `Aws\ServiceDiscovery` - Updated the ListNamespaces API to support the NAME and HTTP_NAME filters, and the BEGINS_WITH filter condition.
+
 ## 3.238.6 - 2022-10-17
 
 * `Aws\Greengrass` - This change allows customers to specify FunctionRuntimeOverride in FunctionDefinitionVersion. This configuration can be used if the runtime on the device is different from the AWS Lambda runtime specified for that function.
