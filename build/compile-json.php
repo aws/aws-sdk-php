@@ -7,7 +7,6 @@ require __DIR__ . '/../vendor/autoload.php';
  */
 $dataFilesIterator = \Aws\recursive_dir_iterator(realpath(__DIR__ . '/../src/data'));
 
-
 foreach (new RegexIterator($dataFilesIterator, '/\.json$/') as $dataFile) {
     (new JsonCompiler($dataFile))
         ->compile("$dataFile.php");
@@ -16,5 +15,4 @@ foreach (new RegexIterator($dataFilesIterator, '/endpoint-.*\.json(\.php)?$/') a
     $gzdata = gzencode(file_get_contents($dataFile));
     file_put_contents( $dataFile.".gz", $gzdata);
     unlink($dataFile);
-    echo $dataFile . "\n";
 }
