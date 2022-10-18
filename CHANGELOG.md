@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.239.0 - 2022-10-18
 
 * `Aws\Api` - Parse json error code if it is present in HTTP response header
 * `Aws\FraudDetector` - Documentation Updates for Amazon Fraud Detector
