@@ -21,7 +21,7 @@ $sdkFiles = new CallbackFilterIterator($sdkFiles, function (SplFileInfo $file) {
     ]);
 });
 
-$burgomaster->recursiveCopy('src', 'Aws', ['php'], $sdkFiles);
+$burgomaster->recursiveCopy('src', 'Aws', ['php', 'php.gz'], $sdkFiles);
 $burgomaster->recursiveCopy('vendor/aws/aws-php-sns-message-validator/src', 'Aws/Sns');
 $burgomaster->recursiveCopy('vendor/mtdowling/jmespath.php/src', 'JmesPath');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/guzzle/src', 'GuzzleHttp');
