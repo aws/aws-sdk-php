@@ -5,7 +5,7 @@ namespace Aws\EndpointV2\Ruleset;
 use Aws\EndpointV2\Rule\RuleCreator;
 
 /**
- * A collection of rules, parameter specs and a class of helper functions
+ * A collection of rules, parameter definitions and a class of helper functions
  * used to resolve either an endpoint or an error.
  */
 Class Ruleset
@@ -76,19 +76,19 @@ Class Ruleset
 
     /**
      * Ensures all corresponding client-provided parameters match
-     * the Ruleset parameters' specified type.
+     * the Ruleset parameter's specified type.
      *
      * @return void
      */
     private function validateInputParameters(array &$inputParameters)
     {
-        foreach($this->parameters as $paramName => $paramSpec) {
+        foreach($this->parameters as $paramName => $param) {
             $inputParam = isset($inputParameters[$paramName]) ? $inputParameters[$paramName] : null;
 
-            if (is_null($inputParam) && !is_null($paramSpec->getDefault())) {
-                $inputParameters[$paramName] = $paramSpec->getDefault();
+            if (is_null($inputParam) && !is_null($param->getDefault())) {
+                $inputParameters[$paramName] = $param->getDefault();
             } elseif (!is_null($inputParam)) {
-                $paramSpec->validateInputParam($inputParam);
+                $param->validateInputParam($inputParam);
             }
         }
     }
@@ -97,8 +97,8 @@ Class Ruleset
     {
         $parameterList = [];
 
-        foreach($parameters as $name => $spec) {
-            $parameterList[$name] = new RulesetParameter($name, $spec);
+        foreach($parameters as $name => $definition) {
+            $parameterList[$name] = new RulesetParameter($name, $definition);
         }
 
         return $parameterList;

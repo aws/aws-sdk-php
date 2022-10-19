@@ -6,7 +6,7 @@ use Aws\Exception\UnresolvedEndpointException;
 
 class RuleCreator
 {
-    public static function create($type, $spec)
+    public static function create($type, $definition)
     {
         $validRuleTypes = ['endpoint', 'error', 'tree'];
         if (!in_array($type, $validRuleTypes)) {
@@ -18,11 +18,11 @@ class RuleCreator
 
         switch ($type) {
             case 'endpoint':
-                return new EndpointRule($spec);
+                return new EndpointRule($definition);
             case 'error':
-                return new ErrorRule($spec);
+                return new ErrorRule($definition);
             case 'tree':
-                return new TreeRule($spec);
+                return new TreeRule($definition);
         }
     }
 }

@@ -5,15 +5,15 @@ namespace Aws\EndpointV2\Rule;
 use Aws\EndpointV2\Ruleset\RulesetStandardLibrary;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 
-Class EndpointRule extends Rule
+Class EndpointRule extends AbstractRule
 {
     /** @var array */
     private $endpoint;
 
-    public function __construct(array $spec)
+    public function __construct(array $definition)
     {
-        parent::__construct($spec);
-        $this->endpoint = $spec['endpoint'];
+        parent::__construct($definition);
+        $this->endpoint = $definition['endpoint'];
     }
 
     /**

@@ -5,7 +5,7 @@ namespace Aws\EndpointV2\Ruleset;
 use Aws\Exception\UnresolvedEndpointException;
 
 /**
- * Houses properties of an individual parameter specification.
+ * Houses properties of an individual parameter definition.
  */
 class RulesetParameter
 {
@@ -30,9 +30,9 @@ class RulesetParameter
     /** @var boolean */
     private $deprecated;
 
-    public function __construct($name, array $spec)
+    public function __construct($name, array $definition)
     {
-        $type = ucfirst($spec['type']);
+        $type = ucfirst($definition['type']);
         if ($this->isValidType($type)) {
             $this->type = $type;
         } else {
@@ -42,11 +42,14 @@ class RulesetParameter
             );
         }
         $this->name = $name;
-        $this->builtIn = isset($spec['builtIn']) ? $spec['builtIn'] : null;
-        $this->default = isset($spec['default']) ? $spec['default'] : null;
-        $this->required =  isset($spec['required']) ? $spec['required'] : false;
-        $this->documentation =  isset($spec['documentation']) ? $spec['documentation'] : null;
-        $this->deprecated =  isset($spec['deprecated']) ? $spec['deprecated'] : false;
+        $this->builtIn = isset($definition['builtIn']) ? $definition['builtIn'] : null;
+        $this->default = isset($definition['default']) ? $definition['default'] : null;
+        $this->required =  isset($definition['required']) ?
+            $definition['required'] : false;
+        $this->documentation =  isset($definition['documentation']) ?
+            $definition['documentation'] : null;
+        $this->deprecated =  isset($definition['deprecated']) ?
+            $definition['deprecated'] : false;
     }
 
     /**
@@ -106,7 +109,7 @@ class RulesetParameter
     }
 
     /**
-     * Validates that an input parameter matches the type provided in its spec.
+     * Validates that an input parameter matches the type provided in its definition.
      *
      * @return void
      * @throws InvalidArgumentException

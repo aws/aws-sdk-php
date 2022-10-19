@@ -4,15 +4,15 @@ namespace Aws\EndpointV2\Rule;
 
 use Aws\EndpointV2\Ruleset\RulesetStandardLibrary;
 
-class TreeRule extends Rule
+class TreeRule extends AbstractRule
 {
     /** @var array */
     private $rules;
 
-    public function __construct(array $spec)
+    public function __construct(array $definition)
     {
-        parent::__construct($spec);
-        $this->rules = $this->createRules($spec['rules']);
+        parent::__construct($definition);
+        $this->rules = $this->createRules($definition['rules']);
     }
 
     /**

@@ -8,15 +8,16 @@ use Aws\EndpointV2\Ruleset\RulesetStandardLibrary;
  *  A rule within a rule set. All rules contain a conditions property,
  * which can be empty, and documentation about the rule.
  */
-abstract Class Rule
+abstract Class AbstractRule
 {
     private $conditions;
     private $documentation;
 
-    public function __construct(array $spec)
+    public function __construct(array $definition)
     {
-        $this->conditions = $spec['conditions'];
-        $this->documentation = isset($spec['documentation']) ? $spec['documentation'] : null;
+        $this->conditions = $definition['conditions'];
+        $this->documentation = isset($definition['documentation']) ?
+            $definition['documentation'] : null;
     }
 
     /**

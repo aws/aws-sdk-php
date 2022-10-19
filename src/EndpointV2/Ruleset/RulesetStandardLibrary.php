@@ -70,8 +70,6 @@ class RulesetStandardLibrary
                 if (substr($part, -1) !== ']') {
                     return null;
                 }
-                # take the entire slice except for the last character (which is `]`)
-                # parse it as an integer
                 $slice = intval(substr($part, $sliceIdx + 1, strlen($part) - 1));
                 $from = isset($from[substr($part,0, $sliceIdx)][$slice])
                     ? $from[substr($part,0, $sliceIdx)][$slice]
