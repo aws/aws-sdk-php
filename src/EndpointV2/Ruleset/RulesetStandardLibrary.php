@@ -155,10 +155,6 @@ class RulesetStandardLibrary
      */
     public function parseUrl($url)
     {
-        if (is_null($url)) {
-            return null;
-        }
-
         $parsed = parse_url($url);
 
         if ($parsed === false || !empty($parsed['query'])) {
@@ -172,7 +168,7 @@ class RulesetStandardLibrary
         }
 
         $urlInfo = [];
-        $urlInfo['scheme'] = isset($parsed['scheme']) ? $parsed['scheme'] : '';
+        $urlInfo['scheme'] = $parsed['scheme'];
         $urlInfo['authority'] = isset($parsed['host']) ? $parsed['host'] : '';
         if (isset($parsed['port'])) {
             $urlInfo['authority'] = $urlInfo['authority'] . ":" . $parsed['port'];

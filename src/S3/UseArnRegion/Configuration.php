@@ -7,10 +7,12 @@ use Aws\S3\UseArnRegion\Exception\ConfigurationException;
 class Configuration implements ConfigurationInterface
 {
     private $useArnRegion;
+    private $isDefault;
 
-    public function __construct($useArnRegion)
+    public function __construct($useArnRegion, $isDefault = false)
     {
         $this->useArnRegion = Aws\boolean_value($useArnRegion);
+        $this->isDefault = $isDefault;
         if (is_null($this->useArnRegion)) {
             throw new ConfigurationException("'use_arn_region' config option"
                 . " must be a boolean value.");
@@ -33,5 +35,10 @@ class Configuration implements ConfigurationInterface
         return [
             'use_arn_region' => $this->isUseArnRegion(),
         ];
+    }
+
+    public function isDefault()
+    {
+        return $this->isDefault;
     }
 }

@@ -124,7 +124,7 @@ class EventBridgeClient extends AwsClient {
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $isCustomEndpoint = isset($args['endpoint']);
-        $stack->appendBuild(
+        !$this->isEndpointV2() && $stack->appendBuild(
             EventBridgeEndpointMiddleware::wrap(
                 $this->getRegion(),
                 [

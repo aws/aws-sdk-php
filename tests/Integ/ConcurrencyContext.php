@@ -17,11 +17,12 @@ use Behat\Gherkin\Node\TableNode;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use JmesPath;
+use PHPUnit\Framework\Assert;
 
 /**
  * Defines application features from the specific context.
  */
-class ConcurrencyContext extends \PHPUnit_Framework_Assert implements
+class ConcurrencyContext extends Assert implements
     Context,
     SnippetAcceptingContext
 {

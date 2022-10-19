@@ -4,10 +4,12 @@ namespace Aws\S3\RegionalEndpoint;
 class Configuration implements ConfigurationInterface
 {
     private $endpointsType;
+    private $isDefault;
 
-    public function __construct($endpointsType)
+    public function __construct($endpointsType, $isDefault = false)
     {
         $this->endpointsType = strtolower($endpointsType);
+        $this->isDefault = $isDefault;
         if (!in_array($this->endpointsType, ['legacy', 'regional'])) {
             throw new \InvalidArgumentException(
                 "Configuration parameter must either be 'legacy' or 'regional'."
@@ -31,5 +33,10 @@ class Configuration implements ConfigurationInterface
         return [
             'endpoints_type' => $this->getEndpointsType()
         ];
+    }
+
+    public function isDefault()
+    {
+        return $this->isDefault;
     }
 }

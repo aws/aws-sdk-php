@@ -199,6 +199,7 @@ class S3ControlClient extends AwsClient
     {
         parent::__construct($args);
         $stack = $this->getHandlerList();
+        $this->isEndpointV2() && $this->processEndpointV2Model();
         $stack->appendBuild(
             EndpointArnMiddleware::wrap(
                 $this->getApi(),
@@ -215,5 +216,42 @@ class S3ControlClient extends AwsClient
             ),
             's3control.endpoint_arn_middleware'
         );
+    }
+
+    private function processEndpointV2Model()
+    {
+        $definition = $this->getApi()->getDefinition();
+        $this->removeHostPrefix($definition);
+        $this->removeRequiredMember($definition);
+        $this->getApi()->setDefinition($definition);
+    }
+
+    private function removeHostPrefix(&$definition)
+    {
+        foreach($definition['operations'] as &$operation) {
+            if (isset($operation['endpoint']['hostPrefix'])
+                && $operation['endpoint']['hostPrefix'] === '{AccountId}.'
+            ) {
+                $operation['endpoint']['hostPrefix'] = str_replace(
+                    '{AccountId}.',
+                    '',
+                    $operation['endpoint']['hostPrefix']
+                );
+            }
+        }
+    }
+
+    private function removeRequiredMember(&$definition)
+    {
+        foreach($definition['shapes'] as &$shape) {
+            if (isset($shape['required'])
+            ) {
+                $found = array_search('AccountId', $shape['required']);
+
+                if ($found !== false) {
+                    unset($shape['required'][$found]);
+                }
+            }
+        }
     }
 }

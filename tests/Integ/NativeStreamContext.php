@@ -10,11 +10,12 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use PHPUnit\Framework\Assert;
 
 /**
  * Defines application features from the specific context.
  */
-class NativeStreamContext extends \PHPUnit_Framework_Assert implements
+class NativeStreamContext extends Assert implements
     Context,
     SnippetAcceptingContext
 {

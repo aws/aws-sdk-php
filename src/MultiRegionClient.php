@@ -1,6 +1,7 @@
 <?php
 namespace Aws;
 
+use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Endpoint\PartitionInterface;
 
@@ -82,7 +83,17 @@ class MultiRegionClient implements AwsClientInterface
                     }
 
                     $args['partition'] = $value;
-                    $args['endpoint_provider'] = $value;
+                    if (isset($args['endpoint_v1']) && $args['endpoint_v1'] === true) {
+                        $args['endpoint_provider'] = $value;
+                    } else {
+                        $datapath = __DIR__ . '/data';
+                        $s3Path = $datapath . '/s3/2006-03-01/endpoint-rule-set.json';
+                        $partitionPath = $datapath . '/partitions.json';
+                        $s3ruleset = json_decode(file_get_contents($s3Path), true);
+                        $partitions = json_decode(file_get_contents($partitionPath), true);
+                        $args['endpoint_provider'] = new \Aws\EndpointV2\EndpointProvider($s3ruleset, $partitions);
+                    }
+
                 }
             ],
         ];
@@ -99,6 +110,7 @@ class MultiRegionClient implements AwsClientInterface
      * - region: (string) Region to connect to when no override is provided.
      *   Used to create the default client factory and determine the appropriate
      *   AWS partition when present.
+     * - endpoint_v1: Opt-out of the Endpoints 2.0 provider
      *
      * @param array $args Client configuration arguments.
      */

@@ -14,8 +14,9 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use PHPUnit\Framework\Assert;
 
-class BatchingContext extends \PHPUnit_Framework_Assert implements
+class BatchingContext extends Assert implements
     Context,
     SnippetAcceptingContext
 {

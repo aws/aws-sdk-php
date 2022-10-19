@@ -144,10 +144,20 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
     {
 
         return [
-            ["us-east-1", [], 'badactor.com?foo=bar', 'EventId must be a valid host'],
+            ["us-east-1", [], 'badactor.com?foo=bar', 'EndpointId must be a valid host label.'],
             ["us-east-1", [], '', 'expected string length to be >= 1, but found string length of 0'],
-            ["us-east-1", ['use_fips_endpoint' => true], 'abc123.456def', 'EventId is currently not compatible with FIPS pseudo regions'],
-            ["us-east-1", ['use_dualstack_endpoint' => true, 'use_fips_endpoint' => true], 'abc123.456def', 'EventId is currently not compatible with FIPS pseudo regions'],
+            [
+                "us-east-1",
+                ['use_fips_endpoint' => true],
+                'abc123.456def',
+                'Invalid Configuration: FIPS is not supported with EventBridge multi-region endpoints.'
+            ],
+            [
+                "us-east-1",
+                ['use_dualstack_endpoint' => true, 'use_fips_endpoint' => true],
+                'abc123.456def',
+                'Invalid Configuration: FIPS is not supported with EventBridge multi-region endpoints.'
+            ],
         ];
     }
 
@@ -197,10 +207,11 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
             $client->execute($command);
             self::fail("this test should have thrown an exception");
         } catch (\Exception $exception) {
-            self::assertSame("InvalidArgumentException", get_class($exception));
+            self::assertSame(
+                $endpointId ? "Aws\Exception\UnresolvedEndpointException" : "InvalidArgumentException",
+                get_class($exception)
+            );
             self::assertStringContainsString($expectedException, $exception->getMessage());
         }
     }
-
-
 }

@@ -522,6 +522,7 @@ EOXML;
                 $this->assertSame('foo.s3.foo-region.amazonaws.test', $request->getUri()->getHost());
                 return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
+            'endpoint_v1' => true
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
@@ -558,7 +559,8 @@ EOXML;
                 $this->assertSame('s3.foo-region.amazonaws.test', $request->getUri()->getHost());
                 return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
-            'use_path_style_endpoint' => true
+            'use_path_style_endpoint' => true,
+            'endpoint_v1' => true
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);

@@ -3,6 +3,8 @@ namespace Aws\Api\Serializer;
 
 use Aws\Api\Service;
 use Aws\CommandInterface;
+use Aws\EndpointV2\EndpointProvider;
+use Aws\EndpointV2\EndpointV2MiddlewareTrait;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
@@ -12,6 +14,8 @@ use Psr\Http\Message\RequestInterface;
  */
 class QuerySerializer
 {
+    use EndpointV2MiddlewareTrait;
+
     private $endpoint;
     private $api;
     private $paramBuilder;
@@ -34,35 +38,52 @@ class QuerySerializer
      *
      * @return RequestInterface
      */
-    public function __invoke(CommandInterface $command)
+    public function __invoke(
+        CommandInterface $command,
+        EndpointProvider $endpointProvider = null,
+        array $clientArgs = null
+    )
     {
-        $operation = $this->api->getOperation($command->getName());
-
+        $operationName = $command->getName();
+        $operation = $this->api->getOperation($operationName);
         $body = [
             'Action'  => $command->getName(),
             'Version' => $this->api->getMetadata('apiVersion')
         ];
-
-        $params = $command->toArray();
+        $commandArgs = $command->toArray();
 
         // Only build up the parameters when there are parameters to build
-        if ($params) {
+        if ($commandArgs) {
             $body += call_user_func(
                 $this->paramBuilder,
                 $operation->getInput(),
-                $params
+                $commandArgs
             );
         }
-
         $body = http_build_query($body, '', '&', PHP_QUERY_RFC3986);
+        $headers = [
+            'Content-Length' => strlen($body),
+            'Content-Type'   => 'application/x-www-form-urlencoded'
+        ];
+
+        if (isset($endpointProvider)) {
+            $providerArgs = $this->resolveProviderArgs(
+                $operation,
+                $endpointProvider,
+                $commandArgs,
+                $clientArgs,
+                $operationName
+            );
+            $endpoint = $endpointProvider->resolveEndpoint($providerArgs);
+            $this->endpoint = $endpoint->getUrl();
+            $this->applyAuthSchemeToCommand($endpoint, $command);
+            $this->applyHeaders($endpoint, $headers);
+        }
 
         return new Request(
             'POST',
             $this->endpoint,
-            [
-                'Content-Length' => strlen($body),
-                'Content-Type'   => 'application/x-www-form-urlencoded'
-            ],
+            $headers,
             $body
         );
     }

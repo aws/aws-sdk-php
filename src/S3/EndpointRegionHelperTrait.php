@@ -92,6 +92,7 @@ trait EndpointRegionHelperTrait
             $this->region,
             $this->service->getEndpointPrefix(),
             $this->partitionProvider)
+            && !$this->service->isModifiedModel()
         )) {
             if (empty($this->config['use_arn_region'])
                 || !($this->config['use_arn_region']->isUseArnRegion())

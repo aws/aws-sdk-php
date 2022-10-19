@@ -3,6 +3,8 @@ namespace Aws\Api\Serializer;
 
 use Aws\Api\Service;
 use Aws\CommandInterface;
+use Aws\EndpointV2\EndpointProvider;
+use Aws\EndpointV2\EndpointV2MiddlewareTrait;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
@@ -12,6 +14,8 @@ use Psr\Http\Message\RequestInterface;
  */
 class JsonRpcSerializer
 {
+    use EndpointV2MiddlewareTrait;
+
     /** @var JsonBody */
     private $jsonFormatter;
 
@@ -48,21 +52,41 @@ class JsonRpcSerializer
      *
      * @return RequestInterface
      */
-    public function __invoke(CommandInterface $command)
+    public function __invoke(
+        CommandInterface $command,
+        EndpointProvider $endpointProvider = null,
+        array $clientArgs = null
+    )
     {
-        $name = $command->getName();
-        $operation = $this->api->getOperation($name);
+        $operationName = $command->getName();
+        $operation = $this->api->getOperation($operationName);
+        $commandArgs = $command->toArray();
+        $headers = [
+                'X-Amz-Target' => $this->api->getMetadata('targetPrefix') . '.' . $operationName,
+                'Content-Type' => $this->contentType
+            ];
+
+        if (isset($endpointProvider)) {
+            $providerArgs = $this->resolveProviderArgs(
+                $operation,
+                $endpointProvider,
+                $commandArgs,
+                $clientArgs,
+                $operationName
+            );
+            $endpoint = $endpointProvider->resolveEndpoint($providerArgs);
+            $this->endpoint = $endpoint->getUrl();
+            $this->applyAuthSchemeToCommand($endpoint, $command);
+            $this->applyHeaders($endpoint, $headers);
+        }
 
         return new Request(
             $operation['http']['method'],
             $this->endpoint,
-            [
-                'X-Amz-Target' => $this->api->getMetadata('targetPrefix') . '.' . $name,
-                'Content-Type' => $this->contentType
-            ],
+            $headers,
             $this->jsonFormatter->build(
                 $operation->getInput(),
-                $command->toArray()
+                $commandArgs
             )
         );
     }

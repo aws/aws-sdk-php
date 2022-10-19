@@ -1323,43 +1323,6 @@ EOXML;
         ]);
     }
 
-    public function testAppliesS3EndpointMiddlewareDualstackInvalidAccelerateWithPathStyle()
-    {
-        // test applies dualstack solo for invalid accelerate operations
-        // when both endpoint is enabled and forcing path style
-        $handler = function (RequestInterface $req) {
-            $this->assertSame(
-                's3.dualstack.us-west-2.amazonaws.com',
-                $req->getUri()->getHost()
-            );
-            return Promise\Create::promiseFor(new Response);
-        };
-
-        $accelerateClient = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-west-2',
-            'use_accelerate_endpoint' => true,
-            'use_dual_stack_endpoint' => true,
-            'use_path_style_endpoint' => true,
-            'http_handler' => $handler,
-        ]);
-        $accelerateClient->createBucket([
-            'Bucket' => 'bucket',
-        ]);
-
-        $client = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-west-2',
-            'http_handler' => $handler,
-        ]);
-        $client->createBucket([
-            'Bucket' => 'bucket',
-            '@use_accelerate_endpoint' => true,
-            '@use_dual_stack_endpoint' => true,
-            '@use_path_style_endpoint' => true,
-        ]);
-    }
-
     public function testAppliesS3EndpointMiddlewareAccelerate()
     {
         // test applies s3-accelerate for valid operations
@@ -1439,7 +1402,7 @@ EOXML;
                 $req->getUri()->getHost()
             );
             $this->assertSame(
-                '/bucket',
+                '/bucket/',
                 $req->getUri()->getPath()
             );
             return Promise\Create::promiseFor(new Response);
@@ -1799,11 +1762,26 @@ EOXML;
 
     public function mrapExceptionTestProvider() {
         return [
-            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", null, null, true, "Multi-Region Access Point ARNs are disabled, but one was provided.  Please enable them or provide a different ARN."],
-            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "aws-global", null, null, true, "Multi-Region Access Point ARNs are disabled, but one was provided.  Please enable them or provide a different ARN."],
-            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", "dualstack", null, false, "Multi-Region Access Point ARNs do not currently support dual stack. Please disable dual stack or provide a different ARN."],
-            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", "accelerate", null, false, "Accelerate is currently not supported with access points. Please disable accelerate or do not supply an access point ARN."],
-            ["arn:aws:s3::123456789012:accesspoint:myendpoint", "us-west-2", null, null, true, "Multi-Region Access Point ARNs are disabled, but one was provided.  Please enable them or provide a different ARN."],
+            [
+                "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", null, null, true,
+                "Invalid configuration: Multi-Region Access Point ARNs are disabled."
+            ],
+            [
+                "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "aws-global", null, null, true,
+                "Invalid configuration: Multi-Region Access Point ARNs are disabled."
+            ],
+            [
+                "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", "dualstack", null, false,
+                "S3 MRAP does not support dual-stack"
+            ],
+            [
+                "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", "accelerate", null, false,
+                "S3 MRAP does not support S3 Accelerate"
+            ],
+            [
+                "arn:aws:s3::123456789012:accesspoint:myendpoint", "us-west-2", null, null, true,
+                "Invalid configuration: Multi-Region Access Point ARNs are disabled."
+            ],
         ];
     }
 
@@ -1891,14 +1869,38 @@ EOXML;
     public function AccessPointFailureProvider()
     {
         return [
-            ["arn:aws:sqs:us-west-2:123456789012:someresource", "us-west-2", null, null, null, "Provided ARN was not a valid S3 access point ARN or S3 Outposts access point ARN."],
-            ["arn:aws:s3:us-west-2:123456789012:bucket_name:mybucket", "us-west-2", null, null, null, "Provided ARN was not a valid S3 access point ARN or S3 Outposts access point ARN."],
-            ["arn:aws:s3:us-west-2::accesspoint:myendpoint", "us-west-2", null, null, null, "The 5th component of a access point ARN is required, represents the account ID, and must be a valid host label.", ],
-            ["arn:aws:s3:us-west-2:123.45678.9012:accesspoint:mybucket", "us-west-2", null, null, null, "The 5th component of a access point ARN is required, represents the account ID, and must be a valid host label."],
-            ["arn:aws:s3:us-west-2:123456789012:accesspoint", "us-west-2", null, null, null, "The 7th component of an access point ARN represents the resource ID and must not be empty."],
-            ["arn:aws:s3:us-west-2:123456789012:accesspoint:*", "us-west-2", null, null, null, "Bucket parameter parsed as ARN and failed with: The resource ID in an access point ARN must be a valid host label value."],
-            ["arn:aws:s3:us-west-2:123456789012:accesspoint:my.bucket", "us-west-2", null, null, null, "Bucket parameter parsed as ARN and failed with: The resource ID in an access point ARN must be a valid host label value."],
-            ["arn:aws:s3:us-west-2:123456789012:accesspoint:mybucket:object:foo", "us-west-2", null, null, null, "The resource ID component of an access point ARN must not contain additional components (delimited by ':')."],
+            [
+                "arn:aws:sqs:us-west-2:123456789012:someresource", "us-west-2", null, null, null,
+                "Invalid ARN: Unrecognized format: arn:aws:sqs:us-west-2:123456789012:someresource (type: someresource)"
+            ],
+            [
+                "arn:aws:s3:us-west-2:123456789012:bucket_name:mybucket", "us-west-2", null, null, null,
+                "Invalid ARN: Unrecognized format: arn:aws:s3:us-west-2:123456789012:bucket_name:mybucket (type: bucket_name)"
+            ],
+            [
+                "arn:aws:s3:us-west-2::accesspoint:myendpoint", "us-west-2", null, null, null,
+                "Invalid ARN: The account id may only contain a-z, A-Z, 0-9 and `-`. Found: ``",
+            ],
+            [
+                "arn:aws:s3:us-west-2:123.45678.9012:accesspoint:mybucket", "us-west-2", null, null, null,
+                "Invalid ARN: The account id may only contain a-z, A-Z, 0-9 and `-`. Found: `123.45678.9012`"
+            ],
+            [
+                "arn:aws:s3:us-west-2:123456789012:accesspoint", "us-west-2", null, null, null,
+                "Invalid ARN: Expected a resource of the format `accesspoint:<accesspoint name>` but no name was provided"
+            ],
+            [
+                "arn:aws:s3:us-west-2:123456789012:accesspoint:*", "us-west-2", null, null, null,
+                "Invalid ARN: The access point name may only contain a-z, A-Z, 0-9 and `-`. Found: `*`"
+            ],
+            [
+                "arn:aws:s3:us-west-2:123456789012:accesspoint:my.bucket", "us-west-2", null, null, null,
+                "Invalid ARN: The access point name may only contain a-z, A-Z, 0-9 and `-`"
+            ],
+            [
+                "arn:aws:s3:us-west-2:123456789012:accesspoint:mybucket:object:foo", "us-west-2", null, null, null,
+                "Invalid ARN: The ARN may only contain a single resource component after `accesspoint`."
+            ],
         ];
     }
 
@@ -1925,7 +1927,7 @@ EOXML;
 
     public function testPresignedMrapFailure (){
         $arn = 'arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap';
-        $expectedException = "Multi-Region Access Point ARNs are disabled, but one was provided.  Please enable them or provide a different ARN.";
+        $expectedException = "Invalid configuration: Multi-Region Access Point ARNs are disabled.";
         $client = new S3Client([
             'region' => 'us-east-1',
             'version' => 'latest',

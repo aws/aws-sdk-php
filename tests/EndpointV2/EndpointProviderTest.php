@@ -1,9 +1,14 @@
 <?php
 namespace Aws\Test\EndpointV2;
 
+
 use Aws\EndpointV2\EndpointArtifactProvider;
+use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointProvider;
 use Aws\Exception\UnresolvedEndpointException;
+use Aws\Middleware;
+use Aws\Test\UsesServiceTrait;
+use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -95,15 +100,14 @@ class EndpointProviderTest extends TestCase
      * @dataProvider basicTestCaseProvider
      * @dataProvider serviceTestCaseProvider
      */
-    public function testEndpointAndErrorCases(
+    public function testBasicEndpointAndErrorCases(
         $ruleset,
-        $partitions,
         $isSuccessCase,
         $inputParams,
         $expected
     )
     {
-        $provider = new EndpointProvider($ruleset, $partitions);
+        $provider = new EndpointProvider($ruleset, $this->partitions);
 
         if ($isSuccessCase === 'false') {
             $this->expectException(UnresolvedEndpointException::class);
@@ -120,6 +124,104 @@ class EndpointProviderTest extends TestCase
                 $this->assertEquals($expectedEndpoint['properties'], $endpoint->getProperties());
             }
         }
+    }
+
+    public function rulesetProtocolCaseProvider()
+    {
+        $protocolTestCases = [];
+        $casesPath = __DIR__ . '/protocol/endpoint-tests.json';
+        $testFile = json_decode(file_get_contents($casesPath), true);
+
+        foreach($testFile['testCases'] as $case) {
+            if (!isset($case['operationInputs']) || isset($case['expect']['error'])) {
+                continue;
+            }
+            $caseArgs = [];
+            foreach($case['operationInputs'] as $operationInput) {
+                $builtInParams = $operationInput['builtInParams'];
+                if (isset($builtInParams['AWS::S3::UseArnRegion'])
+                    || isset($builtInParams['AWS::S3Control::UseArnRegion'])
+                ) {
+                    if (isset($builtInParams['AWS::S3::UseArnRegion'])) {
+                        $useArnRegion = $builtInParams['AWS::S3::UseArnRegion'];
+                    } else {
+                        $useArnRegion = $builtInParams['AWS::S3Control::UseArnRegion'];
+                    }
+                }
+
+                $clientArgs = [
+                    'region' => $builtInParams['AWS::Region'],
+                    'endpoint' => isset($builtInParams['SDK::Endpoint']) ? $builtInParams['SDK::Endpoint'] : null,
+                    'use_fips_endpoint' => isset($builtInParams['AWS::UseFIPS']) ? $builtInParams['AWS::UseFIPS'] : null,
+                    'use_dual_stack_endpoint' => isset($builtInParams['AWS::UseDualStack']) ? $builtInParams['AWS::UseDualStack'] : null,
+                    's3_us_east_1_regional_endpoint' => isset($builtInParams['AWS::S3::UseGlobalEndpoint']) ? $builtInParams['AWS::S3::UseGlobalEndpoint'] === true ? 'legacy' : 'regional' : null,
+                    'sts_regional_endpoints' => isset($builtInParams['AWS::STS::UseGlobalEndpoint']) ? $builtInParams['AWS::STS::UseGlobalEndpoint'] === true ? 'legacy' : 'regional' : null,
+                    'use_accelerate_endpoint' => isset($builtInParams['AWS::S3::Accelerate']) ? $builtInParams['AWS::S3::Accelerate'] : null,
+                    'use_path_style_endpoint' => isset($builtInParams['AWS::S3::ForcePathStyle']) ? $builtInParams['AWS::S3::ForcePathStyle'] : null,
+                    'use_arn_region' => isset($useArnRegion) ? $useArnRegion : null,
+                    'disable_multiregion_access_points' => isset($builtInParams['AWS::S3::DisableMultiRegionAccessPoints']) ? $builtInParams['AWS::S3::DisableMultiRegionAccessPoints'] : null
+                ];
+                array_push($caseArgs, $clientArgs, $operationInput, $case['expect']);
+            }
+            $protocolTestCases[] = $caseArgs;
+        }
+        return $protocolTestCases;
+    }
+
+    /**
+     * Iterates through test cases located in ../test-cases and
+     * ../valid-rules, parses into parameters used for endpoint and error tests
+     *
+     * @dataProvider rulesetProtocolCaseProvider
+     */
+    public function testRulesetProtocolCases($clientArgs, $operationInput, $expected)
+    {
+        $client = $this->getTestClient('s3', $clientArgs);
+        $this->addMockResults($client, [[]]);
+        $command = $client->getCommand(
+            $operationInput['operationName'],
+            isset($operationInput['operationParams']) ? $operationInput['operationParams'] : []
+        );
+
+        if ($clientArgs['region'] === 'us-east-1') {
+            echo 'us-east-1 ' . 'on case '. 'expected: ' . $expected['endpoint']['url'];
+        }
+
+//        $command->getHandlerList()->appendSign(
+//            Middleware::tap(function (
+//                CommandInterface $cmd,
+//                RequestInterface $req
+//            ) use ($expected) {
+//                $endpoint = $expected['endpoint']['url'];
+//                $this->assertStringContainsString(
+//                    $req->getUri()->getHost(),
+//                    $endpoint
+//                );
+//                $this->assertSame("/{$key}", $req->getRequestTarget());
+//                $this->assertEquals(
+//                    $signingRegion,
+//                    $cmd['@context']['signing_region']
+//                );
+//                if (!empty($signingService)) {
+//                    $this->assertEquals(
+//                        $signingService,
+//                        $cmd['@context']['signing_service']
+//                    );
+//                }
+//
+//                $this->assertStringContainsString(
+//                    "/{$signingRegion}/s3",
+//                    $req->getHeader('Authorization')[0]
+//                );
+//            })
+//        );
+
+        $result = $client->execute($command);
+        $returnedUri = $result->toArray()['@metadata']['effectiveUri'];
+        $this->assertStringContainsString(
+            $expected['endpoint']['url'],
+            $returnedUri
+        );
     }
     
     public function testNoEndpointFoundException()

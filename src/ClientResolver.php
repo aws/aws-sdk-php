@@ -38,6 +38,9 @@ class ClientResolver
     /** @var array */
     private $argDefinitions;
 
+    /** @var array */
+    private $builtIns;
+
     /** @var array Map of types to a corresponding function */
     private static $typeMap = [
         'resource' => 'is_resource',
@@ -131,7 +134,7 @@ class ClientResolver
         ],
         'endpoint_provider' => [
             'type'     => 'value',
-            'valid'    => ['callable'],
+            'valid'    => ['callable', EndpointV2\EndpointProvider::class],
             'fn'       => [__CLASS__, '_apply_endpoint_provider'],
             'doc'      => 'An optional PHP callable that accepts a hash of options including a "service" and "region" key and returns NULL or a hash of endpoint data, of which the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider for a list of built-in providers.',
             'default'  => [__CLASS__, '_default_endpoint_provider'],
@@ -312,6 +315,10 @@ class ClientResolver
     {
         $args['config'] = [];
         foreach ($this->argDefinitions as $key => $a) {
+            //sets builtIn values for endpoint resolution.
+            //endpoint value must be observed before the default (legacy)
+            //endpoint provider is applied
+
             // Add defaults, validate required values, and skip if not set.
             if (!isset($args[$key])) {
                 if (isset($a['default'])) {
@@ -357,6 +364,7 @@ class ClientResolver
                 $args['config'][$key] = $args[$key];
             }
         }
+        $this->_apply_client_context_params($args);
 
         return $args;
     }
@@ -403,9 +411,9 @@ class ClientResolver
      * @param mixed  $provided The provided value.
      * @throws \InvalidArgumentException
      */
-    private function invalidType($name, $provided)
+    private function invalidType($name, $provided, $expected = null)
     {
-        $expected = implode('|', $this->argDefinitions[$name]['valid']);
+        $expected = $expected ?: implode('|', $this->argDefinitions[$name]['valid']);
         $msg = "Invalid configuration value "
             . "provided for \"{$name}\". Expected {$expected}, but got "
             . describe_type($provided) . "\n\n"
@@ -598,9 +606,15 @@ class ClientResolver
         $args['error_parser'] = Service::createErrorParser($api->getProtocol(), $api);
     }
 
-    public static function _apply_endpoint_provider(callable $value, array &$args)
+    public static function _apply_endpoint_provider($value, array &$args)
     {
         if (!isset($args['endpoint'])) {
+            if ($value instanceof \Aws\EndpointV2\EndpointProvider) {
+                $options = self::getEndpointProviderOptions($args);
+                $value = PartitionEndpointProvider::defaultProvider($options)
+                    ->getPartition($args['region'], $args['service']);
+            }
+
             $endpointPrefix = isset($args['api']['metadata']['endpointPrefix'])
                 ? $args['api']['metadata']['endpointPrefix']
                 : $args['service'];
@@ -656,6 +670,11 @@ class ClientResolver
                 $args['config']['signing_name'] = $result['signingName'];
             }
         }
+    }
+
+    public static function apply_endpoint_provider_v2()
+    {
+
     }
 
     public static function _apply_endpoint_discovery($value, array &$args) {
@@ -889,13 +908,27 @@ class ClientResolver
 
     public static function _default_endpoint_provider(array $args)
     {
+        //todo add try catch for existence of file
+        //some of this will be caught in tests
+        if ($args['service'] === 's3') {
+            $datapath = __DIR__ . '/data';
+            $s3Path = $datapath . '/s3/2006-03-01/endpoint-rule-set.json';
+            $partitionPath = $datapath . '/partitions.json';
+            $s3ruleset = json_decode(file_get_contents($s3Path), true);
+            $partitions = json_decode(file_get_contents($partitionPath), true);
+
+            return new \Aws\EndpointV2\EndpointProvider($s3ruleset, $partitions);
+        }
         $options = self::getEndpointProviderOptions($args);
+
+        //todo mark getendpoint as deprecated
         return PartitionEndpointProvider::defaultProvider($options)
             ->getPartition($args['region'], $args['service']);
     }
 
     public static function _default_serializer(array $args)
     {
+        //TODO add endpoint provider as argument for V2
         return Service::createSerializer(
             $args['api'],
             $args['endpoint']
@@ -1044,5 +1077,29 @@ EOT;
     private static function isValidRegion($region)
     {
         return is_valid_hostlabel($region);
+    }
+
+    private function _apply_client_context_params(array $args)
+    {
+        if (isset($args['api'])) {
+            if (!is_null($clientContextParams = $args['api']->getClientContextParams())) {
+                foreach($clientContextParams as $paramName => $paramSpec) {
+                    $definition = [
+                        'type' => 'value',
+                        'valid' => [$paramSpec['type']],
+                        'doc' => isset($paramSpec['documentation']) ?
+                            $paramSpec['documentation'] : null
+                    ];
+                    $this->argDefinitions[$paramName] = $definition;
+
+                    if (isset($args[$paramName])) {
+                        $fn = self::$typeMap[$paramSpec['type']];
+                        if (!$fn($args[$paramName])) {
+                            $this->invalidType($paramName, $args[$paramName]);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
+use Aws\EndpointV2\EndpointProvider;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
 
@@ -44,6 +45,19 @@ class AwsClient implements AwsClientInterface
 
     /** @var array*/
     private $defaultRequestOptions;
+
+    /** @var array*/
+    private $clientContextParams = [];
+
+    /** @var array*/
+    private $clientBuiltIns;
+
+    /** @var array*/
+    private $builtIns;
+
+    private $endpointProvider;
+
+    private $serializer;
 
     /**
      * Get an array of client constructor arguments used by the client.
@@ -203,14 +217,22 @@ class AwsClient implements AwsClientInterface
         $this->credentialProvider = $config['credentials'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->config = $config['config'];
+        $this->clientBuiltIns = $this->setClientBuiltIns($args);
+        $this->clientContextParams = $this->setClientContextParams($args);
         $this->defaultRequestOptions = $config['http'];
+        $this->endpointProvider = isset($config['endpoint_provider']) ?
+            $config['endpoint_provider'] : null;
+        $this->serializer = isset($config['serializer']) ?
+            $config['serializer'] : null;
         $this->addSignatureMiddleware();
         $this->addInvocationId();
+//        !$this->isEndpointV2() && $this->addEndpointParameterMiddleware($args);
         $this->addEndpointParameterMiddleware($args);
-        $this->addEndpointDiscoveryMiddleware($config, $args);
+        !$this->isEndpointV2() && $this->addEndpointDiscoveryMiddleware($config, $args);
         $this->loadAliases();
         $this->addStreamRequestPayload();
         $this->addRecursionDetection();
+        $this->isEndpointV2() && $this->addEndpointV2Middleware();
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -269,6 +291,16 @@ class AwsClient implements AwsClientInterface
         }
 
         return new Command($name, $args, clone $this->getHandlerList());
+    }
+
+    public function getClientContextParams()
+    {
+        return $this->clientContextParams;
+    }
+
+    public function getClientBuiltIns()
+    {
+        return $this->clientBuiltIns;
     }
 
     public function __sleep()
@@ -340,6 +372,7 @@ class AwsClient implements AwsClientInterface
 
     private function addSignatureMiddleware()
     {
+        //TODO take action based on endpoint provider?
         $api = $this->getApi();
         $provider = $this->signatureProvider;
         $version = $this->config['signature_version'];
@@ -355,6 +388,7 @@ class AwsClient implements AwsClientInterface
             if (!empty($c['@context']['signing_service'])) {
                 $name = $c['@context']['signing_service'];
             }
+
             $authType = $api->getOperation($c->getName())['authtype'];
             switch ($authType){
                 case 'none':
@@ -368,6 +402,13 @@ class AwsClient implements AwsClientInterface
                 if ($c['@context']['signature_version'] == 'v4a') {
                     $version = 'v4a';
                 }
+            }
+            if (!empty($endpointAuthSchemes = $c->getAuthSchemes())) {
+                $version = $endpointAuthSchemes['version'];
+                $name = isset($endpointAuthSchemes['name']) ?
+                    $endpointAuthSchemes['name'] : $name;
+                $region = isset($endpointAuthSchemes['region']) ?
+                    $endpointAuthSchemes['region'] : $region;
             }
             return SignatureProvider::resolve($provider, $version, $name, $region);
         };
@@ -417,6 +458,131 @@ class AwsClient implements AwsClientInterface
         $this->handlerList->appendBuild(
             Middleware::recursionDetection(), 'recursion-detection'
         );
+    }
+
+    private function addEndpointV2Middleware()
+    {
+        $handlerList = $this->getHandlerList();
+        $handlerList->remove('builder');
+
+        $serializer = $this->serializer;
+        $endpointProvider = $this->endpointProvider;
+        $endpointArgs = $this->getEndpointProviderArgs();
+
+        $handlerList->prependBuild(
+            Middleware::requestBuilder(
+                $serializer,
+                $endpointProvider,
+                $endpointArgs),
+            'builderV2'
+        );
+    }
+
+    private function setClientContextParams($args)
+    {
+        $api = $this->getApi();
+
+        if ($api->hasClientContextParams()) {
+            $paramSpecs = $api->getClientContextParams();
+            $result = [];
+
+            foreach($paramSpecs as $paramName => $paramValue) {
+                if (isset($args[$paramName])) {
+                   $result[$paramName] = $args[$paramName];
+               }
+            }
+            return $result;
+        }
+    }
+
+    private function setClientBuiltIns($args)
+    {
+        $builtIns = [];
+        $config = $this->getConfig();
+
+        $builtIns['SDK::Endpoint'] = isset($args['endpoint']) ? $args['endpoint'] : null;
+        $builtIns['AWS::Region'] = $this->getRegion();
+        $builtIns['AWS::UseFIPS'] = $config['use_fips_endpoint']->isUseFipsEndpoint()
+            && !(isset($builtIns['SDK::Endpoint']));
+        $builtIns['AWS::UseDualStack'] = $config['use_dual_stack_endpoint']->isUseDualstackEndpoint()
+            && !(isset($builtIns['SDK::Endpoint']));
+        if ($args['service'] === 'sts') {
+            $builtIns['AWS::STS::UseGlobalEndpoint'] =  $this->isUseGlobalEndpoint($args);
+        }
+        if ($args['service'] === 's3') {
+            $builtIns['AWS::S3::UseGlobalEndpoint'] = $this->isUseGlobalEndpoint($args);
+            $builtIns['AWS::S3::Accelerate'] = isset($config['use_accelerate_endpoint']) ?
+                $config['use_accelerate_endpoint'] : false;
+            $builtIns['AWS::S3::ForcePathStyle'] = isset($config['use_path_style_endpoint']) ?
+                $config['use_path_style_endpoint'] : null;
+            $builtIns['AWS::S3::UseArnRegion'] = isset($config['use_arn_region']) ?
+                !$config['use_arn_region']->isDefault() ? $config['use_arn_region']->isUseArnRegion() : null : null;
+            $builtIns['AWS::S3::DisableMultiRegionAccessPoints'] = isset($config['disable_multiregion_access_points'])
+                ? $config['disable_multiregion_access_points'] : false;
+        }
+
+        return $builtIns;
+    }
+
+    private function isUseGlobalEndpoint($args)
+    {
+        if ($args['service'] === 's3') {
+            return $this->isUseS3GlobalEndpoint($args);
+        }
+
+        $config = 'sts_regional_endpoints';
+
+        if (isset($args[$config]) && $args[$config] === 'regional') {
+            return false;
+        } elseif ((isset($args[$config]) && !is_string($args[$config]))
+            && ($args[$config]()->wait()->getEndpointsType() === 'regional'
+            || $args[$config]()->wait()->isDefault())
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function isUseS3GlobalEndpoint($args)
+    {
+        $config = 's3_us_east_1_regional_endpoint';
+
+        if ($args['region'] === 'us-east-1') {
+            if (isset($args[$config]) && $args[$config] === 'legacy') {
+                return true;
+            } elseif ((isset($args[$config]) && !is_string($args[$config]))
+                && ($args[$config]()->wait()->getEndpointsType() === 'legacy'
+                    || $args[$config]()->wait()->isDefault())
+            ) {
+                return true;
+            }
+        }
+
+       return false;
+    }
+
+    protected function isEndpointV2()
+    {
+        return $this->endpointProvider instanceof EndpointProvider;
+    }
+
+    private function getEndpointProviderArgs()
+    {
+        return $this->normalizeEndpointProviderArgs();
+    }
+
+    private function normalizeEndpointProviderArgs()
+    {
+        $normalizedBuiltIns = [];
+
+        foreach($this->clientBuiltIns as $name => $value) {
+            $normalizedName = explode('::', $name);
+            $normalizedName = $normalizedName[count($normalizedName) - 1];
+            $normalizedBuiltIns[$normalizedName] = $value;
+        }
+
+        return array_merge($normalizedBuiltIns, $this->getClientContextParams());
     }
 
     /**

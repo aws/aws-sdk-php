@@ -361,28 +361,30 @@ class S3Client extends AwsClient implements S3ClientInterface
             's3.content_type'
         );
 
-        // Use the bucket style middleware when using a "bucket_endpoint" (for cnames)
-        if ($this->getConfig('bucket_endpoint')) {
-            $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
-        } else {
-            $stack->appendBuild(
-                S3EndpointMiddleware::wrap(
-                    $this->getRegion(),
-                    $this->getConfig('endpoint_provider'),
-                    [
-                        'accelerate' => $this->getConfig('use_accelerate_endpoint'),
-                        'path_style' => $this->getConfig('use_path_style_endpoint'),
-                        'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
-                        'dual_stack' =>
-                            $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
+//        if (!$this->isEndpointV2()) {
+            // Use the bucket style middleware when using a "bucket_endpoint" (for cnames)
+            if ($this->getConfig('bucket_endpoint')) {
+                $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
+            } else {
+                !$this->isEndpointV2() && $stack->appendBuild(
+                    S3EndpointMiddleware::wrap(
+                        $this->getRegion(),
+                        $this->getConfig('endpoint_provider'),
+                        [
+                            'accelerate' => $this->getConfig('use_accelerate_endpoint'),
+                            'path_style' => $this->getConfig('use_path_style_endpoint'),
+                            'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
+                            'dual_stack' =>
+                                $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
 
-                    ]
-                ),
-                's3.endpoint_middleware'
-            );
-        }
+                        ]
+                    ),
+                    's3.endpoint_middleware'
+                );
+            }
+//        }
 
-        $stack->appendBuild(
+        !$this->isEndpointV2() && $stack->appendBuild(
             BucketEndpointArnMiddleware::wrap(
                 $this->getApi(),
                 $this->getRegion(),

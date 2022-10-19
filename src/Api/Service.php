@@ -31,6 +31,8 @@ class Service extends AbstractModel
     /** @var array */
     private $waiters = null;
 
+    private $modifiedModel = false;
+
     /**
      * @param array    $definition
      * @param callable $provider
@@ -283,6 +285,11 @@ class Service extends AbstractModel
                 $this->definition['operations'][$name],
                 $this->shapeMap
             );
+        } else if ($this->modifiedModel) {
+            $this->operations[$name] = new Operation(
+                $this->definition['operations'][$name],
+                $this->shapeMap
+            );
         }
 
         return $this->operations[$name];
@@ -471,12 +478,53 @@ class Service extends AbstractModel
     }
 
     /**
+     * Determines if a service has client context params.
+     *
+     * @param string $name Name of the waiter.
+     *
+     * @return bool
+     */
+    public function hasClientContextParams()
+    {
+        return isset($this->definition['clientContextParams']);
+    }
+
+    /**
      * Get all of the context params of the description.
      *
-     * @return Operation[]
+     * @return array | null
      */
     public function getClientContextParams()
     {
-        return $this->definition['clientContextParams'];
+        if ($this->hasClientContextParams()) {
+            return $this->definition['clientContextParams'];
+        }
+        return null;
+    }
+
+    public function getProvider()
+    {
+        return $this->apiProvider;
+    }
+
+    public function getDefinition()
+    {
+        return $this->definition;
+    }
+
+    public function setDefinition($definition)
+    {
+        $this->definition = $definition;
+        $this->modifiedModel = true;
+    }
+
+    public function isModifiedModel()
+    {
+        return $this->modifiedModel;
+    }
+
+    private function setModifiedModel()
+    {
+        $this->modifiedModel = true;
     }
 }

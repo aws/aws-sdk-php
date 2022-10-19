@@ -168,7 +168,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     {
         return function () {
             return Promise\Create::promiseFor(
-                new Configuration(self::DEFAULT_USE_ARN_REGION)
+                new Configuration(self::DEFAULT_USE_ARN_REGION, true)
             );
         };
     }
