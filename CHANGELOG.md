@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.239.1 - 2022-10-19
 
 * `Aws\ChimeSDKMessaging` - Documentation updates for Chime Messaging SDK
 * `Aws\CloudTrail` - This release includes support for exporting CloudTrail Lake query results to an Amazon S3 bucket.
