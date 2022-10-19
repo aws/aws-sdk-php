@@ -1,5 +1,59 @@
 # CHANGELOG
 
+## 3.239.0 - 2022-10-18
+
+* `Aws\Api` - Parse json error code if it is present in HTTP response header
+* `Aws\FraudDetector` - Documentation Updates for Amazon Fraud Detector
+* `Aws\SESv2` - This release allows subscribers to enable Dedicated IPs (managed) to send email via a fully managed dedicated IP experience. It also adds identities' VerificationStatus in the response of GetEmailIdentity and ListEmailIdentities APIs, and ImportJobs counts in the response of ListImportJobs API.
+* `Aws\SageMaker` - This change allows customers to enable data capturing while running a batch transform job, and configure monitoring schedule to monitoring the captured data.
+* `Aws\ServiceDiscovery` - Updated the ListNamespaces API to support the NAME and HTTP_NAME filters, and the BEGINS_WITH filter condition.
+
+## 3.238.6 - 2022-10-17
+
+* `Aws\Greengrass` - This change allows customers to specify FunctionRuntimeOverride in FunctionDefinitionVersion. This configuration can be used if the runtime on the device is different from the AWS Lambda runtime specified for that function.
+* `Aws\SageMaker` - This release adds support for C7g, C6g, C6gd, C6gn, M6g, M6gd, R6g, and R6gn Graviton instance types in Amazon SageMaker Inference.
+
+## 3.238.5 - 2022-10-14
+
+* `Aws\MediaConvert` - MediaConvert now supports specifying the minimum percentage of the HRD buffer available at the end of each encoded video segment.
+
+## 3.238.4 - 2022-10-13
+
+* `Aws\AmplifyUIBuilder` - We are releasing the ability for fields to be configured as arrays.
+* `Aws\Appflow` - With this update, you can choose which Salesforce API is used by Amazon AppFlow to transfer data to or from your Salesforce account. You can choose the Salesforce REST API or Bulk API 2.0. You can also choose for Amazon AppFlow to pick the API automatically.
+* `Aws\Connect` - This release adds support for a secondary email and a mobile number for Amazon Connect instance users.
+* `Aws\ConnectWisdomService` - This release updates the GetRecommendations API to include a trigger event list for classifying and grouping recommendations.
+* `Aws\DirectoryService` - This release adds support for describing and updating AWS Managed Microsoft AD set up.
+* `Aws\ECS` - Documentation update to address tickets.
+* `Aws\GuardDuty` - Add UnprocessedDataSources to CreateDetectorResponse which specifies the data sources that couldn't be enabled during the CreateDetector request. In addition, update documentations.
+* `Aws\IAM` - Documentation updates for the AWS Identity and Access Management API Reference.
+* `Aws\IoTFleetWise` - Documentation update for AWS IoT FleetWise
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports forwarding SCTE-35 messages through the Event Signaling and Management (ESAM) API, and can read those SCTE-35 messages from an inactive source.
+* `Aws\MediaPackageVod` - This release adds SPEKE v2 support for MediaPackage VOD. Speke v2 is an upgrade to the existing SPEKE API to support multiple encryption keys, based on an encryption contract selected by the customer.
+* `Aws\Panorama` - Pause and resume camera stream processing with SignalApplicationInstanceNodeInstances. Reboot an appliance with CreateJobForDevices. More application state information in DescribeApplicationInstance response.
+* `Aws\RDSDataService` - Doc update to reflect no support for schema parameter on BatchExecuteStatement API
+* `Aws\SSM` - Support of AmazonLinux2022 by Patch Manager
+* `Aws\SSMIncidents` - Update RelatedItem enum to support Tasks
+* `Aws\Transfer` - This release adds an option for customers to configure workflows that are triggered when files are only partially received from a client due to premature session disconnect.
+* `Aws\Translate` - This release enables customers to specify multiple target languages in asynchronous batch translation requests.
+
+## 3.238.3 - 2022-10-07
+
+* `Aws\CodeGuruReviewer` - Documentation update to replace broken link.
+* `Aws\ElasticLoadBalancingv2` - Gateway Load Balancer adds a new feature (target_failover) for customers to rebalance existing flows to a healthy target after marked unhealthy or deregistered. This allows graceful patching/upgrades of target appliances during maintenance windows, and helps reduce unhealthy target failover time.
+* `Aws\GreengrassV2` - This release adds error status details for deployments and components that failed on a device and adds features to improve visibility into component installation.
+* `Aws\QuickSight` - Amazon QuickSight now supports SecretsManager Secret ARN in place of CredentialPair for DataSource creation and update. This release also has some minor documentation updates and removes CountryCode as a required parameter in GeoSpatialColumnGroup
+
+## 3.238.2 - 2022-10-06
+
+* `Aws\ResilienceHub` - Documentation change for AWS Resilience Hub. Doc-only update to fix Documentation layout
+
+## 3.238.1 - 2022-10-05
+
+* `Aws\Glue` - This SDK release adds support to sync glue jobs with source control provider. Additionally, a new parameter called SourceControlDetails will be added to Job model.
+* `Aws\NetworkFirewall` - StreamExceptionPolicy configures how AWS Network Firewall processes traffic when a network connection breaks midstream
+* `Aws\Outposts` - This release adds the Asset state information to the ListAssets response. The ListAssets request supports filtering on Asset state.
+
 ## 3.238.0 - 2022-10-04
 
 * `Aws\Connect` - Updated the CreateIntegrationAssociation API to support the CASES_DOMAIN IntegrationType.
