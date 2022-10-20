@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.239.2 - 2022-10-20
 
 * `Aws\CloudWatchRUM` - CloudWatch RUM now supports Extended CloudWatch Metrics with Additional Dimensions
 * `Aws\DevOpsGuru` - This release adds information about the resources DevOps Guru is analyzing.
