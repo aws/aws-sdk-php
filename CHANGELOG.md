@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchRUM` - CloudWatch RUM now supports Extended CloudWatch Metrics with Additional Dimensions
+* `Aws\DevOpsGuru` - This release adds information about the resources DevOps Guru is analyzing.
+* `Aws\GlobalAccelerator` - Global Accelerator now supports AddEndpoints and RemoveEndpoints operations for standard endpoint groups.
+* `Aws\ResilienceHub` - In this release, we are introducing support for regional optimization for AWS Resilience Hub applications. It also includes a few documentation updates to improve clarity.
+
 ## 3.239.1 - 2022-10-19
 
 * `Aws\ChimeSDKMessaging` - Documentation updates for Chime Messaging SDK
