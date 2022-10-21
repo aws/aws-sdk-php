@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.0 - 2022-10-21
 
 * `Aws\Aws` - Adds artifacts for endpoint resolution per the AWS Endpoints V2 initiative.
 * `Aws\CognitoIdentityProvider` - This release adds a new "DeletionProtection" field to the UserPool in Cognito. Application admins can configure this value with either ACTIVE or INACTIVE value. Setting this field to ACTIVE will prevent a user pool from accidental deletion.
