@@ -253,6 +253,13 @@ class ClientResolver
             'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.  This will be ignored if you set the \'profile\' setting.',
             'default'   => true,
         ],
+        'emit_php_deprecation_warning' => [
+            'type'      => 'value',
+            'valid'     => ['bool'],
+            'doc'       => 'Set to false to disable the deprecation warning of PHP versions 7.2.4 and below',
+            'default'   => true,
+            'fn'        => [__CLASS__, '_emit_php_deprecation_warning']
+        ],
     ];
 
     /**
@@ -882,6 +889,22 @@ class ClientResolver
             $list->prependInit(
                 IdempotencyTokenMiddleware::wrap($args['api'], $generator),
                 'idempotency_auto_fill'
+            );
+        }
+    }
+
+    public static function _emit_php_deprecation_warning($value, array &$args) {
+        $phpVersion = PHP_VERSION_ID;
+        if ($value && $phpVersion < 70205) {
+            trigger_error(
+                "This installation of the SDK is using PHP version"
+                .  " {$phpVersion}, which will be deprecated on January"
+                .  " 1st, 2023. which will be deprecated on January.  Please"
+                .  " upgrade your PHP version before then to continue receiving"
+                .  " updates to the AWS SDK for PHP.  To disable this warning,"
+                .  " set emit_php_deprecation_warning to false on the client"
+                .  " constructor.",
+                E_USER_WARNING
             );
         }
     }
