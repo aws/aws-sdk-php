@@ -899,11 +899,10 @@ class ClientResolver
             trigger_error(
                 "This installation of the SDK is using PHP version"
                 .  " {$phpVersion}, which will be deprecated on January"
-                .  " 1st, 2023. which will be deprecated on January.  Please"
-                .  " upgrade your PHP version before then to continue receiving"
-                .  " updates to the AWS SDK for PHP.  To disable this warning,"
-                .  " set emit_php_deprecation_warning to false on the client"
-                .  " constructor.",
+                .  " 1st, 2023.  Please upgrade your PHP version to a minimum of"
+                .  " 70205 before then to continue receiving updates to the AWS"
+                .  " SDK for PHP.  To disable this warning, set "
+                .  " emit_php_deprecation_warning to false on the client constructor.",
                 E_USER_WARNING
             );
         }
