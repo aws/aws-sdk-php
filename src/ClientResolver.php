@@ -18,6 +18,7 @@ use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider as UseDualStackConfi
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface as UseDualStackEndpointConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
+use Aws\EndpointV2\EndpointArtifactProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
@@ -137,7 +138,7 @@ class ClientResolver
             'valid'    => ['callable', EndpointV2\EndpointProvider::class],
             'fn'       => [__CLASS__, '_apply_endpoint_provider'],
             'doc'      => 'An optional PHP callable that accepts a hash of options including a "service" and "region" key and returns NULL or a hash of endpoint data, of which the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider for a list of built-in providers.',
-            'default'  => [__CLASS__, '_default_endpoint_provider'],
+            'default'  => [__CLASS__, '_default_endpoint_provider_v2'],
         ],
         'serializer' => [
             'default'   => [__CLASS__, '_default_serializer'],
@@ -910,9 +911,9 @@ class ClientResolver
     {
         //todo add try catch for existence of file
         //some of this will be caught in tests
-        if ($args['service'] === 's3') {
+        if ($args['service'] === 's3control') {
             $datapath = __DIR__ . '/data';
-            $s3Path = $datapath . '/s3/2006-03-01/endpoint-rule-set.json';
+            $s3Path = $datapath . '/s3control/2018-08-20/endpoint-rule-set-1.json';
             $partitionPath = $datapath . '/partitions.json';
             $s3ruleset = json_decode(file_get_contents($s3Path), true);
             $partitions = json_decode(file_get_contents($partitionPath), true);
@@ -924,6 +925,15 @@ class ClientResolver
         //todo mark getendpoint as deprecated
         return PartitionEndpointProvider::defaultProvider($options)
             ->getPartition($args['region'], $args['service']);
+    }
+
+    public static function _default_endpoint_provider_v2(array $args)
+    {
+        $service = $args['api'];
+        $ruleset = EndpointArtifactProvider::getEndpointRuleset(
+            $service->getServiceName(),
+            $service->getApiVersion()
+        );
     }
 
     public static function _default_serializer(array $args)

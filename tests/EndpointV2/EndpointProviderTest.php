@@ -129,7 +129,7 @@ class EndpointProviderTest extends TestCase
     public function rulesetProtocolCaseProvider()
     {
         $protocolTestCases = [];
-        $casesPath = __DIR__ . '/protocol/endpoint-tests.json';
+        $casesPath = __DIR__ . '/../../src/data/s3control/2018-08-20/endpoint-tests-1.json';
         $testFile = json_decode(file_get_contents($casesPath), true);
 
         foreach($testFile['testCases'] as $case) {
@@ -176,7 +176,7 @@ class EndpointProviderTest extends TestCase
      */
     public function testRulesetProtocolCases($clientArgs, $operationInput, $expected)
     {
-        $client = $this->getTestClient('s3', $clientArgs);
+        $client = $this->getTestClient('s3control', $clientArgs);
         $this->addMockResults($client, [[]]);
         $command = $client->getCommand(
             $operationInput['operationName'],

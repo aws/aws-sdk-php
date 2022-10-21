@@ -200,7 +200,7 @@ class S3ControlClient extends AwsClient
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $this->isEndpointV2() && $this->processEndpointV2Model();
-        $stack->appendBuild(
+        !$this->isEndpointV2() && $stack->appendBuild(
             EndpointArnMiddleware::wrap(
                 $this->getApi(),
                 $this->getRegion(),

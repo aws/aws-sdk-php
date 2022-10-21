@@ -43,7 +43,7 @@ class EndpointArtifactProvider
     public static function getPartitions()
     {
         $basePath = __DIR__ . '/../data';
-        return require($basePath . '/partitions.json.php' );
+        return require($basePath . '/partitions.json.php');
     }
 
     private static function getLatest($service)

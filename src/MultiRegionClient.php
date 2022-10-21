@@ -87,7 +87,7 @@ class MultiRegionClient implements AwsClientInterface
                         $args['endpoint_provider'] = $value;
                     } else {
                         $datapath = __DIR__ . '/data';
-                        $s3Path = $datapath . '/s3/2006-03-01/endpoint-rule-set.json';
+                        $s3Path = $datapath . '/s3/2006-03-01/endpoint-rule-set-1.json';
                         $partitionPath = $datapath . '/partitions.json';
                         $s3ruleset = json_decode(file_get_contents($s3Path), true);
                         $partitions = json_decode(file_get_contents($partitionPath), true);
