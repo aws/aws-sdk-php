@@ -2,8 +2,6 @@
 
 namespace Aws\EndpointV2;
 
-use function Aws\manifest;
-
 class EndpointArtifactProvider
 {
     const BASE_PATH = __DIR__ . '/../data';
@@ -50,7 +48,7 @@ class EndpointArtifactProvider
 
     private static function getLatest($service)
     {
-        $manifest = manifest();
+        $manifest = \Aws\manifest();
         return $manifest[$service]['versions']['latest'];
     }
 }
