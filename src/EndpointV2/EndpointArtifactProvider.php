@@ -4,15 +4,14 @@ namespace Aws\EndpointV2;
 
 class EndpointArtifactProvider
 {
-    const BASE_PATH = __DIR__ . '/../data';
-
     public static function getEndpointRuleset(
         $service,
         $apiVersion,
         $getTestFile = false
     )
     {
-        $serviceDir = self::BASE_PATH . "/{$service}";
+        $basePath = __DIR__ . '/../data';
+        $serviceDir = $basePath . "/{$service}";
         if (!is_dir($serviceDir)) {
             throw new \InvalidArgumentException(
                 'Invalid service name.'
@@ -43,7 +42,8 @@ class EndpointArtifactProvider
 
     public static function getPartitions()
     {
-        return require(self::BASE_PATH . '/partitions.json.php' );
+        $basePath = __DIR__ . '/../data';
+        return require($basePath . '/partitions.json.php' );
     }
 
     private static function getLatest($service)

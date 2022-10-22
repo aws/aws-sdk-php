@@ -3,7 +3,6 @@
 namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\EndpointArtifactProvider;
-use Aws\EndpointV2\Ruleset\Ruleset;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class EndpointArtifactProviderTest extends TestCase
@@ -24,6 +23,13 @@ class EndpointArtifactProviderTest extends TestCase
         );
         $this->assertIsArray($testsDefinition);
         $this->assertArrayHasKey('testCases', $testsDefinition);
+    }
+
+    public function testProvidesPartitions()
+    {
+        $partitions = EndpointArtifactProvider::getPartitions();
+        $this->assertIsArray($partitions);
+        $this->assertArrayHasKey('partitions', $partitions);
     }
 
     public function testThrowsExceptionOnInvalidService()
