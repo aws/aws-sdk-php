@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\EndpointV2;
 
+use Aws\EndpointV2\EndpointArtifactProvider;
 use Aws\EndpointV2\EndpointProvider;
 use Aws\Exception\UnresolvedEndpointException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -10,7 +11,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class EndpointProviderTest extends TestCase
 {
-    public function rulesetTestCaseProvider()
+    public function basicTestCaseProvider()
     {
         $testfileNames = [
             "aws-region",
@@ -26,9 +27,8 @@ class EndpointProviderTest extends TestCase
             "uri-encode",
             "valid-hostlabel"
         ];
-        $partitionsPath = __DIR__ . '/partitions.json';
-        $partitions = json_decode(file_get_contents($partitionsPath), true);
         $providerCases = [];
+        $partitions = EndpointArtifactProvider::getPartitions();
 
         foreach ($testfileNames as $testFile) {
             $casesPath = __DIR__ . '/test-cases/' . $testFile . '.json';
@@ -37,8 +37,7 @@ class EndpointProviderTest extends TestCase
             $ruleset = json_decode(file_get_contents($rulesetPath), true);
 
             foreach ($cases['testCases'] as $case) {
-                $providerCase = [];
-                array_push($providerCase, $ruleset, $partitions);
+                $providerCase = [$ruleset, $partitions];
                 $inputParams = $case['params'];
                 $expected = $case['expect'];
 
@@ -54,11 +53,42 @@ class EndpointProviderTest extends TestCase
         return $providerCases;
     }
 
+    public function serviceTestCaseProvider()
+    {
+        $serviceTestCases = [];
+
+        $services = \Aws\Manifest();
+        $partitions = EndpointArtifactProvider::getPartitions();
+
+        foreach($services as $service => $data) {
+            $serviceTests = EndpointArtifactProvider::getEndpointRuleset(
+                $service, 'latest', true
+            );
+            $ruleset = EndpointArtifactProvider::getEndpointRuleset($service, 'latest');
+
+            foreach($serviceTests['testCases'] as $case) {
+                $testCase = [$ruleset, $partitions];
+
+                $inputParams = isset($case['params']) ? $case['params'] : [];
+                $expected = $case['expect'];
+                if (isset($expected['endpoint'])) {
+                    $testCase[] = 'true';
+                } else if (isset($expected['error'])) {
+                    $testCase[] = 'false';
+                }
+                array_push($testCase, $inputParams, $expected);
+                $serviceTestCases[] = $testCase;
+            }
+        }
+        return $serviceTestCases;
+    }
+
     /**
      * Iterates through test cases located in ../test-cases and
      * ../valid-rules, parses into parameters used for endpoint and error tests
      *
-     * @dataProvider rulesetTestCaseProvider
+     * @dataProvider basicTestCaseProvider
+     * @dataProvider serviceTestCaseProvider
      */
     public function testEndpointAndErrorCases(
         $ruleset,
