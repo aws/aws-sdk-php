@@ -11,6 +11,10 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class EndpointProviderTest extends TestCase
 {
+    /**
+     * Iterates through test cases located in ../test-cases and
+     * ../valid-rules, parses into parameters used for endpoint and error tests
+     */
     public function basicTestCaseProvider()
     {
         $testfileNames = [
@@ -53,6 +57,10 @@ class EndpointProviderTest extends TestCase
         return $providerCases;
     }
 
+    /**
+     * Iterates through test cases located in each service's endpoint test file.
+     * Parses into parameters used for endpoint and error tests
+     */
     public function serviceTestCaseProvider()
     {
         $serviceTestCases = [];
@@ -84,9 +92,6 @@ class EndpointProviderTest extends TestCase
     }
 
     /**
-     * Iterates through test cases located in ../test-cases and
-     * ../valid-rules, parses into parameters used for endpoint and error tests
-     *
      * @dataProvider basicTestCaseProvider
      * @dataProvider serviceTestCaseProvider
      */

@@ -2,13 +2,11 @@
 
 namespace Aws\EndpointV2\Ruleset;
 
-use Aws\Arn\ArnParser;
-use Aws\Arn\Exception\InvalidArnException;
 use Aws\Exception\UnresolvedEndpointException;
 
 /**
  * Provides functions and actions to be performed for endpoint evaluation.
- * This is an internal only class and not subject to backwards compatibility guarantees.
+ * This is an internal only class and is not subject to backwards-compatibility guarantees.
  *
  * @internal
  */
