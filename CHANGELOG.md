@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.1 - 2022-10-24
 
 * `Aws\ACMPCA` - AWS Private Certificate Authority (AWS Private CA) now offers usage modes which are combination of features to address specific use cases.
 * `Aws\Batch` - This release adds support for AWS Batch on Amazon EKS.
