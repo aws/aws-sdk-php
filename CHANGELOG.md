@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - AWS Private Certificate Authority (AWS Private CA) now offers usage modes which are combination of features to address specific use cases.
+* `Aws\Batch` - This release adds support for AWS Batch on Amazon EKS.
+* `Aws\DataSync` - Added support for self-signed certificates when using object storage locations; added BytesCompressed to the TaskExecution response.
+* `Aws\SageMaker` - SageMaker Inference Recommender now supports a new API ListInferenceRecommendationJobSteps to return the details of all the benchmark we create for an inference recommendation job.
+
 ## 3.240.0 - 2022-10-21
 
 * `Aws\Aws` - Adds artifacts for endpoint resolution per the AWS Endpoints V2 initiative.
