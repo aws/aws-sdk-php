@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.2 - 2022-10-25
 
 * `Aws\AccessAnalyzer` - This release adds support for six new resource types in IAM Access Analyzer to help you easily identify public and cross-account access to your AWS resources. Updated service API, documentation, and paginators.
 * `Aws\LocationService` - Added new map styles with satellite imagery for map resources using HERE as a data provider.
