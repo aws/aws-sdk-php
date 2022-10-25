@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AccessAnalyzer` - This release adds support for six new resource types in IAM Access Analyzer to help you easily identify public and cross-account access to your AWS resources. Updated service API, documentation, and paginators.
+* `Aws\LocationService` - Added new map styles with satellite imagery for map resources using HERE as a data provider.
+* `Aws\MediaTailor` - This release is a documentation update
+* `Aws\RDS` - Relational Database Service - This release adds support for exporting DB cluster data to Amazon S3.
+* `Aws\WorkSpaces` - This release adds new enums for supporting Workspaces Core features, including creating Manual running mode workspaces, importing regular Workspaces Core images and importing g4dn Workspaces Core images.
+
 ## 3.240.1 - 2022-10-24
 
 * `Aws\ACMPCA` - AWS Private Certificate Authority (AWS Private CA) now offers usage modes which are combination of features to address specific use cases.
