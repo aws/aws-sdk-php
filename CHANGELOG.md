@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.3 - 2022-10-26
 
 * `Aws\IAM` - Doc only update that corrects instances of CLI not using an entity.
 * `Aws\Kafka` - This release adds support for Tiered Storage. UpdateStorage allows you to control the Storage Mode for supported storage tiers.
