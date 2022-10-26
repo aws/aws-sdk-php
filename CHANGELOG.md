@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IAM` - Doc only update that corrects instances of CLI not using an entity.
+* `Aws\Kafka` - This release adds support for Tiered Storage. UpdateStorage allows you to control the Storage Mode for supported storage tiers.
+* `Aws\Neptune` - Added a new cluster-level attribute to set the capacity range for Neptune Serverless instances.
+* `Aws\SageMaker` - Amazon SageMaker Automatic Model Tuning now supports specifying Grid Search strategy for tuning jobs, which evaluates all hyperparameter combinations exhaustively based on the categorical hyperparameters provided.
+
 ## 3.240.2 - 2022-10-25
 
 * `Aws\AccessAnalyzer` - This release adds support for six new resource types in IAM Access Analyzer to help you easily identify public and cross-account access to your AWS resources. Updated service API, documentation, and paginators.
