@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.4 - 2022-10-27
 
 * `Aws\EC2` - Feature supports the replacement of instance root volume using an updated AMI without requiring customers to stop their instance.
 * `Aws\FMS` - Add support NetworkFirewall Managed Rule Group Override flag in GetViolationDetails API
