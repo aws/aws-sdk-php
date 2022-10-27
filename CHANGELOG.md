@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Feature supports the replacement of instance root volume using an updated AMI without requiring customers to stop their instance.
+* `Aws\FMS` - Add support NetworkFirewall Managed Rule Group Override flag in GetViolationDetails API
+* `Aws\Glue` - Added support for custom datatypes when using custom csv classifier.
+* `Aws\Redshift` - This release clarifies use for the ElasticIp parameter of the CreateCluster and RestoreFromClusterSnapshot APIs.
+* `Aws\SageMaker` - This change allows customers to provide a custom entrypoint script for the docker container to be run while executing training jobs, and provide custom arguments to the entrypoint script.
+* `Aws\WAFV2` - This release adds the following: Challenge rule action, to silently verify client browsers; rule group rule action override to any valid rule action, not just Count; token sharing between protected applications for challenge/CAPTCHA token; targeted rules option for Bot Control managed rule group.
+
 ## 3.240.3 - 2022-10-26
 
 * `Aws\IAM` - Doc only update that corrects instances of CLI not using an entity.
