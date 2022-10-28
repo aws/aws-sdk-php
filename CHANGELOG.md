@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.5 - 2022-10-28
 
 * `Aws\AppRunner` - AWS App Runner adds .NET 6, Go 1, PHP 8.1 and Ruby 3.1 runtimes.
 * `Aws\AppStream` - This release includes CertificateBasedAuthProperties in CreateDirectoryConfig and UpdateDirectoryConfig.
