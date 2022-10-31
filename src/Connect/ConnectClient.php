@@ -139,6 +139,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disassociateRoutingProfileQueuesAsync(array $args = [])
  * @method \Aws\Result disassociateSecurityKey(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateSecurityKeyAsync(array $args = [])
+ * @method \Aws\Result dismissUserContact(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise dismissUserContactAsync(array $args = [])
  * @method \Aws\Result getContactAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getContactAttributesAsync(array $args = [])
  * @method \Aws\Result getCurrentMetricData(array $args = [])

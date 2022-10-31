@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Simple Email Service** service.
+ * @method \Aws\Result batchGetMetricData(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetMetricDataAsync(array $args = [])
  * @method \Aws\Result createConfigurationSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createConfigurationSetAsync(array $args = [])
  * @method \Aws\Result createConfigurationSetEventDestination(array $args = [])
@@ -105,6 +107,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listEmailTemplatesAsync(array $args = [])
  * @method \Aws\Result listImportJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listImportJobsAsync(array $args = [])
+ * @method \Aws\Result listRecommendations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRecommendationsAsync(array $args = [])
  * @method \Aws\Result listSuppressedDestinations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSuppressedDestinationsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
@@ -117,6 +121,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putAccountSendingAttributesAsync(array $args = [])
  * @method \Aws\Result putAccountSuppressionAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAccountSuppressionAttributesAsync(array $args = [])
+ * @method \Aws\Result putAccountVdmAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putAccountVdmAttributesAsync(array $args = [])
  * @method \Aws\Result putConfigurationSetDeliveryOptions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putConfigurationSetDeliveryOptionsAsync(array $args = [])
  * @method \Aws\Result putConfigurationSetReputationOptions(array $args = [])
@@ -127,6 +133,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putConfigurationSetSuppressionOptionsAsync(array $args = [])
  * @method \Aws\Result putConfigurationSetTrackingOptions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putConfigurationSetTrackingOptionsAsync(array $args = [])
+ * @method \Aws\Result putConfigurationSetVdmOptions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putConfigurationSetVdmOptionsAsync(array $args = [])
  * @method \Aws\Result putDedicatedIpInPool(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putDedicatedIpInPoolAsync(array $args = [])
  * @method \Aws\Result putDedicatedIpWarmupAttributes(array $args = [])
