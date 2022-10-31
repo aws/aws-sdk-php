@@ -1,9 +1,10 @@
 <?php
 namespace Aws;
 
-use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Endpoint\PartitionInterface;
+use Aws\EndpointV2\EndpointProvider;
+use Aws\EndpointV2\EndpointArtifactProvider;
 
 class MultiRegionClient implements AwsClientInterface
 {
@@ -81,19 +82,12 @@ class MultiRegionClient implements AwsClientInterface
                             . ' or "aws-us-gov").'
                         );
                     }
-
-                    $args['partition'] = $value;
-                    if (isset($args['endpoint_v1']) && $args['endpoint_v1'] === true) {
-                        $args['endpoint_provider'] = $value;
-                    } else {
-                        $datapath = __DIR__ . '/data';
-                        $s3Path = $datapath . '/s3/2006-03-01/endpoint-rule-set-1.json';
-                        $partitionPath = $datapath . '/partitions.json';
-                        $s3ruleset = json_decode(file_get_contents($s3Path), true);
-                        $partitions = json_decode(file_get_contents($partitionPath), true);
-                        $args['endpoint_provider'] = new \Aws\EndpointV2\EndpointProvider($s3ruleset, $partitions);
-                    }
-
+                    $ruleset = EndpointArtifactProvider::getEndpointRuleset(
+                        $args['service'],
+                        isset($args['version']) ? $args['version'] : 'latest'
+                    );
+                    $partitions = EndpointArtifactProvider::getPartitions();
+                    $args['endpoint_provider'] = new EndpointProvider($ruleset, $partitions);
                 }
             ],
         ];
@@ -110,7 +104,6 @@ class MultiRegionClient implements AwsClientInterface
      * - region: (string) Region to connect to when no override is provided.
      *   Used to create the default client factory and determine the appropriate
      *   AWS partition when present.
-     * - endpoint_v1: Opt-out of the Endpoints 2.0 provider
      *
      * @param array $args Client configuration arguments.
      */

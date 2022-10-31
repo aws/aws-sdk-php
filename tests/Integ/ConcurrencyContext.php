@@ -18,11 +18,12 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use JmesPath;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Defines application features from the specific context.
  */
-class ConcurrencyContext extends Assert implements
+class ConcurrencyContext extends TestCase implements
     Context,
     SnippetAcceptingContext
 {
@@ -93,7 +94,8 @@ class ConcurrencyContext extends Assert implements
     public function theValueAtShouldBeA($key, $type)
     {
         $this->assertInstanceOf(Result::class, $this->result);
-        $this->assertInternalType($type, $this->result->search($key));
+        $methodName = 'assertIs' . ucfirst($type);
+        $this->$methodName($this->result->search($key));
     }
 
     /**

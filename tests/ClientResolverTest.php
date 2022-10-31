@@ -10,6 +10,7 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Endpoint\Partition;
+use Aws\EndpointV2\EndpointProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\LruArrayCache;
 use Aws\S3\S3Client;
@@ -136,6 +137,37 @@ class ClientResolverTest extends TestCase
             'version'      => 'latest'
         ], new HandlerList());
         $this->assertSame($conf['use_aws_shared_config_files'], false);
+    }
+
+    public function testAppliesEndpointProviderV2()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service'      => 'dynamodb',
+            'region'       => 'x',
+            'version'      => 'latest'
+        ], new HandlerList());
+        $this->assertInstanceOf(
+            EndpointProvider::class,
+            $conf['endpoint_provider']
+        );
+    }
+
+    public function testAppliesClientContextParams()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Invalid configuration value provided for "Accelerate". Expected boolean, but got string(3) "foo"'
+            . "\n\n" . 'Accelerate: (boolean)' . "\n\n"
+            . '  Enables this client to use S3 Transfer Acceleration endpoints.'
+        );
+        $conf = $r->resolve([
+            'service'      => 's3',
+            'version'      => 'latest',
+            'region'       => 'x',
+            'Accelerate'       => 'foo',
+        ], new HandlerList());
     }
 
     public function testPrefersApiProviderNameToPartitionName()

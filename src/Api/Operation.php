@@ -103,7 +103,10 @@ class Operation extends AbstractModel
     }
 
     /**
-     * @return mixed
+     * Gets static modeled static values used for
+     * endpoint resolution.
+     *
+     * @return array
      */
     public function getStaticContextParams()
     {
@@ -111,6 +114,9 @@ class Operation extends AbstractModel
     }
 
     /**
+     * Gets definition of modeled dynamic values used
+     * for endpoint resolution
+     *
      * @return array
      */
     public function getContextParams()

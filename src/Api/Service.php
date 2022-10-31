@@ -31,6 +31,7 @@ class Service extends AbstractModel
     /** @var array */
     private $waiters = null;
 
+    /** @var boolean */
     private $modifiedModel = false;
 
     /**
@@ -68,8 +69,10 @@ class Service extends AbstractModel
         } else {
             $this->serviceName = $this->getEndpointPrefix();
         }
-
         $this->apiVersion = $this->getApiVersion();
+        if (isset($definition['clientContextParams'])) {
+           $this->clientContextParams = $definition['clientContextParams'];
+        }
     }
 
     /**
@@ -478,53 +481,59 @@ class Service extends AbstractModel
     }
 
     /**
-     * Determines if a service has client context params.
-     *
-     * @param string $name Name of the waiter.
-     *
-     * @return bool
-     */
-    public function hasClientContextParams()
-    {
-        return isset($this->definition['clientContextParams']);
-    }
-
-    /**
-     * Get all of the context params of the description.
+     * Get all the context params of the description.
      *
      * @return array | null
      */
     public function getClientContextParams()
     {
-        if ($this->hasClientContextParams()) {
-            return $this->definition['clientContextParams'];
-        }
-        return null;
+        return $this->clientContextParams;
     }
 
+    /**
+     * Get the service's api provider.
+     *
+     * @return callable
+     */
     public function getProvider()
     {
         return $this->apiProvider;
     }
 
+    /**
+     * Get the service's definition.
+     *
+     * @return callable
+     */
     public function getDefinition()
     {
         return $this->definition;
     }
 
+    /**
+     * Sets the service's api definition.
+     * Intended for internal use only.
+     *
+     * @return void
+     *
+     * @internal
+     */
     public function setDefinition($definition)
     {
         $this->definition = $definition;
         $this->modifiedModel = true;
     }
 
+    /**
+     * Denotes whether or not a service's definition has
+     * been modified.  Intended for internal use only.
+     *
+     * @return bool
+     *
+     * @internal
+     */
     public function isModifiedModel()
     {
         return $this->modifiedModel;
-    }
-
-    private function setModifiedModel()
-    {
-        $this->modifiedModel = true;
     }
 }

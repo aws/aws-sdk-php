@@ -369,7 +369,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_accelerate_endpoint' => true,
                 ],
-                new UnresolvedEndpointException('Access Points do not support S3 Accelerate')
+                new UnresolvedEndpointException(
+            'Access Points do not support S3 Accelerate'
+                )
             ],
             // Path-style with access point ARN
             [
@@ -384,7 +386,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_path_style_endpoint' => true,
                 ],
-                new UnresolvedEndpointException('Path-style addressing cannot be used with ARN buckets')
+                new UnresolvedEndpointException(
+                    'Path-style addressing cannot be used with ARN buckets'
+                )
             ],
             // Wrong ARN type
             [
@@ -476,7 +480,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_dual_stack_endpoint' => true,
                 ],
-                new UnresolvedEndpointException('S3 Outposts does not support Dual-stack')
+                new UnresolvedEndpointException(
+                    'S3 Outposts does not support Dual-stack'
+                )
             ],
             // S3 Outposts, accelerate
             [
@@ -491,7 +497,8 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_accelerate_endpoint' => true,
                 ],
-                new UnresolvedEndpointException('S3 Outposts does not support S3 Accelerate')
+                new UnresolvedEndpointException(
+        'S3 Outposts does not support S3 Accelerate'                )
             ],
             // s3-external, use_arn_region false
             [

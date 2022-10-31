@@ -199,8 +199,8 @@ class S3ControlClient extends AwsClient
     {
         parent::__construct($args);
         $stack = $this->getHandlerList();
-        $this->isEndpointV2() && $this->processEndpointV2Model();
-        !$this->isEndpointV2() && $stack->appendBuild(
+        $this->processEndpointV2Model();
+        $stack->appendBuild(
             EndpointArnMiddleware::wrap(
                 $this->getApi(),
                 $this->getRegion(),
@@ -218,6 +218,14 @@ class S3ControlClient extends AwsClient
         );
     }
 
+    /**
+     * Modifies API definition to remove `AccountId`
+     * host prefix, as necessary for dynamic endpoint resolution.
+     *
+     * @return void
+     *
+     * @internal
+     */
     private function processEndpointV2Model()
     {
         $definition = $this->getApi()->getDefinition();

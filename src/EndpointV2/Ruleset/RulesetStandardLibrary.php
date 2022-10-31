@@ -159,12 +159,14 @@ class RulesetStandardLibrary
 
         if ($parsed === false || !empty($parsed['query'])) {
             return null;
-        } elseif (isset($parsed['scheme'])) {
-            if ($parsed['scheme'] !== 'http'
-                && $parsed['scheme'] !== 'https'
-            ) {
-                return null;
-            }
+        } elseif (!isset($parsed['scheme'])) {
+            return null;
+        }
+
+        if ($parsed['scheme'] !== 'http'
+            && $parsed['scheme'] !== 'https'
+        ) {
+            return null;
         }
 
         $urlInfo = [];

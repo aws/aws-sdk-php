@@ -503,6 +503,7 @@ EOXML;
                     'signatureVersions' => ['v4'],
                 ],
                 'partition' => 'aws_test',
+                // no longer used in endpoint resolution
                 'dnsSuffix' => 'amazonaws.test',
                 'regions' => [
                     'foo-region' => [
@@ -519,10 +520,9 @@ EOXML;
             ]),
             'http_handler' => function (RequestInterface $request) {
                 $this->assertSame('https', $request->getUri()->getScheme());
-                $this->assertSame('foo.s3.foo-region.amazonaws.test', $request->getUri()->getHost());
+                $this->assertSame('foo.s3.foo-region.amazonaws.com', $request->getUri()->getHost());
                 return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
-            'endpoint_v1' => true
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
@@ -540,6 +540,7 @@ EOXML;
                     'signatureVersions' => ['v4'],
                 ],
                 'partition' => 'aws_test',
+                // no longer used in endpoint resolution
                 'dnsSuffix' => 'amazonaws.test',
                 'regions' => [
                     'foo-region' => [
@@ -556,7 +557,7 @@ EOXML;
             ]),
             'http_handler' => function (RequestInterface $request) {
                 $this->assertSame('https', $request->getUri()->getScheme());
-                $this->assertSame('s3.foo-region.amazonaws.test', $request->getUri()->getHost());
+                $this->assertSame('s3.foo-region.amazonaws.com', $request->getUri()->getHost());
                 return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
             'use_path_style_endpoint' => true,

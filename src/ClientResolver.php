@@ -16,8 +16,6 @@ use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface as UseFipsEndpointConfig
 use Aws\Endpoint\UseDualstackEndpoint\Configuration as UseDualStackEndpointConfiguration;
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider as UseDualStackConfigProvider;
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface as UseDualStackEndpointConfigurationInterface;
-use Aws\EndpointDiscovery\ConfigurationInterface;
-use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointV2\EndpointArtifactProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
@@ -138,11 +136,10 @@ class ClientResolver
             'valid'    => ['callable', EndpointV2\EndpointProvider::class],
             'fn'       => [__CLASS__, '_apply_endpoint_provider'],
             'doc'      => 'An optional PHP callable that accepts a hash of options including a "service" and "region" key and returns NULL or a hash of endpoint data, of which the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider for a list of built-in providers.',
-            'default'  => [__CLASS__, '_default_endpoint_provider_v2'],
+            'default'  => [__CLASS__, '_default_endpoint_provider'],
         ],
         'serializer' => [
             'default'   => [__CLASS__, '_default_serializer'],
-            'fn'        => [__CLASS__, '_apply_serializer'],
             'internal'  => true,
             'type'      => 'value',
             'valid'     => ['callable'],
@@ -177,13 +174,6 @@ class ClientResolver
             'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [__CLASS__, '_default_credential_provider'],
-        ],
-        'endpoint_discovery' => [
-            'type'     => 'value',
-            'valid'    => [ConfigurationInterface::class, CacheInterface::class, 'array', 'callable'],
-            'doc'      => 'Specifies settings for endpoint discovery. Provide an instance of Aws\EndpointDiscovery\ConfigurationInterface, an instance Aws\CacheInterface, a callable that provides a promise for a Configuration object, or an associative array with the following keys: enabled: (bool) Set to true to enable endpoint discovery, false to explicitly disable it. Defaults to false; cache_limit: (int) The maximum number of keys in the endpoints cache. Defaults to 1000.',
-            'fn'       => [__CLASS__, '_apply_endpoint_discovery'],
-            'default'  => [__CLASS__, '_default_endpoint_discovery_provider']
         ],
         'stats' => [
             'type'  => 'value',
@@ -673,20 +663,6 @@ class ClientResolver
         }
     }
 
-    public static function apply_endpoint_provider_v2()
-    {
-
-    }
-
-    public static function _apply_endpoint_discovery($value, array &$args) {
-        $args['endpoint_discovery'] = $value;
-    }
-
-    public static function _default_endpoint_discovery_provider(array $args)
-    {
-        return ConfigurationProvider::defaultProvider($args);
-    }
-
     public static function _apply_use_fips_endpoint($value, array &$args) {
         if ($value instanceof CacheInterface) {
             $value = UseFipsConfigProvider::defaultProvider($args);
@@ -730,11 +706,6 @@ class ClientResolver
 
     public static function _default_use_dual_stack_endpoint(array &$args) {
         return UseDualStackConfigProvider::defaultProvider($args);
-    }
-
-    public static function _apply_serializer($value, array &$args, HandlerList $list)
-    {
-        $list->prependBuild(Middleware::requestBuilder($value), 'builder');
     }
 
     public static function _apply_debug($value, array &$args, HandlerList $list)
@@ -909,36 +880,29 @@ class ClientResolver
 
     public static function _default_endpoint_provider(array $args)
     {
-        //todo add try catch for existence of file
-        //some of this will be caught in tests
-        if ($args['service'] === 's3control') {
-            $datapath = __DIR__ . '/data';
-            $s3Path = $datapath . '/s3control/2018-08-20/endpoint-rule-set-1.json';
-            $partitionPath = $datapath . '/partitions.json';
-            $s3ruleset = json_decode(file_get_contents($s3Path), true);
-            $partitions = json_decode(file_get_contents($partitionPath), true);
+        $service =  isset($args['api']) ? $args['api'] : null;
+        $serviceName = isset($service) ? $service->getServiceName() : null;
+        $apiVersion = isset($service) ? $service->getApiVersion() : null;
 
-            return new \Aws\EndpointV2\EndpointProvider($s3ruleset, $partitions);
+        if (self::isValidService($serviceName)
+            && self::isValidApiVersion($serviceName, $apiVersion)
+        ) {
+            $ruleset = EndpointArtifactProvider::getEndpointRuleset(
+                $service->getServiceName(),
+                $service->getApiVersion()
+            );
+            return new \Aws\EndpointV2\EndpointProvider(
+                $ruleset,
+                EndpointArtifactProvider::getPartitions()
+            );
         }
         $options = self::getEndpointProviderOptions($args);
-
-        //todo mark getendpoint as deprecated
         return PartitionEndpointProvider::defaultProvider($options)
             ->getPartition($args['region'], $args['service']);
     }
 
-    public static function _default_endpoint_provider_v2(array $args)
-    {
-        $service = $args['api'];
-        $ruleset = EndpointArtifactProvider::getEndpointRuleset(
-            $service->getServiceName(),
-            $service->getApiVersion()
-        );
-    }
-
     public static function _default_serializer(array $args)
     {
-        //TODO add endpoint provider as argument for V2
         return Service::createSerializer(
             $args['api'],
             $args['endpoint']
@@ -1111,5 +1075,22 @@ EOT;
                 }
             }
         }
+    }
+
+    private static function isValidService($service) {
+        if (is_null($service)) {
+            return false;
+        }
+        $services = \Aws\manifest();
+        return isset($services[$service]);
+    }
+
+    private static function isValidApiVersion($service, $apiVersion) {
+        if (is_null($apiVersion)) {
+            return false;
+        }
+        return is_dir(
+          __DIR__ . "/data/{$service}/$apiVersion"
+        );
     }
 }

@@ -12,11 +12,12 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\Assert;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * Defines application features from the specific context.
  */
-class BlockingContext extends Assert implements Context, SnippetAcceptingContext
+class BlockingContext extends TestCase implements Context, SnippetAcceptingContext
 {
     use IntegUtils;
 

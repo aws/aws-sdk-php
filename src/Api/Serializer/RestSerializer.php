@@ -46,7 +46,7 @@ abstract class RestSerializer
      */
     public function __invoke(
         CommandInterface $command,
-        EndpointProvider $endpointProvider = null,
+        $endpointProvider = null,
         array $clientArgs = null
     )
     {
@@ -56,7 +56,7 @@ abstract class RestSerializer
         $opts = $this->serialize($operation, $commandArgs);
         $headers = isset($opts['headers']) ? $opts['headers'] : [];
 
-        if (isset($endpointProvider)) {
+        if ($endpointProvider instanceof EndpointProvider) {
             $service = $this->api->getServiceName();
             $providerArgs = $this->resolveProviderArgs(
                 $operation,

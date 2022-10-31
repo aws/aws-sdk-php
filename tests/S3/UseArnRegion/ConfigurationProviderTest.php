@@ -97,7 +97,7 @@ EOT;
     public function testCreatesDefaultFromFallback()
     {
         $this->clearEnv();
-        $expected  = new Configuration(false);
+        $expected  = new Configuration(true);
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::fallback())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
@@ -121,7 +121,7 @@ EOT;
     public function testIgnoresIniWithUseAwsConfigFileFalse()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration(false);
+        $expected = new Configuration(true);
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */

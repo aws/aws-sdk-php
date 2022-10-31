@@ -54,7 +54,7 @@ class JsonRpcSerializer
      */
     public function __invoke(
         CommandInterface $command,
-        EndpointProvider $endpointProvider = null,
+        $endpointProvider = null,
         array $clientArgs = null
     )
     {
@@ -66,7 +66,7 @@ class JsonRpcSerializer
                 'Content-Type' => $this->contentType
             ];
 
-        if (isset($endpointProvider)) {
+        if ($endpointProvider instanceof EndpointProvider) {
             $providerArgs = $this->resolveProviderArgs(
                 $operation,
                 $endpointProvider,

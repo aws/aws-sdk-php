@@ -40,7 +40,7 @@ class QuerySerializer
      */
     public function __invoke(
         CommandInterface $command,
-        EndpointProvider $endpointProvider = null,
+        $endpointProvider = null,
         array $clientArgs = null
     )
     {
@@ -66,7 +66,7 @@ class QuerySerializer
             'Content-Type'   => 'application/x-www-form-urlencoded'
         ];
 
-        if (isset($endpointProvider)) {
+        if ($endpointProvider instanceof EndpointProvider) {
             $providerArgs = $this->resolveProviderArgs(
                 $operation,
                 $endpointProvider,

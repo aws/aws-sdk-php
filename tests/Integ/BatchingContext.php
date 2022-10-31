@@ -15,8 +15,9 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use PHPUnit\Framework\Assert;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class BatchingContext extends Assert implements
+class BatchingContext extends TestCase implements
     Context,
     SnippetAcceptingContext
 {

@@ -151,6 +151,6 @@ EOT;
     public function theValueAtShouldBeA($key, $value)
     {
         $this->assertInstanceOf(Result::class, $this->result);
-        $this->assertContains($value, $this->result->search($key));
+        $this->assertStringContainsString($value, $this->result->search($key));
     }
 }

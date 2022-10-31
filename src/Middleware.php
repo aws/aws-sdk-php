@@ -100,7 +100,7 @@ final class Middleware
      */
     public static function requestBuilder(
         $serializer,
-        EndpointProvider $endpointProvider = null,
+        $endpointProvider = null,
         array $providerArgs = null
     )
     {
