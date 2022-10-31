@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.6 - 2022-10-31
 
 * `Aws\AppRunner` - This release adds support for private App Runner services. Services may now be configured to be made private and only accessible from a VPC. The changes include a new VpcIngressConnection resource and several new and modified APIs.
 * `Aws\CloudWatchLogs` - SDK release to support tagging for destinations and log groups with TagResource. Also supports tag on create with PutDestination.
