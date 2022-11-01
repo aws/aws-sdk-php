@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.7 - 2022-11-01
 
 * `Aws\RDS` - Relational Database Service - This release adds support for configuring Storage Throughput on RDS database instances.
 * `Aws\Textract` - Add ocr results in AnalyzeIDResponse as blocks
