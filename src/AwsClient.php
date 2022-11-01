@@ -4,6 +4,10 @@ namespace Aws;
 use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
+use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
+use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
+use Aws\ClientSideMonitoring\ConfigurationProvider;
+use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\EndpointV2\EndpointProvider;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
@@ -225,6 +229,9 @@ class AwsClient implements AwsClientInterface
         $this->addSignatureMiddleware();
         $this->addInvocationId();
         $this->addEndpointParameterMiddleware($args);
+        if (!$this->isUseEndpointV2()) {
+            $this->addEndpointDiscoveryMiddleware($config, $args);
+        }
         $this->loadAliases();
         $this->addStreamRequestPayload();
         $this->addRecursionDetection();
@@ -364,6 +371,22 @@ class AwsClient implements AwsClientInterface
                     $this->api
                 ),
                 'endpoint_parameter'
+            );
+        }
+    }
+
+    private function addEndpointDiscoveryMiddleware($config, $args)
+    {
+        $list = $this->getHandlerList();
+
+        if (!isset($args['endpoint'])) {
+            $list->appendBuild(
+                EndpointDiscoveryMiddleware::wrap(
+                    $this,
+                    $args,
+                    $config['endpoint_discovery']
+                ),
+                'EndpointDiscoveryMiddleware'
             );
         }
     }
@@ -591,6 +614,11 @@ class AwsClient implements AwsClientInterface
         }
 
         return array_merge($normalizedBuiltIns, $this->getClientContextParams());
+    }
+
+    protected function isUseEndpointV2()
+    {
+        return $this->endpointProvider instanceof EndpointProvider;
     }
 
     /**

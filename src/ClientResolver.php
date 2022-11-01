@@ -16,6 +16,8 @@ use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface as UseFipsEndpointConfig
 use Aws\Endpoint\UseDualstackEndpoint\Configuration as UseDualStackEndpointConfiguration;
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider as UseDualStackConfigProvider;
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface as UseDualStackEndpointConfigurationInterface;
+use Aws\EndpointDiscovery\ConfigurationInterface;
+use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointV2\EndpointArtifactProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
@@ -174,6 +176,13 @@ class ClientResolver
             'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [__CLASS__, '_default_credential_provider'],
+        ],
+        'endpoint_discovery' => [
+            'type'     => 'value',
+            'valid'    => [ConfigurationInterface::class, CacheInterface::class, 'array', 'callable'],
+            'doc'      => 'Specifies settings for endpoint discovery. Provide an instance of Aws\EndpointDiscovery\ConfigurationInterface, an instance Aws\CacheInterface, a callable that provides a promise for a Configuration object, or an associative array with the following keys: enabled: (bool) Set to true to enable endpoint discovery, false to explicitly disable it. Defaults to false; cache_limit: (int) The maximum number of keys in the endpoints cache. Defaults to 1000.',
+            'fn'       => [__CLASS__, '_apply_endpoint_discovery'],
+            'default'  => [__CLASS__, '_default_endpoint_discovery_provider']
         ],
         'stats' => [
             'type'  => 'value',
@@ -599,13 +608,6 @@ class ClientResolver
 
     public static function _apply_endpoint_provider($value, array &$args)
     {
-        if (!$value instanceof \Aws\EndpointV2\EndpointProvider) {
-            if (self::isValidService($args['service'])) {
-                $value = self::_default_endpoint_provider($args);
-                $args['endpoint_provider'] = $value;
-            }
-        }
-
         if (!isset($args['endpoint'])) {
             if ($value instanceof \Aws\EndpointV2\EndpointProvider) {
                 $options = self::getEndpointProviderOptions($args);
@@ -668,6 +670,15 @@ class ClientResolver
                 $args['config']['signing_name'] = $result['signingName'];
             }
         }
+    }
+
+    public static function _apply_endpoint_discovery($value, array &$args) {
+        $args['endpoint_discovery'] = $value;
+    }
+
+    public static function _default_endpoint_discovery_provider(array $args)
+    {
+        return ConfigurationProvider::defaultProvider($args);
     }
 
     public static function _apply_use_fips_endpoint($value, array &$args) {

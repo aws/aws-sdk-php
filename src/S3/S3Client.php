@@ -364,6 +364,22 @@ class S3Client extends AwsClient implements S3ClientInterface
 
         if ($this->getConfig('bucket_endpoint')) {
             $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
+        } elseif (!$this->isUseEndpointV2()) {
+            $stack->appendBuild(
+                S3EndpointMiddleware::wrap(
+                    $this->getRegion(),
+                    $this->getConfig('endpoint_provider'),
+                    [
+                        'accelerate' => $this->getConfig('use_accelerate_endpoint'),
+                        'path_style' => $this->getConfig('use_path_style_endpoint'),
+                        'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
+                        'dual_stack' =>
+                            $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
+
+                    ]
+                ),
+                's3.endpoint_middleware'
+            );
         }
 
         $stack->appendBuild(
@@ -382,7 +398,8 @@ class S3Client extends AwsClient implements S3ClientInterface
                     'endpoint' => isset($args['endpoint'])
                         ? $args['endpoint']
                         : null
-                ]
+                ],
+                $this->isUseEndpointV2()
             ),
             's3.bucket_endpoint_arn'
         );

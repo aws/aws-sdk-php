@@ -198,8 +198,11 @@ class S3ControlClient extends AwsClient
     public function __construct(array $args)
     {
         parent::__construct($args);
+
+        if ($this->isUseEndpointV2()) {
+            $this->processEndpointV2Model();
+        }
         $stack = $this->getHandlerList();
-        $this->processEndpointV2Model();
         $stack->appendBuild(
             EndpointArnMiddleware::wrap(
                 $this->getApi(),
@@ -212,7 +215,8 @@ class S3ControlClient extends AwsClient
                         ? $args['endpoint']
                         : null,
                     'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
-                ]
+                ],
+                $this->isUseEndpointV2()
             ),
             's3control.endpoint_arn_middleware'
         );

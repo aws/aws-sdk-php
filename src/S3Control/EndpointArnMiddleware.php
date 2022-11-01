@@ -3,11 +3,15 @@ namespace Aws\S3Control;
 
 use Aws\Api\Service;
 use Aws\Arn\AccessPointArnInterface;
+use Aws\Arn\ArnInterface;
 use Aws\Arn\ArnParser;
+use Aws\Arn\Exception\InvalidArnException;
 use Aws\Arn\S3\BucketArnInterface;
 use Aws\Arn\S3\OutpostsArnInterface;
 use Aws\CommandInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\Exception\InvalidRegionException;
+use Aws\Exception\UnresolvedEndpointException;
 use Aws\S3\EndpointRegionHelperTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
@@ -20,7 +24,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class EndpointArnMiddleware
 {
-//    use EndpointRegionHelperTrait;
+    use EndpointRegionHelperTrait;
 
     /**
      * Commands which do not do ARN expansion for a specific given shape name
@@ -55,6 +59,9 @@ class EndpointArnMiddleware
     /** @var callable */
     private $nextHandler;
 
+    /** @var boolean */
+    private $isUseEndpointV2;
+
     /**
      * Create a middleware wrapper function.
      *
@@ -66,12 +73,12 @@ class EndpointArnMiddleware
     public static function wrap(
         Service $service,
                 $region,
-        array   $config
-
+        array   $config,
+                $isUseEndpointV2
     )
     {
-        return function (callable $handler) use ($service, $region, $config) {
-            return new self($handler, $service, $region, $config);
+        return function (callable $handler) use ($service, $region, $config, $isUseEndpointV2) {
+            return new self($handler, $service, $region, $config, $isUseEndpointV2);
         };
     }
 
@@ -79,7 +86,8 @@ class EndpointArnMiddleware
         callable $nextHandler,
         Service  $service,
                  $region,
-        array    $config = []
+        array    $config = [],
+        $isUseEndpointV2
     )
     {
         $this->partitionProvider = PartitionEndpointProvider::defaultProvider();
@@ -87,6 +95,7 @@ class EndpointArnMiddleware
         $this->service = $service;
         $this->config = $config;
         $this->nextHandler = $nextHandler;
+        $this->isUseEndpointV2 = $isUseEndpointV2;
     }
 
     public function __invoke(CommandInterface $cmd, RequestInterface $req)
@@ -123,17 +132,25 @@ class EndpointArnMiddleware
                     && ArnParser::isArn($cmd[$bucketNameMember])
                 ) {
                     $arn = ArnParser::parse($cmd[$bucketNameMember]);
+                    !$this->isUseEndpointV2 && $partition = $this->validateBucketArn($arn);
                 } elseif (!is_null($accesspointNameMember)
                     && !empty($cmd[$accesspointNameMember])
                     && !in_array($cmd->getName(), self::$selectiveNonArnableCmds['AccessPointName'])
                     && ArnParser::isArn($cmd[$accesspointNameMember])
                 ) {
                     $arn = ArnParser::parse($cmd[$accesspointNameMember]);
+                    !$this->isUseEndpointV2 && $partition = $this->validateAccessPointArn($arn);
                 }
 
                 // Process only if an appropriate member contains an ARN value
                 // and is an Outposts ARN
                 if (!empty($arn) && $arn instanceof OutpostsArnInterface) {
+                    if (!$this->isUseEndpointV2) {
+                        // Generate host based on ARN
+                        $host = $this->generateOutpostsArnHost($arn, $req);
+                        $req = $req->withHeader('x-amz-outpost-id', $arn->getOutpostId());
+                    }
+
                     // ARN replacement
                     $path = $req->getUri()->getPath();
                     if ($arn instanceof AccessPointArnInterface) {
@@ -189,14 +206,153 @@ class EndpointArnMiddleware
                     }
 
                     // Set modified request
-                    $req = $req
-                        ->withUri($req->getUri()->withPath($path));
                     if (isset($body)) {
                         $req = $req->withBody($body);
                     }
+                    if ($this->isUseEndpointV2) {
+                        $req = $req->withUri($req->getUri()->withPath($path));
+                        goto next;
+                    }
+                    $req = $req
+                        ->withUri($req->getUri()->withHost($host)->withPath($path))
+                        ->withHeader('x-amz-account-id', $arn->getAccountId());
+
+                    // Update signing region based on ARN data if configured to do so
+                    if ($this->config['use_arn_region']->isUseArnRegion()) {
+                        $region = $arn->getRegion();
+                    } else {
+                        $region = $this->region;
+                    }
+                    $endpointData = $partition([
+                        'region' => $region,
+                        'service' => $arn->getService()
+                    ]);
+                    $cmd['@context']['signing_region'] = $endpointData['signingRegion'];
+
+                    // Update signing service for Outposts ARNs
+                    if ($arn instanceof OutpostsArnInterface) {
+                        $cmd['@context']['signing_service'] = $arn->getService();
+                    }
+
+
                 }
             }
         }
-        return $nextHandler($cmd, $req);
+        // For operations that redirect endpoint & signing service based on
+        // presence of OutpostId member. These operations will likely not
+        // overlap with operations that perform ARN expansion.
+        if (in_array($cmd->getName(), self::$outpostIdRedirectCmds)
+            && !empty($cmd['OutpostId'])
+        ) {
+            $req = $req->withUri(
+                $req->getUri()->withHost($this->generateOutpostIdHost())
+            );
+            $cmd['@context']['signing_service'] = 's3-outposts';
+        }
+
+        next:
+            return $nextHandler($cmd, $req);
+    }
+
+    private function generateOutpostsArnHost(
+        OutpostsArnInterface $arn,
+        RequestInterface $req
+    ) {
+        if (!empty($this->config['use_arn_region']->isUseArnRegion())) {
+            $region = $arn->getRegion();
+        } else {
+            $region = $this->region;
+        }
+        $fipsString = $this->config['use_fips_endpoint']->isUseFipsEndpoint()
+            ? "-fips"
+            : "";
+        $suffix = $this->getPartitionSuffix($arn, $this->partitionProvider);
+        return "s3-outposts{$fipsString}.{$region}.{$suffix}";
+    }
+
+    private function generateOutpostIdHost()
+    {
+        $partition = $this->partitionProvider->getPartition(
+            $this->region,
+            $this->service->getEndpointPrefix()
+        );
+        $suffix = $partition->getDnsSuffix();
+        return "s3-outposts.{$this->region}.{$suffix}";
+    }
+
+    private function validateBucketArn(ArnInterface $arn)
+    {
+        if ($arn instanceof BucketArnInterface) {
+            return $this->validateArn($arn);
+        }
+
+        throw new InvalidArnException('Provided ARN was not a valid S3 bucket'
+            . ' ARN.');
+    }
+
+    private function validateAccessPointArn(ArnInterface $arn)
+    {
+        if ($arn instanceof AccessPointArnInterface) {
+            return $this->validateArn($arn);
+        }
+
+        throw new InvalidArnException('Provided ARN was not a valid S3 access'
+            . ' point ARN.');
+    }
+
+    /**
+     * Validates an ARN, returning a partition object corresponding to the ARN
+     * if successful
+     *
+     * @param $arn
+     * @return \Aws\Endpoint\Partition
+     */
+    private function validateArn(ArnInterface $arn)
+    {
+        // Dualstack is not supported with Outposts ARNs
+        if ($arn instanceof OutpostsArnInterface
+            && !empty($this->config['dual_stack'])
+        ) {
+            throw new UnresolvedEndpointException(
+                'Dualstack is currently not supported with S3 Outposts ARNs.'
+                . ' Please disable dualstack or do not supply an Outposts ARN.');
+        }
+
+        // Get partitions for ARN and client region
+        $arnPart = $this->partitionProvider->getPartitionByName(
+            $arn->getPartition()
+        );
+        $clientPart = $this->partitionProvider->getPartition(
+            $this->region,
+            's3'
+        );
+
+        // If client partition not found, try removing pseudo-region qualifiers
+        if (!($clientPart->isRegionMatch($this->region, 's3'))) {
+            $clientPart = $this->partitionProvider->getPartition(
+                \Aws\strip_fips_pseudo_regions($this->region),
+                's3'
+            );
+        }
+
+        // Verify that the partition matches for supplied partition and region
+        if ($arn->getPartition() !== $clientPart->getName()) {
+            throw new InvalidRegionException('The supplied ARN partition'
+                . " does not match the client's partition.");
+        }
+        if ($clientPart->getName() !== $arnPart->getName()) {
+            throw new InvalidRegionException('The corresponding partition'
+                . ' for the supplied ARN region does not match the'
+                . " client's partition.");
+        }
+
+        // Ensure ARN region matches client region unless
+        // configured for using ARN region over client region
+        $this->validateMatchingRegion($arn);
+
+        // Ensure it is not resolved to fips pseudo-region for S3 Outposts
+        $this->validateFipsConfigurations($arn);
+
+        return $arnPart;
     }
 }
