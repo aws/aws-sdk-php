@@ -71,6 +71,12 @@ class Command implements CommandInterface
         $this->authSchemes = $authSchemes;
     }
 
+    /**
+     * Get auth schemes added to command as required
+     * for endpoint resolution
+     *
+     * @returns array | null
+     */
     public function getAuthSchemes()
     {
         return $this->authSchemes;

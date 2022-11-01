@@ -9,7 +9,7 @@ use Aws\Api\StructureShape;
 use Aws\Api\TimestampShape;
 use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointProvider;
-use Aws\EndpointV2\EndpointV2MiddlewareTrait;
+use Aws\EndpointV2\EndpointV2SerializerTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7\UriResolver;
@@ -21,7 +21,7 @@ use Psr\Http\Message\RequestInterface;
  */
 abstract class RestSerializer
 {
-    use EndpointV2MiddlewareTrait;
+    use EndpointV2SerializerTrait;
 
     /** @var Service */
     private $api;

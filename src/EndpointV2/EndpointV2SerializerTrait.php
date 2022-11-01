@@ -2,9 +2,13 @@
 
 namespace Aws\EndpointV2;
 
-use http\Exception\InvalidArgumentException;
-
-trait EndpointV2MiddlewareTrait
+/**
+ * Set of helper functions used to set endpoints and endpoint
+ * properties derived from dynamic endpoint resolution.
+ *
+ * @internal
+ */
+trait EndpointV2SerializerTrait
 {
     private static $accelerateExclusions = [
         'CreateBucket' => true,
@@ -137,7 +141,7 @@ trait EndpointV2MiddlewareTrait
             }
         }
 
-        throw new InvalidArgumentException(
+        throw new \InvalidArgumentException(
             "This operation requests {$unsupportedScheme} 
             . but the client only supports sigv4 and sigv4a"
         );

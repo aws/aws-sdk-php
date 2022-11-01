@@ -477,13 +477,32 @@ class AwsClientTest extends TestCase
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $handlerList = $client->getHandlerList();
 
         $this->assertInstanceOf(
             'Aws\EndpointV2\EndpointProvider',
             $client->getEndpointProvider()
         );
+    }
 
+    public function testOverridesCustomProvider()
+    {
+        $provider = function (array $params) {
+            if ($params['service'] == 'sts') {
+                return ['endpoint' => $params['region'] . '.example.com'];
+            }
+            return null;
+        };
+
+        $client = new StsClient([
+            'region'  => 'us-west-2',
+            'version' => 'latest',
+            'endpoint_provider' => $provider
+        ]);
+
+        $this->assertInstanceOf(
+            'Aws\EndpointV2\EndpointProvider',
+            $client->getEndpointProvider()
+        );
     }
 
     public function testGetClientBuiltins()

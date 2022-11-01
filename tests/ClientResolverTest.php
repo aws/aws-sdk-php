@@ -600,23 +600,23 @@ EOT;
     {
         return [
             ["ec2", false, false, "us-west-2", "ec2.us-west-2.amazonaws.com", ],
-            ["ec2", false, false, "us-east-2", "api.ec2.us-east-2.amazonaws.com", ],
+            ["ec2", false, false, "us-east-2", "ec2.us-east-2.amazonaws.com", ],
             ["ec2", true, false, "us-west-2", "ec2.us-west-2.api.aws", ],
-            ["ec2", true, false, "us-east-2", "api.ec2.us-east-2.api.aws", ],
-            ["s3", false, false, "us-west-2", "s3.api.us-west-2.amazonaws.com", ],
+            ["ec2", true, false, "us-east-2", 'ec2.us-east-2.api.aws', ],
+            ["s3", false, false, "us-west-2", "s3.us-west-2.amazonaws.com", ],
             ["s3", false, false, "us-east-2", "s3.us-east-2.amazonaws.com", ],
-            ["s3", true, false, "us-west-2", "s3.api.dualstack.us-west-2.amazonaws.com", ],
+            ["s3", true, false, "us-west-2", 's3.dualstack.us-west-2.amazonaws.com'],
             ["s3", true, false, "us-east-2", "s3.dualstack.us-east-2.amazonaws.com", ],
             ["route53", false, false, "us-west-2", "route53.amazonaws.com", ],
             ["route53", false, false, "us-east-2", "route53.amazonaws.com", ],
-            ["route53", true, false, "us-west-2", "route53.global.api.aws", ],
-            ["route53", true, false, "us-east-2", "route53.global.api.aws", ],
+            ["route53", true, false, "us-west-2", "route53.us-west-2.api.aws", ],
+            ["route53", true, false, "us-east-2", 'route53.us-east-2.api.aws', ],
             ["dynamodb", false, false, "us-west-2", "dynamodb.us-west-2.amazonaws.com", ],
             ["dynamodb", false, false, "us-east-2", "dynamodb.us-east-2.amazonaws.com", ],
             ["dynamodb", true, false, "us-west-2", "dynamodb.us-west-2.api.aws", ],
             ["dynamodb", true, false, "us-east-2", "dynamodb.us-east-2.api.aws", ],
             ["dynamodb", false, true, "us-west-2", "dynamodb-fips.us-west-2.amazonaws.com", ],
-            ["dynamodb", true, true, "us-west-2", "fips.dynamodb.us-west-2.api.aws", ],
+            ["dynamodb", true, true, "us-west-2", "dynamodb-fips.us-west-2.api.aws", ],
         ];
     }
 

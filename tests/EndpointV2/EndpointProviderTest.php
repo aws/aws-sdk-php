@@ -11,10 +11,8 @@ use Aws\Exception\CommonRuntimeException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Util\Reflection;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Uri;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -23,118 +21,118 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 class EndpointProviderTest extends TestCase
 {
     use UsesServiceTrait;
-//    /**
-//     * Iterates through test cases located in ../test-cases and
-//     * ../valid-rules, parses into parameters used for endpoint and error tests
-//     */
-//    public function basicTestCaseProvider()
-//    {
-//        $testfileNames = [
-//            "aws-region",
-//            "default-values",
-//            "eventbridge",
-//            "fns",
-//            "headers",
-//            "is-virtual-hostable-s3-bucket",
-//            "local-region-override",
-//            "parse-arn",
-//            "parse-url",
-//            "substring",
-//            "uri-encode",
-//            "valid-hostlabel"
-//        ];
-//        $providerCases = [];
-//        $partitions = EndpointArtifactProvider::getPartitions();
-//
-//        foreach ($testfileNames as $testFile) {
-//            $casesPath = __DIR__ . '/test-cases/' . $testFile . '.json';
-//            $rulesetPath = __DIR__ . '/valid-rules/' . $testFile . '.json';
-//            $cases = json_decode(file_get_contents($casesPath), true);
-//            $ruleset = json_decode(file_get_contents($rulesetPath), true);
-//
-//            foreach ($cases['testCases'] as $case) {
-//                $providerCase = [$ruleset, $partitions];
-//                $inputParams = $case['params'];
-//                $expected = $case['expect'];
-//
-//                if (isset($expected['endpoint'])) {
-//                    $providerCase[] = 'true';
-//                } else if (isset($expected['error'])) {
-//                    $providerCase[] = 'false';
-//                }
-//                array_push($providerCase, $inputParams, $expected);
-//                $providerCases[] = $providerCase;
-//            }
-//        }
-//        return $providerCases;
-//    }
-//
-//    /**
-//     * Iterates through test cases located in each service's endpoint test file.
-//     * Parses into parameters used for endpoint and error tests
-//     */
-//    public function serviceTestCaseProvider()
-//    {
-//        $serviceTestCases = [];
-//
-//        $services = \Aws\Manifest();
-//        $partitions = EndpointArtifactProvider::getPartitions();
-//
-//        foreach($services as $service => $data) {
-//            $serviceTests = EndpointArtifactProvider::getEndpointRuleset(
-//                $service, 'latest', true
-//            );
-//            $ruleset = EndpointArtifactProvider::getEndpointRuleset($service, 'latest');
-//
-//            foreach($serviceTests['testCases'] as $case) {
-//                $testCase = [$ruleset, $partitions];
-//
-//                $inputParams = isset($case['params']) ? $case['params'] : [];
-//                $expected = $case['expect'];
-//                if (isset($expected['endpoint'])) {
-//                    $testCase[] = 'true';
-//                } else if (isset($expected['error'])) {
-//                    $testCase[] = 'false';
-//                }
-//                array_push($testCase, $inputParams, $expected);
-//                $serviceTestCases[] = $testCase;
-//            }
-//        }
-//        return $serviceTestCases;
-//    }
-//
-//    /**
-//     * @dataProvider basicTestCaseProvider
-//     * @dataProvider serviceTestCaseProvider
-//     */
-//    public function testEndpointAndErrorCases(
-//        $ruleset,
-//        $partitions,
-//        $isSuccessCase,
-//        $inputParams,
-//        $expected
-//    )
-//    {
-//        $provider = new EndpointProvider($ruleset, $partitions);
-//
-//        if ($isSuccessCase === 'false') {
-//            $this->expectException(UnresolvedEndpointException::class);
-//            $this->expectExceptionMessage($expected['error']);
-//            $provider->resolveEndpoint($inputParams);
-//        } else {
-//            $endpoint = $provider->resolveEndpoint($inputParams);
-//            $expectedEndpoint = $expected['endpoint'];
-//            $this->assertEquals($expectedEndpoint['url'], $endpoint->getUrl());
-//            if (isset($expectedEndpoint['headers'])){
-//                $this->assertEquals($expectedEndpoint['headers'], $endpoint->getHeaders());
-//            }
-//            if (isset($expectedEndpoint['properties'])) {
-//                $this->assertEquals($expectedEndpoint['properties'], $endpoint->getProperties());
-//            }
-//        }
-//    }
+    /**
+     * Iterates through test cases located in ../test-cases and
+     * ../valid-rules, parses into parameters used for endpoint and error tests
+     */
+    public function basicTestCaseProvider()
+    {
+        $testfileNames = [
+            "aws-region",
+            "default-values",
+            "eventbridge",
+            "fns",
+            "headers",
+            "is-virtual-hostable-s3-bucket",
+            "local-region-override",
+            "parse-arn",
+            "parse-url",
+            "substring",
+            "uri-encode",
+            "valid-hostlabel"
+        ];
+        $providerCases = [];
+        $partitions = EndpointArtifactProvider::getPartitions();
 
-    public function rulesetProtocolCaseProvider()
+        foreach ($testfileNames as $testFile) {
+            $casesPath = __DIR__ . '/test-cases/' . $testFile . '.json';
+            $rulesetPath = __DIR__ . '/valid-rules/' . $testFile . '.json';
+            $cases = json_decode(file_get_contents($casesPath), true);
+            $ruleset = json_decode(file_get_contents($rulesetPath), true);
+
+            foreach ($cases['testCases'] as $case) {
+                $providerCase = [$ruleset, $partitions];
+                $inputParams = $case['params'];
+                $expected = $case['expect'];
+
+                if (isset($expected['endpoint'])) {
+                    $providerCase[] = 'true';
+                } else if (isset($expected['error'])) {
+                    $providerCase[] = 'false';
+                }
+                array_push($providerCase, $inputParams, $expected);
+                $providerCases[] = $providerCase;
+            }
+        }
+        return $providerCases;
+    }
+
+    /**
+     * Iterates through test cases located in each service's endpoint test file.
+     * Parses into parameters used for endpoint and error tests
+     */
+    public function serviceTestCaseProvider()
+    {
+        $serviceTestCases = [];
+
+        $services = \Aws\Manifest();
+        $partitions = EndpointArtifactProvider::getPartitions();
+
+        foreach($services as $service => $data) {
+            $serviceTests = EndpointArtifactProvider::getEndpointRuleset(
+                $service, 'latest', true
+            );
+            $ruleset = EndpointArtifactProvider::getEndpointRuleset($service, 'latest');
+
+            foreach($serviceTests['testCases'] as $case) {
+                $testCase = [$ruleset, $partitions];
+
+                $inputParams = isset($case['params']) ? $case['params'] : [];
+                $expected = $case['expect'];
+                if (isset($expected['endpoint'])) {
+                    $testCase[] = 'true';
+                } else if (isset($expected['error'])) {
+                    $testCase[] = 'false';
+                }
+                array_push($testCase, $inputParams, $expected);
+                $serviceTestCases[] = $testCase;
+            }
+        }
+        return $serviceTestCases;
+    }
+
+    /**
+     * @dataProvider basicTestCaseProvider
+     * @dataProvider serviceTestCaseProvider
+     */
+    public function testEndpointAndErrorCases(
+        $ruleset,
+        $partitions,
+        $isSuccessCase,
+        $inputParams,
+        $expected
+    )
+    {
+        $provider = new EndpointProvider($ruleset, $partitions);
+
+        if ($isSuccessCase === 'false') {
+            $this->expectException(UnresolvedEndpointException::class);
+            $this->expectExceptionMessage($expected['error']);
+            $provider->resolveEndpoint($inputParams);
+        } else {
+            $endpoint = $provider->resolveEndpoint($inputParams);
+            $expectedEndpoint = $expected['endpoint'];
+            $this->assertEquals($expectedEndpoint['url'], $endpoint->getUrl());
+            if (isset($expectedEndpoint['headers'])){
+                $this->assertEquals($expectedEndpoint['headers'], $endpoint->getHeaders());
+            }
+            if (isset($expectedEndpoint['properties'])) {
+                $this->assertEquals($expectedEndpoint['properties'], $endpoint->getProperties());
+            }
+        }
+    }
+
+    public function rulesetProtocolSuccessCaseProvider()
     {
         $protocolTestCases = [];
         $serviceList = \Aws\manifest();
@@ -185,30 +183,71 @@ class EndpointProviderTest extends TestCase
      *
      * @dataProvider rulesetProtocolCaseProvider
      */
-    public function testRulesetProtocolCases($service, $clientArgs, $operationInput, $expected, $documentation)
+    public function testRulesetProtocolSuccessCases($service, $clientArgs, $operationInput, $expected, $documentation)
     {
-        try {
-            if (strpos($expected['endpoint']['url'], 's3.us-east-1.amazonaws.com') !== false
-                && $clientArgs['s3_us_east_1_regional_endpoint'] !== true
-            ) {
-                $this->markTestSkipped();
-            }
-            $client = $this->getTestClient($service, $clientArgs);
-            $this->addMockResults($client, [[]]);
-            $command = $client->getCommand(
-                $operationInput['operationName'],
-                isset($operationInput['operationParams']) ? $operationInput['operationParams'] : []
-            );
-            $result = $client->execute($command);
-            $returnedUri = new Uri(
-                $result->toArray()['@metadata']['effectiveUri']
-            );
-            $expectedUri = new Uri($expected['endpoint']['url']);
+        //accounts for legacy global endpoint behavior
+        if (strpos($expected['endpoint']['url'], 's3.us-east-1.amazonaws.com') !== false
+            && $clientArgs['s3_us_east_1_regional_endpoint'] !== true
+        ) {
+            $this->markTestSkipped();
+        }
 
+        $client = $this->getTestClient($service, $clientArgs);
+        $this->addMockResults($client, [[]]);
+        $command = $client->getCommand(
+            $operationInput['operationName'],
+            isset($operationInput['operationParams']) ? $operationInput['operationParams'] : []
+        );
+        $list = $client->getHandlerList();
+
+        $list->appendSign(Middleware::tap(function($cmd, $req) use ($service, $expected) {
+            $expectedEndpoint = $expected['endpoint'];
+            $expectedUri = new Uri($expected['endpoint']['url']);
             $this->assertStringContainsString(
-                strtolower($expectedUri->getHost()),
-                $returnedUri->getHost()
+                $expectedUri->getHost(),
+                $req->getUri()->getHost()
             );
+
+            if (isset($expectedEndpoint['properties']['authSchemes'])) {
+                $expectedAuthSchemes = $expectedEndpoint['properties']['authSchemes'][0];
+                if ((isset($expectedAuthSchemes['disableDoubleEncoding'])
+                    && $expectedAuthSchemes['disableDoubleEncoding'] === true)
+                ) {
+                    $expectedVersion = 's3v4';
+                } else {
+                    $expectedVersion = str_replace('sig', '', $expectedAuthSchemes['name']);
+                }
+                $this->assertEquals(
+                    $cmd->getAuthSchemes()['version'],
+                    $expectedVersion
+                );
+                $this->assertEquals(
+                    $cmd->getAuthSchemes()['name'],
+                    $expectedAuthSchemes['signingName']
+                );
+                $this->assertEquals(
+                    $cmd->getAuthSchemes()['region'],
+                    $expectedAuthSchemes['signingRegion']
+                );
+            }
+            if (isset($expectedEndpoint['headers'])) {
+                $expectedHeaders = $expectedEndpoint['headers'];
+                $returnedHeaders = $req->getHeaders();
+
+                foreach($expectedHeaders as $headerKey => $headerValue) {
+                    $this->assertArrayHasKey($headerKey, $returnedHeaders);
+                    $this->assertEquals(
+                        $returnedHeaders[$headerKey][0],
+                        $headerValue[0]
+                    );
+                }
+
+            }
+        }));
+
+        $handler = $list->resolve();
+        try {
+            $handler($command)->wait();
         } catch (CommonRuntimeException $e) {
             $this->markTestSkipped();
         }

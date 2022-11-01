@@ -4,9 +4,8 @@ namespace Aws\Api\Serializer;
 use Aws\Api\Service;
 use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointProvider;
-use Aws\EndpointV2\EndpointV2MiddlewareTrait;
+use Aws\EndpointV2\EndpointV2SerializerTrait;
 use GuzzleHttp\Psr7\Request;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * Serializes a query protocol request.
@@ -14,7 +13,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class QuerySerializer
 {
-    use EndpointV2MiddlewareTrait;
+    use EndpointV2SerializerTrait;
 
     private $endpoint;
     private $api;
@@ -35,8 +34,10 @@ class QuerySerializer
      * containing "method", "uri", "headers", and "body" key value pairs.
      *
      * @param CommandInterface $command
+     * @param null $endpointProvider
+     * @param array|null $clientArgs
      *
-     * @return RequestInterface
+     * @return Request
      */
     public function __invoke(
         CommandInterface $command,

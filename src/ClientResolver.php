@@ -599,6 +599,13 @@ class ClientResolver
 
     public static function _apply_endpoint_provider($value, array &$args)
     {
+        if (!$value instanceof \Aws\EndpointV2\EndpointProvider) {
+            if (self::isValidService($args['service'])) {
+                $value = self::_default_endpoint_provider($args);
+                $args['endpoint_provider'] = $value;
+            }
+        }
+
         if (!isset($args['endpoint'])) {
             if ($value instanceof \Aws\EndpointV2\EndpointProvider) {
                 $options = self::getEndpointProviderOptions($args);
