@@ -181,7 +181,7 @@ class EndpointProviderTest extends TestCase
      * Iterates through test cases located in ../test-cases and
      * ../valid-rules, parses into parameters used for endpoint and error tests
      *
-     * @dataProvider rulesetProtocolCaseProvider
+     * @dataProvider rulesetProtocolSuccessCaseProvider
      */
     public function testRulesetProtocolSuccessCases($service, $clientArgs, $operationInput, $expected, $documentation)
     {
