@@ -1992,6 +1992,15 @@
       "input":{"shape":"ListImagesRequest"},
       "output":{"shape":"ListImagesResponse"}
     },
+    "ListInferenceRecommendationsJobSteps":{
+      "name":"ListInferenceRecommendationsJobSteps",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListInferenceRecommendationsJobStepsRequest"},
+      "output":{"shape":"ListInferenceRecommendationsJobStepsResponse"}
+    },
     "ListInferenceRecommendationsJobs":{
       "name":"ListInferenceRecommendationsJobs",
       "http":{
@@ -3079,7 +3088,9 @@
         "AlgorithmName":{"shape":"ArnOrName"},
         "TrainingInputMode":{"shape":"TrainingInputMode"},
         "MetricDefinitions":{"shape":"MetricDefinitionList"},
-        "EnableSageMakerMetricsTimeSeries":{"shape":"Boolean"}
+        "EnableSageMakerMetricsTimeSeries":{"shape":"Boolean"},
+        "ContainerEntrypoint":{"shape":"TrainingContainerEntrypoint"},
+        "ContainerArguments":{"shape":"TrainingContainerArguments"}
       }
     },
     "AlgorithmStatus":{
@@ -3821,7 +3832,8 @@
         "PrecisionMacro",
         "Recall",
         "RecallMacro",
-        "LogLoss"
+        "LogLoss",
+        "InferenceLatency"
       ]
     },
     "AutoMLMode":{
@@ -7521,7 +7533,8 @@
         "FailureReason":{"shape":"FailureReason"},
         "InputConfig":{"shape":"RecommendationJobInputConfig"},
         "StoppingConditions":{"shape":"RecommendationJobStoppingConditions"},
-        "InferenceRecommendations":{"shape":"InferenceRecommendations"}
+        "InferenceRecommendations":{"shape":"InferenceRecommendations"},
+        "EndpointPerformances":{"shape":"EndpointPerformances"}
       }
     },
     "DescribeLabelingJobRequest":{
@@ -8908,6 +8921,13 @@
       "type":"list",
       "member":{"shape":"EndpointConfigSummary"}
     },
+    "EndpointInfo":{
+      "type":"structure",
+      "required":["EndpointName"],
+      "members":{
+        "EndpointName":{"shape":"EndpointName"}
+      }
+    },
     "EndpointInput":{
       "type":"structure",
       "required":[
@@ -8967,6 +8987,22 @@
         "InitialInstanceCount":{"shape":"Integer"}
       }
     },
+    "EndpointPerformance":{
+      "type":"structure",
+      "required":[
+        "Metrics",
+        "EndpointInfo"
+      ],
+      "members":{
+        "Metrics":{"shape":"InferenceMetrics"},
+        "EndpointInfo":{"shape":"EndpointInfo"}
+      }
+    },
+    "EndpointPerformances":{
+      "type":"list",
+      "member":{"shape":"EndpointPerformance"},
+      "max":1
+    },
     "EndpointSortKey":{
       "type":"string",
       "enum":[
@@ -9008,6 +9044,11 @@
     "EndpointSummaryList":{
       "type":"list",
       "member":{"shape":"EndpointSummary"}
+    },
+    "Endpoints":{
+      "type":"list",
+      "member":{"shape":"EndpointInfo"},
+      "max":1
     },
     "EntityDescription":{
       "type":"string",
@@ -10056,7 +10097,8 @@
       "enum":[
         "Bayesian",
         "Random",
-        "Hyperband"
+        "Hyperband",
+        "Grid"
       ]
     },
     "HyperParameterTuningJobSummaries":{
@@ -10343,6 +10385,17 @@
       "type":"string",
       "max":256
     },
+    "InferenceMetrics":{
+      "type":"structure",
+      "required":[
+        "MaxInvocations",
+        "ModelLatency"
+      ],
+      "members":{
+        "MaxInvocations":{"shape":"Integer"},
+        "ModelLatency":{"shape":"Integer"}
+      }
+    },
     "InferenceRecommendation":{
       "type":"structure",
       "required":[
@@ -10386,6 +10439,24 @@
         "LastModifiedTime":{"shape":"LastModifiedTime"},
         "FailureReason":{"shape":"FailureReason"}
       }
+    },
+    "InferenceRecommendationsJobStep":{
+      "type":"structure",
+      "required":[
+        "StepType",
+        "JobName",
+        "Status"
+      ],
+      "members":{
+        "StepType":{"shape":"RecommendationStepType"},
+        "JobName":{"shape":"RecommendationJobName"},
+        "Status":{"shape":"RecommendationJobStatus"},
+        "InferenceBenchmark":{"shape":"RecommendationJobInferenceBenchmark"}
+      }
+    },
+    "InferenceRecommendationsJobSteps":{
+      "type":"list",
+      "member":{"shape":"InferenceRecommendationsJobStep"}
     },
     "InferenceRecommendationsJobs":{
       "type":"list",
@@ -11566,6 +11637,24 @@
       "type":"structure",
       "members":{
         "Images":{"shape":"Images"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListInferenceRecommendationsJobStepsRequest":{
+      "type":"structure",
+      "required":["JobName"],
+      "members":{
+        "JobName":{"shape":"RecommendationJobName"},
+        "Status":{"shape":"RecommendationJobStatus"},
+        "StepType":{"shape":"RecommendationStepType"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListInferenceRecommendationsJobStepsResponse":{
+      "type":"structure",
+      "members":{
+        "Steps":{"shape":"InferenceRecommendationsJobSteps"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -15070,6 +15159,7 @@
       "type":"list",
       "member":{"shape":"ProductionVariantInstanceType"}
     },
+    "RecommendationFailureReason":{"type":"string"},
     "RecommendationJobArn":{
       "type":"string",
       "max":256,
@@ -15097,6 +15187,16 @@
       "type":"string",
       "max":128
     },
+    "RecommendationJobInferenceBenchmark":{
+      "type":"structure",
+      "required":["ModelConfiguration"],
+      "members":{
+        "Metrics":{"shape":"RecommendationMetrics"},
+        "EndpointConfiguration":{"shape":"EndpointOutputConfiguration"},
+        "ModelConfiguration":{"shape":"ModelConfiguration"},
+        "FailureReason":{"shape":"RecommendationFailureReason"}
+      }
+    },
     "RecommendationJobInputConfig":{
       "type":"structure",
       "required":["ModelPackageVersionArn"],
@@ -15107,7 +15207,8 @@
         "ResourceLimit":{"shape":"RecommendationJobResourceLimit"},
         "EndpointConfigurations":{"shape":"EndpointInputConfigurations"},
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "ContainerConfig":{"shape":"RecommendationJobContainerConfig"}
+        "ContainerConfig":{"shape":"RecommendationJobContainerConfig"},
+        "Endpoints":{"shape":"Endpoints"}
       }
     },
     "RecommendationJobName":{
@@ -15184,6 +15285,10 @@
         "MaxInvocations":{"shape":"Integer"},
         "ModelLatency":{"shape":"Integer"}
       }
+    },
+    "RecommendationStepType":{
+      "type":"string",
+      "enum":["BENCHMARK"]
     },
     "RecordWrapper":{
       "type":"string",
@@ -15392,10 +15497,7 @@
     },
     "ResourceLimits":{
       "type":"structure",
-      "required":[
-        "MaxNumberOfTrainingJobs",
-        "MaxParallelTrainingJobs"
-      ],
+      "required":["MaxParallelTrainingJobs"],
       "members":{
         "MaxNumberOfTrainingJobs":{"shape":"MaxNumberOfTrainingJobs"},
         "MaxParallelTrainingJobs":{"shape":"MaxParallelTrainingJobs"}
@@ -16558,6 +16660,28 @@
     "TrafficType":{
       "type":"string",
       "enum":["PHASES"]
+    },
+    "TrainingContainerArgument":{
+      "type":"string",
+      "max":256,
+      "pattern":".*"
+    },
+    "TrainingContainerArguments":{
+      "type":"list",
+      "member":{"shape":"TrainingContainerArgument"},
+      "max":100,
+      "min":1
+    },
+    "TrainingContainerEntrypoint":{
+      "type":"list",
+      "member":{"shape":"TrainingContainerEntrypointString"},
+      "max":10,
+      "min":1
+    },
+    "TrainingContainerEntrypointString":{
+      "type":"string",
+      "max":256,
+      "pattern":".*"
     },
     "TrainingEnvironmentKey":{
       "type":"string",
