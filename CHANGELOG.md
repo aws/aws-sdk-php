@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 3.240.8 - 2022-11-02
+
+* `Aws\IoTSiteWise` - This release adds the ListAssetModelProperties and ListAssetProperties APIs. You can list all properties that belong to a single asset model or asset using these two new APIs.
+* `Aws\S3Control` - S3 on Outposts launches support for Lifecycle configuration for Outposts buckets. With S3 Lifecycle configuration, you can mange objects so they are stored cost effectively. You can manage objects using size-based rules and specify how many noncurrent versions bucket will retain.
+* `Aws\SSMIncidents` - Adds support for tagging replication-set on creation.
+* `Aws\SageMaker` - This release updates Framework model regex for ModelPackage to support new Framework version xgboost, sklearn.
+
+## 3.240.7 - 2022-11-01
+
+* `Aws\RDS` - Relational Database Service - This release adds support for configuring Storage Throughput on RDS database instances.
+* `Aws\Textract` - Add ocr results in AnalyzeIDResponse as blocks
+
 ## 3.240.6 - 2022-10-31
 
 * `Aws\AppRunner` - This release adds support for private App Runner services. Services may now be configured to be made private and only accessible from a VPC. The changes include a new VpcIngressConnection resource and several new and modified APIs.
