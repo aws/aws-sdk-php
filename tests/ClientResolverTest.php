@@ -575,18 +575,12 @@ EOT;
         $expectedEndpoint
     )
     {
-        $data = json_decode(
-            file_get_contents(__DIR__ . '/Endpoint/fixtures/dualstack_endpoints.json'),
-            true
-        );
-        $partition = new Partition($data['partitions'][0]);
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $resolver->resolve([
             'service'                   => $service,
             'region'                    => $region,
             'use_dual_stack_endpoint'   => $useDualstackEndpoint,
             'use_fips_endpoint'         => $useFipsEndpoint,
-            'endpoint_provider'         => $partition,
             'version'                   => 'latest',
         ], new HandlerList());
 
@@ -622,18 +616,12 @@ EOT;
 
     public function testDualstackEndpointInIsoPartition()
     {
-        $data = json_decode(
-            file_get_contents(__DIR__ . '/Endpoint/fixtures/dualstack_endpoints.json'),
-            true
-        );
-        $partition = new Partition($data['partitions'][1]);
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $resolver->resolve([
             'service'                   => 'ec2',
             'region'                    => 'us-iso-east-1',
             'use_dual_stack_endpoint'   => false,
             'use_fips_endpoint'         => false,
-            'endpoint_provider'         => $partition,
             'version'                   => 'latest',
         ], new HandlerList());
         $this->assertSame(
@@ -646,18 +634,12 @@ EOT;
     {
         $this->expectException(\Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException::class);
         $this->expectExceptionMessage("Dual-stack is not supported in ISO regions");
-        $data = json_decode(
-            file_get_contents(__DIR__ . '/Endpoint/fixtures/dualstack_endpoints.json'),
-            true
-        );
-        $partition = new Partition($data['partitions'][0]);
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $resolver->resolve([
             'service'                   => 'ec2',
             'region'                    => 'us-iso-east-1',
             'use_dual_stack_endpoint'   => true,
             'use_fips_endpoint'         => false,
-            'endpoint_provider'         => $partition,
             'version'                   => 'latest',
         ], new HandlerList());
     }

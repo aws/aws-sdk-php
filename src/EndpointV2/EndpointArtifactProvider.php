@@ -33,10 +33,7 @@ class EndpointArtifactProvider
         if (file_exists($rulesetPath . $fileName . '.json.php')) {
             return require($rulesetPath . $fileName . '.json.php');
         } else {
-            return json_decode(
-                gzdecode(file_get_contents($rulesetPath . $fileName . '.json.gz')),
-                true
-            );
+            return json_decode(file_get_contents($rulesetPath . $fileName . '.json'), true);
         }
     }
 

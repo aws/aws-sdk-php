@@ -55,10 +55,10 @@ class AwsClient implements AwsClientInterface
     /** @var array*/
     private $builtIns;
 
-    /** @var array*/
+    /** @var  EndpointProvider | callable */
     protected $endpointProvider;
 
-
+    /** @var callable */
     protected $serializer;
 
     /**
@@ -222,10 +222,8 @@ class AwsClient implements AwsClientInterface
         $this->clientBuiltIns = $this->setClientBuiltIns($args);
         $this->clientContextParams = $this->setClientContextParams($args);
         $this->defaultRequestOptions = $config['http'];
-        $this->endpointProvider = isset($config['endpoint_provider']) ?
-            $config['endpoint_provider'] : null;
-        $this->serializer = isset($config['serializer']) ?
-            $config['serializer'] : null;
+        $this->endpointProvider = $config['endpoint_provider'];
+        $this->serializer = $config['serializer'];
         $this->addSignatureMiddleware();
         $this->addInvocationId();
         $this->addEndpointParameterMiddleware($args);
