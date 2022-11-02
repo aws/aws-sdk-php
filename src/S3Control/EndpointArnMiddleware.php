@@ -238,6 +238,9 @@ class EndpointArnMiddleware
                 }
             }
         }
+        if ($this->isUseEndpointV2) {
+            goto next;
+        }
         // For operations that redirect endpoint & signing service based on
         // presence of OutpostId member. These operations will likely not
         // overlap with operations that perform ARN expansion.
