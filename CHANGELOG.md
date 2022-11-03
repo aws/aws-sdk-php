@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MemoryDB` - Adding support for r6gd instances for MemoryDB Redis with data tiering. In a cluster with data tiering enabled, when available memory capacity is exhausted, the least recently used data is automatically tiered to solid state drives for cost-effective capacity scaling with minimal performance impact.
+* `Aws\SageMaker` - Amazon SageMaker now supports running training jobs on ml.trn1 instance types.
+
 ## 3.240.8 - 2022-11-02
 
 * `Aws\IoTSiteWise` - This release adds the ListAssetModelProperties and ListAssetProperties APIs. You can list all properties that belong to a single asset model or asset using these two new APIs.
