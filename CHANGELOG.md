@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.9 - 2022-11-03
 
 * `Aws\MemoryDB` - Adding support for r6gd instances for MemoryDB Redis with data tiering. In a cluster with data tiering enabled, when available memory capacity is exhausted, the least recently used data is automatically tiered to solid state drives for cost-effective capacity scaling with minimal performance impact.
 * `Aws\SageMaker` - Amazon SageMaker now supports running training jobs on ml.trn1 instance types.
