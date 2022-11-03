@@ -6,6 +6,7 @@ use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointProvider;
 use Aws\EndpointV2\EndpointV2SerializerTrait;
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Serializes a query protocol request.
@@ -37,7 +38,7 @@ class QuerySerializer
      * @param null $endpointProvider
      * @param array|null $clientArgs
      *
-     * @return Request
+     * @return RequestInterface
      */
     public function __invoke(
         CommandInterface $command,

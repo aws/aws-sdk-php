@@ -18,7 +18,7 @@ use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider as UseDualStackConfi
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface as UseDualStackEndpointConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
-use Aws\EndpointV2\EndpointArtifactProvider;
+use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
@@ -315,10 +315,6 @@ class ClientResolver
     {
         $args['config'] = [];
         foreach ($this->argDefinitions as $key => $a) {
-            //sets builtIn values for endpoint resolution.
-            //endpoint value must be observed before the default (legacy)
-            //endpoint provider is applied
-
             // Add defaults, validate required values, and skip if not set.
             if (!isset($args[$key])) {
                 if (isset($a['default'])) {
@@ -905,13 +901,13 @@ class ClientResolver
         if (self::isValidService($serviceName)
             && self::isValidApiVersion($serviceName, $apiVersion)
         ) {
-            $ruleset = EndpointArtifactProvider::getEndpointRuleset(
+            $ruleset = EndpointDefinitionProvider::getEndpointRuleset(
                 $service->getServiceName(),
                 $service->getApiVersion()
             );
             return new \Aws\EndpointV2\EndpointProvider(
                 $ruleset,
-                EndpointArtifactProvider::getPartitions()
+                EndpointDefinitionProvider::getPartitions()
             );
         }
         $options = self::getEndpointProviderOptions($args);

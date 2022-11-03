@@ -4,7 +4,7 @@ namespace Aws;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Endpoint\PartitionInterface;
 use Aws\EndpointV2\EndpointProvider;
-use Aws\EndpointV2\EndpointArtifactProvider;
+use Aws\EndpointV2\EndpointDefinitionProvider;
 
 class MultiRegionClient implements AwsClientInterface
 {
@@ -82,11 +82,11 @@ class MultiRegionClient implements AwsClientInterface
                             . ' or "aws-us-gov").'
                         );
                     }
-                    $ruleset = EndpointArtifactProvider::getEndpointRuleset(
+                    $ruleset = EndpointDefinitionProvider::getEndpointRuleset(
                         $args['service'],
                         isset($args['version']) ? $args['version'] : 'latest'
                     );
-                    $partitions = EndpointArtifactProvider::getPartitions();
+                    $partitions = EndpointDefinitionProvider::getPartitions();
                     $args['endpoint_provider'] = new EndpointProvider($ruleset, $partitions);
                 }
             ],

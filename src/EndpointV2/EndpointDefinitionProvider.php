@@ -2,7 +2,11 @@
 
 namespace Aws\EndpointV2;
 
-class EndpointArtifactProvider
+/**
+ * Provides Endpoint-related artifacts used for endpoint resolution
+ * and testing.
+ */
+class EndpointDefinitionProvider
 {
     public static function getEndpointRuleset(
         $service,
@@ -40,7 +44,13 @@ class EndpointArtifactProvider
     public static function getPartitions()
     {
         $basePath = __DIR__ . '/../data';
-        return require($basePath . '/partitions.json.php');
+        $file = '/partitions.json';
+
+        if (file_exists($basePath . $file . '.php')) {
+           return require($basePath . $file . '.php');
+        }
+
+        return require($basePath . $file);
     }
 
     private static function getLatest($service)

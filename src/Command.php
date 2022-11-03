@@ -62,9 +62,11 @@ class Command implements CommandInterface
 
     /**
      * For overriding auth schemes on a per endpoint basis when using
-     * EndpointV2 provider
+     * EndpointV2 provider. Intended for internal use only.
      *
      * @param array $authSchemes
+     *
+     * @internal
      */
     public function setAuthSchemes(array $authSchemes)
     {

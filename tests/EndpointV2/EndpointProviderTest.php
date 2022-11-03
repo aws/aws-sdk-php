@@ -2,7 +2,7 @@
 namespace Aws\Test\EndpointV2;
 
 
-use Aws\EndpointV2\EndpointArtifactProvider;
+use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointProvider;
 use Aws\EndpointV2\Ruleset\Ruleset;
@@ -42,7 +42,7 @@ class EndpointProviderTest extends TestCase
             "valid-hostlabel"
         ];
         $providerCases = [];
-        $partitions = EndpointArtifactProvider::getPartitions();
+        $partitions = EndpointDefinitionProvider::getPartitions();
 
         foreach ($testfileNames as $testFile) {
             $casesPath = __DIR__ . '/test-cases/' . $testFile . '.json';
@@ -76,13 +76,13 @@ class EndpointProviderTest extends TestCase
         $serviceTestCases = [];
 
         $services = \Aws\Manifest();
-        $partitions = EndpointArtifactProvider::getPartitions();
+        $partitions = EndpointDefinitionProvider::getPartitions();
 
         foreach($services as $service => $data) {
-            $serviceTests = EndpointArtifactProvider::getEndpointRuleset(
+            $serviceTests = EndpointDefinitionProvider::getEndpointRuleset(
                 $service, 'latest', true
             );
-            $ruleset = EndpointArtifactProvider::getEndpointRuleset($service, 'latest');
+            $ruleset = EndpointDefinitionProvider::getEndpointRuleset($service, 'latest');
 
             foreach($serviceTests['testCases'] as $case) {
                 $testCase = [$ruleset, $partitions];
@@ -138,7 +138,7 @@ class EndpointProviderTest extends TestCase
         $serviceList = \Aws\manifest();
 
         forEach($serviceList as $service => $serviceValue) {
-            $testFile = EndpointArtifactProvider::getEndpointRuleset($service, 'latest', true);
+            $testFile = EndpointDefinitionProvider::getEndpointRuleset($service, 'latest', true);
 
             foreach($testFile['testCases'] as $case) {
                 if (!isset($case['operationInputs']) || isset($case['expect']['error'])) {
@@ -270,7 +270,7 @@ class EndpointProviderTest extends TestCase
     {
         $rulesetPath = __DIR__ . '/valid-rules/aws-region.json';
         $rulesetDefinition = json_decode(file_get_contents($rulesetPath), true);
-        $partitions = EndpointArtifactProvider::getPartitions();
+        $partitions = EndpointDefinitionProvider::getPartitions();
 
         $endpointMock = $this->getMockBuilder(RulesetEndpoint::class)
             ->disableOriginalConstructor()
