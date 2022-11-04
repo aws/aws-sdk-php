@@ -478,6 +478,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise cancelCapacityReservationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result cancelCapacityReservationFleets(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise cancelCapacityReservationFleetsAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result cancelImageLaunchPermission(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise cancelImageLaunchPermissionAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result copyFpgaImage(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise copyFpgaImageAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result createCapacityReservation(array $args = []) (supported in versions 2016-11-15)
