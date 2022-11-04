@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.10 - 2022-11-04
 
 * `Aws\CloudWatchLogs` - Doc-only update for bug fixes and support of export to buckets encrypted with SSE-KMS
 * `Aws\EC2` - This release adds API support for the recipient of an AMI account share to remove shared AMI launch permissions.
