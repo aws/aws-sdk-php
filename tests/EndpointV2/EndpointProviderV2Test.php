@@ -42,7 +42,6 @@ class EndpointProviderV2Test extends TestCase
             "valid-hostlabel"
         ];
         $providerCases = [];
-        $partitions = EndpointDefinitionProvider::getPartitions();
 
         foreach ($testfileNames as $testFile) {
             $casesPath = __DIR__ . '/test-cases/' . $testFile . '.json';
@@ -51,7 +50,7 @@ class EndpointProviderV2Test extends TestCase
             $ruleset = json_decode(file_get_contents($rulesetPath), true);
 
             foreach ($cases['testCases'] as $case) {
-                $providerCase = [$ruleset, $partitions];
+                $providerCase = [$ruleset];
                 $inputParams = $case['params'];
                 $expected = $case['expect'];
 
@@ -72,13 +71,15 @@ class EndpointProviderV2Test extends TestCase
      */
     public function testBasicEndpointAndErrorCases(
         $ruleset,
-        $partitions,
         $isSuccessCase,
         $inputParams,
         $expected
     )
     {
-        $provider = new EndpointProviderV2($ruleset, $partitions);
+        $provider = new EndpointProviderV2(
+            $ruleset,
+            EndpointDefinitionProvider::getPartitions()
+        );
 
         if ($isSuccessCase === 'false') {
             $this->expectException(UnresolvedEndpointException::class);
