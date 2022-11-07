@@ -479,7 +479,7 @@ class AwsClientTest extends TestCase
         ]);
 
         $this->assertInstanceOf(
-            'Aws\EndpointV2\EndpointProvider',
+            'Aws\EndpointV2\EndpointProviderV2',
             $client->getEndpointProvider()
         );
     }

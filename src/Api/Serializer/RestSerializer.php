@@ -8,7 +8,7 @@ use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Api\TimestampShape;
 use Aws\CommandInterface;
-use Aws\EndpointV2\EndpointProvider;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2SerializerTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Uri;
@@ -40,7 +40,7 @@ abstract class RestSerializer
     }
 
     /**
-     * @param CommandInterface $command Command to serialized
+     * @param CommandInterface $command Command to serialize
      *
      * @return RequestInterface
      */
@@ -56,30 +56,17 @@ abstract class RestSerializer
         $opts = $this->serialize($operation, $commandArgs);
         $headers = isset($opts['headers']) ? $opts['headers'] : [];
 
-        if ($endpointProvider instanceof EndpointProvider) {
-            $service = $this->api->getServiceName();
-            $providerArgs = $this->resolveProviderArgs(
-                $operation,
+        if ($endpointProvider instanceof EndpointProviderV2) {
+            $this->resolveEndpoint(
                 $endpointProvider,
+                $command,
+                $operation,
                 $commandArgs,
                 $clientArgs,
-                $operationName
+                $headers
             );
-            $endpoint = $endpointProvider->resolveEndpoint($providerArgs);
-            $this->endpoint = new Uri($endpoint->getUrl());
-
-            if ($service === 's3') {
-                $s3RequestUri = $this->processS3RequestUri($operation['http']['requestUri'], $operationName);
-                $uri = $this->buildEndpoint($operation, $commandArgs, $opts, $s3RequestUri);
-            } else {
-                $uri = $this->buildEndpoint($operation, $commandArgs, $opts);
-            }
-
-            $this->applyAuthSchemeToCommand($endpoint, $command);
-            $this->applyHeaders($endpoint, $headers);
-        } else {
-            $uri = $this->buildEndpoint($operation, $commandArgs, $opts);
         }
+        $uri = $this->buildEndpoint($operation, $commandArgs, $opts);
 
         return new Psr7\Request(
             $operation['http']['method'],
@@ -213,7 +200,7 @@ abstract class RestSerializer
         }
     }
 
-    private function buildEndpoint(Operation $operation, array $args, array $opts, $s3RequestUri = null)
+    private function buildEndpoint(Operation $operation, array $args, array $opts)
     {
         // Create an associative array of varspecs used in expansions
         $varspecs = $this->getVarspecs($operation, $args);
@@ -233,7 +220,7 @@ abstract class RestSerializer
 
                 return rawurlencode($varspecs[$k]);
             },
-            is_null($s3RequestUri) ? $operation['http']['requestUri'] : $s3RequestUri
+            $operation['http']['requestUri']
         );
 
         // Add the query string variables or appending to one if needed.
@@ -243,7 +230,10 @@ abstract class RestSerializer
 
         // If endpoint has path, remove leading '/' to preserve URI resolution.
         $path = $this->endpoint->getPath();
-        if ($s3RequestUri) {
+        //accounts for removal of bucket from requestUri path
+        if ($this->api->isModifiedModel()
+            && $this->api->getServiceName() === 's3'
+        ) {
             $relative = $path . $relative;
         }
 

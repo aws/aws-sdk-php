@@ -4,7 +4,7 @@ namespace Aws;
 use Aws\Api\Service;
 use Aws\Api\Validator;
 use Aws\Credentials\CredentialsInterface;
-use Aws\EndpointV2\EndpointProvider;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
@@ -94,7 +94,7 @@ final class Middleware
      *
      * @param callable $serializer Function used to serialize a request for a
      *                             command.
-     * @param EndpointProvider|null $endpointProvider
+     * @param EndpointProviderV2 | null $endpointProvider
      * @param array $providerArgs
      * @return callable
      */

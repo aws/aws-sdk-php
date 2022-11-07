@@ -11,7 +11,7 @@ use Aws\LruArrayCache;
  * either an object reflecting the properties of a resolved endpoint,
  * or throws an error.
  */
-class EndpointProvider
+class EndpointProviderV2
 {
     /** @var Ruleset */
     private $ruleSet;

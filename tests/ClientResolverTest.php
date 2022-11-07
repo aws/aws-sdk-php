@@ -10,7 +10,7 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Endpoint\Partition;
-use Aws\EndpointV2\EndpointProvider;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Exception\InvalidRegionException;
 use Aws\LruArrayCache;
 use Aws\S3\S3Client;
@@ -148,7 +148,7 @@ class ClientResolverTest extends TestCase
             'version'      => 'latest'
         ], new HandlerList());
         $this->assertInstanceOf(
-            EndpointProvider::class,
+            EndpointProviderV2::class,
             $conf['endpoint_provider']
         );
     }

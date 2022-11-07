@@ -8,7 +8,7 @@ use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
-use Aws\EndpointV2\EndpointProvider;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
 
@@ -50,12 +50,9 @@ class AwsClient implements AwsClientInterface
     private $clientContextParams = [];
 
     /** @var array*/
-    private $clientBuiltIns;
+    protected $clientBuiltIns = [];
 
-    /** @var array*/
-    private $builtIns;
-
-    /** @var  EndpointProvider | callable */
+    /** @var  EndpointProviderV2 | callable */
     protected $endpointProvider;
 
     /** @var callable */
@@ -219,7 +216,7 @@ class AwsClient implements AwsClientInterface
         $this->credentialProvider = $config['credentials'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->config = $config['config'];
-        $this->clientBuiltIns = $this->setClientBuiltIns($args);
+        $this->setClientBuiltIns($args);
         $this->clientContextParams = $this->setClientContextParams($args);
         $this->defaultRequestOptions = $config['http'];
         $this->endpointProvider = $config['endpoint_provider'];
@@ -499,10 +496,17 @@ class AwsClient implements AwsClientInterface
         );
     }
 
+    /**
+     * Retrieves client context param definition from service model,
+     * creates mapping of client context param names with client-provided
+     * values.
+     *
+     * @return array
+     */
     private function setClientContextParams($args)
     {
         $api = $this->getApi();
-        $result = [];
+        $resolvedParams = [];
         if (!empty($paramDefinitions = $api->getClientContextParams())) {
             foreach($paramDefinitions as $paramName => $paramValue) {
                 if (isset($args[$paramName])) {
@@ -510,7 +514,7 @@ class AwsClient implements AwsClientInterface
                }
             }
         }
-        return $result;
+        return $resolvedParams;
     }
 
     /**
@@ -524,64 +528,20 @@ class AwsClient implements AwsClientInterface
 
         $builtIns['SDK::Endpoint'] = isset($args['endpoint']) ? $args['endpoint'] : null;
         $builtIns['AWS::Region'] = $this->getRegion();
-        $builtIns['AWS::UseFIPS'] = $config['use_fips_endpoint']->isUseFipsEndpoint()
-            && !(isset($builtIns['SDK::Endpoint']));
-        $builtIns['AWS::UseDualStack'] = $config['use_dual_stack_endpoint']->isUseDualstackEndpoint()
-            && !(isset($builtIns['SDK::Endpoint']));
-        if ($service === 'sts') {
-            $builtIns['AWS::STS::UseGlobalEndpoint'] =  $this->isUseGlobalEndpoint($args);
+        if (!isset($builtIns['SDK::Endpoint'])) {
+            $builtIns['AWS::UseFIPS'] = $config['use_fips_endpoint']->isUseFipsEndpoint();
+            $builtIns['AWS::UseDualStack'] = $config['use_dual_stack_endpoint']->isUseDualstackEndpoint();
         }
-        if ($service === 's3control' || $service === 's3') {
+        if ($service === 's3' || $service === 's3control'){
             $builtIns['AWS::S3::UseArnRegion'] = $config['use_arn_region']->isUseArnRegion();
         }
         if ($service === 's3') {
-            $builtIns['AWS::S3::UseGlobalEndpoint'] = $this->isUseGlobalEndpoint($args);
-            $builtIns['AWS::S3::Accelerate'] = isset($config['use_accelerate_endpoint']) ?
-                $config['use_accelerate_endpoint'] : false;
-            $builtIns['AWS::S3::ForcePathStyle'] = isset($config['use_path_style_endpoint']) ?
-                $config['use_path_style_endpoint'] : null;
-            $builtIns['AWS::S3::DisableMultiRegionAccessPoints'] =
-                isset($config['disable_multiregion_access_points']) ?
-                    $config['disable_multiregion_access_points'] : false;
+            $builtIns['AWS::S3::UseArnRegion'] = $config['use_arn_region']->isUseArnRegion();
+            $builtIns['AWS::S3::Accelerate'] = $config['use_accelerate_endpoint'];
+            $builtIns['AWS::S3::ForcePathStyle'] = $config['use_path_style_endpoint'];
+            $builtIns['AWS::S3::DisableMultiRegionAccessPoints'] = $config['disable_multiregion_access_points'];
         }
-        return $builtIns;
-    }
-
-    private function isUseGlobalEndpoint($args)
-    {
-        if ($args['service'] === 's3') {
-            return $this->isUseS3GlobalEndpoint($args);
-        }
-
-        $config = 'sts_regional_endpoints';
-
-        if (isset($args[$config]) && $args[$config] === 'regional') {
-            return false;
-        } elseif ((isset($args[$config]) && !is_string($args[$config]))
-            && ($args[$config]()->wait()->getEndpointsType() === 'regional'
-            || $args[$config]()->wait()->isDefault())
-        ) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private function isUseS3GlobalEndpoint($args)
-    {
-        $config = 's3_us_east_1_regional_endpoint';
-
-        if ($args['region'] === 'us-east-1') {
-            if (isset($args[$config]) && $args[$config] === 'legacy') {
-                return true;
-            } elseif ((isset($args[$config]) && !is_string($args[$config]))
-                && ($args[$config]()->wait()->getEndpointsType() === 'legacy'
-                    || $args[$config]()->wait()->isDefault())
-            ) {
-                return true;
-            }
-        }
-        return false;
+        $this->clientBuiltIns += $builtIns;
     }
 
     /**
@@ -616,7 +576,7 @@ class AwsClient implements AwsClientInterface
 
     protected function isUseEndpointV2()
     {
-        return $this->endpointProvider instanceof EndpointProvider;
+        return $this->endpointProvider instanceof EndpointProviderV2;
     }
 
     /**

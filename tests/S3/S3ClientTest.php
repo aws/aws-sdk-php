@@ -1284,45 +1284,6 @@ EOXML;
         ]);
     }
 
-    public function testAppliesS3EndpointMiddlewareDualstackInvalidAccelerate()
-    {
-        // test applies dualstack solo for invalid accelerate operations
-        // when both endpoint is enabled
-        $handler = function (RequestInterface $req) {
-            $this->assertSame(
-                'bucket.s3.dualstack.us-west-2.amazonaws.com',
-                $req->getUri()->getHost()
-            );
-            $this->assertSame(
-                '/',
-                $req->getUri()->getPath()
-            );
-            return Promise\Create::promiseFor(new Response);
-        };
-
-        $accelerateClient = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-west-2',
-            'use_accelerate_endpoint' => true,
-            'use_dual_stack_endpoint' => true,
-            'http_handler' => $handler,
-        ]);
-        $accelerateClient->createBucket([
-            'Bucket' => 'bucket',
-        ]);
-
-        $client = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-west-2',
-            'http_handler' => $handler,
-        ]);
-        $client->createBucket([
-            'Bucket' => 'bucket',
-            '@use_accelerate_endpoint' => true,
-            '@use_dual_stack_endpoint' => true,
-        ]);
-    }
-
     public function testAppliesS3EndpointMiddlewareAccelerate()
     {
         // test applies s3-accelerate for valid operations

@@ -70,11 +70,6 @@ abstract class AbstractModel implements \ArrayAccess
         unset($this->definition[$offset]);
     }
 
-    public function getContextParam()
-    {
-        return $this->contextParam;
-    }
-
     protected function shapeAt($key)
     {
         if (!isset($this->definition[$key])) {

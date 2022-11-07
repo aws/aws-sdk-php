@@ -3,7 +3,7 @@ namespace Aws\Api\Serializer;
 
 use Aws\Api\Service;
 use Aws\CommandInterface;
-use Aws\EndpointV2\EndpointProvider;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2SerializerTrait;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
@@ -68,18 +68,15 @@ class QuerySerializer
             'Content-Type'   => 'application/x-www-form-urlencoded'
         ];
 
-        if ($endpointProvider instanceof EndpointProvider) {
-            $providerArgs = $this->resolveProviderArgs(
-                $operation,
+        if ($endpointProvider instanceof EndpointProviderV2) {
+            $this->resolveEndpoint(
                 $endpointProvider,
+                $command,
+                $operation,
                 $commandArgs,
                 $clientArgs,
-                $operationName
+                $headers
             );
-            $endpoint = $endpointProvider->resolveEndpoint($providerArgs);
-            $this->endpoint = $endpoint->getUrl();
-            $this->applyAuthSchemeToCommand($endpoint, $command);
-            $this->applyHeaders($endpoint, $headers);
         }
 
         return new Request(

@@ -8,11 +8,29 @@ namespace Aws\EndpointV2;
  */
 class EndpointDefinitionProvider
 {
-    public static function getEndpointRuleset(
-        $service,
-        $apiVersion,
-        $getTestFile = false
-    )
+    public static function getEndpointRuleset($service, $apiVersion)
+    {
+        return self::getData($service, $apiVersion, 'ruleset');
+    }
+
+    public static function getEndpointTests($service, $apiVersion)
+    {
+        return self::getData($service, $apiVersion, 'tests');
+    }
+
+    public static function getPartitions()
+    {
+        $basePath = __DIR__ . '/../data';
+        $file = '/partitions.json';
+
+        if (file_exists($basePath . $file . '.php')) {
+           return require($basePath . $file . '.php');
+        } else {
+            return json_decode(file_get_contents($basePath . $file));
+        }
+    }
+
+    private static function getData($service, $apiVersion, $type)
     {
         $basePath = __DIR__ . '/../data';
         $serviceDir = $basePath . "/{$service}";
@@ -32,25 +50,13 @@ class EndpointDefinitionProvider
                 'Invalid api version.'
             );
         }
-        $fileName = $getTestFile ? '/endpoint-tests-1' : '/endpoint-rule-set-1';
+        $fileName = $type === 'tests' ? '/endpoint-tests-1' : '/endpoint-rule-set-1';
 
         if (file_exists($rulesetPath . $fileName . '.json.php')) {
             return require($rulesetPath . $fileName . '.json.php');
         } else {
             return json_decode(file_get_contents($rulesetPath . $fileName . '.json'), true);
         }
-    }
-
-    public static function getPartitions()
-    {
-        $basePath = __DIR__ . '/../data';
-        $file = '/partitions.json';
-
-        if (file_exists($basePath . $file . '.php')) {
-           return require($basePath . $file . '.php');
-        }
-
-        return require($basePath . $file);
     }
 
     private static function getLatest($service)

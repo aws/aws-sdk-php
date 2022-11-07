@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\EndpointV2;
 
+use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\EndpointV2\Ruleset\RulesetStandardLibrary;
 use Aws\Exception\UnresolvedEndpointException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -15,7 +16,7 @@ class RulesetStandardLibraryTest extends TestCase
     protected function set_up()
     {
         $partitionsPath = __DIR__ . '/partitions.json';
-        $partitions = json_decode(file_get_contents($partitionsPath), true);
+        $partitions = EndpointDefinitionProvider::getPartitions();
         $this->standardLibrary = new RulesetStandardLibrary($partitions);
     }
 

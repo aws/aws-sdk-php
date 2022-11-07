@@ -224,7 +224,7 @@ class S3ControlClient extends AwsClient
 
     /**
      * Modifies API definition to remove `AccountId`
-     * host prefix, as necessary for dynamic endpoint resolution.
+     * host prefix.  This is now handled by the endpoint ruleset.
      *
      * @return void
      *

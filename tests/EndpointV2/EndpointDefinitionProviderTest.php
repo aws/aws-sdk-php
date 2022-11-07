@@ -18,8 +18,8 @@ class EndpointDefinitionProviderTest extends TestCase
 
     public function testProvidesRulesetTests()
     {
-        $testsDefinition = EndpointDefinitionProvider::getEndpointRuleset(
-            's3', 'latest', true
+        $testsDefinition = EndpointDefinitionProvider::getEndpointTests(
+            's3', 'latest'
         );
         $this->assertIsArray($testsDefinition);
         $this->assertArrayHasKey('testCases', $testsDefinition);

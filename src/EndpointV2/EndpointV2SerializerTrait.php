@@ -2,6 +2,9 @@
 
 namespace Aws\EndpointV2;
 
+use Aws\Api\Serializer\RestSerializer;
+use GuzzleHttp\Psr7\Uri;
+
 /**
  * Set of helper functions used to set endpoints and endpoint
  * properties derived from dynamic endpoint resolution.
@@ -10,26 +13,43 @@ namespace Aws\EndpointV2;
  */
 trait EndpointV2SerializerTrait
 {
-    private static $accelerateExclusions = [
-        'CreateBucket' => true,
-        'DeleteBucket' => true,
-        'ListBuckets' => true,
-    ];
-
-    private function resolveProviderArgs(
-        $operation,
+    private function resolveEndpoint(
         $endpointProvider,
+        $command,
+        $operation,
         $commandArgs,
         $clientArgs,
-        $operationName = null
+        &$headers
     )
     {
-        $service = $this->api->getServiceName();
+        $providerArgs = $this->resolveProviderArgs(
+            $endpointProvider,
+            $operation,
+            $commandArgs,
+            $clientArgs
+        );
+        $endpoint = $endpointProvider->resolveEndpoint($providerArgs);
+
+        if ($this instanceof RestSerializer) {
+            $this->endpoint = new Uri($endpoint->getUrl());
+        } else {
+            $this->endpoint = $endpoint->getUrl();
+        }
+        $this->applyAuthSchemeToCommand($endpoint, $command);
+        $this->applyHeaders($endpoint, $headers);
+    }
+
+    private function resolveProviderArgs(
+        $endpointProvider,
+        $operation,
+        $commandArgs,
+        $clientArgs
+    )
+    {
         $rulesetParams = $endpointProvider->getRuleset()->getParameters();
         $endpointCommandArgs = $this->filterEndpointCommandArgs(
             $rulesetParams,
-            $commandArgs,
-            $service
+            $commandArgs
         );
         $staticContextParams = $this->scopeStaticContextParams(
             $operation->getStaticContextParams()
@@ -43,11 +63,6 @@ trait EndpointV2SerializerTrait
             $contextParams,
             $staticContextParams
         );
-
-        if (isset($operationName) && isset(self::$accelerateExclusions[$operationName])
-        ) {
-            $providerArgs['Accelerate'] = false;
-        }
 
         return $providerArgs;
     }
@@ -91,15 +106,24 @@ trait EndpointV2SerializerTrait
 
     private function filterEndpointCommandArgs(
         $rulesetParams,
-        $commandArgs,
-        $service
+        $commandArgs
     )
     {
-        $filteredArgs = [];
+        $endpointMiddlewareOpts = [
+            '@use_dual_stack_endpoint' => 'UseDualStack',
+            '@use_accelerate_endpoint' => 'Accelerate',
+            '@use_path_style_endpoint' => 'ForcePathStyle'
+        ];
 
-        if ($service === 's3' || $service === 's3control') {
-            $this->addS3EndpointCommandArgs($commandArgs);
+        if ($this->api->getServiceName() === 's3') {
+            foreach($endpointMiddlewareOpts as $optionName => $newValue) {
+                if (isset($commandArgs[$optionName])) {
+                    $commandArgs[$newValue] = $commandArgs[$optionName];
+                }
+            }
         }
+
+        $filteredArgs = [];
 
         foreach($rulesetParams as $name => $value) {
             if (isset($rulesetParams[$name]) && isset($commandArgs[$name])) {
@@ -171,33 +195,5 @@ trait EndpointV2SerializerTrait
             $authScheme['signingRegion'] : null;
 
         return $normalizedAuthScheme;
-    }
-
-    private function processS3RequestUri($requestUri)
-    {
-        $requestUri = str_replace('/{Bucket}', '/', $requestUri);
-        $requestUri = str_replace('//', '/', $requestUri);
-        $requestUri = str_replace('/?', '?', $requestUri);
-
-        return $requestUri;
-    }
-
-    private function addS3EndpointCommandArgs(&$commandArgs)
-    {
-        $keys = [
-            '@use_dual_stack_endpoint' => 'UseDualStack',
-            '@use_accelerate_endpoint' => 'Accelerate',
-            '@use_path_style_endpoint' => 'ForcePathStyle'
-        ];
-
-        foreach ($keys as $commandKey => $endpointArgKey) {
-            if (isset($commandArgs[$commandKey])) {
-                if ($commandArgs[$commandKey] === true
-                    || $commandArgs[$commandKey] === false
-                ) {
-                    $commandArgs[$endpointArgKey] = $commandArgs[$commandKey];
-                }
-            }
-        }
     }
 }

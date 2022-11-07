@@ -1,10 +1,9 @@
 <?php
 namespace Aws\Test\EndpointV2;
 
-
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\CommandInterface;
-use Aws\EndpointV2\EndpointProvider;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\Ruleset\Ruleset;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use Aws\Exception\CommonRuntimeException;
@@ -16,9 +15,9 @@ use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers \Aws\EndpointV2\EndpointProvider
+ * @covers EndpointProviderV2
  */
-class EndpointProviderTest extends TestCase
+class EndpointProviderV2Test extends TestCase
 {
     use UsesServiceTrait;
     /**
@@ -79,8 +78,8 @@ class EndpointProviderTest extends TestCase
         $partitions = EndpointDefinitionProvider::getPartitions();
 
         foreach($services as $service => $data) {
-            $serviceTests = EndpointDefinitionProvider::getEndpointRuleset(
-                $service, 'latest', true
+            $serviceTests = EndpointDefinitionProvider::getEndpointTests(
+                $service, 'latest'
             );
             $ruleset = EndpointDefinitionProvider::getEndpointRuleset($service, 'latest');
 
@@ -113,7 +112,7 @@ class EndpointProviderTest extends TestCase
         $expected
     )
     {
-        $provider = new EndpointProvider($ruleset, $partitions);
+        $provider = new EndpointProviderV2($ruleset, $partitions);
 
         if ($isSuccessCase === 'false') {
             $this->expectException(UnresolvedEndpointException::class);
@@ -138,7 +137,7 @@ class EndpointProviderTest extends TestCase
         $serviceList = \Aws\manifest();
 
         forEach($serviceList as $service => $serviceValue) {
-            $testFile = EndpointDefinitionProvider::getEndpointRuleset($service, 'latest', true);
+            $testFile = EndpointDefinitionProvider::getEndpointTests($service, 'latest');
 
             foreach($testFile['testCases'] as $case) {
                 if (!isset($case['operationInputs']) || isset($case['expect']['error'])) {
@@ -252,13 +251,13 @@ class EndpointProviderTest extends TestCase
             $this->markTestSkipped();
         }
     }
-    
+
     public function testNoEndpointFoundException()
     {
         $rulesetPath = __DIR__ . '/valid-rules/deprecated-param.json';
         $ruleset = json_decode(file_get_contents($rulesetPath), true);
-        $provider = new EndpointProvider($ruleset, []);
-        
+        $provider = new EndpointProviderV2($ruleset, []);
+
         $this->expectException(UnresolvedEndpointException::class);
         $this->expectExceptionMessage(
             'Unable to resolve an endpoint using the provider arguments: {"Bucket":"someBucket"}'
@@ -290,7 +289,7 @@ class EndpointProviderTest extends TestCase
             );
 
         $reflectionEndpointProvider = new \ReflectionClass(EndpointProvider::class);
-        $endpointProvider = new EndpointProvider($rulesetDefinition, $partitions);
+        $endpointProvider = new EndpointProviderV2($rulesetDefinition, $partitions);
         $reflectionRuleset = $reflectionEndpointProvider->getproperty('ruleSet');
         $reflectionRuleset->setAccessible(true);
         $reflectionRuleset->setValue($endpointProvider, $rulesetMock);

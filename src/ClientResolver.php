@@ -135,7 +135,7 @@ class ClientResolver
         ],
         'endpoint_provider' => [
             'type'     => 'value',
-            'valid'    => ['callable', EndpointV2\EndpointProvider::class],
+            'valid'    => ['callable', EndpointV2\EndpointProviderV2::class],
             'fn'       => [__CLASS__, '_apply_endpoint_provider'],
             'doc'      => 'An optional PHP callable that accepts a hash of options including a "service" and "region" key and returns NULL or a hash of endpoint data, of which the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider for a list of built-in providers.',
             'default'  => [__CLASS__, '_default_endpoint_provider'],
@@ -407,9 +407,9 @@ class ClientResolver
      * @param mixed  $provided The provided value.
      * @throws \InvalidArgumentException
      */
-    private function invalidType($name, $provided, $expected = null)
+    private function invalidType($name, $provided)
     {
-        $expected = $expected ?: implode('|', $this->argDefinitions[$name]['valid']);
+        $expected = implode('|', $this->argDefinitions[$name]['valid']);
         $msg = "Invalid configuration value "
             . "provided for \"{$name}\". Expected {$expected}, but got "
             . describe_type($provided) . "\n\n"
@@ -605,7 +605,7 @@ class ClientResolver
     public static function _apply_endpoint_provider($value, array &$args)
     {
         if (!isset($args['endpoint'])) {
-            if ($value instanceof \Aws\EndpointV2\EndpointProvider) {
+            if ($value instanceof \Aws\EndpointV2\EndpointProviderV2) {
                 $options = self::getEndpointProviderOptions($args);
                 $value = PartitionEndpointProvider::defaultProvider($options)
                     ->getPartition($args['region'], $args['service']);
@@ -905,7 +905,7 @@ class ClientResolver
                 $service->getServiceName(),
                 $service->getApiVersion()
             );
-            return new \Aws\EndpointV2\EndpointProvider(
+            return new \Aws\EndpointV2\EndpointProviderV2(
                 $ruleset,
                 EndpointDefinitionProvider::getPartitions()
             );

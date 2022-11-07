@@ -4,12 +4,12 @@ namespace Aws\Sts\RegionalEndpoints;
 class Configuration implements ConfigurationInterface
 {
     private $endpointsType;
-    private $isDefault;
+    private $isFallback;
 
-    public function __construct($endpointsType, $isDefault = false)
+    public function __construct($endpointsType, $isFallback = false)
     {
         $this->endpointsType = strtolower($endpointsType);
-        $this->isDefault = $isDefault;
+        $this->isFallback = $isFallback;
         if (!in_array($this->endpointsType, ['legacy', 'regional'])) {
             throw new \InvalidArgumentException(
                 "Configuration parameter must either be 'legacy' or 'regional'."
@@ -35,8 +35,8 @@ class Configuration implements ConfigurationInterface
         ];
     }
 
-    public function isDefault()
+    public function isFallback()
     {
-        return $this->isDefault;
+        return $this->isFallback;
     }
 }
