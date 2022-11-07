@@ -15,11 +15,12 @@ use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers EndpointProviderV2
+ * @covers Aws\EndpointV2\EndpointProviderV2
  */
 class EndpointProviderV2Test extends TestCase
 {
     use UsesServiceTrait;
+
     /**
      * Iterates through test cases located in ../test-cases and
      * ../valid-rules, parses into parameters used for endpoint and error tests
@@ -67,24 +68,51 @@ class EndpointProviderV2Test extends TestCase
     }
 
     /**
+     * @dataProvider basicTestCaseProvider
+     */
+    public function testBasicEndpointAndErrorCases(
+        $ruleset,
+        $partitions,
+        $isSuccessCase,
+        $inputParams,
+        $expected
+    )
+    {
+        $provider = new EndpointProviderV2($ruleset, $partitions);
+
+        if ($isSuccessCase === 'false') {
+            $this->expectException(UnresolvedEndpointException::class);
+            $this->expectExceptionMessage($expected['error']);
+            $provider->resolveEndpoint($inputParams);
+        } else {
+            $endpoint = $provider->resolveEndpoint($inputParams);
+            $expectedEndpoint = $expected['endpoint'];
+            $this->assertEquals($expectedEndpoint['url'], $endpoint->getUrl());
+            if (isset($expectedEndpoint['headers'])){
+                $this->assertEquals($expectedEndpoint['headers'], $endpoint->getHeaders());
+            }
+            if (isset($expectedEndpoint['properties'])) {
+                $this->assertEquals($expectedEndpoint['properties'], $endpoint->getProperties());
+            }
+        }
+    }
+
+    /**
      * Iterates through test cases located in each service's endpoint test file.
      * Parses into parameters used for endpoint and error tests
      */
     public function serviceTestCaseProvider()
     {
         $serviceTestCases = [];
-
         $services = \Aws\Manifest();
-        $partitions = EndpointDefinitionProvider::getPartitions();
 
         foreach($services as $service => $data) {
             $serviceTests = EndpointDefinitionProvider::getEndpointTests(
                 $service, 'latest'
             );
-            $ruleset = EndpointDefinitionProvider::getEndpointRuleset($service, 'latest');
 
             foreach($serviceTests['testCases'] as $case) {
-                $testCase = [$ruleset, $partitions];
+                $testCase = [$service];
 
                 $inputParams = isset($case['params']) ? $case['params'] : [];
                 $expected = $case['expect'];
@@ -101,18 +129,19 @@ class EndpointProviderV2Test extends TestCase
     }
 
     /**
-     * @dataProvider basicTestCaseProvider
      * @dataProvider serviceTestCaseProvider
      */
-    public function testEndpointAndErrorCases(
-        $ruleset,
-        $partitions,
+    public function testServiceEndpointAndErrorCases(
+        $service,
         $isSuccessCase,
         $inputParams,
         $expected
     )
     {
-        $provider = new EndpointProviderV2($ruleset, $partitions);
+        $provider = new EndpointProviderV2(
+            EndpointDefinitionProvider::getEndpointRuleset($service, 'latest'),
+            EndpointDefinitionProvider::getPartitions()
+        );
 
         if ($isSuccessCase === 'false') {
             $this->expectException(UnresolvedEndpointException::class);
@@ -167,7 +196,7 @@ class EndpointProviderV2Test extends TestCase
                         'use_arn_region' => isset($useArnRegion) ? $useArnRegion : null,
                         'disable_multiregion_access_points' => isset($builtInParams['AWS::S3::DisableMultiRegionAccessPoints']) ? $builtInParams['AWS::S3::DisableMultiRegionAccessPoints'] : null
                     ];
-                    array_push($caseArgs, $clientArgs, $operationInput, $case['expect'], $case['documentation']);
+                    array_push($caseArgs, $clientArgs, $operationInput, $case['expect']);
                     $protocolTestCases[] = $caseArgs;
                 }
 
@@ -182,7 +211,7 @@ class EndpointProviderV2Test extends TestCase
      *
      * @dataProvider rulesetProtocolSuccessCaseProvider
      */
-    public function testRulesetProtocolSuccessCases($service, $clientArgs, $operationInput, $expected, $documentation)
+    public function testRulesetProtocolSuccessCases($service, $clientArgs, $operationInput, $expected)
     {
         //accounts for legacy global endpoint behavior
         if (strpos($expected['endpoint']['url'], 's3.us-east-1.amazonaws.com') !== false
