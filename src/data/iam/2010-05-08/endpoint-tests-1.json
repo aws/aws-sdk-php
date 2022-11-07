@@ -7,9 +7,9 @@
                     "properties": {
                         "authSchemes": [
                             {
-                                "name": "sigv4",
+                                "signingRegion": "cn-north-1",
                                 "signingName": "iam",
-                                "signingRegion": "cn-north-1"
+                                "name": "sigv4"
                             }
                         ]
                     },
@@ -17,9 +17,9 @@
                 }
             },
             "params": {
+                "UseFIPS": false,
                 "Region": "aws-cn-global",
-                "UseDualStack": false,
-                "UseFIPS": false
+                "UseDualStack": false
             }
         },
         {
@@ -29,9 +29,9 @@
                     "properties": {
                         "authSchemes": [
                             {
-                                "name": "sigv4",
+                                "signingRegion": "us-east-1",
                                 "signingName": "iam",
-                                "signingRegion": "us-east-1"
+                                "name": "sigv4"
                             }
                         ]
                     },
@@ -39,9 +39,9 @@
                 }
             },
             "params": {
+                "UseFIPS": false,
                 "Region": "aws-global",
-                "UseDualStack": false,
-                "UseFIPS": false
+                "UseDualStack": false
             }
         },
         {
@@ -51,9 +51,9 @@
                     "properties": {
                         "authSchemes": [
                             {
-                                "name": "sigv4",
+                                "signingRegion": "us-iso-east-1",
                                 "signingName": "iam",
-                                "signingRegion": "us-iso-east-1"
+                                "name": "sigv4"
                             }
                         ]
                     },
@@ -61,9 +61,9 @@
                 }
             },
             "params": {
+                "UseFIPS": false,
                 "Region": "aws-iso-global",
-                "UseDualStack": false,
-                "UseFIPS": false
+                "UseDualStack": false
             }
         },
         {
@@ -73,9 +73,9 @@
                     "properties": {
                         "authSchemes": [
                             {
-                                "name": "sigv4",
+                                "signingRegion": "us-isob-east-1",
                                 "signingName": "iam",
-                                "signingRegion": "us-isob-east-1"
+                                "name": "sigv4"
                             }
                         ]
                     },
@@ -83,9 +83,9 @@
                 }
             },
             "params": {
+                "UseFIPS": false,
                 "Region": "aws-iso-b-global",
-                "UseDualStack": false,
-                "UseFIPS": false
+                "UseDualStack": false
             }
         },
         {
@@ -95,9 +95,9 @@
                     "properties": {
                         "authSchemes": [
                             {
-                                "name": "sigv4",
+                                "signingRegion": "us-gov-west-1",
                                 "signingName": "iam",
-                                "signingRegion": "us-gov-west-1"
+                                "name": "sigv4"
                             }
                         ]
                     },
@@ -105,9 +105,9 @@
                 }
             },
             "params": {
+                "UseFIPS": false,
                 "Region": "aws-us-gov-global",
-                "UseDualStack": false,
-                "UseFIPS": false
+                "UseDualStack": false
             }
         },
         {
@@ -118,9 +118,9 @@
                 }
             },
             "params": {
+                "UseFIPS": false,
                 "Region": "us-east-1",
                 "UseDualStack": false,
-                "UseFIPS": false,
                 "Endpoint": "https://example.com"
             }
         },
@@ -130,9 +130,9 @@
                 "error": "Invalid Configuration: FIPS and custom endpoint are not supported"
             },
             "params": {
+                "UseFIPS": true,
                 "Region": "us-east-1",
                 "UseDualStack": false,
-                "UseFIPS": true,
                 "Endpoint": "https://example.com"
             }
         },
@@ -142,9 +142,9 @@
                 "error": "Invalid Configuration: Dualstack and custom endpoint are not supported"
             },
             "params": {
+                "UseFIPS": false,
                 "Region": "us-east-1",
                 "UseDualStack": true,
-                "UseFIPS": false,
                 "Endpoint": "https://example.com"
             }
         }

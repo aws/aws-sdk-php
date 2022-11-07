@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<fullname>Amazon Elastic Compute Cloud</fullname> <p>Amazon Elastic Compute Cloud (Amazon EC2) provides secure and resizable computing capacity in the Amazon Web Services Cloud. Using Amazon EC2 eliminates the need to invest in hardware up front, so you can develop and deploy applications faster. Amazon Virtual Private Cloud (Amazon VPC) enables you to provision a logically isolated section of the Amazon Web Services Cloud where you can launch Amazon Web Services resources in a virtual network that you've defined. Amazon Elastic Block Store (Amazon EBS) provides block level storage volumes for use with EC2 instances. EBS volumes are highly available and reliable storage volumes that can be attached to any running instance and used like a hard drive.</p> <p>To learn more, see the following resources:</p> <ul> <li> <p>Amazon EC2: <a href=\"http://aws.amazon.com/ec2\">AmazonEC2 product page</a>, <a href=\"http://aws.amazon.com/documentation/ec2\">Amazon EC2 documentation</a> </p> </li> <li> <p>Amazon EBS: <a href=\"http://aws.amazon.com/ebs\">Amazon EBS product page</a>, <a href=\"http://aws.amazon.com/documentation/ebs\">Amazon EBS documentation</a> </p> </li> <li> <p>Amazon VPC: <a href=\"http://aws.amazon.com/vpc\">Amazon VPC product page</a>, <a href=\"http://aws.amazon.com/documentation/vpc\">Amazon VPC documentation</a> </p> </li> <li> <p>Amazon Web Services VPN: <a href=\"http://aws.amazon.com/vpn\">Amazon Web Services VPN product page</a>, <a href=\"http://aws.amazon.com/documentation/vpn\">Amazon Web Services VPN documentation</a> </p> </li> </ul>",
   "operations": {
+    "AcceptAddressTransfer": "<p>Accepts an Elastic IP address transfer. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#using-instance-addressing-eips-transfer-accept\">Accept a transferred Elastic IP address</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>",
     "AcceptReservedInstancesExchangeQuote": "<p>Accepts the Convertible Reserved Instance exchange quote described in the <a>GetReservedInstancesExchangeQuote</a> call.</p>",
     "AcceptTransitGatewayMulticastDomainAssociations": "<p>Accepts a request to associate subnets with a transit gateway multicast domain.</p>",
     "AcceptTransitGatewayPeeringAttachment": "<p>Accepts a transit gateway peering attachment request. The peering attachment must be in the <code>pendingAcceptance</code> state.</p>",
@@ -42,6 +43,7 @@
     "CancelCapacityReservationFleets": "<p>Cancels one or more Capacity Reservation Fleets. When you cancel a Capacity Reservation Fleet, the following happens:</p> <ul> <li> <p>The Capacity Reservation Fleet's status changes to <code>cancelled</code>.</p> </li> <li> <p>The individual Capacity Reservations in the Fleet are cancelled. Instances running in the Capacity Reservations at the time of cancelling the Fleet continue to run in shared capacity.</p> </li> <li> <p>The Fleet stops creating new Capacity Reservations.</p> </li> </ul>",
     "CancelConversionTask": "<p>Cancels an active conversion task. The task can be the import of an instance or volume. The action removes all artifacts of the conversion, including a partially uploaded volume or instance. If the conversion is complete or is in the process of transferring the final disk image, the command fails and returns an exception.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ec2-cli-vmimport-export.html\">Importing a Virtual Machine Using the Amazon EC2 CLI</a>.</p>",
     "CancelExportTask": "<p>Cancels an active export task. The request removes all artifacts of the export, including any partially-created Amazon S3 objects. If the export task is complete or is in the process of transferring the final disk image, the command fails and returns an error.</p>",
+    "CancelImageLaunchPermission": "<p>Removes your Amazon Web Services account from the launch permissions for the specified AMI. For more information, see <a href=\"https://docs.aws.amazon.com/\">Cancel sharing an AMI with your Amazon Web Services account</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
     "CancelImportTask": "<p>Cancels an in-process import virtual machine or import snapshot task.</p>",
     "CancelReservedInstancesListing": "<p>Cancels the specified Reserved Instance listing in the Reserved Instance Marketplace.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html\">Reserved Instance Marketplace</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CancelSpotFleetRequests": "<p>Cancels the specified Spot Fleet requests.</p> <p>After you cancel a Spot Fleet request, the Spot Fleet launches no new Spot Instances. You must specify whether the Spot Fleet should also terminate its Spot Instances. If you terminate the instances, the Spot Fleet request enters the <code>cancelled_terminating</code> state. Otherwise, the Spot Fleet request enters the <code>cancelled_running</code> state and the instances continue to run until they are interrupted or you terminate them manually.</p>",
@@ -89,7 +91,7 @@
     "CreateNetworkInterfacePermission": "<p>Grants an Amazon Web Services-authorized account permission to attach the specified network interface to an instance in their account.</p> <p>You can grant permission to a single Amazon Web Services account only, and only one account at a time.</p>",
     "CreatePlacementGroup": "<p>Creates a placement group in which to launch instances. The strategy of the placement group determines how the instances are organized within the group. </p> <p>A <code>cluster</code> placement group is a logical grouping of instances within a single Availability Zone that benefit from low network latency, high network throughput. A <code>spread</code> placement group places instances on distinct hardware. A <code>partition</code> placement group places groups of instances in different partitions, where instances in one partition do not share the same hardware with instances in another partition.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html\">Placement groups</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CreatePublicIpv4Pool": "<p>Creates a public IPv4 address pool. A public IPv4 pool is an EC2 IP address pool required for the public IPv4 CIDRs that you own and bring to Amazon Web Services to manage with IPAM. IPv6 addresses you bring to Amazon Web Services, however, use IPAM pools only. To monitor the status of pool creation, use <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribePublicIpv4Pools.html\">DescribePublicIpv4Pools</a>.</p>",
-    "CreateReplaceRootVolumeTask": "<p>Creates a root volume replacement task for an Amazon EC2 instance. The root volume can either be restored to its initial launch state, or it can be restored using a specific snapshot.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-restoring-volume.html#replace-root\">Replace a root volume</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
+    "CreateReplaceRootVolumeTask": "<p>Replaces the EBS-backed root volume for a <code>running</code> instance with a new volume that is restored to the original root volume's launch state, that is restored to a specific snapshot taken from the original root volume, or that is restored from an AMI that has the same key characteristics as that of the instance.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-restoring-volume.html#replace-root\">Replace a root volume</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
     "CreateReservedInstancesListing": "<p>Creates a listing for Amazon EC2 Standard Reserved Instances to be sold in the Reserved Instance Marketplace. You can submit one Standard Reserved Instance listing at a time. To get a list of your Standard Reserved Instances, you can use the <a>DescribeReservedInstances</a> operation.</p> <note> <p>Only Standard Reserved Instances can be sold in the Reserved Instance Marketplace. Convertible Reserved Instances cannot be sold.</p> </note> <p>The Reserved Instance Marketplace matches sellers who want to resell Standard Reserved Instance capacity that they no longer need with buyers who want to purchase additional capacity. Reserved Instances bought and sold through the Reserved Instance Marketplace work like any other Reserved Instances.</p> <p>To sell your Standard Reserved Instances, you must first register as a seller in the Reserved Instance Marketplace. After completing the registration process, you can create a Reserved Instance Marketplace listing of some or all of your Standard Reserved Instances, and specify the upfront price to receive for them. Your Standard Reserved Instance listings then become available for purchase. To view the details of your Standard Reserved Instance listing, you can use the <a>DescribeReservedInstancesListings</a> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html\">Reserved Instance Marketplace</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CreateRestoreImageTask": "<p>Starts a task that restores an AMI from an Amazon S3 object that was previously created by using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateStoreImageTask.html\">CreateStoreImageTask</a>.</p> <p>To use this API, you must have the required permissions. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html#ami-s3-permissions\">Permissions for storing and restoring AMIs using Amazon S3</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html\">Store and restore an AMI using Amazon S3</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
     "CreateRoute": "<p>Creates a route in a route table within a VPC.</p> <p>You must specify either a destination CIDR block or a prefix list ID. You must also specify exactly one of the resources from the parameter list.</p> <p>When determining how to route traffic, we use the route with the most specific match. For example, traffic is destined for the IPv4 address <code>192.0.2.3</code>, and the route table includes the following two IPv4 routes:</p> <ul> <li> <p> <code>192.0.2.0/24</code> (goes to some target A)</p> </li> <li> <p> <code>192.0.2.0/28</code> (goes to some target B)</p> </li> </ul> <p>Both routes apply to the traffic destined for <code>192.0.2.3</code>. However, the second route in the list covers a smaller number of IP addresses and is therefore more specific, so we use that route to determine where to target the traffic.</p> <p>For more information about route tables, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html\">Route tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>",
@@ -202,6 +204,7 @@
     "DeregisterTransitGatewayMulticastGroupMembers": "<p>Deregisters the specified members (network interfaces) from the transit gateway multicast group.</p>",
     "DeregisterTransitGatewayMulticastGroupSources": "<p>Deregisters the specified sources (network interfaces) from the transit gateway multicast group.</p>",
     "DescribeAccountAttributes": "<p>Describes attributes of your Amazon Web Services account. The following are the supported account attributes:</p> <ul> <li> <p> <code>supported-platforms</code>: Indicates whether your account can launch instances into EC2-Classic and EC2-VPC, or only into EC2-VPC.</p> </li> <li> <p> <code>default-vpc</code>: The ID of the default VPC for your account, or <code>none</code>.</p> </li> <li> <p> <code>max-instances</code>: This attribute is no longer supported. The returned value does not reflect your actual vCPU limit for running On-Demand Instances. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-on-demand-instances.html#ec2-on-demand-instances-limits\">On-Demand Instance Limits</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> </li> <li> <p> <code>vpc-max-security-groups-per-interface</code>: The maximum number of security groups that you can assign to a network interface.</p> </li> <li> <p> <code>max-elastic-ips</code>: The maximum number of Elastic IP addresses that you can allocate for use with EC2-Classic. </p> </li> <li> <p> <code>vpc-max-elastic-ips</code>: The maximum number of Elastic IP addresses that you can allocate for use with EC2-VPC.</p> </li> </ul> <note> <p>We are retiring EC2-Classic on August 15, 2022. We recommend that you migrate from EC2-Classic to a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html\">Migrate from EC2-Classic to a VPC</a> in the <i>Amazon EC2 User Guide</i>.</p> </note>",
+    "DescribeAddressTransfers": "<p>Describes an Elastic IP address transfer. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro\">Transfer Elastic IP addresses</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>",
     "DescribeAddresses": "<p>Describes the specified Elastic IP addresses or all of your Elastic IP addresses.</p> <p>An Elastic IP address is for use in either the EC2-Classic platform or in a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <note> <p>We are retiring EC2-Classic. We recommend that you migrate from EC2-Classic to a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html\">Migrate from EC2-Classic to a VPC</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> </note>",
     "DescribeAddressesAttribute": "<p>Describes the attributes of the specified Elastic IP addresses. For requirements, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#Using_Elastic_Addressing_Reverse_DNS\">Using reverse DNS for email applications</a>.</p>",
     "DescribeAggregateIdFormat": "<p>Describes the longer ID format settings for all resource types in a specific Region. This request is useful for performing a quick audit to determine whether a specific Region is fully opted in for longer IDs (17-character IDs).</p> <p>This request only returns information about resource types that support longer IDs.</p> <p>The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>.</p>",
@@ -341,6 +344,7 @@
     "DetachNetworkInterface": "<p>Detaches a network interface from an instance.</p>",
     "DetachVolume": "<p>Detaches an EBS volume from an instance. Make sure to unmount any file systems on the device within your operating system before detaching the volume. Failure to do so can result in the volume becoming stuck in the <code>busy</code> state while detaching. If this happens, detachment can be delayed indefinitely until you unmount the volume, force detachment, reboot the instance, or all three. If an EBS volume is the root device of an instance, it can't be detached while the instance is running. To detach the root volume, stop the instance first.</p> <p>When a volume with an Amazon Web Services Marketplace product code is detached from an instance, the product code is no longer associated with the instance.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-detaching-volume.html\">Detach an Amazon EBS volume</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
     "DetachVpnGateway": "<p>Detaches a virtual private gateway from a VPC. You do this if you're planning to turn off the VPC and not use it anymore. You can confirm a virtual private gateway has been completely detached from a VPC by describing the virtual private gateway (any attachments to the virtual private gateway are also described).</p> <p>You must wait for the attachment's state to switch to <code>detached</code> before you can delete the VPC or attach a different VPC to the virtual private gateway.</p>",
+    "DisableAddressTransfer": "<p>Disables Elastic IP address transfer. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro\">Transfer Elastic IP addresses</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>",
     "DisableEbsEncryptionByDefault": "<p>Disables EBS encryption by default for your account in the current Region.</p> <p>After you disable encryption by default, you can still create encrypted volumes by enabling encryption when you create each volume.</p> <p>Disabling encryption by default does not change the encryption status of your existing volumes.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\">Amazon EBS encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
     "DisableFastLaunch": "<p>Discontinue faster launching for a Windows AMI, and clean up existing pre-provisioned snapshots. When you disable faster launching, the AMI uses the standard launch process for each instance. All pre-provisioned snapshots must be removed before you can enable faster launching again.</p> <note> <p>To change these settings, you must own the AMI.</p> </note>",
     "DisableFastSnapshotRestores": "<p>Disables fast snapshot restores for the specified snapshots in the specified Availability Zones.</p>",
@@ -363,6 +367,7 @@
     "DisassociateTransitGatewayRouteTable": "<p>Disassociates a resource attachment from a transit gateway route table.</p>",
     "DisassociateTrunkInterface": "<note> <p>This API action is currently in <b>limited preview only</b>. If you are interested in using this feature, contact your account manager.</p> </note> <p>Removes an association between a branch network interface with a trunk network interface.</p>",
     "DisassociateVpcCidrBlock": "<p>Disassociates a CIDR block from a VPC. To disassociate the CIDR block, you must specify its association ID. You can get the association ID by using <a>DescribeVpcs</a>. You must detach or delete all gateways and resources that are associated with the CIDR block before you can disassociate it. </p> <p>You cannot disassociate the CIDR block with which you originally created the VPC (the primary CIDR block).</p>",
+    "EnableAddressTransfer": "<p>Enables Elastic IP address transfer. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro\">Transfer Elastic IP addresses</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>",
     "EnableEbsEncryptionByDefault": "<p>Enables EBS encryption by default for your account in the current Region.</p> <p>After you enable encryption by default, the EBS volumes that you create are always encrypted, either using the default KMS key or the KMS key that you specified when you created each volume. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\">Amazon EBS encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>You can specify the default KMS key for encryption by default using <a>ModifyEbsDefaultKmsKeyId</a> or <a>ResetEbsDefaultKmsKeyId</a>.</p> <p>Enabling encryption by default has no effect on the encryption status of your existing volumes.</p> <p>After you enable encryption by default, you can no longer launch instances using instance types that do not support encryption. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#EBSEncryption_supported_instances\">Supported instance types</a>.</p>",
     "EnableFastLaunch": "<p>When you enable faster launching for a Windows AMI, images are pre-provisioned, using snapshots to launch instances up to 65% faster. To create the optimized Windows image, Amazon EC2 launches an instance and runs through Sysprep steps, rebooting as required. Then it creates a set of reserved snapshots that are used for subsequent launches. The reserved snapshots are automatically replenished as they are used, depending on your settings for launch frequency.</p> <note> <p>To change these settings, you must own the AMI.</p> </note>",
     "EnableFastSnapshotRestores": "<p>Enables fast snapshot restores for the specified snapshots in the specified Availability Zones.</p> <p>You get the full benefit of fast snapshot restores after they enter the <code>enabled</code> state. To get the current state of fast snapshot restores, use <a>DescribeFastSnapshotRestores</a>. To disable fast snapshot restores, use <a>DisableFastSnapshotRestores</a>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-fast-snapshot-restore.html\">Amazon EBS fast snapshot restore</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
@@ -607,6 +612,16 @@
       "refs": {
         "InstanceRequirements$AcceleratorTypes": "<p>The accelerator types that must be on the instance type.</p> <ul> <li> <p>For instance types with GPU accelerators, specify <code>gpu</code>.</p> </li> <li> <p>For instance types with FPGA accelerators, specify <code>fpga</code>.</p> </li> <li> <p>For instance types with inference accelerators, specify <code>inference</code>.</p> </li> </ul> <p>Default: Any accelerator type</p>",
         "InstanceRequirementsRequest$AcceleratorTypes": "<p>The accelerator types that must be on the instance type.</p> <ul> <li> <p>To include instance types with GPU hardware, specify <code>gpu</code>.</p> </li> <li> <p>To include instance types with FPGA hardware, specify <code>fpga</code>.</p> </li> <li> <p>To include instance types with inference hardware, specify <code>inference</code>.</p> </li> </ul> <p>Default: Any accelerator type</p>"
+      }
+    },
+    "AcceptAddressTransferRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AcceptAddressTransferResult": {
+      "base": null,
+      "refs": {
       }
     },
     "AcceptReservedInstancesExchangeQuoteRequest": {
@@ -858,6 +873,27 @@
         "DescribeAddressesAttributeResult$Addresses": "<p>Information about the IP addresses.</p>"
       }
     },
+    "AddressTransfer": {
+      "base": "<p>Details on the Elastic IP address transfer. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro\">Transfer Elastic IP addresses</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>",
+      "refs": {
+        "AcceptAddressTransferResult$AddressTransfer": "<p>An Elastic IP address transfer.</p>",
+        "AddressTransferList$member": null,
+        "DisableAddressTransferResult$AddressTransfer": "<p>An Elastic IP address transfer.</p>",
+        "EnableAddressTransferResult$AddressTransfer": "<p>An Elastic IP address transfer.</p>"
+      }
+    },
+    "AddressTransferList": {
+      "base": null,
+      "refs": {
+        "DescribeAddressTransfersResult$AddressTransfers": "<p>The Elastic IP address transfer.</p>"
+      }
+    },
+    "AddressTransferStatus": {
+      "base": null,
+      "refs": {
+        "AddressTransfer$AddressTransferStatus": "<p>The Elastic IP address transfer status.</p>"
+      }
+    },
     "AdvertiseByoipCidrRequest": {
       "base": null,
       "refs": {
@@ -912,6 +948,8 @@
         "AllocationIds$member": null,
         "AssociateAddressRequest$AllocationId": "<p>[EC2-VPC] The allocation ID. This is required for EC2-VPC.</p>",
         "CreateNatGatewayRequest$AllocationId": "<p>[Public NAT gateways only] The allocation ID of an Elastic IP address to associate with the NAT gateway. You cannot specify an Elastic IP address with a private NAT gateway. If the Elastic IP address is associated with another resource, you must first disassociate it.</p>",
+        "DisableAddressTransferRequest$AllocationId": "<p>The allocation ID of an Elastic IP address.</p>",
+        "EnableAddressTransferRequest$AllocationId": "<p>The allocation ID of an Elastic IP address.</p>",
         "ModifyAddressAttributeRequest$AllocationId": "<p>[EC2-VPC] The allocation ID.</p>",
         "ReleaseAddressRequest$AllocationId": "<p>[EC2-VPC] The allocation ID. Required for EC2-VPC.</p>",
         "ResetAddressAttributeRequest$AllocationId": "<p>[EC2-VPC] The allocation ID.</p>"
@@ -920,6 +958,7 @@
     "AllocationIdList": {
       "base": null,
       "refs": {
+        "DescribeAddressTransfersRequest$AllocationIds": "<p>The allocation IDs of Elastic IP addresses.</p>",
         "DescribeAddressesRequest$AllocationIds": "<p>[EC2-VPC] Information about the allocation IDs.</p>"
       }
     },
@@ -1690,6 +1729,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AcceptAddressTransferRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AcceptReservedInstancesExchangeQuoteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AcceptTransitGatewayMulticastDomainAssociationsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AcceptTransitGatewayPeeringAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -1735,6 +1775,8 @@
         "CancelCapacityReservationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CancelCapacityReservationResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "CancelConversionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CancelImageLaunchPermissionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CancelImageLaunchPermissionResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "CancelImportTaskRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CancelSpotFleetRequestsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CancelSpotFleetRequestsRequest$TerminateInstances": "<p>Indicates whether to terminate instances for a Spot Fleet request if it is canceled successfully.</p>",
@@ -1807,6 +1849,7 @@
         "CreatePlacementGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreatePublicIpv4PoolRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateReplaceRootVolumeTaskRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateReplaceRootVolumeTaskRequest$DeleteReplacedRootVolume": "<p>Indicates whether to automatically delete the original root volume after the root volume replacement task completes. To delete the original root volume, specify <code>true</code>. If you choose to keep the original root volume after the replacement task completes, you must manually delete it when you no longer need it.</p>",
         "CreateRestoreImageTaskRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateRouteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateRouteResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
@@ -1936,6 +1979,7 @@
         "DeregisterTransitGatewayMulticastGroupMembersRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeregisterTransitGatewayMulticastGroupSourcesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeAccountAttributesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeAddressTransfersRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeAddressesAttributeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeAddressesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeAggregateIdFormatRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2077,6 +2121,7 @@
         "DetachVolumeRequest$Force": "<p>Forces detachment if the previous detachment attempt did not occur cleanly (for example, logging into an instance, unmounting the volume, and detaching normally). This option can lead to data loss or a corrupted file system. Use this option only as a last resort to detach a volume from a failed instance. The instance won't have an opportunity to flush file system caches or file system metadata. If you use this option, you must perform file system check and repair procedures.</p>",
         "DetachVolumeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DetachVpnGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DisableAddressTransferRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableEbsEncryptionByDefaultRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableEbsEncryptionByDefaultResult$EbsEncryptionByDefault": "<p>The updated status of encryption by default.</p>",
         "DisableFastLaunchRequest$Force": "<p>Forces the image settings to turn off faster launching for your Windows AMI. This parameter overrides any errors that are encountered while cleaning up resources in your account.</p>",
@@ -2109,6 +2154,7 @@
         "EbsBlockDevice$Encrypted": "<p>Indicates whether the encryption state of an EBS volume is changed while being restored from a backing snapshot. The effect of setting the encryption state to <code>true</code> depends on the volume origin (new or from a snapshot), starting encryption state, ownership, and whether encryption by default is enabled. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#encryption-parameters\">Amazon EBS encryption</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>In no case can you remove encryption from an encrypted volume.</p> <p>Encrypted volumes can only be attached to instances that support Amazon EBS encryption. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#EBSEncryption_supported_instances\">Supported instance types</a>.</p> <p>This parameter is not returned by <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImageAttribute.html\">DescribeImageAttribute</a>.</p>",
         "EbsInstanceBlockDevice$DeleteOnTermination": "<p>Indicates whether the volume is deleted on instance termination.</p>",
         "EbsInstanceBlockDeviceSpecification$DeleteOnTermination": "<p>Indicates whether the volume is deleted on instance termination.</p>",
+        "EnableAddressTransferRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableEbsEncryptionByDefaultRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableEbsEncryptionByDefaultResult$EbsEncryptionByDefault": "<p>The updated status of encryption by default.</p>",
         "EnableFastLaunchRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2373,6 +2419,7 @@
         "ReplaceNetworkAclAssociationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ReplaceNetworkAclEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ReplaceNetworkAclEntryRequest$Egress": "<p>Indicates whether to replace the egress rule.</p> <p>Default: If no value is specified, we replace the ingress rule.</p>",
+        "ReplaceRootVolumeTask$DeleteReplacedRootVolume": "<p>Indicates whether the original root volume is to be deleted after the root volume replacement task completes.</p>",
         "ReplaceRouteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ReplaceRouteRequest$LocalTarget": "<p>Specifies whether to reset the local route to its default target (<code>local</code>).</p>",
         "ReplaceRouteTableAssociationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2593,7 +2640,7 @@
         "AdvertiseByoipCidrResult$ByoipCidr": "<p>Information about the address range.</p>",
         "ByoipCidrSet$member": null,
         "DeprovisionByoipCidrResult$ByoipCidr": "<p>Information about the address range.</p>",
-        "MoveByoipCidrToIpamResult$ByoipCidr": null,
+        "MoveByoipCidrToIpamResult$ByoipCidr": "<p>The BYOIP CIDR.</p>",
         "ProvisionByoipCidrResult$ByoipCidr": "<p>Information about the address range.</p>",
         "WithdrawByoipCidrResult$ByoipCidr": "<p>Information about the address pool.</p>"
       }
@@ -2670,6 +2717,16 @@
       }
     },
     "CancelExportTaskRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CancelImageLaunchPermissionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CancelImageLaunchPermissionResult": {
       "base": null,
       "refs": {
       }
@@ -5329,6 +5386,22 @@
       "refs": {
       }
     },
+    "DescribeAddressTransfersMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeAddressTransfersRequest$MaxResults": "<p>The maximum number of address transfers to return in one page of results.</p>"
+      }
+    },
+    "DescribeAddressTransfersRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeAddressTransfersResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeAddressesAttributeRequest": {
       "base": null,
       "refs": {
@@ -7090,6 +7163,16 @@
         "ClientVpnAuthenticationRequest$ActiveDirectory": "<p>Information about the Active Directory to be used, if applicable. You must provide this information if <b>Type</b> is <code>directory-service-authentication</code>.</p>"
       }
     },
+    "DisableAddressTransferRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisableAddressTransferResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisableEbsEncryptionByDefaultRequest": {
       "base": null,
       "refs": {
@@ -7741,6 +7824,16 @@
       "base": null,
       "refs": {
         "NetworkInfo$EnaSupport": "<p>Indicates whether Elastic Network Adapter (ENA) is supported.</p>"
+      }
+    },
+    "EnableAddressTransferRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EnableAddressTransferResult": {
+      "base": null,
+      "refs": {
       }
     },
     "EnableEbsEncryptionByDefaultRequest": {
@@ -9534,6 +9627,8 @@
     "ImageId": {
       "base": null,
       "refs": {
+        "CancelImageLaunchPermissionRequest$ImageId": "<p>The ID of the AMI that was shared with your Amazon Web Services account.</p>",
+        "CreateReplaceRootVolumeTaskRequest$ImageId": "<p>The ID of the AMI to use to restore the root volume. The specified AMI must have the same product code, billing information, architecture type, and virtualization type as that of the instance.</p> <p>If you want to restore the replacement volume from a specific snapshot, or if you want to restore it to its launch state, omit this parameter.</p>",
         "CreateStoreImageTaskRequest$ImageId": "<p>The ID of the AMI.</p>",
         "DeregisterImageRequest$ImageId": "<p>The ID of the AMI.</p>",
         "DescribeFastLaunchImagesSuccessItem$ImageId": "<p>The image ID that identifies the fast-launch enabled Windows image.</p>",
@@ -9551,6 +9646,7 @@
         "ImageIdList$member": null,
         "ImageIdStringList$member": null,
         "ModifyImageAttributeRequest$ImageId": "<p>The ID of the AMI.</p>",
+        "ReplaceRootVolumeTask$ImageId": "<p>The ID of the AMI used to create the replacement root volume.</p>",
         "RequestLaunchTemplateData$ImageId": "<p>The ID of the AMI.</p>",
         "RequestSpotLaunchSpecification$ImageId": "<p>The ID of the AMI.</p>",
         "ResetImageAttributeRequest$ImageId": "<p>The ID of the AMI.</p>",
@@ -11295,7 +11391,7 @@
       "base": "<p>The CIDR for an IPAM resource.</p>",
       "refs": {
         "IpamResourceCidrSet$member": null,
-        "ModifyIpamResourceCidrResult$IpamResourceCidr": null
+        "ModifyIpamResourceCidrResult$IpamResourceCidr": "<p>The CIDR of the resource.</p>"
       }
     },
     "IpamResourceCidrSet": {
@@ -12673,6 +12769,8 @@
     "MillisecondDateTime": {
       "base": null,
       "refs": {
+        "AddressTransfer$TransferOfferExpirationTimestamp": "<p>The timestamp when the Elastic IP address transfer expired. When the source account starts the transfer, the transfer account has seven hours to allocate the Elastic IP address to complete the transfer, or the Elastic IP address will return to its original owner.</p>",
+        "AddressTransfer$TransferOfferAcceptedTimestamp": "<p>The timestamp when the Elastic IP address transfer was accepted.</p>",
         "AthenaIntegration$PartitionStartDate": "<p>The start date for the partition.</p>",
         "AthenaIntegration$PartitionEndDate": "<p>The end date for the partition.</p>",
         "CapacityReservation$StartDate": "<p>The date and time at which the Capacity Reservation was started.</p>",
@@ -12703,7 +12801,7 @@
         "EnableFastSnapshotRestoreSuccessItem$EnabledTime": "<p>The time at which fast snapshot restores entered the <code>enabled</code> state.</p>",
         "EnableFastSnapshotRestoreSuccessItem$DisablingTime": "<p>The time at which fast snapshot restores entered the <code>disabling</code> state.</p>",
         "EnableFastSnapshotRestoreSuccessItem$DisabledTime": "<p>The time at which fast snapshot restores entered the <code>disabled</code> state.</p>",
-        "EnableImageDeprecationRequest$DeprecateAt": "<p>The date and time to deprecate the AMI, in UTC, in the following format: <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z. If you specify a value for seconds, Amazon EC2 rounds the seconds to the nearest minute.</p> <p>You can’t specify a date in the past. The upper limit for <code>DeprecateAt</code> is 10 years from now.</p>",
+        "EnableImageDeprecationRequest$DeprecateAt": "<p>The date and time to deprecate the AMI, in UTC, in the following format: <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z. If you specify a value for seconds, Amazon EC2 rounds the seconds to the nearest minute.</p> <p>You can’t specify a date in the past. The upper limit for <code>DeprecateAt</code> is 10 years from now, except for public AMIs, where the upper limit is 2 years from the creation date.</p>",
         "FleetCapacityReservation$CreateDate": "<p>The date and time at which the Capacity Reservation was created.</p>",
         "FlowLog$CreationTime": "<p>The date and time the flow log was created.</p>",
         "GetIpamAddressHistoryRequest$StartTime": "<p>The start of the time period for which you are looking for history. If you omit this option, it will default to the value of EndTime.</p>",
@@ -14767,7 +14865,7 @@
     "PublicIpv4PoolRange": {
       "base": "<p>Describes an address range of an IPv4 address pool.</p>",
       "refs": {
-        "ProvisionPublicIpv4PoolCidrResult$PoolAddressRange": null,
+        "ProvisionPublicIpv4PoolCidrResult$PoolAddressRange": "<p>Information about the address range of the public IPv4 pool.</p>",
         "PublicIpv4PoolRangeSet$member": null
       }
     },
@@ -15198,7 +15296,7 @@
     "RequestIpamResourceTag": {
       "base": "<p>A tag on an IPAM resource.</p>",
       "refs": {
-        "GetIpamResourceCidrsRequest$ResourceTag": null,
+        "GetIpamResourceCidrsRequest$ResourceTag": "<p>The resource tag.</p>",
         "RequestIpamResourceTagList$member": null
       }
     },
@@ -16317,7 +16415,7 @@
     "SnapshotId": {
       "base": null,
       "refs": {
-        "CreateReplaceRootVolumeTaskRequest$SnapshotId": "<p>The ID of the snapshot from which to restore the replacement root volume. If you want to restore the volume to the initial launch state, omit this parameter.</p>",
+        "CreateReplaceRootVolumeTaskRequest$SnapshotId": "<p>The ID of the snapshot from which to restore the replacement root volume. The specified snapshot must be a snapshot that you previously created from the original root volume.</p> <p>If you want to restore the replacement root volume to the initial launch state, or if you want to restore the replacement root volume from an AMI, omit this parameter.</p>",
         "CreateVolumeRequest$SnapshotId": "<p>The snapshot from which to create the volume. You must specify either a snapshot ID or a volume size.</p>",
         "DeleteSnapshotRequest$SnapshotId": "<p>The ID of the EBS snapshot.</p>",
         "DescribeSnapshotAttributeRequest$SnapshotId": "<p>The ID of the EBS snapshot.</p>",
@@ -16327,6 +16425,7 @@
         "LaunchTemplateEbsBlockDeviceRequest$SnapshotId": "<p>The ID of the snapshot.</p>",
         "ModifySnapshotAttributeRequest$SnapshotId": "<p>The ID of the snapshot.</p>",
         "ModifySnapshotTierRequest$SnapshotId": "<p>The ID of the snapshot.</p>",
+        "ReplaceRootVolumeTask$SnapshotId": "<p>The ID of the snapshot used to create the replacement root volume.</p>",
         "ResetSnapshotAttributeRequest$SnapshotId": "<p>The ID of the snapshot.</p>",
         "RestoreSnapshotFromRecycleBinRequest$SnapshotId": "<p>The ID of the snapshot to restore.</p>",
         "RestoreSnapshotTierRequest$SnapshotId": "<p>The ID of the snapshot to restore.</p>",
@@ -16764,6 +16863,7 @@
     "String": {
       "base": null,
       "refs": {
+        "AcceptAddressTransferRequest$Address": "<p>The Elastic IP address you are accepting for transfer.</p>",
         "AcceptReservedInstancesExchangeQuoteResult$ExchangeId": "<p>The ID of the successful exchange.</p>",
         "AccessScopeAnalysisFinding$FindingId": "<p>The ID of the finding.</p>",
         "AccountAttribute$AttributeName": "<p>The name of the account attribute.</p>",
@@ -16791,6 +16891,9 @@
         "Address$CustomerOwnedIpv4Pool": "<p>The ID of the customer-owned address pool.</p>",
         "Address$CarrierIp": "<p>The carrier IP address associated. This option is only available for network interfaces which reside in a subnet in a Wavelength Zone (for example an EC2 instance). </p>",
         "AddressAttribute$PtrRecord": "<p>The pointer (PTR) record for the IP address.</p>",
+        "AddressTransfer$PublicIp": "<p>The Elastic IP address being transferred.</p>",
+        "AddressTransfer$AllocationId": "<p>The allocation ID of an Elastic IP address.</p>",
+        "AddressTransfer$TransferAccountId": "<p>The ID of the account that you want to transfer the Elastic IP address to.</p>",
         "AdvertiseByoipCidrRequest$Cidr": "<p>The address range, in CIDR notation. This must be the exact range that you provisioned. You can't advertise only a portion of the provisioned range.</p>",
         "AllocateAddressRequest$NetworkBorderGroup": "<p> A unique set of Availability Zones, Local Zones, or Wavelength Zones from which Amazon Web Services advertises IP addresses. Use this parameter to limit the IP address to this location. IP addresses cannot move between network border groups.</p> <p>Use <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeAvailabilityZones.html\">DescribeAvailabilityZones</a> to view the network border groups.</p> <p>You cannot use a network border group with EC2 Classic. If you attempt this operation on EC2 Classic, you receive an <code>InvalidParameterCombination</code> error.</p>",
         "AllocateAddressRequest$CustomerOwnedIpv4Pool": "<p>The ID of a customer-owned address pool. Use this parameter to let Amazon EC2 select an address from the address pool. Alternatively, specify a specific address from the address pool.</p>",
@@ -17195,6 +17298,8 @@
         "DeprovisionedAddressSet$member": null,
         "DeregisterTransitGatewayMulticastGroupMembersRequest$GroupIpAddress": "<p>The IP address assigned to the transit gateway multicast group.</p>",
         "DeregisterTransitGatewayMulticastGroupSourcesRequest$GroupIpAddress": "<p>The IP address assigned to the transit gateway multicast group.</p>",
+        "DescribeAddressTransfersRequest$NextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
+        "DescribeAddressTransfersResult$NextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
         "DescribeByoipCidrsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeCapacityReservationFleetsRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
         "DescribeCapacityReservationFleetsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
@@ -17427,6 +17532,7 @@
         "ElasticInferenceAcceleratorAssociation$ElasticInferenceAcceleratorArn": "<p> The Amazon Resource Name (ARN) of the elastic inference accelerator. </p>",
         "ElasticInferenceAcceleratorAssociation$ElasticInferenceAcceleratorAssociationId": "<p> The ID of the association. </p>",
         "ElasticInferenceAcceleratorAssociation$ElasticInferenceAcceleratorAssociationState": "<p> The state of the elastic inference accelerator. </p>",
+        "EnableAddressTransferRequest$TransferAccountId": "<p>The ID of the account that you want to transfer the Elastic IP address to.</p>",
         "EnableFastLaunchRequest$ResourceType": "<p>The type of resource to use for pre-provisioning the Windows AMI for faster launching. Supported values include: <code>snapshot</code>, which is the default value.</p>",
         "EnableFastLaunchResult$OwnerId": "<p>The owner ID for the Windows AMI for which faster launching was enabled.</p>",
         "EnableFastLaunchResult$StateTransitionReason": "<p>The reason that the state changed for faster launching for the Windows AMI.</p>",
@@ -18953,6 +19059,7 @@
     "TagSpecificationList": {
       "base": null,
       "refs": {
+        "AcceptAddressTransferRequest$TagSpecifications": "<p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p>",
         "AllocateAddressRequest$TagSpecifications": "<p>The tags to assign to the Elastic IP address.</p>",
         "AllocateHostsRequest$TagSpecifications": "<p>The tags to apply to the Dedicated Host during creation.</p>",
         "AuthorizeSecurityGroupEgressRequest$TagSpecifications": "<p>The tags applied to the security group rule.</p>",
