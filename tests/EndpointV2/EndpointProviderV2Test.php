@@ -288,7 +288,7 @@ class EndpointProviderV2Test extends TestCase
                 $endpointMock
             );
 
-        $reflectionEndpointProvider = new \ReflectionClass(EndpointProvider::class);
+        $reflectionEndpointProvider = new \ReflectionClass(EndpointProviderV2::class);
         $endpointProvider = new EndpointProviderV2($rulesetDefinition, $partitions);
         $reflectionRuleset = $reflectionEndpointProvider->getproperty('ruleSet');
         $reflectionRuleset->setAccessible(true);
