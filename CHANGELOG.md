@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.240.11 - 2022-11-07
 
 * `Aws\Athena` - Adds support for using Query Result Reuse
 * `Aws\AutoScaling` - This release adds support for two new attributes for attribute-based instance type selection - NetworkBandwidthGbps and AllowedInstanceTypes.
