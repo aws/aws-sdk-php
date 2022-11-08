@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.241.0 - 2022-11-08
 
 * `Aws\ACM` - Support added for requesting elliptic curve certificate key algorithm types P-256 (EC_prime256v1) and P-384 (EC_secp384r1).
 * `Aws\BillingConductor` - This release adds the Recurring Custom Line Item feature along with a new API ListCustomLineItemVersions.
