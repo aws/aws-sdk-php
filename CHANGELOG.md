@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.241.1 - 2022-11-09
 
 * `Aws\Connect` - This release adds new fields SignInUrl, UserArn, and UserId to GetFederationToken response payload.
 * `Aws\ConnectCases` - This release adds the ability to disable templates through the UpdateTemplate API. Disabling templates prevents customers from creating cases using the template. For more information see https://docs.aws.amazon.com/cases/latest/APIReference/Welcome.html
