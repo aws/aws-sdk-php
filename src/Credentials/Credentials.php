@@ -108,6 +108,6 @@ Attempting credential expiration extension due to a credential service
 availability issue. A refresh of these credentials will be attempted again 
 after {$extension} minutes.\n
 EOT;
-        error_log($message);
+        trigger_error($message, E_USER_WARNING);
     }
 }
