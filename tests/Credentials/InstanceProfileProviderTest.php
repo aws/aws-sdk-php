@@ -983,17 +983,17 @@ class InstanceProfileProviderTest extends TestCase
      */
     public function testExtendsExpirationAndSendsRequestIfImdsYieldsExpiredCreds($client)
     {
-        //Capture extension message
-        $capture = tmpfile();
-        ini_set('error_log', stream_get_meta_data($capture)['uri']);
+        //expect warning emitted from extension
+        $this->expectWarning();
+        $this->expectWarningMessageMatches(
+            '/Attempting credential expiration extension/'
+        );
 
         $provider = new InstanceProfileProvider([
             'client' => $client
         ]);
         $creds = $provider()->wait();
 
-        $message = stream_get_contents($capture);
-        $this->assertMatchesRegularExpression('/Attempting credential expiration extension/', $message);
         $this->assertSame('foo', $creds->getAccessKeyId());
         $this->assertSame('baz', $creds->getSecretKey());
         $this->assertFalse($creds->isExpired());
@@ -1065,7 +1065,7 @@ class InstanceProfileProviderTest extends TestCase
      */
     public function testExtendsExpirationAndSendsRequestIfImdsUnavailable($client)
     {
-        //Warning emitted from extension
+        //expect warning emitted from extension
         $this->expectWarning();
         $this->expectWarningMessageMatches(
             '/Attempting credential expiration extension/'
