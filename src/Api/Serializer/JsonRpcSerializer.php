@@ -48,18 +48,20 @@ class JsonRpcSerializer
      * When invoked with an AWS command, returns a serialization array
      * containing "method", "uri", "headers", and "body" key value pairs.
      *
-     * @param CommandInterface $command
+     * @param CommandInterface $command Command to serialize into a request.
+     * @param $endpointProvider Provider used for dynamic endpoint resolution.
+     * @param $clientArgs Client arguments used for dynamic endpoint resolution.
      *
      * @return RequestInterface
      */
     public function __invoke(
         CommandInterface $command,
         $endpointProvider = null,
-        array $clientArgs = null
+        $clientArgs = null
     )
     {
         $operationName = $command->getName();
-        $operation = $this->api->getOperation($operationName);
+        $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $headers = [
                 'X-Amz-Target' => $this->api->getMetadata('targetPrefix') . '.' . $operationName,
@@ -67,7 +69,7 @@ class JsonRpcSerializer
             ];
 
         if ($endpointProvider instanceof EndpointProviderV2) {
-            $this->resolveEndpoint(
+            $this->resolveRequestOptions(
                 $endpointProvider,
                 $command,
                 $operation,

@@ -14,23 +14,23 @@ use Aws\LruArrayCache;
 class EndpointProviderV2
 {
     /** @var Ruleset */
-    private $ruleSet;
+    private $ruleset;
 
     /** @var LruArrayCache */
     private $cache;
 
-    public function __construct(array $ruleSet, array $partitions)
+    public function __construct(array $ruleset, array $partitions)
     {
-        $this->ruleSet = new Ruleset($ruleSet, $partitions);
+        $this->ruleset = new Ruleset($ruleset, $partitions);
         $this->cache = new LruArrayCache(100);
     }
 
     /**
      * @return Ruleset
      */
-    public function getRuleSet()
+    public function getRuleset()
     {
-        return $this->ruleSet;
+        return $this->ruleset;
     }
 
     /**
@@ -50,7 +50,7 @@ class EndpointProviderV2
             return $match;
         }
 
-        $endpoint = $this->ruleSet->evaluate($inputParameters);
+        $endpoint = $this->ruleset->evaluate($inputParameters);
         if ($endpoint === false) {
             throw new UnresolvedEndpointException(
                 'Unable to resolve an endpoint using the provider arguments: '

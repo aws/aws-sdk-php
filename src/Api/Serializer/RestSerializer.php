@@ -40,24 +40,25 @@ abstract class RestSerializer
     }
 
     /**
-     * @param CommandInterface $command Command to serialize
+     * @param CommandInterface $command Command to serialize into a request.
+     * @param $endpointProvider Provider used for dynamic endpoint resolution.
+     * @param $clientArgs Client arguments used for dynamic endpoint resolution.
      *
      * @return RequestInterface
      */
     public function __invoke(
         CommandInterface $command,
         $endpointProvider = null,
-        array $clientArgs = null
+        $clientArgs = null
     )
     {
-        $operationName = $command->getName();
-        $operation = $this->api->getOperation($operationName);
+        $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $opts = $this->serialize($operation, $commandArgs);
         $headers = isset($opts['headers']) ? $opts['headers'] : [];
 
         if ($endpointProvider instanceof EndpointProviderV2) {
-            $this->resolveEndpoint(
+            $this->resolveRequestOptions(
                 $endpointProvider,
                 $command,
                 $operation,
@@ -202,23 +203,23 @@ abstract class RestSerializer
 
     private function buildEndpoint(Operation $operation, array $args, array $opts)
     {
-        // Create an associative array of varspecs used in expansions
-        $varspecs = $this->getVarspecs($operation, $args);
+        // Create an associative array of variable definitions used in expansions
+        $varDefinitions = $this->getVarDefinitions($operation, $args);
 
         $relative = preg_replace_callback(
             '/\{([^\}]+)\}/',
-            function (array $matches) use ($varspecs) {
+            function (array $matches) use ($varDefinitions) {
                 $isGreedy = substr($matches[1], -1, 1) == '+';
                 $k = $isGreedy ? substr($matches[1], 0, -1) : $matches[1];
-                if (!isset($varspecs[$k])) {
+                if (!isset($varDefinitions[$k])) {
                     return '';
                 }
 
                 if ($isGreedy) {
-                    return str_replace('%2F', '/', rawurlencode($varspecs[$k]));
+                    return str_replace('%2F', '/', rawurlencode($varDefinitions[$k]));
                 }
 
-                return rawurlencode($varspecs[$k]);
+                return rawurlencode($varDefinitions[$k]);
             },
             $operation['http']['requestUri']
         );
@@ -275,18 +276,18 @@ abstract class RestSerializer
         return $endpoint .= strpos($endpoint, '?') ? "&{$append}" : "?$append";
     }
 
-    private function getVarspecs($command, $args)
+    private function getVarDefinitions($command, $args)
     {
-        $varspecs = [];
+        $varDefinitions = [];
 
         foreach ($command->getInput()->getMembers() as $name => $member) {
             if ($member['location'] == 'uri') {
-                $varspecs[$member['locationName'] ?: $name] =
+                $varDefinitions[$member['locationName'] ?: $name] =
                     isset($args[$name])
                         ? $args[$name]
                         : null;
             }
         }
-        return $varspecs;
+        return $varDefinitions;
     }
 }

@@ -13,7 +13,17 @@ use GuzzleHttp\Psr7\Uri;
  */
 trait EndpointV2SerializerTrait
 {
-    private function resolveEndpoint(
+    /**
+     * Merges endpoint resolution arguments passed from the client
+     * and command and attempts to resolve an endpoint. Headers and
+     * auth schemes may be returned in a resolved endpoint object.
+     * A resolved endpoint uri and headers will be applied to the request.
+     * Auth schemes are applied to the command and compared against the default
+     * auth scheme at signing.
+     *
+     * @internal
+     */
+    private function resolveRequestOptions(
         $endpointProvider,
         $command,
         $operation,
