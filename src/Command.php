@@ -84,11 +84,6 @@ class Command implements CommandInterface
         return $this->authSchemes;
     }
 
-    public function setArg($key, $value)
-    {
-        $this->data += [$key => $value];
-    }
-
     /** @deprecated */
     public function get($name)
     {

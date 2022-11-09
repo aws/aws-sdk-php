@@ -362,7 +362,6 @@ class S3Client extends AwsClient implements S3ClientInterface
             's3.content_type'
         );
 
-
         if ($this->getConfig('bucket_endpoint')) {
             $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
         } elseif (!$this->isUseEndpointV2()) {

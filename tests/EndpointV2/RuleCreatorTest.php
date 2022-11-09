@@ -69,7 +69,7 @@ class RuleCreatorTest extends TestCase
         $this->expectException(UnresolvedEndpointException::class);
         $this->expectExceptionMessage(
             'Unknown rule type ' . $input .
-            'must be of type `Endpoint`, `Tree` or `Error`'
+            ' must be of type `endpoint`, `tree` or `error`'
         );
         RuleCreator::create($input, null);
     }

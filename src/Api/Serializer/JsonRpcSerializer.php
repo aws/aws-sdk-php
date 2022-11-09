@@ -61,7 +61,7 @@ class JsonRpcSerializer
     )
     {
         $operationName = $command->getName();
-        $operation = $this->api->getOperation($command->getName());
+        $operation = $this->api->getOperation($operationName);
         $commandArgs = $command->toArray();
         $headers = [
                 'X-Amz-Target' => $this->api->getMetadata('targetPrefix') . '.' . $operationName,
