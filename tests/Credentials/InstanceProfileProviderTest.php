@@ -1067,6 +1067,9 @@ class InstanceProfileProviderTest extends TestCase
     {
         //Warning emitted from extension
         $this->expectWarning();
+        $this->expectWarningMessageMatches(
+            '/Attempting credential expiration extension/'
+        );
 
         $expiredTime = time() - 1000;
         $expiredCreds = new Credentials('foo', 'baz', null, $expiredTime);
