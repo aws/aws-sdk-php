@@ -65,8 +65,7 @@ Class Ruleset
         $this->validateInputParameters($inputParameters);
 
         foreach($this->rules as $rule) {
-            $inputParametersCopy = $inputParameters;
-            $evaluation = $rule->evaluate($inputParametersCopy, $this->standardLibrary);
+            $evaluation = $rule->evaluate($inputParameters, $this->standardLibrary);
             if ($evaluation !== false) {
                 return $evaluation;
             }

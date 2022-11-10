@@ -56,7 +56,7 @@ abstract Class AbstractRule
     }
 
     abstract public function evaluate(
-        array &$inputParameters,
+        array $inputParameters,
         RulesetStandardLibrary $standardLibrary
     );
 }

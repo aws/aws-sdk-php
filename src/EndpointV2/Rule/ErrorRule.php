@@ -32,7 +32,7 @@ class ErrorRule extends AbstractRule
      * @throws UnresolvedEndpointException
      */
     public function evaluate(
-        array &$inputParameters,
+        array $inputParameters,
         RulesetStandardLibrary $standardLibrary
     )
     {

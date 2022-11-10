@@ -69,7 +69,7 @@ class JsonRpcSerializer
             ];
 
         if ($endpointProvider instanceof EndpointProviderV2) {
-            $this->resolveRequestOptions(
+            $this->setRequestOptions(
                 $endpointProvider,
                 $command,
                 $operation,

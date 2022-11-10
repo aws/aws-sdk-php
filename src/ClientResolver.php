@@ -39,9 +39,6 @@ class ClientResolver
     /** @var array */
     private $argDefinitions;
 
-    /** @var array */
-    private $builtIns;
-
     /** @var array Map of types to a corresponding function */
     private static $typeMap = [
         'resource' => 'is_resource',
@@ -1069,22 +1066,23 @@ EOT;
 
     private function _apply_client_context_params(array $args)
     {
-        if (isset($args['api'])) {
-            if (!is_null($clientContextParams = $args['api']->getClientContextParams())) {
-                foreach($clientContextParams as $paramName => $paramSpec) {
-                    $definition = [
-                        'type' => 'value',
-                        'valid' => [$paramSpec['type']],
-                        'doc' => isset($paramSpec['documentation']) ?
-                            $paramSpec['documentation'] : null
-                    ];
-                    $this->argDefinitions[$paramName] = $definition;
+        if (isset($args['api'])
+           && !empty($args['api']->getClientContextParams()))
+        {
+            $clientContextParams = $args['api']->getClientContextParams();
+            foreach($clientContextParams as $paramName => $paramDefinition) {
+                $definition = [
+                    'type' => 'value',
+                    'valid' => [$paramDefinition['type']],
+                    'doc' => isset($paramDefinition['documentation']) ?
+                        $paramDefinition['documentation'] : null
+                ];
+                $this->argDefinitions[$paramName] = $definition;
 
-                    if (isset($args[$paramName])) {
-                        $fn = self::$typeMap[$paramSpec['type']];
-                        if (!$fn($args[$paramName])) {
-                            $this->invalidType($paramName, $args[$paramName]);
-                        }
+                if (isset($args[$paramName])) {
+                    $fn = self::$typeMap[$paramDefinition['type']];
+                    if (!$fn($args[$paramName])) {
+                        $this->invalidType($paramName, $args[$paramName]);
                     }
                 }
             }

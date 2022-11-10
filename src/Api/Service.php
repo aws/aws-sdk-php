@@ -483,7 +483,7 @@ class Service extends AbstractModel
     /**
      * Get all the context params of the description.
      *
-     * @return array | null
+     * @return array
      */
     public function getClientContextParams()
     {

@@ -30,7 +30,7 @@ Class EndpointRule extends AbstractRule
      *
      * @return RulesetEndpoint | null
      */
-    public function evaluate(array &$inputParameters, RulesetStandardLibrary $standardLibrary)
+    public function evaluate(array $inputParameters, RulesetStandardLibrary $standardLibrary)
     {
         if ($this->evaluateConditions($inputParameters, $standardLibrary)) {
             return $this->resolve($inputParameters, $standardLibrary);

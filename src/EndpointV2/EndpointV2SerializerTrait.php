@@ -23,7 +23,7 @@ trait EndpointV2SerializerTrait
      *
      * @internal
      */
-    private function resolveRequestOptions(
+    private function setRequestOptions(
         $endpointProvider,
         $command,
         $operation,
@@ -61,10 +61,10 @@ trait EndpointV2SerializerTrait
             $rulesetParams,
             $commandArgs
         );
-        $staticContextParams = $this->scopeStaticContextParams(
+        $staticContextParams = $this->bindStaticContextParams(
             $operation->getStaticContextParams()
         );
-        $contextParams = $this->scopeContextParams(
+        $contextParams = $this->bindContextParams(
             $commandArgs, $operation->getContextParams()
         );
         $providerArgs = $this->normalizeEndpointProviderArgs(
@@ -92,7 +92,7 @@ trait EndpointV2SerializerTrait
         return array_merge($boundParams, $endpointCommandArgs);
     }
 
-    private function scopeContextParams($commandArgs, $contextParams)
+    private function bindContextParams($commandArgs, $contextParams)
     {
         $scopedParams = [];
 
@@ -104,7 +104,7 @@ trait EndpointV2SerializerTrait
         return $scopedParams;
     }
 
-    private function scopeStaticContextParams($staticContextParams)
+    private function bindStaticContextParams($staticContextParams)
     {
         $scopedParams = [];
 

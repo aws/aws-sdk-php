@@ -32,7 +32,7 @@ class TreeRule extends AbstractRule
      * @return mixed
      */
     public function evaluate(
-        array &$inputParameters,
+        array $inputParameters,
         RulesetStandardLibrary $standardLibrary
     )
     {
