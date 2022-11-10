@@ -48,6 +48,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise discoverPollEndpointAsync(array $args = [])
  * @method \Aws\Result executeCommand(array $args = [])
  * @method \GuzzleHttp\Promise\Promise executeCommandAsync(array $args = [])
+ * @method \Aws\Result getTaskProtection(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTaskProtectionAsync(array $args = [])
  * @method \Aws\Result listAccountSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAccountSettingsAsync(array $args = [])
  * @method \Aws\Result listAttributes(array $args = [])
@@ -108,6 +110,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateServiceAsync(array $args = [])
  * @method \Aws\Result updateServicePrimaryTaskSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServicePrimaryTaskSetAsync(array $args = [])
+ * @method \Aws\Result updateTaskProtection(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateTaskProtectionAsync(array $args = [])
  * @method \Aws\Result updateTaskSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTaskSetAsync(array $args = [])
  */

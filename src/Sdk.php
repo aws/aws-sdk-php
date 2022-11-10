@@ -544,6 +544,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSagemakerEdgeManager(array $args = [])
  * @method \Aws\SavingsPlans\SavingsPlansClient createSavingsPlans(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSavingsPlans(array $args = [])
+ * @method \Aws\Scheduler\SchedulerClient createScheduler(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionScheduler(array $args = [])
  * @method \Aws\Schemas\SchemasClient createSchemas(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSchemas(array $args = [])
  * @method \Aws\SecretsManager\SecretsManagerClient createSecretsManager(array $args = [])
