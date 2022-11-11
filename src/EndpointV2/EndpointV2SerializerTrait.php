@@ -40,11 +40,7 @@ trait EndpointV2SerializerTrait
         );
         $endpoint = $endpointProvider->resolveEndpoint($providerArgs);
 
-        if ($this instanceof RestSerializer) {
-            $this->endpoint = new Uri($endpoint->getUrl());
-        } else {
-            $this->endpoint = $endpoint->getUrl();
-        }
+        $this->endpoint = $endpoint->getUrl();
         $this->applyAuthSchemeToCommand($endpoint, $command);
         $this->applyHeaders($endpoint, $headers);
     }
@@ -77,6 +73,14 @@ trait EndpointV2SerializerTrait
         return $providerArgs;
     }
 
+    /**
+     * Merges endpoint provider arguments from different sources.
+     * Client built-ins are superseded by client context params.
+     * Client context params are superseded by context params on
+     * an input member's shape.  Context params are superseded by
+     * static context params. The result of this combination is then
+     * merged with any appropriate arguments from the command.
+     */
     private function normalizeEndpointProviderArgs(
         $endpointCommandArgs,
         $clientArgs,
@@ -84,12 +88,10 @@ trait EndpointV2SerializerTrait
         $staticContextParams
     )
     {
-        $boundParams  = array_merge(
-            array_merge($clientArgs, $contextParams),
-            $staticContextParams
-        );
+        $commandContextParams = array_merge($contextParams, $staticContextParams);
+        $combinedEndpointArgs = array_merge($clientArgs, $commandContextParams);
 
-        return array_merge($boundParams, $endpointCommandArgs);
+        return array_merge($combinedEndpointArgs, $endpointCommandArgs);
     }
 
     private function bindContextParams($commandArgs, $contextParams)

@@ -11,6 +11,7 @@ use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2SerializerTrait;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7\UriResolver;
 use Psr\Http\Message\RequestInterface;
@@ -26,7 +27,7 @@ abstract class RestSerializer
     /** @var Service */
     private $api;
 
-    /** @var Psr7\Uri */
+    /** @var Uri */
     private $endpoint;
 
     /**
@@ -66,10 +67,11 @@ abstract class RestSerializer
                 $clientArgs,
                 $headers
             );
+            $this->endpoint = new Uri($this->endpoint);
         }
         $uri = $this->buildEndpoint($operation, $commandArgs, $opts);
 
-        return new Psr7\Request(
+        return new Request(
             $operation['http']['method'],
             $uri,
             $headers,
