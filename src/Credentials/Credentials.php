@@ -99,6 +99,12 @@ class Credentials implements CredentialsInterface, \Serializable
         $this->expires = $data['expires'];
     }
 
+    /**
+     * Internal-only. Used when IMDS is unreachable
+     * or returns expires credentials.
+     *
+     * @internal
+     */
     public function extendExpiration() {
         $extension = mt_rand(5, 10);
         $this->expires = time() + $extension * 60;
