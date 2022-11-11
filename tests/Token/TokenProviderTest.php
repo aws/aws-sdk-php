@@ -362,7 +362,7 @@ EOT;
                 isset($cachedToken['clientSecret']) ? $cachedToken['clientSecret'] : null,
                 isset($cachedToken['registrationExpiresAt']) ? $cachedToken['registrationExpiresAt'] : null,
                 isset($cachedToken['region']) ? $cachedToken['region'] : null,
-                isset($cachedToken['startUrl']) ? $cachedToken['startUrl'] : null,
+                isset($cachedToken['startUrl']) ? $cachedToken['startUrl'] : null
                 );
             $saved = [
                 'token' => $token,
