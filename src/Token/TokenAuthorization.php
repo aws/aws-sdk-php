@@ -21,5 +21,4 @@ interface TokenAuthorization
         RequestInterface $request,
         TokenInterface $token
     );
-
 }

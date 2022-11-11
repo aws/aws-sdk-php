@@ -49,8 +49,7 @@ class TokenProvider
             'sso',
         ];
 
-        $defaultChain = [
-        ];
+        $defaultChain = [];
 
         if (
             !isset($config['use_aws_shared_config_files'])
@@ -62,7 +61,6 @@ class TokenProvider
                 self::getHomeDir() . '/.aws/config',
                 $config
             );
-
         }
 
         if (isset($config['token'])
@@ -120,20 +118,12 @@ class TokenProvider
             };
         }
 
-        return function ($previousToken = null) use ($links) {
+        return function () use ($links) {
             /** @var callable $parent */
             $parent = array_shift($links);
             $promise = $parent();
             while ($next = array_shift($links)) {
-                if ($next instanceof RefreshableTokenProviderInterface
-                    && $previousToken instanceof Token
-                ) {
-                    $promise = $promise->otherwise(
-                        function () use ($next, $previousToken) {return $next->refresh($previousToken);}
-                    );
-                } else {
-                    $promise = $promise->otherwise($next);
-                }
+                $promise = $promise->otherwise($next);
             }
             return $promise;
         };
@@ -141,11 +131,9 @@ class TokenProvider
 
     /**
      * Wraps a token provider and caches a previously provided token.
-     *
      * Ensures that cached tokens are refreshed when they expire.
      *
      * @param callable $provider Token provider function to wrap.
-     *
      * @return callable
      */
     public static function memoize(callable $provider)
@@ -174,12 +162,10 @@ class TokenProvider
                         return $token;
                     }
 
-                    // Refresh a token in the expiration window
                     if (!$token->isExpired()) {
                         return $token;
                     }
-                    // Refresh the result and forward the promise.
-                    return $result = $provider($token);
+                    return $result = $provider();
                 })
                 ->otherwise(function($reason) use (&$result) {
                     // Cleanup rejected promise.
@@ -209,12 +195,16 @@ class TokenProvider
 
         return function () use ($provider, $cache, $cacheKey) {
             $found = $cache->get($cacheKey);
-            if (
-                $found instanceof TokenInterface
-                && !$found->isExpired()
-                && !(strtotime("-10 minutes") >= $found->getExpiration())
-            ) {
-                return Promise\Create::promiseFor($found);
+            if (is_array($found) && isset($found['token'])) {
+                if (isset($found['token']) && $found['token'] instanceof TokenInterface) {
+                    $foundToken = $found['token'];
+                    if (!$foundToken->isExpired()) {
+                        return Promise\Create::promiseFor($foundToken);
+                    }
+                }
+                if (isset($found['refreshMethod']) && is_callable($found['refreshMethod'])) {
+                    return Promise\Create::promiseFor($found['refreshMethod']());
+                }
             }
 
             return $provider()
@@ -267,8 +257,8 @@ class TokenProvider
      * @param string $filename the location of the ini file
      * @param array $config configuration options
      *
-     * @return SsoTokenProvider
-     * @see Aws\Token\SsoTokenProvider for $config details.
+     * @return SsoToken
+     * @see Aws\Token\SsoToken for $config details.
      */
     public static function sso($profileName, $filename, $config = [])
     {

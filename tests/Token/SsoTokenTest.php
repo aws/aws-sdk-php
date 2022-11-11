@@ -4,13 +4,10 @@ namespace Aws\Test\Token;
 
 use Aws\Exception\TokenException;
 use Aws\LruArrayCache;
-use Aws\Result;
-use Aws\SSOOIDC\SSOOIDCClient;
 use Aws\Test\UsesServiceTrait;
 use Aws\Token\SsoTokenProvider;
 use Aws\Token\Token;
 use Aws\Token\TokenProvider;
-use Aws\Token\SsoToken;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 require_once __DIR__ . '/../Token/token_hack.php';
@@ -59,7 +56,7 @@ EOT;
         $this->expectException(TokenException::class);
         $this->expectExceptionMessage("must contain the following keys: sso_start_url and sso_region.");
         try {
-            $tokenProvider = new SsoTokenProvider();
+            $tokenProvider = new SsoTokenProvider('test', $dir . '/config');
             $tokenProvider()->wait();
         } finally {
             unlink($dir . '/config');
@@ -82,7 +79,7 @@ EOT;
         $this->expectException(TokenException::class);
         $this->expectExceptionMessage("must contain the following keys: sso_start_url and sso_region.");
         try {
-            $tokenProvider = new SsoTokenProvider();
+            $tokenProvider = new SsoTokenProvider('test', $dir . '/config');
             $tokenProvider()->wait();
         } finally {
             unlink($dir . '/config');
@@ -103,7 +100,7 @@ EOT;
         $this->expectException(TokenException::class);
         $this->expectExceptionMessage("Profile test does not exist");
         try {
-            $tokenProvider = new SsoTokenProvider();
+            $tokenProvider = new SsoTokenProvider('test', $dir . '/config');
             $tokenProvider()->wait();
         } finally {
             unlink($dir . '/config');
@@ -136,22 +133,5 @@ EOT;
     }
 
 
-    public function testCreatesFromCache()
-    {
-        $cache = new LruArrayCache;
-        $key = __CLASS__ . 'tokenCacahe';
-        $saved = new Token('string', PHP_INT_MAX);
-        $cache->set($key, $saved, $saved->getExpiration() - time());
 
-        $explodingProvider = function () {
-            throw new \BadFunctionCallException('This should never be called');
-        };
-
-        $found = call_user_func(
-            TokenProvider::cache($explodingProvider, $cache, $key)
-        )->wait();
-
-        $this->assertSame($saved->getToken(), $found->getToken());
-        $this->assertEquals($saved->getExpiration(), $found->getExpiration());
-    }
 }

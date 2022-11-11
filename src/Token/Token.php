@@ -25,6 +25,11 @@ class Token implements TokenInterface, \Serializable
         $this->expires = $expires;
     }
 
+    /**
+     * Sets the state of a token object
+     *
+     * @param array $state   array containing 'token' and 'expires'
+     */
     public static function __set_state(array $state)
     {
         return new self(
@@ -57,6 +62,9 @@ class Token implements TokenInterface, \Serializable
         return $this->expires !== null && time() >= $this->expires;
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return [
@@ -65,11 +73,17 @@ class Token implements TokenInterface, \Serializable
         ];
     }
 
+    /**
+     * @return string
+     */
     public function serialize()
     {
         return json_encode($this->__serialize());
     }
 
+    /**
+     * Sets the state of the object from serialized json data
+     */
     public function unserialize($serialized)
     {
         $data = json_decode($serialized, true);
@@ -77,11 +91,17 @@ class Token implements TokenInterface, \Serializable
         $this->__unserialize($data);
     }
 
+    /**
+     * @return array
+     */
     public function __serialize()
     {
         return $this->toArray();
     }
 
+    /**
+     *  Sets the state of this object from an array
+     */
     public function __unserialize($data)
     {
         $this->token = $data['token'];

@@ -2,7 +2,6 @@
 namespace Aws\Token;
 
 
-use Aws\Api\DateTimeResult;
 use Aws\Exception\TokenException;
 use Aws\SSOOIDC\SSOOIDCClient;
 use GuzzleHttp\Promise;
@@ -11,7 +10,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 /**
  * Token that comes from the SSO provider
  */
-class SsoTokenProvider extends Token implements RefreshableTokenProviderInterface
+class SsoTokenProvider implements RefreshableTokenProviderInterface
 {
     use ParsesIniTrait;
 
@@ -19,32 +18,32 @@ class SsoTokenProvider extends Token implements RefreshableTokenProviderInterfac
 
     private $ssoProfileName;
     private $filename;
-    private $config;
+    private $ssoOidcClient;
 
     /**
-     * Constructs a new sso credential provider
+     * Constructs a new SSO token object, with the specified AWS
+     * token
      *
-     * @param string $ssoProfileName the name of the ini profile name
-     * @param string $filename the location of the ini file
-     * @param array $config configuration options
+     * @param string $token   Security token to use
+     * @param int    $expires UNIX timestamp for when the token expires
      */
-    public function __construct($ssoProfileName = null, $filename = null, $config = []) {
+    public function __construct($ssoProfileName, $filename = null, $ssoOidcClient = null) {
         $profileName = getenv(self::ENV_PROFILE) ?: 'default';
         $this->ssoProfileName = !empty($ssoProfileName) ? $ssoProfileName : $profileName;
         $this->filename =  !empty($filename)
             ? $filename :
             self::getHomeDir() . '/.aws/config';
-        $this->config = $config;
+        $this->ssoOidcClient = $ssoOidcClient;
     }
 
-    /**
+    /*
      * Loads cached sso credentials
      *
      * @return PromiseInterface
      */
-    public function __invoke($previousCredentials = null)
+    public function __invoke()
     {
-        return Promise\Coroutine::of(function () use ($previousCredentials) {
+        return Promise\Coroutine::of(function () {
             if (!@is_readable($this->filename)) {
                 throw new TokenException("Cannot read token from $this->filename");
             }
@@ -77,63 +76,20 @@ class SsoTokenProvider extends Token implements RefreshableTokenProviderInterfac
             }
 
             $tokenLocation = self::getTokenLocation($ssoProfile['sso_session']);
-
             if (!@is_readable($tokenLocation)) {
                 throw new TokenException("Unable to read token file at $tokenLocation");
             }
-
-            $tokenData = json_decode(file_get_contents($tokenLocation), true);
-            if (empty($tokenData['accessToken']) || empty($tokenData['expiresAt'])) {
-                throw new TokenException(
-                    "Token file at {$tokenLocation} must contain an access token and an expiration"
-                );
-            }
-
-            try {
-                $expiration = strtotime($tokenData['expiresAt']);
-            } catch (\Exception $e) {
-                throw new TokenException("Cached SSO token returned an invalid expiration");
-            }
-            if ($expiration > time()) {
-                throw new TokenException("Cached SSO token returned an expired token");
-            }
-
-            $refreshToken = isset($tokenData['refreshToken'])
-                ? $tokenData['refreshToken']
-                : null;
-            $clientId = isset($tokenData['clientId'])
-                ? $tokenData['clientId']
-                : null;
-            $clientSecret = isset($tokenData['clientSecret'])
-                ? $tokenData['clientSecret']
-                : null;
-            $registrationExpiration = isset($tokenData['registrationExpiresAt'])
-                ? $tokenData['registrationExpiresAt']
-                : null;
-            $region = isset($tokenData['region'])
-                ? $tokenData['region']
-                : null;
-            $startUrl = isset($tokenData['startUrl'])
-                ? $tokenData['startUrl']
-                : null;
-            if (empty($config['ssoClient'])) {
-                $ssooidcClient = new SSOOIDCClient([
-                    'region' => $sessionProfileData['sso_region'],
-                    'version' => '2019-06-10',
-                    'credentials' => false
-                ]);
-            } else {
-                $ssooidcClient = $config['ssoClient'];
-            }
+            $tokenData = $this->getTokenData($tokenLocation);
+            $this->validateTokenData($tokenLocation, $tokenData);
             yield new SsoToken(
                 $tokenData['accessToken'],
                 $tokenData['expiresAt'],
-                $refreshToken,
-                $clientId,
-                $clientSecret,
-                $registrationExpiration,
-                $region,
-                $startUrl
+                isset($tokenData['refreshToken']) ? $tokenData['refreshToken'] : null,
+                isset($tokenData['clientId']) ? $tokenData['clientId'] : null,
+                isset($tokenData['clientSecret']) ? $tokenData['clientSecret'] : null,
+                isset($tokenData['registrationExpiresAt']) ? $tokenData['registrationExpiresAt'] : null,
+                isset($tokenData['region']) ? $tokenData['region'] : null,
+                isset($tokenData['startUrl']) ? $tokenData['startUrl'] : null
             );
         });
     }
@@ -142,42 +98,45 @@ class SsoTokenProvider extends Token implements RefreshableTokenProviderInterfac
      * Refreshes the token
      * @return mixed|null
      */
-    public function refresh($previousToken) {
-        if (
-            empty($this->ssoOidcClient)
-            || empty($this->refreshStartUrl)
-        ) {
-            throw new TokenException(
-                "Cannot refresh this token without an 'ssooidcClient' "
-                . "and a 'start_url'"
-            );
-        }
+    public function refresh() {
         try {
             //try to reload from disk
             $token = $this();
             if (
-                $token instanceof SsoTokenProvider
-                && !$token->getExpiration()
+                $token instanceof SsoToken
+                && !$token->shouldAttemptRefresh()
             ) {
                 return $token;
             }
         } finally {
             //if reload from disk fails, try refreshing
+            $tokenData = $this->getTokenData(self::getTokenLocation($this->ssoProfileName));
+            if (
+                empty($this->ssoOidcClient)
+                || empty($tokenData['startUrl'])
+            ) {
+                throw new TokenException(
+                    "Cannot refresh this token without an 'ssooidcClient' "
+                    . "and a 'start_url'"
+                );
+            }
             $response = $this->ssoOidcClient->createToken([
-                'clientId' => $token->clientId,
-                'clientSecret' => $token->clientSecret,
+                'clientId' => $tokenData['clientId'],
+                'clientSecret' => $tokenData['clientSecret'],
                 'grantType' => 'refresh_token', // REQUIRED
-                'refreshToken' => $token->refreshToken,
+                'refreshToken' => $tokenData['refreshToken'],
             ]);
-            return $token;
-            echo "hi";
+            return new SsoToken(
+                $response['accessToken'],
+                time () + $response['expiresIn'],
+                $response['refreshToken']
+            );
         }
     }
 
-    public function shouldAttemptRefresh($previousToken)
+    public function shouldAttemptRefresh()
     {
-       return strtotime("-10 minutes") >= $previousToken->getExpiration()
-           && $previousToken->getRegistrationExpiration() < time();
+       return strtotime("-10 minutes") >= strtotime($this->getTokenData()['expiresAt']);
     }
 
     /**
@@ -190,5 +149,38 @@ class SsoTokenProvider extends Token implements RefreshableTokenProviderInterfac
             . '/.aws/sso/cache/'
             . utf8_encode(sha1($sso_session))
             . ".json";
+    }
+
+    /**
+     * @param $tokenLocation
+     * @return array
+     */
+    function getTokenData($tokenLocation)
+    {
+        return json_decode(file_get_contents($tokenLocation), true);
+    }
+
+    /**
+     * @param $tokenData
+     * @param $tokenLocation
+     * @return mixed
+     */
+    private function validateTokenData($tokenLocation, $tokenData)
+    {
+        if (empty($tokenData['accessToken']) || empty($tokenData['expiresAt'])) {
+            throw new TokenException(
+                "Token file at {$tokenLocation} must contain an access token and an expiration"
+            );
+        }
+
+        try {
+            $expiration = strtotime($tokenData['expiresAt']);
+        } catch (\Exception $e) {
+            throw new TokenException("Cached SSO token returned an invalid expiration");
+        }
+        if ($expiration > time()) {
+            throw new TokenException("Cached SSO token returned an expired token");
+        }
+        return $tokenData;
     }
 }

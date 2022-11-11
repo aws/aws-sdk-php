@@ -13,7 +13,6 @@ interface TokenInterface
      */
     public function getToken();
 
-
     /**
      * Get the UNIX timestamp in which the token will expire
      *
