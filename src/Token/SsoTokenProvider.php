@@ -110,7 +110,8 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
             }
         } finally {
             //if reload from disk fails, try refreshing
-            $tokenData = $this->getTokenData(self::getTokenLocation($this->ssoProfileName));
+            $tokenLocation = self::getTokenLocation($this->ssoProfileName);
+            $tokenData = $this->getTokenData($tokenLocation);
             if (
                 empty($this->ssoOidcClient)
                 || empty($tokenData['startUrl'])
@@ -126,11 +127,24 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
                 'grantType' => 'refresh_token', // REQUIRED
                 'refreshToken' => $tokenData['refreshToken'],
             ]);
-            return new SsoToken(
-                $response['accessToken'],
-                time () + $response['expiresIn'],
-                $response['refreshToken']
-            );
+            if ($response['@metadata']['statusCode'] == 200) {
+                $tokenData['accessToken'] = $response['accessToken'];
+                $tokenData['expiresAt'] = time () + $response['expiresIn'];
+                $tokenData['refreshToken'] = $response['refreshToken'];
+                $token = new SsoToken(
+                    $tokenData['accessToken'],
+                    $tokenData['expiresAt'],
+                    $tokenData['refreshToken']
+                );
+
+                $tokenData['expiresAt'] = date_format(
+                    new \DateTime($tokenData['expiresAt']),
+                    'Y-m-d\TH:i:s\Z'
+                );
+                file_put_contents($tokenLocation, json_encode($tokenData));
+
+                return $token;
+            }
         }
     }
 
