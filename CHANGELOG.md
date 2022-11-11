@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.242.1 - 2022-11-11
 
 * `Aws\Glue` - Added links related to enabling job bookmarks.
 * `Aws\IoT` - This release add new api listRelatedResourcesForAuditFinding and new member type IssuerCertificates for Iot device device defender Audit.
