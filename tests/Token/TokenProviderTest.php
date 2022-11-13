@@ -240,7 +240,7 @@ EOT;
                         "accessToken" => "cachedtoken",
                         "expiresAt" => "2021-12-25T13:00:00Z",
                         "clientId" => "clientid",
-                        "clientSecret" => "YSBzZWNyZXQ=",
+                        "clientSecret" => "ABCDE123",
                         "registrationExpiresAt" => "2022-12-25T13:30:00Z",
                         "refreshToken" => "cachedrefreshtoken",
                     ],
@@ -250,16 +250,16 @@ EOT;
                         "expiresIn" => "28800",
                         "refreshToken" => "newrefreshtoken",
                     ],
-                    "expectedTokenWriteback" => [
-                        "startUrl" => "https://d-123.awsapps.com/start",
-                        "region" => "us-west-2",
-                        "accessToken" => "newtoken",
-                        "expiresAt" => "2021-12-25T21:30:00Z",
-                        "clientId" => "clientid",
-                        "clientSecret" => "YSBzZWNyZXQ=",
-                        "registrationExpiresAt" => "2022-12-25T13:30:00Z",
-                        "refreshToken" => "newrefreshtoken",
-                    ],
+                    "expectedTokenWriteback" => '{
+                    "startUrl": "https://d-abc123.awsapps.com/start",
+                    "region": "us-west-2",
+                    "accessToken": "newtoken",
+                    "expiresAt": "2021-12-25T21:30:00Z",
+                    "clientId": "clientid",
+                    "clientSecret": "ABCDE123",
+                    "registrationExpiresAt": "2022-12-25T13:30:00Z",
+                    "refreshToken": "newrefreshtoken"
+                }',
                     "expectedToken" => [
                         "token" => "newtoken",
                         "expiration" => "2021-12-25T21:30:00Z",
@@ -274,7 +274,7 @@ EOT;
                         "accessToken" => "cachedtoken",
                         "expiresAt" => "2021-12-25T13:00:00Z",
                         "clientId" => "clientid",
-                        "clientSecret" => "YSBzZWNyZXQ=",
+                        "clientSecret" => "ABCDE123",
                         "registrationExpiresAt" => "2022-12-25T13:30:00Z",
                         "refreshToken" => "cachedrefreshtoken",
                     ],
@@ -283,15 +283,15 @@ EOT;
                         "accessToken" => "newtoken",
                         "expiresIn" => "28800",
                     ],
-                    "expectedTokenWriteback" => [
-                        "startUrl" => "https://d-123.awsapps.com/start",
-                        "region" => "us-west-2",
-                        "accessToken" => "newtoken",
-                        "expiresAt" => "2021-12-25T21:30:00Z",
-                        "clientId" => "clientid",
-                        "clientSecret" => "YSBzZWNyZXQ=",
-                        "registrationExpiresAt" => "2022-12-25T13:30:00Z",
-                    ],
+                    "expectedTokenWriteback" => '{
+                "startUrl": "https://d-abc123.awsapps.com/start",
+                "region": "us-west-2",
+                "accessToken": "newtoken",
+                "expiresAt": "2021-12-25T21:30:00Z",
+                "clientId": "clientid",
+                "clientSecret": "ABCDE123",
+                "registrationExpiresAt": "2022-12-25T13:30:00Z"
+            }',
                     "expectedToken" => [
                         "token" => "newtoken",
                         "expiration" => "2021-12-25T21:30:00Z",
@@ -334,9 +334,9 @@ EOT;
     "accessToken": "{$cachedToken['accessToken']}",
     "expiresAt": "{$fiveMinAgo}",
     "refreshToken": "string",
-    "clientId": "ABCDEFG323242423121312312312312312",
+    "clientId": "clientid",
     "clientSecret": "ABCDE123",
-    "registrationExpiresAt": "2122-03-06T19:53:17Z",
+    "registrationExpiresAt": "2022-12-25T13:30:00Z",
     "region": "us-west-2",
     "startUrl": "https://d-abc123.awsapps.com/start"
 }
@@ -376,6 +376,7 @@ EOT;
                 TokenProvider::cache(TokenProvider::defaultProvider(), $cache, $key)
             )->wait();
 
+            $this->assertJsonStringEqualsJsonString($expectedTokenWriteback, file_get_contents($cachedFileName));
             $this->assertSame($expectedToken['token'], $found->getToken());
             $this->assertEquals(strtotime($expectedToken['expiration']), $found->getExpiration());
         } finally {

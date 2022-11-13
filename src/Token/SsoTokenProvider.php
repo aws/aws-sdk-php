@@ -137,11 +137,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
                     $tokenData['refreshToken']
                 );
 
-                $tokenData['expiresAt'] = date_format(
-                    new \DateTime($tokenData['expiresAt']),
-                    'Y-m-d\TH:i:s\Z'
-                );
-                file_put_contents($tokenLocation, json_encode($tokenData));
+                $this->writeNewTokenDataToDisk($tokenData, $tokenLocation);
 
                 return $token;
             }
@@ -196,5 +192,19 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
             throw new TokenException("Cached SSO token returned an expired token");
         }
         return $tokenData;
+    }
+
+    /**
+     * @param array $tokenData
+     * @param string $tokenLocation
+     * @return void
+     */
+    private function writeNewTokenDataToDisk(array $tokenData, string $tokenLocation)
+    {
+        $tokenData['expiresAt'] = gmdate(
+            'Y-m-d\TH:i:s\Z',
+            $tokenData['expiresAt']
+        );
+        file_put_contents($tokenLocation, json_encode(array_filter($tokenData)));
     }
 }
