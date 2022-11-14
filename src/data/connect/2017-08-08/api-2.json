@@ -1104,6 +1104,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DismissUserContact":{
+      "name":"DismissUserContact",
+      "http":{
+        "method":"POST",
+        "requestUri":"/users/{InstanceId}/{UserId}/contact"
+      },
+      "input":{"shape":"DismissUserContactRequest"},
+      "output":{"shape":"DismissUserContactResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "GetContactAttributes":{
       "name":"GetContactAttributes",
       "http":{
@@ -4791,6 +4808,32 @@
         }
       }
     },
+    "DismissUserContactRequest":{
+      "type":"structure",
+      "required":[
+        "UserId",
+        "InstanceId",
+        "ContactId"
+      ],
+      "members":{
+        "UserId":{
+          "shape":"UserId",
+          "location":"uri",
+          "locationName":"UserId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactId":{"shape":"ContactId"}
+      }
+    },
+    "DismissUserContactResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DisplayName":{
       "type":"string",
       "max":256,
@@ -4955,7 +4998,10 @@
     "GetFederationTokenResponse":{
       "type":"structure",
       "members":{
-        "Credentials":{"shape":"Credentials"}
+        "Credentials":{"shape":"Credentials"},
+        "SignInUrl":{"shape":"Url"},
+        "UserArn":{"shape":"ARN"},
+        "UserId":{"shape":"AgentResourceId"}
       }
     },
     "GetMetricDataRequest":{
@@ -9301,6 +9347,7 @@
         }
       }
     },
+    "Url":{"type":"string"},
     "UrlReference":{
       "type":"structure",
       "members":{

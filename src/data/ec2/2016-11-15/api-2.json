@@ -12,6 +12,15 @@
     "xmlNamespace":"http://ec2.amazonaws.com/doc/2016-11-15"
   },
   "operations":{
+    "AcceptAddressTransfer":{
+      "name":"AcceptAddressTransfer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AcceptAddressTransferRequest"},
+      "output":{"shape":"AcceptAddressTransferResult"}
+    },
     "AcceptReservedInstancesExchangeQuote":{
       "name":"AcceptReservedInstancesExchangeQuote",
       "http":{
@@ -367,6 +376,15 @@
         "requestUri":"/"
       },
       "input":{"shape":"CancelExportTaskRequest"}
+    },
+    "CancelImageLaunchPermission":{
+      "name":"CancelImageLaunchPermission",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelImageLaunchPermissionRequest"},
+      "output":{"shape":"CancelImageLaunchPermissionResult"}
     },
     "CancelImportTask":{
       "name":"CancelImportTask",
@@ -1784,6 +1802,15 @@
       "input":{"shape":"DescribeAccountAttributesRequest"},
       "output":{"shape":"DescribeAccountAttributesResult"}
     },
+    "DescribeAddressTransfers":{
+      "name":"DescribeAddressTransfers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAddressTransfersRequest"},
+      "output":{"shape":"DescribeAddressTransfersResult"}
+    },
     "DescribeAddresses":{
       "name":"DescribeAddresses",
       "http":{
@@ -3032,6 +3059,15 @@
       },
       "input":{"shape":"DetachVpnGatewayRequest"}
     },
+    "DisableAddressTransfer":{
+      "name":"DisableAddressTransfer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableAddressTransferRequest"},
+      "output":{"shape":"DisableAddressTransferResult"}
+    },
     "DisableEbsEncryptionByDefault":{
       "name":"DisableEbsEncryptionByDefault",
       "http":{
@@ -3226,6 +3262,15 @@
       },
       "input":{"shape":"DisassociateVpcCidrBlockRequest"},
       "output":{"shape":"DisassociateVpcCidrBlockResult"}
+    },
+    "EnableAddressTransfer":{
+      "name":"EnableAddressTransfer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableAddressTransferRequest"},
+      "output":{"shape":"EnableAddressTransferResult"}
     },
     "EnableEbsEncryptionByDefault":{
       "name":"EnableEbsEncryptionByDefault",
@@ -4928,6 +4973,27 @@
         "locationName":"item"
       }
     },
+    "AcceptAddressTransferRequest":{
+      "type":"structure",
+      "required":["Address"],
+      "members":{
+        "Address":{"shape":"String"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "AcceptAddressTransferResult":{
+      "type":"structure",
+      "members":{
+        "AddressTransfer":{
+          "shape":"AddressTransfer",
+          "locationName":"addressTransfer"
+        }
+      }
+    },
     "AcceptReservedInstancesExchangeQuoteRequest":{
       "type":"structure",
       "required":["ReservedInstanceIds"],
@@ -5393,6 +5459,50 @@
         "locationName":"item"
       }
     },
+    "AddressTransfer":{
+      "type":"structure",
+      "members":{
+        "PublicIp":{
+          "shape":"String",
+          "locationName":"publicIp"
+        },
+        "AllocationId":{
+          "shape":"String",
+          "locationName":"allocationId"
+        },
+        "TransferAccountId":{
+          "shape":"String",
+          "locationName":"transferAccountId"
+        },
+        "TransferOfferExpirationTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"transferOfferExpirationTimestamp"
+        },
+        "TransferOfferAcceptedTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"transferOfferAcceptedTimestamp"
+        },
+        "AddressTransferStatus":{
+          "shape":"AddressTransferStatus",
+          "locationName":"addressTransferStatus"
+        }
+      }
+    },
+    "AddressTransferList":{
+      "type":"list",
+      "member":{
+        "shape":"AddressTransfer",
+        "locationName":"item"
+      }
+    },
+    "AddressTransferStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "disabled",
+        "accepted"
+      ]
+    },
     "AdvertiseByoipCidrRequest":{
       "type":"structure",
       "required":["Cidr"],
@@ -5578,12 +5688,28 @@
         "lowestPrice",
         "diversified",
         "capacityOptimized",
-        "capacityOptimizedPrioritized"
+        "capacityOptimizedPrioritized",
+        "priceCapacityOptimized"
       ]
     },
     "AllocationType":{
       "type":"string",
       "enum":["used"]
+    },
+    "AllowedInstanceType":{
+      "type":"string",
+      "max":30,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\.\\*]+"
+    },
+    "AllowedInstanceTypeSet":{
+      "type":"list",
+      "member":{
+        "shape":"AllowedInstanceType",
+        "locationName":"item"
+      },
+      "max":400,
+      "min":0
     },
     "AllowedPrincipal":{
       "type":"structure",
@@ -5881,7 +6007,8 @@
         "i386",
         "x86_64",
         "arm64",
-        "x86_64_mac"
+        "x86_64_mac",
+        "arm64_mac"
       ]
     },
     "ArchitectureTypeList":{
@@ -5906,7 +6033,8 @@
         "i386",
         "x86_64",
         "arm64",
-        "x86_64_mac"
+        "x86_64_mac",
+        "arm64_mac"
       ]
     },
     "ArnList":{
@@ -7302,6 +7430,23 @@
         "ExportTaskId":{
           "shape":"ExportVmTaskId",
           "locationName":"exportTaskId"
+        }
+      }
+    },
+    "CancelImageLaunchPermissionRequest":{
+      "type":"structure",
+      "required":["ImageId"],
+      "members":{
+        "ImageId":{"shape":"ImageId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CancelImageLaunchPermissionResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
         }
       }
     },
@@ -10255,7 +10400,9 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
-        }
+        },
+        "ImageId":{"shape":"ImageId"},
+        "DeleteReplacedRootVolume":{"shape":"Boolean"}
       }
     },
     "CreateReplaceRootVolumeTaskResult":{
@@ -12950,6 +13097,36 @@
         "AccountAttributes":{
           "shape":"AccountAttributeList",
           "locationName":"accountAttributeSet"
+        }
+      }
+    },
+    "DescribeAddressTransfersMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "DescribeAddressTransfersRequest":{
+      "type":"structure",
+      "members":{
+        "AllocationIds":{
+          "shape":"AllocationIdList",
+          "locationName":"AllocationId"
+        },
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"DescribeAddressTransfersMaxResults"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeAddressTransfersResult":{
+      "type":"structure",
+      "members":{
+        "AddressTransfers":{
+          "shape":"AddressTransferList",
+          "locationName":"addressTransferSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -17485,6 +17662,23 @@
         "DirectoryId":{"shape":"String"}
       }
     },
+    "DisableAddressTransferRequest":{
+      "type":"structure",
+      "required":["AllocationId"],
+      "members":{
+        "AllocationId":{"shape":"AllocationId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DisableAddressTransferResult":{
+      "type":"structure",
+      "members":{
+        "AddressTransfer":{
+          "shape":"AddressTransfer",
+          "locationName":"addressTransfer"
+        }
+      }
+    },
     "DisableEbsEncryptionByDefaultRequest":{
       "type":"structure",
       "members":{
@@ -18620,6 +18814,27 @@
         "supported",
         "required"
       ]
+    },
+    "EnableAddressTransferRequest":{
+      "type":"structure",
+      "required":[
+        "AllocationId",
+        "TransferAccountId"
+      ],
+      "members":{
+        "AllocationId":{"shape":"AllocationId"},
+        "TransferAccountId":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "EnableAddressTransferResult":{
+      "type":"structure",
+      "members":{
+        "AddressTransfer":{
+          "shape":"AddressTransfer",
+          "locationName":"addressTransfer"
+        }
+      }
     },
     "EnableEbsEncryptionByDefaultRequest":{
       "type":"structure",
@@ -24176,6 +24391,14 @@
         "AcceleratorTotalMemoryMiB":{
           "shape":"AcceleratorTotalMemoryMiB",
           "locationName":"acceleratorTotalMemoryMiB"
+        },
+        "NetworkBandwidthGbps":{
+          "shape":"NetworkBandwidthGbps",
+          "locationName":"networkBandwidthGbps"
+        },
+        "AllowedInstanceTypes":{
+          "shape":"AllowedInstanceTypeSet",
+          "locationName":"allowedInstanceTypeSet"
         }
       }
     },
@@ -24227,7 +24450,12 @@
           "shape":"AcceleratorNameSet",
           "locationName":"AcceleratorName"
         },
-        "AcceleratorTotalMemoryMiB":{"shape":"AcceleratorTotalMemoryMiBRequest"}
+        "AcceleratorTotalMemoryMiB":{"shape":"AcceleratorTotalMemoryMiBRequest"},
+        "NetworkBandwidthGbps":{"shape":"NetworkBandwidthGbpsRequest"},
+        "AllowedInstanceTypes":{
+          "shape":"AllowedInstanceTypeSet",
+          "locationName":"AllowedInstanceType"
+        }
       }
     },
     "InstanceRequirementsWithMetadataRequest":{
@@ -25036,7 +25264,11 @@
         "r6a.48xlarge",
         "r6a.metal",
         "p4de.24xlarge",
-        "u-3tb1.56xlarge"
+        "u-3tb1.56xlarge",
+        "u-18tb1.112xlarge",
+        "u-24tb1.112xlarge",
+        "trn1.2xlarge",
+        "trn1.32xlarge"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -27112,6 +27344,10 @@
         "PartitionNumber":{
           "shape":"Integer",
           "locationName":"partitionNumber"
+        },
+        "GroupId":{
+          "shape":"PlacementGroupId",
+          "locationName":"groupId"
         }
       }
     },
@@ -27125,7 +27361,8 @@
         "Tenancy":{"shape":"Tenancy"},
         "SpreadDomain":{"shape":"String"},
         "HostResourceGroupArn":{"shape":"String"},
-        "PartitionNumber":{"shape":"Integer"}
+        "PartitionNumber":{"shape":"Integer"},
+        "GroupId":{"shape":"PlacementGroupId"}
       }
     },
     "LaunchTemplatePrivateDnsNameOptions":{
@@ -28546,7 +28783,8 @@
           "locationName":"tenancy"
         },
         "PartitionNumber":{"shape":"Integer"},
-        "HostResourceGroupArn":{"shape":"String"}
+        "HostResourceGroupArn":{"shape":"String"},
+        "GroupId":{"shape":"PlacementGroupId"}
       }
     },
     "ModifyInstancePlacementResult":{
@@ -29822,6 +30060,26 @@
       "member":{
         "shape":"NetworkAcl",
         "locationName":"item"
+      }
+    },
+    "NetworkBandwidthGbps":{
+      "type":"structure",
+      "members":{
+        "Min":{
+          "shape":"Double",
+          "locationName":"min"
+        },
+        "Max":{
+          "shape":"Double",
+          "locationName":"max"
+        }
+      }
+    },
+    "NetworkBandwidthGbpsRequest":{
+      "type":"structure",
+      "members":{
+        "Min":{"shape":"Double"},
+        "Max":{"shape":"Double"}
       }
     },
     "NetworkCardIndex":{"type":"integer"},
@@ -31150,6 +31408,10 @@
         "HostResourceGroupArn":{
           "shape":"String",
           "locationName":"hostResourceGroupArn"
+        },
+        "GroupId":{
+          "shape":"PlacementGroupId",
+          "locationName":"groupId"
         }
       }
     },
@@ -32656,6 +32918,18 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "ImageId":{
+          "shape":"ImageId",
+          "locationName":"imageId"
+        },
+        "SnapshotId":{
+          "shape":"SnapshotId",
+          "locationName":"snapshotId"
+        },
+        "DeleteReplacedRootVolume":{
+          "shape":"Boolean",
+          "locationName":"deleteReplacedRootVolume"
         }
       }
     },
@@ -35879,7 +36153,8 @@
         "lowest-price",
         "diversified",
         "capacity-optimized",
-        "capacity-optimized-prioritized"
+        "capacity-optimized-prioritized",
+        "price-capacity-optimized"
       ]
     },
     "SpotCapacityRebalance":{

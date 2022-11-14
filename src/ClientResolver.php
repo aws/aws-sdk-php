@@ -18,6 +18,7 @@ use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider as UseDualStackConfi
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface as UseDualStackEndpointConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
+use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
@@ -44,6 +45,7 @@ class ClientResolver
         'callable' => 'is_callable',
         'int'      => 'is_int',
         'bool'     => 'is_bool',
+        'boolean'  => 'is_bool',
         'string'   => 'is_string',
         'object'   => 'is_object',
         'array'    => 'is_array',
@@ -130,14 +132,13 @@ class ClientResolver
         ],
         'endpoint_provider' => [
             'type'     => 'value',
-            'valid'    => ['callable'],
+            'valid'    => ['callable', EndpointV2\EndpointProviderV2::class],
             'fn'       => [__CLASS__, '_apply_endpoint_provider'],
             'doc'      => 'An optional PHP callable that accepts a hash of options including a "service" and "region" key and returns NULL or a hash of endpoint data, of which the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider for a list of built-in providers.',
             'default'  => [__CLASS__, '_default_endpoint_provider'],
         ],
         'serializer' => [
             'default'   => [__CLASS__, '_default_serializer'],
-            'fn'        => [__CLASS__, '_apply_serializer'],
             'internal'  => true,
             'type'      => 'value',
             'valid'     => ['callable'],
@@ -356,6 +357,7 @@ class ClientResolver
                 $args['config'][$key] = $args[$key];
             }
         }
+        $this->_apply_client_context_params($args);
 
         return $args;
     }
@@ -597,9 +599,15 @@ class ClientResolver
         $args['error_parser'] = Service::createErrorParser($api->getProtocol(), $api);
     }
 
-    public static function _apply_endpoint_provider(callable $value, array &$args)
+    public static function _apply_endpoint_provider($value, array &$args)
     {
         if (!isset($args['endpoint'])) {
+            if ($value instanceof \Aws\EndpointV2\EndpointProviderV2) {
+                $options = self::getEndpointProviderOptions($args);
+                $value = PartitionEndpointProvider::defaultProvider($options)
+                    ->getPartition($args['region'], $args['service']);
+            }
+
             $endpointPrefix = isset($args['api']['metadata']['endpointPrefix'])
                 ? $args['api']['metadata']['endpointPrefix']
                 : $args['service'];
@@ -709,11 +717,6 @@ class ClientResolver
 
     public static function _default_use_dual_stack_endpoint(array &$args) {
         return UseDualStackConfigProvider::defaultProvider($args);
-    }
-
-    public static function _apply_serializer($value, array &$args, HandlerList $list)
-    {
-        $list->prependBuild(Middleware::requestBuilder($value), 'builder');
     }
 
     public static function _apply_debug($value, array &$args, HandlerList $list)
@@ -888,6 +891,22 @@ class ClientResolver
 
     public static function _default_endpoint_provider(array $args)
     {
+        $service =  isset($args['api']) ? $args['api'] : null;
+        $serviceName = isset($service) ? $service->getServiceName() : null;
+        $apiVersion = isset($service) ? $service->getApiVersion() : null;
+
+        if (self::isValidService($serviceName)
+            && self::isValidApiVersion($serviceName, $apiVersion)
+        ) {
+            $ruleset = EndpointDefinitionProvider::getEndpointRuleset(
+                $service->getServiceName(),
+                $service->getApiVersion()
+            );
+            return new \Aws\EndpointV2\EndpointProviderV2(
+                $ruleset,
+                EndpointDefinitionProvider::getPartitions()
+            );
+        }
         $options = self::getEndpointProviderOptions($args);
         return PartitionEndpointProvider::defaultProvider($options)
             ->getPartition($args['region'], $args['service']);
@@ -1043,5 +1062,47 @@ EOT;
     private static function isValidRegion($region)
     {
         return is_valid_hostlabel($region);
+    }
+
+    private function _apply_client_context_params(array $args)
+    {
+        if (isset($args['api'])
+           && !empty($args['api']->getClientContextParams()))
+        {
+            $clientContextParams = $args['api']->getClientContextParams();
+            foreach($clientContextParams as $paramName => $paramDefinition) {
+                $definition = [
+                    'type' => 'value',
+                    'valid' => [$paramDefinition['type']],
+                    'doc' => isset($paramDefinition['documentation']) ?
+                        $paramDefinition['documentation'] : null
+                ];
+                $this->argDefinitions[$paramName] = $definition;
+
+                if (isset($args[$paramName])) {
+                    $fn = self::$typeMap[$paramDefinition['type']];
+                    if (!$fn($args[$paramName])) {
+                        $this->invalidType($paramName, $args[$paramName]);
+                    }
+                }
+            }
+        }
+    }
+
+    private static function isValidService($service) {
+        if (is_null($service)) {
+            return false;
+        }
+        $services = \Aws\manifest();
+        return isset($services[$service]);
+    }
+
+    private static function isValidApiVersion($service, $apiVersion) {
+        if (is_null($apiVersion)) {
+            return false;
+        }
+        return is_dir(
+          __DIR__ . "/data/{$service}/$apiVersion"
+        );
     }
 }

@@ -361,6 +361,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listImageVersionsAsync(array $args = [])
  * @method \Aws\Result listImages(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listImagesAsync(array $args = [])
+ * @method \Aws\Result listInferenceRecommendationsJobSteps(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listInferenceRecommendationsJobStepsAsync(array $args = [])
  * @method \Aws\Result listInferenceRecommendationsJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listInferenceRecommendationsJobsAsync(array $args = [])
  * @method \Aws\Result listLabelingJobs(array $args = [])

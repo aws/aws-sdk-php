@@ -11,7 +11,7 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Tester\Exception\PendingException;
 use Aws\Crypto\AbstractCryptoClient;
 use Aws\Kms\KmsClient;
-use PHPUnit_Framework_Assert as Assert;
+use PHPUnit\Framework\Assert;
 
 class S3EncryptionContext implements Context, SnippetAcceptingContext
 {

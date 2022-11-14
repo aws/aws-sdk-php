@@ -12,7 +12,7 @@ use Aws\S3\PostObject;
 use Aws\S3\PostObjectV4;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
-use PHPUnit_Framework_Assert as Assert;
+use PHPUnit\Framework\Assert;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 

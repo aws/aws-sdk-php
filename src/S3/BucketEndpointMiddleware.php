@@ -56,20 +56,37 @@ class BucketEndpointMiddleware
         return $path ?: '/';
     }
 
+    private function removeDuplicateBucketFromHost($host, $bucket)
+    {
+        if (substr_count($host, $bucket) > 1) {
+            while (strpos($host, "{$bucket}.{$bucket}") === 0) {
+                $hostArr = explode('.', $host);
+                array_shift($hostArr);
+                $host = implode('.', $hostArr);
+            }
+        }
+        return $host;
+    }
+
     private function modifyRequest(
         RequestInterface $request,
         CommandInterface $command
     ) {
         $uri = $request->getUri();
         $path = $uri->getPath();
+        $host = $uri->getHost();
         $bucket = $command['Bucket'];
         $path = $this->removeBucketFromPath($path, $bucket);
+        $host = $this->removeDuplicateBucketFromHost($host, $bucket);
 
         // Modify the Key to make sure the key is encoded, but slashes are not.
         if ($command['Key']) {
             $path = S3Client::encodeKey(rawurldecode($path));
         }
 
-        return $request->withUri($uri->withPath($path));
+        return $request->withUri(
+            $uri->withHost($host)
+            ->withPath($path)
+        );
     }
 }

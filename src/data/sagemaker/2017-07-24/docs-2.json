@@ -47,7 +47,7 @@
     "CreateProcessingJob": "<p>Creates a processing job.</p>",
     "CreateProject": "<p>Creates a machine learning (ML) project that can contain one or more templates that set up an ML pipeline from training to deploying an approved model.</p>",
     "CreateStudioLifecycleConfig": "<p>Creates a new Studio Lifecycle Configuration.</p>",
-    "CreateTrainingJob": "<p>Starts a model training job. After training completes, SageMaker saves the resulting model artifacts to an Amazon S3 location that you specify. </p> <p>If you choose to host your model using SageMaker hosting services, you can use the resulting model artifacts as part of the model. You can also use the artifacts in a machine learning service other than SageMaker, provided that you know how to use them for inference. </p> <p>In the request body, you provide the following: </p> <ul> <li> <p> <code>AlgorithmSpecification</code> - Identifies the training algorithm to use. </p> </li> <li> <p> <code>HyperParameters</code> - Specify these algorithm-specific parameters to enable the estimation of model parameters during training. Hyperparameters can be tuned to optimize this learning process. For a list of hyperparameters for each training algorithm provided by SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>. </p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets or tokens in any hyperparameter field. If the use of security-sensitive credentials are detected, SageMaker will reject your training job request and return an exception error.</p> </important> </li> <li> <p> <code>InputDataConfig</code> - Describes the training dataset and the Amazon S3, EFS, or FSx location where it is stored.</p> </li> <li> <p> <code>OutputDataConfig</code> - Identifies the Amazon S3 bucket where you want SageMaker to save the results of model training. </p> </li> <li> <p> <code>ResourceConfig</code> - Identifies the resources, ML compute instances, and ML storage volumes to deploy for model training. In distributed training, you specify more than one instance. </p> </li> <li> <p> <code>EnableManagedSpotTraining</code> - Optimize the cost of training machine learning models by up to 80% by using Amazon EC2 Spot instances. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html\">Managed Spot Training</a>. </p> </li> <li> <p> <code>RoleArn</code> - The Amazon Resource Name (ARN) that SageMaker assumes to perform tasks on your behalf during model training. You must grant this role the necessary permissions so that SageMaker can successfully complete model training. </p> </li> <li> <p> <code>StoppingCondition</code> - To help cap training costs, use <code>MaxRuntimeInSeconds</code> to set a time limit for training. Use <code>MaxWaitTimeInSeconds</code> to specify how long a managed spot training job has to complete. </p> </li> <li> <p> <code>Environment</code> - The environment variables to set in the Docker container.</p> </li> <li> <p> <code>RetryStrategy</code> - The number of times to retry the job when the job fails due to an <code>InternalServerError</code>.</p> </li> </ul> <p> For more information about SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works.html\">How It Works</a>. </p>",
+    "CreateTrainingJob": "<p>Starts a model training job. After training completes, SageMaker saves the resulting model artifacts to an Amazon S3 location that you specify. </p> <p>If you choose to host your model using SageMaker hosting services, you can use the resulting model artifacts as part of the model. You can also use the artifacts in a machine learning service other than SageMaker, provided that you know how to use them for inference. </p> <p>In the request body, you provide the following: </p> <ul> <li> <p> <code>AlgorithmSpecification</code> - Identifies the training algorithm to use. </p> </li> <li> <p> <code>HyperParameters</code> - Specify these algorithm-specific parameters to enable the estimation of model parameters during training. Hyperparameters can be tuned to optimize this learning process. For a list of hyperparameters for each training algorithm provided by SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>. </p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets or tokens in any hyperparameter field. If the use of security-sensitive credentials are detected, SageMaker will reject your training job request and return an exception error.</p> </important> </li> <li> <p> <code>InputDataConfig</code> - Describes the input required by the training job and the Amazon S3, EFS, or FSx location where it is stored.</p> </li> <li> <p> <code>OutputDataConfig</code> - Identifies the Amazon S3 bucket where you want SageMaker to save the results of model training. </p> </li> <li> <p> <code>ResourceConfig</code> - Identifies the resources, ML compute instances, and ML storage volumes to deploy for model training. In distributed training, you specify more than one instance. </p> </li> <li> <p> <code>EnableManagedSpotTraining</code> - Optimize the cost of training machine learning models by up to 80% by using Amazon EC2 Spot instances. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html\">Managed Spot Training</a>. </p> </li> <li> <p> <code>RoleArn</code> - The Amazon Resource Name (ARN) that SageMaker assumes to perform tasks on your behalf during model training. You must grant this role the necessary permissions so that SageMaker can successfully complete model training. </p> </li> <li> <p> <code>StoppingCondition</code> - To help cap training costs, use <code>MaxRuntimeInSeconds</code> to set a time limit for training. Use <code>MaxWaitTimeInSeconds</code> to specify how long a managed spot training job has to complete. </p> </li> <li> <p> <code>Environment</code> - The environment variables to set in the Docker container.</p> </li> <li> <p> <code>RetryStrategy</code> - The number of times to retry the job when the job fails due to an <code>InternalServerError</code>.</p> </li> </ul> <p> For more information about SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works.html\">How It Works</a>. </p>",
     "CreateTransformJob": "<p>Starts a transform job. A transform job uses a trained model to get inferences on a dataset and saves these results to an Amazon S3 location that you specify.</p> <p>To perform batch transformations, you create a transform job and use the data that you have readily available.</p> <p>In the request body, you provide the following:</p> <ul> <li> <p> <code>TransformJobName</code> - Identifies the transform job. The name must be unique within an Amazon Web Services Region in an Amazon Web Services account.</p> </li> <li> <p> <code>ModelName</code> - Identifies the model to use. <code>ModelName</code> must be the name of an existing Amazon SageMaker model in the same Amazon Web Services Region and Amazon Web Services account. For information on creating a model, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateModel.html\">CreateModel</a>.</p> </li> <li> <p> <code>TransformInput</code> - Describes the dataset to be transformed and the Amazon S3 location where it is stored.</p> </li> <li> <p> <code>TransformOutput</code> - Identifies the Amazon S3 location where you want Amazon SageMaker to save the results from the transform job.</p> </li> <li> <p> <code>TransformResources</code> - Identifies the ML compute instances for the transform job.</p> </li> </ul> <p>For more information about how batch transformation works, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/batch-transform.html\">Batch Transform</a>.</p>",
     "CreateTrial": "<p>Creates an SageMaker <i>trial</i>. A trial is a set of steps called <i>trial components</i> that produce a machine learning model. A trial is part of a single SageMaker <i>experiment</i>.</p> <p>When you use SageMaker Studio or the SageMaker Python SDK, all experiments, trials, and trial components are automatically tracked, logged, and indexed. When you use the Amazon Web Services SDK for Python (Boto), you must use the logging APIs provided by the SDK.</p> <p>You can add tags to a trial and then use the <a>Search</a> API to search for the tags.</p> <p>To get a list of all your trials, call the <a>ListTrials</a> API. To view a trial's properties, call the <a>DescribeTrial</a> API. To create a trial component, call the <a>CreateTrialComponent</a> API.</p>",
     "CreateTrialComponent": "<p>Creates a <i>trial component</i>, which is a stage of a machine learning <i>trial</i>. A trial is composed of one or more trial components. A trial component can be used in multiple trials.</p> <p>Trial components include pre-processing jobs, training jobs, and batch transform jobs.</p> <p>When you use SageMaker Studio or the SageMaker Python SDK, all experiments, trials, and trial components are automatically tracked, logged, and indexed. When you use the Amazon Web Services SDK for Python (Boto), you must use the logging APIs provided by the SDK.</p> <p>You can add tags to a trial component and then use the <a>Search</a> API to search for the tags.</p>",
@@ -180,6 +180,7 @@
     "ListHyperParameterTuningJobs": "<p>Gets a list of <a>HyperParameterTuningJobSummary</a> objects that describe the hyperparameter tuning jobs launched in your account.</p>",
     "ListImageVersions": "<p>Lists the versions of a specified image and their properties. The list can be filtered by creation time or modified time.</p>",
     "ListImages": "<p>Lists the images in your account and their properties. The list can be filtered by creation time or modified time, and whether the image name contains a specified string.</p>",
+    "ListInferenceRecommendationsJobSteps": "<p>Returns a list of the subtasks for an Inference Recommender job.</p> <p>The supported subtasks are benchmarks, which evaluate the performance of your model on different instance types.</p>",
     "ListInferenceRecommendationsJobs": "<p>Lists recommendation jobs that satisfy various filters.</p>",
     "ListLabelingJobs": "<p>Gets a list of labeling jobs.</p>",
     "ListLabelingJobsForWorkteam": "<p>Gets a list of labeling jobs assigned to a specified work team.</p>",
@@ -4190,6 +4191,13 @@
         "ListEndpointConfigsOutput$EndpointConfigs": "<p>An array of endpoint configurations.</p>"
       }
     },
+    "EndpointInfo": {
+      "base": "<p>Details about a customer endpoint that was compared in an Inference Recommender job.</p>",
+      "refs": {
+        "EndpointPerformance$EndpointInfo": null,
+        "Endpoints$member": null
+      }
+    },
     "EndpointInput": {
       "base": "<p>Input object for the endpoint</p>",
       "refs": {
@@ -4221,6 +4229,7 @@
         "DescribeEndpointOutput$EndpointName": "<p>Name of the endpoint.</p>",
         "DescribeMonitoringScheduleResponse$EndpointName": "<p> The name of the endpoint for the monitoring job.</p>",
         "Endpoint$EndpointName": "<p>The name of the endpoint.</p>",
+        "EndpointInfo$EndpointName": "<p>The name of a customer's endpoint.</p>",
         "EndpointInput$EndpointName": "<p>An endpoint in customer's account which has enabled <code>DataCaptureConfig</code> enabled.</p>",
         "EndpointSummary$EndpointName": "<p>The name of the endpoint.</p>",
         "ListDataQualityJobDefinitionsRequest$EndpointName": "<p>A filter that lists the data quality job definitions associated with the specified endpoint.</p>",
@@ -4248,7 +4257,20 @@
     "EndpointOutputConfiguration": {
       "base": "<p>The endpoint configuration made by Inference Recommender during a recommendation job.</p>",
       "refs": {
-        "InferenceRecommendation$EndpointConfiguration": "<p>Defines the endpoint configuration parameters.</p>"
+        "InferenceRecommendation$EndpointConfiguration": "<p>Defines the endpoint configuration parameters.</p>",
+        "RecommendationJobInferenceBenchmark$EndpointConfiguration": null
+      }
+    },
+    "EndpointPerformance": {
+      "base": "<p>The performance results from running an Inference Recommender job on an existing endpoint.</p>",
+      "refs": {
+        "EndpointPerformances$member": null
+      }
+    },
+    "EndpointPerformances": {
+      "base": null,
+      "refs": {
+        "DescribeInferenceRecommendationsJobResponse$EndpointPerformances": "<p>The performance results from running an Inference Recommender job on an existing endpoint.</p>"
       }
     },
     "EndpointSortKey": {
@@ -4276,6 +4298,12 @@
       "base": null,
       "refs": {
         "ListEndpointsOutput$Endpoints": "<p> An array or endpoint objects. </p>"
+      }
+    },
+    "Endpoints": {
+      "base": null,
+      "refs": {
+        "RecommendationJobInputConfig$Endpoints": "<p>Existing customer endpoints on which to run an Inference Recommender job.</p>"
       }
     },
     "EntityDescription": {
@@ -5067,8 +5095,7 @@
     "FrameworkVersion": {
       "base": null,
       "refs": {
-        "InputConfig$FrameworkVersion": "<p>Specifies the framework version to use. This API field is only supported for the MXNet, PyTorch, TensorFlow and TensorFlow Lite frameworks.</p> <p>For information about framework versions supported for cloud targets and edge devices, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/neo-supported-cloud.html\">Cloud Supported Instance Types and Frameworks</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/neo-supported-devices-edge-frameworks.html\">Edge Supported Frameworks</a>.</p>",
-        "ModelPackageContainerDefinition$FrameworkVersion": "<p>The framework version of the Model Package Container Image.</p>"
+        "InputConfig$FrameworkVersion": "<p>Specifies the framework version to use. This API field is only supported for the MXNet, PyTorch, TensorFlow and TensorFlow Lite frameworks.</p> <p>For information about framework versions supported for cloud targets and edge devices, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/neo-supported-cloud.html\">Cloud Supported Instance Types and Frameworks</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/neo-supported-devices-edge-frameworks.html\">Edge Supported Frameworks</a>.</p>"
       }
     },
     "GenerateCandidateDefinitionsOnly": {
@@ -5704,6 +5731,12 @@
         "DescribeCompilationJobResponse$InferenceImage": "<p>The inference image to use when compiling a model. Specify an image only if the target device is a cloud instance.</p>"
       }
     },
+    "InferenceMetrics": {
+      "base": "<p>The metrics for an existing endpoint compared in an Inference Recommender job.</p>",
+      "refs": {
+        "EndpointPerformance$Metrics": "<p>The metrics for an existing endpoint.</p>"
+      }
+    },
     "InferenceRecommendation": {
       "base": "<p>A list of recommendations made by Amazon SageMaker Inference Recommender.</p>",
       "refs": {
@@ -5720,6 +5753,18 @@
       "base": "<p>A structure that contains a list of recommendation jobs.</p>",
       "refs": {
         "InferenceRecommendationsJobs$member": null
+      }
+    },
+    "InferenceRecommendationsJobStep": {
+      "base": "<p>A returned array object for the <code>Steps</code> response field in the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_InferenceRecommendationsJobStep.html\">ListInferenceRecommendationsJobSteps</a> API command.</p>",
+      "refs": {
+        "InferenceRecommendationsJobSteps$member": null
+      }
+    },
+    "InferenceRecommendationsJobSteps": {
+      "base": null,
+      "refs": {
+        "ListInferenceRecommendationsJobStepsResponse$Steps": "<p>A list of all subtask details in Inference Recommender.</p>"
       }
     },
     "InferenceRecommendationsJobs": {
@@ -5844,6 +5889,8 @@
         "EdgeDeploymentStatus$EdgeDeploymentPendingInStage": "<p>The number of edge devices yet to pick up the deployment in current stage, or in progress.</p>",
         "EdgeDeploymentStatus$EdgeDeploymentFailedInStage": "<p>The number of edge devices that failed the deployment in current stage.</p>",
         "EndpointOutputConfiguration$InitialInstanceCount": "<p>The number of instances recommended to launch initially.</p>",
+        "InferenceMetrics$MaxInvocations": "<p>The expected maximum number of requests per minute for the instance.</p>",
+        "InferenceMetrics$ModelLatency": "<p>The expected model latency at maximum invocations per minute for the instance.</p>",
         "ModelLatencyThreshold$ValueInMilliseconds": "<p>The model latency percentile value in milliseconds.</p>",
         "RecommendationJobStoppingConditions$MaxInvocations": "<p>The maximum number of requests per minute expected for the endpoint.</p>",
         "RecommendationMetrics$MaxInvocations": "<p>The expected maximum number of requests per minute for the instance.</p>",
@@ -6599,6 +6646,16 @@
       "refs": {
       }
     },
+    "ListInferenceRecommendationsJobStepsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListInferenceRecommendationsJobStepsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListInferenceRecommendationsJobsRequest": {
       "base": null,
       "refs": {
@@ -7103,6 +7160,7 @@
         "ListHyperParameterTuningJobsRequest$MaxResults": "<p>The maximum number of tuning jobs to return. The default value is 10.</p>",
         "ListImageVersionsRequest$MaxResults": "<p>The maximum number of versions to return in the response. The default value is 10. </p>",
         "ListImagesRequest$MaxResults": "<p>The maximum number of images to return in the response. The default value is 10. </p>",
+        "ListInferenceRecommendationsJobStepsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListInferenceRecommendationsJobsRequest$MaxResults": "<p>The maximum number of recommendations to return in the response.</p>",
         "ListLabelingJobsForWorkteamRequest$MaxResults": "<p>The maximum number of labeling jobs to return in each page of the response.</p>",
         "ListLabelingJobsRequest$MaxResults": "<p>The maximum number of labeling jobs to return in each page of the response.</p>",
@@ -7369,7 +7427,8 @@
     "ModelConfiguration": {
       "base": "<p>Defines the model configuration. Includes the specification name and environment parameters.</p>",
       "refs": {
-        "InferenceRecommendation$ModelConfiguration": "<p>Defines the model configuration.</p>"
+        "InferenceRecommendation$ModelConfiguration": "<p>Defines the model configuration.</p>",
+        "RecommendationJobInferenceBenchmark$ModelConfiguration": null
       }
     },
     "ModelDataQuality": {
@@ -7547,6 +7606,12 @@
       "refs": {
         "AdditionalInferenceSpecificationDefinition$Containers": "<p>The Amazon ECR registry path of the Docker image that contains the inference code.</p>",
         "InferenceSpecification$Containers": "<p>The Amazon ECR registry path of the Docker image that contains the inference code.</p>"
+      }
+    },
+    "ModelPackageFrameworkVersion": {
+      "base": null,
+      "refs": {
+        "ModelPackageContainerDefinition$FrameworkVersion": "<p>The framework version of the Model Package Container Image.</p>"
       }
     },
     "ModelPackageGroup": {
@@ -8248,6 +8313,8 @@
         "ListImageVersionsResponse$NextToken": "<p>A token for getting the next set of versions, if there are any.</p>",
         "ListImagesRequest$NextToken": "<p>If the previous call to <code>ListImages</code> didn't return the full set of images, the call returns a token for getting the next set of images.</p>",
         "ListImagesResponse$NextToken": "<p>A token for getting the next set of images, if there are any.</p>",
+        "ListInferenceRecommendationsJobStepsRequest$NextToken": "<p>A token that you can specify to return more results from the list. Specify this field if you have a token that was returned from a previous request.</p>",
+        "ListInferenceRecommendationsJobStepsResponse$NextToken": "<p>A token that you can specify in your next request to return more results from the list.</p>",
         "ListInferenceRecommendationsJobsRequest$NextToken": "<p>If the response to a previous <code>ListInferenceRecommendationsJobsRequest</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of recommendations, use the token in the next request.</p>",
         "ListInferenceRecommendationsJobsResponse$NextToken": "<p>A token for getting the next set of recommendations, if there are any.</p>",
         "ListLabelingJobsForWorkteamRequest$NextToken": "<p>If the result of the previous <code>ListLabelingJobsForWorkteam</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of labeling jobs, use the token in the next request.</p>",
@@ -9697,6 +9764,12 @@
         "InferenceSpecification$SupportedRealtimeInferenceInstanceTypes": "<p>A list of the instance types that are used to generate inferences in real-time.</p> <p>This parameter is required for unversioned models, and optional for versioned models.</p>"
       }
     },
+    "RecommendationFailureReason": {
+      "base": null,
+      "refs": {
+        "RecommendationJobInferenceBenchmark$FailureReason": "<p>The reason why a benchmark failed.</p>"
+      }
+    },
     "RecommendationJobArn": {
       "base": null,
       "refs": {
@@ -9725,6 +9798,12 @@
         "InferenceRecommendationsJob$JobDescription": "<p>The job description.</p>"
       }
     },
+    "RecommendationJobInferenceBenchmark": {
+      "base": "<p>The details for a specific benchmark from an Inference Recommender job.</p>",
+      "refs": {
+        "InferenceRecommendationsJobStep$InferenceBenchmark": "<p>The details for a specific benchmark.</p>"
+      }
+    },
     "RecommendationJobInputConfig": {
       "base": "<p>The input configuration of the recommendation job.</p>",
       "refs": {
@@ -9739,6 +9818,8 @@
         "DescribeInferenceRecommendationsJobRequest$JobName": "<p>The name of the job. The name must be unique within an Amazon Web Services Region in the Amazon Web Services account.</p>",
         "DescribeInferenceRecommendationsJobResponse$JobName": "<p>The name of the job. The name must be unique within an Amazon Web Services Region in the Amazon Web Services account.</p>",
         "InferenceRecommendationsJob$JobName": "<p>The name of the job.</p>",
+        "InferenceRecommendationsJobStep$JobName": "<p>The name of the Inference Recommender job.</p>",
+        "ListInferenceRecommendationsJobStepsRequest$JobName": "<p>The name for the Inference Recommender job.</p>",
         "StopInferenceRecommendationsJobRequest$JobName": "<p>The name of the job you want to stop.</p>"
       }
     },
@@ -9765,6 +9846,8 @@
       "refs": {
         "DescribeInferenceRecommendationsJobResponse$Status": "<p>The status of the job.</p>",
         "InferenceRecommendationsJob$Status": "<p>The status of the job.</p>",
+        "InferenceRecommendationsJobStep$Status": "<p>The current status of the benchmark.</p>",
+        "ListInferenceRecommendationsJobStepsRequest$Status": "<p>A filter to return benchmarks of a specified status. If this field is left empty, then all benchmarks are returned.</p>",
         "ListInferenceRecommendationsJobsRequest$StatusEquals": "<p>A filter that retrieves only inference recommendations jobs with a specific status.</p>"
       }
     },
@@ -9798,7 +9881,15 @@
     "RecommendationMetrics": {
       "base": "<p>The metrics of recommendations.</p>",
       "refs": {
-        "InferenceRecommendation$Metrics": "<p>The metrics used to decide what recommendation to make.</p>"
+        "InferenceRecommendation$Metrics": "<p>The metrics used to decide what recommendation to make.</p>",
+        "RecommendationJobInferenceBenchmark$Metrics": null
+      }
+    },
+    "RecommendationStepType": {
+      "base": null,
+      "refs": {
+        "InferenceRecommendationsJobStep$StepType": "<p>The type of the subtask.</p> <p> <code>BENCHMARK</code>: Evaluate the performance of your model on different instance types.</p>",
+        "ListInferenceRecommendationsJobStepsRequest$StepType": "<p>A filter to return details about the specified type of subtask.</p> <p> <code>BENCHMARK</code>: Evaluate the performance of your model on different instance types.</p>"
       }
     },
     "RecordWrapper": {
@@ -11669,6 +11760,30 @@
         "TrafficPattern$TrafficType": "<p>Defines the traffic patterns.</p>"
       }
     },
+    "TrainingContainerArgument": {
+      "base": null,
+      "refs": {
+        "TrainingContainerArguments$member": null
+      }
+    },
+    "TrainingContainerArguments": {
+      "base": null,
+      "refs": {
+        "AlgorithmSpecification$ContainerArguments": "<p>The arguments for a container used to run a training job. See <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms-training-algo-dockerfile.html\">How Amazon SageMaker Runs Your Training Image</a> for additional information.</p>"
+      }
+    },
+    "TrainingContainerEntrypoint": {
+      "base": null,
+      "refs": {
+        "AlgorithmSpecification$ContainerEntrypoint": "<p>The <a href=\"https://docs.docker.com/engine/reference/builder/\">entrypoint script for a Docker container</a> used to run a training job. This script takes precedence over the default train processing instructions. See <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms-training-algo-dockerfile.html\">How Amazon SageMaker Runs Your Training Image</a> for more information.</p>"
+      }
+    },
+    "TrainingContainerEntrypointString": {
+      "base": null,
+      "refs": {
+        "TrainingContainerEntrypoint$member": null
+      }
+    },
     "TrainingEnvironmentKey": {
       "base": null,
       "refs": {
@@ -11877,7 +11992,7 @@
     "TransformInstanceCount": {
       "base": null,
       "refs": {
-        "TransformResources$InstanceCount": "<p>The number of ML compute instances to use in the transform job. For distributed transform jobs, specify a value greater than 1. The default value is <code>1</code>.</p>"
+        "TransformResources$InstanceCount": "<p>The number of ML compute instances to use in the transform job. The default value is <code>1</code>, and the maximum is <code>100</code>. For distributed transform jobs, specify a value greater than <code>1</code>.</p>"
       }
     },
     "TransformInstanceType": {
