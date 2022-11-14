@@ -150,7 +150,9 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
 
     public function shouldAttemptRefresh()
     {
-       return strtotime("-10 minutes") >= strtotime($this->getTokenData()['expiresAt']);
+        $tokenLocation = self::getTokenLocation($this->ssoProfileName);
+        $tokenData = $this->getTokenData($tokenLocation);
+        return strtotime("-10 minutes") >= strtotime($tokenData['expiresAt']);
     }
 
     /**
