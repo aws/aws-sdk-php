@@ -201,9 +201,9 @@ class TokenProvider
                     if (!$foundToken->isExpired()) {
                         return Promise\Create::promiseFor($foundToken);
                     }
-                }
-                if (isset($found['refreshMethod']) && is_callable($found['refreshMethod'])) {
-                    return Promise\Create::promiseFor($found['refreshMethod']());
+                    if (isset($found['refreshMethod']) && is_callable($found['refreshMethod'])) {
+                        return Promise\Create::promiseFor($found['refreshMethod']());
+                    }
                 }
             }
 
