@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CustomerProfiles` - This release enhances the SearchProfiles API by providing functionality to search for profiles using multiple keys and logical operators.
+* `Aws\LakeFormation` - This release adds a new parameter "Parameters" in the DataLakeSettings.
+* `Aws\ManagedBlockchain` - Updating the API docs data type: NetworkEthereumAttributes, and the operations DeleteNode, and CreateNode to also include the supported Goerli network.
+* `Aws\Proton` - Add support for CodeBuild Provisioning
+* `Aws\RDS` - This release adds support for restoring an RDS Multi-AZ DB cluster snapshot to a Single-AZ deployment or a Multi-AZ DB instance deployment.
+* `Aws\Sts` - Fixes a bug where incorrect regional endpoint settings are derived.
+* `Aws\WorkDocs` - Added 2 new document related operations, DeleteDocumentVersion and RestoreDocumentVersions.
+* `Aws\XRay` - This release enhances GetServiceGraph API to support new type of edge to represent links between SQS and Lambda in event-driven applications.
+
 ## 3.243.0 - 2022-11-14
 
 * `Aws\CustomerProfiles` - This release enhances the SearchProfiles API by providing functionality to search for profiles using multiple keys and logical operators.
