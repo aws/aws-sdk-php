@@ -360,7 +360,7 @@ EOT;
                 isset($cachedToken['refreshToken']) ? $cachedToken['refreshToken'] : null,
                 isset($cachedToken['clientId']) ? $cachedToken['clientId'] : null,
                 isset($cachedToken['clientSecret']) ? $cachedToken['clientSecret'] : null,
-                isset($cachedToken['registrationExpiresAt']) ? $cachedToken['registrationExpiresAt'] : null,
+                isset($cachedToken['registrationExpiresAt']) ? strToTime($cachedToken['registrationExpiresAt']) : null,
                 isset($cachedToken['region']) ? $cachedToken['region'] : null,
                 isset($cachedToken['startUrl']) ? $cachedToken['startUrl'] : null
                 );
@@ -376,7 +376,7 @@ EOT;
                 TokenProvider::cache(TokenProvider::defaultProvider(), $cache, $key)
             )->wait();
 
-//            $this->assertJsonStringEqualsJsonString($expectedTokenWriteback, file_get_contents($cachedFileName));
+            $this->assertJsonStringEqualsJsonString($expectedTokenWriteback, file_get_contents($cachedFileName));
             $this->assertSame($expectedToken['token'], $found->getToken());
             $this->assertEquals(strtotime($expectedToken['expiration']), $found->getExpiration());
         } finally {

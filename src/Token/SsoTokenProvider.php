@@ -134,8 +134,12 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
                 $token = new SsoToken(
                     $tokenData['accessToken'],
                     $tokenData['expiresAt'],
-                    $tokenData['refreshToken']
-                );
+                    $tokenData['refreshToken'],
+                    isset($tokenData['clientId']) ? $tokenData['clientId'] : null,
+                    isset($tokenData['clientSecret']) ? $tokenData['clientSecret'] : null,
+                    isset($tokenData['registrationExpiresAt']) ? $tokenData['registrationExpiresAt'] : null,
+                    isset($tokenData['region']) ? $tokenData['region'] : null,
+                    isset($tokenData['startUrl']) ? $tokenData['startUrl'] : null                );
 
                 $this->writeNewTokenDataToDisk($tokenData, $tokenLocation);
 
@@ -199,7 +203,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
      * @param string $tokenLocation
      * @return void
      */
-    private function writeNewTokenDataToDisk(array $tokenData, string $tokenLocation)
+    private function writeNewTokenDataToDisk(array $tokenData, $tokenLocation)
     {
         $tokenData['expiresAt'] = gmdate(
             'Y-m-d\TH:i:s\Z',
