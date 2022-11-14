@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.243.0 - 2022-11-14
 
 * `Aws\CustomerProfiles` - This release enhances the SearchProfiles API by providing functionality to search for profiles using multiple keys and logical operators.
 * `Aws\EndpointV2` - Adds new endpoint provider for the AWS SDKs Endpoints 2.0 initiative.
