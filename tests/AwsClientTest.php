@@ -495,7 +495,7 @@ class AwsClientTest extends TestCase
             'AWS::Region' => 'us-west-2',
             'AWS::UseFIPS' => false,
             'AWS::UseDualStack' => false,
-            'AWS::STS::UseGlobalEndpoint' => false,
+            'AWS::STS::UseGlobalEndpoint' => true,
         ];
         $builtIns = $client->getClientBuiltIns();
         $this->assertEquals(
@@ -515,7 +515,7 @@ class AwsClientTest extends TestCase
             'Region' => 'us-west-2',
             'UseFIPS' => false,
             'UseDualStack' => false,
-            'UseGlobalEndpoint' => false,
+            'UseGlobalEndpoint' => true,
         ];
         $providerArgs = $client->getEndpointProviderArgs();
         $this->assertEquals(

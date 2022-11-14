@@ -107,8 +107,7 @@ class StsClient extends AwsClient
                 return;
             }
         } else {
-            if ($result->isFallback()
-                || $result->getEndpointsType() === 'regional') {
+            if ($result->getEndpointsType() === 'regional') {
                 $value = false;
             } else {
                 $value = true;
