@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.243.1 - 2022-11-14
 
 * `Aws\CustomerProfiles` - This release enhances the SearchProfiles API by providing functionality to search for profiles using multiple keys and logical operators.
 * `Aws\LakeFormation` - This release adds a new parameter "Parameters" in the DataLakeSettings.
