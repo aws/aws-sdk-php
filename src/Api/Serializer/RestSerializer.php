@@ -275,7 +275,7 @@ abstract class RestSerializer
     private function appendQuery($query, $endpoint)
     {
         $append = Psr7\Query::build($query);
-        return $endpoint .= strpos($endpoint, '?') ? "&{$append}" : "?$append";
+        return $endpoint .= strpos($endpoint, '?') !== false ? "&{$append}" : "?{$append}";
     }
 
     private function getVarDefinitions($command, $args)
