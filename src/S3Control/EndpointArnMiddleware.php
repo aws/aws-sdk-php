@@ -68,6 +68,7 @@ class EndpointArnMiddleware
      * @param Service $service
      * @param $region
      * @param array $config
+     * @param boolean $isUseEndpointV2
      * @return callable
      */
     public static function wrap(
@@ -87,7 +88,7 @@ class EndpointArnMiddleware
         Service  $service,
                  $region,
         array    $config = [],
-        $isUseEndpointV2
+        $isUseEndpointV2 = false
     )
     {
         $this->partitionProvider = PartitionEndpointProvider::defaultProvider();
