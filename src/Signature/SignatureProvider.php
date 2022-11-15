@@ -61,8 +61,7 @@ class SignatureProvider
     public static function resolve(callable $provider, $version, $service, $region)
     {
         $result = $provider($version, $service, $region);
-        if (
-            $result instanceof SignatureInterface
+        if ($result instanceof SignatureInterface
             || $result instanceof BearerTokenAuthorization
         ) {
             return $result;
