@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.244.0 - 2022-11-15
 
 * `Aws\Connect` - This release updates the APIs: UpdateInstanceAttribute, DescribeInstanceAttribute, and ListInstanceAttributes. You can use it to programmatically enable/disable enhanced contact monitoring using attribute type ENHANCED_CONTACT_MONITORING on the specified Amazon Connect instance.
 * `Aws\EndpointV2` - Fixes #2558, #2559
