@@ -580,6 +580,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSqs(array $args = [])
  * @method \Aws\Ssm\SsmClient createSsm(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSsm(array $args = [])
+ * @method \Aws\SsmSap\SsmSapClient createSsmSap(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSsmSap(array $args = [])
  * @method \Aws\StorageGateway\StorageGatewayClient createStorageGateway(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionStorageGateway(array $args = [])
  * @method \Aws\Sts\StsClient createSts(array $args = [])

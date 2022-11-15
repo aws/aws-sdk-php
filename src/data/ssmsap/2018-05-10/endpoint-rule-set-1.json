@@ -175,7 +175,7 @@
                                 {
                                     "conditions": [],
                                     "endpoint": {
-                                        "url": "https://greengrass-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                        "url": "https://ssm-sap-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
                                         "properties": {},
                                         "headers": {}
                                     },
@@ -226,18 +226,12 @@
                             "rules": [
                                 {
                                     "conditions": [],
-                                    "type": "tree",
-                                    "rules": [
-                                        {
-                                            "conditions": [],
-                                            "endpoint": {
-                                                "url": "https://greengrass-fips.{Region}.{PartitionResult#dnsSuffix}",
-                                                "properties": {},
-                                                "headers": {}
-                                            },
-                                            "type": "endpoint"
-                                        }
-                                    ]
+                                    "endpoint": {
+                                        "url": "https://ssm-sap-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                        "properties": {},
+                                        "headers": {}
+                                    },
+                                    "type": "endpoint"
                                 }
                             ]
                         },
@@ -285,7 +279,7 @@
                                 {
                                     "conditions": [],
                                     "endpoint": {
-                                        "url": "https://greengrass.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                        "url": "https://ssm-sap.{Region}.{PartitionResult#dualStackDnsSuffix}",
                                         "properties": {},
                                         "headers": {}
                                     },
@@ -302,56 +296,12 @@
                 },
                 {
                     "conditions": [],
-                    "type": "tree",
-                    "rules": [
-                        {
-                            "conditions": [
-                                {
-                                    "fn": "stringEquals",
-                                    "argv": [
-                                        {
-                                            "ref": "Region"
-                                        },
-                                        "dataplane-us-gov-east-1"
-                                    ]
-                                }
-                            ],
-                            "endpoint": {
-                                "url": "https://greengrass-ats.iot.us-gov-east-1.amazonaws.com",
-                                "properties": {},
-                                "headers": {}
-                            },
-                            "type": "endpoint"
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "fn": "stringEquals",
-                                    "argv": [
-                                        {
-                                            "ref": "Region"
-                                        },
-                                        "dataplane-us-gov-west-1"
-                                    ]
-                                }
-                            ],
-                            "endpoint": {
-                                "url": "https://greengrass-ats.iot.us-gov-west-1.amazonaws.com",
-                                "properties": {},
-                                "headers": {}
-                            },
-                            "type": "endpoint"
-                        },
-                        {
-                            "conditions": [],
-                            "endpoint": {
-                                "url": "https://greengrass.{Region}.{PartitionResult#dnsSuffix}",
-                                "properties": {},
-                                "headers": {}
-                            },
-                            "type": "endpoint"
-                        }
-                    ]
+                    "endpoint": {
+                        "url": "https://ssm-sap.{Region}.{PartitionResult#dnsSuffix}",
+                        "properties": {},
+                        "headers": {}
+                    },
+                    "type": "endpoint"
                 }
             ]
         }
