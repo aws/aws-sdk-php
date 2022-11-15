@@ -245,7 +245,9 @@ abstract class RestSerializer
         }
 
         //Accounts for leading / in relative path
-        if (strpos($relative, '//') === 0) {
+        if ($this->api->isModifiedModel()
+            && strpos($relative, '//') === 0
+        ) {
             return new Uri($this->endpoint . $relative);
         }
 
