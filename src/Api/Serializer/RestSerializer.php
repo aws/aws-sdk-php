@@ -244,6 +244,11 @@ abstract class RestSerializer
             $relative = substr($relative, 1);
         }
 
+        //Accounts for leading / in relative path
+        if (strpos($relative, '//') === 0) {
+            return new Uri($this->endpoint . $relative);
+        }
+
         // Expand path place holders using Amazon's slightly different URI
         // template syntax.
         return UriResolver::resolve($this->endpoint, new Uri($relative));
