@@ -8,6 +8,7 @@ use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
 
@@ -47,6 +48,18 @@ class AwsClient implements AwsClientInterface
 
     /** @var array*/
     private $defaultRequestOptions;
+
+    /** @var array*/
+    private $clientContextParams = [];
+
+    /** @var array*/
+    protected $clientBuiltIns = [];
+
+    /** @var  EndpointProviderV2 | callable */
+    protected $endpointProvider;
+
+    /** @var callable */
+    protected $serializer;
 
     /**
      * Get an array of client constructor arguments used by the client.
@@ -216,14 +229,21 @@ class AwsClient implements AwsClientInterface
         $this->tokenProvider = $config['token'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->config = $config['config'];
+        $this->setClientBuiltIns($args);
+        $this->clientContextParams = $this->setClientContextParams($args);
         $this->defaultRequestOptions = $config['http'];
+        $this->endpointProvider = $config['endpoint_provider'];
+        $this->serializer = $config['serializer'];
         $this->addSignatureMiddleware();
         $this->addInvocationId();
         $this->addEndpointParameterMiddleware($args);
-        $this->addEndpointDiscoveryMiddleware($config, $args);
+        if (!$this->isUseEndpointV2()) {
+            $this->addEndpointDiscoveryMiddleware($config, $args);
+        }
         $this->loadAliases();
         $this->addStreamRequestPayload();
         $this->addRecursionDetection();
+        $this->addRequestBuilder();
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -249,6 +269,7 @@ class AwsClient implements AwsClientInterface
         $fn = $this->credentialProvider;
         return $fn();
     }
+
 
     public function getEndpoint()
     {
@@ -282,6 +303,33 @@ class AwsClient implements AwsClientInterface
         }
 
         return new Command($name, $args, clone $this->getHandlerList());
+    }
+
+    public function getEndpointProvider()
+    {
+        return $this->endpointProvider;
+    }
+
+    /**
+     * Provides the set of service context parameter
+     * key-value pairs used for endpoint resolution.
+     *
+     * @return array
+     */
+    public function getClientContextParams()
+    {
+        return $this->clientContextParams;
+    }
+
+    /**
+     * Provides the set of built-in keys and values
+     * used for endpoint resolution
+     *
+     * @return array
+     */
+    public function getClientBuiltIns()
+    {
+        return $this->clientBuiltIns;
     }
 
     public function __sleep()
@@ -368,6 +416,7 @@ class AwsClient implements AwsClientInterface
             if (!empty($c['@context']['signing_service'])) {
                 $name = $c['@context']['signing_service'];
             }
+
             $authType = $api->getOperation($c->getName())['authtype'];
             switch ($authType){
                 case 'none':
@@ -384,6 +433,13 @@ class AwsClient implements AwsClientInterface
                 if ($c['@context']['signature_version'] == 'v4a') {
                     $version = 'v4a';
                 }
+            }
+            if (!empty($endpointAuthSchemes = $c->getAuthSchemes())) {
+                $version = $endpointAuthSchemes['version'];
+                $name = isset($endpointAuthSchemes['name']) ?
+                    $endpointAuthSchemes['name'] : $name;
+                $region = isset($endpointAuthSchemes['region']) ?
+                    $endpointAuthSchemes['region'] : $region;
             }
             return SignatureProvider::resolve($provider, $version, $name, $region);
         };
@@ -433,6 +489,110 @@ class AwsClient implements AwsClientInterface
         $this->handlerList->appendBuild(
             Middleware::recursionDetection(), 'recursion-detection'
         );
+    }
+
+    /**
+     * Adds the `builder` middleware such that a client's endpoint
+     * provider and endpoint resolution arguments can be passed.
+     */
+    private function addRequestBuilder()
+    {
+        $handlerList = $this->getHandlerList();
+        $serializer = $this->serializer;
+        $endpointProvider = $this->endpointProvider;
+        $endpointArgs = $this->getEndpointProviderArgs();
+
+        $handlerList->prependBuild(
+            Middleware::requestBuilder(
+                $serializer,
+                $endpointProvider,
+                $endpointArgs
+            ),
+            'builderV2'
+        );
+    }
+
+    /**
+     * Retrieves client context param definition from service model,
+     * creates mapping of client context param names with client-provided
+     * values.
+     *
+     * @return array
+     */
+    private function setClientContextParams($args)
+    {
+        $api = $this->getApi();
+        $resolvedParams = [];
+        if (!empty($paramDefinitions = $api->getClientContextParams())) {
+            foreach($paramDefinitions as $paramName => $paramValue) {
+                if (isset($args[$paramName])) {
+                   $result[$paramName] = $args[$paramName];
+               }
+            }
+        }
+        return $resolvedParams;
+    }
+
+    /**
+     * Retrieves and sets default values used for endpoint resolution.
+     */
+    private function setClientBuiltIns($args)
+    {
+        $builtIns = [];
+        $config = $this->getConfig();
+        $service = $args['service'];
+
+        $builtIns['SDK::Endpoint'] = isset($args['endpoint']) ? $args['endpoint'] : null;
+        $builtIns['AWS::Region'] = $this->getRegion();
+        if (!isset($builtIns['SDK::Endpoint'])) {
+            $builtIns['AWS::UseFIPS'] = $config['use_fips_endpoint']->isUseFipsEndpoint();
+            $builtIns['AWS::UseDualStack'] = $config['use_dual_stack_endpoint']->isUseDualstackEndpoint();
+        }
+        if ($service === 's3' || $service === 's3control'){
+            $builtIns['AWS::S3::UseArnRegion'] = $config['use_arn_region']->isUseArnRegion();
+        }
+        if ($service === 's3') {
+            $builtIns['AWS::S3::UseArnRegion'] = $config['use_arn_region']->isUseArnRegion();
+            $builtIns['AWS::S3::Accelerate'] = $config['use_accelerate_endpoint'];
+            $builtIns['AWS::S3::ForcePathStyle'] = $config['use_path_style_endpoint'];
+            $builtIns['AWS::S3::DisableMultiRegionAccessPoints'] = $config['disable_multiregion_access_points'];
+        }
+        $this->clientBuiltIns += $builtIns;
+    }
+
+    /**
+     * Retrieves arguments to be used in endpoint resolution.
+     *
+     * @return array
+     */
+    public function getEndpointProviderArgs()
+    {
+        return $this->normalizeEndpointProviderArgs();
+    }
+
+    /**
+     * Combines built-in and client context parameter values in
+     * order of specificity.  Client context parameter values supersede
+     * built-in values.
+     *
+     * @return array
+     */
+    private function normalizeEndpointProviderArgs()
+    {
+        $normalizedBuiltIns = [];
+
+        foreach($this->clientBuiltIns as $name => $value) {
+            $normalizedName = explode('::', $name);
+            $normalizedName = $normalizedName[count($normalizedName) - 1];
+            $normalizedBuiltIns[$normalizedName] = $value;
+        }
+
+        return array_merge($normalizedBuiltIns, $this->getClientContextParams());
+    }
+
+    protected function isUseEndpointV2()
+    {
+        return $this->endpointProvider instanceof EndpointProviderV2;
     }
 
     /**

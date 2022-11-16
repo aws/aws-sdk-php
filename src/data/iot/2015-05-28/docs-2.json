@@ -168,6 +168,7 @@
     "ListPrincipalThings": "<p>Lists the things associated with the specified principal. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListPrincipalThings</a> action.</p>",
     "ListProvisioningTemplateVersions": "<p>A list of provisioning template versions.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListProvisioningTemplateVersions</a> action.</p>",
     "ListProvisioningTemplates": "<p>Lists the provisioning templates in your Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListProvisioningTemplates</a> action.</p>",
+    "ListRelatedResourcesForAuditFinding": "<p>The related resources of an Audit finding. The following resources can be returned from calling this API:</p> <ul> <li> <p>DEVICE_CERTIFICATE</p> </li> <li> <p>CA_CERTIFICATE</p> </li> <li> <p>IOT_POLICY</p> </li> <li> <p>COGNITO_IDENTITY_POOL</p> </li> <li> <p>CLIENT_ID</p> </li> <li> <p>ACCOUNT_SETTINGS</p> </li> <li> <p>ROLE_ALIAS</p> </li> <li> <p>IAM_ROLE</p> </li> <li> <p>ISSUER_CERTIFICATE</p> </li> </ul> <note> <p>This API is similar to DescribeAuditFinding's <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html\">RelatedResources</a> but provides pagination and is not limited to 10 resources. When calling <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html\">DescribeAuditFinding</a> for the intermediate CA revoked for active device certificates check, RelatedResources will not be populated. You must use this API, ListRelatedResourcesForAuditFinding, to list the certificates.</p> </note>",
     "ListRoleAliases": "<p>Lists the role aliases registered in your account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListRoleAliases</a> action.</p>",
     "ListScheduledAudits": "<p>Lists all of your scheduled audits.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListScheduledAudits</a> action.</p>",
     "ListSecurityProfiles": "<p>Lists the Device Defender security profiles you've created. You can filter security profiles by dimension or custom metric.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListSecurityProfiles</a> action.</p> <note> <p> <code>dimensionName</code> and <code>metricName</code> cannot be used in the same request.</p> </note>",
@@ -182,7 +183,7 @@
     "ListThingRegistrationTaskReports": "<p>Information about the thing registration tasks.</p>",
     "ListThingRegistrationTasks": "<p>List bulk thing provisioning tasks.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingRegistrationTasks</a> action.</p>",
     "ListThingTypes": "<p>Lists the existing thing types.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingTypes</a> action.</p>",
-    "ListThings": "<p>Lists your things. Use the <b>attributeName</b> and <b>attributeValue</b> parameters to filter your things. For example, calling <code>ListThings</code> with attributeName=Color and attributeValue=Red retrieves all things in the registry that contain an attribute <b>Color</b> with the value <b>Red</b>. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThings</a> action.</p> <note> <p>You will not be charged for calling this API if an <code>Access denied</code> error is returned. You will also not be charged if no attributes or pagination token was provided in request and no pagination token and no results were returned.</p> </note>",
+    "ListThings": "<p>Lists your things. Use the <b>attributeName</b> and <b>attributeValue</b> parameters to filter your things. For example, calling <code>ListThings</code> with attributeName=Color and attributeValue=Red retrieves all things in the registry that contain an attribute <b>Color</b> with the value <b>Red</b>. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/thing-registry.html#list-things\">List Things</a> from the <i>Amazon Web Services IoT Core Developer Guide</i>.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThings</a> action.</p> <note> <p>You will not be charged for calling this API if an <code>Access denied</code> error is returned. You will also not be charged if no attributes or pagination token was provided in request and no pagination token and no results were returned.</p> </note>",
     "ListThingsInBillingGroup": "<p>Lists the things you have added to the given billing group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingsInBillingGroup</a> action.</p>",
     "ListThingsInThingGroup": "<p>Lists the things in the specified group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingsInThingGroup</a> action.</p>",
     "ListTopicRuleDestinations": "<p>Lists all the topic rule destinations in your Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListTopicRuleDestinations</a> action.</p>",
@@ -1031,6 +1032,7 @@
         "IotSiteWiseAction$roleArn": "<p>The ARN of the role that grants IoT permission to send an asset property value to IoT SiteWise. (<code>\"Action\": \"iotsitewise:BatchPutAssetPropertyValue\"</code>). The trust policy can restrict access to specific asset hierarchy paths.</p>",
         "KafkaAction$destinationArn": "<p>The ARN of Kafka action's VPC <code>TopicRuleDestination</code>.</p>",
         "KinesisAction$roleArn": "<p>The ARN of the IAM role that grants access to the Amazon Kinesis stream.</p>",
+        "LocationAction$roleArn": "<p>The IAM role that grants permission to write to the Amazon Location resource.</p>",
         "LoggingOptionsPayload$roleArn": "<p>The ARN of the IAM role that grants access.</p>",
         "OpenSearchAction$roleArn": "<p>The IAM role ARN that has access to OpenSearch.</p>",
         "RepublishAction$roleArn": "<p>The ARN of the IAM role that grants access.</p>",
@@ -1473,6 +1475,7 @@
         "RegisterCACertificateResponse$certificateArn": "<p>The CA certificate ARN.</p>",
         "RegisterCertificateResponse$certificateArn": "<p>The certificate ARN.</p>",
         "RegisterCertificateWithoutCAResponse$certificateArn": "<p>The Amazon Resource Name (ARN) of the registered certificate.</p>",
+        "ResourceIdentifier$deviceCertificateArn": "<p>The ARN of the identified device certificate.</p>",
         "SigningProfileParameter$certificateArn": "<p>Certificate ARN.</p>",
         "TransferCertificateResponse$transferredCertificateArn": "<p>The ARN of the certificate.</p>"
       }
@@ -3465,7 +3468,8 @@
         "DescribeAuditFindingRequest$findingId": "<p>A unique identifier for a single audit finding. You can use this identifier to apply mitigation actions to the finding.</p>",
         "FindingIds$member": null,
         "ListAuditMitigationActionsExecutionsRequest$findingId": "<p>Specify this filter to limit results to those that were applied to a specific audit finding.</p>",
-        "ListAuditMitigationActionsTasksRequest$findingId": "<p>Specify this filter to limit results to tasks that were applied to a specific audit finding.</p>"
+        "ListAuditMitigationActionsTasksRequest$findingId": "<p>Specify this filter to limit results to tasks that were applied to a specific audit finding.</p>",
+        "ListRelatedResourcesForAuditFindingRequest$findingId": "<p>The finding Id.</p>"
       }
     },
     "FindingIds": {
@@ -4047,6 +4051,30 @@
       "base": null,
       "refs": {
         "AuditFinding$isSuppressed": "<p> Indicates whether the audit finding was suppressed or not during reporting. </p>"
+      }
+    },
+    "IssuerCertificateIdentifier": {
+      "base": "<p>The certificate issuer indentifier.</p>",
+      "refs": {
+        "ResourceIdentifier$issuerCertificateIdentifier": "<p>The issuer certificate identifier.</p>"
+      }
+    },
+    "IssuerCertificateSerialNumber": {
+      "base": null,
+      "refs": {
+        "IssuerCertificateIdentifier$issuerCertificateSerialNumber": "<p>The issuer certificate serial number.</p>"
+      }
+    },
+    "IssuerCertificateSubject": {
+      "base": null,
+      "refs": {
+        "IssuerCertificateIdentifier$issuerCertificateSubject": "<p>The subject of the issuer certificate.</p>"
+      }
+    },
+    "IssuerId": {
+      "base": null,
+      "refs": {
+        "IssuerCertificateIdentifier$issuerId": "<p>The issuer ID.</p>"
       }
     },
     "Job": {
@@ -4703,6 +4731,16 @@
       "refs": {
       }
     },
+    "ListRelatedResourcesForAuditFindingRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListRelatedResourcesForAuditFindingResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListRoleAliasesRequest": {
       "base": null,
       "refs": {
@@ -4926,6 +4964,18 @@
       "refs": {
       }
     },
+    "LocationAction": {
+      "base": "<p>The Amazon Location rule action sends device location updates from an MQTT message to an Amazon Location tracker resource.</p>",
+      "refs": {
+        "Action$location": "<p>The Amazon Location Service rule action sends device location updates from an MQTT message to an Amazon Location tracker resource.</p>"
+      }
+    },
+    "LocationTimestamp": {
+      "base": "<p>Describes how to interpret an application-defined timestamp value from an MQTT message payload and the precision of that value.</p>",
+      "refs": {
+        "LocationAction$timestamp": "<p>The time that the location data was sampled. The default value is the time the MQTT message was processed.</p>"
+      }
+    },
     "LogGroupName": {
       "base": null,
       "refs": {
@@ -5084,6 +5134,7 @@
         "ListOTAUpdatesRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListProvisioningTemplateVersionsRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListProvisioningTemplatesRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
+        "ListRelatedResourcesForAuditFindingRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListScheduledAuditsRequest$maxResults": "<p>The maximum number of results to return at one time. The default is 25.</p>",
         "ListSecurityProfilesForTargetRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListSecurityProfilesRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
@@ -5413,6 +5464,8 @@
         "ListProvisioningTemplateVersionsResponse$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListProvisioningTemplatesRequest$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListProvisioningTemplatesResponse$nextToken": "<p>A token to retrieve the next set of results.</p>",
+        "ListRelatedResourcesForAuditFindingRequest$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
+        "ListRelatedResourcesForAuditFindingResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> for the first API call.</p>",
         "ListScheduledAuditsRequest$nextToken": "<p>The token for the next set of results.</p>",
         "ListScheduledAuditsResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
         "ListSecurityProfilesForTargetRequest$nextToken": "<p>The token for the next set of results.</p>",
@@ -5981,9 +6034,9 @@
     "ProvisioningHook": {
       "base": "<p>Structure that contains <code>payloadVersion</code> and <code>targetArn</code>.</p>",
       "refs": {
-        "CreateProvisioningTemplateRequest$preProvisioningHook": "<p>Creates a pre-provisioning hook template.</p>",
+        "CreateProvisioningTemplateRequest$preProvisioningHook": "<p>Creates a pre-provisioning hook template. Only supports template of type <code>FLEET_PROVISIONING</code>. For more information about provisioning template types, see <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_CreateProvisioningTemplate.html#iot-CreateProvisioningTemplate-request-type\">type</a>.</p>",
         "DescribeProvisioningTemplateResponse$preProvisioningHook": "<p>Gets information about a pre-provisioned hook.</p>",
-        "UpdateProvisioningTemplateRequest$preProvisioningHook": "<p>Updates the pre-provisioning hook template.</p>"
+        "UpdateProvisioningTemplateRequest$preProvisioningHook": "<p>Updates the pre-provisioning hook template. Only supports template of type <code>FLEET_PROVISIONING</code>. For more information about provisioning template types, see <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_CreateProvisioningTemplate.html#iot-CreateProvisioningTemplate-request-type\">type</a>.</p>"
       }
     },
     "ProvisioningTemplateListing": {
@@ -6290,7 +6343,8 @@
     "RelatedResources": {
       "base": null,
       "refs": {
-        "AuditFinding$relatedResources": "<p>The list of related resources.</p>"
+        "AuditFinding$relatedResources": "<p>The list of related resources.</p>",
+        "ListRelatedResourcesForAuditFindingResponse$relatedResources": "<p>The related resources.</p>"
       }
     },
     "RemoveAuthorizerConfig": {
@@ -7190,6 +7244,12 @@
         "KafkaAction$topic": "<p>The Kafka topic for messages to be sent to the Kafka broker.</p>",
         "KafkaAction$key": "<p>The Kafka message key.</p>",
         "KafkaAction$partition": "<p>The Kafka message partition.</p>",
+        "LocationAction$trackerName": "<p>The name of the tracker resource in Amazon Location in which the location is updated.</p>",
+        "LocationAction$deviceId": "<p>The unique ID of the device providing the location data.</p>",
+        "LocationAction$latitude": "<p>A string that evaluates to a double value that represents the latitude of the device's location.</p>",
+        "LocationAction$longitude": "<p>A string that evaluates to a double value that represents the longitude of the device's location.</p>",
+        "LocationTimestamp$value": "<p>An expression that returns a long epoch time value.</p>",
+        "LocationTimestamp$unit": "<p>The precision of the timestamp value that results from the expression described in <code>value</code>.</p> <p>Valid values: <code>SECONDS</code> | <code>MILLISECONDS</code> | <code>MICROSECONDS</code> | <code>NANOSECONDS</code>. The default is <code>MILLISECONDS</code>.</p>",
         "StringMap$key": null,
         "StringMap$value": null,
         "TopicRuleDestination$statusReason": "<p>Additional details or reason why the topic rule destination is in the current status.</p>",
@@ -7486,7 +7546,7 @@
         "DescribeProvisioningTemplateResponse$defaultVersionId": "<p>The default fleet template version ID.</p>",
         "DescribeProvisioningTemplateVersionRequest$versionId": "<p>The provisioning template version ID.</p>",
         "DescribeProvisioningTemplateVersionResponse$versionId": "<p>The provisioning template version ID.</p>",
-        "ProvisioningTemplateVersionSummary$versionId": "<p>The ID of the fleet privisioning template version.</p>",
+        "ProvisioningTemplateVersionSummary$versionId": "<p>The ID of the fleet provisioning template version.</p>",
         "UpdateProvisioningTemplateRequest$defaultVersionId": "<p>The ID of the default provisioning template version.</p>"
       }
     },
@@ -7958,7 +8018,7 @@
     "TinyMaxResults": {
       "base": null,
       "refs": {
-        "GetBehaviorModelTrainingSummariesRequest$maxResults": "<p> The maximum number of results to return at one time. The default is 25. </p>"
+        "GetBehaviorModelTrainingSummariesRequest$maxResults": "<p> The maximum number of results to return at one time. The default is 10. </p>"
       }
     },
     "TlsContext": {

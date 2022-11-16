@@ -66,4 +66,12 @@ class Shape extends AbstractModel
     {
         return $this->definition['name'];
     }
+
+    /**
+     * Get a context param definition.
+     */
+    public function getContextParam()
+    {
+        return $this->contextParam;
+    }
 }

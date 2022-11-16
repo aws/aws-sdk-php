@@ -18,8 +18,10 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Assert;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
+class ClientSideMonitoringContext extends TestCase
     implements Context, SnippetAcceptingContext
 {
 
@@ -435,10 +437,10 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     {
         switch ($expected) {
             case "ANY_INT":
-                $this->assertInternalType('int', $actual);
+                $this->assertIsInt($actual);
                 break;
             case "ANY_STR":
-                $this->assertInternalType('string', $actual);
+                $this->assertIsString('string', $actual);
                 break;
             default:
                 $this->assertEquals($expected, $actual);

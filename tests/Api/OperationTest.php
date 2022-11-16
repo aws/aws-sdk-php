@@ -81,4 +81,53 @@ class OperationTest extends TestCase
         $errorsCopy[0]['a'] = 'test';
         $this->assertSame('structure', $errors[0]->getType());
     }
+
+    public function testGetStaticContextParams()
+    {
+        $params = ['Foo' => ['value' => 'bar']];
+        $o = new Operation([
+            'staticContextParams' => $params
+        ], new ShapeMap([
+            'i' => ['type' => 'structure']
+        ]));
+        $staticContextParams = $o->getStaticContextParams();
+        $this->assertEquals(
+            $params,
+            $staticContextParams
+        );
+    }
+
+    public function testGetContextParams()
+    {
+        $expected = [
+          'Foo' => [
+              'shape' => 'Foo',
+              'type' => 'string'
+          ]
+        ];
+        $o = new Operation([
+            'input' => ['shape' => 'FooOperationRequest']
+        ], new ShapeMap([
+            'FooOperationRequest' => [
+                'type' => 'structure',
+                'members' => [
+                    'Foo' => [
+                        'shape' => 'Foo',
+                        'contextParam' => [
+                            'name' => 'Foo'
+                        ]
+                    ]
+                ]
+            ],
+            'Foo' => [
+                'type' => 'string'
+            ]
+        ]));
+
+        $contextParams = $o->getContextParams();
+        $this->assertEquals(
+           $expected,
+           $contextParams
+        );
+    }
 }
