@@ -1199,8 +1199,6 @@ EOT;
         }
     }
 
-
-
     public function testSsoProfileProviderMissingProfile()
     {
         $this->expectExceptionMessage("Profile nonExistingProfile does not exist in");

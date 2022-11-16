@@ -1,11 +1,8 @@
 <?php
 namespace Aws\Token;
 
-
 use Aws\Exception\TokenException;
-use Aws\SSOOIDC\SSOOIDCClient;
 use GuzzleHttp\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * Token that comes from the SSO provider

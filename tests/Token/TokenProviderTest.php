@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\Token;
 
-
 use Aws\Exception\TokenException;
 use Aws\LruArrayCache;
 use Aws\Result;
@@ -25,11 +24,9 @@ class TokenProviderTest extends TestCase
     public function tear_down()
     {
         parent::tear_down();
-
         unset($_SERVER['aws_time']);
         unset($_SERVER['aws_str_to_time']);
     }
-
 
     private function clearEnv() {
         putenv('AWS_SHARED_CREDENTIALS_FILE');
@@ -300,8 +297,6 @@ EOT;
         ];
     }
 
-
-
     /**
      * @dataProvider tokenProviderSuccessCasesWithRefresh
      */
@@ -384,7 +379,6 @@ EOT;
         }
     }
 
-
     public function tokenProviderFailureCases() {
         return [
             "Minimal expired cached token" =>
@@ -425,7 +419,6 @@ EOT;
                 ],
         ];
     }
-
 
     /**
      * @dataProvider tokenProviderFailureCases
