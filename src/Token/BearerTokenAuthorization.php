@@ -30,5 +30,4 @@ class BearerTokenAuthorization implements TokenAuthorization
         $accessToken = $token->getToken();
         return $request->withHeader('Authorization', "Bearer {$accessToken}");
     }
-
 }

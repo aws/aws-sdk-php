@@ -57,6 +57,5 @@ class BearerTokenAuthorizationTest extends TestCase {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("Cannot authorize a request with an empty token");
         $authorizer->authorizeRequest($request, $token);
-
     }
 }
