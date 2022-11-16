@@ -376,6 +376,9 @@ class AwsClient implements AwsClientInterface
                 case 'v4-unsigned-body':
                     $version = 'v4-unsigned-body';
                     break;
+                case 'bearer':
+                    $version = 'bearer';
+                    break;
             }
             if (isset($c['@context']['signature_version'])) {
                 if ($c['@context']['signature_version'] == 'v4a') {
