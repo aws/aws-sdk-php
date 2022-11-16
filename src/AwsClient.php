@@ -40,6 +40,9 @@ class AwsClient implements AwsClientInterface
     /** @var callable */
     private $credentialProvider;
 
+    /** @var callable */
+    private $tokenProvider;
+
     /** @var HandlerList */
     private $handlerList;
 
@@ -84,6 +87,15 @@ class AwsClient implements AwsClientInterface
      *   credentials or return null. See Aws\Credentials\CredentialProvider for
      *   a list of built-in credentials providers. If no credentials are
      *   provided, the SDK will attempt to load them from the environment.
+     * - token:
+     *   (Aws\Token\TokenInterface|array|bool|callable) Specifies
+     *   the token used to authorize requests. Provide an
+     *   Aws\Token\TokenInterface object, an associative array of
+     *   "token" and an optional "expires" key, `false` to use no
+     *   token, or a callable token provider used to create a
+     *   token or return null. See Aws\Token\TokenProvider for
+     *   a list of built-in token providers. If no token is
+     *   provided, the SDK will attempt to load one from the environment.
      * - csm:
      *   (Aws\ClientSideMonitoring\ConfigurationInterface|array|callable) Specifies
      *   the credentials used to sign requests. Provide an
@@ -214,6 +226,7 @@ class AwsClient implements AwsClientInterface
         $this->signatureProvider = $config['signature_provider'];
         $this->endpoint = new Uri($config['endpoint']);
         $this->credentialProvider = $config['credentials'];
+        $this->tokenProvider = $config['token'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->config = $config['config'];
         $this->setClientBuiltIns($args);
@@ -412,6 +425,9 @@ class AwsClient implements AwsClientInterface
                 case 'v4-unsigned-body':
                     $version = 'v4-unsigned-body';
                     break;
+                case 'bearer':
+                    $version = 'bearer';
+                    break;
             }
             if (isset($c['@context']['signature_version'])) {
                 if ($c['@context']['signature_version'] == 'v4a') {
@@ -428,7 +444,7 @@ class AwsClient implements AwsClientInterface
             return SignatureProvider::resolve($provider, $version, $name, $region);
         };
         $this->handlerList->appendSign(
-            Middleware::signer($this->credentialProvider, $resolver),
+            Middleware::signer($this->credentialProvider, $resolver, $this->tokenProvider),
             'signer'
         );
     }

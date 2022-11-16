@@ -6,9 +6,7 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\History;
 use Aws\LruArrayCache;
-use Aws\Middleware;
 use Aws\Result;
-use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -1271,6 +1269,26 @@ EOT;
 
         call_user_func(CredentialProvider::sso('default', $filename))->wait();
 
+    }
+
+    public function testSsoProfileProviderFailsWithSsoSession()
+    {
+        $this->expectExceptionMessage("Profile default contains an sso_session and will rely on the token provider instead of the legacy sso credential provider.");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+sso_session = fakeSessionName
+EOT;
+        $filename = $dir . '/config';
+        file_put_contents($filename, $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            call_user_func(CredentialProvider::sso('default', $filename))->wait();
+        } finally {
+            unlink($dir . '/config');
+        }
     }
 
     public function testSsoProfileProviderMissingData()

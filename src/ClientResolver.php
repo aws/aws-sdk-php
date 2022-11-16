@@ -26,6 +26,9 @@ use Aws\DefaultsMode\ConfigurationInterface as ConfigModeInterface;
 use Aws\DefaultsMode\ConfigurationProvider as ConfigModeProvider;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
+use Aws\Token\Token;
+use Aws\Token\TokenInterface;
+use Aws\Token\TokenProvider;
 use GuzzleHttp\Promise\PromiseInterface;
 use Aws\Credentials\CredentialProvider;
 use InvalidArgumentException as IAE;
@@ -173,6 +176,13 @@ class ClientResolver
             'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [__CLASS__, '_default_credential_provider'],
+        ],
+        'token' => [
+            'type'    => 'value',
+            'valid'   => [TokenInterface::class, CacheInterface::class, 'array', 'bool', 'callable'],
+            'doc'     => 'Specifies the token used to authorize requests. Provide an Aws\Token\TokenInterface object, an associative array of "token", and an optional "expiration" key, `false` to use a null token, or a callable token provider used to fetch a token or return null. See Aws\\Token\\TokenProvider for a list of built-in credentials providers. If no token is provided, the SDK will attempt to load one from the environment.',
+            'fn'      => [__CLASS__, '_apply_token'],
+            'default' => [__CLASS__, '_default_token_provider'],
         ],
         'endpoint_discovery' => [
             'type'     => 'value',
@@ -540,6 +550,38 @@ class ClientResolver
     public static function _default_credential_provider(array $args)
     {
         return CredentialProvider::defaultProvider($args);
+    }
+
+    public static function _apply_token($value, array &$args)
+    {
+        if (is_callable($value)) {
+            return;
+        }
+
+        if ($value instanceof Token) {
+            $args['token'] = TokenProvider::fromToken($value);
+        } elseif (is_array($value)
+            && isset($value['token'])
+        ) {
+            $args['token'] = TokenProvider::fromToken(
+                new Token(
+                    $value['token'],
+                    isset($value['expires']) ? $value['expires'] : null
+                )
+            );
+        } elseif ($value instanceof CacheInterface) {
+            $args['token'] = TokenProvider::defaultProvider($args);
+        } else {
+            throw new IAE('Token must be an instance of '
+                . 'Aws\Token\TokenInterface, an associative '
+                . 'array that contains "token" and an optional "expires" '
+                . 'key-value pairs, a token provider function, or false.');
+        }
+    }
+
+    public static function _default_token_provider(array $args)
+    {
+        return TokenProvider::defaultProvider($args);
     }
 
     public static function _apply_csm($value, array &$args, HandlerList $list)
