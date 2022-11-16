@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.245.0 - 2022-11-16
 
 * `Aws\Batch` - Documentation updates related to Batch on EKS
 * `Aws\BillingConductor` - This release adds a new feature BillingEntity pricing rule.
