@@ -20,5 +20,4 @@ interface RefreshableTokenProviderInterface
      * @return boolean
      */
     public function shouldAttemptRefresh();
-
 }

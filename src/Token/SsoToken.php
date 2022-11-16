@@ -105,5 +105,4 @@ class SsoToken extends Token
     {
         return $this->startUrl;
     }
-
 }

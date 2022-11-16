@@ -107,5 +107,4 @@ class Token implements TokenInterface, \Serializable
         $this->token = $data['token'];
         $this->expires = $data['expires'];
     }
-
 }

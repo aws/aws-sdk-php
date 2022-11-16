@@ -264,6 +264,5 @@ class TokenProvider
     {
         return new SsoTokenProvider($profileName, $filename, $config);
     }
-
 }
 
