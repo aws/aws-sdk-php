@@ -544,10 +544,8 @@ class AwsClient implements AwsClientInterface
 
         $builtIns['SDK::Endpoint'] = isset($args['endpoint']) ? $args['endpoint'] : null;
         $builtIns['AWS::Region'] = $this->getRegion();
-        if (!isset($builtIns['SDK::Endpoint'])) {
-            $builtIns['AWS::UseFIPS'] = $config['use_fips_endpoint']->isUseFipsEndpoint();
-            $builtIns['AWS::UseDualStack'] = $config['use_dual_stack_endpoint']->isUseDualstackEndpoint();
-        }
+        $builtIns['AWS::UseFIPS'] = $config['use_fips_endpoint']->isUseFipsEndpoint();
+        $builtIns['AWS::UseDualStack'] = $config['use_dual_stack_endpoint']->isUseDualstackEndpoint();
         if ($service === 's3' || $service === 's3control'){
             $builtIns['AWS::S3::UseArnRegion'] = $config['use_arn_region']->isUseArnRegion();
         }
