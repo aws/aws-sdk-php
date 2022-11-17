@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## 3.245.0 - 2022-11-16
+
+* `Aws\Batch` - Documentation updates related to Batch on EKS
+* `Aws\BillingConductor` - This release adds a new feature BillingEntity pricing rule.
+* `Aws\CloudFormation` - Added UnsupportedTarget HandlerErrorCode for use with CFN Resource Hooks
+* `Aws\ComprehendMedical` - This release supports new set of entities and traits. It also adds new category (BEHAVIORAL_ENVIRONMENTAL_SOCIAL).
+* `Aws\Connect` - This release adds a new MonitorContact API for initiating monitoring of ongoing Voice and Chat contacts.
+* `Aws\EKS` - Adds support for customer-provided placement groups for Kubernetes control plane instances when creating local EKS clusters on Outposts
+* `Aws\ElastiCache` - for Redis now supports AWS Identity and Access Management authentication access to Redis clusters starting with redis-engine version 7.0
+* `Aws\IoTTwinMaker` - This release adds the following: 1) ExecuteQuery API allows users to query their AWS IoT TwinMaker Knowledge Graph 2) Pricing plan APIs allow users to configure and manage their pricing mode 3) Support for property groups and tabular property values in existing AWS IoT TwinMaker APIs.
+* `Aws\PersonalizeEvents` - This release provides support for creation and use of metric attributions in AWS Personalize
+* `Aws\Proton` - Add support for sorting and filtering in ListServiceInstances
+* `Aws\RDS` - This release adds support for container databases (CDBs) to Amazon RDS Custom for Oracle. A CDB contains one PDB at creation. You can add more PDBs using Oracle SQL. You can also customize your database installation by setting the Oracle base, Oracle home, and the OS user name and group.
+* `Aws\SSM` - This release adds support for cross account access in CreateOpsItem, UpdateOpsItem and GetOpsItem. It introduces new APIs to setup resource policies for SSM resources: PutResourcePolicy, GetResourcePolicies and DeleteResourcePolicy.
+* `Aws\SSMIncidents` - Add support for PagerDuty integrations on ResponsePlan, IncidentRecord, and RelatedItem APIs
+* `Aws\Token` - Adds the ability to authenticate requests through bearer tokens
+* `Aws\Transfer` - Allow additional operations to throw ThrottlingException
+* `Aws\XRay` - This release adds new APIs - PutResourcePolicy, DeleteResourcePolicy, ListResourcePolicies for supporting resource based policies for AWS X-Ray.
+
 ## 3.244.0 - 2022-11-15
 
 * `Aws\Connect` - This release updates the APIs: UpdateInstanceAttribute, DescribeInstanceAttribute, and ListInstanceAttributes. You can use it to programmatically enable/disable enhanced contact monitoring using attribute type ENHANCED_CONTACT_MONITORING on the specified Amazon Connect instance.
