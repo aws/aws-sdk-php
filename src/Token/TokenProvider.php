@@ -79,7 +79,7 @@ class TokenProvider
 
         return self::memoize(
             call_user_func_array(
-                'self::chain',
+                [TokenProvider::class, 'chain'],
                 array_values($defaultChain)
             )
         );
