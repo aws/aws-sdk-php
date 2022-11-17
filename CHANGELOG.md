@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.245.1 - 2022-11-17
 
 * `Aws\Amplify` - Adds a new value (WEB_COMPUTE) to the Platform enum that allows customers to create Amplify Apps with Server-Side Rendering support.
 * `Aws\AppRegistry` - This release adds support for tagged resource associations, which allows you to associate a group of resources with a defined resource tag key and value to the application.
