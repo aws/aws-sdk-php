@@ -161,7 +161,7 @@ class EndpointProviderV2Test extends TestCase
         }
     }
 
-    public function rulesetProtocolSuccessCaseProvider()
+    public function rulesetProtocolEndpointAndErrorCaseProvider()
     {
         $protocolTestCases = [];
         $serviceList = \Aws\manifest();
@@ -170,16 +170,17 @@ class EndpointProviderV2Test extends TestCase
             $testFile = EndpointDefinitionProvider::getEndpointTests($service, 'latest');
 
             foreach($testFile['testCases'] as $case) {
-                if (!isset($case['operationInputs']) || isset($case['expect']['error'])) {
+                if (!isset($case['operationInputs'])) {
                     continue;
                 }
+
                 foreach($case['operationInputs'] as $operationInput) {
                     $caseArgs = [$service];
                     $builtInParams = $operationInput['builtInParams'];
 
                     if ($service === 's3' && isset($builtInParams['AWS::S3::UseArnRegion'])) {
                         $useArnRegion = $builtInParams['AWS::S3::UseArnRegion'];
-                    } elseif ($service === 's3control' && isset($builtInParams['AWS::S3::UseArnRegion'])) {
+                    } elseif ($service === 's3control' && isset($builtInParams['AWS::S3Control::UseArnRegion'])) {
                         $useArnRegion = $builtInParams['AWS::S3Control::UseArnRegion'];
                     } else {
                         $useArnRegion = null;
@@ -197,7 +198,7 @@ class EndpointProviderV2Test extends TestCase
                         'use_arn_region' => isset($useArnRegion) ? $useArnRegion : null,
                         'disable_multiregion_access_points' => isset($builtInParams['AWS::S3::DisableMultiRegionAccessPoints']) ? $builtInParams['AWS::S3::DisableMultiRegionAccessPoints'] : null
                     ];
-                    array_push($caseArgs, $clientArgs, $operationInput, $case['expect']);
+                    array_push($caseArgs, $clientArgs, $operationInput, $case['expect'], isset($case['expect']['error']));
                     $protocolTestCases[] = $caseArgs;
                 }
 
@@ -207,19 +208,28 @@ class EndpointProviderV2Test extends TestCase
     }
 
     /**
-     * Iterates through test cases located in ../test-cases and
-     * ../valid-rules, parses into parameters used for endpoint and error tests
+     * End-to-end tests which ensure the correct values are resolved
+     * before being passed into the endpoint provider and after other
+     * middleware has acted upon the request.
      *
-     * @dataProvider rulesetProtocolSuccessCaseProvider
+     * @dataProvider rulesetProtocolEndpointAndErrorCaseProvider
      */
-    public function testRulesetProtocolSuccessCases($service, $clientArgs, $operationInput, $expected)
+    public function testRulesetProtocolEndpointAndErrorCases($service, $clientArgs, $operationInput, $expected, $errorCase)
     {
+        if ($errorCase) {
+            $this->expectException(UnresolvedEndpointException::class);
+            $this->expectExceptionMessage($expected['error']);
+            goto clientInstantiation;
+        }
+
         //accounts for legacy global endpoint behavior
         if (strpos($expected['endpoint']['url'], 's3.us-east-1.amazonaws.com') !== false
             && $clientArgs['s3_us_east_1_regional_endpoint'] !== true
         ) {
             $this->markTestSkipped();
         }
+
+        clientInstantiation:
 
         $client = $this->getTestClient($service, $clientArgs);
         $this->addMockResults($client, [[]]);
@@ -228,6 +238,10 @@ class EndpointProviderV2Test extends TestCase
             isset($operationInput['operationParams']) ? $operationInput['operationParams'] : []
         );
         $list = $client->getHandlerList();
+
+        if ($errorCase) {
+            goto resolveHandler;
+        }
 
         $list->appendSign(Middleware::tap(function($cmd, $req) use ($service, $expected) {
             $expectedEndpoint = $expected['endpoint'];
@@ -273,6 +287,7 @@ class EndpointProviderV2Test extends TestCase
 
             }
         }));
+        resolveHandler:
 
         $handler = $list->resolve();
         try {
