@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.246.0 - 2022-11-18
 
 * `Aws\` - Removes SsmSap, which is to be re-released with an updated service id.
 * `Aws\Appflow` - AppFlow provides a new API called UpdateConnectorRegistration to update a custom connector that customers have previously registered. With this API, customers no longer need to unregister and then register a connector to make an update.
