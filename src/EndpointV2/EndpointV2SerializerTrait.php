@@ -138,7 +138,14 @@ trait EndpointV2SerializerTrait
         $filteredArgs = [];
 
         foreach($rulesetParams as $name => $value) {
-            if (isset($rulesetParams[$name]) && isset($commandArgs[$name])) {
+            if (isset($commandArgs[$name])) {
+                $builtIn = $value->getBuiltIn();
+
+                if (isset($builtIn)
+                    && strpos($builtIn, 'SDK') === 0
+                ) {
+                    continue;
+                }
                 $filteredArgs[$name] = $commandArgs[$name];
             }
         }
