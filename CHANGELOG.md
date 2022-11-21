@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.247.0 - 2022-11-21
 
 * `Aws\` - Add support for PHP 8.2
 * `Aws\EndpointV2` - Fixes #2572
