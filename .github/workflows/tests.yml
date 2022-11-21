@@ -59,7 +59,7 @@ jobs:
 
     #php 8.1+ requirements
     - if: ${{ matrix.php-versions >= '8.1' && matrix.composer-options != '' }}
-      name: PHP 8.1
+      name: PHP 8.1+
       run: composer require --dev guzzlehttp/guzzle "^7.3" --no-interaction --prefer-source --with-all-dependencies
 
     #run tests
