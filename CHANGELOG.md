@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.247.0 - 2022-11-21
+
+* `Aws\` - Add support for PHP 8.2
+* `Aws\EndpointV2` - Fixes #2572
+* `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Hyderabad) Region (ap-south-2) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+
 ## 3.246.0 - 2022-11-18
 
 * `Aws\` - Removes SsmSap, which is to be re-released with an updated service id.
