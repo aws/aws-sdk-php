@@ -91,4 +91,24 @@ class BucketEndpointMiddlewareTest extends TestCase
         );
         $s3->execute($command);
     }
+
+    public function testHandlesTrailingForwardSlash()
+    {
+        $s3 = $this->getTestClient('s3', [
+            'endpoint'        => 'http://test.domain.com/test/',
+            'bucket_endpoint' => true
+        ]);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('ListObjects', [
+            'Bucket' => 'test',
+            'Prefix'    => '/'
+        ]);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame('test.domain.com', $req->getUri()->getHost());
+                $this->assertSame('/test/?prefix=%2F&encoding-type=url', $req->getRequestTarget());
+            })
+        );
+        $s3->execute($command);
+    }
 }
