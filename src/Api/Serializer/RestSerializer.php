@@ -238,9 +238,10 @@ abstract class RestSerializer
         if ($this->api->isModifiedModel()
             && $this->api->getServiceName() === 's3'
         ) {
-            substr($path, -1) === '/' && substr($relative, 0, 1) === '/'
-                ? $relative = rtrim($path, '/') . $relative
-                : $relative = $path . $relative;
+            if (substr($path, -1) === '/' && $relative[0] === '/') {
+                $path = rtrim($path, '/');
+            }
+            $relative = $path . $relative;
         }
         // If endpoint has path, remove leading '/' to preserve URI resolution.
         if ($path && $relative[0] === '/') {
