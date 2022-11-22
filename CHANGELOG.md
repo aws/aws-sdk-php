@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.247.1 - 2022-11-22
 
 * `Aws\Appflow` - Adding support for Amazon AppFlow to transfer the data to Amazon Redshift databases through Amazon Redshift Data API service. This feature will support the Redshift destination connector on both public and private accessible Amazon Redshift Clusters and Amazon Redshift Serverless.
 * `Aws\EndpointV2` - Fixes #2575
