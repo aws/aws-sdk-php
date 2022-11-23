@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.247.2 - 2022-11-23
 
 * `Aws\ManagedGrafana` - This release includes support for configuring a Grafana workspace to connect to a datasource within a VPC as well as new APIs for configuring Grafana settings.
 * `Aws\RecycleBin` - This release adds support for Rule Lock for Recycle Bin, which allows you to lock retention rules so that they can no longer be modified or deleted.
