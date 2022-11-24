@@ -191,7 +191,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
         } catch (\Exception $e) {
             throw new TokenException("Cached SSO token returned an invalid expiration");
         }
-        if ($expiration > time()) {
+        if ($expiration < time()) {
             throw new TokenException("Cached SSO token returned an expired token");
         }
         return $tokenData;
