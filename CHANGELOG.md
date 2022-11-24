@@ -1,5 +1,66 @@
 # CHANGELOG
 
+## 3.247.2 - 2022-11-23
+
+* `Aws\ManagedGrafana` - This release includes support for configuring a Grafana workspace to connect to a datasource within a VPC as well as new APIs for configuring Grafana settings.
+* `Aws\RecycleBin` - This release adds support for Rule Lock for Recycle Bin, which allows you to lock retention rules so that they can no longer be modified or deleted.
+
+## 3.247.1 - 2022-11-22
+
+* `Aws\Appflow` - Adding support for Amazon AppFlow to transfer the data to Amazon Redshift databases through Amazon Redshift Data API service. This feature will support the Redshift destination connector on both public and private accessible Amazon Redshift Clusters and Amazon Redshift Serverless.
+* `Aws\EndpointV2` - Fixes #2575
+* `Aws\KinesisAnalyticsV2` - Support for Apache Flink 1.15 in Kinesis Data Analytics.
+
+## 3.247.0 - 2022-11-21
+
+* `Aws\` - Add support for PHP 8.2
+* `Aws\EndpointV2` - Fixes #2572
+* `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Hyderabad) Region (ap-south-2) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+
+## 3.246.0 - 2022-11-18
+
+* `Aws\` - Removes SsmSap, which is to be re-released with an updated service id.
+* `Aws\Appflow` - AppFlow provides a new API called UpdateConnectorRegistration to update a custom connector that customers have previously registered. With this API, customers no longer need to unregister and then register a connector to make an update.
+* `Aws\AuditManager` - This release introduces a new feature for Audit Manager: Evidence finder. You can now use evidence finder to quickly query your evidence, and add the matching evidence results to an assessment report.
+* `Aws\ChimeSDKVoice` - Amazon Chime Voice Connector, Voice Connector Group and PSTN Audio Service APIs are now available in the Amazon Chime SDK Voice namespace. See https://docs.aws.amazon.com/chime-sdk/latest/dg/sdk-available-regions.html for more details.
+* `Aws\CloudFront` - CloudFront API support for staging distributions and associated traffic management policies.
+* `Aws\Connect` - Added AllowedAccessControlTags and TagRestrictedResource for Tag Based Access Control on Amazon Connect Webpage
+* `Aws\DynamoDB` - Updated minor fixes for DynamoDB documentation.
+* `Aws\DynamoDBStreams` - Updated minor fixes for DynamoDB documentation.
+* `Aws\EC2` - This release adds support for copying an Amazon Machine Image's tags when copying an AMI.
+* `Aws\Glue` - AWSGlue Crawler - Adding support for Table and Column level Comments with database level datatypes for JDBC based crawler.
+* `Aws\IoTRoboRunner` - AWS IoT RoboRunner is a new service that makes it easy to build applications that help multi-vendor robots work together seamlessly. See the IoT RoboRunner developer guide for more details on getting started. https://docs.aws.amazon.com/iotroborunner/latest/dev/iotroborunner-welcome.html
+* `Aws\QuickSight` - This release adds the following: 1) Asset management for centralized assets governance 2) QuickSight Q now supports public embedding 3) New Termination protection flag to mitigate accidental deletes 4) Athena data sources now accept a custom IAM role 5) QuickSight supports connectivity to Databricks
+* `Aws\SFN` - This release adds support for using Step Functions service integrations to invoke any cross-account AWS resource, even if that service doesn't support resource-based policies or cross-account calls. See https://docs.aws.amazon.com/step-functions/latest/dg/concepts-access-cross-acct-resources.html
+* `Aws\SageMaker` - Added DisableProfiler flag as a new field in ProfilerConfig
+* `Aws\ServiceCatalog` - This release 1. adds support for Principal Name Sharing with Service Catalog portfolio sharing. 2. Introduces repo sourced products which are created and managed with existing SC APIs. These products are synced to external repos and auto create new product versions based on changes in the repo.
+* `Aws\SsmSap` - AWS Systems Manager for SAP provides simplified operations and management of SAP applications such as SAP HANA. With this release, SAP customers and partners can automate and simplify their SAP system administration tasks such as backup/restore of SAP HANA.
+* `Aws\Transfer` - Adds a NONE encryption algorithm type to AS2 connectors, providing support for skipping encryption of the AS2 message body when a HTTPS URL is also specified.
+
+## 3.245.1 - 2022-11-17
+
+* `Aws\Amplify` - Adds a new value (WEB_COMPUTE) to the Platform enum that allows customers to create Amplify Apps with Server-Side Rendering support.
+* `Aws\AppRegistry` - This release adds support for tagged resource associations, which allows you to associate a group of resources with a defined resource tag key and value to the application.
+* `Aws\AppSync` - This release introduces the APPSYNC_JS runtime, and adds support for JavaScript in AppSync functions and AppSync pipeline resolvers.
+* `Aws\Appflow` - AppFlow simplifies the preparation and cataloging of SaaS data into the AWS Glue Data Catalog where your data can be discovered and accessed by AWS analytics and ML services. AppFlow now also supports data field partitioning and file size optimization to improve query performance and reduce cost.
+* `Aws\CloudWatchRUM` - CloudWatch RUM now supports custom events. To use custom events, create an app monitor or update an app monitor with CustomEvent Status as ENABLED.
+* `Aws\DatabaseMigrationService` - Adds support for Internet Protocol Version 6 (IPv6) on DMS Replication Instances
+* `Aws\EC2` - This release adds a new optional parameter "privateIpAddress" for the CreateNatGateway API. PrivateIPAddress will allow customers to select a custom Private IPv4 address instead of having it be auto-assigned.
+* `Aws\EMRServerless` - Adds support for AWS Graviton2 based applications. You can now select CPU architecture when creating new applications or updating existing ones.
+* `Aws\ElasticLoadBalancingv2` - Provides new target group attributes to turn on/off cross zone load balancing and configure target group health for Network Load Balancers and Application Load Balancers. Provides improvements to health check configuration for Network Load Balancers.
+* `Aws\EndpointV2` - Adds error test cases for endpoint protocol tests.
+* `Aws\Lambda` - Add Node 18 (nodejs18.x) support to AWS Lambda.
+* `Aws\Personalize` - This release provides support for creation and use of metric attributions in AWS Personalize
+* `Aws\Polly` - Add two new neural voices - Ola (pl-PL) and Hala (ar-AE).
+* `Aws\S3Control` - Added 34 new S3 Storage Lens metrics to support additional customer use cases.
+* `Aws\STS` - Documentation updates for AWS Security Token Service.
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager.
+* `Aws\SecurityHub` - Added SourceLayerArn and SourceLayerHash field for security findings. Updated AwsLambdaFunction Resource detail
+* `Aws\Textract` - This release adds support for specifying and extracting information from documents using the Signatures feature within Analyze Document API
+* `Aws\Token` - Removes deprecated self callable from the TokenProvider
+* `Aws\WorkSpaces` - The release introduces CreateStandbyWorkspaces, an API that allows you to create standby WorkSpaces associated with a primary WorkSpace in another Region. DescribeWorkspaces now includes related WorkSpaces properties. DescribeWorkspaceBundles and CreateWorkspaceBundle now return more bundle details.
+* `Aws\ivschat` - Adds LoggingConfiguration APIs for IVS Chat - a feature that allows customers to store and record sent messages in a chat room to S3 buckets, CloudWatch logs, or Kinesis firehose.
+
 ## 3.245.0 - 2022-11-16
 
 * `Aws\Batch` - Documentation updates related to Batch on EKS
@@ -25,7 +86,6 @@
 * `Aws\EndpointV2` - Fixes #2558, #2559
 * `Aws\GreengrassV2` - Adds new parent target ARN paramater to CreateDeployment, GetDeployment, and ListDeployments APIs for the new subdeployments feature.
 * `Aws\Route53` - Amazon Route 53 now supports the Europe (Spain) Region (eu-south-2) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
-* `Aws\SsmSap` - AWS Systems Manager for SAP provides simplified operations and management of SAP applications such as SAP HANA. With this release, SAP customers and partners can automate and simplify their SAP system administration tasks such as backup/restore of SAP HANA.
 * `Aws\WorkSpaces` - This release introduces ModifyCertificateBasedAuthProperties, a new API that allows control of certificate-based auth properties associated with a WorkSpaces directory. The DescribeWorkspaceDirectories API will now additionally return certificate-based auth properties in its responses.
 
 ## 3.243.1 - 2022-11-14

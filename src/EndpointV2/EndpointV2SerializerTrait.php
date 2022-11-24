@@ -127,21 +127,25 @@ trait EndpointV2SerializerTrait
             '@use_path_style_endpoint' => 'ForcePathStyle'
         ];
 
+        $filteredArgs = [];
+
+        foreach($rulesetParams as $name => $value) {
+            if (isset($commandArgs[$name])) {
+                if (!empty($value->getBuiltIn())) {
+                    continue;
+                }
+                $filteredArgs[$name] = $commandArgs[$name];
+            }
+        }
+
         if ($this->api->getServiceName() === 's3') {
             foreach($endpointMiddlewareOpts as $optionName => $newValue) {
                 if (isset($commandArgs[$optionName])) {
-                    $commandArgs[$newValue] = $commandArgs[$optionName];
+                    $filteredArgs[$newValue] = $commandArgs[$optionName];
                 }
             }
         }
 
-        $filteredArgs = [];
-
-        foreach($rulesetParams as $name => $value) {
-            if (isset($rulesetParams[$name]) && isset($commandArgs[$name])) {
-                $filteredArgs[$name] = $commandArgs[$name];
-            }
-        }
         return $filteredArgs;
     }
 

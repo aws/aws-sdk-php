@@ -231,20 +231,25 @@ abstract class RestSerializer
            $relative = $this->appendQuery($opts['query'], $relative);
         }
 
-        // If endpoint has path, remove leading '/' to preserve URI resolution.
         $path = $this->endpoint->getPath();
-        //accounts for removal of bucket from requestUri path
+
+        //Accounts for trailing '/' in path when custom endpoint
+        //is provided to endpointProviderV2
         if ($this->api->isModifiedModel()
             && $this->api->getServiceName() === 's3'
         ) {
+            if (substr($path, -1) === '/' && $relative[0] === '/') {
+                $path = rtrim($path, '/');
+            }
             $relative = $path . $relative;
         }
-
+        // If endpoint has path, remove leading '/' to preserve URI resolution.
         if ($path && $relative[0] === '/') {
             $relative = substr($relative, 1);
         }
 
-        //Accounts for leading / in relative path
+        //Append path to endpoint when leading '//...' present
+        // as uri cannot be properly resolved
         if ($this->api->isModifiedModel()
             && strpos($relative, '//') === 0
         ) {

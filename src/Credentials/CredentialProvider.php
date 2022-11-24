@@ -353,7 +353,7 @@ class CredentialProvider
 
             $tokenLocation = self::getHomeDir()
                 . '/.aws/sso/cache/'
-                . utf8_encode(sha1($ssoProfile['sso_start_url']))
+                . sha1($ssoProfile['sso_start_url'])
                 . ".json";
 
             if (!@is_readable($tokenLocation)) {

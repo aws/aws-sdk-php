@@ -86,6 +86,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionChimeSDKMeetings(array $args = [])
  * @method \Aws\ChimeSDKMessaging\ChimeSDKMessagingClient createChimeSDKMessaging(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionChimeSDKMessaging(array $args = [])
+ * @method \Aws\ChimeSDKVoice\ChimeSDKVoiceClient createChimeSDKVoice(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionChimeSDKVoice(array $args = [])
  * @method \Aws\Cloud9\Cloud9Client createCloud9(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloud9(array $args = [])
  * @method \Aws\CloudControlApi\CloudControlApiClient createCloudControlApi(array $args = [])
@@ -308,6 +310,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionIoTFleetWise(array $args = [])
  * @method \Aws\IoTJobsDataPlane\IoTJobsDataPlaneClient createIoTJobsDataPlane(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTJobsDataPlane(array $args = [])
+ * @method \Aws\IoTRoboRunner\IoTRoboRunnerClient createIoTRoboRunner(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionIoTRoboRunner(array $args = [])
  * @method \Aws\IoTSecureTunneling\IoTSecureTunnelingClient createIoTSecureTunneling(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTSecureTunneling(array $args = [])
  * @method \Aws\IoTSiteWise\IoTSiteWiseClient createIoTSiteWise(array $args = [])
@@ -647,7 +651,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.245.0';
+    const VERSION = '3.247.2';
 
     /** @var array Arguments for creating clients */
     private $args;

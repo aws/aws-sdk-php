@@ -47,6 +47,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateConnectorProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConnectorProfileAsync(array $args = [])
+ * @method \Aws\Result updateConnectorRegistration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateConnectorRegistrationAsync(array $args = [])
  * @method \Aws\Result updateFlow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFlowAsync(array $args = [])
  */
