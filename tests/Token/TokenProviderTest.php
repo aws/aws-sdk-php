@@ -71,7 +71,7 @@ sso_session = admin
 sso_region = us-east-1
 sso_start_url = https://d-abc123.awsapps.com/start
 EOT;
-        $time = time();
+        $time = time() + 5000;
         $token = <<<EOT
 {
     "accessToken": "string",
