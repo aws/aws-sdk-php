@@ -684,7 +684,10 @@ class ClientResolver
             $args['endpoint'] = $result['endpoint'];
 
             if (empty($args['config']['signature_version'])) {
-                if ($args['api']->getSignatureVersion() == 'bearer') {
+                if (
+                    isset($args['api'])
+                    && $args['api']->getSignatureVersion() == 'bearer'
+                ) {
                     $args['config']['signature_version'] = 'bearer';
                 } elseif (isset($result['signatureVersion'])) {
                     $args['config']['signature_version'] = $result['signatureVersion'];
