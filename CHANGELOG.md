@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.248.0 - 2022-11-28
 
 * `Aws\Backup` - AWS Backup introduces support for legal hold and application stack backups. AWS Backup Audit Manager introduces support for cross-Region, cross-account reports.
 * `Aws\CloudWatch` - Adds cross-account support to the GetMetricData API. Adds cross-account support to the ListMetrics API through the usage of the IncludeLinkedAccounts flag and the new OwningAccounts field.
