@@ -71,7 +71,10 @@ sso_session = admin
 sso_region = us-east-1
 sso_start_url = https://d-abc123.awsapps.com/start
 EOT;
-        $time = time();
+        $time =  gmdate(
+            'Y-m-d\TH:i:s\Z',
+            time() + 5000
+        );
         $token = <<<EOT
 {
     "accessToken": "string",
@@ -119,48 +122,6 @@ EOT;
 
         $this->assertSame($token->getToken(), $found->getToken());
         $this->assertEquals($token->getExpiration(), $found->getExpiration());
-    }
-
-    public function testRefreshesFromCache()
-    {
-        {
-            $dir = $this->clearEnv();
-            $ini = <<<EOT
-[profile test]
-sso_session = admin
-[sso-session admin]
-sso_region = us-east-1
-sso_start_url = https://d-abc123.awsapps.com/start
-EOT;
-            $time = time();
-            $token = <<<EOT
-{
-    "accessToken": "string",
-    "expiresAt": "{$time}",
-    "refreshToken": "string",
-    "clientId": "ABCDEFG323242423121312312312312312",
-    "clientSecret": "ABCDE123",
-    "registrationExpiresAt": "2012-12-21T00:00:00Z",
-    "region": "us-west-2",
-    "startUrl": "https://d-abc123.awsapps.com/start"
-}
-EOT;
-
-            file_put_contents($dir . '/config', $ini);
-            file_put_contents($dir . '/sso/cache/d033e22ae348aeb5660fc2140aec35850c4da997.json', $token);
-            putenv('HOME=' . dirname($dir));
-            putenv('AWS_PROFILE=test');
-
-            try {
-                $token = call_user_func(TokenProvider::defaultProvider())->wait();
-                $this->assertSame("string", $token->getToken());
-            } catch (\Exception $e) {
-                throw $e;
-            } finally {
-                unlink($dir . '/config');
-                unlink($dir . '/sso/cache/d033e22ae348aeb5660fc2140aec35850c4da997.json');
-            }
-        }
     }
 
     public function tokenProviderSuccessCases() {
