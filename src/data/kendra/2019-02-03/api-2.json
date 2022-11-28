@@ -4046,11 +4046,19 @@
         "SpellCorrectedQueries":{"shape":"SpellCorrectedQueryList"}
       }
     },
+    "QueryResultFormat":{
+      "type":"string",
+      "enum":[
+        "TABLE",
+        "TEXT"
+      ]
+    },
     "QueryResultItem":{
       "type":"structure",
       "members":{
         "Id":{"shape":"ResultId"},
         "Type":{"shape":"QueryResultType"},
+        "Format":{"shape":"QueryResultFormat"},
         "AdditionalAttributes":{"shape":"AdditionalResultAttributeList"},
         "DocumentId":{"shape":"DocumentId"},
         "DocumentTitle":{"shape":"TextWithHighlights"},
@@ -4058,7 +4066,8 @@
         "DocumentURI":{"shape":"Url"},
         "DocumentAttributes":{"shape":"DocumentAttributeList"},
         "ScoreAttributes":{"shape":"ScoreAttributes"},
-        "FeedbackToken":{"shape":"FeedbackToken"}
+        "FeedbackToken":{"shape":"FeedbackToken"},
+        "TableExcerpt":{"shape":"TableExcerpt"}
       }
     },
     "QueryResultItemList":{
@@ -4868,11 +4877,41 @@
         "Text":{"shape":"SuggestionTextWithHighlights"}
       }
     },
+    "TableCell":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"String"},
+        "TopAnswer":{"shape":"Boolean"},
+        "Highlighted":{"shape":"Boolean"},
+        "Header":{"shape":"Boolean"}
+      }
+    },
+    "TableCellList":{
+      "type":"list",
+      "member":{"shape":"TableCell"}
+    },
+    "TableExcerpt":{
+      "type":"structure",
+      "members":{
+        "Rows":{"shape":"TableRowList"},
+        "TotalNumberOfRows":{"shape":"Integer"}
+      }
+    },
     "TableName":{
       "type":"string",
       "max":100,
       "min":1,
       "pattern":"^[a-zA-Z][a-zA-Z0-9_]*$"
+    },
+    "TableRow":{
+      "type":"structure",
+      "members":{
+        "Cells":{"shape":"TableCellList"}
+      }
+    },
+    "TableRowList":{
+      "type":"list",
+      "member":{"shape":"TableRow"}
     },
     "Tag":{
       "type":"structure",
