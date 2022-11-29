@@ -474,10 +474,13 @@ class SignatureV4 implements SignatureInterface
         $retry = $request->getHeader("aws-sdk-retry");
         $request = $request->withoutHeader("aws-sdk-invocation-id");
         $request = $request->withoutHeader("aws-sdk-retry");
+        $uri = $request->getUri();
+        $query = [];
+
         $http_request = new Request(
             $request->getMethod(),
-            (string) $request->getUri(),
-            [],
+            (string) $uri,
+            parse_str($uri->getQuery(), $query),
             array_map(function ($header) {
                 return $header[0];
             }, $request->getHeaders())
