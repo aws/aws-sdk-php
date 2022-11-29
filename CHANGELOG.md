@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.250.0 - 2022-11-29
 
 * `Aws\Credentials` - Emit warning rather than log error when extending IMDS credentials
 * `Aws\EC2` - This release adds support for AWS Verified Access and the Hpc6id Amazon EC2 compute optimized instance type, which features 3rd generation Intel Xeon Scalable processors.
