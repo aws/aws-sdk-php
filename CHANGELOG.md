@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.251.0 - 2022-11-30
 
 * `Aws\AccessAnalyzer` - This release adds support for S3 cross account access points. IAM Access Analyzer will now produce public or cross account findings when it detects bucket delegation to external account access points.
 * `Aws\Athena` - This release includes support for using Apache Spark in Amazon Athena.
