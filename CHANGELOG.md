@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.252.0 - 2022-12-01
 
 * `Aws\CodeCatalyst` - This release adds operations that support customers using the AWS Toolkits and Amazon CodeCatalyst, a unified software development service that helps developers develop, deploy, and maintain applications in the cloud. For more information, see the documentation.
 * `Aws\Comprehend` - Comprehend now supports semi-structured documents (such as PDF files or image files) as inputs for custom analysis using the synchronous APIs (ClassifyDocument and DetectEntities).
