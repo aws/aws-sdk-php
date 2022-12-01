@@ -334,6 +334,12 @@ class CredentialProvider
                 return self::reject("Profile {$ssoProfileName} does not exist in {$filename}.");
             }
             $ssoProfile = $profiles[$ssoProfileName];
+            if (!empty($ssoProfile['sso_session'])) {
+                return self::reject(
+                    "Profile {$ssoProfileName} contains an sso_session and will rely on"
+                    . " the token provider instead of the legacy sso credential provider."
+                );
+            }
             if (empty($ssoProfile['sso_start_url'])
                 || empty($ssoProfile['sso_region'])
                 || empty($ssoProfile['sso_account_id'])
@@ -347,7 +353,7 @@ class CredentialProvider
 
             $tokenLocation = self::getHomeDir()
                 . '/.aws/sso/cache/'
-                . utf8_encode(sha1($ssoProfile['sso_start_url']))
+                . sha1($ssoProfile['sso_start_url'])
                 . ".json";
 
             if (!@is_readable($tokenLocation)) {

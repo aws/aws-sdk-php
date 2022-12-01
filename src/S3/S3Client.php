@@ -352,6 +352,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         ) {
             $args['s3_us_east_1_regional_endpoint'] = ConfigurationProvider::defaultProvider($args);
         }
+        $this->addBuiltIns($args);
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $stack->appendInit(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), 's3.ssec');
@@ -361,10 +362,9 @@ class S3Client extends AwsClient implements S3ClientInterface
             's3.content_type'
         );
 
-        // Use the bucket style middleware when using a "bucket_endpoint" (for cnames)
         if ($this->getConfig('bucket_endpoint')) {
             $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
-        } else {
+        } elseif (!$this->isUseEndpointV2()) {
             $stack->appendBuild(
                 S3EndpointMiddleware::wrap(
                     $this->getRegion(),
@@ -398,7 +398,8 @@ class S3Client extends AwsClient implements S3ClientInterface
                     'endpoint' => isset($args['endpoint'])
                         ? $args['endpoint']
                         : null
-                ]
+                ],
+                $this->isUseEndpointV2()
             ),
             's3.bucket_endpoint_arn'
         );
@@ -414,6 +415,9 @@ class S3Client extends AwsClient implements S3ClientInterface
         $stack->appendInit($this->getLocationConstraintMiddleware(), 's3.location');
         $stack->appendInit($this->getEncodingTypeMiddleware(), 's3.auto_encode');
         $stack->appendInit($this->getHeadObjectMiddleware(), 's3.head_object');
+        if ($this->isUseEndpointV2()) {
+            $this->processEndpointV2Model();
+        }
     }
 
     /**
@@ -657,6 +661,66 @@ class S3Client extends AwsClient implements S3ClientInterface
         }
 
         return $this->getConfig('signing_name');
+    }
+
+    /**
+     * Modifies API definition to remove `Bucket` from request URIs.
+     * This is now handled by the endpoint ruleset.
+     *
+     * @return void
+     *
+     * @internal
+     */
+    private function processEndpointV2Model()
+    {
+        $definition = $this->getApi()->getDefinition();
+
+        foreach($definition['operations'] as &$operation) {
+            if (isset($operation['http']['requestUri'])) {
+                $requestUri = $operation['http']['requestUri'];
+                if ($requestUri === "/{Bucket}") {
+                    $requestUri = str_replace('/{Bucket}', '/', $requestUri);
+                } else {
+                    $requestUri = str_replace('/{Bucket}', '', $requestUri);
+                }
+                $operation['http']['requestUri'] = $requestUri;
+            }
+        }
+        $this->getApi()->setDefinition($definition);
+    }
+
+    /**
+     * Adds service-specific client built-in values
+     *
+     * @return void
+     */
+    private function addBuiltIns($args)
+    {
+        if ($args['region'] !== 'us-east-1') {
+            return false;
+        }
+        $key = 'AWS::S3::UseGlobalEndpoint';
+        $result = $args['s3_us_east_1_regional_endpoint'] instanceof \Closure ?
+            $args['s3_us_east_1_regional_endpoint']()->wait() : $args['s3_us_east_1_regional_endpoint'];
+
+        if (is_string($result)) {
+            if ($result === 'regional') {
+                $value = false;
+            } else if ($result === 'legacy') {
+                $value = true;
+            } else {
+                return;
+            }
+        } else {
+            if ($result->isFallback()
+                || $result->getEndpointsType() === 'legacy'
+            ) {
+                $value = true;
+            } else {
+                $value = false;
+            }
+        }
+        $this->clientBuiltIns[$key] = $value;
     }
 
     /** @internal */

@@ -3774,7 +3774,9 @@
         "Timeout":{"shape":"Integer"},
         "TracingConfig":{"shape":"AwsLambdaFunctionTracingConfig"},
         "VpcConfig":{"shape":"AwsLambdaFunctionVpcConfig"},
-        "Version":{"shape":"NonEmptyString"}
+        "Version":{"shape":"NonEmptyString"},
+        "Architectures":{"shape":"NonEmptyStringList"},
+        "PackageType":{"shape":"NonEmptyString"}
       }
     },
     "AwsLambdaFunctionEnvironment":{
@@ -7366,7 +7368,9 @@
         "PackageManager":{"shape":"NonEmptyString"},
         "FilePath":{"shape":"NonEmptyString"},
         "FixedInVersion":{"shape":"NonEmptyString"},
-        "Remediation":{"shape":"NonEmptyString"}
+        "Remediation":{"shape":"NonEmptyString"},
+        "SourceLayerHash":{"shape":"NonEmptyString"},
+        "SourceLayerArn":{"shape":"NonEmptyString"}
       }
     },
     "SoftwarePackageList":{
@@ -7397,7 +7401,8 @@
         "StandardsArn":{"shape":"NonEmptyString"},
         "Name":{"shape":"NonEmptyString"},
         "Description":{"shape":"NonEmptyString"},
-        "EnabledByDefault":{"shape":"Boolean"}
+        "EnabledByDefault":{"shape":"Boolean"},
+        "StandardsManagedBy":{"shape":"StandardsManagedBy"}
       }
     },
     "Standards":{
@@ -7427,6 +7432,13 @@
       "type":"map",
       "key":{"shape":"NonEmptyString"},
       "value":{"shape":"NonEmptyString"}
+    },
+    "StandardsManagedBy":{
+      "type":"structure",
+      "members":{
+        "Company":{"shape":"NonEmptyString"},
+        "Product":{"shape":"NonEmptyString"}
+      }
     },
     "StandardsStatus":{
       "type":"string",

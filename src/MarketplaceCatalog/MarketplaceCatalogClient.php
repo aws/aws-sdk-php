@@ -15,7 +15,13 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listChangeSetsAsync(array $args = [])
  * @method \Aws\Result listEntities(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listEntitiesAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result startChangeSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startChangeSetAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class MarketplaceCatalogClient extends AwsClient {}

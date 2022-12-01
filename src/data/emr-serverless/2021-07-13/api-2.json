@@ -75,6 +75,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetDashboardForJobRun":{
+      "name":"GetDashboardForJobRun",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{applicationId}/jobruns/{jobRunId}/dashboard",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDashboardForJobRunRequest"},
+      "output":{"shape":"GetDashboardForJobRunResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetJobRun":{
       "name":"GetJobRun",
       "http":{
@@ -257,7 +272,8 @@
         "tags":{"shape":"TagMap"},
         "autoStartConfiguration":{"shape":"AutoStartConfig"},
         "autoStopConfiguration":{"shape":"AutoStopConfig"},
-        "networkConfiguration":{"shape":"NetworkConfiguration"}
+        "networkConfiguration":{"shape":"NetworkConfiguration"},
+        "architecture":{"shape":"Architecture"}
       }
     },
     "ApplicationArn":{
@@ -320,8 +336,16 @@
         "state":{"shape":"ApplicationState"},
         "stateDetails":{"shape":"String256"},
         "createdAt":{"shape":"Date"},
-        "updatedAt":{"shape":"Date"}
+        "updatedAt":{"shape":"Date"},
+        "architecture":{"shape":"Architecture"}
       }
+    },
+    "Architecture":{
+      "type":"string",
+      "enum":[
+        "ARM64",
+        "X86_64"
+      ]
     },
     "AutoStartConfig":{
       "type":"structure",
@@ -333,10 +357,7 @@
       "type":"structure",
       "members":{
         "enabled":{"shape":"Boolean"},
-        "idleTimeoutMinutes":{
-          "shape":"AutoStopConfigIdleTimeoutMinutesInteger",
-          "box":true
-        }
+        "idleTimeoutMinutes":{"shape":"AutoStopConfigIdleTimeoutMinutesInteger"}
       }
     },
     "AutoStopConfigIdleTimeoutMinutesInteger":{
@@ -445,7 +466,8 @@
         "tags":{"shape":"TagMap"},
         "autoStartConfiguration":{"shape":"AutoStartConfig"},
         "autoStopConfiguration":{"shape":"AutoStopConfig"},
-        "networkConfiguration":{"shape":"NetworkConfiguration"}
+        "networkConfiguration":{"shape":"NetworkConfiguration"},
+        "architecture":{"shape":"Architecture"}
       }
     },
     "CreateApplicationResponse":{
@@ -537,6 +559,31 @@
       "required":["application"],
       "members":{
         "application":{"shape":"Application"}
+      }
+    },
+    "GetDashboardForJobRunRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "jobRunId"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "jobRunId":{
+          "shape":"JobRunId",
+          "location":"uri",
+          "locationName":"jobRunId"
+        }
+      }
+    },
+    "GetDashboardForJobRunResponse":{
+      "type":"structure",
+      "members":{
+        "url":{"shape":"Url"}
       }
     },
     "GetJobRunRequest":{
@@ -741,7 +788,6 @@
         },
         "maxResults":{
           "shape":"ListApplicationsRequestMaxResultsInteger",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -782,7 +828,6 @@
         },
         "maxResults":{
           "shape":"ListJobRunsRequestMaxResultsInteger",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -1165,7 +1210,8 @@
         "maximumCapacity":{"shape":"MaximumAllowedResources"},
         "autoStartConfiguration":{"shape":"AutoStartConfig"},
         "autoStopConfiguration":{"shape":"AutoStopConfig"},
-        "networkConfiguration":{"shape":"NetworkConfiguration"}
+        "networkConfiguration":{"shape":"NetworkConfiguration"},
+        "architecture":{"shape":"Architecture"}
       }
     },
     "UpdateApplicationResponse":{
@@ -1180,6 +1226,11 @@
       "max":10280,
       "min":1,
       "pattern":".*[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\r\\n\\t]*.*"
+    },
+    "Url":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "ValidationException":{
       "type":"structure",

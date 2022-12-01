@@ -35,7 +35,7 @@ class AwsClientTest extends TestCase
                     'protocol'       => 'query',
                     'endpointPrefix' => 'foo'
                 ],
-                'shapes' => []
+                'shapes' => [],
             ];
         };
     }
@@ -59,6 +59,9 @@ class AwsClientTest extends TestCase
         $this->assertSame($config['credentials'], $client->getCredentials()->wait());
         $this->assertSame($config['region'], $client->getRegion());
         $this->assertSame('foo', $client->getApi()->getEndpointPrefix());
+        $this->assertisArray($client->getClientBuiltIns());
+        $this->assertIsArray($client->getClientContextParams());
+        $this->assertisArray($client->getEndpointProviderArgs());
     }
 
     public function testEnsuresOperationIsFoundWhenCreatingCommands()
@@ -383,7 +386,10 @@ class AwsClientTest extends TestCase
                     CommandInterface $command,
                     RequestInterface $request
                 ) {
-                    $this->assertStringContainsString('ap-southeast-1/custom-service', $request->getHeader('Authorization')[0]);
+                    $this->assertStringContainsString(
+                        'ap-southeast-1/custom-service',
+                        $request->getHeader('Authorization')[0]
+                    );
                     return new Result;
                 }
             ]
@@ -462,6 +468,81 @@ class AwsClientTest extends TestCase
                 'use_dual_stack_endpoint' => new DualStackConfiguration(false, "foo")
             ],
             $client->getConfig()
+        );
+    }
+
+    public function testUsesV2EndpointProviderByDefault()
+    {
+        $client = new StsClient([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
+
+        $this->assertInstanceOf(
+            'Aws\EndpointV2\EndpointProviderV2',
+            $client->getEndpointProvider()
+        );
+    }
+
+    public function testGetClientBuiltins()
+    {
+        $client = new StsClient([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
+        $expected = [
+            'SDK::Endpoint' => null,
+            'AWS::Region' => 'us-west-2',
+            'AWS::UseFIPS' => false,
+            'AWS::UseDualStack' => false,
+            'AWS::STS::UseGlobalEndpoint' => true,
+        ];
+        $builtIns = $client->getClientBuiltIns();
+        $this->assertEquals(
+            $expected,
+            $builtIns
+        );
+    }
+
+    public function testGetEndpointProviderArgs()
+    {
+        $client = new StsClient([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
+        $expected = [
+            'Endpoint' => null,
+            'Region' => 'us-west-2',
+            'UseFIPS' => false,
+            'UseDualStack' => false,
+            'UseGlobalEndpoint' => true,
+        ];
+        $providerArgs = $client->getEndpointProviderArgs();
+        $this->assertEquals(
+            $expected,
+            $providerArgs
+        );
+    }
+
+    public function testIsUseGlobalEndpoint() {
+        $client = new StsClient([
+            'region'  => 'us-west-2',
+            'version' => 'latest',
+            'sts_regional_endpoints' => 'legacy'
+        ]);
+        $providerArgs = $client->getEndpointProviderArgs();
+        $this->assertTrue(
+            $providerArgs['UseGlobalEndpoint']
+        );
+
+        $client = new S3Client([
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            's3_us_east_1_regional_endpoint' => 'regional'
+        ]);
+        $providerArgs = $client->getEndpointProviderArgs();
+        $this->assertFalse(
+            $providerArgs['UseGlobalEndpoint']
         );
     }
 
