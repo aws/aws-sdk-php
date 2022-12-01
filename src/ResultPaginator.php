@@ -133,7 +133,11 @@ class ResultPaginator implements \Iterator
         if ($this->nextToken || !$this->requestCount) {
 
             if ($this->nextToken &&
+<<<<<<< HEAD
                 in_array($this->operation, $this->previousTokenOperations)
+=======
+                in_array($this->operation, $this->lastPageHasPreviousToken)
+>>>>>>> cdef6baaa4b262ef88c2359b52e4db49ef6aa810
             ) {
                 $tokenKey = $this->config['input_token'];
                 $previousToken = $this->nextToken[$tokenKey];
