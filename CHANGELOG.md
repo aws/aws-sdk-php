@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.252.1 - 2022-12-02
 
 * `Aws\AppSync` - Fixes the URI for the evaluatecode endpoint to include the /v1 prefix (ie. "/v1/dataplane-evaluatecode").
 * `Aws\ECS` - Documentation updates for Amazon ECS
