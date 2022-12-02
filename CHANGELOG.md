@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - Fixes the URI for the evaluatecode endpoint to include the /v1 prefix (ie. "/v1/dataplane-evaluatecode").
+* `Aws\ECS` - Documentation updates for Amazon ECS
+* `Aws\FMS` - AWS Firewall Manager now supports Fortigate Cloud Native Firewall as a Service as a third-party policy type.
+* `Aws\MediaConvert` - The AWS Elemental MediaConvert SDK has added support for configurable ID3 eMSG box attributes and the ability to signal them with InbandEventStream tags in DASH and CMAF outputs.
+* `Aws\MediaLive` - Updates to Event Signaling and Management (ESAM) API and documentation.
+* `Aws\Polly` - Add language code for Finnish (fi-FI)
+* `Aws\Proton` - CreateEnvironmentAccountConnection RoleArn input is now optional
+* `Aws\RedshiftServerless` - Add Table Level Restore operations for Amazon Redshift Serverless. Add multi-port support for Amazon Redshift Serverless endpoints. Add Tagging support to Snapshots and Recovery Points in Amazon Redshift Serverless.
+* `Aws\SNS` - This release adds the message payload-filtering feature to the SNS Subscribe, SetSubscriptionAttributes, and GetSubscriptionAttributes API actions
+
 ## 3.252.0 - 2022-12-01
 
 * `Aws\CodeCatalyst` - This release adds operations that support customers using the AWS Toolkits and Amazon CodeCatalyst, a unified software development service that helps developers develop, deploy, and maintain applications in the cloud. For more information, see the documentation.
