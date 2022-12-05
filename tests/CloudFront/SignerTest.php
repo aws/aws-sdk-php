@@ -39,7 +39,14 @@ class SignerTest extends TestCase
      * Assert that the key file is parsed during construction
      */
     public function testBadPrivateKeyPath() {
-        $this->expectExceptionMessageMatches("/PEM .*no start line/");
+        preg_match('/OpenSSL (?<version>\d+\.\d+\.\d+)/',OPENSSL_VERSION_TEXT,$matches);
+        // OpenSSL 1.* and 3.* do not return the same error-message
+        if (isset($matches['version']) && version_compare($matches['version'],'3.0','>=')) {
+            $this->expectExceptionMessageMatches("/error:1E08010C:DECODER routines::unsupported/");
+        } else {
+            $this->expectExceptionMessageMatches("/PEM .*no start line/");
+        }
+
         $this->expectException(\InvalidArgumentException::class);
         $filename = tempnam(sys_get_temp_dir(), 'cloudfront-fake-key');
         file_put_contents($filename, "Not a real private key");
