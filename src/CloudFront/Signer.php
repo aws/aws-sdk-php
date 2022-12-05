@@ -72,6 +72,7 @@ class Signer
      * @return array The values needed to construct a signed URL or cookie
      * @throws \InvalidArgumentException  when not provided either a policy or a
      *                                    resource and a expires
+     * @throws \RuntimeException when generated signature is empty
      *
      * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-signed-cookies.html
      */
@@ -113,7 +114,15 @@ class Signer
     private function sign($policy)
     {
         $signature = '';
-        openssl_sign($policy, $signature, $this->pkHandle);
+        
+        if(!openssl_sign($policy, $signature, $this->pkHandle)) {
+            $errorMessages = [];
+            while(($newMessage = openssl_error_string()) !== false) {
+                $errorMessages[] = $newMessage;
+            }
+            
+            throw new \RuntimeException(implode("\n",$errorMessages));
+        }
 
         return $signature;
     }
