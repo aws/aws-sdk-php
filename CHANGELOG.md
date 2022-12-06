@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.252.3 - 2022-12-06
 
 * `Aws\BillingConductor` - This release adds the Tiering Pricing Rule feature.
 * `Aws\Connect` - This release provides APIs that enable you to programmatically manage rules for Contact Lens conversational analytics and third party applications. For more information, see https://docs.aws.amazon.com/connect/latest/APIReference/rules-api.html
