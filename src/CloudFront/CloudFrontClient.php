@@ -206,6 +206,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateCachePolicyAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result updateContinuousDeploymentPolicy(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise updateContinuousDeploymentPolicyAsync(array $args = []) (supported in versions 2020-05-31)
+ * @method \Aws\Result updateDistributionWithStagingConfig(array $args = []) (supported in versions 2020-05-31)
+ * @method \GuzzleHttp\Promise\Promise updateDistributionWithStagingConfigAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result updateFunction(array $args = []) (supported in versions 2020-05-31)
  * @method \GuzzleHttp\Promise\Promise updateFunctionAsync(array $args = []) (supported in versions 2020-05-31)
  * @method \Aws\Result updateKeyGroup(array $args = []) (supported in versions 2020-05-31)

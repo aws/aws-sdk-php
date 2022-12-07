@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Introducing UpdateDistributionWithStagingConfig that can be used to promote the staging configuration to the production.
+* `Aws\CostExplorer` - This release adds the LinkedAccountName field to the GetAnomalies API response under RootCause
+* `Aws\EKS` - Adds support for EKS add-ons configurationValues fields and DescribeAddonConfiguration function
+* `Aws\EndpointDiscovery` - Re-enables endpoint discovery for services/operations that require it.
+* `Aws\KMS` - Updated examples and exceptions for External Key Store (XKS).
+
 ## 3.252.3 - 2022-12-06
 
 * `Aws\BillingConductor` - This release adds the Tiering Pricing Rule feature.
