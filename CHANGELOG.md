@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.252.4 - 2022-12-07
 
 * `Aws\CloudFront` - Introducing UpdateDistributionWithStagingConfig that can be used to promote the staging configuration to the production.
 * `Aws\CostExplorer` - This release adds the LinkedAccountName field to the GetAnomalies API response under RootCause
