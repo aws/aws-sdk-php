@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.252.6 - 2022-12-09
 
 * `Aws\CloudWatchLogs` - Doc-only update for CloudWatch Logs, for Tagging Permissions clarifications
 * `Aws\IoTFleetWise` - Deprecated assignedValue property for actuators and attributes. Added a message to invalid nodes and invalid decoder manifest exceptions.
