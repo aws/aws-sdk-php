@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.253.0 - 2022-12-12
 
 * `Aws\CustomerProfiles` - This release allows custom strings in PartyType and Gender through 2 new attributes in the CreateProfile and UpdateProfile APIs: PartyTypeString and GenderString.
 * `Aws\EC2` - This release updates DescribeFpgaImages to show supported instance types of AFIs in its response.
