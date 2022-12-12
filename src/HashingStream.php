@@ -17,6 +17,9 @@ class HashingStream implements StreamInterface
     /** @var callable|null */
     private $callback;
 
+    /** @var StreamInterface */
+    private $stream;
+
     /**
      * @param StreamInterface $stream     Stream that is being read.
      * @param HashInterface   $hash       Hash used to calculate checksum.
