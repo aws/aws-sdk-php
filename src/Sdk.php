@@ -558,6 +558,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSageMakerFeatureStoreRuntime(array $args = [])
  * @method \Aws\SageMakerGeospatial\SageMakerGeospatialClient createSageMakerGeospatial(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSageMakerGeospatial(array $args = [])
+ * @method \Aws\SageMakerMetrics\SageMakerMetricsClient createSageMakerMetrics(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSageMakerMetrics(array $args = [])
  * @method \Aws\SageMakerRuntime\SageMakerRuntimeClient createSageMakerRuntime(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSageMakerRuntime(array $args = [])
  * @method \Aws\SagemakerEdgeManager\SagemakerEdgeManagerClient createSagemakerEdgeManager(array $args = [])

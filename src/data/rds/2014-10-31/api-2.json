@@ -3012,7 +3012,8 @@
         "PreSignedUrl":{"shape":"String"},
         "DestinationRegion":{"shape":"String"},
         "OptionGroupName":{"shape":"String"},
-        "TargetCustomAvailabilityZone":{"shape":"String"}
+        "TargetCustomAvailabilityZone":{"shape":"String"},
+        "CopyOptionGroup":{"shape":"BooleanOptional"}
       }
     },
     "CopyDBSnapshotResult":{
@@ -6944,7 +6945,10 @@
         "Options":{"shape":"OptionsList"},
         "AllowsVpcAndNonVpcInstanceMemberships":{"shape":"Boolean"},
         "VpcId":{"shape":"String"},
-        "OptionGroupArn":{"shape":"String"}
+        "OptionGroupArn":{"shape":"String"},
+        "SourceOptionGroup":{"shape":"String"},
+        "SourceAccountId":{"shape":"String"},
+        "CopyTimestamp":{"shape":"TStamp"}
       },
       "wrapper":true
     },
@@ -7002,7 +7006,8 @@
         "VpcOnly":{"shape":"Boolean"},
         "SupportsOptionVersionDowngrade":{"shape":"BooleanOptional"},
         "OptionGroupOptionSettings":{"shape":"OptionGroupOptionSettingsList"},
-        "OptionGroupOptionVersions":{"shape":"OptionGroupOptionVersionsList"}
+        "OptionGroupOptionVersions":{"shape":"OptionGroupOptionVersionsList"},
+        "CopyableCrossAccount":{"shape":"BooleanOptional"}
       }
     },
     "OptionGroupOptionSetting":{
