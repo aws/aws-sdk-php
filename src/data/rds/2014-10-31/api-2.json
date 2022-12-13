@@ -2895,6 +2895,15 @@
         "CharacterSetDescription":{"shape":"String"}
       }
     },
+    "ClientPasswordAuthType":{
+      "type":"string",
+      "enum":[
+        "MYSQL_NATIVE_PASSWORD",
+        "POSTGRES_SCRAM_SHA_256",
+        "POSTGRES_MD5",
+        "SQL_SERVER_AUTHENTICATION"
+      ]
+    },
     "CloudwatchLogsExportConfiguration":{
       "type":"structure",
       "members":{
@@ -8592,7 +8601,8 @@
         "UserName":{"shape":"String"},
         "AuthScheme":{"shape":"AuthScheme"},
         "SecretArn":{"shape":"String"},
-        "IAMAuth":{"shape":"IAMAuthMode"}
+        "IAMAuth":{"shape":"IAMAuthMode"},
+        "ClientPasswordAuthType":{"shape":"ClientPasswordAuthType"}
       }
     },
     "UserAuthConfigInfo":{
@@ -8602,7 +8612,8 @@
         "UserName":{"shape":"String"},
         "AuthScheme":{"shape":"AuthScheme"},
         "SecretArn":{"shape":"String"},
-        "IAMAuth":{"shape":"IAMAuthMode"}
+        "IAMAuth":{"shape":"IAMAuthMode"},
+        "ClientPasswordAuthType":{"shape":"ClientPasswordAuthType"}
       }
     },
     "UserAuthConfigInfoList":{

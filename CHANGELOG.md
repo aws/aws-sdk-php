@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudTrail` - Merging mainline branch for service model into mainline release branch. There are no new APIs.
+* `Aws\EndpointV2` - Fixes bug which allowed client-provided http schemes to be overwritten during endpoint resolution.
+* `Aws\RDS` - This deployment adds ClientPasswordAuthType field to the Auth structure of the DBProxy.
+
 ## 3.253.0 - 2022-12-12
 
 * `Aws\CustomerProfiles` - This release allows custom strings in PartyType and Gender through 2 new attributes in the CreateProfile and UpdateProfile APIs: PartyTypeString and GenderString.
