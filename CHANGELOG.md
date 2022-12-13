@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.253.1 - 2022-12-13
 
 * `Aws\CloudTrail` - Merging mainline branch for service model into mainline release branch. There are no new APIs.
 * `Aws\EndpointV2` - Fixes bug which allowed client-provided http schemes to be overwritten during endpoint resolution.
