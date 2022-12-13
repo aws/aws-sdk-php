@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 3.253.0 - 2022-12-12
+
+* `Aws\CustomerProfiles` - This release allows custom strings in PartyType and Gender through 2 new attributes in the CreateProfile and UpdateProfile APIs: PartyTypeString and GenderString.
+* `Aws\EC2` - This release updates DescribeFpgaImages to show supported instance types of AFIs in its response.
+* `Aws\EndpointV2` - Update to standard library ParseArn function.
+* `Aws\KinesisVideo` - This release adds support for public preview of Kinesis Video Stream at Edge enabling customers to provide configuration for the Kinesis Video Stream EdgeAgent running on an on-premise IoT device. Customers can now locally record from cameras and stream videos to the cloud on configured schedule.
+* `Aws\LookoutforVision` - This documentation update adds kms:GenerateDataKey as a required permission to StartModelPackagingJob.
+* `Aws\MigrationHubRefactorSpaces` - This release adds support for Lambda alias service endpoints. Lambda alias ARNs can now be passed into CreateService.
+* `Aws\RDS` - Update the RDS API model to support copying option groups during the CopyDBSnapshot operation
+* `Aws\Rekognition` - Adds support for "aliases" and "categories", inclusion and exclusion filters for labels and label categories, and aggregating labels by video segment timestamps for Stored Video Label Detection APIs.
+* `Aws\SageMakerMetrics` - This release introduces support SageMaker Metrics APIs.
+* `Aws\WAFV2` - Documents the naming requirement for logging destinations that you use with web ACLs.
+
 ## 3.252.6 - 2022-12-09
 
 * `Aws\CloudWatchLogs` - Doc-only update for CloudWatch Logs, for Tagging Permissions clarifications
