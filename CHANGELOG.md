@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.253.2 - 2022-12-14
 
 * `Aws\CloudWatch` - Adding support for Metrics Insights Alarms
 * `Aws\CostExplorer` - This release supports percentage-based thresholds on Cost Anomaly Detection alert subscriptions.
