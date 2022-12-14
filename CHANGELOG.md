@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatch` - Adding support for Metrics Insights Alarms
+* `Aws\CostExplorer` - This release supports percentage-based thresholds on Cost Anomaly Detection alert subscriptions.
+* `Aws\NetworkManager` - Appliance Mode support for AWS Cloud WAN.
+* `Aws\RedshiftDataAPIService` - This release adds a new --client-token field to ExecuteStatement and BatchExecuteStatement operations. Customers can now run queries with the additional client token parameter to ensures idempotency.
+* `Aws\SageMakerMetrics` - Update SageMaker Metrics documentation.
+
 ## 3.253.1 - 2022-12-13
 
 * `Aws\CloudTrail` - Merging mainline branch for service model into mainline release branch. There are no new APIs.
