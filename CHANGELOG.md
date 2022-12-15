@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.253.3 - 2022-12-15
 
 * `Aws\BackupGateway` - This release adds support for VMware vSphere tags, enabling customer to protect VMware virtual machines using tag-based policies for AWS tags mapped from vSphere tags. This release also adds support for customer-accessible gateway-hypervisor interaction log and upload bandwidth rate limit schedule.
 * `Aws\Connect` - Added support for "English - New Zealand" and "English - South African" to be used with Amazon Connect Custom Vocabulary APIs.
