@@ -46,6 +46,14 @@ class BucketEndpointMiddleware
         return $nextHandler($command, $request);
     }
 
+    /**
+     * Performs a one-time removal of Bucket from path, then if
+     * the bucket name is duplicated in the path, performs additional
+     * removal which is dependent on the number of occurrences of the bucket
+     * name in a path-like format in the key name.
+     *
+     * @return string
+     */
     private function removeBucketFromPath($path, $bucket, $key)
     {
         $occurrencesInKey = $this->getBucketNameOccurrencesInKey($key, $bucket);
