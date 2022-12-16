@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Appflow` - This release updates the ListConnectorEntities API action so that it returns paginated responses that customers can retrieve with next tokens.
+* `Aws\CloudFront` - Updated documentation for CloudFront
+* `Aws\DataSync` - AWS DataSync now supports the use of tags with task executions. With this new feature, you can apply tags each time you execute a task, giving you greater control and management over your task executions.
+* `Aws\EFS` - General documentation updates for EFS.
+* `Aws\GuardDuty` - This release provides the valid characters for the Description and Name field.
+* `Aws\IoTFleetWise` - Updated error handling for empty resource names in "UpdateSignalCatalog" and "GetModelManifest" operations.
+* `Aws\S3` - Fixes issue with path-style endpoints which resulted in duplicated buckets in request uri path.
+* `Aws\SageMaker` - AWS sagemaker - Features: This release adds support for random seed, it's an integer value used to initialize a pseudo-random number generator. Setting a random seed will allow the hyperparameter tuning search strategies to produce more consistent configurations for the same tuning job.
+
 ## 3.253.3 - 2022-12-15
 
 * `Aws\BackupGateway` - This release adds support for VMware vSphere tags, enabling customer to protect VMware virtual machines using tag-based policies for AWS tags mapped from vSphere tags. This release also adds support for customer-accessible gateway-hypervisor interaction log and upload bandwidth rate limit schedule.
