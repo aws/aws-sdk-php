@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.253.4 - 2022-12-16
 
 * `Aws\Appflow` - This release updates the ListConnectorEntities API action so that it returns paginated responses that customers can retrieve with next tokens.
 * `Aws\CloudFront` - Updated documentation for CloudFront
