@@ -231,17 +231,29 @@ abstract class RestSerializer
            $relative = $this->appendQuery($opts['query'], $relative);
         }
 
-        // If endpoint has path, remove leading '/' to preserve URI resolution.
         $path = $this->endpoint->getPath();
-        //accounts for removal of bucket from requestUri path
+
+        //Accounts for trailing '/' in path when custom endpoint
+        //is provided to endpointProviderV2
         if ($this->api->isModifiedModel()
             && $this->api->getServiceName() === 's3'
         ) {
+            if (substr($path, -1) === '/' && $relative[0] === '/') {
+                $path = rtrim($path, '/');
+            }
             $relative = $path . $relative;
         }
-
+        // If endpoint has path, remove leading '/' to preserve URI resolution.
         if ($path && $relative[0] === '/') {
             $relative = substr($relative, 1);
+        }
+
+        //Append path to endpoint when leading '//...' present
+        // as uri cannot be properly resolved
+        if ($this->api->isModifiedModel()
+            && strpos($relative, '//') === 0
+        ) {
+            return new Uri($this->endpoint . $relative);
         }
 
         // Expand path place holders using Amazon's slightly different URI
@@ -275,7 +287,7 @@ abstract class RestSerializer
     private function appendQuery($query, $endpoint)
     {
         $append = Psr7\Query::build($query);
-        return $endpoint .= strpos($endpoint, '?') ? "&{$append}" : "?$append";
+        return $endpoint .= strpos($endpoint, '?') !== false ? "&{$append}" : "?{$append}";
     }
 
     private function getVarDefinitions($command, $args)

@@ -61,7 +61,7 @@ class BucketEndpointArnMiddleware
         Service $service,
         $region,
         array $config = [],
-        $isUseEndpointV2
+        $isUseEndpointV2 = false
     ) {
         $this->partitionProvider = PartitionEndpointProvider::defaultProvider();
         $this->region = $region;

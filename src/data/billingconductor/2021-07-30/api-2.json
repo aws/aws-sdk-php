@@ -732,6 +732,10 @@
         "FailedDisassociatedResources":{"shape":"DisassociateResourcesResponseList"}
       }
     },
+    "BillingEntity":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9 ]+"
+    },
     "BillingGroupArn":{
       "type":"string",
       "pattern":"(arn:aws(-cn)?:billingconductor::[0-9]{12}:billinggroup/)?[0-9]{12}"
@@ -904,6 +908,13 @@
         "Arn":{"shape":"CustomLineItemArn"}
       }
     },
+    "CreateFreeTierConfig":{
+      "type":"structure",
+      "required":["Activated"],
+      "members":{
+        "Activated":{"shape":"TieringActivated"}
+      }
+    },
     "CreatePricingPlanInput":{
       "type":"structure",
       "required":["Name"],
@@ -931,8 +942,7 @@
       "required":[
         "Name",
         "Scope",
-        "Type",
-        "ModifierPercentage"
+        "Type"
       ],
       "members":{
         "ClientToken":{
@@ -947,13 +957,22 @@
         "Type":{"shape":"PricingRuleType"},
         "ModifierPercentage":{"shape":"ModifierPercentage"},
         "Service":{"shape":"Service"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "BillingEntity":{"shape":"BillingEntity"},
+        "Tiering":{"shape":"CreateTieringInput"}
       }
     },
     "CreatePricingRuleOutput":{
       "type":"structure",
       "members":{
         "Arn":{"shape":"PricingRuleArn"}
+      }
+    },
+    "CreateTieringInput":{
+      "type":"structure",
+      "required":["FreeTier"],
+      "members":{
+        "FreeTier":{"shape":"CreateFreeTierConfig"}
       }
     },
     "Currency":{"type":"string"},
@@ -1214,6 +1233,13 @@
     "DisassociateResourcesResponseList":{
       "type":"list",
       "member":{"shape":"DisassociateResourceResponseElement"}
+    },
+    "FreeTierConfig":{
+      "type":"structure",
+      "required":["Activated"],
+      "members":{
+        "Activated":{"shape":"TieringActivated"}
+      }
     },
     "Instant":{"type":"long"},
     "InternalServerException":{
@@ -1646,7 +1672,9 @@
         "Service":{"shape":"Service"},
         "AssociatedPricingPlanCount":{"shape":"NumberOfPricingPlansAssociatedWith"},
         "CreationTime":{"shape":"Instant"},
-        "LastModifiedTime":{"shape":"Instant"}
+        "LastModifiedTime":{"shape":"Instant"},
+        "BillingEntity":{"shape":"BillingEntity"},
+        "Tiering":{"shape":"Tiering"}
       }
     },
     "PricingRuleName":{
@@ -1660,14 +1688,16 @@
       "type":"string",
       "enum":[
         "GLOBAL",
-        "SERVICE"
+        "SERVICE",
+        "BILLING_ENTITY"
       ]
     },
     "PricingRuleType":{
       "type":"string",
       "enum":[
         "MARKUP",
-        "DISCOUNT"
+        "DISCOUNT",
+        "TIERING"
       ]
     },
     "ProformaCost":{"type":"string"},
@@ -1777,6 +1807,17 @@
       },
       "exception":true
     },
+    "Tiering":{
+      "type":"structure",
+      "required":["FreeTier"],
+      "members":{
+        "FreeTier":{"shape":"FreeTierConfig"}
+      }
+    },
+    "TieringActivated":{
+      "type":"boolean",
+      "box":true
+    },
     "Token":{"type":"string"},
     "UntagResourceRequest":{
       "type":"structure",
@@ -1871,6 +1912,13 @@
         "PercentageValue":{"shape":"CustomLineItemPercentageChargeValue"}
       }
     },
+    "UpdateFreeTierConfig":{
+      "type":"structure",
+      "required":["Activated"],
+      "members":{
+        "Activated":{"shape":"TieringActivated"}
+      }
+    },
     "UpdatePricingPlanInput":{
       "type":"structure",
       "required":["Arn"],
@@ -1898,7 +1946,8 @@
         "Name":{"shape":"PricingRuleName"},
         "Description":{"shape":"PricingRuleDescription"},
         "Type":{"shape":"PricingRuleType"},
-        "ModifierPercentage":{"shape":"ModifierPercentage"}
+        "ModifierPercentage":{"shape":"ModifierPercentage"},
+        "Tiering":{"shape":"UpdateTieringInput"}
       }
     },
     "UpdatePricingRuleOutput":{
@@ -1912,7 +1961,16 @@
         "ModifierPercentage":{"shape":"ModifierPercentage"},
         "Service":{"shape":"Service"},
         "AssociatedPricingPlanCount":{"shape":"NumberOfPricingPlansAssociatedWith"},
-        "LastModifiedTime":{"shape":"Instant"}
+        "LastModifiedTime":{"shape":"Instant"},
+        "BillingEntity":{"shape":"BillingEntity"},
+        "Tiering":{"shape":"UpdateTieringInput"}
+      }
+    },
+    "UpdateTieringInput":{
+      "type":"structure",
+      "required":["FreeTier"],
+      "members":{
+        "FreeTier":{"shape":"UpdateFreeTierConfig"}
       }
     },
     "ValidationException":{
@@ -1993,8 +2051,13 @@
         "MULTIPLE_PRICING_PLAN_ARN",
         "ILLEGAL_CHILD_ASSOCIATE_RESOURCE",
         "CUSTOM_LINE_ITEM_ASSOCIATION_EXISTS",
+        "INVALID_BILLING_GROUP",
         "INVALID_BILLING_PERIOD_FOR_OPERATION",
-        "INVALID_BILLING_GROUP"
+        "ILLEGAL_BILLING_ENTITY",
+        "ILLEGAL_MODIFIER_PERCENTAGE",
+        "ILLEGAL_TYPE",
+        "ILLEGAL_ENDED_BILLINGGROUP",
+        "ILLEGAL_TIERING_INPUT"
       ]
     }
   }

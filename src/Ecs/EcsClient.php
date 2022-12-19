@@ -60,6 +60,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listContainerInstancesAsync(array $args = [])
  * @method \Aws\Result listServices(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listServicesAsync(array $args = [])
+ * @method \Aws\Result listServicesByNamespace(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listServicesByNamespaceAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result listTaskDefinitionFamilies(array $args = [])

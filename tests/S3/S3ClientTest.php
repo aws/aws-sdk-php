@@ -2186,4 +2186,32 @@ EOXML;
             ["us-east-1", "route", null, 'route.s3-object-lambda.us-east-1.amazonaws.com'],
         ];
     }
+
+    public function testLeadingForwardSlashIsEncoded()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('listObjects', ['Bucket' => 'foo', 'Prefix' => '/']);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame('foo.s3.amazonaws.com', $req->getUri()->getHost());
+                $this->assertSame('/?prefix=%2F&encoding-type=url', $req->getRequestTarget());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function testHandlesTrailingForwardSlashInCustomEndpoint()
+    {
+        $s3 = $this->getTestClient('s3', ['endpoint' => 'https://test.com/']);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('listObjects', ['Bucket' => 'foo', 'Prefix' => '/']);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame('foo.test.com', $req->getUri()->getHost());
+                $this->assertSame('/?prefix=%2F&encoding-type=url', $req->getRequestTarget());
+            })
+        );
+        $s3->execute($command);
+    }
 }

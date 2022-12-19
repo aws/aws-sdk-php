@@ -39,8 +39,10 @@ trait EndpointV2SerializerTrait
             $clientArgs
         );
         $endpoint = $endpointProvider->resolveEndpoint($providerArgs);
+        $resolvedUrl = $endpoint->getUrl();
 
-        $this->endpoint = $endpoint->getUrl();
+        $this->applyScheme($resolvedUrl);
+        $this->endpoint = $resolvedUrl;
         $this->applyAuthSchemeToCommand($endpoint, $command);
         $this->applyHeaders($endpoint, $headers);
     }
@@ -127,21 +129,25 @@ trait EndpointV2SerializerTrait
             '@use_path_style_endpoint' => 'ForcePathStyle'
         ];
 
+        $filteredArgs = [];
+
+        foreach($rulesetParams as $name => $value) {
+            if (isset($commandArgs[$name])) {
+                if (!empty($value->getBuiltIn())) {
+                    continue;
+                }
+                $filteredArgs[$name] = $commandArgs[$name];
+            }
+        }
+
         if ($this->api->getServiceName() === 's3') {
             foreach($endpointMiddlewareOpts as $optionName => $newValue) {
                 if (isset($commandArgs[$optionName])) {
-                    $commandArgs[$newValue] = $commandArgs[$optionName];
+                    $filteredArgs[$newValue] = $commandArgs[$optionName];
                 }
             }
         }
 
-        $filteredArgs = [];
-
-        foreach($rulesetParams as $name => $value) {
-            if (isset($rulesetParams[$name]) && isset($commandArgs[$name])) {
-                $filteredArgs[$name] = $commandArgs[$name];
-            }
-        }
         return $filteredArgs;
     }
 
@@ -207,5 +213,21 @@ trait EndpointV2SerializerTrait
             $authScheme['signingRegion'] : null;
 
         return $normalizedAuthScheme;
+    }
+
+    private function applyScheme(&$resolvedUrl)
+    {
+        $resolvedEndpointScheme = parse_url($resolvedUrl, PHP_URL_SCHEME);
+        $scheme = $this->endpoint instanceof Uri
+            ? $this->endpoint->getScheme()
+            : parse_url($this->endpoint, PHP_URL_SCHEME);
+
+        if (!empty($scheme) && $scheme !== $resolvedEndpointScheme) {
+            $resolvedUrl = str_replace(
+                $resolvedEndpointScheme,
+                $scheme,
+                $resolvedUrl
+            );
+        }
     }
 }

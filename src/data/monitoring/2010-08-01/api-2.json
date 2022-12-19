@@ -1214,6 +1214,10 @@
       "type":"integer",
       "min":1
     },
+    "EvaluationState":{
+      "type":"string",
+      "enum":["PARTIAL_DATA"]
+    },
     "ExceptionType":{"type":"string"},
     "ExtendedStatistic":{"type":"string"},
     "ExtendedStatistics":{
@@ -1380,6 +1384,7 @@
       "max":255,
       "min":1
     },
+    "IncludeLinkedAccounts":{"type":"boolean"},
     "InsightRule":{
       "type":"structure",
       "required":[
@@ -1657,18 +1662,22 @@
         "MetricName":{"shape":"MetricName"},
         "Dimensions":{"shape":"DimensionFilters"},
         "NextToken":{"shape":"NextToken"},
-        "RecentlyActive":{"shape":"RecentlyActive"}
+        "RecentlyActive":{"shape":"RecentlyActive"},
+        "IncludeLinkedAccounts":{"shape":"IncludeLinkedAccounts"},
+        "OwningAccount":{"shape":"AccountId"}
       }
     },
     "ListMetricsOutput":{
       "type":"structure",
       "members":{
         "Metrics":{"shape":"Metrics"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "OwningAccounts":{"shape":"OwningAccounts"}
       },
       "xmlOrder":[
         "Metrics",
-        "NextToken"
+        "NextToken",
+        "OwningAccounts"
       ]
     },
     "ListTagsForResourceInput":{
@@ -1784,7 +1793,9 @@
         "TreatMissingData":{"shape":"TreatMissingData"},
         "EvaluateLowSampleCountPercentile":{"shape":"EvaluateLowSampleCountPercentile"},
         "Metrics":{"shape":"MetricDataQueries"},
-        "ThresholdMetricId":{"shape":"MetricId"}
+        "ThresholdMetricId":{"shape":"MetricId"},
+        "EvaluationState":{"shape":"EvaluationState"},
+        "StateTransitionedTimestamp":{"shape":"Timestamp"}
       },
       "xmlOrder":[
         "AlarmName",
@@ -1813,7 +1824,9 @@
         "EvaluateLowSampleCountPercentile",
         "DatapointsToAlarm",
         "Metrics",
-        "ThresholdMetricId"
+        "ThresholdMetricId",
+        "EvaluationState",
+        "StateTransitionedTimestamp"
       ]
     },
     "MetricAlarms":{
@@ -2018,6 +2031,10 @@
     },
     "NextToken":{"type":"string"},
     "OutputFormat":{"type":"string"},
+    "OwningAccounts":{
+      "type":"list",
+      "member":{"shape":"AccountId"}
+    },
     "PartialFailure":{
       "type":"structure",
       "members":{
@@ -2387,7 +2404,8 @@
       "enum":[
         "Complete",
         "InternalError",
-        "PartialData"
+        "PartialData",
+        "Forbidden"
       ]
     },
     "StopMetricStreamsInput":{

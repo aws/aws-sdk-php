@@ -214,6 +214,20 @@
         {"shape":"ServerException"}
       ]
     },
+    "DescribeAddonConfiguration":{
+      "name":"DescribeAddonConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/addons/configuration-schemas"
+      },
+      "input":{"shape":"DescribeAddonConfigurationRequest"},
+      "output":{"shape":"DescribeAddonConfigurationResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "DescribeAddonVersions":{
       "name":"DescribeAddonVersions",
       "http":{
@@ -570,7 +584,11 @@
         "BOTTLEROCKET_ARM_64",
         "BOTTLEROCKET_x86_64",
         "BOTTLEROCKET_ARM_64_NVIDIA",
-        "BOTTLEROCKET_x86_64_NVIDIA"
+        "BOTTLEROCKET_x86_64_NVIDIA",
+        "WINDOWS_CORE_2019_x86_64",
+        "WINDOWS_FULL_2019_x86_64",
+        "WINDOWS_CORE_2022_x86_64",
+        "WINDOWS_FULL_2022_x86_64"
       ]
     },
     "AccessDeniedException":{
@@ -593,7 +611,11 @@
         "createdAt":{"shape":"Timestamp"},
         "modifiedAt":{"shape":"Timestamp"},
         "serviceAccountRoleArn":{"shape":"String"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "publisher":{"shape":"String"},
+        "owner":{"shape":"String"},
+        "marketplaceInformation":{"shape":"MarketplaceInformation"},
+        "configurationValues":{"shape":"String"}
       }
     },
     "AddonHealth":{
@@ -607,7 +629,10 @@
       "members":{
         "addonName":{"shape":"String"},
         "type":{"shape":"String"},
-        "addonVersions":{"shape":"AddonVersionInfoList"}
+        "addonVersions":{"shape":"AddonVersionInfoList"},
+        "publisher":{"shape":"String"},
+        "owner":{"shape":"String"},
+        "marketplaceInformation":{"shape":"MarketplaceInformation"}
       }
     },
     "AddonIssue":{
@@ -653,7 +678,8 @@
       "members":{
         "addonVersion":{"shape":"String"},
         "architecture":{"shape":"StringList"},
-        "compatibilities":{"shape":"Compatibilities"}
+        "compatibilities":{"shape":"Compatibilities"},
+        "requiresConfiguration":{"shape":"Boolean"}
       }
     },
     "AddonVersionInfoList":{
@@ -890,6 +916,18 @@
         "roleArn":{"shape":"String"}
       }
     },
+    "ControlPlanePlacementRequest":{
+      "type":"structure",
+      "members":{
+        "groupName":{"shape":"String"}
+      }
+    },
+    "ControlPlanePlacementResponse":{
+      "type":"structure",
+      "members":{
+        "groupName":{"shape":"String"}
+      }
+    },
     "CreateAddonRequest":{
       "type":"structure",
       "required":[
@@ -910,7 +948,8 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "configurationValues":{"shape":"String"}
       }
     },
     "CreateAddonResponse":{
@@ -1134,6 +1173,33 @@
         "cluster":{"shape":"Cluster"}
       }
     },
+    "DescribeAddonConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "addonName",
+        "addonVersion"
+      ],
+      "members":{
+        "addonName":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"addonName"
+        },
+        "addonVersion":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"addonVersion"
+        }
+      }
+    },
+    "DescribeAddonConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "addonName":{"shape":"String"},
+        "addonVersion":{"shape":"String"},
+        "configurationSchema":{"shape":"String"}
+      }
+    },
     "DescribeAddonRequest":{
       "type":"structure",
       "required":[
@@ -1181,6 +1247,21 @@
           "shape":"String",
           "location":"querystring",
           "locationName":"addonName"
+        },
+        "types":{
+          "shape":"StringList",
+          "location":"querystring",
+          "locationName":"types"
+        },
+        "publishers":{
+          "shape":"StringList",
+          "location":"querystring",
+          "locationName":"publishers"
+        },
+        "owners":{
+          "shape":"StringList",
+          "location":"querystring",
+          "locationName":"owners"
         }
       }
     },
@@ -1788,6 +1869,13 @@
         "clusterLogging":{"shape":"LogSetups"}
       }
     },
+    "MarketplaceInformation":{
+      "type":"structure",
+      "members":{
+        "productId":{"shape":"String"},
+        "productUrl":{"shape":"String"}
+      }
+    },
     "Nodegroup":{
       "type":"structure",
       "members":{
@@ -1942,7 +2030,8 @@
       ],
       "members":{
         "outpostArns":{"shape":"StringList"},
-        "controlPlaneInstanceType":{"shape":"String"}
+        "controlPlaneInstanceType":{"shape":"String"},
+        "controlPlanePlacement":{"shape":"ControlPlanePlacementRequest"}
       }
     },
     "OutpostConfigResponse":{
@@ -1953,7 +2042,8 @@
       ],
       "members":{
         "outpostArns":{"shape":"StringList"},
-        "controlPlaneInstanceType":{"shape":"String"}
+        "controlPlaneInstanceType":{"shape":"String"},
+        "controlPlanePlacement":{"shape":"ControlPlanePlacementResponse"}
       }
     },
     "PercentCapacity":{
@@ -2205,7 +2295,8 @@
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "configurationValues":{"shape":"String"}
       }
     },
     "UpdateAddonResponse":{
