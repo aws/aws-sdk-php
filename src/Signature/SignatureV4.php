@@ -168,8 +168,8 @@ class SignatureV4 implements SignatureInterface
     ) {
 
         $startTimestamp = isset($options['start_time'])
-                            ? $this->convertToTimestamp($options['start_time'], null)
-                            : time();
+            ? $this->convertToTimestamp($options['start_time'], null)
+            : time();
 
         $expiresTimestamp = $this->convertToTimestamp($expires, $startTimestamp);
 
@@ -359,7 +359,7 @@ class SignatureV4 implements SignatureInterface
             $timestamp = $dateValue->getTimestamp();
         } elseif (!is_numeric($dateValue)) {
             $timestamp = strtotime($dateValue,
-                                   $relativeTimeBase === null ? time() : $relativeTimeBase
+                $relativeTimeBase === null ? time() : $relativeTimeBase
             );
         } else {
             $timestamp = $dateValue;
@@ -459,6 +459,7 @@ class SignatureV4 implements SignatureInterface
             'secret_access_key' => $credentials->getSecretKey(),
             'session_token' => $credentials->getSecurityToken(),
         ]);
+
         $sha = $this->getPayload($request);
         $signingConfig = new SigningConfigAWS([
             'algorithm' => SigningAlgorithm::SIGv4_ASYMMETRIC,
@@ -469,18 +470,26 @@ class SignatureV4 implements SignatureInterface
             'service' => $signingService,
             'date' => time(),
         ]);
-        $sha = $this->getPayload($request);
-        $invocationId = $request->getHeader("aws-sdk-invocation-id");
-        $retry = $request->getHeader("aws-sdk-retry");
-        $request = $request->withoutHeader("aws-sdk-invocation-id");
-        $request = $request->withoutHeader("aws-sdk-retry");
+
+        $illegalV4aHeaders = [
+            self::AMZ_CONTENT_SHA256_HEADER,
+            "aws-sdk-invocation-id",
+            "aws-sdk-retry",
+        ];
+
+        $storedIllegalHeaders = [];
+        foreach ($illegalV4aHeaders as $header) {
+            if ($request->hasHeader($header)){
+                $storedIllegalHeaders[$header] = $request->getHeader($header);
+                $request = $request->withoutHeader($header);
+            }
+        }
+
         $http_request = new Request(
             $request->getMethod(),
             (string) $request->getUri(),
-            [],
-            array_map(function ($header) {
-                return $header[0];
-            }, $request->getHeaders())
+            [], //leave empty as the query is parsed from the uri object
+            array_map(function ($header) {return $header[0];}, $request->getHeaders())
         );
 
         Signing::signRequestAws(
@@ -488,14 +497,14 @@ class SignatureV4 implements SignatureInterface
             $signingConfig, function ($signing_result, $error_code) use (&$http_request) {
             $signing_result->applyToHttpRequest($http_request);
         });
+        foreach ($storedIllegalHeaders as $header => $value) {
+            $request = $request->withHeader($header, $value);
+        }
+
         $sigV4AHeaders = $http_request->headers();
         foreach ($sigV4AHeaders->toArray() as $h => $v) {
             $request = $request->withHeader($h, $v);
         }
-        $request = $request->withHeader("aws-sdk-invocation-id", $invocationId);
-        $request = $request->withHeader("x-amz-content-sha256", $sha);
-        $request = $request->withHeader("aws-sdk-retry", $retry);
-        $request = $request->withHeader("x-amz-region-set", "*");
 
         return $request;
     }
