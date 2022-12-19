@@ -20,7 +20,7 @@ class ApplyChecksumMiddlewareTest extends TestCase
     public function testAddsContentMd5AsAppropriate($operation, $args, $md5Added, $md5Value)
     {
         $s3 = $this->getTestClient(
-            's3',
+            's3'
         );
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand($operation, $args);
