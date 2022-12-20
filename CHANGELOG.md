@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.254.1 - 2022-12-20
 
 * `Aws\Batch` - Adds isCancelled and isTerminated to DescribeJobs response.
 * `Aws\EC2` - Adds support for pagination in the EC2 DescribeImages API.
