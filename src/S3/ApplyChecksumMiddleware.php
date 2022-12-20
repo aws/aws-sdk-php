@@ -102,10 +102,8 @@ class ApplyChecksumMiddleware
                     'Content-MD5',
                     base64_encode(Psr7\Utils::hash($body, 'md5', true))
                 );
-                return $next($command, $request);
             }
         }
-
         if (in_array($name, self::$sha256AndMD5) && $command['ContentSHA256']) {
             // Set the content hash header if provided in the parameters.
             $request = $request->withHeader(
@@ -113,7 +111,6 @@ class ApplyChecksumMiddleware
                 $command['ContentSHA256']
             );
         }
-
         return $next($command, $request);
     }
 }
