@@ -29,10 +29,11 @@ jobs:
     steps:
     #sets up the correct version of PHP with necessary config options
     - name: Setup PHP with Xdebug
+      if: ${{ contains(env.COMPOSER_LIMIT_VERSIONS, matrix.php-versions)}}
       uses: shivammathur/setup-php@v2
       with:
         coverage: xdebug
-        tools: ${{ contains(env.COMPOSER_LIMIT_VERSIONS, matrix.php-versions)}}
+        tools: composer:2.4
         php-version: ${{ matrix.php-versions }}
         ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
 
