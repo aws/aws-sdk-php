@@ -32,7 +32,8 @@ jobs:
       with:
         coverage: xdebug
         php-version: ${{ matrix.php-versions }}
-        ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
+        tools: composer:2.4
+        ini-values: xdebug.overload_var_dump=0, memory_limit=5G, phar.readonly=false
 
     #checkout the codebase from github
     - name: Checkout codebase
