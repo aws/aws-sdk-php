@@ -32,7 +32,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         coverage: xdebug
-        tools: ${{ contains(env.COMPOSER_LIMIT_VERSIONS, matrix.php-versions) && composer:2.4}}
+        tools: ${{ contains(env.COMPOSER_LIMIT_VERSIONS, matrix.php-versions)}}
         php-version: ${{ matrix.php-versions }}
         ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
 
