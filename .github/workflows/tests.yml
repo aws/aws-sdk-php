@@ -18,6 +18,7 @@ jobs:
       matrix:
         php-versions: [ '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
         composer-options: ['', '--prefer-lowest']
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
     #set the name for each job
     name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
     #set up environment variables used by unit tests
@@ -32,8 +33,7 @@ jobs:
       with:
         coverage: xdebug
         php-version: ${{ matrix.php-versions }}
-        tools: composer:2.4
-        ini-values: xdebug.overload_var_dump=0, memory_limit=5G, phar.readonly=false
+        ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
 
     #checkout the codebase from github
     - name: Checkout codebase
