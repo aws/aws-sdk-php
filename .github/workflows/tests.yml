@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       #for each of the following versions of PHP, with and without --prefer-lowest
       matrix:
@@ -25,12 +25,14 @@ jobs:
       AWS_ACCESS_KEY_ID: foo
       AWS_SECRET_ACCESS_KEY: bar
       AWS_CSM_ENABLED: false
+      COMPOSER_LIMIT_VERSIONS: ("7.2" "7.3" "7.4" "8.0" "8.1" "8.2")
     steps:
     #sets up the correct version of PHP with necessary config options
     - name: Setup PHP with Xdebug
       uses: shivammathur/setup-php@v2
       with:
         coverage: xdebug
+        tools: ${{ contains(env.COMPOSER_LIMIT_VERSIONS, matrix.php-versions) && composer:2.4}}
         php-version: ${{ matrix.php-versions }}
         ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
 
