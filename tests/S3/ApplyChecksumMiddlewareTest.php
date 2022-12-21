@@ -20,8 +20,7 @@ class ApplyChecksumMiddlewareTest extends TestCase
     public function testAddsContentMd5AsAppropriate($operation, $args, $md5Added, $md5Value)
     {
         $s3 = $this->getTestClient(
-            's3',
-            ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
+            's3'
         );
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand($operation, $args);
@@ -67,6 +66,20 @@ class ApplyChecksumMiddlewareTest extends TestCase
                 false,
                 null,
             ],
+            // Test MD5 added for operations which conditionally require it
+            [
+                'PutObject',
+                ['Bucket' => 'foo', 'Key'    => 'foo', 'Body' => 'test'],
+                true,
+                'CY9rzUYh03PK3k6DJie09g=='
+            ],
+            // Test MD5 added for operations which conditionally require it
+            [
+                'UploadPart',
+                ['Bucket' => 'foo', 'Key'    => 'foo', 'Body' => 'test', 'PartNumber' => 1, 'UploadId' => 1],
+                true,
+                'CY9rzUYh03PK3k6DJie09g=='
+            ]
         ];
     }
 
