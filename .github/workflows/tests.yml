@@ -51,7 +51,7 @@ jobs:
 
     #get dependencies
     - name: Install dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
+      run: composer install --prefer-dist --no-interaction --no-progress
 
     #php 8.x requirements
     - if: ${{ matrix.php-versions >= '8.0' && matrix.composer-options != '' }}
