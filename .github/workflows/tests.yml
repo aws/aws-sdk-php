@@ -25,11 +25,10 @@ jobs:
       AWS_ACCESS_KEY_ID: foo
       AWS_SECRET_ACCESS_KEY: bar
       AWS_CSM_ENABLED: false
-      COMPOSER_LIMIT_VERSIONS: ("7.2" "7.3" "7.4" "8.0" "8.1" "8.2")
     steps:
     #sets up the correct version of PHP with necessary config options
     - name: Setup PHP with Xdebug
-      if: ${{ contains(env.COMPOSER_LIMIT_VERSIONS, matrix.php-versions)}}
+      if: ${{ contains(fromJson(["7.2", "7.3", "7.4", "8.0", "8.1", "8.2"]), matrix.php-versions) }}
       uses: shivammathur/setup-php@v2
       with:
         coverage: xdebug
