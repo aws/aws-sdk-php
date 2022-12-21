@@ -682,6 +682,9 @@ class S3Client extends AwsClient implements S3ClientInterface
                     $requestUri = str_replace('/{Bucket}', '/', $requestUri);
                 } else {
                     $requestUri = str_replace('/{Bucket}', '', $requestUri);
+                    if (strpos($requestUri, '?') === 0) {
+                        $requestUri = '/' . $requestUri;
+                    }
                 }
                 $operation['http']['requestUri'] = $requestUri;
             }

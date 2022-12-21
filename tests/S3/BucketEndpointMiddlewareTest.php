@@ -66,7 +66,7 @@ class BucketEndpointMiddlewareTest extends TestCase
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
                 $this->assertSame('s3.amazonaws.com', $req->getUri()->getHost());
-                $this->assertSame('/foo?location', $req->getRequestTarget());
+                $this->assertSame('/foo/?location', $req->getRequestTarget());
             })
         );
         $s3->execute($command);
