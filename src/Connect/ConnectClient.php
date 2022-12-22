@@ -295,6 +295,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateInstanceAttributeAsync(array $args = [])
  * @method \Aws\Result updateInstanceStorageConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateInstanceStorageConfigAsync(array $args = [])
+ * @method \Aws\Result updateParticipantRoleConfig(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateParticipantRoleConfigAsync(array $args = [])
  * @method \Aws\Result updatePhoneNumber(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePhoneNumberAsync(array $args = [])
  * @method \Aws\Result updateQueueHoursOfOperation(array $args = [])

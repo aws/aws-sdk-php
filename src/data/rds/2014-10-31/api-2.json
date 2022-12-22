@@ -3162,7 +3162,9 @@
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "NetworkType":{"shape":"String"},
-        "DBSystemId":{"shape":"String"}
+        "DBSystemId":{"shape":"String"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -3268,7 +3270,9 @@
         "CustomIamInstanceProfile":{"shape":"String"},
         "BackupTarget":{"shape":"String"},
         "NetworkType":{"shape":"String"},
-        "StorageThroughput":{"shape":"IntegerOptional"}
+        "StorageThroughput":{"shape":"IntegerOptional"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "CreateDBInstanceReadReplicaMessage":{
@@ -3659,7 +3663,8 @@
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfigurationInfo"},
         "NetworkType":{"shape":"String"},
-        "DBSystemId":{"shape":"String"}
+        "DBSystemId":{"shape":"String"},
+        "MasterUserSecret":{"shape":"MasterUserSecret"}
       },
       "wrapper":true
     },
@@ -4164,7 +4169,8 @@
         "NetworkType":{"shape":"String"},
         "ActivityStreamPolicyStatus":{"shape":"ActivityStreamPolicyStatus"},
         "StorageThroughput":{"shape":"IntegerOptional"},
-        "DBSystemId":{"shape":"String"}
+        "DBSystemId":{"shape":"String"},
+        "MasterUserSecret":{"shape":"MasterUserSecret"}
       },
       "wrapper":true
     },
@@ -6513,6 +6519,14 @@
     },
     "Long":{"type":"long"},
     "LongOptional":{"type":"long"},
+    "MasterUserSecret":{
+      "type":"structure",
+      "members":{
+        "SecretArn":{"shape":"String"},
+        "SecretStatus":{"shape":"String"},
+        "KmsKeyId":{"shape":"String"}
+      }
+    },
     "MaxRecords":{
       "type":"integer",
       "max":100,
@@ -6635,7 +6649,10 @@
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
-        "NetworkType":{"shape":"String"}
+        "NetworkType":{"shape":"String"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "RotateMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -6726,7 +6743,10 @@
         "AutomationMode":{"shape":"AutomationMode"},
         "ResumeFullAutomationModeMinutes":{"shape":"IntegerOptional"},
         "NetworkType":{"shape":"String"},
-        "StorageThroughput":{"shape":"IntegerOptional"}
+        "StorageThroughput":{"shape":"IntegerOptional"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "RotateMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "ModifyDBInstanceResult":{
@@ -7697,7 +7717,6 @@
         "DBClusterIdentifier",
         "Engine",
         "MasterUsername",
-        "MasterUserPassword",
         "SourceEngine",
         "SourceEngineVersion",
         "S3BucketName",
@@ -7736,7 +7755,9 @@
         "Domain":{"shape":"String"},
         "DomainIAMRoleName":{"shape":"String"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
-        "NetworkType":{"shape":"String"}
+        "NetworkType":{"shape":"String"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "RestoreDBClusterFromS3Result":{
@@ -7934,7 +7955,9 @@
         "DeletionProtection":{"shape":"BooleanOptional"},
         "MaxAllocatedStorage":{"shape":"IntegerOptional"},
         "NetworkType":{"shape":"String"},
-        "StorageThroughput":{"shape":"IntegerOptional"}
+        "StorageThroughput":{"shape":"IntegerOptional"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "RestoreDBInstanceFromS3Result":{
