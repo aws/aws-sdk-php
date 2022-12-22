@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 3.255.0 - 2022-12-21
+
+* `Aws\Connect` - Amazon Connect Chat now allows for JSON (application/json) message types to be sent as part of the initial message in the StartChatContact API.
+* `Aws\ConnectParticipant` - Amazon Connect Chat now allows for JSON (application/json) message types to be sent in the SendMessage API.
+* `Aws\LicenseManagerLinuxSubscriptions` - AWS License Manager now offers cross-region, cross-account tracking of commercial Linux subscriptions on AWS. This includes subscriptions purchased as part of EC2 subscription-included AMIs, on the AWS Marketplace, or brought to AWS via Red Hat Cloud Access Program.
+* `Aws\Macie2` - This release adds support for analyzing Amazon S3 objects that use the S3 Glacier Instant Retrieval (Glacier_IR) storage class.
+* `Aws\S3` - Fixes bug where MD5 header is not added for PutObject and UploadPart
+* `Aws\SSM` - Doc-only updates for December 2022.
+* `Aws\SageMaker` - This release enables adding RStudio Workbench support to an existing Amazon SageMaker Studio domain. It allows setting your RStudio on SageMaker environment configuration parameters and also updating the RStudioConnectUrl and RStudioPackageManagerUrl parameters for existing domains
+* `Aws\Scheduler` - Updated the ListSchedules and ListScheduleGroups APIs to allow the NamePrefix field to start with a number. Updated the validation for executionRole field to support any role name.
+* `Aws\Support` - Documentation updates for the AWS Support API
+* `Aws\Transfer` - This release adds support for Decrypt as a workflow step type.
+
 ## 3.254.1 - 2022-12-20
 
 * `Aws\Batch` - Adds isCancelled and isTerminated to DescribeJobs response.

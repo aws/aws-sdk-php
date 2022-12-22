@@ -17,8 +17,7 @@ use Psr\Http\Message\RequestInterface;
 class ApplyChecksumMiddleware
 {
     use CalculatesChecksumTrait;
-
-    private static $sha256AndMD5 = [
+    private static $sha256 = [
         'PutObject',
         'UploadPart',
     ];
@@ -92,25 +91,27 @@ class ApplyChecksumMiddleware
 
         if (!empty($checksumInfo)) {
         //if the checksum member is absent, check if it's required
-            $checksumRequired = isset($checksumInfo['requestChecksumRequired'])
-                ? $checksumInfo['requestChecksumRequired']
-                : null;
-            if ((!empty($checksumRequired) || in_array($name, self::$sha256AndMD5))
-                && !$request->hasHeader('Content-MD5')) {
+        $checksumRequired = isset($checksumInfo['requestChecksumRequired'])
+            ? $checksumInfo['requestChecksumRequired']
+            : null;
+            if (!empty($checksumRequired) && !$request->hasHeader('Content-MD5')) {
                 // Set the content MD5 header for operations that require it.
                 $request = $request->withHeader(
                     'Content-MD5',
                     base64_encode(Psr7\Utils::hash($body, 'md5', true))
                 );
+                return $next($command, $request);
             }
         }
-        if (in_array($name, self::$sha256AndMD5) && $command['ContentSHA256']) {
+
+        if (in_array($name, self::$sha256) && $command['ContentSHA256']) {
             // Set the content hash header if provided in the parameters.
             $request = $request->withHeader(
                 'X-Amz-Content-Sha256',
                 $command['ContentSHA256']
             );
         }
+
         return $next($command, $request);
     }
 }
