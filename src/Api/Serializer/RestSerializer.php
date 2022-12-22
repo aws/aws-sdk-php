@@ -71,6 +71,10 @@ abstract class RestSerializer
         }
         $uri = $this->buildEndpoint($operation, $commandArgs, $opts);
 
+        if (empty($uri->getPath()) && !empty($uri->getQuery())) {
+            $uri = $uri->withPath('/');
+        }
+
         return new Request(
             $operation['http']['method'],
             $uri,
