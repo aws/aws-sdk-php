@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 3.255.0 - 2022-12-21
+## 3.255.1 - 2022-12-22
 
 * `Aws\Connect` - Amazon Connect Chat now allows for JSON (application/json) message types to be sent as part of the initial message in the StartChatContact API.
 * `Aws\ConnectParticipant` - Amazon Connect Chat now allows for JSON (application/json) message types to be sent in the SendMessage API.
