@@ -370,6 +370,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionLexRuntimeV2(array $args = [])
  * @method \Aws\LicenseManager\LicenseManagerClient createLicenseManager(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLicenseManager(array $args = [])
+ * @method \Aws\LicenseManagerLinuxSubscriptions\LicenseManagerLinuxSubscriptionsClient createLicenseManagerLinuxSubscriptions(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionLicenseManagerLinuxSubscriptions(array $args = [])
  * @method \Aws\LicenseManagerUserSubscriptions\LicenseManagerUserSubscriptionsClient createLicenseManagerUserSubscriptions(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLicenseManagerUserSubscriptions(array $args = [])
  * @method \Aws\Lightsail\LightsailClient createLightsail(array $args = [])
@@ -675,7 +677,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.254.1';
+    const VERSION = '3.255.0';
 
     /** @var array Arguments for creating clients */
     private $args;
