@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.255.3 - 2022-12-23
 
 * `Aws\Connect` - Support for Routing Profile filter, SortCriteria, and grouping by Routing Profiles for GetCurrentMetricData API. Support for RoutingProfiles, UserHierarchyGroups, and Agents as filters, NextStatus and AgentStatusName for GetCurrentUserData. Adds ApproximateTotalCount to both APIs.
 * `Aws\ConnectParticipant` - Amazon Connect Chat introduces the Message Receipts feature. This feature allows agents and customers to receive message delivered and read receipts after they send a chat message.
