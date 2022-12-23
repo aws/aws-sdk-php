@@ -15103,7 +15103,9 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
-        }
+        },
+        "MaxResults":{"shape":"Integer"},
+        "NextToken":{"shape":"String"}
       }
     },
     "DescribeImagesResult":{
@@ -15112,6 +15114,10 @@
         "Images":{
           "shape":"ImageList",
           "locationName":"imagesSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -18411,8 +18417,8 @@
       "members":{
         "Device":{"shape":"String"},
         "Force":{"shape":"Boolean"},
-        "InstanceId":{"shape":"InstanceId"},
-        "VolumeId":{"shape":"VolumeId"},
+        "InstanceId":{"shape":"InstanceIdForResolver"},
+        "VolumeId":{"shape":"VolumeIdWithResolver"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -21514,6 +21520,10 @@
         "DataRetentionSupport":{
           "shape":"Boolean",
           "locationName":"dataRetentionSupport"
+        },
+        "InstanceTypes":{
+          "shape":"InstanceTypesList",
+          "locationName":"instanceTypes"
         }
       }
     },
@@ -24839,6 +24849,7 @@
       ]
     },
     "InstanceId":{"type":"string"},
+    "InstanceIdForResolver":{"type":"string"},
     "InstanceIdList":{
       "type":"list",
       "member":{
@@ -26445,6 +26456,13 @@
       "member":{"shape":"String"},
       "max":1000,
       "min":0
+    },
+    "InstanceTypesList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
+      }
     },
     "InstanceUsage":{
       "type":"structure",
@@ -35451,7 +35469,8 @@
         "verified-access-endpoint",
         "verified-access-policy",
         "verified-access-trust-provider",
-        "vpn-connection-device-type"
+        "vpn-connection-device-type",
+        "vpc-block-public-access-exclusion"
       ]
     },
     "ResponseError":{
@@ -42174,6 +42193,7 @@
         "locationName":"VolumeId"
       }
     },
+    "VolumeIdWithResolver":{"type":"string"},
     "VolumeList":{
       "type":"list",
       "member":{

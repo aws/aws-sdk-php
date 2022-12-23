@@ -68,7 +68,8 @@
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"DBSnapshotNotFoundFault"},
         {"shape":"DBProxyNotFoundFault"},
-        {"shape":"DBProxyTargetGroupNotFoundFault"}
+        {"shape":"DBProxyTargetGroupNotFoundFault"},
+        {"shape":"BlueGreenDeploymentNotFoundFault"}
       ]
     },
     "ApplyPendingMaintenanceAction":{
@@ -1499,7 +1500,8 @@
         {"shape":"DBSnapshotNotFoundFault"},
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"DBProxyNotFoundFault"},
-        {"shape":"DBProxyTargetGroupNotFoundFault"}
+        {"shape":"DBProxyTargetGroupNotFoundFault"},
+        {"shape":"BlueGreenDeploymentNotFoundFault"}
       ]
     },
     "ModifyActivityStream":{
@@ -2028,7 +2030,8 @@
         {"shape":"DBSnapshotNotFoundFault"},
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"DBProxyNotFoundFault"},
-        {"shape":"DBProxyTargetGroupNotFoundFault"}
+        {"shape":"DBProxyTargetGroupNotFoundFault"},
+        {"shape":"BlueGreenDeploymentNotFoundFault"}
       ]
     },
     "ResetDBClusterParameterGroup":{
@@ -2121,7 +2124,8 @@
         {"shape":"OptionGroupNotFoundFault"},
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"DomainNotFoundFault"},
-        {"shape":"DBClusterParameterGroupNotFoundFault"}
+        {"shape":"DBClusterParameterGroupNotFoundFault"},
+        {"shape":"InvalidDBInstanceStateFault"}
       ]
     },
     "RestoreDBClusterToPointInTime":{
@@ -2891,6 +2895,15 @@
         "CharacterSetDescription":{"shape":"String"}
       }
     },
+    "ClientPasswordAuthType":{
+      "type":"string",
+      "enum":[
+        "MYSQL_NATIVE_PASSWORD",
+        "POSTGRES_SCRAM_SHA_256",
+        "POSTGRES_MD5",
+        "SQL_SERVER_AUTHENTICATION"
+      ]
+    },
     "CloudwatchLogsExportConfiguration":{
       "type":"structure",
       "members":{
@@ -3008,7 +3021,8 @@
         "PreSignedUrl":{"shape":"String"},
         "DestinationRegion":{"shape":"String"},
         "OptionGroupName":{"shape":"String"},
-        "TargetCustomAvailabilityZone":{"shape":"String"}
+        "TargetCustomAvailabilityZone":{"shape":"String"},
+        "CopyOptionGroup":{"shape":"BooleanOptional"}
       }
     },
     "CopyDBSnapshotResult":{
@@ -3148,7 +3162,9 @@
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "NetworkType":{"shape":"String"},
-        "DBSystemId":{"shape":"String"}
+        "DBSystemId":{"shape":"String"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -3254,7 +3270,9 @@
         "CustomIamInstanceProfile":{"shape":"String"},
         "BackupTarget":{"shape":"String"},
         "NetworkType":{"shape":"String"},
-        "StorageThroughput":{"shape":"IntegerOptional"}
+        "StorageThroughput":{"shape":"IntegerOptional"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "CreateDBInstanceReadReplicaMessage":{
@@ -3299,7 +3317,8 @@
         "MaxAllocatedStorage":{"shape":"IntegerOptional"},
         "CustomIamInstanceProfile":{"shape":"String"},
         "NetworkType":{"shape":"String"},
-        "StorageThroughput":{"shape":"IntegerOptional"}
+        "StorageThroughput":{"shape":"IntegerOptional"},
+        "EnableCustomerOwnedIp":{"shape":"BooleanOptional"}
       }
     },
     "CreateDBInstanceReadReplicaResult":{
@@ -3644,7 +3663,8 @@
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfigurationInfo"},
         "NetworkType":{"shape":"String"},
-        "DBSystemId":{"shape":"String"}
+        "DBSystemId":{"shape":"String"},
+        "MasterUserSecret":{"shape":"MasterUserSecret"}
       },
       "wrapper":true
     },
@@ -4149,7 +4169,8 @@
         "NetworkType":{"shape":"String"},
         "ActivityStreamPolicyStatus":{"shape":"ActivityStreamPolicyStatus"},
         "StorageThroughput":{"shape":"IntegerOptional"},
-        "DBSystemId":{"shape":"String"}
+        "DBSystemId":{"shape":"String"},
+        "MasterUserSecret":{"shape":"MasterUserSecret"}
       },
       "wrapper":true
     },
@@ -6498,6 +6519,14 @@
     },
     "Long":{"type":"long"},
     "LongOptional":{"type":"long"},
+    "MasterUserSecret":{
+      "type":"structure",
+      "members":{
+        "SecretArn":{"shape":"String"},
+        "SecretStatus":{"shape":"String"},
+        "KmsKeyId":{"shape":"String"}
+      }
+    },
     "MaxRecords":{
       "type":"integer",
       "max":100,
@@ -6620,7 +6649,10 @@
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
-        "NetworkType":{"shape":"String"}
+        "NetworkType":{"shape":"String"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "RotateMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -6711,7 +6743,10 @@
         "AutomationMode":{"shape":"AutomationMode"},
         "ResumeFullAutomationModeMinutes":{"shape":"IntegerOptional"},
         "NetworkType":{"shape":"String"},
-        "StorageThroughput":{"shape":"IntegerOptional"}
+        "StorageThroughput":{"shape":"IntegerOptional"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "RotateMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "ModifyDBInstanceResult":{
@@ -6940,7 +6975,10 @@
         "Options":{"shape":"OptionsList"},
         "AllowsVpcAndNonVpcInstanceMemberships":{"shape":"Boolean"},
         "VpcId":{"shape":"String"},
-        "OptionGroupArn":{"shape":"String"}
+        "OptionGroupArn":{"shape":"String"},
+        "SourceOptionGroup":{"shape":"String"},
+        "SourceAccountId":{"shape":"String"},
+        "CopyTimestamp":{"shape":"TStamp"}
       },
       "wrapper":true
     },
@@ -6998,7 +7036,8 @@
         "VpcOnly":{"shape":"Boolean"},
         "SupportsOptionVersionDowngrade":{"shape":"BooleanOptional"},
         "OptionGroupOptionSettings":{"shape":"OptionGroupOptionSettingsList"},
-        "OptionGroupOptionVersions":{"shape":"OptionGroupOptionVersionsList"}
+        "OptionGroupOptionVersions":{"shape":"OptionGroupOptionVersionsList"},
+        "CopyableCrossAccount":{"shape":"BooleanOptional"}
       }
     },
     "OptionGroupOptionSetting":{
@@ -7678,7 +7717,6 @@
         "DBClusterIdentifier",
         "Engine",
         "MasterUsername",
-        "MasterUserPassword",
         "SourceEngine",
         "SourceEngineVersion",
         "S3BucketName",
@@ -7717,7 +7755,9 @@
         "Domain":{"shape":"String"},
         "DomainIAMRoleName":{"shape":"String"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
-        "NetworkType":{"shape":"String"}
+        "NetworkType":{"shape":"String"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "RestoreDBClusterFromS3Result":{
@@ -7915,7 +7955,9 @@
         "DeletionProtection":{"shape":"BooleanOptional"},
         "MaxAllocatedStorage":{"shape":"IntegerOptional"},
         "NetworkType":{"shape":"String"},
-        "StorageThroughput":{"shape":"IntegerOptional"}
+        "StorageThroughput":{"shape":"IntegerOptional"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "RestoreDBInstanceFromS3Result":{
@@ -8162,7 +8204,8 @@
         "db-cluster",
         "db-cluster-snapshot",
         "custom-engine-version",
-        "db-proxy"
+        "db-proxy",
+        "blue-green-deployment"
       ]
     },
     "StartActivityStreamRequest":{
@@ -8582,7 +8625,8 @@
         "UserName":{"shape":"String"},
         "AuthScheme":{"shape":"AuthScheme"},
         "SecretArn":{"shape":"String"},
-        "IAMAuth":{"shape":"IAMAuthMode"}
+        "IAMAuth":{"shape":"IAMAuthMode"},
+        "ClientPasswordAuthType":{"shape":"ClientPasswordAuthType"}
       }
     },
     "UserAuthConfigInfo":{
@@ -8592,7 +8636,8 @@
         "UserName":{"shape":"String"},
         "AuthScheme":{"shape":"AuthScheme"},
         "SecretArn":{"shape":"String"},
-        "IAMAuth":{"shape":"IAMAuthMode"}
+        "IAMAuth":{"shape":"IAMAuthMode"},
+        "ClientPasswordAuthType":{"shape":"ClientPasswordAuthType"}
       }
     },
     "UserAuthConfigInfoList":{

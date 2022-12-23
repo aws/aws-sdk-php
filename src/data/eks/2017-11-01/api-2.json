@@ -214,6 +214,20 @@
         {"shape":"ServerException"}
       ]
     },
+    "DescribeAddonConfiguration":{
+      "name":"DescribeAddonConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/addons/configuration-schemas"
+      },
+      "input":{"shape":"DescribeAddonConfigurationRequest"},
+      "output":{"shape":"DescribeAddonConfigurationResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "DescribeAddonVersions":{
       "name":"DescribeAddonVersions",
       "http":{
@@ -570,7 +584,11 @@
         "BOTTLEROCKET_ARM_64",
         "BOTTLEROCKET_x86_64",
         "BOTTLEROCKET_ARM_64_NVIDIA",
-        "BOTTLEROCKET_x86_64_NVIDIA"
+        "BOTTLEROCKET_x86_64_NVIDIA",
+        "WINDOWS_CORE_2019_x86_64",
+        "WINDOWS_FULL_2019_x86_64",
+        "WINDOWS_CORE_2022_x86_64",
+        "WINDOWS_FULL_2022_x86_64"
       ]
     },
     "AccessDeniedException":{
@@ -596,7 +614,8 @@
         "tags":{"shape":"TagMap"},
         "publisher":{"shape":"String"},
         "owner":{"shape":"String"},
-        "marketplaceInformation":{"shape":"MarketplaceInformation"}
+        "marketplaceInformation":{"shape":"MarketplaceInformation"},
+        "configurationValues":{"shape":"String"}
       }
     },
     "AddonHealth":{
@@ -929,7 +948,8 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "configurationValues":{"shape":"String"}
       }
     },
     "CreateAddonResponse":{
@@ -1151,6 +1171,33 @@
       "type":"structure",
       "members":{
         "cluster":{"shape":"Cluster"}
+      }
+    },
+    "DescribeAddonConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "addonName",
+        "addonVersion"
+      ],
+      "members":{
+        "addonName":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"addonName"
+        },
+        "addonVersion":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"addonVersion"
+        }
+      }
+    },
+    "DescribeAddonConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "addonName":{"shape":"String"},
+        "addonVersion":{"shape":"String"},
+        "configurationSchema":{"shape":"String"}
       }
     },
     "DescribeAddonRequest":{
@@ -2248,7 +2295,8 @@
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "configurationValues":{"shape":"String"}
       }
     },
     "UpdateAddonResponse":{

@@ -237,9 +237,7 @@ class AwsClient implements AwsClientInterface
         $this->addSignatureMiddleware();
         $this->addInvocationId();
         $this->addEndpointParameterMiddleware($args);
-        if (!$this->isUseEndpointV2()) {
-            $this->addEndpointDiscoveryMiddleware($config, $args);
-        }
+        $this->addEndpointDiscoveryMiddleware($config, $args);
         $this->loadAliases();
         $this->addStreamRequestPayload();
         $this->addRecursionDetection();

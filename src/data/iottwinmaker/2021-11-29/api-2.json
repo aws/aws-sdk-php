@@ -86,6 +86,25 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "CreateSyncJob":{
+      "name":"CreateSyncJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceId}/sync-jobs/{syncSource}",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateSyncJobRequest"},
+      "output":{"shape":"CreateSyncJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "CreateWorkspace":{
       "name":"CreateWorkspace",
       "http":{
@@ -156,6 +175,25 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "DeleteSyncJob":{
+      "name":"DeleteSyncJob",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/workspaces/{workspaceId}/sync-jobs/{syncSource}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteSyncJobRequest"},
+      "output":{"shape":"DeleteSyncJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "endpoint":{"hostPrefix":"api."}
     },
@@ -307,6 +345,25 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "GetSyncJob":{
+      "name":"GetSyncJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/sync-jobs/{syncSource}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSyncJobRequest"},
+      "output":{"shape":"GetSyncJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "GetWorkspace":{
       "name":"GetWorkspace",
       "http":{
@@ -373,6 +430,42 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "ListSyncJobs":{
+      "name":"ListSyncJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceId}/sync-jobs-list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSyncJobsRequest"},
+      "output":{"shape":"ListSyncJobsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "ListSyncResources":{
+      "name":"ListSyncResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceId}/sync-jobs/{syncSource}/resources-list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSyncResourcesRequest"},
+      "output":{"shape":"ListSyncResourcesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "endpoint":{"hostPrefix":"api."}
     },
@@ -677,7 +770,8 @@
         "status":{"shape":"Status"},
         "definedIn":{"shape":"String"},
         "properties":{"shape":"PropertyResponses"},
-        "propertyGroups":{"shape":"ComponentPropertyGroupResponses"}
+        "propertyGroups":{"shape":"ComponentPropertyGroupResponses"},
+        "syncSource":{"shape":"SyncSource"}
       }
     },
     "ComponentTypeId":{
@@ -685,6 +779,12 @@
       "max":256,
       "min":1,
       "pattern":"[a-zA-Z_\\.\\-0-9:]+"
+    },
+    "ComponentTypeName":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":".*[^\\u0000-\\u001F\\u007F]*.*"
     },
     "ComponentTypeSummaries":{
       "type":"list",
@@ -704,7 +804,8 @@
         "creationDateTime":{"shape":"Timestamp"},
         "updateDateTime":{"shape":"Timestamp"},
         "description":{"shape":"Description"},
-        "status":{"shape":"Status"}
+        "status":{"shape":"Status"},
+        "componentTypeName":{"shape":"ComponentTypeName"}
       }
     },
     "ComponentUpdateRequest":{
@@ -801,7 +902,8 @@
         "extendsFrom":{"shape":"ExtendsFrom"},
         "functions":{"shape":"FunctionsRequest"},
         "tags":{"shape":"TagMap"},
-        "propertyGroups":{"shape":"PropertyGroupsRequest"}
+        "propertyGroups":{"shape":"PropertyGroupsRequest"},
+        "componentTypeName":{"shape":"ComponentTypeName"}
       }
     },
     "CreateComponentTypeResponse":{
@@ -881,6 +983,41 @@
       "members":{
         "arn":{"shape":"TwinMakerArn"},
         "creationDateTime":{"shape":"Timestamp"}
+      }
+    },
+    "CreateSyncJobRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "syncSource",
+        "syncRole"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "syncSource":{
+          "shape":"SyncSource",
+          "location":"uri",
+          "locationName":"syncSource"
+        },
+        "syncRole":{"shape":"RoleArn"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateSyncJobResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "creationDateTime",
+        "state"
+      ],
+      "members":{
+        "arn":{"shape":"TwinMakerArn"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "state":{"shape":"SyncJobState"}
       }
     },
     "CreateWorkspaceRequest":{
@@ -1039,6 +1176,32 @@
       "members":{
       }
     },
+    "DeleteSyncJobRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "syncSource"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "syncSource":{
+          "shape":"SyncSource",
+          "location":"uri",
+          "locationName":"syncSource"
+        }
+      }
+    },
+    "DeleteSyncJobResponse":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"SyncJobState"}
+      }
+    },
     "DeleteWorkspaceRequest":{
       "type":"structure",
       "required":["workspaceId"],
@@ -1057,7 +1220,7 @@
     },
     "Description":{
       "type":"string",
-      "max":512,
+      "max":2048,
       "min":0,
       "pattern":".*"
     },
@@ -1075,7 +1238,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"[a-zA-Z_0-9-.][a-zA-Z_0-9-. ]*[a-zA-Z0-9]+"
+      "pattern":"[^\\u0000-\\u001F\\u007F]+"
     },
     "EntityPropertyReference":{
       "type":"structure",
@@ -1123,7 +1286,10 @@
       "type":"string",
       "enum":[
         "VALIDATION_ERROR",
-        "INTERNAL_FAILURE"
+        "INTERNAL_FAILURE",
+        "SYNC_INITIALIZING_ERROR",
+        "SYNC_CREATING_ERROR",
+        "SYNC_PROCESSING_ERROR"
       ]
     },
     "ErrorDetails":{
@@ -1256,7 +1422,9 @@
         "isAbstract":{"shape":"Boolean"},
         "isSchemaInitialized":{"shape":"Boolean"},
         "status":{"shape":"Status"},
-        "propertyGroups":{"shape":"PropertyGroupsResponse"}
+        "propertyGroups":{"shape":"PropertyGroupsResponse"},
+        "syncSource":{"shape":"SyncSource"},
+        "componentTypeName":{"shape":"ComponentTypeName"}
       }
     },
     "GetEntityRequest":{
@@ -1302,7 +1470,8 @@
         "parentEntityId":{"shape":"ParentEntityId"},
         "hasChildEntities":{"shape":"Boolean"},
         "creationDateTime":{"shape":"Timestamp"},
-        "updateDateTime":{"shape":"Timestamp"}
+        "updateDateTime":{"shape":"Timestamp"},
+        "syncSource":{"shape":"SyncSource"}
       }
     },
     "GetPricingPlanRequest":{
@@ -1429,6 +1598,43 @@
         "updateDateTime":{"shape":"Timestamp"},
         "description":{"shape":"Description"},
         "capabilities":{"shape":"SceneCapabilities"}
+      }
+    },
+    "GetSyncJobRequest":{
+      "type":"structure",
+      "required":["syncSource"],
+      "members":{
+        "syncSource":{
+          "shape":"SyncSource",
+          "location":"uri",
+          "locationName":"syncSource"
+        },
+        "workspaceId":{
+          "shape":"Id",
+          "location":"querystring",
+          "locationName":"workspace"
+        }
+      }
+    },
+    "GetSyncJobResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "workspaceId",
+        "syncSource",
+        "syncRole",
+        "status",
+        "creationDateTime",
+        "updateDateTime"
+      ],
+      "members":{
+        "arn":{"shape":"TwinMakerArn"},
+        "workspaceId":{"shape":"Id"},
+        "syncSource":{"shape":"SyncSource"},
+        "syncRole":{"shape":"RoleArn"},
+        "status":{"shape":"SyncJobStatus"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "updateDateTime":{"shape":"Timestamp"}
       }
     },
     "GetWorkspaceRequest":{
@@ -1613,6 +1819,55 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListSyncJobsRequest":{
+      "type":"structure",
+      "required":["workspaceId"],
+      "members":{
+        "workspaceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListSyncJobsResponse":{
+      "type":"structure",
+      "members":{
+        "syncJobSummaries":{"shape":"SyncJobSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListSyncResourcesRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "syncSource"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "syncSource":{
+          "shape":"SyncSource",
+          "location":"uri",
+          "locationName":"syncSource"
+        },
+        "filters":{"shape":"SyncResourceFilters"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListSyncResourcesResponse":{
+      "type":"structure",
+      "members":{
+        "syncResources":{"shape":"SyncResourceSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceARN"],
@@ -1763,7 +2018,8 @@
         "isStoredExternally":{"shape":"Boolean"},
         "isTimeSeries":{"shape":"Boolean"},
         "defaultValue":{"shape":"DataValue"},
-        "configuration":{"shape":"Configuration"}
+        "configuration":{"shape":"Configuration"},
+        "displayName":{"shape":"PropertyDisplayName"}
       }
     },
     "PropertyDefinitionResponse":{
@@ -1788,7 +2044,8 @@
         "isFinal":{"shape":"Boolean"},
         "isInherited":{"shape":"Boolean"},
         "defaultValue":{"shape":"DataValue"},
-        "configuration":{"shape":"Configuration"}
+        "configuration":{"shape":"Configuration"},
+        "displayName":{"shape":"PropertyDisplayName"}
       }
     },
     "PropertyDefinitionsRequest":{
@@ -1800,6 +2057,12 @@
       "type":"map",
       "key":{"shape":"Name"},
       "value":{"shape":"PropertyDefinitionResponse"}
+    },
+    "PropertyDisplayName":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":".*[^\\u0000-\\u001F\\u007F]*.*"
     },
     "PropertyFilter":{
       "type":"structure",
@@ -2119,6 +2382,94 @@
       "min":1,
       "pattern":".*"
     },
+    "SyncJobState":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "INITIALIZING",
+        "ACTIVE",
+        "DELETING",
+        "ERROR"
+      ]
+    },
+    "SyncJobStatus":{
+      "type":"structure",
+      "members":{
+        "state":{"shape":"SyncJobState"},
+        "error":{"shape":"ErrorDetails"}
+      }
+    },
+    "SyncJobSummaries":{
+      "type":"list",
+      "member":{"shape":"SyncJobSummary"}
+    },
+    "SyncJobSummary":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"TwinMakerArn"},
+        "workspaceId":{"shape":"Id"},
+        "syncSource":{"shape":"SyncSource"},
+        "status":{"shape":"SyncJobStatus"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "updateDateTime":{"shape":"Timestamp"}
+      }
+    },
+    "SyncResourceFilter":{
+      "type":"structure",
+      "members":{
+        "state":{"shape":"SyncResourceState"},
+        "resourceType":{"shape":"SyncResourceType"},
+        "resourceId":{"shape":"Id"},
+        "externalId":{"shape":"Id"}
+      },
+      "union":true
+    },
+    "SyncResourceFilters":{
+      "type":"list",
+      "member":{"shape":"SyncResourceFilter"}
+    },
+    "SyncResourceState":{
+      "type":"string",
+      "enum":[
+        "INITIALIZING",
+        "PROCESSING",
+        "DELETED",
+        "IN_SYNC",
+        "ERROR"
+      ]
+    },
+    "SyncResourceStatus":{
+      "type":"structure",
+      "members":{
+        "state":{"shape":"SyncResourceState"},
+        "error":{"shape":"ErrorDetails"}
+      }
+    },
+    "SyncResourceSummaries":{
+      "type":"list",
+      "member":{"shape":"SyncResourceSummary"}
+    },
+    "SyncResourceSummary":{
+      "type":"structure",
+      "members":{
+        "resourceType":{"shape":"SyncResourceType"},
+        "externalId":{"shape":"Id"},
+        "resourceId":{"shape":"Id"},
+        "status":{"shape":"SyncResourceStatus"},
+        "updateDateTime":{"shape":"Timestamp"}
+      }
+    },
+    "SyncResourceType":{
+      "type":"string",
+      "enum":[
+        "ENTITY",
+        "COMPONENT_TYPE"
+      ]
+    },
+    "SyncSource":{
+      "type":"string",
+      "pattern":"[a-zA-Z_0-9]+"
+    },
     "TabularConditions":{
       "type":"structure",
       "members":{
@@ -2268,7 +2619,8 @@
         "propertyDefinitions":{"shape":"PropertyDefinitionsRequest"},
         "extendsFrom":{"shape":"ExtendsFrom"},
         "functions":{"shape":"FunctionsRequest"},
-        "propertyGroups":{"shape":"PropertyGroupsRequest"}
+        "propertyGroups":{"shape":"PropertyGroupsRequest"},
+        "componentTypeName":{"shape":"ComponentTypeName"}
       }
     },
     "UpdateComponentTypeResponse":{

@@ -1599,6 +1599,19 @@
         "serviceConnectResources":{"shape":"ServiceConnectServiceResourceList"}
       }
     },
+    "DeploymentAlarms":{
+      "type":"structure",
+      "required":[
+        "alarmNames",
+        "enable",
+        "rollback"
+      ],
+      "members":{
+        "alarmNames":{"shape":"StringList"},
+        "enable":{"shape":"Boolean"},
+        "rollback":{"shape":"Boolean"}
+      }
+    },
     "DeploymentCircuitBreaker":{
       "type":"structure",
       "required":[
@@ -1615,7 +1628,8 @@
       "members":{
         "deploymentCircuitBreaker":{"shape":"DeploymentCircuitBreaker"},
         "maximumPercent":{"shape":"BoxedInteger"},
-        "minimumHealthyPercent":{"shape":"BoxedInteger"}
+        "minimumHealthyPercent":{"shape":"BoxedInteger"},
+        "alarms":{"shape":"DeploymentAlarms"}
       }
     },
     "DeploymentController":{
@@ -2500,7 +2514,9 @@
         "bindIP":{"shape":"String"},
         "containerPort":{"shape":"BoxedInteger"},
         "hostPort":{"shape":"BoxedInteger"},
-        "protocol":{"shape":"TransportProtocol"}
+        "protocol":{"shape":"TransportProtocol"},
+        "containerPortRange":{"shape":"String"},
+        "hostPortRange":{"shape":"String"}
       }
     },
     "NetworkBindings":{
@@ -2635,7 +2651,8 @@
         "hostPort":{"shape":"BoxedInteger"},
         "protocol":{"shape":"TransportProtocol"},
         "name":{"shape":"String"},
-        "appProtocol":{"shape":"ApplicationProtocol"}
+        "appProtocol":{"shape":"ApplicationProtocol"},
+        "containerPortRange":{"shape":"String"}
       }
     },
     "PortMappingList":{
