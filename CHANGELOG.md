@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.255.4 - 2022-12-27
 
 * `Aws\MemoryDB` - This release adds support for MemoryDB Reserved nodes which provides a significant discount compared to on-demand node pricing. Reserved nodes are not physical nodes, but rather a billing discount applied to the use of on-demand nodes in your account.
 * `Aws\Transfer` - Add additional operations to throw ThrottlingExceptions
