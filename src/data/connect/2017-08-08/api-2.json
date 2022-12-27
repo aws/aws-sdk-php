@@ -2348,6 +2348,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "UpdateParticipantRoleConfig":{
+      "name":"UpdateParticipantRoleConfig",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/participant-role-config/{InstanceId}/{ContactId}"
+      },
+      "input":{"shape":"UpdateParticipantRoleConfigRequest"},
+      "output":{"shape":"UpdateParticipantRoleConfigResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "UpdatePhoneNumber":{
       "name":"UpdatePhoneNumber",
       "http":{
@@ -2811,7 +2828,8 @@
       "type":"structure",
       "members":{
         "StatusStartTimestamp":{"shape":"Timestamp"},
-        "StatusArn":{"shape":"ARN"}
+        "StatusArn":{"shape":"ARN"},
+        "StatusName":{"shape":"AgentStatusName"}
       }
     },
     "AgentStatusState":{
@@ -2849,6 +2867,12 @@
     },
     "AgentUsername":{
       "type":"string",
+      "max":100,
+      "min":1
+    },
+    "AgentsMinOneMaxHundred":{
+      "type":"list",
+      "member":{"shape":"UserId"},
       "max":100,
       "min":1
     },
@@ -3182,6 +3206,13 @@
       "members":{
         "ContentType":{"shape":"ChatContentType"},
         "Content":{"shape":"ChatContent"}
+      }
+    },
+    "ChatParticipantRoleConfig":{
+      "type":"structure",
+      "required":["ParticipantTimerConfigList"],
+      "members":{
+        "ParticipantTimerConfigList":{"shape":"ParticipantTimerConfigList"}
       }
     },
     "ChatStreamingConfiguration":{
@@ -4040,6 +4071,19 @@
       "type":"list",
       "member":{"shape":"CurrentMetricResult"}
     },
+    "CurrentMetricSortCriteria":{
+      "type":"structure",
+      "members":{
+        "SortByMetric":{"shape":"CurrentMetricName"},
+        "SortOrder":{"shape":"SortOrder"}
+      }
+    },
+    "CurrentMetricSortCriteriaMaxOne":{
+      "type":"list",
+      "member":{"shape":"CurrentMetricSortCriteria"},
+      "max":1,
+      "min":0
+    },
     "CurrentMetrics":{
       "type":"list",
       "member":{"shape":"CurrentMetric"}
@@ -4833,7 +4877,8 @@
       "type":"structure",
       "members":{
         "Queue":{"shape":"QueueReference"},
-        "Channel":{"shape":"Channel"}
+        "Channel":{"shape":"Channel"},
+        "RoutingProfile":{"shape":"RoutingProfileReference"}
       }
     },
     "DirectoryAlias":{
@@ -5143,7 +5188,8 @@
       "type":"structure",
       "members":{
         "Queues":{"shape":"Queues"},
-        "Channels":{"shape":"Channels"}
+        "Channels":{"shape":"Channels"},
+        "RoutingProfiles":{"shape":"RoutingProfiles"}
       }
     },
     "FunctionArn":{
@@ -5200,7 +5246,8 @@
         "MaxResults":{
           "shape":"MaxResult100",
           "box":true
-        }
+        },
+        "SortCriteria":{"shape":"CurrentMetricSortCriteriaMaxOne"}
       }
     },
     "GetCurrentMetricDataResponse":{
@@ -5208,7 +5255,8 @@
       "members":{
         "NextToken":{"shape":"NextToken"},
         "MetricResults":{"shape":"CurrentMetricResults"},
-        "DataSnapshotTime":{"shape":"timestamp"}
+        "DataSnapshotTime":{"shape":"timestamp"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
     },
     "GetCurrentUserDataRequest":{
@@ -5235,7 +5283,8 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"NextToken"},
-        "UserDataList":{"shape":"UserDataList"}
+        "UserDataList":{"shape":"UserDataList"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
     },
     "GetFederationTokenRequest":{
@@ -5362,7 +5411,8 @@
       "type":"string",
       "enum":[
         "QUEUE",
-        "CHANNEL"
+        "CHANNEL",
+        "ROUTING_PROFILE"
       ]
     },
     "Groupings":{
@@ -7119,6 +7169,49 @@
       "max":256,
       "min":1
     },
+    "ParticipantTimerAction":{
+      "type":"string",
+      "enum":["Unset"]
+    },
+    "ParticipantTimerConfigList":{
+      "type":"list",
+      "member":{"shape":"ParticipantTimerConfiguration"},
+      "max":6,
+      "min":1
+    },
+    "ParticipantTimerConfiguration":{
+      "type":"structure",
+      "required":[
+        "ParticipantRole",
+        "TimerType",
+        "TimerValue"
+      ],
+      "members":{
+        "ParticipantRole":{"shape":"TimerEligibleParticipantRoles"},
+        "TimerType":{"shape":"ParticipantTimerType"},
+        "TimerValue":{"shape":"ParticipantTimerValue"}
+      }
+    },
+    "ParticipantTimerDurationInMinutes":{
+      "type":"integer",
+      "max":480,
+      "min":2
+    },
+    "ParticipantTimerType":{
+      "type":"string",
+      "enum":[
+        "IDLE",
+        "DISCONNECT_NONCUSTOMER"
+      ]
+    },
+    "ParticipantTimerValue":{
+      "type":"structure",
+      "members":{
+        "ParticipantTimerAction":{"shape":"ParticipantTimerAction"},
+        "ParticipantTimerDurationInMinutes":{"shape":"ParticipantTimerDurationInMinutes"}
+      },
+      "union":true
+    },
     "ParticipantToken":{
       "type":"string",
       "max":1000,
@@ -8075,6 +8168,12 @@
       "type":"list",
       "member":{"shape":"RoutingProfileSummary"}
     },
+    "RoutingProfiles":{
+      "type":"list",
+      "member":{"shape":"RoutingProfileId"},
+      "max":100,
+      "min":1
+    },
     "Rule":{
       "type":"structure",
       "required":[
@@ -8453,6 +8552,13 @@
       "member":{"shape":"TaskTemplateSingleSelectOption"}
     },
     "SnapshotVersion":{"type":"string"},
+    "SortOrder":{
+      "type":"string",
+      "enum":[
+        "ASCENDING",
+        "DESCENDING"
+      ]
+    },
     "SourceApplicationName":{
       "type":"string",
       "max":100,
@@ -8966,6 +9072,13 @@
       "exception":true
     },
     "TimeZone":{"type":"string"},
+    "TimerEligibleParticipantRoles":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER",
+        "AGENT"
+      ]
+    },
     "Timestamp":{"type":"timestamp"},
     "TrafficDistributionGroup":{
       "type":"structure",
@@ -9369,6 +9482,39 @@
           "locationName":"resourceType"
         },
         "StorageConfig":{"shape":"InstanceStorageConfig"}
+      }
+    },
+    "UpdateParticipantRoleConfigChannelInfo":{
+      "type":"structure",
+      "members":{
+        "Chat":{"shape":"ChatParticipantRoleConfig"}
+      },
+      "union":true
+    },
+    "UpdateParticipantRoleConfigRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "ChannelConfiguration"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactId":{
+          "shape":"ContactId",
+          "location":"uri",
+          "locationName":"ContactId"
+        },
+        "ChannelConfiguration":{"shape":"UpdateParticipantRoleConfigChannelInfo"}
+      }
+    },
+    "UpdateParticipantRoleConfigResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "UpdatePhoneNumberRequest":{
@@ -9942,15 +10088,25 @@
         "AvailableSlotsByChannel":{"shape":"ChannelToCountMap"},
         "MaxSlotsByChannel":{"shape":"ChannelToCountMap"},
         "ActiveSlotsByChannel":{"shape":"ChannelToCountMap"},
-        "Contacts":{"shape":"AgentContactReferenceList"}
+        "Contacts":{"shape":"AgentContactReferenceList"},
+        "NextStatus":{"shape":"AgentStatusName"}
       }
     },
     "UserDataFilters":{
       "type":"structure",
       "members":{
         "Queues":{"shape":"Queues"},
-        "ContactFilter":{"shape":"ContactFilter"}
+        "ContactFilter":{"shape":"ContactFilter"},
+        "RoutingProfiles":{"shape":"RoutingProfiles"},
+        "Agents":{"shape":"AgentsMinOneMaxHundred"},
+        "UserHierarchyGroups":{"shape":"UserDataHierarchyGroups"}
       }
+    },
+    "UserDataHierarchyGroups":{
+      "type":"list",
+      "member":{"shape":"HierarchyGroupId"},
+      "max":1,
+      "min":1
     },
     "UserDataList":{
       "type":"list",

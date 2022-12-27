@@ -1,6 +1,29 @@
 # CHANGELOG
 
-## 3.255.0 - 2022-12-21
+## 3.255.4 - 2022-12-27
+
+* `Aws\MemoryDB` - This release adds support for MemoryDB Reserved nodes which provides a significant discount compared to on-demand node pricing. Reserved nodes are not physical nodes, but rather a billing discount applied to the use of on-demand nodes in your account.
+* `Aws\Transfer` - Add additional operations to throw ThrottlingExceptions
+
+## 3.255.3 - 2022-12-23
+
+* `Aws\Connect` - Support for Routing Profile filter, SortCriteria, and grouping by Routing Profiles for GetCurrentMetricData API. Support for RoutingProfiles, UserHierarchyGroups, and Agents as filters, NextStatus and AgentStatusName for GetCurrentUserData. Adds ApproximateTotalCount to both APIs.
+* `Aws\ConnectParticipant` - Amazon Connect Chat introduces the Message Receipts feature. This feature allows agents and customers to receive message delivered and read receipts after they send a chat message.
+* `Aws\Detective` - This release adds a missed AccessDeniedException type to several endpoints.
+* `Aws\FSx` - Fix a bug where a recent release might break certain existing SDKs.
+* `Aws\Inspector2` - Amazon Inspector adds support for scanning NodeJS 18.x and Go 1.x AWS Lambda function runtimes.
+
+## 3.255.2 - 2022-12-22
+
+* `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze and generate optimization recommendations for ecs services running on Fargate.
+* `Aws\Connect` - Amazon Connect Chat introduces the Idle Participant/Autodisconnect feature, which allows users to set timeouts relating to the activity of chat participants, using the new UpdateParticipantRoleConfig API.
+* `Aws\IoTDeviceAdvisor` - This release adds the following new features: 1) Documentation updates for IoT Device Advisor APIs. 2) Updated required request parameters for IoT Device Advisor APIs. 3) Added new service feature: ability to provide the test endpoint when customer executing the StartSuiteRun API.
+* `Aws\KinesisVideoWebRTCStorage` - Amazon Kinesis Video Streams offers capabilities to stream video and audio in real-time via WebRTC to the cloud for storage, playback, and analytical processing. Customers can use our enhanced WebRTC SDK and cloud APIs to enable real-time streaming, as well as media ingestion to the cloud.
+* `Aws\RDS` - Add support for managing master user password in AWS Secrets Manager for the DBInstance and DBCluster.
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+* `Aws\Signature` - Rollback MD5 breaking change
+
+## 3.255.1 - 2022-12-22
 
 * `Aws\Connect` - Amazon Connect Chat now allows for JSON (application/json) message types to be sent as part of the initial message in the StartChatContact API.
 * `Aws\ConnectParticipant` - Amazon Connect Chat now allows for JSON (application/json) message types to be sent in the SendMessage API.

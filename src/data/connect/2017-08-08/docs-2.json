@@ -147,6 +147,7 @@
     "UpdateHoursOfOperation": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates the hours of operation.</p>",
     "UpdateInstanceAttribute": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates the value for the specified attribute type.</p>",
     "UpdateInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates an existing configuration for a resource type. This API is idempotent.</p>",
+    "UpdateParticipantRoleConfig": "<p>Updates timeouts for when human chat participants are to be considered idle, and when agents are automatically disconnected from a chat due to idleness. You can set four timers:</p> <ul> <li> <p>Customer idle timeout</p> </li> <li> <p>Customer auto-disconnect timeout</p> </li> <li> <p>Agent idle timeout</p> </li> <li> <p>Agent auto-disconnect timeout</p> </li> </ul> <p>For more information about how chat timeouts work, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-chat-timeouts.html\">Set up chat timeouts for human participants</a>. </p>",
     "UpdatePhoneNumber": "<p>Updates your claimed phone number from its current Amazon Connect instance or traffic distribution group to another Amazon Connect instance or traffic distribution group in the same Amazon Web Services Region.</p> <important> <p>You can call <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API to verify the status of a previous <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumber.html\">UpdatePhoneNumber</a> operation.</p> </important>",
     "UpdateQueueHoursOfOperation": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates the hours of operation for the specified queue.</p>",
     "UpdateQueueMaxContacts": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates the maximum number of contacts allowed in a queue before it is considered full.</p>",
@@ -357,9 +358,11 @@
       "base": null,
       "refs": {
         "AgentStatus$Name": "<p>The name of the agent status.</p>",
+        "AgentStatusReference$StatusName": "<p>The name of the agent status.</p>",
         "AgentStatusSummary$Name": "<p>The name of the agent status.</p>",
         "CreateAgentStatusRequest$Name": "<p>The name of the status.</p>",
-        "UpdateAgentStatusRequest$Name": "<p>The name of the agent status.</p>"
+        "UpdateAgentStatusRequest$Name": "<p>The name of the agent status.</p>",
+        "UserData$NextStatus": "<p>The Next status of the agent.</p>"
       }
     },
     "AgentStatusOrderNumber": {
@@ -419,6 +422,12 @@
         "UserSummary$Username": "<p>The Amazon Connect user name of the user account.</p>"
       }
     },
+    "AgentsMinOneMaxHundred": {
+      "base": null,
+      "refs": {
+        "UserDataFilters$Agents": "<p>A list of up to 100 agent IDs or ARNs.</p>"
+      }
+    },
     "AliasArn": {
       "base": null,
       "refs": {
@@ -448,6 +457,8 @@
     "ApproximateTotalCount": {
       "base": null,
       "refs": {
+        "GetCurrentMetricDataResponse$ApproximateTotalCount": "<p>The total count of the result, regardless of the current page size. </p>",
+        "GetCurrentUserDataResponse$ApproximateTotalCount": "<p>The total count of the result, regardless of the current page size.</p>",
         "SearchQueuesResponse$ApproximateTotalCount": "<p>The total number of queues which matched your search query.</p>",
         "SearchRoutingProfilesResponse$ApproximateTotalCount": "<p>The total number of routing profiles which matched your search query.</p>",
         "SearchSecurityProfilesResponse$ApproximateTotalCount": "<p>The total number of security profiles which matched your search query.</p>",
@@ -661,13 +672,13 @@
     "ChatContent": {
       "base": null,
       "refs": {
-        "ChatMessage$Content": "<p>The content of the chat message.</p>"
+        "ChatMessage$Content": "<p>The content of the chat message. </p> <ul> <li> <p>For <code>text/plain</code> and <code>text/markdown</code>, the Length Constraints are Minimum of 1, Maximum of 1024. </p> </li> <li> <p>For <code>application/json</code>, the Length Constraints are Minimum of 1, Maximum of 12000. </p> </li> </ul>"
       }
     },
     "ChatContentType": {
       "base": null,
       "refs": {
-        "ChatMessage$ContentType": "<p>The type of the content. Supported types are <code>text/plain</code>.</p>"
+        "ChatMessage$ContentType": "<p>The type of the content. Supported types are <code>text/plain</code>, <code>text/markdown</code>, and <code>application/json</code>.</p>"
       }
     },
     "ChatDurationInMinutes": {
@@ -680,6 +691,12 @@
       "base": "<p>A chat message.</p>",
       "refs": {
         "StartChatContactRequest$InitialMessage": "<p>The initial message to be sent to the newly created chat.</p>"
+      }
+    },
+    "ChatParticipantRoleConfig": {
+      "base": "<p>Configuration information for the chat participant role.</p>",
+      "refs": {
+        "UpdateParticipantRoleConfigChannelInfo$Chat": "<p>Configuration information for the chat participant role.</p>"
       }
     },
     "ChatStreamingConfiguration": {
@@ -967,7 +984,8 @@
         "TransferContactResponse$ContactId": "<p>The identifier of the contact in this instance of Amazon Connect. </p>",
         "UpdateContactAttributesRequest$InitialContactId": "<p>The identifier of the contact. This is the identifier of the contact associated with the first interaction with the contact center.</p>",
         "UpdateContactRequest$ContactId": "<p>The identifier of the contact. This is the identifier of the contact associated with the first interaction with your contact center.</p>",
-        "UpdateContactScheduleRequest$ContactId": "<p>The identifier of the contact.</p>"
+        "UpdateContactScheduleRequest$ContactId": "<p>The identifier of the contact.</p>",
+        "UpdateParticipantRoleConfigRequest$ContactId": "<p>The identifier of the contact in this instance of Amazon Connect. </p>"
       }
     },
     "ContactInitiationMethod": {
@@ -1222,7 +1240,8 @@
     "CurrentMetricName": {
       "base": "<p>The current metric names.</p>",
       "refs": {
-        "CurrentMetric$Name": "<p>The name of the metric.</p>"
+        "CurrentMetric$Name": "<p>The name of the metric.</p>",
+        "CurrentMetricSortCriteria$SortByMetric": null
       }
     },
     "CurrentMetricResult": {
@@ -1235,6 +1254,18 @@
       "base": null,
       "refs": {
         "GetCurrentMetricDataResponse$MetricResults": "<p>Information about the real-time metrics.</p>"
+      }
+    },
+    "CurrentMetricSortCriteria": {
+      "base": "<p>The way to sort the resulting response based on metrics. By default resources are sorted based on <code>AGENTS_ONLINE</code>, <code>DESCENDING</code>. The metric collection is sorted based on the input metrics.</p>",
+      "refs": {
+        "CurrentMetricSortCriteriaMaxOne$member": null
+      }
+    },
+    "CurrentMetricSortCriteriaMaxOne": {
+      "base": null,
+      "refs": {
+        "GetCurrentMetricDataRequest$SortCriteria": "<p>The way to sort the resulting response based on metrics. You can enter one sort criteria. By default resources are sorted based on <code>AGENTS_ONLINE</code>, <code>DESCENDING</code>. The metric collection is sorted based on the input metrics.</p> <p>Note the following:</p> <ul> <li> <p>Sorting on <code>SLOTS_ACTIVE</code> and <code>SLOTS_AVAILABLE</code> is not supported.</p> </li> </ul>"
       }
     },
     "CurrentMetrics": {
@@ -1733,7 +1764,7 @@
     "Filters": {
       "base": "<p>Contains the filter to apply when retrieving metrics.</p>",
       "refs": {
-        "GetCurrentMetricDataRequest$Filters": "<p>The queues, up to 100, or channels, to use to filter the metrics returned. Metric data is retrieved only for the resources associated with the queues or channels included in the filter. You can include both queue IDs and queue ARNs in the same request. VOICE, CHAT, and TASK channels are supported.</p>",
+        "GetCurrentMetricDataRequest$Filters": "<p>The filters to apply to returned metrics. You can filter up to the following limits:</p> <ul> <li> <p>Queues: 100</p> </li> <li> <p>Routing profiles: 100</p> </li> <li> <p>Channels: 3 (VOICE, CHAT, and TASK channels are supported.)</p> </li> </ul> <p>Metric data is retrieved only for the resources associated with the queues or routing profiles, and by any channels included in the filter. (You cannot filter by both queue AND routing profile.) You can include both resource IDs and resource ARNs in the same request. </p> <p>Currently tagging is only supported on the resources that are passed in the filter.</p>",
         "GetMetricDataRequest$Filters": "<p>The queues, up to 100, or channels, to use to filter the metrics returned. Metric data is retrieved only for the resources associated with the queues or channels included in the filter. You can include both queue IDs and queue ARNs in the same request. VOICE, CHAT, and TASK channels are supported.</p> <note> <p>To filter by <code>Queues</code>, enter the queue ID/ARN, not the name of the queue.</p> </note>"
       }
     },
@@ -1830,7 +1861,7 @@
     "Groupings": {
       "base": null,
       "refs": {
-        "GetCurrentMetricDataRequest$Groupings": "<p>The grouping applied to the metrics returned. For example, when grouped by <code>QUEUE</code>, the metrics returned apply to each queue rather than aggregated for all queues. </p> <ul> <li> <p>If you group by <code>CHANNEL</code>, you should include a Channels filter. VOICE, CHAT, and TASK channels are supported.</p> </li> <li> <p>If you group by <code>ROUTING_PROFILE</code>, you must include either a queue or routing profile filter.</p> </li> <li> <p>If no <code>Grouping</code> is included in the request, a summary of metrics is returned.</p> </li> </ul>",
+        "GetCurrentMetricDataRequest$Groupings": "<p>The grouping applied to the metrics returned. For example, when grouped by <code>QUEUE</code>, the metrics returned apply to each queue rather than aggregated for all queues. </p> <ul> <li> <p>If you group by <code>CHANNEL</code>, you should include a Channels filter. VOICE, CHAT, and TASK channels are supported.</p> </li> <li> <p>If you group by <code>ROUTING_PROFILE</code>, you must include either a queue or routing profile filter. In addition, a routing profile filter is required for metrics <code>CONTACTS_SCHEDULED</code>, <code>CONTACTS_IN_QUEUE</code>, and <code> OLDEST_CONTACT_AGE</code>.</p> </li> <li> <p>If no <code>Grouping</code> is included in the request, a summary of metrics is returned.</p> </li> </ul>",
         "GetMetricDataRequest$Groupings": "<p>The grouping applied to the metrics returned. For example, when results are grouped by queue, the metrics returned are grouped by queue. The values returned apply to the metrics for each queue rather than aggregated for all queues.</p> <p>If no grouping is specified, a summary of metrics for all queues is returned.</p>"
       }
     },
@@ -1860,6 +1891,7 @@
         "UpdateUserHierarchyGroupNameRequest$HierarchyGroupId": "<p>The identifier of the hierarchy group.</p>",
         "UpdateUserHierarchyRequest$HierarchyGroupId": "<p>The identifier of the hierarchy group.</p>",
         "User$HierarchyGroupId": "<p>The identifier of the hierarchy group for the user.</p>",
+        "UserDataHierarchyGroups$member": null,
         "UserSearchSummary$HierarchyGroupId": "<p>The identifier of the user's hierarchy group.</p>"
       }
     },
@@ -2273,6 +2305,7 @@
         "UpdateHoursOfOperationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
         "UpdateInstanceAttributeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
         "UpdateInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
+        "UpdateParticipantRoleConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
         "UpdateQueueHoursOfOperationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
         "UpdateQueueMaxContactsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
         "UpdateQueueNameRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
@@ -3173,6 +3206,42 @@
         "StartChatContactResponse$ParticipantId": "<p>The identifier for a chat participant. The participantId for a chat participant is the same throughout the chat lifecycle.</p>"
       }
     },
+    "ParticipantTimerAction": {
+      "base": null,
+      "refs": {
+        "ParticipantTimerValue$ParticipantTimerAction": "<p>The timer action. Currently only one value is allowed: <code>Unset</code>. It deletes a timer.</p>"
+      }
+    },
+    "ParticipantTimerConfigList": {
+      "base": null,
+      "refs": {
+        "ChatParticipantRoleConfig$ParticipantTimerConfigList": "<p>A list of participant timers. You can specify any unique combination of role and timer type. Duplicate entries error out the request with a 400.</p>"
+      }
+    },
+    "ParticipantTimerConfiguration": {
+      "base": "<p>Configuration information for the timer. After the timer configuration is set, it persists for the duration of the chat. It persists across new contacts in the chain, for example, transfer contacts.</p> <p>For more information about how chat timeouts work, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-chat-timeouts.html\">Set up chat timeouts for human participants</a>. </p>",
+      "refs": {
+        "ParticipantTimerConfigList$member": null
+      }
+    },
+    "ParticipantTimerDurationInMinutes": {
+      "base": null,
+      "refs": {
+        "ParticipantTimerValue$ParticipantTimerDurationInMinutes": "<p>The duration of a timer, in minutes. </p>"
+      }
+    },
+    "ParticipantTimerType": {
+      "base": null,
+      "refs": {
+        "ParticipantTimerConfiguration$TimerType": "<p>The type of timer. <code>IDLE</code> indicates the timer applies for considering a human chat participant as idle. <code>DISCONNECT_NONCUSTOMER</code> indicates the timer applies to automatically disconnecting a chat participant due to idleness.</p>"
+      }
+    },
+    "ParticipantTimerValue": {
+      "base": "<p>The value of the timer. Either the timer action (<code>Unset</code> to delete the timer), or the duration of the timer in minutes. Only one value can be set.</p> <p>For more information about how chat timeouts work, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-chat-timeouts.html\">Set up chat timeouts for human participants</a>. </p>",
+      "refs": {
+        "ParticipantTimerConfiguration$TimerValue": "<p>The value of the timer. Either the timer action (Unset to delete the timer), or the duration of the timer in minutes. Only one value can be set.</p>"
+      }
+    },
     "ParticipantToken": {
       "base": null,
       "refs": {
@@ -3551,7 +3620,7 @@
       "base": null,
       "refs": {
         "Filters$Queues": "<p>The queues to use to filter the metrics. You should specify at least one queue, and can specify up to 100 queues per request. The <code>GetCurrentMetricsData</code> API in particular requires a queue when you include a <code>Filter</code> in your request. </p>",
-        "UserDataFilters$Queues": "<p>Contains information about a queue resource for which metrics are returned.</p>"
+        "UserDataFilters$Queues": "<p>A list of up to 100 queues or ARNs.</p>"
       }
     },
     "QuickConnect": {
@@ -3796,6 +3865,7 @@
         "RoutingProfile$RoutingProfileId": "<p>The identifier of the routing profile.</p>",
         "RoutingProfileReference$Id": "<p>The identifier of the routing profile.</p>",
         "RoutingProfileSummary$Id": "<p>The identifier of the routing profile.</p>",
+        "RoutingProfiles$member": null,
         "UpdateRoutingProfileConcurrencyRequest$RoutingProfileId": "<p>The identifier of the routing profile.</p>",
         "UpdateRoutingProfileDefaultOutboundQueueRequest$RoutingProfileId": "<p>The identifier of the routing profile.</p>",
         "UpdateRoutingProfileNameRequest$RoutingProfileId": "<p>The identifier of the routing profile.</p>",
@@ -3862,6 +3932,7 @@
     "RoutingProfileReference": {
       "base": "<p>Information about the routing profile assigned to the user.</p>",
       "refs": {
+        "Dimensions$RoutingProfile": null,
         "UserData$RoutingProfile": "<p>Information about the routing profile that is assigned to the user.</p>"
       }
     },
@@ -3895,6 +3966,13 @@
       "base": null,
       "refs": {
         "ListRoutingProfilesResponse$RoutingProfileSummaryList": "<p>Information about the routing profiles.</p>"
+      }
+    },
+    "RoutingProfiles": {
+      "base": null,
+      "refs": {
+        "Filters$RoutingProfiles": "<p>A list of up to 100 routing profile IDs or ARNs.</p>",
+        "UserDataFilters$RoutingProfiles": "<p>A list of up to 100 routing profile IDs or ARNs.</p>"
       }
     },
     "Rule": {
@@ -4196,6 +4274,12 @@
         "GetTaskTemplateRequest$SnapshotVersion": "<p>The system generated version of a task template that is associated with a task, when the task is created.</p>"
       }
     },
+    "SortOrder": {
+      "base": null,
+      "refs": {
+        "CurrentMetricSortCriteria$SortOrder": "<p>The way to sort.</p>"
+      }
+    },
     "SourceApplicationName": {
       "base": null,
       "refs": {
@@ -4359,7 +4443,7 @@
     "SupportedMessagingContentTypes": {
       "base": null,
       "refs": {
-        "StartChatContactRequest$SupportedMessagingContentTypes": "<p>The supported chat message content types. Content types can be text/plain or both text/plain and text/markdown.</p>"
+        "StartChatContactRequest$SupportedMessagingContentTypes": "<p>The supported chat message content types. Content types must always contain <code>text/plain</code>. You can then put any other supported type in the list. For example, all the following lists are valid because they contain <code>text/plain</code>: <code>[text/plain, text/markdown, application/json]</code>, <code>[text/markdown, text/plain]</code>, <code>[text/plain, application/json]</code>.</p>"
       }
     },
     "SuspendContactRecordingRequest": {
@@ -4670,6 +4754,12 @@
         "UpdateHoursOfOperationRequest$TimeZone": "<p>The time zone of the hours of operation.</p>"
       }
     },
+    "TimerEligibleParticipantRoles": {
+      "base": null,
+      "refs": {
+        "ParticipantTimerConfiguration$ParticipantRole": "<p>The role of the participant in the chat conversation.</p>"
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
@@ -4870,6 +4960,22 @@
       "refs": {
       }
     },
+    "UpdateParticipantRoleConfigChannelInfo": {
+      "base": "<p>Configuration information for the chat participant role.</p>",
+      "refs": {
+        "UpdateParticipantRoleConfigRequest$ChannelConfiguration": "<p>The Amazon Connect channel you want to configure.</p>"
+      }
+    },
+    "UpdateParticipantRoleConfigRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateParticipantRoleConfigResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdatePhoneNumberRequest": {
       "base": null,
       "refs": {
@@ -5060,7 +5166,13 @@
     "UserDataFilters": {
       "base": "<p>A filter for the user data.</p>",
       "refs": {
-        "GetCurrentUserDataRequest$Filters": "<p>Filters up to 100 <code>Queues</code>, or up to 9 <code>ContactStates</code>. The user data is retrieved only for those users who are associated with the queues and have contacts that are in the specified <code>ContactState</code>. </p>"
+        "GetCurrentUserDataRequest$Filters": "<p>The filters to apply to returned user data. You can filter up to the following limits:</p> <ul> <li> <p>Queues: 100</p> </li> <li> <p>Routing profiles: 100</p> </li> <li> <p>Agents: 100</p> </li> <li> <p>Contact states: 9</p> </li> <li> <p>User hierarchy groups: 1</p> </li> </ul> <p> The user data is retrieved for only the specified values/resources in the filter. A maximum of one filter can be passed from queues, routing profiles, agents, and user hierarchy groups. </p> <p>Currently tagging is only supported on the resources that are passed in the filter.</p>"
+      }
+    },
+    "UserDataHierarchyGroups": {
+      "base": null,
+      "refs": {
+        "UserDataFilters$UserHierarchyGroups": "<p>A UserHierarchyGroup ID or ARN.</p>"
       }
     },
     "UserDataList": {
@@ -5072,6 +5184,7 @@
     "UserId": {
       "base": null,
       "refs": {
+        "AgentsMinOneMaxHundred$member": null,
         "CreateUserResponse$UserId": "<p>The identifier of the user account.</p>",
         "DeleteUserRequest$UserId": "<p>The identifier of the user.</p>",
         "DescribeUserRequest$UserId": "<p>The identifier of the user account.</p>",
