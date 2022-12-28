@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.255.5 - 2022-12-28
 
 * `Aws\ElastiCache` - This release allows you to modify the encryption in transit setting, for existing Redis clusters. You can now change the TLS configuration of your Redis clusters without the need to re-build or re-provision the clusters or impact application availability.
 * `Aws\NetworkFirewall` - AWS Network Firewall now provides status messages for firewalls to help you troubleshoot when your endpoint fails.
