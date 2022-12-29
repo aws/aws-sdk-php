@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.255.6 - 2022-12-29
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway
 * `Aws\ConnectWisdomService` - This release extends Wisdom CreateContent and StartContentUpload APIs to support PDF and MicrosoftWord docx document uploading.
