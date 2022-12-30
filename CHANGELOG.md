@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Extend response headers policy to support removing headers from viewer responses
+* `Aws\IoTFleetWise` - Update documentation - correct the epoch constant value of default value for expiryTime field in CreateCampaign request.
+
 ## 3.255.6 - 2022-12-29
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway
