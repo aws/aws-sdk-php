@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SecurityLake` - Allow CreateSubscriber API to take string input that allows setting more descriptive SubscriberDescription field. Make souceTypes field required in model level for UpdateSubscriberRequest as it is required for every API call on the backend. Allow ListSubscribers take any String as nextToken param.
+
 ## 3.255.7 - 2022-12-30
 
 * `Aws\CloudFront` - Extend response headers policy to support removing headers from viewer responses
