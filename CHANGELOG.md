@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.255.9 - 2023-01-04
 
 * `Aws\ApplicationAutoScaling` - Customers can now use the existing DescribeScalingActivities API to also see the detailed and machine-readable reasons for Application Auto Scaling not scaling their resources and, if needed, take the necessary corrective actions.
 * `Aws\CloudWatchLogs` - Update to remove sequenceToken as a required field in PutLogEvents calls.
