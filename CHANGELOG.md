@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - Customers can now use the existing DescribeScalingActivities API to also see the detailed and machine-readable reasons for Application Auto Scaling not scaling their resources and, if needed, take the necessary corrective actions.
+* `Aws\CloudWatchLogs` - Update to remove sequenceToken as a required field in PutLogEvents calls.
+* `Aws\SSM` - Adding support for QuickSetup Document Type in Systems Manager
+
 ## 3.255.8 - 2023-01-03
 
 * `Aws\SecurityLake` - Allow CreateSubscriber API to take string input that allows setting more descriptive SubscriberDescription field. Make souceTypes field required in model level for UpdateSubscriberRequest as it is required for every API call on the backend. Allow ListSubscribers take any String as nextToken param.
