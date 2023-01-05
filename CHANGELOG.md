@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.255.10 - 2023-01-05
 
 * `Aws\AmplifyBackend` - Updated GetBackendAPIModels response to include ModelIntrospectionSchema json string
 * `Aws\AppRunner` - This release adds support of securely referencing secrets and configuration data that are stored in Secrets Manager and SSM Parameter Store by adding them as environment secrets in your App Runner service.
