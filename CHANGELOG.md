@@ -1,5 +1,34 @@
 # CHANGELOG
 
+## 3.255.9 - 2023-01-04
+
+* `Aws\ApplicationAutoScaling` - Customers can now use the existing DescribeScalingActivities API to also see the detailed and machine-readable reasons for Application Auto Scaling not scaling their resources and, if needed, take the necessary corrective actions.
+* `Aws\CloudWatchLogs` - Update to remove sequenceToken as a required field in PutLogEvents calls.
+* `Aws\SSM` - Adding support for QuickSetup Document Type in Systems Manager
+
+## 3.255.8 - 2023-01-03
+
+* `Aws\SecurityLake` - Allow CreateSubscriber API to take string input that allows setting more descriptive SubscriberDescription field. Make souceTypes field required in model level for UpdateSubscriberRequest as it is required for every API call on the backend. Allow ListSubscribers take any String as nextToken param.
+
+## 3.255.7 - 2022-12-30
+
+* `Aws\CloudFront` - Extend response headers policy to support removing headers from viewer responses
+* `Aws\IoTFleetWise` - Update documentation - correct the epoch constant value of default value for expiryTime field in CreateCampaign request.
+
+## 3.255.6 - 2022-12-29
+
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway
+* `Aws\ConnectWisdomService` - This release extends Wisdom CreateContent and StartContentUpload APIs to support PDF and MicrosoftWord docx document uploading.
+* `Aws\EMR` - Added GetClusterSessionCredentials API to allow Amazon SageMaker Studio to connect to EMR on EC2 clusters with runtime roles and AWS Lake Formation-based access control for Apache Spark, Apache Hive, and Presto queries.
+* `Aws\SecretsManager` - Added owning service filter, include planned deletion flag, and next rotation date response parameter in ListSecrets.
+
+## 3.255.5 - 2022-12-28
+
+* `Aws\ElastiCache` - This release allows you to modify the encryption in transit setting, for existing Redis clusters. You can now change the TLS configuration of your Redis clusters without the need to re-build or re-provision the clusters or impact application availability.
+* `Aws\NetworkFirewall` - AWS Network Firewall now provides status messages for firewalls to help you troubleshoot when your endpoint fails.
+* `Aws\RDS` - This release adds support for Custom Engine Version (CEV) on RDS Custom SQL Server.
+* `Aws\Route53RecoveryControlConfig` - Added support for Python paginators in the route53-recovery-control-config List* APIs.
+
 ## 3.255.4 - 2022-12-27
 
 * `Aws\MemoryDB` - This release adds support for MemoryDB Reserved nodes which provides a significant discount compared to on-demand node pricing. Reserved nodes are not physical nodes, but rather a billing discount applied to the use of on-demand nodes in your account.
