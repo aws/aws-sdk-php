@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AmplifyBackend` - Updated GetBackendAPIModels response to include ModelIntrospectionSchema json string
+* `Aws\AppRunner` - This release adds support of securely referencing secrets and configuration data that are stored in Secrets Manager and SSM Parameter Store by adding them as environment secrets in your App Runner service.
+* `Aws\Connect` - Documentation update for a new Initiation Method value in DescribeContact API
+* `Aws\EMRServerless` - Adds support for customized images. You can now provide runtime images when creating or updating EMR Serverless Applications.
+* `Aws\Lightsail` - Documentation updates for Amazon Lightsail.
+* `Aws\MWAA` - MWAA supports Apache Airflow version 2.4.3.
+* `Aws\RDS` - This release adds support for specifying which certificate authority (CA) to use for a DB instance's server certificate during DB instance creation, as well as other CA enhancements.
+
 ## 3.255.9 - 2023-01-04
 
 * `Aws\ApplicationAutoScaling` - Customers can now use the existing DescribeScalingActivities API to also see the detailed and machine-readable reasons for Application Auto Scaling not scaling their resources and, if needed, take the necessary corrective actions.
