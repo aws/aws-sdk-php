@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - Added revocation parameter validation: bucket names must match S3 bucket naming rules and CNAMEs conform to RFC2396 restrictions on the use of special characters in URIs.
+* `Aws\AuditManager` - This release introduces a new data retention option in your Audit Manager settings. You can now use the DeregistrationPolicy parameter to specify if you want to delete your data when you deregister Audit Manager.
+
 ## 3.255.10 - 2023-01-05
 
 * `Aws\AmplifyBackend` - Updated GetBackendAPIModels response to include ModelIntrospectionSchema json string
