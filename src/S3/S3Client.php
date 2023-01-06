@@ -301,7 +301,9 @@ class S3Client extends AwsClient implements S3ClientInterface
      * - bucket_endpoint: (bool) Set to true to send requests to a
      *   hardcoded bucket endpoint rather than create an endpoint as a result
      *   of injecting the bucket into the URL. This option is useful for
-     *   interacting with CNAME endpoints.
+     *   interacting with CNAME endpoints. Note: if you are using version 2.243.0
+     *   and above and do not expect the bucket name to appear in the host, you will
+     *   also need to set `use_path_style_endpoint` to `true`.
      * - calculate_md5: (bool) Set to false to disable calculating an MD5
      *   for all Amazon S3 signed uploads.
      * - s3_us_east_1_regional_endpoint:
