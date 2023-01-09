@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.256.0 - 2023-01-09
 
 * `Aws\ECRPublic` - This release for Amazon ECR Public makes several change to bring the SDK into sync with the API.
 * `Aws\KendraRanking` - Introducing Amazon Kendra Intelligent Ranking, a new set of Kendra APIs that leverages Kendra semantic ranking capabilities to improve the quality of search results from other search services (i.e. OpenSearch, ElasticSearch, Solr).
