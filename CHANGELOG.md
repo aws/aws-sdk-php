@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.256.1 - 2023-01-10
 
 * `Aws\LocationService` - This release adds support for two new route travel models, Bicycle and Motorcycle which can be used with Grab data source.
 * `Aws\RDS` - This release adds support for configuring allocated storage on the CreateDBInstanceReadReplica, RestoreDBInstanceFromDBSnapshot, and RestoreDBInstanceToPointInTime APIs.
