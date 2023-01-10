@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\LocationService` - This release adds support for two new route travel models, Bicycle and Motorcycle which can be used with Grab data source.
+* `Aws\RDS` - This release adds support for configuring allocated storage on the CreateDBInstanceReadReplica, RestoreDBInstanceFromDBSnapshot, and RestoreDBInstanceToPointInTime APIs.
+
 ## 3.256.0 - 2023-01-09
 
 * `Aws\ECRPublic` - This release for Amazon ECR Public makes several change to bring the SDK into sync with the API.
