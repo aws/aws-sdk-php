@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.256.2 - 2023-01-11
 
 * `Aws\kendra` - This release adds support to new document types - RTF, XML, XSLT, MS_EXCEL, CSV, JSON, MD
 
