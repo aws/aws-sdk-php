@@ -909,7 +909,9 @@ class S3Client extends AwsClient implements S3ClientInterface
         // Add a note that the ContentMD5 is required for Object Lock enabled buckets for PutObject and UploadPart.
         $objectLock = '<div class="alert alert-info">This value is required if uploading to a bucket '
             . 'which has Object Lock enabled. It will not be calculated for you.</div>';
+        print_r(['shapes']['PutObjectRequest']['members']['ContentMD5']);
         $api['shapes']['PutObjectRequest']['members']['ContentMD5'] .= $objectLock;
+        print_r($api['shapes']['UploadPartRequest']['members']['ContentMD5']);
         $api['shapes']['UploadPartRequest']['members']['ContentMD5'] .= $objectLock;
 
         return [
