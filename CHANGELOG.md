@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\kendra` - This release adds support to new document types - RTF, XML, XSLT, MS_EXCEL, CSV, JSON, MD
+
 ## 3.256.1 - 2023-01-10
 
 * `Aws\LocationService` - This release adds support for two new route travel models, Bicycle and Motorcycle which can be used with Grab data source.
