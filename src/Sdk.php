@@ -336,6 +336,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionKafka(array $args = [])
  * @method \Aws\KafkaConnect\KafkaConnectClient createKafkaConnect(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionKafkaConnect(array $args = [])
+ * @method \Aws\KendraRanking\KendraRankingClient createKendraRanking(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionKendraRanking(array $args = [])
  * @method \Aws\Keyspaces\KeyspacesClient createKeyspaces(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionKeyspaces(array $args = [])
  * @method \Aws\Kinesis\KinesisClient createKinesis(array $args = [])
@@ -677,7 +679,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.255.7';
+    const VERSION = '3.256.1';
 
     /** @var array Arguments for creating clients */
     private $args;

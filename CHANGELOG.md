@@ -1,5 +1,43 @@
 # CHANGELOG
 
+## 3.256.1 - 2023-01-10
+
+* `Aws\LocationService` - This release adds support for two new route travel models, Bicycle and Motorcycle which can be used with Grab data source.
+* `Aws\RDS` - This release adds support for configuring allocated storage on the CreateDBInstanceReadReplica, RestoreDBInstanceFromDBSnapshot, and RestoreDBInstanceToPointInTime APIs.
+
+## 3.256.0 - 2023-01-09
+
+* `Aws\ECRPublic` - This release for Amazon ECR Public makes several change to bring the SDK into sync with the API.
+* `Aws\KendraRanking` - Introducing Amazon Kendra Intelligent Ranking, a new set of Kendra APIs that leverages Kendra semantic ranking capabilities to improve the quality of search results from other search services (i.e. OpenSearch, ElasticSearch, Solr).
+* `Aws\NetworkFirewall` - Network Firewall now supports the Suricata rule action reject, in addition to the actions pass, drop, and alert.
+* `Aws\RAM` - Enabled FIPS aws-us-gov endpoints in SDK.
+* `Aws\WorkSpacesWeb` - This release adds support for a new portal authentication type: AWS IAM Identity Center (successor to AWS Single Sign-On).
+
+## 3.255.11 - 2023-01-06
+
+* `Aws\ACMPCA` - Added revocation parameter validation: bucket names must match S3 bucket naming rules and CNAMEs conform to RFC2396 restrictions on the use of special characters in URIs.
+* `Aws\AuditManager` - This release introduces a new data retention option in your Audit Manager settings. You can now use the DeregistrationPolicy parameter to specify if you want to delete your data when you deregister Audit Manager.
+
+## 3.255.10 - 2023-01-05
+
+* `Aws\AmplifyBackend` - Updated GetBackendAPIModels response to include ModelIntrospectionSchema json string
+* `Aws\AppRunner` - This release adds support of securely referencing secrets and configuration data that are stored in Secrets Manager and SSM Parameter Store by adding them as environment secrets in your App Runner service.
+* `Aws\Connect` - Documentation update for a new Initiation Method value in DescribeContact API
+* `Aws\EMRServerless` - Adds support for customized images. You can now provide runtime images when creating or updating EMR Serverless Applications.
+* `Aws\Lightsail` - Documentation updates for Amazon Lightsail.
+* `Aws\MWAA` - MWAA supports Apache Airflow version 2.4.3.
+* `Aws\RDS` - This release adds support for specifying which certificate authority (CA) to use for a DB instance's server certificate during DB instance creation, as well as other CA enhancements.
+
+## 3.255.9 - 2023-01-04
+
+* `Aws\ApplicationAutoScaling` - Customers can now use the existing DescribeScalingActivities API to also see the detailed and machine-readable reasons for Application Auto Scaling not scaling their resources and, if needed, take the necessary corrective actions.
+* `Aws\CloudWatchLogs` - Update to remove sequenceToken as a required field in PutLogEvents calls.
+* `Aws\SSM` - Adding support for QuickSetup Document Type in Systems Manager
+
+## 3.255.8 - 2023-01-03
+
+* `Aws\SecurityLake` - Allow CreateSubscriber API to take string input that allows setting more descriptive SubscriberDescription field. Make souceTypes field required in model level for UpdateSubscriberRequest as it is required for every API call on the backend. Allow ListSubscribers take any String as nextToken param.
+
 ## 3.255.7 - 2022-12-30
 
 * `Aws\CloudFront` - Extend response headers policy to support removing headers from viewer responses
