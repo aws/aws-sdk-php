@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.0 - 2023-01-12
 
 * `Aws\Api` - Ensures query is separated by `/` when a request uri path is empty.
 * `Aws\CleanRooms` - Initial release of AWS Clean Rooms
