@@ -417,6 +417,9 @@ class S3Client extends AwsClient implements S3ClientInterface
         $stack->appendInit($this->getHeadObjectMiddleware(), 's3.head_object');
         if ($this->isUseEndpointV2()) {
             $this->processEndpointV2Model();
+            $stack->after('builderV2',
+                's3.check_empty_path_with_query',
+                $this->getEmptyPathWithQuery());
         }
     }
 
@@ -643,6 +646,27 @@ class S3Client extends AwsClient implements S3ClientInterface
 
                         return $result;
                     });
+            };
+        };
+    }
+
+    /**
+     * Provides a middleware that checks for an empty path and a
+     * non-empty query string.
+     *
+     * @return \Closure
+     */
+    private function getEmptyPathWithQuery()
+    {
+        return static function (callable $handler) {
+            return function (Command $command, RequestInterface $request) use ($handler) {
+                $uri = $request->getUri();
+                if (empty($uri->getPath()) && !empty($uri->getQuery())) {
+                    $uri = $uri->withPath('/');
+                    $request = $request->withUri($uri);
+                }
+
+                return $handler($command, $request);
             };
         };
     }

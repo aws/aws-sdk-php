@@ -2214,4 +2214,18 @@ EOXML;
         );
         $s3->execute($command);
     }
+
+    public function testAddsForwardSlashIfEmptyPathAndQuery()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('listObjectsV2', ['Bucket' => 'foo']);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame('/', $req->getUri()->getPath());
+                $this->assertSame('list-type=2', $req->getUri()->getQuery());
+            })
+        );
+        $s3->execute($command);
+    }
 }
