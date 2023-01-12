@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Ensures query is separated by `/` when a request uri path is empty.
+* `Aws\CleanRooms` - Initial release of AWS Clean Rooms
+* `Aws\CloudWatchLogs` - Bug fix: logGroupName is now not a required field in GetLogEvents, FilterLogEvents, GetLogGroupFields, and DescribeLogStreams APIs as logGroupIdentifier can be provided instead
+* `Aws\Lambda` - Add support for MaximumConcurrency parameter for SQS event source. Customers can now limit the maximum concurrent invocations for their SQS Event Source Mapping.
+* `Aws\MediaConvert` - The AWS Elemental MediaConvert SDK has added support for compact DASH manifest generation, audio normalization using TruePeak measurements, and the ability to clip the sample range in the color corrector.
+* `Aws\SecretsManager` - Update documentation for new ListSecrets and DescribeSecret parameters
+
 ## 3.256.2 - 2023-01-11
 
 * `Aws\kendra` - This release adds support to new document types - RTF, XML, XSLT, MS_EXCEL, CSV, JSON, MD
