@@ -98,7 +98,7 @@ class DocModel
 
         if (isset($d['append'])) {
             if (!isset($d['excludeAppend'])
-                && !in_array($parentName, $d['excludeAppend'])
+                || !in_array($parentName, $d['excludeAppend'])
             ) {
                 $result .= $d['append'];
             }
