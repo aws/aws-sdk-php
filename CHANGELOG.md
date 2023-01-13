@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.1 - 2023-01-13
 
 * `Aws\Connect` - This release updates the responses of UpdateContactFlowContent, UpdateContactFlowMetadata, UpdateContactFlowName and DeleteContactFlow API with empty responses.
 * `Aws\EC2` - Documentation updates for EC2.
