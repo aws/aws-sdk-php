@@ -104,10 +104,10 @@ class DocModel
             }
         }
 
-        if (isset($d['appendOnly'])) {
-            if (in_array($parentName, $d['appendOnly']['shapes'])) {
-                $result .= $d['appendOnly']['message'];
-            }
+        if (isset($d['appendOnly'])
+           && in_array($parentName, $d['appendOnly']['shapes'])
+        ) {
+            $result .= $d['appendOnly']['message'];
         }
 
         return $this->clean($result);
