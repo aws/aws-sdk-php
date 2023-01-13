@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This release updates the responses of UpdateContactFlowContent, UpdateContactFlowMetadata, UpdateContactFlowName and DeleteContactFlow API with empty responses.
+* `Aws\EC2` - Documentation updates for EC2.
+* `Aws\Outposts` - This release adds POWER_30_KVA as an option for PowerDrawKva. PowerDrawKva is part of the RackPhysicalProperties structure in the CreateSite request.
+* `Aws\ResourceGroups` - AWS Resource Groups customers can now turn on Group Lifecycle Events in their AWS account. When you turn this on, Resource Groups monitors your groups for changes to group state or membership. Those changes are sent to Amazon EventBridge as events that you can respond to using rules you create.
+* `Aws\S3` - Update to `bucket_endpoint` documentation
+
 ## 3.257.0 - 2023-01-12
 
 * `Aws\Api` - Ensures query is separated by `/` when a request uri path is empty.
