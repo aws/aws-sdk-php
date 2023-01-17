@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BillingConductor` - This release adds support for SKU Scope for pricing plans.
+* `Aws\Cloud9` - Added minimum value to AutomaticStopTimeMinutes parameter.
+* `Aws\NetworkFirewall` - Network Firewall now allows creation of dual stack endpoints, enabling inspection of IPv6 traffic.
+* `Aws\S3` - Updates to ContentMD5 api documentation.
+* `Aws\imagebuilder` - Add support for AWS Marketplace product IDs as input during CreateImageRecipe for the parent-image parameter. Add support for listing third-party components.
+
 ## 3.257.1 - 2023-01-13
 
 * `Aws\Connect` - This release updates the responses of UpdateContactFlowContent, UpdateContactFlowMetadata, UpdateContactFlowName and DeleteContactFlow API with empty responses.
