@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.2 - 2023-01-17
 
 * `Aws\BillingConductor` - This release adds support for SKU Scope for pricing plans.
 * `Aws\Cloud9` - Added minimum value to AutomaticStopTimeMinutes parameter.
