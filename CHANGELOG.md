@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.3 - 2023-01-18
 
 * `Aws\CloudWatch` - Enable cross-account streams in CloudWatch Metric Streams via Observability Access Manager.
 * `Aws\EFS` - Documentation updates for EFS access points limit increase
