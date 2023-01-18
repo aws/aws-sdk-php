@@ -90,6 +90,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionChimeSDKMessaging(array $args = [])
  * @method \Aws\ChimeSDKVoice\ChimeSDKVoiceClient createChimeSDKVoice(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionChimeSDKVoice(array $args = [])
+ * @method \Aws\CleanRooms\CleanRoomsClient createCleanRooms(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCleanRooms(array $args = [])
  * @method \Aws\Cloud9\Cloud9Client createCloud9(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloud9(array $args = [])
  * @method \Aws\CloudControlApi\CloudControlApiClient createCloudControlApi(array $args = [])
@@ -679,7 +681,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.256.0';
+    const VERSION = '3.257.2';
 
     /** @var array Arguments for creating clients */
     private $args;
