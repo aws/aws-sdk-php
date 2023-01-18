@@ -1,6 +1,6 @@
-@s3 @integ
+@s3 @integ @requiresPublicAccess
 Feature: POST object uploads
-    
+
     Scenario: Upload an object via POST object with Signature V4
         Given I have an s3 client and I have a file
         And I have an array of form inputs as following:
