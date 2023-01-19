@@ -274,13 +274,12 @@ class EndpointProviderV2Test extends TestCase
                         $cmd->getAuthSchemes()['region'],
                         $expectedAuthSchemes['signingRegion']
                     );
-                }elseif (isset($cmd->getAuthSchemes['signingRegionSet'])) {
+                } elseif (isset($cmd->getAuthSchemes['signingRegionSet'])) {
                     $this->assertEquals(
                         $cmd->getAuthSchemes()['region'],
                         $expectedAuthSchemes['signingRegionSet']
                     );
                 }
-
             }
             if (isset($expectedEndpoint['headers'])) {
                 $expectedHeaders = $expectedEndpoint['headers'];
