@@ -55,7 +55,7 @@ class EndpointV2SerializerTraitTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(
            'This operation requests `sigvfoo`, `sigvbar`, `sigvbaz` auth schemes,'
-           . ' but the client only supports sigv4, sigv4a, none, bearer.'
+           . ' but the client only supports `sigv4`, `sigv4a`, `none`, `bearer`.'
         );
 
         $rulesetPath = __DIR__ . '/invalid-rules/invalid-scheme.json';

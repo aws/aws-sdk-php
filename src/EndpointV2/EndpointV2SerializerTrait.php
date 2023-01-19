@@ -185,7 +185,7 @@ trait EndpointV2SerializerTrait
         }
 
         $invalidAuthSchemesString = implode(', ', $invalidAuthSchemes);
-        $validAuthSchemesString = implode(', ', $validAuthSchemes);
+        $validAuthSchemesString = '`' . implode('`, `', $validAuthSchemes) . '`';
         throw new \InvalidArgumentException(
             "This operation requests {$invalidAuthSchemesString}"
             . " auth schemes, but the client only supports {$validAuthSchemesString}."
