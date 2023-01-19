@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.4 - 2023-01-19
 
 * `Aws\Appflow` - Adding support for Salesforce Pardot connector in Amazon AppFlow.
 * `Aws\CloudWatchLogs` - Bug fix - Removed the regex pattern validation from CoralModel to avoid potential security issue.
