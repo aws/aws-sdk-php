@@ -206,7 +206,7 @@ trait EndpointV2SerializerTrait
             && $authScheme['name'] !== 'sigv4a'
         ) {
             $normalizedAuthScheme['version'] = 's3v4';
-        } elseif($authScheme['name'] === 'none') {
+        } elseif ($authScheme['name'] === 'none') {
             $normalizedAuthScheme['version'] = 'anonymous';
         }
         else {
