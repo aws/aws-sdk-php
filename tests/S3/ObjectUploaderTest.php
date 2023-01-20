@@ -240,8 +240,10 @@ class ObjectUploaderTest extends TestCase
         $client = $this->getTestClient('s3');
         $uploadOptions = [
             'params'          => ['RequestPayer' => 'test'],
+            'add_content_md5' => true,
             'before_upload'   => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);
+                $this->assertTrue(isset($command['ContentMD5']));
             },
         ];
         $url = 'https://foo.s3.amazonaws.com/bar';
@@ -275,11 +277,13 @@ class ObjectUploaderTest extends TestCase
         $uploadOptions = [
             'mup_threshold'   => self::MB * 4,
             'params'          => ['RequestPayer' => 'test'],
+            'add_content_md5' => true,
             'before_initiate' => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
             'before_upload'   => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);
+                $this->assertTrue(isset($command['ContentMD5']));
             },
             'before_complete' => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);

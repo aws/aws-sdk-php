@@ -165,6 +165,7 @@ class MultipartUploaderTest extends TestCase
         $uploadOptions = [
             'bucket'          => 'foo',
             'key'             => 'bar',
+            'add_content_md5' => true,
             'params'          => [
                 'RequestPayer'  => 'test',
                 'ContentLength' => $size
@@ -175,6 +176,7 @@ class MultipartUploaderTest extends TestCase
             'before_upload'   => function($command) use ($size) {
                 $this->assertLessThan($size, $command['ContentLength']);
                 $this->assertSame('test', $command['RequestPayer']);
+                $this->assertTrue(isset($command['ContentMD5']));
             },
             'before_complete' => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);

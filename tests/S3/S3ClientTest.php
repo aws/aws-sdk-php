@@ -2228,4 +2228,47 @@ EOXML;
         );
         $s3->execute($command);
     }
+
+    public function testAutomaticallyComputesMD5ForPutObject()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('PutObject',
+            ['Bucket' => 'foo', 'Key' => 'foo', 'Body' => 'test', 'AddContentMD5' => true]
+        );
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame(
+                    'CY9rzUYh03PK3k6DJie09g==',
+                    $req->getHeader('Content-MD5')[0]
+                );
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function testAutomaticallyComputesMD5ForUploadPart()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('UploadPart',
+            [
+                'Bucket' => 'foo',
+                'Key' => 'foo',
+                'Body' => 'test',
+                'PartNumber' => 1,
+                'UploadId' => 'foo',
+                'AddContentMD5' => true
+            ]
+        );
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame(
+                    'CY9rzUYh03PK3k6DJie09g==',
+                    $req->getHeader('Content-MD5')[0]
+                );
+            })
+        );
+        $s3->execute($command);
+    }
 }
