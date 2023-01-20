@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.5 - 2023-01-20
 
 * `Aws\EC2` - C6in, M6in, M6idn, R6in and R6idn instances are powered by 3rd Generation Intel Xeon Scalable processors (code named Ice Lake) with an all-core turbo frequency of 3.5 GHz.
 * `Aws\IVS` - API and Doc update. Update to arns field in BatchGetStreamKey. Also updates to operations and structures.
