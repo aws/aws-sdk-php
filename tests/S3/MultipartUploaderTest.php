@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Middleware;
 use Aws\S3\MultipartUploader;
 use Aws\Result;
 use Aws\S3\S3Client;
@@ -162,6 +163,16 @@ class MultipartUploaderTest extends TestCase
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
+        $client->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $name = $cmd->getName();
+                if ($name === 'UploadPart') {
+                    $this->assertTrue(
+                        $req->hasHeader('Content-MD5')
+                    );
+                }
+            })
+        );
         $uploadOptions = [
             'bucket'          => 'foo',
             'key'             => 'bar',
@@ -176,7 +187,6 @@ class MultipartUploaderTest extends TestCase
             'before_upload'   => function($command) use ($size) {
                 $this->assertLessThan($size, $command['ContentLength']);
                 $this->assertSame('test', $command['RequestPayer']);
-                $this->assertTrue(isset($command['ContentMD5']));
             },
             'before_complete' => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);
