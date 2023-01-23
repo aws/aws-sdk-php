@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EndpointV2` - Test fixes related to signing, particularly sigv4a.
+* `Aws\Lambda` - Release Lambda RuntimeManagementConfig, enabling customers to better manage runtime updates to their Lambda functions. This release adds two new APIs, GetRuntimeManagementConfig and PutRuntimeManagementConfig, as well as support on existing Create/Get/Update function APIs.
+* `Aws\SageMaker` - Amazon SageMaker Inference now supports P4de instance types.
+
 ## 3.257.5 - 2023-01-20
 
 * `Aws\EC2` - C6in, M6in, M6idn, R6in and R6idn instances are powered by 3rd Generation Intel Xeon Scalable processors (code named Ice Lake) with an all-core turbo frequency of 3.5 GHz.
