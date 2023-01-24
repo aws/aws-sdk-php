@@ -2229,13 +2229,34 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function testAutomaticallyComputesMD5ForPutObject()
+    public function addMD5Provider() {
+        return [
+           [
+               ['Bucket' => 'foo', 'Key' => 'foo', 'Body' => 'test'],
+               'PutObject'
+           ],
+           [
+               [
+                   'Bucket' => 'foo',
+                   'Key' => 'foo',
+                   'Body' => 'test',
+                   'PartNumber' => 1,
+                   'UploadId' => 'foo',
+               ],
+               'UploadPart'
+           ]
+        ];
+    }
+
+    /**
+     * @dataProvider addMD5Provider
+     */
+    public function testAutomaticallyComputesMD5($options, $operation)
     {
         $s3 = $this->getTestClient('s3');
         $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand('PutObject',
-            ['Bucket' => 'foo', 'Key' => 'foo', 'Body' => 'test', 'AddContentMD5' => true]
-        );
+        $options['AddContentMD5'] = true;
+        $command = $s3->getCommand($operation, $options);
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
                 $this->assertSame(
@@ -2247,25 +2268,19 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function testAutomaticallyComputesMD5ForUploadPart()
+    /**
+     * @dataProvider addMD5Provider
+     */
+    public function testDoesNotComputeMD5($options, $operation)
     {
         $s3 = $this->getTestClient('s3');
         $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand('UploadPart',
-            [
-                'Bucket' => 'foo',
-                'Key' => 'foo',
-                'Body' => 'test',
-                'PartNumber' => 1,
-                'UploadId' => 'foo',
-                'AddContentMD5' => true
-            ]
-        );
+        $options['AddContentMD5'] = false;
+        $command = $s3->getCommand($operation, $options);
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
-                $this->assertSame(
-                    'CY9rzUYh03PK3k6DJie09g==',
-                    $req->getHeader('Content-MD5')[0]
+                $this->assertFalse(
+                    $req->hasHeader('Content-MD5')
                 );
             })
         );
