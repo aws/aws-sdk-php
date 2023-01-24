@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.7 - 2023-01-24
 
 * `Aws\GlueDataBrew` - Enabled FIPS us-gov-west-1 endpoints in SDK.
 * `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Melbourne) Region (ap-southeast-4) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
