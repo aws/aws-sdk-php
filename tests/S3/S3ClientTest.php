@@ -2228,4 +2228,62 @@ EOXML;
         );
         $s3->execute($command);
     }
+
+    public function addMD5Provider() {
+        return [
+           [
+               ['Bucket' => 'foo', 'Key' => 'foo', 'Body' => 'test'],
+               'PutObject'
+           ],
+           [
+               [
+                   'Bucket' => 'foo',
+                   'Key' => 'foo',
+                   'Body' => 'test',
+                   'PartNumber' => 1,
+                   'UploadId' => 'foo',
+               ],
+               'UploadPart'
+           ]
+        ];
+    }
+
+    /**
+     * @dataProvider addMD5Provider
+     */
+    public function testAutomaticallyComputesMD5($options, $operation)
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $options['AddContentMD5'] = true;
+        $command = $s3->getCommand($operation, $options);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame(
+                    'CY9rzUYh03PK3k6DJie09g==',
+                    $req->getHeader('Content-MD5')[0]
+                );
+            })
+        );
+        $s3->execute($command);
+    }
+
+    /**
+     * @dataProvider addMD5Provider
+     */
+    public function testDoesNotComputeMD5($options, $operation)
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $options['AddContentMD5'] = false;
+        $command = $s3->getCommand($operation, $options);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertFalse(
+                    $req->hasHeader('Content-MD5')
+                );
+            })
+        );
+        $s3->execute($command);
+    }
 }
