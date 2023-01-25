@@ -95,7 +95,7 @@ class CredentialProvider
             || $config['use_aws_shared_config_files'] !== false
         ) {
             $defaultChain['sso'] = self::sso(
-                'profile '. $profileName,
+                $profileName,
                 self::getHomeDir() . '/.aws/config',
                 $config
             );
