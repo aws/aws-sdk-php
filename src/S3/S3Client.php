@@ -900,6 +900,12 @@ class S3Client extends AwsClient implements S3ClientInterface
         $api['shapes']['UploadPartRequest']['members']['ContentSHA256'] = ['shape' => 'ContentSHA256'];
         $docs['shapes']['ContentSHA256']['append'] = $opt;
 
+        // Add the AddContentMD5 parameter.
+        $docs['shapes']['AddContentMD5']['base'] = 'Set to true to calculate the ContentMD5 for the upload.';
+        $api['shapes']['AddContentMD5'] = ['type' => 'boolean'];
+        $api['shapes']['PutObjectRequest']['members']['AddContentMD5'] = ['shape' => 'AddContentMD5'];
+        $api['shapes']['UploadPartRequest']['members']['AddContentMD5'] = ['shape' => 'AddContentMD5'];
+
         // Add the SaveAs parameter.
         $docs['shapes']['SaveAs']['base'] = 'The path to a file on disk to save the object data.';
         $api['shapes']['SaveAs'] = ['type' => 'string'];
@@ -940,7 +946,8 @@ class S3Client extends AwsClient implements S3ClientInterface
         //Add a note to ContentMD5 for PutObject and UploadPart that specifies the value is required
         // When uploading to a bucket with object lock enabled and that it is not computed automatically
         $objectLock = '<div class="alert alert-info">This value is required if uploading to a bucket '
-            . 'which has Object Lock enabled. It will not be calculated for you.</div>';
+            . 'which has Object Lock enabled. It will not be calculated for you automatically. If you wish to have '
+            . 'the value calculated for you, use the `AddContentMD5` parameter.</div>';
         $docs['shapes']['ContentMD5']['appendOnly'] = [
             'message' => $objectLock,
             'shapes' => ['PutObjectRequest', 'UploadPartRequest']

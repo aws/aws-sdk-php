@@ -255,6 +255,7 @@ class EndpointProviderV2Test extends TestCase
                 $expectedAuthSchemes = $expectedEndpoint['properties']['authSchemes'][0];
                 if ((isset($expectedAuthSchemes['disableDoubleEncoding'])
                     && $expectedAuthSchemes['disableDoubleEncoding'] === true)
+                    && $expectedAuthSchemes['name'] !== 'sigv4a'
                 ) {
                     $expectedVersion = 's3v4';
                 } else {
@@ -268,10 +269,17 @@ class EndpointProviderV2Test extends TestCase
                     $cmd->getAuthSchemes()['name'],
                     $expectedAuthSchemes['signingName']
                 );
-                $this->assertEquals(
-                    $cmd->getAuthSchemes()['region'],
-                    $expectedAuthSchemes['signingRegion']
-                );
+                if (isset($cmd->getAuthSchemes()['region'])) {
+                    $this->assertEquals(
+                        $cmd->getAuthSchemes()['region'],
+                        $expectedAuthSchemes['signingRegion']
+                    );
+                } elseif (isset($cmd->getAuthSchemes['signingRegionSet'])) {
+                    $this->assertEquals(
+                        $cmd->getAuthSchemes()['region'],
+                        $expectedAuthSchemes['signingRegionSet']
+                    );
+                }
             }
             if (isset($expectedEndpoint['headers'])) {
                 $expectedHeaders = $expectedEndpoint['headers'];

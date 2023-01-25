@@ -43,6 +43,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeDomainConfigAsync(array $args = [])
  * @method \Aws\Result describeDomains(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeDomainsAsync(array $args = [])
+ * @method \Aws\Result describeDryRunProgress(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeDryRunProgressAsync(array $args = [])
  * @method \Aws\Result describeInboundConnections(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeInboundConnectionsAsync(array $args = [])
  * @method \Aws\Result describeInstanceTypeLimits(array $args = [])

@@ -1,5 +1,46 @@
 # CHANGELOG
 
+## 3.257.7 - 2023-01-24
+
+* `Aws\GlueDataBrew` - Enabled FIPS us-gov-west-1 endpoints in SDK.
+* `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Melbourne) Region (ap-southeast-4) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+* `Aws\SsmSap` - This release provides updates to documentation and support for listing operations performed by AWS Systems Manager for SAP.
+
+## 3.257.6 - 2023-01-23
+
+* `Aws\EndpointV2` - Test fixes related to signing, particularly sigv4a.
+* `Aws\Lambda` - Release Lambda RuntimeManagementConfig, enabling customers to better manage runtime updates to their Lambda functions. This release adds two new APIs, GetRuntimeManagementConfig and PutRuntimeManagementConfig, as well as support on existing Create/Get/Update function APIs.
+* `Aws\SageMaker` - Amazon SageMaker Inference now supports P4de instance types.
+
+## 3.257.5 - 2023-01-20
+
+* `Aws\EC2` - C6in, M6in, M6idn, R6in and R6idn instances are powered by 3rd Generation Intel Xeon Scalable processors (code named Ice Lake) with an all-core turbo frequency of 3.5 GHz.
+* `Aws\IVS` - API and Doc update. Update to arns field in BatchGetStreamKey. Also updates to operations and structures.
+* `Aws\QuickSight` - This release adds support for data bars in QuickSight table and increases pivot table field well limit.
+
+## 3.257.4 - 2023-01-19
+
+* `Aws\Appflow` - Adding support for Salesforce Pardot connector in Amazon AppFlow.
+* `Aws\CloudWatchLogs` - Bug fix - Removed the regex pattern validation from CoralModel to avoid potential security issue.
+* `Aws\CodeArtifact` - Documentation updates for CodeArtifact
+* `Aws\Connect` - Amazon Connect Chat introduces Persistent Chat, allowing customers to resume previous conversations with context and transcripts carried over from previous chats, eliminating the need to repeat themselves and allowing agents to provide personalized service with access to entire conversation history.
+* `Aws\ConnectParticipant` - This release updates Amazon Connect Participant's GetTranscript api to provide transcripts of past chats on a persistent chat session.
+* `Aws\EC2` - Adds SSM Parameter Resource Aliasing support to EC2 Launch Templates. Launch Templates can now store parameter aliases in place of AMI Resource IDs. CreateLaunchTemplateVersion and DescribeLaunchTemplateVersions now support a convenience flag, ResolveAlias, to return the resolved parameter value.
+* `Aws\Glue` - Release Glue Studio Hudi Data Lake Format for SDK/CLI
+* `Aws\GroundStation` - Add configurable prepass and postpass times for DataflowEndpointGroup. Add Waiter to allow customers to wait for a contact that was reserved through ReserveContact
+* `Aws\MediaLive` - AWS Elemental MediaLive adds support for SCTE 35 preRollMilliSeconds.
+* `Aws\OpenSearchService` - This release adds the enhanced dry run option, that checks for validation errors that might occur when deploying configuration changes and provides a summary of these errors, if any. The feature will also indicate whether a blue/green deployment will be required to apply a change.
+* `Aws\Panorama` - Added AllowMajorVersionUpdate option to OTAJobConfig to make appliance software major version updates opt-in.
+* `Aws\SageMaker` - HyperParameterTuningJobs now allow passing environment variables into the corresponding TrainingJobs
+
+## 3.257.3 - 2023-01-18
+
+* `Aws\CloudWatch` - Enable cross-account streams in CloudWatch Metric Streams via Observability Access Manager.
+* `Aws\EFS` - Documentation updates for EFS access points limit increase
+* `Aws\WAFV2` - Improved the visibility of the guidance for updating AWS WAF resources, such as web ACLs and rule groups.
+* `Aws\crypto` - Sets the default AAD to an empty string instead of null to silence deprecation warnings
+* `Aws\ivschat` - Updates the range for a Chat Room's maximumMessageRatePerSecond field.
+
 ## 3.257.2 - 2023-01-17
 
 * `Aws\BillingConductor` - This release adds support for SKU Scope for pricing plans.
