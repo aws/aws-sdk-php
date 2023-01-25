@@ -40,7 +40,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     {
         return Promise\Coroutine::of(function () {
             if (!@is_readable($this->filename)) {
-                throw new TokenException("Cannot read token from $this->filename");
+                throw new TokenException("Cannot read profiles from $this->filename");
             }
             $profiles = self::loadProfiles($this->filename);
             if (!isset($profiles[$this->ssoProfileName])) {

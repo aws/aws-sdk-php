@@ -28,9 +28,7 @@ class SsoTokenProviderTest extends TestCase
         unset($_SERVER['HOME']);
         unset($_SERVER['AWS_PROFILE']);
 
-        $dir = sys_get_temp_dir();
-
-        return $dir;
+        return sys_get_temp_dir();
     }
 
 
@@ -69,7 +67,6 @@ EOT;
             $tokenLocation, $tokenFile
         );
 
-        $configFilename = $dir . '/.aws/config';
         putenv('HOME=' . dirname($dir));
 
         $result = [
@@ -135,7 +132,8 @@ sso_session = admin
 [sso-session admin]
 sso_region = us-east-2
 EOT;
-        file_put_contents($dir . '/config', $ini);
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
         putenv('HOME=' . dirname($dir));
         putenv('AWS_PROFILE=test');
 
@@ -145,7 +143,7 @@ EOT;
             $tokenProvider = new SsoTokenProvider('test', $dir . '/config');
             $tokenProvider()->wait();
         } finally {
-            unlink($dir . '/config');
+            unlink($configFilename);
         }
     }
 
