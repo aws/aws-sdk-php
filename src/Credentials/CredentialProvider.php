@@ -366,7 +366,7 @@ class CredentialProvider
                     $ssoOidcClient
                 );
                 $token = $tokenPromise()->wait();
-                $ssoCredentials = CredentialProvider::getSsoServiceCredentials(
+                $ssoCredentials = CredentialProvider::getCredentialsFromSsoService(
                     $ssoProfile,
                     $token->getToken(),
                     $config
@@ -407,7 +407,7 @@ class CredentialProvider
                 if ($expiration < $now) {
                     return self::reject("Cached SSO credentials returned expired credentials");
                 }
-                $ssoCredentials = CredentialProvider::getSsoServiceCredentials(
+                $ssoCredentials = CredentialProvider::getCredentialsFromSsoService(
                     $ssoProfile,
                     $tokenData['accessToken'],
                     $config
@@ -927,11 +927,12 @@ class CredentialProvider
     }
 
     /**
-     * @param mixed $ssoProfile
-     * @param $accessToken
-     * @return mixed|null
+     * @param array $ssoProfile
+     * @param string $accessToken
+     * @param array $config
+     * @return array|null
      */
-    public static function getSsoServiceCredentials($ssoProfile, $accessToken, $config)
+    private static function getCredentialsFromSsoService($ssoProfile, $accessToken, $config)
     {
         if (empty($config['ssoClient'])) {
             $ssoClient = new Aws\SSO\SSOClient([
