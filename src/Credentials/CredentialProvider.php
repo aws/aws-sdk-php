@@ -321,7 +321,7 @@ class CredentialProvider
      *
      * @return callable
      */
-    public static function sso($ssoProfileName = 'profile default',
+    public static function sso($ssoProfileName = 'profile',
                                $filename = null,
                                $config = []
     ) {
@@ -342,8 +342,6 @@ class CredentialProvider
                 return self::reject("Profile {$ssoProfileName} does not exist in {$filename}.");
             }
 
-            $ssoCredentials = null;
-            $expiration = null;
             if (!empty($ssoProfile['sso_session'])) {
                 if (empty($config['ssoOidcClient'])) {
                     $sessionName = $ssoProfile['sso_session'];
