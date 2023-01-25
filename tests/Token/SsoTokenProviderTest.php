@@ -31,7 +31,7 @@ class SsoTokenProviderTest extends TestCase
         $dir = sys_get_temp_dir() . '/.aws';
 
         if (!is_dir($dir)) {
-            mkdir($dir, 0700, true);
+            mkdir($dir, 0777, true);
         }
 
         return $dir;
@@ -81,13 +81,10 @@ EOT;
         $tokenLocation = dirname($dir) . SsoTokenProvider::getTokenLocation('session-name');
         if (!is_dir(dirname($tokenLocation))) {
             $dirName = dirname($tokenLocation);
-            mkdir($dirName, 0700, true);
+            mkdir($dir, 0777, true);
         }
 
-        file_put_contents(
-            $tokenLocation, $tokenFile
-        );
-
+        file_put_contents($tokenLocation, $tokenFile);
         putenv('HOME=' . dirname($dir));
 
         $result = [
