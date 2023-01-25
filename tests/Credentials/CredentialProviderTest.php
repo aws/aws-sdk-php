@@ -1071,7 +1071,9 @@ EOT;
             );
         } finally {
             unlink($dir . '/config');
-            unlink($dir . '/sso');
+            unlink($tokenFileName);
+            rmdir($tokenFileDirectory);
+            rmdir($dir . "/sso/");
         }
     }
 
