@@ -78,14 +78,14 @@ EOT;
         $configFilename = $dir . '/config';
         file_put_contents($configFilename, $ini);
 
-        $tokenLocation = dirname($dir) . SsoTokenProvider::getTokenLocation('session-name');
+        putenv('HOME=' . dirname($dir));
+
+        $tokenLocation = SsoTokenProvider::getTokenLocation('session-name');
         if (!is_dir(dirname($tokenLocation))) {
-            $dirName = dirname($tokenLocation);
-            mkdir($dirName, 0777, true);
+            mkdir(dirname($tokenLocation), 0777, true);
         }
 
         file_put_contents($tokenLocation, $tokenFile);
-        putenv('HOME=' . dirname($dir));
 
         $result = [
             'roleCredentials' => [
@@ -95,7 +95,6 @@ EOT;
                 'expiration'      => $expiration
             ],
         ];
-
         $sso = $this->getTestClient('SsoOidc', ['credentials' => false]);
         $this->addMockResults($sso, [
             new Result($result)
