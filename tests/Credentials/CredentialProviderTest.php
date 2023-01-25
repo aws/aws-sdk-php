@@ -1082,7 +1082,7 @@ EOT;
         $dir = $this->clearEnv();
         $expiration = time() + 1000;
         $ini = <<<EOT
-[default]
+[profile default]
 sso_account_id = 12345
 sso_session = session-name
 sso_role_name = roleName
