@@ -3,7 +3,6 @@ namespace Aws\Token;
 
 use Aws\Exception\TokenException;
 use GuzzleHttp\Promise;
-use Aws\Test\UsesServiceTrait;
 
 /**
  * Token that comes from the SSO provider
@@ -11,7 +10,6 @@ use Aws\Test\UsesServiceTrait;
 class SsoTokenProvider implements RefreshableTokenProviderInterface
 {
     use ParsesIniTrait;
-    use UsesServiceTrait;
 
     const ENV_PROFILE = 'AWS_PROFILE';
 
@@ -20,9 +18,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     private $ssoOidcClient;
 
     /**
-     * Constructs a new SSO token Provider, with the specified AWS
-     * token
-     *
+     * Constructs a newSsoTokenProvider object, which will fetch a token from an authenticated SSO profile
      * @param string $ssoProfileName The name of the profile that contains the sso_session key
      * @param int    $filename Name of the config file to sso profile from
      */
