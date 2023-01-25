@@ -58,7 +58,7 @@ EOT;
         $dir = sys_get_temp_dir() . '/.aws';
 
         if (!is_dir($dir)) {
-            mkdir($dir, 0755, true);
+            mkdir($dir, 0777, true);
         }
 
         return $dir;
@@ -1082,6 +1082,7 @@ EOT;
         $dir = $this->clearEnv();
         $expiration = time() + 1000;
         $ini = <<<EOT
+[default]
 sso_account_id = 12345
 sso_session = session-name
 sso_role_name = roleName
