@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.8 - 2023-01-25
 
 * `Aws\CloudFormation` - Enabled FIPS aws-us-gov endpoints in SDK.
 * `Aws\EC2` - This release adds new functionality that allows customers to provision IPv6 CIDR blocks through Amazon VPC IP Address Manager (IPAM) as well as allowing customers to utilize IPAM Resource Discovery APIs.
