@@ -28,7 +28,13 @@ class SsoTokenProviderTest extends TestCase
         unset($_SERVER['HOME']);
         unset($_SERVER['AWS_PROFILE']);
 
-        return sys_get_temp_dir() . '/.aws';
+        $dir = sys_get_temp_dir() . '/.aws';
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        return $dir;
     }
 
 

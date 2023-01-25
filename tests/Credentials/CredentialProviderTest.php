@@ -1038,7 +1038,7 @@ EOT;
         file_put_contents(
             $tokenFileName, $tokenFile
         );
-        putenv('HOME=' . dirname($dir));
+
         $configFilename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
@@ -1071,9 +1071,7 @@ EOT;
             );
         } finally {
             unlink($dir . '/config');
-            unlink($tokenFileName);
-            rmdir($tokenFileDirectory);
-            rmdir($dir . "/sso/");
+            unlink($dir . '/sso');
         }
     }
 
