@@ -81,7 +81,7 @@ EOT;
         $tokenLocation = dirname($dir) . SsoTokenProvider::getTokenLocation('session-name');
         if (!is_dir(dirname($tokenLocation))) {
             $dirName = dirname($tokenLocation);
-            mkdir($dir, 0777, true);
+            mkdir($dirName, 0777, true);
         }
 
         file_put_contents($tokenLocation, $tokenFile);
