@@ -238,20 +238,6 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @When I create a POST object SigV2 with inputs and policy
-     */
-    public function iCreateAPostObjectSigvWithInputsAndPolicy()
-    {
-        $postObject = new PostObject(
-            $this->s3Client,
-            self::getResourceName(),
-            $this->formInputs,
-            $this->jsonPolicy
-        );
-        $this->preparePostData($postObject);
-    }
-
-    /**
      * @Given I provide an array of policy conditions as following:
      */
     public function iProvideAnArrayOfPolicyConditionsAsFollowing(TableNode $table)

@@ -1,29 +1,30 @@
 <?php
 namespace Aws\Test\Integ;
 
-use Aws\Crypto\KmsMaterialsProvider;
+use Aws\Crypto\AbstractCryptoClientV2;
+use Aws\Crypto\KmsMaterialsProviderV2;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Exception\AwsException;
-use Aws\S3\Crypto\S3EncryptionClient;
+use Aws\S3\Crypto\S3EncryptionClientV2;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Tester\Exception\PendingException;
-use Aws\Crypto\AbstractCryptoClient;
 use Aws\Kms\KmsClient;
 use PHPUnit\Framework\Assert;
+
+
 
 class S3EncryptionContext implements Context, SnippetAcceptingContext
 {
     use IntegUtils;
 
     const DEFAULT_REGION = 'us-west-2';
-    const DEFAULT_BUCKET = 'aws-s3-shared-tests';
+    const DEFAULT_BUCKET = 'aws-sdk-php-crypto-tests';
 
     private $plaintexts;
     private $decrypted;
     private $operationParams;
-
     private $region;
     private $cipher;
     private $bucket;
@@ -93,7 +94,7 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
         ]);
         $keyArn = $this->getKmsArnFromAlias($kmsClient, $alias);
 
-        $materialsProvider = new KmsMaterialsProvider(
+        $materialsProvider = new KmsMaterialsProviderV2(
             $kmsClient,
             $keyArn
         );
@@ -115,7 +116,7 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
                     continue 2;
             }
 
-            if (!AbstractCryptoClient::isSupportedCipher($shortCipher)) {
+            if (AbstractCryptoClientV2::isSupportedCipher($shortCipher)) {
                 continue;
             }
 
@@ -138,9 +139,12 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
             'region' => $this->region,
             'version' => 'latest'
         ]);
-        $s3EncryptionClient = new S3EncryptionClient($s3Client);
+        $s3EncryptionClient = new S3EncryptionClientV2($s3Client);
 
         foreach ($this->plaintexts as $fileKeyPart => $plaintext) {
+            if (empty($this->operationParams[$fileKeyPart])) {
+                continue;
+            }
             $params = $this->operationParams[$fileKeyPart];
             $params['Key'] = 'crypto_tests/'
                 . $this->cipher
@@ -148,7 +152,8 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
                 . '/language_' . $language
                 . '/ciphertext_test_case_' . $fileKeyPart;
             $params['Body'] = $plaintext;
-            
+            $params['@KmsEncryptionContext'] = [];
+
             $s3EncryptionClient->putObject($params);
         }
     }
@@ -158,7 +163,7 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
      */
     public function iDecryptEachFixtureAgainstLanguageEncryptionVersion($language, $folder)
     {
-        $materialsProvider = new KmsMaterialsProvider(
+        $materialsProvider = new KmsMaterialsProviderV2(
             self::getSdk()->createKms([
                 'region' => $this->region
             ])
@@ -168,7 +173,7 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
             'region' => $this->region,
             'version' => 'latest'
         ]);
-        $s3EncryptionClient = new S3EncryptionClient($s3Client);
+        $s3EncryptionClient = new S3EncryptionClientV2($s3Client);
 
         $fileKeyParts = array_keys($this->plaintexts);
         foreach ($fileKeyParts as $fileKeyPart) {
@@ -196,7 +201,10 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
             }
 
             $params['@MaterialsProvider'] = $materialsProvider;
-            $result = $s3EncryptionClient->getObject($params);
+            $params['@SecurityProfile'] = 'V2_AND_LEGACY';
+            $params['@KmsAllowDecryptWithAnyCmk'] = true;
+            //Suppress warning emitted for using legacy encryption modes
+            $result = @$s3EncryptionClient->getObject($params);
             $this->decrypted[$fileKeyPart] = (string)$result['Body'];
         }
     }
