@@ -1353,9 +1353,9 @@ EOT;
 
     }
 
-    public function testSsoProfileProviderFailsWithSsoSession()
+    public function testSsoProfileProviderFailsWithBadSsoSessionName()
     {
-        $this->expectExceptionMessage("Profile default contains an sso_session and will rely on the token provider instead of the legacy sso credential provider.");
+        $this->expectExceptionMessage("Could not find fakeSessionName default in");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT

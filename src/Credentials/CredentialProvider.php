@@ -346,6 +346,12 @@ class CredentialProvider
             $expiration = null;
             if (!empty($ssoProfile['sso_session'])) {
                 if (empty($config['ssoOidcClient'])) {
+                    $sessionName = $ssoProfile['sso_session'];
+                    if (empty($profiles['sso-session ' . $sessionName])) {
+                        return self::reject(
+                            "Could not find sso-session {$sessionName} in {$filename}"
+                        );
+                    }
                     $ssoSession = $profiles['sso-session ' . $ssoProfile['sso_session']];
                     $ssoOidcClient = new Aws\SSOOIDC\SSOOIDCClient([
                         'region' => $ssoSession['sso_region'],
