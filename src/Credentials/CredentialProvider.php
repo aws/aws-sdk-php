@@ -321,7 +321,7 @@ class CredentialProvider
      *
      * @return callable
      */
-    public static function sso($ssoProfileName = 'profile',
+    public static function sso($ssoProfileName = 'default',
                                $filename = null,
                                $config = []
     ) {
