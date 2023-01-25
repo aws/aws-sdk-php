@@ -11,6 +11,9 @@ trait ParsesIniTrait
         $profileData = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
 
         $configFilename = self::getHomeDir() . '/.aws/config';
+        if (!is_readable($configFilename)) {
+            return $profileData;
+        }
         $configProfileData = \Aws\parse_ini_file($configFilename, true, INI_SCANNER_RAW);
         foreach ($configProfileData as $name => $profile) {
             // standardize config profile names

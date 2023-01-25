@@ -4,6 +4,7 @@ namespace Aws\Test\Token;
 
 use Aws\Exception\TokenException;
 use Aws\LruArrayCache;
+use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use Aws\Token\SsoTokenProvider;
 use Aws\Token\Token;
@@ -27,20 +28,82 @@ class SsoTokenProviderTest extends TestCase
         unset($_SERVER['HOME']);
         unset($_SERVER['AWS_PROFILE']);
 
-        $dir = sys_get_temp_dir() . '/.aws';
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-
-        $ssoDir = $dir . '/sso/cache';
-        if (!is_dir($ssoDir)) {
-            mkdir($ssoDir, 0777, true);
-        }
+        $dir = sys_get_temp_dir();
 
         return $dir;
     }
 
-    public function testThrowsExceptonWithOnlyStartUrl()
+
+    public function testSsoTokenProviderSuccess()
+    {
+        $dir = $this->clearEnv();
+        $expiration = time() + 1000;
+        $ini = <<<EOT
+[default]
+sso_account_id = 12345
+sso_session = session-name
+sso_role_name = roleName
+
+[sso-session session-name]
+sso_start_url = url.co.uk
+sso_region = us-west-2
+EOT;
+        $tokenFile = <<<EOT
+{
+    "startUrl": "https://d-123.awsapps.com/start",
+    "region": "us-west-2",
+    "accessToken": "token",
+    "expiresAt": "2500-12-25T21:30:00Z"
+}
+EOT;
+
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+
+        $tokenLocation = dirname($dir) . SsoTokenProvider::getTokenLocation('session-name');
+        if (!is_dir(dirname($tokenLocation))) {
+            mkdir(dirname($tokenLocation), 0777, true);
+        }
+
+        file_put_contents(
+            $tokenLocation, $tokenFile
+        );
+
+        $configFilename = $dir . '/.aws/config';
+        putenv('HOME=' . dirname($dir));
+
+        $result = [
+            'roleCredentials' => [
+                'accessKeyId'     => 'foo',
+                'secretAccessKey' => 'assumedSecret',
+                'sessionToken'    => null,
+                'expiration'      => $expiration
+            ],
+        ];
+
+        $sso = $this->getTestClient('SsoOidc', ['credentials' => false]);
+        $this->addMockResults($sso, [
+            new Result($result)
+        ]);
+
+        try {
+            $token = call_user_func(TokenProvider::sso(
+                'default',
+                $configFilename,
+                ['ssoClient' => $sso]
+            ))->wait();
+            $this->assertSame('token', $token->getToken());
+            $this->assertSame('2500-12-25T21:30:00Z', $token->getExpiration());
+            $this->assertNull($token->getRegistrationExpiresAt());
+
+        } finally {
+            unlink($dir . '/config');
+            unlink($tokenLocation);
+            rmdir(dirname($tokenLocation));
+        }
+    }
+
+    public function testThrowsExceptionWithOnlyStartUrl()
     {
         $dir = $this->clearEnv();
         $ini = <<<EOT
@@ -63,7 +126,7 @@ EOT;
         }
     }
 
-    public function testThrowsExceptonWithOnlySsoRegion()
+    public function testThrowsExceptionWithOnlySsoRegion()
     {
         $dir = $this->clearEnv();
         $ini = <<<EOT
@@ -86,7 +149,7 @@ EOT;
         }
     }
 
-    public function testThrowsExceptonWithNonExistingSession()
+    public function testThrowsExceptionWithNonExistingSession()
     {
         $dir = $this->clearEnv();
         $ini = <<<EOT
