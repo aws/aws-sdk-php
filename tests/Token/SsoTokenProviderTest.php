@@ -28,7 +28,7 @@ class SsoTokenProviderTest extends TestCase
         unset($_SERVER['HOME']);
         unset($_SERVER['AWS_PROFILE']);
 
-        return sys_get_temp_dir();
+        return sys_get_temp_dir() . '/.aws';
     }
 
 
@@ -60,7 +60,7 @@ EOT;
 
         $tokenLocation = dirname($dir) . SsoTokenProvider::getTokenLocation('session-name');
         if (!is_dir(dirname($tokenLocation))) {
-            mkdir(dirname($tokenLocation), 0600, true);
+            mkdir(dirname($tokenLocation), 0700, true);
         }
 
         file_put_contents(
