@@ -18,7 +18,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     private $ssoOidcClient;
 
     /**
-     * Constructs a newSsoTokenProvider object, which will fetch a token from an authenticated SSO profile
+     * Constructs a new SsoTokenProvider object, which will fetch a token from an authenticated SSO profile
      * @param string $ssoProfileName The name of the profile that contains the sso_session key
      * @param int    $filename Name of the config file to sso profile from
      */

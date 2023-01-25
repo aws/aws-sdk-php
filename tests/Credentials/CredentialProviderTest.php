@@ -1355,7 +1355,7 @@ EOT;
 
     public function testSsoProfileProviderFailsWithBadSsoSessionName()
     {
-        $this->expectExceptionMessage("Could not find fakeSessionName default in");
+        $this->expectExceptionMessage("Could not find sso-session fakeSessionName in");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
