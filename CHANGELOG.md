@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.9 - 2023-01-26
 
 * `Aws\` - Enables new SSO login format to be used by the SSO Credential provider
 * `Aws\EventBridge` - Minor comments for Redshift Serverless workgroup target support.
