@@ -226,18 +226,6 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Given I provide a json string policy as following:
-     */
-    public function iProvideAJsonStringPolicyAsFollowing(PyStringNode $string)
-    {
-        $policy = json_decode($string->getRaw(),true);
-        $policy['conditions'][] = ["bucket" => self::getResourceName()];
-        $policy['conditions'][] = ["starts-with", '$key', ""];
-
-        $this->jsonPolicy = json_encode($policy);
-    }
-
-    /**
      * @Given I provide an array of policy conditions as following:
      */
     public function iProvideAnArrayOfPolicyConditionsAsFollowing(TableNode $table)

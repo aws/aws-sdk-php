@@ -73,7 +73,7 @@ trait EncryptionTraitV2
         $cipherOptions['Cipher'] = strtolower($cipherOptions['Cipher']);
 
         if (!self::isSupportedCipher($cipherOptions['Cipher'])) {
-            throw new \InvalidArgumentException('The cipher requested is not'
+            throw new \InvalidArgumentException('The cipher' . "{$cipherOptions['Cipher']}" . ' requested is not'
                 . ' supported by the SDK.');
         }
 
