@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Enables new SSO login format to be used by the SSO Credential provider
+* `Aws\EventBridge` - Minor comments for Redshift Serverless workgroup target support.
+* `Aws\IoTFleetWise` - Add model validation to BatchCreateVehicle and BatchUpdateVehicle operations that invalidate requests with an empty vehicles list.
+* `Aws\S3` - Allow FIPS to be used with path-style URLs.
+
 ## 3.257.8 - 2023-01-25
 
 * `Aws\CloudFormation` - Enabled FIPS aws-us-gov endpoints in SDK.
