@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Modernizes integ tests, removes integ test that relies on SigV2.
+* `Aws\AppStream` - Fixing the issue where Appstream waiters hang for fleet_started and fleet_stopped.
+* `Aws\ApplicationAutoScaling` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\ElasticBeanstalk` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\FIS` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\Glacier` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\Greengrass` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\GreengrassV2` - Enabled FIPS endpoints for GovCloud (US) in SDK.
+* `Aws\MediaTailor` - This release introduces the As Run logging type, along with API and documentation updates.
+* `Aws\Outposts` - Adding support for payment term in GetOrder, CreateOrder responses.
+* `Aws\SageMaker` - This release supports running SageMaker Training jobs with container images that are in a private Docker registry.
+* `Aws\SageMakerRuntime` - Amazon SageMaker Runtime which supports InvokeEndpointAsync asynchronously can now invoke endpoints with custom timeout values. Asynchronous invocations support longer processing times.
+* `Aws\ServerlessApplicationRepository` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+
 ## 3.257.9 - 2023-01-26
 
 * `Aws\` - Enables new SSO login format to be used by the SSO Credential provider
