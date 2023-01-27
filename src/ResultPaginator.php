@@ -29,10 +29,6 @@ class ResultPaginator implements \Iterator
     /** @var int Number of operations/requests performed. */
     private $requestCount = 0;
 
-    /** @var array Operations whose last page of results
-     *             returns the previous page's NextToken. */
-    private $previousTokenOperations = ['GetLogEvents'];
-
     /**
      * @param AwsClientInterface $client
      * @param string             $operation
@@ -131,9 +127,8 @@ class ResultPaginator implements \Iterator
         }
 
         if ($this->nextToken || !$this->requestCount) {
-            if ($this->nextToken
-                && in_array($this->operation, $this->previousTokenOperations)
-            ) {
+            $lastPageHasPreviousToken = $this->config['output_token'] === 'nextForwardToken';
+            if ($this->nextToken && $lastPageHasPreviousToken) {
                 $tokenKey = $this->config['input_token'];
                 $previousToken = $this->nextToken[$tokenKey];
             }
