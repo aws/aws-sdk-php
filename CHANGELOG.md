@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.10 - 2023-01-27
 
 * `Aws\` - Modernizes integ tests, removes integ test that relies on SigV2.
 * `Aws\AppStream` - Fixing the issue where Appstream waiters hang for fleet_started and fleet_stopped.
