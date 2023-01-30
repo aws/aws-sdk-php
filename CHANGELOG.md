@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - Update ImportName validation to 255 from the current length of 100
+* `Aws\CloudDirectory` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\CloudFormation` - This feature provides a method of obtaining which regions a stackset has stack instances deployed in.
+* `Aws\DLM` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\EC2` - We add Prefix Lists as a new route destination option for LocalGatewayRoutes. This will allow customers to create routes to Prefix Lists. Prefix List routes will allow customers to group individual CIDR routes with the same target into a single route.
+* `Aws\Kafka` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\MediaConvert` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\SWF` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\imagebuilder` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+
 ## 3.257.10 - 2023-01-27
 
 * `Aws\` - Modernizes integ tests, removes integ test that relies on SigV2.
