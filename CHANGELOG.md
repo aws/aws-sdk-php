@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.257.11 - 2023-01-30
 
 * `Aws\ApplicationDiscoveryService` - Update ImportName validation to 255 from the current length of 100
 * `Aws\CloudDirectory` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
