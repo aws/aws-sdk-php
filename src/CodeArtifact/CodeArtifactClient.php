@@ -17,6 +17,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteDomainAsync(array $args = [])
  * @method \Aws\Result deleteDomainPermissionsPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDomainPermissionsPolicyAsync(array $args = [])
+ * @method \Aws\Result deletePackage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deletePackageAsync(array $args = [])
  * @method \Aws\Result deletePackageVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deletePackageVersionsAsync(array $args = [])
  * @method \Aws\Result deleteRepository(array $args = [])

@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AccessAnalyzer` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\AppSync` - This release introduces the feature to support EventBridge as AppSync data source.
+* `Aws\CloudTrail` - Add new "Channel" APIs to enable users to manage channels used for CloudTrail Lake integrations, and "Resource Policy" APIs to enable users to manage the resource-based permissions policy attached to a channel.
+* `Aws\CloudTrailData` - Add CloudTrail Data Service to enable users to ingest activity events from non-AWS sources into CloudTrail Lake.
+* `Aws\CodeArtifact` - This release introduces a new DeletePackage API, which enables deletion of a package and all of its versions from a repository.
+* `Aws\ConnectParticipant` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\EC2` - This launch allows customers to associate up to 8 IP addresses to their NAT Gateways to increase the limit on concurrent connections to a single destination by eight times from 55K to 440K.
+* `Aws\GroundStation` - DigIF Expansion changes to the Customer APIs.
+* `Aws\IoT` - Added support for IoT Rules Engine Cloudwatch Logs action batch mode.
+* `Aws\Kinesis` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\OpenSearchService` - Amazon OpenSearch Service adds the option for a VPC endpoint connection between two domains when the local domain uses OpenSearch version 1.3 or 2.3. You can now use remote reindex to copy indices from one VPC domain to another without a reverse proxy.
+* `Aws\Outposts` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\Polly` - Amazon Polly adds two new neural American English voices - Ruth, Stephen
+* `Aws\SageMaker` - Amazon SageMaker Automatic Model Tuning now supports more completion criteria for Hyperparameter Optimization.
+* `Aws\SecurityHub` - New fields have been added to the AWS Security Finding Format. Compliance.SecurityControlId is a unique identifier for a security control across standards. Compliance.AssociatedStandards contains all enabled standards in which a security control is enabled.
+* `Aws\Support` - This fixes incorrect endpoint construction when a customer is explicitly setting a region.
+
 ## 3.257.11 - 2023-01-30
 
 * `Aws\ApplicationDiscoveryService` - Update ImportName validation to 255 from the current length of 100

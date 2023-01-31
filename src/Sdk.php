@@ -112,6 +112,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCloudSearchDomain(array $args = [])
  * @method \Aws\CloudTrail\CloudTrailClient createCloudTrail(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudTrail(array $args = [])
+ * @method \Aws\CloudTrailData\CloudTrailDataClient createCloudTrailData(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCloudTrailData(array $args = [])
  * @method \Aws\CloudWatch\CloudWatchClient createCloudWatch(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudWatch(array $args = [])
  * @method \Aws\CloudWatchEvents\CloudWatchEventsClient createCloudWatchEvents(array $args = [])
