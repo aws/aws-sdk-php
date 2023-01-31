@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.0 - 2023-01-31
 
 * `Aws\AccessAnalyzer` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
 * `Aws\AppSync` - This release introduces the feature to support EventBridge as AppSync data source.
