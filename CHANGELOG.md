@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DevOpsGuru` - This release adds filter support ListAnomalyForInsight API.
+* `Aws\ForecastService` - This release will enable customer select INCREMENTAL as ImportModel in Forecast's CreateDatasetImportJob API. Verified latest SDK containing required attribute, following https://w.amazon.com/bin/view/AWS-Seer/Launch/Trebuchet/
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\MediaTailor` - The AWS Elemental MediaTailor SDK for Channel Assembly has added support for program updates, and the ability to clip the end of VOD sources in programs.
+* `Aws\SNS` - Additional attributes added for set-topic-attributes.
+* `Aws\SignatureProvider` - Fixes issue with selecting correct provider when sigv4a signing is specified.
+
 ## 3.258.0 - 2023-01-31
 
 * `Aws\AccessAnalyzer` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
