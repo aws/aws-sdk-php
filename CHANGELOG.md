@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.1 - 2023-02-01
 
 * `Aws\DevOpsGuru` - This release adds filter support ListAnomalyForInsight API.
 * `Aws\ForecastService` - This release will enable customer select INCREMENTAL as ImportModel in Forecast's CreateDatasetImportJob API. Verified latest SDK containing required attribute, following https://w.amazon.com/bin/view/AWS-Seer/Launch/Trebuchet/
