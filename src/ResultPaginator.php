@@ -129,8 +129,8 @@ class ResultPaginator implements \Iterator
         if ($this->nextToken || !$this->requestCount) {
             //Forward/backward paging can result in a case where the last page's nextforwardtoken
             //is the same as the one that came before it.  This can cause an infinite loop.
-            $bidirectionalPaging = $this->config['output_token'] === 'nextForwardToken';
-            if ($bidirectionalPaging && $this->nextToken) {
+            $hasBidirectionalPaging = $this->config['output_token'] === 'nextForwardToken';
+            if ($hasBidirectionalPaging && $this->nextToken) {
                 $tokenKey = $this->config['input_token'];
                 $previousToken = $this->nextToken[$tokenKey];
             }
