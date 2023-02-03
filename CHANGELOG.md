@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.3 - 2023-02-03
 
 * `Aws\` - Increase the minimum required version of the CRT repo
 * `Aws\Proton` - Add new GetResourcesSummary API
