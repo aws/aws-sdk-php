@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Increase the minimum required version of the CRT repo
+* `Aws\Proton` - Add new GetResourcesSummary API
+* `Aws\Redshift` - Corrects descriptions of the parameters for the API operations RestoreFromClusterSnapshot, RestoreTableFromClusterSnapshot, and CreateCluster.
+
 ## 3.258.2 - 2023-02-02
 
 * `Aws\AppConfig` - AWS AppConfig introduces KMS customer-managed key (CMK) encryption of configuration data, along with AWS Secrets Manager as a new configuration data source. S3 objects using SSE-KMS encryption and SSM Parameter Store SecureStrings are also now supported.
