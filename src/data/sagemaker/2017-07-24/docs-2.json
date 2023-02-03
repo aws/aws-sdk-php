@@ -1201,6 +1201,12 @@
         "MonitoringInput$BatchTransformInput": "<p>Input object for the batch transform job.</p>"
       }
     },
+    "BestObjectiveNotImproving": {
+      "base": "<p>A structure that keeps track of which training jobs launched by your hyperparameter tuning job are not improving model performance as evaluated against an objective function.</p>",
+      "refs": {
+        "TuningJobCompletionCriteria$BestObjectiveNotImproving": "<p>A flag to stop your hyperparameter tuning job if model performance fails to improve as evaluated against an objective function.</p>"
+      }
+    },
     "Bias": {
       "base": "<p>Contains bias metrics for a model.</p>",
       "refs": {
@@ -1867,6 +1873,12 @@
         "OutputConfig$CompilerOptions": "<p>Specifies additional parameters for compiler options in JSON format. The compiler options are <code>TargetPlatform</code> specific. It is required for NVIDIA accelerators and highly recommended for CPU compilations. For any other cases, it is optional to specify <code>CompilerOptions.</code> </p> <ul> <li> <p> <code>DTYPE</code>: Specifies the data type for the input. When compiling for <code>ml_*</code> (except for <code>ml_inf</code>) instances using PyTorch framework, provide the data type (dtype) of the model's input. <code>\"float32\"</code> is used if <code>\"DTYPE\"</code> is not specified. Options for data type are:</p> <ul> <li> <p>float32: Use either <code>\"float\"</code> or <code>\"float32\"</code>.</p> </li> <li> <p>int64: Use either <code>\"int64\"</code> or <code>\"long\"</code>.</p> </li> </ul> <p> For example, <code>{\"dtype\" : \"float32\"}</code>.</p> </li> <li> <p> <code>CPU</code>: Compilation for CPU supports the following compiler options.</p> <ul> <li> <p> <code>mcpu</code>: CPU micro-architecture. For example, <code>{'mcpu': 'skylake-avx512'}</code> </p> </li> <li> <p> <code>mattr</code>: CPU flags. For example, <code>{'mattr': ['+neon', '+vfpv4']}</code> </p> </li> </ul> </li> <li> <p> <code>ARM</code>: Details of ARM CPU compilations.</p> <ul> <li> <p> <code>NEON</code>: NEON is an implementation of the Advanced SIMD extension used in ARMv7 processors.</p> <p>For example, add <code>{'mattr': ['+neon']}</code> to the compiler options if compiling for ARM 32-bit platform with the NEON support.</p> </li> </ul> </li> <li> <p> <code>NVIDIA</code>: Compilation for NVIDIA GPU supports the following compiler options.</p> <ul> <li> <p> <code>gpu_code</code>: Specifies the targeted architecture.</p> </li> <li> <p> <code>trt-ver</code>: Specifies the TensorRT versions in x.y.z. format.</p> </li> <li> <p> <code>cuda-ver</code>: Specifies the CUDA version in x.y format.</p> </li> </ul> <p>For example, <code>{'gpu-code': 'sm_72', 'trt-ver': '6.0.1', 'cuda-ver': '10.1'}</code> </p> </li> <li> <p> <code>ANDROID</code>: Compilation for the Android OS supports the following compiler options:</p> <ul> <li> <p> <code>ANDROID_PLATFORM</code>: Specifies the Android API levels. Available levels range from 21 to 29. For example, <code>{'ANDROID_PLATFORM': 28}</code>.</p> </li> <li> <p> <code>mattr</code>: Add <code>{'mattr': ['+neon']}</code> to compiler options if compiling for ARM 32-bit platform with NEON support.</p> </li> </ul> </li> <li> <p> <code>INFERENTIA</code>: Compilation for target ml_inf1 uses compiler options passed in as a JSON string. For example, <code>\"CompilerOptions\": \"\\\"--verbose 1 --num-neuroncores 2 -O2\\\"\"</code>. </p> <p>For information about supported compiler options, see <a href=\"https://github.com/aws/aws-neuron-sdk/blob/master/docs/neuron-cc/command-line-reference.md\"> Neuron Compiler CLI</a>. </p> </li> <li> <p> <code>CoreML</code>: Compilation for the CoreML <a>OutputConfig$TargetDevice</a> supports the following compiler options:</p> <ul> <li> <p> <code>class_labels</code>: Specifies the classification labels file name inside input tar.gz file. For example, <code>{\"class_labels\": \"imagenet_labels_1000.txt\"}</code>. Labels inside the txt file should be separated by newlines.</p> </li> </ul> </li> <li> <p> <code>EIA</code>: Compilation for the Elastic Inference Accelerator supports the following compiler options:</p> <ul> <li> <p> <code>precision_mode</code>: Specifies the precision of compiled artifacts. Supported values are <code>\"FP16\"</code> and <code>\"FP32\"</code>. Default is <code>\"FP32\"</code>.</p> </li> <li> <p> <code>signature_def_key</code>: Specifies the signature to use for models in SavedModel format. Defaults is TensorFlow's default signature def key.</p> </li> <li> <p> <code>output_names</code>: Specifies a list of output tensor names for models in FrozenGraph format. Set at most one API field, either: <code>signature_def_key</code> or <code>output_names</code>.</p> </li> </ul> <p>For example: <code>{\"precision_mode\": \"FP32\", \"output_names\": [\"output:0\"]}</code> </p> </li> </ul>"
       }
     },
+    "CompleteOnConvergence": {
+      "base": null,
+      "refs": {
+        "ConvergenceDetected$CompleteOnConvergence": "<p>A flag to stop a tuning job once AMT has detected that the job has converged.</p>"
+      }
+    },
     "CompressionType": {
       "base": null,
       "refs": {
@@ -2070,6 +2082,12 @@
       "base": null,
       "refs": {
         "ParameterRanges$ContinuousParameterRanges": "<p>The array of <a>ContinuousParameterRange</a> objects that specify ranges of continuous hyperparameters that a hyperparameter tuning job searches.</p>"
+      }
+    },
+    "ConvergenceDetected": {
+      "base": "<p>A flag to indicating that automatic model tuning (AMT) has detected model convergence, defined as a lack of significant improvement (1% or less) against an objective metric.</p>",
+      "refs": {
+        "TuningJobCompletionCriteria$ConvergenceDetected": "<p>A flag to top your hyperparameter tuning job if automatic model tuning (AMT) has detected that your model has converged as evaluated against your objective function.</p>"
       }
     },
     "CreateActionRequest": {
@@ -5897,12 +5915,26 @@
         "TuningJobStepMetaData$Arn": "<p>The Amazon Resource Name (ARN) of the tuning job that was run by this step execution.</p>"
       }
     },
+    "HyperParameterTuningJobCompletionDetails": {
+      "base": "<p>A structure that contains runtime information about both current and completed hyperparameter tuning jobs.</p>",
+      "refs": {
+        "DescribeHyperParameterTuningJobResponse$TuningJobCompletionDetails": "<p>Tuning job completion information returned as the response from a hyperparameter tuning job. This information tells if your tuning job has or has not converged. It also includes the number of training jobs that have not improved model performance as evaluated against the objective function.</p>",
+        "HyperParameterTuningJobSearchEntity$TuningJobCompletionDetails": "<p>Information about either a current or completed hyperparameter tuning job.</p>"
+      }
+    },
     "HyperParameterTuningJobConfig": {
       "base": "<p>Configures a hyperparameter tuning job.</p>",
       "refs": {
         "CreateHyperParameterTuningJobRequest$HyperParameterTuningJobConfig": "<p>The <a>HyperParameterTuningJobConfig</a> object that describes the tuning job, including the search strategy, the objective metric used to evaluate training jobs, ranges of parameters to search, and resource limits for the tuning job. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html\">How Hyperparameter Tuning Works</a>.</p>",
         "DescribeHyperParameterTuningJobResponse$HyperParameterTuningJobConfig": "<p>The <a>HyperParameterTuningJobConfig</a> object that specifies the configuration of the tuning job.</p>",
         "HyperParameterTuningJobSearchEntity$HyperParameterTuningJobConfig": null
+      }
+    },
+    "HyperParameterTuningJobConsumedResources": {
+      "base": "<p>The total resources consumed by your hyperparameter tuning job.</p>",
+      "refs": {
+        "DescribeHyperParameterTuningJobResponse$ConsumedResources": null,
+        "HyperParameterTuningJobSearchEntity$ConsumedResources": "<p>The total amount of resources consumed by a hyperparameter tuning job.</p>"
       }
     },
     "HyperParameterTuningJobName": {
@@ -5968,7 +6000,7 @@
       }
     },
     "HyperParameterTuningJobStrategyType": {
-      "base": "<p>The strategy hyperparameter tuning uses to find the best combination of hyperparameters for your model. Currently, the only supported value is <code>Bayesian</code>.</p>",
+      "base": "<p>The strategy hyperparameter tuning uses to find the best combination of hyperparameters for your model. </p>",
       "refs": {
         "HyperParameterTuningJobConfig$Strategy": "<p>Specifies how hyperparameter tuning chooses the combinations of hyperparameter values to use for the training job it launches. For information about search strategies, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html\">How Hyperparameter Tuning Works</a>.</p>",
         "HyperParameterTuningJobSummary$Strategy": "<p>Specifies the search strategy hyperparameter tuning uses to choose which hyperparameters to evaluate at each iteration.</p>"
@@ -5998,6 +6030,12 @@
       "base": null,
       "refs": {
         "HyperParameterTuningJobWarmStartConfig$WarmStartType": "<p>Specifies one of the following:</p> <dl> <dt>IDENTICAL_DATA_AND_ALGORITHM</dt> <dd> <p>The new hyperparameter tuning job uses the same input data and training image as the parent tuning jobs. You can change the hyperparameter ranges to search and the maximum number of training jobs that the hyperparameter tuning job launches. You cannot use a new version of the training algorithm, unless the changes in the new version do not affect the algorithm itself. For example, changes that improve logging or adding support for a different data format are allowed. You can also change hyperparameters from tunable to static, and from static to tunable, but the total number of static plus tunable hyperparameters must remain the same as it is in all parent jobs. The objective metric for the new tuning job must be the same as for all parent jobs.</p> </dd> <dt>TRANSFER_LEARNING</dt> <dd> <p>The new hyperparameter tuning job can include input data, hyperparameter ranges, maximum number of concurrent training jobs, and maximum number of training jobs that are different than those of its parent hyperparameter tuning jobs. The training image can also be a different version from the version used in the parent hyperparameter tuning job. You can also change hyperparameters from tunable to static, and from static to tunable, but the total number of static plus tunable hyperparameters must remain the same as it is in all parent jobs. The objective metric for the new tuning job must be the same as for all parent jobs.</p> </dd> </dl>"
+      }
+    },
+    "HyperParameterTuningMaxRuntimeInSeconds": {
+      "base": null,
+      "refs": {
+        "ResourceLimits$MaxRuntimeInSeconds": "<p>The maximum time in seconds that a training job launched by a hyperparameter tuning job can run.</p>"
       }
     },
     "HyperParameterTuningResourceConfig": {
@@ -6527,6 +6565,8 @@
         "EdgeDeploymentStatus$EdgeDeploymentPendingInStage": "<p>The number of edge devices yet to pick up the deployment in current stage, or in progress.</p>",
         "EdgeDeploymentStatus$EdgeDeploymentFailedInStage": "<p>The number of edge devices that failed the deployment in current stage.</p>",
         "EndpointOutputConfiguration$InitialInstanceCount": "<p>The number of instances recommended to launch initially.</p>",
+        "HyperParameterTuningJobCompletionDetails$NumberOfTrainingJobsObjectiveNotImproving": "<p>The number of training jobs launched by a tuning job that are not improving (1% or less) as measured by model performance evaluated against an objective function.</p>",
+        "HyperParameterTuningJobConsumedResources$RuntimeInSeconds": "<p>The wall clock runtime in seconds used by your hyperparameter tuning job.</p>",
         "InferenceMetrics$MaxInvocations": "<p>The expected maximum number of requests per minute for the instance.</p>",
         "InferenceMetrics$ModelLatency": "<p>The expected model latency at maximum invocations per minute for the instance.</p>",
         "ListModelCardExportJobsRequest$ModelCardVersion": "<p>List export jobs for the model card with the specified version.</p>",
@@ -7884,6 +7924,12 @@
         "ResourceLimits$MaxNumberOfTrainingJobs": "<p>The maximum number of training jobs that a hyperparameter tuning job can launch.</p>"
       }
     },
+    "MaxNumberOfTrainingJobsNotImproving": {
+      "base": null,
+      "refs": {
+        "BestObjectiveNotImproving$MaxNumberOfTrainingJobsNotImproving": "<p>The number of training jobs that have failed to improve model performance by 1% or greater over prior training jobs as evaluated against an objective function.</p>"
+      }
+    },
     "MaxParallelExecutionSteps": {
       "base": null,
       "refs": {
@@ -8564,6 +8610,7 @@
         "ModelVariantConfig$ModelName": "<p>The name of the Amazon SageMaker Model entity.</p>",
         "ModelVariantConfigSummary$ModelName": "<p>The name of the Amazon SageMaker Model entity.</p>",
         "ProductionVariant$ModelName": "<p>The name of the model that you want to host. This is the name that you specified when creating the model.</p>",
+        "RecommendationJobInputConfig$ModelName": "<p>The name of the created model.</p>",
         "TransformJob$ModelName": "<p>The name of the model associated with the transform job.</p>"
       }
     },
@@ -10983,6 +11030,12 @@
         "InferenceRecommendationsJob$JobArn": "<p>The Amazon Resource Name (ARN) of the recommendation job.</p>"
       }
     },
+    "RecommendationJobCompilationJobName": {
+      "base": null,
+      "refs": {
+        "ModelConfiguration$CompilationJobName": "<p>The name of the compilation job used to create the recommended model artifacts.</p>"
+      }
+    },
     "RecommendationJobCompiledOutputConfig": {
       "base": "<p>Provides information about the output configuration for the compiled model.</p>",
       "refs": {
@@ -10993,6 +11046,12 @@
       "base": "<p>Specifies mandatory fields for running an Inference Recommender job directly in the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateInferenceRecommendationsJob.html\">CreateInferenceRecommendationsJob</a> API. The fields specified in <code>ContainerConfig</code> override the corresponding fields in the model package. Use <code>ContainerConfig</code> if you want to specify these fields for the recommendation job but don't want to edit them in your model package.</p>",
       "refs": {
         "RecommendationJobInputConfig$ContainerConfig": "<p>Specifies mandatory fields for running an Inference Recommender job. The fields specified in <code>ContainerConfig</code> override the corresponding fields in the model package.</p>"
+      }
+    },
+    "RecommendationJobDataInputConfig": {
+      "base": null,
+      "refs": {
+        "RecommendationJobContainerConfig$DataInputConfig": "<p>Specifies the name and shape of the expected data inputs for your trained model with a JSON dictionary form. This field is used for optimizing your model using SageMaker Neo. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_InputConfig.html#sagemaker-Type-InputConfig-DataInputConfig\">DataInputConfig</a>.</p>"
       }
     },
     "RecommendationJobDescription": {
@@ -12277,6 +12336,7 @@
         "EnvironmentParameter$Key": "<p>The environment key suggested by the Amazon SageMaker Inference Recommender.</p>",
         "EnvironmentParameter$ValueType": "<p>The value type suggested by the Amazon SageMaker Inference Recommender.</p>",
         "EnvironmentParameter$Value": "<p>The value suggested by the Amazon SageMaker Inference Recommender.</p>",
+        "InferenceRecommendation$RecommendationId": "<p>The recommendation ID which uniquely identifies each recommendation.</p>",
         "ListProcessingJobsRequest$NameContains": "<p>A string in the processing job name. This filter returns only processing jobs whose name contains the specified string.</p>",
         "ModelCard$ModelId": "<p>The unique name (ID) of the model.</p>",
         "ModelCard$RiskRating": "<p>The risk rating of the model. Different organizations might have different criteria for model card risk ratings. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-cards-risk-rating.html\">Risk ratings</a>.</p>",
@@ -12956,6 +13016,7 @@
         "HyperParameterTrainingJobSummary$CreationTime": "<p>The date and time that the training job was created.</p>",
         "HyperParameterTrainingJobSummary$TrainingStartTime": "<p>The date and time that the training job started.</p>",
         "HyperParameterTrainingJobSummary$TrainingEndTime": "<p>Specifies the time when the training job ends on training instances. You are billed for the time interval between the value of <code>TrainingStartTime</code> and this time. For successful jobs and stopped jobs, this is the time after model artifacts are uploaded. For failed jobs, this is the time when SageMaker detects a job failure.</p>",
+        "HyperParameterTuningJobCompletionDetails$ConvergenceDetectedTime": "<p>The time in timestamp format that AMT detected model convergence, as defined by a lack of significant improvement over time based on criteria developed over a wide range of diverse benchmarking tests.</p>",
         "HyperParameterTuningJobSearchEntity$CreationTime": "<p>The time that a hyperparameter tuning job was created.</p>",
         "HyperParameterTuningJobSearchEntity$HyperParameterTuningEndTime": "<p>The time that a hyperparameter tuning job ended.</p>",
         "HyperParameterTuningJobSearchEntity$LastModifiedTime": "<p>The time that a hyperparameter tuning job was last modified.</p>",
@@ -13276,6 +13337,12 @@
         "TrainingEnvironmentMap$value": null
       }
     },
+    "TrainingImageConfig": {
+      "base": "<p>The configuration to use an image from a private Docker registry for a training job.</p>",
+      "refs": {
+        "AlgorithmSpecification$TrainingImageConfig": "<p>The configuration to use an image from a private Docker registry for a training job.</p>"
+      }
+    },
     "TrainingInputMode": {
       "base": "<p>The training input mode that the algorithm supports. For more information about input modes, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>.</p> <p> <b>Pipe mode</b> </p> <p>If an algorithm supports <code>Pipe</code> mode, Amazon SageMaker streams data directly from Amazon S3 to the container.</p> <p> <b>File mode</b> </p> <p>If an algorithm supports <code>File</code> mode, SageMaker downloads the training data from S3 to the provisioned ML storage volume, and mounts the directory to the Docker volume for the training container.</p> <p>You must provision the ML storage volume with sufficient capacity to accommodate the data downloaded from S3. In addition to the training data, the ML storage volume also stores the output model. The algorithm container uses the ML storage volume to also store intermediate information, if any.</p> <p>For distributed algorithms, training data is distributed uniformly. Your training duration is predictable if the input data objects sizes are approximately the same. SageMaker does not split the files any further for model training. If the object sizes are skewed, training won't be optimal as the data distribution is also skewed when one host in a training cluster is overloaded, thus becoming a bottleneck in training.</p> <p> <b>FastFile mode</b> </p> <p>If an algorithm supports <code>FastFile</code> mode, SageMaker streams data directly from S3 to the container with no code changes, and provides file system access to the data. Users can author their training script to interact with these files as if they were stored on disk.</p> <p> <code>FastFile</code> mode works best when the data is read sequentially. Augmented manifest files aren't supported. The startup time is lower when there are fewer files in the S3 bucket provided.</p>",
       "refs": {
@@ -13409,6 +13476,24 @@
       "base": "<p>Provides summary information about a training job.</p>",
       "refs": {
         "TrainingJobSummaries$member": null
+      }
+    },
+    "TrainingRepositoryAccessMode": {
+      "base": null,
+      "refs": {
+        "TrainingImageConfig$TrainingRepositoryAccessMode": "<p>The method that your training job will use to gain access to the images in your private Docker registry. For access to an image in a private Docker registry, set to <code>Vpc</code>.</p>"
+      }
+    },
+    "TrainingRepositoryAuthConfig": {
+      "base": "<p>An object containing authentication information for a private Docker registry.</p>",
+      "refs": {
+        "TrainingImageConfig$TrainingRepositoryAuthConfig": "<p>An object containing authentication information for a private Docker registry containing your training images.</p>"
+      }
+    },
+    "TrainingRepositoryCredentialsProviderArn": {
+      "base": null,
+      "refs": {
+        "TrainingRepositoryAuthConfig$TrainingRepositoryCredentialsProviderArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services Lambda function used to give SageMaker access credentials to your private Docker registry.</p>"
       }
     },
     "TrainingSpecification": {
@@ -14250,6 +14335,13 @@
         "DescribeUserProfileResponse$UserSettings": "<p>A collection of settings.</p>",
         "UpdateDomainRequest$DefaultUserSettings": "<p>A collection of settings.</p>",
         "UpdateUserProfileRequest$UserSettings": "<p>A collection of settings.</p>"
+      }
+    },
+    "UtilizationMetric": {
+      "base": null,
+      "refs": {
+        "RecommendationMetrics$CpuUtilization": "<p>The expected CPU utilization at maximum invocations per minute for the instance.</p> <p> <code>NaN</code> indicates that the value is not available.</p>",
+        "RecommendationMetrics$MemoryUtilization": "<p>The expected memory utilization at maximum invocations per minute for the instance.</p> <p> <code>NaN</code> indicates that the value is not available.</p>"
       }
     },
     "ValidationFraction": {

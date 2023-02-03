@@ -1,5 +1,91 @@
 # CHANGELOG
 
+## 3.258.2 - 2023-02-02
+
+* `Aws\AppConfig` - AWS AppConfig introduces KMS customer-managed key (CMK) encryption of configuration data, along with AWS Secrets Manager as a new configuration data source. S3 objects using SSE-KMS encryption and SSM Parameter Store SecureStrings are also now supported.
+* `Aws\CloudWatchLogs` - Fixed issue which caused an infinite loop during GetLogEvents auto-pagination
+* `Aws\Connect` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\EC2` - Documentation updates for EC2.
+* `Aws\ElasticLoadBalancingv2` - The GWLB Flex Health Check project updates the default values of healthy-threshold-count from 3 to 5 and unhealthy-threshold-count from 3 to 2
+* `Aws\Keyspaces` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\QuickSight` - QuickSight support for Radar Chart and Dashboard Publish Options
+* `Aws\Redshift` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\SSOAdmin` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+
+## 3.258.1 - 2023-02-01
+
+* `Aws\DevOpsGuru` - This release adds filter support ListAnomalyForInsight API.
+* `Aws\ForecastService` - This release will enable customer select INCREMENTAL as ImportModel in Forecast's CreateDatasetImportJob API. Verified latest SDK containing required attribute, following https://w.amazon.com/bin/view/AWS-Seer/Launch/Trebuchet/
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\MediaTailor` - The AWS Elemental MediaTailor SDK for Channel Assembly has added support for program updates, and the ability to clip the end of VOD sources in programs.
+* `Aws\SNS` - Additional attributes added for set-topic-attributes.
+* `Aws\SignatureProvider` - Fixes issue with selecting correct provider when sigv4a signing is specified.
+
+## 3.258.0 - 2023-01-31
+
+* `Aws\AccessAnalyzer` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\AppSync` - This release introduces the feature to support EventBridge as AppSync data source.
+* `Aws\CloudTrail` - Add new "Channel" APIs to enable users to manage channels used for CloudTrail Lake integrations, and "Resource Policy" APIs to enable users to manage the resource-based permissions policy attached to a channel.
+* `Aws\CloudTrailData` - Add CloudTrail Data Service to enable users to ingest activity events from non-AWS sources into CloudTrail Lake.
+* `Aws\CodeArtifact` - This release introduces a new DeletePackage API, which enables deletion of a package and all of its versions from a repository.
+* `Aws\ConnectParticipant` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\EC2` - This launch allows customers to associate up to 8 IP addresses to their NAT Gateways to increase the limit on concurrent connections to a single destination by eight times from 55K to 440K.
+* `Aws\GroundStation` - DigIF Expansion changes to the Customer APIs.
+* `Aws\IoT` - Added support for IoT Rules Engine Cloudwatch Logs action batch mode.
+* `Aws\Kinesis` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\OpenSearchService` - Amazon OpenSearch Service adds the option for a VPC endpoint connection between two domains when the local domain uses OpenSearch version 1.3 or 2.3. You can now use remote reindex to copy indices from one VPC domain to another without a reverse proxy.
+* `Aws\Outposts` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\Polly` - Amazon Polly adds two new neural American English voices - Ruth, Stephen
+* `Aws\SageMaker` - Amazon SageMaker Automatic Model Tuning now supports more completion criteria for Hyperparameter Optimization.
+* `Aws\SecurityHub` - New fields have been added to the AWS Security Finding Format. Compliance.SecurityControlId is a unique identifier for a security control across standards. Compliance.AssociatedStandards contains all enabled standards in which a security control is enabled.
+* `Aws\Support` - This fixes incorrect endpoint construction when a customer is explicitly setting a region.
+
+## 3.257.11 - 2023-01-30
+
+* `Aws\ApplicationDiscoveryService` - Update ImportName validation to 255 from the current length of 100
+* `Aws\CloudDirectory` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\CloudFormation` - This feature provides a method of obtaining which regions a stackset has stack instances deployed in.
+* `Aws\DLM` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\EC2` - We add Prefix Lists as a new route destination option for LocalGatewayRoutes. This will allow customers to create routes to Prefix Lists. Prefix List routes will allow customers to group individual CIDR routes with the same target into a single route.
+* `Aws\Kafka` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\MediaConvert` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\SWF` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\imagebuilder` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+
+## 3.257.10 - 2023-01-27
+
+* `Aws\` - Modernizes integ tests, removes integ test that relies on SigV2.
+* `Aws\AppStream` - Fixing the issue where Appstream waiters hang for fleet_started and fleet_stopped.
+* `Aws\ApplicationAutoScaling` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\ElasticBeanstalk` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\FIS` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\Glacier` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\Greengrass` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+* `Aws\GreengrassV2` - Enabled FIPS endpoints for GovCloud (US) in SDK.
+* `Aws\MediaTailor` - This release introduces the As Run logging type, along with API and documentation updates.
+* `Aws\Outposts` - Adding support for payment term in GetOrder, CreateOrder responses.
+* `Aws\SageMaker` - This release supports running SageMaker Training jobs with container images that are in a private Docker registry.
+* `Aws\SageMakerRuntime` - Amazon SageMaker Runtime which supports InvokeEndpointAsync asynchronously can now invoke endpoints with custom timeout values. Asynchronous invocations support longer processing times.
+* `Aws\ServerlessApplicationRepository` - Enabled FIPS endpoints for GovCloud (US) regions in SDK.
+
+## 3.257.9 - 2023-01-26
+
+* `Aws\` - Enables new SSO login format to be used by the SSO Credential provider
+* `Aws\EventBridge` - Minor comments for Redshift Serverless workgroup target support.
+* `Aws\IoTFleetWise` - Add model validation to BatchCreateVehicle and BatchUpdateVehicle operations that invalidate requests with an empty vehicles list.
+* `Aws\S3` - Allow FIPS to be used with path-style URLs.
+
+## 3.257.8 - 2023-01-25
+
+* `Aws\CloudFormation` - Enabled FIPS aws-us-gov endpoints in SDK.
+* `Aws\EC2` - This release adds new functionality that allows customers to provision IPv6 CIDR blocks through Amazon VPC IP Address Manager (IPAM) as well as allowing customers to utilize IPAM Resource Discovery APIs.
+* `Aws\MainframeModernization` - Add returnCode, batchJobIdentifier in GetBatchJobExecution response, for user to view the batch job execution result & unique identifier from engine. Also removed unused headers from REST APIs
+* `Aws\Polly` - Add 5 new neural voices - Sergio (es-ES), Andres (es-MX), Remi (fr-FR), Adriano (it-IT) and Thiago (pt-BR).
+* `Aws\RedshiftServerless` - Added query monitoring rules as possible parameters for create and update workgroup operations.
+* `Aws\S3Control` - Add additional endpoint tests for S3 Control. Fix missing endpoint parameters for PutBucketVersioning and GetBucketVersioning. Prior to this fix, those operations may have resulted in an invalid endpoint being resolved.
+* `Aws\STS` - Doc only change to update wording in a key topic
+* `Aws\SageMaker` - SageMaker Inference Recommender now decouples from Model Registry and could accept Model Name to invoke inference recommendations job; Inference Recommender now provides CPU/Memory Utilization metrics data in recommendation output.
+
 ## 3.257.7 - 2023-01-24
 
 * `Aws\GlueDataBrew` - Enabled FIPS us-gov-west-1 endpoints in SDK.
