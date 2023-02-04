@@ -301,8 +301,3 @@ class CrtContext implements Context, SnippetAcceptingContext
         }
     }
 }
-
-
-
-
-
