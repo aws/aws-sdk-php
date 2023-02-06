@@ -61,7 +61,7 @@ integ:
     vendor/bin/behat --format=progress --tags='@integ'
 
 integ-nocrt:
-	vendor/bin/behat --format=progress --tags='@integ&&~@crt'
+    vendor/bin/behat --format=progress --tags='@integ&&~@crt'
 
 smoke:
 	vendor/bin/behat --format=progress --suite=smoke

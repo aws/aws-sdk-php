@@ -132,7 +132,7 @@ class CrtContext implements Context, SnippetAcceptingContext
         $attempts = 0;
         $active = false;
         $result = null;
-        while (!$active) {
+        while (!$active && $attempts <= 5) {
             $result = $eventBridgeClient->describeEndpoint(['Name' => 'test-endpoint']);
             $active = $result['State'] === 'ACTIVE';
             sleep((int) pow(1.2, $attempts));
