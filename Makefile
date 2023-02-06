@@ -58,16 +58,16 @@ sync-models: check-models-dir
 	rm -rf src/data/meteringmarketplace
 
 integ:
-    vendor/bin/behat --format=progress --tags='@integ'
+	vendor/bin/behat --format=progress --tags=integ
 
 integ-nocrt:
-    vendor/bin/behat --format=progress --tags='@integ&&~@crt'
+	vendor/bin/behat --format=progress --tags='@integ&&~@crt'
 
 smoke:
-    vendor/bin/behat --format=progress --suite=smoke
+	vendor/bin/behat --format=progress --suite=smoke
 
 smoke-noassumerole:
-    vendor/bin/behat --format=progress --suite=smoke --tags='~@noassumerole'
+	vendor/bin/behat --format=progress --suite=smoke --tags='~@noassumerole'
 
 # Packages the phar and zip
 package:
