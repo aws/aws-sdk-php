@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.4 - 2023-02-06
 
 * `Aws\ComputeOptimizer` - AWS Compute optimizer can now infer if Kafka is running on an instance.
 * `Aws\CustomerProfiles` - This release deprecates the PartyType and Gender enum data types from the Profile model and replaces them with new PartyTypeString and GenderString attributes, which accept any string of length up to 255.
