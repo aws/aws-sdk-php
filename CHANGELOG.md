@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Transfer` - Updated the documentation for the ImportCertificate API call, and added examples.
+
 ## 3.258.4 - 2023-02-06
 
 * `Aws\ComputeOptimizer` - AWS Compute optimizer can now infer if Kafka is running on an instance.
