@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.5 - 2023-02-07
 
 * `Aws\Transfer` - Updated the documentation for the ImportCertificate API call, and added examples.
 
