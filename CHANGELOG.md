@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Backup` - This release added one attribute (resource name) in the output model of our 9 existing APIs in AWS backup so that customers will see the resource name at the output. No input required from Customers.
+* `Aws\CloudFront` - CloudFront Origin Access Control extends support to AWS Elemental MediaStore origins.
+* `Aws\Glue` - DirectJDBCSource + Glue 4.0 streaming options
+* `Aws\LakeFormation` - This release removes the LFTagpolicyResource expression limits.
+
 ## 3.258.5 - 2023-02-07
 
 * `Aws\Transfer` - Updated the documentation for the ImportCertificate API call, and added examples.
