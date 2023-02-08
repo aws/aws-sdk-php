@@ -946,8 +946,8 @@ class ClientResolver
         if ($value && $phpVersion < 70205) {
             trigger_error(
                 "This installation of the SDK is using PHP version"
-                .  " {$phpVersion}, which will be deprecated on January"
-                .  " 1st, 2023.  Please upgrade your PHP version to a minimum of"
+                .  " {$phpVersion}, which will be deprecated on August"
+                .  " 15th, 2023.  Please upgrade your PHP version to a minimum of"
                 .  " 70205 before then to continue receiving updates to the AWS"
                 .  " SDK for PHP.  To disable this warning, set "
                 .  " emit_php_deprecation_warning to false on the client constructor.",
