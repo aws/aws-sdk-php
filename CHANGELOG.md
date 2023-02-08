@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.6 - 2023-02-08
 
 * `Aws\Backup` - This release added one attribute (resource name) in the output model of our 9 existing APIs in AWS backup so that customers will see the resource name at the output. No input required from Customers.
 * `Aws\CloudFront` - CloudFront Origin Access Control extends support to AWS Elemental MediaStore origins.
