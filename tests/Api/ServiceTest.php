@@ -221,4 +221,57 @@ class ServiceTest extends TestCase
             );
         }
     }
+
+    public function testGetClientContextParams()
+    {
+        $params = [
+            'Foo' => [
+                'type' => 'string',
+                'documentation' => 'blah blah blah'
+            ]
+        ];
+        $s = new Service(
+            [
+                'metadata' => [
+                    'serviceFullName' => 'Foo Service',
+                    'serviceIdentifier' => 'foo',
+                    'serviceId'         => 'Foo',
+                    'endpointPrefix'  => 'bar',
+                    'apiVersion'      => 'baz',
+                    'signingName'     => 'qux',
+                    'protocol'        => 'yak',
+                    'uid'             => 'foo-2016-12-09'
+                ],
+                'clientContextParams' => $params
+            ],
+            function () { return []; }
+        );
+
+        $clientContextParams = $s->getClientContextParams();
+        $this->assertEquals($params, $clientContextParams);
+    }
+
+    public function testModifyModel()
+    {
+        $s = new Service(
+            [
+                'metadata' => [
+                    'serviceFullName' => 'Foo Service',
+                    'serviceIdentifier' => 'foo',
+                    'serviceId'         => 'Foo',
+                    'endpointPrefix'  => 'bar',
+                    'apiVersion'      => 'baz',
+                    'signingName'     => 'qux',
+                    'protocol'        => 'yak',
+                    'uid'             => 'foo-2016-12-09'
+                ]
+            ],
+            function () { return []; }
+        );
+        $definition = $s->getDefinition();
+        $definition['metadata']['serviceId'] = 'bar';
+        $s->setDefinition($definition);
+        $this->assertTrue($s->isModifiedModel());
+        $this->assertEquals( 'bar', $s->getMetadata('serviceId'));
+    }
 }

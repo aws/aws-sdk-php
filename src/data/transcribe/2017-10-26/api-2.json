@@ -618,7 +618,9 @@
         "hi-IN",
         "es-US",
         "en-GB",
-        "en-AU"
+        "en-AU",
+        "de-DE",
+        "ja-JP"
       ]
     },
     "CallAnalyticsJob":{
@@ -696,7 +698,8 @@
         "CategoryName":{"shape":"CategoryName"},
         "Rules":{"shape":"RuleList"},
         "CreateTime":{"shape":"DateTime"},
-        "LastUpdateTime":{"shape":"DateTime"}
+        "LastUpdateTime":{"shape":"DateTime"},
+        "InputType":{"shape":"InputType"}
       }
     },
     "CategoryPropertiesList":{
@@ -748,7 +751,8 @@
       ],
       "members":{
         "CategoryName":{"shape":"CategoryName"},
-        "Rules":{"shape":"RuleList"}
+        "Rules":{"shape":"RuleList"},
+        "InputType":{"shape":"InputType"}
       }
     },
     "CreateCallAnalyticsCategoryResponse":{
@@ -1058,6 +1062,13 @@
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
     },
+    "InputType":{
+      "type":"string",
+      "enum":[
+        "REAL_TIME",
+        "POST_CALL"
+      ]
+    },
     "InternalFailureException":{
       "type":"structure",
       "members":{
@@ -1135,7 +1146,9 @@
         "zh-TW",
         "th-TH",
         "en-ZA",
-        "en-NZ"
+        "en-NZ",
+        "vi-VN",
+        "sv-SE"
       ]
     },
     "LanguageCodeItem":{
@@ -1613,6 +1626,7 @@
     "SentimentValueList":{
       "type":"list",
       "member":{"shape":"SentimentValue"},
+      "max":1,
       "min":1
     },
     "Settings":{
@@ -1945,7 +1959,8 @@
       ],
       "members":{
         "CategoryName":{"shape":"CategoryName"},
-        "Rules":{"shape":"RuleList"}
+        "Rules":{"shape":"RuleList"},
+        "InputType":{"shape":"InputType"}
       }
     },
     "UpdateCallAnalyticsCategoryResponse":{

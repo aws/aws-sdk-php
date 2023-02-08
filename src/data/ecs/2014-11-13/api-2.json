@@ -59,7 +59,8 @@
         {"shape":"UnsupportedFeatureException"},
         {"shape":"PlatformUnknownException"},
         {"shape":"PlatformTaskDefinitionIncompatibilityException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"NamespaceNotFoundException"}
       ]
     },
     "CreateTaskSet":{
@@ -80,7 +81,8 @@
         {"shape":"PlatformTaskDefinitionIncompatibilityException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ServiceNotFoundException"},
-        {"shape":"ServiceNotActiveException"}
+        {"shape":"ServiceNotActiveException"},
+        {"shape":"NamespaceNotFoundException"}
       ]
     },
     "DeleteAccountSetting":{
@@ -345,6 +347,24 @@
         {"shape":"TargetNotConnectedException"}
       ]
     },
+    "GetTaskProtection":{
+      "name":"GetTaskProtection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetTaskProtectionRequest"},
+      "output":{"shape":"GetTaskProtectionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ClusterNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServerException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
+    },
     "ListAccountSettings":{
       "name":"ListAccountSettings",
       "http":{
@@ -414,6 +434,21 @@
         {"shape":"ClientException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ClusterNotFoundException"}
+      ]
+    },
+    "ListServicesByNamespace":{
+      "name":"ListServicesByNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListServicesByNamespaceRequest"},
+      "output":{"shape":"ListServicesByNamespaceResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ClientException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"NamespaceNotFoundException"}
       ]
     },
     "ListTagsForResource":{
@@ -783,7 +818,8 @@
         {"shape":"ServiceNotActiveException"},
         {"shape":"PlatformUnknownException"},
         {"shape":"PlatformTaskDefinitionIncompatibilityException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"NamespaceNotFoundException"}
       ]
     },
     "UpdateServicePrimaryTaskSet":{
@@ -804,6 +840,24 @@
         {"shape":"ServiceNotActiveException"},
         {"shape":"TaskSetNotFoundException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "UpdateTaskProtection":{
+      "name":"UpdateTaskProtection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateTaskProtectionRequest"},
+      "output":{"shape":"UpdateTaskProtectionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ClusterNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServerException"},
+        {"shape":"UnsupportedFeatureException"}
       ]
     },
     "UpdateTaskSet":{
@@ -843,6 +897,14 @@
         "UPDATING",
         "UPDATED",
         "FAILED"
+      ]
+    },
+    "ApplicationProtocol":{
+      "type":"string",
+      "enum":[
+        "http",
+        "http2",
+        "grpc"
       ]
     },
     "AssignPublicIp":{
@@ -1040,7 +1102,8 @@
         "capacityProviders":{"shape":"StringList"},
         "defaultCapacityProviderStrategy":{"shape":"CapacityProviderStrategy"},
         "attachments":{"shape":"Attachments"},
-        "attachmentsStatus":{"shape":"String"}
+        "attachmentsStatus":{"shape":"String"},
+        "serviceConnectDefaults":{"shape":"ClusterServiceConnectDefaults"}
       }
     },
     "ClusterConfiguration":{
@@ -1086,6 +1149,19 @@
       "members":{
       },
       "exception":true
+    },
+    "ClusterServiceConnectDefaults":{
+      "type":"structure",
+      "members":{
+        "namespace":{"shape":"String"}
+      }
+    },
+    "ClusterServiceConnectDefaultsRequest":{
+      "type":"structure",
+      "required":["namespace"],
+      "members":{
+        "namespace":{"shape":"String"}
+      }
     },
     "ClusterSetting":{
       "type":"structure",
@@ -1337,7 +1413,8 @@
         "settings":{"shape":"ClusterSettings"},
         "configuration":{"shape":"ClusterConfiguration"},
         "capacityProviders":{"shape":"StringList"},
-        "defaultCapacityProviderStrategy":{"shape":"CapacityProviderStrategy"}
+        "defaultCapacityProviderStrategy":{"shape":"CapacityProviderStrategy"},
+        "serviceConnectDefaults":{"shape":"ClusterServiceConnectDefaultsRequest"}
       }
     },
     "CreateClusterResponse":{
@@ -1371,7 +1448,8 @@
         "tags":{"shape":"Tags"},
         "enableECSManagedTags":{"shape":"Boolean"},
         "propagateTags":{"shape":"PropagateTags"},
-        "enableExecuteCommand":{"shape":"Boolean"}
+        "enableExecuteCommand":{"shape":"Boolean"},
+        "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"}
       }
     },
     "CreateServiceResponse":{
@@ -1516,7 +1594,22 @@
         "platformFamily":{"shape":"String"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "rolloutState":{"shape":"DeploymentRolloutState"},
-        "rolloutStateReason":{"shape":"String"}
+        "rolloutStateReason":{"shape":"String"},
+        "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
+        "serviceConnectResources":{"shape":"ServiceConnectServiceResourceList"}
+      }
+    },
+    "DeploymentAlarms":{
+      "type":"structure",
+      "required":[
+        "alarmNames",
+        "enable",
+        "rollback"
+      ],
+      "members":{
+        "alarmNames":{"shape":"StringList"},
+        "enable":{"shape":"Boolean"},
+        "rollback":{"shape":"Boolean"}
       }
     },
     "DeploymentCircuitBreaker":{
@@ -1535,7 +1628,8 @@
       "members":{
         "deploymentCircuitBreaker":{"shape":"DeploymentCircuitBreaker"},
         "maximumPercent":{"shape":"BoxedInteger"},
-        "minimumHealthyPercent":{"shape":"BoxedInteger"}
+        "minimumHealthyPercent":{"shape":"BoxedInteger"},
+        "alarms":{"shape":"DeploymentAlarms"}
       }
     },
     "DeploymentController":{
@@ -1751,7 +1845,8 @@
       "type":"structure",
       "members":{
         "endpoint":{"shape":"String"},
-        "telemetryEndpoint":{"shape":"String"}
+        "telemetryEndpoint":{"shape":"String"},
+        "serviceConnectEndpoint":{"shape":"String"}
       }
     },
     "DockerLabelsMap":{
@@ -1939,6 +2034,21 @@
         "fluentd",
         "fluentbit"
       ]
+    },
+    "GetTaskProtectionRequest":{
+      "type":"structure",
+      "required":["cluster"],
+      "members":{
+        "cluster":{"shape":"String"},
+        "tasks":{"shape":"StringList"}
+      }
+    },
+    "GetTaskProtectionResponse":{
+      "type":"structure",
+      "members":{
+        "protectedTasks":{"shape":"ProtectedTasks"},
+        "failures":{"shape":"Failures"}
+      }
     },
     "GpuIds":{
       "type":"list",
@@ -2159,6 +2269,22 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListServicesByNamespaceRequest":{
+      "type":"structure",
+      "required":["namespace"],
+      "members":{
+        "namespace":{"shape":"String"},
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"BoxedInteger"}
+      }
+    },
+    "ListServicesByNamespaceResponse":{
+      "type":"structure",
+      "members":{
+        "serviceArns":{"shape":"StringList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListServicesRequest":{
       "type":"structure",
       "members":{
@@ -2376,13 +2502,21 @@
       "type":"list",
       "member":{"shape":"MountPoint"}
     },
+    "NamespaceNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "NetworkBinding":{
       "type":"structure",
       "members":{
         "bindIP":{"shape":"String"},
         "containerPort":{"shape":"BoxedInteger"},
         "hostPort":{"shape":"BoxedInteger"},
-        "protocol":{"shape":"TransportProtocol"}
+        "protocol":{"shape":"TransportProtocol"},
+        "containerPortRange":{"shape":"String"},
+        "hostPortRange":{"shape":"String"}
       }
     },
     "NetworkBindings":{
@@ -2515,12 +2649,21 @@
       "members":{
         "containerPort":{"shape":"BoxedInteger"},
         "hostPort":{"shape":"BoxedInteger"},
-        "protocol":{"shape":"TransportProtocol"}
+        "protocol":{"shape":"TransportProtocol"},
+        "name":{"shape":"String"},
+        "appProtocol":{"shape":"ApplicationProtocol"},
+        "containerPortRange":{"shape":"String"}
       }
     },
     "PortMappingList":{
       "type":"list",
       "member":{"shape":"PortMapping"}
+    },
+    "PortNumber":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":0
     },
     "PropagateTags":{
       "type":"string",
@@ -2529,6 +2672,18 @@
         "SERVICE",
         "NONE"
       ]
+    },
+    "ProtectedTask":{
+      "type":"structure",
+      "members":{
+        "taskArn":{"shape":"String"},
+        "protectionEnabled":{"shape":"Boolean"},
+        "expirationDate":{"shape":"Timestamp"}
+      }
+    },
+    "ProtectedTasks":{
+      "type":"list",
+      "member":{"shape":"ProtectedTask"}
     },
     "ProxyConfiguration":{
       "type":"structure",
@@ -2852,6 +3007,53 @@
         "propagateTags":{"shape":"PropagateTags"},
         "enableExecuteCommand":{"shape":"Boolean"}
       }
+    },
+    "ServiceConnectClientAlias":{
+      "type":"structure",
+      "required":["port"],
+      "members":{
+        "port":{"shape":"PortNumber"},
+        "dnsName":{"shape":"String"}
+      }
+    },
+    "ServiceConnectClientAliasList":{
+      "type":"list",
+      "member":{"shape":"ServiceConnectClientAlias"}
+    },
+    "ServiceConnectConfiguration":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "namespace":{"shape":"String"},
+        "services":{"shape":"ServiceConnectServiceList"},
+        "logConfiguration":{"shape":"LogConfiguration"}
+      }
+    },
+    "ServiceConnectService":{
+      "type":"structure",
+      "required":["portName"],
+      "members":{
+        "portName":{"shape":"String"},
+        "discoveryName":{"shape":"String"},
+        "clientAliases":{"shape":"ServiceConnectClientAliasList"},
+        "ingressPortOverride":{"shape":"PortNumber"}
+      }
+    },
+    "ServiceConnectServiceList":{
+      "type":"list",
+      "member":{"shape":"ServiceConnectService"}
+    },
+    "ServiceConnectServiceResource":{
+      "type":"structure",
+      "members":{
+        "discoveryName":{"shape":"String"},
+        "discoveryArn":{"shape":"String"}
+      }
+    },
+    "ServiceConnectServiceResourceList":{
+      "type":"list",
+      "member":{"shape":"ServiceConnectServiceResource"}
     },
     "ServiceEvent":{
       "type":"structure",
@@ -3309,7 +3511,10 @@
       "enum":[
         "TaskFailedToStart",
         "EssentialContainerExited",
-        "UserInitiated"
+        "UserInitiated",
+        "ServiceSchedulerInitiated",
+        "SpotInterruption",
+        "TerminationNotice"
       ]
     },
     "Tasks":{
@@ -3422,7 +3627,8 @@
       "members":{
         "cluster":{"shape":"String"},
         "settings":{"shape":"ClusterSettings"},
-        "configuration":{"shape":"ClusterConfiguration"}
+        "configuration":{"shape":"ClusterConfiguration"},
+        "serviceConnectDefaults":{"shape":"ClusterServiceConnectDefaultsRequest"}
       }
     },
     "UpdateClusterResponse":{
@@ -3526,13 +3732,35 @@
         "enableECSManagedTags":{"shape":"BoxedBoolean"},
         "loadBalancers":{"shape":"LoadBalancers"},
         "propagateTags":{"shape":"PropagateTags"},
-        "serviceRegistries":{"shape":"ServiceRegistries"}
+        "serviceRegistries":{"shape":"ServiceRegistries"},
+        "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"}
       }
     },
     "UpdateServiceResponse":{
       "type":"structure",
       "members":{
         "service":{"shape":"Service"}
+      }
+    },
+    "UpdateTaskProtectionRequest":{
+      "type":"structure",
+      "required":[
+        "cluster",
+        "tasks",
+        "protectionEnabled"
+      ],
+      "members":{
+        "cluster":{"shape":"String"},
+        "tasks":{"shape":"StringList"},
+        "protectionEnabled":{"shape":"Boolean"},
+        "expiresInMinutes":{"shape":"BoxedInteger"}
+      }
+    },
+    "UpdateTaskProtectionResponse":{
+      "type":"structure",
+      "members":{
+        "protectedTasks":{"shape":"ProtectedTasks"},
+        "failures":{"shape":"Failures"}
       }
     },
     "UpdateTaskSetRequest":{

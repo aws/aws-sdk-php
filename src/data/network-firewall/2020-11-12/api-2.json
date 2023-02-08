@@ -582,7 +582,8 @@
       "members":{
         "SubnetId":{"shape":"AzSubnet"},
         "EndpointId":{"shape":"EndpointId"},
-        "Status":{"shape":"AttachmentStatus"}
+        "Status":{"shape":"AttachmentStatus"},
+        "StatusMessage":{"shape":"StatusMessage"}
       }
     },
     "AttachmentStatus":{
@@ -1104,6 +1105,13 @@
         "Destination":{"shape":"Destination"},
         "DestinationPort":{"shape":"Port"}
       }
+    },
+    "IPAddressType":{
+      "type":"string",
+      "enum":[
+        "DUALSTACK",
+        "IPV4"
+      ]
     },
     "IPSet":{
       "type":"structure",
@@ -1662,7 +1670,8 @@
       "enum":[
         "PASS",
         "DROP",
-        "ALERT"
+        "ALERT",
+        "REJECT"
       ]
     },
     "StatefulActions":{
@@ -1794,6 +1803,7 @@
         "CustomActions":{"shape":"CustomActions"}
       }
     },
+    "StatusMessage":{"type":"string"},
     "StreamExceptionPolicy":{
       "type":"string",
       "enum":[
@@ -1805,7 +1815,8 @@
       "type":"structure",
       "required":["SubnetId"],
       "members":{
-        "SubnetId":{"shape":"CollectionMember_String"}
+        "SubnetId":{"shape":"CollectionMember_String"},
+        "IPAddressType":{"shape":"IPAddressType"}
       }
     },
     "SubnetMappings":{

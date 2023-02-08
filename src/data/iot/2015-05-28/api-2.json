@@ -2682,6 +2682,21 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "ListRelatedResourcesForAuditFinding":{
+      "name":"ListRelatedResourcesForAuditFinding",
+      "http":{
+        "method":"GET",
+        "requestUri":"/audit/relatedResources"
+      },
+      "input":{"shape":"ListRelatedResourcesForAuditFindingRequest"},
+      "output":{"shape":"ListRelatedResourcesForAuditFindingResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "ListRoleAliases":{
       "name":"ListRoleAliases",
       "http":{
@@ -5118,7 +5133,8 @@
       ],
       "members":{
         "roleArn":{"shape":"AwsArn"},
-        "logGroupName":{"shape":"LogGroupName"}
+        "logGroupName":{"shape":"LogGroupName"},
+        "batchMode":{"shape":"BatchMode"}
       }
     },
     "CloudwatchMetricAction":{
@@ -5244,6 +5260,16 @@
       "type":"integer",
       "max":10,
       "min":1
+    },
+    "ContentType":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "CorrelationData":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "Count":{"type":"integer"},
     "CreateAuditSuppressionRequest":{
@@ -5510,7 +5536,8 @@
         "namespaceId":{"shape":"NamespaceId"},
         "jobTemplateArn":{"shape":"JobTemplateArn"},
         "jobExecutionsRetryConfig":{"shape":"JobExecutionsRetryConfig"},
-        "documentParameters":{"shape":"ParameterMap"}
+        "documentParameters":{"shape":"ParameterMap"},
+        "schedulingConfig":{"shape":"SchedulingConfig"}
       }
     },
     "CreateJobResponse":{
@@ -8494,6 +8521,29 @@
     "IsDefaultVersion":{"type":"boolean"},
     "IsDisabled":{"type":"boolean"},
     "IsSuppressed":{"type":"boolean"},
+    "IssuerCertificateIdentifier":{
+      "type":"structure",
+      "members":{
+        "issuerCertificateSubject":{"shape":"IssuerCertificateSubject"},
+        "issuerId":{"shape":"IssuerId"},
+        "issuerCertificateSerialNumber":{"shape":"IssuerCertificateSerialNumber"}
+      }
+    },
+    "IssuerCertificateSerialNumber":{
+      "type":"string",
+      "max":20,
+      "pattern":"[a-fA-F0-9:]+"
+    },
+    "IssuerCertificateSubject":{
+      "type":"string",
+      "max":1000,
+      "pattern":"[\\p{Graph}\\x20]*"
+    },
+    "IssuerId":{
+      "type":"string",
+      "max":64,
+      "pattern":"(0x)?[a-fA-F0-9]+"
+    },
     "Job":{
       "type":"structure",
       "members":{
@@ -8518,7 +8568,8 @@
         "jobTemplateArn":{"shape":"JobTemplateArn"},
         "jobExecutionsRetryConfig":{"shape":"JobExecutionsRetryConfig"},
         "documentParameters":{"shape":"ParameterMap"},
-        "isConcurrent":{"shape":"BooleanWrapperObject"}
+        "isConcurrent":{"shape":"BooleanWrapperObject"},
+        "schedulingConfig":{"shape":"SchedulingConfig"}
       }
     },
     "JobArn":{"type":"string"},
@@ -8535,6 +8586,14 @@
       "type":"string",
       "max":1350,
       "min":1
+    },
+    "JobEndBehavior":{
+      "type":"string",
+      "enum":[
+        "STOP_ROLLOUT",
+        "CANCEL",
+        "FORCE_CANCEL"
+      ]
     },
     "JobExecution":{
       "type":"structure",
@@ -8653,7 +8712,8 @@
         "IN_PROGRESS",
         "CANCELED",
         "COMPLETED",
-        "DELETION_IN_PROGRESS"
+        "DELETION_IN_PROGRESS",
+        "SCHEDULED"
       ]
     },
     "JobSummary":{
@@ -9876,6 +9936,34 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListRelatedResourcesForAuditFindingRequest":{
+      "type":"structure",
+      "required":["findingId"],
+      "members":{
+        "findingId":{
+          "shape":"FindingId",
+          "location":"querystring",
+          "locationName":"findingId"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListRelatedResourcesForAuditFindingResponse":{
+      "type":"structure",
+      "members":{
+        "relatedResources":{"shape":"RelatedResources"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListRoleAliasesRequest":{
       "type":"structure",
       "members":{
@@ -10670,6 +10758,11 @@
       "max":128,
       "pattern":"[\\s\\S]*"
     },
+    "MessageExpiry":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "MessageFormat":{
       "type":"string",
       "enum":[
@@ -10827,6 +10920,17 @@
         "clientId":{"shape":"MqttClientId"}
       }
     },
+    "MqttHeaders":{
+      "type":"structure",
+      "members":{
+        "payloadFormatIndicator":{"shape":"PayloadFormatIndicator"},
+        "contentType":{"shape":"ContentType"},
+        "responseTopic":{"shape":"ResponseTopic"},
+        "correlationData":{"shape":"CorrelationData"},
+        "messageExpiry":{"shape":"MessageExpiry"},
+        "userProperties":{"shape":"UserProperties"}
+      }
+    },
     "MqttPassword":{
       "type":"blob",
       "max":65535,
@@ -10851,8 +10955,6 @@
     },
     "NamespaceId":{
       "type":"string",
-      "max":64,
-      "min":1,
       "pattern":"[a-zA-Z0-9_-]+"
     },
     "NextToken":{"type":"string"},
@@ -11032,6 +11134,11 @@
     },
     "PartitionKey":{"type":"string"},
     "PayloadField":{"type":"string"},
+    "PayloadFormatIndicator":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "PayloadVersion":{
       "type":"string",
       "max":32,
@@ -11536,7 +11643,8 @@
       "members":{
         "roleArn":{"shape":"AwsArn"},
         "topic":{"shape":"TopicPattern"},
-        "qos":{"shape":"Qos"}
+        "qos":{"shape":"Qos"},
+        "headers":{"shape":"MqttHeaders"}
       }
     },
     "ReservedDomainConfigurationName":{
@@ -11576,7 +11684,9 @@
         "policyVersionIdentifier":{"shape":"PolicyVersionIdentifier"},
         "account":{"shape":"AwsAccountId"},
         "iamRoleArn":{"shape":"RoleArn"},
-        "roleAliasArn":{"shape":"RoleAliasArn"}
+        "roleAliasArn":{"shape":"RoleAliasArn"},
+        "issuerCertificateIdentifier":{"shape":"IssuerCertificateIdentifier"},
+        "deviceCertificateArn":{"shape":"CertificateArn"}
       }
     },
     "ResourceLogicalId":{"type":"string"},
@@ -11606,12 +11716,18 @@
         "CLIENT_ID",
         "ACCOUNT_SETTINGS",
         "ROLE_ALIAS",
-        "IAM_ROLE"
+        "IAM_ROLE",
+        "ISSUER_CERTIFICATE"
       ]
     },
     "Resources":{
       "type":"list",
       "member":{"shape":"Resource"}
+    },
+    "ResponseTopic":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "RetryAttempt":{"type":"integer"},
     "RetryCriteria":{
@@ -11770,6 +11886,14 @@
       "max":128,
       "min":1,
       "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "SchedulingConfig":{
+      "type":"structure",
+      "members":{
+        "startTime":{"shape":"StringDateTime"},
+        "endTime":{"shape":"StringDateTime"},
+        "endBehavior":{"shape":"JobEndBehavior"}
+      }
     },
     "SearchIndexRequest":{
       "type":"structure",
@@ -12285,6 +12409,11 @@
       "member":{"shape":"StreamSummary"}
     },
     "String":{"type":"string"},
+    "StringDateTime":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "StringList":{
       "type":"list",
       "member":{"shape":"stringValue"}
@@ -13504,6 +13633,33 @@
       "max":2000
     },
     "UseBase64":{"type":"boolean"},
+    "UserProperties":{
+      "type":"list",
+      "member":{"shape":"UserProperty"},
+      "max":100,
+      "min":1
+    },
+    "UserProperty":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"UserPropertyKey"},
+        "value":{"shape":"UserPropertyValue"}
+      }
+    },
+    "UserPropertyKey":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "UserPropertyValue":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "Valid":{"type":"boolean"},
     "ValidateSecurityProfileBehaviorsRequest":{
       "type":"structure",

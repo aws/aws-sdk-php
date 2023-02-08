@@ -327,6 +327,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListCustomLineItemVersions":{
+      "name":"ListCustomLineItemVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-custom-line-item-versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCustomLineItemVersionsInput"},
+      "output":{"shape":"ListCustomLineItemVersionsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListCustomLineItems":{
       "name":"ListCustomLineItems",
       "http":{
@@ -659,13 +675,14 @@
         "INVALID_ARN",
         "SERVICE_LIMIT_EXCEEDED",
         "ILLEGAL_CUSTOMLINEITEM",
-        "INTERNAL_SERVER_EXCEPTION"
+        "INTERNAL_SERVER_EXCEPTION",
+        "INVALID_BILLING_PERIOD_RANGE"
       ]
     },
     "AssociateResourceResponseElement":{
       "type":"structure",
       "members":{
-        "Arn":{"shape":"CustomLineItemArn"},
+        "Arn":{"shape":"CustomLineItemAssociationElement"},
         "Error":{"shape":"AssociateResourceError"}
       }
     },
@@ -675,7 +692,7 @@
     },
     "Association":{
       "type":"string",
-      "pattern":"((arn:aws:billingconductor::[0-9]{12}:billinggroup/)?[0-9]{12}|MONITORED|UNMONITORED)"
+      "pattern":"((arn:aws(-cn)?:billingconductor::[0-9]{12}:billinggroup/)?[0-9]{12}|MONITORED|UNMONITORED)"
     },
     "BatchAssociateResourcesToCustomLineItemInput":{
       "type":"structure",
@@ -715,9 +732,13 @@
         "FailedDisassociatedResources":{"shape":"DisassociateResourcesResponseList"}
       }
     },
+    "BillingEntity":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9 ]+"
+    },
     "BillingGroupArn":{
       "type":"string",
-      "pattern":"(arn:aws:billingconductor::[0-9]{12}:billinggroup/)?[0-9]{12}"
+      "pattern":"(arn:aws(-cn)?:billingconductor::[0-9]{12}:billinggroup/)?[0-9]{12}"
     },
     "BillingGroupArnList":{
       "type":"list",
@@ -748,7 +769,7 @@
     },
     "BillingGroupFullArn":{
       "type":"string",
-      "pattern":"arn:aws:billingconductor::[0-9]{12}:billinggroup/[0-9]{12}"
+      "pattern":"arn:aws(-cn)?:billingconductor::[0-9]{12}:billinggroup/[0-9]{12}"
     },
     "BillingGroupList":{
       "type":"list",
@@ -811,13 +832,24 @@
       "members":{
         "Message":{"shape":"String"},
         "ResourceId":{"shape":"String"},
-        "ResourceType":{"shape":"String"}
+        "ResourceType":{"shape":"String"},
+        "Reason":{"shape":"ConflictExceptionReason"}
       },
       "error":{
         "httpStatusCode":409,
         "senderFault":true
       },
       "exception":true
+    },
+    "ConflictExceptionReason":{
+      "type":"string",
+      "enum":[
+        "RESOURCE_NAME_CONFLICT",
+        "PRICING_RULE_IN_PRICING_PLAN_CONFLICT",
+        "PRICING_PLAN_ATTACHED_TO_BILLING_GROUP_DELETE_CONFLICT",
+        "PRICING_RULE_ATTACHED_TO_PRICING_PLAN_DELETE_CONFLICT",
+        "WRITE_CONFLICT_RETRY"
+      ]
     },
     "CreateBillingGroupInput":{
       "type":"structure",
@@ -876,6 +908,13 @@
         "Arn":{"shape":"CustomLineItemArn"}
       }
     },
+    "CreateFreeTierConfig":{
+      "type":"structure",
+      "required":["Activated"],
+      "members":{
+        "Activated":{"shape":"TieringActivated"}
+      }
+    },
     "CreatePricingPlanInput":{
       "type":"structure",
       "required":["Name"],
@@ -903,8 +942,7 @@
       "required":[
         "Name",
         "Scope",
-        "Type",
-        "ModifierPercentage"
+        "Type"
       ],
       "members":{
         "ClientToken":{
@@ -919,13 +957,24 @@
         "Type":{"shape":"PricingRuleType"},
         "ModifierPercentage":{"shape":"ModifierPercentage"},
         "Service":{"shape":"Service"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "BillingEntity":{"shape":"BillingEntity"},
+        "Tiering":{"shape":"CreateTieringInput"},
+        "UsageType":{"shape":"UsageType"},
+        "Operation":{"shape":"Operation"}
       }
     },
     "CreatePricingRuleOutput":{
       "type":"structure",
       "members":{
         "Arn":{"shape":"PricingRuleArn"}
+      }
+    },
+    "CreateTieringInput":{
+      "type":"structure",
+      "required":["FreeTier"],
+      "members":{
+        "FreeTier":{"shape":"CreateFreeTierConfig"}
       }
     },
     "Currency":{"type":"string"},
@@ -938,7 +987,7 @@
     },
     "CustomLineItemArn":{
       "type":"string",
-      "pattern":"(arn:aws:billingconductor::[0-9]{12}:customlineitem/)?[a-zA-Z0-9]{10}"
+      "pattern":"(arn:aws(-cn)?:billingconductor::[0-9]{12}:customlineitem/)?[a-zA-Z0-9]{10}"
     },
     "CustomLineItemArns":{
       "type":"list",
@@ -948,7 +997,7 @@
     },
     "CustomLineItemAssociationElement":{
       "type":"string",
-      "pattern":"(arn:aws:billingconductor::[0-9]{12}:(customlineitem|billinggroup)/)?[a-zA-Z0-9]{10,12}"
+      "pattern":"(arn:aws(-cn)?:billingconductor::[0-9]{12}:(customlineitem|billinggroup)/)?[a-zA-Z0-9]{10,12}"
     },
     "CustomLineItemAssociationsList":{
       "type":"list",
@@ -970,10 +1019,7 @@
     },
     "CustomLineItemBillingPeriodRange":{
       "type":"structure",
-      "required":[
-        "InclusiveStartBillingPeriod",
-        "ExclusiveEndBillingPeriod"
-      ],
+      "required":["InclusiveStartBillingPeriod"],
       "members":{
         "InclusiveStartBillingPeriod":{"shape":"BillingPeriod"},
         "ExclusiveEndBillingPeriod":{"shape":"BillingPeriod"}
@@ -1072,6 +1118,26 @@
         "FEE"
       ]
     },
+    "CustomLineItemVersionList":{
+      "type":"list",
+      "member":{"shape":"CustomLineItemVersionListElement"}
+    },
+    "CustomLineItemVersionListElement":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"CustomLineItemName"},
+        "ChargeDetails":{"shape":"ListCustomLineItemChargeDetails"},
+        "CurrencyCode":{"shape":"CurrencyCode"},
+        "Description":{"shape":"CustomLineItemDescription"},
+        "ProductCode":{"shape":"CustomLineItemProductCode"},
+        "BillingGroupArn":{"shape":"BillingGroupArn"},
+        "CreationTime":{"shape":"Instant"},
+        "LastModifiedTime":{"shape":"Instant"},
+        "AssociationSize":{"shape":"NumberOfAssociations"},
+        "StartBillingPeriod":{"shape":"BillingPeriod"},
+        "EndBillingPeriod":{"shape":"BillingPeriod"}
+      }
+    },
     "DeleteBillingGroupInput":{
       "type":"structure",
       "required":["Arn"],
@@ -1162,13 +1228,20 @@
     "DisassociateResourceResponseElement":{
       "type":"structure",
       "members":{
-        "Arn":{"shape":"CustomLineItemArn"},
+        "Arn":{"shape":"CustomLineItemAssociationElement"},
         "Error":{"shape":"AssociateResourceError"}
       }
     },
     "DisassociateResourcesResponseList":{
       "type":"list",
       "member":{"shape":"DisassociateResourceResponseElement"}
+    },
+    "FreeTierConfig":{
+      "type":"structure",
+      "required":["Activated"],
+      "members":{
+        "Activated":{"shape":"TieringActivated"}
+      }
     },
     "Instant":{"type":"long"},
     "InternalServerException":{
@@ -1276,6 +1349,36 @@
         "PercentageValue":{"shape":"CustomLineItemPercentageChargeValue"}
       }
     },
+    "ListCustomLineItemVersionsBillingPeriodRangeFilter":{
+      "type":"structure",
+      "members":{
+        "StartBillingPeriod":{"shape":"BillingPeriod"},
+        "EndBillingPeriod":{"shape":"BillingPeriod"}
+      }
+    },
+    "ListCustomLineItemVersionsFilter":{
+      "type":"structure",
+      "members":{
+        "BillingPeriodRange":{"shape":"ListCustomLineItemVersionsBillingPeriodRangeFilter"}
+      }
+    },
+    "ListCustomLineItemVersionsInput":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"CustomLineItemArn"},
+        "MaxResults":{"shape":"MaxCustomLineItemResults"},
+        "NextToken":{"shape":"Token"},
+        "Filters":{"shape":"ListCustomLineItemVersionsFilter"}
+      }
+    },
+    "ListCustomLineItemVersionsOutput":{
+      "type":"structure",
+      "members":{
+        "CustomLineItemVersions":{"shape":"CustomLineItemVersionList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
     "ListCustomLineItemsFilter":{
       "type":"structure",
       "members":{
@@ -1288,7 +1391,7 @@
       "type":"structure",
       "members":{
         "BillingPeriod":{"shape":"BillingPeriod"},
-        "MaxResults":{"shape":"MaxBillingGroupResults"},
+        "MaxResults":{"shape":"MaxCustomLineItemResults"},
         "NextToken":{"shape":"Token"},
         "Filters":{"shape":"ListCustomLineItemsFilter"}
       }
@@ -1413,7 +1516,8 @@
       "type":"structure",
       "members":{
         "Arn":{"shape":"CustomLineItemAssociationElement"},
-        "Relationship":{"shape":"CustomLineItemRelationship"}
+        "Relationship":{"shape":"CustomLineItemRelationship"},
+        "EndBillingPeriod":{"shape":"BillingPeriod"}
       }
     },
     "ListResourcesAssociatedToCustomLineItemResponseList":{
@@ -1484,9 +1588,15 @@
       "type":"long",
       "min":0
     },
+    "Operation":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"\\S+"
+    },
     "PricingPlanArn":{
       "type":"string",
-      "pattern":"(arn:aws:billingconductor::[0-9]{12}:pricingplan/)?[a-zA-Z0-9]{10}"
+      "pattern":"(arn:aws(-cn)?:billingconductor::[0-9]{12}:pricingplan/)?[a-zA-Z0-9]{10}"
     },
     "PricingPlanArns":{
       "type":"list",
@@ -1502,7 +1612,7 @@
     },
     "PricingPlanFullArn":{
       "type":"string",
-      "pattern":"arn:aws:billingconductor::[0-9]{12}:pricingplan/[a-zA-Z0-9]{10}"
+      "pattern":"arn:aws(-cn)?:billingconductor::[0-9]{12}:pricingplan/[a-zA-Z0-9]{10}"
     },
     "PricingPlanList":{
       "type":"list",
@@ -1528,7 +1638,7 @@
     },
     "PricingRuleArn":{
       "type":"string",
-      "pattern":"(arn:aws:billingconductor::[0-9]{12}:pricingrule/)?[a-zA-Z0-9]{10}"
+      "pattern":"(arn:aws(-cn)?:billingconductor::[0-9]{12}:pricingrule/)?[a-zA-Z0-9]{10}"
     },
     "PricingRuleArns":{
       "type":"list",
@@ -1570,7 +1680,9 @@
         "Service":{"shape":"Service"},
         "AssociatedPricingPlanCount":{"shape":"NumberOfPricingPlansAssociatedWith"},
         "CreationTime":{"shape":"Instant"},
-        "LastModifiedTime":{"shape":"Instant"}
+        "LastModifiedTime":{"shape":"Instant"},
+        "BillingEntity":{"shape":"BillingEntity"},
+        "Tiering":{"shape":"Tiering"}
       }
     },
     "PricingRuleName":{
@@ -1584,14 +1696,16 @@
       "type":"string",
       "enum":[
         "GLOBAL",
-        "SERVICE"
+        "SERVICE",
+        "BILLING_ENTITY"
       ]
     },
     "PricingRuleType":{
       "type":"string",
       "enum":[
         "MARKUP",
-        "DISCOUNT"
+        "DISCOUNT",
+        "TIERING"
       ]
     },
     "ProformaCost":{"type":"string"},
@@ -1701,6 +1815,17 @@
       },
       "exception":true
     },
+    "Tiering":{
+      "type":"structure",
+      "required":["FreeTier"],
+      "members":{
+        "FreeTier":{"shape":"FreeTierConfig"}
+      }
+    },
+    "TieringActivated":{
+      "type":"boolean",
+      "box":true
+    },
     "Token":{"type":"string"},
     "UntagResourceRequest":{
       "type":"structure",
@@ -1770,7 +1895,7 @@
       "required":["Arn"],
       "members":{
         "Arn":{"shape":"CustomLineItemArn"},
-        "Name":{"shape":"BillingGroupName"},
+        "Name":{"shape":"CustomLineItemName"},
         "Description":{"shape":"CustomLineItemDescription"},
         "ChargeDetails":{"shape":"UpdateCustomLineItemChargeDetails"},
         "BillingPeriodRange":{"shape":"CustomLineItemBillingPeriodRange"}
@@ -1793,6 +1918,13 @@
       "required":["PercentageValue"],
       "members":{
         "PercentageValue":{"shape":"CustomLineItemPercentageChargeValue"}
+      }
+    },
+    "UpdateFreeTierConfig":{
+      "type":"structure",
+      "required":["Activated"],
+      "members":{
+        "Activated":{"shape":"TieringActivated"}
       }
     },
     "UpdatePricingPlanInput":{
@@ -1822,7 +1954,8 @@
         "Name":{"shape":"PricingRuleName"},
         "Description":{"shape":"PricingRuleDescription"},
         "Type":{"shape":"PricingRuleType"},
-        "ModifierPercentage":{"shape":"ModifierPercentage"}
+        "ModifierPercentage":{"shape":"ModifierPercentage"},
+        "Tiering":{"shape":"UpdateTieringInput"}
       }
     },
     "UpdatePricingRuleOutput":{
@@ -1836,8 +1969,25 @@
         "ModifierPercentage":{"shape":"ModifierPercentage"},
         "Service":{"shape":"Service"},
         "AssociatedPricingPlanCount":{"shape":"NumberOfPricingPlansAssociatedWith"},
-        "LastModifiedTime":{"shape":"Instant"}
+        "LastModifiedTime":{"shape":"Instant"},
+        "BillingEntity":{"shape":"BillingEntity"},
+        "Tiering":{"shape":"UpdateTieringInput"},
+        "UsageType":{"shape":"UsageType"},
+        "Operation":{"shape":"Operation"}
       }
+    },
+    "UpdateTieringInput":{
+      "type":"structure",
+      "required":["FreeTier"],
+      "members":{
+        "FreeTier":{"shape":"UpdateFreeTierConfig"}
+      }
+    },
+    "UsageType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"\\S+"
     },
     "ValidationException":{
       "type":"structure",
@@ -1914,7 +2064,16 @@
         "MISSING_LINKED_ACCOUNT_IDS",
         "MULTIPLE_LINKED_ACCOUNT_IDS",
         "MISSING_PRICING_PLAN_ARN",
-        "MULTIPLE_PRICING_PLAN_ARN"
+        "MULTIPLE_PRICING_PLAN_ARN",
+        "ILLEGAL_CHILD_ASSOCIATE_RESOURCE",
+        "CUSTOM_LINE_ITEM_ASSOCIATION_EXISTS",
+        "INVALID_BILLING_GROUP",
+        "INVALID_BILLING_PERIOD_FOR_OPERATION",
+        "ILLEGAL_BILLING_ENTITY",
+        "ILLEGAL_MODIFIER_PERCENTAGE",
+        "ILLEGAL_TYPE",
+        "ILLEGAL_ENDED_BILLINGGROUP",
+        "ILLEGAL_TIERING_INPUT"
       ]
     }
   }

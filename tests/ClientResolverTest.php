@@ -10,6 +10,7 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Endpoint\Partition;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Exception\InvalidRegionException;
 use Aws\LruArrayCache;
 use Aws\S3\S3Client;
@@ -136,6 +137,37 @@ class ClientResolverTest extends TestCase
             'version'      => 'latest'
         ], new HandlerList());
         $this->assertSame($conf['use_aws_shared_config_files'], false);
+    }
+
+    public function testAppliesEndpointProviderV2()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service'      => 'dynamodb',
+            'region'       => 'x',
+            'version'      => 'latest'
+        ], new HandlerList());
+        $this->assertInstanceOf(
+            EndpointProviderV2::class,
+            $conf['endpoint_provider']
+        );
+    }
+
+    public function testAppliesClientContextParams()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Invalid configuration value provided for "Accelerate". Expected boolean, but got string(3) "foo"'
+            . "\n\n" . 'Accelerate: (boolean)' . "\n\n"
+            . '  Enables this client to use S3 Transfer Acceleration endpoints.'
+        );
+        $conf = $r->resolve([
+            'service'      => 's3',
+            'version'      => 'latest',
+            'region'       => 'x',
+            'Accelerate'       => 'foo',
+        ], new HandlerList());
     }
 
     public function testPrefersApiProviderNameToPartitionName()
@@ -543,18 +575,12 @@ EOT;
         $expectedEndpoint
     )
     {
-        $data = json_decode(
-            file_get_contents(__DIR__ . '/Endpoint/fixtures/dualstack_endpoints.json'),
-            true
-        );
-        $partition = new Partition($data['partitions'][0]);
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $resolver->resolve([
             'service'                   => $service,
             'region'                    => $region,
             'use_dual_stack_endpoint'   => $useDualstackEndpoint,
             'use_fips_endpoint'         => $useFipsEndpoint,
-            'endpoint_provider'         => $partition,
             'version'                   => 'latest',
         ], new HandlerList());
 
@@ -568,40 +594,34 @@ EOT;
     {
         return [
             ["ec2", false, false, "us-west-2", "ec2.us-west-2.amazonaws.com", ],
-            ["ec2", false, false, "us-east-2", "api.ec2.us-east-2.amazonaws.com", ],
+            ["ec2", false, false, "us-east-2", "ec2.us-east-2.amazonaws.com", ],
             ["ec2", true, false, "us-west-2", "ec2.us-west-2.api.aws", ],
-            ["ec2", true, false, "us-east-2", "api.ec2.us-east-2.api.aws", ],
-            ["s3", false, false, "us-west-2", "s3.api.us-west-2.amazonaws.com", ],
+            ["ec2", true, false, "us-east-2", 'ec2.us-east-2.api.aws', ],
+            ["s3", false, false, "us-west-2", "s3.us-west-2.amazonaws.com", ],
             ["s3", false, false, "us-east-2", "s3.us-east-2.amazonaws.com", ],
-            ["s3", true, false, "us-west-2", "s3.api.dualstack.us-west-2.amazonaws.com", ],
+            ["s3", true, false, "us-west-2", 's3.dualstack.us-west-2.amazonaws.com'],
             ["s3", true, false, "us-east-2", "s3.dualstack.us-east-2.amazonaws.com", ],
             ["route53", false, false, "us-west-2", "route53.amazonaws.com", ],
             ["route53", false, false, "us-east-2", "route53.amazonaws.com", ],
-            ["route53", true, false, "us-west-2", "route53.global.api.aws", ],
-            ["route53", true, false, "us-east-2", "route53.global.api.aws", ],
+            ["route53", true, false, "us-west-2", "route53.us-west-2.api.aws", ],
+            ["route53", true, false, "us-east-2", 'route53.us-east-2.api.aws', ],
             ["dynamodb", false, false, "us-west-2", "dynamodb.us-west-2.amazonaws.com", ],
             ["dynamodb", false, false, "us-east-2", "dynamodb.us-east-2.amazonaws.com", ],
             ["dynamodb", true, false, "us-west-2", "dynamodb.us-west-2.api.aws", ],
             ["dynamodb", true, false, "us-east-2", "dynamodb.us-east-2.api.aws", ],
             ["dynamodb", false, true, "us-west-2", "dynamodb-fips.us-west-2.amazonaws.com", ],
-            ["dynamodb", true, true, "us-west-2", "fips.dynamodb.us-west-2.api.aws", ],
+            ["dynamodb", true, true, "us-west-2", "dynamodb-fips.us-west-2.api.aws", ],
         ];
     }
 
     public function testDualstackEndpointInIsoPartition()
     {
-        $data = json_decode(
-            file_get_contents(__DIR__ . '/Endpoint/fixtures/dualstack_endpoints.json'),
-            true
-        );
-        $partition = new Partition($data['partitions'][1]);
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $resolver->resolve([
             'service'                   => 'ec2',
             'region'                    => 'us-iso-east-1',
             'use_dual_stack_endpoint'   => false,
             'use_fips_endpoint'         => false,
-            'endpoint_provider'         => $partition,
             'version'                   => 'latest',
         ], new HandlerList());
         $this->assertSame(
@@ -614,18 +634,12 @@ EOT;
     {
         $this->expectException(\Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException::class);
         $this->expectExceptionMessage("Dual-stack is not supported in ISO regions");
-        $data = json_decode(
-            file_get_contents(__DIR__ . '/Endpoint/fixtures/dualstack_endpoints.json'),
-            true
-        );
-        $partition = new Partition($data['partitions'][0]);
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $resolver->resolve([
             'service'                   => 'ec2',
             'region'                    => 'us-iso-east-1',
             'use_dual_stack_endpoint'   => true,
             'use_fips_endpoint'         => false,
-            'endpoint_provider'         => $partition,
             'version'                   => 'latest',
         ], new HandlerList());
     }

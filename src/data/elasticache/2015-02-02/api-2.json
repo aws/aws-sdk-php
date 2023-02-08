@@ -1335,11 +1335,19 @@
         "PasswordCount":{"shape":"IntegerOptional"}
       }
     },
+    "AuthenticationMode":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"InputAuthenticationType"},
+        "Passwords":{"shape":"PasswordListInput"}
+      }
+    },
     "AuthenticationType":{
       "type":"string",
       "enum":[
         "password",
-        "no-password"
+        "no-password",
+        "iam"
       ]
     },
     "AuthorizationAlreadyExistsFault":{
@@ -1459,7 +1467,10 @@
         "AtRestEncryptionEnabled":{"shape":"BooleanOptional"},
         "ARN":{"shape":"String"},
         "ReplicationGroupLogDeliveryEnabled":{"shape":"Boolean"},
-        "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationList"}
+        "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationList"},
+        "NetworkType":{"shape":"NetworkType"},
+        "IpDiscovery":{"shape":"IpDiscovery"},
+        "TransitEncryptionMode":{"shape":"TransitEncryptionMode"}
       },
       "wrapper":true
     },
@@ -1776,7 +1787,8 @@
         "CacheSubnetGroupDescription":{"shape":"String"},
         "VpcId":{"shape":"String"},
         "Subnets":{"shape":"SubnetList"},
-        "ARN":{"shape":"String"}
+        "ARN":{"shape":"String"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       },
       "wrapper":true
     },
@@ -1958,7 +1970,9 @@
         "PreferredOutpostArn":{"shape":"String"},
         "PreferredOutpostArns":{"shape":"PreferredOutpostArnList"},
         "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationRequestList"},
-        "TransitEncryptionEnabled":{"shape":"BooleanOptional"}
+        "TransitEncryptionEnabled":{"shape":"BooleanOptional"},
+        "NetworkType":{"shape":"NetworkType"},
+        "IpDiscovery":{"shape":"IpDiscovery"}
       }
     },
     "CreateCacheClusterResult":{
@@ -2083,7 +2097,10 @@
         "KmsKeyId":{"shape":"String"},
         "UserGroupIds":{"shape":"UserGroupIdListInput"},
         "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationRequestList"},
-        "DataTieringEnabled":{"shape":"BooleanOptional"}
+        "DataTieringEnabled":{"shape":"BooleanOptional"},
+        "NetworkType":{"shape":"NetworkType"},
+        "IpDiscovery":{"shape":"IpDiscovery"},
+        "TransitEncryptionMode":{"shape":"TransitEncryptionMode"}
       }
     },
     "CreateReplicationGroupResult":{
@@ -2137,7 +2154,8 @@
         "Passwords":{"shape":"PasswordListInput"},
         "AccessString":{"shape":"AccessString"},
         "NoPasswordRequired":{"shape":"BooleanOptional"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "AuthenticationMode":{"shape":"AuthenticationMode"}
       }
     },
     "CustomerNodeEndpoint":{
@@ -2805,6 +2823,14 @@
         "ReplicationGroup":{"shape":"ReplicationGroup"}
       }
     },
+    "InputAuthenticationType":{
+      "type":"string",
+      "enum":[
+        "password",
+        "no-password-required",
+        "iam"
+      ]
+    },
     "InsufficientCacheClusterCapacityFault":{
       "type":"structure",
       "members":{
@@ -2976,6 +3002,13 @@
       },
       "exception":true
     },
+    "IpDiscovery":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6"
+      ]
+    },
     "KeyList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -3082,7 +3115,8 @@
         "CacheNodeType":{"shape":"String"},
         "AuthToken":{"shape":"String"},
         "AuthTokenUpdateStrategy":{"shape":"AuthTokenUpdateStrategyType"},
-        "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationRequestList"}
+        "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationRequestList"},
+        "IpDiscovery":{"shape":"IpDiscovery"}
       }
     },
     "ModifyCacheClusterResult":{
@@ -3170,7 +3204,10 @@
         "UserGroupIdsToAdd":{"shape":"UserGroupIdList"},
         "UserGroupIdsToRemove":{"shape":"UserGroupIdList"},
         "RemoveUserGroups":{"shape":"BooleanOptional"},
-        "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationRequestList"}
+        "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationRequestList"},
+        "IpDiscovery":{"shape":"IpDiscovery"},
+        "TransitEncryptionEnabled":{"shape":"BooleanOptional"},
+        "TransitEncryptionMode":{"shape":"TransitEncryptionMode"}
       }
     },
     "ModifyReplicationGroupResult":{
@@ -3218,7 +3255,8 @@
         "AccessString":{"shape":"AccessString"},
         "AppendAccessString":{"shape":"AccessString"},
         "Passwords":{"shape":"PasswordListInput"},
-        "NoPasswordRequired":{"shape":"BooleanOptional"}
+        "NoPasswordRequired":{"shape":"BooleanOptional"},
+        "AuthenticationMode":{"shape":"AuthenticationMode"}
       }
     },
     "MultiAZStatus":{
@@ -3227,6 +3265,18 @@
         "enabled",
         "disabled"
       ]
+    },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6",
+        "dual_stack"
+      ]
+    },
+    "NetworkTypeList":{
+      "type":"list",
+      "member":{"shape":"NetworkType"}
     },
     "NoOperationFault":{
       "type":"structure",
@@ -3519,7 +3569,9 @@
         "EngineVersion":{"shape":"String"},
         "CacheNodeType":{"shape":"String"},
         "AuthTokenStatus":{"shape":"AuthTokenUpdateStatus"},
-        "LogDeliveryConfigurations":{"shape":"PendingLogDeliveryConfigurationList"}
+        "LogDeliveryConfigurations":{"shape":"PendingLogDeliveryConfigurationList"},
+        "TransitEncryptionEnabled":{"shape":"BooleanOptional"},
+        "TransitEncryptionMode":{"shape":"TransitEncryptionMode"}
       }
     },
     "PreferredAvailabilityZoneList":{
@@ -3688,7 +3740,10 @@
         "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationList"},
         "ReplicationGroupCreateTime":{"shape":"TStamp"},
         "DataTiering":{"shape":"DataTieringStatus"},
-        "AutoMinorVersionUpgrade":{"shape":"Boolean"}
+        "AutoMinorVersionUpgrade":{"shape":"Boolean"},
+        "NetworkType":{"shape":"NetworkType"},
+        "IpDiscovery":{"shape":"IpDiscovery"},
+        "TransitEncryptionMode":{"shape":"TransitEncryptionMode"}
       },
       "wrapper":true
     },
@@ -3770,7 +3825,9 @@
         "Resharding":{"shape":"ReshardingStatus"},
         "AuthTokenStatus":{"shape":"AuthTokenUpdateStatus"},
         "UserGroups":{"shape":"UserGroupsUpdateStatus"},
-        "LogDeliveryConfigurations":{"shape":"PendingLogDeliveryConfigurationList"}
+        "LogDeliveryConfigurations":{"shape":"PendingLogDeliveryConfigurationList"},
+        "TransitEncryptionEnabled":{"shape":"BooleanOptional"},
+        "TransitEncryptionMode":{"shape":"TransitEncryptionMode"}
       }
     },
     "ReservedCacheNode":{
@@ -4164,7 +4221,8 @@
       "members":{
         "SubnetIdentifier":{"shape":"String"},
         "SubnetAvailabilityZone":{"shape":"AvailabilityZone"},
-        "SubnetOutpost":{"shape":"SubnetOutpost"}
+        "SubnetOutpost":{"shape":"SubnetOutpost"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       }
     },
     "SubnetIdentifierList":{
@@ -4286,6 +4344,13 @@
         "StartTime":{"shape":"TStamp"},
         "EndTime":{"shape":"TStamp"}
       }
+    },
+    "TransitEncryptionMode":{
+      "type":"string",
+      "enum":[
+        "preferred",
+        "required"
+      ]
     },
     "UGReplicationGroupIdList":{
       "type":"list",

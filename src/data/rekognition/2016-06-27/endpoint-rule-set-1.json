@@ -3,7 +3,7 @@
     "parameters": {
         "Region": {
             "builtIn": "AWS::Region",
-            "required": false,
+            "required": true,
             "documentation": "The AWS region used to dispatch the request.",
             "type": "String"
         },
@@ -52,15 +52,6 @@
                                     "ref": "Endpoint"
                                 }
                             ]
-                        },
-                        {
-                            "fn": "parseURL",
-                            "argv": [
-                                {
-                                    "ref": "Endpoint"
-                                }
-                            ],
-                            "assign": "url"
                         }
                     ],
                     "type": "tree",
@@ -255,6 +246,25 @@
                                                         {
                                                             "ref": "Region"
                                                         },
+                                                        "rekognition.us-east-1"
+                                                    ]
+                                                }
+                                            ],
+                                            "endpoint": {
+                                                "url": "https://rekognition-fips.us-east-1.amazonaws.com",
+                                                "properties": {},
+                                                "headers": {}
+                                            },
+                                            "type": "endpoint"
+                                        },
+                                        {
+                                            "conditions": [
+                                                {
+                                                    "fn": "stringEquals",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "Region"
+                                                        },
                                                         "rekognition.us-east-2"
                                                     ]
                                                 }
@@ -280,25 +290,6 @@
                                             ],
                                             "endpoint": {
                                                 "url": "https://rekognition-fips.us-west-1.amazonaws.com",
-                                                "properties": {},
-                                                "headers": {}
-                                            },
-                                            "type": "endpoint"
-                                        },
-                                        {
-                                            "conditions": [
-                                                {
-                                                    "fn": "stringEquals",
-                                                    "argv": [
-                                                        {
-                                                            "ref": "Region"
-                                                        },
-                                                        "rekognition.us-east-1"
-                                                    ]
-                                                }
-                                            ],
-                                            "endpoint": {
-                                                "url": "https://rekognition-fips.us-east-1.amazonaws.com",
                                                 "properties": {},
                                                 "headers": {}
                                             },

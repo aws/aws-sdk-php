@@ -52,15 +52,6 @@
                                     "ref": "Endpoint"
                                 }
                             ]
-                        },
-                        {
-                            "fn": "parseURL",
-                            "argv": [
-                                {
-                                    "ref": "Endpoint"
-                                }
-                            ],
-                            "assign": "url"
                         }
                     ],
                     "type": "tree",
@@ -174,12 +165,18 @@
                             "rules": [
                                 {
                                     "conditions": [],
-                                    "endpoint": {
-                                        "url": "https://cloudtrail-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                                        "properties": {},
-                                        "headers": {}
-                                    },
-                                    "type": "endpoint"
+                                    "type": "tree",
+                                    "rules": [
+                                        {
+                                            "conditions": [],
+                                            "endpoint": {
+                                                "url": "https://cloudtrail-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                                "properties": {},
+                                                "headers": {}
+                                            },
+                                            "type": "endpoint"
+                                        }
+                                    ]
                                 }
                             ]
                         },
@@ -236,12 +233,12 @@
                                                         {
                                                             "ref": "Region"
                                                         },
-                                                        "us-gov-west-1"
+                                                        "us-gov-east-1"
                                                     ]
                                                 }
                                             ],
                                             "endpoint": {
-                                                "url": "https://cloudtrail.us-gov-west-1.amazonaws.com",
+                                                "url": "https://cloudtrail.us-gov-east-1.amazonaws.com",
                                                 "properties": {},
                                                 "headers": {}
                                             },
@@ -255,12 +252,12 @@
                                                         {
                                                             "ref": "Region"
                                                         },
-                                                        "us-gov-east-1"
+                                                        "us-gov-west-1"
                                                     ]
                                                 }
                                             ],
                                             "endpoint": {
-                                                "url": "https://cloudtrail.us-gov-east-1.amazonaws.com",
+                                                "url": "https://cloudtrail.us-gov-west-1.amazonaws.com",
                                                 "properties": {},
                                                 "headers": {}
                                             },
@@ -322,12 +319,18 @@
                             "rules": [
                                 {
                                     "conditions": [],
-                                    "endpoint": {
-                                        "url": "https://cloudtrail.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                                        "properties": {},
-                                        "headers": {}
-                                    },
-                                    "type": "endpoint"
+                                    "type": "tree",
+                                    "rules": [
+                                        {
+                                            "conditions": [],
+                                            "endpoint": {
+                                                "url": "https://cloudtrail.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                                "properties": {},
+                                                "headers": {}
+                                            },
+                                            "type": "endpoint"
+                                        }
+                                    ]
                                 }
                             ]
                         },
@@ -340,12 +343,18 @@
                 },
                 {
                     "conditions": [],
-                    "endpoint": {
-                        "url": "https://cloudtrail.{Region}.{PartitionResult#dnsSuffix}",
-                        "properties": {},
-                        "headers": {}
-                    },
-                    "type": "endpoint"
+                    "type": "tree",
+                    "rules": [
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://cloudtrail.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        }
+                    ]
                 }
             ]
         }

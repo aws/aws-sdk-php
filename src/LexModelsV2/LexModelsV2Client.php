@@ -7,6 +7,12 @@ use Psr\Http\Message\RequestInterface;
 
 /**
  * This client is used to interact with the **Amazon Lex Model Building V2** service.
+ * @method \Aws\Result batchCreateCustomVocabularyItem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchCreateCustomVocabularyItemAsync(array $args = [])
+ * @method \Aws\Result batchDeleteCustomVocabularyItem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDeleteCustomVocabularyItemAsync(array $args = [])
+ * @method \Aws\Result batchUpdateCustomVocabularyItem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchUpdateCustomVocabularyItemAsync(array $args = [])
  * @method \Aws\Result buildBotLocale(array $args = [])
  * @method \GuzzleHttp\Promise\Promise buildBotLocaleAsync(array $args = [])
  * @method \Aws\Result createBot(array $args = [])
@@ -97,6 +103,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise listBuiltInIntentsAsync(array $args = [])
  * @method \Aws\Result listBuiltInSlotTypes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBuiltInSlotTypesAsync(array $args = [])
+ * @method \Aws\Result listCustomVocabularyItems(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCustomVocabularyItemsAsync(array $args = [])
  * @method \Aws\Result listExports(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listExportsAsync(array $args = [])
  * @method \Aws\Result listImports(array $args = [])
