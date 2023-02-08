@@ -951,7 +951,7 @@ class ClientResolver
                 .  " 70205 before then to continue receiving updates to the AWS"
                 .  " SDK for PHP.  To disable this warning, set "
                 .  " emit_php_deprecation_warning to false on the client constructor.",
-                E_USER_WARNING
+                E_USER_DEPRECATED
             );
         }
     }
