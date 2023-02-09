@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.7 - 2023-02-09
 
 * `Aws\ChimeSDKMeetings` - Documentation updates for Chime Meetings SDK
 * `Aws\CloudWatchEvidently` - Updated entity overrides parameter to accept up to 2500 overrides or a total of 40KB.
