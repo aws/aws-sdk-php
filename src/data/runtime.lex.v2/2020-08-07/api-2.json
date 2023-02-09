@@ -746,6 +746,9 @@
                 },
                 "eventId": {
                     "shape": "EventId"
+                },
+                "recognizedBotMember": {
+                    "shape": "RecognizedBotMember"
                 }
             },
             "event": true
@@ -1023,6 +1026,9 @@
                 },
                 "sessionId": {
                     "shape": "SessionId"
+                },
+                "recognizedBotMember": {
+                    "shape": "RecognizedBotMember"
                 }
             }
         },
@@ -1127,9 +1133,28 @@
                 },
                 "audioStream": {
                     "shape": "BlobStream"
+                },
+                "recognizedBotMember": {
+                    "shape": "NonEmptyString",
+                    "location": "header",
+                    "locationName": "x-amz-lex-recognized-bot-member"
                 }
             },
             "payload": "audioStream"
+        },
+        "RecognizedBotMember": {
+            "type": "structure",
+            "required": [
+                "botId"
+            ],
+            "members": {
+                "botId": {
+                    "shape": "BotIdentifier"
+                },
+                "botName": {
+                    "shape": "Name"
+                }
+            }
         },
         "ResourceNotFoundException": {
             "type": "structure",
