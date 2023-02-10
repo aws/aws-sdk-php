@@ -68,12 +68,12 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @BeforeFeature
+     * @BeforeSuite
      */
     public static function createTestBucket()
     {
         $client = self::getSdk()->createS3();
-        if (!$client->doesBucketExist(self::getResourceName())) {
+        if (!$client->doesBucketExistV2(self::getResourceName())) {
             $client->createBucket(['Bucket' => self::getResourceName()]);
             $client->waitUntil('BucketExists', [
                 'Bucket' => self::getResourceName(),
@@ -82,7 +82,7 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @AfterFeature
+     * @AfterSuite
      */
     public static function deleteTestBucket()
     {
@@ -129,7 +129,7 @@ class S3Context implements Context, SnippetAcceptingContext
         $logBucket = self::INTEG_LOG_BUCKET_PREFIX . "-{$identity['Account']}";
 
         // Log bucket deletion result
-        if (!($client->doesBucketExist($logBucket))) {
+        if (!($client->doesBucketExistV2($logBucket))) {
             $client->createBucket([
                 'Bucket' => $logBucket
             ]);

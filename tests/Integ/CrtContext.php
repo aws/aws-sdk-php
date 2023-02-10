@@ -65,6 +65,14 @@ class CrtContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @AfterFeature @mrap
+     */
+    public static function deleteTempFile()
+    {
+        unlink(self::$tempFile);
+    }
+
+    /**
      * @BeforeFeature @eventbridge
      */
     public static function setEventBuses()
