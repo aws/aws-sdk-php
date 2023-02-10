@@ -85,7 +85,7 @@ class CrtContext implements Context, SnippetAcceptingContext
         $eventBusWest = str_replace('us-east-1', 'us-west-2', $eventBusEast);
         array_push(
             self::$eventBuses,
-            ['EventBusArn' =>$eventBusEast],
+            ['EventBusArn' => $eventBusEast],
             ['EventBusArn' => $eventBusWest]
         );
     }
