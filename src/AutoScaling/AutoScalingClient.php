@@ -120,6 +120,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise recordLifecycleActionHeartbeatAsync(array $args = [])
  * @method \Aws\Result resumeProcesses(array $args = [])
  * @method \GuzzleHttp\Promise\Promise resumeProcessesAsync(array $args = [])
+ * @method \Aws\Result rollbackInstanceRefresh(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise rollbackInstanceRefreshAsync(array $args = [])
  * @method \Aws\Result setDesiredCapacity(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setDesiredCapacityAsync(array $args = [])
  * @method \Aws\Result setInstanceHealth(array $args = [])

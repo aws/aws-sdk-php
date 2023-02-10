@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - You can now either terminate/replace, ignore, or wait for EC2 Auto Scaling instances on standby or protected from scale in. Also, you can also roll back changes from a failed instance refresh.
+* `Aws\Connect` - This update provides the Wisdom session ARN for contacts enabled for Wisdom in the chat channel.
+* `Aws\EC2` - Adds support for waiters that automatically poll for an imported snapshot until it reaches the completed state.
+* `Aws\Polly` - Amazon Polly adds two new neural Japanese voices - Kazuha, Tomoko
+* `Aws\SNS` - This release adds support for SNS X-Ray active tracing as well as other updates.
+* `Aws\SageMaker` - Amazon SageMaker Autopilot adds support for selecting algorithms in CreateAutoMLJob API.
+
 ## 3.258.7 - 2023-02-09
 
 * `Aws\ChimeSDKMeetings` - Documentation updates for Chime Meetings SDK
