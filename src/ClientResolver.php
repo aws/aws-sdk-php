@@ -944,7 +944,7 @@ class ClientResolver
     public static function _emit_php_deprecation_warning($value, array &$args) {
         $phpVersion = PHP_VERSION_ID;
         if ($value && $phpVersion < 70205) {
-            trigger_error(
+            @trigger_error(
                 "This installation of the SDK is using PHP version"
                 .  " {$phpVersion}, which will be deprecated on August"
                 .  " 15th, 2023.  Please upgrade your PHP version to a minimum of"
