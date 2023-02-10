@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.8 - 2023-02-10
 
 * `Aws\AutoScaling` - You can now either terminate/replace, ignore, or wait for EC2 Auto Scaling instances on standby or protected from scale in. Also, you can also roll back changes from a failed instance refresh.
 * `Aws\Connect` - This update provides the Wisdom session ARN for contacts enabled for Wisdom in the chat channel.
