@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.9 - 2023-02-13
 
 * `Aws\Account` - This release of the Account Management API enables customers to view and manage whether AWS Opt-In Regions are enabled or disabled for their Account. For more information, see https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-regions.html
 * `Aws\AppConfigData` - AWS AppConfig now offers the option to set a version label on hosted configuration versions. If a labeled hosted configuration version is deployed, its version label is available in the GetLatestConfiguration response.
