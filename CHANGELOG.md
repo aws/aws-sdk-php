@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds integ tests for CRT features.
+* `Aws\AppConfig` - AWS AppConfig now offers the option to set a version label on hosted configuration versions. Version labels allow you to identify specific hosted configuration versions based on an alternate versioning scheme that you define.
+* `Aws\DataSync` - With this launch, we are giving customers the ability to use older SMB protocol versions, enabling them to use DataSync to copy data to and from their legacy storage arrays.
+* `Aws\EC2` - With this release customers can turn host maintenance on or off when allocating or modifying a supported dedicated host. Host maintenance is turned on by default for supported hosts.
+
 ## 3.258.9 - 2023-02-13
 
 * `Aws\Account` - This release of the Account Management API enables customers to view and manage whether AWS Opt-In Regions are enabled or disabled for their Account. For more information, see https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-regions.html
