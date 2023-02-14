@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.10 - 2023-02-14
 
 * `Aws\` - Adds integ tests for CRT features.
 * `Aws\AppConfig` - AWS AppConfig now offers the option to set a version label on hosted configuration versions. Version labels allow you to identify specific hosted configuration versions based on an alternate versioning scheme that you define.
