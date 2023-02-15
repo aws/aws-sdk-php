@@ -948,7 +948,7 @@ class ClientResolver
         } elseif (!empty($_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"])) {
             $emitWarning = $_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"];
         }
-        if ($emitWarning && $phpVersion > 70205) {
+        if ($emitWarning && $phpVersion < 70205) {
             $phpVersionString = phpversion();
             trigger_error(
                 "This installation of the SDK is using PHP version"
