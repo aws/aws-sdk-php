@@ -264,12 +264,12 @@ class ClientResolver
             'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.  This will be ignored if you set the \'profile\' setting.',
             'default'   => true,
         ],
-        'emit_php_deprecation_warning' => [
+        'suppress_php_deprecation_warning' => [
             'type'      => 'value',
             'valid'     => ['bool'],
             'doc'       => 'Set to false to disable the deprecation warning of PHP versions 7.2.4 and below',
-            'default'   => true,
-            'fn'        => [__CLASS__, '_emit_php_deprecation_warning']
+            'default'   => false,
+            'fn'        => [__CLASS__, '_suppress_php_deprecation_warning']
         ],
     ];
 
@@ -941,19 +941,18 @@ class ClientResolver
         }
     }
 
-    public static function _emit_php_deprecation_warning($emitWarning, array &$args) {
+    public static function _suppress_php_deprecation_warning($suppressWarning, array &$args) {
         $phpVersion = PHP_VERSION_ID;
-        if ($emitWarning !== false) {
-            if (!empty(getenv("AWS_EMIT_PHP_DEPRECATION_WARNING"))) {
-                $emitWarning = getenv("AWS_EMIT_PHP_DEPRECATION_WARNING");
-            } elseif (!empty($_ENV["AWS_EMIT_PHP_DEPRECATION_WARNING"])) {
-                $emitWarning = $_ENV["AWS_EMIT_PHP_DEPRECATION_WARNING"];
-            } elseif (!empty($_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"])) {
-                $emitWarning = $_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"];
+        if ($suppressWarning !== true) {
+            if (!empty("AWS_SUPPRESS_PHP_DEPRECATION_WARNING")) {
+                $suppressWarning = getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING");
+            } elseif (!empty($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
+                $suppressWarning = $_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
+            } elseif (!empty($_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
+                $suppressWarning = $_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
             }
         }
-        if ($emitWarning && $phpVersion > 70205) {
-            print_r(getenv());
+        if (!$suppressWarning && $phpVersion > 70205) {
             $phpVersionString = phpversion();
             trigger_error(
                 "This installation of the SDK is using PHP version"
@@ -961,9 +960,9 @@ class ClientResolver
                 .  " 15th, 2023.  Please upgrade your PHP version to a minimum of"
                 .  " 7.2.5 before then to continue receiving updates to the AWS"
                 .  " SDK for PHP.  To disable this warning, set"
-                .  " emit_php_deprecation_warning to false on the client constructor"
-                .  " or set the environment variable AWS_EMIT_PHP_DEPRECATION_WARNING"
-                .  " to false.",
+                .  " suppress_php_deprecation_warning to true on the client constructor"
+                .  " or set the environment variable AWS_SUPPRESS_PHP_DEPRECATION_WARNING"
+                .  " to true.",
                 E_USER_DEPRECATED
             );
         }
