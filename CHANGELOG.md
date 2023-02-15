@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.11 - 2023-02-15
 
 * `Aws\CloudTrail` - This release adds an InsufficientEncryptionPolicyException type to the StartImport endpoint
 * `Aws\EFS` - Documentation update for EFS to support IAM best practices.
