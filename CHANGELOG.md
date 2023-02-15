@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudTrail` - This release adds an InsufficientEncryptionPolicyException type to the StartImport endpoint
+* `Aws\EFS` - Documentation update for EFS to support IAM best practices.
+* `Aws\FraudDetector` - This release introduces Lists feature which allows customers to reference a set of values in Fraud Detector's rules. With Lists, customers can dynamically manage these attributes in real time. Lists can be created/deleted and its contents can be modified using the Fraud Detector API.
+* `Aws\Glue` - Fix DirectJDBCSource not showing up in CLI code gen
+* `Aws\PrivateNetworks` - This release introduces a new StartNetworkResourceUpdate API, which enables return/replacement of hardware from a NetworkSite.
+* `Aws\RDS` - Database Activity Stream support for RDS for SQL Server.
+* `Aws\WAFV2` - For protected CloudFront distributions, you can now use the AWS WAF Fraud Control account takeover prevention (ATP) managed rule group to block new login attempts from clients that have recently submitted too many failed login attempts.
+
 ## 3.258.10 - 2023-02-14
 
 * `Aws\` - Adds integ tests for CRT features.
