@@ -943,10 +943,12 @@ class ClientResolver
 
     public static function _emit_php_deprecation_warning($emitWarning, array &$args) {
         $phpVersion = PHP_VERSION_ID;
-        if (!empty(getenv("AWS_EMIT_PHP_DEPRECATION_WARNING"))) {
-            $emitWarning = getenv("AWS_EMIT_PHP_DEPRECATION_WARNING");
-        } elseif (!empty($_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"])) {
-            $emitWarning = $_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"];
+        if ($emitWarning !== false) {
+            if (!empty(getenv("AWS_EMIT_PHP_DEPRECATION_WARNING"))) {
+                $emitWarning = getenv("AWS_EMIT_PHP_DEPRECATION_WARNING");
+            } elseif (!empty($_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"])) {
+                $emitWarning = $_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"];
+            }
         }
         if ($emitWarning && $phpVersion < 70205) {
             $phpVersionString = phpversion();
