@@ -52,6 +52,11 @@ jobs:
     - name: Install dependencies
       run: composer update ${{ matrix.composer-options }} --no-interaction --prefer-source
 
+    #ignore deprecation warnings in phpunit
+    - if: ${{ matrix.php-versions <= '7.2' }}
+      name: Phpunit ignore deprecation warnings
+      run: sed -i '2 s/<phpunit\ /<phpunit\ convertWarningsToExceptions="false"/1' phpunit.xml.dist
+
     #php 8.x requirements
     - if: ${{ matrix.php-versions >= '8.0' && matrix.composer-options != '' }}
       name: PHP 8.x

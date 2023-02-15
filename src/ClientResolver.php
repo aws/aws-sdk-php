@@ -941,16 +941,24 @@ class ClientResolver
         }
     }
 
-    public static function _emit_php_deprecation_warning($value, array &$args) {
+    public static function _emit_php_deprecation_warning($emitWarning, array &$args) {
         $phpVersion = PHP_VERSION_ID;
-        if ($value && $phpVersion < 70205) {
-            @trigger_error(
+        if (!empty(getenv("AWS_EMIT_PHP_DEPRECATION_WARNING"))) {
+            $emitWarning = getenv("AWS_EMIT_PHP_DEPRECATION_WARNING");
+        } elseif (!empty($_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"])) {
+            $emitWarning = $_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"];
+        }
+        if ($emitWarning && $phpVersion > 70205) {
+            $phpVersionString = phpversion();
+            trigger_error(
                 "This installation of the SDK is using PHP version"
-                .  " {$phpVersion}, which will be deprecated on August"
+                .  " {$phpVersionString}, which will be deprecated on August"
                 .  " 15th, 2023.  Please upgrade your PHP version to a minimum of"
-                .  " 70205 before then to continue receiving updates to the AWS"
-                .  " SDK for PHP.  To disable this warning, set "
-                .  " emit_php_deprecation_warning to false on the client constructor.",
+                .  " 7.2.5 before then to continue receiving updates to the AWS"
+                .  " SDK for PHP.  To disable this warning, set"
+                .  " emit_php_deprecation_warning to false on the client constructor"
+                .  " or set the environment variable AWS_EMIT_PHP_DEPRECATION_WARNING"
+                .  " to false.",
                 E_USER_DEPRECATED
             );
         }
