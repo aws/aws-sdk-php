@@ -946,6 +946,8 @@ class ClientResolver
         if ($emitWarning !== false) {
             if (!empty(getenv("AWS_EMIT_PHP_DEPRECATION_WARNING"))) {
                 $emitWarning = getenv("AWS_EMIT_PHP_DEPRECATION_WARNING");
+            } elseif (!empty($_ENV["AWS_EMIT_PHP_DEPRECATION_WARNING"])) {
+                $emitWarning = $_ENV["AWS_EMIT_PHP_DEPRECATION_WARNING"];
             } elseif (!empty($_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"])) {
                 $emitWarning = $_SERVER["AWS_EMIT_PHP_DEPRECATION_WARNING"];
             }
