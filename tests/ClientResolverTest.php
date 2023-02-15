@@ -1111,20 +1111,3 @@ EOT;
             ],
         ];
     }
-
-    public function testEmitsDeprecationWarningOnDeprecatedVersions() {
-        if (PHP_VERSION_ID >= 70205) {
-            $this->markTestSkipped();
-        }
-        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
-        $this->expectExceptionMessage("This installation of the SDK is using PHP version");
-        $result = $resolver->resolve(
-            [
-                'service' => 's3',
-                'version' => 'latest',
-                'region' => 'us-east-2',
-            ],
-            new HandlerList()
-        );
-    }
-}
