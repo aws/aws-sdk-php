@@ -942,29 +942,17 @@ class ClientResolver
     }
 
     public static function _apply_suppress_php_deprecation_warning($suppressWarning, array &$args) {
-        $phpVersion = PHP_VERSION_ID;
-        if (!$suppressWarning) {
-            if (!empty(getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING"))) {
-                $suppressWarning = getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING");
-            } elseif (!empty($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
-                $suppressWarning = $_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
-            } elseif (!empty($_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
-                $suppressWarning = $_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
-            }
-        }
-        if (!$suppressWarning && $phpVersion <  70205) {
-            $phpVersionString = phpversion();
-            trigger_error(
-                "This installation of the SDK is using PHP version"
-                .  " {$phpVersionString}, which will be deprecated on August"
-                .  " 15th, 2023.  Please upgrade your PHP version to a minimum of"
-                .  " 7.2.5 before then to continue receiving updates to the AWS"
-                .  " SDK for PHP.  To disable this warning, set"
-                .  " suppress_php_deprecation_warning to true on the client constructor"
-                .  " or set the environment variable AWS_SUPPRESS_PHP_DEPRECATION_WARNING"
-                .  " to true.",
-                E_USER_DEPRECATED
-            );
+        if ($suppressWarning) {
+            $args['suppress_php_deprecation_warning'] = true;
+        } elseif (!empty($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
+            $args['suppress_php_deprecation_warning'] =
+                $_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
+        } elseif (!empty($_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
+            $args['suppress_php_deprecation_warning'] =
+                $_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
+        } elseif (!empty(getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING"))) {
+            $args['suppress_php_deprecation_warning']
+                = getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING");
         }
     }
 
