@@ -269,7 +269,7 @@ class ClientResolver
             'valid'     => ['bool'],
             'doc'       => 'Set to false to disable the deprecation warning of PHP versions 7.2.4 and below',
             'default'   => false,
-            'fn'        => [__CLASS__, '_suppress_php_deprecation_warning']
+            'fn'        => [__CLASS__, '_apply_suppress_php_deprecation_warning']
         ],
     ];
 
@@ -941,10 +941,10 @@ class ClientResolver
         }
     }
 
-    public static function _suppress_php_deprecation_warning($suppressWarning, array &$args) {
+    public static function _apply_suppress_php_deprecation_warning($suppressWarning, array &$args) {
         $phpVersion = PHP_VERSION_ID;
-        if ($suppressWarning !== true) {
-            if (!empty("AWS_SUPPRESS_PHP_DEPRECATION_WARNING")) {
+        if (!$suppressWarning) {
+            if (!empty(getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING"))) {
                 $suppressWarning = getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING");
             } elseif (!empty($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
                 $suppressWarning = $_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
@@ -952,7 +952,7 @@ class ClientResolver
                 $suppressWarning = $_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
             }
         }
-        if (!$suppressWarning && $phpVersion < 70205) {
+        if (!$suppressWarning && $phpVersion <  70205) {
             $phpVersionString = phpversion();
             trigger_error(
                 "This installation of the SDK is using PHP version"
