@@ -13,8 +13,7 @@ trait HasDataTrait
     /**
      * @return \Traversable
      */
-    #[\ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->data);
     }
@@ -27,8 +26,7 @@ trait HasDataTrait
      *
      * @return mixed|null
      */
-    #[\ReturnTypeWillChange]
-    public function & offsetGet($offset)
+    public function & offsetGet($offset): mixed
     {
         if (isset($this->data[$offset])) {
             return $this->data[$offset];
@@ -41,8 +39,7 @@ trait HasDataTrait
     /**
      * @return void
      */
-    #[\ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->data[$offset] = $value;
     }
@@ -50,8 +47,7 @@ trait HasDataTrait
     /**
      * @return bool
      */
-    #[\ReturnTypeWillChange]
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->data[$offset]);
     }
@@ -59,8 +55,7 @@ trait HasDataTrait
     /**
      * @return void
      */
-    #[\ReturnTypeWillChange]
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
@@ -73,8 +68,7 @@ trait HasDataTrait
     /**
      * @return int
      */
-    #[\ReturnTypeWillChange]
-    public function count()
+    public function count(): int
     {
         return count($this->data);
     }

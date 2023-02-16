@@ -36,8 +36,7 @@ abstract class AbstractModel implements \ArrayAccess
     /**
      * @return mixed|null
      */
-    #[\ReturnTypeWillChange]
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return isset($this->definition[$offset])
             ? $this->definition[$offset] : null;
@@ -46,8 +45,7 @@ abstract class AbstractModel implements \ArrayAccess
     /**
      * @return void
      */
-    #[\ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->definition[$offset] = $value;
     }
@@ -55,8 +53,7 @@ abstract class AbstractModel implements \ArrayAccess
     /**
      * @return bool
      */
-    #[\ReturnTypeWillChange]
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->definition[$offset]);
     }
@@ -64,8 +61,7 @@ abstract class AbstractModel implements \ArrayAccess
     /**
      * @return void
      */
-    #[\ReturnTypeWillChange]
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->definition[$offset]);
     }

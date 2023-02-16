@@ -116,8 +116,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      *
      * @return string
      */
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return (string) $this;
     }

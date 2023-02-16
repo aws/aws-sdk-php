@@ -308,8 +308,7 @@ class HandlerList implements \Countable
     /**
      * @return int
      */
-    #[\ReturnTypeWillChange]
-    public function count()
+    public function count(): int
     {
         return count($this->steps[self::INIT])
             + count($this->steps[self::VALIDATE])
