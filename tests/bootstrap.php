@@ -34,7 +34,3 @@ if (PHP_VERSION_ID >= 70400 && $versionData[0] == 5) {
     $patchGeneratorPath = __DIR__ . '/bootstrap/PHPUnit_Framework_MockObject_Generator_7.4.php';
     file_put_contents($vendorGeneratorPath, file_get_contents($patchGeneratorPath));
 }
-
-if (PHP_VERSION_ID < 70205) {
-    PHPUnit_Framework_Error_Deprecated::$enabled = false;
-}
