@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.258.12 - 2023-02-16
 
 * `Aws\EMR` - This release provides customers the ability to define a timeout period for procuring capacity during a resize operation for Instance Fleet clusters. Customers can specify this timeout using the ResizeSpecifications parameter supported by RunJobFlow, ModifyInstanceFleet and AddInstanceFleet APIs.
 * `Aws\IVS` - Doc-only update. Updated text description in DeleteChannel, Stream, and StreamSummary.
