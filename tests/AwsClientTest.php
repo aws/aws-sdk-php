@@ -16,6 +16,7 @@ use Aws\S3\S3Client;
 use Aws\Signature\SignatureV4;
 use Aws\Sts\StsClient;
 use Aws\WrappedHttpHandler;
+use Exception;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -597,5 +598,82 @@ class AwsClientTest extends TestCase
             'error_parser' => function () {},
             'version'      => 'latest'
         ]);
+    }
+
+    public function testThrowsDeprecationWarning() {
+        $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
+        $storeEnvArrayVariable = isset($_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']) ? $_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] : '';
+        $storeServerArrayVariable = isset($_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']) ? $_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] : '';
+        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
+        unset($_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']);
+        unset($_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']);
+        $expectsDeprecation = PHP_VERSION_ID < 70205;
+        if ($expectsDeprecation) {
+            try {
+                $this->expectDeprecation();
+                $this->expectDeprecationMessage("This installation of the SDK is using PHP version");
+                $client = new StsClient([
+                    'region'  => 'us-west-2',
+                    'version' => 'latest'
+                ]);
+                $this->fail("This test should have thrown the deprecation");
+            } finally {
+                putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
+            }
+        } else {
+            $client = new StsClient([
+                'region'  => 'us-west-2',
+                'version' => 'latest'
+            ]);
+            $this->assertTrue(true);
+        }
+        putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
+        if (!empty($storeEnvArrayVariable)) {
+            $_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] = $storeEnvArrayVariable;
+        }
+        if (!empty($storeServerArrayVariable)) {
+            $_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] = $storeServerArrayVariable;
+        }
+    }
+
+    public function testCanDisableWarningWithClientConfig() {
+        $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
+        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
+        $expectsDeprecation = PHP_VERSION_ID < 70205;
+        if ($expectsDeprecation) {
+            try {
+                $client = new StsClient([
+                    'region'  => 'us-west-2',
+                    'version' => 'latest',
+                    'suppress_php_deprecation_warning' => true
+                ]);
+            } catch (Exception $exception) {
+                $this->fail("This test should not have thrown the deprecation");
+            }
+        } else {
+            putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
+            $this->markTestSkipped();
+        }
+        putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
+    }
+
+    public function testCanDisableWarningWithEnvVar() {
+        $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
+        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
+        $expectsDeprecation = PHP_VERSION_ID < 70205;
+        if ($expectsDeprecation) {
+            try {
+                $client = new StsClient([
+                    'region'  => 'us-west-2',
+                    'version' => 'latest'
+                ]);
+            } catch (Exception $exception) {
+                $this->fail("This test should not have thrown the deprecation");
+            }
+        } else {
+            putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
+            $this->markTestSkipped();
+        }
+        putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
     }
 }
