@@ -610,15 +610,20 @@ class AwsClientTest extends TestCase
         $expectsDeprecation = PHP_VERSION_ID < 70205;
         if ($expectsDeprecation) {
             try {
-                $this->expectDeprecation();
-                $this->expectDeprecationMessage("This installation of the SDK is using PHP version");
+                set_error_handler(function ($e, $message) {
+                    $this->assertStringContainsString("This installation of the SDK is using PHP version", $message);
+                    $this->assertEquals($e, E_USER_DEPRECATED);
+                    throw new Exception("This test successfully triggered the deprecation");
+                });
                 $client = new StsClient([
                     'region'  => 'us-west-2',
                     'version' => 'latest'
                 ]);
                 $this->fail("This test should have thrown the deprecation");
+            } catch (Exception $exception) {
             } finally {
                 putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
+                restore_error_handler();
             }
         } else {
             $client = new StsClient([

@@ -596,7 +596,7 @@ class AwsClient implements AwsClientInterface
         $phpVersion = PHP_VERSION_ID;
         if ($phpVersion <  70205) {
             $phpVersionString = phpversion();
-            trigger_error(
+            @trigger_error(
                 "This installation of the SDK is using PHP version"
                 .  " {$phpVersionString}, which will be deprecated on August"
                 .  " 15th, 2023.  Please upgrade your PHP version to a minimum of"
