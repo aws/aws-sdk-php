@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Emit a warning to users on PHP versions 7.2.4 and below that we are ending support for this language version on 08/15/2023
+* `Aws\AppRunner` - This release supports removing MaxSize limit for AutoScalingConfiguration.
+* `Aws\Glue` - Release of Delta Lake Data Lake Format for Glue Studio Service
+
 ## 3.258.12 - 2023-02-16
 
 * `Aws\EMR` - This release provides customers the ability to define a timeout period for procuring capacity during a resize operation for Instance Fleet clusters. Customers can specify this timeout using the ResizeSpecifications parameter supported by RunJobFlow, ModifyInstanceFleet and AddInstanceFleet APIs.
