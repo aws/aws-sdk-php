@@ -621,9 +621,7 @@ class AwsClientTest extends TestCase
                 ]);
                 $this->fail("This test should have thrown the deprecation");
             } catch (Exception $exception) {
-
-            }
-            finally {
+            } finally {
                 putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
                 restore_error_handler();
             }
@@ -642,7 +640,6 @@ class AwsClientTest extends TestCase
             $_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] = $storeServerArrayVariable;
         }
     }
-
 
     public function testCanDisableWarningWithClientConfig() {
         $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
