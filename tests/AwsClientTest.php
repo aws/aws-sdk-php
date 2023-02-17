@@ -648,7 +648,7 @@ class AwsClientTest extends TestCase
         if ($expectsDeprecation) {
             try {
                 set_error_handler(function ($e, $message) {
-                    $this->fail("This test should not have thrown the deprecation");
+                    $this->fail("This test should not have thrown any error");
                 });
                 $client = new StsClient([
                     'region'  => 'us-west-2',
@@ -657,6 +657,7 @@ class AwsClientTest extends TestCase
                 ]);
             } catch (Exception $exception) {
                 restore_error_handler();
+                $this->fail("This test should not have thrown the deprecation");
             }
         } else {
             putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
@@ -667,12 +668,13 @@ class AwsClientTest extends TestCase
 
     public function testCanDisableWarningWithEnvVar() {
         $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
-        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
+        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=');
         $expectsDeprecation = PHP_VERSION_ID < 70205;
         if ($expectsDeprecation) {
             try {
                 set_error_handler(function ($e, $message) {
-                    $this->fail("This test should not have thrown the deprecation");
+                    echo "hi";
+                    $this->fail("This test should not have thrown any error");
                 });
                 $client = new StsClient([
                     'region'  => 'us-west-2',
@@ -680,6 +682,7 @@ class AwsClientTest extends TestCase
                 ]);
             } catch (Exception $exception) {
                 restore_error_handler();
+                $this->fail("This test should not have thrown the deprecation");
             }
         } else {
             putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
