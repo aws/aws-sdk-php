@@ -605,6 +605,8 @@ class AwsClientTest extends TestCase
         $storeEnvArrayVariable = isset($_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']) ? $_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] : '';
         $storeServerArrayVariable = isset($_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']) ? $_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] : '';
         putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
+        unset($_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']);
+        unset($_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']);
         $expectsDeprecation = PHP_VERSION_ID < 70205;
         if ($expectsDeprecation) {
             try {
