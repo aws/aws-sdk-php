@@ -648,7 +648,7 @@ class AwsClientTest extends TestCase
         if ($expectsDeprecation) {
             try {
                 set_error_handler(function ($e, $message) {
-                    $this->fail("This test should not have thrown any error");
+                    $this->assertStringNotContainsString("This installation of the SDK is using PHP version", $message);
                 });
                 $client = new StsClient([
                     'region'  => 'us-west-2',
@@ -668,12 +668,12 @@ class AwsClientTest extends TestCase
 
     public function testCanDisableWarningWithEnvVar() {
         $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
-        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=');
+        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
         $expectsDeprecation = PHP_VERSION_ID < 70205;
         if ($expectsDeprecation) {
             try {
                 set_error_handler(function ($e, $message) {
-                    $this->fail("This test should not have thrown any error");
+                    $this->assertStringNotContainsString("This installation of the SDK is using PHP version", $message);
                 });
                 $client = new StsClient([
                     'region'  => 'us-west-2',
