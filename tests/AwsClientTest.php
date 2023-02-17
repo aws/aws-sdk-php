@@ -602,12 +602,14 @@ class AwsClientTest extends TestCase
 
     public function testThrowsDeprecationWarning() {
         $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
+        $storeEnvArrayVariable = isset($_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']) ? $_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] : '';
+        $storeServerArrayVariable = isset($_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']) ? $_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] : '';
         putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
         $expectsDeprecation = PHP_VERSION_ID < 70205;
         if ($expectsDeprecation) {
             try {
-                $this->expectError();
-                $this->expectErrorMessage("This installation of the SDK is using PHP version");
+                $this->expectDeprecation();
+                $this->expectDeprecationMessage("This installation of the SDK is using PHP version");
                 $client = new StsClient([
                     'region'  => 'us-west-2',
                     'version' => 'latest'
@@ -624,7 +626,12 @@ class AwsClientTest extends TestCase
             $this->assertTrue(true);
         }
         putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
-
+        if (!empty($storeEnvArrayVariable)) {
+            $_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] = $storeEnvArrayVariable;
+        }
+        if (!empty($storeServerArrayVariable)) {
+            $_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] = $storeServerArrayVariable;
+        }
     }
 
     public function testCanDisableWarningWithClientConfig() {
