@@ -673,7 +673,6 @@ class AwsClientTest extends TestCase
         if ($expectsDeprecation) {
             try {
                 set_error_handler(function ($e, $message) {
-                    echo "hi";
                     $this->fail("This test should not have thrown any error");
                 });
                 $client = new StsClient([
