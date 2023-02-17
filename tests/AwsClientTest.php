@@ -648,6 +648,7 @@ class AwsClientTest extends TestCase
         if ($expectsDeprecation) {
             try {
                 set_error_handler(function ($e, $message) {
+                    restore_error_handler();
                     $this->assertStringNotContainsString("This installation of the SDK is using PHP version", $message);
                 });
                 $client = new StsClient([
@@ -656,7 +657,6 @@ class AwsClientTest extends TestCase
                     'suppress_php_deprecation_warning' => true
                 ]);
             } catch (Exception $exception) {
-                restore_error_handler();
                 $this->fail("This test should not have thrown the deprecation");
             }
         } else {
@@ -673,6 +673,7 @@ class AwsClientTest extends TestCase
         if ($expectsDeprecation) {
             try {
                 set_error_handler(function ($e, $message) {
+                    restore_error_handler();
                     $this->assertStringNotContainsString("This installation of the SDK is using PHP version", $message);
                 });
                 $client = new StsClient([
@@ -680,7 +681,6 @@ class AwsClientTest extends TestCase
                     'version' => 'latest'
                 ]);
             } catch (Exception $exception) {
-                restore_error_handler();
                 $this->fail("This test should not have thrown the deprecation");
             }
         } else {
