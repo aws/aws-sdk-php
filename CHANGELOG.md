@@ -1,5 +1,56 @@
 # CHANGELOG
 
+## 3.258.12 - 2023-02-16
+
+* `Aws\EMR` - This release provides customers the ability to define a timeout period for procuring capacity during a resize operation for Instance Fleet clusters. Customers can specify this timeout using the ResizeSpecifications parameter supported by RunJobFlow, ModifyInstanceFleet and AddInstanceFleet APIs.
+* `Aws\IVS` - Doc-only update. Updated text description in DeleteChannel, Stream, and StreamSummary.
+* `Aws\ManagedGrafana` - With this release Amazon Managed Grafana now supports inbound Network Access Control that helps you to restrict user access to your Grafana workspaces
+* `Aws\WAFV2` - Added a notice for account takeover prevention (ATP). The interface incorrectly lets you to configure ATP response inspection in regional web ACLs in Region US East (N. Virginia), without returning an error. ATP response inspection is only available in web ACLs that protect CloudFront distributions.
+
+## 3.258.11 - 2023-02-15
+
+* `Aws\CloudTrail` - This release adds an InsufficientEncryptionPolicyException type to the StartImport endpoint
+* `Aws\EFS` - Documentation update for EFS to support IAM best practices.
+* `Aws\FraudDetector` - This release introduces Lists feature which allows customers to reference a set of values in Fraud Detector's rules. With Lists, customers can dynamically manage these attributes in real time. Lists can be created/deleted and its contents can be modified using the Fraud Detector API.
+* `Aws\Glue` - Fix DirectJDBCSource not showing up in CLI code gen
+* `Aws\PrivateNetworks` - This release introduces a new StartNetworkResourceUpdate API, which enables return/replacement of hardware from a NetworkSite.
+* `Aws\RDS` - Database Activity Stream support for RDS for SQL Server.
+* `Aws\WAFV2` - For protected CloudFront distributions, you can now use the AWS WAF Fraud Control account takeover prevention (ATP) managed rule group to block new login attempts from clients that have recently submitted too many failed login attempts.
+
+## 3.258.10 - 2023-02-14
+
+* `Aws\` - Adds integ tests for CRT features.
+* `Aws\AppConfig` - AWS AppConfig now offers the option to set a version label on hosted configuration versions. Version labels allow you to identify specific hosted configuration versions based on an alternate versioning scheme that you define.
+* `Aws\DataSync` - With this launch, we are giving customers the ability to use older SMB protocol versions, enabling them to use DataSync to copy data to and from their legacy storage arrays.
+* `Aws\EC2` - With this release customers can turn host maintenance on or off when allocating or modifying a supported dedicated host. Host maintenance is turned on by default for supported hosts.
+
+## 3.258.9 - 2023-02-13
+
+* `Aws\Account` - This release of the Account Management API enables customers to view and manage whether AWS Opt-In Regions are enabled or disabled for their Account. For more information, see https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-regions.html
+* `Aws\AppConfigData` - AWS AppConfig now offers the option to set a version label on hosted configuration versions. If a labeled hosted configuration version is deployed, its version label is available in the GetLatestConfiguration response.
+* `Aws\Snowball` - Adds support for EKS Anywhere on Snowball. AWS Snow Family customers can now install EKS Anywhere service on Snowball Edge Compute Optimized devices.
+
+## 3.258.8 - 2023-02-10
+
+* `Aws\AutoScaling` - You can now either terminate/replace, ignore, or wait for EC2 Auto Scaling instances on standby or protected from scale in. Also, you can also roll back changes from a failed instance refresh.
+* `Aws\Connect` - This update provides the Wisdom session ARN for contacts enabled for Wisdom in the chat channel.
+* `Aws\EC2` - Adds support for waiters that automatically poll for an imported snapshot until it reaches the completed state.
+* `Aws\Polly` - Amazon Polly adds two new neural Japanese voices - Kazuha, Tomoko
+* `Aws\SNS` - This release adds support for SNS X-Ray active tracing as well as other updates.
+* `Aws\SageMaker` - Amazon SageMaker Autopilot adds support for selecting algorithms in CreateAutoMLJob API.
+
+## 3.258.7 - 2023-02-09
+
+* `Aws\ChimeSDKMeetings` - Documentation updates for Chime Meetings SDK
+* `Aws\CloudWatchEvidently` - Updated entity overrides parameter to accept up to 2500 overrides or a total of 40KB.
+* `Aws\EMRContainers` - EMR on EKS allows configuring retry policies for job runs through the StartJobRun API. Using retry policies, a job cause a driver pod to be restarted automatically if it fails or is deleted. The job's status can be seen in the DescribeJobRun and ListJobRun APIs and monitored using CloudWatch events.
+* `Aws\LexModelsV2` - AWS Lex now supports Network of Bots.
+* `Aws\LexRuntimeV2` - AWS Lex now supports Network of Bots.
+* `Aws\Lightsail` - Documentation updates for Lightsail
+* `Aws\MigrationHubRefactorSpaces` - This release adds support for creating environments with a network fabric type of NONE
+* `Aws\WorkDocs` - Doc only update for the WorkDocs APIs.
+* `Aws\WorkSpaces` - Removed Windows Server 2016 BYOL and made changes based on IAM campaign.
+
 ## 3.258.6 - 2023-02-08
 
 * `Aws\Backup` - This release added one attribute (resource name) in the output model of our 9 existing APIs in AWS backup so that customers will see the resource name at the output. No input required from Customers.

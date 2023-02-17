@@ -1446,6 +1446,7 @@
           "ap-south-1" : { },
           "ap-southeast-1" : { },
           "ap-southeast-2" : { },
+          "ap-southeast-3" : { },
           "ca-central-1" : { },
           "eu-central-1" : { },
           "eu-north-1" : { },
@@ -2248,6 +2249,11 @@
       },
       "cases" : {
         "endpoints" : {
+          "ap-southeast-1" : { },
+          "ap-southeast-2" : { },
+          "ca-central-1" : { },
+          "eu-central-1" : { },
+          "eu-west-2" : { },
           "fips-us-east-1" : {
             "deprecated" : true
           },
@@ -3636,6 +3642,7 @@
       "connect-campaigns" : {
         "endpoints" : {
           "ap-southeast-2" : { },
+          "ca-central-1" : { },
           "eu-west-2" : { },
           "fips-us-east-1" : {
             "credentialScope" : {
@@ -7280,6 +7287,7 @@
           "ap-northeast-2" : { },
           "ap-northeast-3" : { },
           "ap-south-1" : { },
+          "ap-south-2" : { },
           "ap-southeast-1" : { },
           "ap-southeast-2" : { },
           "ap-southeast-3" : { },
@@ -7288,6 +7296,7 @@
           "eu-central-2" : { },
           "eu-north-1" : { },
           "eu-south-1" : { },
+          "eu-south-2" : { },
           "eu-west-1" : { },
           "eu-west-2" : { },
           "eu-west-3" : { },
@@ -8280,11 +8289,17 @@
           "ap-east-1" : {
             "hostname" : "kendra-ranking.ap-east-1.api.aws"
           },
+          "ap-northeast-1" : {
+            "hostname" : "kendra-ranking.ap-northeast-1.api.aws"
+          },
           "ap-northeast-2" : {
             "hostname" : "kendra-ranking.ap-northeast-2.api.aws"
           },
           "ap-northeast-3" : {
             "hostname" : "kendra-ranking.ap-northeast-3.api.aws"
+          },
+          "ap-south-1" : {
+            "hostname" : "kendra-ranking.ap-south-1.api.aws"
           },
           "ap-south-2" : {
             "hostname" : "kendra-ranking.ap-south-2.api.aws"
@@ -11415,6 +11430,7 @@
           "ap-southeast-1" : { },
           "ap-southeast-2" : { },
           "ap-southeast-3" : { },
+          "ap-southeast-4" : { },
           "ca-central-1" : {
             "variants" : [ {
               "hostname" : "ram-fips.ca-central-1.amazonaws.com",
@@ -17681,6 +17697,15 @@
           }
         }
       },
+      "servicequotas" : {
+        "defaults" : {
+          "protocols" : [ "https" ]
+        },
+        "endpoints" : {
+          "cn-north-1" : { },
+          "cn-northwest-1" : { }
+        }
+      },
       "sms" : {
         "endpoints" : {
           "cn-north-1" : { },
@@ -19585,18 +19610,32 @@
       },
       "glacier" : {
         "endpoints" : {
-          "us-gov-east-1" : {
+          "fips-us-gov-east-1" : {
             "credentialScope" : {
               "region" : "us-gov-east-1"
             },
+            "deprecated" : true,
             "hostname" : "glacier.us-gov-east-1.amazonaws.com"
           },
-          "us-gov-west-1" : {
+          "fips-us-gov-west-1" : {
             "credentialScope" : {
               "region" : "us-gov-west-1"
             },
-            "hostname" : "glacier.us-gov-west-1.amazonaws.com",
-            "protocols" : [ "http", "https" ]
+            "deprecated" : true,
+            "hostname" : "glacier.us-gov-west-1.amazonaws.com"
+          },
+          "us-gov-east-1" : {
+            "variants" : [ {
+              "hostname" : "glacier.us-gov-east-1.amazonaws.com",
+              "tags" : [ "fips" ]
+            } ]
+          },
+          "us-gov-west-1" : {
+            "protocols" : [ "http", "https" ],
+            "variants" : [ {
+              "hostname" : "glacier.us-gov-west-1.amazonaws.com",
+              "tags" : [ "fips" ]
+            } ]
           }
         }
       },
@@ -20491,17 +20530,31 @@
       },
       "outposts" : {
         "endpoints" : {
-          "us-gov-east-1" : {
+          "fips-us-gov-east-1" : {
             "credentialScope" : {
               "region" : "us-gov-east-1"
             },
+            "deprecated" : true,
             "hostname" : "outposts.us-gov-east-1.amazonaws.com"
           },
-          "us-gov-west-1" : {
+          "fips-us-gov-west-1" : {
             "credentialScope" : {
               "region" : "us-gov-west-1"
             },
+            "deprecated" : true,
             "hostname" : "outposts.us-gov-west-1.amazonaws.com"
+          },
+          "us-gov-east-1" : {
+            "variants" : [ {
+              "hostname" : "outposts.us-gov-east-1.amazonaws.com",
+              "tags" : [ "fips" ]
+            } ]
+          },
+          "us-gov-west-1" : {
+            "variants" : [ {
+              "hostname" : "outposts.us-gov-west-1.amazonaws.com",
+              "tags" : [ "fips" ]
+            } ]
           }
         }
       },
@@ -20876,6 +20929,7 @@
           } ]
         },
         "endpoints" : {
+          "us-gov-east-1" : { },
           "us-gov-west-1" : {
             "variants" : [ {
               "hostname" : "runtime.sagemaker.us-gov-west-1.amazonaws.com",

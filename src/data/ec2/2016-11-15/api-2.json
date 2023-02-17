@@ -5994,7 +5994,8 @@
           "locationName":"TagSpecification"
         },
         "HostRecovery":{"shape":"HostRecovery"},
-        "OutpostArn":{"shape":"String"}
+        "OutpostArn":{"shape":"String"},
+        "HostMaintenance":{"shape":"HostMaintenance"}
       }
     },
     "AllocateHostsResult":{
@@ -23394,6 +23395,10 @@
         "OutpostArn":{
           "shape":"String",
           "locationName":"outpostArn"
+        },
+        "HostMaintenance":{
+          "shape":"HostMaintenance",
+          "locationName":"hostMaintenance"
         }
       }
     },
@@ -23427,6 +23432,13 @@
         "shape":"Host",
         "locationName":"item"
       }
+    },
+    "HostMaintenance":{
+      "type":"string",
+      "enum":[
+        "on",
+        "off"
+      ]
     },
     "HostOffering":{
       "type":"structure",
@@ -28437,7 +28449,7 @@
       "type":"structure",
       "members":{
         "UserData":{
-          "shape":"String",
+          "shape":"SensitiveUserData",
           "locationName":"userData"
         },
         "SecurityGroups":{
@@ -30339,7 +30351,8 @@
         },
         "HostRecovery":{"shape":"HostRecovery"},
         "InstanceType":{"shape":"String"},
-        "InstanceFamily":{"shape":"String"}
+        "InstanceFamily":{"shape":"String"},
+        "HostMaintenance":{"shape":"HostMaintenance"}
       }
     },
     "ModifyHostsResult":{
@@ -35597,7 +35610,7 @@
           "locationName":"subnetId"
         },
         "UserData":{
-          "shape":"String",
+          "shape":"SensitiveUserData",
           "locationName":"userData"
         }
       }
@@ -36433,7 +36446,7 @@
           "locationName":"instanceInitiatedShutdownBehavior"
         },
         "UserData":{
-          "shape":"String",
+          "shape":"SensitiveUserData",
           "locationName":"userData"
         },
         "TagSpecifications":{
@@ -37436,7 +37449,8 @@
         },
         "SubnetId":{"shape":"SubnetId"},
         "UserData":{"shape":"String"}
-      }
+      },
+      "sensitive":true
     },
     "ScheduledInstancesMonitoring":{
       "type":"structure",
@@ -38496,7 +38510,7 @@
           "locationName":"subnetId"
         },
         "UserData":{
-          "shape":"String",
+          "shape":"SensitiveUserData",
           "locationName":"userData"
         },
         "WeightedCapacity":{
