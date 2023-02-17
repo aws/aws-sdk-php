@@ -610,15 +610,20 @@ class AwsClientTest extends TestCase
         $expectsDeprecation = PHP_VERSION_ID < 70205;
         if ($expectsDeprecation) {
             try {
-                $this->expectDeprecation();
-                $this->expectDeprecationMessage("This installation of the SDK is using PHP version");
+                set_error_handler(function ($e, $message) {
+                    $this->assertStringContainsString("This installation of the SDK is using PHP version", $message);
+                    $this->assertEquals($e, E_USER_DEPRECATED);
+                    throw new Exception("This test successfully triggered the deprecation");
+                });
                 $client = new StsClient([
                     'region'  => 'us-west-2',
                     'version' => 'latest'
                 ]);
                 $this->fail("This test should have thrown the deprecation");
+            } catch (Exception $exception) {
             } finally {
                 putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
+                restore_error_handler();
             }
         } else {
             $client = new StsClient([
@@ -642,12 +647,17 @@ class AwsClientTest extends TestCase
         $expectsDeprecation = PHP_VERSION_ID < 70205;
         if ($expectsDeprecation) {
             try {
+                set_error_handler(function ($e, $message) {
+                    $this->assertStringNotContainsString("This installation of the SDK is using PHP version", $message);
+                });
                 $client = new StsClient([
                     'region'  => 'us-west-2',
                     'version' => 'latest',
                     'suppress_php_deprecation_warning' => true
                 ]);
+                restore_error_handler();
             } catch (Exception $exception) {
+                restore_error_handler();
                 $this->fail("This test should not have thrown the deprecation");
             }
         } else {
@@ -663,11 +673,17 @@ class AwsClientTest extends TestCase
         $expectsDeprecation = PHP_VERSION_ID < 70205;
         if ($expectsDeprecation) {
             try {
+                set_error_handler(function ($e, $message) {
+                    echo "hi";
+                    $this->assertStringNotContainsString("This installation of the SDK is using PHP version", $message);
+                });
                 $client = new StsClient([
                     'region'  => 'us-west-2',
                     'version' => 'latest'
                 ]);
+                restore_error_handler();
             } catch (Exception $exception) {
+                restore_error_handler();
                 $this->fail("This test should not have thrown the deprecation");
             }
         } else {
