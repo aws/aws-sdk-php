@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.259.0 - 2023-02-17
 
 * `Aws\` - Emit a warning to users on PHP versions 7.2.4 and below that we are ending support for this language version on 08/15/2023
 * `Aws\AppRunner` - This release supports removing MaxSize limit for AutoScalingConfiguration.
