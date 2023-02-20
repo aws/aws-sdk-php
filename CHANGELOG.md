@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.259.1 - 2023-02-20
 
 * `Aws\AuditManager` - This release introduces a ServiceQuotaExceededException to the UpdateAssessmentFrameworkShare API operation.
 * `Aws\Connect` - Reasons for failed diff has been approved by SDK Reviewer
