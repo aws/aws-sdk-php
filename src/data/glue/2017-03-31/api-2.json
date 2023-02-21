@@ -3911,6 +3911,21 @@
       "members":{
       }
     },
+    "CatalogDeltaSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "AdditionalDeltaOptions":{"shape":"AdditionalOptions"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
     "CatalogEncryptionMode":{
       "type":"string",
       "enum":[
@@ -4165,7 +4180,13 @@
         "CatalogHudiSource":{"shape":"CatalogHudiSource"},
         "S3HudiSource":{"shape":"S3HudiSource"},
         "S3HudiCatalogTarget":{"shape":"S3HudiCatalogTarget"},
-        "S3HudiDirectTarget":{"shape":"S3HudiDirectTarget"}
+        "S3HudiDirectTarget":{"shape":"S3HudiDirectTarget"},
+        "DirectJDBCSource":{"shape":"DirectJDBCSource"},
+        "S3CatalogDeltaSource":{"shape":"S3CatalogDeltaSource"},
+        "CatalogDeltaSource":{"shape":"CatalogDeltaSource"},
+        "S3DeltaSource":{"shape":"S3DeltaSource"},
+        "S3DeltaCatalogTarget":{"shape":"S3DeltaCatalogTarget"},
+        "S3DeltaDirectTarget":{"shape":"S3DeltaDirectTarget"}
       }
     },
     "CodeGenConfigurationNodes":{
@@ -6083,6 +6104,13 @@
         "CreateNativeDeltaTable":{"shape":"NullableBoolean"}
       }
     },
+    "DeltaTargetCompressionType":{
+      "type":"string",
+      "enum":[
+        "uncompressed",
+        "snappy"
+      ]
+    },
     "DeltaTargetList":{
       "type":"list",
       "member":{"shape":"DeltaTarget"}
@@ -6149,6 +6177,24 @@
       "member":{"shape":"GenericString"},
       "max":25,
       "min":1
+    },
+    "DirectJDBCSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table",
+        "ConnectionName",
+        "ConnectionType"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "ConnectionName":{"shape":"EnclosedInStringProperty"},
+        "ConnectionType":{"shape":"JDBCConnectionType"},
+        "RedshiftTmpDir":{"shape":"EnclosedInStringProperty"}
+      }
     },
     "DirectKafkaSource":{
       "type":"structure",
@@ -8043,6 +8089,16 @@
       "exception":true
     },
     "IsVersionValid":{"type":"boolean"},
+    "JDBCConnectionType":{
+      "type":"string",
+      "enum":[
+        "sqlserver",
+        "mysql",
+        "oracle",
+        "postgresql",
+        "redshift"
+      ]
+    },
     "JDBCConnectorOptions":{
       "type":"structure",
       "members":{
@@ -8402,7 +8458,10 @@
         "NumRetries":{"shape":"BoxedNonNegativeInt"},
         "RetryIntervalMs":{"shape":"BoxedNonNegativeLong"},
         "MaxOffsetsPerTrigger":{"shape":"BoxedNonNegativeLong"},
-        "MinPartitions":{"shape":"BoxedNonNegativeInt"}
+        "MinPartitions":{"shape":"BoxedNonNegativeInt"},
+        "IncludeHeaders":{"shape":"BoxedBoolean"},
+        "AddRecordTimestamp":{"shape":"EnclosedInStringProperty"},
+        "EmitConsumerLagMetrics":{"shape":"EnclosedInStringProperty"}
       }
     },
     "KeyList":{
@@ -8452,7 +8511,9 @@
         "AvoidEmptyBatches":{"shape":"BoxedBoolean"},
         "StreamArn":{"shape":"EnclosedInStringProperty"},
         "RoleArn":{"shape":"EnclosedInStringProperty"},
-        "RoleSessionName":{"shape":"EnclosedInStringProperty"}
+        "RoleSessionName":{"shape":"EnclosedInStringProperty"},
+        "AddRecordTimestamp":{"shape":"EnclosedInStringProperty"},
+        "EmitConsumerLagMetrics":{"shape":"EnclosedInStringProperty"}
       }
     },
     "KmsKeyArn":{
@@ -10014,6 +10075,21 @@
         "Id":{"shape":"IntegerValue"}
       }
     },
+    "S3CatalogDeltaSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "AdditionalDeltaOptions":{"shape":"AdditionalOptions"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
     "S3CatalogHudiSource":{
       "type":"structure",
       "required":[
@@ -10088,6 +10164,58 @@
         "WriteHeader":{"shape":"BoxedBoolean"},
         "SkipFirst":{"shape":"BoxedBoolean"},
         "OptimizePerformance":{"shape":"BooleanValue"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
+    "S3DeltaCatalogTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Table",
+        "Database"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "AdditionalOptions":{"shape":"AdditionalOptions"},
+        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"}
+      }
+    },
+    "S3DeltaDirectTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Path",
+        "Compression",
+        "Format"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
+        "Path":{"shape":"EnclosedInStringProperty"},
+        "Compression":{"shape":"DeltaTargetCompressionType"},
+        "Format":{"shape":"TargetFormat"},
+        "AdditionalOptions":{"shape":"AdditionalOptions"},
+        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
+      }
+    },
+    "S3DeltaSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Paths"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Paths":{"shape":"EnclosedInStringProperties"},
+        "AdditionalDeltaOptions":{"shape":"AdditionalOptions"},
+        "AdditionalOptions":{"shape":"S3DirectSourceAdditionalOptions"},
         "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
@@ -11271,7 +11399,8 @@
         "avro",
         "orc",
         "parquet",
-        "hudi"
+        "hudi",
+        "delta"
       ]
     },
     "TaskRun":{

@@ -60,6 +60,9 @@ sync-models: check-models-dir
 integ:
 	vendor/bin/behat --format=progress --tags=integ
 
+integ-nocrt:
+	vendor/bin/behat --format=progress --tags='@integ&&~@crt'
+
 smoke:
 	vendor/bin/behat --format=progress --suite=smoke
 
