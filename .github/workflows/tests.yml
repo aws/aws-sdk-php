@@ -38,6 +38,10 @@ jobs:
     #checkout the codebase from github
     - name: Checkout codebase
       uses: actions/checkout@v3
+      
+    # set up ssl config
+    - name: SSL Config Change
+      run: sed -i 's/openssl_conf = openssl_init/#openssl_conf = openssl_init/g' /etc/ssl/openssl.cnf
 
     #validate composer files
     - name: Validate composer.json and composer.lock
