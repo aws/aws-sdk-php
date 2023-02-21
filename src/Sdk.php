@@ -636,6 +636,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionTimestreamQuery(array $args = [])
  * @method \Aws\TimestreamWrite\TimestreamWriteClient createTimestreamWrite(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTimestreamWrite(array $args = [])
+ * @method \Aws\Tnb\TnbClient createTnb(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionTnb(array $args = [])
  * @method \Aws\TranscribeService\TranscribeServiceClient createTranscribeService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTranscribeService(array $args = [])
  * @method \Aws\Transfer\TransferClient createTransfer(array $args = [])

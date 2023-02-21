@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QuickSight` - S3 data sources now accept a custom IAM role.
+* `Aws\ResilienceHub` - In this release we improved resilience hub application creation and maintenance by introducing new resource and app component crud APIs, improving visibility and maintenance of application input sources and added support for additional information attributes to be provided by customers.
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub
+* `Aws\Tnb` - This is the initial SDK release for AWS Telco Network Builder (TNB). AWS Telco Network Builder is a network automation service that helps you deploy and manage telecom networks.
+
 ## 3.259.1 - 2023-02-20
 
 * `Aws\AuditManager` - This release introduces a ServiceQuotaExceededException to the UpdateAssessmentFrameworkShare API operation.
