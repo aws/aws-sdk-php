@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.260.0 - 2023-02-21
 
 * `Aws\QuickSight` - S3 data sources now accept a custom IAM role.
 * `Aws\ResilienceHub` - In this release we improved resilience hub application creation and maintenance by introducing new resource and app component crud APIs, improving visibility and maintenance of application input sources and added support for additional information attributes to be provided by customers.
