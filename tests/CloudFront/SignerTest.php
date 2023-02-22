@@ -40,6 +40,7 @@ class SignerTest extends TestCase
      */
     public function testBadPrivateKeyPath() {
         $this->expectExceptionMessageMatches("/PEM .*no start line/");
+        phpinfo();
         $this->expectException(\InvalidArgumentException::class);
         $filename = tempnam(sys_get_temp_dir(), 'cloudfront-fake-key');
         file_put_contents($filename, "Not a real private key");
