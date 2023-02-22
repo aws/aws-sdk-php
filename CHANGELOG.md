@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.260.1 - 2023-02-22
 
 * `Aws\ChimeSDKVoice` - This release introduces support for Voice Connector media metrics in the Amazon Chime SDK Voice namespace
 * `Aws\CloudFront` - CloudFront now supports block lists in origin request policies so that you can forward all headers, cookies, or query string from viewer requests to the origin *except* for those specified in the block list.
