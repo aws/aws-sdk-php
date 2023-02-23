@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.260.2 - 2023-02-23
 
 * `Aws\Appflow` - This release enables the customers to choose whether to use Private Link for Metadata and Authorization call when using a private Salesforce connections
 * `Aws\ECS` - This release supports deleting Amazon ECS task definitions that are in the INACTIVE state.
