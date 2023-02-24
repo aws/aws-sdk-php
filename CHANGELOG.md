@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.260.3 - 2023-02-24
 
 * `Aws\Connect` - StartTaskContact API now supports linked task creation with a new optional RelatedContactId parameter
 * `Aws\ConnectCases` - This release adds the ability to delete domains through the DeleteDomain API. For more information see https://docs.aws.amazon.com/cases/latest/APIReference/Welcome.html
