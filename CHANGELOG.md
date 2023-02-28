@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Comprehend` - Amazon Comprehend now supports flywheels to help you train and manage new model versions for custom models.
+* `Aws\EC2` - This release allows IMDS support to be set to v2-only on an existing AMI, so that all future instances launched from that AMI will use IMDSv2 by default.
+* `Aws\KMS` - AWS KMS is deprecating the RSAES_PKCS1_V1_5 wrapping algorithm option in the GetParametersForImport API that is used in the AWS KMS Import Key Material feature. AWS KMS will end support for this wrapping algorithm by October 1, 2023.
+* `Aws\Lightsail` - This release adds Lightsail for Research feature support, such as GUI session access, cost estimates, stop instance on idle, and disk auto mount.
+* `Aws\ManagedBlockchain` - This release adds support for tagging to the accessor resource in Amazon Managed Blockchain
+* `Aws\Omics` - Minor model changes to accomodate batch imports feature
+
 ## 3.261.0 - 2023-02-27
 
 * `Aws\DevOpsGuru` - This release adds the description field on ListAnomaliesForInsight and DescribeAnomaly API responses for proactive anomalies.
