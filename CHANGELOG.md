@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.1 - 2023-02-28
 
 * `Aws\Comprehend` - Amazon Comprehend now supports flywheels to help you train and manage new model versions for custom models.
 * `Aws\EC2` - This release allows IMDS support to be set to v2-only on an existing AMI, so that all future instances launched from that AMI will use IMDSv2 by default.
