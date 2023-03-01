@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.2 - 2023-03-01
 
 * `Aws\CodeCatalyst` - Published Dev Environments StopDevEnvironmentSession API
 * `Aws\Pricing` - This release adds 2 new APIs - ListPriceLists which returns a list of applicable price lists, and GetPriceListFileUrl which outputs a URL to retrieve your price lists from the generated file from ListPriceLists
