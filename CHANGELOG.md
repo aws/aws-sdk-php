@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeCatalyst` - Published Dev Environments StopDevEnvironmentSession API
+* `Aws\Pricing` - This release adds 2 new APIs - ListPriceLists which returns a list of applicable price lists, and GetPriceListFileUrl which outputs a URL to retrieve your price lists from the generated file from ListPriceLists
+* `Aws\S3Outposts` - S3 on Outposts introduces a new API ListOutpostsWithS3, with this API you can list all your Outposts with S3 capacity.
+
 ## 3.261.1 - 2023-02-28
 
 * `Aws\Comprehend` - Amazon Comprehend now supports flywheels to help you train and manage new model versions for custom models.

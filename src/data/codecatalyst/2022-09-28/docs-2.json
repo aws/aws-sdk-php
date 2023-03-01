@@ -1,9 +1,9 @@
 {
   "version": "2.0",
-  "service": "<note> <p> <b>Amazon CodeCatalyst is in preview release and subject to change.</b> </p> </note> <p>Welcome to the Amazon CodeCatalyst API reference. This reference provides descriptions of operations and data types for Amazon CodeCatalyst. You can use the Amazon CodeCatalyst API to work with the following objects. </p> <p>Dev Environments and the Amazon Web Services Toolkits, by calling the following:</p> <ul> <li> <p> <a>CreateAccessToken</a>, which creates a personal access token (PAT) for the current user.</p> </li> <li> <p> <a>CreateDevEnvironment</a>, which creates a Dev Environment, where you can quickly work on the code stored in the source repositories of your project.</p> </li> <li> <p> <a>CreateProject</a> which creates a project in a specified space.</p> </li> <li> <p> <a>CreateSourceRepositoryBranch</a>, which creates a branch in a specified repository where you can work on code.</p> </li> <li> <p> <a>DeleteDevEnvironment</a>, which deletes a Dev Environment.</p> </li> <li> <p> <a>GetDevEnvironment</a>, which returns information about a Dev Environment.</p> </li> <li> <p> <a>GetProject</a>, which returns information about a project.</p> </li> <li> <p> <a>GetSourceRepositoryCloneUrls</a>, which returns information about the URLs that can be used with a Git client to clone a source repository.</p> </li> <li> <p> <a>GetSubscription</a>, which returns information about the Amazon Web Services account used for billing purposes and the billing plan for the space.</p> </li> <li> <p> <a>GetUserDetails</a>, which returns information about a user in Amazon CodeCatalyst.</p> </li> <li> <p> <a>ListDevEnvironments</a>, which retrives a list of Dev Environments in a project.</p> </li> <li> <p> <a>ListProjects</a>, which retrieves a list of projects in a space.</p> </li> <li> <p> <a>ListSourceRepositories</a>, which retrieves a list of source repositories in a project.</p> </li> <li> <p> <a>ListSourceRepositoryBranches</a>, which retrieves a list of branches in a source repository.</p> </li> <li> <p> <a>ListSpaces</a>, which retrieves a list of spaces.</p> </li> <li> <p> <a>StartDevEnvironment</a>, which starts a specified Dev Environment and puts it into an active state.</p> </li> <li> <p> <a>StartDevEnvironmentSession</a>, which starts a session to a specified Dev Environment.</p> </li> <li> <p> <a>StopDevEnvironment</a>, which stops a specified Dev Environment and puts it into an stopped state.</p> </li> <li> <p> <a>UpdateDevEnvironment</a>, which changes one or more values for a Dev Environment.</p> </li> <li> <p> <a>VerifySession</a>, which verifies whether the calling user has a valid Amazon CodeCatalyst login and session.</p> </li> </ul> <p>Security, activity, and resource management in Amazon CodeCatalyst, by calling the following:</p> <ul> <li> <p> <a>DeleteAccessToken</a>, which deletes a specified personal access token (PAT).</p> </li> <li> <p> <a>ListAccessTokens</a>, which lists all personal access tokens (PATs) associated with a user.</p> </li> <li> <p> <a>ListEventLogs</a>, which retrieves a list of events that occurred during a specified time period in a space.</p> </li> </ul>",
+  "service": "<note> <p> <b>Amazon CodeCatalyst is in preview release and subject to change.</b> </p> </note> <p>Welcome to the Amazon CodeCatalyst API reference. This reference provides descriptions of operations and data types for Amazon CodeCatalyst. You can use the Amazon CodeCatalyst API to work with the following objects. </p> <p>Dev Environments and the Amazon Web Services Toolkits, by calling the following:</p> <ul> <li> <p> <a>CreateAccessToken</a>, which creates a personal access token (PAT) for the current user.</p> </li> <li> <p> <a>CreateDevEnvironment</a>, which creates a Dev Environment, where you can quickly work on the code stored in the source repositories of your project.</p> </li> <li> <p> <a>CreateProject</a> which creates a project in a specified space.</p> </li> <li> <p> <a>CreateSourceRepositoryBranch</a>, which creates a branch in a specified repository where you can work on code.</p> </li> <li> <p> <a>DeleteDevEnvironment</a>, which deletes a Dev Environment.</p> </li> <li> <p> <a>GetDevEnvironment</a>, which returns information about a Dev Environment.</p> </li> <li> <p> <a>GetProject</a>, which returns information about a project.</p> </li> <li> <p> <a>GetSourceRepositoryCloneUrls</a>, which returns information about the URLs that can be used with a Git client to clone a source repository.</p> </li> <li> <p> <a>GetSubscription</a>, which returns information about the Amazon Web Services account used for billing purposes and the billing plan for the space.</p> </li> <li> <p> <a>GetUserDetails</a>, which returns information about a user in Amazon CodeCatalyst.</p> </li> <li> <p> <a>ListDevEnvironments</a>, which retrives a list of Dev Environments in a project.</p> </li> <li> <p> <a>ListProjects</a>, which retrieves a list of projects in a space.</p> </li> <li> <p> <a>ListSourceRepositories</a>, which retrieves a list of source repositories in a project.</p> </li> <li> <p> <a>ListSourceRepositoryBranches</a>, which retrieves a list of branches in a source repository.</p> </li> <li> <p> <a>ListSpaces</a>, which retrieves a list of spaces.</p> </li> <li> <p> <a>StartDevEnvironment</a>, which starts a specified Dev Environment and puts it into an active state.</p> </li> <li> <p> <a>StartDevEnvironmentSession</a>, which starts a session to a specified Dev Environment.</p> </li> <li> <p> <a>StopDevEnvironment</a>, which stops a specified Dev Environment and puts it into an stopped state.</p> </li> <li> <p> <a>StopDevEnvironmentSession</a>, which stops a session for a specified Dev Environment.</p> </li> <li> <p> <a>UpdateDevEnvironment</a>, which changes one or more values for a Dev Environment.</p> </li> <li> <p> <a>VerifySession</a>, which verifies whether the calling user has a valid Amazon CodeCatalyst login and session.</p> </li> </ul> <p>Security, activity, and resource management in Amazon CodeCatalyst, by calling the following:</p> <ul> <li> <p> <a>DeleteAccessToken</a>, which deletes a specified personal access token (PAT).</p> </li> <li> <p> <a>ListAccessTokens</a>, which lists all personal access tokens (PATs) associated with a user.</p> </li> <li> <p> <a>ListEventLogs</a>, which retrieves a list of events that occurred during a specified time period in a space.</p> </li> </ul>",
   "operations": {
     "CreateAccessToken": "<p>Creates a personal access token (PAT) for the current user. A personal access token (PAT) is similar to a password. It is associated with your user account. You use PATs to access Amazon CodeCatalyst resources such as source repositories from third-party applications like Git and integrated development environments (IDEs). For more information, see <a href=\"https://docs.aws.amazon.com/codecatalyst/latest/userguide/ipa-tokens-keys.html\">Managing personal access tokens in Amazon CodeCatalyst</a>.</p>",
-    "CreateDevEnvironment": "<p>Creates a Dev Environment in Amazon CodeCatalyst, a cloud-based development Dev Environment that you can use to quickly work on the code stored in the source repositories of your project. By default, a Dev Environment is configured to have a 2 core processor, 4GB of RAM, and 16GB of persistent storage. </p>",
+    "CreateDevEnvironment": "<p>Creates a Dev Environment in Amazon CodeCatalyst, a cloud-based development Dev Environment that you can use to quickly work on the code stored in the source repositories of your project. </p> <note> <p>When created in the Amazon CodeCatalyst console, by default a Dev Environment is configured to have a 2 core processor, 4GB of RAM, and 16GB of persistent storage. None of these defaults apply to a Dev Environment created programmatically.</p> </note>",
     "CreateProject": "<p>Creates a project in a specified space.</p>",
     "CreateSourceRepositoryBranch": "<p>Creates a branch in a specified source repository in Amazon CodeCatalyst. </p> <note> <p>This API only creates a branch in a source repository hosted in Amazon CodeCatalyst. You cannot use this API to create a branch in a linked repository.</p> </note>",
     "DeleteAccessToken": "<p>Deletes a specified personal access token (PAT). A personal access token can only be deleted by the user who created it.</p>",
@@ -24,6 +24,7 @@
     "StartDevEnvironment": "<p>Starts a specified Dev Environment and puts it into an active state. </p>",
     "StartDevEnvironmentSession": "<p>Starts a session for a specified Dev Environment.</p>",
     "StopDevEnvironment": "<p>Pauses a specified Dev Environment and places it in a non-running state. Stopped Dev Environments do not consume compute minutes.</p>",
+    "StopDevEnvironmentSession": "<p>Stops a session for a specified Dev Environment.</p>",
     "UpdateDevEnvironment": "<p>Changes one or more values for a Dev Environment. Updating certain values of the Dev Environment will cause a restart.</p>",
     "VerifySession": "<p>Verifies whether the calling user has a valid Amazon CodeCatalyst login and session. If successful, this returns the ID of the user in Amazon CodeCatalyst.</p>"
   },
@@ -37,6 +38,7 @@
       "base": null,
       "refs": {
         "AccessTokenSummary$id": "<p>The system-generated ID of the personal access token.</p>",
+        "CreateAccessTokenResponse$accessTokenId": "<p>The system-generated unique ID of the access token.</p>",
         "DeleteAccessTokenRequest$id": "<p>The ID of the personal access token to delete. You can find the IDs of all PATs associated with your user account by calling <a>ListAccessTokens</a>.</p>"
       }
     },
@@ -396,13 +398,13 @@
     "IdeConfigurationNameString": {
       "base": null,
       "refs": {
-        "IdeConfiguration$name": "<p>The name of the IDE.</p>"
+        "IdeConfiguration$name": "<p>The name of the IDE. Valid values include <code>Cloud9</code>, <code>IntelliJ</code>, <code>PyCharm</code>, <code>GoLand</code>, and <code>VSCode</code>.</p>"
       }
     },
     "IdeConfigurationRuntimeString": {
       "base": null,
       "refs": {
-        "IdeConfiguration$runtime": "<p>A link to the IDE runtime image.</p>"
+        "IdeConfiguration$runtime": "<p>A link to the IDE runtime image. </p> <note> <p>This parameter is not required for <code>VSCode</code>.</p> </note>"
       }
     },
     "IdeNameString": {
@@ -657,7 +659,7 @@
         "ListSourceRepositoriesRequest$projectName": "<p>The name of the project in the space.</p>",
         "ListSourceRepositoryBranchesRequest$spaceName": "<p>The name of the space.</p>",
         "ListSourceRepositoryBranchesRequest$projectName": "<p>The name of the project in the space.</p>",
-        "SpaceSummary$name": "<p> <i>We need to know what this is and the basic usage information so that third-party developers know how to use this data type.</i> </p>",
+        "SpaceSummary$name": "<p>The name of the space.</p>",
         "StartDevEnvironmentRequest$spaceName": "<p>The name of the space.</p>",
         "StartDevEnvironmentRequest$projectName": "<p>The name of the project in the space.</p>",
         "StartDevEnvironmentResponse$spaceName": "<p>The name of the space.</p>",
@@ -670,6 +672,10 @@
         "StopDevEnvironmentRequest$projectName": "<p>The name of the project in the space.</p>",
         "StopDevEnvironmentResponse$spaceName": "<p>The name of the space.</p>",
         "StopDevEnvironmentResponse$projectName": "<p>The name of the project in the space.</p>",
+        "StopDevEnvironmentSessionRequest$spaceName": "<p>The name of the space.</p>",
+        "StopDevEnvironmentSessionRequest$projectName": "<p>The name of the project in the space.</p>",
+        "StopDevEnvironmentSessionResponse$spaceName": "<p>The name of the space.</p>",
+        "StopDevEnvironmentSessionResponse$projectName": "<p>The name of the project in the space.</p>",
         "UpdateDevEnvironmentRequest$spaceName": "<p>The name of the space.</p>",
         "UpdateDevEnvironmentRequest$projectName": "<p>The name of the project in the space.</p>",
         "UpdateDevEnvironmentResponse$spaceName": "<p>The name of the space.</p>",
@@ -692,7 +698,7 @@
     "PersistentStorageConfiguration": {
       "base": "<p>Information about the configuration of persistent storage for a Dev Environment. </p>",
       "refs": {
-        "CreateDevEnvironmentRequest$persistentStorage": "<p>Information about the amount of storage allocated to the Dev Environment. By default, a Dev Environment is configured to have 16GB of persistent storage.</p> <note> <p>Valid values for persistent storage are based on memory sizes in 16GB increments. Valid values are 16, 32, and 64.</p> </note>"
+        "CreateDevEnvironmentRequest$persistentStorage": "<p>Information about the amount of storage allocated to the Dev Environment. </p> <note> <p>By default, a Dev Environment is configured to have 16GB of persistent storage when created from the Amazon CodeCatalyst console, but there is no default when programmatically creating a Dev Environment. Valid values for persistent storage are based on memory sizes in 16GB increments. Valid values are 16, 32, and 64.</p> </note>"
       }
     },
     "PersistentStorageConfigurationSizeInGiBInteger": {
@@ -880,6 +886,28 @@
       "refs": {
       }
     },
+    "StopDevEnvironmentSessionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopDevEnvironmentSessionRequestSessionIdString": {
+      "base": null,
+      "refs": {
+        "StopDevEnvironmentSessionRequest$sessionId": "<p>The system-generated unique ID of the Dev Environment session. This ID is returned by <a>StartDevEnvironmentSession</a>.</p>"
+      }
+    },
+    "StopDevEnvironmentSessionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopDevEnvironmentSessionResponseSessionIdString": {
+      "base": null,
+      "refs": {
+        "StopDevEnvironmentSessionResponse$sessionId": "<p>The system-generated unique ID of the Dev Environment session.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -1023,6 +1051,8 @@
         "StartDevEnvironmentSessionResponse$id": "<p>The system-generated unique ID of the Dev Environment.</p>",
         "StopDevEnvironmentRequest$id": "<p>The system-generated unique ID of the Dev Environment. </p>",
         "StopDevEnvironmentResponse$id": "<p>The system-generated unique ID of the Dev Environment. </p>",
+        "StopDevEnvironmentSessionRequest$id": "<p>The system-generated unique ID of the Dev Environment. To obtain this ID, use <a>ListDevEnvironments</a>.</p>",
+        "StopDevEnvironmentSessionResponse$id": "<p>The system-generated unique ID of the Dev Environment.</p>",
         "UpdateDevEnvironmentRequest$id": "<p>The system-generated unique ID of the Dev Environment. </p>",
         "UpdateDevEnvironmentResponse$id": "<p>The system-generated unique ID of the Dev Environment. </p>"
       }
