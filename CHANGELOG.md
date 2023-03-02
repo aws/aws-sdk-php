@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoT` - A recurring maintenance window is an optional configuration used for rolling out the job document to all devices in the target group observing a predetermined start time, duration, and frequency that the maintenance window occurs.
+* `Aws\MigrationHubStrategyRecommendations` - This release updates the File Import API to allow importing servers already discovered by customers with reduced pre-requisites.
+* `Aws\Organizations` - This release introduces a new reason code, ACCOUNT_CREATION_NOT_COMPLETE, to ConstraintViolationException in CreateOrganization API.
+* `Aws\PI` - This release adds a new field PeriodAlignment to allow the customer specifying the returned timestamp of time periods to be either the start or end time.
+* `Aws\Pipes` - This release fixes some input parameter range and patterns.
+* `Aws\SageMaker` - Add a new field "EndpointMetrics" in SageMaker Inference Recommender "ListInferenceRecommendationsJobSteps" API response.
+
 ## 3.261.2 - 2023-03-01
 
 * `Aws\CodeCatalyst` - Published Dev Environments StopDevEnvironmentSession API
