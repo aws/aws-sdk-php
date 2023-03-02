@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.3 - 2023-03-02
 
 * `Aws\IoT` - A recurring maintenance window is an optional configuration used for rolling out the job document to all devices in the target group observing a predetermined start time, duration, and frequency that the maintenance window occurs.
 * `Aws\MigrationHubStrategyRecommendations` - This release updates the File Import API to allow importing servers already discovered by customers with reduced pre-requisites.
