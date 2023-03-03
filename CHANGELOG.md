@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.4 - 2023-03-03
 
 * `Aws\DynamoDB` - Documentation updates for DynamoDB.
 * `Aws\EC2` - This release adds support for a new boot mode for EC2 instances called 'UEFI Preferred'.
