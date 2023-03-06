@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.5 - 2023-03-06
 
 * `Aws\Account` - AWS Account alternate contact email addresses can now have a length of 254 characters and contain the character "|".
 * `Aws\IVS` - Updated text description in DeleteChannel, Stream, and StreamSummary.
