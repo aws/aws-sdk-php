@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.6 - 2023-03-07
 
 * `Aws\DatabaseMigrationService` - This release adds DMS Fleet Advisor Target Recommendation APIs and exposes functionality for DMS Fleet Advisor. It adds functionality to start Target Recommendation calculation.
 * `Aws\LocationService` - Documentation update for the release of 3 additional map styles for use with Open Data Maps: Open Data Standard Dark, Open Data Visualization Light & Open Data Visualization Dark.
