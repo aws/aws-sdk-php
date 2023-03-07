@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DatabaseMigrationService` - This release adds DMS Fleet Advisor Target Recommendation APIs and exposes functionality for DMS Fleet Advisor. It adds functionality to start Target Recommendation calculation.
+* `Aws\LocationService` - Documentation update for the release of 3 additional map styles for use with Open Data Maps: Open Data Standard Dark, Open Data Visualization Light & Open Data Visualization Dark.
+
 ## 3.261.5 - 2023-03-06
 
 * `Aws\Account` - AWS Account alternate contact email addresses can now have a length of 254 characters and contain the character "|".
