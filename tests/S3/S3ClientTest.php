@@ -1846,7 +1846,11 @@ EOXML;
         ];
     }
 
-    public function testPresignedMrapSuccess (){
+    public function testPresignedMrapSuccess ()
+    {
+        if (!extension_loaded('awscrt')) {
+            $this->markTestSkipped();
+        }
         $arn = 'arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap';
         $expectedEndpoint = "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com";
         $client = new S3Client([
@@ -1863,11 +1867,13 @@ EOXML;
         );
         $presigned = $client->createPresignedRequest($command, time() + 10000);
         self::assertSame($expectedEndpoint, $presigned->getUri()->getHost());
-        self::assertSame("*", $presigned->getHeader("x-amz-region-set")[0]);
-
+        $url = (string) $presigned->getUri();
+        $this->assertStringContainsString('Amz-Region-Set=%2A', $url);
+        $this->assertStringContainsString('X-Amz-Algorithm=AWS4-ECDSA-P256-SHA256', $url);
     }
 
-    public function testPresignedMrapFailure (){
+    public function testPresignedMrapFailure ()
+    {
         $arn = 'arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap';
         $expectedException = "Invalid configuration: Multi-Region Access Point ARNs are disabled.";
         $client = new S3Client([

@@ -125,7 +125,7 @@ class SignatureProvider
                         : new SignatureV4($service, $region);
                 case 'v4a':
                     return !empty(self::$s3v4SignedServices[$service])
-                        ? new S3SignatureV4($service, $region)
+                        ? new S3SignatureV4($service, $region, ['use_v4a' => true])
                         : new SignatureV4($service, $region, ['use_v4a' => true]);
                 case 'v4-unsigned-body':
                     return !empty(self::$s3v4SignedServices[$service])
