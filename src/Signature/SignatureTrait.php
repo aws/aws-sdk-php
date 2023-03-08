@@ -17,11 +17,6 @@ trait SignatureTrait
         return "$shortDate/$region/$service/aws4_request";
     }
 
-    private function createV4aScope()
-    {
-        "$shortDate/$service/aws4_request";
-    }
-
     private function getSigningKey($shortDate, $region, $service, $secretKey)
     {
         $k = $shortDate . '_' . $region . '_' . $service . '_' . $secretKey;
