@@ -65,6 +65,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listRepositoriesInDomainAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result publishPackageVersion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise publishPackageVersionAsync(array $args = [])
  * @method \Aws\Result putDomainPermissionsPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putDomainPermissionsPolicyAsync(array $args = [])
  * @method \Aws\Result putPackageOriginConfiguration(array $args = [])
