@@ -15,6 +15,8 @@ class AssumeRoleWithWebIdentityCredentialProvider
 {
     const ERROR_MSG = "Missing required 'AssumeRoleWithWebIdentityCredentialProvider' configuration option: ";
     const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
+    const ENV_REGION = 'AWS_REGION';
+    const ENV_DEFAULT_REGION = 'AWS_DEFAULT_REGION';
 
     /** @var string */
     private $tokenFile;
@@ -71,9 +73,15 @@ class AssumeRoleWithWebIdentityCredentialProvider
             ? $config['SessionName']
             : 'aws-sdk-php-' . round(microtime(true) * 1000);
 
+        $regionFromEnv = getenv(self::ENV_REGION);
+        $defaultRegionFromEnv = getenv(self::ENV_DEFAULT_REGION);
         $region = isset($config['region'])
             ? $config['region']
-            : 'us-east-1';
+            : ( isset($regionFromEnv)
+            ? $regionFromEnv
+            : ( isset($defaultRegionFromEnv)
+            ? $defaultRegionFromEnv
+            :'us-east-1'));
 
         if (isset($config['client'])) {
             $this->client = $config['client'];
