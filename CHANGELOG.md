@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.8 - 2023-03-09
 
 * `Aws\CloudWatchEvidently` - Updated entity override documentation
 * `Aws\CodeArtifact` - This release introduces the generic package format, a mechanism for storing arbitrary binary assets. It also adds a new API, PublishPackageVersion, to allow for publishing generic packages.
