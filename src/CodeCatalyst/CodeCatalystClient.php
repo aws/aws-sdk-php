@@ -49,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startDevEnvironmentSessionAsync(array $args = [])
  * @method \Aws\Result stopDevEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopDevEnvironmentAsync(array $args = [])
+ * @method \Aws\Result stopDevEnvironmentSession(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopDevEnvironmentSessionAsync(array $args = [])
  * @method \Aws\Result updateDevEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDevEnvironmentAsync(array $args = [])
  * @method \Aws\Result verifySession(array $args = [])
