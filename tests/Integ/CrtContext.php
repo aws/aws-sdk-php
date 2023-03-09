@@ -259,17 +259,6 @@ class CrtContext implements Context, SnippetAcceptingContext
         );
     }
 
-//    /**
-//     * @Given I have uploaded an object to S3 with a key of `mrap-test` and a body of `test`
-//     */
-//    public function iHaveUploadedAnObjectToS3WithAKeyOfAndABodyOf()
-//    {
-//
-//        Assert::assertTrue(
-//            $this->s3Client->doesObjectExistV2(self::$multiRegionAccessPoint, 'mrap-test')
-//        );
-//    }
-
     /**
      * @When I create a pre-signed request for a :command command with:
      */
