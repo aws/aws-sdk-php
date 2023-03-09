@@ -9,6 +9,8 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Aws\S3\S3Client;
 use Aws\S3Control\S3ControlClient;
+use Behat\Gherkin\Node\TableNode;
+use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\Assert;
 use Psr\Http\Message\StreamInterface;
@@ -32,6 +34,8 @@ class CrtContext implements Context, SnippetAcceptingContext
     private $s3Client;
     /** @var StreamInterface */
     private $stream;
+    /** @var RequestInterface */
+    private $presignedRequest;
 
     /**
      * @BeforeFeature @mrap
@@ -244,6 +248,7 @@ class CrtContext implements Context, SnippetAcceptingContext
 
     /**
      * @Then I can confirm the object has been updated
+     * @Given I have uploaded an object to S3 with a key of `mrap-test` and a body of `test`
      */
     public function iCanConfirmTheObjectHasBeenUpdated()
     {
@@ -252,6 +257,54 @@ class CrtContext implements Context, SnippetAcceptingContext
             'test',
             (string) $result['Body']
         );
+    }
+
+//    /**
+//     * @Given I have uploaded an object to S3 with a key of `mrap-test` and a body of `test`
+//     */
+//    public function iHaveUploadedAnObjectToS3WithAKeyOfAndABodyOf()
+//    {
+//
+//        Assert::assertTrue(
+//            $this->s3Client->doesObjectExistV2(self::$multiRegionAccessPoint, 'mrap-test')
+//        );
+//    }
+
+    /**
+     * @When I create a pre-signed request for a :command command with:
+     */
+    public function iCreateAPreSignedUrlForACommandWith(
+        $commandName,
+        TableNode $table
+    ) {
+        $args = ['Bucket' => self::$multiRegionAccessPoint];
+        foreach ($table as $row) {
+            $args[$row['key']] = $row['value'];
+        }
+        $client = $this->s3Client;
+        $command = $client->getCommand($commandName, $args);
+        $this->presignedRequest = $client
+            ->createPresignedRequest($command, '+1 hour');
+    }
+
+    /**
+     * @Then the contents of the response to the presigned request should be :body
+     */
+    public function theContentsAtThePresignedUrlShouldBe($body)
+    {
+        // Not using assertStringFileEquals here due to issues with remote files
+        Assert::assertEquals(
+            $body,
+            file_get_contents($this->presignedRequest->getUri())
+        );
+    }
+
+    /**
+     * @Given I send the pre-signed request
+     */
+    public function iSendThePreSignedRequest()
+    {
+        (new Client())->send($this->presignedRequest);
     }
 
     /**

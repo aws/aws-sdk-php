@@ -72,7 +72,7 @@ class S3EndpointMiddleware
         $region,
         array $options,
         $endpointProvider = null
-    ) {
+    ) {Øsigna
         $this->pathStyleByDefault = isset($options['path_style'])
             ? (bool) $options['path_style'] : false;
         $this->dualStackByDefault = isset($options['dual_stack'])

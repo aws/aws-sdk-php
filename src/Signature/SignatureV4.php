@@ -506,12 +506,11 @@ class SignatureV4 implements SignatureInterface
     {
         $this->verifyCRTLoaded();
         $credentials_provider = $this->createCRTStaticCredentialsProvider($credentials);
-        $sha = $this->getPayload($request);
         $signingConfig = new SigningConfigAWS([
             'algorithm' => SigningAlgorithm::SIGv4_ASYMMETRIC,
             'signature_type' => SignatureType::HTTP_REQUEST_HEADERS,
             'credentials_provider' => $credentials_provider,
-            'signed_body_value' => $sha,
+            'signed_body_value' => $this->getPayload($request),
             'region' => "*",
             'service' => $signingService,
             'date' => time(),
@@ -549,7 +548,7 @@ class SignatureV4 implements SignatureInterface
             'algorithm' => SigningAlgorithm::SIGv4_ASYMMETRIC,
             'signature_type' => SignatureType::HTTP_REQUEST_QUERY_PARAMS,
             'credentials_provider' => $credentials_provider,
-            'signed_body_value' => 'UNSIGNED-PAYLOAD',
+            'signed_body_value' => $this->getPresignedPayload($request),
             'region' => "*",
             'service' => $this->service,
             'date' => time(),
