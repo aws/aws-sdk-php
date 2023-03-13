@@ -646,12 +646,12 @@
     },
     "CreateSolNetworkInstanceInputNsDescriptionString":{
       "type":"string",
-      "max":124,
-      "min":1
+      "max":255,
+      "min":0
     },
     "CreateSolNetworkInstanceInputNsNameString":{
       "type":"string",
-      "max":80,
+      "max":100,
       "min":1
     },
     "CreateSolNetworkInstanceOutput":{
@@ -1164,14 +1164,16 @@
           "shape":"NsInstanceId",
           "location":"uri",
           "locationName":"nsInstanceId"
-        }
+        },
+        "tags":{"shape":"TagMap"}
       }
     },
     "InstantiateSolNetworkInstanceOutput":{
       "type":"structure",
       "required":["nsLcmOpOccId"],
       "members":{
-        "nsLcmOpOccId":{"shape":"NsLcmOpOccId"}
+        "nsLcmOpOccId":{"shape":"NsLcmOpOccId"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "InternalServerException":{
@@ -1850,13 +1852,15 @@
           "shape":"NsInstanceId",
           "location":"uri",
           "locationName":"nsInstanceId"
-        }
+        },
+        "tags":{"shape":"TagMap"}
       }
     },
     "TerminateSolNetworkInstanceOutput":{
       "type":"structure",
       "members":{
-        "nsLcmOpOccId":{"shape":"NsLcmOpOccId"}
+        "nsLcmOpOccId":{"shape":"NsLcmOpOccId"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "ThrottlingException":{
@@ -1937,13 +1941,15 @@
           "location":"uri",
           "locationName":"nsInstanceId"
         },
+        "tags":{"shape":"TagMap"},
         "updateType":{"shape":"UpdateSolNetworkType"}
       }
     },
     "UpdateSolNetworkInstanceOutput":{
       "type":"structure",
       "members":{
-        "nsLcmOpOccId":{"shape":"NsLcmOpOccId"}
+        "nsLcmOpOccId":{"shape":"NsLcmOpOccId"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "UpdateSolNetworkModify":{

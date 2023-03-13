@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppIntegrationsService` - Adds FileConfiguration to Amazon AppIntegrations CreateDataIntegration supporting scheduled downloading of third party files into Amazon Connect from sources such as Microsoft SharePoint.
+* `Aws\ConnectWisdomService` - This release extends Wisdom CreateKnowledgeBase API to support SharePoint connector type by removing the @required trait for objectField
+* `Aws\LakeFormation` - This release updates the documentation regarding Get/Update DataCellsFilter
+* `Aws\S3Control` - Added support for cross-account Multi-Region Access Points. Added support for S3 Replication for S3 on Outposts.
+* `Aws\Tnb` - This release adds tagging support to the following Network Instance APIs : Instantiate, Update, Terminate.
+
 ## 3.261.9 - 2023-03-10
 
 * `Aws\SecretsManager` - The type definitions of SecretString and SecretBinary now have a minimum length of 1 in the model to match the exception thrown when you pass in empty values.
