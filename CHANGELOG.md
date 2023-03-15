@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.12 - 2023-03-15
 
 * `Aws\MigrationHubStrategyRecommendations` - This release adds the binary analysis that analyzes IIS application DLLs on Windows and Java applications on Linux to provide anti-pattern report without configuring access to the source code.
 * `Aws\S3Control` - Added support for S3 Object Lambda aliases.
