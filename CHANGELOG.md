@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MigrationHubStrategyRecommendations` - This release adds the binary analysis that analyzes IIS application DLLs on Windows and Java applications on Linux to provide anti-pattern report without configuring access to the source code.
+* `Aws\S3Control` - Added support for S3 Object Lambda aliases.
+* `Aws\SecurityLake` - Make Create/Get/ListSubscribers APIs return resource share ARN and name so they can be used to validate the RAM resource share to accept. GetDatalake can be used to track status of UpdateDatalake and DeleteDatalake requests.
+
 ## 3.261.11 - 2023-03-14
 
 * `Aws\ApplicationAutoScaling` - Application Auto Scaling customers can now use mathematical functions to customize the metric used with Target Tracking policies within the policy configuration itself, saving the cost and effort of publishing the customizations as a separate metric.
