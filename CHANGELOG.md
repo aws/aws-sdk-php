@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GuardDuty` - Updated 9 APIs for feature enablement to reflect expansion of GuardDuty to features. Added new APIs and updated existing APIs to support RDS Protection GA.
+* `Aws\ResourceExplorer2` - Documentation updates for APIs.
+* `Aws\SageMakerRuntime` - Documentation updates for SageMaker Runtime
+
 ## 3.261.12 - 2023-03-15
 
 * `Aws\MigrationHubStrategyRecommendations` - This release adds the binary analysis that analyzes IIS application DLLs on Windows and Java applications on Linux to provide anti-pattern report without configuring access to the source code.
