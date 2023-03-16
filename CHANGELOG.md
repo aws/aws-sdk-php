@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.13 - 2023-03-16
 
 * `Aws\GuardDuty` - Updated 9 APIs for feature enablement to reflect expansion of GuardDuty to features. Added new APIs and updated existing APIs to support RDS Protection GA.
 * `Aws\ResourceExplorer2` - Documentation updates for APIs.
