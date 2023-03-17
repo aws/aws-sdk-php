@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.14 - 2023-03-17
 
 * `Aws\BillingConductor` - This release adds a new filter to ListAccountAssociations API and a new filter to ListBillingGroups API.
 * `Aws\ConfigService` - This release adds resourceType enums for types released from October 2022 through February 2023.
