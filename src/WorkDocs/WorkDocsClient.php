@@ -83,6 +83,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise removeResourcePermissionAsync(array $args = [])
  * @method \Aws\Result restoreDocumentVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreDocumentVersionsAsync(array $args = [])
+ * @method \Aws\Result searchResources(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchResourcesAsync(array $args = [])
  * @method \Aws\Result updateDocument(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDocumentAsync(array $args = [])
  * @method \Aws\Result updateDocumentVersion(array $args = [])
