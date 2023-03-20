@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.15 - 2023-03-20
 
 * `Aws\ApplicationAutoScaling` - With this release customers can now tag their Application Auto Scaling registered targets with key-value pairs and manage IAM permissions for all the tagged resources centrally.
 * `Aws\Neptune` - This release makes following few changes. db-cluster-identifier is now a required parameter of create-db-instance. describe-db-cluster will now return PendingModifiedValues and GlobalClusterIdentifier fields in the response.
