@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKMessaging` - Amazon Chime SDK messaging customers can now manage streaming configuration for messaging data for archival and analysis.
+* `Aws\CleanRooms` - GA Release of AWS Clean Rooms, Added Tagging Functionality
+* `Aws\EC2` - This release adds support for AWS Network Firewall, AWS PrivateLink, and Gateway Load Balancers to Amazon VPC Reachability Analyzer, and it makes the path destination optional as long as a destination address in the filter at source is provided.
+* `Aws\IoTSiteWise` - Provide support for tagging of data streams and enabling tag based authorization for property alias
+* `Aws\mgn` - This release introduces the Import and export feature and expansion of the post-launch actions
+
 ## 3.261.15 - 2023-03-20
 
 * `Aws\ApplicationAutoScaling` - With this release customers can now tag their Application Auto Scaling registered targets with key-value pairs and manage IAM permissions for all the tagged resources centrally.
