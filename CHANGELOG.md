@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.16 - 2023-03-21
 
 * `Aws\ChimeSDKMessaging` - Amazon Chime SDK messaging customers can now manage streaming configuration for messaging data for archival and analysis.
 * `Aws\CleanRooms` - GA Release of AWS Clean Rooms, Added Tagging Functionality
