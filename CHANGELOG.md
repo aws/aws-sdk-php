@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\IoTTwinMaker` - This release adds support of adding metadata when creating a new scene or updating an existing scene.
+* `Aws\NetworkManager` - This release includes an update to create-transit-gateway-route-table-attachment, showing example usage for TransitGatewayRouteTableArn.
+* `Aws\Pipes` - This release improves validation on the ARNs in the API model
+* `Aws\ResilienceHub` - This release provides customers with the ability to import resources from within an EKS cluster and assess the resiliency of EKS cluster workloads.
+* `Aws\SSM` - This Patch Manager release supports creating, updating, and deleting Patch Baselines for AmazonLinux2023, AlmaLinux.
+
 ## 3.261.16 - 2023-03-21
 
 * `Aws\ChimeSDKMessaging` - Amazon Chime SDK messaging customers can now manage streaming configuration for messaging data for archival and analysis.

@@ -971,7 +971,8 @@
         "contentLocation":{"shape":"S3Url"},
         "description":{"shape":"Description"},
         "capabilities":{"shape":"SceneCapabilities"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "sceneMetadata":{"shape":"SceneMetadataMap"}
       }
     },
     "CreateSceneResponse":{
@@ -1380,6 +1381,13 @@
       "key":{"shape":"Name"},
       "value":{"shape":"FunctionResponse"}
     },
+    "GeneratedSceneMetadataMap":{
+      "type":"map",
+      "key":{"shape":"Name"},
+      "value":{"shape":"SceneMetadataValue"},
+      "max":50,
+      "min":0
+    },
     "GetComponentTypeRequest":{
       "type":"structure",
       "required":[
@@ -1597,7 +1605,9 @@
         "creationDateTime":{"shape":"Timestamp"},
         "updateDateTime":{"shape":"Timestamp"},
         "description":{"shape":"Description"},
-        "capabilities":{"shape":"SceneCapabilities"}
+        "capabilities":{"shape":"SceneCapabilities"},
+        "sceneMetadata":{"shape":"SceneMetadataMap"},
+        "generatedSceneMetadata":{"shape":"GeneratedSceneMetadataMap"}
       }
     },
     "GetSyncJobRequest":{
@@ -2313,6 +2323,19 @@
       "min":0,
       "pattern":".*"
     },
+    "SceneMetadataMap":{
+      "type":"map",
+      "key":{"shape":"Name"},
+      "value":{"shape":"SceneMetadataValue"},
+      "max":50,
+      "min":0
+    },
+    "SceneMetadataValue":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":".*"
+    },
     "SceneSummaries":{
       "type":"list",
       "member":{"shape":"SceneSummary"}
@@ -2717,7 +2740,8 @@
         },
         "contentLocation":{"shape":"S3Url"},
         "description":{"shape":"Description"},
-        "capabilities":{"shape":"SceneCapabilities"}
+        "capabilities":{"shape":"SceneCapabilities"},
+        "sceneMetadata":{"shape":"SceneMetadataMap"}
       }
     },
     "UpdateSceneResponse":{
