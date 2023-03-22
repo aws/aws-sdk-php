@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.261.17 - 2023-03-22
 
 * `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
 * `Aws\IoTTwinMaker` - This release adds support of adding metadata when creating a new scene or updating an existing scene.
