@@ -83,6 +83,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listSubChannelsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result putChannelExpirationSettings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putChannelExpirationSettingsAsync(array $args = [])
  * @method \Aws\Result putChannelMembershipPreferences(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putChannelMembershipPreferencesAsync(array $args = [])
  * @method \Aws\Result putMessagingStreamingConfigurations(array $args = [])
