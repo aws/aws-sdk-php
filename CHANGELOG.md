@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.262.0 - 2023-03-23
 
 * `Aws\Batch` - This feature allows Batch to support configuration of ephemeral storage size for jobs running on FARGATE
 * `Aws\ChimeSDKIdentity` - AppInstanceBots can be used to add a bot powered by Amazon Lex to chat channels. ExpirationSettings provides automatic resource deletion for AppInstanceUsers.
