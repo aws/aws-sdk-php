@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.262.1 - 2023-03-24
 
 * `Aws\CloudWatch` - Doc-only update to correct alarm actions list
 * `Aws\Comprehend` - This release adds a new field (FlywheelArn) to the EntitiesDetectionJobProperties object. The FlywheelArn field is returned in the DescribeEntitiesDetectionJob and ListEntitiesDetectionJobs responses when the EntitiesDetection job is started with a FlywheelArn instead of an EntityRecognizerArn .
