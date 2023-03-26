@@ -2,6 +2,7 @@
 namespace Aws\Test\DynamoDb;
 
 use Aws\CommandInterface;
+use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\StandardSessionConnection;
 use Aws\Middleware;
 use Aws\Result;
@@ -96,7 +97,7 @@ class StandardSessionConnectionTest extends TestCase
     {
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
-            $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
+            $this->createMockAwsException('ERROR', DynamoDbException::class)
         ]);
         $connection = new StandardSessionConnection($client);
         $data = $connection->read('session1');
@@ -140,7 +141,7 @@ class StandardSessionConnectionTest extends TestCase
     {
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
-            $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
+            $this->createMockAwsException('ERROR', DynamoDbException::class)
         ]);
         $client->getHandlerList()->appendBuild(Middleware::tap(function ($command) {
             $this->assertEquals(
@@ -159,7 +160,7 @@ class StandardSessionConnectionTest extends TestCase
         $this->expectWarning();
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
-            $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
+            $this->createMockAwsException('ERROR', DynamoDbException::class)
         ]);
         $client->getHandlerList()->appendBuild(Middleware::tap(function ($command) {
             $this->assertEquals(
@@ -176,7 +177,7 @@ class StandardSessionConnectionTest extends TestCase
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
              new Result([]),
-             $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
+             $this->createMockAwsException('ERROR', DynamoDbException::class)
         ]);
 
         $connection = new StandardSessionConnection($client);
@@ -194,7 +195,7 @@ class StandardSessionConnectionTest extends TestCase
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
             new Result([]),
-            $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
+            $this->createMockAwsException('ERROR', DynamoDbException::class)
         ]);
 
         $connection = new StandardSessionConnection($client);

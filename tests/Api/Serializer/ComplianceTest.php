@@ -3,6 +3,7 @@ namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
+use Aws\Signature\SignatureInterface;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -80,7 +81,7 @@ class ComplianceTest extends TestCase
                 return $service->toArray();
             },
             'credentials'  => false,
-            'signature'    => $this->getMockBuilder('Aws\Signature\SignatureInterface')->getMock(),
+            'signature'    => $this->getMockBuilder(SignatureInterface::class)->getMock(),
             'region'       => 'us-west-2',
             'endpoint'     => $ep,
             'error_parser' => Service::createErrorParser($service->getProtocol()),

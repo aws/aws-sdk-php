@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\DynamoDb;
 
+use Aws\DynamoDb\SessionConnectionConfigTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +14,7 @@ class SessionConnectionConfigTraitTest extends TestCase
 
     public function testStandardConfig()
     {
-        $scc = $this->getMockForTrait('Aws\DynamoDb\SessionConnectionConfigTrait');
+        $scc = $this->getMockForTrait(SessionConnectionConfigTrait::class);
         $scc->setSessionLifetime((int) ini_get('session.gc_maxlifetime'));
         $this->assertSame('sessions', $scc->getTableName());
         $this->assertSame('id', $scc->getHashKey());
@@ -45,7 +46,7 @@ class SessionConnectionConfigTraitTest extends TestCase
             'min_lock_retry_microtime'      => 2019,
             'max_lock_retry_microtime'      => 2019
         ];
-        $scc = $this->getMockForTrait('Aws\DynamoDb\SessionConnectionConfigTrait');
+        $scc = $this->getMockForTrait(SessionConnectionConfigTrait::class);
         $scc->initConfig($config);
         $this->assertSame('sessions_custom', $scc->getTableName());
         $this->assertSame('id_custom', $scc->getHashKey());
@@ -62,7 +63,7 @@ class SessionConnectionConfigTraitTest extends TestCase
 
         // Test Custom Config Without Session Lifetime
         unset($config['session_lifetime']);
-        $scc = $this->getMockForTrait('Aws\DynamoDb\SessionConnectionConfigTrait');
+        $scc = $this->getMockForTrait(SessionConnectionConfigTrait::class);
         $scc->initConfig($config);
         $this->assertSame((int) ini_get('session.gc_maxlifetime'), $scc->getSessionLifetime());
     }
