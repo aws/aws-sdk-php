@@ -18,7 +18,7 @@ class MultipartUploaderTest extends TestCase
     const MB = 1048576;
     const FILENAME = '_aws-sdk-php-glacier-mup-test-dots.txt';
 
-    public static function tearDownAfterClass()
+    public static function _tearDownAfterClass()
     {
         @unlink(sys_get_temp_dir() . '/' . self::FILENAME);
     }
@@ -28,7 +28,7 @@ class MultipartUploaderTest extends TestCase
      */
     public function testGlacierMultipartUploadWorkflow(
         array $uploadOptions = [],
-        StreamInterface $source,
+        StreamInterface $source = null,
         $error = false
     ) {
         $client = $this->getTestClient('glacier');

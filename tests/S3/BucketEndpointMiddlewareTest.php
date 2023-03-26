@@ -91,4 +91,83 @@ class BucketEndpointMiddlewareTest extends TestCase
         );
         $s3->execute($command);
     }
+
+    public function testHandlesTrailingForwardSlash()
+    {
+        $s3 = $this->getTestClient('s3', [
+            'endpoint'        => 'http://test.domain.com/test/',
+            'bucket_endpoint' => true
+        ]);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('ListObjects', [
+            'Bucket' => 'test',
+            'Prefix'    => '/'
+        ]);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame('test.domain.com', $req->getUri()->getHost());
+                $this->assertSame('/test/?prefix=%2F&encoding-type=url', $req->getRequestTarget());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function testHandlesDuplicatePath()
+    {
+        $s3 = $this->getTestClient('s3', [
+            'endpoint'        => 'http://domain.com/test',
+            'bucket_endpoint' => true,
+            'use_path_style_endpoint' => true
+        ]);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('headBucket', [
+            'Bucket' => 'test',
+        ]);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame('domain.com', $req->getUri()->getHost());
+                $this->assertSame('/test/', $req->getUri()->getPath());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function keyContainsBucketNameProvider()
+    {
+        return [
+            ['bucketname'],
+            ['/bucketname'],
+            ['foo/bucketname/'],
+            ['/foo/bucketname'],
+            ['///bucketname'],
+            ['bucketname/bucketname/bucketname/bucketname'],
+            ['/bucketname/bucketname/bucketname/bucketname']
+        ];
+    }
+
+    /**
+     * @dataProvider keyContainsBucketNameProvider
+     *
+     * @param $key
+     */
+    public function testsHandlesDuplicatePathWithKeyContainsBucketName($key)
+    {
+        $s3 = $this->getTestClient('s3', [
+            'endpoint'        => 'http://domain.com/bucketname',
+            'bucket_endpoint' => true,
+            'use_path_style_endpoint' => true
+        ]);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('headObject', [
+            'Bucket' => 'bucketname',
+            'Key' => $key
+        ]);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) use ($key) {
+                $this->assertSame('domain.com', $req->getUri()->getHost());
+                $this->assertSame('/bucketname/' . $key, $req->getUri()->getPath());
+            })
+        );
+        $s3->execute($command);
+    }
 }

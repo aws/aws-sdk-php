@@ -106,7 +106,8 @@
         {"shape":"InvalidParameters"},
         {"shape":"InvalidTarget"},
         {"shape":"InvalidSchedule"},
-        {"shape":"InvalidTargetMaps"}
+        {"shape":"InvalidTargetMaps"},
+        {"shape":"InvalidTag"}
       ]
     },
     "CreateAssociationBatch":{
@@ -175,7 +176,8 @@
         {"shape":"InternalServerError"},
         {"shape":"OpsItemAlreadyExistsException"},
         {"shape":"OpsItemLimitExceededException"},
-        {"shape":"OpsItemInvalidParameterException"}
+        {"shape":"OpsItemInvalidParameterException"},
+        {"shape":"OpsItemAccessDeniedException"}
       ]
     },
     "CreateOpsMetadata":{
@@ -361,6 +363,20 @@
         {"shape":"InternalServerError"},
         {"shape":"ResourceDataSyncNotFoundException"},
         {"shape":"ResourceDataSyncInvalidConfigurationException"}
+      ]
+    },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ResourcePolicyInvalidParameterException"},
+        {"shape":"ResourcePolicyConflictException"}
       ]
     },
     "DeregisterManagedInstance":{
@@ -1073,7 +1089,8 @@
       "output":{"shape":"GetOpsItemResponse"},
       "errors":[
         {"shape":"InternalServerError"},
-        {"shape":"OpsItemNotFoundException"}
+        {"shape":"OpsItemNotFoundException"},
+        {"shape":"OpsItemAccessDeniedException"}
       ]
     },
     "GetOpsMetadata":{
@@ -1191,6 +1208,19 @@
       "output":{"shape":"GetPatchBaselineForPatchGroupResult"},
       "errors":[
         {"shape":"InternalServerError"}
+      ]
+    },
+    "GetResourcePolicies":{
+      "name":"GetResourcePolicies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourcePoliciesRequest"},
+      "output":{"shape":"GetResourcePoliciesResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ResourcePolicyInvalidParameterException"}
       ]
     },
     "GetServiceSetting":{
@@ -1534,6 +1564,21 @@
         {"shape":"InvalidPolicyTypeException"},
         {"shape":"InvalidPolicyAttributeException"},
         {"shape":"IncompatiblePolicyException"}
+      ]
+    },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ResourcePolicyInvalidParameterException"},
+        {"shape":"ResourcePolicyLimitExceededException"},
+        {"shape":"ResourcePolicyConflictException"}
       ]
     },
     "RegisterDefaultPatchBaseline":{
@@ -1937,7 +1982,8 @@
         {"shape":"OpsItemNotFoundException"},
         {"shape":"OpsItemAlreadyExistsException"},
         {"shape":"OpsItemLimitExceededException"},
-        {"shape":"OpsItemInvalidParameterException"}
+        {"shape":"OpsItemInvalidParameterException"},
+        {"shape":"OpsItemAccessDeniedException"}
       ]
     },
     "UpdateOpsMetadata":{
@@ -2083,6 +2129,50 @@
       "max":10
     },
     "AggregatorSchemaOnly":{"type":"boolean"},
+    "Alarm":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"AlarmName"}
+      }
+    },
+    "AlarmConfiguration":{
+      "type":"structure",
+      "required":["Alarms"],
+      "members":{
+        "IgnorePollAlarmFailure":{"shape":"Boolean"},
+        "Alarms":{"shape":"AlarmList"}
+      }
+    },
+    "AlarmList":{
+      "type":"list",
+      "member":{"shape":"Alarm"},
+      "max":1,
+      "min":1
+    },
+    "AlarmName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
+    },
+    "AlarmStateInformation":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "State"
+      ],
+      "members":{
+        "Name":{"shape":"AlarmName"},
+        "State":{"shape":"ExternalAlarmState"}
+      }
+    },
+    "AlarmStateInformationList":{
+      "type":"list",
+      "member":{"shape":"AlarmStateInformation"},
+      "max":1,
+      "min":1
+    },
     "AllowedPattern":{
       "type":"string",
       "max":1024,
@@ -2201,7 +2291,9 @@
         "TargetMaps":{
           "shape":"TargetMaps",
           "box":true
-        }
+        },
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"}
       }
     },
     "AssociationDescriptionList":{
@@ -2225,7 +2317,9 @@
         "DetailedStatus":{"shape":"StatusName"},
         "CreatedTime":{"shape":"DateTime"},
         "LastExecutionDate":{"shape":"DateTime"},
-        "ResourceCountByStatus":{"shape":"ResourceCountByStatus"}
+        "ResourceCountByStatus":{"shape":"ResourceCountByStatus"},
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"}
       }
     },
     "AssociationExecutionDoesNotExist":{
@@ -2622,6 +2716,8 @@
           "box":true
         },
         "ProgressCounters":{"shape":"ProgressCounters"},
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"},
         "AutomationSubtype":{"shape":"AutomationSubtype"},
         "ScheduledTime":{"shape":"DateTime"},
         "Runbooks":{"shape":"Runbooks"},
@@ -2712,6 +2808,8 @@
         "MaxErrors":{"shape":"MaxErrors"},
         "Target":{"shape":"String"},
         "AutomationType":{"shape":"AutomationType"},
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"},
         "AutomationSubtype":{"shape":"AutomationSubtype"},
         "ScheduledTime":{"shape":"DateTime"},
         "Runbooks":{"shape":"Runbooks"},
@@ -2941,7 +3039,9 @@
         "ServiceRole":{"shape":"ServiceRole"},
         "NotificationConfig":{"shape":"NotificationConfig"},
         "CloudWatchOutputConfig":{"shape":"CloudWatchOutputConfig"},
-        "TimeoutSeconds":{"shape":"TimeoutSeconds"}
+        "TimeoutSeconds":{"shape":"TimeoutSeconds"},
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"}
       }
     },
     "CommandFilter":{
@@ -3341,7 +3441,8 @@
         "TargetMaps":{
           "shape":"TargetMaps",
           "box":true
-        }
+        },
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "CreateAssociationBatchResult":{
@@ -3378,7 +3479,12 @@
         "TargetMaps":{
           "shape":"TargetMaps",
           "box":true
-        }
+        },
+        "Tags":{
+          "shape":"TagList",
+          "box":true
+        },
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "CreateAssociationResult":{
@@ -3470,13 +3576,15 @@
         "ActualStartTime":{"shape":"DateTime"},
         "ActualEndTime":{"shape":"DateTime"},
         "PlannedStartTime":{"shape":"DateTime"},
-        "PlannedEndTime":{"shape":"DateTime"}
+        "PlannedEndTime":{"shape":"DateTime"},
+        "AccountId":{"shape":"OpsItemAccountId"}
       }
     },
     "CreateOpsItemResponse":{
       "type":"structure",
       "members":{
-        "OpsItemId":{"shape":"String"}
+        "OpsItemId":{"shape":"String"},
+        "OpsItemArn":{"shape":"OpsItemArn"}
       }
     },
     "CreateOpsMetadataRequest":{
@@ -3690,6 +3798,24 @@
       }
     },
     "DeleteResourceDataSyncResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "PolicyId",
+        "PolicyHash"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArnString"},
+        "PolicyId":{"shape":"PolicyId"},
+        "PolicyHash":{"shape":"PolicyHash"}
+      }
+    },
+    "DeleteResourcePolicyResponse":{
       "type":"structure",
       "members":{
       }
@@ -4681,7 +4807,9 @@
       "required":["Name"],
       "members":{
         "Name":{"shape":"DocumentARN"},
-        "Version":{"shape":"DocumentVersion"}
+        "Version":{"shape":"DocumentVersion"},
+        "RequireType":{"shape":"RequireType"},
+        "VersionName":{"shape":"DocumentVersionName"}
       }
     },
     "DocumentRequiresList":{
@@ -4773,7 +4901,10 @@
         "ChangeCalendar",
         "Automation.ChangeTemplate",
         "ProblemAnalysis",
-        "ProblemAnalysisTemplate"
+        "ProblemAnalysisTemplate",
+        "CloudFormation",
+        "ConformancePackTemplate",
+        "QuickSetup"
       ]
     },
     "DocumentVersion":{
@@ -4874,6 +5005,13 @@
       "pattern":"[\\w+=,.@/-]+"
     },
     "ExpirationDate":{"type":"timestamp"},
+    "ExternalAlarmState":{
+      "type":"string",
+      "enum":[
+        "UNKNOWN",
+        "ALARM"
+      ]
+    },
     "FailedCreateAssociation":{
       "type":"structure",
       "members":{
@@ -5170,7 +5308,9 @@
         "Status":{"shape":"MaintenanceWindowExecutionStatus"},
         "StatusDetails":{"shape":"MaintenanceWindowExecutionStatusDetails"},
         "StartTime":{"shape":"DateTime"},
-        "EndTime":{"shape":"DateTime"}
+        "EndTime":{"shape":"DateTime"},
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"}
       }
     },
     "GetMaintenanceWindowRequest":{
@@ -5234,14 +5374,16 @@
         "CutoffBehavior":{
           "shape":"MaintenanceWindowTaskCutoffBehavior",
           "box":true
-        }
+        },
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "GetOpsItemRequest":{
       "type":"structure",
       "required":["OpsItemId"],
       "members":{
-        "OpsItemId":{"shape":"OpsItemId"}
+        "OpsItemId":{"shape":"OpsItemId"},
+        "OpsItemArn":{"shape":"OpsItemArn"}
       }
     },
     "GetOpsItemResponse":{
@@ -5431,6 +5573,34 @@
         "ModifiedDate":{"shape":"DateTime"},
         "Description":{"shape":"BaselineDescription"},
         "Sources":{"shape":"PatchSourceList"}
+      }
+    },
+    "GetResourcePoliciesRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArnString"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"ResourcePolicyMaxResults"}
+      }
+    },
+    "GetResourcePoliciesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "Policies":{"shape":"GetResourcePoliciesResponseEntries"}
+      }
+    },
+    "GetResourcePoliciesResponseEntries":{
+      "type":"list",
+      "member":{"shape":"GetResourcePoliciesResponseEntry"}
+    },
+    "GetResourcePoliciesResponseEntry":{
+      "type":"structure",
+      "members":{
+        "PolicyId":{"shape":"PolicyId"},
+        "PolicyHash":{"shape":"PolicyHash"},
+        "Policy":{"shape":"Policy"}
       }
     },
     "GetServiceSettingRequest":{
@@ -6081,6 +6251,13 @@
       "exception":true
     },
     "InvalidSchedule":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "InvalidTag":{
       "type":"structure",
       "members":{
         "Message":{"shape":"String"}
@@ -6869,7 +7046,9 @@
         "StartTime":{"shape":"DateTime"},
         "EndTime":{"shape":"DateTime"},
         "TaskArn":{"shape":"MaintenanceWindowTaskArn"},
-        "TaskType":{"shape":"MaintenanceWindowTaskType"}
+        "TaskType":{"shape":"MaintenanceWindowTaskType"},
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"}
       }
     },
     "MaintenanceWindowExecutionTaskIdentityList":{
@@ -7104,7 +7283,8 @@
         "CutoffBehavior":{
           "shape":"MaintenanceWindowTaskCutoffBehavior",
           "box":true
-        }
+        },
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "MaintenanceWindowTaskArn":{
@@ -7334,6 +7514,7 @@
         "WINDOWS",
         "AMAZON_LINUX",
         "AMAZON_LINUX_2",
+        "AMAZON_LINUX_2022",
         "UBUNTU",
         "REDHAT_ENTERPRISE_LINUX",
         "SUSE",
@@ -7342,7 +7523,9 @@
         "DEBIAN",
         "MACOS",
         "RASPBIAN",
-        "ROCKY_LINUX"
+        "ROCKY_LINUX",
+        "ALMA_LINUX",
+        "AMAZON_LINUX_2023"
       ]
     },
     "OpsAggregator":{
@@ -7506,8 +7689,20 @@
         "ActualStartTime":{"shape":"DateTime"},
         "ActualEndTime":{"shape":"DateTime"},
         "PlannedStartTime":{"shape":"DateTime"},
-        "PlannedEndTime":{"shape":"DateTime"}
+        "PlannedEndTime":{"shape":"DateTime"},
+        "OpsItemArn":{"shape":"OpsItemArn"}
       }
+    },
+    "OpsItemAccessDeniedException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "OpsItemAccountId":{
+      "type":"string",
+      "pattern":"^[0-9]{12}$"
     },
     "OpsItemAlreadyExistsException":{
       "type":"structure",
@@ -7516,6 +7711,12 @@
         "OpsItemId":{"shape":"String"}
       },
       "exception":true
+    },
+    "OpsItemArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:ssm:[a-z0-9-\\.]{0,63}:[0-9]{12}:opsitem.*"
     },
     "OpsItemCategory":{
       "type":"string",
@@ -7651,7 +7852,8 @@
         "ChangeRequestByApproverName",
         "ChangeRequestByTemplate",
         "ChangeRequestByTargetsResourceGroup",
-        "InsightByType"
+        "InsightByType",
+        "AccountId"
       ]
     },
     "OpsItemFilterOperator":{
@@ -8721,6 +8923,12 @@
       },
       "exception":true
     },
+    "Policy":{
+      "type":"string",
+      "pattern":"\\S+"
+    },
+    "PolicyHash":{"type":"string"},
+    "PolicyId":{"type":"string"},
     "Product":{"type":"string"},
     "ProgressCounters":{
       "type":"structure",
@@ -8805,6 +9013,26 @@
       "members":{
         "Version":{"shape":"PSParameterVersion"},
         "Tier":{"shape":"ParameterTier"}
+      }
+    },
+    "PutResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Policy"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArnString"},
+        "Policy":{"shape":"Policy"},
+        "PolicyId":{"shape":"PolicyId"},
+        "PolicyHash":{"shape":"PolicyHash"}
+      }
+    },
+    "PutResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "PolicyId":{"shape":"PolicyId"},
+        "PolicyHash":{"shape":"PolicyHash"}
       }
     },
     "RebootOption":{
@@ -8918,7 +9146,8 @@
         "CutoffBehavior":{
           "shape":"MaintenanceWindowTaskCutoffBehavior",
           "box":true
-        }
+        },
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "RegisterTaskWithMaintenanceWindowResult":{
@@ -8994,6 +9223,11 @@
       "members":{
       }
     },
+    "RequireType":{
+      "type":"string",
+      "max":128,
+      "pattern":"^[a-zA-Z0-9_\\-.]{1,128}$"
+    },
     "ResetServiceSettingRequest":{
       "type":"structure",
       "required":["SettingId"],
@@ -9013,6 +9247,11 @@
         "ParameterValues":{"shape":"TargetParameterList"},
         "Truncated":{"shape":"Boolean"}
       }
+    },
+    "ResourceArnString":{
+      "type":"string",
+      "max":2048,
+      "min":20
     },
     "ResourceComplianceSummaryItem":{
       "type":"structure",
@@ -9245,6 +9484,39 @@
       },
       "exception":true
     },
+    "ResourcePolicyConflictException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "ResourcePolicyInvalidParameterException":{
+      "type":"structure",
+      "members":{
+        "ParameterNames":{"shape":"ResourcePolicyParameterNamesList"},
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "ResourcePolicyLimitExceededException":{
+      "type":"structure",
+      "members":{
+        "Limit":{"shape":"Integer"},
+        "LimitType":{"shape":"String"},
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "ResourcePolicyMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
+    "ResourcePolicyParameterNamesList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ResourceType":{
       "type":"string",
       "enum":[
@@ -9263,7 +9535,8 @@
         "PatchBaseline",
         "OpsItem",
         "OpsMetadata",
-        "Automation"
+        "Automation",
+        "Association"
       ]
     },
     "ResponseCode":{"type":"integer"},
@@ -9439,7 +9712,8 @@
         "MaxErrors":{"shape":"MaxErrors"},
         "ServiceRoleArn":{"shape":"ServiceRole"},
         "NotificationConfig":{"shape":"NotificationConfig"},
-        "CloudWatchOutputConfig":{"shape":"CloudWatchOutputConfig"}
+        "CloudWatchOutputConfig":{"shape":"CloudWatchOutputConfig"},
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "SendCommandResult":{
@@ -9703,7 +9977,8 @@
           "shape":"TargetLocations",
           "box":true
         },
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "StartAutomationExecutionResult":{
@@ -9825,7 +10100,8 @@
         "TargetLocation":{
           "shape":"TargetLocation",
           "box":true
-        }
+        },
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"}
       }
     },
     "StepExecutionFilter":{
@@ -9933,7 +10209,7 @@
     "TagValue":{
       "type":"string",
       "max":256,
-      "min":1,
+      "min":0,
       "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
     "Target":{
@@ -9972,6 +10248,10 @@
         },
         "ExecutionRoleName":{
           "shape":"ExecutionRoleName",
+          "box":true
+        },
+        "TargetLocationAlarmConfiguration":{
+          "shape":"AlarmConfiguration",
           "box":true
         }
       }
@@ -10189,7 +10469,8 @@
         "TargetMaps":{
           "shape":"TargetMaps",
           "box":true
-        }
+        },
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "UpdateAssociationResult":{
@@ -10391,7 +10672,8 @@
         "CutoffBehavior":{
           "shape":"MaintenanceWindowTaskCutoffBehavior",
           "box":true
-        }
+        },
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "UpdateMaintenanceWindowTaskResult":{
@@ -10413,7 +10695,8 @@
         "CutoffBehavior":{
           "shape":"MaintenanceWindowTaskCutoffBehavior",
           "box":true
-        }
+        },
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "UpdateManagedInstanceRoleRequest":{
@@ -10450,7 +10733,8 @@
         "ActualStartTime":{"shape":"DateTime"},
         "ActualEndTime":{"shape":"DateTime"},
         "PlannedStartTime":{"shape":"DateTime"},
-        "PlannedEndTime":{"shape":"DateTime"}
+        "PlannedEndTime":{"shape":"DateTime"},
+        "OpsItemArn":{"shape":"OpsItemArn"}
       }
     },
     "UpdateOpsItemResponse":{

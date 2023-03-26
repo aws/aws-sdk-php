@@ -8,7 +8,7 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Ring\Future\CompletedFutureArray;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Credentials\EcsCredentialProvider
@@ -16,6 +16,8 @@ use PHPUnit\Framework\TestCase;
 class EcsCredentialProviderTest extends TestCase
 {
     private $uripath;
+    private $fulluripath;
+    private $authtokenpath;
 
     private function clearEnv()
     {
@@ -29,26 +31,24 @@ class EcsCredentialProviderTest extends TestCase
         unset($_SERVER[EcsCredentialProvider::ENV_AUTH_TOKEN]);
     }
 
-    public function setUp()
+    public function set_up()
     {
         $this->uripath = getenv(EcsCredentialProvider::ENV_URI);
         $this->fulluripath = getenv(EcsCredentialProvider::ENV_FULL_URI);
         $this->authtokenpath = getenv(EcsCredentialProvider::ENV_AUTH_TOKEN);
     }
 
-    public function tearDown()
+    public function tear_down()
     {
         $this->uripath = getenv(EcsCredentialProvider::ENV_URI);
         $this->fulluripath = getenv(EcsCredentialProvider::ENV_FULL_URI);
         $this->authtokenpath = getenv(EcsCredentialProvider::ENV_AUTH_TOKEN);
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error retrieving credential from ECS
-     */
     public function testRejectsIfUriPathIsNotAvailable()
     {
+        $this->expectExceptionMessage("Error retrieving credential from ECS");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $client = function () use (&$responses) {
             return Promise\Create::rejectionFor([
                 'exception' => new \Exception('error')
@@ -58,12 +58,10 @@ class EcsCredentialProviderTest extends TestCase
         $p()->wait();
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Unexpected ECS credential value
-     */
     public function testThrowsExceptionOnInvalidEcsCredential()
     {
+        $this->expectExceptionMessage("Unexpected ECS credential value");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $this->getTestCreds(
             $this->getCredentialArray(null, null, null, null, false)
         )->wait();
@@ -81,6 +79,7 @@ class EcsCredentialProviderTest extends TestCase
         $this->assertSame($t, $c->getExpiration());
     }
 
+    /** @doesNotPerformAssertions */
     public function testDoesNotRequireConfig()
     {
         new EcsCredentialProvider();

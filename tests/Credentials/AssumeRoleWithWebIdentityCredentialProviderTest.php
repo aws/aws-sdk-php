@@ -12,7 +12,7 @@ use Aws\Api\DateTimeResult;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider
@@ -35,36 +35,30 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         return $dir;
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Missing required 'AssumeRoleWithWebIdentityCredentialProvider' configuration option:
-     */
     public function testEnsureRoleArnProvidedForAssumeRole()
     {
+        $this->expectExceptionMessage("Missing required 'AssumeRoleWithWebIdentityCredentialProvider' configuration option:");
+        $this->expectException(\InvalidArgumentException::class);
         $config = [
             'WebIdentityTokenFile' => '/path/to/token/file',
         ];
         new AssumeRoleWithWebIdentityCredentialProvider($config);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Missing required 'AssumeRoleWithWebIdentityCredentialProvider' configuration option:
-     */
     public function testEnsureWebIdentityTokenFileProvidedForAssumeRole()
     {
+        $this->expectExceptionMessage("Missing required 'AssumeRoleWithWebIdentityCredentialProvider' configuration option:");
+        $this->expectException(\InvalidArgumentException::class);
         $config = [
             'RoleArn' => self::SAMPLE_ROLE_ARN,
         ];
         new AssumeRoleWithWebIdentityCredentialProvider($config);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage 'WebIdentityTokenFile' must be an absolute path.
-     */
     public function testEnsureWebIdentityTokenFileIsAbsolutePath()
     {
+        $this->expectExceptionMessage("'WebIdentityTokenFile' must be an absolute path.");
+        $this->expectException(\InvalidArgumentException::class);
         $config = [
             'RoleArn' => self::SAMPLE_ROLE_ARN,
             'WebIdentityTokenFile' => '..\foo\path'
@@ -106,7 +100,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
             $this->assertSame('foo', $creds->getAccessKeyId());
             $this->assertSame('bar', $creds->getSecretKey());
             $this->assertSame('baz', $creds->getSecurityToken());
-            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Error $e) {
             throw $e;
@@ -133,7 +127,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $sts = $this->getTestClient('Sts', ['credentials' => false]);
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
-                $this->assertContains('aws-sdk-php-', $c->toArray()['RoleSessionName']);
+                $this->assertStringContainsString('aws-sdk-php-', $c->toArray()['RoleSessionName']);
                 return Promise\Create::promiseFor(new Result($result));
             }
         );
@@ -146,12 +140,10 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         unlink($tokenPath);
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error reading WebIdentityTokenFile
-     */
     public function testThrowsExceptionWhenReadingTokenFileFails()
     {
+        $this->expectExceptionMessage("Error reading WebIdentityTokenFile");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
         $args['WebIdentityTokenFile'] = '/foo';
         $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
@@ -172,18 +164,16 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
             $this->fail("Should have thrown an exception");
         } catch (\Exception $e) {
             self::assertInstanceOf('\Aws\Exception\CredentialsException', $e);
-            self::assertContains('Error reading WebIdentityTokenFile', $e->getMessage());
+            self::assertStringContainsString('Error reading WebIdentityTokenFile', $e->getMessage());
         } finally {
             unlink($tokenPath);
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error assuming role from web identity credentials
-     */
     public function testThrowsExceptionWhenRetrievingAssumeRoleCredentialFails()
     {
+        $this->expectExceptionMessage("Error assuming role from web identity credentials");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $sts = new StsClient([
             'region' => 'us-west-2',
@@ -216,12 +206,10 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error retrieving web identity credentials: Found 1 error while validating the input provided for the AssumeRoleWithWebIdentity operation:
-     */
     public function testThrowsNonAwsExceptionWhenRetrievingAssumeRoleCredentialFails()
     {
+        $this->expectExceptionMessage("Error retrieving web identity credentials: Found 1 error while validating the input provided for the AssumeRoleWithWebIdentity operation:");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $sts = new StsClient([
             'region' => 'us-west-2',
@@ -294,7 +282,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
             $this->assertSame('foo', $creds->getAccessKeyId());
             $this->assertSame('bar', $creds->getSecretKey());
             $this->assertSame('baz', $creds->getSecurityToken());
-            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {
             throw $e;
@@ -303,12 +291,10 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage InvalidIdentityToken, retries exhausted
-     */
     public function testThrowsExceptionWhenInvalidIdentityTokenRetriesExhausted()
     {
+        $this->expectExceptionMessage("InvalidIdentityToken, retries exhausted");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $result = [
             'Credentials' => [
@@ -353,12 +339,10 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage InvalidIdentityToken, retries exhausted
-     */
     public function testCanDisableInvalidIdentityTokenRetries()
     {
+        $this->expectExceptionMessage("InvalidIdentityToken, retries exhausted");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $result = [
             'Credentials' => [

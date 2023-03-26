@@ -114,7 +114,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateAssessmentFramework":{
@@ -129,7 +130,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateAssessmentReport":{
@@ -159,7 +161,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "DeleteAssessment":{
@@ -846,7 +849,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "UpdateAssessmentStatus":{
@@ -861,7 +865,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "UpdateControl":{
@@ -1444,6 +1449,12 @@
       "type":"list",
       "member":{"shape":"ChangeLog"}
     },
+    "CloudTrailArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:.*:cloudtrail:.*"
+    },
     "ComplianceType":{
       "type":"string",
       "max":100,
@@ -1700,7 +1711,8 @@
           "shape":"UUID",
           "location":"uri",
           "locationName":"assessmentId"
-        }
+        },
+        "queryStatement":{"shape":"QueryStatement"}
       }
     },
     "CreateAssessmentReportResponse":{
@@ -1945,6 +1957,13 @@
       "members":{
       }
     },
+    "DeleteResources":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "DEFAULT"
+      ]
+    },
     "DeregisterAccountRequest":{
       "type":"structure",
       "members":{
@@ -1965,6 +1984,12 @@
     "DeregisterOrganizationAdminAccountResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "DeregistrationPolicy":{
+      "type":"structure",
+      "members":{
+        "deleteResources":{"shape":"DeleteResources"}
       }
     },
     "DisassociateAssessmentReportEvidenceFolderRequest":{
@@ -2043,6 +2068,32 @@
       "type":"map",
       "key":{"shape":"EvidenceAttributeKey"},
       "value":{"shape":"EvidenceAttributeValue"}
+    },
+    "EvidenceFinderBackfillStatus":{
+      "type":"string",
+      "enum":[
+        "NOT_STARTED",
+        "IN_PROGRESS",
+        "COMPLETED"
+      ]
+    },
+    "EvidenceFinderEnablement":{
+      "type":"structure",
+      "members":{
+        "eventDataStoreArn":{"shape":"CloudTrailArn"},
+        "enablementStatus":{"shape":"EvidenceFinderEnablementStatus"},
+        "backfillStatus":{"shape":"EvidenceFinderBackfillStatus"},
+        "error":{"shape":"ErrorMessage"}
+      }
+    },
+    "EvidenceFinderEnablementStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "ENABLE_IN_PROGRESS",
+        "DISABLE_IN_PROGRESS"
+      ]
     },
     "EvidenceIds":{
       "type":"list",
@@ -2966,6 +3017,12 @@
         "ASSESSMENT_REPORT"
       ]
     },
+    "QueryStatement":{
+      "type":"string",
+      "max":10000,
+      "min":1,
+      "pattern":"(?s).*"
+    },
     "Region":{
       "type":"string",
       "pattern":"^[a-z]{2}-[a-z]+-[0-9]{1}$"
@@ -3001,7 +3058,8 @@
       "type":"structure",
       "members":{
         "arn":{"shape":"GenericArn"},
-        "value":{"shape":"String"}
+        "value":{"shape":"String"},
+        "complianceCheck":{"shape":"String"}
       }
     },
     "ResourceNotFoundException":{
@@ -3077,6 +3135,15 @@
       "type":"list",
       "member":{"shape":"ServiceMetadata"}
     },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":402},
+      "exception":true
+    },
     "SettingAttribute":{
       "type":"string",
       "enum":[
@@ -3084,7 +3151,9 @@
         "IS_AWS_ORG_ENABLED",
         "SNS_TOPIC",
         "DEFAULT_ASSESSMENT_REPORTS_DESTINATION",
-        "DEFAULT_PROCESS_OWNERS"
+        "DEFAULT_PROCESS_OWNERS",
+        "EVIDENCE_FINDER_ENABLEMENT",
+        "DEREGISTRATION_POLICY"
       ]
     },
     "Settings":{
@@ -3094,7 +3163,9 @@
         "snsTopic":{"shape":"SNSTopic"},
         "defaultAssessmentReportsDestination":{"shape":"AssessmentReportsDestination"},
         "defaultProcessOwners":{"shape":"Roles"},
-        "kmsKey":{"shape":"KmsKey"}
+        "kmsKey":{"shape":"KmsKey"},
+        "evidenceFinderEnablement":{"shape":"EvidenceFinderEnablement"},
+        "deregistrationPolicy":{"shape":"DeregistrationPolicy"}
       }
     },
     "ShareRequestAction":{
@@ -3528,7 +3599,9 @@
         "snsTopic":{"shape":"SnsArn"},
         "defaultAssessmentReportsDestination":{"shape":"AssessmentReportsDestination"},
         "defaultProcessOwners":{"shape":"Roles"},
-        "kmsKey":{"shape":"KmsKey"}
+        "kmsKey":{"shape":"KmsKey"},
+        "evidenceFinderEnabled":{"shape":"Boolean"},
+        "deregistrationPolicy":{"shape":"DeregistrationPolicy"}
       }
     },
     "UpdateSettingsResponse":{

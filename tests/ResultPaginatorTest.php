@@ -2,12 +2,13 @@
 namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
+use Aws\CloudWatchLogs\CloudWatchLogsClient;
 use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Result;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\ResultPaginator
@@ -105,13 +106,13 @@ class ResultPaginatorTest extends TestCase
         $this->addMockResults($client, $results);
         $paginator = $client->getPaginator('ListTables', [], $config);
         $this->assertEquals(['test1', 'test2'], $paginator->current()['TableNames']);
-        $this->assertEquals(['NextToken' => 'test2'], $this->readAttribute($paginator, 'nextToken'), '[1]');
+        $this->assertEquals(['NextToken' => 'test2'], $this->getPropertyValue($paginator, 'nextToken'), '[1]');
         $paginator->next();
         $this->assertEquals([], $paginator->current()['TableNames']);
-        $this->assertEquals(['NextToken' => 'test2'], $this->readAttribute($paginator, 'nextToken'), '[2]');
+        $this->assertEquals(['NextToken' => 'test2'], $this->getPropertyValue($paginator, 'nextToken'), '[2]');
         $paginator->next();
         $this->assertEquals(['test3'], $paginator->current()['TableNames']);
-        $this->assertEmpty($this->readAttribute($paginator, 'nextToken'), '[3]');
+        $this->assertEmpty($this->getPropertyValue($paginator, 'nextToken'), '[3]');
     }
 
     /**
@@ -412,5 +413,48 @@ class ResultPaginatorTest extends TestCase
         foreach ($paginator->search('a') as $b) {
 
         }
+    }
+
+    public function testLastPageHasPreviousToken()
+    {
+        $config = ['input_token' => 'nextToken', 'output_token' => 'nextForwardToken'];
+        $provider = ApiProvider::defaultProvider();
+        $client = new CloudWatchLogsClient([
+            'region'  => 'us-west-2',
+            'version' => 'latest',
+            'api_provider' => function ($t, $s, $v) use ($provider, $config) {
+                if ($t === 'paginator') {
+                    $res = $provider($t, $s, $v);
+                    $res['pagination']['GetLogEvents'] = $config
+                        + $res['pagination']['GetLogEvents'];
+                    return $res;
+                }
+
+                return $provider($t, $s, $v);
+            }
+        ]);
+        $results = [
+            new Result(['nextToken' => 'foo', 'nextForwardToken' => 'foo']),
+            new Result(['nextToken' => 'bar', 'nextForwardToken' => 'bar']),
+            new Result(['nextToken' => 'bar', 'nextForwardToken' => 'bar']),
+            new Result(['nextToken' => 'baz', 'nextForwardToken' => 'baz']),
+        ];
+        $requestCount = 0;
+        $this->addMockResults(
+            $client,
+            $results,
+            function () use (&$requestCount) {
+                $requestCount++;
+            }
+        );
+        $paginator = $client->getPaginator('GetLogEvents', [
+            "logGroupName" => "foo",
+            "logStreamName" => 'bar',
+        ]);
+        // Iterate over the paginator
+        foreach ($paginator as $key => $result) {}
+        // Make sure the paginator yields the expected results
+        $this->assertInstanceOf('Aws\\Result', $result);
+        $this->assertEquals(3, $requestCount);
     }
 }

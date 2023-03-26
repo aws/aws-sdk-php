@@ -5,7 +5,7 @@ use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionInterface;
 use Aws\Endpoint\UseDualstackEndpoint;
 use Aws\Endpoint\UseFipsEndpoint;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Endpoint\Partition
@@ -29,12 +29,11 @@ class PartitionTest extends TestCase
      * @dataProvider invalidPartitionDefinitionProvider
      *
      * @param array $invalidDefinition
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp /missing required \w+ field/
      */
     public function testRejectsInvalidDefinitions(array $invalidDefinition)
     {
+        $this->expectExceptionMessageMatches("/missing required \w+ field/");
+        $this->expectException(\InvalidArgumentException::class);
         new Partition($invalidDefinition);
     }
 
@@ -63,7 +62,7 @@ class PartitionTest extends TestCase
     {
         $partition = new Partition($definition);
         $resolved = $partition(['region' => 'fips-aws-global', 'service' => 'service']);
-        self::assertContains('service-fips.amazonaws.com', $resolved['endpoint']);
+        self::assertStringContainsString('service-fips.amazonaws.com', $resolved['endpoint']);
     }
 
     public function partitionDefinitionProvider()
@@ -689,7 +688,7 @@ class PartitionTest extends TestCase
             ]
         ]);
 
-        self::assertContains('testsuffix.com', $resolved['endpoint']);
+        $this->assertStringContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
     public function variantTagProvider()
@@ -839,7 +838,7 @@ class PartitionTest extends TestCase
             ]
         ]);
 
-        self::assertNotContains('testsuffix.com', $resolved['endpoint']);
+        $this->assertStringNotContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
     public function variantTagEmptyProvider()
@@ -962,6 +961,75 @@ class PartitionTest extends TestCase
                 ],
                 null,
                 null
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider booleanConfigProvider
+     *
+     * @param array $tags
+     * @param @fipsConfig
+     * @param @dualstackConfig
+     */
+    public function testGetVariantWithBooleanConfigValues(
+        array $tags,
+              $fipsConfig,
+              $dualstackConfig
+    )
+    {
+        $definition = [
+            'partition' => 'aws_test',
+            'dnsSuffix' => 'amazonaws.com',
+            'regions' => [
+                'region' => [
+                    'description' => 'A description',
+                ],
+            ],
+            'services' => [
+                'service' => [
+                    'endpoints' => [
+                        'us-east-1' => [
+                            'variants' => [[
+                                'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                'tags' => $tags
+                            ]]
+                        ],
+                        'us-west-2' => [],
+                    ],
+                ],
+            ],
+        ];
+        $partition = new Partition($definition);
+        $resolved = $partition([
+            'region' => 'us-east-1',
+            'service' => 'service',
+            'options' => [
+                'use_fips_endpoint' => $fipsConfig,
+                'use_dual_stack_endpoint' => $dualstackConfig
+            ]
+        ]);
+
+        $this->assertStringContainsString('testsuffix.com', $resolved['endpoint']);
+    }
+
+    public function booleanConfigProvider()
+    {
+        return [
+            [
+                ['fips'],
+                true,
+                false
+            ],
+            [
+                ['dualstack'],
+                false,
+                true
+            ],
+            [
+                ['fips', 'dualstack'],
+                true,
+                true
             ]
         ];
     }

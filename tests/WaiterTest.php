@@ -14,7 +14,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Waiter
@@ -23,11 +23,9 @@ class WaiterTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testErrorOnBadConfig()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $provider = ApiProvider::defaultProvider();
         $client = new DynamoDbClient([
             'region' => 'foo',
@@ -44,11 +42,9 @@ class WaiterTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testErrorOnBadBeforeCallback()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $client = $this->getTestClient('DynamoDb');
         $client->waitUntil(
             'TableExists',
@@ -59,6 +55,7 @@ class WaiterTest extends TestCase
         );
     }
 
+    /** @doesNotPerformAssertions */
     public function testContinueWaitingOnHandlerError()
     {
         $retries = 10;
@@ -91,6 +88,7 @@ class WaiterTest extends TestCase
         ]);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanCancel()
     {
         $client = $this->getTestClient('DynamoDb');
@@ -221,6 +219,7 @@ class WaiterTest extends TestCase
                     'metadata' => [
                         'endpointPrefix' => 'foo',
                         'protocol' => 'json',
+                        'jsonVersion' => '1.1',
                         'signatureVersion' => 'v4'
                     ],
                 ];

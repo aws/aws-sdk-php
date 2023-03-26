@@ -238,8 +238,19 @@ class ObjectUploaderTest extends TestCase
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
+        $client->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $name = $cmd->getName();
+                if ($name === 'UploadPart') {
+                    $this->assertTrue(
+                        $req->hasHeader('Content-MD5')
+                    );
+                }
+            })
+        );
         $uploadOptions = [
             'params'          => ['RequestPayer' => 'test'],
+            'add_content_md5' => true,
             'before_upload'   => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
@@ -272,9 +283,20 @@ class ObjectUploaderTest extends TestCase
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
+        $client->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $name = $cmd->getName();
+                if ($name === 'UploadPart') {
+                    $this->assertTrue(
+                        $req->hasHeader('Content-MD5')
+                    );
+                }
+            })
+        );
         $uploadOptions = [
             'mup_threshold'   => self::MB * 4,
             'params'          => ['RequestPayer' => 'test'],
+            'add_content_md5' => true,
             'before_initiate' => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },

@@ -9,7 +9,7 @@ use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointDiscovery\Exception\ConfigurationException;
 use Aws\LruArrayCache;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\EndpointDiscovery\ConfigurationProvider
@@ -34,13 +34,14 @@ endpoint_discovery_enabled = true
 endpoint_discovery_enabled = false
 EOT;
 
-    public static function setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'enabled' => getenv(ConfigurationProvider::ENV_ENABLED) ?: '',
             'enabled_alt' => getenv(ConfigurationProvider::ENV_ENABLED_ALT) ?: '',
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
+            'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
         ];
     }
 
@@ -49,6 +50,7 @@ EOT;
         putenv(ConfigurationProvider::ENV_ENABLED . '=');
         putenv(ConfigurationProvider::ENV_ENABLED_ALT . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
+        putenv(ConfigurationProvider::ENV_PROFILE . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -59,7 +61,7 @@ EOT;
         return $dir;
     }
 
-    public static function tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=' .
             self::$originalEnv['enabled']);
@@ -67,6 +69,8 @@ EOT;
             self::$originalEnv['enabled_alt']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
+            self::$originalEnv['config_file']);
         putenv('HOME=' . self::$originalEnv['home']);
     }
 
@@ -202,21 +206,17 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \Aws\EndpointDiscovery\Exception\ConfigurationException
-     */
     public function testEnsuresIniFileExists()
     {
+        $this->expectException(\Aws\EndpointDiscovery\Exception\ConfigurationException::class);
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
         call_user_func(ConfigurationProvider::ini())->wait();
     }
 
-    /**
-     * @expectedException \Aws\EndpointDiscovery\Exception\ConfigurationException
-     */
     public function testEnsuresProfileIsNotEmpty()
     {
+        $this->expectException(\Aws\EndpointDiscovery\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         $ini = "[custom]";
         file_put_contents($dir . '/config', $ini);
@@ -230,12 +230,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\EndpointDiscovery\Exception\ConfigurationException
-     * @expectedExceptionMessage 'foo' not found in
-     */
     public function testEnsuresFileIsNotEmpty()
     {
+        $this->expectExceptionMessage("'foo' not found in");
+        $this->expectException(\Aws\EndpointDiscovery\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', '');
         putenv('HOME=' . dirname($dir));
@@ -248,12 +246,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\EndpointDiscovery\Exception\ConfigurationException
-     * @expectedExceptionMessage Invalid config file:
-     */
     public function testEnsuresIniFileIsValid()
     {
+        $this->expectExceptionMessage("Invalid config file:");
+        $this->expectException(\Aws\EndpointDiscovery\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
@@ -323,11 +319,9 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testChainThrowsExceptionOnEmptyArgs()
     {
+        $this->expectException(\InvalidArgumentException::class);
         ConfigurationProvider::chain();
     }
 
@@ -488,12 +482,10 @@ EOT;
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Not a valid endpoint_discovery configuration argument.
-     */
     public function testInvalidConfigurationUnwrap()
     {
+        $this->expectExceptionMessage("Not a valid endpoint_discovery configuration argument.");
+        $this->expectException(\InvalidArgumentException::class);
         ConfigurationProvider::unwrap([]);
     }
 }

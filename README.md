@@ -1,6 +1,5 @@
 # AWS SDK for PHP - Version 3
 
-[![@awsforphp on Twitter](http://img.shields.io/badge/twitter-%40awsforphp-blue.svg?style=flat)](https://twitter.com/awsforphp)
 [![Total Downloads](https://img.shields.io/packagist/dt/aws/aws-sdk-php.svg?style=flat)](https://packagist.org/packages/aws/aws-sdk-php)
 [![Apache 2 License](https://img.shields.io/packagist/l/aws/aws-sdk-php.svg?style=flat)](http://aws.amazon.com/apache-2-0/)
 [![Gitter](https://badges.gitter.im/aws/aws-sdk-php.svg)](https://gitter.im/aws/aws-sdk-php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -144,7 +143,6 @@ We work hard to provide a high-quality and useful SDK for our AWS services, and 
 * [Forum][sdk-forum] – Ask questions, get help, and give feedback
 * [Issues][sdk-issues] – Report issues, submit pull requests, and get involved
   (see [Apache 2.0 License][sdk-license])
-* [@awsforphp][sdk-twitter] – Follow us on Twitter
 
 ## Related AWS Projects
 
@@ -165,7 +163,6 @@ We work hard to provide a high-quality and useful SDK for our AWS services, and 
 [sdk-issues]: https://github.com/aws/aws-sdk-php/issues
 [sdk-license]: http://aws.amazon.com/apache2.0/
 [sdk-blog]: https://aws.amazon.com/blogs/developer/category/php/
-[sdk-twitter]: https://twitter.com/awsforphp
 [sdk-sample]: http://aws.amazon.com/developers/getting-started/php
 
 [install-packagist]: https://packagist.org/packages/aws/aws-sdk-php
@@ -177,7 +174,7 @@ We work hard to provide a high-quality and useful SDK for our AWS services, and 
 [docs-guide-v2]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/index.html
 [docs-contribution]: https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md
 [docs-migration]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/getting-started_migration.html
-[docs-signup]: http://aws.amazon.com/developers/access-keys/
+[docs-signup]: https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/
 [docs-requirements]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/getting-started_requirements.html
 [docs-installation]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/getting-started_installation.html
 [docs-quickstart]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/welcome.html#getting-started

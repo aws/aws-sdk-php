@@ -6,7 +6,7 @@ use Aws\Api\Service;
 use Aws\Api\StructureShape;
 use Aws\Test\TestServiceTrait;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\Service
@@ -63,7 +63,7 @@ class ServiceTest extends TestCase
     public function testReturnsMetadata()
     {
         $s = new Service([], function () { return []; });
-        $this->assertInternalType('array', $s->getMetadata());
+        $this->assertIsArray($s->getMetadata());
         $s['metadata'] = [
             'serviceFullName' => 'foo',
             'endpointPrefix'  => 'bar',
@@ -94,11 +94,9 @@ class ServiceTest extends TestCase
         $this->assertArrayHasKey('foo', $s->getOperations());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testEnsuresOperationExists()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s = new Service([], function () { return []; });
         $s->getOperation('foo');
     }
@@ -159,11 +157,9 @@ class ServiceTest extends TestCase
         $this->assertInstanceOf($cl, Service::createErrorParser($p));
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testThrowsOnUnexpectedProtocol()
     {
+        $this->expectException(\UnexpectedValueException::class);
         Service::createErrorParser('undefined_protocol');
     }
 
@@ -183,8 +179,12 @@ class ServiceTest extends TestCase
      */
     public function testCreatesSerializer($type, $cl)
     {
+        $data = ['metadata' => ['protocol' => $type]];
+        if ($type === 'json') {
+            $data['metadata']['jsonVersion'] = '1.1';
+        }
         $service = new Service(
-            ['metadata' => ['protocol' => $type]],
+            $data,
             function () { return []; }
         );
         $serializer = Service::createSerializer($service, $type);
@@ -215,9 +215,63 @@ class ServiceTest extends TestCase
         $this->assertInstanceOf($cl, $parser);
 
         if ($parser instanceof QueryParser) {
-            $this->assertAttributeInstanceOf(
-                'Aws\Api\Parser\XmlParser', 'parser', $parser
+            $this->assertInstanceOf(
+                'Aws\Api\Parser\XmlParser',
+                $this->getPropertyValue($parser, 'parser')
             );
         }
+    }
+
+    public function testGetClientContextParams()
+    {
+        $params = [
+            'Foo' => [
+                'type' => 'string',
+                'documentation' => 'blah blah blah'
+            ]
+        ];
+        $s = new Service(
+            [
+                'metadata' => [
+                    'serviceFullName' => 'Foo Service',
+                    'serviceIdentifier' => 'foo',
+                    'serviceId'         => 'Foo',
+                    'endpointPrefix'  => 'bar',
+                    'apiVersion'      => 'baz',
+                    'signingName'     => 'qux',
+                    'protocol'        => 'yak',
+                    'uid'             => 'foo-2016-12-09'
+                ],
+                'clientContextParams' => $params
+            ],
+            function () { return []; }
+        );
+
+        $clientContextParams = $s->getClientContextParams();
+        $this->assertEquals($params, $clientContextParams);
+    }
+
+    public function testModifyModel()
+    {
+        $s = new Service(
+            [
+                'metadata' => [
+                    'serviceFullName' => 'Foo Service',
+                    'serviceIdentifier' => 'foo',
+                    'serviceId'         => 'Foo',
+                    'endpointPrefix'  => 'bar',
+                    'apiVersion'      => 'baz',
+                    'signingName'     => 'qux',
+                    'protocol'        => 'yak',
+                    'uid'             => 'foo-2016-12-09'
+                ]
+            ],
+            function () { return []; }
+        );
+        $definition = $s->getDefinition();
+        $definition['metadata']['serviceId'] = 'bar';
+        $s->setDefinition($definition);
+        $this->assertTrue($s->isModifiedModel());
+        $this->assertEquals( 'bar', $s->getMetadata('serviceId'));
     }
 }

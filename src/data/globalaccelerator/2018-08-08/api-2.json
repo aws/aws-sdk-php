@@ -31,6 +31,23 @@
         {"shape":"ConflictException"}
       ]
     },
+    "AddEndpoints":{
+      "name":"AddEndpoints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AddEndpointsRequest"},
+      "output":{"shape":"AddEndpointsResponse"},
+      "errors":[
+        {"shape":"TransactionInProgressException"},
+        {"shape":"EndpointGroupNotFoundException"},
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "AdvertiseByoipCidr":{
       "name":"AdvertiseByoipCidr",
       "http":{
@@ -55,6 +72,7 @@
       },
       "input":{"shape":"AllowCustomRoutingTrafficRequest"},
       "errors":[
+        {"shape":"EndpointGroupNotFoundException"},
         {"shape":"InvalidArgumentException"},
         {"shape":"InternalServiceErrorException"}
       ]
@@ -249,6 +267,7 @@
       },
       "input":{"shape":"DenyCustomRoutingTrafficRequest"},
       "errors":[
+        {"shape":"EndpointGroupNotFoundException"},
         {"shape":"InvalidArgumentException"},
         {"shape":"InternalServiceErrorException"}
       ]
@@ -561,6 +580,21 @@
         {"shape":"ConflictException"}
       ]
     },
+    "RemoveEndpoints":{
+      "name":"RemoveEndpoints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RemoveEndpointsRequest"},
+      "errors":[
+        {"shape":"EndpointGroupNotFoundException"},
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TransactionInProgressException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -599,6 +633,7 @@
       "output":{"shape":"UpdateAcceleratorResponse"},
       "errors":[
         {"shape":"AcceleratorNotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServiceErrorException"},
         {"shape":"InvalidArgumentException"}
       ]
@@ -724,7 +759,9 @@
         "DnsName":{"shape":"GenericString"},
         "Status":{"shape":"AcceleratorStatus"},
         "CreatedTime":{"shape":"Timestamp"},
-        "LastModifiedTime":{"shape":"Timestamp"}
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "DualStackDnsName":{"shape":"GenericString"},
+        "Events":{"shape":"AcceleratorEvents"}
       }
     },
     "AcceleratorAttributes":{
@@ -734,6 +771,17 @@
         "FlowLogsS3Bucket":{"shape":"GenericString"},
         "FlowLogsS3Prefix":{"shape":"GenericString"}
       }
+    },
+    "AcceleratorEvent":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"GenericString"},
+        "Timestamp":{"shape":"Timestamp"}
+      }
+    },
+    "AcceleratorEvents":{
+      "type":"list",
+      "member":{"shape":"AcceleratorEvent"}
     },
     "AcceleratorNotDisabledException":{
       "type":"structure",
@@ -782,6 +830,24 @@
       "type":"structure",
       "members":{
         "EndpointDescriptions":{"shape":"CustomRoutingEndpointDescriptions"},
+        "EndpointGroupArn":{"shape":"GenericString"}
+      }
+    },
+    "AddEndpointsRequest":{
+      "type":"structure",
+      "required":[
+        "EndpointConfigurations",
+        "EndpointGroupArn"
+      ],
+      "members":{
+        "EndpointConfigurations":{"shape":"EndpointConfigurations"},
+        "EndpointGroupArn":{"shape":"GenericString"}
+      }
+    },
+    "AddEndpointsResponse":{
+      "type":"structure",
+      "members":{
+        "EndpointDescriptions":{"shape":"EndpointDescriptions"},
         "EndpointGroupArn":{"shape":"GenericString"}
       }
     },
@@ -1444,6 +1510,20 @@
       "type":"list",
       "member":{"shape":"EndpointGroup"}
     },
+    "EndpointIdentifier":{
+      "type":"structure",
+      "required":["EndpointId"],
+      "members":{
+        "EndpointId":{"shape":"GenericString"},
+        "ClientIPPreservationEnabled":{"shape":"GenericBoolean"}
+      }
+    },
+    "EndpointIdentifiers":{
+      "type":"list",
+      "member":{"shape":"EndpointIdentifier"},
+      "max":10,
+      "min":1
+    },
     "EndpointIds":{
       "type":"list",
       "member":{"shape":"GenericString"}
@@ -1540,9 +1620,19 @@
       "type":"string",
       "max":45
     },
+    "IpAddressFamily":{
+      "type":"string",
+      "enum":[
+        "IPv4",
+        "IPv6"
+      ]
+    },
     "IpAddressType":{
       "type":"string",
-      "enum":["IPV4"]
+      "enum":[
+        "IPV4",
+        "DUAL_STACK"
+      ]
     },
     "IpAddresses":{
       "type":"list",
@@ -1553,8 +1643,13 @@
     "IpSet":{
       "type":"structure",
       "members":{
-        "IpFamily":{"shape":"GenericString"},
-        "IpAddresses":{"shape":"IpAddresses"}
+        "IpFamily":{
+          "shape":"GenericString",
+          "deprecated":true,
+          "deprecatedMessage":"IpFamily has been replaced by IpAddressFamily"
+        },
+        "IpAddresses":{"shape":"IpAddresses"},
+        "IpAddressFamily":{"shape":"IpAddressFamily"}
       }
     },
     "IpSets":{
@@ -1839,6 +1934,17 @@
         "EndpointGroupArn":{"shape":"GenericString"}
       }
     },
+    "RemoveEndpointsRequest":{
+      "type":"structure",
+      "required":[
+        "EndpointIdentifiers",
+        "EndpointGroupArn"
+      ],
+      "members":{
+        "EndpointIdentifiers":{"shape":"EndpointIdentifiers"},
+        "EndpointGroupArn":{"shape":"GenericString"}
+      }
+    },
     "ResourceArn":{
       "type":"string",
       "max":1011,
@@ -1912,6 +2018,13 @@
       "type":"float",
       "max":100,
       "min":0
+    },
+    "TransactionInProgressException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
     },
     "UntagResourceRequest":{
       "type":"structure",

@@ -24,9 +24,12 @@
     "ListStagingAccounts": "<p>Returns an array of staging accounts for existing extended source servers.</p>",
     "ListTagsForResource": "<p>List all tags for your Elastic Disaster Recovery resources.</p>",
     "RetryDataReplication": "<p>Causes the data replication initiation sequence to begin immediately upon next Handshake for the specified Source Server ID, regardless of when the previous initiation started. This command will work only if the Source Server is stalled or is in a DISCONNECTED or STOPPED state.</p>",
+    "ReverseReplication": "<p>Start replication to origin / target region - applies only to protected instances that originated in EC2. For recovery instances on target region - starts replication back to origin region. For failback instances on origin region - starts replication to target region to re-protect them. </p>",
     "StartFailbackLaunch": "<p>Initiates a Job for launching the machine that is being failed back to from the specified Recovery Instance. This will run conversion on the failback client and will reboot your machine, thus completing the failback process.</p>",
     "StartRecovery": "<p>Launches Recovery Instances for the specified Source Servers. For each Source Server you may choose a point in time snapshot to launch from, or use an on demand snapshot.</p>",
+    "StartReplication": "<p>Starts replication for a stopped Source Server. This action would make the Source Server protected again and restart billing for it.</p>",
     "StopFailback": "<p>Stops the failback process for a specified Recovery Instance. This changes the Failback State of the Recovery Instance back to FAILBACK_NOT_STARTED.</p>",
+    "StopReplication": "<p>Stops replication for a Source Server. This action would make the Source Server unprotected, delete its existing snapshots and stop billing for it.</p>",
     "TagResource": "<p>Adds or overwrites only the specified tags for the specified Elastic Disaster Recovery resource or resources. When you specify an existing tag key, the value is overwritten with the new value. Each resource can have a maximum of 50 tags. Each tag consists of a key and optional value.</p>",
     "TerminateRecoveryInstances": "<p>Initiates a Job for terminating the EC2 resources associated with the specified Recovery Instances, and then will delete the Recovery Instances from the Elastic Disaster Recovery service.</p>",
     "UntagResource": "<p>Deletes the specified set of tags from the specified set of Elastic Disaster Recovery resources.</p>",
@@ -72,6 +75,7 @@
         "Account$accountID": "<p>Account ID of AWS account.</p>",
         "AccountIDs$member": null,
         "ListExtensibleSourceServersRequest$stagingAccountID": "<p>The Id of the staging Account to retrieve extensible source servers from.</p>",
+        "SourceCloudProperties$originAccountID": "<p>AWS Account ID for an EC2-originated Source Server.</p>",
         "StagingArea$stagingAccountID": "<p>Account ID of the account to which source server belongs. If this source server is extended - shows Account ID of staging source server.</p>"
       }
     },
@@ -85,6 +89,21 @@
       "base": null,
       "refs": {
         "ListStagingAccountsResponse$accounts": "<p>An array of staging AWS Accounts.</p>"
+      }
+    },
+    "AwsAvailabilityZone": {
+      "base": null,
+      "refs": {
+        "DataReplicationInfo$stagingAvailabilityZone": "<p>AWS Availability zone into which data is being replicated.</p>",
+        "RecoveryInstance$originAvailabilityZone": "<p>AWS availability zone associated with the recovery instance.</p>",
+        "RecoveryInstanceDataReplicationInfo$stagingAvailabilityZone": "<p>AWS Availability zone into which data is being replicated.</p>",
+        "SourceCloudProperties$originAvailabilityZone": "<p>AWS Availability Zone for an EC2-originated Source Server.</p>"
+      }
+    },
+    "AwsRegion": {
+      "base": null,
+      "refs": {
+        "SourceCloudProperties$originRegion": "<p>AWS Region for an EC2-originated Source Server.</p>"
       }
     },
     "Boolean": {
@@ -458,6 +477,12 @@
         "StagingArea$status": "<p>Status of Source server extension. Possible values: (a) NOT_EXTENDED - This is a source server that is replicating in the current account. (b) EXTENDED - Source server is extended from a staging source server. In this case, the value of stagingSourceServerArn is pointing to the Arn of the source server in the staging account. (c) EXTENSION_ERROR - Some issue occurred when accessing staging source server. In this case, errorMessage field will contain an error message that explains what happened.</p>"
       }
     },
+    "FailbackLaunchType": {
+      "base": null,
+      "refs": {
+        "RecoveryInstanceFailback$failbackLaunchType": "<p>The launch type (Recovery / Drill) of the last launch for the failback replication of this recovery instance.</p>"
+      }
+    },
     "FailbackReplicationError": {
       "base": null,
       "refs": {
@@ -500,7 +525,6 @@
       "base": null,
       "refs": {
         "DataReplicationInfo$etaDateTime": "<p>An estimate of when the data replication will be completed.</p>",
-        "DataReplicationInfo$lagDuration": "<p>Data replication lag duration.</p>",
         "DataReplicationInitiation$nextAttemptDateTime": "<p>The date and time of the next attempt to initiate data replication.</p>",
         "DataReplicationInitiation$startDateTime": "<p>The date and time of the current attempt to initiate data replication.</p>",
         "DescribeJobsRequestFilters$fromDate": "<p>The start date in a date range query.</p>",
@@ -511,7 +535,6 @@
         "Job$endDateTime": "<p>The date and time of when the Job ended.</p>",
         "JobLog$logDateTime": "<p>The date and time the log was taken.</p>",
         "LifeCycle$addedToServiceDateTime": "<p>The date and time of when the Source Server was added to the service.</p>",
-        "LifeCycle$elapsedReplicationDuration": "<p>The amount of time that the Source Server has been replicating for.</p>",
         "LifeCycle$firstByteDateTime": "<p>The date and time of the first byte that was replicated from the Source Server.</p>",
         "LifeCycle$lastSeenByServiceDateTime": "<p>The date and time this Source Server was last seen by the service.</p>",
         "LifeCycleLastLaunchInitiated$apiCallDateTime": "<p>The date and time the last Source Server launch was initiated.</p>",
@@ -528,6 +551,13 @@
         "RecoverySnapshot$expectedTimestamp": "<p>The timestamp of when we expect the snapshot to be taken.</p>",
         "RecoverySnapshot$timestamp": "<p>The actual timestamp that the snapshot was taken.</p>",
         "SourceProperties$lastUpdatedDateTime": "<p>The date and time the Source Properties were last updated on.</p>"
+      }
+    },
+    "ISO8601DurationString": {
+      "base": null,
+      "refs": {
+        "DataReplicationInfo$lagDuration": "<p>Data replication lag duration.</p>",
+        "LifeCycle$elapsedReplicationDuration": "<p>The amount of time that the Source Server has been replicating for.</p>"
       }
     },
     "IdentificationHints": {
@@ -688,6 +718,7 @@
     "LaunchStatus": {
       "base": null,
       "refs": {
+        "LifeCycleLastLaunch$status": "<p>Status of Source Server's last launch.</p>",
         "ParticipatingServer$launchStatus": "<p>The launch status of a participating server.</p>"
       }
     },
@@ -776,6 +807,12 @@
       "refs": {
         "RecoveryInstanceProperties$os": "<p>Operating system.</p>",
         "SourceProperties$os": "<p>Operating system.</p>"
+      }
+    },
+    "OriginEnvironment": {
+      "base": null,
+      "refs": {
+        "RecoveryInstance$originEnvironment": "<p>Environment (On Premises / AWS) of the instance that the recovery instance originated from.</p>"
       }
     },
     "PITPolicy": {
@@ -958,6 +995,7 @@
         "RecoveryInstance$recoveryInstanceID": "<p>The ID of the Recovery Instance.</p>",
         "RecoveryInstanceIDs$member": null,
         "RecoveryInstancesForTerminationRequest$member": null,
+        "ReverseReplicationRequest$recoveryInstanceID": "<p>The ID of the Recovery Instance that we want to reverse the replication for.</p>",
         "SourceServer$recoveryInstanceId": "<p>The ID of the Recovery Instance associated with this Source Server.</p>",
         "StartFailbackRequestRecoveryInstanceIDs$member": null,
         "StopFailbackRequest$recoveryInstanceID": "<p>The ID of the Recovery Instance we want to stop failback for.</p>",
@@ -1089,6 +1127,12 @@
         "DescribeReplicationConfigurationTemplatesResponse$items": "<p>An array of Replication Configuration Templates.</p>"
       }
     },
+    "ReplicationDirection": {
+      "base": "<p>Replication direction designates if this is a failover replication, or a failback replication. When a DRS agent is installed on an instance, the replication direction is failover. In cases where a recovery launch was made in the recovery location and a new recovery instance was created, and then a failback replication was initiated from that recovery instance back to the origin location, then the replication direction will be failback.</p>",
+      "refs": {
+        "SourceServer$replicationDirection": "<p>Replication direction of the Source Server.</p>"
+      }
+    },
     "ReplicationServersSecurityGroupsIDs": {
       "base": null,
       "refs": {
@@ -1105,6 +1149,16 @@
       }
     },
     "RetryDataReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ReverseReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ReverseReplicationResponse": {
       "base": null,
       "refs": {
       }
@@ -1129,6 +1183,12 @@
         "UpdateReplicationConfigurationRequest$name": "<p>The name of the Replication Configuration.</p>"
       }
     },
+    "SourceCloudProperties": {
+      "base": "<p>Properties of the cloud environment where this Source Server originated from.</p>",
+      "refs": {
+        "SourceServer$sourceCloudProperties": "<p>Source cloud properties of the Source Server.</p>"
+      }
+    },
     "SourceProperties": {
       "base": "<p>Properties of the Source Server machine.</p>",
       "refs": {
@@ -1139,13 +1199,17 @@
       "base": null,
       "refs": {
         "CreateExtendedSourceServerResponse$sourceServer": "<p>Created extended source server.</p>",
-        "SourceServersList$member": null
+        "SourceServersList$member": null,
+        "StartReplicationResponse$sourceServer": "<p>The Source Server that this action was targeted on.</p>",
+        "StopReplicationResponse$sourceServer": "<p>The Source Server that this action was targeted on.</p>"
       }
     },
     "SourceServerARN": {
       "base": null,
       "refs": {
         "CreateExtendedSourceServerRequest$sourceServerArn": "<p>This defines the ARN of the source server in staging Account based on which you want to create an extended source server.</p>",
+        "ReverseReplicationResponse$reversedDirectionSourceServerArn": "<p>ARN of created SourceServer.</p>",
+        "SourceServer$reversedDirectionSourceServerArn": "<p>For EC2-originated Source Servers which have been failed over and then failed back, this value will mean the ARN of the Source Server on the opposite replication direction.</p>",
         "StagingSourceServer$arn": "<p>The ARN of the source server.</p>"
       }
     },
@@ -1168,6 +1232,8 @@
         "SourceServer$sourceServerID": "<p>The ID of the Source Server.</p>",
         "SourceServerIDs$member": null,
         "StartRecoveryRequestSourceServer$sourceServerID": "<p>The ID of the Source Server you want to recover.</p>",
+        "StartReplicationRequest$sourceServerID": "<p>The ID of the Source Server to start replication for.</p>",
+        "StopReplicationRequest$sourceServerID": "<p>The ID of the Source Server to stop replication for.</p>",
         "UpdateLaunchConfigurationRequest$sourceServerID": "<p>The ID of the Source Server that we want to retrieve a Launch Configuration for.</p>",
         "UpdateReplicationConfigurationRequest$sourceServerID": "<p>The ID of the Source Server for this Replication Configuration.</p>"
       }
@@ -1240,7 +1306,27 @@
       "refs": {
       }
     },
+    "StartReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartReplicationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StopFailbackRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopReplicationResponse": {
       "base": null,
       "refs": {
       }

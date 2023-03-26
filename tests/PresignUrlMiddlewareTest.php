@@ -9,7 +9,7 @@ use Aws\Neptune\NeptuneClient;
 use Aws\Rds\RdsClient;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\PresignUrlMiddleware
@@ -47,10 +47,10 @@ class PresignUrlMiddlewareTest extends TestCase
             'handler' => function (CommandInterface $cmd, RequestInterface $r) {
                 $url = $cmd['PresignedUrl'];
                 $this->assertNotNull($url);
-                $this->assertContains('https://ec2.eu-west-1.amazonaws.com', $url);
-                $this->assertContains('SourceSnapshotId=foo', $url);
-                $this->assertContains('SourceRegion=eu-west-1', $url);
-                $this->assertContains('X-Amz-Signature=', $url);
+                $this->assertStringContainsString('https://ec2.eu-west-1.amazonaws.com', $url);
+                $this->assertStringContainsString('SourceSnapshotId=foo', $url);
+                $this->assertStringContainsString('SourceRegion=eu-west-1', $url);
+                $this->assertStringContainsString('X-Amz-Signature=', $url);
                 $this->assertSame('us-east-2', $cmd['DestinationRegion']);
 
                 return new Result;
@@ -67,12 +67,12 @@ class PresignUrlMiddlewareTest extends TestCase
             'handler' => function (CommandInterface $cmd, RequestInterface $r) {
                 $url = $cmd['PreSignedUrl'];
                 $this->assertNotNull($url);
-                $this->assertContains('https://rds.eu-west-1.amazonaws.com', $url);
-                $this->assertContains('KmsKeyId=', $url);
-                $this->assertContains('SourceDBSnapshotIdentifier=', $url);
-                $this->assertContains('TargetDBSnapshotIdentifier=my-snapshot-copy', $url);
-                $this->assertContains('eu-west-1', $url);
-                $this->assertContains('X-Amz-Signature=', $url);
+                $this->assertStringContainsString('https://rds.eu-west-1.amazonaws.com', $url);
+                $this->assertStringContainsString('KmsKeyId=', $url);
+                $this->assertStringContainsString('SourceDBSnapshotIdentifier=', $url);
+                $this->assertStringContainsString('TargetDBSnapshotIdentifier=my-snapshot-copy', $url);
+                $this->assertStringContainsString('eu-west-1', $url);
+                $this->assertStringContainsString('X-Amz-Signature=', $url);
                 $this->assertSame('us-east-2', $cmd['DestinationRegion']);
 
                 return new Result;

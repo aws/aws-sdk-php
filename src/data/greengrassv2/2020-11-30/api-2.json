@@ -873,10 +873,11 @@
       "required":["targetArn"],
       "members":{
         "targetArn":{"shape":"TargetARN"},
-        "deploymentName":{"shape":"NonEmptyString"},
+        "deploymentName":{"shape":"DeploymentNameString"},
         "components":{"shape":"ComponentDeploymentSpecifications"},
         "iotJobConfiguration":{"shape":"DeploymentIoTJobConfiguration"},
         "deploymentPolicies":{"shape":"DeploymentPolicies"},
+        "parentTargetArn":{"shape":"ThingGroupARN"},
         "tags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientTokenString",
@@ -939,7 +940,8 @@
         "deploymentName":{"shape":"NonEmptyString"},
         "creationTimestamp":{"shape":"Timestamp"},
         "deploymentStatus":{"shape":"DeploymentStatus"},
-        "isLatestForTarget":{"shape":"IsLatestForTarget"}
+        "isLatestForTarget":{"shape":"IsLatestForTarget"},
+        "parentTargetArn":{"shape":"ThingGroupARN"}
       }
     },
     "DeploymentComponentUpdatePolicy":{
@@ -996,6 +998,11 @@
       "member":{"shape":"Deployment"}
     },
     "DeploymentName":{"type":"string"},
+    "DeploymentNameString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "DeploymentPolicies":{
       "type":"structure",
       "members":{
@@ -1105,8 +1112,27 @@
         "coreDeviceExecutionStatus":{"shape":"EffectiveDeploymentExecutionStatus"},
         "reason":{"shape":"Reason"},
         "creationTimestamp":{"shape":"Timestamp"},
-        "modifiedTimestamp":{"shape":"Timestamp"}
+        "modifiedTimestamp":{"shape":"Timestamp"},
+        "statusDetails":{"shape":"EffectiveDeploymentStatusDetails"}
       }
+    },
+    "EffectiveDeploymentErrorCode":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "EffectiveDeploymentErrorStack":{
+      "type":"list",
+      "member":{"shape":"EffectiveDeploymentErrorCode"}
+    },
+    "EffectiveDeploymentErrorType":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "EffectiveDeploymentErrorTypeList":{
+      "type":"list",
+      "member":{"shape":"EffectiveDeploymentErrorType"}
     },
     "EffectiveDeploymentExecutionStatus":{
       "type":"string",
@@ -1119,6 +1145,13 @@
         "CANCELED",
         "REJECTED"
       ]
+    },
+    "EffectiveDeploymentStatusDetails":{
+      "type":"structure",
+      "members":{
+        "errorStack":{"shape":"EffectiveDeploymentErrorStack"},
+        "errorTypes":{"shape":"EffectiveDeploymentErrorTypeList"}
+      }
     },
     "EffectiveDeploymentsList":{
       "type":"list",
@@ -1261,6 +1294,7 @@
         "iotJobConfiguration":{"shape":"DeploymentIoTJobConfiguration"},
         "creationTimestamp":{"shape":"Timestamp"},
         "isLatestForTarget":{"shape":"IsLatestForTarget"},
+        "parentTargetArn":{"shape":"ThingGroupARN"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -1289,7 +1323,11 @@
         "componentVersion":{"shape":"ComponentVersionString"},
         "lifecycleState":{"shape":"InstalledComponentLifecycleState"},
         "lifecycleStateDetails":{"shape":"LifecycleStateDetails"},
-        "isRoot":{"shape":"IsRoot"}
+        "isRoot":{"shape":"IsRoot"},
+        "lastStatusChangeTimestamp":{"shape":"Timestamp"},
+        "lastReportedTimestamp":{"shape":"Timestamp"},
+        "lastInstallationSource":{"shape":"NonEmptyString"},
+        "lifecycleStatusCodes":{"shape":"InstalledComponentLifecycleStatusCodeList"}
       }
     },
     "InstalledComponentLifecycleState":{
@@ -1305,9 +1343,25 @@
         "FINISHED"
       ]
     },
+    "InstalledComponentLifecycleStatusCode":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "InstalledComponentLifecycleStatusCodeList":{
+      "type":"list",
+      "member":{"shape":"InstalledComponentLifecycleStatusCode"}
+    },
     "InstalledComponentList":{
       "type":"list",
       "member":{"shape":"InstalledComponent"}
+    },
+    "InstalledComponentTopologyFilter":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "ROOT"
+      ]
     },
     "InternalServerException":{
       "type":"structure",
@@ -1557,15 +1611,11 @@
         "rw"
       ]
     },
-    "LambdaFunctionARNWithVersionNumber":{
-      "type":"string",
-      "pattern":"arn:[^:]*:lambda:[^:]+:[0-9]+:function:[a-zA-Z0-9-_]+:[0-9]+"
-    },
     "LambdaFunctionRecipeSource":{
       "type":"structure",
       "required":["lambdaArn"],
       "members":{
-        "lambdaArn":{"shape":"LambdaFunctionARNWithVersionNumber"},
+        "lambdaArn":{"shape":"NonEmptyString"},
         "componentName":{"shape":"ComponentNameString"},
         "componentVersion":{"shape":"ComponentVersionString"},
         "componentPlatforms":{"shape":"ComponentPlatformList"},
@@ -1758,6 +1808,11 @@
           "location":"querystring",
           "locationName":"historyFilter"
         },
+        "parentTargetArn":{
+          "shape":"ThingGroupARN",
+          "location":"querystring",
+          "locationName":"parentTargetArn"
+        },
         "maxResults":{
           "shape":"DefaultMaxResults",
           "box":true,
@@ -1829,6 +1884,12 @@
           "box":true,
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "topologyFilter":{
+          "shape":"InstalledComponentTopologyFilter",
+          "box":true,
+          "location":"querystring",
+          "locationName":"topologyFilter"
         }
       }
     },

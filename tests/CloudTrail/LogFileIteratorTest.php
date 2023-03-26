@@ -8,7 +8,7 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\CloudTrail\LogFileIterator
@@ -31,11 +31,9 @@ class LogFileIteratorTest extends TestCase
         $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryErrorsOnUnknownBucket()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s3Client = $this->getMockS3Client();
         $cloudTrailClient = CloudTrailClient::factory([
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
@@ -65,11 +63,9 @@ class LogFileIteratorTest extends TestCase
         $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testConstructorErrorsOnInvalidDate()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s3Client = $this->getMockS3Client();
         new LogFileIterator($s3Client, 'test-bucket', [
             LogFileIterator::START_DATE => true,

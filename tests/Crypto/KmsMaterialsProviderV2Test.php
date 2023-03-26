@@ -6,7 +6,7 @@ use Aws\Kms\KmsClient;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Crypto\KmsMaterialsProviderV2
@@ -83,12 +83,10 @@ class KmsMaterialsProviderV2Test extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage A KMS key id is required for encryption with KMS keywrap
-     */
     public function testGenerateThrowsForNoKmsId()
     {
+        $this->expectExceptionMessage("A KMS key id is required for encryption with KMS keywrap");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         /** @var KmsClient $client */
         $client = $this->getTestClient('Kms', []);
         $provider = new KmsMaterialsProviderV2($client);
@@ -105,12 +103,10 @@ class KmsMaterialsProviderV2Test extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage '@KmsEncryptionContext' is a required argument when using KmsMaterialsProviderV2
-     */
     public function testGenerateThrowsForNoEncryptionContext()
     {
+        $this->expectExceptionMessage("'@KmsEncryptionContext' is a required argument when using KmsMaterialsProviderV2");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         /** @var KmsClient $client */
         $client = $this->getTestClient('Kms', []);
         $provider = new KmsMaterialsProviderV2($client, 'foo');
@@ -123,12 +119,10 @@ class KmsMaterialsProviderV2Test extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage Conflict in reserved @KmsEncryptionContext key aws:x-amz-cek-alg
-     */
     public function testGenerateThrowsForContextConflict()
     {
+        $this->expectExceptionMessage("Conflict in reserved @KmsEncryptionContext key aws:x-amz-cek-alg");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         /** @var KmsClient $client */
         $client = $this->getTestClient('Kms', []);
         $provider = new KmsMaterialsProviderV2($client, 'foo');
@@ -182,12 +176,10 @@ class KmsMaterialsProviderV2Test extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage KMS CMK ID was not specified and the operation is not opted-in to attempting to use any valid CMK
-     */
     public function testDecryptCekThrowsForNoKmsId()
     {
+        $this->expectExceptionMessage("KMS CMK ID was not specified and the operation is not opted-in to attempting to use any valid CMK");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         /** @var KmsClient $client */
         $client = $this->getTestClient('Kms', []);
         $provider = new KmsMaterialsProviderV2($client);

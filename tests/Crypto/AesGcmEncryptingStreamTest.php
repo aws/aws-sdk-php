@@ -4,20 +4,20 @@ namespace Aws\Test\Crypto;
 use Aws\Crypto\AesGcmEncryptingStream;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class AesGcmEncryptingStreamTest extends TestCase
 {
     use AesEncryptionStreamTestTrait;
 
-    protected function setUp()
+    protected function set_up()
     {
         if (version_compare(PHP_VERSION, '7.1', '<')) {
             $this->markTestSkipped(
                 'AES-GCM decryption is only supported in PHP 7.1 or greater'
             );
         }
-        parent::setUp();
+        parent::set_up();
     }
 
     /**

@@ -14,7 +14,7 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -24,13 +24,13 @@ class InstanceProfileProviderTest extends TestCase
 {
     static $originalFlag;
 
-    public static function setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalFlag = getenv(InstanceProfileProvider::ENV_DISABLE) ?: '';
         putenv(InstanceProfileProvider::ENV_DISABLE. '=false');
     }
 
-    public static function tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(InstanceProfileProvider::ENV_DISABLE. '=' . self::$originalFlag);
     }
@@ -178,7 +178,7 @@ class InstanceProfileProviderTest extends TestCase
                                 Psr7\Utils::streamFor(
                                     json_encode(call_user_func_array(
                                         [$this, 'getCredentialArray'],
-                                        $creds
+                                        array_values($creds)
                                     ))
                                 )
                             )
@@ -300,7 +300,8 @@ class InstanceProfileProviderTest extends TestCase
      */
     public function testHandlesSuccessScenarios(
         callable $client,
-        CredentialsInterface $expected
+        CredentialsInterface $expected,
+        $expectedAttempts = null
     ) {
         $provider = new InstanceProfileProvider([
             'client' => $client,
@@ -325,6 +326,9 @@ class InstanceProfileProviderTest extends TestCase
             $expected->getExpiration(),
             $credentials->getExpiration()
         );
+        if ($expectedAttempts) {
+            $this->assertEquals($expectedAttempts, $this->getPropertyValue($provider, 'attempts'));
+        }
     }
 
     public function successTestCases()
@@ -409,7 +413,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                6
             ],
 
             // Insecure data flow, with retries for request exception
@@ -428,7 +433,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                5
             ],
 
             // Secure data flow, with retries for json exception
@@ -443,7 +449,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                4
             ],
 
             // Insecure data flow, with retries for json exception
@@ -458,7 +465,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                4
             ],
 
             // Secure data flow, with retries for ConnectException (Guzzle 7)
@@ -486,7 +494,8 @@ class InstanceProfileProviderTest extends TestCase
                     $creds,
                     true
                 ),
-                $credsObject
+                $credsObject,
+                6
             ],
 
             // Insecure data flow, with retries for ConnectException (Guzzle 7)
@@ -506,7 +515,8 @@ class InstanceProfileProviderTest extends TestCase
                     $creds,
                     true
                 ),
-                $credsObject
+                $credsObject,
+                5
             ],
         ];
     }
@@ -797,12 +807,10 @@ class InstanceProfileProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service. (999 Expected Exception)
-     */
     public function testSwitchesBackToSecureModeOn401()
     {
+        $this->expectExceptionMessage("Error retrieving credentials from the instance profile metadata service. (999 Expected Exception)");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $requestClass = $this->getRequestClass();
         $responseClass = $this->getResponseClass();
         $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
@@ -899,23 +907,23 @@ class InstanceProfileProviderTest extends TestCase
         $this->assertSame($t, $c->getExpiration());
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Unexpected instance profile response
-     */
     public function testThrowsExceptionOnInvalidMetadata()
     {
+        $this->expectExceptionMessage("Unexpected instance profile response");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $this->getTestCreds(
             $this->getCredentialArray(null, null, null, null, false),
             'foo'
         )->wait();
     }
 
+    /** @doesNotPerformAssertions */
     public function testDoesNotRequireConfig()
     {
         new InstanceProfileProvider();
     }
 
+    /** @doesNotPerformAssertions */
     public function testEnvDisableFlag()
     {
         $flag = getenv(InstanceProfileProvider::ENV_DISABLE);
@@ -975,17 +983,17 @@ class InstanceProfileProviderTest extends TestCase
      */
     public function testExtendsExpirationAndSendsRequestIfImdsYieldsExpiredCreds($client)
     {
-        //Capture extension message
-        $capture = tmpfile();
-        ini_set('error_log', stream_get_meta_data($capture)['uri']);
+        //expect warning emitted from extension
+        $this->expectWarning();
+        $this->expectWarningMessageMatches(
+            '/Attempting credential expiration extension/'
+        );
 
         $provider = new InstanceProfileProvider([
             'client' => $client
         ]);
         $creds = $provider()->wait();
 
-        $message = stream_get_contents($capture);
-        $this->assertRegExp('/Attempting credential expiration extension/', $message);
         $this->assertSame('foo', $creds->getAccessKeyId());
         $this->assertSame('baz', $creds->getSecretKey());
         $this->assertFalse($creds->isExpired());
@@ -1007,7 +1015,7 @@ class InstanceProfileProviderTest extends TestCase
         $result = $s3Client->listBuckets();
 
         $this->assertEquals('Request sent', $result['message']);
-        $this->assertAttributeLessThanOrEqual(3, 'attempts', $provider);
+        $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
     }
 
     public function returnsExpiredCredsProvider()
@@ -1057,9 +1065,11 @@ class InstanceProfileProviderTest extends TestCase
      */
     public function testExtendsExpirationAndSendsRequestIfImdsUnavailable($client)
     {
-        //Capture extension message
-        $capture = tmpfile();
-        ini_set('error_log', stream_get_meta_data($capture)['uri']);
+        //expect warning emitted from extension
+        $this->expectWarning();
+        $this->expectWarningMessageMatches(
+            '/Attempting credential expiration extension/'
+        );
 
         $expiredTime = time() - 1000;
         $expiredCreds = new Credentials('foo', 'baz', null, $expiredTime);
@@ -1069,9 +1079,6 @@ class InstanceProfileProviderTest extends TestCase
             'client' => $client
         ]);
         $creds = $provider($expiredCreds)->wait();
-
-        $message = stream_get_contents($capture);
-        $this->assertRegExp('/Attempting credential expiration extension/', $message);
         $this->assertSame('foo', $creds->getAccessKeyId());
         $this->assertSame('baz', $creds->getSecretKey());
         $this->assertFalse($expiredCreds->isExpired());
@@ -1093,7 +1100,7 @@ class InstanceProfileProviderTest extends TestCase
         $result = $s3Client->listBuckets();
 
         $this->assertEquals('Request sent', $result['message']);
-        $this->assertAttributeLessThanOrEqual(3, 'attempts', $provider);
+        $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
     }
 
     public function imdsUnavailableProvider()
@@ -1176,5 +1183,25 @@ class InstanceProfileProviderTest extends TestCase
                 )
             ]
         ];
+    }
+
+    public function testResetsAttempts()
+    {
+        $now = time() + 10000;
+        $creds = ['foo', 'baz', null, "@{$now}"];
+
+        $client = $this->getSecureTestClient(
+            [],
+            'MockProfile',
+            $creds
+        );
+
+        $provider = new InstanceProfileProvider([
+            'client' => $client
+        ]);
+
+        $provider()->wait();
+        $provider()->wait();
+        $this->assertLessThanOrEqual(3, $this->getPropertyValue($provider, 'attempts'));
     }
 }

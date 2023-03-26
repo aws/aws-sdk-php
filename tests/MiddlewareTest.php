@@ -19,14 +19,14 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Middleware
  */
 class MiddlewareTest extends TestCase
 {
-    public function setup()
+    public function set_up()
     {
         \GuzzleHttp\Promise\queue()->run();
     }
@@ -108,6 +108,11 @@ class MiddlewareTest extends TestCase
         $this->assertTrue($req->hasHeader('Authorization'));
     }
 
+    public function TestOverridesAuthScheme()
+    {
+
+    }
+
     public function testBuildsRequests()
     {
         $r = new Request('GET', 'http://www.foo.com');
@@ -123,12 +128,10 @@ class MiddlewareTest extends TestCase
         $this->assertTrue($called);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage [a] is missing and is a required parameter
-     */
     public function testValidatesCommands()
     {
+        $this->expectExceptionMessage("[a] is missing and is a required parameter");
+        $this->expectException(\InvalidArgumentException::class);
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
         $api = new Service(
@@ -165,6 +168,65 @@ class MiddlewareTest extends TestCase
         }
 
         $handler(new Command('foo'));
+    }
+
+    public function testHandlesModifiedServiceModel()
+    {
+        $list = new HandlerList();
+        $list->setHandler(new MockHandler([new Result()]));
+        $api = new Service(
+            [
+                'metadata' => [
+                    'endpointPrefix' => 'a',
+                    'apiVersion'     => 'b'
+                ],
+                'operations' => [
+                    'foo' => [
+                        'input' => ['shape'=> 'foo']
+                    ]
+                ],
+                'shapes' => [
+                    'foo' => [
+                        'type' => 'structure',
+                        'required' => ['a'],
+                        'members' => [
+                            'a' => ['shape' => 'a']
+                        ]
+                    ],
+                    'a' => ['type' => 'string']
+                ]
+            ],
+            function () { return []; }
+        );
+        $list->appendValidate(Middleware::validation($api));
+        $api->setDefinition(
+            [
+                'metadata' => [
+                    'endpointPrefix' => 'a',
+                    'apiVersion'     => 'b'
+                ],
+                'operations' => [
+                    'foo' => [
+                        'input' => ['shape'=> 'foo']
+                    ]
+                ],
+                'shapes' => [
+                    'foo' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'a' => ['shape' => 'a']
+                        ]
+                    ],
+                    'a' => ['type' => 'string']
+                ]
+            ]
+        );
+        $handler = $list->resolve();
+        $result = $handler(new Command('foo', []), new Request('GET', 'http://foo.com'))->wait();
+        $this->assertInstanceOf(
+            Aws\Result::class,
+            $result
+        );
     }
 
     public function testExtractsSourceFileIntoBody()
@@ -319,14 +381,14 @@ class MiddlewareTest extends TestCase
     public function testRecursionDetection($mockHandler, $name, $trace)
     {
         $name !== null && putenv("AWS_LAMBDA_FUNCTION_NAME={$name}");
-        $trace !== null && putenv("_X_AMZ_TRACE_ID={$trace}");
+        $trace !== null && putenv("_X_AMZN_TRACE_ID={$trace}");
         $list = new HandlerList();
         $list->setHandler($mockHandler);
         $list->appendBuild(Middleware::recursionDetection());
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
         putenv('AWS_LAMBDA_FUNCTION_NAME');
-        putenv('_X_AMZ_TRACE_ID');
+        putenv('_X_AMZN_TRACE_ID');
     }
 
     public function recursionDetectionProvider()
@@ -344,6 +406,15 @@ class MiddlewareTest extends TestCase
             $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));
             $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
             $this->assertEquals('bar%1Bbaz', $headerValue);
+            return Promise\Create::promiseFor(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+
+        $addHeaderWithNoEncodingMock = function ($command, $request) {
+            $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));
+            $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
+            $this->assertEquals('bar=;:+&[]{}"\',baz', $headerValue);
             return Promise\Create::promiseFor(
                 new Result(['@metadata' => ['statusCode' => 200]])
             );
@@ -368,6 +439,7 @@ class MiddlewareTest extends TestCase
         return [
             [$addHeaderMock, 'foo', 'bar'],
             [$addHeaderWithEncodingMock, 'foo', 'bar\ebaz'],
+            [$addHeaderWithNoEncodingMock, 'foo', 'bar=;:+&[]{}"\',baz'],
             [$dontAddHeaderMock, '', 'bar'],
             [$dontAddHeaderMock, 'foo', ''],
             [$dontAddHeaderMock, '', ''],

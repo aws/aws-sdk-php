@@ -6,7 +6,7 @@ use Aws\DynamoDb\StandardSessionConnection;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\DynamoDb\StandardSessionConnection
@@ -154,11 +154,9 @@ class StandardSessionConnectionTest extends TestCase
         $this->assertFalse($return);
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     */
     public function testWriteTriggersWarningOnFailure()
     {
+        $this->expectWarning();
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
             $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
@@ -190,11 +188,9 @@ class StandardSessionConnectionTest extends TestCase
         $this->assertFalse($return);
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     */
     public function testDeleteTriggersWarningOnFailure()
     {
+        $this->expectWarning();
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
             new Result([]),

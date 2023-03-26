@@ -17,14 +17,14 @@ use GuzzleHttp\Psr7\Response as PsrResponse;
 use GuzzleHttp\Ring\Client\MockHandler;
 use GuzzleHttp\Stream\Stream;
 use React\Promise\Deferred;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Handler\GuzzleV5\GuzzleHandler
  */
 class HandlerTest extends TestCase
 {
-    public function setUp()
+    public function set_up()
     {
         if (!class_exists('GuzzleHttp\Ring\Core')) {
             $this->markTestSkipped();

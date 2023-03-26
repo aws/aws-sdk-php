@@ -76,6 +76,36 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "BatchGetSecurityControls":{
+      "name":"BatchGetSecurityControls",
+      "http":{
+        "method":"POST",
+        "requestUri":"/securityControls/batchGet"
+      },
+      "input":{"shape":"BatchGetSecurityControlsRequest"},
+      "output":{"shape":"BatchGetSecurityControlsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
+    "BatchGetStandardsControlAssociations":{
+      "name":"BatchGetStandardsControlAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/associations/batchGet"
+      },
+      "input":{"shape":"BatchGetStandardsControlAssociationsRequest"},
+      "output":{"shape":"BatchGetStandardsControlAssociationsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "BatchImportFindings":{
       "name":"BatchImportFindings",
       "http":{
@@ -104,6 +134,21 @@
         {"shape":"InvalidInputException"},
         {"shape":"LimitExceededException"},
         {"shape":"InvalidAccessException"}
+      ]
+    },
+    "BatchUpdateStandardsControlAssociations":{
+      "name":"BatchUpdateStandardsControlAssociations",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/associations"
+      },
+      "input":{"shape":"BatchUpdateStandardsControlAssociationsRequest"},
+      "output":{"shape":"BatchUpdateStandardsControlAssociationsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "CreateActionTarget":{
@@ -733,6 +778,36 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "ListSecurityControlDefinitions":{
+      "name":"ListSecurityControlDefinitions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/securityControls/definitions"
+      },
+      "input":{"shape":"ListSecurityControlDefinitionsRequest"},
+      "output":{"shape":"ListSecurityControlDefinitionsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
+    "ListStandardsControlAssociations":{
+      "name":"ListStandardsControlAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/associations"
+      },
+      "input":{"shape":"ListStandardsControlAssociationsRequest"},
+      "output":{"shape":"ListStandardsControlAssociationsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -1041,6 +1116,23 @@
       "type":"list",
       "member":{"shape":"NonEmptyString"}
     },
+    "AssociatedStandard":{
+      "type":"structure",
+      "members":{
+        "StandardsId":{"shape":"NonEmptyString"}
+      }
+    },
+    "AssociatedStandardsList":{
+      "type":"list",
+      "member":{"shape":"AssociatedStandard"}
+    },
+    "AssociationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "AutoEnableStandards":{
       "type":"string",
       "enum":[
@@ -1335,6 +1427,134 @@
         "HttpEndpoint":{"shape":"NonEmptyString"},
         "HttpPutResponseHopLimit":{"shape":"Integer"},
         "HttpTokens":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsBackupBackupPlanAdvancedBackupSettingsDetails":{
+      "type":"structure",
+      "members":{
+        "BackupOptions":{"shape":"FieldMap"},
+        "ResourceType":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsBackupBackupPlanAdvancedBackupSettingsList":{
+      "type":"list",
+      "member":{"shape":"AwsBackupBackupPlanAdvancedBackupSettingsDetails"}
+    },
+    "AwsBackupBackupPlanBackupPlanDetails":{
+      "type":"structure",
+      "members":{
+        "BackupPlanName":{"shape":"NonEmptyString"},
+        "AdvancedBackupSettings":{"shape":"AwsBackupBackupPlanAdvancedBackupSettingsList"},
+        "BackupPlanRule":{"shape":"AwsBackupBackupPlanRuleList"}
+      }
+    },
+    "AwsBackupBackupPlanDetails":{
+      "type":"structure",
+      "members":{
+        "BackupPlan":{"shape":"AwsBackupBackupPlanBackupPlanDetails"},
+        "BackupPlanArn":{"shape":"NonEmptyString"},
+        "BackupPlanId":{"shape":"NonEmptyString"},
+        "VersionId":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsBackupBackupPlanLifecycleDetails":{
+      "type":"structure",
+      "members":{
+        "DeleteAfterDays":{"shape":"Long"},
+        "MoveToColdStorageAfterDays":{"shape":"Long"}
+      }
+    },
+    "AwsBackupBackupPlanRuleCopyActionsDetails":{
+      "type":"structure",
+      "members":{
+        "DestinationBackupVaultArn":{"shape":"NonEmptyString"},
+        "Lifecycle":{"shape":"AwsBackupBackupPlanLifecycleDetails"}
+      }
+    },
+    "AwsBackupBackupPlanRuleCopyActionsList":{
+      "type":"list",
+      "member":{"shape":"AwsBackupBackupPlanRuleCopyActionsDetails"}
+    },
+    "AwsBackupBackupPlanRuleDetails":{
+      "type":"structure",
+      "members":{
+        "TargetBackupVault":{"shape":"NonEmptyString"},
+        "StartWindowMinutes":{"shape":"Long"},
+        "ScheduleExpression":{"shape":"NonEmptyString"},
+        "RuleName":{"shape":"NonEmptyString"},
+        "RuleId":{"shape":"NonEmptyString"},
+        "EnableContinuousBackup":{"shape":"Boolean"},
+        "CompletionWindowMinutes":{"shape":"Long"},
+        "CopyActions":{"shape":"AwsBackupBackupPlanRuleCopyActionsList"},
+        "Lifecycle":{"shape":"AwsBackupBackupPlanLifecycleDetails"}
+      }
+    },
+    "AwsBackupBackupPlanRuleList":{
+      "type":"list",
+      "member":{"shape":"AwsBackupBackupPlanRuleDetails"}
+    },
+    "AwsBackupBackupVaultDetails":{
+      "type":"structure",
+      "members":{
+        "BackupVaultArn":{"shape":"NonEmptyString"},
+        "BackupVaultName":{"shape":"NonEmptyString"},
+        "EncryptionKeyArn":{"shape":"NonEmptyString"},
+        "Notifications":{"shape":"AwsBackupBackupVaultNotificationsDetails"},
+        "AccessPolicy":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsBackupBackupVaultNotificationsDetails":{
+      "type":"structure",
+      "members":{
+        "BackupVaultEvents":{"shape":"NonEmptyStringList"},
+        "SnsTopicArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsBackupRecoveryPointCalculatedLifecycleDetails":{
+      "type":"structure",
+      "members":{
+        "DeleteAt":{"shape":"NonEmptyString"},
+        "MoveToColdStorageAt":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsBackupRecoveryPointCreatedByDetails":{
+      "type":"structure",
+      "members":{
+        "BackupPlanArn":{"shape":"NonEmptyString"},
+        "BackupPlanId":{"shape":"NonEmptyString"},
+        "BackupPlanVersion":{"shape":"NonEmptyString"},
+        "BackupRuleId":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsBackupRecoveryPointDetails":{
+      "type":"structure",
+      "members":{
+        "BackupSizeInBytes":{"shape":"Long"},
+        "BackupVaultArn":{"shape":"NonEmptyString"},
+        "BackupVaultName":{"shape":"NonEmptyString"},
+        "CalculatedLifecycle":{"shape":"AwsBackupRecoveryPointCalculatedLifecycleDetails"},
+        "CompletionDate":{"shape":"NonEmptyString"},
+        "CreatedBy":{"shape":"AwsBackupRecoveryPointCreatedByDetails"},
+        "CreationDate":{"shape":"NonEmptyString"},
+        "EncryptionKeyArn":{"shape":"NonEmptyString"},
+        "IamRoleArn":{"shape":"NonEmptyString"},
+        "IsEncrypted":{"shape":"Boolean"},
+        "LastRestoreTime":{"shape":"NonEmptyString"},
+        "Lifecycle":{"shape":"AwsBackupRecoveryPointLifecycleDetails"},
+        "RecoveryPointArn":{"shape":"NonEmptyString"},
+        "ResourceArn":{"shape":"NonEmptyString"},
+        "ResourceType":{"shape":"NonEmptyString"},
+        "SourceBackupVaultArn":{"shape":"NonEmptyString"},
+        "Status":{"shape":"NonEmptyString"},
+        "StatusMessage":{"shape":"NonEmptyString"},
+        "StorageClass":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsBackupRecoveryPointLifecycleDetails":{
+      "type":"structure",
+      "members":{
+        "DeleteAfterDays":{"shape":"Long"},
+        "MoveToColdStorageAfterDays":{"shape":"Long"}
       }
     },
     "AwsCertificateManagerCertificateDetails":{
@@ -1979,6 +2199,365 @@
     "AwsEc2InstanceNetworkInterfacesList":{
       "type":"list",
       "member":{"shape":"AwsEc2InstanceNetworkInterfacesDetails"}
+    },
+    "AwsEc2LaunchTemplateDataBlockDeviceMappingSetDetails":{
+      "type":"structure",
+      "members":{
+        "DeviceName":{"shape":"NonEmptyString"},
+        "Ebs":{"shape":"AwsEc2LaunchTemplateDataBlockDeviceMappingSetEbsDetails"},
+        "NoDevice":{"shape":"NonEmptyString"},
+        "VirtualName":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataBlockDeviceMappingSetEbsDetails":{
+      "type":"structure",
+      "members":{
+        "DeleteOnTermination":{"shape":"Boolean"},
+        "Encrypted":{"shape":"Boolean"},
+        "Iops":{"shape":"Integer"},
+        "KmsKeyId":{"shape":"NonEmptyString"},
+        "SnapshotId":{"shape":"NonEmptyString"},
+        "Throughput":{"shape":"Integer"},
+        "VolumeSize":{"shape":"Integer"},
+        "VolumeType":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataBlockDeviceMappingSetList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2LaunchTemplateDataBlockDeviceMappingSetDetails"}
+    },
+    "AwsEc2LaunchTemplateDataCapacityReservationSpecificationCapacityReservationTargetDetails":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationId":{"shape":"NonEmptyString"},
+        "CapacityReservationResourceGroupArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataCapacityReservationSpecificationDetails":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationPreference":{"shape":"NonEmptyString"},
+        "CapacityReservationTarget":{"shape":"AwsEc2LaunchTemplateDataCapacityReservationSpecificationCapacityReservationTargetDetails"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataCpuOptionsDetails":{
+      "type":"structure",
+      "members":{
+        "CoreCount":{"shape":"Integer"},
+        "ThreadsPerCore":{"shape":"Integer"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataCreditSpecificationDetails":{
+      "type":"structure",
+      "members":{
+        "CpuCredits":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataDetails":{
+      "type":"structure",
+      "members":{
+        "BlockDeviceMappingSet":{"shape":"AwsEc2LaunchTemplateDataBlockDeviceMappingSetList"},
+        "CapacityReservationSpecification":{"shape":"AwsEc2LaunchTemplateDataCapacityReservationSpecificationDetails"},
+        "CpuOptions":{"shape":"AwsEc2LaunchTemplateDataCpuOptionsDetails"},
+        "CreditSpecification":{"shape":"AwsEc2LaunchTemplateDataCreditSpecificationDetails"},
+        "DisableApiStop":{"shape":"Boolean"},
+        "DisableApiTermination":{"shape":"Boolean"},
+        "EbsOptimized":{"shape":"Boolean"},
+        "ElasticGpuSpecificationSet":{"shape":"AwsEc2LaunchTemplateDataElasticGpuSpecificationSetList"},
+        "ElasticInferenceAcceleratorSet":{"shape":"AwsEc2LaunchTemplateDataElasticInferenceAcceleratorSetList"},
+        "EnclaveOptions":{"shape":"AwsEc2LaunchTemplateDataEnclaveOptionsDetails"},
+        "HibernationOptions":{"shape":"AwsEc2LaunchTemplateDataHibernationOptionsDetails"},
+        "IamInstanceProfile":{"shape":"AwsEc2LaunchTemplateDataIamInstanceProfileDetails"},
+        "ImageId":{"shape":"NonEmptyString"},
+        "InstanceInitiatedShutdownBehavior":{"shape":"NonEmptyString"},
+        "InstanceMarketOptions":{"shape":"AwsEc2LaunchTemplateDataInstanceMarketOptionsDetails"},
+        "InstanceRequirements":{"shape":"AwsEc2LaunchTemplateDataInstanceRequirementsDetails"},
+        "InstanceType":{"shape":"NonEmptyString"},
+        "KernelId":{"shape":"NonEmptyString"},
+        "KeyName":{"shape":"NonEmptyString"},
+        "LicenseSet":{"shape":"AwsEc2LaunchTemplateDataLicenseSetList"},
+        "MaintenanceOptions":{"shape":"AwsEc2LaunchTemplateDataMaintenanceOptionsDetails"},
+        "MetadataOptions":{"shape":"AwsEc2LaunchTemplateDataMetadataOptionsDetails"},
+        "Monitoring":{"shape":"AwsEc2LaunchTemplateDataMonitoringDetails"},
+        "NetworkInterfaceSet":{"shape":"AwsEc2LaunchTemplateDataNetworkInterfaceSetList"},
+        "Placement":{"shape":"AwsEc2LaunchTemplateDataPlacementDetails"},
+        "PrivateDnsNameOptions":{"shape":"AwsEc2LaunchTemplateDataPrivateDnsNameOptionsDetails"},
+        "RamDiskId":{"shape":"NonEmptyString"},
+        "SecurityGroupIdSet":{"shape":"NonEmptyStringList"},
+        "SecurityGroupSet":{"shape":"NonEmptyStringList"},
+        "UserData":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataElasticGpuSpecificationSetDetails":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataElasticGpuSpecificationSetList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2LaunchTemplateDataElasticGpuSpecificationSetDetails"}
+    },
+    "AwsEc2LaunchTemplateDataElasticInferenceAcceleratorSetDetails":{
+      "type":"structure",
+      "members":{
+        "Count":{"shape":"Integer"},
+        "Type":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataElasticInferenceAcceleratorSetList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2LaunchTemplateDataElasticInferenceAcceleratorSetDetails"}
+    },
+    "AwsEc2LaunchTemplateDataEnclaveOptionsDetails":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataHibernationOptionsDetails":{
+      "type":"structure",
+      "members":{
+        "Configured":{"shape":"Boolean"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataIamInstanceProfileDetails":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"NonEmptyString"},
+        "Name":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceMarketOptionsDetails":{
+      "type":"structure",
+      "members":{
+        "MarketType":{"shape":"NonEmptyString"},
+        "SpotOptions":{"shape":"AwsEc2LaunchTemplateDataInstanceMarketOptionsSpotOptionsDetails"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceMarketOptionsSpotOptionsDetails":{
+      "type":"structure",
+      "members":{
+        "BlockDurationMinutes":{"shape":"Integer"},
+        "InstanceInterruptionBehavior":{"shape":"NonEmptyString"},
+        "MaxPrice":{"shape":"NonEmptyString"},
+        "SpotInstanceType":{"shape":"NonEmptyString"},
+        "ValidUntil":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceRequirementsAcceleratorCountDetails":{
+      "type":"structure",
+      "members":{
+        "Max":{"shape":"Integer"},
+        "Min":{"shape":"Integer"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceRequirementsAcceleratorTotalMemoryMiBDetails":{
+      "type":"structure",
+      "members":{
+        "Max":{"shape":"Integer"},
+        "Min":{"shape":"Integer"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceRequirementsBaselineEbsBandwidthMbpsDetails":{
+      "type":"structure",
+      "members":{
+        "Max":{"shape":"Integer"},
+        "Min":{"shape":"Integer"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceRequirementsDetails":{
+      "type":"structure",
+      "members":{
+        "AcceleratorCount":{"shape":"AwsEc2LaunchTemplateDataInstanceRequirementsAcceleratorCountDetails"},
+        "AcceleratorManufacturers":{"shape":"NonEmptyStringList"},
+        "AcceleratorNames":{"shape":"NonEmptyStringList"},
+        "AcceleratorTotalMemoryMiB":{"shape":"AwsEc2LaunchTemplateDataInstanceRequirementsAcceleratorTotalMemoryMiBDetails"},
+        "AcceleratorTypes":{"shape":"NonEmptyStringList"},
+        "BareMetal":{"shape":"NonEmptyString"},
+        "BaselineEbsBandwidthMbps":{"shape":"AwsEc2LaunchTemplateDataInstanceRequirementsBaselineEbsBandwidthMbpsDetails"},
+        "BurstablePerformance":{"shape":"NonEmptyString"},
+        "CpuManufacturers":{"shape":"NonEmptyStringList"},
+        "ExcludedInstanceTypes":{"shape":"NonEmptyStringList"},
+        "InstanceGenerations":{"shape":"NonEmptyStringList"},
+        "LocalStorage":{"shape":"NonEmptyString"},
+        "LocalStorageTypes":{"shape":"NonEmptyStringList"},
+        "MemoryGiBPerVCpu":{"shape":"AwsEc2LaunchTemplateDataInstanceRequirementsMemoryGiBPerVCpuDetails"},
+        "MemoryMiB":{"shape":"AwsEc2LaunchTemplateDataInstanceRequirementsMemoryMiBDetails"},
+        "NetworkInterfaceCount":{"shape":"AwsEc2LaunchTemplateDataInstanceRequirementsNetworkInterfaceCountDetails"},
+        "OnDemandMaxPricePercentageOverLowestPrice":{"shape":"Integer"},
+        "RequireHibernateSupport":{"shape":"Boolean"},
+        "SpotMaxPricePercentageOverLowestPrice":{"shape":"Integer"},
+        "TotalLocalStorageGB":{"shape":"AwsEc2LaunchTemplateDataInstanceRequirementsTotalLocalStorageGBDetails"},
+        "VCpuCount":{"shape":"AwsEc2LaunchTemplateDataInstanceRequirementsVCpuCountDetails"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceRequirementsMemoryGiBPerVCpuDetails":{
+      "type":"structure",
+      "members":{
+        "Max":{"shape":"Double"},
+        "Min":{"shape":"Double"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceRequirementsMemoryMiBDetails":{
+      "type":"structure",
+      "members":{
+        "Max":{"shape":"Integer"},
+        "Min":{"shape":"Integer"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceRequirementsNetworkInterfaceCountDetails":{
+      "type":"structure",
+      "members":{
+        "Max":{"shape":"Integer"},
+        "Min":{"shape":"Integer"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceRequirementsTotalLocalStorageGBDetails":{
+      "type":"structure",
+      "members":{
+        "Max":{"shape":"Double"},
+        "Min":{"shape":"Double"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataInstanceRequirementsVCpuCountDetails":{
+      "type":"structure",
+      "members":{
+        "Max":{"shape":"Integer"},
+        "Min":{"shape":"Integer"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataLicenseSetDetails":{
+      "type":"structure",
+      "members":{
+        "LicenseConfigurationArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataLicenseSetList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2LaunchTemplateDataLicenseSetDetails"}
+    },
+    "AwsEc2LaunchTemplateDataMaintenanceOptionsDetails":{
+      "type":"structure",
+      "members":{
+        "AutoRecovery":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataMetadataOptionsDetails":{
+      "type":"structure",
+      "members":{
+        "HttpEndpoint":{"shape":"NonEmptyString"},
+        "HttpProtocolIpv6":{"shape":"NonEmptyString"},
+        "HttpTokens":{"shape":"NonEmptyString"},
+        "HttpPutResponseHopLimit":{"shape":"Integer"},
+        "InstanceMetadataTags":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataMonitoringDetails":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataNetworkInterfaceSetDetails":{
+      "type":"structure",
+      "members":{
+        "AssociateCarrierIpAddress":{"shape":"Boolean"},
+        "AssociatePublicIpAddress":{"shape":"Boolean"},
+        "DeleteOnTermination":{"shape":"Boolean"},
+        "Description":{"shape":"NonEmptyString"},
+        "DeviceIndex":{"shape":"Integer"},
+        "Groups":{"shape":"NonEmptyStringList"},
+        "InterfaceType":{"shape":"NonEmptyString"},
+        "Ipv4PrefixCount":{"shape":"Integer"},
+        "Ipv4Prefixes":{"shape":"AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv4PrefixesList"},
+        "Ipv6AddressCount":{"shape":"Integer"},
+        "Ipv6Addresses":{"shape":"AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv6AddressesList"},
+        "Ipv6PrefixCount":{"shape":"Integer"},
+        "Ipv6Prefixes":{"shape":"AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv6PrefixesList"},
+        "NetworkCardIndex":{"shape":"Integer"},
+        "NetworkInterfaceId":{"shape":"NonEmptyString"},
+        "PrivateIpAddress":{"shape":"NonEmptyString"},
+        "PrivateIpAddresses":{"shape":"AwsEc2LaunchTemplateDataNetworkInterfaceSetPrivateIpAddressesList"},
+        "SecondaryPrivateIpAddressCount":{"shape":"Integer"},
+        "SubnetId":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv4PrefixesDetails":{
+      "type":"structure",
+      "members":{
+        "Ipv4Prefix":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv4PrefixesList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv4PrefixesDetails"}
+    },
+    "AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv6AddressesDetails":{
+      "type":"structure",
+      "members":{
+        "Ipv6Address":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv6AddressesList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv6AddressesDetails"}
+    },
+    "AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv6PrefixesDetails":{
+      "type":"structure",
+      "members":{
+        "Ipv6Prefix":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv6PrefixesList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv6PrefixesDetails"}
+    },
+    "AwsEc2LaunchTemplateDataNetworkInterfaceSetList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2LaunchTemplateDataNetworkInterfaceSetDetails"}
+    },
+    "AwsEc2LaunchTemplateDataNetworkInterfaceSetPrivateIpAddressesDetails":{
+      "type":"structure",
+      "members":{
+        "Primary":{"shape":"Boolean"},
+        "PrivateIpAddress":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataNetworkInterfaceSetPrivateIpAddressesList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2LaunchTemplateDataNetworkInterfaceSetPrivateIpAddressesDetails"}
+    },
+    "AwsEc2LaunchTemplateDataPlacementDetails":{
+      "type":"structure",
+      "members":{
+        "Affinity":{"shape":"NonEmptyString"},
+        "AvailabilityZone":{"shape":"NonEmptyString"},
+        "GroupName":{"shape":"NonEmptyString"},
+        "HostId":{"shape":"NonEmptyString"},
+        "HostResourceGroupArn":{"shape":"NonEmptyString"},
+        "PartitionNumber":{"shape":"Integer"},
+        "SpreadDomain":{"shape":"NonEmptyString"},
+        "Tenancy":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDataPrivateDnsNameOptionsDetails":{
+      "type":"structure",
+      "members":{
+        "EnableResourceNameDnsAAAARecord":{"shape":"Boolean"},
+        "EnableResourceNameDnsARecord":{"shape":"Boolean"},
+        "HostnameType":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2LaunchTemplateDetails":{
+      "type":"structure",
+      "members":{
+        "LaunchTemplateName":{"shape":"NonEmptyString"},
+        "Id":{"shape":"NonEmptyString"},
+        "LaunchTemplateData":{"shape":"AwsEc2LaunchTemplateDataDetails"},
+        "DefaultVersionNumber":{"shape":"Long"},
+        "LatestVersionNumber":{"shape":"Long"}
+      }
     },
     "AwsEc2NetworkAclAssociation":{
       "type":"structure",
@@ -3646,7 +4225,9 @@
         "Timeout":{"shape":"Integer"},
         "TracingConfig":{"shape":"AwsLambdaFunctionTracingConfig"},
         "VpcConfig":{"shape":"AwsLambdaFunctionVpcConfig"},
-        "Version":{"shape":"NonEmptyString"}
+        "Version":{"shape":"NonEmptyString"},
+        "Architectures":{"shape":"NonEmptyStringList"},
+        "PackageType":{"shape":"NonEmptyString"}
       }
     },
     "AwsLambdaFunctionEnvironment":{
@@ -4734,6 +5315,37 @@
         "SSEKMSKeyId":{"shape":"NonEmptyString"}
       }
     },
+    "AwsSageMakerNotebookInstanceDetails":{
+      "type":"structure",
+      "members":{
+        "AcceleratorTypes":{"shape":"NonEmptyStringList"},
+        "AdditionalCodeRepositories":{"shape":"NonEmptyStringList"},
+        "DefaultCodeRepository":{"shape":"NonEmptyString"},
+        "DirectInternetAccess":{"shape":"NonEmptyString"},
+        "FailureReason":{"shape":"NonEmptyString"},
+        "InstanceMetadataServiceConfiguration":{"shape":"AwsSageMakerNotebookInstanceMetadataServiceConfigurationDetails"},
+        "InstanceType":{"shape":"NonEmptyString"},
+        "KmsKeyId":{"shape":"NonEmptyString"},
+        "NetworkInterfaceId":{"shape":"NonEmptyString"},
+        "NotebookInstanceArn":{"shape":"NonEmptyString"},
+        "NotebookInstanceLifecycleConfigName":{"shape":"NonEmptyString"},
+        "NotebookInstanceName":{"shape":"NonEmptyString"},
+        "NotebookInstanceStatus":{"shape":"NonEmptyString"},
+        "PlatformIdentifier":{"shape":"NonEmptyString"},
+        "RoleArn":{"shape":"NonEmptyString"},
+        "RootAccess":{"shape":"NonEmptyString"},
+        "SecurityGroups":{"shape":"NonEmptyStringList"},
+        "SubnetId":{"shape":"NonEmptyString"},
+        "Url":{"shape":"NonEmptyString"},
+        "VolumeSizeInGB":{"shape":"Integer"}
+      }
+    },
+    "AwsSageMakerNotebookInstanceMetadataServiceConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "MinimumInstanceMetadataServiceVersion":{"shape":"NonEmptyString"}
+      }
+    },
     "AwsSecretsManagerSecretDetails":{
       "type":"structure",
       "members":{
@@ -4924,7 +5536,9 @@
         "FindingProviderFieldsSeverityLabel":{"shape":"StringFilterList"},
         "FindingProviderFieldsSeverityOriginal":{"shape":"StringFilterList"},
         "FindingProviderFieldsTypes":{"shape":"StringFilterList"},
-        "Sample":{"shape":"BooleanFilterList"}
+        "Sample":{"shape":"BooleanFilterList"},
+        "ComplianceSecurityControlId":{"shape":"StringFilterList"},
+        "ComplianceAssociatedStandardsId":{"shape":"StringFilterList"}
       }
     },
     "AwsSecurityFindingIdentifier":{
@@ -5221,6 +5835,133 @@
       "type":"list",
       "member":{"shape":"AwsWafWebAclRule"}
     },
+    "AwsWafv2ActionAllowDetails":{
+      "type":"structure",
+      "members":{
+        "CustomRequestHandling":{"shape":"AwsWafv2CustomRequestHandlingDetails"}
+      }
+    },
+    "AwsWafv2ActionBlockDetails":{
+      "type":"structure",
+      "members":{
+        "CustomResponse":{"shape":"AwsWafv2CustomResponseDetails"}
+      }
+    },
+    "AwsWafv2CustomHttpHeader":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NonEmptyString"},
+        "Value":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsWafv2CustomRequestHandlingDetails":{
+      "type":"structure",
+      "members":{
+        "InsertHeaders":{"shape":"AwsWafv2InsertHeadersList"}
+      }
+    },
+    "AwsWafv2CustomResponseDetails":{
+      "type":"structure",
+      "members":{
+        "CustomResponseBodyKey":{"shape":"NonEmptyString"},
+        "ResponseCode":{"shape":"Integer"},
+        "ResponseHeaders":{"shape":"AwsWafv2InsertHeadersList"}
+      }
+    },
+    "AwsWafv2InsertHeadersList":{
+      "type":"list",
+      "member":{"shape":"AwsWafv2CustomHttpHeader"}
+    },
+    "AwsWafv2RuleGroupDetails":{
+      "type":"structure",
+      "members":{
+        "Capacity":{"shape":"Long"},
+        "Description":{"shape":"NonEmptyString"},
+        "Id":{"shape":"NonEmptyString"},
+        "Name":{"shape":"NonEmptyString"},
+        "Arn":{"shape":"NonEmptyString"},
+        "Rules":{"shape":"AwsWafv2RulesList"},
+        "Scope":{"shape":"NonEmptyString"},
+        "VisibilityConfig":{"shape":"AwsWafv2VisibilityConfigDetails"}
+      }
+    },
+    "AwsWafv2RulesActionCaptchaDetails":{
+      "type":"structure",
+      "members":{
+        "CustomRequestHandling":{"shape":"AwsWafv2CustomRequestHandlingDetails"}
+      }
+    },
+    "AwsWafv2RulesActionCountDetails":{
+      "type":"structure",
+      "members":{
+        "CustomRequestHandling":{"shape":"AwsWafv2CustomRequestHandlingDetails"}
+      }
+    },
+    "AwsWafv2RulesActionDetails":{
+      "type":"structure",
+      "members":{
+        "Allow":{"shape":"AwsWafv2ActionAllowDetails"},
+        "Block":{"shape":"AwsWafv2ActionBlockDetails"},
+        "Captcha":{"shape":"AwsWafv2RulesActionCaptchaDetails"},
+        "Count":{"shape":"AwsWafv2RulesActionCountDetails"}
+      }
+    },
+    "AwsWafv2RulesDetails":{
+      "type":"structure",
+      "members":{
+        "Action":{"shape":"AwsWafv2RulesActionDetails"},
+        "Name":{"shape":"NonEmptyString"},
+        "OverrideAction":{"shape":"NonEmptyString"},
+        "Priority":{"shape":"Integer"},
+        "VisibilityConfig":{"shape":"AwsWafv2VisibilityConfigDetails"}
+      }
+    },
+    "AwsWafv2RulesList":{
+      "type":"list",
+      "member":{"shape":"AwsWafv2RulesDetails"}
+    },
+    "AwsWafv2VisibilityConfigDetails":{
+      "type":"structure",
+      "members":{
+        "CloudWatchMetricsEnabled":{"shape":"Boolean"},
+        "MetricName":{"shape":"NonEmptyString"},
+        "SampledRequestsEnabled":{"shape":"Boolean"}
+      }
+    },
+    "AwsWafv2WebAclActionDetails":{
+      "type":"structure",
+      "members":{
+        "Allow":{"shape":"AwsWafv2ActionAllowDetails"},
+        "Block":{"shape":"AwsWafv2ActionBlockDetails"}
+      }
+    },
+    "AwsWafv2WebAclCaptchaConfigDetails":{
+      "type":"structure",
+      "members":{
+        "ImmunityTimeProperty":{"shape":"AwsWafv2WebAclCaptchaConfigImmunityTimePropertyDetails"}
+      }
+    },
+    "AwsWafv2WebAclCaptchaConfigImmunityTimePropertyDetails":{
+      "type":"structure",
+      "members":{
+        "ImmunityTime":{"shape":"Long"}
+      }
+    },
+    "AwsWafv2WebAclDetails":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NonEmptyString"},
+        "Arn":{"shape":"NonEmptyString"},
+        "ManagedbyFirewallManager":{"shape":"Boolean"},
+        "Id":{"shape":"NonEmptyString"},
+        "Capacity":{"shape":"Long"},
+        "CaptchaConfig":{"shape":"AwsWafv2WebAclCaptchaConfigDetails"},
+        "DefaultAction":{"shape":"AwsWafv2WebAclActionDetails"},
+        "Description":{"shape":"NonEmptyString"},
+        "Rules":{"shape":"AwsWafv2RulesList"},
+        "VisibilityConfig":{"shape":"AwsWafv2VisibilityConfigDetails"}
+      }
+    },
     "AwsXrayEncryptionConfigDetails":{
       "type":"structure",
       "members":{
@@ -5253,6 +5994,36 @@
       "type":"structure",
       "members":{
         "StandardsSubscriptions":{"shape":"StandardsSubscriptions"}
+      }
+    },
+    "BatchGetSecurityControlsRequest":{
+      "type":"structure",
+      "required":["SecurityControlIds"],
+      "members":{
+        "SecurityControlIds":{"shape":"StringList"}
+      }
+    },
+    "BatchGetSecurityControlsResponse":{
+      "type":"structure",
+      "required":["SecurityControls"],
+      "members":{
+        "SecurityControls":{"shape":"SecurityControls"},
+        "UnprocessedIds":{"shape":"UnprocessedSecurityControls"}
+      }
+    },
+    "BatchGetStandardsControlAssociationsRequest":{
+      "type":"structure",
+      "required":["StandardsControlAssociationIds"],
+      "members":{
+        "StandardsControlAssociationIds":{"shape":"StandardsControlAssociationIds"}
+      }
+    },
+    "BatchGetStandardsControlAssociationsResponse":{
+      "type":"structure",
+      "required":["StandardsControlAssociationDetails"],
+      "members":{
+        "StandardsControlAssociationDetails":{"shape":"StandardsControlAssociationDetails"},
+        "UnprocessedAssociations":{"shape":"UnprocessedStandardsControlAssociations"}
       }
     },
     "BatchImportFindingsRequest":{
@@ -5324,6 +6095,19 @@
       "type":"list",
       "member":{"shape":"BatchUpdateFindingsUnprocessedFinding"}
     },
+    "BatchUpdateStandardsControlAssociationsRequest":{
+      "type":"structure",
+      "required":["StandardsControlAssociationUpdates"],
+      "members":{
+        "StandardsControlAssociationUpdates":{"shape":"StandardsControlAssociationUpdates"}
+      }
+    },
+    "BatchUpdateStandardsControlAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "UnprocessedAssociationUpdates":{"shape":"UnprocessedStandardsControlAssociationUpdates"}
+      }
+    },
     "Boolean":{"type":"boolean"},
     "BooleanFilter":{
       "type":"structure",
@@ -5393,7 +6177,9 @@
       "members":{
         "Status":{"shape":"ComplianceStatus"},
         "RelatedRequirements":{"shape":"RelatedRequirementsList"},
-        "StatusReasons":{"shape":"StatusReasonsList"}
+        "StatusReasons":{"shape":"StatusReasonsList"},
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "AssociatedStandards":{"shape":"AssociatedStandardsList"}
       }
     },
     "ComplianceStatus":{
@@ -5416,6 +6202,13 @@
         "VolumeMounts":{"shape":"VolumeMountList"},
         "Privileged":{"shape":"Boolean"}
       }
+    },
+    "ControlFindingGenerator":{
+      "type":"string",
+      "enum":[
+        "STANDARD_CONTROL",
+        "SECURITY_CONTROL"
+      ]
     },
     "ControlStatus":{
       "type":"string",
@@ -5692,7 +6485,8 @@
       "members":{
         "HubArn":{"shape":"NonEmptyString"},
         "SubscribedAt":{"shape":"NonEmptyString"},
-        "AutoEnableControls":{"shape":"Boolean"}
+        "AutoEnableControls":{"shape":"Boolean"},
+        "ControlFindingGenerator":{"shape":"ControlFindingGenerator"}
       }
     },
     "DescribeOrganizationConfigurationRequest":{
@@ -5894,7 +6688,8 @@
       "type":"structure",
       "members":{
         "Tags":{"shape":"TagMap"},
-        "EnableDefaultStandards":{"shape":"Boolean"}
+        "EnableDefaultStandards":{"shape":"Boolean"},
+        "ControlFindingGenerator":{"shape":"ControlFindingGenerator"}
       }
     },
     "EnableSecurityHubResponse":{
@@ -6435,6 +7230,63 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListSecurityControlDefinitionsRequest":{
+      "type":"structure",
+      "members":{
+        "StandardsArn":{
+          "shape":"NonEmptyString",
+          "location":"querystring",
+          "locationName":"StandardsArn"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "ListSecurityControlDefinitionsResponse":{
+      "type":"structure",
+      "required":["SecurityControlDefinitions"],
+      "members":{
+        "SecurityControlDefinitions":{"shape":"SecurityControlDefinitions"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListStandardsControlAssociationsRequest":{
+      "type":"structure",
+      "required":["SecurityControlId"],
+      "members":{
+        "SecurityControlId":{
+          "shape":"NonEmptyString",
+          "location":"querystring",
+          "locationName":"SecurityControlId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "ListStandardsControlAssociationsResponse":{
+      "type":"structure",
+      "required":["StandardsControlAssociationSummaries"],
+      "members":{
+        "StandardsControlAssociationSummaries":{"shape":"StandardsControlAssociationSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -6814,6 +7666,13 @@
       "type":"list",
       "member":{"shape":"Record"}
     },
+    "RegionAvailabilityStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "UNAVAILABLE"
+      ]
+    },
     "RelatedFinding":{
       "type":"structure",
       "required":[
@@ -6947,7 +7806,14 @@
         "AwsWafRegionalWebAcl":{"shape":"AwsWafRegionalWebAclDetails"},
         "AwsWafRule":{"shape":"AwsWafRuleDetails"},
         "AwsWafRuleGroup":{"shape":"AwsWafRuleGroupDetails"},
-        "AwsEcsTask":{"shape":"AwsEcsTaskDetails"}
+        "AwsEcsTask":{"shape":"AwsEcsTaskDetails"},
+        "AwsBackupBackupVault":{"shape":"AwsBackupBackupVaultDetails"},
+        "AwsBackupBackupPlan":{"shape":"AwsBackupBackupPlanDetails"},
+        "AwsBackupRecoveryPoint":{"shape":"AwsBackupRecoveryPointDetails"},
+        "AwsEc2LaunchTemplate":{"shape":"AwsEc2LaunchTemplateDetails"},
+        "AwsSageMakerNotebookInstance":{"shape":"AwsSageMakerNotebookInstanceDetails"},
+        "AwsWafv2WebAcl":{"shape":"AwsWafv2WebAclDetails"},
+        "AwsWafv2RuleGroup":{"shape":"AwsWafv2RuleGroupDetails"}
       }
     },
     "ResourceList":{
@@ -7159,6 +8025,54 @@
         "Definition":{"shape":"NonEmptyStringList"}
       }
     },
+    "SecurityControl":{
+      "type":"structure",
+      "required":[
+        "SecurityControlId",
+        "SecurityControlArn",
+        "Title",
+        "Description",
+        "RemediationUrl",
+        "SeverityRating",
+        "SecurityControlStatus"
+      ],
+      "members":{
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "SecurityControlArn":{"shape":"NonEmptyString"},
+        "Title":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "RemediationUrl":{"shape":"NonEmptyString"},
+        "SeverityRating":{"shape":"SeverityRating"},
+        "SecurityControlStatus":{"shape":"ControlStatus"}
+      }
+    },
+    "SecurityControlDefinition":{
+      "type":"structure",
+      "required":[
+        "SecurityControlId",
+        "Title",
+        "Description",
+        "RemediationUrl",
+        "SeverityRating",
+        "CurrentRegionAvailability"
+      ],
+      "members":{
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "Title":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "RemediationUrl":{"shape":"NonEmptyString"},
+        "SeverityRating":{"shape":"SeverityRating"},
+        "CurrentRegionAvailability":{"shape":"RegionAvailabilityStatus"}
+      }
+    },
+    "SecurityControlDefinitions":{
+      "type":"list",
+      "member":{"shape":"SecurityControlDefinition"}
+    },
+    "SecurityControls":{
+      "type":"list",
+      "member":{"shape":"SecurityControl"}
+    },
     "SecurityGroups":{
       "type":"list",
       "member":{"shape":"NonEmptyString"}
@@ -7233,7 +8147,11 @@
         "Release":{"shape":"NonEmptyString"},
         "Architecture":{"shape":"NonEmptyString"},
         "PackageManager":{"shape":"NonEmptyString"},
-        "FilePath":{"shape":"NonEmptyString"}
+        "FilePath":{"shape":"NonEmptyString"},
+        "FixedInVersion":{"shape":"NonEmptyString"},
+        "Remediation":{"shape":"NonEmptyString"},
+        "SourceLayerHash":{"shape":"NonEmptyString"},
+        "SourceLayerArn":{"shape":"NonEmptyString"}
       }
     },
     "SoftwarePackageList":{
@@ -7264,7 +8182,8 @@
         "StandardsArn":{"shape":"NonEmptyString"},
         "Name":{"shape":"NonEmptyString"},
         "Description":{"shape":"NonEmptyString"},
-        "EnabledByDefault":{"shape":"Boolean"}
+        "EnabledByDefault":{"shape":"Boolean"},
+        "StandardsManagedBy":{"shape":"StandardsManagedBy"}
       }
     },
     "Standards":{
@@ -7286,6 +8205,92 @@
         "RelatedRequirements":{"shape":"RelatedRequirementsList"}
       }
     },
+    "StandardsControlArnList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"}
+    },
+    "StandardsControlAssociationDetail":{
+      "type":"structure",
+      "required":[
+        "StandardsArn",
+        "SecurityControlId",
+        "SecurityControlArn",
+        "AssociationStatus"
+      ],
+      "members":{
+        "StandardsArn":{"shape":"NonEmptyString"},
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "SecurityControlArn":{"shape":"NonEmptyString"},
+        "AssociationStatus":{"shape":"AssociationStatus"},
+        "RelatedRequirements":{"shape":"RelatedRequirementsList"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "UpdatedReason":{"shape":"NonEmptyString"},
+        "StandardsControlTitle":{"shape":"NonEmptyString"},
+        "StandardsControlDescription":{"shape":"NonEmptyString"},
+        "StandardsControlArns":{"shape":"StandardsControlArnList"}
+      }
+    },
+    "StandardsControlAssociationDetails":{
+      "type":"list",
+      "member":{"shape":"StandardsControlAssociationDetail"}
+    },
+    "StandardsControlAssociationId":{
+      "type":"structure",
+      "required":[
+        "SecurityControlId",
+        "StandardsArn"
+      ],
+      "members":{
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "StandardsArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "StandardsControlAssociationIds":{
+      "type":"list",
+      "member":{"shape":"StandardsControlAssociationId"}
+    },
+    "StandardsControlAssociationSummaries":{
+      "type":"list",
+      "member":{"shape":"StandardsControlAssociationSummary"}
+    },
+    "StandardsControlAssociationSummary":{
+      "type":"structure",
+      "required":[
+        "StandardsArn",
+        "SecurityControlId",
+        "SecurityControlArn",
+        "AssociationStatus"
+      ],
+      "members":{
+        "StandardsArn":{"shape":"NonEmptyString"},
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "SecurityControlArn":{"shape":"NonEmptyString"},
+        "AssociationStatus":{"shape":"AssociationStatus"},
+        "RelatedRequirements":{"shape":"RelatedRequirementsList"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "UpdatedReason":{"shape":"NonEmptyString"},
+        "StandardsControlTitle":{"shape":"NonEmptyString"},
+        "StandardsControlDescription":{"shape":"NonEmptyString"}
+      }
+    },
+    "StandardsControlAssociationUpdate":{
+      "type":"structure",
+      "required":[
+        "StandardsArn",
+        "SecurityControlId",
+        "AssociationStatus"
+      ],
+      "members":{
+        "StandardsArn":{"shape":"NonEmptyString"},
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "AssociationStatus":{"shape":"AssociationStatus"},
+        "UpdatedReason":{"shape":"NonEmptyString"}
+      }
+    },
+    "StandardsControlAssociationUpdates":{
+      "type":"list",
+      "member":{"shape":"StandardsControlAssociationUpdate"}
+    },
     "StandardsControls":{
       "type":"list",
       "member":{"shape":"StandardsControl"}
@@ -7294,6 +8299,13 @@
       "type":"map",
       "key":{"shape":"NonEmptyString"},
       "value":{"shape":"NonEmptyString"}
+    },
+    "StandardsManagedBy":{
+      "type":"structure",
+      "members":{
+        "Company":{"shape":"NonEmptyString"},
+        "Product":{"shape":"NonEmptyString"}
+      }
     },
     "StandardsStatus":{
       "type":"string",
@@ -7523,6 +8535,63 @@
       "type":"list",
       "member":{"shape":"NonEmptyString"}
     },
+    "UnprocessedErrorCode":{
+      "type":"string",
+      "enum":[
+        "INVALID_INPUT",
+        "ACCESS_DENIED",
+        "NOT_FOUND",
+        "LIMIT_EXCEEDED"
+      ]
+    },
+    "UnprocessedSecurityControl":{
+      "type":"structure",
+      "required":[
+        "SecurityControlId",
+        "ErrorCode"
+      ],
+      "members":{
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "ErrorCode":{"shape":"UnprocessedErrorCode"},
+        "ErrorReason":{"shape":"NonEmptyString"}
+      }
+    },
+    "UnprocessedSecurityControls":{
+      "type":"list",
+      "member":{"shape":"UnprocessedSecurityControl"}
+    },
+    "UnprocessedStandardsControlAssociation":{
+      "type":"structure",
+      "required":[
+        "StandardsControlAssociationId",
+        "ErrorCode"
+      ],
+      "members":{
+        "StandardsControlAssociationId":{"shape":"StandardsControlAssociationId"},
+        "ErrorCode":{"shape":"UnprocessedErrorCode"},
+        "ErrorReason":{"shape":"NonEmptyString"}
+      }
+    },
+    "UnprocessedStandardsControlAssociationUpdate":{
+      "type":"structure",
+      "required":[
+        "StandardsControlAssociationUpdate",
+        "ErrorCode"
+      ],
+      "members":{
+        "StandardsControlAssociationUpdate":{"shape":"StandardsControlAssociationUpdate"},
+        "ErrorCode":{"shape":"UnprocessedErrorCode"},
+        "ErrorReason":{"shape":"NonEmptyString"}
+      }
+    },
+    "UnprocessedStandardsControlAssociationUpdates":{
+      "type":"list",
+      "member":{"shape":"UnprocessedStandardsControlAssociationUpdate"}
+    },
+    "UnprocessedStandardsControlAssociations":{
+      "type":"list",
+      "member":{"shape":"UnprocessedStandardsControlAssociation"}
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -7635,7 +8704,8 @@
     "UpdateSecurityHubConfigurationRequest":{
       "type":"structure",
       "members":{
-        "AutoEnableControls":{"shape":"Boolean"}
+        "AutoEnableControls":{"shape":"Boolean"},
+        "ControlFindingGenerator":{"shape":"ControlFindingGenerator"}
       }
     },
     "UpdateSecurityHubConfigurationResponse":{
@@ -7718,8 +8788,17 @@
         "Cvss":{"shape":"CvssList"},
         "RelatedVulnerabilities":{"shape":"StringList"},
         "Vendor":{"shape":"VulnerabilityVendor"},
-        "ReferenceUrls":{"shape":"StringList"}
+        "ReferenceUrls":{"shape":"StringList"},
+        "FixAvailable":{"shape":"VulnerabilityFixAvailable"}
       }
+    },
+    "VulnerabilityFixAvailable":{
+      "type":"string",
+      "enum":[
+        "YES",
+        "NO",
+        "PARTIAL"
+      ]
     },
     "VulnerabilityList":{
       "type":"list",

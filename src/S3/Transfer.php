@@ -27,6 +27,7 @@ class Transfer implements PromisorInterface
     private $mupThreshold;
     private $before;
     private $s3Args = [];
+    private $addContentMD5;
 
     /**
      * When providing the $source argument, you may provide a string referencing
@@ -134,6 +135,10 @@ class Transfer implements PromisorInterface
                 $this->addDebugToBefore($options['debug']);
             }
         }
+
+        // Handle "add_content_md5" option.
+        $this->addContentMD5 = isset($options['add_content_md5'])
+            && $options['add_content_md5'] === true;
     }
 
     /**
@@ -218,27 +223,28 @@ class Transfer implements PromisorInterface
         return rtrim(str_replace('\\', '/', $path), '/');
     }
 
-    private function resolveUri($uri)
+    private function resolvesOutsideTargetDirectory($sink, $objectKey)
     {
         $resolved = [];
-        $sections = explode('/', $uri);
-        foreach ($sections as $section) {
+        $sections = explode('/', $sink);
+        $targetSectionsLength = count(explode('/', $objectKey));
+        $targetSections = array_slice($sections, -($targetSectionsLength + 1));
+        $targetDirectory = $targetSections[0];
+
+        foreach ($targetSections as $section) {
             if ($section === '.' || $section === '') {
                 continue;
             }
             if ($section === '..') {
                 array_pop($resolved);
-                $destinationDirname = explode('/', $this->destination['path']);
-                if (end($resolved) === end($destinationDirname)) {
-                    array_pop($resolved);
+                if (empty($resolved) || $resolved[0] !== $targetDirectory) {
+                    return true;
                 }
             } else {
                 $resolved []= $section;
             }
         }
-
-        return ($uri[0] === '/' ? '/' : '')
-            . implode('/', $resolved);
+        return false;
     }
 
     private function createDownloadPromise()
@@ -247,17 +253,10 @@ class Transfer implements PromisorInterface
         $prefix = "s3://{$parts['Bucket']}/"
             . (isset($parts['Key']) ? $parts['Key'] . '/' : '');
 
-
         $commands = [];
         foreach ($this->getDownloadsIterator() as $object) {
             // Prepare the sink.
             $objectKey = preg_replace('/^' . preg_quote($prefix, '/') . '/', '', $object);
-
-            $resolveSink = $this->destination['path'] . '/';
-            if (isset($parts['Key']) && strpos($objectKey, $parts['Key']) !== 0) {
-                $resolveSink .= $parts['Key'] . '/';
-            }
-            $resolveSink .= $objectKey;
             $sink = $this->destination['path'] . '/' . $objectKey;
 
             $command = $this->client->getCommand(
@@ -265,11 +264,7 @@ class Transfer implements PromisorInterface
                 $this->getS3Args($object) + ['@http'  => ['sink'  => $sink]]
             );
 
-            if (strpos(
-                    $this->resolveUri($resolveSink),
-                    $this->destination['path'] . '/'
-                ) !== 0
-            ) {
+            if ($this->resolvesOutsideTargetDirectory($sink, $objectKey)) {
                 throw new AwsException(
                     'Cannot download key ' . $objectKey
                     . ', its relative path resolves outside the'
@@ -352,6 +347,7 @@ class Transfer implements PromisorInterface
         $args = $this->s3Args;
         $args['SourceFile'] = $filename;
         $args['Key'] = $this->createS3Key($filename);
+        $args['AddContentMD5'] = $this->addContentMD5;
         $command = $this->client->getCommand('PutObject', $args);
         $this->before and call_user_func($this->before, $command);
 
@@ -371,6 +367,7 @@ class Transfer implements PromisorInterface
             'before_upload'   => $this->before,
             'before_complete' => $this->before,
             'concurrency'     => $this->concurrency,
+            'add_content_md5' => $this->addContentMD5
         ]))->promise();
     }
 

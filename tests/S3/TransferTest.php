@@ -9,7 +9,7 @@ use Aws\S3\Transfer;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SplFileInfo;
 
 /**
@@ -19,73 +19,58 @@ class TransferTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage base_dir
-     */
     public function testEnsuresBaseDirIsAvailable()
     {
+        $this->expectExceptionMessage("base_dir");
+        $this->expectException(\InvalidArgumentException::class);
         $s3 = $this->getTestClient('s3');
         new Transfer($s3, new \ArrayIterator([]), 's3://foo/bar');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage You cannot copy from s3 to s3.
-     */
     public function testCannotCopyS3ToS3()
     {
+        $this->expectExceptionMessage("You cannot copy from s3 to s3.");
+        $this->expectException(\InvalidArgumentException::class);
         $s3 = $this->getTestClient('s3');
         new Transfer($s3, 's3://baz/bam', 's3://foo/bar');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage You cannot copy from file to file.
-     */
     public function testCannotCopyLocal()
     {
+        $this->expectExceptionMessage("You cannot copy from file to file.");
+        $this->expectException(\InvalidArgumentException::class);
         $s3 = $this->getTestClient('s3');
         new Transfer($s3, __DIR__, __DIR__);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage mup_threshold must be >= 5MB
-     */
     public function testEnsuresMupSizeIsValid()
     {
+        $this->expectExceptionMessage("mup_threshold must be >= 5MB");
+        $this->expectException(\InvalidArgumentException::class);
         $s3 = $this->getTestClient('s3');
         new Transfer($s3, __DIR__, 's3://foo/bar', ['mup_threshold' => 10]);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage source must be the path to a directory or an
-     *                           iterator that yields file names
-     */
     public function testEnsuresSourceIsValid()
     {
+        $this->expectExceptionMessage("source must be the path to a directory or an iterator that yields file names");
+        $this->expectException(\InvalidArgumentException::class);
         $s3 = $this->getTestClient('s3');
         new Transfer($s3, false, 's3://foo/bar');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Scheme must be "s3" or "file"
-     */
     public function testEnsuresValidScheme()
     {
+        $this->expectExceptionMessage("Scheme must be \"s3\" or \"file\"");
+        $this->expectException(\InvalidArgumentException::class);
         $s3 = $this->getTestClient('s3');
         new Transfer($s3, __DIR__, 'monkey://foo/bar');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage before must be a callable
-     */
     public function testEnsuresBeforeIsCallable()
     {
+        $this->expectExceptionMessage("before must be a callable");
+        $this->expectException(\InvalidArgumentException::class);
         $s3 = $this->getTestClient('s3');
         new Transfer($s3, __DIR__, 's3://foo/bar', ['before' => 'cheese']);
     }
@@ -123,7 +108,7 @@ class TransferTest extends TestCase
             $this->assertSame('PutObject', $test->getName());
             $this->assertSame('foo', $test['Bucket']);
             $this->assertStringStartsWith('bar/', $test['Key']);
-            $this->assertContains($test['SourceFile'] . ' -> s3://foo/bar', $output);
+            $this->assertStringContainsString($test['SourceFile'] . ' -> s3://foo/bar', $output);
         }
     }
 
@@ -136,6 +121,15 @@ class TransferTest extends TestCase
             new Result(['ETag' => 'b']),
             new Result(['UploadId' => '123']),
         ]);
+
+        $s3->getHandlerList()->appendSign(Middleware::tap(
+            function (CommandInterface $cmd, RequestInterface $req) {
+                $name = $cmd->getName();
+                if ($name === 'UploadPart') {
+                    $this->assertTrue(isset($command['ContentMD5']));
+                }
+            }
+        ));
 
         $dir = sys_get_temp_dir() . '/unittest';
         `rm -rf $dir`;
@@ -151,13 +145,14 @@ class TransferTest extends TestCase
         $res = fopen('php://temp', 'r+');
         $t = new Transfer($s3, $dir, 's3://foo/bar', [
             'mup_threshold' => 5248000,
-            'debug' => $res
+            'debug' => $res,
+            'add_content_md5' => true
         ]);
 
         $t->transfer();
         rewind($res);
         $output = stream_get_contents($res);
-        $this->assertContains("Transferring $filename -> s3://foo/bar/large.txt (UploadPart) : Part=1", $output);
+        $this->assertStringContainsString("Transferring $filename -> s3://foo/bar/large.txt (UploadPart) : Part=1", $output);
         `rm -rf $dir`;
     }
 
@@ -191,7 +186,7 @@ class TransferTest extends TestCase
         $t->transfer();
         rewind($res);
         $output = stream_get_contents($res);
-        $this->assertContains("Transferring $filename -> s3://foo/bar/large.txt (UploadPart) : Part=1", $output);
+        $this->assertStringContainsString("Transferring $filename -> s3://foo/bar/large.txt (UploadPart) : Part=1", $output);
         `rm -rf $dir`;
     }
 
@@ -218,7 +213,7 @@ class TransferTest extends TestCase
         $t->transfer();
         rewind($res);
         $output = stream_get_contents($res);
-        $this->assertContains('s3://foo/bar/c//d -> ', $output);
+        $this->assertStringContainsString('s3://foo/bar/c//d -> ', $output);
         `rm -rf $dir`;
     }
 
@@ -283,19 +278,18 @@ class TransferTest extends TestCase
         $t->transfer();
         rewind($res);
         $output = stream_get_contents($res);
-        $this->assertContains('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/bar/../bar/a/b -> ', $output);
-        $this->assertContains('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/bar/c//d -> ', $output);
-        $this->assertContains('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/../bar//c/../a/b/.. -> ', $output);
+        $this->assertStringContainsString('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/bar/../bar/a/b -> ', $output);
+        $this->assertStringContainsString('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/bar/c//d -> ', $output);
+        $this->assertStringContainsString('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/../bar//c/../a/b/.. -> ', $output);
         `rm -rf $dir`;
     }
 
     /**
      * @dataProvider providedPathsOutsideTarget
-     *
-     * @expectedException \Aws\Exception\AwsException
      */
     public function testCannotDownloadObjectsOutsideTarget($key)
     {
+        $this->expectException(\Aws\Exception\AwsException::class);
         $s3 = $this->getTestClient('s3');
         $lso = [
             'IsTruncated' => false,

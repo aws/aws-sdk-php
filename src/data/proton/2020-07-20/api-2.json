@@ -592,6 +592,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetResourcesSummary":{
+      "name":"GetResourcesSummary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourcesSummaryInput"},
+      "output":{"shape":"GetResourcesSummaryOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetService":{
       "name":"GetService",
       "http":{
@@ -1307,18 +1322,24 @@
     "AccountSettings":{
       "type":"structure",
       "members":{
+        "pipelineCodebuildRoleArn":{"shape":"RoleArnOrEmptyString"},
         "pipelineProvisioningRepository":{"shape":"RepositoryBranch"},
-        "pipelineServiceRoleArn":{"shape":"PipelineRoleArn"}
+        "pipelineServiceRoleArn":{"shape":"RoleArnOrEmptyString"}
       }
     },
     "Arn":{
       "type":"string",
       "max":200,
-      "min":1
+      "min":1,
+      "pattern":"^arn:(aws|aws-cn|aws-us-gov):[a-zA-Z0-9-]+:[a-zA-Z0-9-]*:\\d{12}:([\\w+=,.@-]+[/:])*[\\w+=,.@-]+$"
     },
     "AwsAccountId":{
       "type":"string",
       "pattern":"^\\d{12}$"
+    },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
     },
     "CancelComponentDeploymentInput":{
       "type":"structure",
@@ -1488,6 +1509,18 @@
       },
       "exception":true
     },
+    "CountsSummary":{
+      "type":"structure",
+      "members":{
+        "components":{"shape":"ResourceCountsSummary"},
+        "environmentTemplates":{"shape":"ResourceCountsSummary"},
+        "environments":{"shape":"ResourceCountsSummary"},
+        "pipelines":{"shape":"ResourceCountsSummary"},
+        "serviceInstances":{"shape":"ResourceCountsSummary"},
+        "serviceTemplates":{"shape":"ResourceCountsSummary"},
+        "services":{"shape":"ResourceCountsSummary"}
+      }
+    },
     "CreateComponentInput":{
       "type":"structure",
       "required":[
@@ -1518,18 +1551,18 @@
       "type":"structure",
       "required":[
         "environmentName",
-        "managementAccountId",
-        "roleArn"
+        "managementAccountId"
       ],
       "members":{
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "componentRoleArn":{"shape":"Arn"},
+        "codebuildRoleArn":{"shape":"RoleArn"},
+        "componentRoleArn":{"shape":"RoleArn"},
         "environmentName":{"shape":"ResourceName"},
         "managementAccountId":{"shape":"AwsAccountId"},
-        "roleArn":{"shape":"Arn"},
+        "roleArn":{"shape":"RoleArn"},
         "tags":{"shape":"TagList"}
       }
     },
@@ -1549,7 +1582,8 @@
         "templateName"
       ],
       "members":{
-        "componentRoleArn":{"shape":"Arn"},
+        "codebuildRoleArn":{"shape":"RoleArn"},
+        "componentRoleArn":{"shape":"RoleArn"},
         "description":{"shape":"Description"},
         "environmentAccountConnectionId":{"shape":"EnvironmentAccountConnectionId"},
         "name":{"shape":"ResourceName"},
@@ -1942,7 +1976,8 @@
       ],
       "members":{
         "arn":{"shape":"EnvironmentArn"},
-        "componentRoleArn":{"shape":"Arn"},
+        "codebuildRoleArn":{"shape":"RoleArn"},
+        "componentRoleArn":{"shape":"RoleArn"},
         "createdAt":{"shape":"Timestamp"},
         "deploymentStatus":{"shape":"DeploymentStatus"},
         "deploymentStatusMessage":{"shape":"StatusMessage"},
@@ -1976,7 +2011,8 @@
       ],
       "members":{
         "arn":{"shape":"EnvironmentAccountConnectionArn"},
-        "componentRoleArn":{"shape":"Arn"},
+        "codebuildRoleArn":{"shape":"RoleArn"},
+        "componentRoleArn":{"shape":"RoleArn"},
         "environmentAccountId":{"shape":"AwsAccountId"},
         "environmentName":{"shape":"ResourceName"},
         "id":{"shape":"EnvironmentAccountConnectionId"},
@@ -2326,6 +2362,18 @@
         "latestSync":{"shape":"RepositorySyncAttempt"}
       }
     },
+    "GetResourcesSummaryInput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetResourcesSummaryOutput":{
+      "type":"structure",
+      "required":["counts"],
+      "members":{
+        "counts":{"shape":"CountsSummary"}
+      }
+    },
     "GetServiceInput":{
       "type":"structure",
       "required":["name"],
@@ -2433,6 +2481,10 @@
       "type":"string",
       "max":200,
       "min":1
+    },
+    "Integer":{
+      "type":"integer",
+      "box":true
     },
     "InternalServerException":{
       "type":"structure",
@@ -2671,12 +2723,42 @@
         "provisionedResources":{"shape":"ProvisionedResourceList"}
       }
     },
+    "ListServiceInstancesFilter":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"ListServiceInstancesFilterBy"},
+        "value":{"shape":"ListServiceInstancesFilterValue"}
+      }
+    },
+    "ListServiceInstancesFilterBy":{
+      "type":"string",
+      "enum":[
+        "name",
+        "deploymentStatus",
+        "templateName",
+        "serviceName",
+        "deployedTemplateVersionStatus",
+        "environmentName",
+        "lastDeploymentAttemptedAtBefore",
+        "lastDeploymentAttemptedAtAfter",
+        "createdAtBefore",
+        "createdAtAfter"
+      ]
+    },
+    "ListServiceInstancesFilterList":{
+      "type":"list",
+      "member":{"shape":"ListServiceInstancesFilter"}
+    },
+    "ListServiceInstancesFilterValue":{"type":"string"},
     "ListServiceInstancesInput":{
       "type":"structure",
       "members":{
+        "filters":{"shape":"ListServiceInstancesFilterList"},
         "maxResults":{"shape":"MaxPageResults"},
         "nextToken":{"shape":"NextToken"},
-        "serviceName":{"shape":"ResourceName"}
+        "serviceName":{"shape":"ResourceName"},
+        "sortBy":{"shape":"ListServiceInstancesSortBy"},
+        "sortOrder":{"shape":"SortOrder"}
       }
     },
     "ListServiceInstancesOutput":{
@@ -2686,6 +2768,18 @@
         "nextToken":{"shape":"NextToken"},
         "serviceInstances":{"shape":"ServiceInstanceSummaryList"}
       }
+    },
+    "ListServiceInstancesSortBy":{
+      "type":"string",
+      "enum":[
+        "name",
+        "deploymentStatus",
+        "templateName",
+        "serviceName",
+        "environmentName",
+        "lastDeploymentAttemptedAt",
+        "createdAt"
+      ]
     },
     "ListServicePipelineOutputsInput":{
       "type":"structure",
@@ -2796,10 +2890,7 @@
     },
     "NotifyResourceDeploymentStatusChangeInput":{
       "type":"structure",
-      "required":[
-        "resourceArn",
-        "status"
-      ],
+      "required":["resourceArn"],
       "members":{
         "deploymentId":{"shape":"DeploymentId"},
         "outputs":{"shape":"NotifyResourceDeploymentStatusChangeInputOutputsList"},
@@ -2846,12 +2937,6 @@
     "OutputsList":{
       "type":"list",
       "member":{"shape":"Output"}
-    },
-    "PipelineRoleArn":{
-      "type":"string",
-      "max":2048,
-      "min":0,
-      "pattern":"(^$)|(^arn:[a-zA-Z-]+:[a-zA-Z0-9-]+:[a-zA-Z0-9-]*:\\d*:[\\w+=\\/:,\\.@-]*)"
     },
     "ProvisionedResource":{
       "type":"structure",
@@ -3041,6 +3126,17 @@
         "QUEUED"
       ]
     },
+    "ResourceCountsSummary":{
+      "type":"structure",
+      "required":["total"],
+      "members":{
+        "behindMajor":{"shape":"Integer"},
+        "behindMinor":{"shape":"Integer"},
+        "failed":{"shape":"Integer"},
+        "total":{"shape":"Integer"},
+        "upToDate":{"shape":"Integer"}
+      }
+    },
     "ResourceDeploymentStatus":{
       "type":"string",
       "enum":[
@@ -3131,6 +3227,18 @@
         "repositoryProvider":{"shape":"RepositoryProvider"},
         "sha":{"shape":"SHA"}
       }
+    },
+    "RoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^arn:(aws|aws-cn|aws-us-gov):iam::\\d{12}:role/([\\w+=,.@-]{1,512}[/:])*([\\w+=,.@-]{1,64})$"
+    },
+    "RoleArnOrEmptyString":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"(^$)|(^arn:(aws|aws-cn|aws-us-gov):iam::\\d{12}:role/([\\w+=,.@-]{1,512}[/:])*([\\w+=,.@-]{1,64})$)"
     },
     "S3Bucket":{
       "type":"string",
@@ -3439,6 +3547,13 @@
       "type":"list",
       "member":{"shape":"ServiceTemplateVersionSummary"}
     },
+    "SortOrder":{
+      "type":"string",
+      "enum":[
+        "ASCENDING",
+        "DESCENDING"
+      ]
+    },
     "SpecContents":{
       "type":"string",
       "max":51200,
@@ -3602,8 +3717,10 @@
     "UpdateAccountSettingsInput":{
       "type":"structure",
       "members":{
+        "deletePipelineProvisioningRepository":{"shape":"Boolean"},
+        "pipelineCodebuildRoleArn":{"shape":"RoleArnOrEmptyString"},
         "pipelineProvisioningRepository":{"shape":"RepositoryBranchInput"},
-        "pipelineServiceRoleArn":{"shape":"PipelineRoleArn"}
+        "pipelineServiceRoleArn":{"shape":"RoleArnOrEmptyString"}
       }
     },
     "UpdateAccountSettingsOutput":{
@@ -3640,9 +3757,10 @@
       "type":"structure",
       "required":["id"],
       "members":{
-        "componentRoleArn":{"shape":"Arn"},
+        "codebuildRoleArn":{"shape":"RoleArn"},
+        "componentRoleArn":{"shape":"RoleArn"},
         "id":{"shape":"EnvironmentAccountConnectionId"},
-        "roleArn":{"shape":"Arn"}
+        "roleArn":{"shape":"RoleArn"}
       }
     },
     "UpdateEnvironmentAccountConnectionOutput":{
@@ -3659,7 +3777,8 @@
         "name"
       ],
       "members":{
-        "componentRoleArn":{"shape":"Arn"},
+        "codebuildRoleArn":{"shape":"RoleArn"},
+        "componentRoleArn":{"shape":"RoleArn"},
         "deploymentType":{"shape":"DeploymentUpdateType"},
         "description":{"shape":"Description"},
         "environmentAccountConnectionId":{"shape":"EnvironmentAccountConnectionId"},

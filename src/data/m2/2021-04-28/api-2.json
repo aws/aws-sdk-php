@@ -624,7 +624,8 @@
         "Stopping",
         "Stopped",
         "Failed",
-        "Deleting"
+        "Deleting",
+        "Deleting From Environment"
       ]
     },
     "ApplicationSummary":{
@@ -728,11 +729,13 @@
       ],
       "members":{
         "applicationId":{"shape":"Identifier"},
+        "batchJobIdentifier":{"shape":"BatchJobIdentifier"},
         "endTime":{"shape":"Timestamp"},
         "executionId":{"shape":"Identifier"},
         "jobId":{"shape":"String100"},
         "jobName":{"shape":"String100"},
         "jobType":{"shape":"BatchJobType"},
+        "returnCode":{"shape":"String"},
         "startTime":{"shape":"Timestamp"},
         "status":{"shape":"BatchJobExecutionStatus"}
       }
@@ -835,6 +838,7 @@
         "definition":{"shape":"Definition"},
         "description":{"shape":"EntityDescription"},
         "engineType":{"shape":"EngineType"},
+        "kmsKeyId":{"shape":"String"},
         "name":{"shape":"EntityName"},
         "tags":{"shape":"TagMap"}
       }
@@ -923,6 +927,7 @@
         "engineVersion":{"shape":"EngineVersion"},
         "highAvailabilityConfig":{"shape":"HighAvailabilityConfig"},
         "instanceType":{"shape":"String20"},
+        "kmsKeyId":{"shape":"String"},
         "name":{"shape":"EntityName"},
         "preferredMaintenanceWindow":{"shape":"String50"},
         "publiclyAccessible":{"shape":"Boolean"},
@@ -1225,7 +1230,8 @@
         "Creating",
         "Available",
         "Deleting",
-        "Failed"
+        "Failed",
+        "Updating"
       ]
     },
     "EnvironmentSummary":{
@@ -1339,6 +1345,7 @@
         "description":{"shape":"EntityDescription"},
         "engineType":{"shape":"EngineType"},
         "environmentId":{"shape":"Identifier"},
+        "kmsKeyId":{"shape":"String"},
         "lastStartTime":{"shape":"Timestamp"},
         "latestVersion":{"shape":"ApplicationVersionSummary"},
         "listenerArns":{"shape":"ArnList"},
@@ -1419,12 +1426,14 @@
       ],
       "members":{
         "applicationId":{"shape":"Identifier"},
+        "batchJobIdentifier":{"shape":"BatchJobIdentifier"},
         "endTime":{"shape":"Timestamp"},
         "executionId":{"shape":"Identifier"},
         "jobId":{"shape":"String100"},
         "jobName":{"shape":"String100"},
         "jobType":{"shape":"BatchJobType"},
         "jobUser":{"shape":"String100"},
+        "returnCode":{"shape":"String"},
         "startTime":{"shape":"Timestamp"},
         "status":{"shape":"BatchJobExecutionStatus"},
         "statusReason":{"shape":"String"}
@@ -1575,10 +1584,11 @@
         "environmentId":{"shape":"Identifier"},
         "highAvailabilityConfig":{"shape":"HighAvailabilityConfig"},
         "instanceType":{"shape":"String20"},
+        "kmsKeyId":{"shape":"String"},
         "loadBalancerArn":{"shape":"String"},
         "name":{"shape":"EntityName"},
         "pendingMaintenance":{"shape":"PendingMaintenance"},
-        "preferredMaintenanceWindow":{"shape":"String"},
+        "preferredMaintenanceWindow":{"shape":"String50"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"String50List"},
         "status":{"shape":"EnvironmentLifecycle"},
@@ -1634,7 +1644,6 @@
         },
         "maxResults":{
           "shape":"MaxResults",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -1663,7 +1672,6 @@
         },
         "maxResults":{
           "shape":"MaxResults",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -1698,7 +1706,6 @@
         },
         "maxResults":{
           "shape":"MaxResults",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -1743,7 +1750,6 @@
         },
         "maxResults":{
           "shape":"MaxResults",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -1788,7 +1794,6 @@
         },
         "maxResults":{
           "shape":"MaxResults",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -1818,7 +1823,6 @@
         },
         "maxResults":{
           "shape":"MaxResults",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -1853,7 +1857,6 @@
         },
         "maxResults":{
           "shape":"MaxResults",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -1882,7 +1885,6 @@
         },
         "maxResults":{
           "shape":"MaxResults",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -1911,7 +1913,6 @@
         },
         "maxResults":{
           "shape":"MaxResults",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -2283,10 +2284,7 @@
       "required":["environmentId"],
       "members":{
         "applyDuringMaintenanceWindow":{"shape":"Boolean"},
-        "desiredCapacity":{
-          "shape":"CapacityValue",
-          "box":true
-        },
+        "desiredCapacity":{"shape":"CapacityValue"},
         "engineVersion":{"shape":"EngineVersion"},
         "environmentId":{
           "shape":"Identifier",

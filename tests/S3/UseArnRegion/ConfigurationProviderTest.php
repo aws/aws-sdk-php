@@ -7,7 +7,7 @@ use Aws\S3\UseArnRegion\ConfigurationInterface;
 use Aws\S3\UseArnRegion\ConfigurationProvider;
 use Aws\S3\UseArnRegion\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\S3\UseArnRegion\ConfigurationProvider
@@ -30,12 +30,13 @@ s3_use_arn_region = false
 s3_use_arn_region = true
 EOT;
 
-    public static function setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'use_arn_region' => getenv(ConfigurationProvider::ENV_USE_ARN_REGION) ?: '',
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
+            'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
         ];
     }
 
@@ -43,6 +44,7 @@ EOT;
     {
         putenv(ConfigurationProvider::ENV_USE_ARN_REGION . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
+        putenv(ConfigurationProvider::ENV_PROFILE . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -53,12 +55,14 @@ EOT;
         return $dir;
     }
 
-    public static function tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_USE_ARN_REGION . '=' .
             self::$originalEnv['use_arn_region']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
+            self::$originalEnv['config_file']);
         putenv('HOME=' . self::$originalEnv['home']);
     }
 
@@ -93,7 +97,7 @@ EOT;
     public function testCreatesDefaultFromFallback()
     {
         $this->clearEnv();
-        $expected  = new Configuration(false);
+        $expected  = new Configuration(true);
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::fallback())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
@@ -117,7 +121,7 @@ EOT;
     public function testIgnoresIniWithUseAwsConfigFileFalse()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration(false);
+        $expected = new Configuration(true);
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
@@ -168,21 +172,17 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \Aws\S3\UseArnRegion\Exception\ConfigurationException
-     */
     public function testEnsuresIniFileExists()
     {
+        $this->expectException(\Aws\S3\UseArnRegion\Exception\ConfigurationException::class);
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
         call_user_func(ConfigurationProvider::ini())->wait();
     }
 
-    /**
-     * @expectedException \Aws\S3\UseArnRegion\Exception\ConfigurationException
-     */
     public function testEnsuresProfileIsNotEmpty()
     {
+        $this->expectException(\Aws\S3\UseArnRegion\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         $ini = "[custom]";
         file_put_contents($dir . '/config', $ini);
@@ -196,12 +196,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\S3\UseArnRegion\Exception\ConfigurationException
-     * @expectedExceptionMessage 'foo' not found in
-     */
     public function testEnsuresFileIsNotEmpty()
     {
+        $this->expectExceptionMessage("'foo' not found in");
+        $this->expectException(\Aws\S3\UseArnRegion\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', '');
         putenv('HOME=' . dirname($dir));
@@ -214,12 +212,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\S3\UseArnRegion\Exception\ConfigurationException
-     * @expectedExceptionMessage Invalid config file:
-     */
     public function testEnsuresIniFileIsValid()
     {
+        $this->expectExceptionMessage("Invalid config file:");
+        $this->expectException(\Aws\S3\UseArnRegion\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
@@ -288,11 +284,9 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testChainThrowsExceptionOnEmptyArgs()
     {
+        $this->expectException(\InvalidArgumentException::class);
         ConfigurationProvider::chain();
     }
 

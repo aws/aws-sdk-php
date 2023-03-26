@@ -2,8 +2,12 @@
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Serializer\RestXmlSerializer;
+use Aws\Api\Service;
+use Aws\Command;
+use Aws\EndpointV2\EndpointDefinitionProvider;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\Serializer\RestXmlSerializer
@@ -42,7 +46,7 @@ class RestXmlSerializerTest extends TestCase
             ],
         ]);
         $contents = $request->getBody()->getContents();
-        $this->assertContains(
+        $this->assertStringContainsString(
             "<Key>/@/#/=/;/:/ /,/?/&apos;/&quot;/&lt;/&gt;/&amp;/&#13;/&#10;/",
             $contents
         );
@@ -100,5 +104,21 @@ class RestXmlSerializerTest extends TestCase
             [true, 'true'],
             [false, 'false']
         ];
+    }
+
+    public function testDoesNotOverrideScheme()
+    {
+        $client = $this->getTestClient('s3', ['region' => 'us-east-1']);
+        $serializer = new RestXmlSerializer($client->getApi(), 'http://test.com');
+        $cmd = new Command('HeadObject', ['baz' => []]);
+        $endpointProvider = new EndpointProviderV2(
+            json_decode(
+                file_get_contents(__DIR__ . '/../../EndpointV2/valid-rules/aws-region.json'),
+                true
+            ),
+            EndpointDefinitionProvider::getPartitions()
+        );
+        $request = $serializer($cmd, $endpointProvider, ['Region' => 'us-east-1']);
+        $this->assertSame('http://us-east-1.amazonaws.com/', (string) $request->getUri());
     }
 }

@@ -5,10 +5,15 @@ namespace Aws\Test\ClientSideMonitoring;
 use Aws\HandlerList;
 use Aws\MonitoringEventsInterface;
 use Aws\Result;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Promise;
+use Yoast\PHPUnitPolyfills\Polyfills\AssertIsType;
 
 trait MonitoringMiddlewareTestingTrait
 {
+    use AssertIsType;
+    use ArraySubsetAsserts;
+
     /**
      * @dataProvider getMonitoringDataTests
      */
@@ -67,6 +72,6 @@ trait MonitoringMiddlewareTestingTrait
 
         $this->assertTrue($called);
         $this->assertArraySubset($expected, $eventData);
-        $this->assertInternalType('int', $eventData['Timestamp']);
+        $this->assertIsInt($eventData['Timestamp']);
     }
 }

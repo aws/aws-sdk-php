@@ -641,6 +641,8 @@
         "ec2InstanceAggregation":{"shape":"Ec2InstanceAggregation"},
         "findingTypeAggregation":{"shape":"FindingTypeAggregation"},
         "imageLayerAggregation":{"shape":"ImageLayerAggregation"},
+        "lambdaFunctionAggregation":{"shape":"LambdaFunctionAggregation"},
+        "lambdaLayerAggregation":{"shape":"LambdaLayerAggregation"},
         "packageAggregation":{"shape":"PackageAggregation"},
         "repositoryAggregation":{"shape":"RepositoryAggregation"},
         "titleAggregation":{"shape":"TitleAggregation"}
@@ -651,7 +653,8 @@
       "type":"string",
       "enum":[
         "AWS_EC2_INSTANCE",
-        "AWS_ECR_CONTAINER_IMAGE"
+        "AWS_ECR_CONTAINER_IMAGE",
+        "AWS_LAMBDA_FUNCTION"
       ]
     },
     "AggregationResponse":{
@@ -663,6 +666,8 @@
         "ec2InstanceAggregation":{"shape":"Ec2InstanceAggregationResponse"},
         "findingTypeAggregation":{"shape":"FindingTypeAggregationResponse"},
         "imageLayerAggregation":{"shape":"ImageLayerAggregationResponse"},
+        "lambdaFunctionAggregation":{"shape":"LambdaFunctionAggregationResponse"},
+        "lambdaLayerAggregation":{"shape":"LambdaLayerAggregationResponse"},
         "packageAggregation":{"shape":"PackageAggregationResponse"},
         "repositoryAggregation":{"shape":"RepositoryAggregationResponse"},
         "titleAggregation":{"shape":"TitleAggregationResponse"}
@@ -684,7 +689,9 @@
         "AWS_EC2_INSTANCE",
         "AWS_ECR_CONTAINER",
         "IMAGE_LAYER",
-        "ACCOUNT"
+        "ACCOUNT",
+        "AWS_LAMBDA_FUNCTION",
+        "LAMBDA_LAYER"
       ]
     },
     "AmiAggregation":{
@@ -718,6 +725,19 @@
         "AFFECTED_INSTANCES"
       ]
     },
+    "Architecture":{
+      "type":"string",
+      "enum":[
+        "X86_64",
+        "ARM64"
+      ]
+    },
+    "ArchitectureList":{
+      "type":"list",
+      "member":{"shape":"Architecture"},
+      "max":1,
+      "min":1
+    },
     "Arn":{
       "type":"string",
       "max":1011,
@@ -745,7 +765,8 @@
       ],
       "members":{
         "ec2":{"shape":"Boolean"},
-        "ecr":{"shape":"Boolean"}
+        "ecr":{"shape":"Boolean"},
+        "lambda":{"shape":"Boolean"}
       }
     },
     "AwsEc2InstanceDetails":{
@@ -813,6 +834,28 @@
         "HIGH",
         "ALL"
       ]
+    },
+    "AwsLambdaFunctionDetails":{
+      "type":"structure",
+      "required":[
+        "codeSha256",
+        "executionRoleArn",
+        "functionName",
+        "runtime",
+        "version"
+      ],
+      "members":{
+        "architectures":{"shape":"ArchitectureList"},
+        "codeSha256":{"shape":"NonEmptyString"},
+        "executionRoleArn":{"shape":"ExecutionRoleArn"},
+        "functionName":{"shape":"FunctionName"},
+        "lastModifiedAt":{"shape":"Timestamp"},
+        "layers":{"shape":"LayerList"},
+        "packageType":{"shape":"PackageType"},
+        "runtime":{"shape":"Runtime"},
+        "version":{"shape":"Version"},
+        "vpcConfig":{"shape":"LambdaVpcConfig"}
+      }
     },
     "BadRequestException":{
       "type":"structure",
@@ -927,6 +970,9 @@
         "ec2InstanceTags":{"shape":"CoverageMapFilterList"},
         "ecrImageTags":{"shape":"CoverageStringFilterList"},
         "ecrRepositoryName":{"shape":"CoverageStringFilterList"},
+        "lambdaFunctionName":{"shape":"CoverageStringFilterList"},
+        "lambdaFunctionRuntime":{"shape":"CoverageStringFilterList"},
+        "lambdaFunctionTags":{"shape":"CoverageMapFilterList"},
         "resourceId":{"shape":"CoverageStringFilterList"},
         "resourceType":{"shape":"CoverageStringFilterList"},
         "scanStatusCode":{"shape":"CoverageStringFilterList"},
@@ -961,7 +1007,8 @@
       "enum":[
         "AWS_EC2_INSTANCE",
         "AWS_ECR_CONTAINER_IMAGE",
-        "AWS_ECR_REPOSITORY"
+        "AWS_ECR_REPOSITORY",
+        "AWS_LAMBDA_FUNCTION"
       ]
     },
     "CoverageStringComparison":{
@@ -1213,7 +1260,7 @@
     "DisableResourceTypeList":{
       "type":"list",
       "member":{"shape":"ResourceScanType"},
-      "max":2,
+      "max":3,
       "min":0
     },
     "DisableResponse":{
@@ -1382,7 +1429,7 @@
     "EnableResourceTypeList":{
       "type":"list",
       "member":{"shape":"ResourceScanType"},
-      "max":2,
+      "max":3,
       "min":1
     },
     "EnableResponse":{
@@ -1413,6 +1460,23 @@
       ]
     },
     "ErrorMessage":{"type":"string"},
+    "ExecutionRoleArn":{
+      "type":"string",
+      "pattern":"^arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+$"
+    },
+    "ExploitAvailable":{
+      "type":"string",
+      "enum":[
+        "YES",
+        "NO"
+      ]
+    },
+    "ExploitabilityDetails":{
+      "type":"structure",
+      "members":{
+        "lastKnownExploitAt":{"shape":"DateTimeTimestamp"}
+      }
+    },
     "ExternalReportStatus":{
       "type":"string",
       "enum":[
@@ -1503,11 +1567,18 @@
         "ecrImageRegistry":{"shape":"StringFilterList"},
         "ecrImageRepositoryName":{"shape":"StringFilterList"},
         "ecrImageTags":{"shape":"StringFilterList"},
+        "exploitAvailable":{"shape":"StringFilterList"},
         "findingArn":{"shape":"StringFilterList"},
         "findingStatus":{"shape":"StringFilterList"},
         "findingType":{"shape":"StringFilterList"},
         "firstObservedAt":{"shape":"DateFilterList"},
+        "fixAvailable":{"shape":"StringFilterList"},
         "inspectorScore":{"shape":"NumberFilterList"},
+        "lambdaFunctionExecutionRoleArn":{"shape":"StringFilterList"},
+        "lambdaFunctionLastModifiedAt":{"shape":"DateFilterList"},
+        "lambdaFunctionLayers":{"shape":"StringFilterList"},
+        "lambdaFunctionName":{"shape":"StringFilterList"},
+        "lambdaFunctionRuntime":{"shape":"StringFilterList"},
         "lastObservedAt":{"shape":"DateFilterList"},
         "networkProtocol":{"shape":"StringFilterList"},
         "portRange":{"shape":"PortRangeFilterList"},
@@ -1560,8 +1631,11 @@
       "members":{
         "awsAccountId":{"shape":"AccountId"},
         "description":{"shape":"FindingDescription"},
+        "exploitAvailable":{"shape":"ExploitAvailable"},
+        "exploitabilityDetails":{"shape":"ExploitabilityDetails"},
         "findingArn":{"shape":"FindingArn"},
         "firstObservedAt":{"shape":"DateTimeTimestamp"},
+        "fixAvailable":{"shape":"FixAvailable"},
         "inspectorScore":{"shape":"Double"},
         "inspectorScoreDetails":{"shape":"InspectorScoreDetails"},
         "lastObservedAt":{"shape":"DateTimeTimestamp"},
@@ -1636,6 +1710,14 @@
         "ALL"
       ]
     },
+    "FixAvailable":{
+      "type":"string",
+      "enum":[
+        "YES",
+        "NO",
+        "PARTIAL"
+      ]
+    },
     "FreeTrialAccountInfo":{
       "type":"structure",
       "required":[
@@ -1705,8 +1787,13 @@
       "type":"string",
       "enum":[
         "EC2",
-        "ECR"
+        "ECR",
+        "LAMBDA"
       ]
+    },
+    "FunctionName":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"
     },
     "GetConfigurationRequest":{
       "type":"structure",
@@ -1858,6 +1945,105 @@
     "IpV6AddressList":{
       "type":"list",
       "member":{"shape":"IpV6Address"}
+    },
+    "LambdaFunctionAggregation":{
+      "type":"structure",
+      "members":{
+        "functionNames":{"shape":"StringFilterList"},
+        "functionTags":{"shape":"MapFilterList"},
+        "resourceIds":{"shape":"StringFilterList"},
+        "runtimes":{"shape":"StringFilterList"},
+        "sortBy":{"shape":"LambdaFunctionSortBy"},
+        "sortOrder":{"shape":"SortOrder"}
+      }
+    },
+    "LambdaFunctionAggregationResponse":{
+      "type":"structure",
+      "required":["resourceId"],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "functionName":{"shape":"String"},
+        "lambdaTags":{"shape":"TagMap"},
+        "lastModifiedAt":{"shape":"DateTimeTimestamp"},
+        "resourceId":{"shape":"NonEmptyString"},
+        "runtime":{"shape":"String"},
+        "severityCounts":{"shape":"SeverityCounts"}
+      }
+    },
+    "LambdaFunctionMetadata":{
+      "type":"structure",
+      "members":{
+        "functionName":{"shape":"String"},
+        "functionTags":{"shape":"TagMap"},
+        "layers":{"shape":"LambdaLayerList"},
+        "runtime":{"shape":"Runtime"}
+      }
+    },
+    "LambdaFunctionSortBy":{
+      "type":"string",
+      "enum":[
+        "CRITICAL",
+        "HIGH",
+        "ALL"
+      ]
+    },
+    "LambdaLayerAggregation":{
+      "type":"structure",
+      "members":{
+        "functionNames":{"shape":"StringFilterList"},
+        "layerArns":{"shape":"StringFilterList"},
+        "resourceIds":{"shape":"StringFilterList"},
+        "sortBy":{"shape":"LambdaLayerSortBy"},
+        "sortOrder":{"shape":"SortOrder"}
+      }
+    },
+    "LambdaLayerAggregationResponse":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "functionName",
+        "layerArn",
+        "resourceId"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "functionName":{"shape":"NonEmptyString"},
+        "layerArn":{"shape":"NonEmptyString"},
+        "resourceId":{"shape":"NonEmptyString"},
+        "severityCounts":{"shape":"SeverityCounts"}
+      }
+    },
+    "LambdaLayerArn":{
+      "type":"string",
+      "pattern":"^arn:[a-zA-Z0-9-]+:lambda:[a-zA-Z0-9-]+:\\d{12}:layer:[a-zA-Z0-9-_]+:[0-9]+$"
+    },
+    "LambdaLayerList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5,
+      "min":0
+    },
+    "LambdaLayerSortBy":{
+      "type":"string",
+      "enum":[
+        "CRITICAL",
+        "HIGH",
+        "ALL"
+      ]
+    },
+    "LambdaVpcConfig":{
+      "type":"structure",
+      "members":{
+        "securityGroupIds":{"shape":"SecurityGroupIdList"},
+        "subnetIds":{"shape":"SubnetIdList"},
+        "vpcId":{"shape":"VpcId"}
+      }
+    },
+    "LayerList":{
+      "type":"list",
+      "member":{"shape":"LambdaLayerArn"},
+      "max":5,
+      "min":1
     },
     "ListAccountPermissionsMaxResults":{
       "type":"integer",
@@ -2229,6 +2415,7 @@
         "epoch":{"shape":"NumberFilter"},
         "name":{"shape":"StringFilter"},
         "release":{"shape":"StringFilter"},
+        "sourceLambdaLayerArn":{"shape":"StringFilter"},
         "sourceLayerHash":{"shape":"StringFilter"},
         "version":{"shape":"StringFilter"}
       }
@@ -2278,6 +2465,13 @@
         "ALL"
       ]
     },
+    "PackageType":{
+      "type":"string",
+      "enum":[
+        "IMAGE",
+        "ZIP"
+      ]
+    },
     "PackageVersion":{
       "type":"string",
       "max":1024,
@@ -2287,8 +2481,7 @@
       "type":"structure",
       "required":[
         "source",
-        "vulnerabilityId",
-        "vulnerablePackages"
+        "vulnerabilityId"
       ],
       "members":{
         "cvss":{"shape":"CvssScoreList"},
@@ -2453,14 +2646,15 @@
       "type":"structure",
       "members":{
         "awsEc2Instance":{"shape":"AwsEc2InstanceDetails"},
-        "awsEcrContainerImage":{"shape":"AwsEcrContainerImageDetails"}
+        "awsEcrContainerImage":{"shape":"AwsEcrContainerImageDetails"},
+        "awsLambdaFunction":{"shape":"AwsLambdaFunctionDetails"}
       }
     },
     "ResourceId":{
       "type":"string",
       "max":341,
       "min":10,
-      "pattern":"(^arn:.*:ecr:.*:\\d{12}:repository\\/(?:[a-z0-9]+(?:[._-][a-z0-9]+)*\\/)*[a-z0-9]+(?:[._-][a-z0-9]+)*(\\/sha256:[a-z0-9]{64})?$)|(^i-([a-z0-9]{8}|[a-z0-9]{17}|\\\\*)$)"
+      "pattern":"(^arn:.*:ecr:.*:\\d{12}:repository\\/(?:[a-z0-9]+(?:[._-][a-z0-9]+)*\\/)*[a-z0-9]+(?:[._-][a-z0-9]+)*(\\/sha256:[a-z0-9]{64})?$)|(^i-([a-z0-9]{8}|[a-z0-9]{17}|\\\\*)$|(^arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$))"
     },
     "ResourceList":{
       "type":"list",
@@ -2485,14 +2679,16 @@
       "members":{
         "ec2":{"shape":"Ec2Metadata"},
         "ecrImage":{"shape":"EcrContainerImageMetadata"},
-        "ecrRepository":{"shape":"EcrRepositoryMetadata"}
+        "ecrRepository":{"shape":"EcrRepositoryMetadata"},
+        "lambdaFunction":{"shape":"LambdaFunctionMetadata"}
       }
     },
     "ResourceScanType":{
       "type":"string",
       "enum":[
         "EC2",
-        "ECR"
+        "ECR",
+        "LAMBDA"
       ]
     },
     "ResourceState":{
@@ -2503,7 +2699,8 @@
       ],
       "members":{
         "ec2":{"shape":"State"},
-        "ecr":{"shape":"State"}
+        "ecr":{"shape":"State"},
+        "lambda":{"shape":"State"}
       }
     },
     "ResourceStatus":{
@@ -2514,7 +2711,8 @@
       ],
       "members":{
         "ec2":{"shape":"Status"},
-        "ecr":{"shape":"Status"}
+        "ecr":{"shape":"Status"},
+        "lambda":{"shape":"Status"}
       }
     },
     "ResourceType":{
@@ -2522,7 +2720,26 @@
       "enum":[
         "AWS_EC2_INSTANCE",
         "AWS_ECR_CONTAINER_IMAGE",
-        "AWS_ECR_REPOSITORY"
+        "AWS_ECR_REPOSITORY",
+        "AWS_LAMBDA_FUNCTION"
+      ]
+    },
+    "Runtime":{
+      "type":"string",
+      "enum":[
+        "NODEJS",
+        "NODEJS_12_X",
+        "NODEJS_14_X",
+        "NODEJS_16_X",
+        "JAVA_8",
+        "JAVA_8_AL2",
+        "JAVA_11",
+        "PYTHON_3_7",
+        "PYTHON_3_8",
+        "PYTHON_3_9",
+        "UNSUPPORTED",
+        "NODEJS_18_X",
+        "GO_1_X"
       ]
     },
     "ScanStatus":{
@@ -2559,7 +2776,11 @@
         "SCAN_FREQUENCY_MANUAL",
         "SCAN_FREQUENCY_SCAN_ON_PUSH",
         "EC2_INSTANCE_STOPPED",
-        "PENDING_DISABLE"
+        "PENDING_DISABLE",
+        "NO_INVENTORY",
+        "STALE_INVENTORY",
+        "EXCLUDED_BY_TAG",
+        "UNSUPPORTED_RUNTIME"
       ]
     },
     "ScanType":{
@@ -2569,11 +2790,22 @@
         "PACKAGE"
       ]
     },
+    "SecurityGroupId":{
+      "type":"string",
+      "pattern":"^sg-([a-z0-9]{8}|[a-z0-9]{17}|\\*)$"
+    },
+    "SecurityGroupIdList":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":5,
+      "min":0
+    },
     "Service":{
       "type":"string",
       "enum":[
         "EC2",
-        "ECR"
+        "ECR",
+        "LAMBDA"
       ]
     },
     "ServiceQuotaExceededException":{
@@ -2733,6 +2965,16 @@
       "type":"list",
       "member":{"shape":"NonEmptyString"}
     },
+    "SubnetId":{
+      "type":"string",
+      "pattern":"^subnet-([a-z0-9]{8}|[a-z0-9]{17}|\\*)$"
+    },
+    "SubnetIdList":{
+      "type":"list",
+      "member":{"shape":"SubnetId"},
+      "max":16,
+      "min":0
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -2778,13 +3020,19 @@
       "type":"structure",
       "required":["message"],
       "members":{
-        "message":{"shape":"String"}
+        "message":{"shape":"String"},
+        "retryAfterSeconds":{
+          "shape":"Integer",
+          "location":"header",
+          "locationName":"Retry-After"
+        }
       },
       "error":{
         "httpStatusCode":429,
         "senderFault":true
       },
-      "exception":true
+      "exception":true,
+      "retryable":{"throttling":true}
     },
     "Timestamp":{"type":"timestamp"},
     "TitleAggregation":{
@@ -2900,7 +3148,7 @@
     "UsageAccountIdList":{
       "type":"list",
       "member":{"shape":"UsageAccountId"},
-      "max":5000,
+      "max":7000,
       "min":1
     },
     "UsageList":{
@@ -2923,7 +3171,8 @@
       "enum":[
         "EC2_INSTANCE_HOURS",
         "ECR_INITIAL_SCAN",
-        "ECR_RESCAN"
+        "ECR_RESCAN",
+        "LAMBDA_FUNCTION_HOURS"
       ]
     },
     "UsageValue":{
@@ -2970,6 +3219,14 @@
         "OTHER"
       ]
     },
+    "Version":{
+      "type":"string",
+      "pattern":"^\\$LATEST|[0-9]+$"
+    },
+    "VpcId":{
+      "type":"string",
+      "pattern":"^vpc-([a-z0-9]{8}|[a-z0-9]{17}|\\*)$"
+    },
     "VulnerabilityId":{
       "type":"string",
       "max":128,
@@ -2993,6 +3250,8 @@
         "name":{"shape":"PackageName"},
         "packageManager":{"shape":"PackageManager"},
         "release":{"shape":"PackageRelease"},
+        "remediation":{"shape":"VulnerablePackageRemediation"},
+        "sourceLambdaLayerArn":{"shape":"LambdaLayerArn"},
         "sourceLayerHash":{"shape":"SourceLayerHash"},
         "version":{"shape":"PackageVersion"}
       }
@@ -3000,6 +3259,11 @@
     "VulnerablePackageList":{
       "type":"list",
       "member":{"shape":"VulnerablePackage"}
+    },
+    "VulnerablePackageRemediation":{
+      "type":"string",
+      "max":1024,
+      "min":1
     }
   }
 }

@@ -12,6 +12,7 @@ class CurrentChangesTest extends TestCase
         return end($portions);
     }
 
+    /** @doesNotPerformAssertions */
     public function testVerifyDotChangesFolder()
     {
         $files = glob(__DIR__ . '/../../../.changes/*');
@@ -30,6 +31,7 @@ class CurrentChangesTest extends TestCase
         }
     }
 
+    /** @doesNotPerformAssertions */
     public function testVerifyNextreleaseContents()
     {
         if (!is_dir(__DIR__ . '/../../../.changes/nextrelease/')) {

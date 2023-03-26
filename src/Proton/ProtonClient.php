@@ -71,6 +71,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getRepositoryAsync(array $args = [])
  * @method \Aws\Result getRepositorySyncStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRepositorySyncStatusAsync(array $args = [])
+ * @method \Aws\Result getResourcesSummary(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getResourcesSummaryAsync(array $args = [])
  * @method \Aws\Result getService(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getServiceAsync(array $args = [])
  * @method \Aws\Result getServiceInstance(array $args = [])

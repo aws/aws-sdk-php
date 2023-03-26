@@ -3,7 +3,7 @@ namespace Aws\Test;
 
 use Aws\Psr16CacheAdapter;
 use Psr\SimpleCache\CacheInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class Psr16CacheAdapterTest extends TestCase
 {
@@ -12,7 +12,7 @@ class Psr16CacheAdapterTest extends TestCase
     /** @var Psr16CacheAdapter */
     private $instance;
 
-    public function setUp()
+    public function set_up()
     {
         $this->wrapped = $this->getMockBuilder(CacheInterface::class)->getMock();
         $this->instance = new Psr16CacheAdapter($this->wrapped);

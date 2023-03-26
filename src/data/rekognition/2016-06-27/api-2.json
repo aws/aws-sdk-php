@@ -31,6 +31,26 @@
         {"shape":"InvalidImageFormatException"}
       ]
     },
+    "CopyProjectVersion":{
+      "name":"CopyProjectVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CopyProjectVersionRequest"},
+      "output":{"shape":"CopyProjectVersionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"ResourceInUseException"}
+      ]
+    },
     "CreateCollection":{
       "name":"CreateCollection",
       "http":{
@@ -195,6 +215,24 @@
         {"shape":"InternalServerError"},
         {"shape":"ThrottlingException"},
         {"shape":"ProvisionedThroughputExceededException"}
+      ]
+    },
+    "DeleteProjectPolicy":{
+      "name":"DeleteProjectPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteProjectPolicyRequest"},
+      "output":{"shape":"DeleteProjectPolicyResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InvalidPolicyRevisionIdException"}
       ]
     },
     "DeleteProjectVersion":{
@@ -713,6 +751,24 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListProjectPolicies":{
+      "name":"ListProjectPolicies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListProjectPoliciesRequest"},
+      "output":{"shape":"ListProjectPoliciesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InvalidPaginationTokenException"}
+      ]
+    },
     "ListStreamProcessors":{
       "name":"ListStreamProcessors",
       "http":{
@@ -745,6 +801,28 @@
         {"shape":"InternalServerError"},
         {"shape":"ThrottlingException"},
         {"shape":"ProvisionedThroughputExceededException"}
+      ]
+    },
+    "PutProjectPolicy":{
+      "name":"PutProjectPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutProjectPolicyRequest"},
+      "output":{"shape":"PutProjectPolicyResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidPolicyRevisionIdException"},
+        {"shape":"MalformedPolicyDocumentException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "RecognizeCelebrities":{
@@ -1387,6 +1465,31 @@
         "TIMESTAMP"
       ]
     },
+    "CopyProjectVersionRequest":{
+      "type":"structure",
+      "required":[
+        "SourceProjectArn",
+        "SourceProjectVersionArn",
+        "DestinationProjectArn",
+        "VersionName",
+        "OutputConfig"
+      ],
+      "members":{
+        "SourceProjectArn":{"shape":"ProjectArn"},
+        "SourceProjectVersionArn":{"shape":"ProjectVersionArn"},
+        "DestinationProjectArn":{"shape":"ProjectArn"},
+        "VersionName":{"shape":"VersionName"},
+        "OutputConfig":{"shape":"OutputConfig"},
+        "Tags":{"shape":"TagMap"},
+        "KmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "CopyProjectVersionResponse":{
+      "type":"structure",
+      "members":{
+        "ProjectVersionArn":{"shape":"ProjectVersionArn"}
+      }
+    },
     "CoversBodyPart":{
       "type":"structure",
       "members":{
@@ -1674,6 +1777,23 @@
         "DeletedFaces":{"shape":"FaceIdList"}
       }
     },
+    "DeleteProjectPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ProjectArn",
+        "PolicyName"
+      ],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"},
+        "PolicyName":{"shape":"ProjectPolicyName"},
+        "PolicyRevisionId":{"shape":"ProjectPolicyRevisionId"}
+      }
+    },
+    "DeleteProjectPolicyResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteProjectRequest":{
       "type":"structure",
       "required":["ProjectArn"],
@@ -1833,13 +1953,70 @@
         "OrientationCorrection":{"shape":"OrientationCorrection"}
       }
     },
+    "DetectLabelsFeatureList":{
+      "type":"list",
+      "member":{"shape":"DetectLabelsFeatureName"},
+      "max":2,
+      "min":0
+    },
+    "DetectLabelsFeatureName":{
+      "type":"string",
+      "enum":[
+        "GENERAL_LABELS",
+        "IMAGE_PROPERTIES"
+      ]
+    },
+    "DetectLabelsImageBackground":{
+      "type":"structure",
+      "members":{
+        "Quality":{"shape":"DetectLabelsImageQuality"},
+        "DominantColors":{"shape":"DominantColors"}
+      }
+    },
+    "DetectLabelsImageForeground":{
+      "type":"structure",
+      "members":{
+        "Quality":{"shape":"DetectLabelsImageQuality"},
+        "DominantColors":{"shape":"DominantColors"}
+      }
+    },
+    "DetectLabelsImageProperties":{
+      "type":"structure",
+      "members":{
+        "Quality":{"shape":"DetectLabelsImageQuality"},
+        "DominantColors":{"shape":"DominantColors"},
+        "Foreground":{"shape":"DetectLabelsImageForeground"},
+        "Background":{"shape":"DetectLabelsImageBackground"}
+      }
+    },
+    "DetectLabelsImagePropertiesSettings":{
+      "type":"structure",
+      "members":{
+        "MaxDominantColors":{"shape":"DetectLabelsMaxDominantColors"}
+      }
+    },
+    "DetectLabelsImageQuality":{
+      "type":"structure",
+      "members":{
+        "Brightness":{"shape":"Float"},
+        "Sharpness":{"shape":"Float"},
+        "Contrast":{"shape":"Float"}
+      }
+    },
+    "DetectLabelsMaxDominantColors":{
+      "type":"integer",
+      "max":20,
+      "min":0
+    },
     "DetectLabelsRequest":{
       "type":"structure",
       "required":["Image"],
       "members":{
         "Image":{"shape":"Image"},
         "MaxLabels":{"shape":"UInteger"},
-        "MinConfidence":{"shape":"Percent"}
+        "MinConfidence":{"shape":"Percent"},
+        "Features":{"shape":"DetectLabelsFeatureList"},
+        "Settings":{"shape":"DetectLabelsSettings"}
       }
     },
     "DetectLabelsResponse":{
@@ -1847,7 +2024,15 @@
       "members":{
         "Labels":{"shape":"Labels"},
         "OrientationCorrection":{"shape":"OrientationCorrection"},
-        "LabelModelVersion":{"shape":"String"}
+        "LabelModelVersion":{"shape":"String"},
+        "ImageProperties":{"shape":"DetectLabelsImageProperties"}
+      }
+    },
+    "DetectLabelsSettings":{
+      "type":"structure",
+      "members":{
+        "GeneralLabels":{"shape":"GeneralLabelsSettings"},
+        "ImageProperties":{"shape":"DetectLabelsImagePropertiesSettings"}
       }
     },
     "DetectModerationLabelsRequest":{
@@ -1937,6 +2122,22 @@
       "member":{"shape":"DistributeDataset"},
       "max":2,
       "min":2
+    },
+    "DominantColor":{
+      "type":"structure",
+      "members":{
+        "Red":{"shape":"UInteger"},
+        "Blue":{"shape":"UInteger"},
+        "Green":{"shape":"UInteger"},
+        "HexCode":{"shape":"String"},
+        "CSSColor":{"shape":"String"},
+        "SimplifiedColor":{"shape":"String"},
+        "PixelPercent":{"shape":"Percent"}
+      }
+    },
+    "DominantColors":{
+      "type":"list",
+      "member":{"shape":"DominantColor"}
     },
     "Emotion":{
       "type":"structure",
@@ -2133,6 +2334,27 @@
         "Female"
       ]
     },
+    "GeneralLabelsFilterList":{
+      "type":"list",
+      "member":{"shape":"GeneralLabelsFilterValue"},
+      "max":100,
+      "min":0
+    },
+    "GeneralLabelsFilterValue":{
+      "type":"string",
+      "max":50,
+      "min":0,
+      "pattern":"[A-Za-z0-9àâèçñó'-_(). ]*"
+    },
+    "GeneralLabelsSettings":{
+      "type":"structure",
+      "members":{
+        "LabelInclusionFilters":{"shape":"GeneralLabelsFilterList"},
+        "LabelExclusionFilters":{"shape":"GeneralLabelsFilterList"},
+        "LabelCategoryInclusionFilters":{"shape":"GeneralLabelsFilterList"},
+        "LabelCategoryExclusionFilters":{"shape":"GeneralLabelsFilterList"}
+      }
+    },
     "Geometry":{
       "type":"structure",
       "members":{
@@ -2242,7 +2464,8 @@
         "JobId":{"shape":"JobId"},
         "MaxResults":{"shape":"MaxResults"},
         "NextToken":{"shape":"PaginationToken"},
-        "SortBy":{"shape":"LabelDetectionSortBy"}
+        "SortBy":{"shape":"LabelDetectionSortBy"},
+        "AggregateBy":{"shape":"LabelDetectionAggregateBy"}
       }
     },
     "GetLabelDetectionResponse":{
@@ -2458,7 +2681,8 @@
       "type":"structure",
       "members":{
         "BoundingBox":{"shape":"BoundingBox"},
-        "Confidence":{"shape":"Percent"}
+        "Confidence":{"shape":"Percent"},
+        "DominantColors":{"shape":"DominantColors"}
       }
     },
     "Instances":{
@@ -2485,6 +2709,12 @@
       "exception":true
     },
     "InvalidParameterException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "InvalidPolicyRevisionIdException":{
       "type":"structure",
       "members":{
       },
@@ -2569,14 +2799,62 @@
         "Name":{"shape":"String"},
         "Confidence":{"shape":"Percent"},
         "Instances":{"shape":"Instances"},
-        "Parents":{"shape":"Parents"}
+        "Parents":{"shape":"Parents"},
+        "Aliases":{"shape":"LabelAliases"},
+        "Categories":{"shape":"LabelCategories"}
+      }
+    },
+    "LabelAlias":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"}
+      }
+    },
+    "LabelAliases":{
+      "type":"list",
+      "member":{"shape":"LabelAlias"}
+    },
+    "LabelCategories":{
+      "type":"list",
+      "member":{"shape":"LabelCategory"}
+    },
+    "LabelCategory":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"}
       }
     },
     "LabelDetection":{
       "type":"structure",
       "members":{
         "Timestamp":{"shape":"Timestamp"},
-        "Label":{"shape":"Label"}
+        "Label":{"shape":"Label"},
+        "StartTimestampMillis":{"shape":"ULong"},
+        "EndTimestampMillis":{"shape":"ULong"},
+        "DurationMillis":{"shape":"ULong"}
+      }
+    },
+    "LabelDetectionAggregateBy":{
+      "type":"string",
+      "enum":[
+        "TIMESTAMPS",
+        "SEGMENTS"
+      ]
+    },
+    "LabelDetectionFeatureList":{
+      "type":"list",
+      "member":{"shape":"LabelDetectionFeatureName"},
+      "max":1,
+      "min":0
+    },
+    "LabelDetectionFeatureName":{
+      "type":"string",
+      "enum":["GENERAL_LABELS"]
+    },
+    "LabelDetectionSettings":{
+      "type":"structure",
+      "members":{
+        "GeneralLabels":{"shape":"GeneralLabelsSettings"}
       }
     },
     "LabelDetectionSortBy":{
@@ -2725,6 +3003,27 @@
         "FaceModelVersion":{"shape":"String"}
       }
     },
+    "ListProjectPoliciesPageSize":{
+      "type":"integer",
+      "max":5,
+      "min":1
+    },
+    "ListProjectPoliciesRequest":{
+      "type":"structure",
+      "required":["ProjectArn"],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"},
+        "NextToken":{"shape":"ExtendedPaginationToken"},
+        "MaxResults":{"shape":"ListProjectPoliciesPageSize"}
+      }
+    },
+    "ListProjectPoliciesResponse":{
+      "type":"structure",
+      "members":{
+        "ProjectPolicies":{"shape":"ProjectPolicies"},
+        "NextToken":{"shape":"ExtendedPaginationToken"}
+      }
+    },
     "ListStreamProcessorsRequest":{
       "type":"structure",
       "members":{
@@ -2751,6 +3050,12 @@
       "members":{
         "Tags":{"shape":"TagMap"}
       }
+    },
+    "MalformedPolicyDocumentException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
     },
     "MaxDurationInSecondsULong":{
       "type":"long",
@@ -2946,6 +3251,38 @@
       "max":10,
       "min":1
     },
+    "ProjectPolicies":{
+      "type":"list",
+      "member":{"shape":"ProjectPolicy"}
+    },
+    "ProjectPolicy":{
+      "type":"structure",
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"},
+        "PolicyName":{"shape":"ProjectPolicyName"},
+        "PolicyRevisionId":{"shape":"ProjectPolicyRevisionId"},
+        "PolicyDocument":{"shape":"ProjectPolicyDocument"},
+        "CreationTimestamp":{"shape":"DateTime"},
+        "LastUpdatedTimestamp":{"shape":"DateTime"}
+      }
+    },
+    "ProjectPolicyDocument":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
+    },
+    "ProjectPolicyName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.\\-]+"
+    },
+    "ProjectPolicyRevisionId":{
+      "type":"string",
+      "max":64,
+      "pattern":"[0-9A-Fa-f]+"
+    },
     "ProjectStatus":{
       "type":"string",
       "enum":[
@@ -2975,7 +3312,9 @@
         "TestingDataResult":{"shape":"TestingDataResult"},
         "EvaluationResult":{"shape":"EvaluationResult"},
         "ManifestSummary":{"shape":"GroundTruthManifest"},
-        "KmsKeyId":{"shape":"KmsKeyId"}
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "MaxInferenceUnits":{"shape":"InferenceUnits"},
+        "SourceProjectVersionArn":{"shape":"ProjectVersionArn"}
       }
     },
     "ProjectVersionDescriptions":{
@@ -2993,7 +3332,10 @@
         "FAILED",
         "STOPPING",
         "STOPPED",
-        "DELETING"
+        "DELETING",
+        "COPYING_IN_PROGRESS",
+        "COPYING_COMPLETED",
+        "COPYING_FAILED"
       ]
     },
     "ProjectVersionsPageSize":{
@@ -3067,6 +3409,26 @@
       "members":{
       },
       "exception":true
+    },
+    "PutProjectPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ProjectArn",
+        "PolicyName",
+        "PolicyDocument"
+      ],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"},
+        "PolicyName":{"shape":"ProjectPolicyName"},
+        "PolicyRevisionId":{"shape":"ProjectPolicyRevisionId"},
+        "PolicyDocument":{"shape":"ProjectPolicyDocument"}
+      }
+    },
+    "PutProjectPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "PolicyRevisionId":{"shape":"ProjectPolicyRevisionId"}
+      }
     },
     "QualityFilter":{
       "type":"string",
@@ -3396,7 +3758,9 @@
         "ClientRequestToken":{"shape":"ClientRequestToken"},
         "MinConfidence":{"shape":"Percent"},
         "NotificationChannel":{"shape":"NotificationChannel"},
-        "JobTag":{"shape":"JobTag"}
+        "JobTag":{"shape":"JobTag"},
+        "Features":{"shape":"LabelDetectionFeatureList"},
+        "Settings":{"shape":"LabelDetectionSettings"}
       }
     },
     "StartLabelDetectionResponse":{
@@ -3429,7 +3793,8 @@
       ],
       "members":{
         "ProjectVersionArn":{"shape":"ProjectVersionArn"},
-        "MinInferenceUnits":{"shape":"InferenceUnits"}
+        "MinInferenceUnits":{"shape":"InferenceUnits"},
+        "MaxInferenceUnits":{"shape":"InferenceUnits"}
       }
     },
     "StartProjectVersionResponse":{

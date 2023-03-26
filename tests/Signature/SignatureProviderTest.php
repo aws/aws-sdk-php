@@ -2,7 +2,7 @@
 namespace Aws\Test\Signature;
 
 use Aws\Signature\SignatureProvider;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Signature\SignatureProvider
@@ -16,8 +16,14 @@ class SignatureProviderTest extends TestCase
             ['v4', 'Aws\Signature\S3SignatureV4', 's3'],
             ['v4', 'Aws\Signature\S3SignatureV4', 's3control'],
             ['v4', 'Aws\Signature\S3SignatureV4', 's3-object-lambda'],
+            ['v4a', 'Aws\Signature\S3SignatureV4', 's3'],
+            ['v4a', 'Aws\Signature\S3SignatureV4', 's3control'],
+            ['v4a', 'Aws\Signature\S3SignatureV4', 's3-object-lambda'],
+            ['v4a', 'Aws\Signature\SignatureV4', 'eventbridge'],
+            ['v4a', 'Aws\Signature\SignatureV4', 'eventbridge'],
+            ['v4a', 'Aws\Signature\SignatureV4', 'eventbridge'],
             ['v4-unsigned-body', 'Aws\Signature\SignatureV4', 'foo'],
-            ['anonymous', 'Aws\Signature\AnonymousSignature', 's3'],
+            ['anonymous', 'Aws\Signature\AnonymousSignature', 's3']
         ];
     }
 
@@ -53,11 +59,9 @@ class SignatureProviderTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Aws\Exception\UnresolvedSignatureException
-     */
     public function testResolvesSignaturesWithException()
     {
+        $this->expectException(\Aws\Exception\UnresolvedSignatureException::class);
         $fn = SignatureProvider::defaultProvider();
         SignatureProvider::resolve($fn, 'foooo', '', '');
     }

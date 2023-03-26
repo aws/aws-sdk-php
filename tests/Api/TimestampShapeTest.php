@@ -3,7 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\TimestampShape;
 use Aws\Api\ShapeMap;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\TimestampShape
@@ -35,20 +35,16 @@ class TimestampShapeTest extends TestCase
         $this->assertEquals($result, $s->format($value, $format));
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testValidatesTimestampFormat()
     {
+        $this->expectException(\UnexpectedValueException::class);
         $s = new TimestampShape([], new ShapeMap([]));
         $s->format('now', 'foo');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testValidatesTimestampValue()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s = new TimestampShape([], new ShapeMap([]));
         $s->format(true, 'iso8601');
     }

@@ -20,6 +20,8 @@
     "DeleteResolver": "<p>Deletes a <code>Resolver</code> object.</p>",
     "DeleteType": "<p>Deletes a <code>Type</code> object.</p>",
     "DisassociateApi": "<p>Removes an <code>ApiAssociation</code> object from a custom domain.</p>",
+    "EvaluateCode": "<p>Evaluates the given code and returns the response. The code definition requirements depend on the specified runtime. For <code>APPSYNC_JS</code> runtimes, the code defines the request and response functions. The request function takes the incoming request after a GraphQL operation is parsed and converts it into a request configuration for the selected data source operation. The response function interprets responses from the data source and maps it to the shape of the GraphQL field output type. </p>",
+    "EvaluateMappingTemplate": "<p>Evaluates a given template and returns the response. The mapping template can be a request or response template.</p> <p>Request templates take the incoming request after a GraphQL operation is parsed and convert it into a request configuration for the selected data source operation. Response templates interpret responses from the data source and map it to the shape of the GraphQL field output type.</p> <p>Mapping templates are written in the Apache Velocity Template Language (VTL).</p>",
     "FlushApiCache": "<p>Flushes an <code>ApiCache</code> object.</p>",
     "GetApiAssociation": "<p>Retrieves an <code>ApiAssociation</code> object.</p>",
     "GetApiCache": "<p>Retrieves an <code>ApiCache</code> object.</p>",
@@ -138,6 +140,18 @@
       "refs": {
       }
     },
+    "AppSyncRuntime": {
+      "base": "<p>Describes a runtime used by an Amazon Web Services AppSync pipeline resolver or Amazon Web Services AppSync function. Specifies the name and version of the runtime to use. Note that if a runtime is specified, code must also be specified.</p>",
+      "refs": {
+        "CreateFunctionRequest$runtime": null,
+        "CreateResolverRequest$runtime": null,
+        "EvaluateCodeRequest$runtime": "<p>The runtime to be used when evaluating the code. Currently, only the <code>APPSYNC_JS</code> runtime is supported.</p>",
+        "FunctionConfiguration$runtime": null,
+        "Resolver$runtime": null,
+        "UpdateFunctionRequest$runtime": null,
+        "UpdateResolverRequest$runtime": null
+      }
+    },
     "AssociateApiRequest": {
       "base": null,
       "refs": {
@@ -181,9 +195,21 @@
         "AuthorizationConfig$awsIamConfig": "<p>The Identity and Access Management (IAM) settings.</p>"
       }
     },
+    "BadRequestDetail": {
+      "base": "<p>Provides further details for the reason behind the bad request. For reason type <code>CODE_ERROR</code>, the detail will contain a list of code errors.</p>",
+      "refs": {
+        "BadRequestException$detail": null
+      }
+    },
     "BadRequestException": {
       "base": "<p>The request is not well formed. For example, a value is invalid or a required field is missing. Check the field values, and then try again.</p>",
       "refs": {
+      }
+    },
+    "BadRequestReason": {
+      "base": "<p>Provides context for the cause of the bad request. The only supported value is <code>CODE_ERROR</code>.</p>",
+      "refs": {
+        "BadRequestException$reason": null
       }
     },
     "Blob": {
@@ -235,6 +261,55 @@
         "DomainNameConfig$certificateArn": "<p>The Amazon Resource Name (ARN) of the certificate. This can be an Certificate Manager (ACM) certificate or an Identity and Access Management (IAM) server certificate.</p>"
       }
     },
+    "Code": {
+      "base": null,
+      "refs": {
+        "CreateFunctionRequest$code": "<p>The <code>function</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
+        "CreateResolverRequest$code": "<p>The <code>resolver</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
+        "EvaluateCodeRequest$code": "<p>The code definition to be evaluated. Note that <code>code</code> and <code>runtime</code> are both required for this action. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
+        "FunctionConfiguration$code": "<p>The <code>function</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
+        "Resolver$code": "<p>The <code>resolver</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
+        "UpdateFunctionRequest$code": "<p>The <code>function</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
+        "UpdateResolverRequest$code": "<p>The <code>resolver</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>"
+      }
+    },
+    "CodeError": {
+      "base": "<p>Describes an AppSync error.</p>",
+      "refs": {
+        "CodeErrors$member": null
+      }
+    },
+    "CodeErrorColumn": {
+      "base": null,
+      "refs": {
+        "CodeErrorLocation$column": "<p>The column number in the code. Defaults to <code>0</code> if unknown.</p>"
+      }
+    },
+    "CodeErrorLine": {
+      "base": null,
+      "refs": {
+        "CodeErrorLocation$line": "<p>The line number in the code. Defaults to <code>0</code> if unknown.</p>"
+      }
+    },
+    "CodeErrorLocation": {
+      "base": "<p>Describes the location of the error in a code sample.</p>",
+      "refs": {
+        "CodeError$location": "<p>The line, column, and span location of the error in the code.</p>"
+      }
+    },
+    "CodeErrorSpan": {
+      "base": null,
+      "refs": {
+        "CodeErrorLocation$span": "<p>The span/length of the error. Defaults to <code>-1</code> if unknown.</p>"
+      }
+    },
+    "CodeErrors": {
+      "base": null,
+      "refs": {
+        "BadRequestDetail$codeErrors": "<p>Contains the list of errors in the request.</p>",
+        "EvaluateCodeErrorDetail$codeErrors": "<p>Contains the list of <code>CodeError</code> objects.</p>"
+      }
+    },
     "CognitoUserPoolConfig": {
       "base": "<p>Describes an Amazon Cognito user pool configuration.</p>",
       "refs": {
@@ -256,6 +331,13 @@
       "base": null,
       "refs": {
         "SyncConfig$conflictHandler": "<p>The Conflict Resolution strategy to perform in the event of a conflict.</p> <ul> <li> <p> <b>OPTIMISTIC_CONCURRENCY</b>: Resolve conflicts by rejecting mutations when versions don't match the latest version at the server.</p> </li> <li> <p> <b>AUTOMERGE</b>: Resolve conflicts with the Automerge conflict resolution strategy.</p> </li> <li> <p> <b>LAMBDA</b>: Resolve conflicts with an Lambda function supplied in the <code>LambdaConflictHandlerConfig</code>.</p> </li> </ul>"
+      }
+    },
+    "Context": {
+      "base": null,
+      "refs": {
+        "EvaluateCodeRequest$context": "<p>The map that holds all of the contextual information for your resolver invocation. A <code>context</code> is required for this action.</p>",
+        "EvaluateMappingTemplateRequest$context": "<p>The map that holds all of the contextual information for your resolver invocation. A <code>context</code> is required for this action.</p>"
       }
     },
     "CreateApiCacheRequest": {
@@ -351,7 +433,7 @@
       "base": null,
       "refs": {
         "CreateDataSourceRequest$type": "<p>The type of the <code>DataSource</code>.</p>",
-        "DataSource$type": "<p>The type of the data source.</p> <ul> <li> <p> <b>AWS_LAMBDA</b>: The data source is an Lambda function.</p> </li> <li> <p> <b>AMAZON_DYNAMODB</b>: The data source is an Amazon DynamoDB table.</p> </li> <li> <p> <b>AMAZON_ELASTICSEARCH</b>: The data source is an Amazon OpenSearch Service domain.</p> </li> <li> <p> <b>AMAZON_OPENSEARCH_SERVICE</b>: The data source is an Amazon OpenSearch Service domain.</p> </li> <li> <p> <b>NONE</b>: There is no data source. Use this type when you want to invoke a GraphQL operation without connecting to a data source, such as when you're performing data transformation with resolvers or invoking a subscription from a mutation.</p> </li> <li> <p> <b>HTTP</b>: The data source is an HTTP endpoint.</p> </li> <li> <p> <b>RELATIONAL_DATABASE</b>: The data source is a relational database.</p> </li> </ul>",
+        "DataSource$type": "<p>The type of the data source.</p> <ul> <li> <p> <b>AWS_LAMBDA</b>: The data source is an Lambda function.</p> </li> <li> <p> <b>AMAZON_DYNAMODB</b>: The data source is an Amazon DynamoDB table.</p> </li> <li> <p> <b>AMAZON_ELASTICSEARCH</b>: The data source is an Amazon OpenSearch Service domain.</p> </li> <li> <p> <b>AMAZON_OPENSEARCH_SERVICE</b>: The data source is an Amazon OpenSearch Service domain.</p> </li> <li> <p> <b>AMAZON_EVENTBRIDGE</b>: The data source is an Amazon EventBridge configuration.</p> </li> <li> <p> <b>NONE</b>: There is no data source. Use this type when you want to invoke a GraphQL operation without connecting to a data source, such as when you're performing data transformation with resolvers or invoking a subscription from a mutation.</p> </li> <li> <p> <b>HTTP</b>: The data source is an HTTP endpoint.</p> </li> <li> <p> <b>RELATIONAL_DATABASE</b>: The data source is a relational database.</p> </li> </ul>",
         "UpdateDataSourceRequest$type": "<p>The new data source type.</p>"
       }
     },
@@ -516,12 +598,61 @@
         "UpdateDataSourceRequest$elasticsearchConfig": "<p>The new OpenSearch configuration.</p> <p>As of September 2021, Amazon Elasticsearch service is Amazon OpenSearch Service. This configuration is deprecated. Instead, use <a>UpdateDataSourceRequest$openSearchServiceConfig</a> to update an OpenSearch data source.</p>"
       }
     },
+    "ErrorDetail": {
+      "base": "<p>Contains the list of errors generated. When using JavaScript, this will apply to the request or response function evaluation.</p>",
+      "refs": {
+        "EvaluateMappingTemplateResponse$error": "<p>The <code>ErrorDetail</code> object.</p>"
+      }
+    },
     "ErrorMessage": {
       "base": null,
       "refs": {
         "BadRequestException$message": null,
         "ConcurrentModificationException$message": null,
+        "ErrorDetail$message": "<p>The error payload.</p>",
+        "EvaluateCodeErrorDetail$message": "<p>The error payload.</p>",
         "GraphQLSchemaException$message": null
+      }
+    },
+    "EvaluateCodeErrorDetail": {
+      "base": "<p>Contains the list of errors from a code evaluation response.</p>",
+      "refs": {
+        "EvaluateCodeResponse$error": "<p>Contains the payload of the response error.</p>"
+      }
+    },
+    "EvaluateCodeRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EvaluateCodeResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EvaluateMappingTemplateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EvaluateMappingTemplateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EvaluationResult": {
+      "base": null,
+      "refs": {
+        "EvaluateCodeResponse$evaluationResult": "<p>The result of the evaluation operation.</p>",
+        "EvaluateMappingTemplateResponse$evaluationResult": "<p>The mapping template; this can be a request or response template.</p>"
+      }
+    },
+    "EventBridgeDataSourceConfig": {
+      "base": "<p>Describes an Amazon EventBridge bus data source configuration.</p>",
+      "refs": {
+        "CreateDataSourceRequest$eventBridgeConfig": "<p>Amazon EventBridge settings.</p>",
+        "DataSource$eventBridgeConfig": "<p>Amazon EventBridge settings.</p>",
+        "UpdateDataSourceRequest$eventBridgeConfig": "<p>The new Amazon EventBridge settings.</p>"
       }
     },
     "FieldLogLevel": {
@@ -820,6 +951,13 @@
         "UpdateGraphqlApiRequest$logConfig": "<p>The Amazon CloudWatch Logs configuration for the <code>GraphqlApi</code> object.</p>"
       }
     },
+    "Logs": {
+      "base": null,
+      "refs": {
+        "EvaluateCodeResponse$logs": "<p>A list of logs that were generated by calls to <code>util.log.info</code> and <code>util.log.error</code> in the evaluated code.</p>",
+        "EvaluateMappingTemplateResponse$logs": "<p>A list of logs that were generated by calls to <code>util.log.info</code> and <code>util.log.error</code> in the evaluated code.</p>"
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -1030,6 +1168,12 @@
         "UpdateTypeRequest$typeName": "<p>The new type name.</p>"
       }
     },
+    "RuntimeName": {
+      "base": null,
+      "refs": {
+        "AppSyncRuntime$name": "<p>The <code>name</code> of the runtime to use. Currently, the only allowed value is <code>APPSYNC_JS</code>.</p>"
+      }
+    },
     "SchemaStatus": {
       "base": null,
       "refs": {
@@ -1058,13 +1202,16 @@
         "ApiKeyLimitExceededException$message": null,
         "ApiKeyValidityOutOfBoundsException$message": null,
         "ApiLimitExceededException$message": null,
+        "AppSyncRuntime$runtimeVersion": "<p>The <code>version</code> of the runtime to use. Currently, the only allowed version is <code>1.0.0</code>.</p>",
         "AssociateApiRequest$apiId": "<p>The API ID.</p>",
         "AwsIamConfig$signingRegion": "<p>The signing Amazon Web Services Region for IAM authorization.</p>",
         "AwsIamConfig$signingServiceName": "<p>The signing service name for IAM authorization.</p>",
         "CachingKeys$member": null,
+        "CodeError$errorType": "<p>The type of code error. </p> <p>Examples include, but aren't limited to: <code>LINT_ERROR</code>, <code>PARSER_ERROR</code>.</p>",
+        "CodeError$value": "<p>A user presentable error.</p> <p>Examples include, but aren't limited to: <code>Parsing error: Unterminated string literal</code>.</p>",
         "CognitoUserPoolConfig$userPoolId": "<p>The user pool ID.</p>",
         "CognitoUserPoolConfig$awsRegion": "<p>The Amazon Web Services Region in which the user pool was created.</p>",
-        "CognitoUserPoolConfig$appIdClientRegex": "<p>A regular expression for validating the incoming Amazon Cognito user pool app client ID.</p>",
+        "CognitoUserPoolConfig$appIdClientRegex": "<p>A regular expression for validating the incoming Amazon Cognito user pool app client ID. If this value isn't set, no filtering is applied.</p>",
         "CreateApiCacheRequest$apiId": "<p>The GraphQL API ID.</p>",
         "CreateApiKeyRequest$apiId": "<p>The ID for your GraphQL API.</p>",
         "CreateApiKeyRequest$description": "<p>A description of the purpose of the API key.</p>",
@@ -1073,7 +1220,7 @@
         "CreateDataSourceRequest$serviceRoleArn": "<p>The Identity and Access Management (IAM) service role Amazon Resource Name (ARN) for the data source. The system assumes this role when accessing the data source.</p>",
         "CreateFunctionRequest$apiId": "<p>The GraphQL API ID.</p>",
         "CreateFunctionRequest$description": "<p>The <code>Function</code> description.</p>",
-        "CreateFunctionRequest$functionVersion": "<p>The <code>version</code> of the request mapping template. Currently, the supported value is 2018-05-29.</p>",
+        "CreateFunctionRequest$functionVersion": "<p>The <code>version</code> of the request mapping template. Currently, the supported value is 2018-05-29. Note that when using VTL and mapping templates, the <code>functionVersion</code> is required.</p>",
         "CreateGraphqlApiRequest$name": "<p>A user-supplied name for the <code>GraphqlApi</code>.</p>",
         "CreateResolverRequest$apiId": "<p>The ID for the GraphQL API for which the resolver is being created.</p>",
         "CreateTypeRequest$apiId": "<p>The API ID.</p>",
@@ -1096,6 +1243,8 @@
         "DynamodbDataSourceConfig$awsRegion": "<p>The Amazon Web Services Region.</p>",
         "ElasticsearchDataSourceConfig$endpoint": "<p>The endpoint.</p>",
         "ElasticsearchDataSourceConfig$awsRegion": "<p>The Amazon Web Services Region.</p>",
+        "EvaluateCodeRequest$function": "<p>The function within the code to be evaluated. If provided, the valid values are <code>request</code> and <code>response</code>.</p>",
+        "EventBridgeDataSourceConfig$eventBusArn": "<p>The ARN of the event bus. For more information about event buses, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus.html\">Amazon EventBridge event buses</a>.</p>",
         "FlushApiCacheRequest$apiId": "<p>The API ID.</p>",
         "FunctionConfiguration$functionId": "<p>A unique ID representing the <code>Function</code> object.</p>",
         "FunctionConfiguration$functionArn": "<p>The Amazon Resource Name (ARN) of the <code>Function</code> object.</p>",
@@ -1130,6 +1279,7 @@
         "ListResolversRequest$typeName": "<p>The type name.</p>",
         "ListTypesRequest$apiId": "<p>The API ID.</p>",
         "LogConfig$cloudWatchLogsRoleArn": "<p>The service role that AppSync assumes to publish to CloudWatch logs in your account.</p>",
+        "Logs$member": null,
         "MapOfStringToString$key": null,
         "MapOfStringToString$value": null,
         "NotFoundException$message": null,
@@ -1157,7 +1307,7 @@
         "UpdateDataSourceRequest$serviceRoleArn": "<p>The new service role Amazon Resource Name (ARN) for the data source.</p>",
         "UpdateFunctionRequest$apiId": "<p>The GraphQL API ID.</p>",
         "UpdateFunctionRequest$description": "<p>The <code>Function</code> description.</p>",
-        "UpdateFunctionRequest$functionVersion": "<p>The <code>version</code> of the request mapping template. Currently, the supported value is 2018-05-29.</p>",
+        "UpdateFunctionRequest$functionVersion": "<p>The <code>version</code> of the request mapping template. Currently, the supported value is 2018-05-29. Note that when using VTL and mapping templates, the <code>functionVersion</code> is required.</p>",
         "UpdateGraphqlApiRequest$apiId": "<p>The API ID.</p>",
         "UpdateGraphqlApiRequest$name": "<p>The new name for the <code>GraphqlApi</code> object.</p>",
         "UpdateResolverRequest$apiId": "<p>The API ID.</p>",
@@ -1165,7 +1315,7 @@
         "UpdateTypeRequest$definition": "<p>The new definition.</p>",
         "UserPoolConfig$userPoolId": "<p>The user pool ID.</p>",
         "UserPoolConfig$awsRegion": "<p>The Amazon Web Services Region in which the user pool was created.</p>",
-        "UserPoolConfig$appIdClientRegex": "<p>A regular expression for validating the incoming Amazon Cognito user pool app client ID.</p>"
+        "UserPoolConfig$appIdClientRegex": "<p>A regular expression for validating the incoming Amazon Cognito user pool app client ID. If this value isn't set, no filtering is applied.</p>"
       }
     },
     "SyncConfig": {
@@ -1221,6 +1371,12 @@
       "base": "<p>The value for the tag.</p>",
       "refs": {
         "TagMap$value": null
+      }
+    },
+    "Template": {
+      "base": null,
+      "refs": {
+        "EvaluateMappingTemplateRequest$template": "<p>The mapping template; this can be a request or response template. A <code>template</code> is required for this action.</p>"
       }
     },
     "Type": {

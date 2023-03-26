@@ -3,7 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\Operation;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\Operation
@@ -22,7 +22,7 @@ class OperationTest extends TestCase
         $o = new Operation([], new ShapeMap([]));
         $this->assertInstanceOf('Aws\Api\Shape', $o->getInput());
         $this->assertInstanceOf('Aws\Api\Shape', $o->getOutput());
-        $this->assertInternalType('array', $o->getErrors());
+        $this->assertIsArray($o->getErrors());
     }
 
     public function testReturnsInputShape()
@@ -60,7 +60,7 @@ class OperationTest extends TestCase
             'b' => ['type' => 'list'],
         ]));
         $e = $o->getErrors();
-        $this->assertInternalType('array', $e);
+        $this->assertIsArray($e);
         $this->assertInstanceOf('Aws\Api\Shape', $e[0]);
         $this->assertInstanceOf('Aws\Api\Shape', $e[1]);
         $this->assertSame('structure', $e[0]->getType());
@@ -80,5 +80,54 @@ class OperationTest extends TestCase
         $errorsCopy[0]['a_copy'] = $errorsCopy[0]['a'];
         $errorsCopy[0]['a'] = 'test';
         $this->assertSame('structure', $errors[0]->getType());
+    }
+
+    public function testGetStaticContextParams()
+    {
+        $params = ['Foo' => ['value' => 'bar']];
+        $o = new Operation([
+            'staticContextParams' => $params
+        ], new ShapeMap([
+            'i' => ['type' => 'structure']
+        ]));
+        $staticContextParams = $o->getStaticContextParams();
+        $this->assertEquals(
+            $params,
+            $staticContextParams
+        );
+    }
+
+    public function testGetContextParams()
+    {
+        $expected = [
+          'Foo' => [
+              'shape' => 'Foo',
+              'type' => 'string'
+          ]
+        ];
+        $o = new Operation([
+            'input' => ['shape' => 'FooOperationRequest']
+        ], new ShapeMap([
+            'FooOperationRequest' => [
+                'type' => 'structure',
+                'members' => [
+                    'Foo' => [
+                        'shape' => 'Foo',
+                        'contextParam' => [
+                            'name' => 'Foo'
+                        ]
+                    ]
+                ]
+            ],
+            'Foo' => [
+                'type' => 'string'
+            ]
+        ]));
+
+        $contextParams = $o->getContextParams();
+        $this->assertEquals(
+           $expected,
+           $contextParams
+        );
     }
 }

@@ -3,18 +3,16 @@ namespace Aws\Test\CloudSearchDomain;
 
 use Aws\CloudSearchDomain\CloudSearchDomainClient;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\CloudSearchDomain\CloudSearchDomainClient
  */
 class CloudSearchDomainTest extends TestCase
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRequiresEndpoint()
     {
+        $this->expectException(\InvalidArgumentException::class);
         new CloudSearchDomainClient([
             'service'   => 'cloudsearchdomain',
             'version'   => 'latest'

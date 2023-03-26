@@ -566,6 +566,9 @@
                 },
                 "slotElicitationStyle": {
                     "shape": "StyleType"
+                },
+                "subSlotToElicit": {
+                    "shape": "ElicitSubSlot"
                 }
             }
         },
@@ -594,6 +597,20 @@
         },
         "Double": {
             "type": "double"
+        },
+        "ElicitSubSlot": {
+            "type": "structure",
+            "required": [
+                "name"
+            ],
+            "members": {
+                "name": {
+                    "shape": "NonEmptyString"
+                },
+                "subSlotToElicit": {
+                    "shape": "ElicitSubSlot"
+                }
+            }
         },
         "EpochMillis": {
             "type": "long"
@@ -729,6 +746,9 @@
                 },
                 "eventId": {
                     "shape": "EventId"
+                },
+                "recognizedBotMember": {
+                    "shape": "RecognizedBotMember"
                 }
             },
             "event": true
@@ -1006,6 +1026,9 @@
                 },
                 "sessionId": {
                     "shape": "SessionId"
+                },
+                "recognizedBotMember": {
+                    "shape": "RecognizedBotMember"
                 }
             }
         },
@@ -1110,9 +1133,28 @@
                 },
                 "audioStream": {
                     "shape": "BlobStream"
+                },
+                "recognizedBotMember": {
+                    "shape": "NonEmptyString",
+                    "location": "header",
+                    "locationName": "x-amz-lex-recognized-bot-member"
                 }
             },
             "payload": "audioStream"
+        },
+        "RecognizedBotMember": {
+            "type": "structure",
+            "required": [
+                "botId"
+            ],
+            "members": {
+                "botId": {
+                    "shape": "BotIdentifier"
+                },
+                "botName": {
+                    "shape": "Name"
+                }
+            }
         },
         "ResourceNotFoundException": {
             "type": "structure",
@@ -1131,12 +1173,12 @@
         },
         "RuntimeHintDetails": {
             "type": "structure",
-            "required": [
-                "runtimeHintValues"
-            ],
             "members": {
                 "runtimeHintValues": {
                     "shape": "RuntimeHintValuesList"
+                },
+                "subSlotHints": {
+                    "shape": "SlotHintsSlotMap"
                 }
             }
         },
@@ -1246,7 +1288,8 @@
             "type": "string",
             "enum": [
                 "Scalar",
-                "List"
+                "List",
+                "Composite"
             ]
         },
         "Slot": {
@@ -1260,6 +1303,9 @@
                 },
                 "values": {
                     "shape": "Values"
+                },
+                "subSlots": {
+                    "shape": "Slots"
                 }
             }
         },

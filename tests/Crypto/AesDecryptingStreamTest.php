@@ -6,7 +6,7 @@ use Aws\Crypto\Cipher\Cbc;
 use Aws\Crypto\Cipher\CipherMethod;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class AesDecryptingStreamTest extends TestCase
 {
@@ -142,11 +142,9 @@ class AesDecryptingStreamTest extends TestCase
         $this->assertFalse($stream->isWritable());
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testDoesNotSupportArbitrarySeeking()
     {
+        $this->expectException(\LogicException::class);
         $stream = new AesDecryptingStream(
             new RandomByteStream(124 * self::MB),
             'foo',

@@ -15,6 +15,9 @@ class Service extends AbstractModel
     /** @var string */
     private $apiVersion;
 
+    /** @var array */
+    private $clientContextParams = [];
+
     /** @var Operation[] */
     private $operations = [];
 
@@ -23,6 +26,9 @@ class Service extends AbstractModel
 
     /** @var array */
     private $waiters = null;
+
+    /** @var boolean */
+    private $modifiedModel = false;
 
     /**
      * @param array    $definition
@@ -35,7 +41,8 @@ class Service extends AbstractModel
         static $defaults = [
             'operations' => [],
             'shapes'     => [],
-            'metadata'   => []
+            'metadata'   => [],
+            'clientContextParams' => []
         ], $defaultMeta = [
             'apiVersion'       => null,
             'serviceFullName'  => null,
@@ -58,8 +65,10 @@ class Service extends AbstractModel
         } else {
             $this->serviceName = $this->getEndpointPrefix();
         }
-
         $this->apiVersion = $this->getApiVersion();
+        if (isset($definition['clientContextParams'])) {
+           $this->clientContextParams = $definition['clientContextParams'];
+        }
     }
 
     /**
@@ -275,6 +284,11 @@ class Service extends AbstractModel
                 $this->definition['operations'][$name],
                 $this->shapeMap
             );
+        } else if ($this->modifiedModel) {
+            $this->operations[$name] = new Operation(
+                $this->definition['operations'][$name],
+                $this->shapeMap
+            );
         }
 
         return $this->operations[$name];
@@ -460,5 +474,62 @@ class Service extends AbstractModel
     public function getShapeMap()
     {
         return $this->shapeMap;
+    }
+
+    /**
+     * Get all the context params of the description.
+     *
+     * @return array
+     */
+    public function getClientContextParams()
+    {
+        return $this->clientContextParams;
+    }
+
+    /**
+     * Get the service's api provider.
+     *
+     * @return callable
+     */
+    public function getProvider()
+    {
+        return $this->apiProvider;
+    }
+
+    /**
+     * Get the service's definition.
+     *
+     * @return callable
+     */
+    public function getDefinition()
+    {
+        return $this->definition;
+    }
+
+    /**
+     * Sets the service's api definition.
+     * Intended for internal use only.
+     *
+     * @return void
+     *
+     * @internal
+     */
+    public function setDefinition($definition)
+    {
+        $this->definition = $definition;
+        $this->modifiedModel = true;
+    }
+
+    /**
+     * Denotes whether or not a service's definition has
+     * been modified.  Intended for internal use only.
+     *
+     * @return bool
+     *
+     * @internal
+     */
+    public function isModifiedModel()
+    {
+        return $this->modifiedModel;
     }
 }

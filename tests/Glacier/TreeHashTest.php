@@ -2,7 +2,7 @@
 namespace Aws\Test\Glacier;
 
 use Aws\Glacier\TreeHash;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class TreeHashTest extends TestCase
 {
@@ -38,11 +38,11 @@ class TreeHashTest extends TestCase
     }
 
     /**
-     * @expectedException \LogicException
      * @covers Aws\Glacier\TreeHash::update
      */
     public function testCannotUpdateAfterHashCalculation()
     {
+        $this->expectException(\LogicException::class);
         $hash = new TreeHash('sha256');
         $hash->update('foo');
         $hash->complete();
@@ -51,11 +51,11 @@ class TreeHashTest extends TestCase
     }
 
     /**
-     * @expectedException \LogicException
      * @covers Aws\Glacier\TreeHash::addChecksum
      */
     public function testCannotAddChecksumsAfterHashCalculation()
     {
+        $this->expectException(\LogicException::class);
         $hash = new TreeHash('sha256');
         $hash->update('foo');
         $hash->complete();

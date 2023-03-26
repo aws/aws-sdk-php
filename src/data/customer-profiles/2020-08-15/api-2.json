@@ -656,6 +656,17 @@
         "Values":{"shape":"requestValueList"}
       }
     },
+    "AdditionalSearchKey":{
+      "type":"structure",
+      "required":[
+        "KeyName",
+        "Values"
+      ],
+      "members":{
+        "KeyName":{"shape":"name"},
+        "Values":{"shape":"requestValueList"}
+      }
+    },
     "Address":{
       "type":"structure",
       "members":{
@@ -918,7 +929,9 @@
         "ShippingAddress":{"shape":"Address"},
         "MailingAddress":{"shape":"Address"},
         "BillingAddress":{"shape":"Address"},
-        "Attributes":{"shape":"Attributes"}
+        "Attributes":{"shape":"Attributes"},
+        "PartyTypeString":{"shape":"string1To255"},
+        "GenderString":{"shape":"string1To255"}
       }
     },
     "CreateProfileResponse":{
@@ -1211,8 +1224,16 @@
       "max":256,
       "pattern":"[a-zA-Z0-9][\\w!@#.-]+"
     },
+    "FoundByKeyValue":{
+      "type":"structure",
+      "members":{
+        "KeyName":{"shape":"name"},
+        "Values":{"shape":"requestValueList"}
+      }
+    },
     "Gender":{
       "type":"string",
+      "deprecated":true,
       "enum":[
         "MALE",
         "FEMALE",
@@ -1343,7 +1364,8 @@
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"},
         "ObjectTypeNames":{"shape":"ObjectTypeNames"},
-        "WorkflowId":{"shape":"string1To255"}
+        "WorkflowId":{"shape":"string1To255"},
+        "IsUnstructured":{"shape":"optionalBoolean"}
       }
     },
     "GetMatchesRequest":{
@@ -1720,7 +1742,8 @@
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"},
         "ObjectTypeNames":{"shape":"ObjectTypeNames"},
-        "WorkflowId":{"shape":"string1To255"}
+        "WorkflowId":{"shape":"string1To255"},
+        "IsUnstructured":{"shape":"optionalBoolean"}
       }
     },
     "ListIntegrationsRequest":{
@@ -2095,6 +2118,7 @@
     },
     "PartyType":{
       "type":"string",
+      "deprecated":true,
       "enum":[
         "INDIVIDUAL",
         "BUSINESS",
@@ -2125,7 +2149,10 @@
         "ShippingAddress":{"shape":"Address"},
         "MailingAddress":{"shape":"Address"},
         "BillingAddress":{"shape":"Address"},
-        "Attributes":{"shape":"Attributes"}
+        "Attributes":{"shape":"Attributes"},
+        "FoundByItems":{"shape":"foundByList"},
+        "PartyTypeString":{"shape":"string1To255"},
+        "GenderString":{"shape":"string1To255"}
       }
     },
     "ProfileIdList":{
@@ -2191,7 +2218,8 @@
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"},
         "ObjectTypeNames":{"shape":"ObjectTypeNames"},
-        "WorkflowId":{"shape":"string1To255"}
+        "WorkflowId":{"shape":"string1To255"},
+        "IsUnstructured":{"shape":"optionalBoolean"}
       }
     },
     "PutProfileObjectRequest":{
@@ -2413,7 +2441,9 @@
           "locationName":"DomainName"
         },
         "KeyName":{"shape":"name"},
-        "Values":{"shape":"requestValueList"}
+        "Values":{"shape":"requestValueList"},
+        "AdditionalSearchKeys":{"shape":"additionalSearchKeysList"},
+        "LogicalOperator":{"shape":"logicalOperator"}
       }
     },
     "SearchProfilesResponse":{
@@ -2751,7 +2781,9 @@
         "ShippingAddress":{"shape":"UpdateAddress"},
         "MailingAddress":{"shape":"UpdateAddress"},
         "BillingAddress":{"shape":"UpdateAddress"},
-        "Attributes":{"shape":"UpdateAttributes"}
+        "Attributes":{"shape":"UpdateAttributes"},
+        "PartyTypeString":{"shape":"string0To255"},
+        "GenderString":{"shape":"string0To255"}
       }
     },
     "UpdateProfileResponse":{
@@ -2817,6 +2849,12 @@
         "Object":{"shape":"Object"}
       }
     },
+    "additionalSearchKeysList":{
+      "type":"list",
+      "member":{"shape":"AdditionalSearchKey"},
+      "max":4,
+      "min":1
+    },
     "boolean":{"type":"boolean"},
     "encryptionKey":{
       "type":"string",
@@ -2827,6 +2865,19 @@
       "type":"integer",
       "max":1098,
       "min":1
+    },
+    "foundByList":{
+      "type":"list",
+      "member":{"shape":"FoundByKeyValue"},
+      "max":5,
+      "min":1
+    },
+    "logicalOperator":{
+      "type":"string",
+      "enum":[
+        "AND",
+        "OR"
+      ]
     },
     "long":{"type":"long"},
     "matchesNumber":{

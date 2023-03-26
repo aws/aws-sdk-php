@@ -214,6 +214,20 @@
         {"shape":"ServerException"}
       ]
     },
+    "DescribeAddonConfiguration":{
+      "name":"DescribeAddonConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/addons/configuration-schemas"
+      },
+      "input":{"shape":"DescribeAddonConfigurationRequest"},
+      "output":{"shape":"DescribeAddonConfigurationResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "DescribeAddonVersions":{
       "name":"DescribeAddonVersions",
       "http":{
@@ -570,7 +584,11 @@
         "BOTTLEROCKET_ARM_64",
         "BOTTLEROCKET_x86_64",
         "BOTTLEROCKET_ARM_64_NVIDIA",
-        "BOTTLEROCKET_x86_64_NVIDIA"
+        "BOTTLEROCKET_x86_64_NVIDIA",
+        "WINDOWS_CORE_2019_x86_64",
+        "WINDOWS_FULL_2019_x86_64",
+        "WINDOWS_CORE_2022_x86_64",
+        "WINDOWS_FULL_2022_x86_64"
       ]
     },
     "AccessDeniedException":{
@@ -593,7 +611,11 @@
         "createdAt":{"shape":"Timestamp"},
         "modifiedAt":{"shape":"Timestamp"},
         "serviceAccountRoleArn":{"shape":"String"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "publisher":{"shape":"String"},
+        "owner":{"shape":"String"},
+        "marketplaceInformation":{"shape":"MarketplaceInformation"},
+        "configurationValues":{"shape":"String"}
       }
     },
     "AddonHealth":{
@@ -607,7 +629,10 @@
       "members":{
         "addonName":{"shape":"String"},
         "type":{"shape":"String"},
-        "addonVersions":{"shape":"AddonVersionInfoList"}
+        "addonVersions":{"shape":"AddonVersionInfoList"},
+        "publisher":{"shape":"String"},
+        "owner":{"shape":"String"},
+        "marketplaceInformation":{"shape":"MarketplaceInformation"}
       }
     },
     "AddonIssue":{
@@ -644,7 +669,8 @@
         "UPDATING",
         "DELETING",
         "DELETE_FAILED",
-        "DEGRADED"
+        "DEGRADED",
+        "UPDATE_FAILED"
       ]
     },
     "AddonVersionInfo":{
@@ -652,7 +678,8 @@
       "members":{
         "addonVersion":{"shape":"String"},
         "architecture":{"shape":"StringList"},
-        "compatibilities":{"shape":"Compatibilities"}
+        "compatibilities":{"shape":"Compatibilities"},
+        "requiresConfiguration":{"shape":"Boolean"}
       }
     },
     "AddonVersionInfoList":{
@@ -790,8 +817,40 @@
         "platformVersion":{"shape":"String"},
         "tags":{"shape":"TagMap"},
         "encryptionConfig":{"shape":"EncryptionConfigList"},
-        "connectorConfig":{"shape":"ConnectorConfigResponse"}
+        "connectorConfig":{"shape":"ConnectorConfigResponse"},
+        "id":{"shape":"String"},
+        "health":{"shape":"ClusterHealth"},
+        "outpostConfig":{"shape":"OutpostConfigResponse"}
       }
+    },
+    "ClusterHealth":{
+      "type":"structure",
+      "members":{
+        "issues":{"shape":"ClusterIssueList"}
+      }
+    },
+    "ClusterIssue":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"ClusterIssueCode"},
+        "message":{"shape":"String"},
+        "resourceIds":{"shape":"StringList"}
+      }
+    },
+    "ClusterIssueCode":{
+      "type":"string",
+      "enum":[
+        "AccessDenied",
+        "ClusterUnreachable",
+        "ConfigurationConflict",
+        "InternalFailure",
+        "ResourceLimitExceeded",
+        "ResourceNotFound"
+      ]
+    },
+    "ClusterIssueList":{
+      "type":"list",
+      "member":{"shape":"ClusterIssue"}
     },
     "ClusterName":{
       "type":"string",
@@ -857,6 +916,18 @@
         "roleArn":{"shape":"String"}
       }
     },
+    "ControlPlanePlacementRequest":{
+      "type":"structure",
+      "members":{
+        "groupName":{"shape":"String"}
+      }
+    },
+    "ControlPlanePlacementResponse":{
+      "type":"structure",
+      "members":{
+        "groupName":{"shape":"String"}
+      }
+    },
     "CreateAddonRequest":{
       "type":"structure",
       "required":[
@@ -877,7 +948,8 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "configurationValues":{"shape":"String"}
       }
     },
     "CreateAddonResponse":{
@@ -905,7 +977,8 @@
           "idempotencyToken":true
         },
         "tags":{"shape":"TagMap"},
-        "encryptionConfig":{"shape":"EncryptionConfigList"}
+        "encryptionConfig":{"shape":"EncryptionConfigList"},
+        "outpostConfig":{"shape":"OutpostConfigRequest"}
       }
     },
     "CreateClusterResponse":{
@@ -1100,6 +1173,33 @@
         "cluster":{"shape":"Cluster"}
       }
     },
+    "DescribeAddonConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "addonName",
+        "addonVersion"
+      ],
+      "members":{
+        "addonName":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"addonName"
+        },
+        "addonVersion":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"addonVersion"
+        }
+      }
+    },
+    "DescribeAddonConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "addonName":{"shape":"String"},
+        "addonVersion":{"shape":"String"},
+        "configurationSchema":{"shape":"String"}
+      }
+    },
     "DescribeAddonRequest":{
       "type":"structure",
       "required":[
@@ -1147,6 +1247,21 @@
           "shape":"String",
           "location":"querystring",
           "locationName":"addonName"
+        },
+        "types":{
+          "shape":"StringList",
+          "location":"querystring",
+          "locationName":"types"
+        },
+        "publishers":{
+          "shape":"StringList",
+          "location":"querystring",
+          "locationName":"publishers"
+        },
+        "owners":{
+          "shape":"StringList",
+          "location":"querystring",
+          "locationName":"owners"
         }
       }
     },
@@ -1754,6 +1869,13 @@
         "clusterLogging":{"shape":"LogSetups"}
       }
     },
+    "MarketplaceInformation":{
+      "type":"structure",
+      "members":{
+        "productId":{"shape":"String"},
+        "productUrl":{"shape":"String"}
+      }
+    },
     "Nodegroup":{
       "type":"structure",
       "members":{
@@ -1900,6 +2022,30 @@
         "requiredClaims":{"shape":"requiredClaimsMap"}
       }
     },
+    "OutpostConfigRequest":{
+      "type":"structure",
+      "required":[
+        "outpostArns",
+        "controlPlaneInstanceType"
+      ],
+      "members":{
+        "outpostArns":{"shape":"StringList"},
+        "controlPlaneInstanceType":{"shape":"String"},
+        "controlPlanePlacement":{"shape":"ControlPlanePlacementRequest"}
+      }
+    },
+    "OutpostConfigResponse":{
+      "type":"structure",
+      "required":[
+        "outpostArns",
+        "controlPlaneInstanceType"
+      ],
+      "members":{
+        "outpostArns":{"shape":"StringList"},
+        "controlPlaneInstanceType":{"shape":"String"},
+        "controlPlanePlacement":{"shape":"ControlPlanePlacementResponse"}
+      }
+    },
     "PercentCapacity":{
       "type":"integer",
       "box":true,
@@ -1945,7 +2091,8 @@
       "type":"string",
       "enum":[
         "OVERWRITE",
-        "NONE"
+        "NONE",
+        "PRESERVE"
       ]
     },
     "ResourceInUseException":{
@@ -2148,7 +2295,8 @@
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "configurationValues":{"shape":"String"}
       }
     },
     "UpdateAddonResponse":{

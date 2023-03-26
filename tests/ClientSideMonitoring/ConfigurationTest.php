@@ -3,7 +3,7 @@
 namespace Aws\Test\ClientSideMonitoring;
 
 use Aws\ClientSideMonitoring\Configuration;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Log\InvalidArgumentException;
 
 
@@ -12,7 +12,6 @@ use Psr\Log\InvalidArgumentException;
  */
 class ConfigurationTest extends TestCase
 {
-
     public function testGetsCorrectValues()
     {
         $config = new Configuration(true, 'FooHost', 888, 'FooApp');
@@ -34,11 +33,9 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->toArray());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testHandlesInvalidPort()
     {
+        $this->expectException(\InvalidArgumentException::class);
         new Configuration(true, 'invalidport', 'FooApp');
     }
 

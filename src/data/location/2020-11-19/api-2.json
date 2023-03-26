@@ -190,9 +190,30 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"geofencing."},
+      "idempotent":true
+    },
+    "CreateKey":{
+      "name":"CreateKey",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metadata/v0/keys",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateKeyRequest"},
+      "output":{"shape":"CreateKeyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"metadata."},
       "idempotent":true
     },
     "CreateMap":{
@@ -209,6 +230,7 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"maps."},
@@ -228,6 +250,7 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"places."},
@@ -247,6 +270,7 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"routes."},
@@ -288,6 +312,25 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"geofencing."},
+      "idempotent":true
+    },
+    "DeleteKey":{
+      "name":"DeleteKey",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/metadata/v0/keys/{KeyName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteKeyRequest"},
+      "output":{"shape":"DeleteKeyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"metadata."},
       "idempotent":true
     },
     "DeleteMap":{
@@ -383,6 +426,24 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"geofencing."}
+    },
+    "DescribeKey":{
+      "name":"DescribeKey",
+      "http":{
+        "method":"GET",
+        "requestUri":"/metadata/v0/keys/{KeyName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeKeyRequest"},
+      "output":{"shape":"DescribeKeyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"metadata."}
     },
     "DescribeMap":{
       "name":"DescribeMap",
@@ -600,6 +661,24 @@
       ],
       "endpoint":{"hostPrefix":"maps."}
     },
+    "GetPlace":{
+      "name":"GetPlace",
+      "http":{
+        "method":"GET",
+        "requestUri":"/places/v0/indexes/{IndexName}/places/{PlaceId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPlaceRequest"},
+      "output":{"shape":"GetPlaceResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"places."}
+    },
     "ListDevicePositions":{
       "name":"ListDevicePositions",
       "http":{
@@ -651,6 +730,23 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"geofencing."}
+    },
+    "ListKeys":{
+      "name":"ListKeys",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metadata/v0/list-keys",
+        "responseCode":200
+      },
+      "input":{"shape":"ListKeysRequest"},
+      "output":{"shape":"ListKeysResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"metadata."}
     },
     "ListMaps":{
       "name":"ListMaps",
@@ -885,6 +981,25 @@
       "endpoint":{"hostPrefix":"geofencing."},
       "idempotent":true
     },
+    "UpdateKey":{
+      "name":"UpdateKey",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/metadata/v0/keys/{KeyName}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateKeyRequest"},
+      "output":{"shape":"UpdateKeyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"metadata."},
+      "idempotent":true
+    },
     "UpdateMap":{
       "name":"UpdateMap",
       "http":{
@@ -977,6 +1092,52 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ApiKey":{
+      "type":"string",
+      "max":1000,
+      "min":0,
+      "sensitive":true
+    },
+    "ApiKeyAction":{
+      "type":"string",
+      "pattern":"^geo:GetMap\\*$"
+    },
+    "ApiKeyFilter":{
+      "type":"structure",
+      "members":{
+        "KeyStatus":{"shape":"Status"}
+      }
+    },
+    "ApiKeyRestrictions":{
+      "type":"structure",
+      "required":[
+        "AllowActions",
+        "AllowResources"
+      ],
+      "members":{
+        "AllowActions":{"shape":"ApiKeyRestrictionsAllowActionsList"},
+        "AllowReferers":{"shape":"ApiKeyRestrictionsAllowReferersList"},
+        "AllowResources":{"shape":"ApiKeyRestrictionsAllowResourcesList"}
+      }
+    },
+    "ApiKeyRestrictionsAllowActionsList":{
+      "type":"list",
+      "member":{"shape":"ApiKeyAction"},
+      "max":1,
+      "min":1
+    },
+    "ApiKeyRestrictionsAllowReferersList":{
+      "type":"list",
+      "member":{"shape":"RefererPattern"},
+      "max":5,
+      "min":1
+    },
+    "ApiKeyRestrictionsAllowResourcesList":{
+      "type":"list",
+      "member":{"shape":"GeoArn"},
+      "max":5,
+      "min":1
     },
     "Arn":{
       "type":"string",
@@ -1513,6 +1674,18 @@
         "Weight":{"shape":"TruckWeight"}
       }
     },
+    "Circle":{
+      "type":"structure",
+      "required":[
+        "Center",
+        "Radius"
+      ],
+      "members":{
+        "Center":{"shape":"Position"},
+        "Radius":{"shape":"Double"}
+      },
+      "sensitive":true
+    },
     "ConflictException":{
       "type":"structure",
       "required":["Message"],
@@ -1571,6 +1744,36 @@
         "CreateTime":{"shape":"Timestamp"}
       }
     },
+    "CreateKeyRequest":{
+      "type":"structure",
+      "required":[
+        "KeyName",
+        "Restrictions"
+      ],
+      "members":{
+        "Description":{"shape":"ResourceDescription"},
+        "ExpireTime":{"shape":"Timestamp"},
+        "KeyName":{"shape":"ResourceName"},
+        "NoExpiry":{"shape":"Boolean"},
+        "Restrictions":{"shape":"ApiKeyRestrictions"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateKeyResponse":{
+      "type":"structure",
+      "required":[
+        "CreateTime",
+        "Key",
+        "KeyArn",
+        "KeyName"
+      ],
+      "members":{
+        "CreateTime":{"shape":"Timestamp"},
+        "Key":{"shape":"ApiKey"},
+        "KeyArn":{"shape":"Arn"},
+        "KeyName":{"shape":"ResourceName"}
+      }
+    },
     "CreateMapRequest":{
       "type":"structure",
       "required":[
@@ -1598,7 +1801,7 @@
       ],
       "members":{
         "CreateTime":{"shape":"Timestamp"},
-        "MapArn":{"shape":"Arn"},
+        "MapArn":{"shape":"GeoArn"},
         "MapName":{"shape":"ResourceName"}
       }
     },
@@ -1721,6 +1924,22 @@
       "members":{
       }
     },
+    "DeleteKeyRequest":{
+      "type":"structure",
+      "required":["KeyName"],
+      "members":{
+        "KeyName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"KeyName"
+        }
+      }
+    },
+    "DeleteKeyResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteMapRequest":{
       "type":"structure",
       "required":["MapName"],
@@ -1825,6 +2044,40 @@
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
+    "DescribeKeyRequest":{
+      "type":"structure",
+      "required":["KeyName"],
+      "members":{
+        "KeyName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"KeyName"
+        }
+      }
+    },
+    "DescribeKeyResponse":{
+      "type":"structure",
+      "required":[
+        "CreateTime",
+        "ExpireTime",
+        "Key",
+        "KeyArn",
+        "KeyName",
+        "Restrictions",
+        "UpdateTime"
+      ],
+      "members":{
+        "CreateTime":{"shape":"Timestamp"},
+        "Description":{"shape":"ResourceDescription"},
+        "ExpireTime":{"shape":"Timestamp"},
+        "Key":{"shape":"ApiKey"},
+        "KeyArn":{"shape":"Arn"},
+        "KeyName":{"shape":"ResourceName"},
+        "Restrictions":{"shape":"ApiKeyRestrictions"},
+        "Tags":{"shape":"TagMap"},
+        "UpdateTime":{"shape":"Timestamp"}
+      }
+    },
     "DescribeMapRequest":{
       "type":"structure",
       "required":["MapName"],
@@ -1852,7 +2105,7 @@
         "CreateTime":{"shape":"Timestamp"},
         "DataSource":{"shape":"String"},
         "Description":{"shape":"ResourceDescription"},
-        "MapArn":{"shape":"Arn"},
+        "MapArn":{"shape":"GeoArn"},
         "MapName":{"shape":"ResourceName"},
         "PricingPlan":{
           "shape":"PricingPlan",
@@ -2055,9 +2308,16 @@
       "type":"double",
       "box":true
     },
+    "GeoArn":{
+      "type":"string",
+      "max":1600,
+      "min":0,
+      "pattern":"^arn(:[a-z0-9]+([.-][a-z0-9]+)*):geo(:([a-z0-9]+([.-][a-z0-9]+)*))(:[0-9]+):((\\*)|([-a-z]+[/][*-._\\w]+))$"
+    },
     "GeofenceGeometry":{
       "type":"structure",
       "members":{
+        "Circle":{"shape":"Circle"},
         "Polygon":{"shape":"LinearRings"}
       }
     },
@@ -2187,6 +2447,11 @@
           "location":"uri",
           "locationName":"FontUnicodeRange"
         },
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
+        },
         "MapName":{
           "shape":"ResourceName",
           "location":"uri",
@@ -2202,6 +2467,11 @@
       "type":"structure",
       "members":{
         "Blob":{"shape":"Blob"},
+        "CacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
         "ContentType":{
           "shape":"String",
           "location":"header",
@@ -2222,6 +2492,11 @@
           "location":"uri",
           "locationName":"FileName"
         },
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
+        },
         "MapName":{
           "shape":"ResourceName",
           "location":"uri",
@@ -2237,6 +2512,11 @@
       "type":"structure",
       "members":{
         "Blob":{"shape":"Blob"},
+        "CacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
         "ContentType":{
           "shape":"String",
           "location":"header",
@@ -2249,6 +2529,11 @@
       "type":"structure",
       "required":["MapName"],
       "members":{
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
+        },
         "MapName":{
           "shape":"ResourceName",
           "location":"uri",
@@ -2260,6 +2545,11 @@
       "type":"structure",
       "members":{
         "Blob":{"shape":"Blob"},
+        "CacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
         "ContentType":{
           "shape":"String",
           "location":"header",
@@ -2277,6 +2567,11 @@
         "Z"
       ],
       "members":{
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
+        },
         "MapName":{
           "shape":"ResourceName",
           "location":"uri",
@@ -2315,6 +2610,11 @@
       "type":"structure",
       "members":{
         "Blob":{"shape":"Blob"},
+        "CacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
         "ContentType":{
           "shape":"String",
           "location":"header",
@@ -2322,6 +2622,37 @@
         }
       },
       "payload":"Blob"
+    },
+    "GetPlaceRequest":{
+      "type":"structure",
+      "required":[
+        "IndexName",
+        "PlaceId"
+      ],
+      "members":{
+        "IndexName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"IndexName"
+        },
+        "Language":{
+          "shape":"LanguageTag",
+          "location":"querystring",
+          "locationName":"language"
+        },
+        "PlaceId":{
+          "shape":"PlaceId",
+          "location":"uri",
+          "locationName":"PlaceId"
+        }
+      }
+    },
+    "GetPlaceResponse":{
+      "type":"structure",
+      "required":["Place"],
+      "members":{
+        "Place":{"shape":"Place"}
+      }
     },
     "Id":{
       "type":"string",
@@ -2560,6 +2891,50 @@
         "Entries":{"shape":"ListGeofenceResponseEntryList"},
         "NextToken":{"shape":"Token"}
       }
+    },
+    "ListKeysRequest":{
+      "type":"structure",
+      "members":{
+        "Filter":{"shape":"ApiKeyFilter"},
+        "MaxResults":{"shape":"ListKeysRequestMaxResultsInteger"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListKeysRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListKeysResponse":{
+      "type":"structure",
+      "required":["Entries"],
+      "members":{
+        "Entries":{"shape":"ListKeysResponseEntryList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListKeysResponseEntry":{
+      "type":"structure",
+      "required":[
+        "CreateTime",
+        "ExpireTime",
+        "KeyName",
+        "Restrictions",
+        "UpdateTime"
+      ],
+      "members":{
+        "CreateTime":{"shape":"Timestamp"},
+        "Description":{"shape":"ResourceDescription"},
+        "ExpireTime":{"shape":"Timestamp"},
+        "KeyName":{"shape":"ResourceName"},
+        "Restrictions":{"shape":"ApiKeyRestrictions"},
+        "UpdateTime":{"shape":"Timestamp"}
+      }
+    },
+    "ListKeysResponseEntryList":{
+      "type":"list",
+      "member":{"shape":"ListKeysResponseEntry"}
     },
     "ListMapsRequest":{
       "type":"structure",
@@ -2824,7 +3199,9 @@
         "Region":{"shape":"String"},
         "Street":{"shape":"String"},
         "SubRegion":{"shape":"String"},
-        "TimeZone":{"shape":"TimeZone"}
+        "TimeZone":{"shape":"TimeZone"},
+        "UnitNumber":{"shape":"String"},
+        "UnitType":{"shape":"String"}
       }
     },
     "PlaceGeometry":{
@@ -2833,6 +3210,7 @@
         "Point":{"shape":"Position"}
       }
     },
+    "PlaceId":{"type":"string"},
     "PlaceIndexSearchResultLimit":{
       "type":"integer",
       "max":50,
@@ -2926,6 +3304,12 @@
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
+    "RefererPattern":{
+      "type":"string",
+      "max":253,
+      "min":0,
+      "pattern":"^([$\\-._+!*\\x{60}(),;/?:@=&\\w]|%([0-9a-fA-F?]{2}|[0-9a-fA-F?]?[*]))+$"
+    },
     "ResourceDescription":{
       "type":"string",
       "max":1000,
@@ -3005,7 +3389,8 @@
       ],
       "members":{
         "Distance":{"shape":"SearchForPositionResultDistanceDouble"},
-        "Place":{"shape":"Place"}
+        "Place":{"shape":"Place"},
+        "PlaceId":{"shape":"PlaceId"}
       }
     },
     "SearchForPositionResultDistanceDouble":{
@@ -3021,6 +3406,7 @@
       "type":"structure",
       "required":["Text"],
       "members":{
+        "PlaceId":{"shape":"PlaceId"},
         "Text":{"shape":"String"}
       }
     },
@@ -3034,6 +3420,7 @@
       "members":{
         "Distance":{"shape":"SearchForTextResultDistanceDouble"},
         "Place":{"shape":"Place"},
+        "PlaceId":{"shape":"PlaceId"},
         "Relevance":{"shape":"SearchForTextResultRelevanceDouble"}
       }
     },
@@ -3225,6 +3612,13 @@
       },
       "exception":true
     },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "Expired"
+      ]
+    },
     "Step":{
       "type":"structure",
       "required":[
@@ -3344,7 +3738,9 @@
       "enum":[
         "Car",
         "Truck",
-        "Walking"
+        "Walking",
+        "Bicycle",
+        "Motorcycle"
       ]
     },
     "TruckDimensions":{
@@ -3442,6 +3838,35 @@
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
+    "UpdateKeyRequest":{
+      "type":"structure",
+      "required":["KeyName"],
+      "members":{
+        "Description":{"shape":"ResourceDescription"},
+        "ExpireTime":{"shape":"Timestamp"},
+        "ForceUpdate":{"shape":"Boolean"},
+        "KeyName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"KeyName"
+        },
+        "NoExpiry":{"shape":"Boolean"},
+        "Restrictions":{"shape":"ApiKeyRestrictions"}
+      }
+    },
+    "UpdateKeyResponse":{
+      "type":"structure",
+      "required":[
+        "KeyArn",
+        "KeyName",
+        "UpdateTime"
+      ],
+      "members":{
+        "KeyArn":{"shape":"Arn"},
+        "KeyName":{"shape":"ResourceName"},
+        "UpdateTime":{"shape":"Timestamp"}
+      }
+    },
     "UpdateMapRequest":{
       "type":"structure",
       "required":["MapName"],
@@ -3467,7 +3892,7 @@
         "UpdateTime"
       ],
       "members":{
-        "MapArn":{"shape":"Arn"},
+        "MapArn":{"shape":"GeoArn"},
         "MapName":{"shape":"ResourceName"},
         "UpdateTime":{"shape":"Timestamp"}
       }

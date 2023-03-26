@@ -321,7 +321,8 @@
         "EndTime":{"shape":"ISOTimestamp"},
         "PeriodInSeconds":{"shape":"Integer"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "PeriodAlignment":{"shape":"PeriodAlignment"}
       }
     },
     "GetResourceMetricsResponse":{
@@ -359,7 +360,7 @@
     },
     "Limit":{
       "type":"integer",
-      "max":10,
+      "max":25,
       "min":1
     },
     "ListAvailableResourceDimensionsRequest":{
@@ -408,7 +409,7 @@
     },
     "MaxResults":{
       "type":"integer",
-      "max":20,
+      "max":25,
       "min":0
     },
     "MetricDimensionGroups":{
@@ -473,6 +474,13 @@
         "Message":{"shape":"ErrorString"}
       },
       "exception":true
+    },
+    "PeriodAlignment":{
+      "type":"string",
+      "enum":[
+        "END_TIME",
+        "START_TIME"
+      ]
     },
     "RequestString":{
       "type":"string",

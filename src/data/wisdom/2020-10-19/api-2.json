@@ -505,10 +505,7 @@
     },
     "AppIntegrationsConfiguration":{
       "type":"structure",
-      "required":[
-        "appIntegrationArn",
-        "objectFields"
-      ],
+      "required":["appIntegrationArn"],
       "members":{
         "appIntegrationArn":{"shape":"GenericArn"},
         "objectFields":{"shape":"ObjectFieldsList"}
@@ -759,7 +756,7 @@
     },
     "ContentType":{
       "type":"string",
-      "pattern":"^(text/(plain|html))|(application/x\\.wisdom-json;source=(salesforce|servicenow|zendesk))$"
+      "pattern":"^(text/(plain|html))|(application/(pdf|vnd\\.openxmlformats-officedocument\\.wordprocessingml\\.document))|(application/x\\.wisdom-json;source=(salesforce|servicenow|zendesk))$"
     },
     "CreateAssistantAssociationRequest":{
       "type":"structure",
@@ -835,7 +832,7 @@
         "overrideLinkOutUri":{"shape":"Uri"},
         "tags":{"shape":"Tags"},
         "title":{"shape":"ContentTitle"},
-        "uploadId":{"shape":"NonEmptyString"}
+        "uploadId":{"shape":"UploadId"}
       }
     },
     "CreateContentResponse":{
@@ -1815,7 +1812,7 @@
       ],
       "members":{
         "headersToInclude":{"shape":"Headers"},
-        "uploadId":{"shape":"NonEmptyString"},
+        "uploadId":{"shape":"UploadId"},
         "url":{"shape":"Url"},
         "urlExpiry":{"shape":"SyntheticTimestamp_epoch_seconds"}
       }
@@ -1925,7 +1922,7 @@
         "removeOverrideLinkOutUri":{"shape":"Boolean"},
         "revisionId":{"shape":"NonEmptyString"},
         "title":{"shape":"ContentTitle"},
-        "uploadId":{"shape":"NonEmptyString"}
+        "uploadId":{"shape":"UploadId"}
       }
     },
     "UpdateContentResponse":{
@@ -1954,6 +1951,11 @@
       "members":{
         "knowledgeBase":{"shape":"KnowledgeBaseData"}
       }
+    },
+    "UploadId":{
+      "type":"string",
+      "max":1200,
+      "min":1
     },
     "Uri":{
       "type":"string",

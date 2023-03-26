@@ -3,14 +3,16 @@ namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\XmlErrorParser;
 use Aws\Test\TestServiceTrait;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Psr7;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\ErrorParser\XmlErrorParser
  */
 class XmlErrorParserTest extends TestCase
 {
+    use ArraySubsetAsserts;
     use TestServiceTrait;
 
     /**

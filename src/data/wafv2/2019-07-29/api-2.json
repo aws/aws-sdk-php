@@ -45,7 +45,8 @@
         {"shape":"WAFInvalidResourceException"},
         {"shape":"WAFUnavailableEntityException"},
         {"shape":"WAFSubscriptionNotFoundException"},
-        {"shape":"WAFExpiredManagedRuleGroupVersionException"}
+        {"shape":"WAFExpiredManagedRuleGroupVersionException"},
+        {"shape":"WAFInvalidOperationException"}
       ]
     },
     "CreateIPSet":{
@@ -129,7 +130,8 @@
         {"shape":"WAFTagOperationInternalErrorException"},
         {"shape":"WAFSubscriptionNotFoundException"},
         {"shape":"WAFInvalidOperationException"},
-        {"shape":"WAFConfigurationWarningException"}
+        {"shape":"WAFConfigurationWarningException"},
+        {"shape":"WAFExpiredManagedRuleGroupVersionException"}
       ]
     },
     "DeleteFirewallManagerRuleGroups":{
@@ -807,6 +809,22 @@
     }
   },
   "shapes":{
+    "AWSManagedRulesATPRuleSet":{
+      "type":"structure",
+      "required":["LoginPath"],
+      "members":{
+        "LoginPath":{"shape":"String"},
+        "RequestInspection":{"shape":"RequestInspection"},
+        "ResponseInspection":{"shape":"ResponseInspection"}
+      }
+    },
+    "AWSManagedRulesBotControlRuleSet":{
+      "type":"structure",
+      "required":["InspectionLevel"],
+      "members":{
+        "InspectionLevel":{"shape":"InspectionLevel"}
+      }
+    },
     "Action":{"type":"string"},
     "ActionCondition":{
       "type":"structure",
@@ -822,6 +840,7 @@
         "BLOCK",
         "COUNT",
         "CAPTCHA",
+        "CHALLENGE",
         "EXCLUDED_AS_COUNT"
       ]
     },
@@ -917,6 +936,26 @@
       }
     },
     "CaptchaResponse":{
+      "type":"structure",
+      "members":{
+        "ResponseCode":{"shape":"ResponseCode"},
+        "SolveTimestamp":{"shape":"SolveTimestamp"},
+        "FailureReason":{"shape":"FailureReason"}
+      }
+    },
+    "ChallengeAction":{
+      "type":"structure",
+      "members":{
+        "CustomRequestHandling":{"shape":"CustomRequestHandling"}
+      }
+    },
+    "ChallengeConfig":{
+      "type":"structure",
+      "members":{
+        "ImmunityTimeProperty":{"shape":"ImmunityTimeProperty"}
+      }
+    },
+    "ChallengeResponse":{
       "type":"structure",
       "members":{
         "ResponseCode":{"shape":"ResponseCode"},
@@ -1348,7 +1387,9 @@
         "VisibilityConfig":{"shape":"VisibilityConfig"},
         "Tags":{"shape":"TagList"},
         "CustomResponseBodies":{"shape":"CustomResponseBodies"},
-        "CaptchaConfig":{"shape":"CaptchaConfig"}
+        "CaptchaConfig":{"shape":"CaptchaConfig"},
+        "ChallengeConfig":{"shape":"ChallengeConfig"},
+        "TokenDomains":{"shape":"TokenDomains"}
       }
     },
     "CreateWebACLResponse":{
@@ -1617,12 +1658,25 @@
       "member":{"shape":"ExcludedRule"},
       "max":100
     },
+    "FailureCode":{
+      "type":"integer",
+      "max":999,
+      "min":0
+    },
     "FailureReason":{
       "type":"string",
       "enum":[
         "TOKEN_MISSING",
-        "TOKEN_EXPIRED"
+        "TOKEN_EXPIRED",
+        "TOKEN_INVALID",
+        "TOKEN_DOMAIN_MISMATCH"
       ]
+    },
+    "FailureValue":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":".*\\S.*"
     },
     "FallbackBehavior":{
       "type":"string",
@@ -2099,6 +2153,13 @@
         "ImmunityTime":{"shape":"TimeWindowSecond"}
       }
     },
+    "InspectionLevel":{
+      "type":"string",
+      "enum":[
+        "COMMON",
+        "TARGETED"
+      ]
+    },
     "JsonBody":{
       "type":"structure",
       "required":[
@@ -2432,16 +2493,33 @@
     "ManagedRuleGroupConfig":{
       "type":"structure",
       "members":{
-        "LoginPath":{"shape":"LoginPathString"},
-        "PayloadType":{"shape":"PayloadType"},
-        "UsernameField":{"shape":"UsernameField"},
-        "PasswordField":{"shape":"PasswordField"}
+        "LoginPath":{
+          "shape":"LoginPathString",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Use AWSManagedRulesATPRuleSet LoginPath"
+        },
+        "PayloadType":{
+          "shape":"PayloadType",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Use AWSManagedRulesATPRuleSet RequestInspection PayloadType"
+        },
+        "UsernameField":{
+          "shape":"UsernameField",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Use AWSManagedRulesATPRuleSet RequestInspection UsernameField"
+        },
+        "PasswordField":{
+          "shape":"PasswordField",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Use AWSManagedRulesATPRuleSet RequestInspection PasswordField"
+        },
+        "AWSManagedRulesBotControlRuleSet":{"shape":"AWSManagedRulesBotControlRuleSet"},
+        "AWSManagedRulesATPRuleSet":{"shape":"AWSManagedRulesATPRuleSet"}
       }
     },
     "ManagedRuleGroupConfigs":{
       "type":"list",
-      "member":{"shape":"ManagedRuleGroupConfig"},
-      "min":1
+      "member":{"shape":"ManagedRuleGroupConfig"}
     },
     "ManagedRuleGroupStatement":{
       "type":"structure",
@@ -2455,7 +2533,8 @@
         "Version":{"shape":"VersionKeyString"},
         "ExcludedRules":{"shape":"ExcludedRules"},
         "ScopeDownStatement":{"shape":"Statement"},
-        "ManagedRuleGroupConfigs":{"shape":"ManagedRuleGroupConfigs"}
+        "ManagedRuleGroupConfigs":{"shape":"ManagedRuleGroupConfigs"},
+        "RuleActionOverrides":{"shape":"RuleActionOverrides"}
       }
     },
     "ManagedRuleGroupSummaries":{
@@ -2664,7 +2743,10 @@
         "HEADER_MATCH_PATTERN",
         "COOKIE_MATCH_PATTERN",
         "MAP_MATCH_SCOPE",
-        "OVERSIZE_HANDLING"
+        "OVERSIZE_HANDLING",
+        "CHALLENGE_CONFIG",
+        "TOKEN_DOMAIN",
+        "ATP_RULE_SET_RESPONSE_INSPECTION"
       ]
     },
     "ParameterExceptionParameter":{
@@ -2886,6 +2968,19 @@
         "Timestamp":{"shape":"Timestamp"}
       }
     },
+    "RequestInspection":{
+      "type":"structure",
+      "required":[
+        "PayloadType",
+        "UsernameField",
+        "PasswordField"
+      ],
+      "members":{
+        "PayloadType":{"shape":"PayloadType"},
+        "UsernameField":{"shape":"UsernameField"},
+        "PasswordField":{"shape":"PasswordField"}
+      }
+    },
     "ResourceArn":{
       "type":"string",
       "max":2048,
@@ -2901,7 +2996,9 @@
       "enum":[
         "APPLICATION_LOAD_BALANCER",
         "API_GATEWAY",
-        "APPSYNC"
+        "APPSYNC",
+        "COGNITO_USER_POOL",
+        "APP_RUNNER_SERVICE"
       ]
     },
     "ResponseCode":{"type":"integer"},
@@ -2918,6 +3015,117 @@
         "TEXT_HTML",
         "APPLICATION_JSON"
       ]
+    },
+    "ResponseInspection":{
+      "type":"structure",
+      "members":{
+        "StatusCode":{"shape":"ResponseInspectionStatusCode"},
+        "Header":{"shape":"ResponseInspectionHeader"},
+        "BodyContains":{"shape":"ResponseInspectionBodyContains"},
+        "Json":{"shape":"ResponseInspectionJson"}
+      }
+    },
+    "ResponseInspectionBodyContains":{
+      "type":"structure",
+      "required":[
+        "SuccessStrings",
+        "FailureStrings"
+      ],
+      "members":{
+        "SuccessStrings":{"shape":"ResponseInspectionBodyContainsSuccessStrings"},
+        "FailureStrings":{"shape":"ResponseInspectionBodyContainsFailureStrings"}
+      }
+    },
+    "ResponseInspectionBodyContainsFailureStrings":{
+      "type":"list",
+      "member":{"shape":"FailureValue"},
+      "max":5,
+      "min":1
+    },
+    "ResponseInspectionBodyContainsSuccessStrings":{
+      "type":"list",
+      "member":{"shape":"SuccessValue"},
+      "max":5,
+      "min":1
+    },
+    "ResponseInspectionHeader":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "SuccessValues",
+        "FailureValues"
+      ],
+      "members":{
+        "Name":{"shape":"ResponseInspectionHeaderName"},
+        "SuccessValues":{"shape":"ResponseInspectionHeaderSuccessValues"},
+        "FailureValues":{"shape":"ResponseInspectionHeaderFailureValues"}
+      }
+    },
+    "ResponseInspectionHeaderFailureValues":{
+      "type":"list",
+      "member":{"shape":"FailureValue"},
+      "max":3,
+      "min":1
+    },
+    "ResponseInspectionHeaderName":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
+    "ResponseInspectionHeaderSuccessValues":{
+      "type":"list",
+      "member":{"shape":"SuccessValue"},
+      "max":3,
+      "min":1
+    },
+    "ResponseInspectionJson":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "SuccessValues",
+        "FailureValues"
+      ],
+      "members":{
+        "Identifier":{"shape":"FieldIdentifier"},
+        "SuccessValues":{"shape":"ResponseInspectionJsonSuccessValues"},
+        "FailureValues":{"shape":"ResponseInspectionJsonFailureValues"}
+      }
+    },
+    "ResponseInspectionJsonFailureValues":{
+      "type":"list",
+      "member":{"shape":"FailureValue"},
+      "max":5,
+      "min":1
+    },
+    "ResponseInspectionJsonSuccessValues":{
+      "type":"list",
+      "member":{"shape":"SuccessValue"},
+      "max":5,
+      "min":1
+    },
+    "ResponseInspectionStatusCode":{
+      "type":"structure",
+      "required":[
+        "SuccessCodes",
+        "FailureCodes"
+      ],
+      "members":{
+        "SuccessCodes":{"shape":"ResponseInspectionStatusCodeSuccessCodes"},
+        "FailureCodes":{"shape":"ResponseInspectionStatusCodeFailureCodes"}
+      }
+    },
+    "ResponseInspectionStatusCodeFailureCodes":{
+      "type":"list",
+      "member":{"shape":"FailureCode"},
+      "max":10,
+      "min":1
+    },
+    "ResponseInspectionStatusCodeSuccessCodes":{
+      "type":"list",
+      "member":{"shape":"SuccessCode"},
+      "max":10,
+      "min":1
     },
     "ResponseStatusCode":{
       "type":"integer",
@@ -2940,7 +3148,8 @@
         "OverrideAction":{"shape":"OverrideAction"},
         "RuleLabels":{"shape":"Labels"},
         "VisibilityConfig":{"shape":"VisibilityConfig"},
-        "CaptchaConfig":{"shape":"CaptchaConfig"}
+        "CaptchaConfig":{"shape":"CaptchaConfig"},
+        "ChallengeConfig":{"shape":"ChallengeConfig"}
       }
     },
     "RuleAction":{
@@ -2949,8 +3158,26 @@
         "Block":{"shape":"BlockAction"},
         "Allow":{"shape":"AllowAction"},
         "Count":{"shape":"CountAction"},
-        "Captcha":{"shape":"CaptchaAction"}
+        "Captcha":{"shape":"CaptchaAction"},
+        "Challenge":{"shape":"ChallengeAction"}
       }
+    },
+    "RuleActionOverride":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "ActionToUse"
+      ],
+      "members":{
+        "Name":{"shape":"EntityName"},
+        "ActionToUse":{"shape":"RuleAction"}
+      }
+    },
+    "RuleActionOverrides":{
+      "type":"list",
+      "member":{"shape":"RuleActionOverride"},
+      "max":100,
+      "min":1
     },
     "RuleGroup":{
       "type":"structure",
@@ -2980,7 +3207,8 @@
       "required":["ARN"],
       "members":{
         "ARN":{"shape":"ResourceArn"},
-        "ExcludedRules":{"shape":"ExcludedRules"}
+        "ExcludedRules":{"shape":"ExcludedRules"},
+        "RuleActionOverrides":{"shape":"RuleActionOverrides"}
       }
     },
     "RuleGroupSummaries":{
@@ -3035,7 +3263,9 @@
         "RequestHeadersInserted":{"shape":"HTTPHeaders"},
         "ResponseCodeSent":{"shape":"ResponseStatusCode"},
         "Labels":{"shape":"Labels"},
-        "CaptchaResponse":{"shape":"CaptchaResponse"}
+        "CaptchaResponse":{"shape":"CaptchaResponse"},
+        "ChallengeResponse":{"shape":"ChallengeResponse"},
+        "OverriddenAction":{"shape":"Action"}
       }
     },
     "SampledHTTPRequests":{
@@ -3133,6 +3363,18 @@
     "Statements":{
       "type":"list",
       "member":{"shape":"Statement"}
+    },
+    "String":{"type":"string"},
+    "SuccessCode":{
+      "type":"integer",
+      "max":999,
+      "min":0
+    },
+    "SuccessValue":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":".*\\S.*"
     },
     "Tag":{
       "type":"structure",
@@ -3257,6 +3499,16 @@
       "min":60
     },
     "Timestamp":{"type":"timestamp"},
+    "TokenDomain":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"^[\\w\\.\\-/]+$"
+    },
+    "TokenDomains":{
+      "type":"list",
+      "member":{"shape":"TokenDomain"}
+    },
     "URIString":{"type":"string"},
     "UntagResourceRequest":{
       "type":"structure",
@@ -3395,7 +3647,9 @@
         "VisibilityConfig":{"shape":"VisibilityConfig"},
         "LockToken":{"shape":"LockToken"},
         "CustomResponseBodies":{"shape":"CustomResponseBodies"},
-        "CaptchaConfig":{"shape":"CaptchaConfig"}
+        "CaptchaConfig":{"shape":"CaptchaConfig"},
+        "ChallengeConfig":{"shape":"ChallengeConfig"},
+        "TokenDomains":{"shape":"TokenDomains"}
       }
     },
     "UpdateWebACLResponse":{
@@ -3607,7 +3861,9 @@
         "ManagedByFirewallManager":{"shape":"Boolean"},
         "LabelNamespace":{"shape":"LabelName"},
         "CustomResponseBodies":{"shape":"CustomResponseBodies"},
-        "CaptchaConfig":{"shape":"CaptchaConfig"}
+        "CaptchaConfig":{"shape":"CaptchaConfig"},
+        "ChallengeConfig":{"shape":"ChallengeConfig"},
+        "TokenDomains":{"shape":"TokenDomains"}
       }
     },
     "WebACLSummaries":{

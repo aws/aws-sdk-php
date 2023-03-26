@@ -7,7 +7,7 @@ use Aws\Crypto\Cipher\Cbc;
 use Aws\Crypto\Cipher\CipherMethod;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class AesEncryptingStreamTest extends TestCase
 {
@@ -172,11 +172,10 @@ class AesEncryptingStreamTest extends TestCase
      * @dataProvider cipherMethodProvider
      *
      * @param CipherMethod $cipherMethod
-     *
-     * @expectedException \LogicException
      */
     public function testDoesNotSupportSeekingFromEnd(CipherMethod $cipherMethod)
     {
+        $this->expectException(\LogicException::class);
         $stream = new AesEncryptingStream(Psr7\Utils::streamFor('foo'), 'foo', $cipherMethod);
 
         $stream->seek(1, SEEK_END);

@@ -3,7 +3,7 @@
   "service": "<p><fullname>AWS Panorama</fullname> <p> <b>Overview</b> </p> <p>This is the <i>AWS Panorama API Reference</i>. For an introduction to the service, see <a href=\"https://docs.aws.amazon.com/panorama/latest/dev/panorama-welcome.html\">What is AWS Panorama?</a> in the <i>AWS Panorama Developer Guide</i>.</p></p>",
   "operations": {
     "CreateApplicationInstance": "<p>Creates an application instance and deploys it to a device.</p>",
-    "CreateJobForDevices": "<p>Creates a job to run on one or more devices.</p>",
+    "CreateJobForDevices": "<p>Creates a job to run on a device. A job can update a device's software or reboot it.</p>",
     "CreateNodeFromTemplateJob": "<p>Creates a camera stream node.</p>",
     "CreatePackage": "<p>Creates a package and storage location in an Amazon S3 access point.</p>",
     "CreatePackageImportJob": "<p>Imports a node package.</p>",
@@ -32,6 +32,7 @@
     "ProvisionDevice": "<p>Creates a device and returns a configuration archive. The configuration archive is a ZIP file that contains a provisioning certificate that is valid for 5 minutes. Name the configuration archive <code>certificates-omni_<i>device-name</i>.zip</code> and transfer it to the device within 5 minutes. Use the included USB storage device and connect it to the USB 3.0 port next to the HDMI output.</p>",
     "RegisterPackageVersion": "<p>Registers a package version.</p>",
     "RemoveApplicationInstance": "<p>Removes an application instance.</p>",
+    "SignalApplicationInstanceNodeInstances": "<p>Signal camera nodes to stop or resume.</p>",
     "TagResource": "<p>Tags a resource.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
     "UpdateDeviceMetadata": "<p>Updates a device's metadata.</p>"
@@ -88,7 +89,9 @@
         "DescribeApplicationInstanceResponse$ApplicationInstanceIdToReplace": "<p>The ID of the application instance that this instance replaced.</p>",
         "ListApplicationInstanceDependenciesRequest$ApplicationInstanceId": "<p>The application instance's ID.</p>",
         "ListApplicationInstanceNodeInstancesRequest$ApplicationInstanceId": "<p>The node instances' application instance ID.</p>",
-        "RemoveApplicationInstanceRequest$ApplicationInstanceId": "<p>An application instance ID.</p>"
+        "RemoveApplicationInstanceRequest$ApplicationInstanceId": "<p>An application instance ID.</p>",
+        "SignalApplicationInstanceNodeInstancesRequest$ApplicationInstanceId": "<p>An application instance ID.</p>",
+        "SignalApplicationInstanceNodeInstancesResponse$ApplicationInstanceId": "<p>An application instance ID.</p>"
       }
     },
     "ApplicationInstanceName": {
@@ -124,7 +127,8 @@
       "base": null,
       "refs": {
         "DeletePackageRequest$ForceDelete": "<p>Delete the package even if it has artifacts stored in its access point. Deletes the package's artifacts from Amazon S3.</p>",
-        "DescribePackageVersionResponse$IsLatestPatch": "<p>Whether the version is the latest available.</p>"
+        "DescribePackageVersionResponse$IsLatestPatch": "<p>Whether the version is the latest available.</p>",
+        "OTAJobConfig$AllowMajorVersionUpdate": "<p>Whether to apply the update if it is a major version change.</p>"
       }
     },
     "Bucket": {
@@ -241,7 +245,8 @@
     "CurrentSoftware": {
       "base": null,
       "refs": {
-        "DescribeDeviceResponse$CurrentSoftware": "<p>The device's current software version.</p>"
+        "DescribeDeviceResponse$CurrentSoftware": "<p>The device's current software version.</p>",
+        "Device$CurrentSoftware": "<p>A device's current software.</p>"
       }
     },
     "DefaultGateway": {
@@ -390,6 +395,7 @@
         "DescribeDeviceResponse$Description": "<p>The device's description.</p>",
         "DescribeNodeFromTemplateJobResponse$NodeDescription": "<p>The node's description.</p>",
         "DescribeNodeResponse$Description": "<p>The node's description.</p>",
+        "Device$Description": "<p>A description for the device.</p>",
         "Node$Description": "<p>The node's description.</p>",
         "NodeInputPort$Description": "<p>The input port's description.</p>",
         "NodeOutputPort$Description": "<p>The output port's description.</p>",
@@ -397,10 +403,24 @@
         "UpdateDeviceMetadataRequest$Description": "<p>A description for the device.</p>"
       }
     },
+    "DesiredState": {
+      "base": null,
+      "refs": {
+        "ReportedRuntimeContextState$DesiredState": "<p>The application's desired state.</p>"
+      }
+    },
     "Device": {
       "base": "<p>A device.</p>",
       "refs": {
         "DeviceList$member": null
+      }
+    },
+    "DeviceAggregatedStatus": {
+      "base": null,
+      "refs": {
+        "DescribeDeviceResponse$DeviceAggregatedStatus": "<p>A device's aggregated status. Including the device's connection status, provisioning status, and lease status.</p>",
+        "Device$DeviceAggregatedStatus": "<p>A device's aggregated status. Including the device's connection status, provisioning status, and lease status.</p>",
+        "ListDevicesRequest$DeviceAggregatedStatusFilter": "<p>Filter based on a device's status.</p>"
       }
     },
     "DeviceArn": {
@@ -446,7 +466,7 @@
     "DeviceIdList": {
       "base": null,
       "refs": {
-        "CreateJobForDevicesRequest$DeviceIds": "<p>IDs of target devices.</p>"
+        "CreateJobForDevicesRequest$DeviceIds": "<p>ID of target device.</p>"
       }
     },
     "DeviceJob": {
@@ -458,7 +478,7 @@
     "DeviceJobConfig": {
       "base": "<p>A job's configuration.</p>",
       "refs": {
-        "CreateJobForDevicesRequest$DeviceJobConfig": "<p>Configuration settings for the job.</p>"
+        "CreateJobForDevicesRequest$DeviceJobConfig": "<p>Configuration settings for a software update job.</p>"
       }
     },
     "DeviceJobList": {
@@ -485,6 +505,12 @@
         "ProvisionDeviceRequest$Name": "<p>A name for the device.</p>"
       }
     },
+    "DeviceReportedStatus": {
+      "base": null,
+      "refs": {
+        "ReportedRuntimeContextState$DeviceReportedStatus": "<p>The application's reported status.</p>"
+      }
+    },
     "DeviceSerialNumber": {
       "base": null,
       "refs": {
@@ -503,7 +529,8 @@
       "base": null,
       "refs": {
         "DescribeDeviceJobResponse$DeviceType": "<p>The device's type.</p>",
-        "DescribeDeviceResponse$Type": "<p>The device's type.</p>"
+        "DescribeDeviceResponse$Type": "<p>The device's type.</p>",
+        "Device$Type": "<p>The device's type.</p>"
       }
     },
     "Dns": {
@@ -542,6 +569,7 @@
       "base": null,
       "refs": {
         "DescribeDeviceJobResponse$ImageVersion": "<p>For an OTA job, the target version of the device software.</p>",
+        "LatestDeviceJob$ImageVersion": "<p>The target version of the device software.</p>",
         "OTAJobConfig$ImageVersion": "<p>The target version of the device software.</p>"
       }
     },
@@ -629,7 +657,10 @@
     "JobType": {
       "base": null,
       "refs": {
-        "CreateJobForDevicesRequest$JobType": "<p>The type of job to run.</p>"
+        "CreateJobForDevicesRequest$JobType": "<p>The type of job to run.</p>",
+        "DescribeDeviceJobResponse$JobType": "<p>The job's type.</p>",
+        "DeviceJob$JobType": "<p>The job's type.</p>",
+        "LatestDeviceJob$JobType": "<p>The job's type.</p>"
       }
     },
     "LastUpdatedTime": {
@@ -646,6 +677,13 @@
       "base": null,
       "refs": {
         "DescribeDeviceResponse$LatestAlternateSoftware": "<p>The most recent beta software release.</p>"
+      }
+    },
+    "LatestDeviceJob": {
+      "base": "<p>Returns information about the latest device job.</p>",
+      "refs": {
+        "DescribeDeviceResponse$LatestDeviceJob": "<p>A device's latest job. Includes the target image version, and the job status.</p>",
+        "Device$LatestDeviceJob": "<p>A device's latest job. Includes the target image version, and the update job status.</p>"
       }
     },
     "LatestSoftware": {
@@ -709,6 +747,12 @@
     "ListDevicesResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "ListDevicesSortBy": {
+      "base": null,
+      "refs": {
+        "ListDevicesRequest$SortBy": "<p>The target column to be sorted on. Default column sort is CREATED_TIME.</p>"
       }
     },
     "ListNodeFromTemplateJobsRequest": {
@@ -818,6 +862,12 @@
         "ListNodesRequest$MaxResults": "<p>The maximum number of nodes to return in one page of results.</p>",
         "ListPackageImportJobsRequest$MaxResults": "<p>The maximum number of package import jobs to return in one page of results.</p>",
         "ListPackagesRequest$MaxResults": "<p>The maximum number of packages to return in one page of results.</p>"
+      }
+    },
+    "NameFilter": {
+      "base": null,
+      "refs": {
+        "ListDevicesRequest$NameFilter": "<p>Filter based on device's name. Prefixes supported.</p>"
       }
     },
     "NetworkConnectionStatus": {
@@ -930,7 +980,8 @@
     "NodeInstanceId": {
       "base": null,
       "refs": {
-        "NodeInstance$NodeInstanceId": "<p>The instance's ID.</p>"
+        "NodeInstance$NodeInstanceId": "<p>The instance's ID.</p>",
+        "NodeSignal$NodeInstanceId": "<p>The camera node's name, from the application manifest.</p>"
       }
     },
     "NodeInstanceStatus": {
@@ -1045,6 +1096,24 @@
         "PackageObject$PackageVersion": "<p>The object's package version.</p>",
         "PackageVersionOutputConfig$PackageVersion": "<p>The output's package version.</p>",
         "RegisterPackageVersionRequest$PackageVersion": "<p>A package version.</p>"
+      }
+    },
+    "NodeSignal": {
+      "base": "<p>A signal to a camera node to start or stop processing video.</p>",
+      "refs": {
+        "NodeSignalList$member": null
+      }
+    },
+    "NodeSignalList": {
+      "base": null,
+      "refs": {
+        "SignalApplicationInstanceNodeInstancesRequest$NodeSignals": "<p>A list of signals.</p>"
+      }
+    },
+    "NodeSignalValue": {
+      "base": null,
+      "refs": {
+        "NodeSignal$Signal": "<p>The signal value.</p>"
       }
     },
     "NodesList": {
@@ -1295,6 +1364,19 @@
       "refs": {
       }
     },
+    "ReportedRuntimeContextState": {
+      "base": "<p>An application instance's state.</p>",
+      "refs": {
+        "ReportedRuntimeContextStates$member": null
+      }
+    },
+    "ReportedRuntimeContextStates": {
+      "base": null,
+      "refs": {
+        "ApplicationInstance$RuntimeContextStates": "<p>The application's state.</p>",
+        "DescribeApplicationInstanceResponse$RuntimeContextStates": "<p>The application instance's state.</p>"
+      }
+    },
     "ResourceArn": {
       "base": null,
       "refs": {
@@ -1314,6 +1396,12 @@
         "InternalServerException$RetryAfterSeconds": "<p>The number of seconds a client should wait before retrying the call.</p>"
       }
     },
+    "RuntimeContextName": {
+      "base": null,
+      "refs": {
+        "ReportedRuntimeContextState$RuntimeContextName": "<p>The device's name.</p>"
+      }
+    },
     "RuntimeRoleArn": {
       "base": null,
       "refs": {
@@ -1330,6 +1418,22 @@
     "ServiceQuotaExceededException": {
       "base": "<p>The request would cause a limit to be exceeded.</p>",
       "refs": {
+      }
+    },
+    "SignalApplicationInstanceNodeInstancesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SignalApplicationInstanceNodeInstancesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SortOrder": {
+      "base": null,
+      "refs": {
+        "ListDevicesRequest$SortOrder": "<p>The sorting order for the returned list. SortOrder is DESCENDING by default based on CREATED_TIME. Otherwise, SortOrder is ASCENDING.</p>"
       }
     },
     "StaticIpConnectionInfo": {
@@ -1400,6 +1504,7 @@
         "DescribeApplicationInstanceResponse$Tags": "<p>The application instance's tags.</p>",
         "DescribeDeviceResponse$Tags": "<p>The device's tags.</p>",
         "DescribePackageResponse$Tags": "<p>The package's tags.</p>",
+        "Device$Tags": "<p>The device's tags.</p>",
         "JobResourceTags$Tags": "<p>The job's tags.</p>",
         "ListTagsForResourceResponse$Tags": "<p>A list of tags.</p>",
         "PackageListItem$Tags": "<p>The package's tags.</p>",
@@ -1462,7 +1567,8 @@
         "DescribePackageResponse$CreatedTime": "<p>When the package was created.</p>",
         "DescribePackageVersionResponse$RegisteredTime": "<p>The version's registered time.</p>",
         "Node$CreatedTime": "<p>When the node was created.</p>",
-        "PackageListItem$CreatedTime": "<p>When the package was created.</p>"
+        "PackageListItem$CreatedTime": "<p>When the package was created.</p>",
+        "ReportedRuntimeContextState$DeviceReportedTime": "<p>When the device reported the application's state.</p>"
       }
     },
     "Token": {
@@ -1502,7 +1608,8 @@
     "UpdateProgress": {
       "base": null,
       "refs": {
-        "DescribeDeviceJobResponse$Status": "<p>The job's status.</p>"
+        "DescribeDeviceJobResponse$Status": "<p>The job's status.</p>",
+        "LatestDeviceJob$Status": "<p>Status of the latest device job.</p>"
       }
     },
     "ValidationException": {

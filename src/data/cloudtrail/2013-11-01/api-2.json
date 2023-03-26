@@ -30,9 +30,11 @@
         {"shape":"InvalidTagParameterException"},
         {"shape":"InactiveEventDataStoreException"},
         {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"ChannelNotFoundException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"ConflictException"}
       ],
       "idempotent":true
@@ -54,9 +56,33 @@
         {"shape":"QueryIdNotFoundException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"UnsupportedOperationException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"ConflictException"}
       ],
       "idempotent":true
+    },
+    "CreateChannel":{
+      "name":"CreateChannel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateChannelRequest"},
+      "output":{"shape":"CreateChannelResponse"},
+      "errors":[
+        {"shape":"ChannelMaxLimitExceededException"},
+        {"shape":"InvalidSourceException"},
+        {"shape":"ChannelAlreadyExistsException"},
+        {"shape":"EventDataStoreARNInvalidException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InvalidEventDataStoreCategoryException"},
+        {"shape":"InactiveEventDataStoreException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidTagParameterException"},
+        {"shape":"TagsLimitExceededException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
     },
     "CreateEventDataStore":{
       "name":"CreateEventDataStore",
@@ -69,16 +95,22 @@
       "errors":[
         {"shape":"EventDataStoreAlreadyExistsException"},
         {"shape":"EventDataStoreMaxLimitExceededException"},
+        {"shape":"InvalidEventSelectorsException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidTagParameterException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"ConflictException"},
+        {"shape":"InsufficientEncryptionPolicyException"},
+        {"shape":"InvalidKmsKeyIdException"},
+        {"shape":"KmsKeyNotFoundException"},
+        {"shape":"KmsException"},
         {"shape":"CloudTrailAccessNotEnabledException"},
         {"shape":"InsufficientDependencyServiceAccessPermissionException"},
         {"shape":"NotOrganizationMasterAccountException"},
         {"shape":"OrganizationsNotInUseException"},
-        {"shape":"OrganizationNotInAllFeaturesModeException"}
+        {"shape":"OrganizationNotInAllFeaturesModeException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
       ]
     },
     "CreateTrail":{
@@ -102,6 +134,7 @@
         {"shape":"InvalidKmsKeyIdException"},
         {"shape":"InvalidTrailNameException"},
         {"shape":"TrailNotProvidedException"},
+        {"shape":"TagsLimitExceededException"},
         {"shape":"InvalidParameterCombinationException"},
         {"shape":"KmsKeyNotFoundException"},
         {"shape":"KmsKeyDisabledException"},
@@ -117,10 +150,26 @@
         {"shape":"NotOrganizationMasterAccountException"},
         {"shape":"OrganizationsNotInUseException"},
         {"shape":"OrganizationNotInAllFeaturesModeException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"CloudTrailInvalidClientTokenIdException"},
         {"shape":"ConflictException"}
       ],
       "idempotent":true
+    },
+    "DeleteChannel":{
+      "name":"DeleteChannel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteChannelRequest"},
+      "output":{"shape":"DeleteChannelResponse"},
+      "errors":[
+        {"shape":"ChannelARNInvalidException"},
+        {"shape":"ChannelNotFoundException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
     },
     "DeleteEventDataStore":{
       "name":"DeleteEventDataStore",
@@ -134,12 +183,34 @@
         {"shape":"EventDataStoreARNInvalidException"},
         {"shape":"EventDataStoreNotFoundException"},
         {"shape":"EventDataStoreTerminationProtectedException"},
+        {"shape":"EventDataStoreHasOngoingImportException"},
+        {"shape":"InactiveEventDataStoreException"},
         {"shape":"InvalidParameterException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
+        {"shape":"ChannelExistsForEDSException"},
         {"shape":"InsufficientDependencyServiceAccessPermissionException"}
       ]
+    },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ResourceARNNotValidException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourcePolicyNotFoundException"},
+        {"shape":"ResourceTypeNotSupportedException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
     },
     "DeleteTrail":{
       "name":"DeleteTrail",
@@ -152,12 +223,37 @@
       "errors":[
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
+        {"shape":"CloudTrailARNInvalidException"},
+        {"shape":"ConflictException"},
         {"shape":"InvalidHomeRegionException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
+        {"shape":"InsufficientDependencyServiceAccessPermissionException"}
+      ],
+      "idempotent":true
+    },
+    "DeregisterOrganizationDelegatedAdmin":{
+      "name":"DeregisterOrganizationDelegatedAdmin",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeregisterOrganizationDelegatedAdminRequest"},
+      "output":{"shape":"DeregisterOrganizationDelegatedAdminResponse"},
+      "errors":[
+        {"shape":"AccountNotFoundException"},
+        {"shape":"AccountNotRegisteredException"},
+        {"shape":"CloudTrailAccessNotEnabledException"},
+        {"shape":"ConflictException"},
         {"shape":"InsufficientDependencyServiceAccessPermissionException"},
-        {"shape":"ConflictException"}
+        {"shape":"InvalidParameterException"},
+        {"shape":"NotOrganizationManagementAccountException"},
+        {"shape":"OrganizationNotInAllFeaturesModeException"},
+        {"shape":"OrganizationsNotInUseException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"OperationNotPermittedException"}
       ],
       "idempotent":true
     },
@@ -176,7 +272,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"QueryIdNotFoundException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"UnsupportedOperationException"}
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
       ],
       "idempotent":true
     },
@@ -191,7 +288,24 @@
       "errors":[
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"InvalidTrailNameException"}
+        {"shape":"InvalidTrailNameException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
+      ],
+      "idempotent":true
+    },
+    "GetChannel":{
+      "name":"GetChannel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetChannelRequest"},
+      "output":{"shape":"GetChannelResponse"},
+      "errors":[
+        {"shape":"ChannelARNInvalidException"},
+        {"shape":"ChannelNotFoundException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
       ],
       "idempotent":true
     },
@@ -208,7 +322,8 @@
         {"shape":"EventDataStoreNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"UnsupportedOperationException"}
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
       ],
       "idempotent":true
     },
@@ -223,10 +338,27 @@
       "errors":[
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
+        {"shape":"CloudTrailARNInvalidException"},
         {"shape":"UnsupportedOperationException"},
-        {"shape":"OperationNotPermittedException"}
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
       ],
       "idempotent":true
+    },
+    "GetImport":{
+      "name":"GetImport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetImportRequest"},
+      "output":{"shape":"GetImportResponse"},
+      "errors":[
+        {"shape":"ImportNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
     },
     "GetInsightSelectors":{
       "name":"GetInsightSelectors",
@@ -239,9 +371,11 @@
       "errors":[
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
+        {"shape":"CloudTrailARNInvalidException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"InsightNotEnabledException"}
+        {"shape":"InsightNotEnabledException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
       ],
       "idempotent":true
     },
@@ -261,9 +395,29 @@
         {"shape":"InvalidNextTokenException"},
         {"shape":"InvalidParameterException"},
         {"shape":"QueryIdNotFoundException"},
+        {"shape":"InsufficientEncryptionPolicyException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
+      ]
+    },
+    "GetResourcePolicy":{
+      "name":"GetResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourcePolicyRequest"},
+      "output":{"shape":"GetResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ResourceARNNotValidException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourcePolicyNotFoundException"},
+        {"shape":"ResourceTypeNotSupportedException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"UnsupportedOperationException"}
-      ]
+      ],
+      "idempotent":true
     },
     "GetTrail":{
       "name":"GetTrail",
@@ -274,6 +428,7 @@
       "input":{"shape":"GetTrailRequest"},
       "output":{"shape":"GetTrailResponse"},
       "errors":[
+        {"shape":"CloudTrailARNInvalidException"},
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
         {"shape":"UnsupportedOperationException"},
@@ -290,10 +445,26 @@
       "input":{"shape":"GetTrailStatusRequest"},
       "output":{"shape":"GetTrailStatusResponse"},
       "errors":[
+        {"shape":"CloudTrailARNInvalidException"},
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"}
+      ],
+      "idempotent":true
+    },
+    "ListChannels":{
+      "name":"ListChannels",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListChannelsRequest"},
+      "output":{"shape":"ListChannelsResponse"},
+      "errors":[
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
       ],
       "idempotent":true
     },
@@ -308,6 +479,39 @@
       "errors":[
         {"shape":"InvalidMaxResultsException"},
         {"shape":"InvalidNextTokenException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
+      ],
+      "idempotent":true
+    },
+    "ListImportFailures":{
+      "name":"ListImportFailures",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListImportFailuresRequest"},
+      "output":{"shape":"ListImportFailuresResponse"},
+      "errors":[
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
+    },
+    "ListImports":{
+      "name":"ListImports",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListImportsRequest"},
+      "output":{"shape":"ListImportsResponse"},
+      "errors":[
+        {"shape":"EventDataStoreARNInvalidException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"InvalidParameterException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"UnsupportedOperationException"}
       ],
@@ -347,7 +551,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidQueryStatusException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"UnsupportedOperationException"}
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
       ],
       "idempotent":true
     },
@@ -368,7 +573,8 @@
         {"shape":"EventDataStoreNotFoundException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"InvalidTokenException"}
+        {"shape":"InvalidTokenException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
       ],
       "idempotent":true
     },
@@ -416,11 +622,13 @@
       "errors":[
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
+        {"shape":"CloudTrailARNInvalidException"},
         {"shape":"InvalidHomeRegionException"},
         {"shape":"InvalidEventSelectorsException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"InsufficientDependencyServiceAccessPermissionException"}
       ],
       "idempotent":true
@@ -436,6 +644,7 @@
       "errors":[
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
+        {"shape":"CloudTrailARNInvalidException"},
         {"shape":"InvalidHomeRegionException"},
         {"shape":"InvalidInsightSelectorsException"},
         {"shape":"InsufficientS3BucketPolicyException"},
@@ -444,7 +653,51 @@
         {"shape":"KmsException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"NotOrganizationMasterAccountException"}
+        {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
+      ],
+      "idempotent":true
+    },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ResourceARNNotValidException"},
+        {"shape":"ResourcePolicyNotValidException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceTypeNotSupportedException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
+    },
+    "RegisterOrganizationDelegatedAdmin":{
+      "name":"RegisterOrganizationDelegatedAdmin",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RegisterOrganizationDelegatedAdminRequest"},
+      "output":{"shape":"RegisterOrganizationDelegatedAdminResponse"},
+      "errors":[
+        {"shape":"AccountRegisteredException"},
+        {"shape":"AccountNotFoundException"},
+        {"shape":"InsufficientDependencyServiceAccessPermissionException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"CannotDelegateManagementAccountException"},
+        {"shape":"CloudTrailAccessNotEnabledException"},
+        {"shape":"ConflictException"},
+        {"shape":"DelegatedAdminAccountLimitExceededException"},
+        {"shape":"NotOrganizationManagementAccountException"},
+        {"shape":"OrganizationNotInAllFeaturesModeException"},
+        {"shape":"OrganizationsNotInUseException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"OperationNotPermittedException"}
       ],
       "idempotent":true
     },
@@ -464,9 +717,11 @@
         {"shape":"InvalidTagParameterException"},
         {"shape":"InactiveEventDataStoreException"},
         {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"ChannelNotFoundException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"NotOrganizationMasterAccountException"}
+        {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
       ],
       "idempotent":true
     },
@@ -490,7 +745,33 @@
         {"shape":"InsufficientDependencyServiceAccessPermissionException"},
         {"shape":"OrganizationsNotInUseException"},
         {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"OrganizationNotInAllFeaturesModeException"}
+      ]
+    },
+    "StartImport":{
+      "name":"StartImport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartImportRequest"},
+      "output":{"shape":"StartImportResponse"},
+      "errors":[
+        {"shape":"AccountHasOngoingImportException"},
+        {"shape":"EventDataStoreARNInvalidException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InvalidEventDataStoreStatusException"},
+        {"shape":"InvalidEventDataStoreCategoryException"},
+        {"shape":"InactiveEventDataStoreException"},
+        {"shape":"InvalidImportSourceException"},
+        {"shape":"ImportNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InsufficientEncryptionPolicyException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
       ]
     },
     "StartLogging":{
@@ -502,12 +783,15 @@
       "input":{"shape":"StartLoggingRequest"},
       "output":{"shape":"StartLoggingResponse"},
       "errors":[
+        {"shape":"CloudTrailARNInvalidException"},
+        {"shape":"ConflictException"},
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
         {"shape":"InvalidHomeRegionException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"InsufficientDependencyServiceAccessPermissionException"}
       ],
       "idempotent":true
@@ -527,10 +811,31 @@
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidQueryStatementException"},
         {"shape":"MaxConcurrentQueriesException"},
+        {"shape":"InsufficientEncryptionPolicyException"},
+        {"shape":"InvalidS3PrefixException"},
+        {"shape":"InvalidS3BucketNameException"},
+        {"shape":"InsufficientS3BucketPolicyException"},
+        {"shape":"S3BucketDoesNotExistException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"UnsupportedOperationException"}
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
       ],
       "idempotent":true
+    },
+    "StopImport":{
+      "name":"StopImport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopImportRequest"},
+      "output":{"shape":"StopImportResponse"},
+      "errors":[
+        {"shape":"ImportNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
     },
     "StopLogging":{
       "name":"StopLogging",
@@ -543,11 +848,36 @@
       "errors":[
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
+        {"shape":"CloudTrailARNInvalidException"},
+        {"shape":"ConflictException"},
         {"shape":"InvalidHomeRegionException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"InsufficientDependencyServiceAccessPermissionException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateChannel":{
+      "name":"UpdateChannel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateChannelRequest"},
+      "output":{"shape":"UpdateChannelResponse"},
+      "errors":[
+        {"shape":"ChannelARNInvalidException"},
+        {"shape":"ChannelNotFoundException"},
+        {"shape":"ChannelAlreadyExistsException"},
+        {"shape":"EventDataStoreARNInvalidException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InvalidEventDataStoreCategoryException"},
+        {"shape":"InactiveEventDataStoreException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
       ],
       "idempotent":true
     },
@@ -562,14 +892,21 @@
       "errors":[
         {"shape":"EventDataStoreARNInvalidException"},
         {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InvalidEventSelectorsException"},
+        {"shape":"EventDataStoreHasOngoingImportException"},
         {"shape":"InactiveEventDataStoreException"},
         {"shape":"InvalidParameterException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"UnsupportedOperationException"},
+        {"shape":"InsufficientEncryptionPolicyException"},
+        {"shape":"InvalidKmsKeyIdException"},
+        {"shape":"KmsKeyNotFoundException"},
+        {"shape":"KmsException"},
         {"shape":"CloudTrailAccessNotEnabledException"},
         {"shape":"InsufficientDependencyServiceAccessPermissionException"},
         {"shape":"OrganizationsNotInUseException"},
         {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"OrganizationNotInAllFeaturesModeException"}
       ],
       "idempotent":true
@@ -595,6 +932,8 @@
         {"shape":"InvalidTrailNameException"},
         {"shape":"TrailNotProvidedException"},
         {"shape":"InvalidEventSelectorsException"},
+        {"shape":"CloudTrailARNInvalidException"},
+        {"shape":"ConflictException"},
         {"shape":"InvalidParameterCombinationException"},
         {"shape":"InvalidHomeRegionException"},
         {"shape":"KmsKeyNotFoundException"},
@@ -610,12 +949,44 @@
         {"shape":"OrganizationsNotInUseException"},
         {"shape":"NotOrganizationMasterAccountException"},
         {"shape":"OrganizationNotInAllFeaturesModeException"},
-        {"shape":"CloudTrailInvalidClientTokenIdException"}
+        {"shape":"NoManagementAccountSLRExistsException"},
+        {"shape":"CloudTrailInvalidClientTokenIdException"},
+        {"shape":"InvalidParameterException"}
       ],
       "idempotent":true
     }
   },
   "shapes":{
+    "AccountHasOngoingImportException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "AccountId":{
+      "type":"string",
+      "max":16,
+      "min":12,
+      "pattern":"\\d+"
+    },
+    "AccountNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "AccountNotRegisteredException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "AccountRegisteredException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "AddTagsRequest":{
       "type":"structure",
       "required":[
@@ -666,12 +1037,13 @@
     "ByteBuffer":{"type":"blob"},
     "CancelQueryRequest":{
       "type":"structure",
-      "required":[
-        "EventDataStore",
-        "QueryId"
-      ],
+      "required":["QueryId"],
       "members":{
-        "EventDataStore":{"shape":"EventDataStoreArn"},
+        "EventDataStore":{
+          "shape":"EventDataStoreArn",
+          "deprecated":true,
+          "deprecatedMessage":"EventDataStore is no longer required by CancelQueryRequest"
+        },
         "QueryId":{"shape":"UUID"}
       }
     },
@@ -685,6 +1057,65 @@
         "QueryId":{"shape":"UUID"},
         "QueryStatus":{"shape":"QueryStatus"}
       }
+    },
+    "CannotDelegateManagementAccountException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "Channel":{
+      "type":"structure",
+      "members":{
+        "ChannelArn":{"shape":"ChannelArn"},
+        "Name":{"shape":"ChannelName"}
+      }
+    },
+    "ChannelARNInvalidException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ChannelAlreadyExistsException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ChannelArn":{
+      "type":"string",
+      "max":256,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9._/\\-:]+$"
+    },
+    "ChannelExistsForEDSException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ChannelMaxLimitExceededException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ChannelName":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9._\\-]+$"
+    },
+    "ChannelNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "Channels":{
+      "type":"list",
+      "member":{"shape":"Channel"}
     },
     "CloudTrailARNInvalidException":{
       "type":"structure",
@@ -716,6 +1147,30 @@
       },
       "exception":true
     },
+    "CreateChannelRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Source",
+        "Destinations"
+      ],
+      "members":{
+        "Name":{"shape":"ChannelName"},
+        "Source":{"shape":"Source"},
+        "Destinations":{"shape":"Destinations"},
+        "Tags":{"shape":"TagsList"}
+      }
+    },
+    "CreateChannelResponse":{
+      "type":"structure",
+      "members":{
+        "ChannelArn":{"shape":"ChannelArn"},
+        "Name":{"shape":"ChannelName"},
+        "Source":{"shape":"Source"},
+        "Destinations":{"shape":"Destinations"},
+        "Tags":{"shape":"TagsList"}
+      }
+    },
     "CreateEventDataStoreRequest":{
       "type":"structure",
       "required":["Name"],
@@ -726,7 +1181,8 @@
         "OrganizationEnabled":{"shape":"Boolean"},
         "RetentionPeriod":{"shape":"RetentionPeriod"},
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
-        "TagsList":{"shape":"TagsList"}
+        "TagsList":{"shape":"TagsList"},
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
       }
     },
     "CreateEventDataStoreResponse":{
@@ -742,7 +1198,8 @@
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
         "TagsList":{"shape":"TagsList"},
         "CreatedTimestamp":{"shape":"Date"},
-        "UpdatedTimestamp":{"shape":"Date"}
+        "UpdatedTimestamp":{"shape":"Date"},
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
       }
     },
     "CreateTrailRequest":{
@@ -803,6 +1260,24 @@
       "member":{"shape":"DataResource"}
     },
     "Date":{"type":"timestamp"},
+    "DelegatedAdminAccountLimitExceededException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "DeleteChannelRequest":{
+      "type":"structure",
+      "required":["Channel"],
+      "members":{
+        "Channel":{"shape":"ChannelArn"}
+      }
+    },
+    "DeleteChannelResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteEventDataStoreRequest":{
       "type":"structure",
       "required":["EventDataStore"],
@@ -811,6 +1286,18 @@
       }
     },
     "DeleteEventDataStoreResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"}
+      }
+    },
+    "DeleteResourcePolicyResponse":{
       "type":"structure",
       "members":{
       }
@@ -827,14 +1314,46 @@
       "members":{
       }
     },
+    "DeliveryS3Uri":{
+      "type":"string",
+      "max":1024,
+      "pattern":"s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](/.*)?"
+    },
+    "DeliveryStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "FAILED",
+        "FAILED_SIGNING_FILE",
+        "PENDING",
+        "RESOURCE_NOT_FOUND",
+        "ACCESS_DENIED",
+        "ACCESS_DENIED_SIGNING_FILE",
+        "CANCELLED",
+        "UNKNOWN"
+      ]
+    },
+    "DeregisterOrganizationDelegatedAdminRequest":{
+      "type":"structure",
+      "required":["DelegatedAdminAccountId"],
+      "members":{
+        "DelegatedAdminAccountId":{"shape":"AccountId"}
+      }
+    },
+    "DeregisterOrganizationDelegatedAdminResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DescribeQueryRequest":{
       "type":"structure",
-      "required":[
-        "EventDataStore",
-        "QueryId"
-      ],
+      "required":["QueryId"],
       "members":{
-        "EventDataStore":{"shape":"EventDataStoreArn"},
+        "EventDataStore":{
+          "shape":"EventDataStoreArn",
+          "deprecated":true,
+          "deprecatedMessage":"EventDataStore is no longer required by DescribeQueryRequest"
+        },
         "QueryId":{"shape":"UUID"}
       }
     },
@@ -845,7 +1364,9 @@
         "QueryString":{"shape":"QueryStatement"},
         "QueryStatus":{"shape":"QueryStatus"},
         "QueryStatistics":{"shape":"QueryStatisticsForDescribeQuery"},
-        "ErrorMessage":{"shape":"ErrorMessage"}
+        "ErrorMessage":{"shape":"ErrorMessage"},
+        "DeliveryS3Uri":{"shape":"DeliveryS3Uri"},
+        "DeliveryStatus":{"shape":"DeliveryStatus"}
       }
     },
     "DescribeTrailsRequest":{
@@ -860,6 +1381,30 @@
       "members":{
         "trailList":{"shape":"TrailList"}
       }
+    },
+    "Destination":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Location"
+      ],
+      "members":{
+        "Type":{"shape":"DestinationType"},
+        "Location":{"shape":"Location"}
+      }
+    },
+    "DestinationType":{
+      "type":"string",
+      "enum":[
+        "EVENT_DATA_STORE",
+        "AWS_SERVICE"
+      ]
+    },
+    "Destinations":{
+      "type":"list",
+      "member":{"shape":"Destination"},
+      "max":200,
+      "min":1
     },
     "ErrorMessage":{
       "type":"string",
@@ -950,6 +1495,18 @@
       "min":3,
       "pattern":"^[a-zA-Z0-9._/\\-:]+$"
     },
+    "EventDataStoreHasOngoingImportException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "EventDataStoreKmsKeyId":{
+      "type":"string",
+      "max":350,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9._/\\-:]+$"
+    },
     "EventDataStoreMaxLimitExceededException":{
       "type":"structure",
       "members":{
@@ -1007,6 +1564,24 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "GetChannelRequest":{
+      "type":"structure",
+      "required":["Channel"],
+      "members":{
+        "Channel":{"shape":"ChannelArn"}
+      }
+    },
+    "GetChannelResponse":{
+      "type":"structure",
+      "members":{
+        "ChannelArn":{"shape":"ChannelArn"},
+        "Name":{"shape":"ChannelName"},
+        "Source":{"shape":"Source"},
+        "SourceConfig":{"shape":"SourceConfig"},
+        "Destinations":{"shape":"Destinations"},
+        "IngestionStatus":{"shape":"IngestionStatus"}
+      }
+    },
     "GetEventDataStoreRequest":{
       "type":"structure",
       "required":["EventDataStore"],
@@ -1026,7 +1601,8 @@
         "RetentionPeriod":{"shape":"RetentionPeriod"},
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
         "CreatedTimestamp":{"shape":"Date"},
-        "UpdatedTimestamp":{"shape":"Date"}
+        "UpdatedTimestamp":{"shape":"Date"},
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
       }
     },
     "GetEventSelectorsRequest":{
@@ -1042,6 +1618,27 @@
         "TrailARN":{"shape":"String"},
         "EventSelectors":{"shape":"EventSelectors"},
         "AdvancedEventSelectors":{"shape":"AdvancedEventSelectors"}
+      }
+    },
+    "GetImportRequest":{
+      "type":"structure",
+      "required":["ImportId"],
+      "members":{
+        "ImportId":{"shape":"UUID"}
+      }
+    },
+    "GetImportResponse":{
+      "type":"structure",
+      "members":{
+        "ImportId":{"shape":"UUID"},
+        "Destinations":{"shape":"ImportDestinations"},
+        "ImportSource":{"shape":"ImportSource"},
+        "StartEventTime":{"shape":"Date"},
+        "EndEventTime":{"shape":"Date"},
+        "ImportStatus":{"shape":"ImportStatus"},
+        "CreatedTimestamp":{"shape":"Date"},
+        "UpdatedTimestamp":{"shape":"Date"},
+        "ImportStatistics":{"shape":"ImportStatistics"}
       }
     },
     "GetInsightSelectorsRequest":{
@@ -1060,12 +1657,13 @@
     },
     "GetQueryResultsRequest":{
       "type":"structure",
-      "required":[
-        "EventDataStore",
-        "QueryId"
-      ],
+      "required":["QueryId"],
       "members":{
-        "EventDataStore":{"shape":"EventDataStoreArn"},
+        "EventDataStore":{
+          "shape":"EventDataStoreArn",
+          "deprecated":true,
+          "deprecatedMessage":"EventDataStore is no longer required by GetQueryResultsRequest"
+        },
         "QueryId":{"shape":"UUID"},
         "NextToken":{"shape":"PaginationToken"},
         "MaxQueryResults":{"shape":"MaxQueryResults"}
@@ -1079,6 +1677,20 @@
         "QueryResultRows":{"shape":"QueryResultRows"},
         "NextToken":{"shape":"PaginationToken"},
         "ErrorMessage":{"shape":"ErrorMessage"}
+      }
+    },
+    "GetResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"}
+      }
+    },
+    "GetResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"},
+        "ResourcePolicy":{"shape":"ResourcePolicy"}
       }
     },
     "GetTrailRequest":{
@@ -1123,6 +1735,81 @@
         "TimeLoggingStopped":{"shape":"String"}
       }
     },
+    "ImportDestinations":{
+      "type":"list",
+      "member":{"shape":"EventDataStoreArn"},
+      "max":1,
+      "min":1
+    },
+    "ImportFailureList":{
+      "type":"list",
+      "member":{"shape":"ImportFailureListItem"}
+    },
+    "ImportFailureListItem":{
+      "type":"structure",
+      "members":{
+        "Location":{"shape":"String"},
+        "Status":{"shape":"ImportFailureStatus"},
+        "ErrorType":{"shape":"String"},
+        "ErrorMessage":{"shape":"String"},
+        "LastUpdatedTime":{"shape":"Date"}
+      }
+    },
+    "ImportFailureStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "RETRY",
+        "SUCCEEDED"
+      ]
+    },
+    "ImportNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ImportSource":{
+      "type":"structure",
+      "required":["S3"],
+      "members":{
+        "S3":{"shape":"S3ImportSource"}
+      }
+    },
+    "ImportStatistics":{
+      "type":"structure",
+      "members":{
+        "PrefixesFound":{"shape":"Long"},
+        "PrefixesCompleted":{"shape":"Long"},
+        "FilesCompleted":{"shape":"Long"},
+        "EventsCompleted":{"shape":"Long"},
+        "FailedEntries":{"shape":"Long"}
+      }
+    },
+    "ImportStatus":{
+      "type":"string",
+      "enum":[
+        "INITIALIZING",
+        "IN_PROGRESS",
+        "FAILED",
+        "STOPPED",
+        "COMPLETED"
+      ]
+    },
+    "ImportsList":{
+      "type":"list",
+      "member":{"shape":"ImportsListItem"}
+    },
+    "ImportsListItem":{
+      "type":"structure",
+      "members":{
+        "ImportId":{"shape":"UUID"},
+        "ImportStatus":{"shape":"ImportStatus"},
+        "Destinations":{"shape":"ImportDestinations"},
+        "CreatedTimestamp":{"shape":"Date"},
+        "UpdatedTimestamp":{"shape":"Date"}
+      }
+    },
     "InactiveEventDataStoreException":{
       "type":"structure",
       "members":{
@@ -1134,6 +1821,16 @@
       "members":{
       },
       "exception":true
+    },
+    "IngestionStatus":{
+      "type":"structure",
+      "members":{
+        "LatestIngestionSuccessTime":{"shape":"Date"},
+        "LatestIngestionSuccessEventID":{"shape":"UUID"},
+        "LatestIngestionErrorCode":{"shape":"ErrorMessage"},
+        "LatestIngestionAttemptTime":{"shape":"Date"},
+        "LatestIngestionAttemptEventID":{"shape":"UUID"}
+      }
     },
     "InsightNotEnabledException":{
       "type":"structure",
@@ -1207,6 +1904,12 @@
       },
       "exception":true
     },
+    "InvalidEventDataStoreCategoryException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "InvalidEventDataStoreStatusException":{
       "type":"structure",
       "members":{
@@ -1220,6 +1923,12 @@
       "exception":true
     },
     "InvalidHomeRegionException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "InvalidImportSourceException":{
       "type":"structure",
       "members":{
       },
@@ -1297,6 +2006,12 @@
       },
       "exception":true
     },
+    "InvalidSourceException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "InvalidTagParameterException":{
       "type":"structure",
       "members":{
@@ -1340,6 +2055,25 @@
       },
       "exception":true
     },
+    "ListChannelsMaxResultsCount":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "ListChannelsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListChannelsMaxResultsCount"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListChannelsResponse":{
+      "type":"structure",
+      "members":{
+        "Channels":{"shape":"Channels"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListEventDataStoresMaxResultsCount":{
       "type":"integer",
       "max":1000,
@@ -1356,6 +2090,48 @@
       "type":"structure",
       "members":{
         "EventDataStores":{"shape":"EventDataStores"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListImportFailuresMaxResultsCount":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "ListImportFailuresRequest":{
+      "type":"structure",
+      "required":["ImportId"],
+      "members":{
+        "ImportId":{"shape":"UUID"},
+        "MaxResults":{"shape":"ListImportFailuresMaxResultsCount"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListImportFailuresResponse":{
+      "type":"structure",
+      "members":{
+        "Failures":{"shape":"ImportFailureList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListImportsMaxResultsCount":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "ListImportsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListImportsMaxResultsCount"},
+        "Destination":{"shape":"EventDataStoreArn"},
+        "ImportStatus":{"shape":"ImportStatus"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListImportsResponse":{
+      "type":"structure",
+      "members":{
+        "Imports":{"shape":"ImportsList"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1426,6 +2202,12 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "Location":{
+      "type":"string",
+      "max":1024,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9._/\\-:]+$"
+    },
     "Long":{"type":"long"},
     "LookupAttribute":{
       "type":"structure",
@@ -1435,7 +2217,7 @@
       ],
       "members":{
         "AttributeKey":{"shape":"LookupAttributeKey"},
-        "AttributeValue":{"shape":"String"}
+        "AttributeValue":{"shape":"LookupAttributeValue"}
       }
     },
     "LookupAttributeKey":{
@@ -1450,6 +2232,11 @@
         "EventSource",
         "AccessKeyId"
       ]
+    },
+    "LookupAttributeValue":{
+      "type":"string",
+      "max":2000,
+      "min":1
     },
     "LookupAttributesList":{
       "type":"list",
@@ -1496,6 +2283,18 @@
       "exception":true
     },
     "NextToken":{"type":"string"},
+    "NoManagementAccountSLRExistsException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "NotOrganizationManagementAccountException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "NotOrganizationMasterAccountException":{
       "type":"structure",
       "members":{
@@ -1585,6 +2384,24 @@
         "InsightSelectors":{"shape":"InsightSelectors"}
       }
     },
+    "PutResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "ResourcePolicy"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"},
+        "ResourcePolicy":{"shape":"ResourcePolicy"}
+      }
+    },
+    "PutResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"},
+        "ResourcePolicy":{"shape":"ResourcePolicy"}
+      }
+    },
     "Queries":{
       "type":"list",
       "member":{"shape":"Query"}
@@ -1661,6 +2478,18 @@
         "All"
       ]
     },
+    "RegisterOrganizationDelegatedAdminRequest":{
+      "type":"structure",
+      "required":["MemberAccountId"],
+      "members":{
+        "MemberAccountId":{"shape":"AccountId"}
+      }
+    },
+    "RegisterOrganizationDelegatedAdminResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "RemoveTagsRequest":{
       "type":"structure",
       "required":[
@@ -1684,6 +2513,18 @@
         "ResourceName":{"shape":"String"}
       }
     },
+    "ResourceARNNotValidException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ResourceArn":{
+      "type":"string",
+      "max":256,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9._/\\-:]+$"
+    },
     "ResourceIdList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -1693,6 +2534,23 @@
       "member":{"shape":"Resource"}
     },
     "ResourceNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ResourcePolicy":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ResourcePolicyNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ResourcePolicyNotValidException":{
       "type":"structure",
       "members":{
       },
@@ -1734,7 +2592,8 @@
         "RetentionPeriod":{"shape":"RetentionPeriod"},
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
         "CreatedTimestamp":{"shape":"Date"},
-        "UpdatedTimestamp":{"shape":"Date"}
+        "UpdatedTimestamp":{"shape":"Date"},
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
       }
     },
     "RetentionPeriod":{
@@ -1748,6 +2607,19 @@
       },
       "exception":true
     },
+    "S3ImportSource":{
+      "type":"structure",
+      "required":[
+        "S3LocationUri",
+        "S3BucketRegion",
+        "S3BucketAccessRoleArn"
+      ],
+      "members":{
+        "S3LocationUri":{"shape":"String"},
+        "S3BucketRegion":{"shape":"String"},
+        "S3BucketAccessRoleArn":{"shape":"String"}
+      }
+    },
     "SelectorField":{
       "type":"string",
       "max":1000,
@@ -1759,6 +2631,42 @@
       "max":1000,
       "min":0,
       "pattern":".*"
+    },
+    "Source":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":".*"
+    },
+    "SourceConfig":{
+      "type":"structure",
+      "members":{
+        "ApplyToAllRegions":{"shape":"Boolean"},
+        "AdvancedEventSelectors":{"shape":"AdvancedEventSelectors"}
+      }
+    },
+    "StartImportRequest":{
+      "type":"structure",
+      "members":{
+        "Destinations":{"shape":"ImportDestinations"},
+        "ImportSource":{"shape":"ImportSource"},
+        "StartEventTime":{"shape":"Date"},
+        "EndEventTime":{"shape":"Date"},
+        "ImportId":{"shape":"UUID"}
+      }
+    },
+    "StartImportResponse":{
+      "type":"structure",
+      "members":{
+        "ImportId":{"shape":"UUID"},
+        "Destinations":{"shape":"ImportDestinations"},
+        "ImportSource":{"shape":"ImportSource"},
+        "StartEventTime":{"shape":"Date"},
+        "EndEventTime":{"shape":"Date"},
+        "ImportStatus":{"shape":"ImportStatus"},
+        "CreatedTimestamp":{"shape":"Date"},
+        "UpdatedTimestamp":{"shape":"Date"}
+      }
     },
     "StartLoggingRequest":{
       "type":"structure",
@@ -1776,13 +2684,35 @@
       "type":"structure",
       "required":["QueryStatement"],
       "members":{
-        "QueryStatement":{"shape":"QueryStatement"}
+        "QueryStatement":{"shape":"QueryStatement"},
+        "DeliveryS3Uri":{"shape":"DeliveryS3Uri"}
       }
     },
     "StartQueryResponse":{
       "type":"structure",
       "members":{
         "QueryId":{"shape":"UUID"}
+      }
+    },
+    "StopImportRequest":{
+      "type":"structure",
+      "required":["ImportId"],
+      "members":{
+        "ImportId":{"shape":"UUID"}
+      }
+    },
+    "StopImportResponse":{
+      "type":"structure",
+      "members":{
+        "ImportId":{"shape":"UUID"},
+        "ImportSource":{"shape":"ImportSource"},
+        "Destinations":{"shape":"ImportDestinations"},
+        "ImportStatus":{"shape":"ImportStatus"},
+        "CreatedTimestamp":{"shape":"Date"},
+        "UpdatedTimestamp":{"shape":"Date"},
+        "StartEventTime":{"shape":"Date"},
+        "EndEventTime":{"shape":"Date"},
+        "ImportStatistics":{"shape":"ImportStatistics"}
       }
     },
     "StopLoggingRequest":{
@@ -1902,6 +2832,24 @@
       },
       "exception":true
     },
+    "UpdateChannelRequest":{
+      "type":"structure",
+      "required":["Channel"],
+      "members":{
+        "Channel":{"shape":"ChannelArn"},
+        "Destinations":{"shape":"Destinations"},
+        "Name":{"shape":"ChannelName"}
+      }
+    },
+    "UpdateChannelResponse":{
+      "type":"structure",
+      "members":{
+        "ChannelArn":{"shape":"ChannelArn"},
+        "Name":{"shape":"ChannelName"},
+        "Source":{"shape":"Source"},
+        "Destinations":{"shape":"Destinations"}
+      }
+    },
     "UpdateEventDataStoreRequest":{
       "type":"structure",
       "required":["EventDataStore"],
@@ -1912,7 +2860,8 @@
         "MultiRegionEnabled":{"shape":"Boolean"},
         "OrganizationEnabled":{"shape":"Boolean"},
         "RetentionPeriod":{"shape":"RetentionPeriod"},
-        "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"}
+        "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
       }
     },
     "UpdateEventDataStoreResponse":{
@@ -1927,7 +2876,8 @@
         "RetentionPeriod":{"shape":"RetentionPeriod"},
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
         "CreatedTimestamp":{"shape":"Date"},
-        "UpdatedTimestamp":{"shape":"Date"}
+        "UpdatedTimestamp":{"shape":"Date"},
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
       }
     },
     "UpdateTrailRequest":{

@@ -2,7 +2,7 @@
 namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\ShapeMap
@@ -15,11 +15,9 @@ class ShapeMapTest extends TestCase
         $this->assertEquals(['foo', 'baz'], $sm->getShapeNames());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testEnsuresShapeExists()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $sm = new ShapeMap([]);
         $sm->resolve(['shape' => 'missing']);
     }

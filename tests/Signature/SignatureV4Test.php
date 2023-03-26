@@ -3,12 +3,12 @@ namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\NoSeekStream;
 
 require_once __DIR__ . '/sig_hack.php';
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Signature\SignatureV4
@@ -19,16 +19,23 @@ class SignatureV4Test extends TestCase
     const DEFAULT_SECRET = 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY';
     const DEFAULT_DATETIME = 'Mon, 09 Sep 2011 23:36:00 GMT';
 
-    public function setup()
+    public function set_up()
     {
         $_SERVER['aws_time'] = strtotime('December 5, 2013 00:00:00 UTC');
+    }
+
+    public function tear_down()
+    {
+        parent::tear_down();
+
+        unset($_SERVER['aws_time']);
     }
 
     public function testReturnsRegionAndService()
     {
         $s = new SignatureV4('foo', 'bar');
-        $this->assertSame('foo', $this->readAttribute($s, 'service'));
-        $this->assertSame('bar', $this->readAttribute($s, 'region'));
+        $this->assertSame('foo', $this->getPropertyValue($s, 'service'));
+        $this->assertSame('bar', $this->getPropertyValue($s, 'region'));
     }
 
     public function testAddsSecurityTokenIfPresent()
@@ -76,19 +83,19 @@ class SignatureV4Test extends TestCase
         $request = new Request('GET', 'http://www.example.com');
         $credentials = new Credentials('fizz', 'buzz');
         $sig->signRequest($request, $credentials);
-        $this->assertCount(1, $this->readAttribute($sig, 'cache'));
+        $this->assertCount(1, $this->getPropertyValue($sig, 'cache'));
 
         $credentials = new Credentials('fizz', 'baz');
         $sig->signRequest($request, $credentials);
-        $this->assertCount(2, $this->readAttribute($sig, 'cache'));
+        $this->assertCount(2, $this->getPropertyValue($sig, 'cache'));
 
         $credentials = new Credentials('fizz', 'paz');
         $sig->signRequest($request, $credentials);
-        $this->assertCount(3, $this->readAttribute($sig, 'cache'));
+        $this->assertCount(3, $this->getPropertyValue($sig, 'cache'));
 
         $credentials = new Credentials('fizz', 'foobar');
         $sig->signRequest($request, $credentials);
-        $this->assertCount(1, $this->readAttribute($sig, 'cache'));
+        $this->assertCount(1, $this->getPropertyValue($sig, 'cache'));
     }
 
     private function getFixtures()
@@ -125,7 +132,7 @@ class SignatureV4Test extends TestCase
             $credentials,
             $dateTime
         )->getUri();
-        $this->assertContains('X-Amz-Expires=518400',$url);
+        $this->assertStringContainsString('X-Amz-Expires=518400',$url);
 
     }
 
@@ -135,7 +142,7 @@ class SignatureV4Test extends TestCase
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
         $url = (string) $signature->presign($request,$credentials,1386720000)->getUri();
-        $this->assertContains('X-Amz-Expires=518400',$url);
+        $this->assertStringContainsString('X-Amz-Expires=518400',$url);
     }
 
     public function testCreatesPresignedDateFromStrtotime()
@@ -148,7 +155,7 @@ class SignatureV4Test extends TestCase
             $credentials,
             'December 11, 2013 00:00:00 UTC'
         )->getUri();
-        $this->assertContains('X-Amz-Expires=518400',$url);
+        $this->assertStringContainsString('X-Amz-Expires=518400',$url);
     }
 
     public function testAddsSecurityTokenIfPresentInPresigned()
@@ -159,8 +166,8 @@ class SignatureV4Test extends TestCase
         $request = $signature->presign($request, $credentials, 1386720000);
         $this->assertEmpty($request->getHeader('X-Amz-Security-Token'));
         $url = (string) $request->getUri();
-        $this->assertContains('X-Amz-Security-Token=123', $url);
-        $this->assertContains('X-Amz-Expires=518400', $url);
+        $this->assertStringContainsString('X-Amz-Security-Token=123', $url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function getStartDateTimeInterfaceInputs()
@@ -186,8 +193,8 @@ class SignatureV4Test extends TestCase
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
         $url = (string) $signature->presign($request, $credentials, 1386720000, $options)->getUri();
-        $this->assertContains('X-Amz-Date=20131205T000000Z', $url);
-        $this->assertContains('X-Amz-Expires=518400', $url);
+        $this->assertStringContainsString('X-Amz-Date=20131205T000000Z', $url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function testUsesStartDateFromUnixTimestampIfPresent()
@@ -198,8 +205,8 @@ class SignatureV4Test extends TestCase
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
         $url = (string) $signature->presign($request, $credentials, 1386720000, $options)->getUri();
-        $this->assertContains('X-Amz-Date=20131205T000000Z', $url);
-        $this->assertContains('X-Amz-Expires=518400', $url);
+        $this->assertStringContainsString('X-Amz-Date=20131205T000000Z', $url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function testUsesStartDateFromStrtotimeIfPresent()
@@ -210,15 +217,13 @@ class SignatureV4Test extends TestCase
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
         $url = (string) $signature->presign($request, $credentials, 1386720000, $options)->getUri();
-        $this->assertContains('X-Amz-Date=20131205T000000Z', $url);
-        $this->assertContains('X-Amz-Expires=518400', $url);
+        $this->assertStringContainsString('X-Amz-Date=20131205T000000Z', $url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testEnsuresSigV4DurationIsLessThanOneWeek()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature) = $this->getFixtures();
         $signature->presign($request, $credentials, 'December 31, 2013 00:00:00 UTC');
@@ -254,11 +259,9 @@ class SignatureV4Test extends TestCase
         $this->assertSame('foo=bar&baz=bam', $request->getUri()->getQuery());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testEnsuresMethodIsPost()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $request = new Request('PUT', 'http://foo.com');
         SignatureV4::convertPostToGet($request);
     }
@@ -274,7 +277,7 @@ class SignatureV4Test extends TestCase
             'content-md5' => 'bogus'
         ]);
         $signed = $sig->signRequest($req, $creds);
-        $this->assertContains('content-md5;host;x-amz-date;x-amz-foo', $signed->getHeaderLine('Authorization'));
+        $this->assertStringContainsString('content-md5;host;x-amz-date;x-amz-foo', $signed->getHeaderLine('Authorization'));
     }
 
     public function testPresignSpecificHeaders()
@@ -290,7 +293,7 @@ class SignatureV4Test extends TestCase
             'x-amz-content-sha256' => 'abc',
         ]);
         $presigned = $sig->presign($req, $creds, '+5 minutes');
-        $this->assertContains(urlencode('host;x-amz-foo;content-md5;x-amz-meta-foo'), (string)$presigned->getUri());
+        $this->assertStringContainsString(urlencode('host;x-amz-foo;content-md5;x-amz-meta-foo'), (string)$presigned->getUri());
     }
 
     public function testPresignBlacklistedHeaders()
@@ -303,27 +306,23 @@ class SignatureV4Test extends TestCase
             'Content-Type' => 'text/html',
         ]);
         $presigned = $sig->presign($req, $creds, '+5 minutes');
-        $this->assertNotContains('user-agent', (string)$presigned->getUri());
-        $this->assertNotContains('X-Amz-User-Agent', (string)$presigned->getUri());
-        $this->assertNotContains('content-length', (string)$presigned->getUri());
-        $this->assertNotContains('Content-Type', (string)$presigned->getUri());
+        $this->assertStringNotContainsString('user-agent', (string)$presigned->getUri());
+        $this->assertStringNotContainsString('X-Amz-User-Agent', (string)$presigned->getUri());
+        $this->assertStringNotContainsString('content-length', (string)$presigned->getUri());
+        $this->assertStringNotContainsString('Content-Type', (string)$presigned->getUri());
     }
 
-    /**
-     * @expectedException \Aws\Exception\CouldNotCreateChecksumException
-     */
     public function testEnsuresContentSha256CanBeCalculated()
     {
+        $this->expectException(\Aws\Exception\CouldNotCreateChecksumException::class);
         list($request, $credentials, $signature) = $this->getFixtures();
         $request = $request->withBody(new NoSeekStream(Psr7\Utils::streamFor('foo')));
         $signature->signRequest($request, $credentials);
     }
 
-    /**
-     * @expectedException \Aws\Exception\CouldNotCreateChecksumException
-     */
     public function testEnsuresContentSha256CanBeCalculatedWhenSeekFails()
     {
+        $this->expectException(\Aws\Exception\CouldNotCreateChecksumException::class);
         list($request, $credentials, $signature) = $this->getFixtures();
         $stream = Psr7\FnStream::decorate(Psr7\Utils::streamFor('foo'), [
             'seek' => function () {
@@ -334,6 +333,7 @@ class SignatureV4Test extends TestCase
         $signature->signRequest($request, $credentials);
     }
 
+    /** @doesNotPerformAssertions */
     public function testUnsignedPayloadProvider()
     {
         return [
@@ -411,6 +411,7 @@ class SignatureV4Test extends TestCase
         $this->assertSame($sreq, Psr7\Message::toString($signature->signRequest($request, $credentials)));
     }
 
+    /** @doesNotPerformAssertions */
     public function testProvider()
     {
         return [

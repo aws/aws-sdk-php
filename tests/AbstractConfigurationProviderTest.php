@@ -6,7 +6,7 @@ use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\ResultInterface;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\AbstractConfigurationProvider
@@ -65,11 +65,9 @@ class AbstractConfigurationProviderTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testChainThrowsExceptionOnEmptyArgs()
     {
+        $this->expectException(\InvalidArgumentException::class);
         call_user_func([$this->provider, 'chain']);
     }
 

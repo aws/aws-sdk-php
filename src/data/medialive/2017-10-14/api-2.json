@@ -1594,6 +1594,46 @@
         }
       ]
     },
+    "RebootInputDevice": {
+      "name": "RebootInputDevice",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/inputDevices/{inputDeviceId}/reboot",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "RebootInputDeviceRequest"
+      },
+      "output": {
+        "shape": "RebootInputDeviceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
     "RejectInputDeviceTransfer": {
       "name": "RejectInputDeviceTransfer",
       "http": {
@@ -1674,6 +1714,46 @@
         },
         {
           "shape": "ConflictException"
+        }
+      ]
+    },
+    "StartInputDeviceMaintenanceWindow": {
+      "name": "StartInputDeviceMaintenanceWindow",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/inputDevices/{inputDeviceId}/startInputDeviceMaintenanceWindow",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "StartInputDeviceMaintenanceWindowRequest"
+      },
+      "output": {
+        "shape": "StartInputDeviceMaintenanceWindowResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
         }
       ]
     },
@@ -2495,6 +2575,10 @@
           "shape": "Ac3Settings",
           "locationName": "ac3Settings"
         },
+        "Eac3AtmosSettings": {
+          "shape": "Eac3AtmosSettings",
+          "locationName": "eac3AtmosSettings"
+        },
         "Eac3Settings": {
           "shape": "Eac3Settings",
           "locationName": "eac3Settings"
@@ -2578,6 +2662,18 @@
       "enum": [
         "FOLLOW_INPUT",
         "USE_CONFIGURED"
+      ]
+    },
+    "AudioDolbyEDecode": {
+      "type": "structure",
+      "members": {
+        "ProgramSelection": {
+          "shape": "DolbyEProgramSelection",
+          "locationName": "programSelection"
+        }
+      },
+      "required": [
+        "ProgramSelection"
       ]
     },
     "AudioHlsRenditionSelection": {
@@ -2770,6 +2866,10 @@
         "Tracks": {
           "shape": "__listOfAudioTrack",
           "locationName": "tracks"
+        },
+        "DolbyEDecode": {
+          "shape": "AudioDolbyEDecode",
+          "locationName": "dolbyEDecode"
         }
       },
       "required": [
@@ -2857,6 +2957,10 @@
     "AvailSettings": {
       "type": "structure",
       "members": {
+        "Esam": {
+          "shape": "Esam",
+          "locationName": "esam"
+        },
         "Scte35SpliceInsert": {
           "shape": "Scte35SpliceInsert",
           "locationName": "scte35SpliceInsert"
@@ -5327,6 +5431,25 @@
         "UPDATING"
       ]
     },
+    "DolbyEProgramSelection": {
+      "type": "string",
+      "enum": [
+        "ALL_CHANNELS",
+        "PROGRAM_1",
+        "PROGRAM_2",
+        "PROGRAM_3",
+        "PROGRAM_4",
+        "PROGRAM_5",
+        "PROGRAM_6",
+        "PROGRAM_7",
+        "PROGRAM_8"
+      ]
+    },
+    "DolbyVision81Settings": {
+      "type": "structure",
+      "members": {
+      }
+    },
     "DvbNitSettings": {
       "type": "structure",
       "members": {
@@ -5534,6 +5657,69 @@
         "RepInterval": {
           "shape": "__integerMin1000Max30000",
           "locationName": "repInterval"
+        }
+      }
+    },
+    "Eac3AtmosCodingMode": {
+      "type": "string",
+      "enum": [
+        "CODING_MODE_5_1_4",
+        "CODING_MODE_7_1_4",
+        "CODING_MODE_9_1_6"
+      ]
+    },
+    "Eac3AtmosDrcLine": {
+      "type": "string",
+      "enum": [
+        "FILM_LIGHT",
+        "FILM_STANDARD",
+        "MUSIC_LIGHT",
+        "MUSIC_STANDARD",
+        "NONE",
+        "SPEECH"
+      ]
+    },
+    "Eac3AtmosDrcRf": {
+      "type": "string",
+      "enum": [
+        "FILM_LIGHT",
+        "FILM_STANDARD",
+        "MUSIC_LIGHT",
+        "MUSIC_STANDARD",
+        "NONE",
+        "SPEECH"
+      ]
+    },
+    "Eac3AtmosSettings": {
+      "type": "structure",
+      "members": {
+        "Bitrate": {
+          "shape": "__double",
+          "locationName": "bitrate"
+        },
+        "CodingMode": {
+          "shape": "Eac3AtmosCodingMode",
+          "locationName": "codingMode"
+        },
+        "Dialnorm": {
+          "shape": "__integerMin1Max31",
+          "locationName": "dialnorm"
+        },
+        "DrcLine": {
+          "shape": "Eac3AtmosDrcLine",
+          "locationName": "drcLine"
+        },
+        "DrcRf": {
+          "shape": "Eac3AtmosDrcRf",
+          "locationName": "drcRf"
+        },
+        "HeightTrim": {
+          "shape": "__double",
+          "locationName": "heightTrim"
+        },
+        "SurroundTrim": {
+          "shape": "__double",
+          "locationName": "surroundTrim"
         }
       }
     },
@@ -5880,6 +6066,39 @@
         "TimecodeConfig"
       ]
     },
+    "Esam": {
+      "type": "structure",
+      "members": {
+        "AcquisitionPointId": {
+          "shape": "__stringMax256",
+          "locationName": "acquisitionPointId"
+        },
+        "AdAvailOffset": {
+          "shape": "__integerMinNegative1000Max1000",
+          "locationName": "adAvailOffset"
+        },
+        "PasswordParam": {
+          "shape": "__string",
+          "locationName": "passwordParam"
+        },
+        "PoisEndpoint": {
+          "shape": "__stringMax2048",
+          "locationName": "poisEndpoint"
+        },
+        "Username": {
+          "shape": "__string",
+          "locationName": "username"
+        },
+        "ZoneIdentity": {
+          "shape": "__stringMax256",
+          "locationName": "zoneIdentity"
+        }
+      },
+      "required": [
+        "AcquisitionPointId",
+        "PoisEndpoint"
+      ]
+    },
     "FailoverCondition": {
       "type": "structure",
       "members": {
@@ -6114,6 +6333,10 @@
         "CaptureIntervalUnits": {
           "shape": "FrameCaptureIntervalUnit",
           "locationName": "captureIntervalUnits"
+        },
+        "TimecodeBurninSettings": {
+          "shape": "TimecodeBurninSettings",
+          "locationName": "timecodeBurninSettings"
         }
       }
     },
@@ -6518,6 +6741,10 @@
         "TimecodeInsertion": {
           "shape": "H264TimecodeInsertionBehavior",
           "locationName": "timecodeInsertion"
+        },
+        "TimecodeBurninSettings": {
+          "shape": "TimecodeBurninSettings",
+          "locationName": "timecodeBurninSettings"
         }
       }
     },
@@ -6588,6 +6815,10 @@
         "ColorSpacePassthroughSettings": {
           "shape": "ColorSpacePassthroughSettings",
           "locationName": "colorSpacePassthroughSettings"
+        },
+        "DolbyVision81Settings": {
+          "shape": "DolbyVision81Settings",
+          "locationName": "dolbyVision81Settings"
         },
         "Hdr10Settings": {
           "shape": "Hdr10Settings",
@@ -6800,6 +7031,10 @@
         "TimecodeInsertion": {
           "shape": "H265TimecodeInsertionBehavior",
           "locationName": "timecodeInsertion"
+        },
+        "TimecodeBurninSettings": {
+          "shape": "TimecodeBurninSettings",
+          "locationName": "timecodeBurninSettings"
         }
       },
       "required": [
@@ -7731,6 +7966,10 @@
         "MaxBitrate": {
           "shape": "__integer",
           "locationName": "maxBitrate"
+        },
+        "LatencyMs": {
+          "shape": "__integer",
+          "locationName": "latencyMs"
         }
       }
     },
@@ -7796,6 +8035,10 @@
         "Width": {
           "shape": "__integer",
           "locationName": "width"
+        },
+        "LatencyMs": {
+          "shape": "__integer",
+          "locationName": "latencyMs"
         }
       }
     },
@@ -7926,7 +8169,8 @@
     "InputDeviceType": {
       "type": "string",
       "enum": [
-        "HD"
+        "HD",
+        "UHD"
       ]
     },
     "InputDeviceUhdSettings": {
@@ -7963,6 +8207,10 @@
         "Width": {
           "shape": "__integer",
           "locationName": "width"
+        },
+        "LatencyMs": {
+          "shape": "__integer",
+          "locationName": "latencyMs"
         }
       }
     },
@@ -9211,6 +9459,10 @@
           "shape": "__string",
           "locationName": "scte35Pid"
         },
+        "Scte35PrerollPullupMilliseconds": {
+          "shape": "__doubleMin0Max5000",
+          "locationName": "scte35PrerollPullupMilliseconds"
+        },
         "SegmentationMarkers": {
           "shape": "M2tsSegmentationMarkers",
           "locationName": "segmentationMarkers"
@@ -9663,6 +9915,10 @@
         "TimecodeInsertion": {
           "shape": "Mpeg2TimecodeInsertionBehavior",
           "locationName": "timecodeInsertion"
+        },
+        "TimecodeBurninSettings": {
+          "shape": "TimecodeBurninSettings",
+          "locationName": "timecodeBurninSettings"
         }
       },
       "required": [
@@ -10227,6 +10483,10 @@
         "Sid": {
           "shape": "__doubleMin1Max65535",
           "locationName": "sid"
+        },
+        "Timezone": {
+          "shape": "NielsenWatermarkTimezones",
+          "locationName": "timezone"
         }
       },
       "required": [
@@ -10239,6 +10499,21 @@
       "enum": [
         "DISABLED",
         "ENABLED"
+      ]
+    },
+    "NielsenWatermarkTimezones": {
+      "type": "string",
+      "enum": [
+        "AMERICA_PUERTO_RICO",
+        "US_ALASKA",
+        "US_ARIZONA",
+        "US_CENTRAL",
+        "US_EASTERN",
+        "US_HAWAII",
+        "US_MOUNTAIN",
+        "US_PACIFIC",
+        "US_SAMOA",
+        "UTC"
       ]
     },
     "NielsenWatermarksCbetStepaside": {
@@ -10681,6 +10956,44 @@
       "members": {
       }
     },
+    "RebootInputDevice": {
+      "type": "structure",
+      "members": {
+        "Force": {
+          "shape": "RebootInputDeviceForce",
+          "locationName": "force"
+        }
+      }
+    },
+    "RebootInputDeviceForce": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "RebootInputDeviceRequest": {
+      "type": "structure",
+      "members": {
+        "Force": {
+          "shape": "RebootInputDeviceForce",
+          "locationName": "force"
+        },
+        "InputDeviceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "inputDeviceId"
+        }
+      },
+      "required": [
+        "InputDeviceId"
+      ]
+    },
+    "RebootInputDeviceResponse": {
+      "type": "structure",
+      "members": {
+      }
+    },
     "Rec601Settings": {
       "type": "structure",
       "members": {
@@ -11107,6 +11420,10 @@
           "shape": "PauseStateScheduleActionSettings",
           "locationName": "pauseStateSettings"
         },
+        "Scte35InputSettings": {
+          "shape": "Scte35InputScheduleActionSettings",
+          "locationName": "scte35InputSettings"
+        },
         "Scte35ReturnToNetworkSettings": {
           "shape": "Scte35ReturnToNetworkScheduleActionSettings",
           "locationName": "scte35ReturnToNetworkSettings"
@@ -11300,6 +11617,29 @@
         "RESTRICT_GROUP0",
         "RESTRICT_GROUP1",
         "RESTRICT_GROUP2"
+      ]
+    },
+    "Scte35InputMode": {
+      "type": "string",
+      "enum": [
+        "FIXED",
+        "FOLLOW_ACTIVE"
+      ]
+    },
+    "Scte35InputScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "InputAttachmentNameReference": {
+          "shape": "__string",
+          "locationName": "inputAttachmentNameReference"
+        },
+        "Mode": {
+          "shape": "Scte35InputMode",
+          "locationName": "mode"
+        }
+      },
+      "required": [
+        "Mode"
       ]
     },
     "Scte35NoRegionalBlackoutFlag": {
@@ -11638,6 +11978,24 @@
           "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
+      }
+    },
+    "StartInputDeviceMaintenanceWindowRequest": {
+      "type": "structure",
+      "members": {
+        "InputDeviceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "inputDeviceId"
+        }
+      },
+      "required": [
+        "InputDeviceId"
+      ]
+    },
+    "StartInputDeviceMaintenanceWindowResponse": {
+      "type": "structure",
+      "members": {
       }
     },
     "StartMultiplexRequest": {
@@ -12033,6 +12391,50 @@
         }
       }
     },
+    "TimecodeBurninFontSize": {
+      "type": "string",
+      "enum": [
+        "EXTRA_SMALL_10",
+        "LARGE_48",
+        "MEDIUM_32",
+        "SMALL_16"
+      ]
+    },
+    "TimecodeBurninPosition": {
+      "type": "string",
+      "enum": [
+        "BOTTOM_CENTER",
+        "BOTTOM_LEFT",
+        "BOTTOM_RIGHT",
+        "MIDDLE_CENTER",
+        "MIDDLE_LEFT",
+        "MIDDLE_RIGHT",
+        "TOP_CENTER",
+        "TOP_LEFT",
+        "TOP_RIGHT"
+      ]
+    },
+    "TimecodeBurninSettings": {
+      "type": "structure",
+      "members": {
+        "FontSize": {
+          "shape": "TimecodeBurninFontSize",
+          "locationName": "fontSize"
+        },
+        "Position": {
+          "shape": "TimecodeBurninPosition",
+          "locationName": "position"
+        },
+        "Prefix": {
+          "shape": "__stringMax255",
+          "locationName": "prefix"
+        }
+      },
+      "required": [
+        "Position",
+        "FontSize"
+      ]
+    },
     "TimecodeConfig": {
       "type": "structure",
       "members": {
@@ -12216,13 +12618,13 @@
     "UnprocessableEntityException": {
       "type": "structure",
       "members": {
-        "Message": {
+        "ElementPath": {
           "shape": "__string",
-          "locationName": "message"
+          "locationName": "elementPath"
         },
-        "ValidationErrors": {
-          "shape": "__listOfValidationError",
-          "locationName": "validationErrors"
+        "ErrorMessage": {
+          "shape": "__string",
+          "locationName": "errorMessage"
         }
       },
       "exception": true,
@@ -13037,6 +13439,9 @@
       "type": "double"
     },
     "__doubleMin0Max100": {
+      "type": "double"
+    },
+    "__doubleMin0Max5000": {
       "type": "double"
     },
     "__doubleMin1": {

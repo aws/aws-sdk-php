@@ -55,6 +55,23 @@
         {"shape":"ConflictException"}
       ]
     },
+    "AuthorizeVpcEndpointAccess":{
+      "name":"AuthorizeVpcEndpointAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/authorizeVpcEndpointAccess"
+      },
+      "input":{"shape":"AuthorizeVpcEndpointAccessRequest"},
+      "output":{"shape":"AuthorizeVpcEndpointAccessResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"BaseException"}
+      ]
+    },
     "CancelServiceSoftwareUpdate":{
       "name":"CancelServiceSoftwareUpdate",
       "http":{
@@ -121,6 +138,23 @@
         {"shape":"ValidationException"}
       ]
     },
+    "CreateVpcEndpoint":{
+      "name":"CreateVpcEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/vpcEndpoints"
+      },
+      "input":{"shape":"CreateVpcEndpointRequest"},
+      "output":{"shape":"CreateVpcEndpointResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"BaseException"}
+      ]
+    },
     "DeleteDomain":{
       "name":"DeleteDomain",
       "http":{
@@ -177,6 +211,21 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "DeleteVpcEndpoint":{
+      "name":"DeleteVpcEndpoint",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2021-01-01/opensearch/vpcEndpoints/{VpcEndpointId}"
+      },
+      "input":{"shape":"DeleteVpcEndpointRequest"},
+      "output":{"shape":"DeleteVpcEndpointResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"InternalException"},
+        {"shape":"BaseException"}
       ]
     },
     "DescribeDomain":{
@@ -251,6 +300,22 @@
         {"shape":"BaseException"},
         {"shape":"InternalException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "DescribeDryRunProgress":{
+      "name":"DescribeDryRunProgress",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/dryRun"
+      },
+      "input":{"shape":"DescribeDryRunProgressRequest"},
+      "output":{"shape":"DescribeDryRunProgressResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "DescribeInboundConnections":{
@@ -340,6 +405,21 @@
         {"shape":"InternalException"},
         {"shape":"ValidationException"},
         {"shape":"DisabledOperationException"}
+      ]
+    },
+    "DescribeVpcEndpoints":{
+      "name":"DescribeVpcEndpoints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/vpcEndpoints/describe"
+      },
+      "input":{"shape":"DescribeVpcEndpointsRequest"},
+      "output":{"shape":"DescribeVpcEndpointsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"BaseException"}
       ]
     },
     "DissociatePackage":{
@@ -483,6 +563,22 @@
         {"shape":"ValidationException"}
       ]
     },
+    "ListScheduledActions":{
+      "name":"ListScheduledActions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/scheduledActions"
+      },
+      "input":{"shape":"ListScheduledActionsRequest"},
+      "output":{"shape":"ListScheduledActionsResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidPaginationTokenException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "ListTags":{
       "name":"ListTags",
       "http":{
@@ -511,6 +607,50 @@
         {"shape":"InternalException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "ListVpcEndpointAccess":{
+      "name":"ListVpcEndpointAccess",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/listVpcEndpointAccess"
+      },
+      "input":{"shape":"ListVpcEndpointAccessRequest"},
+      "output":{"shape":"ListVpcEndpointAccessResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"InternalException"},
+        {"shape":"BaseException"}
+      ]
+    },
+    "ListVpcEndpoints":{
+      "name":"ListVpcEndpoints",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/vpcEndpoints"
+      },
+      "input":{"shape":"ListVpcEndpointsRequest"},
+      "output":{"shape":"ListVpcEndpointsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"BaseException"}
+      ]
+    },
+    "ListVpcEndpointsForDomain":{
+      "name":"ListVpcEndpointsForDomain",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/vpcEndpoints"
+      },
+      "input":{"shape":"ListVpcEndpointsForDomainRequest"},
+      "output":{"shape":"ListVpcEndpointsForDomainResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BaseException"}
       ]
     },
     "PurchaseReservedInstanceOffering":{
@@ -554,6 +694,22 @@
         {"shape":"BaseException"},
         {"shape":"ValidationException"},
         {"shape":"InternalException"}
+      ]
+    },
+    "RevokeVpcEndpointAccess":{
+      "name":"RevokeVpcEndpointAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/revokeVpcEndpointAccess"
+      },
+      "input":{"shape":"RevokeVpcEndpointAccessRequest"},
+      "output":{"shape":"RevokeVpcEndpointAccessResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"InternalException"},
+        {"shape":"BaseException"}
       ]
     },
     "StartServiceSoftwareUpdate":{
@@ -605,6 +761,41 @@
         {"shape":"ValidationException"}
       ]
     },
+    "UpdateScheduledAction":{
+      "name":"UpdateScheduledAction",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/scheduledAction/update"
+      },
+      "input":{"shape":"UpdateScheduledActionRequest"},
+      "output":{"shape":"UpdateScheduledActionResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"SlotNotAvailableException"},
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "UpdateVpcEndpoint":{
+      "name":"UpdateVpcEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/vpcEndpoints/update"
+      },
+      "input":{"shape":"UpdateVpcEndpointRequest"},
+      "output":{"shape":"UpdateVpcEndpointResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"InternalException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"BaseException"}
+      ]
+    },
     "UpgradeDomain":{
       "name":"UpgradeDomain",
       "http":{
@@ -629,6 +820,10 @@
       "max":2048,
       "min":20,
       "pattern":".*"
+    },
+    "AWSAccount":{
+      "type":"string",
+      "pattern":"^[0-9]+$"
     },
     "AWSDomainInformation":{
       "type":"structure",
@@ -673,6 +868,33 @@
         "Options":{"shape":"PolicyDocument"},
         "Status":{"shape":"OptionStatus"}
       }
+    },
+    "ActionSeverity":{
+      "type":"string",
+      "enum":[
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
+    },
+    "ActionStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING_UPDATE",
+        "IN_PROGRESS",
+        "FAILED",
+        "COMPLETED",
+        "NOT_ELIGIBLE",
+        "ELIGIBLE"
+      ]
+    },
+    "ActionType":{
+      "type":"string",
+      "enum":[
+        "SERVICE_SOFTWARE_UPDATE",
+        "JVM_HEAP_SIZE_TUNING",
+        "JVM_YOUNG_GEN_TUNING"
+      ]
     },
     "AddTagsRequest":{
       "type":"structure",
@@ -768,6 +990,39 @@
         "DomainPackageDetails":{"shape":"DomainPackageDetails"}
       }
     },
+    "AuthorizeVpcEndpointAccessRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "Account"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "Account":{"shape":"AWSAccount"}
+      }
+    },
+    "AuthorizeVpcEndpointAccessResponse":{
+      "type":"structure",
+      "required":["AuthorizedPrincipal"],
+      "members":{
+        "AuthorizedPrincipal":{"shape":"AuthorizedPrincipal"}
+      }
+    },
+    "AuthorizedPrincipal":{
+      "type":"structure",
+      "members":{
+        "PrincipalType":{"shape":"PrincipalType"},
+        "Principal":{"shape":"String"}
+      }
+    },
+    "AuthorizedPrincipalList":{
+      "type":"list",
+      "member":{"shape":"AuthorizedPrincipal"}
+    },
     "AutoTune":{
       "type":"structure",
       "members":{
@@ -811,21 +1066,24 @@
       "members":{
         "DesiredState":{"shape":"AutoTuneDesiredState"},
         "RollbackOnDisable":{"shape":"RollbackOnDisable"},
-        "MaintenanceSchedules":{"shape":"AutoTuneMaintenanceScheduleList"}
+        "MaintenanceSchedules":{"shape":"AutoTuneMaintenanceScheduleList"},
+        "UseOffPeakWindow":{"shape":"Boolean"}
       }
     },
     "AutoTuneOptionsInput":{
       "type":"structure",
       "members":{
         "DesiredState":{"shape":"AutoTuneDesiredState"},
-        "MaintenanceSchedules":{"shape":"AutoTuneMaintenanceScheduleList"}
+        "MaintenanceSchedules":{"shape":"AutoTuneMaintenanceScheduleList"},
+        "UseOffPeakWindow":{"shape":"Boolean"}
       }
     },
     "AutoTuneOptionsOutput":{
       "type":"structure",
       "members":{
         "State":{"shape":"AutoTuneState"},
-        "ErrorMessage":{"shape":"String"}
+        "ErrorMessage":{"shape":"String"},
+        "UseOffPeakWindow":{"shape":"Boolean"}
       }
     },
     "AutoTuneOptionsStatus":{
@@ -937,6 +1195,11 @@
         "ChangeProgressStages":{"shape":"ChangeProgressStageList"}
       }
     },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "CloudWatchLogsLogGroupArn":{
       "type":"string",
       "max":2048,
@@ -1031,6 +1294,19 @@
       "min":10,
       "pattern":"[a-z][a-z0-9\\-]+"
     },
+    "ConnectionMode":{
+      "type":"string",
+      "enum":[
+        "DIRECT",
+        "VPC_ENDPOINT"
+      ]
+    },
+    "ConnectionProperties":{
+      "type":"structure",
+      "members":{
+        "Endpoint":{"shape":"Endpoint"}
+      }
+    },
     "ConnectionStatusMessage":{"type":"string"},
     "CreateDomainRequest":{
       "type":"structure",
@@ -1051,7 +1327,9 @@
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
         "TagList":{"shape":"TagList"},
-        "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"}
+        "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"},
+        "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
+        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"}
       }
     },
     "CreateDomainResponse":{
@@ -1070,7 +1348,8 @@
       "members":{
         "LocalDomainInfo":{"shape":"DomainInformationContainer"},
         "RemoteDomainInfo":{"shape":"DomainInformationContainer"},
-        "ConnectionAlias":{"shape":"ConnectionAlias"}
+        "ConnectionAlias":{"shape":"ConnectionAlias"},
+        "ConnectionMode":{"shape":"ConnectionMode"}
       }
     },
     "CreateOutboundConnectionResponse":{
@@ -1080,7 +1359,9 @@
         "RemoteDomainInfo":{"shape":"DomainInformationContainer"},
         "ConnectionAlias":{"shape":"ConnectionAlias"},
         "ConnectionStatus":{"shape":"OutboundConnectionStatus"},
-        "ConnectionId":{"shape":"ConnectionId"}
+        "ConnectionId":{"shape":"ConnectionId"},
+        "ConnectionMode":{"shape":"ConnectionMode"},
+        "ConnectionProperties":{"shape":"ConnectionProperties"}
       }
     },
     "CreatePackageRequest":{
@@ -1101,6 +1382,25 @@
       "type":"structure",
       "members":{
         "PackageDetails":{"shape":"PackageDetails"}
+      }
+    },
+    "CreateVpcEndpointRequest":{
+      "type":"structure",
+      "required":[
+        "DomainArn",
+        "VpcOptions"
+      ],
+      "members":{
+        "DomainArn":{"shape":"DomainArn"},
+        "VpcOptions":{"shape":"VPCOptions"},
+        "ClientToken":{"shape":"ClientToken"}
+      }
+    },
+    "CreateVpcEndpointResponse":{
+      "type":"structure",
+      "required":["VpcEndpoint"],
+      "members":{
+        "VpcEndpoint":{"shape":"VpcEndpoint"}
       }
     },
     "CreatedAt":{"type":"timestamp"},
@@ -1170,6 +1470,24 @@
       "type":"structure",
       "members":{
         "PackageDetails":{"shape":"PackageDetails"}
+      }
+    },
+    "DeleteVpcEndpointRequest":{
+      "type":"structure",
+      "required":["VpcEndpointId"],
+      "members":{
+        "VpcEndpointId":{
+          "shape":"VpcEndpointId",
+          "location":"uri",
+          "locationName":"VpcEndpointId"
+        }
+      }
+    },
+    "DeleteVpcEndpointResponse":{
+      "type":"structure",
+      "required":["VpcEndpointSummary"],
+      "members":{
+        "VpcEndpointSummary":{"shape":"VpcEndpointSummary"}
       }
     },
     "DeploymentCloseDateTimeStamp":{"type":"timestamp"},
@@ -1278,6 +1596,35 @@
       "required":["DomainStatusList"],
       "members":{
         "DomainStatusList":{"shape":"DomainStatusList"}
+      }
+    },
+    "DescribeDryRunProgressRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "DryRunId":{
+          "shape":"GUID",
+          "location":"querystring",
+          "locationName":"dryRunId"
+        },
+        "LoadDryRunConfig":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"loadDryRunConfig"
+        }
+      }
+    },
+    "DescribeDryRunProgressResponse":{
+      "type":"structure",
+      "members":{
+        "DryRunProgressStatus":{"shape":"DryRunProgressStatus"},
+        "DryRunConfig":{"shape":"DomainStatus"},
+        "DryRunResults":{"shape":"DryRunResults"}
       }
     },
     "DescribeInboundConnectionsRequest":{
@@ -1436,6 +1783,24 @@
         "ReservedInstances":{"shape":"ReservedInstanceList"}
       }
     },
+    "DescribeVpcEndpointsRequest":{
+      "type":"structure",
+      "required":["VpcEndpointIds"],
+      "members":{
+        "VpcEndpointIds":{"shape":"VpcEndpointIdList"}
+      }
+    },
+    "DescribeVpcEndpointsResponse":{
+      "type":"structure",
+      "required":[
+        "VpcEndpoints",
+        "VpcEndpointErrors"
+      ],
+      "members":{
+        "VpcEndpoints":{"shape":"VpcEndpoints"},
+        "VpcEndpointErrors":{"shape":"VpcEndpointErrorList"}
+      }
+    },
     "Description":{"type":"string"},
     "DisableTimestamp":{"type":"timestamp"},
     "DisabledOperationException":{
@@ -1470,6 +1835,12 @@
         "DomainPackageDetails":{"shape":"DomainPackageDetails"}
       }
     },
+    "DomainArn":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"arn:aws[a-z\\-]*:[a-z]+:[a-z0-9\\-]+:[0-9]+:domain\\/[a-z0-9\\-]+"
+    },
     "DomainConfig":{
       "type":"structure",
       "members":{
@@ -1487,7 +1858,9 @@
         "DomainEndpointOptions":{"shape":"DomainEndpointOptionsStatus"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsStatus"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsStatus"},
-        "ChangeProgressDetails":{"shape":"ChangeProgressDetails"}
+        "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
+        "OffPeakWindowOptions":{"shape":"OffPeakWindowOptionsStatus"},
+        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptionsStatus"}
       }
     },
     "DomainEndpointOptions":{
@@ -1610,7 +1983,9 @@
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptions"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsOutput"},
-        "ChangeProgressDetails":{"shape":"ChangeProgressDetails"}
+        "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
+        "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
+        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"}
       }
     },
     "DomainStatusList":{
@@ -1619,6 +1994,29 @@
     },
     "Double":{"type":"double"},
     "DryRun":{"type":"boolean"},
+    "DryRunMode":{
+      "type":"string",
+      "enum":[
+        "Basic",
+        "Verbose"
+      ]
+    },
+    "DryRunProgressStatus":{
+      "type":"structure",
+      "required":[
+        "DryRunId",
+        "DryRunStatus",
+        "CreationDate",
+        "UpdateDate"
+      ],
+      "members":{
+        "DryRunId":{"shape":"GUID"},
+        "DryRunStatus":{"shape":"String"},
+        "CreationDate":{"shape":"String"},
+        "UpdateDate":{"shape":"String"},
+        "ValidationFailures":{"shape":"ValidationFailures"}
+      }
+    },
     "DryRunResults":{
       "type":"structure",
       "members":{
@@ -1644,7 +2042,8 @@
         "EBSEnabled":{"shape":"Boolean"},
         "VolumeType":{"shape":"VolumeType"},
         "VolumeSize":{"shape":"IntegerClass"},
-        "Iops":{"shape":"IntegerClass"}
+        "Iops":{"shape":"IntegerClass"},
+        "Throughput":{"shape":"IntegerClass"}
       }
     },
     "EBSOptionsStatus":{
@@ -1675,6 +2074,10 @@
         "Options":{"shape":"EncryptionAtRestOptions"},
         "Status":{"shape":"OptionStatus"}
       }
+    },
+    "Endpoint":{
+      "type":"string",
+      "pattern":"^[A-Za-z0-9\\-\\.]+$"
     },
     "EndpointsMap":{
       "type":"map",
@@ -1818,7 +2221,8 @@
         "LocalDomainInfo":{"shape":"DomainInformationContainer"},
         "RemoteDomainInfo":{"shape":"DomainInformationContainer"},
         "ConnectionId":{"shape":"ConnectionId"},
-        "ConnectionStatus":{"shape":"InboundConnectionStatus"}
+        "ConnectionStatus":{"shape":"InboundConnectionStatus"},
+        "ConnectionMode":{"shape":"ConnectionMode"}
       }
     },
     "InboundConnectionStatus":{
@@ -2049,6 +2453,34 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListScheduledActionsRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListScheduledActionsResponse":{
+      "type":"structure",
+      "members":{
+        "ScheduledActions":{"shape":"ScheduledActionsList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsRequest":{
       "type":"structure",
       "required":["ARN"],
@@ -2085,6 +2517,81 @@
       "type":"structure",
       "members":{
         "Versions":{"shape":"VersionList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListVpcEndpointAccessRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListVpcEndpointAccessResponse":{
+      "type":"structure",
+      "required":[
+        "AuthorizedPrincipalList",
+        "NextToken"
+      ],
+      "members":{
+        "AuthorizedPrincipalList":{"shape":"AuthorizedPrincipalList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListVpcEndpointsForDomainRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListVpcEndpointsForDomainResponse":{
+      "type":"structure",
+      "required":[
+        "VpcEndpointSummaryList",
+        "NextToken"
+      ],
+      "members":{
+        "VpcEndpointSummaryList":{"shape":"VpcEndpointSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListVpcEndpointsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListVpcEndpointsResponse":{
+      "type":"structure",
+      "required":[
+        "VpcEndpointSummaryList",
+        "NextToken"
+      ],
+      "members":{
+        "VpcEndpointSummaryList":{"shape":"VpcEndpointSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -2159,6 +2666,26 @@
       "max":100,
       "min":1,
       "pattern":"[a-zA-Z0-9\\-\\_\\.]+"
+    },
+    "OffPeakWindow":{
+      "type":"structure",
+      "members":{
+        "WindowStartTime":{"shape":"WindowStartTime"}
+      }
+    },
+    "OffPeakWindowOptions":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "OffPeakWindow":{"shape":"OffPeakWindow"}
+      }
+    },
+    "OffPeakWindowOptionsStatus":{
+      "type":"structure",
+      "members":{
+        "Options":{"shape":"OffPeakWindowOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
     },
     "OpenSearchPartitionInstanceType":{
       "type":"string",
@@ -2298,7 +2825,9 @@
         "RemoteDomainInfo":{"shape":"DomainInformationContainer"},
         "ConnectionId":{"shape":"ConnectionId"},
         "ConnectionAlias":{"shape":"ConnectionAlias"},
-        "ConnectionStatus":{"shape":"OutboundConnectionStatus"}
+        "ConnectionStatus":{"shape":"OutboundConnectionStatus"},
+        "ConnectionMode":{"shape":"ConnectionMode"},
+        "ConnectionProperties":{"shape":"ConnectionProperties"}
       }
     },
     "OutboundConnectionStatus":{
@@ -2420,6 +2949,13 @@
       "max":102400,
       "min":0,
       "pattern":".*"
+    },
+    "PrincipalType":{
+      "type":"string",
+      "enum":[
+        "AWS_ACCOUNT",
+        "AWS_SERVICE"
+      ]
     },
     "PurchaseReservedInstanceOfferingRequest":{
       "type":"structure",
@@ -2554,6 +3090,26 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "RevokeVpcEndpointAccessRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "Account"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "Account":{"shape":"AWSAccount"}
+      }
+    },
+    "RevokeVpcEndpointAccessResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "RoleArn":{
       "type":"string",
       "max":2048,
@@ -2620,6 +3176,38 @@
         "SessionTimeoutMinutes":{"shape":"IntegerClass"}
       }
     },
+    "ScheduleAt":{
+      "type":"string",
+      "enum":[
+        "NOW",
+        "TIMESTAMP",
+        "OFF_PEAK_WINDOW"
+      ]
+    },
+    "ScheduledAction":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Type",
+        "Severity",
+        "ScheduledTime"
+      ],
+      "members":{
+        "Id":{"shape":"String"},
+        "Type":{"shape":"ActionType"},
+        "Severity":{"shape":"ActionSeverity"},
+        "ScheduledTime":{"shape":"Long"},
+        "Description":{"shape":"String"},
+        "ScheduledBy":{"shape":"ScheduledBy"},
+        "Status":{"shape":"ActionStatus"},
+        "Mandatory":{"shape":"Boolean"},
+        "Cancellable":{"shape":"Boolean"}
+      }
+    },
+    "ScheduledActionsList":{
+      "type":"list",
+      "member":{"shape":"ScheduledAction"}
+    },
     "ScheduledAutoTuneActionType":{
       "type":"string",
       "enum":[
@@ -2645,6 +3233,13 @@
         "HIGH"
       ]
     },
+    "ScheduledBy":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER",
+        "SYSTEM"
+      ]
+    },
     "ServiceSoftwareOptions":{
       "type":"structure",
       "members":{
@@ -2659,6 +3254,18 @@
       }
     },
     "ServiceUrl":{"type":"string"},
+    "SlotList":{
+      "type":"list",
+      "member":{"shape":"Long"}
+    },
+    "SlotNotAvailableException":{
+      "type":"structure",
+      "members":{
+        "SlotSuggestions":{"shape":"SlotList"}
+      },
+      "error":{"httpStatusCode":409},
+      "exception":true
+    },
     "SnapshotOptions":{
       "type":"structure",
       "members":{
@@ -2676,12 +3283,27 @@
         "Status":{"shape":"OptionStatus"}
       }
     },
+    "SoftwareUpdateOptions":{
+      "type":"structure",
+      "members":{
+        "AutoSoftwareUpdateEnabled":{"shape":"Boolean"}
+      }
+    },
+    "SoftwareUpdateOptionsStatus":{
+      "type":"structure",
+      "members":{
+        "Options":{"shape":"SoftwareUpdateOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
+    },
     "StartAt":{"type":"timestamp"},
     "StartServiceSoftwareUpdateRequest":{
       "type":"structure",
       "required":["DomainName"],
       "members":{
-        "DomainName":{"shape":"DomainName"}
+        "DomainName":{"shape":"DomainName"},
+        "ScheduleAt":{"shape":"ScheduleAt"},
+        "DesiredStartTime":{"shape":"Long"}
       }
     },
     "StartServiceSoftwareUpdateResponse":{
@@ -2689,6 +3311,16 @@
       "members":{
         "ServiceSoftwareOptions":{"shape":"ServiceSoftwareOptions"}
       }
+    },
+    "StartTimeHours":{
+      "type":"long",
+      "max":23,
+      "min":0
+    },
+    "StartTimeMinutes":{
+      "type":"long",
+      "max":59,
+      "min":0
     },
     "StartTimestamp":{"type":"timestamp"},
     "StorageSubTypeName":{"type":"string"},
@@ -2786,7 +3418,10 @@
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
         "AutoTuneOptions":{"shape":"AutoTuneOptions"},
-        "DryRun":{"shape":"DryRun"}
+        "DryRun":{"shape":"DryRun"},
+        "DryRunMode":{"shape":"DryRunMode"},
+        "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
+        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"}
       }
     },
     "UpdateDomainConfigResponse":{
@@ -2794,7 +3429,8 @@
       "required":["DomainConfig"],
       "members":{
         "DomainConfig":{"shape":"DomainConfig"},
-        "DryRunResults":{"shape":"DryRunResults"}
+        "DryRunResults":{"shape":"DryRunResults"},
+        "DryRunProgressStatus":{"shape":"DryRunProgressStatus"}
       }
     },
     "UpdatePackageRequest":{
@@ -2816,7 +3452,51 @@
         "PackageDetails":{"shape":"PackageDetails"}
       }
     },
+    "UpdateScheduledActionRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ActionID",
+        "ActionType",
+        "ScheduleAt"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ActionID":{"shape":"String"},
+        "ActionType":{"shape":"ActionType"},
+        "ScheduleAt":{"shape":"ScheduleAt"},
+        "DesiredStartTime":{"shape":"Long"}
+      }
+    },
+    "UpdateScheduledActionResponse":{
+      "type":"structure",
+      "members":{
+        "ScheduledAction":{"shape":"ScheduledAction"}
+      }
+    },
     "UpdateTimestamp":{"type":"timestamp"},
+    "UpdateVpcEndpointRequest":{
+      "type":"structure",
+      "required":[
+        "VpcEndpointId",
+        "VpcOptions"
+      ],
+      "members":{
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
+        "VpcOptions":{"shape":"VPCOptions"}
+      }
+    },
+    "UpdateVpcEndpointResponse":{
+      "type":"structure",
+      "required":["VpcEndpoint"],
+      "members":{
+        "VpcEndpoint":{"shape":"VpcEndpoint"}
+      }
+    },
     "UpgradeDomainRequest":{
       "type":"structure",
       "required":[
@@ -2932,6 +3612,17 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "ValidationFailure":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"String"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "ValidationFailures":{
+      "type":"list",
+      "member":{"shape":"ValidationFailure"}
+    },
     "ValueStringList":{
       "type":"list",
       "member":{"shape":"NonEmptyString"},
@@ -2963,8 +3654,89 @@
       "enum":[
         "standard",
         "gp2",
-        "io1"
+        "io1",
+        "gp3"
       ]
+    },
+    "VpcEndpoint":{
+      "type":"structure",
+      "members":{
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
+        "VpcEndpointOwner":{"shape":"AWSAccount"},
+        "DomainArn":{"shape":"DomainArn"},
+        "VpcOptions":{"shape":"VPCDerivedInfo"},
+        "Status":{"shape":"VpcEndpointStatus"},
+        "Endpoint":{"shape":"Endpoint"}
+      }
+    },
+    "VpcEndpointError":{
+      "type":"structure",
+      "members":{
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
+        "ErrorCode":{"shape":"VpcEndpointErrorCode"},
+        "ErrorMessage":{"shape":"String"}
+      }
+    },
+    "VpcEndpointErrorCode":{
+      "type":"string",
+      "enum":[
+        "ENDPOINT_NOT_FOUND",
+        "SERVER_ERROR"
+      ]
+    },
+    "VpcEndpointErrorList":{
+      "type":"list",
+      "member":{"shape":"VpcEndpointError"}
+    },
+    "VpcEndpointId":{
+      "type":"string",
+      "max":256,
+      "min":5,
+      "pattern":"^aos-[a-zA-Z0-9]*$"
+    },
+    "VpcEndpointIdList":{
+      "type":"list",
+      "member":{"shape":"VpcEndpointId"}
+    },
+    "VpcEndpointStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "ACTIVE",
+        "UPDATING",
+        "UPDATE_FAILED",
+        "DELETING",
+        "DELETE_FAILED"
+      ]
+    },
+    "VpcEndpointSummary":{
+      "type":"structure",
+      "members":{
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
+        "VpcEndpointOwner":{"shape":"String"},
+        "DomainArn":{"shape":"DomainArn"},
+        "Status":{"shape":"VpcEndpointStatus"}
+      }
+    },
+    "VpcEndpointSummaryList":{
+      "type":"list",
+      "member":{"shape":"VpcEndpointSummary"}
+    },
+    "VpcEndpoints":{
+      "type":"list",
+      "member":{"shape":"VpcEndpoint"}
+    },
+    "WindowStartTime":{
+      "type":"structure",
+      "required":[
+        "Hours",
+        "Minutes"
+      ],
+      "members":{
+        "Hours":{"shape":"StartTimeHours"},
+        "Minutes":{"shape":"StartTimeMinutes"}
+      }
     },
     "ZoneAwarenessConfig":{
       "type":"structure",

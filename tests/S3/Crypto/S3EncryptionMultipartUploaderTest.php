@@ -10,7 +10,7 @@ use Aws\Test\Crypto\UsesCryptoParamsTrait;
 use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Psr7;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class S3EncryptionMultipartUploaderTest extends TestCase
 {
@@ -451,7 +451,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         ]);
         $list = $s3->getHandlerList();
         $list->appendSign(Middleware::tap(function($cmd, $req) {
-            $this->assertContains(
+            $this->assertStringContainsString(
                 'feat/s3-encrypt/' . S3EncryptionMultipartUploader::CRYPTO_VERSION,
                 $req->getHeaderLine('User-Agent')
             );

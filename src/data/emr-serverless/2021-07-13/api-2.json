@@ -39,6 +39,7 @@
       "output":{"shape":"CreateApplicationResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"}
       ],
@@ -69,6 +70,21 @@
       },
       "input":{"shape":"GetApplicationRequest"},
       "output":{"shape":"GetApplicationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetDashboardForJobRun":{
+      "name":"GetDashboardForJobRun",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{applicationId}/jobruns/{jobRunId}/dashboard",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDashboardForJobRunRequest"},
+      "output":{"shape":"GetDashboardForJobRunResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
@@ -257,7 +273,10 @@
         "tags":{"shape":"TagMap"},
         "autoStartConfiguration":{"shape":"AutoStartConfig"},
         "autoStopConfiguration":{"shape":"AutoStopConfig"},
-        "networkConfiguration":{"shape":"NetworkConfiguration"}
+        "networkConfiguration":{"shape":"NetworkConfiguration"},
+        "architecture":{"shape":"Architecture"},
+        "imageConfiguration":{"shape":"ImageConfiguration"},
+        "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationMap"}
       }
     },
     "ApplicationArn":{
@@ -320,8 +339,16 @@
         "state":{"shape":"ApplicationState"},
         "stateDetails":{"shape":"String256"},
         "createdAt":{"shape":"Date"},
-        "updatedAt":{"shape":"Date"}
+        "updatedAt":{"shape":"Date"},
+        "architecture":{"shape":"Architecture"}
       }
+    },
+    "Architecture":{
+      "type":"string",
+      "enum":[
+        "ARM64",
+        "X86_64"
+      ]
     },
     "AutoStartConfig":{
       "type":"structure",
@@ -333,10 +360,7 @@
       "type":"structure",
       "members":{
         "enabled":{"shape":"Boolean"},
-        "idleTimeoutMinutes":{
-          "shape":"AutoStopConfigIdleTimeoutMinutesInteger",
-          "box":true
-        }
+        "idleTimeoutMinutes":{"shape":"AutoStopConfigIdleTimeoutMinutesInteger"}
       }
     },
     "AutoStopConfigIdleTimeoutMinutesInteger":{
@@ -445,7 +469,10 @@
         "tags":{"shape":"TagMap"},
         "autoStartConfiguration":{"shape":"AutoStartConfig"},
         "autoStopConfiguration":{"shape":"AutoStopConfig"},
-        "networkConfiguration":{"shape":"NetworkConfiguration"}
+        "networkConfiguration":{"shape":"NetworkConfiguration"},
+        "architecture":{"shape":"Architecture"},
+        "imageConfiguration":{"shape":"ImageConfigurationInput"},
+        "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationInputMap"}
       }
     },
     "CreateApplicationResponse":{
@@ -539,6 +566,31 @@
         "application":{"shape":"Application"}
       }
     },
+    "GetDashboardForJobRunRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "jobRunId"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "jobRunId":{
+          "shape":"JobRunId",
+          "location":"uri",
+          "locationName":"jobRunId"
+        }
+      }
+    },
+    "GetDashboardForJobRunResponse":{
+      "type":"structure",
+      "members":{
+        "url":{"shape":"Url"}
+      }
+    },
     "GetJobRunRequest":{
       "type":"structure",
       "required":[
@@ -586,6 +638,30 @@
       "max":2048,
       "min":20,
       "pattern":"arn:(aws[a-zA-Z0-9-]*):iam::(\\d{12})?:(role((\\u002F)|(\\u002F[\\u0021-\\u007F]+\\u002F))[\\w+=,.@-]+)"
+    },
+    "ImageConfiguration":{
+      "type":"structure",
+      "required":["imageUri"],
+      "members":{
+        "imageUri":{"shape":"ImageUri"},
+        "resolvedImageDigest":{"shape":"ImageDigest"}
+      }
+    },
+    "ImageConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "imageUri":{"shape":"ImageUri"}
+      }
+    },
+    "ImageDigest":{
+      "type":"string",
+      "pattern":"sha256:[0-9a-f]{64}"
+    },
+    "ImageUri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"([a-z0-9]+[a-z0-9-.]*)\\/((?:[a-z0-9]+(?:[._-][a-z0-9]+)*\\/)*[a-z0-9]+(?:[._-][a-z0-9]+)*)(?:\\:([a-zA-Z0-9_][a-zA-Z0-9-._]{0,299})|@(sha256:[0-9a-f]{64}))"
     },
     "InitScriptPath":{
       "type":"string",
@@ -741,7 +817,6 @@
         },
         "maxResults":{
           "shape":"ListApplicationsRequestMaxResultsInteger",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -782,7 +857,6 @@
         },
         "maxResults":{
           "shape":"ListJobRunsRequestMaxResultsInteger",
-          "box":true,
           "location":"querystring",
           "locationName":"maxResults"
         },
@@ -1165,7 +1239,10 @@
         "maximumCapacity":{"shape":"MaximumAllowedResources"},
         "autoStartConfiguration":{"shape":"AutoStartConfig"},
         "autoStopConfiguration":{"shape":"AutoStopConfig"},
-        "networkConfiguration":{"shape":"NetworkConfiguration"}
+        "networkConfiguration":{"shape":"NetworkConfiguration"},
+        "architecture":{"shape":"Architecture"},
+        "imageConfiguration":{"shape":"ImageConfigurationInput"},
+        "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationInputMap"}
       }
     },
     "UpdateApplicationResponse":{
@@ -1180,6 +1257,11 @@
       "max":10280,
       "min":1,
       "pattern":".*[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\r\\n\\t]*.*"
+    },
+    "Url":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "ValidationException":{
       "type":"structure",
@@ -1209,6 +1291,28 @@
         "memory":{"shape":"MemorySize"},
         "disk":{"shape":"DiskSize"}
       }
+    },
+    "WorkerTypeSpecification":{
+      "type":"structure",
+      "members":{
+        "imageConfiguration":{"shape":"ImageConfiguration"}
+      }
+    },
+    "WorkerTypeSpecificationInput":{
+      "type":"structure",
+      "members":{
+        "imageConfiguration":{"shape":"ImageConfigurationInput"}
+      }
+    },
+    "WorkerTypeSpecificationInputMap":{
+      "type":"map",
+      "key":{"shape":"WorkerTypeString"},
+      "value":{"shape":"WorkerTypeSpecificationInput"}
+    },
+    "WorkerTypeSpecificationMap":{
+      "type":"map",
+      "key":{"shape":"WorkerTypeString"},
+      "value":{"shape":"WorkerTypeSpecification"}
     },
     "WorkerTypeString":{
       "type":"string",

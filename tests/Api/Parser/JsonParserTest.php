@@ -2,7 +2,7 @@
 namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\Exception\ParserException;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * This class tests the custom functionality of the JsonParser;
@@ -119,7 +119,7 @@ class JsonParserTest extends TestCase
         $command = $client->getCommand($commandName);
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->setExpectedException($expectedException, $expectedMessage);
+        $this->expectException($expectedException, $expectedMessage);
         $handler($command)->wait();
     }
 }
