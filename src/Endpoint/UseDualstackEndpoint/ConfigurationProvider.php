@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Endpoint\UseDualstackEndpoint;
 
 use Aws\AbstractConfigurationProvider;
@@ -41,8 +42,7 @@ use GuzzleHttp\Promise;
  * $config = $promise->wait();
  * </code>
  */
-class ConfigurationProvider extends AbstractConfigurationProvider
-    implements ConfigurationProviderInterface
+class ConfigurationProvider extends AbstractConfigurationProvider implements ConfigurationProviderInterface
 {
     const ENV_USE_DUAL_STACK_ENDPOINT = 'AWS_USE_DUALSTACK_ENDPOINT';
     const INI_USE_DUAL_STACK_ENDPOINT = 'use_dualstack_endpoint';

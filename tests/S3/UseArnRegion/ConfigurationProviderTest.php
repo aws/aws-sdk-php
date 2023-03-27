@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3\UseArnRegion;
 
 use Aws\LruArrayCache;
@@ -352,4 +353,3 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 }
-

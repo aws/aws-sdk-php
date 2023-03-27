@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SageMakerMetrics;
 
 use Aws\AwsClient;
@@ -8,4 +9,6 @@ use Aws\AwsClient;
  * @method \Aws\Result batchPutMetrics(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchPutMetricsAsync(array $args = [])
  */
-class SageMakerMetricsClient extends AwsClient {}
+class SageMakerMetricsClient extends AwsClient
+{
+}

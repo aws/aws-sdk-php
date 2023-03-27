@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Glacier;
 
 use Aws\Exception\CouldNotCreateChecksumException;

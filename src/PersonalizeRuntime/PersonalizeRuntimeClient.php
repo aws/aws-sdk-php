@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\PersonalizeRuntime;
 
 use Aws\AwsClient;
@@ -10,4 +11,6 @@ use Aws\AwsClient;
  * @method \Aws\Result getRecommendations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRecommendationsAsync(array $args = [])
  */
-class PersonalizeRuntimeClient extends AwsClient {}
+class PersonalizeRuntimeClient extends AwsClient
+{
+}

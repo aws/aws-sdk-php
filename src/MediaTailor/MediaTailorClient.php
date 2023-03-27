@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MediaTailor;
 
 use Aws\AwsClient;
@@ -94,4 +95,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateVodSource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVodSourceAsync(array $args = [])
  */
-class MediaTailorClient extends AwsClient {}
+class MediaTailorClient extends AwsClient
+{
+}

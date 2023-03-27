@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SsmSap;
 
 use Aws\AwsClient;
@@ -40,4 +41,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateApplicationSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateApplicationSettingsAsync(array $args = [])
  */
-class SsmSapClient extends AwsClient {}
+class SsmSapClient extends AwsClient
+{
+}

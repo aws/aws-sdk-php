@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Api\Service;
@@ -65,7 +66,9 @@ class TraceMiddleware
     public function __construct(array $config = [], Service $service = null)
     {
         $this->config = $config + [
-            'logfn'        => function ($value) { echo $value; },
+            'logfn'        => function ($value) {
+                echo $value;
+            },
             'stream_size'  => 524288,
             'scrub_auth'   => true,
             'http'         => true,
@@ -337,22 +340,23 @@ class TraceMiddleware
             RecursiveIteratorIterator::SELF_FIRST
         );
         foreach ($iterator as $parameter => $value) {
-           if (isset($shapes[$parameter]['sensitive']) &&
-               $shapes[$parameter]['sensitive'] === true
-           ) {
-               $redactedValue = is_string($value) ? "[{$parameter}]" : ["[{$parameter}]"];
-               $currentDepth = $iterator->getDepth();
-               for ($subDepth = $currentDepth; $subDepth >= 0; $subDepth--) {
-                   $subIterator = $iterator->getSubIterator($subDepth);
-                   $subIterator->offsetSet(
-                       $subIterator->key(),
-                       ($subDepth === $currentDepth
-                           ? $redactedValue
-                           : $iterator->getSubIterator(($subDepth+1))->getArrayCopy()
-                       )
-                   );
-               }
-           }
+            if (isset($shapes[$parameter]['sensitive']) &&
+                $shapes[$parameter]['sensitive'] === true
+            ) {
+                $redactedValue = is_string($value) ? "[{$parameter}]" : ["[{$parameter}]"];
+                $currentDepth = $iterator->getDepth();
+                for ($subDepth = $currentDepth; $subDepth >= 0; $subDepth--) {
+                    $subIterator = $iterator->getSubIterator($subDepth);
+                    $subIterator->offsetSet(
+                        $subIterator->key(),
+                        (
+                            $subDepth === $currentDepth
+                            ? $redactedValue
+                            : $iterator->getSubIterator(($subDepth+1))->getArrayCopy()
+                        )
+                    );
+                }
+            }
         }
         return $iterator->getArrayCopy();
     }

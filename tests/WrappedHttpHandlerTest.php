@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
@@ -65,7 +66,9 @@ class WrappedHttpHandlerTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $cmd = new Command('foo');
         $req = new Request('GET', 'http://foo.com');
-        $handler = function () { return new RejectedPromise([]); };
+        $handler = function () {
+            return new RejectedPromise([]);
+        };
         $parser = $errorParser = [$this, 'fail'];
         $wrapped = new WrappedHttpHandler($handler, $parser, $errorParser);
         $wrapped($cmd, $req)->wait();
@@ -108,8 +111,7 @@ class WrappedHttpHandlerTest extends TestCase
         $expectedCode,
         $expectedId,
         $expectedArray
-    )
-    {
+    ) {
         $client = $this->generateTestClient($service, []);
         $cmd = $client->getCommand('TestOperation', []);
         $e = new \Exception('a');
@@ -341,7 +343,9 @@ class WrappedHttpHandlerTest extends TestCase
         $e = new \Exception('a');
         $cmd = new Command('foo');
         $req = new Request('GET', 'http://foo.com');
-        $handler = function () use ($e) { throw $e; };
+        $handler = function () use ($e) {
+            throw $e;
+        };
         $parser = [$this, 'fail'];
         $errorParser = [$this, 'fail'];
         $wrapped = new WrappedHttpHandler($handler, $parser, $errorParser);
@@ -358,9 +362,11 @@ class WrappedHttpHandlerTest extends TestCase
     {
         $handler = function ($request, array $options) {
             $this->assertArrayNotHasKey('http_stats_receiver', $options);
-            return new Response;
+            return new Response();
         };
-        $parser = function () { return new Result; };
+        $parser = function () {
+            return new Result();
+        };
         $wrapped = new WrappedHttpHandler($handler, $parser, [$this, 'fail']);
 
         $wrapped(new Command('a'), new Request('GET', 'http://foo.com'))
@@ -372,10 +378,12 @@ class WrappedHttpHandlerTest extends TestCase
         $handler = function ($request, array $options) {
             $this->assertArrayHasKey('http_stats_receiver', $options);
             $this->assertIsCallable($options['http_stats_receiver']);
-            return new Response;
+            return new Response();
         };
 
-        $parser = function () { return new Result; };
+        $parser = function () {
+            return new Result();
+        };
         $wrapped = new WrappedHttpHandler(
             $handler,
             $parser,

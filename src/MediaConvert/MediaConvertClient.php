@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MediaConvert;
 
 use Aws\AwsClient;
@@ -62,4 +63,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateQueue(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateQueueAsync(array $args = [])
  */
-class MediaConvertClient extends AwsClient {}
+class MediaConvertClient extends AwsClient
+{
+}

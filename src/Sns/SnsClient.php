@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Sns;
 
 use Aws\AwsClient;
@@ -91,4 +92,6 @@ use Aws\AwsClient;
  * @method \Aws\Result verifySMSSandboxPhoneNumber(array $args = [])
  * @method \GuzzleHttp\Promise\Promise verifySMSSandboxPhoneNumberAsync(array $args = [])
  */
-class SnsClient extends AwsClient {}
+class SnsClient extends AwsClient
+{
+}

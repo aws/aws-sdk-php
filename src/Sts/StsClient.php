@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Sts;
 
 use Aws\AwsClient;
@@ -29,7 +30,6 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  */
 class StsClient extends AwsClient
 {
-
     /**
      * {@inheritdoc}
      *
@@ -101,7 +101,7 @@ class StsClient extends AwsClient
         if (is_string($result)) {
             if ($result === 'regional') {
                 $value = false;
-            } else if ($result === 'legacy') {
+            } elseif ($result === 'legacy') {
                 $value = true;
             } else {
                 return;

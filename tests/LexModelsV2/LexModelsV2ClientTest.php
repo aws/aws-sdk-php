@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\LexModelsV2;
 
 use Aws\Exception\CouldNotCreateChecksumException;

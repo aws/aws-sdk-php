@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
@@ -50,7 +51,7 @@ class RetryMiddlewareV2Test extends TestCase
         $errors = [];
         $mock = new MockHandler(
             $queue,
-            function() use ($expected, &$attempt, $quotaManager, &$errors, $command) {
+            function () use ($expected, &$attempt, $quotaManager, &$errors, $command) {
                 try {
                     $this->assertEquals(
                         $expected[$attempt]['quota'],
@@ -62,14 +63,13 @@ class RetryMiddlewareV2Test extends TestCase
                             $command['@http']['delay']
                         );
                     }
-
                 } catch (\Exception $e) {
                     // Catch errors manually for throwing later
                     $errors[] = $e;
                 }
                 $attempt++;
             },
-            function() use ($expected, &$attempt, $quotaManager, &$errors, $command) {
+            function () use ($expected, &$attempt, $quotaManager, &$errors, $command) {
                 try {
                     $this->assertEquals(
                         $expected[$attempt]['quota'],
@@ -129,7 +129,7 @@ class RetryMiddlewareV2Test extends TestCase
         $this->assertCount($attempt, $queue);
     }
 
-    function standardModeTestCases()
+    public function standardModeTestCases()
     {
         $command = new Command('foo');
         $result200 = new Result([
@@ -391,7 +391,7 @@ class RetryMiddlewareV2Test extends TestCase
         // Errors within MockHandler closure get caught silently
         $errors = [];
 
-        $assertFunction = function() use (&$time, &$attempt, &$errors, $expectedTimes) {
+        $assertFunction = function () use (&$time, &$attempt, &$errors, $expectedTimes) {
             try {
                 $this->assertLessThanOrEqual(
                     0.5,
@@ -430,7 +430,7 @@ class RetryMiddlewareV2Test extends TestCase
             $mock,
             [
                 'rate_limiter' => new RateLimiter([
-                    'time_provider' => function() use ($times) {
+                    'time_provider' => function () use ($times) {
                         static $i;
                         if (is_null($i)) {
                             $i = 0;
@@ -473,7 +473,8 @@ class RetryMiddlewareV2Test extends TestCase
         try {
             $retryMW(new Command('SomeCommand'), new Request('GET', ''))->wait();
             $this->fail();
-        } catch (AwsException $e) { }
+        } catch (AwsException $e) {
+        }
     }
 
     public function testDeciderRetriesWhenStatusCodeMatches()
@@ -770,7 +771,8 @@ class RetryMiddlewareV2Test extends TestCase
 
     public function testDelaysExponentiallyWithJitter()
     {
-        $retryMiddleware = new RetryMiddlewareV2(new Configuration('standard', 3), function () {});
+        $retryMiddleware = new RetryMiddlewareV2(new Configuration('standard', 3), function () {
+        });
         $this->assertLessThanOrEqual(2000, $retryMiddleware->exponentialDelayWithJitter(1));
         $this->assertLessThanOrEqual(4000, $retryMiddleware->exponentialDelayWithJitter(2));
         $this->assertLessThanOrEqual(8000, $retryMiddleware->exponentialDelayWithJitter(3));
@@ -779,7 +781,8 @@ class RetryMiddlewareV2Test extends TestCase
 
     public function testDelaysWithSomeRandomness()
     {
-        $retryMiddleware = new RetryMiddlewareV2(new Configuration('standard', 3), function () {});
+        $retryMiddleware = new RetryMiddlewareV2(new Configuration('standard', 3), function () {
+        });
         $maxDelay = 1000 * pow(2, 4);
         $values = array_map(function () use ($retryMiddleware) {
             return $retryMiddleware->exponentialDelayWithJitter(4);
@@ -809,7 +812,9 @@ class RetryMiddlewareV2Test extends TestCase
                     return $res2;
                 },
             ],
-            function () use (&$called) { $called[] = func_get_args(); }
+            function () use (&$called) {
+                $called[] = func_get_args();
+            }
         );
 
         $wrapped = new RetryMiddlewareV2(
@@ -842,8 +847,12 @@ class RetryMiddlewareV2Test extends TestCase
                     return new Result();
                 },
             ],
-            function () use (&$called) { $called[] = func_get_args(); },
-            function () use (&$called) { $called[] = func_get_args(); }
+            function () use (&$called) {
+                $called[] = func_get_args();
+            },
+            function () use (&$called) {
+                $called[] = func_get_args();
+            }
         );
 
         $wrapped = new RetryMiddlewareV2(
@@ -870,8 +879,12 @@ class RetryMiddlewareV2Test extends TestCase
                     return new AwsException('foo', $command);
                 }
             ],
-            function () use (&$called) { $called[] = func_get_args(); },
-            function () use (&$called) { $called[] = func_get_args(); }
+            function () use (&$called) {
+                $called[] = func_get_args();
+            },
+            function () use (&$called) {
+                $called[] = func_get_args();
+            }
         );
 
         $wrapped = new RetryMiddlewareV2(
@@ -896,8 +909,12 @@ class RetryMiddlewareV2Test extends TestCase
         $res1 = new Result();
         $mock = new MockHandler(
             [$res1],
-            function () use (&$called) { $called[] = func_get_args(); },
-            function () use (&$called) { $called[] = func_get_args(); }
+            function () use (&$called) {
+                $called[] = func_get_args();
+            },
+            function () use (&$called) {
+                $called[] = func_get_args();
+            }
         );
 
         $wrapped = new RetryMiddlewareV2(

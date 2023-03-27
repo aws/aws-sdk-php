@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\LookoutMetrics;
 
 use Aws\AwsClient;
@@ -68,4 +69,6 @@ use Psr\Http\Message\RequestInterface;
  * @method \Aws\Result updateMetricSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateMetricSetAsync(array $args = [])
  */
-class LookoutMetricsClient extends AwsClient {}
+class LookoutMetricsClient extends AwsClient
+{
+}

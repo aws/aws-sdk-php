@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3\Crypto;
 
 use Aws\Crypto\AbstractCryptoClient;
@@ -143,7 +144,7 @@ class S3EncryptionMultipartUploader extends MultipartUploader
 
     private function getEncryptingDataPreparer()
     {
-        return function() {
+        return function () {
             // Defer encryption work until promise is executed
             $envelope = new MetadataEnvelope();
 

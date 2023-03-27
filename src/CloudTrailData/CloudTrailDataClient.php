@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CloudTrailData;
 
 use Aws\AwsClient;
@@ -8,4 +9,6 @@ use Aws\AwsClient;
  * @method \Aws\Result putAuditEvents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAuditEventsAsync(array $args = [])
  */
-class CloudTrailDataClient extends AwsClient {}
+class CloudTrailDataClient extends AwsClient
+{
+}

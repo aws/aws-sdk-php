@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Glacier;
 
 use Aws\Glacier\MultipartUploader;
@@ -79,8 +80,11 @@ class MultipartUploaderTest extends TestCase
             [ // Error: bad part_size
                 ['part_size' => 1] + $defaults,
                 Psr7\FnStream::decorate(
-                    Psr7\Utils::streamFor($data), [
-                        'getSize' => function () {return null;}
+                    Psr7\Utils::streamFor($data),
+                    [
+                        'getSize' => function () {
+                            return null;
+                        }
                     ]
                 ),
                 'InvalidArgumentException'

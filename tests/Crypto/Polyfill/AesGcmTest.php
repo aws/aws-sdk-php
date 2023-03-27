@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Crypto\Polyfill;
 
 use Aws\Crypto\Polyfill\AesGcm;

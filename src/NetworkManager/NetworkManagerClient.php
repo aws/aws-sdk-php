@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\NetworkManager;
 
 use Aws\AwsClient;
@@ -176,4 +177,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateVpcAttachment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVpcAttachmentAsync(array $args = [])
  */
-class NetworkManagerClient extends AwsClient {}
+class NetworkManagerClient extends AwsClient
+{
+}

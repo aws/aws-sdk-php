@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\AppConfig;
 
 use Aws\AwsClient;
@@ -92,4 +93,6 @@ use Aws\AwsClient;
  * @method \Aws\Result validateConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise validateConfigurationAsync(array $args = [])
  */
-class AppConfigClient extends AwsClient {}
+class AppConfigClient extends AwsClient
+{
+}

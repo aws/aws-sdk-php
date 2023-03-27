@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MTurk;
 
 use Aws\AwsClient;
@@ -84,4 +85,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateQualificationType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateQualificationTypeAsync(array $args = [])
  */
-class MTurkClient extends AwsClient {}
+class MTurkClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Credentials;
 
 use Aws\Api\DateTimeResult;
@@ -12,13 +13,18 @@ use GuzzleHttp\Promise;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-
 /**
  * @covers \Aws\Credentials\CredentialProvider
  */
 class CredentialProviderTest extends TestCase
 {
-    private $home, $homedrive, $homepath, $key, $secret, $profile;
+    use UsesServiceTrait;
+    private $home;
+    private $homedrive;
+    private $homepath;
+    private $key;
+    private $secret;
+    private $profile;
 
     private static $standardIni = <<<EOT
 [default]
@@ -26,8 +32,6 @@ aws_access_key_id = foo
 aws_secret_access_key = bar
 aws_session_token = baz
 EOT;
-
-    use UsesServiceTrait;
 
     private function clearEnv()
     {
@@ -86,7 +90,7 @@ EOT;
 
     public function testCreatesFromCache()
     {
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $key = __CLASS__ . 'credentialsCache';
         $saved = new Credentials('foo', 'bar', 'baz', PHP_INT_MAX);
         $cache->set($key, $saved, $saved->getExpiration() - time());
@@ -108,7 +112,7 @@ EOT;
 
     public function testRefreshesCacheWhenCredsExpired()
     {
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $key = __CLASS__ . 'credentialsCache';
         $saved = new Credentials('foo', 'bar', 'baz', time() - 1);
         $cache->set($key, $saved);
@@ -129,7 +133,7 @@ EOT;
 
     public function testPersistsToCache()
     {
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $key = __CLASS__ . 'credentialsCache';
         $creds = new Credentials('foo', 'bar', 'baz', PHP_INT_MAX);
 
@@ -787,7 +791,7 @@ EOT;
                 $dir . '/credentials',
                 []
             ))->wait();
-        }  finally {
+        } finally {
             unlink($dir . '/credentials');
         }
     }
@@ -1036,7 +1040,8 @@ EOT;
         }
         $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
         file_put_contents(
-            $tokenFileName, $tokenFile
+            $tokenFileName,
+            $tokenFile
         );
 
         $configFilename = $dir . '/config';
@@ -1116,7 +1121,8 @@ EOT;
             mkdir(dirname($tokenLocation), 0777, true);
         }
         file_put_contents(
-            $tokenLocation, $tokenFile
+            $tokenLocation,
+            $tokenFile
         );
 
         $configFilename = $dir . '/config';
@@ -1183,7 +1189,8 @@ EOT;
         }
         $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
         file_put_contents(
-            $tokenFileName, $tokenFile
+            $tokenFileName,
+            $tokenFile
         );
 
         $configFilename = $dir . '/config';
@@ -1247,7 +1254,8 @@ EOT;
         }
         $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
         file_put_contents(
-            $tokenFileName, $tokenFile
+            $tokenFileName,
+            $tokenFile
         );
 
         $configFilename = $dir . '/config';
@@ -1306,7 +1314,8 @@ EOT;
         }
         $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
         file_put_contents(
-            $tokenFileName, $tokenFile
+            $tokenFileName,
+            $tokenFile
         );
         putenv('HOME=' . dirname($dir));
         $configFilename = $dir . '/config';
@@ -1350,7 +1359,6 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         call_user_func(CredentialProvider::sso('default', $filename))->wait();
-
     }
 
     public function testSsoProfileProviderFailsWithBadSsoSessionName()
@@ -1872,8 +1880,10 @@ EOT;
         foreach ($cacheable as $provider) {
             $this->clearEnv();
 
-            if ($provider == 'ecs') putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
-            $cache = new LruArrayCache;
+            if ($provider == 'ecs') {
+                putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
+            }
+            $cache = new LruArrayCache();
             $cache->set('aws_cached_' . $provider . '_credentials', $credsForCache);
             $credentials = call_user_func(CredentialProvider::defaultProvider([
                 'credentials' => $cache,
@@ -1890,7 +1900,7 @@ EOT;
         $instanceCredential = new Credentials('instance_foo', 'instance_bar', 'instance_baz', PHP_INT_MAX);
         $ecsCredential = new Credentials('ecs_foo', 'ecs_bar', 'ecs_baz', PHP_INT_MAX);
 
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $cache->set('aws_cached_instance_credentials', $instanceCredential);
         $cache->set('aws_cached_ecs_credentials', $ecsCredential);
 
@@ -1908,7 +1918,7 @@ EOT;
             'credentials' => $cache,
         ]))
             ->wait();
-    
+
         $this->assertSame($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
         $this->assertSame($ecsCredential->getSecretKey(), $credentials->getSecretKey());
 
@@ -1919,7 +1929,7 @@ EOT;
             'credentials' => $cache,
         ]))
             ->wait();
-            
+
         $this->assertSame($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
         $this->assertSame($ecsCredential->getSecretKey(), $credentials->getSecretKey());
     }
@@ -1933,7 +1943,9 @@ EOT;
         putenv('HOME=' . dirname($dir));
         $a = CredentialProvider::ini('foo');
         $b = CredentialProvider::ini();
-        $c = function () { $this->fail('Should not have called'); };
+        $c = function () {
+            $this->fail('Should not have called');
+        };
         $provider = CredentialProvider::chain($a, $b, $c);
         $creds = $provider()->wait();
         $this->assertSame('foo', $creds->getAccessKeyId());
@@ -1981,9 +1993,12 @@ EOT;
      * @param bool $expected
      */
     public function testShouldUseEcs(
-        $relative, $serverRelative, $full, $serverFull, $expected
-    )
-    {
+        $relative,
+        $serverRelative,
+        $full,
+        $serverFull,
+        $expected
+    ) {
         $this->clearEnv();
         putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI' . $relative);
         $_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = $serverRelative;

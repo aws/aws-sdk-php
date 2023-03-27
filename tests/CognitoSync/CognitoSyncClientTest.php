@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\CognitoSync;
 
 use Aws\Test\UsesServiceTrait;
@@ -27,7 +28,7 @@ class CognitoSyncClientTest extends TestCase
                     );
                 }
 
-                return new FulfilledPromise(new Response);
+                return new FulfilledPromise(new Response());
             },
         ]);
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Rekognition;
 
 use Aws\AwsClient;
@@ -132,4 +133,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateStreamProcessor(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStreamProcessorAsync(array $args = [])
  */
-class RekognitionClient extends AwsClient {}
+class RekognitionClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Serializer\JsonBody;
@@ -17,7 +18,9 @@ class JsonBodyTest extends TestCase
 
     public function testUsesEmptyHashByDefault()
     {
-        $j = new JsonBody(new Service([], function() { return []; }));
+        $j = new JsonBody(new Service([], function () {
+            return [];
+        }));
         $this->assertSame(
             '{}',
             $j->build(new Shape([], new ShapeMap([])), [])
@@ -96,8 +99,11 @@ class JsonBodyTest extends TestCase
                         'bar' => ['a' => 'b']
                     ]
                 ],
-                sprintf('{"foo":{"baz":{"a":"%s"},"bar":{"a":"%s"}}}',
-                    base64_encode('a'), base64_encode('b'))
+                sprintf(
+                    '{"foo":{"baz":{"a":"%s"},"bar":{"a":"%s"}}}',
+                    base64_encode('a'),
+                    base64_encode('b')
+                )
             ],
             // Formats lists
             [
@@ -169,7 +175,9 @@ class JsonBodyTest extends TestCase
      */
     public function testFormatsJson($def, $args, $result)
     {
-        $j = new JsonBody(new Service([], function() { return []; }));
+        $j = new JsonBody(new Service([], function () {
+            return [];
+        }));
         $shape = Shape::create($def, new ShapeMap([]));
         $this->assertEquals($result, $j->build($shape, $args));
     }
@@ -197,8 +205,11 @@ class JsonBodyTest extends TestCase
                         'bar' => ['a' => 'b']
                     ]
                 ],
-                sprintf('{"foo":{"baz":{"a":"%s"},"bar":{"a":"%s"}}}',
-                    base64_encode('a'), base64_encode('b'))
+                sprintf(
+                    '{"foo":{"baz":{"a":"%s"},"bar":{"a":"%s"}}}',
+                    base64_encode('a'),
+                    base64_encode('b')
+                )
             ],
             // Formats lists
             [
@@ -217,7 +228,9 @@ class JsonBodyTest extends TestCase
      */
     public function testFormatsJsonDoesNotCreateReferences($def, $args, $result)
     {
-        $j = new JsonBody(new Service([], function() { return []; }));
+        $j = new JsonBody(new Service([], function () {
+            return [];
+        }));
         $shape = Shape::create($def, new ShapeMap([]));
         $builtShape = $j->build($shape, $args);
         $this->assertEquals($result, $builtShape);

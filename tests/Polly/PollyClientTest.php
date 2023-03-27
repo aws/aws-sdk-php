@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Polly;
 
 use Aws\Credentials\Credentials;

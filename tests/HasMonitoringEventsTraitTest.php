@@ -1,15 +1,14 @@
 <?php
+
 namespace Aws\Test;
 
 use PHPUnit\Framework\TestCase;
-
 
 /**
  * @covers \Aws\HasMonitoringEventsTrait
  */
 class HasMonitoringEventsTraitTest extends TestCase
 {
-
     public function testAddsAndRetrievesMonitoringEvents()
     {
         $events = [
@@ -26,13 +25,13 @@ class HasMonitoringEventsTraitTest extends TestCase
         ];
 
         $mock = $this->getMockForTrait('Aws\HasMonitoringEventsTrait');
-        foreach($events as $event) {
+        foreach ($events as $event) {
             $mock->appendMonitoringEvent($event);
         }
 
         $this->assertSame(
-            $events, $mock->getMonitoringEvents()
+            $events,
+            $mock->getMonitoringEvents()
         );
     }
-
 }

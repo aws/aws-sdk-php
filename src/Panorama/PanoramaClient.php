@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Panorama;
 
 use Aws\AwsClient;
@@ -74,4 +75,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateDeviceMetadata(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDeviceMetadataAsync(array $args = [])
  */
-class PanoramaClient extends AwsClient {}
+class PanoramaClient extends AwsClient
+{
+}

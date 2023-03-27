@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\EventBridge;
 
 use Aws\CommandInterface;
@@ -15,7 +16,6 @@ class EventBridgeClientTest extends TestCase
 
     public function putEventsEndpointSuccessProvider()
     {
-
         return [
             [
                 "us-east-1",
@@ -90,8 +90,7 @@ class EventBridgeClientTest extends TestCase
         $endpointId,
         $expectedEndpoint,
         $additionalHeaders
-    )
-    {
+    ) {
         //these tests require the CRT
         $isCrtAvailable = extension_loaded('awscrt');
         if (!$isCrtAvailable && !empty($endpointId)) {
@@ -101,8 +100,7 @@ class EventBridgeClientTest extends TestCase
         $clientConfig = [
             'region' => $clientRegion,
             'version' => 'latest',
-            'handler' => function (CommandInterface $cmd, RequestInterface $req)
-            use ($expectedEndpoint, $additionalHeaders) {
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) use ($expectedEndpoint, $additionalHeaders) {
                 $this->assertSame(
                     $expectedEndpoint,
                     (string) $req->getUri()
@@ -140,7 +138,6 @@ class EventBridgeClientTest extends TestCase
 
     public function putEventsEndpointFailureProvider()
     {
-
         return [
             ["us-east-1", [], 'badactor.com?foo=bar', 'EndpointId must be a valid host label.'],
             ["us-east-1", ['use_fips_endpoint' => true], 'abc123.456def', 'Invalid Configuration: FIPS is not supported with EventBridge multi-region endpoints.'],
@@ -161,8 +158,7 @@ class EventBridgeClientTest extends TestCase
         $additionalConfig,
         $endpointId,
         $expectedException
-    )
-    {
+    ) {
         $clientConfig = [
             'region' => $clientRegion,
             'version' => 'latest',

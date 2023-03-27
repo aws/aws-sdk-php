@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\MetadataParserTrait;
@@ -52,13 +53,10 @@ abstract class AbstractErrorParser
         $data['body'] = [];
 
         if (!empty($command) && !empty($this->api)) {
-
             // If modeled error code is indicated, check for known error shape
             if (!empty($data['code'])) {
-
                 $errors = $this->api->getOperation($command->getName())->getErrors();
                 foreach ($errors as $key => $error) {
-
                     // If error code matches a known error shape, populate the body
                     if ($data['code'] == $error['name']
                         && $error instanceof StructureShape

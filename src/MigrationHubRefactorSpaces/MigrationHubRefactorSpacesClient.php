@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MigrationHubRefactorSpaces;
 
 use Aws\AwsClient;
@@ -54,4 +55,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateRoute(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRouteAsync(array $args = [])
  */
-class MigrationHubRefactorSpacesClient extends AwsClient {}
+class MigrationHubRefactorSpacesClient extends AwsClient
+{
+}

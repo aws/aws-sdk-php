@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\CacheInterface;
@@ -100,7 +101,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             },
         ]);
 
@@ -129,7 +130,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             },
         ]);
 
@@ -155,7 +156,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             },
         ]);
 
@@ -183,7 +184,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             }
         ]);
 
@@ -206,7 +207,7 @@ EOXML;
                     return Promise\Create::promiseFor(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
                 }
 
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             },
             'use_path_style_endpoint' => true
         ]);
@@ -235,7 +236,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             },
         ]);
 
@@ -254,7 +255,7 @@ EOXML;
                     return Promise\Create::promiseFor(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
                 }
 
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             },
             'use_path_style_endpoint' => true
         ]);
@@ -439,7 +440,7 @@ EOXML;
 
     public function testCorrectsErroneousEntriesInCache()
     {
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $cache->set('aws:s3:foo:location', 'us-east-1');
 
         $client = new S3MultiRegionClient([
@@ -467,7 +468,7 @@ EOXML;
 
     public function testCorrectsErroneousEntriesInCacheWithPathStyle()
     {
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $cache->set('aws:s3:foo:location', 'us-east-1');
 
         $client = new S3MultiRegionClient([

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Route53RecoveryReadiness;
 
 use Aws\AwsClient;
@@ -70,4 +71,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateResourceSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateResourceSetAsync(array $args = [])
  */
-class Route53RecoveryReadinessClient extends AwsClient {}
+class Route53RecoveryReadinessClient extends AwsClient
+{
+}

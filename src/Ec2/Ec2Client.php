@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Ec2;
 
 use Aws\AwsClient;

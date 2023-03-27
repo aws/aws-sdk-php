@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Token;
 
 // Hack time() to returned the canned result.

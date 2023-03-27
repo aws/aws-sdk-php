@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\InternetMonitor;
 
 use Aws\AwsClient;
@@ -26,4 +27,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateMonitor(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateMonitorAsync(array $args = [])
  */
-class InternetMonitorClient extends AwsClient {}
+class InternetMonitorClient extends AwsClient
+{
+}

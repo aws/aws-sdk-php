@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ChimeSDKMeetings;
 
 use Aws\AwsClient;
@@ -38,4 +39,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateAttendeeCapabilities(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAttendeeCapabilitiesAsync(array $args = [])
  */
-class ChimeSDKMeetingsClient extends AwsClient {}
+class ChimeSDKMeetingsClient extends AwsClient
+{
+}

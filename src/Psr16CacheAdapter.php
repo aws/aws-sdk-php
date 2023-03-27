@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Psr\SimpleCache\CacheInterface as SimpleCacheInterface;

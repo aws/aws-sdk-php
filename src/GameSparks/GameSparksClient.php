@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\GameSparks;
 
 use Aws\AwsClient;
@@ -72,4 +73,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateStage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStageAsync(array $args = [])
  */
-class GameSparksClient extends AwsClient {}
+class GameSparksClient extends AwsClient
+{
+}

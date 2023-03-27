@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\TimestreamQuery;
 
 use Aws\AwsClient;
@@ -32,4 +33,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateScheduledQuery(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateScheduledQueryAsync(array $args = [])
  */
-class TimestreamQueryClient extends AwsClient {}
+class TimestreamQueryClient extends AwsClient
+{
+}

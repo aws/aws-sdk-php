@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\GreengrassV2;
 
 use Aws\AwsClient;
@@ -64,4 +65,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateConnectivityInfo(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConnectivityInfoAsync(array $args = [])
  */
-class GreengrassV2Client extends AwsClient {}
+class GreengrassV2Client extends AwsClient
+{
+}

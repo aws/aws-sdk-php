@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\NimbleStudio;
 
 use Aws\AwsClient;
@@ -104,4 +105,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateStudioComponent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStudioComponentAsync(array $args = [])
  */
-class NimbleStudioClient extends AwsClient {}
+class NimbleStudioClient extends AwsClient
+{
+}

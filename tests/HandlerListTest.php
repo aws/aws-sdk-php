@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Command;
@@ -23,7 +24,8 @@ class HandlerListTest extends TestCase
 
     public function testHandlerCanBeSetInCtor()
     {
-        $handler = function () {};
+        $handler = function () {
+        };
         $list = new HandlerList($handler);
         $this->assertTrue($list->hasHandler());
         $this->assertSame($handler, $list->resolve());
@@ -31,7 +33,8 @@ class HandlerListTest extends TestCase
 
     public function testHandlerCanBeSetInSetter()
     {
-        $handler = function () {};
+        $handler = function () {
+        };
         $list = new HandlerList();
         $list->setHandler($handler);
         $this->assertTrue($list->hasHandler());
@@ -41,15 +44,20 @@ class HandlerListTest extends TestCase
     public function testCanPrependWithName()
     {
         $list = new HandlerList();
-        $list->prependInit(function () {}, 'foo');
+        $list->prependInit(function () {
+        }, 'foo');
         $this->assertCount(1, $list);
     }
 
     public function testCanRemoveByInstance()
     {
-        $handler = function () {};
+        $handler = function () {
+        };
         $list = new HandlerList($handler);
-        $middleware = function () { return function () {}; };
+        $middleware = function () {
+            return function () {
+            };
+        };
         $list->appendInit($middleware);
         $this->assertCount(1, $list);
         $this->assertNotSame($handler, $list->resolve());
@@ -67,9 +75,13 @@ class HandlerListTest extends TestCase
 
     public function testCanRemoveByName()
     {
-        $handler = function () {};
+        $handler = function () {
+        };
         $list = new HandlerList($handler);
-        $middleware = function () { return function () {}; };
+        $middleware = function () {
+            return function () {
+            };
+        };
         $list->appendInit($middleware, 'foo');
         $this->assertCount(1, $list);
         $this->assertNotSame($handler, $list->resolve());
@@ -127,11 +139,13 @@ class HandlerListTest extends TestCase
     public function testCanPrintStack()
     {
         $list = new HandlerList();
-        $list->appendInit(function () {}, 'foo');
+        $list->appendInit(function () {
+        }, 'foo');
         $list->appendInit([$this, 'bar'], 'bar');
         $list->appendValidate(__CLASS__ . '::foo');
         $list->appendSign([Middleware::class, 'tap'], 'baz');
-        $list->setHandler(function () {});
+        $list->setHandler(function () {
+        });
         $lines = explode("\n", (string) $list);
         $this->assertCount(6, $lines);
         $this->assertStringContainsString('0) Step: init, Name: foo, Function: callable(', $lines[0]);
@@ -141,15 +155,22 @@ class HandlerListTest extends TestCase
         $this->assertStringContainsString('4) Handler: callable(', $lines[4]);
     }
 
-    public static function foo() {}
-    public function bar() {}
+    public static function foo()
+    {
+    }
+    public function bar()
+    {
+    }
 
     public function testCanAddBefore()
     {
         $list = new HandlerList();
-        $list->appendInit(function () {});
-        $list->appendBuild(function () {}, 'test');
-        $list->before('test', 'a', function () {});
+        $list->appendInit(function () {
+        });
+        $list->appendBuild(function () {
+        }, 'test');
+        $list->before('test', 'a', function () {
+        });
         $lines = explode("\n", (string) $list);
         $this->assertStringContainsString("1) Step: build, Name: a", $lines[1]);
         $this->assertStringContainsString("2) Step: build, Name: test", $lines[2]);
@@ -158,10 +179,14 @@ class HandlerListTest extends TestCase
     public function testCanAddAfter()
     {
         $list = new HandlerList();
-        $list->appendBuild(function () {}, 'test');
-        $list->appendBuild(function () {}, 'after_test');
-        $list->appendInit(function () {});
-        $list->after('test', 'a', function () {});
+        $list->appendBuild(function () {
+        }, 'test');
+        $list->appendBuild(function () {
+        }, 'after_test');
+        $list->appendInit(function () {
+        });
+        $list->after('test', 'a', function () {
+        });
         $lines = explode("\n", (string) $list);
         $this->assertStringContainsString("1) Step: build, Name: test", $lines[1]);
         $this->assertStringContainsString("2) Step: build, Name: a", $lines[2]);
@@ -172,17 +197,24 @@ class HandlerListTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $list = new HandlerList();
-        $list->before('foo', '', function () {});
+        $list->before('foo', '', function () {
+        });
     }
 
     public function testCanInterposeMiddleware()
     {
-        $list = new HandlerList(function () {});
-        $list->appendInit(Middleware::tap(function () {}), 'a');
-        $list->appendValidate(Middleware::tap(function () {}), 'b');
-        $list->appendBuild(Middleware::tap(function () {}), 'c');
-        $list->appendSign(Middleware::tap(function () {}), 'd');
-        $list->appendAttempt(Middleware::tap(function (){}), 'e');
+        $list = new HandlerList(function () {
+        });
+        $list->appendInit(Middleware::tap(function () {
+        }), 'a');
+        $list->appendValidate(Middleware::tap(function () {
+        }), 'b');
+        $list->appendBuild(Middleware::tap(function () {
+        }), 'c');
+        $list->appendSign(Middleware::tap(function () {
+        }), 'd');
+        $list->appendAttempt(Middleware::tap(function () {
+        }), 'e');
 
         $list->interpose(function ($step, $name) use (&$res) {
             return function (callable $h) use ($step, $name, &$res) {

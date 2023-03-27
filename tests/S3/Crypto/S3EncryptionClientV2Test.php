@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3\Crypto;
 
 use Aws\Crypto\AesDecryptingStream;
@@ -642,7 +643,7 @@ EOXML;
     {
         $kms = $this->getKmsClient();
         $list = $kms->getHandlerList();
-        $list->setHandler(function($cmd, $req) {
+        $list->setHandler(function ($cmd, $req) {
             // Verify decryption command has correct parameters
             $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(
@@ -690,7 +691,7 @@ EOXML;
     {
         $kms = $this->getKmsClient();
         $list = $kms->getHandlerList();
-        $list->setHandler(function($cmd, $req) {
+        $list->setHandler(function ($cmd, $req) {
             // Verify decryption command has correct parameters
             $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(
@@ -734,7 +735,7 @@ EOXML;
     {
         $kms = $this->getKmsClient();
         $list = $kms->getHandlerList();
-        $list->setHandler(function($cmd, $req) {
+        $list->setHandler(function ($cmd, $req) {
             // Verify decryption command has correct parameters
             $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(
@@ -908,7 +909,7 @@ EOXML;
         $this->expectWarning();
         $kms = $this->getKmsClient();
         $list = $kms->getHandlerList();
-        $list->setHandler(function($cmd, $req) {
+        $list->setHandler(function ($cmd, $req) {
             // Verify decryption command has correct parameters
             $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(
@@ -953,7 +954,7 @@ EOXML;
         $this->expectException(\Aws\Exception\CryptoException::class);
         $kms = $this->getKmsClient();
         $list = $kms->getHandlerList();
-        $list->setHandler(function($cmd, $req) {
+        $list->setHandler(function ($cmd, $req) {
             // Verify decryption command has correct parameters
             $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Parser\Exception;
 
 use Aws\Api\Parser\Exception\ParserException;

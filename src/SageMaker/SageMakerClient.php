@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SageMaker;
 
 use Aws\AwsClient;
@@ -610,4 +611,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWorkteam(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkteamAsync(array $args = [])
  */
-class SageMakerClient extends AwsClient {}
+class SageMakerClient extends AwsClient
+{
+}

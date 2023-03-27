@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Personalize;
 
 use Aws\AwsClient;
@@ -138,4 +139,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateRecommender(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRecommenderAsync(array $args = [])
  */
-class PersonalizeClient extends AwsClient {}
+class PersonalizeClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Credentials;
 
 use Aws;
@@ -7,6 +8,7 @@ use Aws\CacheInterface;
 use Aws\Exception\CredentialsException;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
+
 /**
  * Credential providers are functions that accept no arguments and return a
  * promise that is fulfilled with an {@see \Aws\Credentials\CredentialsInterface}
@@ -178,7 +180,9 @@ class CredentialProvider
                     && $previousCreds instanceof Credentials
                 ) {
                     $promise = $promise->otherwise(
-                        function () use ($next, $previousCreds) {return $next($previousCreds);}
+                        function () use ($next, $previousCreds) {
+                            return $next($previousCreds);
+                        }
                     );
                 } else {
                     $promise = $promise->otherwise($next);
@@ -230,7 +234,7 @@ class CredentialProvider
                     // Refresh the result and forward the promise.
                     return $result = $provider($creds);
                 })
-                ->otherwise(function($reason) use (&$result) {
+                ->otherwise(function ($reason) use (&$result) {
                     // Cleanup rejected promise.
                     $result = null;
                     return new Promise\RejectedPromise($reason);
@@ -293,7 +297,7 @@ class CredentialProvider
             $secret = getenv(self::ENV_SECRET);
             if ($key && $secret) {
                 return Promise\Create::promiseFor(
-                    new Credentials($key, $secret, getenv(self::ENV_SESSION) ?: NULL)
+                    new Credentials($key, $secret, getenv(self::ENV_SESSION) ?: null)
                 );
             }
 
@@ -321,9 +325,10 @@ class CredentialProvider
      *
      * @return callable
      */
-    public static function sso($ssoProfileName = 'default',
-                               $filename = null,
-                               $config = []
+    public static function sso(
+        $ssoProfileName = 'default',
+        $filename = null,
+        $config = []
     ) {
         $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
 
@@ -372,7 +377,6 @@ class CredentialProvider
                     $config
                 );
                 $expiration = $ssoCredentials['expiration'];
-
             } else {
                 if (empty($ssoProfile['sso_start_url'])
                     || empty($ssoProfile['sso_region'])
@@ -586,7 +590,8 @@ class CredentialProvider
                 if ($disableAssumeRole) {
                     return self::reject(
                         "Role assumption profiles are disabled. "
-                        . "Failed to load profile " . $profile);
+                        . "Failed to load profile " . $profile
+                    );
                 }
                 return self::loadRoleProfile(
                     $data,
@@ -666,8 +671,7 @@ class CredentialProvider
             }
 
             if (!isset($processData['AccessKeyId'])
-                || !isset($processData['SecretAccessKey']))
-            {
+                || !isset($processData['SecretAccessKey'])) {
                 return self::reject("credential_process does not return valid credentials");
             }
 
@@ -723,7 +727,8 @@ class CredentialProvider
             empty($roleProfile['source_profile'])
             == empty($roleProfile['credential_source'])
         ) {
-            return self::reject("Either source_profile or credential_source must be set " .
+            return self::reject(
+                "Either source_profile or credential_source must be set " .
                 "using profile " . $profileName . ", but not both."
             );
         }
@@ -732,7 +737,8 @@ class CredentialProvider
         if (!empty($roleProfile['source_profile'])) {
             $sourceProfileName = $roleProfile['source_profile'];
             if (!isset($profiles[$sourceProfileName])) {
-                return self::reject("source_profile " . $sourceProfileName
+                return self::reject(
+                    "source_profile " . $sourceProfileName
                     . " using profile " . $profileName . " does not exist"
                 );
             }
@@ -757,7 +763,7 @@ class CredentialProvider
                 : 'us-east-1';
             $config['preferStaticCredentials'] = true;
             $sourceCredentials = null;
-            if (!empty($roleProfile['source_profile'])){
+            if (!empty($roleProfile['source_profile'])) {
                 $sourceCredentials = call_user_func(
                     CredentialProvider::ini($sourceProfileName, $filename, $config)
                 )->wait();
@@ -830,7 +836,8 @@ class CredentialProvider
     /**
      * Gets profiles from ~/.aws/credentials and ~/.aws/config ini files
      */
-    private static function loadDefaultProfiles() {
+    private static function loadDefaultProfiles()
+    {
         $profiles = [];
         $credFile = self::getHomeDir() . '/.aws/credentials';
         $configFile = self::getHomeDir() . '/.aws/config';

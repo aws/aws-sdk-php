@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\XRay;
 
 use Aws\AwsClient;
@@ -66,4 +67,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSamplingRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSamplingRuleAsync(array $args = [])
  */
-class XRayClient extends AwsClient {}
+class XRayClient extends AwsClient
+{
+}

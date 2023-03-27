@@ -49,11 +49,14 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
     protected function resetMiddlewareSocket()
     {
         $prepareSocket = $this->getMethod('prepareSocket');
-        $middleware = new ApiCallMonitoringMiddleware(function(){},
+        $middleware = new ApiCallMonitoringMiddleware(
+            function () {
+            },
             $this->getCredentialProvider(),
             $this->getConfiguration(),
             'test',
-            'test');
+            'test'
+        );
         $prepareSocket->invokeArgs($middleware, array(true));
     }
 
@@ -194,9 +197,10 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
     public function testDisablesMiddlewareForUnwrapErrors()
     {
         $middleware = new ApiCallMonitoringMiddleware(
-            function() {},
+            function () {
+            },
             $this->getCredentialProvider(),
-            function() {
+            function () {
                 throw new \Exception('Test exception');
             },
             'us-east-1',

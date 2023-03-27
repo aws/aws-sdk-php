@@ -1,6 +1,6 @@
 <?php
-namespace Aws\Test\Endpoint\UseDualstackEndpoint;
 
+namespace Aws\Test\Endpoint\UseDualstackEndpoint;
 
 use Aws\LruArrayCache;
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider;
@@ -354,4 +354,3 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 }
-

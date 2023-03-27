@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\kendra;
 
 use Aws\AwsClient;
@@ -126,4 +127,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateThesaurus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateThesaurusAsync(array $args = [])
  */
-class kendraClient extends AwsClient {}
+class kendraClient extends AwsClient
+{
+}

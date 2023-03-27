@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Operation;
@@ -53,7 +54,7 @@ class JsonRpcParserTest extends TestCase
             new Response(200, [], json_encode(null))
         );
     }
-    
+
     public function testCanHandleEmptyResponses()
     {
         $operation = $this->getMockBuilder(Operation::class)

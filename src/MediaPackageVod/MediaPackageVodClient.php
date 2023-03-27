@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MediaPackageVod;
 
 use Aws\AwsClient;
@@ -40,4 +41,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updatePackagingGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePackagingGroupAsync(array $args = [])
  */
-class MediaPackageVodClient extends AwsClient {}
+class MediaPackageVodClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\LexModelsV2;
 
 use Aws\AwsClient;
@@ -150,4 +151,6 @@ use Psr\Http\Message\RequestInterface;
  * @method \Aws\Result updateSlotType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSlotTypeAsync(array $args = [])
  */
-class LexModelsV2Client extends AwsClient {}
+class LexModelsV2Client extends AwsClient
+{
+}

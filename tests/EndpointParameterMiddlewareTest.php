@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\AwsClient;
@@ -270,7 +271,9 @@ class EndpointParameterMiddlewareTest extends TestCase
                     ],
                 ],
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
     }
 }

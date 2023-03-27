@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DefaultsMode;
 
 use Aws\AbstractConfigurationProvider;
@@ -42,8 +43,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  * $config = $promise->wait();
  * </code>
  */
-class ConfigurationProvider extends AbstractConfigurationProvider
-    implements ConfigurationProviderInterface
+class ConfigurationProvider extends AbstractConfigurationProvider implements ConfigurationProviderInterface
 {
     const DEFAULT_MODE = 'legacy';
     const ENV_MODE = 'AWS_DEFAULTS_MODE';
@@ -124,7 +124,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     {
         return function () {
             return Promise\Create::promiseFor(
-                new Configuration( self::DEFAULT_MODE)
+                new Configuration(self::DEFAULT_MODE)
             );
         };
     }

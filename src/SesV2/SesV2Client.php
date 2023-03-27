@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SesV2;
 
 use Aws\AwsClient;
@@ -178,4 +179,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateEmailTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEmailTemplateAsync(array $args = [])
  */
-class SesV2Client extends AwsClient {}
+class SesV2Client extends AwsClient
+{
+}

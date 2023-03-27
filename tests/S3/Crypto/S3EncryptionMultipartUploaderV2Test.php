@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3\Crypto;
 
 use Aws\CommandInterface;
@@ -16,7 +17,9 @@ use Psr\Http\Message\RequestInterface;
 
 class S3EncryptionMultipartUploaderV2Test extends TestCase
 {
-    use UsesServiceTrait, UsesMetadataEnvelopeTrait, UsesCryptoParamsTraitV2;
+    use UsesServiceTrait;
+    use UsesMetadataEnvelopeTrait;
+    use UsesCryptoParamsTraitV2;
 
     const MB = 1048576;
     const TEST_URL = 'http://foo.s3.amazonaws.com/bar';
@@ -420,7 +423,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                     'Cipher' => 'gcm',
                 ],
                 '@KmsEncryptionContext' => [],
-                'before_initiate' => function($command) {
+                'before_initiate' => function ($command) {
                     $this->assertSame('foo', $command['Bucket']);
                     $this->assertSame('bar', $command['Key']);
                     $this->assertSame(
@@ -501,7 +504,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
             new Result(['Location' => self::TEST_URL]),
         ]);
         $list = $s3->getHandlerList();
-        $list->appendSign(Middleware::tap(function($cmd, $req) {
+        $list->appendSign(Middleware::tap(function ($cmd, $req) {
             $this->assertStringContainsString(
                 'feat/s3-encrypt/' . S3EncryptionMultipartUploaderV2::CRYPTO_VERSION,
                 $req->getHeaderLine('User-Agent')
@@ -547,7 +550,8 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
             new Result(['Location' => self::TEST_URL]),
         ]);
         $list = $s3->getHandlerList();
-        $list->appendSign(Middleware::tap(function(
+        $list->appendSign(Middleware::tap(
+            function (
                 CommandInterface $cmd,
                 RequestInterface $req
             ) {

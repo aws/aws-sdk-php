@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CodeStar;
 
 use Aws\AwsClient;
@@ -42,4 +43,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateUserProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateUserProfileAsync(array $args = [])
  */
-class CodeStarClient extends AwsClient {}
+class CodeStarClient extends AwsClient
+{
+}

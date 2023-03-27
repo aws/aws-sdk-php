@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CloudTrail;
 
 use Aws\S3\S3Client;
@@ -129,7 +130,7 @@ class LogRecordIterator implements \OuterIterator
             if (!$success) {
                 // The objects iterator is exhausted as well, so stop trying
                 break;
-           }
+            }
         }
     }
 

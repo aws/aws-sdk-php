@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Emr;
 
 use Aws\AwsClient;
@@ -113,4 +114,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateStudioSessionMapping(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStudioSessionMappingAsync(array $args = [])
  */
-class EmrClient extends AwsClient {}
+class EmrClient extends AwsClient
+{
+}

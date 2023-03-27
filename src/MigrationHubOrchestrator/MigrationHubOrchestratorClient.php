@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MigrationHubOrchestrator;
 
 use Aws\AwsClient;
@@ -62,4 +63,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWorkflowStepGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkflowStepGroupAsync(array $args = [])
  */
-class MigrationHubOrchestratorClient extends AwsClient {}
+class MigrationHubOrchestratorClient extends AwsClient
+{
+}

@@ -13,7 +13,6 @@ use Psr\Http\Message\RequestInterface;
  */
 interface MonitoringMiddlewareInterface
 {
-
     /**
      * Data for event properties to be sent to the monitoring agent.
      *

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\EBS;
 
 use Aws\AwsClient;
@@ -18,4 +19,6 @@ use Aws\AwsClient;
  * @method \Aws\Result startSnapshot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startSnapshotAsync(array $args = [])
  */
-class EBSClient extends AwsClient {}
+class EBSClient extends AwsClient
+{
+}

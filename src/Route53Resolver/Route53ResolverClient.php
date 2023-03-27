@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Route53Resolver;
 
 use Aws\AwsClient;
@@ -132,4 +133,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateResolverRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateResolverRuleAsync(array $args = [])
  */
-class Route53ResolverClient extends AwsClient {}
+class Route53ResolverClient extends AwsClient
+{
+}

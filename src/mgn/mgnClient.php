@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\mgn;
 
 use Aws\AwsClient;
@@ -128,4 +129,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWave(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWaveAsync(array $args = [])
  */
-class mgnClient extends AwsClient {}
+class mgnClient extends AwsClient
+{
+}

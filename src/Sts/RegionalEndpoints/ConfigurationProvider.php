@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Sts\RegionalEndpoints;
 
 use Aws\AbstractConfigurationProvider;
@@ -42,8 +43,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  * $config = $promise->wait();
  * </code>
  */
-class ConfigurationProvider extends AbstractConfigurationProvider
-    implements ConfigurationProviderInterface
+class ConfigurationProvider extends AbstractConfigurationProvider implements ConfigurationProviderInterface
 {
     const DEFAULT_ENDPOINTS_TYPE = 'legacy';
     const ENV_ENDPOINTS_TYPE = 'AWS_STS_REGIONAL_ENDPOINTS';

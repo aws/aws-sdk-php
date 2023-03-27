@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Detective;
 
 use Aws\AwsClient;
@@ -54,4 +55,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateOrganizationConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOrganizationConfigurationAsync(array $args = [])
  */
-class DetectiveClient extends AwsClient {}
+class DetectiveClient extends AwsClient
+{
+}

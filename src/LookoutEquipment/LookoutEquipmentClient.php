@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\LookoutEquipment;
 
 use Aws\AwsClient;
@@ -72,4 +73,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateLabelGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLabelGroupAsync(array $args = [])
  */
-class LookoutEquipmentClient extends AwsClient {}
+class LookoutEquipmentClient extends AwsClient
+{
+}

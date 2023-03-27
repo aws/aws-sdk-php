@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Sfn;
 
 use Aws\AwsClient;
@@ -58,4 +59,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateStateMachine(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStateMachineAsync(array $args = [])
  */
-class SfnClient extends AwsClient {}
+class SfnClient extends AwsClient
+{
+}

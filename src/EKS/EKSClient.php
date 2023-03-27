@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\EKS;
 
 use Aws\AwsClient;
@@ -76,4 +77,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateNodegroupVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateNodegroupVersionAsync(array $args = [])
  */
-class EKSClient extends AwsClient {}
+class EKSClient extends AwsClient
+{
+}

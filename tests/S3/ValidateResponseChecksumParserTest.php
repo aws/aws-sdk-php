@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\Api\ApiProvider;
@@ -22,16 +23,20 @@ class ValidateResponseChecksumParserTest extends TestCase
      * @dataProvider getChosenChecksumCases
      */
     public function testValidatesChoosesRightChecksum(
-        $responseAlgorithms, $checksumHeadersReturned, $expectedChecksum
+        $responseAlgorithms,
+        $checksumHeadersReturned,
+        $expectedChecksum
     ) {
         $s3 = $this->getTestClient(
             's3',
             ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
         );
-        $parser = new ValidateResponseChecksumParser(function () {
-            return new Result();
-        },
-        $s3->getApi());
+        $parser = new ValidateResponseChecksumParser(
+            function () {
+                return new Result();
+            },
+            $s3->getApi()
+        );
 
         $response = new Response(200, [], "response body");
         foreach ($checksumHeadersReturned as $header) {
@@ -56,14 +61,16 @@ class ValidateResponseChecksumParserTest extends TestCase
         ];
     }
 
-    public function testValidatesChecksumFailsOnBadValue() {
+    public function testValidatesChecksumFailsOnBadValue()
+    {
         $s3 = $this->getTestClient(
             's3',
             ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
         );
-        $parser = new ValidateResponseChecksumParser(function () {
-            return new Result();
-        },
+        $parser = new ValidateResponseChecksumParser(
+            function () {
+                return new Result();
+            },
             $s3->getApi()
         );
 
@@ -78,14 +85,16 @@ class ValidateResponseChecksumParserTest extends TestCase
         $this->assertEquals("FAILED", $chosenChecksum['status']);
     }
 
-    public function testValidatesChecksumSucceeds() {
+    public function testValidatesChecksumSucceeds()
+    {
         $s3 = $this->getTestClient(
             's3',
             ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
         );
-        $parser = new ValidateResponseChecksumParser(function () {
-            return new Result();
-        },
+        $parser = new ValidateResponseChecksumParser(
+            function () {
+                return new Result();
+            },
             $s3->getApi()
         );
         $expectedValue = "E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0=";
@@ -102,14 +111,16 @@ class ValidateResponseChecksumParserTest extends TestCase
         $this->assertEquals($expectedValue, $chosenChecksum['checksumHeaderValue']);
     }
 
-    public function testValidatesChecksumSkipsValidation() {
+    public function testValidatesChecksumSkipsValidation()
+    {
         $s3 = $this->getTestClient(
             's3',
             ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
         );
-        $parser = new ValidateResponseChecksumParser(function () {
-            return new Result();
-        },
+        $parser = new ValidateResponseChecksumParser(
+            function () {
+                return new Result();
+            },
             $s3->getApi()
         );
         $response = new Response(200, [], "response body");
@@ -121,14 +132,16 @@ class ValidateResponseChecksumParserTest extends TestCase
         $this->assertEquals("SKIPPED", $chosenChecksum['status']);
     }
 
-    public function testSkipsGetObjectReturnsFullMultipart() {
+    public function testSkipsGetObjectReturnsFullMultipart()
+    {
         $s3 = $this->getTestClient(
             's3',
             ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
         );
-        $parser = new ValidateResponseChecksumParser(function () {
-            return new Result();
-        },
+        $parser = new ValidateResponseChecksumParser(
+            function () {
+                return new Result();
+            },
             $s3->getApi()
         );
         $command = $s3->getCommand("GetObject", ["ChecksumMode" => "enabled"]);
@@ -141,14 +154,16 @@ class ValidateResponseChecksumParserTest extends TestCase
         self::assertTrue(true);
     }
 
-    public function testValidatesSha256() {
+    public function testValidatesSha256()
+    {
         $s3 = $this->getTestClient(
             's3',
             ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
         );
-        $parser = new ValidateResponseChecksumParser(function () {
-            return new Result();
-        },
+        $parser = new ValidateResponseChecksumParser(
+            function () {
+                return new Result();
+            },
             $s3->getApi()
         );
         $command = $s3->getCommand("GetObject", ["ChecksumMode" => "enabled"]);

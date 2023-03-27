@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws;
@@ -110,7 +111,6 @@ class MiddlewareTest extends TestCase
 
     public function TestOverridesAuthScheme()
     {
-
     }
 
     public function testBuildsRequests()
@@ -156,7 +156,9 @@ class MiddlewareTest extends TestCase
                     'a' => ['type' => 'string']
                 ]
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
         $list->appendValidate(Middleware::validation($api));
         $handler = $list->resolve();
@@ -196,7 +198,9 @@ class MiddlewareTest extends TestCase
                     'a' => ['type' => 'string']
                 ]
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
         $list->appendValidate(Middleware::validation($api));
         $api->setDefinition(
@@ -332,7 +336,7 @@ class MiddlewareTest extends TestCase
         $list = new HandlerList();
         $list->setHandler(function () {
             usleep(1000); // wait for a millisecond
-            return Promise\Create::promiseFor(new Result);
+            return Promise\Create::promiseFor(new Result());
         });
         $list->prependInit(Middleware::timer());
         $handler = $list->resolve();

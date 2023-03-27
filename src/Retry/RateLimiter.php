@@ -1,6 +1,6 @@
 <?php
-namespace Aws\Retry;
 
+namespace Aws\Retry;
 
 /**
  * @internal

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Command;
@@ -82,7 +83,8 @@ class MockHandlerTest extends TestCase
             },
             function ($reason) use (&$thens) {
                 $thens[] = $reason;
-            });
+            }
+        );
         $r1 = new Result([]);
         $cmd = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');

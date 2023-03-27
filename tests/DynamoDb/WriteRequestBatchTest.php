@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\DynamoDb;
 
 use Aws\CommandInterface;
@@ -178,7 +179,7 @@ class WriteRequestBatchTest extends TestCase
 
         $batch = new WriteRequestBatch($client, [
             'table' => 'foo',
-            'error' => function($e) use (&$unhandledErrors) {
+            'error' => function ($e) use (&$unhandledErrors) {
                 $unhandledErrors++;
             }
         ]);

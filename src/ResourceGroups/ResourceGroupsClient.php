@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ResourceGroups;
 
 use Aws\AwsClient;
@@ -42,4 +43,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateGroupQuery(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateGroupQueryAsync(array $args = [])
  */
-class ResourceGroupsClient extends AwsClient {}
+class ResourceGroupsClient extends AwsClient
+{
+}

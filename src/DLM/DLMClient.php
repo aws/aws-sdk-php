@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DLM;
 
 use Aws\AwsClient;
@@ -22,4 +23,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateLifecyclePolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLifecyclePolicyAsync(array $args = [])
  */
-class DLMClient extends AwsClient {}
+class DLMClient extends AwsClient
+{
+}

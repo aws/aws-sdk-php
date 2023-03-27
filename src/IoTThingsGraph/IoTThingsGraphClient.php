@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoTThingsGraph;
 
 use Aws\AwsClient;
@@ -76,4 +77,6 @@ use Aws\AwsClient;
  * @method \Aws\Result uploadEntityDefinitions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadEntityDefinitionsAsync(array $args = [])
  */
-class IoTThingsGraphClient extends AwsClient {}
+class IoTThingsGraphClient extends AwsClient
+{
+}

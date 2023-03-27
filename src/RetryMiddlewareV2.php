@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Exception\AwsException;
@@ -84,12 +85,11 @@ class RetryMiddlewareV2
             $retryCurlErrors[CURLE_RECV_ERROR] = true;
         }
 
-        return function(
+        return function (
             $attempts,
             CommandInterface $command,
             $result
         ) use ($options, $quotaManager, $retryCurlErrors, $maxAttempts) {
-
             // Release retry tokens back to quota on a successful result
             $quotaManager->releaseToQuota($result);
 
@@ -106,7 +106,6 @@ class RetryMiddlewareV2
             );
 
             if ($isRetryable) {
-
                 // Retrieve retry tokens and check if quota has been exceeded
                 if (!$quotaManager->hasRetryQuota($result)) {
                     return false;
@@ -246,7 +245,7 @@ class RetryMiddlewareV2
     public function exponentialDelayWithJitter($attempts)
     {
         $rand = mt_rand() / mt_getrandmax();
-        return min(1000 * $rand * pow(2, $attempts) , $this->maxBackoff);
+        return min(1000 * $rand * pow(2, $attempts), $this->maxBackoff);
     }
 
     private static function isRetryable(
@@ -258,14 +257,14 @@ class RetryMiddlewareV2
         if (!empty($options['transient_error_codes'])
             && is_array($options['transient_error_codes'])
         ) {
-            foreach($options['transient_error_codes'] as $code) {
+            foreach ($options['transient_error_codes'] as $code) {
                 $errorCodes[$code] = true;
             }
         }
         if (!empty($options['throttling_error_codes'])
             && is_array($options['throttling_error_codes'])
         ) {
-            foreach($options['throttling_error_codes'] as $code) {
+            foreach ($options['throttling_error_codes'] as $code) {
                 $errorCodes[$code] = true;
             }
         }
@@ -274,7 +273,7 @@ class RetryMiddlewareV2
         if (!empty($options['status_codes'])
             && is_array($options['status_codes'])
         ) {
-            foreach($options['status_codes'] as $code) {
+            foreach ($options['status_codes'] as $code) {
                 $statusCodes[$code] = true;
             }
         }
@@ -282,7 +281,7 @@ class RetryMiddlewareV2
         if (!empty($options['curl_errors'])
             && is_array($options['curl_errors'])
         ) {
-            foreach($options['curl_errors'] as $code) {
+            foreach ($options['curl_errors'] as $code) {
                 $retryCurlErrors[$code] = true;
             }
         }
@@ -353,7 +352,7 @@ class RetryMiddlewareV2
             if (!empty($this->options['throttling_error_codes'])
                 && is_array($this->options['throttling_error_codes'])
             ) {
-                foreach($this->options['throttling_error_codes'] as $code) {
+                foreach ($this->options['throttling_error_codes'] as $code) {
                     $throttlingErrors[$code] = true;
                 }
             }

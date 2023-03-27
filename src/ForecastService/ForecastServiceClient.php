@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ForecastService;
 
 use Aws\AwsClient;
@@ -132,4 +133,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateDatasetGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDatasetGroupAsync(array $args = [])
  */
-class ForecastServiceClient extends AwsClient {}
+class ForecastServiceClient extends AwsClient
+{
+}

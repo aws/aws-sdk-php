@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api;
 
 use Aws;
@@ -305,9 +306,9 @@ class Validator
         if (is_array($value)) {
             $typeOfFirstKey = gettype(key($value));
             foreach ($value as $key => $val) {
-               if (!$this->checkDocumentType($val) || gettype($key) != $typeOfFirstKey) {
-                   return false;
-               }
+                if (!$this->checkDocumentType($val) || gettype($key) != $typeOfFirstKey) {
+                    return false;
+                }
             }
             return $this->checkArray($value);
         }
@@ -334,7 +335,9 @@ class Validator
     private function addError($message)
     {
         $this->errors[] =
-            implode('', array_map(function ($s) { return "[{$s}]"; }, $this->path))
+            implode('', array_map(function ($s) {
+                return "[{$s}]";
+            }, $this->path))
             . ' '
             . $message;
     }

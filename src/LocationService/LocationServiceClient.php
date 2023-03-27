@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\LocationService;
 
 use Aws\AwsClient;
@@ -122,4 +123,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateTracker(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTrackerAsync(array $args = [])
  */
-class LocationServiceClient extends AwsClient {}
+class LocationServiceClient extends AwsClient
+{
+}

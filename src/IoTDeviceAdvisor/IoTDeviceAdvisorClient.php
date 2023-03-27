@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoTDeviceAdvisor;
 
 use Aws\AwsClient;
@@ -34,4 +35,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSuiteDefinition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSuiteDefinitionAsync(array $args = [])
  */
-class IoTDeviceAdvisorClient extends AwsClient {}
+class IoTDeviceAdvisorClient extends AwsClient
+{
+}

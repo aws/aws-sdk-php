@@ -27,7 +27,7 @@ class RateLimiterTest extends TestCase
     public function testCorrectlyCalculatesSendingRate()
     {
         $rateLimiter = new RateLimiter([
-            'time_provider' => function() {
+            'time_provider' => function () {
                 static $i;
                 $times = [5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8];
                 if (is_null($i)) {
@@ -165,7 +165,7 @@ class RateLimiterTest extends TestCase
         }
 
         $rateLimiter = new RateLimiter([
-            'time_provider' => function() use ($times) {
+            'time_provider' => function () use ($times) {
                 static $i;
                 if (is_null($i)) {
                     $i = 0;
@@ -199,7 +199,7 @@ class RateLimiterTest extends TestCase
         }
 
         $rateLimiter = new RateLimiter([
-            'time_provider' => function() use ($times) {
+            'time_provider' => function () use ($times) {
                 static $i;
                 if (is_null($i)) {
                     $i = 0;
@@ -257,5 +257,4 @@ class RateLimiterTest extends TestCase
             );
         }
     }
-
 }

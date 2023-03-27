@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Multipart;
 
 use Aws\CommandInterface;

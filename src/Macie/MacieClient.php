@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Macie;
 
 use Aws\AwsClient;
@@ -20,4 +21,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateS3Resources(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateS3ResourcesAsync(array $args = [])
  */
-class MacieClient extends AwsClient {}
+class MacieClient extends AwsClient
+{
+}

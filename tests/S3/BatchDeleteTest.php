@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\CommandInterface;
@@ -186,7 +187,7 @@ class BatchDeleteTest extends TestCase
         $keys = \JmesPath\search('[].Delete.Objects[].Key', $cmds);
         $this->assertEquals(range(0, 9), $keys);
     }
-    
+
     public function testWithNoMatchingObjects()
     {
         $client = $this->getTestClient('s3');

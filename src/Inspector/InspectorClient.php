@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Inspector;
 
 use Aws\AwsClient;
@@ -81,4 +82,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateAssessmentTarget(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAssessmentTargetAsync(array $args = [])
  */
-class InspectorClient extends AwsClient {}
+class InspectorClient extends AwsClient
+{
+}

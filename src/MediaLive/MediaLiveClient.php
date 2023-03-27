@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MediaLive;
 
 use Aws\AwsClient;
@@ -124,4 +125,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateReservation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateReservationAsync(array $args = [])
  */
-class MediaLiveClient extends AwsClient {}
+class MediaLiveClient extends AwsClient
+{
+}

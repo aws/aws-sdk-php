@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Route53RecoveryCluster;
 
 use Aws\AwsClient;
@@ -14,4 +15,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateRoutingControlStates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRoutingControlStatesAsync(array $args = [])
  */
-class Route53RecoveryClusterClient extends AwsClient {}
+class Route53RecoveryClusterClient extends AwsClient
+{
+}

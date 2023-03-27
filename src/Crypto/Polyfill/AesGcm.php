@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Crypto\Polyfill;
 
 use Aws\Exception\CryptoPolyfillException;

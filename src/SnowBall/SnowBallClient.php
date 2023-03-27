@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SnowBall;
 
 use Aws\AwsClient;
@@ -58,4 +59,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateLongTermPricing(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLongTermPricingAsync(array $args = [])
  */
-class SnowBallClient extends AwsClient {}
+class SnowBallClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DocDB;
 
 use Aws\AwsClient;
@@ -113,7 +114,8 @@ use Aws\PresignUrlMiddleware;
  * @method \Aws\Result stopDBCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopDBClusterAsync(array $args = [])
  */
-class DocDBClient extends AwsClient {
+class DocDBClient extends AwsClient
+{
     public function __construct(array $args)
     {
         $args['with_resolved'] = function (array $args) {

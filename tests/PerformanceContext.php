@@ -146,7 +146,7 @@ class PerformanceContext implements Context, SnippetAcceptingContext
                     ->findOperationWithNoRequiredParameters($service);
                 $this->addMockResults(
                     $this->clients[$service],
-                    array_fill(0, $numCommands, new Result)
+                    array_fill(0, $numCommands, new Result())
                 );
 
                 for ($i = 0; $i < $numCommands; $i++) {

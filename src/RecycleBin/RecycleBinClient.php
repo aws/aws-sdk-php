@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\RecycleBin;
 
 use Aws\AwsClient;
@@ -26,4 +27,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRuleAsync(array $args = [])
  */
-class RecycleBinClient extends AwsClient {}
+class RecycleBinClient extends AwsClient
+{
+}

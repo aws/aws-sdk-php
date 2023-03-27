@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\WellArchitected;
 
 use Aws\AwsClient;
@@ -90,4 +91,6 @@ use Aws\AwsClient;
  * @method \Aws\Result upgradeLensReview(array $args = [])
  * @method \GuzzleHttp\Promise\Promise upgradeLensReviewAsync(array $args = [])
  */
-class WellArchitectedClient extends AwsClient {}
+class WellArchitectedClient extends AwsClient
+{
+}

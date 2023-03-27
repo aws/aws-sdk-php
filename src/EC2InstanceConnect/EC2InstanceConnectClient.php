@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\EC2InstanceConnect;
 
 use Aws\AwsClient;
@@ -10,4 +11,6 @@ use Aws\AwsClient;
  * @method \Aws\Result sendSerialConsoleSSHPublicKey(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendSerialConsoleSSHPublicKeyAsync(array $args = [])
  */
-class EC2InstanceConnectClient extends AwsClient {}
+class EC2InstanceConnectClient extends AwsClient
+{
+}

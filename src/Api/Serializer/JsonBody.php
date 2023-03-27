@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api\Serializer;
 
 use Aws\Api\Service;
@@ -71,7 +72,7 @@ class JsonBody
                     }
                 }
                 if (empty($data)) {
-                    return new \stdClass;
+                    return new \stdClass();
                 }
                 return $data;
 
@@ -84,7 +85,7 @@ class JsonBody
 
             case 'map':
                 if (empty($value)) {
-                    return new \stdClass;
+                    return new \stdClass();
                 }
                 $values = $shape->getValue();
                 foreach ($value as $k => $v) {

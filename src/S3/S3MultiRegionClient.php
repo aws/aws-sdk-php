@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3;
 
 use Aws\CacheInterface;
@@ -228,7 +229,9 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
                 'type' => 'config',
                 'valid' => [CacheInterface::class],
                 'doc' => 'Cache of regions in which given buckets are located.',
-                'default' => function () { return new LruArrayCache; },
+                'default' => function () {
+                    return new LruArrayCache();
+                },
             ],
             'region' => $regionDef,
         ];

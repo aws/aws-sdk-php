@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\VoiceID;
 
 use Aws\AwsClient;
@@ -64,4 +65,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWatchlist(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWatchlistAsync(array $args = [])
  */
-class VoiceIDClient extends AwsClient {}
+class VoiceIDClient extends AwsClient
+{
+}

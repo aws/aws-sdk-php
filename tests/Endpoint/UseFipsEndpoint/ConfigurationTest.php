@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Endpoint\UseFipsEndpoint;
 
 use Aws\Endpoint\UseFipsEndpoint\Configuration;

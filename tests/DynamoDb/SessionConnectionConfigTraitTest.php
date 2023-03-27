@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\DynamoDb;
 
 use Aws\Test\UsesServiceTrait;

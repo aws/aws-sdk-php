@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DevOpsGuru;
 
 use Aws\AwsClient;
@@ -68,4 +69,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateServiceIntegration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServiceIntegrationAsync(array $args = [])
  */
-class DevOpsGuruClient extends AwsClient {}
+class DevOpsGuruClient extends AwsClient
+{
+}

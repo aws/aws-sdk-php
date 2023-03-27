@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Arn;
 
 use Aws\Arn\AccessPointArn;

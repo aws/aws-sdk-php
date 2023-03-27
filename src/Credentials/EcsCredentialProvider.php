@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
@@ -56,7 +57,7 @@ class EcsCredentialProvider
     {
         $client = $this->client;
         $request = new Request('GET', self::getEcsUri());
-        
+
         $headers = $this->setHeaderForAuthToken();
         return $client(
             $request,
@@ -81,17 +82,19 @@ class EcsCredentialProvider
             );
         });
     }
-    
+
     private function getEcsAuthToken()
     {
         return getenv(self::ENV_AUTH_TOKEN);
     }
 
-    public function setHeaderForAuthToken(){
+    public function setHeaderForAuthToken()
+    {
         $authToken = self::getEcsAuthToken();
         $headers = [];
-        if(!empty($authToken))
+        if (!empty($authToken)) {
             $headers = ['Authorization' => $authToken];
+        }
 
         return $headers;
     }
@@ -109,16 +112,17 @@ class EcsCredentialProvider
             $credsUri = isset($_SERVER[self::ENV_URI]) ? $_SERVER[self::ENV_URI] : '';
         }
 
-        if(empty($credsUri)){
+        if (empty($credsUri)) {
             $credFullUri = getenv(self::ENV_FULL_URI);
-            if($credFullUri === false){
+            if ($credFullUri === false) {
                 $credFullUri = isset($_SERVER[self::ENV_FULL_URI]) ? $_SERVER[self::ENV_FULL_URI] : '';
             }
 
-            if(!empty($credFullUri))
+            if (!empty($credFullUri)) {
                 return $credFullUri;
+            }
         }
-        
+
         return self::SERVER_URI . $credsUri;
     }
 

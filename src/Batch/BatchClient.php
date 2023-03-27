@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Batch;
 
 use Aws\AwsClient;
@@ -54,4 +55,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSchedulingPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSchedulingPolicyAsync(array $args = [])
  */
-class BatchClient extends AwsClient {}
+class BatchClient extends AwsClient
+{
+}

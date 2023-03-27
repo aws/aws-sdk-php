@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api\Serializer;
 
 use Aws\Api\MapShape;
@@ -51,8 +52,7 @@ abstract class RestSerializer
         CommandInterface $command,
         $endpointProvider = null,
         $clientArgs = null
-    )
-    {
+    ) {
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $opts = $this->serialize($operation, $commandArgs);
@@ -120,7 +120,7 @@ abstract class RestSerializer
 
         if (isset($bodyMembers)) {
             $this->payload($operation->getInput(), $bodyMembers, $opts);
-        } else if (!isset($opts['body']) && $this->hasPayloadParam($input, $payload)) {
+        } elseif (!isset($opts['body']) && $this->hasPayloadParam($input, $payload)) {
             $this->payload($operation->getInput(), [], $opts);
         }
 
@@ -228,7 +228,7 @@ abstract class RestSerializer
 
         // Add the query string variables or appending to one if needed.
         if (!empty($opts['query'])) {
-           $relative = $this->appendQuery($opts['query'], $relative);
+            $relative = $this->appendQuery($opts['query'], $relative);
         }
 
         $path = $this->endpoint->getPath();

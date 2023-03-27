@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Crypto\Polyfill;
 
 /**
@@ -16,7 +17,7 @@ class Key
     private $internalString;
 
     /**
-     * Hide contents of 
+     * Hide contents of
      *
      * @return array
      */

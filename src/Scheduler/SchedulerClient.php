@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Scheduler;
 
 use Aws\AwsClient;
@@ -30,4 +31,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSchedule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateScheduleAsync(array $args = [])
  */
-class SchedulerClient extends AwsClient {}
+class SchedulerClient extends AwsClient
+{
+}

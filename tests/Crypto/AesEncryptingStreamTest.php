@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\AesDecryptingStream;
@@ -11,10 +12,9 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class AesEncryptingStreamTest extends TestCase
 {
+    use AesEncryptionStreamTestTrait;
     const KB = 1024;
     const MB = 1048576;
-
-    use AesEncryptionStreamTestTrait;
 
     /**
      * @dataProvider cartesianJoinInputCipherMethodProvider

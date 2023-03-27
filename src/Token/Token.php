@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Token;
 
 use Aws\Token\TokenInterface;

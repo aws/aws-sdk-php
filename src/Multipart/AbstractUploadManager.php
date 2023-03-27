@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Multipart;
 
 use Aws\AwsClientInterface as Client;
@@ -97,7 +98,8 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
         return $this->promise = Promise\Coroutine::of(function () {
             // Initiate the upload.
             if ($this->state->isCompleted()) {
-                throw new \LogicException('This multipart upload has already '
+                throw new \LogicException(
+                    'This multipart upload has already '
                     . 'been completed or aborted.'
                 );
             }

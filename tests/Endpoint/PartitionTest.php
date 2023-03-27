@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\Partition;
@@ -512,7 +513,6 @@ class PartitionTest extends TestCase
 
         $data = $partition($params);
         $this->assertEquals($expectedEndpoint, $data['endpoint']);
-
     }
 
     public function stsEndpointTestCases()
@@ -611,7 +611,6 @@ class PartitionTest extends TestCase
 
         $data = $partition($params);
         $this->assertEquals($expectedEndpoint, $data['endpoint']);
-
     }
 
     public function s3EndpointTestCases()
@@ -676,8 +675,7 @@ class PartitionTest extends TestCase
         array $definition,
         $fipsConfig,
         $dualstackConfig
-    )
-    {
+    ) {
         $partition = new Partition($definition);
         $resolved = $partition([
             'region' => 'us-east-1',
@@ -826,8 +824,7 @@ class PartitionTest extends TestCase
         array $definition,
         $fipsConfig,
         $dualstackConfig
-    )
-    {
+    ) {
         $partition = new Partition($definition);
         $resolved = $partition([
             'region' => 'us-east-1',
@@ -974,10 +971,9 @@ class PartitionTest extends TestCase
      */
     public function testGetVariantWithBooleanConfigValues(
         array $tags,
-              $fipsConfig,
-              $dualstackConfig
-    )
-    {
+        $fipsConfig,
+        $dualstackConfig
+    ) {
         $definition = [
             'partition' => 'aws_test',
             'dnsSuffix' => 'amazonaws.com',

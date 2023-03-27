@@ -1,8 +1,9 @@
 <?php
+
 namespace Aws\S3\Crypto;
 
-use \Aws\Crypto\MetadataStrategyInterface;
-use \Aws\Crypto\MetadataEnvelope;
+use Aws\Crypto\MetadataStrategyInterface;
+use Aws\Crypto\MetadataEnvelope;
 
 class HeadersMetadataStrategy implements MetadataStrategyInterface
 {

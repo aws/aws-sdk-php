@@ -170,7 +170,7 @@ class ConcurrencyContext extends TestCase implements
     public function thereShouldBeValueAt($count, $path)
     {
         $this->assertCount((int) $count, array_unique(
-                JmesPath\search($path, $this->result)
+            JmesPath\search($path, $this->result)
         ));
     }
 }

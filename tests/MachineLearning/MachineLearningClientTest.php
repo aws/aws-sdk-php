@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\MachineLearning;
 
 use Aws\Middleware;
@@ -24,7 +25,8 @@ class MachineLearningClientTest extends TestCase
         ]);
         $this->addMockResults($client, [[]]);
         $client->getHandlerList()->appendSign(Middleware::tap(function ($c, $r) use (&$command, &$request) {
-            $command = $c; $request = $r;
+            $command = $c;
+            $request = $r;
         }));
         $client->predict([
             'MLModelId' => 'foo',

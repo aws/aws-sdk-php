@@ -10,7 +10,8 @@ class EndpointDefinitionProviderTest extends TestCase
     public function testProvidesRuleset()
     {
         $rulesetDefinition = EndpointDefinitionProvider::getEndpointRuleset(
-            's3', 'latest'
+            's3',
+            'latest'
         );
         $this->assertIsArray($rulesetDefinition);
         $this->assertArrayHasKey('parameters', $rulesetDefinition);
@@ -19,7 +20,8 @@ class EndpointDefinitionProviderTest extends TestCase
     public function testProvidesRulesetTests()
     {
         $testsDefinition = EndpointDefinitionProvider::getEndpointTests(
-            's3', 'latest'
+            's3',
+            'latest'
         );
         $this->assertIsArray($testsDefinition);
         $this->assertArrayHasKey('testCases', $testsDefinition);

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IVSRealTime;
 
 use Aws\AwsClient;
@@ -26,4 +27,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateStage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStageAsync(array $args = [])
  */
-class IVSRealTimeClient extends AwsClient {}
+class IVSRealTimeClient extends AwsClient
+{
+}

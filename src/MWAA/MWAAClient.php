@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MWAA;
 
 use Aws\AwsClient;
@@ -28,4 +29,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEnvironmentAsync(array $args = [])
  */
-class MWAAClient extends AwsClient {}
+class MWAAClient extends AwsClient
+{
+}

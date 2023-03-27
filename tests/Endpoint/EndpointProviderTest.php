@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\EndpointProvider;
@@ -13,13 +14,16 @@ class EndpointProviderTest extends TestCase
     public function testThrowsWhenUnresolved()
     {
         $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);
-        EndpointProvider::resolve(function() {}, []);
+        EndpointProvider::resolve(function () {
+        }, []);
     }
 
     public function testThrowsWhenNotArray()
     {
         $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);
-        EndpointProvider::resolve(function() { return 'foo'; }, []);
+        EndpointProvider::resolve(function () {
+            return 'foo';
+        }, []);
     }
 
     public function testCreatesDefaultProvider()

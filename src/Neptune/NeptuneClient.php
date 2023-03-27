@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Neptune;
 
 use Aws\AwsClient;
@@ -145,7 +146,8 @@ use Aws\PresignUrlMiddleware;
  * @method \Aws\Result stopDBCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopDBClusterAsync(array $args = [])
  */
-class NeptuneClient extends AwsClient {
+class NeptuneClient extends AwsClient
+{
     public function __construct(array $args)
     {
         $args['with_resolved'] = function (array $args) {

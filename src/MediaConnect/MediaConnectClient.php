@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MediaConnect;
 
 use Aws\AwsClient;
@@ -66,4 +67,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateFlowSource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFlowSourceAsync(array $args = [])
  */
-class MediaConnectClient extends AwsClient {}
+class MediaConnectClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CodeCatalyst;
 
 use Aws\AwsClient;
@@ -56,4 +57,6 @@ use Aws\AwsClient;
  * @method \Aws\Result verifySession(array $args = [])
  * @method \GuzzleHttp\Promise\Promise verifySessionAsync(array $args = [])
  */
-class CodeCatalystClient extends AwsClient {}
+class CodeCatalystClient extends AwsClient
+{
+}

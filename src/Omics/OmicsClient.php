@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Omics;
 
 use Aws\AwsClient;
@@ -138,4 +139,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWorkflow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkflowAsync(array $args = [])
  */
-class OmicsClient extends AwsClient {}
+class OmicsClient extends AwsClient
+{
+}

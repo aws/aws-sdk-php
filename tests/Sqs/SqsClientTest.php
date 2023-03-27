@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Sqs;
 
 use Aws\Middleware;

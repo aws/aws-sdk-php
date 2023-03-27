@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Textract;
 
 use Aws\AwsClient;
@@ -32,4 +33,6 @@ use Aws\AwsClient;
  * @method \Aws\Result startLendingAnalysis(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startLendingAnalysisAsync(array $args = [])
  */
-class TextractClient extends AwsClient {}
+class TextractClient extends AwsClient
+{
+}

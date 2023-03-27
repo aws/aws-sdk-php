@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Service;
@@ -41,7 +42,9 @@ class ComplianceTest extends TestCase
                     ];
                     $description = new Service(
                         $serviceData,
-                        function () { return []; }
+                        function () {
+                            return [];
+                        }
                     );
                     $cases[] = [
                         $file . ': ' . $suite['description'],

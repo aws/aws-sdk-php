@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;

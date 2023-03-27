@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Api\ApiProvider;
@@ -417,7 +418,7 @@ class AwsClient implements AwsClientInterface
             }
 
             $authType = $api->getOperation($c->getName())['authtype'];
-            switch ($authType){
+            switch ($authType) {
                 case 'none':
                     $version = 'anonymous';
                     break;
@@ -486,7 +487,8 @@ class AwsClient implements AwsClientInterface
         // Add recursion detection header to requests
         // originating in supported Lambda runtimes
         $this->handlerList->appendBuild(
-            Middleware::recursionDetection(), 'recursion-detection'
+            Middleware::recursionDetection(),
+            'recursion-detection'
         );
     }
 
@@ -523,10 +525,10 @@ class AwsClient implements AwsClientInterface
         $api = $this->getApi();
         $resolvedParams = [];
         if (!empty($paramDefinitions = $api->getClientContextParams())) {
-            foreach($paramDefinitions as $paramName => $paramValue) {
+            foreach ($paramDefinitions as $paramName => $paramValue) {
                 if (isset($args[$paramName])) {
-                   $result[$paramName] = $args[$paramName];
-               }
+                    $result[$paramName] = $args[$paramName];
+                }
             }
         }
         return $resolvedParams;
@@ -545,7 +547,7 @@ class AwsClient implements AwsClientInterface
         $builtIns['AWS::Region'] = $this->getRegion();
         $builtIns['AWS::UseFIPS'] = $config['use_fips_endpoint']->isUseFipsEndpoint();
         $builtIns['AWS::UseDualStack'] = $config['use_dual_stack_endpoint']->isUseDualstackEndpoint();
-        if ($service === 's3' || $service === 's3control'){
+        if ($service === 's3' || $service === 's3control') {
             $builtIns['AWS::S3::UseArnRegion'] = $config['use_arn_region']->isUseArnRegion();
         }
         if ($service === 's3') {
@@ -578,7 +580,7 @@ class AwsClient implements AwsClientInterface
     {
         $normalizedBuiltIns = [];
 
-        foreach($this->clientBuiltIns as $name => $value) {
+        foreach ($this->clientBuiltIns as $name => $value) {
             $normalizedName = explode('::', $name);
             $normalizedName = $normalizedName[count($normalizedName) - 1];
             $normalizedBuiltIns[$normalizedName] = $value;
@@ -592,7 +594,8 @@ class AwsClient implements AwsClientInterface
         return $this->endpointProvider instanceof EndpointProviderV2;
     }
 
-    public static function emitDeprecationWarning() {
+    public static function emitDeprecationWarning()
+    {
         $phpVersion = PHP_VERSION_ID;
         if ($phpVersion <  70205) {
             $phpVersionString = phpversion();

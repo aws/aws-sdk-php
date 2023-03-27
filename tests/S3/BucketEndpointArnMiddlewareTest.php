@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\Command;
@@ -370,7 +371,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'use_accelerate_endpoint' => true,
                 ],
                 new UnresolvedEndpointException(
-            'Access Points do not support S3 Accelerate'
+                    'Access Points do not support S3 Accelerate'
                 )
             ],
             // Path-style with access point ARN
@@ -498,7 +499,8 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'use_accelerate_endpoint' => true,
                 ],
                 new UnresolvedEndpointException(
-        'S3 Outposts does not support S3 Accelerate'                )
+                    'S3 Outposts does not support S3 Accelerate'
+                )
             ],
             // s3-external, use_arn_region false
             [
@@ -557,7 +559,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
             'version' => 'latest',
             'region' => 'us-west-2',
             's3_use_arn_region' => true,
-            'handler' => function(CommandInterface $cmd, RequestInterface $req) {
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) {
                 $this->assertSame(
                     'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                     $req->getUri()->getHost()

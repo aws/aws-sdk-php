@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\DynamoDb;
 
 use Aws\DynamoDb\Marshaler;
@@ -31,7 +32,7 @@ class MarshalerTest extends TestCase
 
     public function getMarshalValueUseCases()
     {
-        $m = new Marshaler;
+        $m = new Marshaler();
 
         $resource = fopen('php://temp', 'w+');
         fwrite($resource, 'foo');
@@ -114,7 +115,7 @@ class MarshalerTest extends TestCase
                 ]]
             ],
             [ // Empty
-                new \stdClass,
+                new \stdClass(),
                 ['M' => []]
             ],
             [ // Traversable
@@ -228,7 +229,7 @@ JSON;
             ]],
         ];
 
-        $m = new Marshaler;
+        $m = new Marshaler();
         $this->assertEquals($expected, $m->marshalJson($json));
         $this->assertEquals($expected, $m->marshalItem($array));
     }
@@ -236,7 +237,7 @@ JSON;
     public function testErrorIfMarshalingBadJsonDoc()
     {
         $this->expectException(\InvalidArgumentException::class);
-        (new Marshaler)->marshalJson('foo');
+        (new Marshaler())->marshalJson('foo');
     }
 
 
@@ -279,14 +280,14 @@ JSON;
 JSON;
         $json = str_replace([" ", "\n"], '', $json); // remove whitespace
 
-        $m = new Marshaler;
+        $m = new Marshaler();
         $this->assertSame($json, $m->unmarshalJson($item));
         $this->assertSame($json, json_encode($m->unmarshalItem($item)));
     }
 
     public function testCanUnmarshalToObjectFormat()
     {
-        $result = (new Marshaler)->unmarshalValue(
+        $result = (new Marshaler())->unmarshalValue(
             ['M' => ['a' => ['S' => 'b']]],
             true
         );
@@ -298,13 +299,13 @@ JSON;
     public function testErrorIfUnmarshalingUnknownType()
     {
         $this->expectException(\UnexpectedValueException::class);
-        $m = new Marshaler;
+        $m = new Marshaler();
         $m->unmarshalValue(['BOMB' => 'BOOM']);
     }
 
     public function testThatBinaryAndSetValuesGetRoundtrippedWithoutChanges()
     {
-        $m = new Marshaler;
+        $m = new Marshaler();
         $item = [
             'foo' => $m->binary('foo'),
             'bar' => $m->set(['foo', 'bar']),

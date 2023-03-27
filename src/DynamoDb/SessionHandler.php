@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DynamoDb;
 
 /**
@@ -90,7 +91,7 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function register()
     {
-         return session_set_save_handler($this, true);
+        return session_set_save_handler($this, true);
     }
 
     /**

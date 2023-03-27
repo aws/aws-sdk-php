@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Backup;
 
 use Aws\AwsClient;
@@ -150,4 +151,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateReportPlan(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateReportPlanAsync(array $args = [])
  */
-class BackupClient extends AwsClient {}
+class BackupClient extends AwsClient
+{
+}

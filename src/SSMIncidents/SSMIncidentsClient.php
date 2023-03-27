@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SSMIncidents;
 
 use Aws\AwsClient;
@@ -64,4 +65,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateTimelineEvent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTimelineEventAsync(array $args = [])
  */
-class SSMIncidentsClient extends AwsClient {}
+class SSMIncidentsClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\Ruleset\RulesetParameter;
@@ -22,7 +23,7 @@ class RulesetParameterTest extends TestCase
                 "message" => 'There is a new parameter.'
             ]
         ];
-        $this->rulesetParameter = new RulesetParameter('Region' ,$spec);
+        $this->rulesetParameter = new RulesetParameter('Region', $spec);
     }
 
     public function wrongParameterTypeProvider()
@@ -58,7 +59,8 @@ class RulesetParameterTest extends TestCase
         $this->rulesetParameter->validateInputParam('us-east-1');
     }
 
-    public function testUnknownTypeThrowsException() {
+    public function testUnknownTypeThrowsException()
+    {
         $parameterSpec = [
             'type' => 'tuple'
         ];

@@ -34,8 +34,7 @@ class ErrorRule extends AbstractRule
     public function evaluate(
         array $inputParameters,
         RulesetStandardLibrary $standardLibrary
-    )
-    {
+    ) {
         if ($this->evaluateConditions($inputParameters, $standardLibrary)) {
             $message = $standardLibrary->resolveValue($this->error, $inputParameters);
             throw new UnresolvedEndpointException($message);

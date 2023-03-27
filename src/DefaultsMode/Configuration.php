@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DefaultsMode;
 
 use Aws\DefaultsMode\Exception\ConfigurationException;
@@ -49,9 +50,9 @@ class Configuration implements ConfigurationInterface
                 if (isset($this->$settingName)) {
                     if (isset($settingValue['override'])) {
                         $this->$settingName = $settingValue['override'];
-                    } else if (isset($settingValue['multiply'])) {
+                    } elseif (isset($settingValue['multiply'])) {
                         $this->$settingName *= $settingValue['multiply'];
-                    } else if (isset($settingValue['add'])) {
+                    } elseif (isset($settingValue['add'])) {
                         $this->$settingName += $settingValue['add'];
                     }
                 } else {
@@ -127,5 +128,4 @@ class Configuration implements ConfigurationInterface
             'http_request_timeout_in_milliseconds'       => $this->getHttpRequestTimeoutInMillis(),
         ];
     }
-
 }

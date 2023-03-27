@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Retry;
 
 use Aws\AbstractConfigurationProvider;
@@ -42,8 +43,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  * $config = $promise->wait();
  * </code>
  */
-class ConfigurationProvider extends AbstractConfigurationProvider
-    implements ConfigurationProviderInterface
+class ConfigurationProvider extends AbstractConfigurationProvider implements ConfigurationProviderInterface
 {
     const DEFAULT_MAX_ATTEMPTS = 3;
     const DEFAULT_MODE = 'legacy';

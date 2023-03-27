@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\FIS;
 
 use Aws\AwsClient;
@@ -38,4 +39,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateExperimentTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateExperimentTemplateAsync(array $args = [])
  */
-class FISClient extends AwsClient {}
+class FISClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Rds;
 
 use Aws\CommandInterface;
@@ -8,6 +9,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+
 require_once __DIR__ . '/../Signature/sig_hack.php';
 
 /**
@@ -26,7 +28,7 @@ class RdsClientTest extends TestCase
         $_SERVER['aws_time'] = null;
         $_SERVER['formatAwsTime'] = null;
     }
-    
+
     public function testAddsCopySnapshotMiddleware()
     {
         $rds = new RdsClient([
@@ -95,17 +97,16 @@ class RdsClientTest extends TestCase
             'handler' => function (
                 CommandInterface $cmd,
                 RequestInterface $r
-            ) use ($expectedUrl, $expectedSignature)
-            {
+            ) use ($expectedUrl, $expectedSignature) {
                 $url = $cmd['PreSignedUrl'];
                 if (!empty($expectedUrl)) {
                     self::assertSame($expectedUrl, $url);
-                } else if (!empty($expectedSignature)) {
+                } elseif (!empty($expectedSignature)) {
                     $this->assertStringContainsString("X-Amz-Signature={$expectedSignature}", $url);
                 } else {
                     self::assertNull($url);
                 }
-                return new Result;
+                return new Result();
             }
         ]);
 
@@ -119,4 +120,3 @@ class RdsClientTest extends TestCase
         call_user_func([$rds, $functionName], $functionArgs);
     }
 }
-

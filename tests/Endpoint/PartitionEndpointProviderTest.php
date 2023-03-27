@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\EndpointProvider;
@@ -282,7 +283,8 @@ class PartitionEndpointProviderTest extends TestCase
             foreach ($prefixData['prefix-groups'] as $current => $old) {
                 foreach ($old as $prefix) {
                     $this->assertArrayHasKey(
-                        $prefix, $partition["services"]
+                        $prefix,
+                        $partition["services"]
                     );
                     $this->assertSame(
                         $partition["services"][$current],

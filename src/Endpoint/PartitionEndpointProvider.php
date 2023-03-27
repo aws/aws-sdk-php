@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Endpoint;
 
 use JmesPath\Env;

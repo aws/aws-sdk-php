@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ServiceDiscovery;
 
 use Aws\AwsClient;
@@ -58,4 +59,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateService(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServiceAsync(array $args = [])
  */
-class ServiceDiscoveryClient extends AwsClient {}
+class ServiceDiscoveryClient extends AwsClient
+{
+}

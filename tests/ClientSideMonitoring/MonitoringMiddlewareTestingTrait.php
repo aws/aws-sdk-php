@@ -63,7 +63,7 @@ trait MonitoringMiddlewareTestingTrait
         } catch (\Exception $e) {
             if (!$isResultException) {
                 $this->fail('Should not have received a rejection.');
-            } else if (!($e instanceof MonitoringEventsInterface)) {
+            } elseif (!($e instanceof MonitoringEventsInterface)) {
                 $this->fail('Unable to validate the specified behavior');
             }
             $monitoringEvents = $e->getMonitoringEvents();

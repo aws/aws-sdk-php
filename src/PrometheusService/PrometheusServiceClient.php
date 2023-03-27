@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\PrometheusService;
 
 use Aws\AwsClient;
@@ -48,4 +49,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWorkspaceAlias(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkspaceAliasAsync(array $args = [])
  */
-class PrometheusServiceClient extends AwsClient {}
+class PrometheusServiceClient extends AwsClient
+{
+}

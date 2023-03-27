@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
@@ -126,8 +127,8 @@ class OperationTest extends TestCase
 
         $contextParams = $o->getContextParams();
         $this->assertEquals(
-           $expected,
-           $contextParams
+            $expected,
+            $contextParams
         );
     }
 }

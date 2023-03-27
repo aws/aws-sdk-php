@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\KinesisVideoWebRTCStorage;
 
 use Aws\AwsClient;
@@ -8,4 +9,6 @@ use Aws\AwsClient;
  * @method \Aws\Result joinStorageSession(array $args = [])
  * @method \GuzzleHttp\Promise\Promise joinStorageSessionAsync(array $args = [])
  */
-class KinesisVideoWebRTCStorageClient extends AwsClient {}
+class KinesisVideoWebRTCStorageClient extends AwsClient
+{
+}

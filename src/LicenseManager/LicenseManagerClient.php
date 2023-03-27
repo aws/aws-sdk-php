@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\LicenseManager;
 
 use Aws\AwsClient;
@@ -106,4 +107,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateServiceSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServiceSettingsAsync(array $args = [])
  */
-class LicenseManagerClient extends AwsClient {}
+class LicenseManagerClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api\Serializer;
 
 use Aws\Api\MapShape;

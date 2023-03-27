@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ConnectWisdomService;
 
 use Aws\AwsClient;
@@ -68,4 +69,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateKnowledgeBaseTemplateUri(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateKnowledgeBaseTemplateUriAsync(array $args = [])
  */
-class ConnectWisdomServiceClient extends AwsClient {}
+class ConnectWisdomServiceClient extends AwsClient
+{
+}

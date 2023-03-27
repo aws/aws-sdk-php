@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\EventBridge;
 
 use Aws\AwsClient;
@@ -118,7 +119,8 @@ use Aws\AwsClient;
  * @method \Aws\Result updateEndpoint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEndpointAsync(array $args = [])
  */
-class EventBridgeClient extends AwsClient {
+class EventBridgeClient extends AwsClient
+{
     public function __construct(array $args)
     {
         parent::__construct($args);

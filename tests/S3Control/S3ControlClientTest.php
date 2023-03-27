@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3Control;
 
 use Aws\Arn\ArnParser;
@@ -25,7 +26,7 @@ class S3ControlClientTest extends TestCase
                 '111222333444.s3-control.us-west-2.amazonaws.com',
                 $req->getUri()->getHost()
             );
-            return Promise\Create::promiseFor(new Response);
+            return Promise\Create::promiseFor(new Response());
         };
 
         $client = $this->getTestClient([
@@ -35,5 +36,4 @@ class S3ControlClientTest extends TestCase
             'AccountId' => '111222333444',
         ]);
     }
-
 }

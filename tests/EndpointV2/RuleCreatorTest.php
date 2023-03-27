@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\Rule\RuleCreator;
@@ -47,7 +48,8 @@ class RuleCreatorTest extends TestCase
     /**
      * @dataProvider RuleCreationProvider
      */
-    public function testRuleCreation($spec, $expected) {
+    public function testRuleCreation($spec, $expected)
+    {
         $result = RuleCreator::create($spec['type'], $spec);
         $this->assertInstanceOf('Aws\EndpointV2\Rule\\' . $expected, $result);
     }

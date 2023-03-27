@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DynamoDb;
 
 use Psr\Http\Message\StreamInterface;
@@ -272,13 +273,14 @@ class Marshaler
                 return $value + 0;
             case 'M':
                 if ($mapAsObject) {
-                    $data = new \stdClass;
+                    $data = new \stdClass();
                     foreach ($value as $k => $v) {
                         $data->$k = $this->unmarshalValue($v, $mapAsObject);
                     }
                     return $data;
                 }
                 // NOBREAK: Unmarshal M the same way as L, for arrays.
+                // no break
             case 'L':
                 foreach ($value as $k => $v) {
                     $value[$k] = $this->unmarshalValue($v, $mapAsObject);

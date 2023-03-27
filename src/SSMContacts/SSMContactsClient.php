@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SSMContacts;
 
 use Aws\AwsClient;
@@ -60,4 +61,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateContactChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateContactChannelAsync(array $args = [])
  */
-class SSMContactsClient extends AwsClient {}
+class SSMContactsClient extends AwsClient
+{
+}

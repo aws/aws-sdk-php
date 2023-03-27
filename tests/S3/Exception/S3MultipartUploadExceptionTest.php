@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3\Exception;
 
 use Aws\Command;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\drs;
 
 use Aws\AwsClient;
@@ -76,4 +77,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateReplicationConfigurationTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateReplicationConfigurationTemplateAsync(array $args = [])
  */
-class drsClient extends AwsClient {}
+class drsClient extends AwsClient
+{
+}

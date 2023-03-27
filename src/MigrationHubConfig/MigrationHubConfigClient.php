@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MigrationHubConfig;
 
 use Aws\AwsClient;
@@ -12,4 +13,6 @@ use Aws\AwsClient;
  * @method \Aws\Result getHomeRegion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getHomeRegionAsync(array $args = [])
  */
-class MigrationHubConfigClient extends AwsClient {}
+class MigrationHubConfigClient extends AwsClient
+{
+}

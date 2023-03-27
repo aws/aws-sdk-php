@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\Middleware;
@@ -86,8 +87,11 @@ class MultipartUploaderTest extends TestCase
                 [],
                 ['part_size' => 1] + $defaults,
                 Psr7\FnStream::decorate(
-                    Psr7\Utils::streamFor($data), [
-                        'getSize' => function () {return null;}
+                    Psr7\Utils::streamFor($data),
+                    [
+                        'getSize' => function () {
+                            return null;
+                        }
                     ]
                 ),
                 'InvalidArgumentException'
@@ -181,14 +185,14 @@ class MultipartUploaderTest extends TestCase
                 'RequestPayer'  => 'test',
                 'ContentLength' => $size
             ],
-            'before_initiate' => function($command) {
+            'before_initiate' => function ($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
-            'before_upload'   => function($command) use ($size) {
+            'before_upload'   => function ($command) use ($size) {
                 $this->assertLessThan($size, $command['ContentLength']);
                 $this->assertSame('test', $command['RequestPayer']);
             },
-            'before_complete' => function($command) {
+            'before_complete' => function ($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             }
         ];
@@ -254,7 +258,7 @@ class MultipartUploaderTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'params'          => $params,
-            'before_initiate' => function($command) use ($expectedContentType) {
+            'before_initiate' => function ($command) use ($expectedContentType) {
                 $this->assertEquals(
                     $expectedContentType,
                     $command['ContentType']

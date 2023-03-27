@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MarketplaceCommerceAnalytics;
 
 use Aws\AwsClient;
@@ -11,4 +12,6 @@ use Aws\AwsClient;
  * @method \Aws\Result startSupportDataExport(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startSupportDataExportAsync(array $args = [])
  */
-class MarketplaceCommerceAnalyticsClient extends AwsClient {}
+class MarketplaceCommerceAnalyticsClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Exception\AwsException;
@@ -126,7 +127,7 @@ class RetryMiddleware
         if (!empty($extraConfig['error_codes'])
             && is_array($extraConfig['error_codes'])
         ) {
-            foreach($extraConfig['error_codes'] as $code) {
+            foreach ($extraConfig['error_codes'] as $code) {
                 $errorCodes[$code] = true;
             }
         }
@@ -135,7 +136,7 @@ class RetryMiddleware
         if (!empty($extraConfig['status_codes'])
             && is_array($extraConfig['status_codes'])
         ) {
-            foreach($extraConfig['status_codes'] as $code) {
+            foreach ($extraConfig['status_codes'] as $code) {
                 $statusCodes[$code] = true;
             }
         }
@@ -143,7 +144,7 @@ class RetryMiddleware
         if (!empty($extraConfig['curl_errors'])
             && is_array($extraConfig['curl_errors'])
         ) {
-            foreach($extraConfig['curl_errors'] as $code) {
+            foreach ($extraConfig['curl_errors'] as $code) {
                 $retryCurlErrors[$code] = true;
             }
         }

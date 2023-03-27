@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoTEventsData;
 
 use Aws\AwsClient;
@@ -30,4 +31,6 @@ use Aws\AwsClient;
  * @method \Aws\Result listDetectors(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDetectorsAsync(array $args = [])
  */
-class IoTEventsDataClient extends AwsClient {}
+class IoTEventsDataClient extends AwsClient
+{
+}

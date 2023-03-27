@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Api\Service;
@@ -54,7 +55,6 @@ class EndpointParameterMiddleware
             preg_match_all("/\{([a-zA-Z0-9]+)}/", $prefix, $parameters);
 
             if (!empty($parameters[1])) {
-
                 // Captured parameters without braces stored in $parameters[1],
                 // which should correspond to members in the Command object
                 foreach ($parameters[1] as $index => $parameter) {

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\Exception\ParserException;
@@ -104,8 +105,7 @@ class XmlParserTest extends TestCase
         $commandName,
         $expectedException,
         $expectedMessage
-    )
-    {
+    ) {
         $service = $this->generateTestService('rest-xml');
         $client = $this->generateTestClient(
             $service,

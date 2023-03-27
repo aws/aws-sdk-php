@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CookieSigner;
@@ -11,7 +12,7 @@ class CookieSignerTest extends TestCase
 
     public function set_up()
     {
-        openssl_pkey_export(openssl_pkey_new(),$this->key);
+        openssl_pkey_export(openssl_pkey_new(), $this->key);
         $this->kp  = 'test';
     }
 

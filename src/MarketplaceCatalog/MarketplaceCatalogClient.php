@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MarketplaceCatalog;
 
 use Aws\AwsClient;
@@ -24,4 +25,6 @@ use Aws\AwsClient;
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
-class MarketplaceCatalogClient extends AwsClient {}
+class MarketplaceCatalogClient extends AwsClient
+{
+}

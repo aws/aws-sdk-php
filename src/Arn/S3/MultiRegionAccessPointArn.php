@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Arn\S3;
 
 use Aws\Arn\Arn;
@@ -34,5 +35,4 @@ class MultiRegionAccessPointArn extends AccessPointArn
     {
         Arn::validate($data);
     }
-
 }

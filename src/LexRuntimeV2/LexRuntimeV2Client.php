@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\LexRuntimeV2;
 
 use Aws\AwsClient;
@@ -16,4 +17,6 @@ use Aws\AwsClient;
  * @method \Aws\Result recognizeUtterance(array $args = [])
  * @method \GuzzleHttp\Promise\Promise recognizeUtteranceAsync(array $args = [])
  */
-class LexRuntimeV2Client extends AwsClient {}
+class LexRuntimeV2Client extends AwsClient
+{
+}

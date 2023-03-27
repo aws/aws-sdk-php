@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\CommandInterface;
@@ -53,7 +54,7 @@ class PresignUrlMiddlewareTest extends TestCase
                 $this->assertStringContainsString('X-Amz-Signature=', $url);
                 $this->assertSame('us-east-2', $cmd['DestinationRegion']);
 
-                return new Result;
+                return new Result();
             },
         ]);
         $ec2->copySnapshot([
@@ -75,7 +76,7 @@ class PresignUrlMiddlewareTest extends TestCase
                 $this->assertStringContainsString('X-Amz-Signature=', $url);
                 $this->assertSame('us-east-2', $cmd['DestinationRegion']);
 
-                return new Result;
+                return new Result();
             },
         ]);
         $rds->copyDBSnapshot([
@@ -95,7 +96,7 @@ class PresignUrlMiddlewareTest extends TestCase
                 $this->assertNull($cmd['PreSignedUrl']);
                 $this->assertSame('us-east-2', $cmd['DestinationRegion']);
 
-                return new Result;
+                return new Result();
             },
         ]);
         $rds->createDBInstanceReadReplica([
@@ -104,4 +105,3 @@ class PresignUrlMiddlewareTest extends TestCase
         ]);
     }
 }
-

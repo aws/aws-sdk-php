@@ -843,8 +843,8 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     private function generateDescribeException(CommandInterface $cmd)
     {
         return Promise\Create::rejectionFor(new AwsException(
-           'Test describe endpoints exception',
-           $cmd
+            'Test describe endpoints exception',
+            $cmd
         ));
     }
 

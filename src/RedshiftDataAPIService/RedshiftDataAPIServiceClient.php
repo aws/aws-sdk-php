@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\RedshiftDataAPIService;
 
 use Aws\AwsClient;
@@ -26,4 +27,6 @@ use Aws\AwsClient;
  * @method \Aws\Result listTables(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTablesAsync(array $args = [])
  */
-class RedshiftDataAPIServiceClient extends AwsClient {}
+class RedshiftDataAPIServiceClient extends AwsClient
+{
+}

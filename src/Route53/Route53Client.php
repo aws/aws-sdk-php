@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Route53;
 
 use Aws\AwsClient;

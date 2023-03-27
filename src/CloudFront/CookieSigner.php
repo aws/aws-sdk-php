@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CloudFront;
 
 class CookieSigner

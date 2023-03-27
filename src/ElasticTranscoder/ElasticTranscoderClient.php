@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ElasticTranscoder;
 
 use Aws\AwsClient;
@@ -41,4 +42,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updatePipelineStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePipelineStatusAsync(array $args = [])
  */
-class ElasticTranscoderClient extends AwsClient {}
+class ElasticTranscoderClient extends AwsClient
+{
+}

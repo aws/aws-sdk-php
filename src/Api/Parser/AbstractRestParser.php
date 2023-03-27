@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api\Parser;
 
 use Aws\Api\DateTimeResult;
@@ -80,7 +81,7 @@ abstract class AbstractRestParser extends AbstractParser
                 $member,
                 $this
             );
-        } else if ($member instanceof StructureShape) {
+        } elseif ($member instanceof StructureShape) {
             // Structure members parse top-level data into a specific key.
             $result[$payload] = [];
             $this->payload($response, $member, $result[$payload]);

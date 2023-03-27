@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\AppRegistry;
 
 use Aws\AwsClient;
@@ -54,4 +55,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateAttributeGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAttributeGroupAsync(array $args = [])
  */
-class AppRegistryClient extends AwsClient {}
+class AppRegistryClient extends AwsClient
+{
+}

@@ -1,6 +1,6 @@
 <?php
-namespace Aws\Test\S3;
 
+namespace Aws\Test\S3;
 
 use Aws\Api\Parser\Exception\ParserException;
 use Aws\CommandInterface;
@@ -15,7 +15,9 @@ class RetryableMalformedResponseParserTest extends TestCase
     {
         $this->expectExceptionMessage("Sorry!");
         $this->expectException(\Aws\S3\Exception\S3Exception::class);
-        $parser = function () { throw new ParserException('Sorry!'); };
+        $parser = function () {
+            throw new ParserException('Sorry!');
+        };
 
         $instance = new RetryableMalformedResponseParser(
             $parser,

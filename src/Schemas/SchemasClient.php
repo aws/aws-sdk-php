@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Schemas;
 
 use Aws\AwsClient;
@@ -68,4 +69,6 @@ use Aws\AwsClient;
  * @method \Aws\Result exportSchema(array $args = [])
  * @method \GuzzleHttp\Promise\Promise exportSchemaAsync(array $args = [])
  */
-class SchemasClient extends AwsClient {}
+class SchemasClient extends AwsClient
+{
+}

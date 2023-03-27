@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Exception;
 
 use Aws\HasMonitoringEventsTrait;
@@ -17,7 +18,8 @@ class MultipartUploadException extends \RuntimeException implements
      * @param UploadState      $state Upload state at time of the exception.
      * @param \Exception|array $prev  Exception being thrown.
      */
-    public function __construct(UploadState $state, $prev = null) {
+    public function __construct(UploadState $state, $prev = null)
+    {
         $msg = 'An exception occurred while performing a multipart upload';
 
         if (is_array($prev)) {

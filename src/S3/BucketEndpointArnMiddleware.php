@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3;
 
 use Aws\Api\Service;
@@ -87,7 +88,6 @@ class BucketEndpointArnMiddleware
                 }
 
                 if (!empty($arnableKey) && ArnParser::isArn($cmd[$arnableKey])) {
-
                     try {
                         // Throw for commands that do not support ARN inputs
                         if (in_array($cmd->getName(), $this->nonArnableCommands)) {
@@ -121,7 +121,6 @@ class BucketEndpointArnMiddleware
                         if ($this->isUseEndpointV2) {
                             $req = $req->withUri(
                                 $req->getUri()->withPath($path)
-
                             );
                             goto next;
                         }
@@ -194,7 +193,7 @@ class BucketEndpointArnMiddleware
 
         if ($arn instanceof OutpostsAccessPointArn) {
             $host .= '.' . $arn->getOutpostId() . '.s3-outposts';
-        } else if ($arn instanceof ObjectLambdaAccessPointArn) {
+        } elseif ($arn instanceof ObjectLambdaAccessPointArn) {
             if (!empty($this->config['endpoint'])) {
                 return $host . '.' . $this->config['endpoint'];
             } else {
@@ -227,7 +226,6 @@ class BucketEndpointArnMiddleware
     private function validateArn($arn)
     {
         if ($arn instanceof AccessPointArnInterface) {
-
             // Dualstack is not supported with Outposts access points
             if ($arn instanceof OutpostsAccessPointArn
                 && !empty($this->config['dual_stack'])
@@ -235,7 +233,8 @@ class BucketEndpointArnMiddleware
                 throw new UnresolvedEndpointException(
                     'Dualstack is currently not supported with S3 Outposts access'
                     . ' points. Please disable dualstack or do not supply an'
-                    . ' access point ARN.');
+                    . ' access point ARN.'
+                );
             }
             if ($arn instanceof MultiRegionAccessPointArn) {
                 if (!empty($this->config['disable_multiregion_access_points'])) {
@@ -256,7 +255,8 @@ class BucketEndpointArnMiddleware
                 throw new UnresolvedEndpointException(
                     'Accelerate is currently not supported with access points.'
                     . ' Please disable accelerate or do not supply an access'
-                    . ' point ARN.');
+                    . ' point ARN.'
+                );
             }
 
             // Path-style is not supported with access points
@@ -264,7 +264,8 @@ class BucketEndpointArnMiddleware
                 throw new UnresolvedEndpointException(
                     'Path-style addressing is currently not supported with'
                     . ' access points. Please disable path-style or do not'
-                    . ' supply an access point ARN.');
+                    . ' supply an access point ARN.'
+                );
             }
 
             // Custom endpoint is not supported with access points
@@ -274,7 +275,8 @@ class BucketEndpointArnMiddleware
                 throw new UnresolvedEndpointException(
                     'A custom endpoint has been supplied along with an access'
                     . ' point ARN, and these are not compatible with each other.'
-                    . ' Please only use one or the other.');
+                    . ' Please only use one or the other.'
+                );
             }
 
             // Dualstack is not supported with object lambda access points
@@ -284,7 +286,8 @@ class BucketEndpointArnMiddleware
                 throw new UnresolvedEndpointException(
                     'Dualstack is currently not supported with Object Lambda access'
                     . ' points. Please disable dualstack or do not supply an'
-                    . ' access point ARN.');
+                    . ' access point ARN.'
+                );
             }
             // Global endpoints do not support cross-region requests
             if ($this->isGlobal($this->region)
@@ -295,7 +298,8 @@ class BucketEndpointArnMiddleware
                 throw new UnresolvedEndpointException(
                     'Global endpoints do not support cross region requests.'
                     . ' Please enable use_arn_region or do not supply a global region'
-                    . ' with a different region in the ARN.');
+                    . ' with a different region in the ARN.'
+                );
             }
 
             // Get partitions for ARN and client region

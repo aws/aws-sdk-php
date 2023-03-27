@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CloudHsm\Exception;
 
 use Aws\Exception\AwsException;
@@ -6,4 +7,6 @@ use Aws\Exception\AwsException;
 /**
  * AWS CloudHSM exception.
  */
-class CloudHsmException extends AwsException {}
+class CloudHsmException extends AwsException
+{
+}

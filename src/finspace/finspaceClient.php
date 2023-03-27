@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\finspace;
 
 use Aws\AwsClient;
@@ -24,4 +25,6 @@ use Psr\Http\Message\RequestInterface;
  * @method \Aws\Result updateEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEnvironmentAsync(array $args = [])
  */
-class finspaceClient extends AwsClient {}
+class finspaceClient extends AwsClient
+{
+}

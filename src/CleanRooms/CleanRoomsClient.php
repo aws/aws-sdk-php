@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CleanRooms;
 
 use Aws\AwsClient;
@@ -80,4 +81,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateProtectedQuery(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProtectedQueryAsync(array $args = [])
  */
-class CleanRoomsClient extends AwsClient {}
+class CleanRoomsClient extends AwsClient
+{
+}

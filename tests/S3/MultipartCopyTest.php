@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\Result;
@@ -117,13 +118,13 @@ class MultipartCopyTest extends TestCase
             'key' => 'bar',
             'source_metadata' => new Result(['ContentLength' => 11 * self::MB]),
             'params'          => ['RequestPayer' => 'test'],
-            'before_initiate' => function($command) {
+            'before_initiate' => function ($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
-            'before_upload'   => function($command) {
+            'before_upload'   => function ($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
-            'before_complete' => function($command) {
+            'before_complete' => function ($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             }
         ];

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Endpoint\UseFipsEndpoint;
 
 use Aws\AbstractConfigurationProvider;
@@ -41,8 +42,7 @@ use GuzzleHttp\Promise;
  * $config = $promise->wait();
  * </code>
  */
-class ConfigurationProvider extends AbstractConfigurationProvider
-    implements ConfigurationProviderInterface
+class ConfigurationProvider extends AbstractConfigurationProvider implements ConfigurationProviderInterface
 {
     const ENV_USE_FIPS_ENDPOINT = 'AWS_USE_FIPS_ENDPOINT';
     const INI_USE_FIPS_ENDPOINT = 'use_fips_endpoint';
@@ -168,7 +168,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         return function () use ($region) {
             $isFipsPseudoRegion = strpos($region, 'fips-') !== false
                 || strpos($region, '-fips') !== false;
-            if ($isFipsPseudoRegion){
+            if ($isFipsPseudoRegion) {
                 $configuration = new Configuration(true);
             } else {
                 $configuration = new Configuration(false);

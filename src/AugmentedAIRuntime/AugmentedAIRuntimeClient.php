@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\AugmentedAIRuntime;
 
 use Aws\AwsClient;
@@ -16,4 +17,6 @@ use Aws\AwsClient;
  * @method \Aws\Result stopHumanLoop(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopHumanLoopAsync(array $args = [])
  */
-class AugmentedAIRuntimeClient extends AwsClient {}
+class AugmentedAIRuntimeClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Credentials;
 
 /**
@@ -105,7 +106,8 @@ class Credentials implements CredentialsInterface, \Serializable
      *
      * @internal
      */
-    public function extendExpiration() {
+    public function extendExpiration()
+    {
         $extension = mt_rand(5, 10);
         $this->expires = time() + $extension * 60;
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Exception;
 
 /**
@@ -7,5 +8,4 @@ namespace Aws\Exception;
  */
 class CryptoException extends \RuntimeException
 {
-
 }

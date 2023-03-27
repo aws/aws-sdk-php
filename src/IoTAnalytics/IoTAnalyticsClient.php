@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoTAnalytics;
 
 use Aws\AwsClient;
@@ -74,4 +75,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updatePipeline(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePipelineAsync(array $args = [])
  */
-class IoTAnalyticsClient extends AwsClient {}
+class IoTAnalyticsClient extends AwsClient
+{
+}

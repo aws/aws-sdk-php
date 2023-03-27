@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Greengrass;
 
 use Aws\AwsClient;
@@ -190,4 +191,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateThingRuntimeConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateThingRuntimeConfigurationAsync(array $args = [])
  */
-class GreengrassClient extends AwsClient {}
+class GreengrassClient extends AwsClient
+{
+}

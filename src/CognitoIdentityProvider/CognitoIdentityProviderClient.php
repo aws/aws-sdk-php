@@ -1,11 +1,12 @@
 <?php
+
 namespace Aws\CognitoIdentityProvider;
 
 use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Cognito Identity Provider** service.
- * 
+ *
  * @method \Aws\Result addCustomAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addCustomAttributesAsync(array $args = [])
  * @method \Aws\Result adminAddUserToGroup(array $args = [])
@@ -209,4 +210,6 @@ use Aws\AwsClient;
  * @method \Aws\Result verifyUserAttribute(array $args = [])
  * @method \GuzzleHttp\Promise\Promise verifyUserAttributeAsync(array $args = [])
  */
-class CognitoIdentityProviderClient extends AwsClient {}
+class CognitoIdentityProviderClient extends AwsClient
+{
+}

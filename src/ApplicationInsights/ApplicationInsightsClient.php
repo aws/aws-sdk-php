@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ApplicationInsights;
 
 use Aws\AwsClient;
@@ -60,4 +61,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateLogPattern(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLogPatternAsync(array $args = [])
  */
-class ApplicationInsightsClient extends AwsClient {}
+class ApplicationInsightsClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api;
 
 use Aws\Api\ApiProvider;
@@ -25,11 +26,15 @@ class ApiProviderTest extends TestCase
 
     public function testCanResolveProvider()
     {
-        $p = function ($a, $b, $c) {return [];};
+        $p = function ($a, $b, $c) {
+            return [];
+        };
         $result = ['metadata'=> ['serviceIdentifier' => 's']];
         $this->assertEquals($result, ApiProvider::resolve($p, 't', 's', 'v'));
 
-        $p = function ($a, $b, $c) {return null;};
+        $p = function ($a, $b, $c) {
+            return null;
+        };
         $this->expectException(UnresolvedApiException::class);
         ApiProvider::resolve($p, 't', 's', 'v');
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Glacier;
 
 use Aws\Api\ApiProvider;
@@ -145,7 +146,8 @@ class GlacierClient extends AwsClient
                     // Add a tree hash if not provided.
                     if (!$command['checksum']) {
                         $body = new HashingStream(
-                            $body, new TreeHash(),
+                            $body,
+                            new TreeHash(),
                             function ($result) use (&$request) {
                                 $request = $request->withHeader(
                                     'x-amz-sha256-tree-hash',
@@ -158,7 +160,8 @@ class GlacierClient extends AwsClient
                     // Add a linear content hash if not provided.
                     if (!$command['ContentSHA256']) {
                         $body = new HashingStream(
-                            $body, new PhpHash('sha256'),
+                            $body,
+                            new PhpHash('sha256'),
                             function ($result) use ($command) {
                                 $command['ContentSHA256'] = bin2hex($result);
                             }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Pinpoint;
 
 use Aws\Api\ApiProvider;
@@ -247,4 +248,6 @@ use Aws\AwsClient;
  * @method \Aws\Result verifyOTPMessage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise verifyOTPMessageAsync(array $args = [])
  */
-class PinpointClient extends AwsClient {}
+class PinpointClient extends AwsClient
+{
+}

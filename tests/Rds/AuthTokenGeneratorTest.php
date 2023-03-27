@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Rds;
 
 use Aws\Credentials\Credentials;

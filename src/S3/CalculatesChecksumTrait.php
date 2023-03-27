@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3;
 
 use AWS\CRT\CRT;
@@ -13,7 +14,8 @@ trait CalculatesChecksumTrait
      * @param string $value               the value to be encoded
      * @return string
      */
-    public static function getEncodedValue($requestedAlgorithm, $value) {
+    public static function getEncodedValue($requestedAlgorithm, $value)
+    {
         $requestedAlgorithm = strtolower($requestedAlgorithm);
         $useCrt = extension_loaded('awscrt');
         if ($useCrt) {
@@ -27,14 +29,15 @@ trait CalculatesChecksumTrait
                     return base64_encode(Psr7\Utils::hash($value, $requestedAlgorithm, true));
                 default:
                     break;
-                throw new InvalidArgumentException(
-                    "Invalid checksum requested: {$requestedAlgorithm}."
-                    . "  Valid algorithms are CRC32C, CRC32, SHA256, and SHA1."
-                );
+                    throw new InvalidArgumentException(
+                        "Invalid checksum requested: {$requestedAlgorithm}."
+                        . "  Valid algorithms are CRC32C, CRC32, SHA256, and SHA1."
+                    );
             }
-        }  else {
+        } else {
             if ($requestedAlgorithm == 'crc32c') {
-                throw new CommonRuntimeException("crc32c is not supported for checksums "
+                throw new CommonRuntimeException(
+                    "crc32c is not supported for checksums "
                     . "without use of the common runtime for php.  Please enable the CRT or choose "
                     . "a different algorithm."
                 );
@@ -45,5 +48,4 @@ trait CalculatesChecksumTrait
             return base64_encode(Psr7\Utils::hash($value, $requestedAlgorithm, true));
         }
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3Outposts;
 
 use Aws\AwsClient;
@@ -16,4 +17,6 @@ use Aws\AwsClient;
  * @method \Aws\Result listSharedEndpoints(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSharedEndpointsAsync(array $args = [])
  */
-class S3OutpostsClient extends AwsClient {}
+class S3OutpostsClient extends AwsClient
+{
+}

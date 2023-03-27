@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\WorkMailMessageFlow;
 
 use Aws\AwsClient;
@@ -10,4 +11,6 @@ use Aws\AwsClient;
  * @method \Aws\Result putRawMessageContent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putRawMessageContentAsync(array $args = [])
  */
-class WorkMailMessageFlowClient extends AwsClient {}
+class WorkMailMessageFlowClient extends AwsClient
+{
+}

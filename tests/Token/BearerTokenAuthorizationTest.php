@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Token;
 
 use Aws\Token\Token;
@@ -8,9 +9,10 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 /**
  * @covers Aws\Token\BearerTokenAuthorization
  */
-class BearerTokenAuthorizationTest extends TestCase {
-
-    public function bearerTestProvider() {
+class BearerTokenAuthorizationTest extends TestCase
+{
+    public function bearerTestProvider()
+    {
         return [
             "Minimal bearer auth case" =>
                 [
@@ -36,7 +38,8 @@ class BearerTokenAuthorizationTest extends TestCase {
     /**
      * @dataProvider bearerTestProvider
      */
-    public function testBearerSuccessCases($headers, $tokenString, $expectedHeaders) {
+    public function testBearerSuccessCases($headers, $tokenString, $expectedHeaders)
+    {
         $authorizer = new \Aws\Token\BearerTokenAuthorization();
         $request = new Request('GET', 'http://foo.com');
         foreach ($headers as $header => $value) {
@@ -49,7 +52,8 @@ class BearerTokenAuthorizationTest extends TestCase {
         }
     }
 
-    public function testBearerNullToken() {
+    public function testBearerNullToken()
+    {
         $authorizer = new \Aws\Token\BearerTokenAuthorization();
         $request = new Request('GET', 'http://foo.com');
         $token = new Token(null);

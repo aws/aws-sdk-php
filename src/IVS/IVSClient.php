@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IVS;
 
 use Aws\AwsClient;
@@ -62,4 +63,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateChannelAsync(array $args = [])
  */
-class IVSClient extends AwsClient {}
+class IVSClient extends AwsClient
+{
+}

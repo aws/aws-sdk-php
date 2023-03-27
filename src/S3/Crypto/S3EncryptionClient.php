@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3\Crypto;
 
 use Aws\Crypto\DecryptionTrait;

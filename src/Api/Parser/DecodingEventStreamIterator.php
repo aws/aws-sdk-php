@@ -2,7 +2,7 @@
 
 namespace Aws\Api\Parser;
 
-use \Iterator;
+use Iterator;
 use Aws\Api\DateTimeResult;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;

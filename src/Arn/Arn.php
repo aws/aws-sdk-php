@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Arn;
 
 use Aws\Arn\Exception\InvalidArnException;
@@ -30,7 +31,6 @@ class Arn implements ArnInterface
         $lastDelim = 0;
         $numComponents = 0;
         for ($i = 0; $i < $length; $i++) {
-
             if (($numComponents < 5 && $string[$i] === ':')) {
                 // Split components between delimiters
                 $data[key($data)] = substr($string, $lastDelim, $i - $lastDelim);

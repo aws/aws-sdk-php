@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\WAFV2;
 
 use Aws\AwsClient;
@@ -102,4 +103,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWebACL(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWebACLAsync(array $args = [])
  */
-class WAFV2Client extends AwsClient {}
+class WAFV2Client extends AwsClient
+{
+}

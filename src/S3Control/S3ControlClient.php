@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3Control;
 
 use Aws\AwsClient;
@@ -140,7 +141,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  * @method \Aws\Result updateJobStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateJobStatusAsync(array $args = [])
  */
-class S3ControlClient extends AwsClient 
+class S3ControlClient extends AwsClient
 {
     public static function getArguments()
     {
@@ -250,7 +251,7 @@ class S3ControlClient extends AwsClient
 
     private function removeHostPrefix(&$definition)
     {
-        foreach($definition['operations'] as &$operation) {
+        foreach ($definition['operations'] as &$operation) {
             if (isset($operation['endpoint']['hostPrefix'])
                 && $operation['endpoint']['hostPrefix'] === '{AccountId}.'
             ) {
@@ -265,7 +266,7 @@ class S3ControlClient extends AwsClient
 
     private function removeRequiredMember(&$definition)
     {
-        foreach($definition['shapes'] as &$shape) {
+        foreach ($definition['shapes'] as &$shape) {
             if (isset($shape['required'])
             ) {
                 $found = array_search('AccountId', $shape['required']);

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DirectoryService;
 
 use Aws\AwsClient;
@@ -141,4 +142,6 @@ use Aws\AwsClient;
  * @method \Aws\Result verifyTrust(array $args = [])
  * @method \GuzzleHttp\Promise\Promise verifyTrustAsync(array $args = [])
  */
-class DirectoryServiceClient extends AwsClient {}
+class DirectoryServiceClient extends AwsClient
+{
+}

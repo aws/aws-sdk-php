@@ -13,7 +13,6 @@ use Psr\Http\Message\RequestInterface;
  */
 class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
 {
-
     /**
      * Api Call Attempt event keys for each Api Call event key
      *
@@ -88,14 +87,16 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
         return $data + self::getFinalAttemptData($klass);
     }
 
-    private static function getResultAttemptCount(ResultInterface $result) {
+    private static function getResultAttemptCount(ResultInterface $result)
+    {
         if (isset($result['@metadata']['transferStats']['http'])) {
             return count($result['@metadata']['transferStats']['http']);
         }
         return 1;
     }
 
-    private static function getExceptionAttemptCount(\Exception $e) {
+    private static function getExceptionAttemptCount(\Exception $e)
+    {
         $attemptCount = 0;
         if ($e instanceof MonitoringEventsInterface) {
             foreach ($e->getMonitoringEvents() as $event) {
@@ -104,7 +105,6 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
                     $attemptCount++;
                 }
             }
-
         }
         return $attemptCount;
     }

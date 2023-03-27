@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Retry;
 
 use Aws\Retry\Exception\ConfigurationException;

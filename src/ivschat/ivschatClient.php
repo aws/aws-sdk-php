@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ivschat;
 
 use Aws\AwsClient;
@@ -40,4 +41,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateRoom(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRoomAsync(array $args = [])
  */
-class ivschatClient extends AwsClient {}
+class ivschatClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
@@ -70,7 +71,6 @@ class InstanceProfileProvider
     {
         $this->attempts = 0;
         return Promise\Coroutine::of(function () use ($previousCredentials) {
-
             // Retrieve token or switch out of secure mode
             $token = null;
             while ($this->secureMode && is_null($token)) {
@@ -87,8 +87,7 @@ class InstanceProfileProvider
                         && $previousCredentials instanceof Credentials
                     ) {
                         goto generateCredentials;
-                    }
-                    else if (!method_exists($e, 'getResponse')
+                    } elseif (!method_exists($e, 'getResponse')
                         || empty($e->getResponse())
                         || !in_array(
                             $e->getResponse()->getStatusCode(),
@@ -169,7 +168,7 @@ class InstanceProfileProvider
                         && $previousCredentials instanceof Credentials
                     ) {
                         goto generateCredentials;
-                    } else if (!empty($this->getExceptionStatusCode($e))
+                    } elseif (!empty($this->getExceptionStatusCode($e))
                         && $this->getExceptionStatusCode($e) === 401
                     ) {
                         $this->secureMode = true;

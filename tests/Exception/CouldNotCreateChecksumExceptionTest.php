@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Exception;
 
 use Aws\Exception\CouldNotCreateChecksumException;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\KinesisVideoArchivedMedia;
 
 use Aws\AwsClient;
@@ -18,4 +19,6 @@ use Aws\AwsClient;
  * @method \Aws\Result listFragments(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listFragmentsAsync(array $args = [])
  */
-class KinesisVideoArchivedMediaClient extends AwsClient {}
+class KinesisVideoArchivedMediaClient extends AwsClient
+{
+}

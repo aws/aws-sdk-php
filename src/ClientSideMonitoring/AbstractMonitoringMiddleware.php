@@ -14,8 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @internal
  */
-abstract class AbstractMonitoringMiddleware
-    implements MonitoringMiddlewareInterface
+abstract class AbstractMonitoringMiddleware implements MonitoringMiddlewareInterface
 {
     private static $socket;
 
