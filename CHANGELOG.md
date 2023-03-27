@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.262.2 - 2023-03-27
 
 * `Aws\AppRegistry` - In this release, we started supporting ARN in applicationSpecifier and attributeGroupSpecifier. GetAttributeGroup, ListAttributeGroups and ListAttributeGroupsForApplication APIs will now have CreatedBy field in the response.
 * `Aws\Athena` - Enforces a minimal level of encryption for the workgroup for query and calculation results that are written to Amazon S3. When enabled, workgroup users can set encryption only to the minimum level set by the administrator or higher when they submit queries.
