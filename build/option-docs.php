@@ -1,7 +1,4 @@
 <?php
-
-use Aws\AwsClient;
-
 require __DIR__  . '/../vendor/autoload.php';
 
 function generateDocblock(array $args)
@@ -35,7 +32,7 @@ function generateDocblock(array $args)
     }
 }
 
-$clientName = isset($argv[1]) ? $argv[1] : AwsClient::class;
+$clientName = isset($argv[1]) ? $argv[1] : 'Aws\AwsClient';
 $args = call_user_func([$clientName, 'getArguments']);
 ksort($args);
 

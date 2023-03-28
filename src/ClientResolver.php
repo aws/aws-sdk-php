@@ -549,7 +549,7 @@ class ClientResolver
             $args['credentials'] = CredentialProvider::defaultProvider($args);
         } else {
             throw new IAE('Credentials must be an instance of '
-                . CredentialsInterface::class . ', an associative '
+                . "'" . CredentialsInterface::class . ', an associative '
                 . 'array that contains "key", "secret", and an optional "token" '
                 . 'key-value pairs, a credentials provider function, or false.');
         }
