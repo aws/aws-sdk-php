@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.262.3 - 2023-03-28
 
 * `Aws\IoTDataPlane` - Add endpoint ruleset support for cn-north-1.
 * `Aws\SSMContacts` - This release adds 12 new APIs as part of Oncall Schedule feature release, adds support for a new contact type: ONCALL_SCHEDULE. Check public documentation for AWS ssm-contacts for more information
