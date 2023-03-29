@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.262.4 - 2023-03-29
 
 * `Aws\OpenSearchServerless` - This release includes two new exception types "ServiceQuotaExceededException" and "OcuLimitExceededException".
 * `Aws\RDS` - Add support for creating a read replica DB instance from a Multi-AZ DB cluster.
