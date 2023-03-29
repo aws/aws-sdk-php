@@ -76,6 +76,36 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "BatchGetSecurityControls":{
+      "name":"BatchGetSecurityControls",
+      "http":{
+        "method":"POST",
+        "requestUri":"/securityControls/batchGet"
+      },
+      "input":{"shape":"BatchGetSecurityControlsRequest"},
+      "output":{"shape":"BatchGetSecurityControlsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
+    "BatchGetStandardsControlAssociations":{
+      "name":"BatchGetStandardsControlAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/associations/batchGet"
+      },
+      "input":{"shape":"BatchGetStandardsControlAssociationsRequest"},
+      "output":{"shape":"BatchGetStandardsControlAssociationsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "BatchImportFindings":{
       "name":"BatchImportFindings",
       "http":{
@@ -104,6 +134,21 @@
         {"shape":"InvalidInputException"},
         {"shape":"LimitExceededException"},
         {"shape":"InvalidAccessException"}
+      ]
+    },
+    "BatchUpdateStandardsControlAssociations":{
+      "name":"BatchUpdateStandardsControlAssociations",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/associations"
+      },
+      "input":{"shape":"BatchUpdateStandardsControlAssociationsRequest"},
+      "output":{"shape":"BatchUpdateStandardsControlAssociationsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "CreateActionTarget":{
@@ -733,6 +778,36 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "ListSecurityControlDefinitions":{
+      "name":"ListSecurityControlDefinitions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/securityControls/definitions"
+      },
+      "input":{"shape":"ListSecurityControlDefinitionsRequest"},
+      "output":{"shape":"ListSecurityControlDefinitionsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
+    "ListStandardsControlAssociations":{
+      "name":"ListStandardsControlAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/associations"
+      },
+      "input":{"shape":"ListStandardsControlAssociationsRequest"},
+      "output":{"shape":"ListStandardsControlAssociationsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -1050,6 +1125,35 @@
     "AssociatedStandardsList":{
       "type":"list",
       "member":{"shape":"AssociatedStandard"}
+    },
+    "AssociationSetDetails":{
+      "type":"structure",
+      "members":{
+        "AssociationState":{"shape":"AssociationStateDetails"},
+        "GatewayId":{"shape":"NonEmptyString"},
+        "Main":{"shape":"Boolean"},
+        "RouteTableAssociationId":{"shape":"NonEmptyString"},
+        "RouteTableId":{"shape":"NonEmptyString"},
+        "SubnetId":{"shape":"NonEmptyString"}
+      }
+    },
+    "AssociationSetList":{
+      "type":"list",
+      "member":{"shape":"AssociationSetDetails"}
+    },
+    "AssociationStateDetails":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"NonEmptyString"},
+        "StatusMessage":{"shape":"NonEmptyString"}
+      }
+    },
+    "AssociationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "AutoEnableStandards":{
       "type":"string",
@@ -2095,7 +2199,8 @@
         "LaunchedAt":{"shape":"NonEmptyString"},
         "NetworkInterfaces":{"shape":"AwsEc2InstanceNetworkInterfacesList"},
         "VirtualizationType":{"shape":"NonEmptyString"},
-        "MetadataOptions":{"shape":"AwsEc2InstanceMetadataOptions"}
+        "MetadataOptions":{"shape":"AwsEc2InstanceMetadataOptions"},
+        "Monitoring":{"shape":"AwsEc2InstanceMonitoringDetails"}
       }
     },
     "AwsEc2InstanceMetadataOptions":{
@@ -2106,6 +2211,12 @@
         "HttpPutResponseHopLimit":{"shape":"Integer"},
         "HttpTokens":{"shape":"NonEmptyString"},
         "InstanceMetadataTags":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2InstanceMonitoringDetails":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"NonEmptyString"}
       }
     },
     "AwsEc2InstanceNetworkInterfacesDetails":{
@@ -2573,6 +2684,17 @@
     "AwsEc2NetworkInterfaceSecurityGroupList":{
       "type":"list",
       "member":{"shape":"AwsEc2NetworkInterfaceSecurityGroup"}
+    },
+    "AwsEc2RouteTableDetails":{
+      "type":"structure",
+      "members":{
+        "AssociationSet":{"shape":"AssociationSetList"},
+        "OwnerId":{"shape":"NonEmptyString"},
+        "PropagatingVgwSet":{"shape":"PropagatingVgwSetList"},
+        "RouteTableId":{"shape":"NonEmptyString"},
+        "RouteSet":{"shape":"RouteSetList"},
+        "VpcId":{"shape":"NonEmptyString"}
+      }
     },
     "AwsEc2SecurityGroupDetails":{
       "type":"structure",
@@ -3543,7 +3665,8 @@
       "type":"structure",
       "members":{
         "SecurityGroupIds":{"shape":"NonEmptyStringList"},
-        "SubnetIds":{"shape":"NonEmptyStringList"}
+        "SubnetIds":{"shape":"NonEmptyStringList"},
+        "EndpointPublicAccess":{"shape":"Boolean"}
       }
     },
     "AwsElasticBeanstalkEnvironmentDetails":{
@@ -5092,7 +5215,8 @@
         "BucketLoggingConfiguration":{"shape":"AwsS3BucketLoggingConfiguration"},
         "BucketWebsiteConfiguration":{"shape":"AwsS3BucketWebsiteConfiguration"},
         "BucketNotificationConfiguration":{"shape":"AwsS3BucketNotificationConfiguration"},
-        "BucketVersioningConfiguration":{"shape":"AwsS3BucketBucketVersioningConfiguration"}
+        "BucketVersioningConfiguration":{"shape":"AwsS3BucketBucketVersioningConfiguration"},
+        "ObjectLockConfiguration":{"shape":"AwsS3BucketObjectLockConfiguration"}
       }
     },
     "AwsS3BucketLoggingConfiguration":{
@@ -5154,6 +5278,27 @@
     "AwsS3BucketNotificationConfigurationS3KeyFilterRules":{
       "type":"list",
       "member":{"shape":"AwsS3BucketNotificationConfigurationS3KeyFilterRule"}
+    },
+    "AwsS3BucketObjectLockConfiguration":{
+      "type":"structure",
+      "members":{
+        "ObjectLockEnabled":{"shape":"NonEmptyString"},
+        "Rule":{"shape":"AwsS3BucketObjectLockConfigurationRuleDetails"}
+      }
+    },
+    "AwsS3BucketObjectLockConfigurationRuleDefaultRetentionDetails":{
+      "type":"structure",
+      "members":{
+        "Days":{"shape":"Integer"},
+        "Mode":{"shape":"NonEmptyString"},
+        "Years":{"shape":"Integer"}
+      }
+    },
+    "AwsS3BucketObjectLockConfigurationRuleDetails":{
+      "type":"structure",
+      "members":{
+        "DefaultRetention":{"shape":"AwsS3BucketObjectLockConfigurationRuleDefaultRetentionDetails"}
+      }
     },
     "AwsS3BucketServerSideEncryptionByDefault":{
       "type":"structure",
@@ -5914,6 +6059,36 @@
         "StandardsSubscriptions":{"shape":"StandardsSubscriptions"}
       }
     },
+    "BatchGetSecurityControlsRequest":{
+      "type":"structure",
+      "required":["SecurityControlIds"],
+      "members":{
+        "SecurityControlIds":{"shape":"StringList"}
+      }
+    },
+    "BatchGetSecurityControlsResponse":{
+      "type":"structure",
+      "required":["SecurityControls"],
+      "members":{
+        "SecurityControls":{"shape":"SecurityControls"},
+        "UnprocessedIds":{"shape":"UnprocessedSecurityControls"}
+      }
+    },
+    "BatchGetStandardsControlAssociationsRequest":{
+      "type":"structure",
+      "required":["StandardsControlAssociationIds"],
+      "members":{
+        "StandardsControlAssociationIds":{"shape":"StandardsControlAssociationIds"}
+      }
+    },
+    "BatchGetStandardsControlAssociationsResponse":{
+      "type":"structure",
+      "required":["StandardsControlAssociationDetails"],
+      "members":{
+        "StandardsControlAssociationDetails":{"shape":"StandardsControlAssociationDetails"},
+        "UnprocessedAssociations":{"shape":"UnprocessedStandardsControlAssociations"}
+      }
+    },
     "BatchImportFindingsRequest":{
       "type":"structure",
       "required":["Findings"],
@@ -5982,6 +6157,19 @@
     "BatchUpdateFindingsUnprocessedFindingsList":{
       "type":"list",
       "member":{"shape":"BatchUpdateFindingsUnprocessedFinding"}
+    },
+    "BatchUpdateStandardsControlAssociationsRequest":{
+      "type":"structure",
+      "required":["StandardsControlAssociationUpdates"],
+      "members":{
+        "StandardsControlAssociationUpdates":{"shape":"StandardsControlAssociationUpdates"}
+      }
+    },
+    "BatchUpdateStandardsControlAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "UnprocessedAssociationUpdates":{"shape":"UnprocessedStandardsControlAssociationUpdates"}
+      }
     },
     "Boolean":{"type":"boolean"},
     "BooleanFilter":{
@@ -6077,6 +6265,13 @@
         "VolumeMounts":{"shape":"VolumeMountList"},
         "Privileged":{"shape":"Boolean"}
       }
+    },
+    "ControlFindingGenerator":{
+      "type":"string",
+      "enum":[
+        "STANDARD_CONTROL",
+        "SECURITY_CONTROL"
+      ]
     },
     "ControlStatus":{
       "type":"string",
@@ -6353,7 +6548,8 @@
       "members":{
         "HubArn":{"shape":"NonEmptyString"},
         "SubscribedAt":{"shape":"NonEmptyString"},
-        "AutoEnableControls":{"shape":"Boolean"}
+        "AutoEnableControls":{"shape":"Boolean"},
+        "ControlFindingGenerator":{"shape":"ControlFindingGenerator"}
       }
     },
     "DescribeOrganizationConfigurationRequest":{
@@ -6555,7 +6751,8 @@
       "type":"structure",
       "members":{
         "Tags":{"shape":"TagMap"},
-        "EnableDefaultStandards":{"shape":"Boolean"}
+        "EnableDefaultStandards":{"shape":"Boolean"},
+        "ControlFindingGenerator":{"shape":"ControlFindingGenerator"}
       }
     },
     "EnableSecurityHubResponse":{
@@ -7096,6 +7293,63 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListSecurityControlDefinitionsRequest":{
+      "type":"structure",
+      "members":{
+        "StandardsArn":{
+          "shape":"NonEmptyString",
+          "location":"querystring",
+          "locationName":"StandardsArn"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "ListSecurityControlDefinitionsResponse":{
+      "type":"structure",
+      "required":["SecurityControlDefinitions"],
+      "members":{
+        "SecurityControlDefinitions":{"shape":"SecurityControlDefinitions"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListStandardsControlAssociationsRequest":{
+      "type":"structure",
+      "required":["SecurityControlId"],
+      "members":{
+        "SecurityControlId":{
+          "shape":"NonEmptyString",
+          "location":"querystring",
+          "locationName":"SecurityControlId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "ListStandardsControlAssociationsResponse":{
+      "type":"structure",
+      "required":["StandardsControlAssociationSummaries"],
+      "members":{
+        "StandardsControlAssociationSummaries":{"shape":"StandardsControlAssociationSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -7433,6 +7687,16 @@
       "type":"list",
       "member":{"shape":"Product"}
     },
+    "PropagatingVgwSetDetails":{
+      "type":"structure",
+      "members":{
+        "GatewayId":{"shape":"NonEmptyString"}
+      }
+    },
+    "PropagatingVgwSetList":{
+      "type":"list",
+      "member":{"shape":"PropagatingVgwSetDetails"}
+    },
     "Range":{
       "type":"structure",
       "members":{
@@ -7474,6 +7738,13 @@
     "Records":{
       "type":"list",
       "member":{"shape":"Record"}
+    },
+    "RegionAvailabilityStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "UNAVAILABLE"
+      ]
     },
     "RelatedFinding":{
       "type":"structure",
@@ -7615,7 +7886,8 @@
         "AwsEc2LaunchTemplate":{"shape":"AwsEc2LaunchTemplateDetails"},
         "AwsSageMakerNotebookInstance":{"shape":"AwsSageMakerNotebookInstanceDetails"},
         "AwsWafv2WebAcl":{"shape":"AwsWafv2WebAclDetails"},
-        "AwsWafv2RuleGroup":{"shape":"AwsWafv2RuleGroupDetails"}
+        "AwsWafv2RuleGroup":{"shape":"AwsWafv2RuleGroupDetails"},
+        "AwsEc2RouteTable":{"shape":"AwsEc2RouteTableDetails"}
       }
     },
     "ResourceList":{
@@ -7641,6 +7913,31 @@
     "ResultList":{
       "type":"list",
       "member":{"shape":"Result"}
+    },
+    "RouteSetDetails":{
+      "type":"structure",
+      "members":{
+        "CarrierGatewayId":{"shape":"NonEmptyString"},
+        "CoreNetworkArn":{"shape":"NonEmptyString"},
+        "DestinationCidrBlock":{"shape":"NonEmptyString"},
+        "DestinationIpv6CidrBlock":{"shape":"NonEmptyString"},
+        "DestinationPrefixListId":{"shape":"NonEmptyString"},
+        "EgressOnlyInternetGatewayId":{"shape":"NonEmptyString"},
+        "GatewayId":{"shape":"NonEmptyString"},
+        "InstanceId":{"shape":"NonEmptyString"},
+        "InstanceOwnerId":{"shape":"NonEmptyString"},
+        "LocalGatewayId":{"shape":"NonEmptyString"},
+        "NatGatewayId":{"shape":"NonEmptyString"},
+        "NetworkInterfaceId":{"shape":"NonEmptyString"},
+        "Origin":{"shape":"NonEmptyString"},
+        "State":{"shape":"NonEmptyString"},
+        "TransitGatewayId":{"shape":"NonEmptyString"},
+        "VpcPeeringConnectionId":{"shape":"NonEmptyString"}
+      }
+    },
+    "RouteSetList":{
+      "type":"list",
+      "member":{"shape":"RouteSetDetails"}
     },
     "RuleGroupDetails":{
       "type":"structure",
@@ -7827,6 +8124,54 @@
         "Definition":{"shape":"NonEmptyStringList"}
       }
     },
+    "SecurityControl":{
+      "type":"structure",
+      "required":[
+        "SecurityControlId",
+        "SecurityControlArn",
+        "Title",
+        "Description",
+        "RemediationUrl",
+        "SeverityRating",
+        "SecurityControlStatus"
+      ],
+      "members":{
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "SecurityControlArn":{"shape":"NonEmptyString"},
+        "Title":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "RemediationUrl":{"shape":"NonEmptyString"},
+        "SeverityRating":{"shape":"SeverityRating"},
+        "SecurityControlStatus":{"shape":"ControlStatus"}
+      }
+    },
+    "SecurityControlDefinition":{
+      "type":"structure",
+      "required":[
+        "SecurityControlId",
+        "Title",
+        "Description",
+        "RemediationUrl",
+        "SeverityRating",
+        "CurrentRegionAvailability"
+      ],
+      "members":{
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "Title":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "RemediationUrl":{"shape":"NonEmptyString"},
+        "SeverityRating":{"shape":"SeverityRating"},
+        "CurrentRegionAvailability":{"shape":"RegionAvailabilityStatus"}
+      }
+    },
+    "SecurityControlDefinitions":{
+      "type":"list",
+      "member":{"shape":"SecurityControlDefinition"}
+    },
+    "SecurityControls":{
+      "type":"list",
+      "member":{"shape":"SecurityControl"}
+    },
     "SecurityGroups":{
       "type":"list",
       "member":{"shape":"NonEmptyString"}
@@ -7958,6 +8303,92 @@
         "SeverityRating":{"shape":"SeverityRating"},
         "RelatedRequirements":{"shape":"RelatedRequirementsList"}
       }
+    },
+    "StandardsControlArnList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"}
+    },
+    "StandardsControlAssociationDetail":{
+      "type":"structure",
+      "required":[
+        "StandardsArn",
+        "SecurityControlId",
+        "SecurityControlArn",
+        "AssociationStatus"
+      ],
+      "members":{
+        "StandardsArn":{"shape":"NonEmptyString"},
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "SecurityControlArn":{"shape":"NonEmptyString"},
+        "AssociationStatus":{"shape":"AssociationStatus"},
+        "RelatedRequirements":{"shape":"RelatedRequirementsList"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "UpdatedReason":{"shape":"NonEmptyString"},
+        "StandardsControlTitle":{"shape":"NonEmptyString"},
+        "StandardsControlDescription":{"shape":"NonEmptyString"},
+        "StandardsControlArns":{"shape":"StandardsControlArnList"}
+      }
+    },
+    "StandardsControlAssociationDetails":{
+      "type":"list",
+      "member":{"shape":"StandardsControlAssociationDetail"}
+    },
+    "StandardsControlAssociationId":{
+      "type":"structure",
+      "required":[
+        "SecurityControlId",
+        "StandardsArn"
+      ],
+      "members":{
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "StandardsArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "StandardsControlAssociationIds":{
+      "type":"list",
+      "member":{"shape":"StandardsControlAssociationId"}
+    },
+    "StandardsControlAssociationSummaries":{
+      "type":"list",
+      "member":{"shape":"StandardsControlAssociationSummary"}
+    },
+    "StandardsControlAssociationSummary":{
+      "type":"structure",
+      "required":[
+        "StandardsArn",
+        "SecurityControlId",
+        "SecurityControlArn",
+        "AssociationStatus"
+      ],
+      "members":{
+        "StandardsArn":{"shape":"NonEmptyString"},
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "SecurityControlArn":{"shape":"NonEmptyString"},
+        "AssociationStatus":{"shape":"AssociationStatus"},
+        "RelatedRequirements":{"shape":"RelatedRequirementsList"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "UpdatedReason":{"shape":"NonEmptyString"},
+        "StandardsControlTitle":{"shape":"NonEmptyString"},
+        "StandardsControlDescription":{"shape":"NonEmptyString"}
+      }
+    },
+    "StandardsControlAssociationUpdate":{
+      "type":"structure",
+      "required":[
+        "StandardsArn",
+        "SecurityControlId",
+        "AssociationStatus"
+      ],
+      "members":{
+        "StandardsArn":{"shape":"NonEmptyString"},
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "AssociationStatus":{"shape":"AssociationStatus"},
+        "UpdatedReason":{"shape":"NonEmptyString"}
+      }
+    },
+    "StandardsControlAssociationUpdates":{
+      "type":"list",
+      "member":{"shape":"StandardsControlAssociationUpdate"}
     },
     "StandardsControls":{
       "type":"list",
@@ -8203,6 +8634,63 @@
       "type":"list",
       "member":{"shape":"NonEmptyString"}
     },
+    "UnprocessedErrorCode":{
+      "type":"string",
+      "enum":[
+        "INVALID_INPUT",
+        "ACCESS_DENIED",
+        "NOT_FOUND",
+        "LIMIT_EXCEEDED"
+      ]
+    },
+    "UnprocessedSecurityControl":{
+      "type":"structure",
+      "required":[
+        "SecurityControlId",
+        "ErrorCode"
+      ],
+      "members":{
+        "SecurityControlId":{"shape":"NonEmptyString"},
+        "ErrorCode":{"shape":"UnprocessedErrorCode"},
+        "ErrorReason":{"shape":"NonEmptyString"}
+      }
+    },
+    "UnprocessedSecurityControls":{
+      "type":"list",
+      "member":{"shape":"UnprocessedSecurityControl"}
+    },
+    "UnprocessedStandardsControlAssociation":{
+      "type":"structure",
+      "required":[
+        "StandardsControlAssociationId",
+        "ErrorCode"
+      ],
+      "members":{
+        "StandardsControlAssociationId":{"shape":"StandardsControlAssociationId"},
+        "ErrorCode":{"shape":"UnprocessedErrorCode"},
+        "ErrorReason":{"shape":"NonEmptyString"}
+      }
+    },
+    "UnprocessedStandardsControlAssociationUpdate":{
+      "type":"structure",
+      "required":[
+        "StandardsControlAssociationUpdate",
+        "ErrorCode"
+      ],
+      "members":{
+        "StandardsControlAssociationUpdate":{"shape":"StandardsControlAssociationUpdate"},
+        "ErrorCode":{"shape":"UnprocessedErrorCode"},
+        "ErrorReason":{"shape":"NonEmptyString"}
+      }
+    },
+    "UnprocessedStandardsControlAssociationUpdates":{
+      "type":"list",
+      "member":{"shape":"UnprocessedStandardsControlAssociationUpdate"}
+    },
+    "UnprocessedStandardsControlAssociations":{
+      "type":"list",
+      "member":{"shape":"UnprocessedStandardsControlAssociation"}
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -8315,7 +8803,8 @@
     "UpdateSecurityHubConfigurationRequest":{
       "type":"structure",
       "members":{
-        "AutoEnableControls":{"shape":"Boolean"}
+        "AutoEnableControls":{"shape":"Boolean"},
+        "ControlFindingGenerator":{"shape":"ControlFindingGenerator"}
       }
     },
     "UpdateSecurityHubConfigurationResponse":{

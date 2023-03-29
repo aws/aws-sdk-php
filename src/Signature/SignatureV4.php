@@ -166,14 +166,21 @@ class SignatureV4 implements SignatureInterface
         $expires,
         array $options = []
     ) {
-
         $startTimestamp = isset($options['start_time'])
             ? $this->convertToTimestamp($options['start_time'], null)
             : time();
-
         $expiresTimestamp = $this->convertToTimestamp($expires, $startTimestamp);
 
+        if ($this->useV4a) {
+            return $this->presignWithV4a(
+                $request,
+                $credentials,
+                $this->convertExpires($expiresTimestamp, $startTimestamp)
+            );
+        }
+
         $parsed = $this->createPresignedRequest($request, $credentials);
+
         $payload = $this->getPresignedPayload($request);
         $httpDate = gmdate(self::ISO8601_BASIC, $startTimestamp);
         $shortDate = substr($httpDate, 0, 8);
@@ -439,13 +446,7 @@ class SignatureV4 implements SignatureInterface
         );
     }
 
-    /**
-     * @param CredentialsInterface $credentials
-     * @param RequestInterface $request
-     * @param $signingService
-     * @return RequestInterface
-     */
-    protected function signWithV4a(CredentialsInterface $credentials, RequestInterface $request, $signingService)
+    private function verifyCRTLoaded()
     {
         if (!extension_loaded('awscrt')) {
             throw new CommonRuntimeException(
@@ -454,50 +455,76 @@ class SignatureV4 implements SignatureInterface
                 . " https://github.com/aws/aws-sdk-php/blob/master/CRT_INSTRUCTIONS.md"
             );
         }
-        $credentials_provider = new StaticCredentialsProvider([
+    }
+
+    private function createCRTStaticCredentialsProvider($credentials)
+    {
+        return new StaticCredentialsProvider([
             'access_key_id' => $credentials->getAccessKeyId(),
             'secret_access_key' => $credentials->getSecretKey(),
             'session_token' => $credentials->getSecurityToken(),
         ]);
+    }
 
-        $sha = $this->getPayload($request);
-        $signingConfig = new SigningConfigAWS([
-            'algorithm' => SigningAlgorithm::SIGv4_ASYMMETRIC,
-            'signature_type' => SignatureType::HTTP_REQUEST_HEADERS,
-            'credentials_provider' => $credentials_provider,
-            'signed_body_value' => $sha,
-            'region' => "*",
-            'service' => $signingService,
-            'date' => time(),
-        ]);
-
+    private function removeIllegalV4aHeaders(&$request)
+    {
         $illegalV4aHeaders = [
             self::AMZ_CONTENT_SHA256_HEADER,
             "aws-sdk-invocation-id",
             "aws-sdk-retry",
+            'x-amz-region-set'
         ];
+        $storedHeaders = [];
 
-        $storedIllegalHeaders = [];
         foreach ($illegalV4aHeaders as $header) {
             if ($request->hasHeader($header)){
-                $storedIllegalHeaders[$header] = $request->getHeader($header);
+                $storedHeaders[$header] = $request->getHeader($header);
                 $request = $request->withoutHeader($header);
             }
         }
 
-        $http_request = new Request(
+        return $storedHeaders;
+    }
+
+    private function CRTRequestFromGuzzleRequest($request)
+    {
+        return new Request(
             $request->getMethod(),
             (string) $request->getUri(),
             [], //leave empty as the query is parsed from the uri object
             array_map(function ($header) {return $header[0];}, $request->getHeaders())
         );
+    }
+
+    /**
+     * @param CredentialsInterface $credentials
+     * @param RequestInterface $request
+     * @param $signingService
+     * @return RequestInterface
+     */
+    protected function signWithV4a(CredentialsInterface $credentials, RequestInterface $request, $signingService)
+    {
+        $this->verifyCRTLoaded();
+        $credentials_provider = $this->createCRTStaticCredentialsProvider($credentials);
+        $signingConfig = new SigningConfigAWS([
+            'algorithm' => SigningAlgorithm::SIGv4_ASYMMETRIC,
+            'signature_type' => SignatureType::HTTP_REQUEST_HEADERS,
+            'credentials_provider' => $credentials_provider,
+            'signed_body_value' => $this->getPayload($request),
+            'region' => "*",
+            'service' => $signingService,
+            'date' => time(),
+        ]);
+
+        $removedIllegalHeaders = $this->removeIllegalV4aHeaders($request);
+        $http_request = $this->CRTRequestFromGuzzleRequest($request);
 
         Signing::signRequestAws(
             Signable::fromHttpRequest($http_request),
             $signingConfig, function ($signing_result, $error_code) use (&$http_request) {
             $signing_result->applyToHttpRequest($http_request);
         });
-        foreach ($storedIllegalHeaders as $header => $value) {
+        foreach ($removedIllegalHeaders as $header => $value) {
             $request = $request->withHeader($header, $value);
         }
 
@@ -507,5 +534,43 @@ class SignatureV4 implements SignatureInterface
         }
 
         return $request;
+    }
+
+    protected function presignWithV4a(
+        RequestInterface $request,
+        CredentialsInterface $credentials,
+        $expires
+    )
+    {
+        $this->verifyCRTLoaded();
+        $credentials_provider = $this->createCRTStaticCredentialsProvider($credentials);
+        $signingConfig = new SigningConfigAWS([
+            'algorithm' => SigningAlgorithm::SIGv4_ASYMMETRIC,
+            'signature_type' => SignatureType::HTTP_REQUEST_QUERY_PARAMS,
+            'credentials_provider' => $credentials_provider,
+            'signed_body_value' => $this->getPresignedPayload($request),
+            'region' => "*",
+            'service' => $this->service,
+            'date' => time(),
+            'expiration_in_seconds' => $expires
+        ]);
+
+        $this->removeIllegalV4aHeaders($request);
+        foreach ($this->getHeaderBlacklist() as $headerName => $headerValue) {
+            if ($request->hasHeader($headerName)) {
+                $request = $request->withoutHeader($headerName);
+            }
+        }
+
+        $http_request = $this->CRTRequestFromGuzzleRequest($request);
+        Signing::signRequestAws(
+            Signable::fromHttpRequest($http_request),
+            $signingConfig, function ($signing_result, $error_code) use (&$http_request) {
+            $signing_result->applyToHttpRequest($http_request);
+        });
+
+        return $request->withUri(
+            new Psr7\Uri($http_request->pathAndQuery())
+        );
     }
 }

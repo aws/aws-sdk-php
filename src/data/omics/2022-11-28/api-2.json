@@ -1401,7 +1401,6 @@
     "AnnotationImportItemSources":{
       "type":"list",
       "member":{"shape":"AnnotationImportItemSource"},
-      "max":1,
       "min":1
     },
     "AnnotationImportJobItem":{
@@ -2923,7 +2922,8 @@
         "IN_PROGRESS",
         "CANCELLED",
         "COMPLETED",
-        "FAILED"
+        "FAILED",
+        "COMPLETED_WITH_FAILURES"
       ]
     },
     "JobStatusMessage":{
@@ -4237,10 +4237,14 @@
     },
     "SchemaItem":{
       "type":"map",
-      "key":{"shape":"String"},
+      "key":{"shape":"SchemaItemKeyString"},
       "value":{"shape":"SchemaValueType"},
       "max":1,
       "min":1
+    },
+    "SchemaItemKeyString":{
+      "type":"string",
+      "pattern":"^[a-z0-9_]{1,255}$"
     },
     "SchemaValueType":{
       "type":"string",
@@ -5016,13 +5020,13 @@
       ],
       "members":{
         "jobStatus":{"shape":"JobStatus"},
-        "source":{"shape":"S3Uri"}
+        "source":{"shape":"S3Uri"},
+        "statusMessage":{"shape":"JobStatusMsg"}
       }
     },
     "VariantImportItemDetails":{
       "type":"list",
       "member":{"shape":"VariantImportItemDetail"},
-      "max":1,
       "min":1
     },
     "VariantImportItemSource":{
@@ -5035,7 +5039,6 @@
     "VariantImportItemSources":{
       "type":"list",
       "member":{"shape":"VariantImportItemSource"},
-      "max":1,
       "min":1
     },
     "VariantImportJobItem":{
@@ -5226,7 +5229,8 @@
         "ACTIVE",
         "UPDATING",
         "DELETED",
-        "FAILED"
+        "FAILED",
+        "INACTIVE"
       ],
       "max":64,
       "min":1
@@ -5241,7 +5245,10 @@
     },
     "WorkflowType":{
       "type":"string",
-      "enum":["PRIVATE"],
+      "enum":[
+        "PRIVATE",
+        "SERVICE"
+      ],
       "max":64,
       "min":1
     }

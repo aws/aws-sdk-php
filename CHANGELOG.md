@@ -1,5 +1,220 @@
 # CHANGELOG
 
+## 3.262.3 - 2023-03-28
+
+* `Aws\IoTDataPlane` - Add endpoint ruleset support for cn-north-1.
+* `Aws\SSMContacts` - This release adds 12 new APIs as part of Oncall Schedule feature release, adds support for a new contact type: ONCALL_SCHEDULE. Check public documentation for AWS ssm-contacts for more information
+* `Aws\SSMIncidents` - Increased maximum length of "TriggerDetails.rawData" to 10K characters and "IncidentSummary" to 8K characters.
+
+## 3.262.2 - 2023-03-27
+
+* `Aws\AppRegistry` - In this release, we started supporting ARN in applicationSpecifier and attributeGroupSpecifier. GetAttributeGroup, ListAttributeGroups and ListAttributeGroupsForApplication APIs will now have CreatedBy field in the response.
+* `Aws\Athena` - Enforces a minimal level of encryption for the workgroup for query and calculation results that are written to Amazon S3. When enabled, workgroup users can set encryption only to the minimum level set by the administrator or higher when they submit queries.
+* `Aws\ChimeSDKVoice` - Documentation updates for Amazon Chime SDK Voice.
+* `Aws\Connect` - This release introduces support for RelatedContactId in the StartChatContact API. Interactive message and interactive message response have been added to the list of supported message content types for this API as well.
+* `Aws\ConnectParticipant` - This release provides an update to the SendMessage API to handle interactive message response content-types.
+* `Aws\IoTWireless` - Introducing new APIs that enable Sidewalk devices to communicate with AWS IoT Core through Sidewalk gateways. This will empower AWS customers to connect Sidewalk devices with other AWS IoT Services, creating possibilities for seamless integration and advanced device management.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports ID3 tag insertion for audio only HLS output groups. AWS Elemental Link devices now support tagging.
+* `Aws\SageMaker` - Fixed some improperly rendered links in SDK documentation.
+* `Aws\SecurityHub` - Added new resource detail objects to ASFF, including resources for AwsEksCluster, AWSS3Bucket, AwsEc2RouteTable and AwsEC2Instance.
+* `Aws\VoiceID` - Amazon Connect Voice ID now supports multiple fraudster watchlists. Every domain has a default watchlist where all existing fraudsters are placed by default. Custom watchlists may now be created, managed, and evaluated against for known fraudster detection.
+
+## 3.262.1 - 2023-03-24
+
+* `Aws\CloudWatch` - Doc-only update to correct alarm actions list
+* `Aws\Comprehend` - This release adds a new field (FlywheelArn) to the EntitiesDetectionJobProperties object. The FlywheelArn field is returned in the DescribeEntitiesDetectionJob and ListEntitiesDetectionJobs responses when the EntitiesDetection job is started with a FlywheelArn instead of an EntityRecognizerArn .
+* `Aws\RDS` - Added error code CreateCustomDBEngineVersionFault for when the create custom engine version for Custom engines fails.
+
+## 3.262.0 - 2023-03-23
+
+* `Aws\Batch` - This feature allows Batch to support configuration of ephemeral storage size for jobs running on FARGATE
+* `Aws\ChimeSDKIdentity` - AppInstanceBots can be used to add a bot powered by Amazon Lex to chat channels. ExpirationSettings provides automatic resource deletion for AppInstanceUsers.
+* `Aws\ChimeSDKMediaPipelines` - This release adds Amazon Chime SDK call analytics. Call analytics include voice analytics, which provides speaker search and voice tone analysis. These capabilities can be used with Amazon Transcribe and Transcribe Call Analytics to generate machine-learning-powered insights from real-time audio.
+* `Aws\ChimeSDKMessaging` - ExpirationSettings provides automatic resource deletion for Channels.
+* `Aws\ChimeSDKVoice` - This release adds Amazon Chime SDK call analytics. Call analytics include voice analytics, which provides speaker search and voice tone analysis. These capabilities can be used with Amazon Transcribe and Transcribe Call Analytics to generate machine-learning-powered insights from real-time audio.
+* `Aws\CodeArtifact` - Repository CreationTime is added to the CreateRepository and ListRepositories API responses.
+* `Aws\GuardDuty` - Adds AutoEnableOrganizationMembers attribute to DescribeOrganizationConfiguration and UpdateOrganizationConfiguration APIs.
+* `Aws\IVSRealTime` - Initial release of the Amazon Interactive Video Service RealTime API.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK now supports passthrough of ID3v2 tags for audio inputs to audio-only HLS outputs.
+* `Aws\SageMaker` - Amazon SageMaker Autopilot adds two new APIs - CreateAutoMLJobV2 and DescribeAutoMLJobV2. Amazon SageMaker Notebook Instances now supports the ml.geospatial.interactive instance type.
+* `Aws\ServiceDiscovery` - Reverted the throttling exception RequestLimitExceeded for AWS Cloud Map APIs introduced in SDK version 1.12.424 2023-03-09 to previous exception specified in the ErrorCode.
+* `Aws\Textract` - The AnalyzeDocument - Tables feature adds support for new elements in the API: table titles, footers, section titles, summary cells/tables, and table type.
+
+## 3.261.17 - 2023-03-22
+
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\IoTTwinMaker` - This release adds support of adding metadata when creating a new scene or updating an existing scene.
+* `Aws\NetworkManager` - This release includes an update to create-transit-gateway-route-table-attachment, showing example usage for TransitGatewayRouteTableArn.
+* `Aws\Pipes` - This release improves validation on the ARNs in the API model
+* `Aws\ResilienceHub` - This release provides customers with the ability to import resources from within an EKS cluster and assess the resiliency of EKS cluster workloads.
+* `Aws\SSM` - This Patch Manager release supports creating, updating, and deleting Patch Baselines for AmazonLinux2023, AlmaLinux.
+
+## 3.261.16 - 2023-03-21
+
+* `Aws\ChimeSDKMessaging` - Amazon Chime SDK messaging customers can now manage streaming configuration for messaging data for archival and analysis.
+* `Aws\CleanRooms` - GA Release of AWS Clean Rooms, Added Tagging Functionality
+* `Aws\EC2` - This release adds support for AWS Network Firewall, AWS PrivateLink, and Gateway Load Balancers to Amazon VPC Reachability Analyzer, and it makes the path destination optional as long as a destination address in the filter at source is provided.
+* `Aws\IoTSiteWise` - Provide support for tagging of data streams and enabling tag based authorization for property alias
+* `Aws\mgn` - This release introduces the Import and export feature and expansion of the post-launch actions
+
+## 3.261.15 - 2023-03-20
+
+* `Aws\ApplicationAutoScaling` - With this release customers can now tag their Application Auto Scaling registered targets with key-value pairs and manage IAM permissions for all the tagged resources centrally.
+* `Aws\Neptune` - This release makes following few changes. db-cluster-identifier is now a required parameter of create-db-instance. describe-db-cluster will now return PendingModifiedValues and GlobalClusterIdentifier fields in the response.
+* `Aws\S3Outposts` - S3 On Outposts added support for endpoint status, and a failed endpoint reason, if any
+* `Aws\WorkDocs` - This release adds a new API, SearchResources, which enable users to search through metadata and content of folders, documents, document versions and comments in a WorkDocs site.
+
+## 3.261.14 - 2023-03-17
+
+* `Aws\BillingConductor` - This release adds a new filter to ListAccountAssociations API and a new filter to ListBillingGroups API.
+* `Aws\ConfigService` - This release adds resourceType enums for types released from October 2022 through February 2023.
+* `Aws\DatabaseMigrationService` - S3 setting to create AWS Glue Data Catalog. Oracle setting to control conversion of timestamp column. Support for Kafka SASL Plain authentication. Setting to map boolean from PostgreSQL to Redshift. SQL Server settings to force lob lookup on inline LOBs and to control access of database logs.
+
+## 3.261.13 - 2023-03-16
+
+* `Aws\GuardDuty` - Updated 9 APIs for feature enablement to reflect expansion of GuardDuty to features. Added new APIs and updated existing APIs to support RDS Protection GA.
+* `Aws\ResourceExplorer2` - Documentation updates for APIs.
+* `Aws\SageMakerRuntime` - Documentation updates for SageMaker Runtime
+
+## 3.261.12 - 2023-03-15
+
+* `Aws\MigrationHubStrategyRecommendations` - This release adds the binary analysis that analyzes IIS application DLLs on Windows and Java applications on Linux to provide anti-pattern report without configuring access to the source code.
+* `Aws\S3Control` - Added support for S3 Object Lambda aliases.
+* `Aws\SecurityLake` - Make Create/Get/ListSubscribers APIs return resource share ARN and name so they can be used to validate the RAM resource share to accept. GetDatalake can be used to track status of UpdateDatalake and DeleteDatalake requests.
+
+## 3.261.11 - 2023-03-14
+
+* `Aws\ApplicationAutoScaling` - Application Auto Scaling customers can now use mathematical functions to customize the metric used with Target Tracking policies within the policy configuration itself, saving the cost and effort of publishing the customizations as a separate metric.
+* `Aws\DataExchange` - This release enables data providers to license direct access to S3 objects encrypted with Customer Managed Keys (CMK) in AWS KMS through AWS Data Exchange. Subscribers can use these keys to decrypt, then use the encrypted S3 objects shared with them, without creating or managing copies.
+* `Aws\DirectConnect` - describe-direct-connect-gateway-associations includes a new status, updating, indicating that the association is currently in-process of updating.
+* `Aws\EC2` - This release adds a new DnsOptions key (PrivateDnsOnlyForInboundResolverEndpoint) to CreateVpcEndpoint and ModifyVpcEndpoint APIs.
+* `Aws\IAM` - Documentation only updates to correct customer-reported issues
+* `Aws\Keyspaces` - Adding support for client-side timestamps
+
+## 3.261.10 - 2023-03-13
+
+* `Aws\AppIntegrationsService` - Adds FileConfiguration to Amazon AppIntegrations CreateDataIntegration supporting scheduled downloading of third party files into Amazon Connect from sources such as Microsoft SharePoint.
+* `Aws\ConnectWisdomService` - This release extends Wisdom CreateKnowledgeBase API to support SharePoint connector type by removing the @required trait for objectField
+* `Aws\LakeFormation` - This release updates the documentation regarding Get/Update DataCellsFilter
+* `Aws\S3Control` - Added support for cross-account Multi-Region Access Points. Added support for S3 Replication for S3 on Outposts.
+* `Aws\Tnb` - This release adds tagging support to the following Network Instance APIs : Instantiate, Update, Terminate.
+
+## 3.261.9 - 2023-03-10
+
+* `Aws\SecretsManager` - The type definitions of SecretString and SecretBinary now have a minimum length of 1 in the model to match the exception thrown when you pass in empty values.
+* `Aws\ivschat` - This release adds a new exception returned when calling AWS IVS chat UpdateLoggingConfiguration. Now UpdateLoggingConfiguration can return ConflictException when invalid updates are made in sequence to Logging Configurations.
+
+## 3.261.8 - 2023-03-09
+
+* `Aws\CloudWatchEvidently` - Updated entity override documentation
+* `Aws\CodeArtifact` - This release introduces the generic package format, a mechanism for storing arbitrary binary assets. It also adds a new API, PublishPackageVersion, to allow for publishing generic packages.
+* `Aws\Connect` - This release adds a new API, GetMetricDataV2, which returns metric data for Amazon Connect.
+* `Aws\NetworkManager` - This update provides example usage for TransitGatewayRouteTableArn.
+* `Aws\QuickSight` - This release has two changes: add state persistence feature for embedded dashboard and console in GenerateEmbedUrlForRegisteredUser API; add properties for hidden collapsed row dimensions in PivotTableOptions.
+* `Aws\RedshiftDataAPIService` - Added support for Redshift Serverless workgroup-arn wherever the WorkgroupName parameter is available.
+* `Aws\SESv2` - This release introduces a new recommendation in Virtual Deliverability Manager Advisor, which detects missing or misconfigured Brand Indicator for Message Identification (BIMI) DNS records for customer sending identities.
+* `Aws\SageMaker` - Amazon SageMaker Inference now allows SSM access to customer's model container by setting the "EnableSSMAccess" parameter for a ProductionVariant in CreateEndpointConfig API.
+* `Aws\ServiceDiscovery` - Updated all AWS Cloud Map APIs to provide consistent throttling exception (RequestLimitExceeded)
+* `Aws\Signature` - Adds support for sigV4a presigned urls.
+
+## 3.261.7 - 2023-03-08
+
+* `Aws\Athena` - A new field SubstatementType is added to GetQueryExecution API, so customers have an error free way to detect the query type and interpret the result.
+* `Aws\DynamoDB` - Adds deletion protection support to DynamoDB tables. Tables with deletion protection enabled cannot be deleted. Deletion protection is disabled by default, can be enabled via the CreateTable or UpdateTable APIs, and is visible in TableDescription. This setting is not replicated for Global Tables.
+* `Aws\EC2` - Introducing Amazon EC2 C7g, M7g and R7g instances, powered by the latest generation AWS Graviton3 processors and deliver up to 25% better performance over Graviton2-based instances.
+* `Aws\LakeFormation` - This release adds two new API support "GetDataCellsFiler" and "UpdateDataCellsFilter", and also updates the corresponding documentation.
+* `Aws\MediaPackage` - This release provides the date and time live resources were created.
+* `Aws\MediaPackageVod` - This release provides the date and time VOD resources were created.
+* `Aws\Route53Resolver` - Add dual-stack and IPv6 support for Route 53 Resolver Endpoint,Add IPv6 target IP in Route 53 Resolver Forwarding Rule
+* `Aws\SageMaker` - There needs to be a user identity to specify the SageMaker user who perform each action regarding the entity. However, these is a not a unified concept of user identity across SageMaker service that could be used today.
+
+## 3.261.6 - 2023-03-07
+
+* `Aws\DatabaseMigrationService` - This release adds DMS Fleet Advisor Target Recommendation APIs and exposes functionality for DMS Fleet Advisor. It adds functionality to start Target Recommendation calculation.
+* `Aws\LocationService` - Documentation update for the release of 3 additional map styles for use with Open Data Maps: Open Data Standard Dark, Open Data Visualization Light & Open Data Visualization Dark.
+
+## 3.261.5 - 2023-03-06
+
+* `Aws\Account` - AWS Account alternate contact email addresses can now have a length of 254 characters and contain the character "|".
+* `Aws\IVS` - Updated text description in DeleteChannel, Stream, and StreamSummary.
+
+## 3.261.4 - 2023-03-03
+
+* `Aws\DynamoDB` - Documentation updates for DynamoDB.
+* `Aws\EC2` - This release adds support for a new boot mode for EC2 instances called 'UEFI Preferred'.
+* `Aws\Macie2` - Documentation updates for Amazon Macie
+* `Aws\MediaConvert` - The AWS Elemental MediaConvert SDK has improved handling for different input and output color space combinations.
+* `Aws\MediaLive` - AWS Elemental MediaLive adds support for Nielsen watermark timezones.
+* `Aws\TranscribeService` - Amazon Transcribe now supports role access for these API operations: CreateVocabulary, UpdateVocabulary, CreateVocabularyFilter, and UpdateVocabularyFilter.
+
+## 3.261.3 - 2023-03-02
+
+* `Aws\IoT` - A recurring maintenance window is an optional configuration used for rolling out the job document to all devices in the target group observing a predetermined start time, duration, and frequency that the maintenance window occurs.
+* `Aws\MigrationHubStrategyRecommendations` - This release updates the File Import API to allow importing servers already discovered by customers with reduced pre-requisites.
+* `Aws\Organizations` - This release introduces a new reason code, ACCOUNT_CREATION_NOT_COMPLETE, to ConstraintViolationException in CreateOrganization API.
+* `Aws\PI` - This release adds a new field PeriodAlignment to allow the customer specifying the returned timestamp of time periods to be either the start or end time.
+* `Aws\Pipes` - This release fixes some input parameter range and patterns.
+* `Aws\SageMaker` - Add a new field "EndpointMetrics" in SageMaker Inference Recommender "ListInferenceRecommendationsJobSteps" API response.
+
+## 3.261.2 - 2023-03-01
+
+* `Aws\CodeCatalyst` - Published Dev Environments StopDevEnvironmentSession API
+* `Aws\Pricing` - This release adds 2 new APIs - ListPriceLists which returns a list of applicable price lists, and GetPriceListFileUrl which outputs a URL to retrieve your price lists from the generated file from ListPriceLists
+* `Aws\S3Outposts` - S3 on Outposts introduces a new API ListOutpostsWithS3, with this API you can list all your Outposts with S3 capacity.
+
+## 3.261.1 - 2023-02-28
+
+* `Aws\Comprehend` - Amazon Comprehend now supports flywheels to help you train and manage new model versions for custom models.
+* `Aws\EC2` - This release allows IMDS support to be set to v2-only on an existing AMI, so that all future instances launched from that AMI will use IMDSv2 by default.
+* `Aws\KMS` - AWS KMS is deprecating the RSAES_PKCS1_V1_5 wrapping algorithm option in the GetParametersForImport API that is used in the AWS KMS Import Key Material feature. AWS KMS will end support for this wrapping algorithm by October 1, 2023.
+* `Aws\Lightsail` - This release adds Lightsail for Research feature support, such as GUI session access, cost estimates, stop instance on idle, and disk auto mount.
+* `Aws\ManagedBlockchain` - This release adds support for tagging to the accessor resource in Amazon Managed Blockchain
+* `Aws\Omics` - Minor model changes to accomodate batch imports feature
+
+## 3.261.0 - 2023-02-27
+
+* `Aws\DevOpsGuru` - This release adds the description field on ListAnomaliesForInsight and DescribeAnomaly API responses for proactive anomalies.
+* `Aws\InternetMonitor` - CloudWatch Internet Monitor is a a new service within CloudWatch that will help application developers and network engineers continuously monitor internet performance metrics such as availability and performance between their AWS-hosted applications and end-users of these applications
+* `Aws\Lambda` - This release adds the ability to create ESMs with Document DB change streams as event source. For more information see https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html.
+* `Aws\MediaConvert` - The AWS Elemental MediaConvert SDK has added support for HDR10 to SDR tone mapping, and animated GIF video input sources.
+* `Aws\TimestreamWrite` - This release adds the ability to ingest batched historical data or migrate data in bulk from S3 into Timestream using CSV files.
+* `Aws\drs` - New fields were added to reflect availability zone data in source server and recovery instance description commands responses, as well as source server launch status.
+
+## 3.260.3 - 2023-02-24
+
+* `Aws\Connect` - StartTaskContact API now supports linked task creation with a new optional RelatedContactId parameter
+* `Aws\ConnectCases` - This release adds the ability to delete domains through the DeleteDomain API. For more information see https://docs.aws.amazon.com/cases/latest/APIReference/Welcome.html
+* `Aws\Redshift` - Documentation updates for Redshift API bringing it in line with IAM best practices.
+* `Aws\SecurityHub` - New Security Hub APIs and updates to existing APIs that help you consolidate control findings and enable and disable controls across all supported standards
+* `Aws\ServiceCatalog` - Documentation updates for Service Catalog
+
+## 3.260.2 - 2023-02-23
+
+* `Aws\Appflow` - This release enables the customers to choose whether to use Private Link for Metadata and Authorization call when using a private Salesforce connections
+* `Aws\ECS` - This release supports deleting Amazon ECS task definitions that are in the INACTIVE state.
+* `Aws\GuardDuty` - Updated API and data types descriptions for CreateFilter, UpdateFilter, and TriggerDetails.
+* `Aws\IoTWireless` - In this release, we add additional capabilities for the FUOTA which allows user to configure the fragment size, the sending interval and the redundancy ratio of the FUOTA tasks
+* `Aws\LocationService` - This release adds support for using Maps APIs with an API Key in addition to AWS Cognito. This includes support for adding, listing, updating and deleting API Keys.
+* `Aws\Macie2` - This release adds support for a new finding type, Policy:IAMUser/S3BucketSharedWithCloudFront, and S3 bucket metadata that indicates if a bucket is shared with an Amazon CloudFront OAI or OAC.
+* `Aws\ManagedGrafana` - Doc-only update. Updated information on attached role policies for customer provided roles
+* `Aws\WAFV2` - You can now associate an AWS WAF v2 web ACL with an AWS App Runner service.
+
+## 3.260.1 - 2023-02-22
+
+* `Aws\ChimeSDKVoice` - This release introduces support for Voice Connector media metrics in the Amazon Chime SDK Voice namespace
+* `Aws\CloudFront` - CloudFront now supports block lists in origin request policies so that you can forward all headers, cookies, or query string from viewer requests to the origin *except* for those specified in the block list.
+* `Aws\CloudWatchRUM` - CloudWatch RUM now supports CloudWatch Custom Metrics
+* `Aws\DataSync` - AWS DataSync has relaxed the minimum length constraint of AccessKey for Object Storage locations to 1.
+* `Aws\OpenSearchService` - This release lets customers configure Off-peak window and software update related properties for a new/existing domain. It enhances the capabilities of StartServiceSoftwareUpdate API; adds 2 new APIs - ListScheduledActions & UpdateScheduledAction; and allows Auto-tune to make use of Off-peak window.
+* `Aws\SSM` - Document only update for Feb 2023
+
+## 3.260.0 - 2023-02-21
+
+* `Aws\QuickSight` - S3 data sources now accept a custom IAM role.
+* `Aws\ResilienceHub` - In this release we improved resilience hub application creation and maintenance by introducing new resource and app component crud APIs, improving visibility and maintenance of application input sources and added support for additional information attributes to be provided by customers.
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub
+* `Aws\Tnb` - This is the initial SDK release for AWS Telco Network Builder (TNB). AWS Telco Network Builder is a network automation service that helps you deploy and manage telecom networks.
+
 ## 3.259.1 - 2023-02-20
 
 * `Aws\AuditManager` - This release introduces a ServiceQuotaExceededException to the UpdateAssessmentFrameworkShare API operation.
