@@ -53,7 +53,7 @@
                     <input type="hidden" name="cx" value="{$config->googleCseId}">
                     <input type="hidden" name="ie" value="UTF-8">
                     <div class="form-group">
-                        <input type="text" name="q" class="search-query form-control" placeholder="Search"{if 'overview' === $active} autofocus{/if}>
+                        <input aria-label="Search" type="text" name="q" class="search-query form-control" placeholder="Search"{if 'overview' === $active} autofocus{/if}>
                     </div>
                 </form>
 
@@ -123,10 +123,10 @@
 
             <div id="groups">
             {if $namespaces}
-                <h3>Namespaces</h3>
+                <h2>Namespaces</h2>
                 {include group, groups => $namespaces, actualGroup => $namespace, groupBy => 'namespace'}
             {elseif $packages}
-                <h3>Packages</h3>
+                <h2>Packages</h2>
                 {include group, groups => $packages, actualGroup => $package, groupBy => 'package'}
             {/if}
             </div>
@@ -139,32 +139,32 @@
 
             <div id="elements">
                 {if $classes}
-                <h3>Classes</h3>
+                <h2>Classes</h2>
                 {include elements, elements => $classes, activeElement => $class}
                 {/if}
 
                 {if $interfaces}
-                <h3>Interfaces</h3>
+                <h2>Interfaces</h2>
                 {include elements, elements => $interfaces, activeElement => $class}
                 {/if}
 
                 {if $traits}
-                <h3>Traits</h3>
+                <h2>Traits</h2>
                 {include elements, elements => $traits, activeElement => $class}
                 {/if}
 
                 {if $exceptions}
-                <h3>Exceptions</h3>
+                <h2>Exceptions</h2>
                 {include elements, elements => $exceptions, activeElement => $class}
                 {/if}
 
                 {if $constants}
-                <h3>Constants</h3>
+                <h2>Constants</h2>
                 {include elements, elements => $constants, activeElement => $constant}
                 {/if}
 
                 {if $functions}
-                <h3>Functions</h3>
+                <h2>Functions</h2>
                 {include elements, elements => $functions, activeElement => $function}
                 {/if}
             </div>

@@ -29,10 +29,12 @@ class HtmlDocument
         }, $this->lines));
     }
 
-    public function section($num, $text, $anchorPrefix = null, $class = null)
+    public function section($num, $text, $anchorPrefix = null, $class = null, $label = null)
     {
         $anchor = $this->slug($anchorPrefix . '-' . $text);
-        $link = ' <a href="#' . $anchor . '" class="anchor-link">' . $this->glyph('link') . '</a>';
+        $ariaLabel = empty($label) ? null : "aria-label=\"Go to ${$label}\"";
+        //Fixes violation 2
+        $link = ' <a $label href="#' . $anchor . '" class="anchor-link">' . $this->glyph('link') . '</a>';
         $attrs = ['id' => $anchor];
         if ($class) {
             $attrs['class'] = $class;
