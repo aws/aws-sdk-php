@@ -911,7 +911,7 @@ class CredentialProvider
      */
     private static function getSsoCredentialsLegacy($profiles, $ssoProfileName, $filename, $config)
     {
-        $ssoProfile = $profiles['ssoProfileName'];
+        $ssoProfile = $profiles[$ssoProfileName];
         if (empty($ssoProfile['sso_start_url'])
             || empty($ssoProfile['sso_region'])
             || empty($ssoProfile['sso_account_id'])
