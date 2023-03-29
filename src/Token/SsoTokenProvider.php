@@ -158,7 +158,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     {
         return self::getHomeDir()
             . '/.aws/sso/cache/'
-            . sha1($sso_session)
+            . mb_convert_encoding(sha1($sso_session), "UTF-8")
             . ".json";
     }
 
