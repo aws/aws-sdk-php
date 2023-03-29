@@ -857,7 +857,7 @@ class CredentialProvider
      * @param $ssoProfileName
      * @param $filename
      * @param $config
-     * @return Promise\FulfilledPromise|Promise\Promise|Promise\PromiseInterface|Promise\RejectedPromise
+     * @return Promise\PromiseInterface
      */
     private static function getSsoCredentials($profiles, $ssoProfileName, $filename, $config)
     {
@@ -907,7 +907,7 @@ class CredentialProvider
      * @param $ssoProfileName
      * @param $filename
      * @param $config
-     * @return Promise\FulfilledPromise|Promise\Promise|Promise\PromiseInterface|Promise\RejectedPromise
+     * @return Promise\PromiseInterface
      */
     private static function getSsoCredentialsLegacy($profiles, $ssoProfileName, $filename, $config)
     {
