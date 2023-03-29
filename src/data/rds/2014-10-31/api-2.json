@@ -415,7 +415,9 @@
         {"shape":"InstanceQuotaExceededFault"},
         {"shape":"StorageQuotaExceededFault"},
         {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBClusterNotFoundFault"},
         {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"InvalidDBClusterStateFault"},
         {"shape":"DBSubnetGroupNotFoundFault"},
         {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
         {"shape":"InvalidSubnet"},
@@ -3301,10 +3303,7 @@
     },
     "CreateDBInstanceReadReplicaMessage":{
       "type":"structure",
-      "required":[
-        "DBInstanceIdentifier",
-        "SourceDBInstanceIdentifier"
-      ],
+      "required":["DBInstanceIdentifier"],
       "members":{
         "DBInstanceIdentifier":{"shape":"String"},
         "SourceDBInstanceIdentifier":{"shape":"String"},
@@ -3343,7 +3342,8 @@
         "NetworkType":{"shape":"String"},
         "StorageThroughput":{"shape":"IntegerOptional"},
         "EnableCustomerOwnedIp":{"shape":"BooleanOptional"},
-        "AllocatedStorage":{"shape":"IntegerOptional"}
+        "AllocatedStorage":{"shape":"IntegerOptional"},
+        "SourceDBClusterIdentifier":{"shape":"String"}
       }
     },
     "CreateDBInstanceReadReplicaResult":{
@@ -4207,7 +4207,8 @@
         "StorageThroughput":{"shape":"IntegerOptional"},
         "DBSystemId":{"shape":"String"},
         "MasterUserSecret":{"shape":"MasterUserSecret"},
-        "CertificateDetails":{"shape":"CertificateDetails"}
+        "CertificateDetails":{"shape":"CertificateDetails"},
+        "ReadReplicaSourceDBClusterIdentifier":{"shape":"String"}
       },
       "wrapper":true
     },

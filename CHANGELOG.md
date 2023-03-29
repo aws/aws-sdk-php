@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpenSearchServerless` - This release includes two new exception types "ServiceQuotaExceededException" and "OcuLimitExceededException".
+* `Aws\RDS` - Add support for creating a read replica DB instance from a Multi-AZ DB cluster.
+
 ## 3.262.3 - 2023-03-28
 
 * `Aws\IoTDataPlane` - Add endpoint ruleset support for cn-north-1.
