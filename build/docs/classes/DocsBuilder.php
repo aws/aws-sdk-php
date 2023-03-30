@@ -722,7 +722,13 @@ EOT;
         $html->open('div', 'operation-container');
 
         // Name
-        $html->section(3, $html->glyph('cog') . ' ' . $name, null, 'method-title');
+        $html->section(
+            3,
+            $html->glyph('cog') . ' ' . $name,
+            null,
+            'method-title',
+            $name
+        );
 
         // Code
         $html->elem(
