@@ -2,7 +2,7 @@
 
 namespace Aws\Api\Parser;
 
-use \Iterator;
+use Iterator;
 use Aws\Exception\EventStreamDataException;
 use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\StructureShape;

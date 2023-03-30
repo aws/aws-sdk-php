@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\PinpointSMSVoiceV2;
 
 use Aws\AwsClient;
@@ -92,4 +93,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updatePool(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePoolAsync(array $args = [])
  */
-class PinpointSMSVoiceV2Client extends AwsClient {}
+class PinpointSMSVoiceV2Client extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Parser;
 
 use Aws\Command;
@@ -40,7 +41,9 @@ class ComplianceTest extends TestCase
                             $case['given']['name'] => $case['given']
                         ]
                     ];
-                    $description = new Service($serviceData, function () { return []; });
+                    $description = new Service($serviceData, function () {
+                        return [];
+                    });
                     if (!empty($case['error'])) {
                         if (empty($case['errorCode'])) {
                             throw new \InvalidArgumentException('Protocol test error cases must have associated "errorType" value.');

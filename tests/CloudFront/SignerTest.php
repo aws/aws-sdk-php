@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\Signer;
@@ -25,7 +26,8 @@ class SignerTest extends TestCase
     /**
      * Assert that the key variable contents are parsed during construction
      */
-    public function testBadPrivateKeyContents() {
+    public function testBadPrivateKeyContents()
+    {
         $this->expectExceptionMessageMatches("/PK .*Not a real private key/");
         $this->expectException(\InvalidArgumentException::class);
         $privateKey = "Not a real private key";
@@ -38,7 +40,8 @@ class SignerTest extends TestCase
     /**
      * Assert that the key file is parsed during construction
      */
-    public function testBadPrivateKeyPath() {
+    public function testBadPrivateKeyPath()
+    {
         $this->expectExceptionMessageMatches("/PEM .*no start line/");
         $this->expectException(\InvalidArgumentException::class);
         $filename = tempnam(sys_get_temp_dir(), 'cloudfront-fake-key');

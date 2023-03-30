@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\AppSync;
 
 use Aws\AwsClient;
@@ -108,4 +109,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTypeAsync(array $args = [])
  */
-class AppSyncClient extends AwsClient {}
+class AppSyncClient extends AwsClient
+{
+}

@@ -24,7 +24,7 @@ class EndpointDefinitionProvider
         $file = '/partitions.json';
 
         if (file_exists($basePath . $file . '.php')) {
-           return require($basePath . $file . '.php');
+            return require($basePath . $file . '.php');
         } else {
             return json_decode(file_get_contents($basePath . $file));
         }

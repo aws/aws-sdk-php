@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Integ;
 
 use Aws\Handler\GuzzleV5\GuzzleHandler;

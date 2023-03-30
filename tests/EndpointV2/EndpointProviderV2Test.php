@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\EndpointDefinitionProvider;
@@ -56,7 +57,7 @@ class EndpointProviderV2Test extends TestCase
 
                 if (isset($expected['endpoint'])) {
                     $providerCase[] = 'true';
-                } else if (isset($expected['error'])) {
+                } elseif (isset($expected['error'])) {
                     $providerCase[] = 'false';
                 }
                 array_push($providerCase, $inputParams, $expected);
@@ -74,8 +75,7 @@ class EndpointProviderV2Test extends TestCase
         $isSuccessCase,
         $inputParams,
         $expected
-    )
-    {
+    ) {
         $provider = new EndpointProviderV2(
             $ruleset,
             EndpointDefinitionProvider::getPartitions()
@@ -89,7 +89,7 @@ class EndpointProviderV2Test extends TestCase
             $endpoint = $provider->resolveEndpoint($inputParams);
             $expectedEndpoint = $expected['endpoint'];
             $this->assertEquals($expectedEndpoint['url'], $endpoint->getUrl());
-            if (isset($expectedEndpoint['headers'])){
+            if (isset($expectedEndpoint['headers'])) {
                 $this->assertEquals($expectedEndpoint['headers'], $endpoint->getHeaders());
             }
             if (isset($expectedEndpoint['properties'])) {
@@ -107,19 +107,20 @@ class EndpointProviderV2Test extends TestCase
         $serviceTestCases = [];
         $services = \Aws\Manifest();
 
-        foreach($services as $service => $data) {
+        foreach ($services as $service => $data) {
             $serviceTests = EndpointDefinitionProvider::getEndpointTests(
-                $service, 'latest'
+                $service,
+                'latest'
             );
 
-            foreach($serviceTests['testCases'] as $case) {
+            foreach ($serviceTests['testCases'] as $case) {
                 $testCase = [$service];
 
                 $inputParams = isset($case['params']) ? $case['params'] : [];
                 $expected = $case['expect'];
                 if (isset($expected['endpoint'])) {
                     $testCase[] = 'true';
-                } else if (isset($expected['error'])) {
+                } elseif (isset($expected['error'])) {
                     $testCase[] = 'false';
                 }
                 array_push($testCase, $inputParams, $expected);
@@ -137,8 +138,7 @@ class EndpointProviderV2Test extends TestCase
         $isSuccessCase,
         $inputParams,
         $expected
-    )
-    {
+    ) {
         $provider = new EndpointProviderV2(
             EndpointDefinitionProvider::getEndpointRuleset($service, 'latest'),
             EndpointDefinitionProvider::getPartitions()
@@ -152,7 +152,7 @@ class EndpointProviderV2Test extends TestCase
             $endpoint = $provider->resolveEndpoint($inputParams);
             $expectedEndpoint = $expected['endpoint'];
             $this->assertEquals($expectedEndpoint['url'], $endpoint->getUrl());
-            if (isset($expectedEndpoint['headers'])){
+            if (isset($expectedEndpoint['headers'])) {
                 $this->assertEquals($expectedEndpoint['headers'], $endpoint->getHeaders());
             }
             if (isset($expectedEndpoint['properties'])) {
@@ -166,15 +166,15 @@ class EndpointProviderV2Test extends TestCase
         $protocolTestCases = [];
         $serviceList = \Aws\manifest();
 
-        forEach($serviceList as $service => $serviceValue) {
+        foreach ($serviceList as $service => $serviceValue) {
             $testFile = EndpointDefinitionProvider::getEndpointTests($service, 'latest');
 
-            foreach($testFile['testCases'] as $case) {
+            foreach ($testFile['testCases'] as $case) {
                 if (!isset($case['operationInputs'])) {
                     continue;
                 }
 
-                foreach($case['operationInputs'] as $operationInput) {
+                foreach ($case['operationInputs'] as $operationInput) {
                     $caseArgs = [$service];
                     $builtInParams = $operationInput['builtInParams'];
 
@@ -201,7 +201,6 @@ class EndpointProviderV2Test extends TestCase
                     array_push($caseArgs, $clientArgs, $operationInput, $case['expect'], isset($case['expect']['error']));
                     $protocolTestCases[] = $caseArgs;
                 }
-
             }
         }
         return $protocolTestCases;
@@ -243,7 +242,7 @@ class EndpointProviderV2Test extends TestCase
             goto resolveHandler;
         }
 
-        $list->appendSign(Middleware::tap(function($cmd, $req) use ($service, $expected) {
+        $list->appendSign(Middleware::tap(function ($cmd, $req) use ($service, $expected) {
             $expectedEndpoint = $expected['endpoint'];
             $expectedUri = new Uri($expected['endpoint']['url']);
             $this->assertStringContainsString(
@@ -285,14 +284,13 @@ class EndpointProviderV2Test extends TestCase
                 $expectedHeaders = $expectedEndpoint['headers'];
                 $returnedHeaders = $req->getHeaders();
 
-                foreach($expectedHeaders as $headerKey => $headerValue) {
+                foreach ($expectedHeaders as $headerKey => $headerValue) {
                     $this->assertArrayHasKey($headerKey, $returnedHeaders);
                     $this->assertEquals(
                         $returnedHeaders[$headerKey][0],
                         $headerValue[0]
                     );
                 }
-
             }
         }));
         resolveHandler:

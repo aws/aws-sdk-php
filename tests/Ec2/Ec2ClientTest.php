@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Ec2;
 
 use Aws\Ec2\Ec2Client;

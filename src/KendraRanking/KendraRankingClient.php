@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\KendraRanking;
 
 use Aws\AwsClient;
@@ -24,4 +25,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateRescoreExecutionPlan(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRescoreExecutionPlanAsync(array $args = [])
  */
-class KendraRankingClient extends AwsClient {}
+class KendraRankingClient extends AwsClient
+{
+}

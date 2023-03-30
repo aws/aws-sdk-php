@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CloudWatchEvidently;
 
 use Aws\AwsClient;
@@ -82,4 +83,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateProjectDataDelivery(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProjectDataDeliveryAsync(array $args = [])
  */
-class CloudWatchEvidentlyClient extends AwsClient {}
+class CloudWatchEvidentlyClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoTFleetHub;
 
 use Aws\AwsClient;
@@ -22,4 +23,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateApplicationAsync(array $args = [])
  */
-class IoTFleetHubClient extends AwsClient {}
+class IoTFleetHubClient extends AwsClient
+{
+}

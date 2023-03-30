@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\AwsClientInterface;
@@ -12,11 +13,10 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class SdkTest extends TestCase
 {
-
     public function testEnsuresMissingMethodThrowsException()
     {
         $this->expectException(\BadMethodCallException::class);
-        (new Sdk)->foo();
+        (new Sdk())->foo();
     }
 
     public function testHasMagicMethods()
@@ -34,7 +34,7 @@ class SdkTest extends TestCase
     {
         $this->assertInstanceOf(
             AwsClientInterface::class,
-            (new Sdk)->createDynamoDb([
+            (new Sdk())->createDynamoDb([
                 'region'  => 'us-east-1',
                 'version' => 'latest'
             ])
@@ -43,7 +43,7 @@ class SdkTest extends TestCase
 
     public function testCreatesMultiRegionClients()
     {
-        $multiregionS3 = (new Sdk)->createMultiRegionS3([
+        $multiregionS3 = (new Sdk())->createMultiRegionS3([
             'version' => 'latest',
         ]);
 
@@ -56,7 +56,7 @@ class SdkTest extends TestCase
     {
         $this->assertInstanceOf(
             AwsClientInterface::class,
-            (new Sdk)->createCloudWatch([
+            (new Sdk())->createCloudWatch([
                 'region'  => 'us-east-1',
                 'version' => 'latest'
             ])

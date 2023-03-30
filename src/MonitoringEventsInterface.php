@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 /**
@@ -6,7 +7,6 @@ namespace Aws;
  */
 interface MonitoringEventsInterface
 {
-
     /**
      * Get client-side monitoring events attached to this object. Each event is
      * represented as an associative array within the returned array.
@@ -28,5 +28,4 @@ interface MonitoringEventsInterface
      * @param array $event
      */
     public function appendMonitoringEvent(array $event);
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\imagebuilder;
 
 use Aws\AwsClient;
@@ -106,4 +107,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateInfrastructureConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateInfrastructureConfigurationAsync(array $args = [])
  */
-class imagebuilderClient extends AwsClient {}
+class imagebuilderClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Signature;
 
 // Hack gmdate() to returned the canned result.

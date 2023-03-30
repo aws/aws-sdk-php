@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api\Serializer;
 
 use Aws\Api\Service;
@@ -44,8 +45,7 @@ class QuerySerializer
         CommandInterface $command,
         $endpointProvider = null,
         $clientArgs = null
-    )
-    {
+    ) {
         $operation = $this->api->getOperation($command->getName());
         $body = [
             'Action'  => $command->getName(),

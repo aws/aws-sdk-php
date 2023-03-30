@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoTRoboRunner;
 
 use Aws\AwsClient;
@@ -46,4 +47,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWorkerFleet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkerFleetAsync(array $args = [])
  */
-class IoTRoboRunnerClient extends AwsClient {}
+class IoTRoboRunnerClient extends AwsClient
+{
+}

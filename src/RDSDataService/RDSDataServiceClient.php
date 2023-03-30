@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\RDSDataService;
 
 use Aws\AwsClient;
@@ -18,4 +19,6 @@ use Aws\AwsClient;
  * @method \Aws\Result rollbackTransaction(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rollbackTransactionAsync(array $args = [])
  */
-class RDSDataServiceClient extends AwsClient {}
+class RDSDataServiceClient extends AwsClient
+{
+}

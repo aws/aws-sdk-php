@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoTEvents;
 
 use Aws\AwsClient;
@@ -58,4 +59,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateInput(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateInputAsync(array $args = [])
  */
-class IoTEventsClient extends AwsClient {}
+class IoTEventsClient extends AwsClient
+{
+}

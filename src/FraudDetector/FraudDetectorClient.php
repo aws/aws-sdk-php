@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\FraudDetector;
 
 use Aws\AwsClient;
@@ -152,4 +153,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateVariable(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVariableAsync(array $args = [])
  */
-class FraudDetectorClient extends AwsClient {}
+class FraudDetectorClient extends AwsClient
+{
+}

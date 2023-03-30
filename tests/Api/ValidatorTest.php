@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api;
 
 use Aws\Api\Shape;

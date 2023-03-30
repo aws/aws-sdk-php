@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3;
 
 use Aws\Api\ApiProvider;
@@ -419,9 +420,11 @@ class S3Client extends AwsClient implements S3ClientInterface
         $stack->appendInit($this->getHeadObjectMiddleware(), 's3.head_object');
         if ($this->isUseEndpointV2()) {
             $this->processEndpointV2Model();
-            $stack->after('builderV2',
+            $stack->after(
+                'builderV2',
                 's3.check_empty_path_with_query',
-                $this->getEmptyPathWithQuery());
+                $this->getEmptyPathWithQuery()
+            );
         }
     }
 
@@ -648,7 +651,6 @@ class S3Client extends AwsClient implements S3ClientInterface
                                     }
                                 }
                             }
-
                         }
 
                         return $result;
@@ -687,7 +689,7 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     private function getSigningName($host)
     {
-        if (strpos( $host, 's3-object-lambda')) {
+        if (strpos($host, 's3-object-lambda')) {
             return 's3-object-lambda';
         }
 
@@ -706,7 +708,7 @@ class S3Client extends AwsClient implements S3ClientInterface
     {
         $definition = $this->getApi()->getDefinition();
 
-        foreach($definition['operations'] as &$operation) {
+        foreach ($definition['operations'] as &$operation) {
             if (isset($operation['http']['requestUri'])) {
                 $requestUri = $operation['http']['requestUri'];
                 if ($requestUri === "/{Bucket}") {
@@ -737,7 +739,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         if (is_string($result)) {
             if ($result === 'regional') {
                 $value = false;
-            } else if ($result === 'legacy') {
+            } elseif ($result === 'legacy') {
                 $value = true;
             } else {
                 return;
@@ -779,9 +781,9 @@ class S3Client extends AwsClient implements S3ClientInterface
                             && $error->getResponse()->getStatusCode() >= 400
                         ) {
                             return strpos(
-                                    $error->getResponse()->getBody(),
-                                    'Your socket connection to the server'
-                                ) !== false;
+                                $error->getResponse()->getBody(),
+                                'Your socket connection to the server'
+                            ) !== false;
                         }
 
                         if ($error->getPrevious() instanceof RequestException) {
@@ -808,7 +810,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                         $config,
                         [
                             'collect_stats' => $args['stats']['retries'],
-                            'decider' => function(
+                            'decider' => function (
                                 $attempts,
                                 CommandInterface $cmd,
                                 $result
@@ -871,11 +873,11 @@ class S3Client extends AwsClient implements S3ClientInterface
         $opt = '<div class="alert alert-info">This value will be computed for you it is not supplied.</div>';
 
         // Add a note on the CopyObject docs
-         $s3ExceptionRetryMessage = "<p>Additional info on response behavior: if there is"
-            . " an internal error in S3 after the request was successfully recieved,"
-            . " a 200 response will be returned with an <code>S3Exception</code> embedded"
-            . " in it; this will still be caught and retried by"
-            . " <code>RetryMiddleware.</code></p>";
+        $s3ExceptionRetryMessage = "<p>Additional info on response behavior: if there is"
+           . " an internal error in S3 after the request was successfully recieved,"
+           . " a 200 response will be returned with an <code>S3Exception</code> embedded"
+           . " in it; this will still be caught and retried by"
+           . " <code>RetryMiddleware.</code></p>";
 
         $docs['operations']['CopyObject'] .=  $s3ExceptionRetryMessage;
         $docs['operations']['CompleteMultipartUpload'] .=  $s3ExceptionRetryMessage;

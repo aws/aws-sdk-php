@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CustomerProfiles;
 
 use Aws\AwsClient;
@@ -82,4 +83,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProfileAsync(array $args = [])
  */
-class CustomerProfilesClient extends AwsClient {}
+class CustomerProfilesClient extends AwsClient
+{
+}

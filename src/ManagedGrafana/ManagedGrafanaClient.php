@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ManagedGrafana;
 
 use Aws\AwsClient;
@@ -42,4 +43,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWorkspaceConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkspaceConfigurationAsync(array $args = [])
  */
-class ManagedGrafanaClient extends AwsClient {}
+class ManagedGrafanaClient extends AwsClient
+{
+}

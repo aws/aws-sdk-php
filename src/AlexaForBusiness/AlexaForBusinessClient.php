@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\AlexaForBusiness;
 
 use Aws\AwsClient;
@@ -192,4 +193,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSkillGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSkillGroupAsync(array $args = [])
  */
-class AlexaForBusinessClient extends AwsClient {}
+class AlexaForBusinessClient extends AwsClient
+{
+}

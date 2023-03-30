@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Arn;
 
 use Aws\Arn\AccessPointArn;
@@ -15,7 +16,6 @@ use PHPUnit\Framework\TestCase;
  */
 class ArnParserTest extends TestCase
 {
-
     /**
      * @dataProvider isArnCases
      *

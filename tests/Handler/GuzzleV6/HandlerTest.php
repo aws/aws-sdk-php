@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Handler\GuzzleV6;
 
 use Aws\Handler\GuzzleV6\GuzzleHandler;
@@ -100,7 +101,8 @@ class HandlerTest extends TestCase
         $request = new Request('PUT', 'http://example.com');
         $wasCalled = false;
         $options = [
-            'http_stats_receiver' => function () {},
+            'http_stats_receiver' => function () {
+            },
             'on_stats' => function (TransferStats $stats) use (&$wasCalled) {
                 $wasCalled = true;
             },
@@ -145,5 +147,4 @@ class HandlerTest extends TestCase
 
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');
     }
-
 }

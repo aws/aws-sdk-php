@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Crypto\Polyfill;
 
 /**
@@ -206,7 +207,8 @@ class ByteArray extends \SplFixedArray
             $length = $input->count();
         }
 
-        $i = 0; $j = $offset;
+        $i = 0;
+        $j = $offset;
         while ($i < $length && $j < $this->count()) {
             $this[$j] = $input[$i];
             ++$i;

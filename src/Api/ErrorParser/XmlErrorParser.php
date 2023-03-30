@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\PayloadParserTrait;
@@ -88,8 +89,8 @@ class XmlErrorParser extends AbstractErrorParser
         $namespaces = $element->getDocNamespaces();
         if (!isset($namespaces[''])) {
             return '';
-        } 
-        
+        }
+
         // Account for the default namespace being defined and PHP not
         // being able to handle it :(.
         $element->registerXPathNamespace('ns', $namespaces['']);

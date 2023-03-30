@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\EMRServerless;
 
 use Aws\AwsClient;
@@ -36,4 +37,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateApplicationAsync(array $args = [])
  */
-class EMRServerlessClient extends AwsClient {}
+class EMRServerlessClient extends AwsClient
+{
+}

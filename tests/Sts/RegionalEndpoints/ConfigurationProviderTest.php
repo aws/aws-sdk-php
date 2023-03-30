@@ -125,8 +125,10 @@ EOT;
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
-        $result = call_user_func(ConfigurationProvider::defaultProvider(
-            ['use_aws_shared_config_files' => false])
+        $result = call_user_func(
+            ConfigurationProvider::defaultProvider(
+                ['use_aws_shared_config_files' => false]
+            )
         )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');

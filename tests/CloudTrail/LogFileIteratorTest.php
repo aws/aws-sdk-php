@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\CloudTrail;
 
 use Aws\Api\Parser\RestXmlParser;

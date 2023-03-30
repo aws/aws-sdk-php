@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Token;
 
 trait ParsesIniTrait

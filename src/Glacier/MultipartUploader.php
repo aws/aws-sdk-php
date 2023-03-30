@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Glacier;
 
 use Aws\CommandInterface;
@@ -168,7 +169,9 @@ class MultipartUploader extends AbstractUploader
             // Create another stream decorated with hashing streams and read
             // through it, so we can get the hash values for the part.
             $decoratedBody = $this->decorateWithHashes($body, $data);
-            while (!$decoratedBody->eof()) $decoratedBody->read(1048576);
+            while (!$decoratedBody->eof()) {
+                $decoratedBody->read(1048576);
+            }
             // Seek the original source forward to the end of the range.
             $this->source->seek($this->source->tell() + $body->getSize());
         } else {
@@ -241,14 +244,18 @@ class MultipartUploader extends AbstractUploader
     private function decorateWithHashes(Stream $stream, array &$data)
     {
         // Make sure that a tree hash is calculated.
-        $stream = new HashingStream($stream, new TreeHash(),
+        $stream = new HashingStream(
+            $stream,
+            new TreeHash(),
             function ($result) use (&$data) {
                 $data['checksum'] = bin2hex($result);
             }
         );
 
         // Make sure that a linear SHA256 hash is calculated.
-        $stream = new HashingStream($stream, new PhpHash('sha256'),
+        $stream = new HashingStream(
+            $stream,
+            new PhpHash('sha256'),
             function ($result) use (&$data) {
                 $data['ContentSHA256'] = bin2hex($result);
             }

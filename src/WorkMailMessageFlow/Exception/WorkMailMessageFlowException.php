@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\WorkMailMessageFlow\Exception;
 
 use Aws\Exception\AwsException;
@@ -6,4 +7,6 @@ use Aws\Exception\AwsException;
 /**
  * Represents an error interacting with the **Amazon WorkMail Message Flow** service.
  */
-class WorkMailMessageFlowException extends AwsException {}
+class WorkMailMessageFlowException extends AwsException
+{
+}

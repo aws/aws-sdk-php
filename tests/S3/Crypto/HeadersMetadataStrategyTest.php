@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3\Crypto;
 
 use Aws\S3\Crypto\HeadersMetadataStrategy;

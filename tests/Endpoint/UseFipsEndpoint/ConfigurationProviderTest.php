@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Endpoint\UseFipsEndpoint;
 
 use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider;
@@ -361,4 +362,3 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 }
-

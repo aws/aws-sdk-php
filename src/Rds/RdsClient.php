@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Rds;
 
 use Aws\AwsClient;

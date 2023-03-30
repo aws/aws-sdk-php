@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
@@ -365,7 +366,8 @@ class SignatureV4 implements SignatureInterface
         if ($dateValue instanceof \DateTimeInterface) {
             $timestamp = $dateValue->getTimestamp();
         } elseif (!is_numeric($dateValue)) {
-            $timestamp = strtotime($dateValue,
+            $timestamp = strtotime(
+                $dateValue,
                 $relativeTimeBase === null ? time() : $relativeTimeBase
             );
         } else {
@@ -477,7 +479,7 @@ class SignatureV4 implements SignatureInterface
         $storedHeaders = [];
 
         foreach ($illegalV4aHeaders as $header) {
-            if ($request->hasHeader($header)){
+            if ($request->hasHeader($header)) {
                 $storedHeaders[$header] = $request->getHeader($header);
                 $request = $request->withoutHeader($header);
             }
@@ -492,7 +494,9 @@ class SignatureV4 implements SignatureInterface
             $request->getMethod(),
             (string) $request->getUri(),
             [], //leave empty as the query is parsed from the uri object
-            array_map(function ($header) {return $header[0];}, $request->getHeaders())
+            array_map(function ($header) {
+                return $header[0];
+            }, $request->getHeaders())
         );
     }
 
@@ -521,9 +525,11 @@ class SignatureV4 implements SignatureInterface
 
         Signing::signRequestAws(
             Signable::fromHttpRequest($http_request),
-            $signingConfig, function ($signing_result, $error_code) use (&$http_request) {
-            $signing_result->applyToHttpRequest($http_request);
-        });
+            $signingConfig,
+            function ($signing_result, $error_code) use (&$http_request) {
+                $signing_result->applyToHttpRequest($http_request);
+            }
+        );
         foreach ($removedIllegalHeaders as $header => $value) {
             $request = $request->withHeader($header, $value);
         }
@@ -540,8 +546,7 @@ class SignatureV4 implements SignatureInterface
         RequestInterface $request,
         CredentialsInterface $credentials,
         $expires
-    )
-    {
+    ) {
         $this->verifyCRTLoaded();
         $credentials_provider = $this->createCRTStaticCredentialsProvider($credentials);
         $signingConfig = new SigningConfigAWS([
@@ -565,9 +570,11 @@ class SignatureV4 implements SignatureInterface
         $http_request = $this->CRTRequestFromGuzzleRequest($request);
         Signing::signRequestAws(
             Signable::fromHttpRequest($http_request),
-            $signingConfig, function ($signing_result, $error_code) use (&$http_request) {
-            $signing_result->applyToHttpRequest($http_request);
-        });
+            $signingConfig,
+            function ($signing_result, $error_code) use (&$http_request) {
+                $signing_result->applyToHttpRequest($http_request);
+            }
+        );
 
         return $request->withUri(
             new Psr7\Uri($http_request->pathAndQuery())

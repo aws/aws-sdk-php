@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\QLDB;
 
 use Aws\AwsClient;
@@ -46,4 +47,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateLedgerPermissionsMode(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLedgerPermissionsModeAsync(array $args = [])
  */
-class QLDBClient extends AwsClient {}
+class QLDBClient extends AwsClient
+{
+}

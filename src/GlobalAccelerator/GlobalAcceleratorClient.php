@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\GlobalAccelerator;
 
 use Aws\AwsClient;
@@ -104,4 +105,6 @@ use Aws\AwsClient;
  * @method \Aws\Result withdrawByoipCidr(array $args = [])
  * @method \GuzzleHttp\Promise\Promise withdrawByoipCidrAsync(array $args = [])
  */
-class GlobalAcceleratorClient extends AwsClient {}
+class GlobalAcceleratorClient extends AwsClient
+{
+}

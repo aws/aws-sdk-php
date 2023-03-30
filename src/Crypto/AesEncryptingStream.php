@@ -1,8 +1,9 @@
 <?php
+
 namespace Aws\Crypto;
 
 use GuzzleHttp\Psr7\StreamDecoratorTrait;
-use \LogicException;
+use LogicException;
 use Psr\Http\Message\StreamInterface;
 use Aws\Crypto\Cipher\CipherMethod;
 
@@ -11,9 +12,8 @@ use Aws\Crypto\Cipher\CipherMethod;
  */
 class AesEncryptingStream implements AesStreamInterface
 {
-    const BLOCK_SIZE = 16; // 128 bits
-
     use StreamDecoratorTrait;
+    const BLOCK_SIZE = 16; // 128 bits
 
     /**
      * @var string

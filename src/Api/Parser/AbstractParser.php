@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api\Parser;
 
 use Aws\Api\Service;

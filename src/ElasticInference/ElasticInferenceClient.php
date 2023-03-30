@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ElasticInference;
 
 use Aws\AwsClient;
@@ -18,4 +19,6 @@ use Aws\AwsClient;
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
-class ElasticInferenceClient extends AwsClient {}
+class ElasticInferenceClient extends AwsClient
+{
+}

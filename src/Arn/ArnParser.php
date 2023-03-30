@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Arn;
 
 use Aws\Arn\S3\AccessPointArn as S3AccessPointArn;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ForecastQueryService;
 
 use Aws\AwsClient;
@@ -10,4 +11,6 @@ use Aws\AwsClient;
  * @method \Aws\Result queryWhatIfForecast(array $args = [])
  * @method \GuzzleHttp\Promise\Promise queryWhatIfForecastAsync(array $args = [])
  */
-class ForecastQueryServiceClient extends AwsClient {}
+class ForecastQueryServiceClient extends AwsClient
+{
+}

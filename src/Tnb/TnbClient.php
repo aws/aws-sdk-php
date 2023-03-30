@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Tnb;
 
 use Aws\AwsClient;
@@ -72,4 +73,6 @@ use Aws\AwsClient;
  * @method \Aws\Result validateSolNetworkPackageContent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise validateSolNetworkPackageContentAsync(array $args = [])
  */
-class TnbClient extends AwsClient {}
+class TnbClient extends AwsClient
+{
+}

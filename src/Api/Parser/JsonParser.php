@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api\Parser;
 
 use Aws\Api\DateTimeResult;
@@ -68,4 +69,3 @@ class JsonParser
         }
     }
 }
-

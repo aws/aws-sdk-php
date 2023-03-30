@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MachineLearning;
 
 use Aws\AwsClient;

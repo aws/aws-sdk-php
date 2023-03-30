@@ -6,7 +6,6 @@ use Aws\ClientSideMonitoring\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Log\InvalidArgumentException;
 
-
 /**
  * @covers \Aws\ClientSideMonitoring\Configuration
  */

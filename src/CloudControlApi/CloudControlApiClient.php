@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CloudControlApi;
 
 use Aws\AwsClient;
@@ -22,4 +23,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateResourceAsync(array $args = [])
  */
-class CloudControlApiClient extends AwsClient {}
+class CloudControlApiClient extends AwsClient
+{
+}

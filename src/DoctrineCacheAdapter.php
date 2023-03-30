@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Doctrine\Common\Cache\Cache;

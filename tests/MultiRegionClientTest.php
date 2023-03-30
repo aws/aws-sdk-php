@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Api\Service;
@@ -94,7 +95,7 @@ class MultiRegionClientTest extends TestCase
         $mockHandler->expects($this->atLeastOnce())
             ->method('resolve')
             ->willReturn(function (CommandInterface $c) {
-                return new FulfilledPromise(new Result);
+                return new FulfilledPromise(new Result());
             });
         $this->mockRegionalClient->expects($this->once())
             ->method('getCommand')

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\WorkSpaces;
 
 use Aws\AwsClient;
@@ -137,4 +138,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWorkspaceImagePermission(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkspaceImagePermissionAsync(array $args = [])
  */
-class WorkSpacesClient extends AwsClient {}
+class WorkSpacesClient extends AwsClient
+{
+}

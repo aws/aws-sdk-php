@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Crypto;
 
 use Aws\Crypto\Polyfill\AesGcm;
@@ -6,7 +7,7 @@ use Aws\Crypto\Polyfill\Key;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\StreamDecoratorTrait;
 use Psr\Http\Message\StreamInterface;
-use \RuntimeException;
+use RuntimeException;
 
 /**
  * @internal Represents a stream of data to be gcm encrypted.
@@ -56,7 +57,6 @@ class AesGcmEncryptingStream implements AesStreamInterface, AesStreamInterfaceV2
         $tagLength = 16,
         $keySize = 256
     ) {
-
         $this->plaintext = $plaintext;
         $this->key = $key;
         $this->initializationVector = $initializationVector;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Service;
@@ -140,7 +141,8 @@ class RestJsonSerializerTest extends TestCase
                     'BoolShape' => ['type' => 'boolean'],
                 ]
             ],
-            function () {}
+            function () {
+            }
         );
     }
 
@@ -263,7 +265,8 @@ class RestJsonSerializerTest extends TestCase
     }
 
 
-    public function doctypeTestProvider() {
+    public function doctypeTestProvider()
+    {
         return [
             [
                 ['DocumentValue' =>
@@ -302,7 +305,8 @@ class RestJsonSerializerTest extends TestCase
      * @param string $operation
      * @param string $input
      */
-    public function testRestJsonContentTypeNoPayload($operation, $input) {
+    public function testRestJsonContentTypeNoPayload($operation, $input)
+    {
         $request = $this->getRequest($operation, $input);
         $this->assertSame('http://foo.com/', (string) $request->getUri());
         $this->assertSame("", $request->getBody()->getContents());
@@ -314,7 +318,8 @@ class RestJsonSerializerTest extends TestCase
     }
 
 
-    public function restJsonContentTypeProvider() {
+    public function restJsonContentTypeProvider()
+    {
         return [
             [
                 "noPayload", ['baz' => 'bar'],
@@ -336,7 +341,8 @@ class RestJsonSerializerTest extends TestCase
         $this->assertSame($expected, $request->getHeaderLine('Is-Bool'));
     }
 
-    public function boolProvider() {
+    public function boolProvider()
+    {
         return [
             [true, 'true'],
             [false, 'false']
@@ -358,4 +364,3 @@ class RestJsonSerializerTest extends TestCase
         $this->assertSame('http://us-east-1.amazonaws.com/', (string) $request->getUri());
     }
 }
-

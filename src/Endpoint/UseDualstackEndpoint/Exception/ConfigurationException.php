@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Endpoint\UseDualstackEndpoint\Exception;
 
 use Aws\HasMonitoringEventsTrait;

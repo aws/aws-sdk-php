@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3\UseArnRegion;
 
 use Aws\S3\UseArnRegion\Configuration;

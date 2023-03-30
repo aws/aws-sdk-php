@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Api\Service;
@@ -10,7 +11,6 @@ use Aws\Api\Service;
  */
 class InputValidationMiddleware
 {
-
     /** @var callable */
     private $nextHandler;
 
@@ -26,7 +26,8 @@ class InputValidationMiddleware
      * @param Service $service
      * @param array $mandatoryAttributeList
      * @return callable     */
-    public static function wrap(Service $service, $mandatoryAttributeList) {
+    public static function wrap(Service $service, $mandatoryAttributeList)
+    {
         if (!is_array($mandatoryAttributeList) ||
             array_filter($mandatoryAttributeList, 'is_string') !== $mandatoryAttributeList
         ) {
@@ -49,7 +50,8 @@ class InputValidationMiddleware
         $this->mandatoryAttributeList = $mandatoryAttributeList;
     }
 
-    public function __invoke(CommandInterface $cmd) {
+    public function __invoke(CommandInterface $cmd)
+    {
         $nextHandler = $this->nextHandler;
         $op = $this->service->getOperation($cmd->getName())->toArray();
         if (!empty($op['input']['shape'])) {
@@ -58,7 +60,7 @@ class InputValidationMiddleware
                 if (!empty($input['required'])) {
                     foreach ($input['required'] as $key => $member) {
                         if (in_array($member, $this->mandatoryAttributeList)) {
-                            $argument = is_string($cmd[$member]) ?  trim($cmd[$member]) : $cmd[$member];
+                            $argument = is_string($cmd[$member]) ? trim($cmd[$member]) : $cmd[$member];
                             if ($argument === '' || $argument === null) {
                                 $commandName = $cmd->getName();
                                 throw new \InvalidArgumentException(
@@ -72,5 +74,4 @@ class InputValidationMiddleware
         }
         return $nextHandler($cmd);
     }
-
 }

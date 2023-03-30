@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Connect;
 
 use Aws\AwsClient;
@@ -346,4 +347,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateUserSecurityProfiles(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateUserSecurityProfilesAsync(array $args = [])
  */
-class ConnectClient extends AwsClient {}
+class ConnectClient extends AwsClient
+{
+}

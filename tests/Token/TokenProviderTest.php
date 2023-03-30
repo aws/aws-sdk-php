@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Token;
 
 use Aws\Exception\TokenException;
@@ -28,7 +29,8 @@ class TokenProviderTest extends TestCase
         unset($_SERVER['aws_str_to_time']);
     }
 
-    private function clearEnv() {
+    private function clearEnv()
+    {
         putenv('AWS_SHARED_CREDENTIALS_FILE');
         putenv('HOME');
         putenv('AWS_PROFILE');
@@ -49,7 +51,8 @@ class TokenProviderTest extends TestCase
         return $dir;
     }
 
-    private function getHomeDir() {
+    private function getHomeDir()
+    {
         if ($homeDir = getenv('HOME')) {
             return $homeDir;
         }
@@ -106,7 +109,7 @@ EOT;
 
     public function testCreatesFromCache()
     {
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $key = __CLASS__ . 'tokenCache';
         $token = new Token('string', PHP_INT_MAX);
         $saved = ['token' => $token];
@@ -124,7 +127,8 @@ EOT;
         $this->assertEquals($token->getExpiration(), $found->getExpiration());
     }
 
-    public function tokenProviderSuccessCases() {
+    public function tokenProviderSuccessCases()
+    {
         return [
             "Valid token with all fields" =>
                 [
@@ -163,7 +167,7 @@ EOT;
     public function testTokenProviderCachedSuccess($cachedToken, $expectedToken)
     {
         $_SERVER['aws_time'] = 1640466950;
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $key = 'aws_cached_sso_token';
         $token = new SsoToken(
             $cachedToken['accessToken'],
@@ -187,7 +191,8 @@ EOT;
         $this->assertEquals(strtotime($expectedToken['expiration']), $found->getExpiration());
     }
 
-    public function tokenProviderSuccessCasesWithRefresh() {
+    public function tokenProviderSuccessCasesWithRefresh()
+    {
         return [
             "Expired token refresh with refresh token" =>
                 [
@@ -266,11 +271,11 @@ EOT;
         $cachedToken,
         $refreshResponse,
         $expectedTokenWriteback,
-        $expectedToken)
-    {
+        $expectedToken
+    ) {
         $_SERVER['aws_time'] = \strtotime('2021-12-25T13:30:00Z');
         $_SERVER['aws_str_to_time'] = \strtotime('2021-12-25T13:25:00Z');
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $key = __CLASS__ . 'tokenCache';
 
         $ssooidc = $this->getTestClient('ssooidc', ['credentials' => false]);
@@ -319,7 +324,7 @@ EOT;
                 isset($cachedToken['registrationExpiresAt']) ? strToTime($cachedToken['registrationExpiresAt']) : null,
                 isset($cachedToken['region']) ? $cachedToken['region'] : null,
                 isset($cachedToken['startUrl']) ? $cachedToken['startUrl'] : null
-                );
+            );
             $saved = [
                 'token' => $token,
                 'refreshMethod' => function () use ($ssoTokenProvider) {
@@ -340,7 +345,8 @@ EOT;
         }
     }
 
-    public function tokenProviderFailureCases() {
+    public function tokenProviderFailureCases()
+    {
         return [
             "Minimal expired cached token" =>
                 [
@@ -386,7 +392,7 @@ EOT;
      */
     public function testTokenProviderFailureCases($cachedToken, $expectedException)
     {
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $key = __CLASS__ . 'tokenCache';
         $token = new SsoToken(
             'string',

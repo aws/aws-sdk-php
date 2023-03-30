@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\EndpointDefinitionProvider;
@@ -36,7 +37,7 @@ class EndpointV2SerializerTraitTest extends TestCase
             ]
         );
         $list = $client->getHandlerList();
-        $list->appendSign(Middleware::tap(function($cmd, $req) {
+        $list->appendSign(Middleware::tap(function ($cmd, $req) {
             $this->assertStringContainsString(
                 'foo.com',
                 $req->getUri()->getHost()
@@ -54,8 +55,8 @@ class EndpointV2SerializerTraitTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(
-           'This operation requests `sigvfoo`, `sigvbar`, `sigvbaz` auth schemes,'
-           . ' but the client only supports `sigv4`, `sigv4a`, `none`, `bearer`.'
+            'This operation requests `sigvfoo`, `sigvbar`, `sigvbaz` auth schemes,'
+            . ' but the client only supports `sigv4`, `sigv4a`, `none`, `bearer`.'
         );
 
         $rulesetPath = __DIR__ . '/invalid-rules/invalid-scheme.json';

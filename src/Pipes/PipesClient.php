@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Pipes;
 
 use Aws\AwsClient;
@@ -26,4 +27,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updatePipe(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePipeAsync(array $args = [])
  */
-class PipesClient extends AwsClient {}
+class PipesClient extends AwsClient
+{
+}

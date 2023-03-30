@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Ecs;
 
 use Aws\AwsClient;
@@ -119,4 +120,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateTaskSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTaskSetAsync(array $args = [])
  */
-class EcsClient extends AwsClient {}
+class EcsClient extends AwsClient
+{
+}

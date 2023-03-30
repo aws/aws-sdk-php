@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Command;
@@ -36,7 +37,8 @@ class JsonRpcSerializerTest extends TestCase
                     ]
                 ]
             ],
-            function () {}
+            function () {
+            }
         );
 
         $j = new JsonRpcSerializer($service, 'http://foo.com');
@@ -77,7 +79,8 @@ class JsonRpcSerializerTest extends TestCase
                     ]
                 ]
             ],
-            function () {}
+            function () {
+            }
         );
 
         $q = new JsonRpcSerializer($service, 'http://foo.com');

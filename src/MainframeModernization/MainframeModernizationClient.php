@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MainframeModernization;
 
 use Aws\AwsClient;
@@ -70,4 +71,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEnvironmentAsync(array $args = [])
  */
-class MainframeModernizationClient extends AwsClient {}
+class MainframeModernizationClient extends AwsClient
+{
+}

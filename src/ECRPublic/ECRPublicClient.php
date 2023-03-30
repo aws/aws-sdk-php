@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ECRPublic;
 
 use Aws\AwsClient;
@@ -52,4 +53,6 @@ use Aws\AwsClient;
  * @method \Aws\Result uploadLayerPart(array $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadLayerPartAsync(array $args = [])
  */
-class ECRPublicClient extends AwsClient {}
+class ECRPublicClient extends AwsClient
+{
+}

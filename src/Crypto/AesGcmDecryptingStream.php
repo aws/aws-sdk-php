@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Crypto;
 
 use Aws\Exception\CryptoException;

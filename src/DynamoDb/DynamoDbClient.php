@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DynamoDb;
 
 use Aws\Api\Parser\Crc32ValidatingParser;

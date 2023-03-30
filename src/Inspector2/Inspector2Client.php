@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Inspector2;
 
 use Aws\AwsClient;
@@ -70,4 +71,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateOrganizationConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOrganizationConfigurationAsync(array $args = [])
  */
-class Inspector2Client extends AwsClient {}
+class Inspector2Client extends AwsClient
+{
+}

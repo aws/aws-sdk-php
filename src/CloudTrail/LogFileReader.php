@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CloudTrail;
 
 use Aws\S3\S3Client;

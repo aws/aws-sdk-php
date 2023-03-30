@@ -1,6 +1,6 @@
 <?php
-namespace Aws;
 
+namespace Aws;
 
 trait HasMonitoringEventsTrait
 {

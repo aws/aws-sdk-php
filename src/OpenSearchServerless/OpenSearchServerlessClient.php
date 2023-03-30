@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\OpenSearchServerless;
 
 use Aws\AwsClient;
@@ -68,4 +69,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateVpcEndpoint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVpcEndpointAsync(array $args = [])
  */
-class OpenSearchServerlessClient extends AwsClient {}
+class OpenSearchServerlessClient extends AwsClient
+{
+}

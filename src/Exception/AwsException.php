@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Exception;
 
 use Aws\Api\Shape;

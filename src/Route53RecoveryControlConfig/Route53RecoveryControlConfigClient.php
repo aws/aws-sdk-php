@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Route53RecoveryControlConfig;
 
 use Aws\AwsClient;
@@ -52,4 +53,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSafetyRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSafetyRuleAsync(array $args = [])
  */
-class Route53RecoveryControlConfigClient extends AwsClient {}
+class Route53RecoveryControlConfigClient extends AwsClient
+{
+}

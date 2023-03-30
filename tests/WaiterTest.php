@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
@@ -68,7 +69,9 @@ class WaiterTest extends TestCase
                 array $options
             ) use (&$retries) {
                 if (0 === --$retries) {
-                    return new FulfilledPromise(new Response(200, [],
+                    return new FulfilledPromise(new Response(
+                        200,
+                        [],
                         Psr7\Utils::streamFor('{"Table":{"TableStatus":"ACTIVE"}}')
                     ));
                 }
@@ -105,12 +108,16 @@ class WaiterTest extends TestCase
         $iteration = $waitTime = 0;
         $statusQueue = ['CREATING', 'CREATING', 'CREATING', 'ACTIVE'];
         $handler = static function (Request $request, array $options) use (
-            $statusQueue, &$waitTime, &$iteration
+            $statusQueue,
+            &$waitTime,
+            &$iteration
         ) {
             $waitTime += $options['delay'];
 
             $promise = new Promise\Promise();
-            $promise->resolve(new Response(200, [],
+            $promise->resolve(new Response(
+                200,
+                [],
                 Psr7\Utils::streamFor(sprintf(
                     '{"Table":{"TableStatus":"%s"}}',
                     $statusQueue[$iteration]
@@ -157,8 +164,7 @@ class WaiterTest extends TestCase
             $client->waitUntil('TableExists', [
                 'TableName' => 'WhoCares',
                 '@waiter'    => [
-                    'before' => function (CommandInterface $cmd, $attempt)
-                    use (&$actualAttempt) {
+                    'before' => function (CommandInterface $cmd, $attempt) use (&$actualAttempt) {
                         $actualAttempt = $attempt;
                     }
                 ]
@@ -227,7 +233,9 @@ class WaiterTest extends TestCase
 
             return ['waiters' => [
                 'TableExists' =>  [
-                    'delay' => function ($attempt) { return $attempt; },
+                    'delay' => function ($attempt) {
+                        return $attempt;
+                    },
                     'maxAttempts' => 5,
                     'operation' => 'DescribeTable',
                     'acceptors' => [
@@ -388,7 +396,8 @@ class WaiterTest extends TestCase
     private function getMockResult($data = [])
     {
         if (is_string($data)) {
-            return new AwsException('ERROR',
+            return new AwsException(
+                'ERROR',
                 $this->getMockBuilder('Aws\CommandInterface')->getMock(),
                 [
                     'code'   => $data,

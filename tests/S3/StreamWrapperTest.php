@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\CommandInterface;
@@ -286,7 +287,9 @@ class StreamWrapperTest extends TestCase
         $this->expectExceptionMessage("403 Forbidden");
         $this->expectWarning();
         $this->addMockResults($this->client, [
-            function ($cmd, $req) { return new S3Exception('403 Forbidden', $cmd); }
+            function ($cmd, $req) {
+                return new S3Exception('403 Forbidden', $cmd);
+            }
         ]);
         $s = fopen('s3://bucket/key', 'w');
         fwrite($s, 'test');
@@ -326,7 +329,9 @@ class StreamWrapperTest extends TestCase
     public function testCanOpenAppendStreamsWithMissingFile()
     {
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('err', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('err', $cmd);
+            },
             new Result(['@metadata' => ['statusCode' => 204, 'effectiveUri' => 'http://foo.com']])
         ]);
 
@@ -355,7 +360,9 @@ class StreamWrapperTest extends TestCase
         $this->expectExceptionMessage("403 Forbidden");
         $this->expectWarning();
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('403 Forbidden', $cmd);
+            },
         ]);
         $this->assertFalse(unlink('s3://bucket/key'));
     }
@@ -387,11 +394,17 @@ class StreamWrapperTest extends TestCase
         $this->client->getHandlerList()->appendSign(Middleware::history($history));
 
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('404', $cmd);
+            },
             new Result(),
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('404', $cmd);
+            },
             new Result(),
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('404', $cmd);
+            },
             new Result(),
         ]);
 
@@ -420,7 +433,9 @@ class StreamWrapperTest extends TestCase
         $this->client->getHandlerList()->appendSign(Middleware::history($history));
 
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('404', $cmd);
+            },
             new Result() // 204
         ]);
 
@@ -444,7 +459,9 @@ class StreamWrapperTest extends TestCase
         $this->expectExceptionMessage("403 Forbidden");
         $this->expectWarning();
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('403 Forbidden', $cmd);
+            },
         ]);
         rmdir('s3://bucket');
     }
@@ -528,7 +545,9 @@ class StreamWrapperTest extends TestCase
         $this->expectExceptionMessage("Forbidden");
         $this->expectWarning();
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('403 Forbidden', $cmd);
+            },
         ]);
         rename('s3://foo/bar', 's3://baz/bar');
     }
@@ -611,7 +630,7 @@ class StreamWrapperTest extends TestCase
         $this->cache->set('s3://foo/bar', ['size' => 123, 7 => 123]);
         $this->assertSame(123, filesize('s3://foo/bar'));
         $this->addMockResults($this->client, [
-            new Result,
+            new Result(),
             new Result(['ContentLength' => 124])
         ]);
         file_put_contents('s3://foo/bar', 'baz!');
@@ -630,8 +649,12 @@ class StreamWrapperTest extends TestCase
         $this->expectWarning();
         // Sends one request for HeadObject, then another for ListObjects
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
-            function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); }
+            function ($cmd, $r) {
+                return new S3Exception('403 Forbidden', $cmd);
+            },
+            function ($cmd, $r) {
+                return new S3Exception('403 Forbidden', $cmd);
+            }
         ]);
         clearstatcache('s3://bucket/key');
         stat('s3://bucket/key');
@@ -642,7 +665,9 @@ class StreamWrapperTest extends TestCase
         $this->expectExceptionMessage("File or directory not found: s3://bucket");
         $this->expectWarning();
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('404', $cmd);
+            },
         ]);
         clearstatcache('s3://bucket');
         stat('s3://bucket');
@@ -668,7 +693,9 @@ class StreamWrapperTest extends TestCase
     public function testCanStatPrefix()
     {
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('404', $cmd);
+            },
             new Result([
                 'Name' => 'bucket-1',
                 'IsTruncated' => false,
@@ -687,7 +714,9 @@ class StreamWrapperTest extends TestCase
         $this->expectExceptionMessage("File or directory not found: s3://bucket/prefix");
         $this->expectWarning();
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('404', $cmd);
+            },
             new Result()
         ]);
         clearstatcache('s3://bucket/prefix');
@@ -696,7 +725,9 @@ class StreamWrapperTest extends TestCase
 
     public function fileTypeProvider()
     {
-        $err = function ($cmd, $r) { return new S3Exception('404', $cmd); };
+        $err = function ($cmd, $r) {
+            return new S3Exception('404', $cmd);
+        };
 
         return [
             ['s3://', [], 'dir'],
@@ -742,7 +773,9 @@ class StreamWrapperTest extends TestCase
         clearstatcache();
         if ($result == 'error') {
             $err = false;
-            set_error_handler(function ($e) use (&$err) { $err = true; });
+            set_error_handler(function ($e) use (&$err) {
+                $err = true;
+            });
             $actual = filetype($uri);
             restore_error_handler();
             $this->assertFalse($actual);
@@ -786,7 +819,9 @@ class StreamWrapperTest extends TestCase
     public function testDoesNotErrorOnIsLink()
     {
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('404', $cmd);
+            },
         ]);
         $this->assertFalse(is_link('s3://bucket/key'));
     }
@@ -794,7 +829,9 @@ class StreamWrapperTest extends TestCase
     public function testDoesNotErrorOnFileExists()
     {
         $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
+            function ($cmd, $r) {
+                return new S3Exception('404', $cmd);
+            },
         ]);
         $this->assertFileDoesNotExist('s3://bucket/key');
     }
@@ -942,7 +979,9 @@ class StreamWrapperTest extends TestCase
     {
         $stream = Psr7\Utils::streamFor('12345');
         $stream = Psr7\FnStream::decorate($stream, [
-            'getSize' => function () { return null; }
+            'getSize' => function () {
+                return null;
+            }
         ]);
         $result = [
             'Body' => $stream,

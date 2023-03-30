@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\OpenSearchService;
 
 use Aws\AwsClient;
@@ -110,4 +111,6 @@ use Aws\AwsClient;
  * @method \Aws\Result upgradeDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise upgradeDomainAsync(array $args = [])
  */
-class OpenSearchServiceClient extends AwsClient {}
+class OpenSearchServiceClient extends AwsClient
+{
+}

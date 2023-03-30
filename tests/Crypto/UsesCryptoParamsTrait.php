@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\KmsMaterialsProvider;
@@ -25,7 +26,6 @@ trait UsesCryptoParamsTrait
 
     public function getInvalidMaterialsProviders()
     {
-
         return [
             [
                 new \stdClass(),

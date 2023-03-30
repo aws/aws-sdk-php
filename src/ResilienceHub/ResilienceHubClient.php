@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ResilienceHub;
 
 use Aws\AwsClient;
@@ -110,4 +111,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateResiliencyPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateResiliencyPolicyAsync(array $args = [])
  */
-class ResilienceHubClient extends AwsClient {}
+class ResilienceHubClient extends AwsClient
+{
+}

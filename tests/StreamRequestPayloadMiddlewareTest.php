@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Api\Service;
@@ -127,7 +128,8 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
             ]
         );
         $middleware = StreamRequestPayloadMiddleware::wrap($service);
-        $invokable = $middleware(function($cmd, $req) {});
+        $invokable = $middleware(function ($cmd, $req) {
+        });
 
         // Mock a request with a body whose size returns null
         $filestream = tmpfile();
@@ -289,8 +291,9 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                     ],
                 ],
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CloudWatchLogs;
 
 use Aws\AwsClient;
@@ -103,4 +104,6 @@ use Aws\AwsClient;
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
-class CloudWatchLogsClient extends AwsClient {}
+class CloudWatchLogsClient extends AwsClient
+{
+}

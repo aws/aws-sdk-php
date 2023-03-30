@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3Control;
 
 use Aws\Api\ApiProvider;

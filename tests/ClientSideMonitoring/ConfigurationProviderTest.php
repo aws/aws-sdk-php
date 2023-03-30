@@ -10,13 +10,11 @@ use Aws\LruArrayCache;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-
 /**
  * @covers \Aws\ClientSideMonitoring\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
-
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -125,10 +123,10 @@ EOT;
         putenv(ConfigurationProvider::ENV_PORT);
         putenv(ConfigurationProvider::ENV_CLIENT_ID);
         $promise = call_user_func(ConfigurationProvider::env())->then(
-            function() {
+            function () {
                 $this->fail('Should have received a rejection.');
             },
-            function(ConfigurationException $e) {
+            function (ConfigurationException $e) {
                 $this->assertStringStartsWith(
                     'Could not find environment variable CSM config',
                     $e->getMessage()
@@ -294,7 +292,7 @@ EOT;
             throw $e;
         }
     }
-    
+
     public function testUsesClassDefaultOptions()
     {
         $this->clearEnv();
@@ -344,7 +342,9 @@ EOT;
         putenv('HOME=' . dirname($dir));
         $a = ConfigurationProvider::ini('custom');
         $b = ConfigurationProvider::ini();
-        $c = function () { $this->fail('Should not have called'); };
+        $c = function () {
+            $this->fail('Should not have called');
+        };
         $provider = ConfigurationProvider::chain($a, $b, $c);
         /** @var ConfigurationInterface $result */
         $result = $provider()->wait();
@@ -438,7 +438,7 @@ EOT;
         $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
         return [
             [
-                function() use ($expected) {
+                function () use ($expected) {
                     return $expected;
                 },
                 $expected

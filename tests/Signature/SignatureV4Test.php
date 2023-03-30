@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
@@ -132,8 +133,7 @@ class SignatureV4Test extends TestCase
             $credentials,
             $dateTime
         )->getUri();
-        $this->assertStringContainsString('X-Amz-Expires=518400',$url);
-
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function testCreatesPresignedDatesFromUnixTimestamp()
@@ -141,8 +141,8 @@ class SignatureV4Test extends TestCase
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
-        $url = (string) $signature->presign($request,$credentials,1386720000)->getUri();
-        $this->assertStringContainsString('X-Amz-Expires=518400',$url);
+        $url = (string) $signature->presign($request, $credentials, 1386720000)->getUri();
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function testCreatesPresignedDateFromStrtotime()
@@ -155,7 +155,7 @@ class SignatureV4Test extends TestCase
             $credentials,
             'December 11, 2013 00:00:00 UTC'
         )->getUri();
-        $this->assertStringContainsString('X-Amz-Expires=518400',$url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function testAddsSecurityTokenIfPresentInPresigned()
@@ -405,7 +405,7 @@ class SignatureV4Test extends TestCase
         $payloadFn = new \ReflectionMethod($signature, 'getPayload');
         $payloadFn->setAccessible(true);
         $payload = $payloadFn->invoke($signature, $request);
-        $this->assertSame('UNSIGNED-PAYLOAD',$payload);
+        $this->assertSame('UNSIGNED-PAYLOAD', $payload);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\Message::toString($signature->signRequest($request, $credentials)));

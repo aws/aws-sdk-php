@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3\Crypto;
 
 use Aws\S3\Crypto\InstructionFileMetadataStrategy;
@@ -13,7 +14,8 @@ use PHPUnit\Framework\TestCase;
  */
 class InstructionFileMetadataStrategyTest extends TestCase
 {
-    use UsesMetadataEnvelopeTrait, UsesServiceTrait;
+    use UsesMetadataEnvelopeTrait;
+    use UsesServiceTrait;
 
     /**
      * @dataProvider getMetadataFields

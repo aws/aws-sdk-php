@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Api\Service;
@@ -37,8 +38,8 @@ final class Middleware
         ) {
             return function (
                 CommandInterface $command,
-                RequestInterface $request = null)
-            use (
+                RequestInterface $request = null
+            ) use (
                 $handler,
                 $api,
                 $bodyParameter,
@@ -104,8 +105,7 @@ final class Middleware
         $serializer,
         $endpointProvider = null,
         array $providerArgs = null
-    )
-    {
+    ) {
         return function (callable $handler) use ($serializer, $endpointProvider, $providerArgs) {
             return function (CommandInterface $command) use ($serializer, $handler, $endpointProvider, $providerArgs) {
                 return $handler($command, $serializer($command, $endpointProvider, $providerArgs));
@@ -135,8 +135,7 @@ final class Middleware
                 $signer = $signatureFunction($command);
                 if ($signer instanceof TokenAuthorization) {
                     return $tokenProvider()->then(
-                        function (TokenInterface $token)
-                        use ($handler, $command, $signer, $request) {
+                        function (TokenInterface $token) use ($handler, $command, $signer, $request) {
                             return $handler(
                                 $command,
                                 $signer->authorizeRequest($request, $token)
@@ -145,8 +144,7 @@ final class Middleware
                     );
                 } else {
                     return $credProvider()->then(
-                        function (CredentialsInterface $creds)
-                        use ($handler, $command, $signer, $request) {
+                        function (CredentialsInterface $creds) use ($handler, $command, $signer, $request) {
                             return $handler(
                                 $command,
                                 $signer->signRequest($request, $creds)
@@ -227,7 +225,7 @@ final class Middleware
             return function (
                 CommandInterface $command,
                 RequestInterface $request
-            ) use ($handler){
+            ) use ($handler) {
                 return $handler($command, $request->withHeader(
                     'aws-sdk-invocation-id',
                     md5(uniqid(gethostname(), true))
@@ -281,7 +279,7 @@ final class Middleware
             return function (
                 CommandInterface $command,
                 RequestInterface $request
-            ) use ($handler){
+            ) use ($handler) {
                 $isLambda = getenv('AWS_LAMBDA_FUNCTION_NAME');
                 $traceId = str_replace('\e', '\x1b', getenv('_X_AMZN_TRACE_ID'));
 
@@ -290,9 +288,9 @@ final class Middleware
                         $ignoreChars = ['=', ';', ':', '+', '&', '[', ']', '{', '}', '"', '\'', ','];
                         $traceIdEncoded = rawurlencode(stripcslashes($traceId));
 
-                        foreach($ignoreChars as $char) {
+                        foreach ($ignoreChars as $char) {
                             $encodedChar = rawurlencode($char);
-                            $traceIdEncoded = str_replace($encodedChar, $char,  $traceIdEncoded);
+                            $traceIdEncoded = str_replace($encodedChar, $char, $traceIdEncoded);
                         }
 
                         return $handler($command, $request->withHeader(

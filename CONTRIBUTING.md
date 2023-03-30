@@ -85,8 +85,12 @@ we ask the same of all community contributions as well:
    will be released under that license. For substantial contributions, we may
    ask you to sign a [Contributor License Agreement (CLA)][cla].
 2. We follow all of the relevant PSR recommendations from the [PHP Framework
-   Interop Group][php-fig]. Please submit code that follows these standards.
-   The [PHP CS Fixer][cs-fixer] tool can be helpful for formatting your code.
+   Interop Group][php-fig]. Please submit code that follows the 
+   [PER coding style](php-fig-per).  
+   The [PHP CS Fixer][cs-fixer] tool can be helpful for formatting your code.  
+   You can install the currently used version of PHP CS Fixer using 
+   `composer install-cs-fix` and automatically format
+   your code by running `composer cs-fix`.
 3. We maintain a high percentage of code coverage in our unit tests. If you make
    changes to the code, please add, update, and/or remove tests as appropriate.
    Tests are run via `make test` command.
@@ -152,7 +156,8 @@ category field should exist with the value set to an empty string `""`.
 [pull-requests]: https://github.com/aws/aws-sdk-php/pulls
 [license]: http://aws.amazon.com/apache2.0/
 [cla]: https://github.com/aws/aws-cla/blob/master/amazon-single-contribution-license.txt
-[php-fig]: http://php-fig.org
+[php-fig]: https://www.php-fig.org/
+[php-fig-per]: https://www.php-fig.org/per/coding-style/
 [cs-fixer]: http://cs.sensiolabs.org/
 [phpstan]: https://github.com/phpstan/phpstan
 [sphinx]: http://sphinx-doc.org/

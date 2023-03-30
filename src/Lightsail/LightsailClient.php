@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Lightsail;
 
 use Aws\AwsClient;
@@ -324,4 +325,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateRelationalDatabaseParameters(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRelationalDatabaseParametersAsync(array $args = [])
  */
-class LightsailClient extends AwsClient {}
+class LightsailClient extends AwsClient
+{
+}

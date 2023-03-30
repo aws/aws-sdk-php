@@ -1,6 +1,6 @@
 <?php
-namespace Aws\Test\Build\Docs;
 
+namespace Aws\Test\Build\Docs;
 
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;

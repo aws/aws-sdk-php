@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Endpoint\UseDualstackEndpoint;
 
 use Aws;
@@ -18,7 +19,8 @@ class Configuration implements ConfigurationInterface
         if ($this->useDualstackEndpoint == true
             && (strpos($region, "iso-") !== false || strpos($region, "-iso") !== false)
         ) {
-            throw new ConfigurationException("Dual-stack is not supported in ISO regions");        }
+            throw new ConfigurationException("Dual-stack is not supported in ISO regions");
+        }
     }
 
     /**

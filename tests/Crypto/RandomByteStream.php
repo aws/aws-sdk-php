@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Crypto;
 
 use GuzzleHttp\Psr7\PumpStream;

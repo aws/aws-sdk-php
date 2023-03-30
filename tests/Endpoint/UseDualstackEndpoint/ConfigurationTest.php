@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Endpoint\UseDualstackEndpoint;
 
 use Aws\Endpoint\UseDualstackEndpoint\Configuration;

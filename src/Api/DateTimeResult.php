@@ -86,13 +86,13 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
                 } catch (Exception $exception) {
                     return self::fromEpoch($timestamp);
                 }
-            } else if ($expectedFormat == 'unixTimestamp') {
+            } elseif ($expectedFormat == 'unixTimestamp') {
                 try {
                     return self::fromEpoch($timestamp);
                 } catch (Exception $exception) {
                     return self::fromISO8601($timestamp);
                 }
-            } else if (\Aws\is_valid_epoch($timestamp)) {
+            } elseif (\Aws\is_valid_epoch($timestamp)) {
                 return self::fromEpoch($timestamp);
             }
             return self::fromISO8601($timestamp);

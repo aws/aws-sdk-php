@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Token;
 
 use Aws\Exception\TokenException;
@@ -22,7 +23,8 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
      * @param string $ssoProfileName The name of the profile that contains the sso_session key
      * @param int    $filename Name of the config file to sso profile from
      */
-    public function __construct($ssoProfileName, $filename = null, $ssoOidcClient = null) {
+    public function __construct($ssoProfileName, $filename = null, $ssoOidcClient = null)
+    {
         $profileName = getenv(self::ENV_PROFILE) ?: 'default';
         $this->ssoProfileName = !empty($ssoProfileName) ? $ssoProfileName : $profileName;
         $this->filename =  !empty($filename)
@@ -93,7 +95,8 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
      * Refreshes the token
      * @return mixed|null
      */
-    public function refresh() {
+    public function refresh()
+    {
         try {
             //try to reload from disk
             $token = $this();
@@ -124,7 +127,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
             ]);
             if ($response['@metadata']['statusCode'] == 200) {
                 $tokenData['accessToken'] = $response['accessToken'];
-                $tokenData['expiresAt'] = time () + $response['expiresIn'];
+                $tokenData['expiresAt'] = time() + $response['expiresIn'];
                 $tokenData['refreshToken'] = $response['refreshToken'];
                 $token = new SsoToken(
                     $tokenData['accessToken'],
@@ -134,7 +137,8 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
                     isset($tokenData['clientSecret']) ? $tokenData['clientSecret'] : null,
                     isset($tokenData['registrationExpiresAt']) ? $tokenData['registrationExpiresAt'] : null,
                     isset($tokenData['region']) ? $tokenData['region'] : null,
-                    isset($tokenData['startUrl']) ? $tokenData['startUrl'] : null                );
+                    isset($tokenData['startUrl']) ? $tokenData['startUrl'] : null
+                );
 
                 $this->writeNewTokenDataToDisk($tokenData, $tokenLocation);
 
@@ -166,7 +170,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
      * @param $tokenLocation
      * @return array
      */
-    function getTokenData($tokenLocation)
+    public function getTokenData($tokenLocation)
     {
         return json_decode(file_get_contents($tokenLocation), true);
     }

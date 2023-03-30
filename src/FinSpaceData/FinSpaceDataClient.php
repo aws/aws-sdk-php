@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\FinSpaceData;
 
 use Aws\AwsClient;
@@ -70,4 +71,6 @@ use Psr\Http\Message\RequestInterface;
  * @method \Aws\Result updateUser(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateUserAsync(array $args = [])
  */
-class FinSpaceDataClient extends AwsClient {}
+class FinSpaceDataClient extends AwsClient
+{
+}

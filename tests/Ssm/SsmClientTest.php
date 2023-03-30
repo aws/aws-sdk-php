@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Ssm;
 
 use Aws\Ssm\SsmClient;

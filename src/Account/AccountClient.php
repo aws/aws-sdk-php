@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Account;
 
 use Aws\AwsClient;
@@ -24,4 +25,6 @@ use Aws\AwsClient;
  * @method \Aws\Result putContactInformation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putContactInformationAsync(array $args = [])
  */
-class AccountClient extends AwsClient {}
+class AccountClient extends AwsClient
+{
+}

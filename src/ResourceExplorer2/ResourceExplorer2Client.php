@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ResourceExplorer2;
 
 use Aws\AwsClient;
@@ -44,4 +45,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateView(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateViewAsync(array $args = [])
  */
-class ResourceExplorer2Client extends AwsClient {}
+class ResourceExplorer2Client extends AwsClient
+{
+}

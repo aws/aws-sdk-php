@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use GuzzleHttp\Psr7;

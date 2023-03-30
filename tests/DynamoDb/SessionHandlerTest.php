@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\DynamoDb;
 
 use Aws\DynamoDb\SessionHandler;
@@ -79,7 +80,7 @@ class SessionHandlerTest extends TestCase
         );
         $connection->expects($this->any())
             ->method('write')
-            ->willReturn( true);
+            ->willReturn(true);
         $connection->expects($this->once())
             ->method('read')
             ->withAnyParameters('test')
@@ -114,10 +115,10 @@ class SessionHandlerTest extends TestCase
             ->willReturn('expires');
         $connection->expects($this->any())
             ->method('write')
-            ->willReturn( true);
+            ->willReturn(true);
         $connection->expects($this->any())
             ->method('read')
-            ->willReturn( ['expires' => time() + 1000, 'data' => 'serializedData']);
+            ->willReturn(['expires' => time() + 1000, 'data' => 'serializedData']);
         $sh = new SessionHandler($connection);
         $sh->write(session_id(), $data);
 

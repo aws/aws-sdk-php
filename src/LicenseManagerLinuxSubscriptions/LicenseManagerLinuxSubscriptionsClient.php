@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\LicenseManagerLinuxSubscriptions;
 
 use Aws\AwsClient;
@@ -14,4 +15,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateServiceSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServiceSettingsAsync(array $args = [])
  */
-class LicenseManagerLinuxSubscriptionsClient extends AwsClient {}
+class LicenseManagerLinuxSubscriptionsClient extends AwsClient
+{
+}

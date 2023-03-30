@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws;
@@ -36,9 +37,15 @@ class FunctionsTest extends TestCase
      */
     public function testComposesOrFunctions()
     {
-        $a = function ($a, $b) { return null; };
-        $b = function ($a, $b) { return $a . $b; };
-        $c = function ($a, $b) { return 'C'; };
+        $a = function ($a, $b) {
+            return null;
+        };
+        $b = function ($a, $b) {
+            return $a . $b;
+        };
+        $c = function ($a, $b) {
+            return 'C';
+        };
         $comp = Aws\or_chain($a, $b, $c);
         $this->assertSame('+-', $comp('+', '-'));
     }
@@ -49,9 +56,15 @@ class FunctionsTest extends TestCase
     public function testReturnsNullWhenNonResolve()
     {
         $called = [];
-        $a = function () use (&$called) { $called[] = 'a'; };
-        $b = function () use (&$called) { $called[] = 'b'; };
-        $c = function () use (&$called) { $called[] = 'c'; };
+        $a = function () use (&$called) {
+            $called[] = 'a';
+        };
+        $b = function () use (&$called) {
+            $called[] = 'b';
+        };
+        $c = function () use (&$called) {
+            $called[] = 'c';
+        };
         $comp = Aws\or_chain($a, $b, $c);
         $this->assertNull($comp());
         $this->assertEquals(['a', 'b', 'c'], $called);
@@ -136,7 +149,9 @@ class FunctionsTest extends TestCase
     public function testFilter()
     {
         $data = [0, 1, 2, 3, 4];
-        $func = function ($v) { return $v % 2; };
+        $func = function ($v) {
+            return $v % 2;
+        };
         $result = \Aws\filter($data, $func);
         $this->assertEquals([1, 3], iterator_to_array($result));
     }
@@ -147,7 +162,9 @@ class FunctionsTest extends TestCase
     public function testMap()
     {
         $data = [0, 1, 2, 3, 4];
-        $result = \Aws\map($data, function ($v) { return $v + 1; });
+        $result = \Aws\map($data, function ($v) {
+            return $v + 1;
+        });
         $this->assertEquals([1, 2, 3, 4, 5], iterator_to_array($result));
     }
 
@@ -157,7 +174,9 @@ class FunctionsTest extends TestCase
     public function testFlatMap()
     {
         $data = ['Hello', 'World'];
-        $xf = function ($value) { return str_split($value); };
+        $xf = function ($value) {
+            return str_split($value);
+        };
         $result = \Aws\flatmap($data, $xf);
         $this->assertEquals(
             ['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd'],
@@ -198,7 +217,7 @@ class FunctionsTest extends TestCase
      */
     public function testDescribeDoubleToFloat()
     {
-        $double = (double)1.3;
+        $double = (float)1.3;
         $this->assertSame('float(1.3)', Aws\describe_type($double));
     }
 

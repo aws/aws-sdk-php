@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Lambda;
 
 use Aws\Lambda\LambdaClient;
@@ -11,7 +12,7 @@ class LambdaClientTest extends TestCase
 {
     use ArraySubsetAsserts;
 
-    function testsAddsDefaultCurlOptions()
+    public function testsAddsDefaultCurlOptions()
     {
         if (!extension_loaded('curl')) {
             $this->markTestSkipped('Test skipped on no cURL extension');

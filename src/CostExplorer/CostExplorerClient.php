@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CostExplorer;
 
 use Aws\AwsClient;
@@ -80,4 +81,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateCostCategoryDefinition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateCostCategoryDefinitionAsync(array $args = [])
  */
-class CostExplorerClient extends AwsClient {}
+class CostExplorerClient extends AwsClient
+{
+}

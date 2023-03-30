@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\Api\ApiProvider;
@@ -17,7 +18,8 @@ class AmbiguousSuccessParserTest extends TestCase
 
     public function set_up()
     {
-        $parser = function () {};
+        $parser = function () {
+        };
         $errorParser = function () {
             return ['code' => 'InternalError', 'message' => 'Sorry!'];
         };
@@ -78,7 +80,8 @@ class AmbiguousSuccessParserTest extends TestCase
     {
         $this->expectExceptionMessage("An error connecting to the service occurred while performing the");
         $this->expectException(\Aws\S3\Exception\S3Exception::class);
-        $parser = function() {};
+        $parser = function () {
+        };
         $errorParser = new XmlErrorParser();
         $instance = new AmbiguousSuccessParser(
             $parser,
@@ -105,11 +108,15 @@ class AmbiguousSuccessParserTest extends TestCase
     {
         $provider = ApiProvider::defaultProvider();
         return array_map(
-            function ($op) { return [$op]; },
+            function ($op) {
+                return [$op];
+            },
             array_diff(
                 array_keys($provider('api', 's3', 'latest')['operations']),
                 array_map(
-                    function (array $args) { return $args[0]; },
+                    function (array $args) {
+                        return $args[0];
+                    },
                     $this->opsWithAmbiguousSuccessesProvider()
                 )
             )

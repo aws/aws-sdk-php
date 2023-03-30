@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
@@ -37,7 +38,7 @@ class JsonRpcErrorParserTest extends TestCase
             count($expected),
             $parsed
         );
-        foreach($parsed as $key => $value) {
+        foreach ($parsed as $key => $value) {
             if ($key === 'error_shape') {
                 $this->assertEquals(
                     $expected['error_shape']->toArray(),

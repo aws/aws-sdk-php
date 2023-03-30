@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api;
 
 use Aws\Api\Parser\QueryParser;
@@ -18,14 +19,18 @@ class ServiceTest extends TestCase
 
     public function testSetsDefaultValues()
     {
-        $s = new Service([], function () { return []; });
+        $s = new Service([], function () {
+            return [];
+        });
         $this->assertSame([], $s['operations']);
         $this->assertSame([], $s['shapes']);
     }
 
     public function testImplementsArrayAccess()
     {
-        $s = new Service(['metadata' => ['foo' => 'bar']], function () { return []; });
+        $s = new Service(['metadata' => ['foo' => 'bar']], function () {
+            return [];
+        });
         $this->assertSame('bar', $s['metadata']['foo']);
         $this->assertNull($s['missing']);
         $s['abc'] = '123';
@@ -48,7 +53,9 @@ class ServiceTest extends TestCase
                     'uid'             => 'foo-2016-12-09'
                 ]
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
         $this->assertSame('Foo Service', $s->getServiceFullName());
         $this->assertSame('foo', $s->getServiceName());
@@ -62,7 +69,9 @@ class ServiceTest extends TestCase
 
     public function testReturnsMetadata()
     {
-        $s = new Service([], function () { return []; });
+        $s = new Service([], function () {
+            return [];
+        });
         $this->assertIsArray($s->getMetadata());
         $s['metadata'] = [
             'serviceFullName' => 'foo',
@@ -87,7 +96,9 @@ class ServiceTest extends TestCase
     {
         $s = new Service(
             ['operations' => ['foo' => ['input' => []]]],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
         $this->assertTrue($s->hasOperation('foo'));
         $this->assertInstanceOf('Aws\Api\Operation', $s->getOperation('foo'));
@@ -97,7 +108,9 @@ class ServiceTest extends TestCase
     public function testEnsuresOperationExists()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $s = new Service([], function () { return []; });
+        $s = new Service([], function () {
+            return [];
+        });
         $s->getOperation('foo');
     }
 
@@ -185,7 +198,9 @@ class ServiceTest extends TestCase
         }
         $service = new Service(
             $data,
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
         $serializer = Service::createSerializer($service, $type);
         $this->assertInstanceOf($cl, $serializer);
@@ -209,7 +224,9 @@ class ServiceTest extends TestCase
     {
         $service = new Service(
             ['metadata' => ['protocol' => $type]],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
         $parser = Service::createParser($service);
         $this->assertInstanceOf($cl, $parser);
@@ -244,7 +261,9 @@ class ServiceTest extends TestCase
                 ],
                 'clientContextParams' => $params
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
 
         $clientContextParams = $s->getClientContextParams();
@@ -266,12 +285,14 @@ class ServiceTest extends TestCase
                     'uid'             => 'foo-2016-12-09'
                 ]
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
         $definition = $s->getDefinition();
         $definition['metadata']['serviceId'] = 'bar';
         $s->setDefinition($definition);
         $this->assertTrue($s->isModifiedModel());
-        $this->assertEquals( 'bar', $s->getMetadata('serviceId'));
+        $this->assertEquals('bar', $s->getMetadata('serviceId'));
     }
 }

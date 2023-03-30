@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Chime;
 
 use Aws\AwsClient;
@@ -388,4 +389,6 @@ use Aws\AwsClient;
  * @method \Aws\Result validateE911Address(array $args = [])
  * @method \GuzzleHttp\Promise\Promise validateE911AddressAsync(array $args = [])
  */
-class ChimeClient extends AwsClient {}
+class ChimeClient extends AwsClient
+{
+}

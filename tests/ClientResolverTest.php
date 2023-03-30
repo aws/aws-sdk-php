@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Api\Service;
@@ -455,7 +456,7 @@ EOT;
         }
 
         $c = new Credentials('foo', 'bar');
-        $cache = new LruArrayCache;
+        $cache = new LruArrayCache();
         $cache->set('aws_cached_instance_credentials', $c);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
@@ -574,8 +575,7 @@ EOT;
         $useFipsEndpoint,
         $region,
         $expectedEndpoint
-    )
-    {
+    ) {
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $resolver->resolve([
             'service' => $service,
@@ -887,7 +887,7 @@ EOT;
      */
     public function testAcceptsBooleansAndArraysForSelectiveStatCollection($userValue, array $resolvedValue)
     {
-        $list = new HandlerList;
+        $list = new HandlerList();
         $args = [];
         ClientResolver::_apply_stats($userValue, $args, $list);
         foreach ($resolvedValue as $collector => $enabled) {
@@ -932,21 +932,20 @@ EOT;
      */
     public function testResolvesValuesReturnedByEndpointProvider(
         array $args,
-              $argName,
-              $expected,
-              $override
-    )
-    {
+        $argName,
+        $expected,
+        $override
+    ) {
         $resolverArgs = array_intersect_key(
             ClientResolver::getDefaultArguments(),
             array_flip(['endpoint_provider', 'service', 'region', 'scheme', $argName])
         );
         $resolver = new ClientResolver($resolverArgs);
 
-        $resolved = $resolver->resolve($args, new HandlerList);
+        $resolved = $resolver->resolve($args, new HandlerList());
         $this->assertSame($expected, $resolved[$argName]);
 
-        $resolved = $resolver->resolve([$argName => $override] + $args, new HandlerList);
+        $resolved = $resolver->resolve([$argName => $override] + $args, new HandlerList());
         $this->assertSame($override, $resolved[$argName]);
     }
 
@@ -996,17 +995,16 @@ EOT;
      */
     public function testSigningValuesAreFetchedFromPartition(
         array $args,
-              $argName,
-              $expected
-    )
-    {
+        $argName,
+        $expected
+    ) {
         $resolverArgs = array_intersect_key(
             ClientResolver::getDefaultArguments(),
             array_flip(['endpoint_provider', 'endpoint', 'service', 'region', $argName])
         );
         $resolver = new ClientResolver($resolverArgs);
 
-        $resolved = $resolver->resolve($args, new HandlerList);
+        $resolved = $resolver->resolve($args, new HandlerList());
         $this->assertSame($expected, $resolved[$argName]);
     }
 
@@ -1045,14 +1043,13 @@ EOT;
     public function testIdempotencyTokenMiddlewareAddedAsAppropriate(
         $value,
         $shouldAddIdempotencyMiddleware
-    )
-    {
+    ) {
         $args = [
             'api' => new Service([], function () {
                 return [];
             }),
         ];
-        $list = new HandlerList;
+        $list = new HandlerList();
 
         $this->assertCount(0, $list);
         ClientResolver::_apply_idempotency_auto_fill($value, $args, $list);
@@ -1095,7 +1092,6 @@ EOT;
                 $this->fail('Expected an exception with: ' . $expected->getMessage());
             }
             $this->assertEquals($expected, $result['region']);
-
         } catch (InvalidRegionException $e) {
             $this->assertEquals($expected->getMessage(), $e->getMessage());
         }

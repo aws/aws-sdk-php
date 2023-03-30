@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\EndpointDiscovery;
 
 use Aws\AwsClient;
@@ -160,7 +161,7 @@ class EndpointDiscoveryMiddleware
                             $g
                         );
                     }
-                    
+
                     return $value;
                 };
 
@@ -311,7 +312,6 @@ class EndpointDiscoveryMiddleware
         $nextHandler = $this->nextHandler;
         $endpointList = self::$cache->get($cacheKey);
         if ($endpointList instanceof EndpointList) {
-
             // Remove invalid endpoint from cached list
             $endpointList->remove($endpoint);
 
@@ -319,13 +319,11 @@ class EndpointDiscoveryMiddleware
             $newEndpoint = $endpointList->getEndpoint();
         }
         if (empty($newEndpoint)) {
-
             // If no more cached endpoints, make discovery call
             // if none made within cooldown for given key
             if (time() - $this->discoveryTimes[$cacheKey]
                 < self::$discoveryCooldown
             ) {
-
                 // If no more cached endpoints and it's required,
                 // fail with original exception
                 if ($isRequired) {
@@ -393,7 +391,7 @@ class EndpointDiscoveryMiddleware
             $split = explode('/', $parsed['path'], 2);
             $parsed['host'] = $split[0];
             if (isset($split[1])) {
-                if (substr($split[1], 0 , 1) !== '/') {
+                if (substr($split[1], 0, 1) !== '/') {
                     $split[1] = '/' . $split[1];
                 }
                 $parsed['path'] = $split[1];

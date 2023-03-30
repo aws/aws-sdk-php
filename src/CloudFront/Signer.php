@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CloudFront;
 
 /**
@@ -39,10 +40,10 @@ class Signer
             $this->pkHandle = openssl_pkey_get_private("file://$privateKey", $passphrase);
             if (!$this->pkHandle) {
                 $errorMessages = [];
-                while(($newMessage = openssl_error_string()) !== false){
+                while (($newMessage = openssl_error_string()) !== false) {
                     $errorMessages[] = $newMessage;
                 }
-                throw new \InvalidArgumentException(implode("\n",$errorMessages));
+                throw new \InvalidArgumentException(implode("\n", $errorMessages));
             }
         }
     }

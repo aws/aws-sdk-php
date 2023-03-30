@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\AppConfigData;
 
 use Aws\AwsClient;
@@ -10,4 +11,6 @@ use Aws\AwsClient;
  * @method \Aws\Result startConfigurationSession(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startConfigurationSessionAsync(array $args = [])
  */
-class AppConfigDataClient extends AwsClient {}
+class AppConfigDataClient extends AwsClient
+{
+}

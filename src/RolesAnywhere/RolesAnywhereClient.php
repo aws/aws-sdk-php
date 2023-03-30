@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\RolesAnywhere;
 
 use Aws\AwsClient;
@@ -58,4 +59,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateTrustAnchor(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTrustAnchorAsync(array $args = [])
  */
-class RolesAnywhereClient extends AwsClient {}
+class RolesAnywhereClient extends AwsClient
+{
+}

@@ -86,7 +86,9 @@ class EventParsingIteratorTest extends TestCase
             $stream,
             $this->eventstreamShape,
             new RestXmlParser(
-                new Service([], function () { return []; })
+                new Service([], function () {
+                    return [];
+                })
             )
         );
 
@@ -115,7 +117,9 @@ class EventParsingIteratorTest extends TestCase
             $stream,
             $this->eventstreamShape,
             new RestXmlParser(
-                new Service([], function () { return []; })
+                new Service([], function () {
+                    return [];
+                })
             )
         );
 
@@ -144,7 +148,9 @@ class EventParsingIteratorTest extends TestCase
             $stream,
             $this->eventstreamShape,
             new RestXmlParser(
-                new Service([], function () { return []; })
+                new Service([], function () {
+                    return [];
+                })
             )
         );
 

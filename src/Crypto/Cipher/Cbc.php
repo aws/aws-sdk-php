@@ -1,8 +1,9 @@
 <?php
+
 namespace Aws\Crypto\Cipher;
 
-use \InvalidArgumentException;
-use \LogicException;
+use InvalidArgumentException;
+use LogicException;
 
 /**
  * An implementation of the CBC cipher for use with an AesEncryptingStream or

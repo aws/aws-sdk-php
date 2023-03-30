@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\Command;
@@ -548,15 +549,14 @@ class S3EndpointMiddlewareTest extends TestCase
         $additionalFlags,
         $useArnRegion,
         $endpointUrl,
-        $expectedEndpoint)
-    {
+        $expectedEndpoint
+    ) {
         //additional flags is not used yet, will be in the future if dualstack support is added
         $clientConfig = [
             'region' => $clientRegion,
             'use_arn_region' => $useArnRegion,
             'version' => 'latest',
-            'handler' => function (CommandInterface $cmd, RequestInterface $req)
-            use ($expectedEndpoint) {
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) use ($expectedEndpoint) {
                 $this->assertSame(
                     $expectedEndpoint,
                     $req->getUri()->getHost()
@@ -622,14 +622,13 @@ class S3EndpointMiddlewareTest extends TestCase
         $additionalFlags,
         $useArnRegion,
         $endpointUrl,
-        $expectedException)
-    {
+        $expectedException
+    ) {
         $clientConfig = [
             'region' => $clientRegion,
             'use_arn_region' => $useArnRegion,
             'version' => 'latest',
-            'handler' => function (CommandInterface $cmd, RequestInterface $req)
-            use ($expectedException) {
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) use ($expectedException) {
                 $this->assertSame(
                     $expectedException,
                     $req->getUri()->getHost()
@@ -747,13 +746,11 @@ class S3EndpointMiddlewareTest extends TestCase
         $route,
         $endpointUrl,
         $expectedEndpoint
-    )
-    {
+    ) {
         $clientConfig = [
             'region' => $clientRegion,
             'version' => 'latest',
-            'handler' => function (CommandInterface $cmd, RequestInterface $req)
-            use ($expectedEndpoint) {
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) use ($expectedEndpoint) {
                 $this->assertSame(
                     $expectedEndpoint,
                     $req->getUri()->getHost()
@@ -777,7 +774,6 @@ class S3EndpointMiddlewareTest extends TestCase
 
     public function writeGetObjectResponseProvider()
     {
-
         return [
             ["us-west-2", "route", null, 'route.s3-object-lambda.us-west-2.amazonaws.com'],
             ["us-east-1", "route", null, 'route.s3-object-lambda.us-east-1.amazonaws.com'],

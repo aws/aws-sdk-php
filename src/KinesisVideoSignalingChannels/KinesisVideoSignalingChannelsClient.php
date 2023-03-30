@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\KinesisVideoSignalingChannels;
 
 use Aws\AwsClient;
@@ -10,4 +11,6 @@ use Aws\AwsClient;
  * @method \Aws\Result sendAlexaOfferToMaster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendAlexaOfferToMasterAsync(array $args = [])
  */
-class KinesisVideoSignalingChannelsClient extends AwsClient {}
+class KinesisVideoSignalingChannelsClient extends AwsClient
+{
+}

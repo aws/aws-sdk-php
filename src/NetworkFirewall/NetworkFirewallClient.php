@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\NetworkFirewall;
 
 use Aws\AwsClient;
@@ -68,4 +69,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSubnetChangeProtection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSubnetChangeProtectionAsync(array $args = [])
  */
-class NetworkFirewallClient extends AwsClient {}
+class NetworkFirewallClient extends AwsClient
+{
+}

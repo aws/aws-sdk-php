@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ChimeSDKMediaPipelines;
 
 use Aws\AwsClient;
@@ -44,4 +45,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateMediaInsightsPipelineStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateMediaInsightsPipelineStatusAsync(array $args = [])
  */
-class ChimeSDKMediaPipelinesClient extends AwsClient {}
+class ChimeSDKMediaPipelinesClient extends AwsClient
+{
+}

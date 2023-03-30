@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Amplify;
 
 use Aws\AwsClient;
@@ -80,4 +81,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWebhook(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWebhookAsync(array $args = [])
  */
-class AmplifyClient extends AwsClient {}
+class AmplifyClient extends AwsClient
+{
+}

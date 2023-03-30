@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Api\DateTimeResult;
@@ -183,7 +184,9 @@ class InputValidationMiddlewareTest extends TestCase
                     ],
                 ],
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
     }
 }

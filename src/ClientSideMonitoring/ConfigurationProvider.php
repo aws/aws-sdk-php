@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ClientSideMonitoring;
 
 use Aws\AbstractConfigurationProvider;
@@ -42,8 +43,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  * $config = $promise->wait();
  * </code>
  */
-class ConfigurationProvider extends AbstractConfigurationProvider
-    implements ConfigurationProviderInterface
+class ConfigurationProvider extends AbstractConfigurationProvider implements ConfigurationProviderInterface
 {
     const DEFAULT_CLIENT_ID = '';
     const DEFAULT_ENABLED = false;
@@ -113,8 +113,8 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                         $enabled,
                         getenv(self::ENV_HOST) ?: self::DEFAULT_HOST,
                         getenv(self::ENV_PORT) ?: self::DEFAULT_PORT,
-                        getenv(self:: ENV_CLIENT_ID) ?: self::DEFAULT_CLIENT_ID
-                     )
+                        getenv(self::ENV_CLIENT_ID) ?: self::DEFAULT_CLIENT_ID
+                    )
                 );
             }
 
@@ -131,7 +131,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
      */
     public static function fallback()
     {
-        return function() {
+        return function () {
             return Promise\Create::promiseFor(
                 new Configuration(
                     self::DEFAULT_ENABLED,

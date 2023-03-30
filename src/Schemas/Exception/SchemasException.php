@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Schemas\Exception;
 
 use Aws\Exception\AwsException;
@@ -6,4 +7,6 @@ use Aws\Exception\AwsException;
 /**
  * Represents an error interacting with the **Schemas** service.
  */
-class SchemasException extends AwsException {}
+class SchemasException extends AwsException
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Rds;
 
 use Aws\CommandInterface;
@@ -7,6 +8,7 @@ use Aws\Neptune\NeptuneClient;
 use Aws\Result;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+
 require_once __DIR__ . '/../Signature/sig_hack.php';
 
 /**
@@ -70,12 +72,12 @@ class NeptuneClientTest extends TestCase
                     $url = $cmd['PreSignedUrl'];
                     if (!empty($expectedUrl)) {
                         self::assertSame($expectedUrl, $url);
-                    } else if (!empty($expectedSignature)) {
+                    } elseif (!empty($expectedSignature)) {
                         $this->assertStringContainsString("X-Amz-Signature={$expectedSignature}", $url);
                     } else {
                         self::assertNull($url);
                     }
-                    return new Result;
+                    return new Result();
                 }
         ]);
 
@@ -89,4 +91,3 @@ class NeptuneClientTest extends TestCase
         call_user_func([$neptune, $functionName], $functionArgs);
     }
 }
-

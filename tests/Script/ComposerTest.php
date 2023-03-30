@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Script;
 
 use Aws;
@@ -79,7 +80,7 @@ class ComposerTest extends TestCase
             $filesystem->mkdir($clientDir);
             $filesystem->mkdir($modelDir);
         }
-        $filesystem->mkdir( $clientPath . 'Api');
+        $filesystem->mkdir($clientPath . 'Api');
 
         $unsafeForDeletion = ['Kms', 'S3', 'SSO', 'SSOOIDC', 'Sts'];
         if (in_array('DynamoDbStreams', $servicesToKeep)) {
@@ -114,8 +115,8 @@ class ComposerTest extends TestCase
 
     private function getMockEvent(
         array $servicesToKeep,
-              $vendorDir = '',
-              $message = null
+        $vendorDir = '',
+        $message = null
     ) {
         $mockPackage = $this->getMockBuilder('Composer\Package\RootPackage')
             ->disableOriginalConstructor()

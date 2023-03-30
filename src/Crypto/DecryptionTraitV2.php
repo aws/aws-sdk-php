@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Crypto;
 
 use Aws\Exception\CryptoException;
@@ -166,7 +167,8 @@ trait DecryptionTraitV2
         )) {
             if (in_array(
                 $envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER],
-                AbstractCryptoClient::$supportedKeyWraps)
+                AbstractCryptoClient::$supportedKeyWraps
+            )
             ) {
                 throw $v1SchemaException;
             }
@@ -215,9 +217,9 @@ trait DecryptionTraitV2
         switch ($cipherOptions['Cipher']) {
             case 'gcm':
                 $cipherOptions['Tag'] = $this->getTagFromCiphertextStream(
-                        $cipherTextStream,
-                        $cipherOptions['TagLength']
-                    );
+                    $cipherTextStream,
+                    $cipherOptions['TagLength']
+                );
 
                 return new AesGcmDecryptingStream(
                     $this->getStrippedCiphertextStream(

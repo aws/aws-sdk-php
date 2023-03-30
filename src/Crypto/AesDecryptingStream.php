@@ -1,8 +1,9 @@
 <?php
+
 namespace Aws\Crypto;
 
 use GuzzleHttp\Psr7\StreamDecoratorTrait;
-use \LogicException;
+use LogicException;
 use Psr\Http\Message\StreamInterface;
 use Aws\Crypto\Cipher\CipherMethod;
 
@@ -11,9 +12,8 @@ use Aws\Crypto\Cipher\CipherMethod;
  */
 class AesDecryptingStream implements AesStreamInterface
 {
-    const BLOCK_SIZE = 16; // 128 bits
-
     use StreamDecoratorTrait;
+    const BLOCK_SIZE = 16; // 128 bits
 
     /**
      * @var string
@@ -90,7 +90,7 @@ class AesDecryptingStream implements AesStreamInterface
         if ($length > strlen($this->buffer)) {
             $this->buffer .= $this->decryptBlock(
                 (int) (
-                        self::BLOCK_SIZE * ceil(($length - strlen($this->buffer)) / self::BLOCK_SIZE)
+                    self::BLOCK_SIZE * ceil(($length - strlen($this->buffer)) / self::BLOCK_SIZE)
                 )
             );
         }

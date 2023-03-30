@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\AssumeRoleCredentialProvider;
@@ -17,9 +18,8 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class AssumeRoleCredentialProviderTest extends TestCase
 {
-    const SAMPLE_ROLE_ARN = 'arn:aws:iam::012345678910:role/role_name';
-
     use UsesServiceTrait;
+    const SAMPLE_ROLE_ARN = 'arn:aws:iam::012345678910:role/role_name';
 
     /**
      * @dataProvider insufficientArguments

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3Control;
 
 use Aws\Api\Service;
@@ -72,11 +73,10 @@ class EndpointArnMiddleware
      */
     public static function wrap(
         Service $service,
-                $region,
+        $region,
         array   $config,
-                $isUseEndpointV2
-    )
-    {
+        $isUseEndpointV2
+    ) {
         return function (callable $handler) use ($service, $region, $config, $isUseEndpointV2) {
             return new self($handler, $service, $region, $config, $isUseEndpointV2);
         };
@@ -85,11 +85,10 @@ class EndpointArnMiddleware
     public function __construct(
         callable $nextHandler,
         Service  $service,
-                 $region,
+        $region,
         array    $config = [],
         $isUseEndpointV2 = false
-    )
-    {
+    ) {
         $this->partitionProvider = PartitionEndpointProvider::defaultProvider();
         $this->region = $region;
         $this->service = $service;
@@ -108,7 +107,6 @@ class EndpointArnMiddleware
         ) {
             $service = $this->service->toArray();
             if (!empty($input = $service['shapes'][$op['input']['shape']])) {
-
                 // Stores member name that targets 'BucketName' shape
                 $bucketNameMember = null;
 
@@ -172,7 +170,6 @@ class EndpointArnMiddleware
                         // Replace ARN in the command
                         $cmd[$accesspointNameMember] = $arn->getAccesspointName();
                     } elseif ($arn instanceof BucketArnInterface) {
-
                         // Replace ARN in the path
                         $path = str_replace(
                             urlencode($cmd[$bucketNameMember]),
@@ -233,8 +230,6 @@ class EndpointArnMiddleware
                     if ($arn instanceof OutpostsArnInterface) {
                         $cmd['@context']['signing_service'] = $arn->getService();
                     }
-
-
                 }
             }
         }
@@ -318,7 +313,8 @@ class EndpointArnMiddleware
         ) {
             throw new UnresolvedEndpointException(
                 'Dualstack is currently not supported with S3 Outposts ARNs.'
-                . ' Please disable dualstack or do not supply an Outposts ARN.');
+                . ' Please disable dualstack or do not supply an Outposts ARN.'
+            );
         }
 
         // Get partitions for ARN and client region

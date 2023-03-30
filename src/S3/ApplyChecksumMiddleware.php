@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3;
 
 use Aws\Api\Service;
@@ -56,7 +57,7 @@ class ApplyChecksumMiddleware
 
         //Checks if AddContentMD5 has been specified for PutObject or UploadPart
         $addContentMD5 = isset($command['AddContentMD5'])
-            ?  $command['AddContentMD5']
+            ? $command['AddContentMD5']
             : null;
 
         $op = $this->api->getOperation($command->getName());
@@ -95,10 +96,10 @@ class ApplyChecksumMiddleware
         }
 
         if (!empty($checksumInfo)) {
-        //if the checksum member is absent, check if it's required
-        $checksumRequired = isset($checksumInfo['requestChecksumRequired'])
-            ? $checksumInfo['requestChecksumRequired']
-            : null;
+            //if the checksum member is absent, check if it's required
+            $checksumRequired = isset($checksumInfo['requestChecksumRequired'])
+                ? $checksumInfo['requestChecksumRequired']
+                : null;
             if ((!empty($checksumRequired) && !$request->hasHeader('Content-MD5'))
                 || (in_array($name, self::$sha256AndMd5) && $addContentMD5)
             ) {

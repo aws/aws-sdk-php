@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SecurityLake;
 
 use Aws\AwsClient;
@@ -66,4 +67,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSubscriptionNotificationConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSubscriptionNotificationConfigurationAsync(array $args = [])
  */
-class SecurityLakeClient extends AwsClient {}
+class SecurityLakeClient extends AwsClient
+{
+}

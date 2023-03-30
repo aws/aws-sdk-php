@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Keyspaces;
 
 use Aws\AwsClient;
@@ -32,4 +33,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateTable(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTableAsync(array $args = [])
  */
-class KeyspacesClient extends AwsClient {}
+class KeyspacesClient extends AwsClient
+{
+}

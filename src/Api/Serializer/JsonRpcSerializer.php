@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api\Serializer;
 
 use Aws\Api\Service;
@@ -58,8 +59,7 @@ class JsonRpcSerializer
         CommandInterface $command,
         $endpointProvider = null,
         $clientArgs = null
-    )
-    {
+    ) {
         $operationName = $command->getName();
         $operation = $this->api->getOperation($operationName);
         $commandArgs = $command->toArray();

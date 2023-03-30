@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Integ;
 
 use Aws\S3\Exception\S3Exception;
@@ -194,7 +195,7 @@ class S3Context implements Context, SnippetAcceptingContext
      */
     public function iSendThePreSignedRequest()
     {
-        (new Client)->send($this->presignedRequest);
+        (new Client())->send($this->presignedRequest);
     }
 
     /**
@@ -269,7 +270,7 @@ class S3Context implements Context, SnippetAcceptingContext
     public function iMakeAHttpPostRequest()
     {
         try {
-            (new Client)->request(
+            (new Client())->request(
                 $this->attributes['method'],
                 $this->attributes['action'],
                 [

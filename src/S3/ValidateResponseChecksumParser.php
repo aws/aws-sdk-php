@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3;
 
 use Aws\Api\Parser\AbstractParser;
@@ -66,7 +67,7 @@ class ValidateResponseChecksumParser extends AbstractParser
 
         if ($checksumValidationInfo['status'] == "SUCCEEDED") {
             $result['ChecksumValidated'] = $checksumValidationInfo['checksum'];
-        } else if ($checksumValidationInfo['status'] == "FAILED"){
+        } elseif ($checksumValidationInfo['status'] == "FAILED") {
             //Ignore failed validations on GetObject if it's a multipart get which returned a full multipart object
             if ($command->getName() == "GetObject"
                 && !empty($checksumValidationInfo['checksumHeaderValue'])

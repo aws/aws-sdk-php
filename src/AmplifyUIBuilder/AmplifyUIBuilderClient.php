@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\AmplifyUIBuilder;
 
 use Aws\AwsClient;
@@ -50,4 +51,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateTheme(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateThemeAsync(array $args = [])
  */
-class AmplifyUIBuilderClient extends AwsClient {}
+class AmplifyUIBuilderClient extends AwsClient
+{
+}

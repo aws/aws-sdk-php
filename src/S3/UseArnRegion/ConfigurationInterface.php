@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3\UseArnRegion;
 
 interface ConfigurationInterface

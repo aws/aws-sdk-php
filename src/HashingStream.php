@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use GuzzleHttp\Psr7\StreamDecoratorTrait;

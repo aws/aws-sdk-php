@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Signature;
 
 use Aws\Exception\UnresolvedSignatureException;

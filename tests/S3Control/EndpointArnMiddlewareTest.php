@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3Control;
 
 use Aws\Arn\Exception\InvalidArnException;
@@ -42,7 +43,7 @@ class EndpointArnMiddlewareTest extends TestCase
         $signingRegion,
         $signingService
     ) {
-        $options['http_handler'] = function($req) {
+        $options['http_handler'] = function ($req) {
             return Promise\Create::promiseFor(new Response());
         };
         $s3control = $this->getTestClient($options);
@@ -436,7 +437,7 @@ class EndpointArnMiddlewareTest extends TestCase
         $options,
         \Exception $expectedException
     ) {
-        $options['http_handler'] = function($req) {
+        $options['http_handler'] = function ($req) {
             return Promise\Create::promiseFor(new Response());
         };
         $s3control = $this->getTestClient($options);

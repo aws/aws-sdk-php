@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Pricing;
 
 use Aws\AwsClient;
@@ -16,4 +17,6 @@ use Aws\AwsClient;
  * @method \Aws\Result listPriceLists(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPriceListsAsync(array $args = [])
  */
-class PricingClient extends AwsClient {}
+class PricingClient extends AwsClient
+{
+}

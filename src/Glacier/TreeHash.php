@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Glacier;
 
 use Aws\HashInterface;

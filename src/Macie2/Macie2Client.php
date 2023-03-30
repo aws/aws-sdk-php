@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Macie2;
 
 use Aws\AwsClient;
@@ -164,4 +165,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSensitivityInspectionTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSensitivityInspectionTemplateAsync(array $args = [])
  */
-class Macie2Client extends AwsClient {}
+class Macie2Client extends AwsClient
+{
+}

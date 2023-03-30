@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SecurityHub;
 
 use Aws\AwsClient;
@@ -128,4 +129,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateStandardsControl(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStandardsControlAsync(array $args = [])
  */
-class SecurityHubClient extends AwsClient {}
+class SecurityHubClient extends AwsClient
+{
+}

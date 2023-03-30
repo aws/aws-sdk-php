@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoTFleetWise;
 
 use Aws\AwsClient;
@@ -106,4 +107,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateVehicle(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVehicleAsync(array $args = [])
  */
-class IoTFleetWiseClient extends AwsClient {}
+class IoTFleetWiseClient extends AwsClient
+{
+}

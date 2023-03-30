@@ -45,6 +45,10 @@
         "yoast/phpunit-polyfills": "^1.0",
         "dms/phpunit-arraysubset-asserts": "^0.4.0"
     },
+    "scripts": {
+        "install-cs-fix": "@composer install --working-dir=tools/php-cs-fixer",
+        "cs-fix": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -v"
+    },
     "suggest": {
         "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
         "ext-curl": "To send requests using cURL",

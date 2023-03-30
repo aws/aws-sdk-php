@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3;
 
 use Aws\CacheInterface;
@@ -155,7 +156,7 @@ class StreamWrapper
             return $this->triggerError($errors);
         }
 
-        return $this->boolCall(function() {
+        return $this->boolCall(function () {
             switch ($this->mode) {
                 case 'r': return $this->openReadStream();
                 case 'a': return $this->openAppendStream();
@@ -173,7 +174,7 @@ class StreamWrapper
     {
         // Check if stream body size has been
         // calculated via a flush or close
-        if($this->body->getSize() === null && $this->mode !== 'r') {
+        if ($this->body->getSize() === null && $this->mode !== 'r') {
             return $this->triggerError(
                 "Unable to determine stream size. Did you forget to close or flush the stream?"
             );
@@ -221,7 +222,9 @@ class StreamWrapper
 
     public function stream_tell()
     {
-        return $this->boolCall(function() { return $this->body->tell(); });
+        return $this->boolCall(function () {
+            return $this->body->tell();
+        });
     }
 
     public function stream_write($data)
@@ -472,7 +475,7 @@ class StreamWrapper
      */
     public function dir_rewinddir()
     {
-        return $this->boolCall(function() {
+        return $this->boolCall(function () {
             $this->objectIterator = null;
             $this->dir_opendir($this->openedPath, null);
             return true;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Endpoint\UseFipsEndpoint;
 
 interface ConfigurationInterface

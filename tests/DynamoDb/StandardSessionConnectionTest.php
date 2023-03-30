@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\DynamoDb;
 
 use Aws\CommandInterface;
@@ -73,14 +74,14 @@ class StandardSessionConnectionTest extends TestCase
                 'binarykey' => ['B' => 'bar']
             ]]),
         ]);
-        
+
         $client->getHandlerList()->appendBuild(Middleware::tap(function ($command) {
             $this->assertEquals(
                 ['sessionid' => ['S' => 'session1']],
                 $command['Key']
             );
         }));
-        
+
         $connection = new StandardSessionConnection($client, [
             'hash_key' => 'sessionid',
         ]);
@@ -219,10 +220,12 @@ class StandardSessionConnectionTest extends TestCase
         ]);
 
         $commands = [];
-        $client->getHandlerList()->appendBuild(Middleware::tap(
-            function (CommandInterface $command) use (&$commands) {
-                $commands[] = $command->getName();
-            })
+        $client->getHandlerList()->appendBuild(
+            Middleware::tap(
+                function (CommandInterface $command) use (&$commands) {
+                    $commands[] = $command->getName();
+                }
+            )
         );
 
         (new StandardSessionConnection($client))->deleteExpired();

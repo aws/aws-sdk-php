@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\EndpointDiscovery;
 
 class Configuration implements ConfigurationInterface

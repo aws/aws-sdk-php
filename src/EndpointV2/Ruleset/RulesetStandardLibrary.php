@@ -69,8 +69,8 @@ class RulesetStandardLibrary
                     return null;
                 }
                 $slice = intval(substr($part, $sliceIdx + 1, strlen($part) - 1));
-                $from = isset($from[substr($part,0, $sliceIdx)][$slice])
-                    ? $from[substr($part,0, $sliceIdx)][$slice]
+                $from = isset($from[substr($part, 0, $sliceIdx)][$slice])
+                    ? $from[substr($part, 0, $sliceIdx)][$slice]
                     : null;
             } else {
                 $from = $from[$part];
@@ -220,7 +220,7 @@ class RulesetStandardLibrary
     public function parseArn($arnString)
     {
         if (is_null($arnString)
-            || substr( $arnString, 0, 3 ) !== "arn"
+            || substr($arnString, 0, 3) !== "arn"
         ) {
             return null;
         }
@@ -293,7 +293,7 @@ class RulesetStandardLibrary
         if ($allowSubdomains) {
             $labels = explode('.', $bucketName);
             $results = [];
-            forEach($labels as $label) {
+            foreach ($labels as $label) {
                 $results[] = $this->isVirtualHostableS3Bucket($label, false);
             }
             return !in_array(false, $results);
@@ -305,7 +305,7 @@ class RulesetStandardLibrary
     {
         $funcArgs = [];
 
-        forEach($funcCondition['argv'] as $arg) {
+        foreach ($funcCondition['argv'] as $arg) {
             $funcArgs[] = $this->resolveValue($arg, $inputParameters);
         }
 
@@ -321,7 +321,7 @@ class RulesetStandardLibrary
 
         if (isset($funcCondition['assign'])) {
             $assign = $funcCondition['assign'];
-            if (isset($inputParameters[$assign])){
+            if (isset($inputParameters[$assign])) {
                 throw new UnresolvedEndpointException(
                     "Assignment `{$assign}` already exists in input parameters" .
                     " or has already been assigned by an endpoint rule and cannot be overwritten."
@@ -376,7 +376,7 @@ class RulesetStandardLibrary
                 $parts = explode("#", $match[1]);
                 if (count($parts) > 1) {
                     $resolvedValue = $inputParameters;
-                    foreach($parts as $part) {
+                    foreach ($parts as $part) {
                         if (!isset($resolvedValue[$part])) {
                             throw new UnresolvedEndpointException($notFoundMessage);
                         }
@@ -394,7 +394,7 @@ class RulesetStandardLibrary
         );
     }
 
-    private function validateHostLabel ($hostLabel)
+    private function validateHostLabel($hostLabel)
     {
         if (empty($hostLabel) || strlen($hostLabel) > 63) {
             return false;
@@ -411,7 +411,7 @@ class RulesetStandardLibrary
             && strrpos($hostName, ']') === strlen($hostName) - 1;
 
         return preg_match(
-                self::IPV4_RE,
+            self::IPV4_RE,
             $hostName
         )
         //IPV6 enclosed in brackets

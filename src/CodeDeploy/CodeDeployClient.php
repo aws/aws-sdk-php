@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CodeDeploy;
 
 use Aws\AwsClient;
@@ -101,4 +102,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateDeploymentGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDeploymentGroupAsync(array $args = [])
  */
-class CodeDeployClient extends AwsClient {}
+class CodeDeployClient extends AwsClient
+{
+}

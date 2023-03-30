@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ControlTower;
 
 use Aws\AwsClient;
@@ -14,4 +15,6 @@ use Aws\AwsClient;
  * @method \Aws\Result listEnabledControls(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listEnabledControlsAsync(array $args = [])
  */
-class ControlTowerClient extends AwsClient {}
+class ControlTowerClient extends AwsClient
+{
+}

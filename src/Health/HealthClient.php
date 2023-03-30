@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Health;
 
 use Aws\AwsClient;
@@ -32,4 +33,6 @@ use Aws\AwsClient;
  * @method \Aws\Result enableHealthServiceAccessForOrganization(array $args = [])
  * @method \GuzzleHttp\Promise\Promise enableHealthServiceAccessForOrganizationAsync(array $args = [])
  */
-class HealthClient extends AwsClient {}
+class HealthClient extends AwsClient
+{
+}

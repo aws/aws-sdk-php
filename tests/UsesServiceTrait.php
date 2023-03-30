@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\AwsClientInterface;
@@ -117,8 +118,11 @@ trait UsesServiceTrait
                             'apiVersion' => 'version'
                         ]
                     ],
-                    function () { return []; }
-                )));
+                    function () {
+                        return [];
+                    }
+                )
+            ));
 
         return new $type(
             $message ?: 'Test error',

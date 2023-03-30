@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Translate;
 
 use Aws\AwsClient;
@@ -42,4 +43,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateParallelData(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateParallelDataAsync(array $args = [])
  */
-class TranslateClient extends AwsClient {}
+class TranslateClient extends AwsClient
+{
+}

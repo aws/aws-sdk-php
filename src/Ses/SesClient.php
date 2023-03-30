@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Ses;
 
 use Aws\Api\ApiProvider;
@@ -212,7 +213,8 @@ class SesClient extends \Aws\AwsClient
         return  base64_encode($signatureAndVersion);
     }
 
-    private static function sign($key, $message) {
+    private static function sign($key, $message)
+    {
         return hash_hmac('sha256', $key, $message, true);
     }
 

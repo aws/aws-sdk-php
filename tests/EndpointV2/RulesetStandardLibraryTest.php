@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\EndpointDefinitionProvider;
@@ -269,7 +270,8 @@ class RulesetStandardLibraryTest extends TestCase
         $this->standardLibrary->resolveTemplateString($string, $inputParams);
     }
 
-    public function testParseArnReturnsNullIfInvalid() {
+    public function testParseArnReturnsNullIfInvalid()
+    {
         $result = $this->standardLibrary->parseArn('arn:aws:this-is-not-an-arn:foo');
         $this->assertEquals(null, $result);
     }
@@ -300,13 +302,15 @@ class RulesetStandardLibraryTest extends TestCase
         $this->standardLibrary->partition(null);
     }
 
-    public function testSubstringThrowsExceptionIfInputNotString() {
+    public function testSubstringThrowsExceptionIfInputNotString()
+    {
         $this->expectException(UnresolvedEndpointException::class);
         $this->expectExceptionMessage('Input passed to `substring` must be `string`.');
         $this->standardLibrary->substring(null, null, null, null);
     }
 
-    public function testCallFunctionThrowsErrorIfAlreadyAssigned() {
+    public function testCallFunctionThrowsErrorIfAlreadyAssigned()
+    {
         $condition = [
             'fn' => 'aws.parseArn',
             'argv' => ['{Bucket}'],
@@ -325,4 +329,3 @@ class RulesetStandardLibraryTest extends TestCase
         $this->standardLibrary->callFunction($condition, $inputParameters);
     }
 }
-

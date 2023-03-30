@@ -30,8 +30,7 @@ trait EndpointV2SerializerTrait
         $commandArgs,
         $clientArgs,
         &$headers
-    )
-    {
+    ) {
         $providerArgs = $this->resolveProviderArgs(
             $endpointProvider,
             $operation,
@@ -52,8 +51,7 @@ trait EndpointV2SerializerTrait
         $operation,
         $commandArgs,
         $clientArgs
-    )
-    {
+    ) {
         $rulesetParams = $endpointProvider->getRuleset()->getParameters();
         $endpointCommandArgs = $this->filterEndpointCommandArgs(
             $rulesetParams,
@@ -63,7 +61,8 @@ trait EndpointV2SerializerTrait
             $operation->getStaticContextParams()
         );
         $contextParams = $this->bindContextParams(
-            $commandArgs, $operation->getContextParams()
+            $commandArgs,
+            $operation->getContextParams()
         );
         $providerArgs = $this->normalizeEndpointProviderArgs(
             $endpointCommandArgs,
@@ -88,8 +87,7 @@ trait EndpointV2SerializerTrait
         $clientArgs,
         $contextParams,
         $staticContextParams
-    )
-    {
+    ) {
         $commandContextParams = array_merge($contextParams, $staticContextParams);
         $combinedEndpointArgs = array_merge($clientArgs, $commandContextParams);
 
@@ -100,7 +98,7 @@ trait EndpointV2SerializerTrait
     {
         $scopedParams = [];
 
-        foreach($contextParams as $name => $spec) {
+        foreach ($contextParams as $name => $spec) {
             if (isset($commandArgs[$spec['shape']])) {
                 $scopedParams[$name] = $commandArgs[$spec['shape']];
             }
@@ -112,7 +110,7 @@ trait EndpointV2SerializerTrait
     {
         $scopedParams = [];
 
-        forEach($staticContextParams as $paramName => $paramValue) {
+        foreach ($staticContextParams as $paramName => $paramValue) {
             $scopedParams[$paramName] = $paramValue['value'];
         }
         return $scopedParams;
@@ -121,8 +119,7 @@ trait EndpointV2SerializerTrait
     private function filterEndpointCommandArgs(
         $rulesetParams,
         $commandArgs
-    )
-    {
+    ) {
         $endpointMiddlewareOpts = [
             '@use_dual_stack_endpoint' => 'UseDualStack',
             '@use_accelerate_endpoint' => 'Accelerate',
@@ -131,7 +128,7 @@ trait EndpointV2SerializerTrait
 
         $filteredArgs = [];
 
-        foreach($rulesetParams as $name => $value) {
+        foreach ($rulesetParams as $name => $value) {
             if (isset($commandArgs[$name])) {
                 if (!empty($value->getBuiltIn())) {
                     continue;
@@ -141,7 +138,7 @@ trait EndpointV2SerializerTrait
         }
 
         if ($this->api->getServiceName() === 's3') {
-            foreach($endpointMiddlewareOpts as $optionName => $newValue) {
+            foreach ($endpointMiddlewareOpts as $optionName => $newValue) {
                 if (isset($commandArgs[$optionName])) {
                     $filteredArgs[$newValue] = $commandArgs[$optionName];
                 }
@@ -154,10 +151,10 @@ trait EndpointV2SerializerTrait
     private function applyHeaders($endpoint, &$headers)
     {
         if (!is_null($endpoint->getHeaders())) {
-           $headers = array_merge(
-               $headers,
-               $endpoint->getHeaders()
-           );
+            $headers = array_merge(
+                $headers,
+                $endpoint->getHeaders()
+            );
         }
     }
 
@@ -176,7 +173,7 @@ trait EndpointV2SerializerTrait
         $validAuthSchemes = ['sigv4', 'sigv4a', 'none', 'bearer'];
         $invalidAuthSchemes = [];
 
-        foreach($authSchemes as $authScheme) {
+        foreach ($authSchemes as $authScheme) {
             if (in_array($authScheme['name'], $validAuthSchemes)) {
                 return $this->normalizeAuthScheme($authScheme);
             } else {
@@ -194,11 +191,11 @@ trait EndpointV2SerializerTrait
 
     private function normalizeAuthScheme($authScheme)
     {
-       /*
-            sigv4a will contain a regionSet property. which is guaranteed to be `*`
-            for now.  The SigV4 class handles this automatically for now. It seems
-            complexity will be added here in the future.
-       */
+        /*
+             sigv4a will contain a regionSet property. which is guaranteed to be `*`
+             for now.  The SigV4 class handles this automatically for now. It seems
+             complexity will be added here in the future.
+        */
         $normalizedAuthScheme = [];
 
         if (isset($authScheme['disableDoubleEncoding'])
@@ -208,10 +205,11 @@ trait EndpointV2SerializerTrait
             $normalizedAuthScheme['version'] = 's3v4';
         } elseif ($authScheme['name'] === 'none') {
             $normalizedAuthScheme['version'] = 'anonymous';
-        }
-        else {
+        } else {
             $normalizedAuthScheme['version'] = str_replace(
-                'sig', '', $authScheme['name']
+                'sig',
+                '',
+                $authScheme['name']
             );
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Polly;
 
 use Aws\Api\Serializer\JsonBody;

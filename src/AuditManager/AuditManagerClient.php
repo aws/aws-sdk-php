@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\AuditManager;
 
 use Aws\AwsClient;
@@ -128,4 +129,6 @@ use Aws\AwsClient;
  * @method \Aws\Result validateAssessmentReportIntegrity(array $args = [])
  * @method \GuzzleHttp\Promise\Promise validateAssessmentReportIntegrityAsync(array $args = [])
  */
-class AuditManagerClient extends AwsClient {}
+class AuditManagerClient extends AwsClient
+{
+}

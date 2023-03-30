@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\PersonalizeEvents;
 
 use Aws\AwsClient;
@@ -12,4 +13,6 @@ use Aws\AwsClient;
  * @method \Aws\Result putUsers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putUsersAsync(array $args = [])
  */
-class PersonalizeEventsClient extends AwsClient {}
+class PersonalizeEventsClient extends AwsClient
+{
+}

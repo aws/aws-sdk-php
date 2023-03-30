@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Api\Service;
@@ -22,7 +23,9 @@ class TraceMiddlewareTest extends TestCase
     public function testEmitsDebugInfo()
     {
         $str = '';
-        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $logfn = function ($value) use (&$str) {
+            $str .= $value;
+        };
         $list = new HandlerList();
         $list->setHandler(function ($cmd, $req) {
             return Promise\Create::promiseFor(new Result([
@@ -62,7 +65,9 @@ class TraceMiddlewareTest extends TestCase
     public function testTracksExceptions()
     {
         $str = '';
-        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $logfn = function ($value) use (&$str) {
+            $str .= $value;
+        };
         $list = new HandlerList();
         $list->setHandler(function ($cmd, $req) {
             return Promise\Create::promiseFor(new Result());
@@ -94,7 +99,9 @@ class TraceMiddlewareTest extends TestCase
     public function testTracksAwsSpecificExceptions()
     {
         $str = '';
-        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $logfn = function ($value) use (&$str) {
+            $str .= $value;
+        };
         $list = new HandlerList();
         $list->setHandler(function ($cmd, $req) {
             return Promise\Create::promiseFor(new Result());
@@ -136,7 +143,9 @@ class TraceMiddlewareTest extends TestCase
     public function testScrubsAuthStrings($key, $signature, array $headers)
     {
         $str = '';
-        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $logfn = function ($value) use (&$str) {
+            $str .= $value;
+        };
         $list = new HandlerList();
 
         $list->setHandler(function ($cmd, $req) use ($key) {
@@ -156,7 +165,9 @@ class TraceMiddlewareTest extends TestCase
         $request = new Request(
             'GET',
             "http://foo.com?Signature=$signature&AWSAccessKeyId=$key",
-            array_map(function (array $h) { return $h['raw']; }, $headers)
+            array_map(function (array $h) {
+                return $h['raw'];
+            }, $headers)
         );
         $handler($command, $request);
 
@@ -174,23 +185,25 @@ class TraceMiddlewareTest extends TestCase
         $client = $this->generateTestClient($service);
         $command = $client->getCommand(
             'SensitiveOp',
-             [
-                 "InputShape" => [
-                     "PublicParameter" => "PublicParameter not redacted",
-                     "SensitiveParameter" => "SensitiveParameter was redacted",
-                     "NestedParams" => [
-                         "NestedPublicParameter" => "NestedParams also not redacted",
-                         "NestedSensitiveParameter" => "NestedSensitiveParameter was also redacted",
-                     ],
-                     "SensitiveArray" => [
-                         "PublicParameter" => "SensitiveArray contents also redacted",
-                     ]
-                 ]
-             ]
+            [
+                "InputShape" => [
+                    "PublicParameter" => "PublicParameter not redacted",
+                    "SensitiveParameter" => "SensitiveParameter was redacted",
+                    "NestedParams" => [
+                        "NestedPublicParameter" => "NestedParams also not redacted",
+                        "NestedSensitiveParameter" => "NestedSensitiveParameter was also redacted",
+                    ],
+                    "SensitiveArray" => [
+                        "PublicParameter" => "SensitiveArray contents also redacted",
+                    ]
+                ]
+            ]
         );
 
         $str = '';
-        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $logfn = function ($value) use (&$str) {
+            $str .= $value;
+        };
         $list = new HandlerList();
         $list->setHandler(function () {
             return Promise\Create::promiseFor(new Result());
@@ -248,7 +261,9 @@ class TraceMiddlewareTest extends TestCase
         ];
         $toScrub = 'OhNoIShouldBeHidden';
         $str = '';
-        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $logfn = function ($value) use (&$str) {
+            $str .= $value;
+        };
         $list = new HandlerList();
 
         $list->setHandler(function ($cmd, $req) {
@@ -372,7 +387,9 @@ class TraceMiddlewareTest extends TestCase
                     ],
                 ],
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
     }
 }

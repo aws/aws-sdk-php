@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Api\Validator;
@@ -672,7 +673,8 @@ class ClientResolver
                     ? $value['services'][$args['service']]['endpoints']
                     : null;
             if (isset($serviceEndpoints[$args['region']]['deprecated'])) {
-                trigger_error("The service " . $args['service'] . "has "
+                trigger_error(
+                    "The service " . $args['service'] . "has "
                     . " deprecated the region " . $args['region'] . ".",
                     E_USER_WARNING
                 );
@@ -717,7 +719,8 @@ class ClientResolver
         }
     }
 
-    public static function _apply_endpoint_discovery($value, array &$args) {
+    public static function _apply_endpoint_discovery($value, array &$args)
+    {
         $args['endpoint_discovery'] = $value;
     }
 
@@ -726,7 +729,8 @@ class ClientResolver
         return ConfigurationProvider::defaultProvider($args);
     }
 
-    public static function _apply_use_fips_endpoint($value, array &$args) {
+    public static function _apply_use_fips_endpoint($value, array &$args)
+    {
         if ($value instanceof CacheInterface) {
             $value = UseFipsConfigProvider::defaultProvider($args);
         }
@@ -744,11 +748,13 @@ class ClientResolver
         }
     }
 
-    public static function _default_use_fips_endpoint(array &$args) {
+    public static function _default_use_fips_endpoint(array &$args)
+    {
         return UseFipsConfigProvider::defaultProvider($args);
     }
 
-    public static function _apply_use_dual_stack_endpoint($value, array &$args) {
+    public static function _apply_use_dual_stack_endpoint($value, array &$args)
+    {
         if ($value instanceof CacheInterface) {
             $value = UseDualStackConfigProvider::defaultProvider($args);
         }
@@ -767,7 +773,8 @@ class ClientResolver
         }
     }
 
-    public static function _default_use_dual_stack_endpoint(array &$args) {
+    public static function _default_use_dual_stack_endpoint(array &$args)
+    {
         return UseDualStackConfigProvider::defaultProvider($args);
     }
 
@@ -777,7 +784,8 @@ class ClientResolver
             $list->interpose(
                 new TraceMiddleware(
                     $value === true ? [] : $value,
-                    $args['api'])
+                    $args['api']
+                )
             );
         }
     }
@@ -877,7 +885,7 @@ class ClientResolver
         }
 
         //Add the input to the end
-        if ($inputUserAgent){
+        if ($inputUserAgent) {
             if (!is_array($inputUserAgent)) {
                 $inputUserAgent = [$inputUserAgent];
             }
@@ -941,7 +949,8 @@ class ClientResolver
         }
     }
 
-    public static function _apply_suppress_php_deprecation_warning($suppressWarning, array &$args) {
+    public static function _apply_suppress_php_deprecation_warning($suppressWarning, array &$args)
+    {
         if ($suppressWarning) {
             $args['suppress_php_deprecation_warning'] = true;
         } elseif (!empty($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
@@ -1134,10 +1143,9 @@ EOT;
     private function _apply_client_context_params(array $args)
     {
         if (isset($args['api'])
-           && !empty($args['api']->getClientContextParams()))
-        {
+           && !empty($args['api']->getClientContextParams())) {
             $clientContextParams = $args['api']->getClientContextParams();
-            foreach($clientContextParams as $paramName => $paramDefinition) {
+            foreach ($clientContextParams as $paramName => $paramDefinition) {
                 $definition = [
                     'type' => 'value',
                     'valid' => [$paramDefinition['type']],
@@ -1156,7 +1164,8 @@ EOT;
         }
     }
 
-    private static function isValidService($service) {
+    private static function isValidService($service)
+    {
         if (is_null($service)) {
             return false;
         }
@@ -1164,12 +1173,13 @@ EOT;
         return isset($services[$service]);
     }
 
-    private static function isValidApiVersion($service, $apiVersion) {
+    private static function isValidApiVersion($service, $apiVersion)
+    {
         if (is_null($apiVersion)) {
             return false;
         }
         return is_dir(
-          __DIR__ . "/data/{$service}/$apiVersion"
+            __DIR__ . "/data/{$service}/$apiVersion"
         );
     }
 }

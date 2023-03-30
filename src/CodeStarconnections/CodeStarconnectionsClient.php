@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\CodeStarconnections;
 
 use Aws\AwsClient;
@@ -30,4 +31,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateHost(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateHostAsync(array $args = [])
  */
-class CodeStarconnectionsClient extends AwsClient {}
+class CodeStarconnectionsClient extends AwsClient
+{
+}

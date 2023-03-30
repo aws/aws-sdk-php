@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\RedshiftServerless;
 
 use Aws\AwsClient;
@@ -86,4 +87,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateWorkgroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkgroupAsync(array $args = [])
  */
-class RedshiftServerlessClient extends AwsClient {}
+class RedshiftServerlessClient extends AwsClient
+{
+}

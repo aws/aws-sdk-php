@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\CommandInterface;
@@ -79,7 +80,7 @@ class TransferTest extends TestCase
     {
         $s3 = $this->getTestClient('s3');
         $s3->getHandlerList()->appendSign(
-            $this->mockResult(function() {
+            $this->mockResult(function () {
                 return new Result();
             }),
             's3.test'
@@ -315,7 +316,8 @@ class TransferTest extends TestCase
         `rm -rf $dir`;
     }
 
-    public function providedPathsOutsideTarget() {
+    public function providedPathsOutsideTarget()
+    {
         return [
             ['bar/../a/b'],
             //ensures if path resolves to target directory
@@ -333,7 +335,9 @@ class TransferTest extends TestCase
         $s3 = $this->getMockS3Client();
         $filesInDirectory = array_filter(
             iterator_to_array(\Aws\recursive_dir_iterator(__DIR__)),
-            function ($path) { return !is_dir($path); }
+            function ($path) {
+                return !is_dir($path);
+            }
         );
 
         $s3->expects($this->exactly(count($filesInDirectory)))
@@ -357,7 +361,9 @@ class TransferTest extends TestCase
         $s3 = $this->getMockS3Client();
         $justThisFile = array_filter(
             iterator_to_array(\Aws\recursive_dir_iterator(__DIR__)),
-            function ($path) { return $path === __FILE__; }
+            function ($path) {
+                return $path === __FILE__;
+            }
         );
 
         $s3->expects($this->once())

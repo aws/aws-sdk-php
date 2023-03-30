@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\Exception\ParserException;
@@ -87,8 +88,7 @@ class JsonParserTest extends TestCase
         $timestamp,
         $commandName,
         $expectedValue
-    )
-    {
+    ) {
         $service = $this->generateTestService('json');
         $client = $this->generateTestClient(
             $service,
@@ -109,8 +109,7 @@ class JsonParserTest extends TestCase
         $commandName,
         $expectedException,
         $expectedMessage
-    )
-    {
+    ) {
         $service = $this->generateTestService('json');
         $client = $this->generateTestClient(
             $service,
@@ -123,4 +122,3 @@ class JsonParserTest extends TestCase
         $handler($command)->wait();
     }
 }
-

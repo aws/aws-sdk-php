@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Synthetics;
 
 use Aws\AwsClient;
@@ -48,4 +49,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateCanary(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateCanaryAsync(array $args = [])
  */
-class SyntheticsClient extends AwsClient {}
+class SyntheticsClient extends AwsClient
+{
+}

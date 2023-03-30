@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Redshift;
 
 use Aws\AwsClient;
@@ -245,4 +246,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updatePartnerStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePartnerStatusAsync(array $args = [])
  */
-class RedshiftClient extends AwsClient {}
+class RedshiftClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SSOAdmin;
 
 use Aws\AwsClient;
@@ -80,4 +81,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updatePermissionSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePermissionSetAsync(array $args = [])
  */
-class SSOAdminClient extends AwsClient {}
+class SSOAdminClient extends AwsClient
+{
+}

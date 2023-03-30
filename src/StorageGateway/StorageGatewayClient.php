@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\StorageGateway;
 
 use Aws\AwsClient;
@@ -187,4 +188,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateVTLDeviceType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVTLDeviceTypeAsync(array $args = [])
  */
-class StorageGatewayClient extends AwsClient {}
+class StorageGatewayClient extends AwsClient
+{
+}

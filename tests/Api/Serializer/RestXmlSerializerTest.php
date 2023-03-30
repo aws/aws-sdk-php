@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Serializer\RestXmlSerializer;
@@ -99,7 +100,8 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    public function boolProvider() {
+    public function boolProvider()
+    {
         return [
             [true, 'true'],
             [false, 'false']

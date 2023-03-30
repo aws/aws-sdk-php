@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\PinpointSMSVoice;
 
 use Aws\AwsClient;
@@ -22,4 +23,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateConfigurationSetEventDestination(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConfigurationSetEventDestinationAsync(array $args = [])
  */
-class PinpointSMSVoiceClient extends AwsClient {}
+class PinpointSMSVoiceClient extends AwsClient
+{
+}

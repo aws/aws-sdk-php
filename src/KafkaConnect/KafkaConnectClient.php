@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\KafkaConnect;
 
 use Aws\AwsClient;
@@ -30,4 +31,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateConnector(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConnectorAsync(array $args = [])
  */
-class KafkaConnectClient extends AwsClient {}
+class KafkaConnectClient extends AwsClient
+{
+}

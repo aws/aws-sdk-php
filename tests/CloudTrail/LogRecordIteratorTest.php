@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\CloudTrail;
 
 use Aws\Result;
@@ -71,7 +72,7 @@ class LogRecordIteratorTest extends TestCase
         $logFileReader = $this->getMockBuilder('Aws\CloudTrail\LogFileReader')
             ->disableOriginalConstructor()
             ->getMock();
-        $logFileIterator = new \ArrayIterator;
+        $logFileIterator = new \ArrayIterator();
         $records = new LogRecordIterator($logFileReader, $logFileIterator);
         $this->assertNull($records->key());
         $this->assertFalse($records->current());

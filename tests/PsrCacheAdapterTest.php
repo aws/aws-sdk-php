@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\PsrCacheAdapter;
@@ -8,7 +9,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class PsrCacheAdapterTest extends TestCase
 {
-
     /** @var CacheItemPoolInterface|\PHPUnit_Framework_MockObject_MockObject $wrappedCache */
     private $wrapped;
     /** @var PsrCacheAdapter */

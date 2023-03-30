@@ -295,14 +295,14 @@ class PHPUnit_Framework_MockObject_Generator
             is_string($type) &&
             !interface_exists($type, $callAutoload)) {
             if (count($arguments) == 0) {
-                $object = new $className;
+                $object = new $className();
             } else {
                 $class  = new ReflectionClass($className);
                 $object = $class->newInstanceArgs($arguments);
             }
         } else {
             try {
-                $instantiator = new Instantiator;
+                $instantiator = new Instantiator();
                 $object       = $instantiator->instantiate($className);
             } catch (InstantiatorUnexpectedValueException $exception) {
                 if ($exception->getPrevious()) {
@@ -322,7 +322,7 @@ class PHPUnit_Framework_MockObject_Generator
         if ($callOriginalMethods) {
             if (!is_object($proxyTarget)) {
                 if (count($arguments) == 0) {
-                    $proxyTarget = new $type;
+                    $proxyTarget = new $type();
                 } else {
                     $class       = new ReflectionClass($type);
                     $proxyTarget = $class->newInstanceArgs($arguments);
@@ -710,10 +710,11 @@ class PHPUnit_Framework_MockObject_Generator
                 $isMultipleInterfaces = true;
 
                 $additionalInterfaces[] = $_type;
-                $typeClass              = new ReflectionClass($this->generateClassName(
-                    $_type,
-                    $mockClassName,
-                    'Mock_'
+                $typeClass              = new ReflectionClass(
+                    $this->generateClassName(
+                        $_type,
+                        $mockClassName,
+                        'Mock_'
                     )['fullClassName']
                 );
 
@@ -879,7 +880,9 @@ class PHPUnit_Framework_MockObject_Generator
                 'mock_class_name'   => $mockClassName['className'],
                 'mocked_methods'    => $mockedMethods,
                 'method'            => $method,
-                'configurable'      => '[' . implode(', ', array_map(function ($m) { return '\'' . $m . '\'';}, $configurable)) . ']'
+                'configurable'      => '[' . implode(', ', array_map(function ($m) {
+                    return '\'' . $m . '\'';
+                }, $configurable)) . ']'
             ]
         );
 

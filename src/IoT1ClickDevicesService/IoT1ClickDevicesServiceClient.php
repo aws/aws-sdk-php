@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoT1ClickDevicesService;
 
 use Aws\AwsClient;
@@ -32,4 +33,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateDeviceState(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDeviceStateAsync(array $args = [])
  */
-class IoT1ClickDevicesServiceClient extends AwsClient {}
+class IoT1ClickDevicesServiceClient extends AwsClient
+{
+}

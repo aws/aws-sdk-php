@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\GlueDataBrew;
 
 use Aws\AwsClient;
@@ -94,4 +95,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSchedule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateScheduleAsync(array $args = [])
  */
-class GlueDataBrewClient extends AwsClient {}
+class GlueDataBrewClient extends AwsClient
+{
+}

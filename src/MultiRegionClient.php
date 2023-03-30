@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Endpoint\PartitionEndpointProvider;
@@ -76,7 +77,8 @@ class MultiRegionClient implements AwsClientInterface
                     }
 
                     if (!$value instanceof PartitionInterface) {
-                        throw new \InvalidArgumentException('No valid partition'
+                        throw new \InvalidArgumentException(
+                            'No valid partition'
                             . ' was provided. Provide a concrete partition or'
                             . ' the name of a partition (e.g., "aws," "aws-cn,"'
                             . ' or "aws-us-gov").'

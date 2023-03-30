@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Sts\RegionalEndpoints;
 
 class Configuration implements ConfigurationInterface

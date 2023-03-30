@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Ssm;
 
 use Aws\AwsClient;
@@ -283,4 +284,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateServiceSetting(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServiceSettingAsync(array $args = [])
  */
-class SsmClient extends AwsClient {}
+class SsmClient extends AwsClient
+{
+}

@@ -110,7 +110,9 @@ trait TestServiceTrait
                     ],
                 ],
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
     }
 }

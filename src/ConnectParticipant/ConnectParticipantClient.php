@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ConnectParticipant;
 
 use Aws\AwsClient;
@@ -22,4 +23,6 @@ use Aws\AwsClient;
  * @method \Aws\Result startAttachmentUpload(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startAttachmentUploadAsync(array $args = [])
  */
-class ConnectParticipantClient extends AwsClient {}
+class ConnectParticipantClient extends AwsClient
+{
+}

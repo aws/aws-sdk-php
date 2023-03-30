@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Sqs;
 
 use Aws\AwsClient;
@@ -233,7 +234,7 @@ class SqsClient extends AwsClient
                                             ]
                                         );
                                     }
-                                } else if (isset($msg['MessageAttributes'])) {
+                                } elseif (isset($msg['MessageAttributes'])) {
                                     throw new SqsException(
                                         sprintf(
                                             'No Attribute MD5 found. Expected %s',

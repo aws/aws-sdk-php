@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DeviceFarm;
 
 use Aws\AwsClient;
@@ -161,4 +162,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateVPCEConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVPCEConfigurationAsync(array $args = [])
  */
-class DeviceFarmClient extends AwsClient {}
+class DeviceFarmClient extends AwsClient
+{
+}

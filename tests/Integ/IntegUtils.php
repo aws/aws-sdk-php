@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Integ;
 
 trait IntegUtils
@@ -43,7 +44,8 @@ trait IntegUtils
         self::$originalCsmEnabled = getenv(
             \Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED
         );
-        putenv(\Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED
+        putenv(
+            \Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED
             . '=false'
         );
     }
@@ -55,7 +57,8 @@ trait IntegUtils
      */
     public static function restoreCsmConfig()
     {
-        putenv(\Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED .
+        putenv(
+            \Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED .
             '=' . self::$originalCsmEnabled
         );
     }

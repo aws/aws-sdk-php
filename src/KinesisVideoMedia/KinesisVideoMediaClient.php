@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\KinesisVideoMedia;
 
 use Aws\AwsClient;
@@ -8,4 +9,6 @@ use Aws\AwsClient;
  * @method \Aws\Result getMedia(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getMediaAsync(array $args = [])
  */
-class KinesisVideoMediaClient extends AwsClient {}
+class KinesisVideoMediaClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Mobile;
 
 use Aws\AwsClient;
@@ -24,4 +25,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateProject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProjectAsync(array $args = [])
  */
-class MobileClient extends AwsClient {}
+class MobileClient extends AwsClient
+{
+}

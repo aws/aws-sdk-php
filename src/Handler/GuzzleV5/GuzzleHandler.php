@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Handler\GuzzleV5;
 
 use Exception;

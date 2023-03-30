@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoT1ClickProjects;
 
 use Aws\AwsClient;
@@ -38,4 +39,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateProject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProjectAsync(array $args = [])
  */
-class IoT1ClickProjectsClient extends AwsClient {}
+class IoT1ClickProjectsClient extends AwsClient
+{
+}

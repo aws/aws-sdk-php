@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SagemakerEdgeManager;
 
 use Aws\AwsClient;
@@ -12,4 +13,6 @@ use Aws\AwsClient;
  * @method \Aws\Result sendHeartbeat(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendHeartbeatAsync(array $args = [])
  */
-class SagemakerEdgeManagerClient extends AwsClient {}
+class SagemakerEdgeManagerClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DataPipeline;
 
 use Aws\AwsClient;
@@ -45,4 +46,6 @@ use Aws\AwsClient;
  * @method \Aws\Result validatePipelineDefinition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise validatePipelineDefinitionAsync(array $args = [])
  */
-class DataPipelineClient extends AwsClient {}
+class DataPipelineClient extends AwsClient
+{
+}

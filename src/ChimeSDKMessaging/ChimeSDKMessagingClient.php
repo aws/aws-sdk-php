@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ChimeSDKMessaging;
 
 use Aws\AwsClient;
@@ -108,4 +109,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateChannelReadMarker(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateChannelReadMarkerAsync(array $args = [])
  */
-class ChimeSDKMessagingClient extends AwsClient {}
+class ChimeSDKMessagingClient extends AwsClient
+{
+}

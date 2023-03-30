@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\EndpointDiscovery\Exception;
 
 use Aws\HasMonitoringEventsTrait;

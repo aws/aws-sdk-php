@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Pricing\Exception;
 
 use Aws\Exception\AwsException;
@@ -6,4 +7,6 @@ use Aws\Exception\AwsException;
 /**
  * Represents an error interacting with the **AWS Price List Service** service.
  */
-class PricingException extends AwsException {}
+class PricingException extends AwsException
+{
+}

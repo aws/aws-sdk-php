@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api;
 
 use Aws\Api\Serializer\QuerySerializer;
@@ -71,7 +72,7 @@ class Service extends AbstractModel
         }
         $this->apiVersion = $this->getApiVersion();
         if (isset($definition['clientContextParams'])) {
-           $this->clientContextParams = $definition['clientContextParams'];
+            $this->clientContextParams = $definition['clientContextParams'];
         }
     }
 
@@ -288,7 +289,7 @@ class Service extends AbstractModel
                 $this->definition['operations'][$name],
                 $this->shapeMap
             );
-        } else if ($this->modifiedModel) {
+        } elseif ($this->modifiedModel) {
             $this->operations[$name] = new Operation(
                 $this->definition['operations'][$name],
                 $this->shapeMap

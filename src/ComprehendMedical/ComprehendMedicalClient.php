@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ComprehendMedical;
 
 use Aws\AwsClient;
@@ -58,4 +59,6 @@ use Aws\AwsClient;
  * @method \Aws\Result stopSNOMEDCTInferenceJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopSNOMEDCTInferenceJobAsync(array $args = [])
  */
-class ComprehendMedicalClient extends AwsClient {}
+class ComprehendMedicalClient extends AwsClient
+{
+}

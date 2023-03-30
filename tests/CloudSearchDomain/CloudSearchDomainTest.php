@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\CloudSearchDomain;
 
 use Aws\CloudSearchDomain\CloudSearchDomainClient;

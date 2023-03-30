@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\BackupGateway;
 
 use Aws\AwsClient;
@@ -56,4 +57,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateHypervisor(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateHypervisorAsync(array $args = [])
  */
-class BackupGatewayClient extends AwsClient {}
+class BackupGatewayClient extends AwsClient
+{
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Api\Service;
@@ -23,7 +24,7 @@ class IdempotencyTokenMiddleware
      * One of following functions needs to be available
      * in order to generate random bytes used for UUID
      * (SDK will attempt to utilize function in following order):
-     *  - random_bytes (requires PHP 7.0 or above) 
+     *  - random_bytes (requires PHP 7.0 or above)
      *  - openssl_random_pseudo_bytes (requires 'openssl' module enabled)
      *  - mcrypt_create_iv (requires 'mcrypt' module enabled)
      *

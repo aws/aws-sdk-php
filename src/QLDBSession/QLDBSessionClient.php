@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\QLDBSession;
 
 use Aws\AwsClient;
@@ -8,4 +9,6 @@ use Aws\AwsClient;
  * @method \Aws\Result sendCommand(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendCommandAsync(array $args = [])
  */
-class QLDBSessionClient extends AwsClient {}
+class QLDBSessionClient extends AwsClient
+{
+}

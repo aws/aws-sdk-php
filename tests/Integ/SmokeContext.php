@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Integ;
 
 use Aws;
@@ -258,7 +259,7 @@ class SmokeContext extends Assert implements
     public function setUp(BeforeScenarioScope $scope)
     {
         foreach ($scope->getFeature()->getTags() as $tag) {
-            try{
+            try {
                 $this->serviceName = Aws\manifest($tag)['namespace'];
                 break;
             } catch (\Exception $e) {

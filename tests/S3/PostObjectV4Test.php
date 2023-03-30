@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\Credentials\Credentials;
@@ -131,7 +132,7 @@ class PostObjectV4Test extends TestCase
             'credentials' => [
                 'key' => 'AKIAIOSFODNN7EXAMPLE',
                 'secret' => 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
-                'token' => NULL
+                'token' => null
             ],
         ]);
         $p = new PostObjectV4(

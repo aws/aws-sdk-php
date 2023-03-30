@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DatabaseMigrationService;
 
 use Aws\AwsClient;
@@ -144,4 +145,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSubscriptionsToEventBridge(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSubscriptionsToEventBridgeAsync(array $args = [])
  */
-class DatabaseMigrationServiceClient extends AwsClient {}
+class DatabaseMigrationServiceClient extends AwsClient
+{
+}

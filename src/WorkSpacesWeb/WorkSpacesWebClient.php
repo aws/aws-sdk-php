@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\WorkSpacesWeb;
 
 use Aws\AwsClient;
@@ -108,4 +109,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateUserSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateUserSettingsAsync(array $args = [])
  */
-class WorkSpacesWebClient extends AwsClient {}
+class WorkSpacesWebClient extends AwsClient
+{
+}

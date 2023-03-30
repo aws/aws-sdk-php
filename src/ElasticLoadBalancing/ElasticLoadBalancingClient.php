@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ElasticLoadBalancing;
 
 use Aws\AwsClient;
@@ -65,4 +66,6 @@ use Aws\AwsClient;
  * @method \Aws\Result setLoadBalancerPoliciesOfListener(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setLoadBalancerPoliciesOfListenerAsync(array $args = [])
  */
-class ElasticLoadBalancingClient extends AwsClient {}
+class ElasticLoadBalancingClient extends AwsClient
+{
+}

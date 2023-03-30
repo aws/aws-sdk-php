@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\DynamoDb;
 
 use Aws\Command;
@@ -77,7 +78,7 @@ class DynamoDbClientTest extends TestCase
             [ [],            null ],
             [ [null],        null ],
             [ ['foo', 1],    null ],
-            [ new \stdClass, null ],
+            [ new \stdClass(), null ],
             [ $handle,       '{"B":"foo"}' ],
             [ $stream,       '{"B":"bar"}' ],
         ];
@@ -112,7 +113,7 @@ class DynamoDbClientTest extends TestCase
             new Result(),
         ];
         $attemptCount = 0;
-        $callback = function() use (&$attemptCount) {
+        $callback = function () use (&$attemptCount) {
             $attemptCount++;
         };
         $handler = new MockHandler($queue, $callback, $callback);

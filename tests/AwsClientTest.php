@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
@@ -44,14 +45,17 @@ class AwsClientTest extends TestCase
     public function testHasGetters()
     {
         $config = [
-            'handler'      => function () {},
+            'handler'      => function () {
+            },
             'credentials'  => new Credentials('foo', 'bar'),
             'region'       => 'foo',
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
-            'serializer'   => function () {},
+            'serializer'   => function () {
+            },
             'api_provider' => $this->getApiProvider(),
             'service'      => 'foo',
-            'error_parser' => function () {},
+            'error_parser' => function () {
+            },
             'version'      => 'latest'
         ];
 
@@ -92,7 +96,8 @@ class AwsClientTest extends TestCase
     {
         $this->expectExceptionMessage("Error executing \"foo\" on \"http://us-east-1.foo.amazonaws.com\"; AWS HTTP error: Baz Bar!");
         $this->expectException(\Aws\S3\Exception\S3Exception::class);
-        $parser = function () {};
+        $parser = function () {
+        };
         $errorParser = new JsonRpcErrorParser();
         $h = new WrappedHttpHandler(
             function () {
@@ -329,7 +334,7 @@ class AwsClientTest extends TestCase
                         }
                     }
 
-                    return new Result;
+                    return new Result();
                 }
             ]
         );
@@ -361,7 +366,7 @@ class AwsClientTest extends TestCase
                         $this->assertTrue($request->hasHeader($signatureHeader));
                     }
                     $this->assertSame('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
-                    return new Result;
+                    return new Result();
                 }
             ]
         );
@@ -391,15 +396,13 @@ class AwsClientTest extends TestCase
                         'ap-southeast-1/custom-service',
                         $request->getHeader('Authorization')[0]
                     );
-                    return new Result;
+                    return new Result();
                 }
             ]
         );
         $list = $client->getHandlerList();
         $list->appendBuild(function ($handler) {
-            return function (CommandInterface $cmd, RequestInterface $req)
-                use ($handler)
-            {
+            return function (CommandInterface $cmd, RequestInterface $req) use ($handler) {
                 $cmd['@context']['signing_region'] = 'ap-southeast-1';
                 $cmd['@context']['signing_service'] = 'custom-service';
                 return $handler($cmd, $req);
@@ -525,7 +528,8 @@ class AwsClientTest extends TestCase
         );
     }
 
-    public function testIsUseGlobalEndpoint() {
+    public function testIsUseGlobalEndpoint()
+    {
         $client = new StsClient([
             'region'  => 'us-west-2',
             'version' => 'latest',
@@ -562,7 +566,8 @@ class AwsClientTest extends TestCase
             'region'       => 'foo',
             'service'      => 'foo',
             'api_provider' => $apiProvider,
-            'error_parser' => function () {},
+            'error_parser' => function () {
+            },
             'version'      => 'latest'
         ]);
     }
@@ -595,12 +600,14 @@ class AwsClientTest extends TestCase
             'region'       => 'foo',
             'service'      => 'foo',
             'api_provider' => $apiProvider,
-            'error_parser' => function () {},
+            'error_parser' => function () {
+            },
             'version'      => 'latest'
         ]);
     }
 
-    public function testThrowsDeprecationWarning() {
+    public function testThrowsDeprecationWarning()
+    {
         $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
         $storeEnvArrayVariable = isset($_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']) ? $_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] : '';
         $storeServerArrayVariable = isset($_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']) ? $_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] : '';
@@ -641,7 +648,8 @@ class AwsClientTest extends TestCase
         }
     }
 
-    public function testCanDisableWarningWithClientConfig() {
+    public function testCanDisableWarningWithClientConfig()
+    {
         $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
         putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
         $expectsDeprecation = PHP_VERSION_ID < 70205;
@@ -667,7 +675,8 @@ class AwsClientTest extends TestCase
         putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
     }
 
-    public function testCanDisableWarningWithEnvVar() {
+    public function testCanDisableWarningWithEnvVar()
+    {
         $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
         putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
         $expectsDeprecation = PHP_VERSION_ID < 70205;

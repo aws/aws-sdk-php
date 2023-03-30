@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\LookoutforVision;
 
 use Aws\AwsClient;
@@ -50,4 +51,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateDatasetEntries(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDatasetEntriesAsync(array $args = [])
  */
-class LookoutforVisionClient extends AwsClient {}
+class LookoutforVisionClient extends AwsClient
+{
+}

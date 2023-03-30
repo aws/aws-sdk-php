@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3\Crypto;
 
 use Aws\Crypto\KmsMaterialsProviderV2;
@@ -612,7 +613,7 @@ EOXML;
     {
         $kms = $this->getKmsClient();
         $list = $kms->getHandlerList();
-        $list->setHandler(function($cmd, $req) {
+        $list->setHandler(function ($cmd, $req) {
             // Verify decryption command has correct parameters
             $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(

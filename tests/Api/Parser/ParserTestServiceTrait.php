@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Service;
@@ -11,7 +12,6 @@ use GuzzleHttp\Psr7\Response;
  */
 trait ParserTestServiceTrait
 {
-
     /**
      * Creates a service for the test
      *

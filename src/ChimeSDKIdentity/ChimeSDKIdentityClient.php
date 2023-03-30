@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ChimeSDKIdentity;
 
 use Aws\AwsClient;
@@ -66,4 +67,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateAppInstanceUserEndpoint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAppInstanceUserEndpointAsync(array $args = [])
  */
-class ChimeSDKIdentityClient extends AwsClient {}
+class ChimeSDKIdentityClient extends AwsClient
+{
+}

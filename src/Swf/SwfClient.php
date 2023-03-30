@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Swf;
 
 use Aws\AwsClient;
@@ -81,4 +82,6 @@ use Aws\AwsClient;
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
-class SwfClient extends AwsClient {}
+class SwfClient extends AwsClient
+{
+}

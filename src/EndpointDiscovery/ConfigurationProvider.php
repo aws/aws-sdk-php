@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\EndpointDiscovery;
 
 use Aws\AbstractConfigurationProvider;
@@ -42,8 +43,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  * $config = $promise->wait();
  * </code>
  */
-class ConfigurationProvider extends AbstractConfigurationProvider
-    implements ConfigurationProviderInterface
+class ConfigurationProvider extends AbstractConfigurationProvider implements ConfigurationProviderInterface
 {
     const DEFAULT_ENABLED = false;
     const DEFAULT_CACHE_LIMIT = 1000;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\AppIntegrationsService;
 
 use Aws\AwsClient;
@@ -36,4 +37,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateEventIntegration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEventIntegrationAsync(array $args = [])
  */
-class AppIntegrationsServiceClient extends AwsClient {}
+class AppIntegrationsServiceClient extends AwsClient
+{
+}

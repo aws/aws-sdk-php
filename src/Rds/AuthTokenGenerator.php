@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Rds;
 
 use Aws\Credentials\CredentialsInterface;
@@ -14,7 +15,6 @@ use Aws;
  */
 class AuthTokenGenerator
 {
-
     private $credentialProvider;
 
     /**

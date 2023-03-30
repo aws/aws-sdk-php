@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\CommandInterface;
@@ -67,7 +68,7 @@ class ObjectUploaderTest extends TestCase
             'region' => 'us-west-2'
         ]);
         $client->getHandlerList()->appendSign(Middleware::tap(
-            function(CommandInterface $cmd, RequestInterface $req) {
+            function (CommandInterface $cmd, RequestInterface $req) {
                 $this->assertSame(
                     'mydest-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                     $req->getUri()->getHost()
@@ -80,13 +81,13 @@ class ObjectUploaderTest extends TestCase
         ));
         $this->addMockResults($client, $mockedResults);
         $result = (new ObjectUploader(
-                $client,
-                'arn:aws:s3:us-west-2:123456789012:accesspoint:mydest',
-                'key',
-                $body,
-                'private',
-                $options
-            ))->upload();
+            $client,
+            'arn:aws:s3:us-west-2:123456789012:accesspoint:mydest',
+            'key',
+            $body,
+            'private',
+            $options
+        ))->upload();
         $this->assertTrue($this->mockQueueEmpty());
     }
 
@@ -140,7 +141,8 @@ class ObjectUploaderTest extends TestCase
                 // 3 MB, known-size stream (put)
                 $this->generateStream(1024 * 1024 * 3),
                 [$putObject],
-                ['before_upload' => function () {}]
+                ['before_upload' => function () {
+                }]
             ],
             [
                 // 3 MB, unknown-size stream (put)
@@ -187,7 +189,8 @@ class ObjectUploaderTest extends TestCase
                 // 3 MB, known-size stream (put)
                 $this->generateStream(1024 * 1024 * 3),
                 [$putObject],
-                ['before_upload' => function () {}]
+                ['before_upload' => function () {
+                }]
             ],
             [
                 // 3 MB, unknown-size stream (put)
@@ -251,7 +254,7 @@ class ObjectUploaderTest extends TestCase
         $uploadOptions = [
             'params'          => ['RequestPayer' => 'test'],
             'add_content_md5' => true,
-            'before_upload'   => function($command) {
+            'before_upload'   => function ($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
         ];
@@ -273,7 +276,8 @@ class ObjectUploaderTest extends TestCase
             'bar',
             $source,
             'private',
-            $uploadOptions);
+            $uploadOptions
+        );
         $result = $uploader->upload();
 
         $this->assertSame($url, $result['ObjectURL']);
@@ -297,13 +301,13 @@ class ObjectUploaderTest extends TestCase
             'mup_threshold'   => self::MB * 4,
             'params'          => ['RequestPayer' => 'test'],
             'add_content_md5' => true,
-            'before_initiate' => function($command) {
+            'before_initiate' => function ($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
-            'before_upload'   => function($command) {
+            'before_upload'   => function ($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
-            'before_complete' => function($command) {
+            'before_complete' => function ($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             }
         ];
@@ -325,7 +329,8 @@ class ObjectUploaderTest extends TestCase
             'bar',
             $source,
             'private',
-            $uploadOptions);
+            $uploadOptions
+        );
         $result = $uploader->upload();
 
         $this->assertSame($url, $result['ObjectURL']);

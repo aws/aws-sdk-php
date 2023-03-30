@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DynamoDb;
 
 trait SessionConnectionConfigTrait
@@ -42,29 +43,25 @@ trait SessionConnectionConfigTrait
     /**
      * It initialize the Config class and
      * it sets values in case of valid configurations.
-     * 
+     *
      * It transforms parameters underscore separated in camelcase "this_is_a_test" => ThisIsATest
      * and it uses it in order to set the values.
-     * 
+     *
      * @param array $config
      */
-    public function initConfig( array $config = [] )
+    public function initConfig(array $config = [])
     {
-        if (!empty($config))
-        {
-            foreach ($config as $key => $value)
-            {
+        if (!empty($config)) {
+            foreach ($config as $key => $value) {
                 $method = 'set' . str_replace('_', '', ucwords($key, '_'));
-                if(method_exists($this,$method))
-                {
+                if (method_exists($this, $method)) {
                     call_user_func_array(array($this, $method), array($value));
                 }
             }
         }
 
         // It applies the default PHP session lifetime, if no session lifetime config is provided
-        if(!isset($config['session_lifetime']))
-        {
+        if (!isset($config['session_lifetime'])) {
             $this->setSessionLifetime((int) ini_get('session.gc_maxlifetime'));
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MediaPackage;
 
 use Aws\AwsClient;
@@ -44,4 +45,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateOriginEndpoint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOriginEndpointAsync(array $args = [])
  */
-class MediaPackageClient extends AwsClient {}
+class MediaPackageClient extends AwsClient
+{
+}

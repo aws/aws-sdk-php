@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Serializer\QuerySerializer;
@@ -39,7 +40,8 @@ class QuerySerializerTest extends TestCase
                     ]
                 ]
             ],
-            function () {}
+            function () {
+            }
         );
 
         $q = new QuerySerializer($service, 'http://foo.com');
@@ -74,7 +76,8 @@ class QuerySerializerTest extends TestCase
                     ]
                 ]
             ],
-            function () {}
+            function () {
+            }
         );
 
         $q = new QuerySerializer($service, 'http://foo.com');

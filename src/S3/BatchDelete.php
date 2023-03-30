@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3;
 
 use Aws\AwsClientInterface;
@@ -227,11 +228,11 @@ class BatchDelete implements PromisorInterface
 
         // When done, ensure cleanup and that any remaining are processed.
         return $promise->then(
-            function () use ($cleanup)  {
+            function () use ($cleanup) {
                 return Promise\Create::promiseFor($this->flushQueue())
                     ->then($cleanup);
             },
-            function ($reason) use ($cleanup)  {
+            function ($reason) use ($cleanup) {
                 $cleanup();
                 return Promise\Create::rejectionFor($reason);
             }

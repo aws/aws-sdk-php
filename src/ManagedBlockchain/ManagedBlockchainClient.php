@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\ManagedBlockchain;
 
 use Aws\AwsClient;
@@ -60,4 +61,6 @@ use Aws\AwsClient;
  * @method \Aws\Result voteOnProposal(array $args = [])
  * @method \GuzzleHttp\Promise\Promise voteOnProposalAsync(array $args = [])
  */
-class ManagedBlockchainClient extends AwsClient {}
+class ManagedBlockchainClient extends AwsClient
+{
+}

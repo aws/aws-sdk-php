@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\BackupStorage;
 
 use Aws\AwsClient;
@@ -24,4 +25,6 @@ use Aws\AwsClient;
  * @method \Aws\Result startObject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startObjectAsync(array $args = [])
  */
-class BackupStorageClient extends AwsClient {}
+class BackupStorageClient extends AwsClient
+{
+}

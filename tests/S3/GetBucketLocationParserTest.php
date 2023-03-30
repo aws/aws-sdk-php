@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\Test\UsesServiceTrait;
@@ -19,7 +20,9 @@ class GetBucketLocationParserTest extends TestCase
      * @dataProvider getTestCases
      */
     public function testParsesLocationFromGetBucketLocationOperations(
-        $commandName, $responseBody, $expectedValue
+        $commandName,
+        $responseBody,
+        $expectedValue
     ) {
         $parser = new GetBucketLocationParser(function () {
             return new Result();

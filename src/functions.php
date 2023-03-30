@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use GuzzleHttp\Client;
@@ -19,7 +20,9 @@ use GuzzleHttp\Promise\FulfilledPromise;
  */
 function constantly($value)
 {
-    return function () use ($value) { return $value; };
+    return function () use ($value) {
+        return $value;
+    };
 }
 
 /**
@@ -455,8 +458,8 @@ function is_valid_hostlabel($label)
 function parse_ini_file(
     $filename,
     $process_sections = false,
-    $scanner_mode = INI_SCANNER_NORMAL)
-{
+    $scanner_mode = INI_SCANNER_NORMAL
+) {
     return parse_ini_string(
         preg_replace('/^#.*\\n/m', "", file_get_contents($filename)),
         $process_sections,
@@ -541,4 +544,3 @@ function strip_fips_pseudo_regions($region)
 {
     return str_replace(['fips-', '-fips'], ['', ''], $region);
 }
-

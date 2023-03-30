@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws;
 
 use Aws\Api\Service;
@@ -53,7 +54,6 @@ class StreamRequestPayloadMiddleware
         }
 
         if ($hasStreaming) {
-
             // Add 'transfer-encoding' header if payload size not required to
             // to be calculated and not already known
             if (empty($requiresLength)

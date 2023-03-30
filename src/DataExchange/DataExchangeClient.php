@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DataExchange;
 
 use Aws\AwsClient;
@@ -64,4 +65,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateRevision(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRevisionAsync(array $args = [])
  */
-class DataExchangeClient extends AwsClient {}
+class DataExchangeClient extends AwsClient
+{
+}

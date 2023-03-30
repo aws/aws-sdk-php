@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Sts;
 
 use Aws\Api\DateTimeResult;

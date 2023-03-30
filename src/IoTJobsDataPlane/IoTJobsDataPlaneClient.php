@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\IoTJobsDataPlane;
 
 use Aws\AwsClient;
@@ -14,4 +15,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateJobExecution(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateJobExecutionAsync(array $args = [])
  */
-class IoTJobsDataPlaneClient extends AwsClient {}
+class IoTJobsDataPlaneClient extends AwsClient
+{
+}

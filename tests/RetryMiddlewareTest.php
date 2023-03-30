@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Command;
@@ -38,7 +39,8 @@ class RetryMiddlewareTest extends TestCase
         try {
             $retryMW(new Command('SomeCommand'), new Request('GET', ''))->wait();
             $this->fail();
-        } catch (AwsException $e) { }
+        } catch (AwsException $e) {
+        }
     }
 
     public function testDeciderRetriesWhenStatusCodeMatches()
@@ -304,7 +306,9 @@ class RetryMiddlewareTest extends TestCase
                     return $res2;
                 },
             ],
-            function () use (&$called) { $called[] = func_get_args(); }
+            function () use (&$called) {
+                $called[] = func_get_args();
+            }
         );
 
         $wrapped = new RetryMiddleware(
@@ -337,8 +341,12 @@ class RetryMiddlewareTest extends TestCase
                     return new Result();
                 },
             ],
-            function () use (&$called) { $called[] = func_get_args(); },
-            function () use (&$called) { $called[] = func_get_args(); }
+            function () use (&$called) {
+                $called[] = func_get_args();
+            },
+            function () use (&$called) {
+                $called[] = func_get_args();
+            }
         );
 
         $wrapped = new RetryMiddleware(
@@ -365,8 +373,12 @@ class RetryMiddlewareTest extends TestCase
                     return new AwsException('foo', $command);
                 }
             ],
-            function () use (&$called) { $called[] = func_get_args(); },
-            function () use (&$called) { $called[] = func_get_args(); }
+            function () use (&$called) {
+                $called[] = func_get_args();
+            },
+            function () use (&$called) {
+                $called[] = func_get_args();
+            }
         );
 
         $wrapped = new RetryMiddleware(
@@ -391,8 +403,12 @@ class RetryMiddlewareTest extends TestCase
         $res1 = new Result();
         $mock = new MockHandler(
             [$res1],
-            function () use (&$called) { $called[] = func_get_args(); },
-            function () use (&$called) { $called[] = func_get_args(); }
+            function () use (&$called) {
+                $called[] = func_get_args();
+            },
+            function () use (&$called) {
+                $called[] = func_get_args();
+            }
         );
 
         $wrapped = new RetryMiddleware(
@@ -466,7 +482,9 @@ class RetryMiddlewareTest extends TestCase
         ]);
         $retryMW = new RetryMiddleware(
             RetryMiddleware::createDefaultDecider($retries = 3),
-            function () { return 100; },
+            function () {
+                return 100;
+            },
             $handler,
             true
         );
@@ -486,7 +504,9 @@ class RetryMiddlewareTest extends TestCase
         };
         $retryMW = new RetryMiddleware(
             RetryMiddleware::createDefaultDecider($retries = 3),
-            function () { return 100; },
+            function () {
+                return 100;
+            },
             $nextHandler,
             true
         );

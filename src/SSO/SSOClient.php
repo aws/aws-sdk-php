@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SSO;
 
 use Aws\AwsClient;
@@ -14,4 +15,6 @@ use Aws\AwsClient;
  * @method \Aws\Result logout(array $args = [])
  * @method \GuzzleHttp\Promise\Promise logoutAsync(array $args = [])
  */
-class SSOClient extends AwsClient {}
+class SSOClient extends AwsClient
+{
+}

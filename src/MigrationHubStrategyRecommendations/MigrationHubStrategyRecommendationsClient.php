@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MigrationHubStrategyRecommendations;
 
 use Aws\AwsClient;
@@ -48,4 +49,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateServerConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServerConfigAsync(array $args = [])
  */
-class MigrationHubStrategyRecommendationsClient extends AwsClient {}
+class MigrationHubStrategyRecommendationsClient extends AwsClient
+{
+}

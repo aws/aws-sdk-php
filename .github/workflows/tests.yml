@@ -87,3 +87,36 @@ jobs:
     - if: ${{ (matrix.php-versions == '7.1' || matrix.php-versions == '8.0') && matrix.composer-options == '' }}
       name: Code coverage
       run: bash <(curl -s https://codecov.io/bash)
+
+  lint:
+    runs-on: ubuntu-20.04
+    name: Lint
+    steps:
+      #sets up the correct version of PHP with necessary config options
+      - name: Setup PHP with Xdebug
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
+
+      #checkout the codebase from github
+      - name: Checkout codebase
+        uses: actions/checkout@v2
+
+      #get dependencies
+      - name: Install dependencies
+        run: composer update --working-dir=tools/php-cs-fixer --no-interaction
+
+      #run tests
+      - name: Lint codestyle using php-cs-fixer
+        run: >
+          tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --verbose --dry-run || \
+              ( echo -e "\n\n" \
+                  && echo "Problems with the formatting of the code have been detected." \
+                  && echo "You can manually fix these problems or run following commands to automatically fix these problems:" \
+                  && echo -e "\n" \
+                  && echo "composer install-cs-fix" \
+                  && echo "composer cs-fix" \
+                  && echo -e "\n\n" \
+                  && $(exit 1) # fail test \
+                )

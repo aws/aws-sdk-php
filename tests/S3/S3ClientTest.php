@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\S3;
 
 use Aws\Arn\ArnParser;
@@ -184,7 +185,7 @@ class S3ClientTest extends TestCase
                 foreach (['X-Amz-Date', 'Authorization'] as $signatureHeader) {
                     $this->assertTrue($request->hasHeader($signatureHeader));
                 }
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             },
         ]);
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
@@ -294,8 +295,7 @@ class S3ClientTest extends TestCase
         $errCode,
         $statusCode,
         $deleteMarker = false
-    )
-    {
+    ) {
         $response = new Response($statusCode);
         $deleteMarker && $response = $response->withHeader(
             'x-amz-delete-marker',
@@ -320,8 +320,7 @@ class S3ClientTest extends TestCase
         $V2 = false,
         $accept403 = false,
         $acceptDeleteMarkers = false
-    )
-    {
+    ) {
         /** @var S3Client $s3 */
         $s3 = $this->getTestClient('S3', ['region' => 'us-east-1']);
         $this->addMockResults($s3, [$result]);
@@ -427,7 +426,8 @@ class S3ClientTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         /** @var S3Client $client */
         $client = $this->getTestClient('S3');
-        $client->deleteObject([
+        $client->deleteObject(
+            [
             'Bucket' => "",
             'Key' => "key"]
         );
@@ -567,7 +567,7 @@ class S3ClientTest extends TestCase
                     (string) $request->getUri()
                 );
 
-                return Promise\Create::promiseFor(new Psr7\Response);
+                return Promise\Create::promiseFor(new Psr7\Response());
             }
         ]);
 
@@ -591,7 +591,7 @@ class S3ClientTest extends TestCase
             'retries' => $retrySettings,
             'http_handler' => function () use (&$retries) {
                 if (0 === --$retries) {
-                    return new FulfilledPromise(new Response);
+                    return new FulfilledPromise(new Response());
                 }
 
                 return new RejectedPromise([
@@ -934,7 +934,7 @@ EOXML;
             'retries' => $retrySettings,
             'http_handler' => function () use (&$retries, $networkingError) {
                 if (0 === --$retries) {
-                    return new FulfilledPromise(new Response);
+                    return new FulfilledPromise(new Response());
                 }
 
                 return new RejectedPromise([
@@ -974,7 +974,7 @@ EOXML;
             'retries' => $retrySettings,
             'http_handler' => function () use (&$retries, $networkingError) {
                 if (0 === --$retries) {
-                    return new FulfilledPromise(new Response);
+                    return new FulfilledPromise(new Response());
                 }
 
                 return new RejectedPromise([
@@ -1013,7 +1013,7 @@ EOXML;
             'retries' => $retrySettings,
             'http_handler' => function () use (&$retries, $networkingError) {
                 if (0 === --$retries) {
-                    return new FulfilledPromise(new Response);
+                    return new FulfilledPromise(new Response());
                 }
 
                 return new RejectedPromise([
@@ -1042,7 +1042,7 @@ EOXML;
                 $this->assertArrayHasKey('encoding-type', $query);
                 $this->assertSame('url', $query['encoding-type']);
 
-                return new FulfilledPromise(new Response);
+                return new FulfilledPromise(new Response());
             },
         ]);
 
@@ -1150,7 +1150,7 @@ EOXML;
                 $this->assertArrayHasKey('decode_content', $opts);
                 $this->assertFalse($opts['decode_content']);
 
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             }
         ]);
 
@@ -1167,7 +1167,7 @@ EOXML;
                 $this->assertArrayHasKey('decode_content', $opts);
                 $this->assertFalse($opts['decode_content']);
 
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             }
         ]);
 
@@ -1183,7 +1183,7 @@ EOXML;
                 $this->assertArrayHasKey('decode_content', $opts);
                 $this->assertFalse($opts['decode_content']);
 
-                return Promise\Create::promiseFor(new Response);
+                return Promise\Create::promiseFor(new Response());
             }
         ]);
 
@@ -1210,7 +1210,7 @@ EOXML;
         $client = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
-            'http_handler' => function() {
+            'http_handler' => function () {
                 return new RejectedPromise([
                     'connection_error' => false,
                     'exception' => $this->getMockBuilder(AwsException::class)
@@ -1231,7 +1231,7 @@ EOXML;
         $client = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
-            'http_handler' => function() {
+            'http_handler' => function () {
                 return new RejectedPromise([
                     'connection_error' => false,
                     'exception' => $this->getMockBuilder(AwsException::class)
@@ -1256,7 +1256,7 @@ EOXML;
                 '/key',
                 $req->getUri()->getPath()
             );
-            return Promise\Create::promiseFor(new Response);
+            return Promise\Create::promiseFor(new Response());
         };
 
         $accelerateClient = new S3Client([
@@ -1292,7 +1292,7 @@ EOXML;
                 'bucket.s3-accelerate.amazonaws.com',
                 $req->getUri()->getHost()
             );
-            return Promise\Create::promiseFor(new Response);
+            return Promise\Create::promiseFor(new Response());
         };
 
         $accelerateClient = new S3Client([
@@ -1330,7 +1330,7 @@ EOXML;
                 '/',
                 $req->getUri()->getPath()
             );
-            return Promise\Create::promiseFor(new Response);
+            return Promise\Create::promiseFor(new Response());
         };
 
         $dualStackClient = new S3Client([
@@ -1366,7 +1366,7 @@ EOXML;
                 '/bucket/',
                 $req->getUri()->getPath()
             );
-            return Promise\Create::promiseFor(new Response);
+            return Promise\Create::promiseFor(new Response());
         };
 
         $dualStackClient = new S3Client([
@@ -1642,7 +1642,6 @@ EOXML;
 
     public function multiRegionSuccessProvider()
     {
-
         return [
             ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-east-1", null, null, false, "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
             ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", null, null, false, "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
@@ -1673,8 +1672,7 @@ EOXML;
             'use_arn_region' => $useArnRegion,
             'version' => 'latest',
             'disable_multiregion_access_points' => $disableMraps,
-            'handler' => function (CommandInterface $cmd, RequestInterface $req)
-            use ($expectedEndpoint, $expectedHeaders) {
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) use ($expectedEndpoint, $expectedHeaders) {
                 $this->assertSame(
                     $expectedEndpoint,
                     $req->getUri()->getHost()
@@ -1702,7 +1700,8 @@ EOXML;
         $client->execute($command);
     }
 
-    public function mrapExceptionTestProvider() {
+    public function mrapExceptionTestProvider()
+    {
         return [
             [
                 "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", null, null, true,
@@ -1774,14 +1773,14 @@ EOXML;
      * @param $disableMraps
      * @param $expectedException
      */
-    public function testAccessPointFailures (
+    public function testAccessPointFailures(
         $bucketFieldInput,
         $clientRegion,
         $additionalFlags,
         $useArnRegion,
         $disableMraps,
         $expectedException
-    ){
+    ) {
         $client = new S3Client([
             'region' => $clientRegion,
             'use_arn_region' => $useArnRegion,
@@ -1846,7 +1845,7 @@ EOXML;
         ];
     }
 
-    public function testPresignedMrapSuccess ()
+    public function testPresignedMrapSuccess()
     {
         if (!extension_loaded('awscrt')) {
             $this->markTestSkipped();
@@ -1872,7 +1871,7 @@ EOXML;
         $this->assertStringContainsString('X-Amz-Algorithm=AWS4-ECDSA-P256-SHA256', $url);
     }
 
-    public function testPresignedMrapFailure ()
+    public function testPresignedMrapFailure()
     {
         $arn = 'arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap';
         $expectedException = "Invalid configuration: Multi-Region Access Point ARNs are disabled.";
@@ -1957,15 +1956,14 @@ EOXML;
         $additionalFlags,
         $useArnRegion,
         $endpointUrl,
-        $expectedEndpoint)
-    {
+        $expectedEndpoint
+    ) {
         //additional flags is not used yet, will be in the future if dualstack support is added
         $clientConfig = [
             'region' => $clientRegion,
             'use_arn_region' => $useArnRegion,
             'version' => 'latest',
-            'handler' => function (CommandInterface $cmd, RequestInterface $req)
-            use ($expectedEndpoint) {
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) use ($expectedEndpoint) {
                 $this->assertSame(
                     $expectedEndpoint,
                     $req->getUri()->getHost()
@@ -2031,14 +2029,13 @@ EOXML;
         $additionalFlags,
         $useArnRegion,
         $endpointUrl,
-        $expectedException)
-    {
+        $expectedException
+    ) {
         $clientConfig = [
             'region' => $clientRegion,
             'use_arn_region' => $useArnRegion,
             'version' => 'latest',
-            'handler' => function (CommandInterface $cmd, RequestInterface $req)
-            use ($expectedException) {
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) use ($expectedException) {
                 $this->assertSame(
                     $expectedException,
                     $req->getUri()->getHost()
@@ -2157,13 +2154,11 @@ EOXML;
         $route,
         $endpointUrl,
         $expectedEndpoint
-    )
-    {
+    ) {
         $clientConfig = [
             'region' => $clientRegion,
             'version' => 'latest',
-            'handler' => function (CommandInterface $cmd, RequestInterface $req)
-            use ($expectedEndpoint) {
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) use ($expectedEndpoint) {
                 $this->assertSame(
                     $expectedEndpoint,
                     $req->getUri()->getHost()
@@ -2235,7 +2230,8 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function addMD5Provider() {
+    public function addMD5Provider()
+    {
         return [
            [
                ['Bucket' => 'foo', 'Key' => 'foo', 'Body' => 'test'],

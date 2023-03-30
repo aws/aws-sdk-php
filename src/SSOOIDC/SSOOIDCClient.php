@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SSOOIDC;
 
 use Aws\AwsClient;
@@ -12,4 +13,6 @@ use Aws\AwsClient;
  * @method \Aws\Result startDeviceAuthorization(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startDeviceAuthorizationAsync(array $args = [])
  */
-class SSOOIDCClient extends AwsClient {}
+class SSOOIDCClient extends AwsClient
+{
+}

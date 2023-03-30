@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\XmlErrorParser;

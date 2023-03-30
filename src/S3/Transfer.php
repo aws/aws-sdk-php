@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3;
 
 use Aws;
@@ -101,7 +102,8 @@ class Transfer implements PromisorInterface
 
         // Validate schemes.
         if ($this->sourceMetadata['scheme'] === $this->destination['scheme']) {
-            throw new \InvalidArgumentException("You cannot copy from"
+            throw new \InvalidArgumentException(
+                "You cannot copy from"
                 . " {$this->sourceMetadata['scheme']} to"
                 . " {$this->destination['scheme']}."
             );
@@ -268,7 +270,9 @@ class Transfer implements PromisorInterface
                 throw new AwsException(
                     'Cannot download key ' . $objectKey
                     . ', its relative path resolves outside the'
-                    . ' parent directory', $command);
+                    . ' parent directory',
+                    $command
+                );
             }
 
             // Create the directory if needed.
@@ -311,7 +315,9 @@ class Transfer implements PromisorInterface
         if (is_string($this->source)) {
             return Aws\filter(
                 Aws\recursive_dir_iterator($this->sourceMetadata['path']),
-                function ($file) { return !is_dir($file); }
+                function ($file) {
+                    return !is_dir($file);
+                }
             );
         }
 
@@ -410,6 +416,7 @@ class Transfer implements PromisorInterface
                     break;
                 case 'UploadPart':
                     $part = $command['PartNumber'];
+                    // no break
                 case 'CreateMultipartUpload':
                 case 'CompleteMultipartUpload':
                     $sourceKey = $command['Key'];

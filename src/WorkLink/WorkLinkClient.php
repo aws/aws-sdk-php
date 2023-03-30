@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\WorkLink;
 
 use Aws\AwsClient;
@@ -72,4 +73,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateIdentityProviderConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateIdentityProviderConfigurationAsync(array $args = [])
  */
-class WorkLinkClient extends AwsClient {}
+class WorkLinkClient extends AwsClient
+{
+}

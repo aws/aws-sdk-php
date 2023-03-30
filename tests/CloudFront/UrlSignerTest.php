@@ -12,13 +12,12 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class UrlSignerTest extends TestCase
 {
-
     protected $key;
     protected $kp;
 
     public function set_up()
     {
-        openssl_pkey_export(openssl_pkey_new(),$this->key);
+        openssl_pkey_export(openssl_pkey_new(), $this->key);
         $this->kp  = 'test';
     }
 

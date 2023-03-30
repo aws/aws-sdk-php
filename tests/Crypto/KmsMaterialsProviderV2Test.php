@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\KmsMaterialsProviderV2;
@@ -32,7 +33,7 @@ class KmsMaterialsProviderV2Test extends TestCase
         /** @var KmsClient $client */
         $client = $this->getTestClient('Kms', []);
         $list = $client->getHandlerList();
-        $list->appendSign(Middleware::tap(function($cmd, $req) use ($keyId) {
+        $list->appendSign(Middleware::tap(function ($cmd, $req) use ($keyId) {
             // Test that command is populated correctly
             $this->assertEquals(
                 [
@@ -144,7 +145,7 @@ class KmsMaterialsProviderV2Test extends TestCase
         /** @var KmsClient $client */
         $client = $this->getTestClient('Kms', []);
         $list = $client->getHandlerList();
-        $list->appendSign(Middleware::tap(function($cmd, $req) {
+        $list->appendSign(Middleware::tap(function ($cmd, $req) {
             // Test that command is populated correctly
             $this->assertEquals(
                 [
@@ -197,7 +198,7 @@ class KmsMaterialsProviderV2Test extends TestCase
         /** @var KmsClient $client */
         $client = $this->getTestClient('Kms', []);
         $list = $client->getHandlerList();
-        $list->appendSign(Middleware::tap(function($cmd, $req) {
+        $list->appendSign(Middleware::tap(function ($cmd, $req) {
             // Test that command is populated correctly
             $this->assertEquals(
                 [

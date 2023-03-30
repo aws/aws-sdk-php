@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
@@ -411,7 +412,6 @@ class ResultPaginatorTest extends TestCase
 
         $setIds = [];
         foreach ($paginator->search('a') as $b) {
-
         }
     }
 
@@ -452,7 +452,8 @@ class ResultPaginatorTest extends TestCase
             "logStreamName" => 'bar',
         ]);
         // Iterate over the paginator
-        foreach ($paginator as $key => $result) {}
+        foreach ($paginator as $key => $result) {
+        }
         // Make sure the paginator yields the expected results
         $this->assertInstanceOf('Aws\\Result', $result);
         $this->assertEquals(3, $requestCount);

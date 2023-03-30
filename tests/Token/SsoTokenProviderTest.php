@@ -1,6 +1,6 @@
 <?php
-namespace Aws\Test\Token;
 
+namespace Aws\Test\Token;
 
 use Aws\Exception\TokenException;
 use Aws\LruArrayCache;
@@ -20,7 +20,8 @@ class SsoTokenProviderTest extends TestCase
 {
     use UsesServiceTrait;
 
-    private function clearEnv() {
+    private function clearEnv()
+    {
         putenv('AWS_SHARED_CREDENTIALS_FILE');
         putenv('HOME');
         putenv('AWS_PROFILE');
@@ -109,7 +110,6 @@ EOT;
             $this->assertSame('token', $token->getToken());
             $this->assertSame('2500-12-25T21:30:00Z', $token->getExpiration());
             $this->assertNull($token->getRegistrationExpiresAt());
-
         } finally {
             unlink($dir . '/config');
             unlink($tokenLocation);
@@ -209,7 +209,4 @@ EOT;
             unlink($dir . '/config');
         }
     }
-
-
-
 }

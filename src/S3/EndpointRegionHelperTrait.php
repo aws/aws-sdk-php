@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\S3;
 
 use Aws\Api\Service;
@@ -80,18 +81,21 @@ trait EndpointRegionHelperTrait
                 throw new InvalidRegionException(
                     'Fips is currently not supported with S3 Outposts access'
                     . ' points. Please provide a non-fips region or do not supply an'
-                    . ' access point ARN.');
+                    . ' access point ARN.'
+                );
             }
         }
     }
 
     private function validateMatchingRegion(ArnInterface $arn)
     {
-        if (!($this->isMatchingSigningRegion(
-            $arn->getRegion(),
-            $this->region,
-            $this->service->getEndpointPrefix(),
-            $this->partitionProvider)
+        if (!(
+            $this->isMatchingSigningRegion(
+                $arn->getRegion(),
+                $this->region,
+                $this->service->getEndpointPrefix(),
+                $this->partitionProvider
+            )
         )) {
             if (empty($this->config['use_arn_region'])
                 || !($this->config['use_arn_region']->isUseArnRegion())

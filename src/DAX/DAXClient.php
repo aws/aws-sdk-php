@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\DAX;
 
 use Aws\AwsClient;
@@ -48,4 +49,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateSubnetGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSubnetGroupAsync(array $args = [])
  */
-class DAXClient extends AwsClient {}
+class DAXClient extends AwsClient
+{
+}

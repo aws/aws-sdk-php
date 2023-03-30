@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\SageMakerFeatureStoreRuntime;
 
 use Aws\AwsClient;
@@ -14,4 +15,6 @@ use Aws\AwsClient;
  * @method \Aws\Result putRecord(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putRecordAsync(array $args = [])
  */
-class SageMakerFeatureStoreRuntimeClient extends AwsClient {}
+class SageMakerFeatureStoreRuntimeClient extends AwsClient
+{
+}

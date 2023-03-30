@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\MarketplaceEntitlementService;
 
 use Aws\AwsClient;
@@ -8,4 +9,6 @@ use Aws\AwsClient;
  * @method \Aws\Result getEntitlements(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEntitlementsAsync(array $args = [])
  */
-class MarketplaceEntitlementServiceClient extends AwsClient {}
+class MarketplaceEntitlementServiceClient extends AwsClient
+{
+}

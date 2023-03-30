@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Integ;
 
 use Aws\Crypto\KmsMaterialsProvider;
@@ -235,4 +236,3 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
         return '';
     }
 }
-

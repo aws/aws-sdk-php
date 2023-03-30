@@ -34,10 +34,9 @@ class TreeRule extends AbstractRule
     public function evaluate(
         array $inputParameters,
         RulesetStandardLibrary $standardLibrary
-    )
-    {
+    ) {
         if ($this->evaluateConditions($inputParameters, $standardLibrary)) {
-            foreach($this->rules as $rule) {
+            foreach ($this->rules as $rule) {
                 $inputParametersCopy = $inputParameters;
                 $evaluation = $rule->evaluate($inputParametersCopy, $standardLibrary);
                 if ($evaluation !== false) {
@@ -52,7 +51,7 @@ class TreeRule extends AbstractRule
     {
         $rulesList = [];
 
-        forEach($rules as $rule) {
+        foreach ($rules as $rule) {
             $ruleType = RuleCreator::create($rule['type'], $rule);
             $rulesList[] = $ruleType;
         }

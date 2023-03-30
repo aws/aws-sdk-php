@@ -8,7 +8,7 @@ use Aws\EndpointV2\Rule\RuleCreator;
  * A collection of rules, parameter definitions and a class of helper functions
  * used to resolve either an endpoint or an error.
  */
-Class Ruleset
+class Ruleset
 {
     /** @var string */
     private $version;
@@ -64,7 +64,7 @@ Class Ruleset
     {
         $this->validateInputParameters($inputParameters);
 
-        foreach($this->rules as $rule) {
+        foreach ($this->rules as $rule) {
             $evaluation = $rule->evaluate($inputParameters, $this->standardLibrary);
             if ($evaluation !== false) {
                 return $evaluation;
@@ -81,7 +81,7 @@ Class Ruleset
      */
     private function validateInputParameters(array &$inputParameters)
     {
-        foreach($this->parameters as $paramName => $param) {
+        foreach ($this->parameters as $paramName => $param) {
             $inputParam = isset($inputParameters[$paramName]) ? $inputParameters[$paramName] : null;
 
             if (is_null($inputParam) && !is_null($param->getDefault())) {
@@ -96,7 +96,7 @@ Class Ruleset
     {
         $parameterList = [];
 
-        foreach($parameters as $name => $definition) {
+        foreach ($parameters as $name => $definition) {
             $parameterList[$name] = new RulesetParameter($name, $definition);
         }
 
@@ -107,11 +107,10 @@ Class Ruleset
     {
         $rulesList = [];
 
-        forEach($rules as $rule) {
+        foreach ($rules as $rule) {
             $ruleObj = RuleCreator::create($rule['type'], $rule);
             $rulesList[] = $ruleObj;
         }
         return $rulesList;
     }
 }
-

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Proton;
 
 use Aws\AwsClient;
@@ -158,4 +159,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateTemplateSyncConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTemplateSyncConfigAsync(array $args = [])
  */
-class ProtonClient extends AwsClient {}
+class ProtonClient extends AwsClient
+{
+}

@@ -133,9 +133,13 @@ class RulesetParameter
             $msg = isset($deprecated['message']) ? $deprecated['message'] : null;
             $since = isset($deprecated['since']) ? $deprecated['since'] : null;
 
-            if (!is_null($since)) $deprecationString = $deprecationString
-                . 'since '. $since . '. ';
-            if (!is_null($msg)) $deprecationString = $deprecationString . $msg;
+            if (!is_null($since)) {
+                $deprecationString = $deprecationString
+                    . 'since '. $since . '. ';
+            }
+            if (!is_null($msg)) {
+                $deprecationString = $deprecationString . $msg;
+            }
 
             trigger_error($deprecationString, E_USER_WARNING);
         }

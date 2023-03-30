@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Multipart;
 
 use Aws\Command;
@@ -175,14 +176,16 @@ class AbstractUploaderTest extends TestCase
         $exception = null;
         try {
             $this->getTestUploader('non-existent-file.foobar', $config);
-        } catch (\Exception $exception) {}
+        } catch (\Exception $exception) {
+        }
         $this->assertInstanceOf('RuntimeException', $exception);
 
         // CASE 3: Source stream is not readable.
         $exception = null;
         try {
             $this->getTestUploader(STDERR, $config);
-        } catch (\Exception $exception) {}
+        } catch (\Exception $exception) {
+        }
         $this->assertInstanceOf('InvalidArgumentException', $exception);
     }
 

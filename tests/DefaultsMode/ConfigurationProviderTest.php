@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\DefaultsMode;
 
 use Aws\LruArrayCache;
