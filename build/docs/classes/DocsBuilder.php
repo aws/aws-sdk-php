@@ -912,7 +912,6 @@ EOT;
         ksort($members);
         foreach ($members as $name => $member) {
             $html->open('dt', 'param-def');
-            $html->elem('a', ['href' => '#' . $this->memberSlug($name)], '');
             $html->elem('span', 'term', $name);
             $html->close();
             $html->open('dd', 'param-def');
