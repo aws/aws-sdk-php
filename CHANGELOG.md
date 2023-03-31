@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.1 - 2023-03-31
 
 * `Aws\EC2` - Documentation updates for EC2 On Demand Capacity Reservations
 * `Aws\InternetMonitor` - This release adds a new feature for Amazon CloudWatch Internet Monitor that enables customers to deliver internet measurements to Amazon S3 buckets as well as CloudWatch Logs.
