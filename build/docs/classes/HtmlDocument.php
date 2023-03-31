@@ -32,7 +32,7 @@ class HtmlDocument
     public function section($num, $text, $anchorPrefix = null, $class = null, $label = null)
     {
         $anchor = $this->slug($anchorPrefix . '-' . $text);
-        $ariaLabel = empty($label) ? null : 'aria-label=\"Go to ' . $label . '"';
+        $ariaLabel = empty($label) ? null : 'aria-label="Go to ' . $label . '"';
         //Fixes violation 2
         $link = ' <a ' . $ariaLabel . ' href="#' . $anchor . '" class="anchor-link">' . $this->glyph('link') . '</a>';
         $attrs = ['id' => $anchor];
