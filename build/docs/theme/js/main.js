@@ -8,6 +8,21 @@ $(window).load(function() {
 	var $splitter = $('#splitter');
 	var $groups = $('#groups');
 	var $content = $('#content');
+	var $activatedSideLink = $('#left #menu #groups ul ul .active')
+	var hasFocusedTabindexMinusOne = false;
+
+	//tabindex
+	//checks for active links in sidebar, moves tabindex to active element
+	if ($activatedSideLink) {
+		$activatedSideLink.attr('tabindex', '-1');
+	}
+
+	$document.on('keydown', function(e) {
+		if (!hasFocusedTabindexMinusOne && e.keyCode === 9) {
+			$('[tabindex="-1"]').first().focus();
+			hasFocusedTabindexMinusOne = true
+		}
+	});
 
 	// Menu
 
