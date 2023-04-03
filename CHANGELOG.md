@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.2 - 2023-04-03
 
 * `Aws\Glue` - Add support for database-level federation
 * `Aws\LakeFormation` - Add support for database-level federation
