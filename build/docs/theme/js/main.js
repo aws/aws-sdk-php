@@ -8,21 +8,27 @@ $(window).load(function() {
 	var $splitter = $('#splitter');
 	var $groups = $('#groups');
 	var $content = $('#content');
-	var $activatedSideLink = $('#left #menu #groups ul ul .active')
+	var $activatedSideLink = $('#left #menu .active');
 	var hasFocusedTabindexMinusOne = false;
+	var $skipMenuContent = $('#skip-to-content');
+	var $mainContent = $('#right .page-header h1')
 
-	//tabindex
-	//checks for active links in sidebar, moves tabindex to active element
+	//mechanism for skipping menu content
+	$mainContent.attr('id', 'main-content')
+	$skipMenuContent.click(function(event) {
+		$mainContent.attr('tabindex', -1).focus();
+	});
+
+	//tabindex for menu links
 	if ($activatedSideLink) {
 		$activatedSideLink.attr('tabindex', '-1');
+		$document.on('keydown', function(e) {
+			if (!hasFocusedTabindexMinusOne && e.keyCode === 9) {
+				$activatedSideLink.focus();
+				hasFocusedTabindexMinusOne = true
+			}
+		});
 	}
-
-	$document.on('keydown', function(e) {
-		if (!hasFocusedTabindexMinusOne && e.keyCode === 9) {
-			$('[tabindex="-1"]').first().focus();
-			hasFocusedTabindexMinusOne = true
-		}
-	});
 
 	// Menu
 
