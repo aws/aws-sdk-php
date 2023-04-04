@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AmplifyUIBuilder` - Support StorageField and custom displays for data-bound options in form builder. Support non-string operands for predicates in collections. Support choosing client to get token from.
+* `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling
+* `Aws\DataExchange` - This release updates the value of MaxResults.
+* `Aws\EC2` - C6in, M6in, M6idn, R6in and R6idn bare metal instances are powered by 3rd Generation Intel Xeon Scalable processors and offer up to 200 Gbps of network bandwidth.
+* `Aws\ElasticInference` - Updated public documentation for the Describe and Tagging APIs.
+* `Aws\SageMaker` - Amazon SageMaker Asynchronous Inference now allows customer's to receive failure model responses in S3 and receive success/failure model responses in SNS notifications.
+* `Aws\SageMakerRuntime` - Amazon SageMaker Asynchronous Inference now provides customers a FailureLocation as a response parameter in InvokeEndpointAsync API to capture the model failure responses.
+* `Aws\WAFV2` - This release rolls back association config feature for webACLs that protect CloudFront protections.
+
 ## 3.263.2 - 2023-04-03
 
 * `Aws\Glue` - Add support for database-level federation
