@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppRunner` - App Runner adds support for seven new vCPU and memory configurations.
+* `Aws\ConfigService` - This release adds resourceType enums for types released in March 2023.
+* `Aws\ECS` - This is a document only updated to add information about Amazon Elastic Inference (EI).
+* `Aws\IVSRealTime` - Fix ParticipantToken ExpirationTime format
+* `Aws\IdentityStore` - Documentation updates for Identity Store CLI command reference.
+* `Aws\NetworkFirewall` - AWS Network Firewall now supports IPv6-only subnets.
+* `Aws\ServiceCatalog` - removed incorrect product type value
+* `Aws\VPCLattice` - This release removes the entities in the API doc model package for auth policies.
+
 ## 3.263.3 - 2023-04-04
 
 * `Aws\AmplifyUIBuilder` - Support StorageField and custom displays for data-bound options in form builder. Support non-string operands for predicates in collections. Support choosing client to get token from.
