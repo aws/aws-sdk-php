@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.4 - 2023-04-05
 
 * `Aws\AppRunner` - App Runner adds support for seven new vCPU and memory configurations.
 * `Aws\ConfigService` - This release adds resourceType enums for types released in March 2023.
