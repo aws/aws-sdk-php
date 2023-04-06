@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.5 - 2023-04-06
 
 * `Aws\CloudFormation` - Including UPDATE_COMPLETE as a failed status for DeleteStack waiter.
 * `Aws\GreengrassV2` - Add support for SUCCEEDED value in coreDeviceExecutionStatus field. Documentation updates for Greengrass V2.
