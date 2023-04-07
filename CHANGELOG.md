@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.6 - 2023-04-07
 
 * `Aws\DLM` - Updated timestamp format for GetLifecyclePolicy API
 * `Aws\DocDB` - This release adds a new parameter 'DBClusterParameterGroupName' to 'RestoreDBClusterFromSnapshot' API to associate the name of the DB cluster parameter group while performing restore.
