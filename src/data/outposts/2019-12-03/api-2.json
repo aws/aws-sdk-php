@@ -502,6 +502,13 @@
         "RackElevation":{"shape":"RackElevation"}
       }
     },
+    "AssetState":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "RETIRING"
+      ]
+    },
     "AssetType":{
       "type":"string",
       "enum":["COMPUTE"]
@@ -608,10 +615,19 @@
       "type":"list",
       "member":{"shape":"City"}
     },
+    "ComputeAssetState":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "ISOLATED",
+        "RETIRING"
+      ]
+    },
     "ComputeAttributes":{
       "type":"structure",
       "members":{
-        "HostId":{"shape":"HostId"}
+        "HostId":{"shape":"HostId"},
+        "State":{"shape":"ComputeAssetState"}
       }
     },
     "ConflictException":{
@@ -996,7 +1012,9 @@
         "Quantity":{"shape":"LineItemQuantity"},
         "Status":{"shape":"LineItemStatus"},
         "ShipmentInformation":{"shape":"ShipmentInformation"},
-        "AssetInformationList":{"shape":"LineItemAssetInformationList"}
+        "AssetInformationList":{"shape":"LineItemAssetInformationList"},
+        "PreviousLineItemId":{"shape":"LineItemId"},
+        "PreviousOrderId":{"shape":"OrderId"}
       }
     },
     "LineItemAssetInformation":{
@@ -1046,7 +1064,8 @@
         "INSTALLING",
         "INSTALLED",
         "ERROR",
-        "CANCELLED"
+        "CANCELLED",
+        "REPLACED"
       ]
     },
     "LineItemStatusCounts":{
@@ -1077,6 +1096,11 @@
           "shape":"Token",
           "location":"querystring",
           "locationName":"NextToken"
+        },
+        "StatusFilter":{
+          "shape":"StatusList",
+          "location":"querystring",
+          "locationName":"StatusFilter"
         }
       }
     },
@@ -1315,7 +1339,9 @@
         "LineItems":{"shape":"LineItemListDefinition"},
         "PaymentOption":{"shape":"PaymentOption"},
         "OrderSubmissionDate":{"shape":"ISO8601Timestamp"},
-        "OrderFulfilledDate":{"shape":"ISO8601Timestamp"}
+        "OrderFulfilledDate":{"shape":"ISO8601Timestamp"},
+        "PaymentTerm":{"shape":"PaymentTerm"},
+        "OrderType":{"shape":"OrderType"}
       }
     },
     "OrderId":{
@@ -1431,7 +1457,10 @@
     },
     "PaymentTerm":{
       "type":"string",
-      "enum":["THREE_YEARS"]
+      "enum":[
+        "THREE_YEARS",
+        "ONE_YEAR"
+      ]
     },
     "PostalCode":{
       "type":"string",
@@ -1453,7 +1482,8 @@
       "enum":[
         "POWER_5_KVA",
         "POWER_10_KVA",
-        "POWER_15_KVA"
+        "POWER_15_KVA",
+        "POWER_30_KVA"
       ]
     },
     "PowerFeedDrop":{
@@ -1618,6 +1648,12 @@
       "type":"list",
       "member":{"shape":"StateOrRegion"}
     },
+    "StatusList":{
+      "type":"list",
+      "member":{"shape":"AssetState"},
+      "max":2,
+      "min":1
+    },
     "String":{
       "type":"string",
       "max":1000,
@@ -1693,7 +1729,7 @@
     },
     "Token":{
       "type":"string",
-      "max":1005,
+      "max":2048,
       "min":1,
       "pattern":"^(\\d+)##(\\S+)$"
     },

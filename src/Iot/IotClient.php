@@ -338,6 +338,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listProvisioningTemplateVersionsAsync(array $args = [])
  * @method \Aws\Result listProvisioningTemplates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listProvisioningTemplatesAsync(array $args = [])
+ * @method \Aws\Result listRelatedResourcesForAuditFinding(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRelatedResourcesForAuditFindingAsync(array $args = [])
  * @method \Aws\Result listRoleAliases(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listRoleAliasesAsync(array $args = [])
  * @method \Aws\Result listScheduledAudits(array $args = [])

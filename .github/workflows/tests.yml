@@ -12,11 +12,11 @@ permissions:
 
 jobs:
   run:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       #for each of the following versions of PHP, with and without --prefer-lowest
       matrix:
-        php-versions: ['5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
+        php-versions: ['5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
         composer-options: ['', '--prefer-lowest']
     #set the name for each job
     name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
@@ -25,6 +25,7 @@ jobs:
       AWS_ACCESS_KEY_ID: foo
       AWS_SECRET_ACCESS_KEY: bar
       AWS_CSM_ENABLED: false
+      AWS_SUPPRESS_PHP_DEPRECATION_WARNING: true
     steps:
     #sets up the correct version of PHP with necessary config options
     - name: Setup PHP with Xdebug
@@ -57,9 +58,9 @@ jobs:
       name: PHP 8.x
       run: composer require --dev phpunit/phpunit "^9.5" --no-interaction --prefer-source --with-all-dependencies
 
-    #php 8.1 requirements
+    #php 8.1+ requirements
     - if: ${{ matrix.php-versions >= '8.1' && matrix.composer-options != '' }}
-      name: PHP 8.1
+      name: PHP 8.1+
       run: composer require --dev guzzlehttp/guzzle "^7.3" --no-interaction --prefer-source --with-all-dependencies
 
     #run tests

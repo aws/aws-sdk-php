@@ -73,7 +73,10 @@ class StreamWrapperTest extends TestCase
 
     public function testValidatesArn()
     {
-        $this->expectExceptionMessage("Bucket parameter parsed as ARN and failed with: Provided ARN was not a valid S3 access point ARN");
+        $this->expectExceptionMessage(
+            "Invalid ARN: Unrecognized format:" .
+            " arn:aws:s3:us-east-1:123456789012:foo:myaccess (type: foo)"
+        );
         $this->expectWarning();
         fopen('s3://arn:aws:s3:us-east-1:123456789012:foo:myaccess/test_key', 'r');
     }

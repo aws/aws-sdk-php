@@ -23,10 +23,13 @@
     "ListExtensibleSourceServers": "<p>Returns a list of source servers on a staging account that are extensible, which means that: a. The source server is not already extended into this Account. b. The source server on the Account we’re reading from is not an extension of another source server. </p>",
     "ListStagingAccounts": "<p>Returns an array of staging accounts for existing extended source servers.</p>",
     "ListTagsForResource": "<p>List all tags for your Elastic Disaster Recovery resources.</p>",
-    "RetryDataReplication": "<p>Causes the data replication initiation sequence to begin immediately upon next Handshake for the specified Source Server ID, regardless of when the previous initiation started. This command will work only if the Source Server is stalled or is in a DISCONNECTED or STOPPED state.</p>",
+    "RetryDataReplication": "<p>WARNING: RetryDataReplication is deprecated. Causes the data replication initiation sequence to begin immediately upon next Handshake for the specified Source Server ID, regardless of when the previous initiation started. This command will work only if the Source Server is stalled or is in a DISCONNECTED or STOPPED state. </p>",
+    "ReverseReplication": "<p>Start replication to origin / target region - applies only to protected instances that originated in EC2. For recovery instances on target region - starts replication back to origin region. For failback instances on origin region - starts replication to target region to re-protect them. </p>",
     "StartFailbackLaunch": "<p>Initiates a Job for launching the machine that is being failed back to from the specified Recovery Instance. This will run conversion on the failback client and will reboot your machine, thus completing the failback process.</p>",
     "StartRecovery": "<p>Launches Recovery Instances for the specified Source Servers. For each Source Server you may choose a point in time snapshot to launch from, or use an on demand snapshot.</p>",
+    "StartReplication": "<p>Starts replication for a stopped Source Server. This action would make the Source Server protected again and restart billing for it.</p>",
     "StopFailback": "<p>Stops the failback process for a specified Recovery Instance. This changes the Failback State of the Recovery Instance back to FAILBACK_NOT_STARTED.</p>",
+    "StopReplication": "<p>Stops replication for a Source Server. This action would make the Source Server unprotected, delete its existing snapshots and stop billing for it.</p>",
     "TagResource": "<p>Adds or overwrites only the specified tags for the specified Elastic Disaster Recovery resource or resources. When you specify an existing tag key, the value is overwritten with the new value. Each resource can have a maximum of 50 tags. Each tag consists of a key and optional value.</p>",
     "TerminateRecoveryInstances": "<p>Initiates a Job for terminating the EC2 resources associated with the specified Recovery Instances, and then will delete the Recovery Instances from the Elastic Disaster Recovery service.</p>",
     "UntagResource": "<p>Deletes the specified set of tags from the specified set of Elastic Disaster Recovery resources.</p>",
@@ -72,6 +75,7 @@
         "Account$accountID": "<p>Account ID of AWS account.</p>",
         "AccountIDs$member": null,
         "ListExtensibleSourceServersRequest$stagingAccountID": "<p>The Id of the staging Account to retrieve extensible source servers from.</p>",
+        "SourceCloudProperties$originAccountID": "<p>AWS Account ID for an EC2-originated Source Server.</p>",
         "StagingArea$stagingAccountID": "<p>Account ID of the account to which source server belongs. If this source server is extended - shows Account ID of staging source server.</p>"
       }
     },
@@ -87,11 +91,27 @@
         "ListStagingAccountsResponse$accounts": "<p>An array of staging AWS Accounts.</p>"
       }
     },
+    "AwsAvailabilityZone": {
+      "base": null,
+      "refs": {
+        "DataReplicationInfo$stagingAvailabilityZone": "<p>AWS Availability zone into which data is being replicated.</p>",
+        "RecoveryInstance$originAvailabilityZone": "<p>AWS availability zone associated with the recovery instance.</p>",
+        "RecoveryInstanceDataReplicationInfo$stagingAvailabilityZone": "<p>AWS Availability zone into which data is being replicated.</p>",
+        "SourceCloudProperties$originAvailabilityZone": "<p>AWS Availability Zone for an EC2-originated Source Server.</p>"
+      }
+    },
+    "AwsRegion": {
+      "base": null,
+      "refs": {
+        "SourceCloudProperties$originRegion": "<p>AWS Region for an EC2-originated Source Server.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
         "ConversionProperties$forceUefi": "<p>Whether the volume being converted uses UEFI or not</p>",
         "CreateReplicationConfigurationTemplateRequest$associateDefaultSecurityGroup": "<p>Whether to associate the default Elastic Disaster Recovery Security group with the Replication Configuration Template.</p>",
+        "CreateReplicationConfigurationTemplateRequest$autoReplicateNewDisks": "<p>Whether to allow the AWS replication agent to automatically replicate newly added disks.</p>",
         "CreateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Whether to create a Public IP for the Recovery Instance by default.</p>",
         "CreateReplicationConfigurationTemplateRequest$useDedicatedReplicationServer": "<p>Whether to use a dedicated Replication Server in the replication staging area.</p>",
         "GetFailbackReplicationConfigurationResponse$usePrivateIP": "<p>Whether to use Private IP for the failback replication of the Recovery Instance.</p>",
@@ -103,10 +123,12 @@
         "RecoveryInstance$isDrill": "<p>Whether this Recovery Instance was created for a drill or for an actual Recovery event.</p>",
         "RecoveryInstanceFailback$failbackToOriginalServer": "<p>Whether we are failing back to the original Source Server for this Recovery Instance.</p>",
         "ReplicationConfiguration$associateDefaultSecurityGroup": "<p>Whether to associate the default Elastic Disaster Recovery Security group with the Replication Configuration.</p>",
+        "ReplicationConfiguration$autoReplicateNewDisks": "<p>Whether to allow the AWS replication agent to automatically replicate newly added disks.</p>",
         "ReplicationConfiguration$createPublicIP": "<p>Whether to create a Public IP for the Recovery Instance by default.</p>",
         "ReplicationConfiguration$useDedicatedReplicationServer": "<p>Whether to use a dedicated Replication Server in the replication staging area.</p>",
         "ReplicationConfigurationReplicatedDisk$isBootDisk": "<p>Whether to boot from this disk or not.</p>",
         "ReplicationConfigurationTemplate$associateDefaultSecurityGroup": "<p>Whether to associate the default Elastic Disaster Recovery Security group with the Replication Configuration Template.</p>",
+        "ReplicationConfigurationTemplate$autoReplicateNewDisks": "<p>Whether to allow the AWS replication agent to automatically replicate newly added disks.</p>",
         "ReplicationConfigurationTemplate$createPublicIP": "<p>Whether to create a Public IP for the Recovery Instance by default.</p>",
         "ReplicationConfigurationTemplate$useDedicatedReplicationServer": "<p>Whether to use a dedicated Replication Server in the replication staging area.</p>",
         "StartRecoveryRequest$isDrill": "<p>Whether this Source Server Recovery operation is a drill or not.</p>",
@@ -114,9 +136,11 @@
         "UpdateLaunchConfigurationRequest$copyPrivateIp": "<p>Whether we should copy the Private IP of the Source Server to the Recovery Instance.</p>",
         "UpdateLaunchConfigurationRequest$copyTags": "<p>Whether we want to copy the tags of the Source Server to the EC2 machine of the Recovery Instance.</p>",
         "UpdateReplicationConfigurationRequest$associateDefaultSecurityGroup": "<p>Whether to associate the default Elastic Disaster Recovery Security group with the Replication Configuration.</p>",
+        "UpdateReplicationConfigurationRequest$autoReplicateNewDisks": "<p>Whether to allow the AWS replication agent to automatically replicate newly added disks.</p>",
         "UpdateReplicationConfigurationRequest$createPublicIP": "<p>Whether to create a Public IP for the Recovery Instance by default.</p>",
         "UpdateReplicationConfigurationRequest$useDedicatedReplicationServer": "<p>Whether to use a dedicated Replication Server in the replication staging area.</p>",
         "UpdateReplicationConfigurationTemplateRequest$associateDefaultSecurityGroup": "<p>Whether to associate the default Elastic Disaster Recovery Security group with the Replication Configuration Template.</p>",
+        "UpdateReplicationConfigurationTemplateRequest$autoReplicateNewDisks": "<p>Whether to allow the AWS replication agent to automatically replicate newly added disks.</p>",
         "UpdateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Whether to create a Public IP for the Recovery Instance by default.</p>",
         "UpdateReplicationConfigurationTemplateRequest$useDedicatedReplicationServer": "<p>Whether to use a dedicated Replication Server in the replication staging area.</p>"
       }
@@ -440,6 +464,14 @@
         "UpdateReplicationConfigurationTemplateRequest$replicationServerInstanceType": "<p>The instance type to be used for the replication server.</p>"
       }
     },
+    "EbsSnapshot": {
+      "base": null,
+      "refs": {
+        "ConversionMap$key": null,
+        "ConversionMap$value": null,
+        "EbsSnapshotsList$member": null
+      }
+    },
     "EbsSnapshotsList": {
       "base": null,
       "refs": {
@@ -456,6 +488,12 @@
       "base": null,
       "refs": {
         "StagingArea$status": "<p>Status of Source server extension. Possible values: (a) NOT_EXTENDED - This is a source server that is replicating in the current account. (b) EXTENDED - Source server is extended from a staging source server. In this case, the value of stagingSourceServerArn is pointing to the Arn of the source server in the staging account. (c) EXTENSION_ERROR - Some issue occurred when accessing staging source server. In this case, errorMessage field will contain an error message that explains what happened.</p>"
+      }
+    },
+    "FailbackLaunchType": {
+      "base": null,
+      "refs": {
+        "RecoveryInstanceFailback$failbackLaunchType": "<p>The launch type (Recovery / Drill) of the last launch for the failback replication of this recovery instance.</p>"
       }
     },
     "FailbackReplicationError": {
@@ -693,6 +731,7 @@
     "LaunchStatus": {
       "base": null,
       "refs": {
+        "LifeCycleLastLaunch$status": "<p>Status of Source Server's last launch.</p>",
         "ParticipatingServer$launchStatus": "<p>The launch status of a participating server.</p>"
       }
     },
@@ -781,6 +820,12 @@
       "refs": {
         "RecoveryInstanceProperties$os": "<p>Operating system.</p>",
         "SourceProperties$os": "<p>Operating system.</p>"
+      }
+    },
+    "OriginEnvironment": {
+      "base": null,
+      "refs": {
+        "RecoveryInstance$originEnvironment": "<p>Environment (On Premises / AWS) of the instance that the recovery instance originated from.</p>"
       }
     },
     "PITPolicy": {
@@ -963,6 +1008,7 @@
         "RecoveryInstance$recoveryInstanceID": "<p>The ID of the Recovery Instance.</p>",
         "RecoveryInstanceIDs$member": null,
         "RecoveryInstancesForTerminationRequest$member": null,
+        "ReverseReplicationRequest$recoveryInstanceID": "<p>The ID of the Recovery Instance that we want to reverse the replication for.</p>",
         "SourceServer$recoveryInstanceId": "<p>The ID of the Recovery Instance associated with this Source Server.</p>",
         "StartFailbackRequestRecoveryInstanceIDs$member": null,
         "StopFailbackRequest$recoveryInstanceID": "<p>The ID of the Recovery Instance we want to stop failback for.</p>",
@@ -1094,6 +1140,12 @@
         "DescribeReplicationConfigurationTemplatesResponse$items": "<p>An array of Replication Configuration Templates.</p>"
       }
     },
+    "ReplicationDirection": {
+      "base": "<p>Replication direction designates if this is a failover replication, or a failback replication. When a DRS agent is installed on an instance, the replication direction is failover. In cases where a recovery launch was made in the recovery location and a new recovery instance was created, and then a failback replication was initiated from that recovery instance back to the origin location, then the replication direction will be failback.</p>",
+      "refs": {
+        "SourceServer$replicationDirection": "<p>Replication direction of the Source Server.</p>"
+      }
+    },
     "ReplicationServersSecurityGroupsIDs": {
       "base": null,
       "refs": {
@@ -1110,6 +1162,16 @@
       }
     },
     "RetryDataReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ReverseReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ReverseReplicationResponse": {
       "base": null,
       "refs": {
       }
@@ -1134,6 +1196,12 @@
         "UpdateReplicationConfigurationRequest$name": "<p>The name of the Replication Configuration.</p>"
       }
     },
+    "SourceCloudProperties": {
+      "base": "<p>Properties of the cloud environment where this Source Server originated from.</p>",
+      "refs": {
+        "SourceServer$sourceCloudProperties": "<p>Source cloud properties of the Source Server.</p>"
+      }
+    },
     "SourceProperties": {
       "base": "<p>Properties of the Source Server machine.</p>",
       "refs": {
@@ -1144,13 +1212,17 @@
       "base": null,
       "refs": {
         "CreateExtendedSourceServerResponse$sourceServer": "<p>Created extended source server.</p>",
-        "SourceServersList$member": null
+        "SourceServersList$member": null,
+        "StartReplicationResponse$sourceServer": "<p>The Source Server that this action was targeted on.</p>",
+        "StopReplicationResponse$sourceServer": "<p>The Source Server that this action was targeted on.</p>"
       }
     },
     "SourceServerARN": {
       "base": null,
       "refs": {
         "CreateExtendedSourceServerRequest$sourceServerArn": "<p>This defines the ARN of the source server in staging Account based on which you want to create an extended source server.</p>",
+        "ReverseReplicationResponse$reversedDirectionSourceServerArn": "<p>ARN of created SourceServer.</p>",
+        "SourceServer$reversedDirectionSourceServerArn": "<p>For EC2-originated Source Servers which have been failed over and then failed back, this value will mean the ARN of the Source Server on the opposite replication direction.</p>",
         "StagingSourceServer$arn": "<p>The ARN of the source server.</p>"
       }
     },
@@ -1173,6 +1245,8 @@
         "SourceServer$sourceServerID": "<p>The ID of the Source Server.</p>",
         "SourceServerIDs$member": null,
         "StartRecoveryRequestSourceServer$sourceServerID": "<p>The ID of the Source Server you want to recover.</p>",
+        "StartReplicationRequest$sourceServerID": "<p>The ID of the Source Server to start replication for.</p>",
+        "StopReplicationRequest$sourceServerID": "<p>The ID of the Source Server to stop replication for.</p>",
         "UpdateLaunchConfigurationRequest$sourceServerID": "<p>The ID of the Source Server that we want to retrieve a Launch Configuration for.</p>",
         "UpdateReplicationConfigurationRequest$sourceServerID": "<p>The ID of the Source Server for this Replication Configuration.</p>"
       }
@@ -1245,7 +1319,27 @@
       "refs": {
       }
     },
+    "StartReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartReplicationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StopFailbackRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopReplicationResponse": {
       "base": null,
       "refs": {
       }
@@ -1403,14 +1497,6 @@
       "base": null,
       "refs": {
         "ConversionProperties$volumeToVolumeSize": "<p>A mapping between the volumes and their sizes</p>"
-      }
-    },
-    "ebsSnapshot": {
-      "base": null,
-      "refs": {
-        "ConversionMap$key": null,
-        "ConversionMap$value": null,
-        "EbsSnapshotsList$member": null
       }
     }
   }

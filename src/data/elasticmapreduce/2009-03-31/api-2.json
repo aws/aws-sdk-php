@@ -264,6 +264,19 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "GetClusterSessionCredentials":{
+      "name":"GetClusterSessionCredentials",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetClusterSessionCredentialsInput"},
+      "output":{"shape":"GetClusterSessionCredentialsOutput"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidRequestException"}
+      ]
+    },
     "GetManagedScalingPolicy":{
       "name":"GetManagedScalingPolicy",
       "http":{
@@ -994,7 +1007,8 @@
       "members":{
         "State":{"shape":"ClusterState"},
         "StateChangeReason":{"shape":"ClusterStateChangeReason"},
-        "Timeline":{"shape":"ClusterTimeline"}
+        "Timeline":{"shape":"ClusterTimeline"},
+        "ErrorDetails":{"shape":"ErrorDetailList"}
       }
     },
     "ClusterSummary":{
@@ -1147,6 +1161,13 @@
         "IdentityType":{"shape":"IdentityType"},
         "SessionPolicyArn":{"shape":"XmlStringMaxLen256"}
       }
+    },
+    "Credentials":{
+      "type":"structure",
+      "members":{
+        "UsernamePassword":{"shape":"UsernamePassword"}
+      },
+      "union":true
     },
     "Date":{"type":"timestamp"},
     "DeleteSecurityConfigurationInput":{
@@ -1354,6 +1375,22 @@
       "max":256,
       "min":1
     },
+    "ErrorData":{
+      "type":"list",
+      "member":{"shape":"StringMap"}
+    },
+    "ErrorDetail":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"String"},
+        "ErrorData":{"shape":"ErrorData"},
+        "ErrorMessage":{"shape":"String"}
+      }
+    },
+    "ErrorDetailList":{
+      "type":"list",
+      "member":{"shape":"ErrorDetail"}
+    },
     "ErrorMessage":{"type":"string"},
     "ExecutionEngineConfig":{
       "type":"structure",
@@ -1403,6 +1440,24 @@
       "members":{
         "BlockPublicAccessConfiguration":{"shape":"BlockPublicAccessConfiguration"},
         "BlockPublicAccessConfigurationMetadata":{"shape":"BlockPublicAccessConfigurationMetadata"}
+      }
+    },
+    "GetClusterSessionCredentialsInput":{
+      "type":"structure",
+      "required":[
+        "ClusterId",
+        "ExecutionRoleArn"
+      ],
+      "members":{
+        "ClusterId":{"shape":"XmlStringMaxLen256"},
+        "ExecutionRoleArn":{"shape":"ArnType"}
+      }
+    },
+    "GetClusterSessionCredentialsOutput":{
+      "type":"structure",
+      "members":{
+        "Credentials":{"shape":"Credentials"},
+        "ExpiresAt":{"shape":"Date"}
       }
     },
     "GetManagedScalingPolicyInput":{
@@ -1499,7 +1554,8 @@
         "ProvisionedOnDemandCapacity":{"shape":"WholeNumber"},
         "ProvisionedSpotCapacity":{"shape":"WholeNumber"},
         "InstanceTypeSpecifications":{"shape":"InstanceTypeSpecificationList"},
-        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"}
+        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"},
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
       }
     },
     "InstanceFleetConfig":{
@@ -1511,7 +1567,8 @@
         "TargetOnDemandCapacity":{"shape":"WholeNumber"},
         "TargetSpotCapacity":{"shape":"WholeNumber"},
         "InstanceTypeConfigs":{"shape":"InstanceTypeConfigList"},
-        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"}
+        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"},
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
       }
     },
     "InstanceFleetConfigList":{
@@ -1529,7 +1586,8 @@
       "members":{
         "InstanceFleetId":{"shape":"InstanceFleetId"},
         "TargetOnDemandCapacity":{"shape":"WholeNumber"},
-        "TargetSpotCapacity":{"shape":"WholeNumber"}
+        "TargetSpotCapacity":{"shape":"WholeNumber"},
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
       }
     },
     "InstanceFleetProvisioningSpecifications":{
@@ -1537,6 +1595,13 @@
       "members":{
         "SpotSpecification":{"shape":"SpotProvisioningSpecification"},
         "OnDemandSpecification":{"shape":"OnDemandProvisioningSpecification"}
+      }
+    },
+    "InstanceFleetResizingSpecifications":{
+      "type":"structure",
+      "members":{
+        "SpotResizeSpecification":{"shape":"SpotResizingSpecification"},
+        "OnDemandResizeSpecification":{"shape":"OnDemandResizingSpecification"}
       }
     },
     "InstanceFleetState":{
@@ -2350,6 +2415,13 @@
         "CapacityReservationOptions":{"shape":"OnDemandCapacityReservationOptions"}
       }
     },
+    "OnDemandResizingSpecification":{
+      "type":"structure",
+      "required":["TimeoutDurationMinutes"],
+      "members":{
+        "TimeoutDurationMinutes":{"shape":"WholeNumber"}
+      }
+    },
     "OptionalArnType":{
       "type":"string",
       "max":2048,
@@ -2760,6 +2832,13 @@
         "TERMINATE_CLUSTER"
       ]
     },
+    "SpotResizingSpecification":{
+      "type":"structure",
+      "required":["TimeoutDurationMinutes"],
+      "members":{
+        "TimeoutDurationMinutes":{"shape":"WholeNumber"}
+      }
+    },
     "StartNotebookExecutionInput":{
       "type":"structure",
       "required":[
@@ -3082,6 +3161,14 @@
         "IdentityType":{"shape":"IdentityType"},
         "SessionPolicyArn":{"shape":"XmlStringMaxLen256"}
       }
+    },
+    "UsernamePassword":{
+      "type":"structure",
+      "members":{
+        "Username":{"shape":"XmlStringMaxLen256"},
+        "Password":{"shape":"XmlStringMaxLen256"}
+      },
+      "sensitive":true
     },
     "VolumeSpecification":{
       "type":"structure",

@@ -19,6 +19,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeWorkspaceAsync(array $args = [])
  * @method \Aws\Result describeWorkspaceAuthentication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeWorkspaceAuthenticationAsync(array $args = [])
+ * @method \Aws\Result describeWorkspaceConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeWorkspaceConfigurationAsync(array $args = [])
  * @method \Aws\Result disassociateLicense(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateLicenseAsync(array $args = [])
  * @method \Aws\Result listPermissions(array $args = [])
@@ -37,5 +39,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateWorkspaceAsync(array $args = [])
  * @method \Aws\Result updateWorkspaceAuthentication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkspaceAuthenticationAsync(array $args = [])
+ * @method \Aws\Result updateWorkspaceConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateWorkspaceConfigurationAsync(array $args = [])
  */
 class ManagedGrafanaClient extends AwsClient {}

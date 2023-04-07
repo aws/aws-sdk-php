@@ -42,7 +42,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateApplication":{
@@ -58,7 +59,8 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateAttributeGroup":{
@@ -130,7 +132,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetApplication":{
@@ -176,6 +179,17 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "GetConfiguration":{
+      "name":"GetConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/configuration"
+      },
+      "output":{"shape":"GetConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"}
       ]
     },
     "ListApplications":{
@@ -265,6 +279,19 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "PutConfiguration":{
+      "name":"PutConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/configuration"
+      },
+      "input":{"shape":"PutConfigurationRequest"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "SyncResource":{
       "name":"SyncResource",
       "http":{
@@ -276,7 +303,9 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
       ]
     },
     "TagResource":{
@@ -318,8 +347,9 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ValidationException"}
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateAttributeGroup":{
@@ -339,6 +369,12 @@
     }
   },
   "shapes":{
+    "AppRegistryConfiguration":{
+      "type":"structure",
+      "members":{
+        "tagQueryConfiguration":{"shape":"TagQueryConfiguration"}
+      }
+    },
     "Application":{
       "type":"structure",
       "members":{
@@ -365,7 +401,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"[-.\\w]+"
+      "pattern":"([-.\\w]+)|(arn:aws[-a-z]*:servicecatalog:[a-z]{2}(-gov)?-[a-z]+-\\d:\\d{12}:/applications/[-.\\w]+)"
     },
     "ApplicationSummaries":{
       "type":"list",
@@ -464,14 +500,19 @@
     },
     "AttributeGroupArn":{
       "type":"string",
-      "pattern":"arn:aws[-a-z]*:servicecatalog:[a-z]{2}(-gov)?-[a-z]+-\\d:\\d{12}:/attribute-groups/[a-z0-9]+"
+      "pattern":"arn:aws[-a-z]*:servicecatalog:[a-z]{2}(-gov)?-[a-z]+-\\d:\\d{12}:/attribute-groups/[-.\\w]+"
     },
     "AttributeGroupDetails":{
       "type":"structure",
       "members":{
         "id":{"shape":"AttributeGroupId"},
         "arn":{"shape":"AttributeGroupArn"},
-        "name":{"shape":"Name"}
+        "name":{
+          "shape":"Name",
+          "deprecated":true,
+          "deprecatedMessage":"This field is deprecated. We recommend not using the field when using ListAttributeGroupsForApplication."
+        },
+        "createdBy":{"shape":"CreatedBy"}
       }
     },
     "AttributeGroupDetailsList":{
@@ -480,9 +521,9 @@
     },
     "AttributeGroupId":{
       "type":"string",
-      "max":26,
-      "min":26,
-      "pattern":"[a-z0-9]+"
+      "max":256,
+      "min":1,
+      "pattern":"[-.\\w]+"
     },
     "AttributeGroupIds":{
       "type":"list",
@@ -490,9 +531,9 @@
     },
     "AttributeGroupSpecifier":{
       "type":"string",
-      "max":256,
+      "max":512,
       "min":1,
-      "pattern":"[-.\\w]+"
+      "pattern":"([-.\\w]+)|(arn:aws[-a-z]*:servicecatalog:[a-z]{2}(-gov)?-[a-z]+-\\d:\\d{12}:/attribute-groups/[-.\\w]+)"
     },
     "AttributeGroupSummaries":{
       "type":"list",
@@ -506,7 +547,8 @@
         "name":{"shape":"Name"},
         "description":{"shape":"Description"},
         "creationTime":{"shape":"Timestamp"},
-        "lastUpdateTime":{"shape":"Timestamp"}
+        "lastUpdateTime":{"shape":"Timestamp"},
+        "createdBy":{"shape":"CreatedBy"}
       }
     },
     "Attributes":{
@@ -574,6 +616,12 @@
       "members":{
         "attributeGroup":{"shape":"AttributeGroup"}
       }
+    },
+    "CreatedBy":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(?!-)([a-z0-9-]+\\.)+(aws\\.internal|amazonaws\\.com(\\.cn)?)$"
     },
     "DeleteApplicationRequest":{
       "type":"structure",
@@ -748,7 +796,14 @@
         "attributes":{"shape":"Attributes"},
         "creationTime":{"shape":"Timestamp"},
         "lastUpdateTime":{"shape":"Timestamp"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "createdBy":{"shape":"CreatedBy"}
+      }
+    },
+    "GetConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "configuration":{"shape":"AppRegistryConfiguration"}
       }
     },
     "Integrations":{
@@ -918,7 +973,7 @@
     },
     "MaxResults":{
       "type":"integer",
-      "max":25,
+      "max":100,
       "min":1
     },
     "Name":{
@@ -933,6 +988,13 @@
       "min":1,
       "pattern":"[A-Za-z0-9+/=]+"
     },
+    "PutConfigurationRequest":{
+      "type":"structure",
+      "required":["configuration"],
+      "members":{
+        "configuration":{"shape":"AppRegistryConfiguration"}
+      }
+    },
     "Resource":{
       "type":"structure",
       "members":{
@@ -940,6 +1002,12 @@
         "arn":{"shape":"StackArn"},
         "associationTime":{"shape":"Timestamp"},
         "integrations":{"shape":"ResourceIntegrations"}
+      }
+    },
+    "ResourceDetails":{
+      "type":"structure",
+      "members":{
+        "tagValue":{"shape":"TagValue"}
       }
     },
     "ResourceGroup":{
@@ -965,7 +1033,9 @@
       "type":"structure",
       "members":{
         "name":{"shape":"ResourceSpecifier"},
-        "arn":{"shape":"StackArn"}
+        "arn":{"shape":"Arn"},
+        "resourceType":{"shape":"ResourceType"},
+        "resourceDetails":{"shape":"ResourceDetails"}
       }
     },
     "ResourceIntegrations":{
@@ -990,7 +1060,10 @@
     },
     "ResourceType":{
       "type":"string",
-      "enum":["CFN_STACK"]
+      "enum":[
+        "CFN_STACK",
+        "RESOURCE_TAG_VALUE"
+      ]
     },
     "Resources":{
       "type":"list",
@@ -1047,13 +1120,25 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"(?!aws:)[a-zA-Z+-=._:/]+"
+      "pattern":"[a-zA-Z+-=._:/]+"
+    },
+    "TagKeyConfig":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^(?!\\s+$)[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*"
     },
     "TagKeys":{
       "type":"list",
       "member":{"shape":"TagKey"},
       "max":50,
       "min":0
+    },
+    "TagQueryConfiguration":{
+      "type":"structure",
+      "members":{
+        "tagKey":{"shape":"TagKeyConfig"}
+      }
     },
     "TagResourceRequest":{
       "type":"structure",
@@ -1086,6 +1171,16 @@
       "value":{"shape":"TagValue"},
       "max":50,
       "min":0
+    },
+    "ThrottlingException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"},
+        "serviceCode":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":429},
+      "exception":true
     },
     "Timestamp":{
       "type":"timestamp",

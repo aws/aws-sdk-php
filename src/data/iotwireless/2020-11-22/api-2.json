@@ -471,6 +471,24 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DeleteWirelessDeviceImportTask":{
+      "name":"DeleteWirelessDeviceImportTask",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/wireless_device_import_task/{Id}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteWirelessDeviceImportTaskRequest"},
+      "output":{"shape":"DeleteWirelessDeviceImportTaskResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DeleteWirelessGateway":{
       "name":"DeleteWirelessGateway",
       "http":{
@@ -517,6 +535,21 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeregisterWirelessDevice":{
+      "name":"DeregisterWirelessDevice",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/wireless-devices/{Identifier}/deregister"
+      },
+      "input":{"shape":"DeregisterWirelessDeviceRequest"},
+      "output":{"shape":"DeregisterWirelessDeviceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
@@ -800,7 +833,9 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "GetPositionConfiguration":{
       "name":"GetPositionConfiguration",
@@ -811,6 +846,24 @@
       },
       "input":{"shape":"GetPositionConfigurationRequest"},
       "output":{"shape":"GetPositionConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
+    },
+    "GetPositionEstimate":{
+      "name":"GetPositionEstimate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/position-estimate"
+      },
+      "input":{"shape":"GetPositionEstimateRequest"},
+      "output":{"shape":"GetPositionEstimateResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -850,6 +903,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "GetResourcePosition":{
+      "name":"GetResourcePosition",
+      "http":{
+        "method":"GET",
+        "requestUri":"/resource-positions/{ResourceIdentifier}"
+      },
+      "input":{"shape":"GetResourcePositionRequest"},
+      "output":{"shape":"GetResourcePositionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "GetServiceEndpoint":{
@@ -896,6 +965,23 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetWirelessDeviceImportTask":{
+      "name":"GetWirelessDeviceImportTask",
+      "http":{
+        "method":"GET",
+        "requestUri":"/wireless_device_import_task/{Id}"
+      },
+      "input":{"shape":"GetWirelessDeviceImportTaskRequest"},
+      "output":{"shape":"GetWirelessDeviceImportTaskResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -1043,6 +1129,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListDevicesForWirelessDeviceImportTask":{
+      "name":"ListDevicesForWirelessDeviceImportTask",
+      "http":{
+        "method":"GET",
+        "requestUri":"/wireless_device_import_task"
+      },
+      "input":{"shape":"ListDevicesForWirelessDeviceImportTaskRequest"},
+      "output":{"shape":"ListDevicesForWirelessDeviceImportTaskResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListEventConfigurations":{
       "name":"ListEventConfigurations",
       "http":{
@@ -1148,7 +1251,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "ListQueuedMessages":{
       "name":"ListQueuedMessages",
@@ -1194,6 +1299,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListWirelessDeviceImportTasks":{
+      "name":"ListWirelessDeviceImportTasks",
+      "http":{
+        "method":"GET",
+        "requestUri":"/wireless_device_import_tasks"
+      },
+      "input":{"shape":"ListWirelessDeviceImportTasksRequest"},
+      "output":{"shape":"ListWirelessDeviceImportTasksResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -1257,7 +1379,9 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "PutResourceLogLevel":{
       "name":"PutResourceLogLevel",
@@ -1411,6 +1535,42 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "StartSingleWirelessDeviceImportTask":{
+      "name":"StartSingleWirelessDeviceImportTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/wireless_single_device_import_task",
+        "responseCode":201
+      },
+      "input":{"shape":"StartSingleWirelessDeviceImportTaskRequest"},
+      "output":{"shape":"StartSingleWirelessDeviceImportTaskResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "StartWirelessDeviceImportTask":{
+      "name":"StartWirelessDeviceImportTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/wireless_device_import_task",
+        "responseCode":201
+      },
+      "input":{"shape":"StartWirelessDeviceImportTaskRequest"},
+      "output":{"shape":"StartWirelessDeviceImportTaskResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -1600,7 +1760,9 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "UpdateResourceEventConfiguration":{
       "name":"UpdateResourceEventConfiguration",
@@ -1620,6 +1782,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateResourcePosition":{
+      "name":"UpdateResourcePosition",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/resource-positions/{ResourceIdentifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"UpdateResourcePositionRequest"},
+      "output":{"shape":"UpdateResourcePositionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateWirelessDevice":{
       "name":"UpdateWirelessDevice",
       "http":{
@@ -1634,6 +1813,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UpdateWirelessDeviceImportTask":{
+      "name":"UpdateWirelessDeviceImportTask",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/wireless_device_import_task/{Id}",
+        "responseCode":204
+      },
+      "input":{"shape":"UpdateWirelessDeviceImportTaskRequest"},
+      "output":{"shape":"UpdateWirelessDeviceImportTaskResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -1703,6 +1900,10 @@
       "max":1011,
       "min":1
     },
+    "ApId":{
+      "type":"string",
+      "max":256
+    },
     "AppEui":{
       "type":"string",
       "pattern":"[a-fA-F0-9]{16}"
@@ -1721,6 +1922,35 @@
       "min":1,
       "pattern":"[a-fA-F0-9]{64}",
       "sensitive":true
+    },
+    "ApplicationConfig":{
+      "type":"structure",
+      "members":{
+        "FPort":{"shape":"FPort"},
+        "Type":{"shape":"ApplicationConfigType"},
+        "DestinationName":{"shape":"DestinationName"}
+      }
+    },
+    "ApplicationConfigType":{
+      "type":"string",
+      "enum":["SemtechGeolocation"]
+    },
+    "ApplicationServerPublicKey":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "pattern":"[a-fA-F0-9]{64}",
+      "sensitive":true
+    },
+    "Applications":{
+      "type":"list",
+      "member":{"shape":"ApplicationConfig"}
+    },
+    "AssistPosition":{
+      "type":"list",
+      "member":{"shape":"Coordinate"},
+      "max":2,
+      "min":2
     },
     "AssociateAwsAccountWithPartnerAccountRequest":{
       "type":"structure",
@@ -1863,6 +2093,31 @@
       }
     },
     "AutoCreateTasks":{"type":"boolean"},
+    "BCCH":{
+      "type":"integer",
+      "max":1023,
+      "min":0
+    },
+    "BSIC":{
+      "type":"integer",
+      "max":63,
+      "min":0
+    },
+    "BaseLat":{
+      "type":"float",
+      "max":90,
+      "min":-90
+    },
+    "BaseLng":{
+      "type":"float",
+      "max":180,
+      "min":-180
+    },
+    "BaseStationId":{
+      "type":"integer",
+      "max":65535,
+      "min":0
+    },
     "BatteryLevel":{
       "type":"string",
       "enum":[
@@ -1908,6 +2163,82 @@
     "CancelMulticastGroupSessionResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "CaptureTimeAccuracy":{"type":"float"},
+    "CdmaChannel":{
+      "type":"integer",
+      "max":4095,
+      "min":0
+    },
+    "CdmaList":{
+      "type":"list",
+      "member":{"shape":"CdmaObj"},
+      "max":16,
+      "min":1
+    },
+    "CdmaLocalId":{
+      "type":"structure",
+      "required":[
+        "PnOffset",
+        "CdmaChannel"
+      ],
+      "members":{
+        "PnOffset":{"shape":"PnOffset"},
+        "CdmaChannel":{"shape":"CdmaChannel"}
+      }
+    },
+    "CdmaNmrList":{
+      "type":"list",
+      "member":{"shape":"CdmaNmrObj"},
+      "max":32,
+      "min":1
+    },
+    "CdmaNmrObj":{
+      "type":"structure",
+      "required":[
+        "PnOffset",
+        "CdmaChannel"
+      ],
+      "members":{
+        "PnOffset":{"shape":"PnOffset"},
+        "CdmaChannel":{"shape":"CdmaChannel"},
+        "PilotPower":{"shape":"PilotPower"},
+        "BaseStationId":{"shape":"BaseStationId"}
+      }
+    },
+    "CdmaObj":{
+      "type":"structure",
+      "required":[
+        "SystemId",
+        "NetworkId",
+        "BaseStationId"
+      ],
+      "members":{
+        "SystemId":{"shape":"SystemId"},
+        "NetworkId":{"shape":"NetworkId"},
+        "BaseStationId":{"shape":"BaseStationId"},
+        "RegistrationZone":{"shape":"RegistrationZone"},
+        "CdmaLocalId":{"shape":"CdmaLocalId"},
+        "PilotPower":{"shape":"PilotPower"},
+        "BaseLat":{"shape":"BaseLat"},
+        "BaseLng":{"shape":"BaseLng"},
+        "CdmaNmr":{"shape":"CdmaNmrList"}
+      }
+    },
+    "CellParams":{
+      "type":"integer",
+      "max":127,
+      "min":0
+    },
+    "CellTowers":{
+      "type":"structure",
+      "members":{
+        "Gsm":{"shape":"GsmList"},
+        "Wcdma":{"shape":"WcdmaList"},
+        "Tdscdma":{"shape":"TdscdmaList"},
+        "Lte":{"shape":"LteList"},
+        "Cdma":{"shape":"CdmaList"}
       }
     },
     "CertificateList":{
@@ -1982,6 +2313,7 @@
         "LoRaWAN":{"shape":"LoRaWANConnectionStatusResourceTypeEventConfiguration"}
       }
     },
+    "Coordinate":{"type":"float"},
     "Crc":{
       "type":"long",
       "max":4294967295,
@@ -2024,7 +2356,8 @@
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
           "idempotencyToken":true
-        }
+        },
+        "Sidewalk":{"shape":"SidewalkCreateDeviceProfile"}
       }
     },
     "CreateDeviceProfileResponse":{
@@ -2050,7 +2383,10 @@
         "LoRaWAN":{"shape":"LoRaWANFuotaTask"},
         "FirmwareUpdateImage":{"shape":"FirmwareUpdateImage"},
         "FirmwareUpdateRole":{"shape":"FirmwareUpdateRole"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "RedundancyPercent":{"shape":"RedundancyPercent"},
+        "FragmentSizeBytes":{"shape":"FragmentSizeBytes"},
+        "FragmentIntervalMS":{"shape":"FragmentIntervalMS"}
       }
     },
     "CreateFuotaTaskResponse":{
@@ -2139,7 +2475,9 @@
           "idempotencyToken":true
         },
         "LoRaWAN":{"shape":"LoRaWANDevice"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "Positioning":{"shape":"PositioningConfigStatus"},
+        "Sidewalk":{"shape":"SidewalkCreateWirelessDevice"}
       }
     },
     "CreateWirelessDeviceResponse":{
@@ -2214,6 +2552,30 @@
       }
     },
     "CreatedAt":{"type":"timestamp"},
+    "CreationDate":{"type":"timestamp"},
+    "CreationTime":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
+    "DakCertificateId":{
+      "type":"string",
+      "max":256
+    },
+    "DakCertificateMetadata":{
+      "type":"structure",
+      "required":["CertificateId"],
+      "members":{
+        "CertificateId":{"shape":"DakCertificateId"},
+        "MaxAllowedSignature":{"shape":"MaxAllowedSignature"},
+        "FactorySupport":{"shape":"FactorySupport"},
+        "ApId":{"shape":"ApId"},
+        "DeviceTypeId":{"shape":"DeviceTypeId"}
+      }
+    },
+    "DakCertificateMetadataList":{
+      "type":"list",
+      "member":{"shape":"DakCertificateMetadata"}
+    },
     "DeleteDestinationRequest":{
       "type":"structure",
       "required":["Name"],
@@ -2339,6 +2701,22 @@
       "members":{
       }
     },
+    "DeleteWirelessDeviceImportTaskRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"ImportTaskId",
+          "location":"uri",
+          "locationName":"Id"
+        }
+      }
+    },
+    "DeleteWirelessDeviceImportTaskResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteWirelessDeviceRequest":{
       "type":"structure",
       "required":["Id"],
@@ -2403,6 +2781,27 @@
       "members":{
       }
     },
+    "DeregisterWirelessDeviceRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"Identifier"
+        },
+        "WirelessDeviceType":{
+          "shape":"WirelessDeviceType",
+          "location":"querystring",
+          "locationName":"WirelessDeviceType"
+        }
+      }
+    },
+    "DeregisterWirelessDeviceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "Description":{
       "type":"string",
       "max":2048
@@ -2445,6 +2844,15 @@
       "type":"list",
       "member":{"shape":"CertificateList"}
     },
+    "DeviceCreationFile":{
+      "type":"string",
+      "max":1024
+    },
+    "DeviceCreationFileList":{
+      "type":"list",
+      "member":{"shape":"DeviceCreationFile"}
+    },
+    "DeviceName":{"type":"string"},
     "DeviceProfile":{
       "type":"structure",
       "members":{
@@ -2465,6 +2873,13 @@
     "DeviceProfileName":{
       "type":"string",
       "max":256
+    },
+    "DeviceProfileType":{
+      "type":"string",
+      "enum":[
+        "Sidewalk",
+        "LoRaWAN"
+      ]
     },
     "DeviceRegistrationStateEventConfiguration":{
       "type":"structure",
@@ -2487,6 +2902,10 @@
         "RegisteredReachable",
         "RegisteredUnreachable"
       ]
+    },
+    "DeviceTypeId":{
+      "type":"string",
+      "max":2048
     },
     "DisassociateAwsAccountFromPartnerAccountRequest":{
       "type":"structure",
@@ -2711,10 +3130,20 @@
       "max":15,
       "min":0
     },
+    "EARFCN":{
+      "type":"integer",
+      "max":262143,
+      "min":0
+    },
     "EndPoint":{
       "type":"string",
       "max":256,
       "min":1
+    },
+    "EutranCid":{
+      "type":"integer",
+      "max":268435455,
+      "min":0
     },
     "Event":{
       "type":"string",
@@ -2799,7 +3228,8 @@
         "Fuota":{"shape":"FPort"},
         "Multicast":{"shape":"FPort"},
         "ClockSync":{"shape":"FPort"},
-        "Positioning":{"shape":"Positioning"}
+        "Positioning":{"shape":"Positioning"},
+        "Applications":{"shape":"Applications"}
       }
     },
     "FactoryPresetFreqsList":{
@@ -2808,6 +3238,7 @@
       "max":20,
       "min":0
     },
+    "FactorySupport":{"type":"boolean"},
     "Fingerprint":{
       "type":"string",
       "max":64,
@@ -2823,6 +3254,14 @@
     "FirmwareUpdateRole":{
       "type":"string",
       "max":2048,
+      "min":1
+    },
+    "FragmentIntervalMS":{
+      "type":"integer",
+      "min":1
+    },
+    "FragmentSizeBytes":{
+      "type":"integer",
       "min":1
     },
     "FuotaDeviceStatus":{
@@ -2875,6 +3314,7 @@
         "Delete_Waiting"
       ]
     },
+    "GPST":{"type":"float"},
     "GatewayEui":{
       "type":"string",
       "pattern":"^(([0-9A-Fa-f]{2}-){7}|([0-9A-Fa-f]{2}:){7}|([0-9A-Fa-f]{2}\\s){7}|([0-9A-Fa-f]{2}){7})([0-9A-Fa-f]{2})$"
@@ -2897,6 +3337,12 @@
     "GenAppKey":{
       "type":"string",
       "pattern":"[a-fA-F0-9]{32}"
+    },
+    "GeoJsonPayload":{"type":"blob"},
+    "GeranCid":{
+      "type":"integer",
+      "max":65535,
+      "min":0
     },
     "GetDestinationRequest":{
       "type":"structure",
@@ -2937,7 +3383,8 @@
         "Arn":{"shape":"DeviceProfileArn"},
         "Name":{"shape":"DeviceProfileName"},
         "Id":{"shape":"DeviceProfileId"},
-        "LoRaWAN":{"shape":"LoRaWANDeviceProfile"}
+        "LoRaWAN":{"shape":"LoRaWANDeviceProfile"},
+        "Sidewalk":{"shape":"SidewalkGetDeviceProfile"}
       }
     },
     "GetEventConfigurationByResourceTypesRequest":{
@@ -2977,7 +3424,10 @@
         "LoRaWAN":{"shape":"LoRaWANFuotaTaskGetInfo"},
         "FirmwareUpdateImage":{"shape":"FirmwareUpdateImage"},
         "FirmwareUpdateRole":{"shape":"FirmwareUpdateRole"},
-        "CreatedAt":{"shape":"CreatedAt"}
+        "CreatedAt":{"shape":"CreatedAt"},
+        "RedundancyPercent":{"shape":"RedundancyPercent"},
+        "FragmentSizeBytes":{"shape":"FragmentSizeBytes"},
+        "FragmentIntervalMS":{"shape":"FragmentIntervalMS"}
       }
     },
     "GetLogLevelsByResourceTypesRequest":{
@@ -3098,14 +3548,35 @@
           "location":"querystring",
           "locationName":"resourceType"
         }
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "GetPositionConfigurationResponse":{
       "type":"structure",
       "members":{
         "Solvers":{"shape":"PositionSolverDetails"},
         "Destination":{"shape":"DestinationName"}
+      },
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
+    },
+    "GetPositionEstimateRequest":{
+      "type":"structure",
+      "members":{
+        "WiFiAccessPoints":{"shape":"WiFiAccessPoints"},
+        "CellTowers":{"shape":"CellTowers"},
+        "Ip":{"shape":"Ip"},
+        "Gnss":{"shape":"Gnss"},
+        "Timestamp":{"shape":"CreationDate"}
       }
+    },
+    "GetPositionEstimateResponse":{
+      "type":"structure",
+      "members":{
+        "GeoJsonPayload":{"shape":"GeoJsonPayload"}
+      },
+      "payload":"GeoJsonPayload"
     },
     "GetPositionRequest":{
       "type":"structure",
@@ -3124,7 +3595,9 @@
           "location":"querystring",
           "locationName":"resourceType"
         }
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "GetPositionResponse":{
       "type":"structure",
@@ -3135,7 +3608,9 @@
         "SolverProvider":{"shape":"PositionSolverProvider"},
         "SolverVersion":{"shape":"PositionSolverVersion"},
         "Timestamp":{"shape":"ISODateTimeString"}
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "GetResourceEventConfigurationRequest":{
       "type":"structure",
@@ -3196,6 +3671,32 @@
         "LogLevel":{"shape":"LogLevel"}
       }
     },
+    "GetResourcePositionRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceIdentifier",
+        "ResourceType"
+      ],
+      "members":{
+        "ResourceIdentifier":{
+          "shape":"PositionResourceIdentifier",
+          "location":"uri",
+          "locationName":"ResourceIdentifier"
+        },
+        "ResourceType":{
+          "shape":"PositionResourceType",
+          "location":"querystring",
+          "locationName":"resourceType"
+        }
+      }
+    },
+    "GetResourcePositionResponse":{
+      "type":"structure",
+      "members":{
+        "GeoJsonPayload":{"shape":"GeoJsonPayload"}
+      },
+      "payload":"GeoJsonPayload"
+    },
     "GetServiceEndpointRequest":{
       "type":"structure",
       "members":{
@@ -3234,6 +3735,33 @@
         "LoRaWAN":{"shape":"LoRaWANGetServiceProfileInfo"}
       }
     },
+    "GetWirelessDeviceImportTaskRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"ImportTaskId",
+          "location":"uri",
+          "locationName":"Id"
+        }
+      }
+    },
+    "GetWirelessDeviceImportTaskResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"ImportTaskId"},
+        "Arn":{"shape":"ImportTaskArn"},
+        "DestinationName":{"shape":"DestinationName"},
+        "Sidewalk":{"shape":"SidewalkGetStartImportInfo"},
+        "CreationTime":{"shape":"CreationTime"},
+        "Status":{"shape":"ImportTaskStatus"},
+        "StatusReason":{"shape":"StatusReason"},
+        "InitializedImportedDeviceCount":{"shape":"ImportedWirelessDeviceCount"},
+        "PendingImportedDeviceCount":{"shape":"ImportedWirelessDeviceCount"},
+        "OnboardedImportedDeviceCount":{"shape":"ImportedWirelessDeviceCount"},
+        "FailedImportedDeviceCount":{"shape":"ImportedWirelessDeviceCount"}
+      }
+    },
     "GetWirelessDeviceRequest":{
       "type":"structure",
       "required":[
@@ -3265,7 +3793,8 @@
         "ThingName":{"shape":"ThingName"},
         "ThingArn":{"shape":"ThingArn"},
         "LoRaWAN":{"shape":"LoRaWANDevice"},
-        "Sidewalk":{"shape":"SidewalkDevice"}
+        "Sidewalk":{"shape":"SidewalkDevice"},
+        "Positioning":{"shape":"PositioningConfigStatus"}
       }
     },
     "GetWirelessDeviceStatisticsRequest":{
@@ -3414,11 +3943,99 @@
         "Status":{"shape":"WirelessGatewayTaskStatus"}
       }
     },
+    "GlobalIdentity":{
+      "type":"structure",
+      "required":[
+        "Lac",
+        "GeranCid"
+      ],
+      "members":{
+        "Lac":{"shape":"LAC"},
+        "GeranCid":{"shape":"GeranCid"}
+      }
+    },
+    "Gnss":{
+      "type":"structure",
+      "required":["Payload"],
+      "members":{
+        "Payload":{"shape":"GnssNav"},
+        "CaptureTime":{"shape":"GPST"},
+        "CaptureTimeAccuracy":{"shape":"CaptureTimeAccuracy"},
+        "AssistPosition":{"shape":"AssistPosition"},
+        "AssistAltitude":{"shape":"Coordinate"},
+        "Use2DSolver":{"shape":"Use2DSolver"}
+      }
+    },
+    "GnssNav":{
+      "type":"string",
+      "max":2048
+    },
+    "GsmList":{
+      "type":"list",
+      "member":{"shape":"GsmObj"},
+      "max":16,
+      "min":1
+    },
+    "GsmLocalId":{
+      "type":"structure",
+      "required":[
+        "Bsic",
+        "Bcch"
+      ],
+      "members":{
+        "Bsic":{"shape":"BSIC"},
+        "Bcch":{"shape":"BCCH"}
+      }
+    },
+    "GsmNmrList":{
+      "type":"list",
+      "member":{"shape":"GsmNmrObj"},
+      "max":32,
+      "min":1
+    },
+    "GsmNmrObj":{
+      "type":"structure",
+      "required":[
+        "Bsic",
+        "Bcch"
+      ],
+      "members":{
+        "Bsic":{"shape":"BSIC"},
+        "Bcch":{"shape":"BCCH"},
+        "RxLevel":{"shape":"RxLevel"},
+        "GlobalIdentity":{"shape":"GlobalIdentity"}
+      }
+    },
+    "GsmObj":{
+      "type":"structure",
+      "required":[
+        "Mcc",
+        "Mnc",
+        "Lac",
+        "GeranCid"
+      ],
+      "members":{
+        "Mcc":{"shape":"MCC"},
+        "Mnc":{"shape":"MNC"},
+        "Lac":{"shape":"LAC"},
+        "GeranCid":{"shape":"GeranCid"},
+        "GsmLocalId":{"shape":"GsmLocalId"},
+        "GsmTimingAdvance":{"shape":"GsmTimingAdvance"},
+        "RxLevel":{"shape":"RxLevel"},
+        "GsmNmr":{"shape":"GsmNmrList"}
+      }
+    },
+    "GsmTimingAdvance":{
+      "type":"integer",
+      "max":63,
+      "min":0
+    },
     "HorizontalAccuracy":{
       "type":"float",
       "min":0
     },
     "HrAllowed":{"type":"boolean"},
+    "IPAddress":{"type":"string"},
     "ISODateTimeString":{
       "type":"string",
       "pattern":"^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$"
@@ -3437,6 +4054,45 @@
         "WirelessGatewayId"
       ]
     },
+    "ImportTaskArn":{
+      "type":"string",
+      "max":128
+    },
+    "ImportTaskId":{
+      "type":"string",
+      "max":256
+    },
+    "ImportTaskStatus":{
+      "type":"string",
+      "enum":[
+        "INITIALIZING",
+        "INITIALIZED",
+        "PENDING",
+        "COMPLETE",
+        "FAILED",
+        "DELETING"
+      ]
+    },
+    "ImportedSidewalkDevice":{
+      "type":"structure",
+      "members":{
+        "SidewalkManufacturingSn":{"shape":"SidewalkManufacturingSn"},
+        "OnboardingStatus":{"shape":"OnboardStatus"},
+        "OnboardingStatusReason":{"shape":"OnboardStatusReason"},
+        "LastUpdateTime":{"shape":"LastUpdateTime"}
+      }
+    },
+    "ImportedWirelessDevice":{
+      "type":"structure",
+      "members":{
+        "Sidewalk":{"shape":"ImportedSidewalkDevice"}
+      }
+    },
+    "ImportedWirelessDeviceCount":{"type":"long"},
+    "ImportedWirelessDeviceList":{
+      "type":"list",
+      "member":{"shape":"ImportedWirelessDevice"}
+    },
     "Integer":{"type":"integer"},
     "InternalServerException":{
       "type":"structure",
@@ -3450,6 +4106,13 @@
       "type":"string",
       "max":4096,
       "min":1
+    },
+    "Ip":{
+      "type":"structure",
+      "required":["IpAddress"],
+      "members":{
+        "IpAddress":{"shape":"IPAddress"}
+      }
     },
     "JoinEui":{
       "type":"string",
@@ -3479,6 +4142,15 @@
       "members":{
         "LoRaWAN":{"shape":"LoRaWANJoinResourceTypeEventConfiguration"}
       }
+    },
+    "LAC":{
+      "type":"integer",
+      "max":65535,
+      "min":1
+    },
+    "LastUpdateTime":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
     },
     "ListDestinationsRequest":{
       "type":"structure",
@@ -3514,6 +4186,11 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"maxResults"
+        },
+        "DeviceProfileType":{
+          "shape":"DeviceProfileType",
+          "location":"querystring",
+          "locationName":"deviceProfileType"
         }
       }
     },
@@ -3522,6 +4199,40 @@
       "members":{
         "NextToken":{"shape":"NextToken"},
         "DeviceProfileList":{"shape":"DeviceProfileList"}
+      }
+    },
+    "ListDevicesForWirelessDeviceImportTaskRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"ImportTaskId",
+          "location":"querystring",
+          "locationName":"id"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "Status":{
+          "shape":"OnboardStatus",
+          "location":"querystring",
+          "locationName":"status"
+        }
+      }
+    },
+    "ListDevicesForWirelessDeviceImportTaskResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "DestinationName":{"shape":"DestinationName"},
+        "ImportedWirelessDeviceList":{"shape":"ImportedWirelessDeviceList"}
       }
     },
     "ListEventConfigurationsRequest":{
@@ -3686,14 +4397,18 @@
           "location":"querystring",
           "locationName":"nextToken"
         }
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "ListPositionConfigurationsResponse":{
       "type":"structure",
       "members":{
         "PositionConfigurationList":{"shape":"PositionConfigurationList"},
         "NextToken":{"shape":"NextToken"}
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "ListQueuedMessagesRequest":{
       "type":"structure",
@@ -3765,6 +4480,28 @@
       "type":"structure",
       "members":{
         "Tags":{"shape":"TagList"}
+      }
+    },
+    "ListWirelessDeviceImportTasksRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListWirelessDeviceImportTasksResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "WirelessDeviceImportTaskList":{"shape":"WirelessDeviceImportTaskList"}
       }
     },
     "ListWirelessDevicesRequest":{
@@ -4106,10 +4843,90 @@
         "DISABLED"
       ]
     },
+    "LteList":{
+      "type":"list",
+      "member":{"shape":"LteObj"},
+      "max":16,
+      "min":1
+    },
+    "LteLocalId":{
+      "type":"structure",
+      "required":[
+        "Pci",
+        "Earfcn"
+      ],
+      "members":{
+        "Pci":{"shape":"PCI"},
+        "Earfcn":{"shape":"EARFCN"}
+      }
+    },
+    "LteNmrList":{
+      "type":"list",
+      "member":{"shape":"LteNmrObj"},
+      "max":32,
+      "min":1
+    },
+    "LteNmrObj":{
+      "type":"structure",
+      "required":[
+        "Pci",
+        "Earfcn",
+        "EutranCid"
+      ],
+      "members":{
+        "Pci":{"shape":"PCI"},
+        "Earfcn":{"shape":"EARFCN"},
+        "EutranCid":{"shape":"EutranCid"},
+        "Rsrp":{"shape":"RSRP"},
+        "Rsrq":{"shape":"RSRQ"}
+      }
+    },
+    "LteObj":{
+      "type":"structure",
+      "required":[
+        "Mcc",
+        "Mnc",
+        "EutranCid"
+      ],
+      "members":{
+        "Mcc":{"shape":"MCC"},
+        "Mnc":{"shape":"MNC"},
+        "EutranCid":{"shape":"EutranCid"},
+        "Tac":{"shape":"TAC"},
+        "LteLocalId":{"shape":"LteLocalId"},
+        "LteTimingAdvance":{"shape":"LteTimingAdvance"},
+        "Rsrp":{"shape":"RSRP"},
+        "Rsrq":{"shape":"RSRQ"},
+        "NrCapable":{"shape":"NRCapable"},
+        "LteNmr":{"shape":"LteNmrList"}
+      }
+    },
+    "LteTimingAdvance":{
+      "type":"integer",
+      "max":1282,
+      "min":0
+    },
+    "MCC":{
+      "type":"integer",
+      "max":999,
+      "min":200
+    },
+    "MNC":{
+      "type":"integer",
+      "max":999,
+      "min":0
+    },
+    "MacAddress":{
+      "type":"string",
+      "max":17,
+      "min":12,
+      "pattern":"^([0-9A-Fa-f]{2}[:-]?){5}([0-9A-Fa-f]{2})$"
+    },
     "MacVersion":{
       "type":"string",
       "max":64
     },
+    "MaxAllowedSignature":{"type":"integer"},
     "MaxDutyCycle":{
       "type":"integer",
       "max":100,
@@ -4219,6 +5036,7 @@
         "LoRaWAN":{"shape":"LoRaWANMulticastMetadata"}
       }
     },
+    "NRCapable":{"type":"boolean"},
     "NetId":{
       "type":"string",
       "pattern":"[a-fA-F0-9]{6}"
@@ -4250,6 +5068,11 @@
         "Name":{"shape":"NetworkAnalyzerConfigurationName"}
       }
     },
+    "NetworkId":{
+      "type":"integer",
+      "max":65535,
+      "min":0
+    },
     "NextToken":{
       "type":"string",
       "max":4096
@@ -4269,6 +5092,16 @@
       "type":"string",
       "pattern":"[a-fA-F0-9]{32}"
     },
+    "OnboardStatus":{
+      "type":"string",
+      "enum":[
+        "INITIALIZED",
+        "PENDING",
+        "ONBOARDED",
+        "FAILED"
+      ]
+    },
+    "OnboardStatusReason":{"type":"string"},
     "OtaaV1_0_x":{
       "type":"structure",
       "members":{
@@ -4284,6 +5117,16 @@
         "NwkKey":{"shape":"NwkKey"},
         "JoinEui":{"shape":"JoinEui"}
       }
+    },
+    "PCI":{
+      "type":"integer",
+      "max":503,
+      "min":0
+    },
+    "PSC":{
+      "type":"integer",
+      "max":511,
+      "min":0
     },
     "PackageVersion":{
       "type":"string",
@@ -4312,10 +5155,20 @@
       "type":"string",
       "enum":["Sidewalk"]
     },
+    "PathLoss":{
+      "type":"integer",
+      "max":158,
+      "min":46
+    },
     "PayloadData":{
       "type":"string",
       "max":2048,
       "pattern":"^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+    },
+    "PilotPower":{
+      "type":"integer",
+      "max":-49,
+      "min":-142
     },
     "PingSlotDr":{
       "type":"integer",
@@ -4331,6 +5184,11 @@
       "type":"integer",
       "max":4096,
       "min":128
+    },
+    "PnOffset":{
+      "type":"integer",
+      "max":511,
+      "min":0
     },
     "PositionConfigurationFec":{
       "type":"string",
@@ -4408,11 +5266,22 @@
         "Gnss":{"shape":"FPort"}
       }
     },
+    "PositioningConfigStatus":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
+    },
     "PrAllowed":{"type":"boolean"},
     "PresetFreq":{
       "type":"integer",
       "max":16700000,
       "min":1000000
+    },
+    "PrivateKeysList":{
+      "type":"list",
+      "member":{"shape":"CertificateList"}
     },
     "ProximityEventConfiguration":{
       "type":"structure",
@@ -4446,12 +5315,16 @@
         },
         "Solvers":{"shape":"PositionSolverConfigurations"},
         "Destination":{"shape":"DestinationName"}
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "PutPositionConfigurationResponse":{
       "type":"structure",
       "members":{
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "PutResourceLogLevelRequest":{
       "type":"structure",
@@ -4479,14 +5352,45 @@
       "members":{
       }
     },
+    "QualificationStatus":{"type":"boolean"},
     "QueryString":{
       "type":"string",
       "max":4096
     },
+    "RSCP":{
+      "type":"integer",
+      "max":-25,
+      "min":-120
+    },
+    "RSRP":{
+      "type":"integer",
+      "max":-44,
+      "min":-140
+    },
+    "RSRQ":{
+      "type":"float",
+      "max":-3,
+      "min":-19.5
+    },
+    "RSS":{
+      "type":"integer",
+      "max":0,
+      "min":-128
+    },
     "RaAllowed":{"type":"boolean"},
+    "RedundancyPercent":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
     "RegParamsRevision":{
       "type":"string",
       "max":64
+    },
+    "RegistrationZone":{
+      "type":"integer",
+      "max":4095,
+      "min":0
     },
     "ReportDevStatusBattery":{"type":"boolean"},
     "ReportDevStatusMargin":{"type":"boolean"},
@@ -4548,6 +5452,10 @@
       "type":"string",
       "max":64
     },
+    "Role":{
+      "type":"string",
+      "max":2048
+    },
     "RoleArn":{
       "type":"string",
       "max":2048,
@@ -4572,6 +5480,11 @@
       "type":"integer",
       "max":16700000,
       "min":1000000
+    },
+    "RxLevel":{
+      "type":"integer",
+      "max":-25,
+      "min":-110
     },
     "SNwkSIntKey":{
       "type":"string",
@@ -4714,13 +5627,28 @@
       "type":"list",
       "member":{"shape":"SidewalkAccountInfoWithFingerprint"}
     },
+    "SidewalkCreateDeviceProfile":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "SidewalkCreateWirelessDevice":{
+      "type":"structure",
+      "members":{
+        "DeviceProfileId":{"shape":"DeviceProfileId"}
+      }
+    },
     "SidewalkDevice":{
       "type":"structure",
       "members":{
         "AmazonId":{"shape":"AmazonId"},
         "SidewalkId":{"shape":"SidewalkId"},
         "SidewalkManufacturingSn":{"shape":"SidewalkManufacturingSn"},
-        "DeviceCertificates":{"shape":"DeviceCertificateList"}
+        "DeviceCertificates":{"shape":"DeviceCertificateList"},
+        "PrivateKeys":{"shape":"PrivateKeysList"},
+        "DeviceProfileId":{"shape":"DeviceProfileId"},
+        "CertificateId":{"shape":"DakCertificateId"},
+        "Status":{"shape":"WirelessDeviceSidewalkStatus"}
       }
     },
     "SidewalkDeviceMetadata":{
@@ -4738,6 +5666,21 @@
         "AmazonIdEventTopic":{"shape":"EventNotificationTopicStatus"}
       }
     },
+    "SidewalkGetDeviceProfile":{
+      "type":"structure",
+      "members":{
+        "ApplicationServerPublicKey":{"shape":"ApplicationServerPublicKey"},
+        "QualificationStatus":{"shape":"QualificationStatus"},
+        "DakCertificateMetadata":{"shape":"DakCertificateMetadataList"}
+      }
+    },
+    "SidewalkGetStartImportInfo":{
+      "type":"structure",
+      "members":{
+        "DeviceCreationFileList":{"shape":"DeviceCreationFileList"},
+        "Role":{"shape":"Role"}
+      }
+    },
     "SidewalkId":{
       "type":"string",
       "max":256
@@ -4748,7 +5691,9 @@
         "AmazonId":{"shape":"AmazonId"},
         "SidewalkId":{"shape":"SidewalkId"},
         "SidewalkManufacturingSn":{"shape":"SidewalkManufacturingSn"},
-        "DeviceCertificates":{"shape":"DeviceCertificateList"}
+        "DeviceCertificates":{"shape":"DeviceCertificateList"},
+        "DeviceProfileId":{"shape":"DeviceProfileId"},
+        "Status":{"shape":"WirelessDeviceSidewalkStatus"}
       }
     },
     "SidewalkManufacturingSn":{
@@ -4769,10 +5714,29 @@
         "AckModeRetryDurationSecs":{"shape":"AckModeRetryDurationSecs"}
       }
     },
+    "SidewalkSingleStartImportInfo":{
+      "type":"structure",
+      "members":{
+        "SidewalkManufacturingSn":{"shape":"SidewalkManufacturingSn"}
+      }
+    },
+    "SidewalkStartImportInfo":{
+      "type":"structure",
+      "members":{
+        "DeviceCreationFile":{"shape":"DeviceCreationFile"},
+        "Role":{"shape":"Role"}
+      }
+    },
     "SidewalkUpdateAccount":{
       "type":"structure",
       "members":{
         "AppServerPrivateKey":{"shape":"AppServerPrivateKey"}
+      }
+    },
+    "SidewalkUpdateImportInfo":{
+      "type":"structure",
+      "members":{
+        "DeviceCreationFile":{"shape":"DeviceCreationFile"}
       }
     },
     "SigningAlg":{
@@ -4855,15 +5819,63 @@
       "members":{
       }
     },
+    "StartSingleWirelessDeviceImportTaskRequest":{
+      "type":"structure",
+      "required":[
+        "DestinationName",
+        "Sidewalk"
+      ],
+      "members":{
+        "DestinationName":{"shape":"DestinationName"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "DeviceName":{"shape":"DeviceName"},
+        "Tags":{"shape":"TagList"},
+        "Sidewalk":{"shape":"SidewalkSingleStartImportInfo"}
+      }
+    },
+    "StartSingleWirelessDeviceImportTaskResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"ImportTaskId"},
+        "Arn":{"shape":"ImportTaskArn"}
+      }
+    },
     "StartTime":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "StartWirelessDeviceImportTaskRequest":{
+      "type":"structure",
+      "required":[
+        "DestinationName",
+        "Sidewalk"
+      ],
+      "members":{
+        "DestinationName":{"shape":"DestinationName"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "Tags":{"shape":"TagList"},
+        "Sidewalk":{"shape":"SidewalkStartImportInfo"}
+      }
+    },
+    "StartWirelessDeviceImportTaskResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"ImportTaskId"},
+        "Arn":{"shape":"ImportTaskArn"}
+      }
     },
     "Station":{
       "type":"string",
       "max":4096,
       "min":1
     },
+    "StatusReason":{"type":"string"},
     "SubBand":{
       "type":"integer",
       "max":8,
@@ -4881,13 +5893,32 @@
         "EU868",
         "US915",
         "AU915",
-        "AS923-1"
+        "AS923-1",
+        "AS923-2",
+        "AS923-3",
+        "AS923-4",
+        "EU433",
+        "CN470",
+        "CN779",
+        "RU864",
+        "KR920",
+        "IN865"
       ]
     },
     "Supports32BitFCnt":{"type":"boolean"},
     "SupportsClassB":{"type":"boolean"},
     "SupportsClassC":{"type":"boolean"},
     "SupportsJoin":{"type":"boolean"},
+    "SystemId":{
+      "type":"integer",
+      "max":32767,
+      "min":1
+    },
+    "TAC":{
+      "type":"integer",
+      "max":65535,
+      "min":0
+    },
     "Tag":{
       "type":"structure",
       "required":[
@@ -4946,6 +5977,67 @@
       "max":100,
       "min":0
     },
+    "TdscdmaList":{
+      "type":"list",
+      "member":{"shape":"TdscdmaObj"},
+      "max":16,
+      "min":1
+    },
+    "TdscdmaLocalId":{
+      "type":"structure",
+      "required":[
+        "Uarfcn",
+        "CellParams"
+      ],
+      "members":{
+        "Uarfcn":{"shape":"UARFCN"},
+        "CellParams":{"shape":"CellParams"}
+      }
+    },
+    "TdscdmaNmrList":{
+      "type":"list",
+      "member":{"shape":"TdscdmaNmrObj"},
+      "max":32,
+      "min":1
+    },
+    "TdscdmaNmrObj":{
+      "type":"structure",
+      "required":[
+        "Uarfcn",
+        "CellParams"
+      ],
+      "members":{
+        "Uarfcn":{"shape":"UARFCN"},
+        "CellParams":{"shape":"CellParams"},
+        "UtranCid":{"shape":"UtranCid"},
+        "Rscp":{"shape":"RSCP"},
+        "PathLoss":{"shape":"PathLoss"}
+      }
+    },
+    "TdscdmaObj":{
+      "type":"structure",
+      "required":[
+        "Mcc",
+        "Mnc",
+        "UtranCid"
+      ],
+      "members":{
+        "Mcc":{"shape":"MCC"},
+        "Mnc":{"shape":"MNC"},
+        "Lac":{"shape":"LAC"},
+        "UtranCid":{"shape":"UtranCid"},
+        "TdscdmaLocalId":{"shape":"TdscdmaLocalId"},
+        "TdscdmaTimingAdvance":{"shape":"TdscdmaTimingAdvance"},
+        "Rscp":{"shape":"RSCP"},
+        "PathLoss":{"shape":"PathLoss"},
+        "TdscdmaNmr":{"shape":"TdscdmaNmrList"}
+      }
+    },
+    "TdscdmaTimingAdvance":{
+      "type":"integer",
+      "max":1530,
+      "min":0
+    },
     "TestWirelessDeviceRequest":{
       "type":"structure",
       "required":["Id"],
@@ -4997,6 +6089,16 @@
     "TransmitMode":{
       "type":"integer",
       "max":1,
+      "min":0
+    },
+    "UARFCN":{
+      "type":"integer",
+      "max":16383,
+      "min":0
+    },
+    "UARFCNDL":{
+      "type":"integer",
+      "max":16383,
       "min":0
     },
     "UlBucketSize":{
@@ -5092,7 +6194,8 @@
     "UpdateFPorts":{
       "type":"structure",
       "members":{
-        "Positioning":{"shape":"Positioning"}
+        "Positioning":{"shape":"Positioning"},
+        "Applications":{"shape":"Applications"}
       }
     },
     "UpdateFuotaTaskRequest":{
@@ -5108,7 +6211,10 @@
         "Description":{"shape":"Description"},
         "LoRaWAN":{"shape":"LoRaWANFuotaTask"},
         "FirmwareUpdateImage":{"shape":"FirmwareUpdateImage"},
-        "FirmwareUpdateRole":{"shape":"FirmwareUpdateRole"}
+        "FirmwareUpdateRole":{"shape":"FirmwareUpdateRole"},
+        "RedundancyPercent":{"shape":"RedundancyPercent"},
+        "FragmentSizeBytes":{"shape":"FragmentSizeBytes"},
+        "FragmentIntervalMS":{"shape":"FragmentIntervalMS"}
       }
     },
     "UpdateFuotaTaskResponse":{
@@ -5215,12 +6321,16 @@
           "locationName":"resourceType"
         },
         "Position":{"shape":"PositionCoordinate"}
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "UpdatePositionResponse":{
       "type":"structure",
       "members":{
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"This operation is no longer supported."
     },
     "UpdateResourceEventConfigurationRequest":{
       "type":"structure",
@@ -5256,10 +6366,56 @@
       "members":{
       }
     },
+    "UpdateResourcePositionRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceIdentifier",
+        "ResourceType"
+      ],
+      "members":{
+        "ResourceIdentifier":{
+          "shape":"PositionResourceIdentifier",
+          "location":"uri",
+          "locationName":"ResourceIdentifier"
+        },
+        "ResourceType":{
+          "shape":"PositionResourceType",
+          "location":"querystring",
+          "locationName":"resourceType"
+        },
+        "GeoJsonPayload":{"shape":"GeoJsonPayload"}
+      },
+      "payload":"GeoJsonPayload"
+    },
+    "UpdateResourcePositionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UpdateSignature":{
       "type":"string",
       "max":4096,
       "min":1
+    },
+    "UpdateWirelessDeviceImportTaskRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Sidewalk"
+      ],
+      "members":{
+        "Id":{
+          "shape":"ImportTaskId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "Sidewalk":{"shape":"SidewalkUpdateImportInfo"}
+      }
+    },
+    "UpdateWirelessDeviceImportTaskResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "UpdateWirelessDeviceRequest":{
       "type":"structure",
@@ -5273,7 +6429,8 @@
         "DestinationName":{"shape":"DestinationName"},
         "Name":{"shape":"WirelessDeviceName"},
         "Description":{"shape":"Description"},
-        "LoRaWAN":{"shape":"LoRaWANUpdateDevice"}
+        "LoRaWAN":{"shape":"LoRaWANUpdateDevice"},
+        "Positioning":{"shape":"PositioningConfigStatus"}
       }
     },
     "UpdateWirelessDeviceResponse":{
@@ -5317,6 +6474,12 @@
         "Arn":{"shape":"WirelessGatewayTaskDefinitionArn"}
       }
     },
+    "Use2DSolver":{"type":"boolean"},
+    "UtranCid":{
+      "type":"integer",
+      "max":268435455,
+      "min":0
+    },
     "ValidationException":{
       "type":"structure",
       "members":{
@@ -5328,6 +6491,77 @@
     "VerticalAccuracy":{
       "type":"float",
       "min":0
+    },
+    "WcdmaList":{
+      "type":"list",
+      "member":{"shape":"WcdmaObj"},
+      "max":16,
+      "min":1
+    },
+    "WcdmaLocalId":{
+      "type":"structure",
+      "required":[
+        "Uarfcndl",
+        "Psc"
+      ],
+      "members":{
+        "Uarfcndl":{"shape":"UARFCNDL"},
+        "Psc":{"shape":"PSC"}
+      }
+    },
+    "WcdmaNmrList":{
+      "type":"list",
+      "member":{"shape":"WcdmaNmrObj"},
+      "max":32,
+      "min":1
+    },
+    "WcdmaNmrObj":{
+      "type":"structure",
+      "required":[
+        "Uarfcndl",
+        "Psc",
+        "UtranCid"
+      ],
+      "members":{
+        "Uarfcndl":{"shape":"UARFCNDL"},
+        "Psc":{"shape":"PSC"},
+        "UtranCid":{"shape":"UtranCid"},
+        "Rscp":{"shape":"RSCP"},
+        "PathLoss":{"shape":"PathLoss"}
+      }
+    },
+    "WcdmaObj":{
+      "type":"structure",
+      "required":[
+        "Mcc",
+        "Mnc",
+        "UtranCid"
+      ],
+      "members":{
+        "Mcc":{"shape":"MCC"},
+        "Mnc":{"shape":"MNC"},
+        "Lac":{"shape":"LAC"},
+        "UtranCid":{"shape":"UtranCid"},
+        "WcdmaLocalId":{"shape":"WcdmaLocalId"},
+        "Rscp":{"shape":"RSCP"},
+        "PathLoss":{"shape":"PathLoss"},
+        "WcdmaNmr":{"shape":"WcdmaNmrList"}
+      }
+    },
+    "WiFiAccessPoint":{
+      "type":"structure",
+      "required":[
+        "MacAddress",
+        "Rss"
+      ],
+      "members":{
+        "MacAddress":{"shape":"MacAddress"},
+        "Rss":{"shape":"RSS"}
+      }
+    },
+    "WiFiAccessPoints":{
+      "type":"list",
+      "member":{"shape":"WiFiAccessPoint"}
     },
     "WirelessDeviceArn":{"type":"string"},
     "WirelessDeviceEvent":{
@@ -5375,6 +6609,26 @@
         "SidewalkManufacturingSn"
       ]
     },
+    "WirelessDeviceImportTask":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"ImportTaskId"},
+        "Arn":{"shape":"ImportTaskArn"},
+        "DestinationName":{"shape":"DestinationName"},
+        "Sidewalk":{"shape":"SidewalkGetStartImportInfo"},
+        "CreationTime":{"shape":"CreationTime"},
+        "Status":{"shape":"ImportTaskStatus"},
+        "StatusReason":{"shape":"StatusReason"},
+        "InitializedImportedDeviceCount":{"shape":"ImportedWirelessDeviceCount"},
+        "PendingImportedDeviceCount":{"shape":"ImportedWirelessDeviceCount"},
+        "OnboardedImportedDeviceCount":{"shape":"ImportedWirelessDeviceCount"},
+        "FailedImportedDeviceCount":{"shape":"ImportedWirelessDeviceCount"}
+      }
+    },
+    "WirelessDeviceImportTaskList":{
+      "type":"list",
+      "member":{"shape":"WirelessDeviceImportTask"}
+    },
     "WirelessDeviceList":{
       "type":"list",
       "member":{"shape":"WirelessDeviceId"},
@@ -5400,6 +6654,15 @@
     "WirelessDeviceName":{
       "type":"string",
       "max":256
+    },
+    "WirelessDeviceSidewalkStatus":{
+      "type":"string",
+      "enum":[
+        "PROVISIONED",
+        "REGISTERED",
+        "ACTIVATED",
+        "UNKNOWN"
+      ]
     },
     "WirelessDeviceStatistics":{
       "type":"structure",

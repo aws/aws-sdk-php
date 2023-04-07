@@ -649,6 +649,24 @@
         {"shape":"RateLimitExceededException"}
       ]
     },
+    "ListReceivedGrantsForOrganization":{
+      "name":"ListReceivedGrantsForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListReceivedGrantsForOrganizationRequest"},
+      "output":{"shape":"ListReceivedGrantsForOrganizationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RateLimitExceededException"}
+      ]
+    },
     "ListReceivedLicenses":{
       "name":"ListReceivedLicenses",
       "http":{
@@ -657,6 +675,24 @@
       },
       "input":{"shape":"ListReceivedLicensesRequest"},
       "output":{"shape":"ListReceivedLicensesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RateLimitExceededException"}
+      ]
+    },
+    "ListReceivedLicensesForOrganization":{
+      "name":"ListReceivedLicensesForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListReceivedLicensesForOrganizationRequest"},
+      "output":{"shape":"ListReceivedLicensesForOrganizationResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InvalidParameterValueException"},
@@ -878,6 +914,13 @@
       },
       "exception":true
     },
+    "ActivationOverrideBehavior":{
+      "type":"string",
+      "enum":[
+        "DISTRIBUTED_GRANTS_ONLY",
+        "ALL_GRANTS_PERMITTED_BY_ISSUER"
+      ]
+    },
     "AllowedOperation":{
       "type":"string",
       "enum":[
@@ -1091,7 +1134,8 @@
         "AllowedOperations":{"shape":"AllowedOperationList"},
         "Status":{"shape":"GrantStatus"},
         "StatusReason":{"shape":"StatusReasonMessage"},
-        "SourceVersion":{"shape":"String"}
+        "SourceVersion":{"shape":"String"},
+        "Options":{"shape":"Options"}
       }
     },
     "CreateGrantVersionResponse":{
@@ -1683,7 +1727,8 @@
         "GrantStatus":{"shape":"GrantStatus"},
         "StatusReason":{"shape":"StatusReasonMessage"},
         "Version":{"shape":"String"},
-        "GrantedOperations":{"shape":"AllowedOperationList"}
+        "GrantedOperations":{"shape":"AllowedOperationList"},
+        "Options":{"shape":"Options"}
       }
     },
     "GrantList":{
@@ -2123,6 +2168,23 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListReceivedGrantsForOrganizationRequest":{
+      "type":"structure",
+      "required":["LicenseArn"],
+      "members":{
+        "LicenseArn":{"shape":"Arn"},
+        "Filters":{"shape":"FilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"MaxSize100"}
+      }
+    },
+    "ListReceivedGrantsForOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "Grants":{"shape":"GrantList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListReceivedGrantsRequest":{
       "type":"structure",
       "members":{
@@ -2136,6 +2198,21 @@
       "type":"structure",
       "members":{
         "Grants":{"shape":"GrantList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListReceivedLicensesForOrganizationRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"FilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"MaxSize100"}
+      }
+    },
+    "ListReceivedLicensesForOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "Licenses":{"shape":"GrantedLicenseList"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -2257,6 +2334,12 @@
         "Message":{"shape":"Message"}
       },
       "exception":true
+    },
+    "Options":{
+      "type":"structure",
+      "members":{
+        "ActivationOverrideBehavior":{"shape":"ActivationOverrideBehavior"}
+      }
     },
     "OrganizationConfiguration":{
       "type":"structure",

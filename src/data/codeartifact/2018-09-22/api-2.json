@@ -117,6 +117,23 @@
         {"shape":"ValidationException"}
       ]
     },
+    "DeletePackage":{
+      "name":"DeletePackage",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/package"
+      },
+      "input":{"shape":"DeletePackageRequest"},
+      "output":{"shape":"DeletePackageResult"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "DeletePackageVersions":{
       "name":"DeletePackageVersions",
       "http":{
@@ -486,6 +503,24 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "PublishPackageVersion":{
+      "name":"PublishPackageVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/package/version/publish"
+      },
+      "input":{"shape":"PublishPackageVersionRequest"},
+      "output":{"shape":"PublishPackageVersionResult"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
       ]
@@ -883,6 +918,53 @@
       "type":"structure",
       "members":{
         "domain":{"shape":"DomainDescription"}
+      }
+    },
+    "DeletePackageRequest":{
+      "type":"structure",
+      "required":[
+        "domain",
+        "repository",
+        "format",
+        "package"
+      ],
+      "members":{
+        "domain":{
+          "shape":"DomainName",
+          "location":"querystring",
+          "locationName":"domain"
+        },
+        "domainOwner":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"domain-owner"
+        },
+        "repository":{
+          "shape":"RepositoryName",
+          "location":"querystring",
+          "locationName":"repository"
+        },
+        "format":{
+          "shape":"PackageFormat",
+          "location":"querystring",
+          "locationName":"format"
+        },
+        "namespace":{
+          "shape":"PackageNamespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        },
+        "package":{
+          "shape":"PackageName",
+          "location":"querystring",
+          "locationName":"package"
+        }
+      }
+    },
+    "DeletePackageResult":{
+      "type":"structure",
+      "members":{
+        "deletedPackage":{"shape":"PackageSummary"}
       }
     },
     "DeletePackageVersionsRequest":{
@@ -2036,7 +2118,8 @@
         "npm",
         "pypi",
         "maven",
-        "nuget"
+        "nuget",
+        "generic"
       ]
     },
     "PackageName":{
@@ -2209,6 +2292,85 @@
       "min":1,
       "pattern":"\\S+"
     },
+    "PublishPackageVersionRequest":{
+      "type":"structure",
+      "required":[
+        "domain",
+        "repository",
+        "format",
+        "package",
+        "packageVersion",
+        "assetContent",
+        "assetName",
+        "assetSHA256"
+      ],
+      "members":{
+        "domain":{
+          "shape":"DomainName",
+          "location":"querystring",
+          "locationName":"domain"
+        },
+        "domainOwner":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"domain-owner"
+        },
+        "repository":{
+          "shape":"RepositoryName",
+          "location":"querystring",
+          "locationName":"repository"
+        },
+        "format":{
+          "shape":"PackageFormat",
+          "location":"querystring",
+          "locationName":"format"
+        },
+        "namespace":{
+          "shape":"PackageNamespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        },
+        "package":{
+          "shape":"PackageName",
+          "location":"querystring",
+          "locationName":"package"
+        },
+        "packageVersion":{
+          "shape":"PackageVersion",
+          "location":"querystring",
+          "locationName":"version"
+        },
+        "assetContent":{"shape":"Asset"},
+        "assetName":{
+          "shape":"AssetName",
+          "location":"querystring",
+          "locationName":"asset"
+        },
+        "assetSHA256":{
+          "shape":"SHA256",
+          "location":"header",
+          "locationName":"x-amz-content-sha256"
+        },
+        "unfinished":{
+          "shape":"BooleanOptional",
+          "location":"querystring",
+          "locationName":"unfinished"
+        }
+      },
+      "payload":"assetContent"
+    },
+    "PublishPackageVersionResult":{
+      "type":"structure",
+      "members":{
+        "format":{"shape":"PackageFormat"},
+        "namespace":{"shape":"PackageNamespace"},
+        "package":{"shape":"PackageName"},
+        "version":{"shape":"PackageVersion"},
+        "versionRevision":{"shape":"PackageVersionRevision"},
+        "status":{"shape":"PackageVersionStatus"},
+        "asset":{"shape":"AssetSummary"}
+      }
+    },
     "PutDomainPermissionsPolicyRequest":{
       "type":"structure",
       "required":[
@@ -2320,7 +2482,8 @@
         "arn":{"shape":"Arn"},
         "description":{"shape":"Description"},
         "upstreams":{"shape":"UpstreamRepositoryInfoList"},
-        "externalConnections":{"shape":"RepositoryExternalConnectionInfoList"}
+        "externalConnections":{"shape":"RepositoryExternalConnectionInfoList"},
+        "createdTime":{"shape":"Timestamp"}
       }
     },
     "RepositoryExternalConnectionInfo":{
@@ -2349,7 +2512,8 @@
         "domainName":{"shape":"DomainName"},
         "domainOwner":{"shape":"AccountId"},
         "arn":{"shape":"Arn"},
-        "description":{"shape":"Description"}
+        "description":{"shape":"Description"},
+        "createdTime":{"shape":"Timestamp"}
       }
     },
     "RepositorySummaryList":{
@@ -2386,6 +2550,12 @@
       ]
     },
     "RetryAfterSeconds":{"type":"integer"},
+    "SHA256":{
+      "type":"string",
+      "max":64,
+      "min":64,
+      "pattern":"[0-9a-f]+"
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":["message"],
