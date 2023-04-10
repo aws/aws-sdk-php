@@ -3,7 +3,6 @@ namespace Aws\Crypto;
 
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\AppendStream;
-use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\StreamInterface;
 
 trait EncryptionTraitV2
@@ -37,8 +36,8 @@ trait EncryptionTraitV2
      * Builds an AesStreamInterface and populates encryption metadata into the
      * supplied envelope.
      *
-     * @param Stream $plaintext Plain-text data to be encrypted using the
-     *                          materials, algorithm, and data provided.
+     * @param StreamInterface $plaintext Plain-text data to be encrypted using the
+     *                                   materials, algorithm, and data provided.
      * @param array $options    Options for use in encryption, including cipher
      *                          options, and encryption context.
      * @param MaterialsProviderV2 $provider A provider to supply and encrypt
@@ -54,7 +53,7 @@ trait EncryptionTraitV2
      * @internal
      */
     public function encrypt(
-        Stream $plaintext,
+        StreamInterface $plaintext,
         array $options,
         MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope
@@ -145,8 +144,8 @@ trait EncryptionTraitV2
      * Generates a stream that wraps the plaintext with the proper cipher and
      * uses the content encryption key (CEK) to encrypt the data when read.
      *
-     * @param Stream $plaintext Plain-text data to be encrypted using the
-     *                          materials, algorithm, and data provided.
+     * @param StreamInterface $plaintext Plain-text data to be encrypted using the
+     *                                   materials, algorithm, and data provided.
      * @param string $cek A content encryption key for use by the stream for
      *                    encrypting the plaintext data.
      * @param array $cipherOptions Options for use in determining the cipher to
@@ -157,7 +156,7 @@ trait EncryptionTraitV2
      * @internal
      */
     protected function getEncryptingStream(
-        Stream $plaintext,
+        StreamInterface $plaintext,
         $cek,
         &$cipherOptions
     ) {
