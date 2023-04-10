@@ -48,7 +48,8 @@
                 <button type="button"
                         class="navbar-toggle"
                         data-toggle="collapse"
-                        data-target=".navbar-collapse">
+                        data-target=".navbar-collapse"
+                >
 
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -89,11 +90,11 @@
                     </li>
 
                     {foreach $annotationGroups as $annotation}
-                    <li n:class="$active === 'annotation-group-' . $annotation ? active">
-                        <a n:tag-if="$active !== 'annotation-group-' . $annotation" href="annotation-group-{$annotation}.html" title="List of elements with {$annotation} annotation">
-                            <span>{$annotation|firstUpper}</span>
-                        </a>
-                    </li>
+                        <li n:class="$active === 'annotation-group-' . $annotation ? active">
+                            <a n:tag-if="$active !== 'annotation-group-' . $annotation" href="annotation-group-{$annotation}.html" title="List of elements with {$annotation} annotation">
+                                <span>{$annotation|firstUpper}</span>
+                            </a>
+                        </li>
                     {/foreach}
 
                     <li class="divider-vertical" n:if="$config->download"></li>
@@ -103,8 +104,8 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <div class="feedback-message"><span><a href="https://docs-feedback.aws.amazon.com/feedback.jsp?hidden_service_name=AWS%20SDK%20for%20PHP">Submit Feedback</a></span></div>
-                 </ul>
+                    <li><div class="feedback-message"><span><a href="https://docs-feedback.aws.amazon.com/feedback.jsp?hidden_service_name=AWS%20SDK%20for%20PHP">Submit Feedback</a></span></div></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -197,6 +198,6 @@
     </div>
     <script src="{='resources/combined.js'|staticFile}"></script>
     <script src="{='searchIndex.js'|staticFile}"></script>
-    <script src="{='resources/collpase.js'|staticFile}"></script>
+    <script src="{='resources/collapse.js'|staticFile}"></script>
 </body>
 </html>
