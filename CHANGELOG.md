@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.7 - 2023-04-10
 
 * `Aws\Connect` - This release adds the ability to configure an agent's routing profile to receive contacts from multiple channels at the same time via extending the UpdateRoutingProfileConcurrency, CreateRoutingProfile and DescribeRoutingProfile APIs.
 * `Aws\ECS` - This release adds support for enabling FIPS compliance on Amazon ECS Fargate tasks
