@@ -45,19 +45,27 @@
     <nav id="navigation" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
+                <button type="button"
+                        class="navbar-toggle"
+                        data-toggle="collapse"
+                        data-target=".navbar-collapse">
+
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a href="index.html" class="navbar-brand">{if $config->title}{$config->title}{else}Overview{/if}</a>
             </div>
             <div class="collapse navbar-collapse">
-
-                <form{if $config->googleCseId} action="http://www.google.com/cse"{/if} id="search" class="navbar-form navbar-left" role="search">
-                    <input type="hidden" name="cx" value="{$config->googleCseId}">
-                    <input type="hidden" name="ie" value="UTF-8">
-                    <div class="form-group">
-                        <input aria-label="Search" type="text" name="q" class="search-query form-control" placeholder="Search"{if 'overview' === $active} autofocus{/if}>
-                    </div>
-                </form>
-
                 <ul class="nav navbar-nav">
+                    <form{if $config->googleCseId} action="http://www.google.com/cse"{/if} id="search" class="navbar-form navbar-left" role="search">
+                        <input type="hidden" name="cx" value="{$config->googleCseId}">
+                        <input type="hidden" name="ie" value="UTF-8">
+                        <div class="form-group">
+                            <input aria-label="Search" type="text" name="q" class="search-query form-control" placeholder="Search"{if 'overview' === $active} autofocus{/if}>
+                        </div>
+                    </form>
                     <li n:class="'package' === $active ? active" n:if="$packages">
                         <a n:tag-if="'package' !== $active && $package" href="{$package|packageUrl}" title="Summary of {$package}"><span>Package</span></a>
                     </li>
@@ -94,7 +102,9 @@
                         <a href="{$archive}" title="Download documentation as ZIP archive"><span>Download</span></a>
                     </li>
                 </ul>
-                <div class="feedback-message"><span>Did this page help you? <a href="https://docs-feedback.aws.amazon.com/feedback.jsp?hidden_service_name=AWS%20SDK%20for%20PHP">SUBMIT FEEDBACK!</a></span></div>
+                <ul class="nav navbar-nav navbar-right">
+                    <div class="feedback-message"><span><a href="https://docs-feedback.aws.amazon.com/feedback.jsp?hidden_service_name=AWS%20SDK%20for%20PHP">Submit Feedback</a></span></div>
+                 </ul>
             </div>
         </div>
     </nav>
@@ -187,5 +197,6 @@
     </div>
     <script src="{='resources/combined.js'|staticFile}"></script>
     <script src="{='searchIndex.js'|staticFile}"></script>
+    <script src="{='resources/collpase.js'|staticFile}"></script>
 </body>
 </html>
