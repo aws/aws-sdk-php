@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.8 - 2023-04-11
 
 * `Aws\ECRPublic` - This release will allow using registry alias as registryId in BatchDeleteImage request.
 * `Aws\EMRServerless` - This release extends GetJobRun API to return job run timeout (executionTimeoutMinutes) specified during StartJobRun call (or default timeout of 720 minutes if none was specified).
