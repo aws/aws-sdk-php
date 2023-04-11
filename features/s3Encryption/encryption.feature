@@ -1,11 +1,13 @@
 @s3Encryption @integ
 Feature: S3 Client Side Encryption
 
+  @requiresUniqueResources
   Scenario: Upload PHP's GCM encrypted fixtures
     When I get all fixtures for "aes_gcm" from "aws-sdk-php-crypto-tests"
     Then I encrypt each fixture with "kms" "AWS_SDK_PHP_TEST_ALIAS" "us-west-2" and "aes_gcm"
     And upload "PHP" data with folder "version_2"
 
+  @requiresUniqueResources
   Scenario: Upload PHP's CBC encrypted fixtures
     When I get all fixtures for "aes_cbc" from "aws-sdk-php-crypto-tests"
     Then I encrypt each fixture with "kms" "AWS_SDK_PHP_TEST_ALIAS" "us-west-2" and "aes_cbc"
