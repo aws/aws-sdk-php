@@ -190,33 +190,7 @@ $(window).load(function() {
 			.toggleClass('medium', width <= 960)
 			.toggleClass('small', width <= 650);
 	}
-	$splitter.mousedown(function() {
-			$splitter.addClass('active');
-
-			$document.mousemove(function(event) {
-				if (event.pageX >= 230 && $document.width() - event.pageX >= 600 + splitterWidth) {
-					setSplitterPosition(event.pageX);
-					setContentWidth();
-				}
-			});
-
-			$()
-				.add($splitter)
-				.add($document)
-					.mouseup(function() {
-						$splitter
-							.removeClass('active')
-							.unbind('mouseup');
-						$document
-							.unbind('mousemove')
-							.unbind('mouseup');
-
-						$.cookie('splitter', splitterPosition, {expires: 365});
-					});
-
-			return false;
-		});
-	$splitter.dblclick(function() {
+	function toggleSplitter() {
 		if (splitterPosition) {
 			splitterPositionBackup = $left.width();
 			setSplitterPosition(0);
@@ -229,15 +203,80 @@ $(window).load(function() {
 
 		$.cookie('splitter', splitterPosition, {expires: 365});
 		$.cookie('splitterBackup', splitterPositionBackup, {expires: 365});
+	}
+	function collapseLeft() {
+		$left.hide();
+		$splitter.hide();
+		$right.css('margin-left', '0px')
+	}
+
+	function showSplitter() {
+		$right.removeClass('container');
+		$rightInner.removeClass('row')
+		$left.show();
+		$splitter.show();
+		setSplitterPosition(splitterPosition)
+		setNavigationPosition();
+		setContentWidth();
+	}
+
+	function checkWindowSize() {
+		var width = $(window).width();
+
+		if (width < 768) {
+			if (width < 340) {
+				$right.addClass('container');
+				$rightInner.addClass('row')
+			}
+			collapseLeft();
+		} else {
+			showSplitter();
+		}
+	}
+
+	$splitter.mousedown(function() {
+		$splitter.addClass('active');
+
+		$document.mousemove(function(event) {
+			if (event.pageX >= 230 && $document.width() - event.pageX >= 600 + splitterWidth) {
+				setSplitterPosition(event.pageX);
+				setContentWidth();
+			}
+		});
+
+		$()
+			.add($splitter)
+			.add($document)
+			.mouseup(function() {
+				$splitter
+					.removeClass('active')
+					.unbind('mouseup');
+				$document
+					.unbind('mousemove')
+					.unbind('mouseup');
+
+				$.cookie('splitter', splitterPosition, {expires: 365});
+			});
+
+		return false;
 	});
+	$splitter.dblclick(toggleSplitter);
 	if (null !== splitterPosition) {
 		setSplitterPosition(splitterPosition);
 	}
 	setNavigationPosition();
 	setContentWidth();
+	$(document).ready(function() {
+		checkWindowSize();
+	});
 	$(window)
 		.resize(setNavigationPosition)
-		.resize(setContentWidth);
+		.resize(setContentWidth)
+		.resize(checkWindowSize);
+
+	$(document).ready(function() {
+		checkWindowSize();
+	});
 
 	// Select selected lines
 	var matches = window.location.hash.substr(1).match(/^\d+(?:-\d+)?(?:,\d+(?:-\d+)?)*$/);
