@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECRPublic` - This release will allow using registry alias as registryId in BatchDeleteImage request.
+* `Aws\EMRServerless` - This release extends GetJobRun API to return job run timeout (executionTimeoutMinutes) specified during StartJobRun call (or default timeout of 720 minutes if none was specified).
+* `Aws\EventBridge` - EventBridge PutTarget support for multiple SQL arguments on RedshiftDataParameters
+* `Aws\IoT` - Re-release to remove unexpected API changes
+* `Aws\IoTDataPlane` - This release adds support for MQTT5 user properties when calling the AWS IoT GetRetainedMessage API
+* `Aws\WAFV2` - For web ACLs that protect CloudFront protections, the default request body inspection size is now 16 KB, and you can use the new association configuration to increase the inspection size further, up to 64 KB. Sizes over 16 KB can incur additional costs.
+
 ## 3.263.7 - 2023-04-10
 
 * `Aws\Connect` - This release adds the ability to configure an agent's routing profile to receive contacts from multiple channels at the same time via extending the UpdateRoutingProfileConcurrency, CreateRoutingProfile and DescribeRoutingProfile APIs.
