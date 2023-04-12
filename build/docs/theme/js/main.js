@@ -169,6 +169,7 @@ $(window).load(function() {
 	var splitterWidth = $splitter.width();
 	var splitterPosition = $.cookie('splitter') ? parseInt($.cookie('splitter')) : null;
 	var splitterPositionBackup = $.cookie('splitterBackup') ? parseInt($.cookie('splitterBackup')) : null;
+
 	function setSplitterPosition(position)
 	{
 		splitterPosition = position;
@@ -177,12 +178,14 @@ $(window).load(function() {
 		$right.css('margin-left', position + splitterWidth);
 		$splitter.css('left', position);
 	}
+
 	function setNavigationPosition()
 	{
 		var height = $(window).height() - navigationHeight;
 		$left.height(height);
 		$splitter.height(height);
 	}
+
 	function setContentWidth()
 	{
 		var width = $rightInner.width();
@@ -190,6 +193,7 @@ $(window).load(function() {
 			.toggleClass('medium', width <= 960)
 			.toggleClass('small', width <= 650);
 	}
+
 	function toggleSplitter() {
 		if (splitterPosition) {
 			splitterPositionBackup = $left.width();
@@ -204,17 +208,21 @@ $(window).load(function() {
 		$.cookie('splitter', splitterPosition, {expires: 365});
 		$.cookie('splitterBackup', splitterPositionBackup, {expires: 365});
 	}
-	function collapseLeft() {
-		$left.hide();
+
+	function collapseSplitter() {
 		$splitter.hide();
 		$right.css('margin-left', '0px')
+		$dropdown.show();
+		$left.css({"width" : "100%", "background-color" : "white"})
+		$index.append($left);
 	}
 
 	function showSplitter() {
 		$right.removeClass('container');
-		$rightInner.removeClass('row')
-		$left.show();
+		$rightInner.removeClass('row');
+		$left.insertAfter($navigation);
 		$splitter.show();
+		$dropdown.hide();
 		setSplitterPosition(splitterPosition)
 		setNavigationPosition();
 		setContentWidth();
@@ -228,7 +236,7 @@ $(window).load(function() {
 				$right.addClass('container');
 				$rightInner.addClass('row')
 			}
-			collapseLeft();
+			collapseSplitter();
 		} else {
 			showSplitter();
 		}
@@ -260,15 +268,20 @@ $(window).load(function() {
 
 		return false;
 	});
+
 	$splitter.dblclick(toggleSplitter);
+
 	if (null !== splitterPosition) {
 		setSplitterPosition(splitterPosition);
 	}
+
 	setNavigationPosition();
 	setContentWidth();
+
 	$(document).ready(function() {
 		checkWindowSize();
 	});
+
 	$(window)
 		.resize(setNavigationPosition)
 		.resize(setContentWidth)
@@ -277,25 +290,6 @@ $(window).load(function() {
 	$(document).ready(function() {
 		checkWindowSize();
 	});
-
-	// Select selected lines
-	var matches = window.location.hash.substr(1).match(/^\d+(?:-\d+)?(?:,\d+(?:-\d+)?)*$/);
-	if (null !== matches) {
-		var lists = matches[0].split(',');
-		for (var i = 0; i < lists.length; i++) {
-			var lines = lists[i].split('-');
-			lines[0] = parseInt(lines[0]);
-			lines[1] = parseInt(lines[1] || lines[0]);
-			for (var j = lines[0]; j <= lines[1]; j++) {
-				$('#' + j).addClass('selected');
-			}
-		}
-
-		var $firstLine = $('#' + parseInt(matches[0]));
-		if ($firstLine.length > 0) {
-			$right.scrollTop($firstLine.position().top);
-		}
-	}
 
 	// Save selected lines
 	var lastLine;

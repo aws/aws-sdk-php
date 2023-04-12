@@ -125,9 +125,8 @@
                 {foreach $groups as $group}
                     {var $nextLevel = substr_count($iterator->nextValue, '\\') > substr_count($group, '\\')}
                     <li n:class="$actualGroup === $group || 0 === strpos($actualGroup, $group . '\\') ? active, $config->main && 0 === strpos($group, $config->main) ? main">
-                        <a href="{if $groupBy === 'package'}{$group|packageUrl}{else}{$group|namespaceUrl}{/if}">
-                            {$group|subgroupName}<span n:tag-if="$nextLevel"></span>
-                        </a>
+                        <a href="{if $groupBy === 'package'}{$group|packageUrl}{else}{$group|namespaceUrl}{/if}"></a>
+                        {$group|subgroupName}<button class="btn left-expand" n:tag-if="$nextLevel"></button>
                         {if $nextLevel}
                 <ul>
                         {else}
