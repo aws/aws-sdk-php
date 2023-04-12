@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.9 - 2023-04-12
 
 * `Aws\GroundStation` - AWS Ground Station Wideband DigIF GA Release
 * `Aws\ManagedBlockchain` - Removal of the Ropsten network. The Ethereum foundation ceased support of Ropsten on December 31st, 2022..
