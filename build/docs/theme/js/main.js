@@ -281,6 +281,25 @@ $(window).load(function() {
 		checkWindowSize();
 	});
 
+	// Select selected lines
+	var matches = window.location.hash.substr(1).match(/^\d+(?:-\d+)?(?:,\d+(?:-\d+)?)*$/);
+	if (null !== matches) {
+		var lists = matches[0].split(',');
+		for (var i = 0; i < lists.length; i++) {
+			var lines = lists[i].split('-');
+			lines[0] = parseInt(lines[0]);
+			lines[1] = parseInt(lines[1] || lines[0]);
+			for (var j = lines[0]; j <= lines[1]; j++) {
+				$('#' + j).addClass('selected');
+			}
+		}
+
+		var $firstLine = $('#' + parseInt(matches[0]));
+		if ($firstLine.length > 0) {
+			$right.scrollTop($firstLine.position().top);
+		}
+	}
+
 	// Save selected lines
 	var lastLine;
 	$('.l a').click(function(event) {
