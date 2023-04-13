@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKVoice` - This release adds tagging support for Voice Connectors and SIP Media Applications
+* `Aws\MediaConnect` - Gateway is a new feature of AWS Elemental MediaConnect. Gateway allows the deployment of on-premises resources for the purpose of transporting live video to and from the AWS Cloud.
+
 ## 3.263.9 - 2023-04-12
 
 * `Aws\GroundStation` - AWS Ground Station Wideband DigIF GA Release
