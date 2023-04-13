@@ -33,28 +33,29 @@ $(window).load(function() {
 	// Menu
 
 	// Hide deep packages and namespaces
-	$('ul span', $groups).click(function(event) {
+	$('ul button', $groups).click(function(event) {
 		event.preventDefault();
 		event.stopPropagation();
 		$(this)
 			.toggleClass('collapsed')
-			.parent()
-				.next('ul')
-					.toggleClass('collapsed');
+			// .parent()
+			.next('ul')
+			.toggleClass('collapsed');
+		$(this).attr( 'aria-expanded', $(this).attr('aria-expanded') === 'true' ? false : true);
 	}).click();
 
 	$active = $('ul li.active', $groups);
 	if ($active.length > 0) {
 		// Open active
-		$('> a > span', $active).click();
+		$('> button', $active).click();
 	} else {
 		$main = $('> ul > li.main', $groups);
 		if ($main.length > 0) {
 			// Open first level of the main project
-			$('> a > span', $main).click();
+			$('> button', $main).click();
 		} else {
 			// Open first level of all
-			$('> ul > li > a > span', $groups).click();
+			$('> ul > li > button', $groups).click();
 		}
 	}
 
@@ -153,7 +154,6 @@ $(window).load(function() {
 	// Open details
 	if (ApiGen.config.options.elementDetailsCollapsed) {
 		$(document.body).on('click', 'tr', function(ev) {
-
 			var short = this.querySelector('.short')
 			, detailed = this.querySelector('.detailed')
 
@@ -169,7 +169,6 @@ $(window).load(function() {
 	var splitterWidth = $splitter.width();
 	var splitterPosition = $.cookie('splitter') ? parseInt($.cookie('splitter')) : null;
 	var splitterPositionBackup = $.cookie('splitterBackup') ? parseInt($.cookie('splitterBackup')) : null;
-
 	function setSplitterPosition(position)
 	{
 		splitterPosition = position;
@@ -178,14 +177,12 @@ $(window).load(function() {
 		$right.css('margin-left', position + splitterWidth);
 		$splitter.css('left', position);
 	}
-
 	function setNavigationPosition()
 	{
 		var height = $(window).height() - navigationHeight;
 		$left.height(height);
 		$splitter.height(height);
 	}
-
 	function setContentWidth()
 	{
 		var width = $rightInner.width();
@@ -193,7 +190,6 @@ $(window).load(function() {
 			.toggleClass('medium', width <= 960)
 			.toggleClass('small', width <= 650);
 	}
-
 	function toggleSplitter() {
 		if (splitterPosition) {
 			splitterPositionBackup = $left.width();
@@ -208,7 +204,6 @@ $(window).load(function() {
 		$.cookie('splitter', splitterPosition, {expires: 365});
 		$.cookie('splitterBackup', splitterPositionBackup, {expires: 365});
 	}
-
 	function collapseSplitter() {
 		$splitter.hide();
 		$right.css('margin-left', '0px')
@@ -268,20 +263,15 @@ $(window).load(function() {
 
 		return false;
 	});
-
 	$splitter.dblclick(toggleSplitter);
-
 	if (null !== splitterPosition) {
 		setSplitterPosition(splitterPosition);
 	}
-
 	setNavigationPosition();
 	setContentWidth();
-
 	$(document).ready(function() {
 		checkWindowSize();
 	});
-
 	$(window)
 		.resize(setNavigationPosition)
 		.resize(setContentWidth)
