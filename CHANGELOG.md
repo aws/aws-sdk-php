@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.11 - 2023-04-14
 
 * `Aws\ECS` - This release supports ephemeral storage for AWS Fargate Windows containers.
 * `Aws\Lambda` - This release adds SnapStart related exceptions to InvokeWithResponseStream API. IAM access related documentation is also added for this API.
