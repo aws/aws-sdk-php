@@ -64,7 +64,8 @@
                             <input type="hidden" name="cx" value="{$config->googleCseId}">
                             <input type="hidden" name="ie" value="UTF-8">
                             <div class="form-group">
-                                <input aria-label="Search" type="text" name="q" class="search-query form-control" placeholder="Search"{if 'overview' === $active} autofocus{/if}>
+                                <div class="suggestions-help" role="status" aria-live="polite"></div>
+                                <input data-suggest type="text" aria-autocomplete="list" aria-label="Search" type="text" name="q" class="search-query form-control" placeholder="Search"{if 'overview' === $active} autofocus{/if}>
                             </div>
                         </form>
                     </li>
