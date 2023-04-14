@@ -151,6 +151,15 @@ $(window).load(function() {
 		$caption.click();
 	}
 
+	// Announce results in Autocomplete
+	var $suggestionsHelp = $('.suggestions-help');
+
+	$('[data-suggest]').on('input', function() {
+		$suggestionsHelp.text(
+				'There are suggestions. Use the up and down arrows to browse.'
+			);
+	});
+
 	// Open details
 	if (ApiGen.config.options.elementDetailsCollapsed) {
 		$(document.body).on('click', 'tr', function(ev) {
