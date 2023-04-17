@@ -63,12 +63,6 @@ class ObjectUploader implements PromisorInterface
         // Handle "add_content_md5" option.
         $this->addContentMD5 = isset($options['add_content_md5'])
             && $options['add_content_md5'] === true;
-        /*$totalSize = $this->body->getSize();
-        $this->progressThresholds = [];
-        for ($i=1;$i<=8;$i++) {
-            $this->progressThresholds []= round($totalSize*($i/8));
-        }
-        print_r($this->progressThresholds);*/
     }
 
     /**
@@ -80,7 +74,6 @@ class ObjectUploader implements PromisorInterface
         $mup_threshold = $this->options['mup_threshold'];
         if ($this->requiresMultipart($this->body, $mup_threshold)) {
             // Perform a multipart upload.
-            echo "Total bytes: " . $this->body->getSize() . "\n";
             return (new MultipartUploader($this->client, $this->body, [
                     'bucket' => $this->bucket,
                     'key'    => $this->key,
@@ -108,9 +101,6 @@ class ObjectUploader implements PromisorInterface
     public function upload()
     {
         $result = $this->promise()->wait();
-//        if ($result["@metadata"]["statusCode"] == '200') {
-//            echo "|====================| 100.0%\nTransfer complete!\n";
-//        }
         return $result;
     }
 

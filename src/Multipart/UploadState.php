@@ -119,13 +119,6 @@ class UploadState
      *                    CREATED, INITIATED, and COMPLETED on this class.
      */
 
-//    public function updateProgressBar($contentLength)
-//    {
-////        echo "part size " . $this->partSize . "\n";
-//
-//        echo "total uploaded: " . ($this->uploadedBytes += $contentLength) . "\n";
-//        return array_shift($this->progressBar);
-//    }
     public function setStatus($status)
     {
         $this->status = $status;

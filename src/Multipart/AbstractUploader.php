@@ -60,8 +60,6 @@ abstract class AbstractUploader extends AbstractUploadManager
                 );
                 $command->getHandlerList()->appendSign($resultHandler, 'mup');
                 $numberOfParts = $this->getNumberOfParts($this->state->getPartSize());
-////prints multiple times bc it's inside the if statement--------------------------------------------------------------------------------------------------
-//                echo __METHOD__ . " | Calculating # of parts: " . $numberOfParts . "\n";
                 if (isset($numberOfParts) && $partNumber > $numberOfParts) {
                     throw new $this->config['exception_class'](
                         $this->state,

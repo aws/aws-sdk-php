@@ -87,7 +87,6 @@ class MultipartUploader extends AbstractUploader
         for ($i=1;$i<=8;$i++) {
             $this->progressThresholds []= round($totalSize*($i/8));
         }
-        print_r($this->progressThresholds);
         echo array_shift($this->progressBar);
     }
 
@@ -164,7 +163,6 @@ class MultipartUploader extends AbstractUploader
         $threshold = $this->progressThresholds;
 
         if (!empty($threshold) and !empty($this->progressBar) and $this->uploadedBytes >= $threshold[0]) {
-            echo $this->uploadedBytes . " is larger than or = to " . $threshold[0] . "\n";
             array_shift($this->progressThresholds);
             echo array_shift($this->progressBar);
         }
