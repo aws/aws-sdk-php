@@ -34,6 +34,9 @@ class RandomByteStream implements StreamInterface
         });
     }
 
+    /**
+     * @returns int
+     */
     public function getSize()
     {
         return $this->maxLength;
