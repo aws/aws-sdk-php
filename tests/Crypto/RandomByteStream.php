@@ -35,7 +35,7 @@ class RandomByteStream implements StreamInterface
     }
 
     /**
-     * @returns int
+     * @return int|null
      */
     public function getSize()
     {
