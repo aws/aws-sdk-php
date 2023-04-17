@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.12 - 2023-04-17
 
 * `Aws\Appflow` - This release adds a Client Token parameter to the following AppFlow APIs: Create/Update Connector Profile, Create/Update Flow, Start Flow, Register Connector, Update Connector Registration. The Client Token parameter allows idempotent operations for these APIs.
 * `Aws\DynamoDB` - Documentation updates for DynamoDB API
