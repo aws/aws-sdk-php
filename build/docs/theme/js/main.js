@@ -239,9 +239,14 @@ $(window).load(function() {
 			if (width < 340) {
 				$right.addClass('container');
 				$rightInner.addClass('row')
+			} else {
+				$right.removeClass('container');
+				$rightInner.removeClass('row');
 			}
+			$('.form-group').addClass('container');
 			collapseSplitter();
 		} else {
+			$('.form-group').removeClass('container');
 			showSplitter();
 		}
 	}
