@@ -381,7 +381,7 @@ class StreamWrapperTest extends TestCase
         mkdir('s3://already-existing-bucket/key');
     }
 
-    public function testCreatingBucketsDoesNotSetACL()
+    public function testCreatingBucketsDoesNotSetAcl()
     {
         $history = new History();
         $this->client->getHandlerList()->appendSign(Middleware::history($history));
