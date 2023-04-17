@@ -153,14 +153,13 @@ class MultipartUploader extends AbstractUploader
         }
 
         $data['ContentLength'] = $contentLength;
-//        echo $data['ContentLength'];
         $this->uploadedBytes += $contentLength;
-        $this->displayProgress($contentLength);
+        $this->displayProgress();
 
         return $data;
     }
 
-    protected function displayProgress($length)
+    protected function displayProgress()
     {
         $threshold = $this->progressThresholds;
 
