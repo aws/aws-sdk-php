@@ -55,8 +55,15 @@ trait MultipartUploadingTrait
             'PartNumber' => $command['PartNumber'],
             'ETag'       => $this->extractETag($result),
         ]);
+//        $progressResult = $this->getState()->updateProgressBar($command["ContentLength"]);
+//        echo $progressResult;
     }
 
+    protected function displayProgress(CommandInterface $command)
+    {
+        $progressResult = $this->getState()->updateProgressBar($command["ContentLength"]);
+        return $progressResult;
+    }
     abstract protected function extractETag(ResultInterface $result);
 
     protected function getCompleteParams()

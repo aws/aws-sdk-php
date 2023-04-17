@@ -19,6 +19,18 @@ class MultipartUploader extends AbstractUploader
     const PART_MIN_SIZE = 5242880;
     const PART_MAX_SIZE = 5368709120;
     const PART_MAX_NUM = 10000;
+    private $uploadedBytes = 0;
+    private $progressBar = [
+        "Transfer initiated...\n|                    | 0.0%\n",
+        "|==                  | 12.5%\n",
+        "|=====               | 25.0%\n",
+        "|=======             | 37.5%\n",
+        "|==========          | 50.0%\n",
+        "|============        | 62.5%\n",
+        "|===============     | 75.0%\n",
+        "|=================   | 87.5%\n",
+        "|====================| 100.0%\nTransfer complete!\n"
+    ];
 
     /**
      * Creates a multipart upload for an S3 object.
@@ -70,6 +82,13 @@ class MultipartUploader extends AbstractUploader
             'key'    => null,
             'exception_class' => S3MultipartUploadException::class,
         ]);
+        $totalSize = $this->source->getSize();
+        $this->progressThresholds = [];
+        for ($i=1;$i<=8;$i++) {
+            $this->progressThresholds []= round($totalSize*($i/8));
+        }
+        print_r($this->progressThresholds);
+        echo array_shift($this->progressBar);
     }
 
     protected function loadUploadWorkflowInfo()
@@ -134,8 +153,22 @@ class MultipartUploader extends AbstractUploader
         }
 
         $data['ContentLength'] = $contentLength;
+//        echo $data['ContentLength'];
+        $this->uploadedBytes += $contentLength;
+        $this->displayProgress($contentLength);
 
         return $data;
+    }
+
+    protected function displayProgress($length)
+    {
+        $threshold = $this->progressThresholds;
+
+        if (!empty($threshold) and !empty($this->progressBar) and $this->uploadedBytes >= $threshold[0]) {
+            echo $this->uploadedBytes . " is larger than or = to " . $threshold[0] . "\n";
+            array_shift($this->progressThresholds);
+            echo array_shift($this->progressBar);
+        }
     }
 
     protected function extractETag(ResultInterface $result)

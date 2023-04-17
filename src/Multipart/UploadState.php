@@ -97,6 +97,7 @@ class UploadState
      */
     public function hasPartBeenUploaded($partNumber)
     {
+//        echo __METHOD__ . " | checking if uploaded: " . $partNumber . "\n";
         return isset($this->uploadedParts[$partNumber]);
     }
 
@@ -108,7 +109,6 @@ class UploadState
     public function getUploadedParts()
     {
         ksort($this->uploadedParts);
-
         return $this->uploadedParts;
     }
 
@@ -118,6 +118,14 @@ class UploadState
      * @param int $status Status is an integer code defined by the constants
      *                    CREATED, INITIATED, and COMPLETED on this class.
      */
+
+//    public function updateProgressBar($contentLength)
+//    {
+////        echo "part size " . $this->partSize . "\n";
+//
+//        echo "total uploaded: " . ($this->uploadedBytes += $contentLength) . "\n";
+//        return array_shift($this->progressBar);
+//    }
     public function setStatus($status)
     {
         $this->status = $status;
