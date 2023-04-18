@@ -291,10 +291,6 @@ $(window).load(function() {
 		.resize(setContentWidth)
 		.resize(checkWindowSize);
 
-	$(document).ready(function() {
-		checkWindowSize();
-	});
-
 	// Select selected lines
 	var matches = window.location.hash.substr(1).match(/^\d+(?:-\d+)?(?:,\d+(?:-\d+)?)*$/);
 	if (null !== matches) {
