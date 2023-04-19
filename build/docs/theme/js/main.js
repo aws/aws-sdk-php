@@ -227,6 +227,7 @@ $(window).load(function() {
 		$left.insertAfter($navigation);
 		$splitter.show();
 		$dropdown.hide();
+		$left.css("width", "")
 		setSplitterPosition(splitterPosition)
 		setNavigationPosition();
 		setContentWidth();
@@ -246,8 +247,10 @@ $(window).load(function() {
 			$('.form-group').addClass('container');
 			collapseSplitter();
 		} else {
+			if ($splitter.is(':hidden')) {
+				showSplitter();
+			}
 			$('.form-group').removeClass('container');
-			showSplitter();
 		}
 	}
 
