@@ -126,7 +126,6 @@ class UploadState
      */
     public function hasPartBeenUploaded($partNumber)
     {
-//        echo __METHOD__ . " | checking if uploaded: " . $partNumber . "\n";
         return isset($this->uploadedParts[$partNumber]);
     }
 
