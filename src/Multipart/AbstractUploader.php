@@ -147,7 +147,4 @@ abstract class AbstractUploader extends AbstractUploadManager
         }
         return null;
     }
-
 }
-
-
