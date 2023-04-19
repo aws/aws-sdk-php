@@ -71,7 +71,7 @@ class MultipartUploader extends AbstractUploader
             'exception_class' => S3MultipartUploadException::class,
         ]);
 
-        $this->createProgressThresholds($this->source->getSize());
+        $this->getState()->setProgressThresholds($this->source->getSize());
     }
 
     protected function loadUploadWorkflowInfo()

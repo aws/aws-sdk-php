@@ -51,15 +51,6 @@ trait MultipartUploadingTrait
         return $state;
     }
 
-    protected function createProgressThresholds($totalSize)
-    {
-        $this->progressThresholds = [];
-        for ($i=1;$i<=8;$i++) {
-            $this->progressThresholds []= round($totalSize*($i/8));
-        }
-        $this->getState()->setProgressThresholds($this->progressThresholds);
-    }
-
     protected function handleResult(CommandInterface $command, ResultInterface $result)
     {
         $this->getState()->markPartAsUploaded($command['PartNumber'], [

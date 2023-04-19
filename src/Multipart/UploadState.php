@@ -37,6 +37,8 @@ class UploadState
     /** @var int Identifies the status the upload. */
     private $status = self::CREATED;
 
+    private $progressThresholds = [];
+
     /**
      * @param array $id Params used to identity the upload.
      */
@@ -89,9 +91,11 @@ class UploadState
         $this->partSize = $partSize;
     }
 
-    public function setProgressThresholds($thresholds)
+    public function setProgressThresholds($totalSize)
     {
-        $this->progressThresholds = $thresholds;
+        for ($i=1;$i<=8;$i++) {
+            $this->progressThresholds []= round($totalSize*($i/8));
+        }
     }
 
     public function displayProgress($totalUploaded)
