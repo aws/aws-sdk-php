@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.13 - 2023-04-19
 
 * `Aws\Comprehend` - This release supports native document models for custom classification, in addition to plain-text models. You train native document models using documents (PDF, Word, images) in their native format.
 * `Aws\ECS` - This release supports the Account Setting "TagResourceAuthorization" that allows for enhanced Tagging security controls.
