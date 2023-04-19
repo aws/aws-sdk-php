@@ -92,16 +92,12 @@ class ObjectUploader implements PromisorInterface
         if (is_callable($this->options['before_upload'])) {
             $this->options['before_upload']($command);
         }
-//        return $this->client->executeAsync($command);
-        $test = $this->client->executeAsync($command);
-        return $test;
-
+        return $this->client->executeAsync($command);
     }
 
     public function upload()
     {
-        $result = $this->promise()->wait();
-        return $result;
+        return $this->promise()->wait();
     }
 
     /**

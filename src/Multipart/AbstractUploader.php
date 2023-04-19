@@ -87,8 +87,6 @@ abstract class AbstractUploader extends AbstractUploadManager
                 $this->source->read($this->state->getPartSize());
             }
         }
-//prints near the end of the handleResult print statements? Maybe the thing about "Or do we just create parts til we reach the end of the file?"-------------------------------------------------------------------------------------------------------------
-//        print "AbstractUploader Number of parts: " . $numberOfParts . "\n";
     }
 
     /**

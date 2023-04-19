@@ -13,6 +13,18 @@ class UploadState
     const INITIATED = 1;
     const COMPLETED = 2;
 
+    protected $progressBar = [
+        "Transfer initiated...\n|                    | 0.0%\n",
+        "|==                  | 12.5%\n",
+        "|=====               | 25.0%\n",
+        "|=======             | 37.5%\n",
+        "|==========          | 50.0%\n",
+        "|============        | 62.5%\n",
+        "|===============     | 75.0%\n",
+        "|=================   | 87.5%\n",
+        "|====================| 100.0%\nTransfer complete!\n"
+    ];
+
     /** @var array Params used to identity the upload. */
     private $id;
 
@@ -31,6 +43,7 @@ class UploadState
     public function __construct(array $id)
     {
         $this->id = $id;
+        echo array_shift($this->progressBar);
     }
 
     /**
@@ -74,6 +87,22 @@ class UploadState
     public function setPartSize($partSize)
     {
         $this->partSize = $partSize;
+    }
+
+    public function setProgressThresholds($thresholds)
+    {
+        $this->progressThresholds = $thresholds;
+    }
+
+    public function displayProgress($totalUploaded)
+    {
+        while (!empty($this->progressThresholds)
+                && !empty($this->progressBar)
+                && $totalUploaded >= $this->progressThresholds[0])
+        {
+            array_shift($this->progressThresholds);
+            echo array_shift($this->progressBar);
+        }
     }
 
     /**
