@@ -61,7 +61,7 @@ jobs:
     #php 8.1+ requirements
     - if: ${{ matrix.php-versions >= '8.1' && matrix.composer-options != '' }}
       name: PHP 8.1+
-      run: composer require --dev guzzlehttp/guzzle "^7.3" --no-interaction --prefer-source --with-all-dependencies
+      run: composer require --dev guzzlehttp/guzzle "^7.4.5" --no-interaction --prefer-source --with-all-dependencies
 
     #run tests
     - name: Run test suite
@@ -79,7 +79,7 @@ jobs:
     - if:  ${{ matrix.composer-options == '' }}
       name: Package generation
       run: |
-        composer require guzzlehttp/psr7 "^1.7.0"
+        composer require guzzlehttp/psr7 "^1.9.1"
         composer update
         make package
 
