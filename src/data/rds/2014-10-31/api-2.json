@@ -415,7 +415,9 @@
         {"shape":"InstanceQuotaExceededFault"},
         {"shape":"StorageQuotaExceededFault"},
         {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBClusterNotFoundFault"},
         {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"InvalidDBClusterStateFault"},
         {"shape":"DBSubnetGroupNotFoundFault"},
         {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
         {"shape":"InvalidSubnet"},
@@ -1595,6 +1597,7 @@
         {"shape":"InvalidDBSecurityGroupStateFault"},
         {"shape":"InvalidDBInstanceStateFault"},
         {"shape":"DBClusterAlreadyExistsFault"},
+        {"shape":"DBInstanceAlreadyExistsFault"},
         {"shape":"DomainNotFoundFault"}
       ]
     },
@@ -3301,10 +3304,7 @@
     },
     "CreateDBInstanceReadReplicaMessage":{
       "type":"structure",
-      "required":[
-        "DBInstanceIdentifier",
-        "SourceDBInstanceIdentifier"
-      ],
+      "required":["DBInstanceIdentifier"],
       "members":{
         "DBInstanceIdentifier":{"shape":"String"},
         "SourceDBInstanceIdentifier":{"shape":"String"},
@@ -3343,7 +3343,8 @@
         "NetworkType":{"shape":"String"},
         "StorageThroughput":{"shape":"IntegerOptional"},
         "EnableCustomerOwnedIp":{"shape":"BooleanOptional"},
-        "AllocatedStorage":{"shape":"IntegerOptional"}
+        "AllocatedStorage":{"shape":"IntegerOptional"},
+        "SourceDBClusterIdentifier":{"shape":"String"}
       }
     },
     "CreateDBInstanceReadReplicaResult":{
@@ -4207,7 +4208,8 @@
         "StorageThroughput":{"shape":"IntegerOptional"},
         "DBSystemId":{"shape":"String"},
         "MasterUserSecret":{"shape":"MasterUserSecret"},
-        "CertificateDetails":{"shape":"CertificateDetails"}
+        "CertificateDetails":{"shape":"CertificateDetails"},
+        "ReadReplicaSourceDBClusterIdentifier":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -6700,7 +6702,9 @@
         "NetworkType":{"shape":"String"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "RotateMasterUserPassword":{"shape":"BooleanOptional"},
-        "MasterUserSecretKmsKeyId":{"shape":"String"}
+        "MasterUserSecretKmsKeyId":{"shape":"String"},
+        "EngineMode":{"shape":"String"},
+        "AllowEngineModeChange":{"shape":"Boolean"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{

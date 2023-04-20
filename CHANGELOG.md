@@ -1,5 +1,145 @@
 # CHANGELOG
 
+## 3.263.13 - 2023-04-19
+
+* `Aws\Comprehend` - This release supports native document models for custom classification, in addition to plain-text models. You train native document models using documents (PDF, Word, images) in their native format.
+* `Aws\ECS` - This release supports the Account Setting "TagResourceAuthorization" that allows for enhanced Tagging security controls.
+* `Aws\RAM` - This release adds support for customer managed permissions. Customer managed permissions enable customers to author and manage tailored permissions for resources shared using RAM.
+* `Aws\RDS` - Adds support for the ImageId parameter of CreateCustomDBEngineVersion to RDS Custom for Oracle
+* `Aws\S3` - Provides support for "Snow" Storage class.
+* `Aws\S3` - Removes ACL from bucket creation in S3 Streamwrapper.
+* `Aws\S3Control` - Provides support for overriding endpoint when region is "snow". This will enable bucket APIs for Amazon S3 Compatible storage on Snow Family devices.
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+* `Aws\SecurityHub` - Update that adds SDK code examples for Security Hub
+
+## 3.263.12 - 2023-04-17
+
+* `Aws\Appflow` - This release adds a Client Token parameter to the following AppFlow APIs: Create/Update Connector Profile, Create/Update Flow, Start Flow, Register Connector, Update Connector Registration. The Client Token parameter allows idempotent operations for these APIs.
+* `Aws\DynamoDB` - Documentation updates for DynamoDB API
+* `Aws\EMRServerless` - The GetJobRun API has been updated to include the job's billed resource utilization. This utilization shows the aggregate vCPU, memory and storage that AWS has billed for the job run. The billed resources include a 1-minute minimum usage for workers, plus additional storage over 20 GB per worker.
+* `Aws\InternetMonitor` - This release includes a new configurable value, TrafficPercentageToMonitor, which allows users to adjust the amount of traffic monitored by percentage
+* `Aws\IoTWireless` - Supports the new feature of LoRaWAN roaming, allows to configure MaxEirp for LoRaWAN gateway, and allows to configure PingSlotPeriod for LoRaWAN multicast group
+* `Aws\Lambda` - Add Python 3.10 (python3.10) support to AWS Lambda
+* `Aws\drs` - Changed existing APIs and added new APIs to support using an account-level launch configuration template with AWS Elastic Disaster Recovery.
+
+## 3.263.11 - 2023-04-14
+
+* `Aws\ECS` - This release supports ephemeral storage for AWS Fargate Windows containers.
+* `Aws\Lambda` - This release adds SnapStart related exceptions to InvokeWithResponseStream API. IAM access related documentation is also added for this API.
+* `Aws\MigrationHubRefactorSpaces` - Doc only update for Refactor Spaces environments without network bridge feature.
+* `Aws\RDS` - This release adds support of modifying the engine mode of database clusters.
+
+## 3.263.10 - 2023-04-13
+
+* `Aws\ChimeSDKVoice` - This release adds tagging support for Voice Connectors and SIP Media Applications
+* `Aws\MediaConnect` - Gateway is a new feature of AWS Elemental MediaConnect. Gateway allows the deployment of on-premises resources for the purpose of transporting live video to and from the AWS Cloud.
+
+## 3.263.9 - 2023-04-12
+
+* `Aws\GroundStation` - AWS Ground Station Wideband DigIF GA Release
+* `Aws\ManagedBlockchain` - Removal of the Ropsten network. The Ethereum foundation ceased support of Ropsten on December 31st, 2022..
+
+## 3.263.8 - 2023-04-11
+
+* `Aws\ECRPublic` - This release will allow using registry alias as registryId in BatchDeleteImage request.
+* `Aws\EMRServerless` - This release extends GetJobRun API to return job run timeout (executionTimeoutMinutes) specified during StartJobRun call (or default timeout of 720 minutes if none was specified).
+* `Aws\EventBridge` - EventBridge PutTarget support for multiple SQL arguments on RedshiftDataParameters
+* `Aws\IoT` - Re-release to remove unexpected API changes
+* `Aws\IoTDataPlane` - This release adds support for MQTT5 user properties when calling the AWS IoT GetRetainedMessage API
+* `Aws\WAFV2` - For web ACLs that protect CloudFront protections, the default request body inspection size is now 16 KB, and you can use the new association configuration to increase the inspection size further, up to 64 KB. Sizes over 16 KB can incur additional costs.
+
+## 3.263.7 - 2023-04-10
+
+* `Aws\Connect` - This release adds the ability to configure an agent's routing profile to receive contacts from multiple channels at the same time via extending the UpdateRoutingProfileConcurrency, CreateRoutingProfile and DescribeRoutingProfile APIs.
+* `Aws\ECS` - This release adds support for enabling FIPS compliance on Amazon ECS Fargate tasks
+* `Aws\MarketplaceCatalog` - Added three new APIs to support resource sharing: GetResourcePolicy, PutResourcePolicy, and DeleteResourcePolicy. Added new OwnershipType field to ListEntities request to let users filter on entities that are shared with them. Increased max page size of ListEntities response from 20 to 50 results.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK now supports conversion of 608 paint-on captions to pop-on captions for SCC sources.
+* `Aws\Omics` - Remove unexpected API changes.
+* `Aws\Rekognition` - This release adds support for Face Liveness APIs in Amazon Rekognition. Updates UpdateStreamProcessor to return ResourceInUseException Exception. Minor updates to API documentation.
+
+## 3.263.6 - 2023-04-07
+
+* `Aws\DLM` - Updated timestamp format for GetLifecyclePolicy API
+* `Aws\DocDB` - This release adds a new parameter 'DBClusterParameterGroupName' to 'RestoreDBClusterFromSnapshot' API to associate the name of the DB cluster parameter group while performing restore.
+* `Aws\FSx` - Amazon FSx for Lustre now supports creating data repository associations on Persistent_1 and Scratch_2 file systems.
+* `Aws\Lambda` - This release adds a new Lambda InvokeWithResponseStream API to support streaming Lambda function responses. The release also adds a new InvokeMode parameter to Function Url APIs to control whether the response will be streamed or buffered.
+* `Aws\QuickSight` - This release has two changes: adding the OR condition to tag-based RLS rules in CreateDataSet and UpdateDataSet; adding RefreshSchedule and Incremental RefreshProperties operations for users to programmatically configure SPICE dataset ingestions.
+* `Aws\RedshiftDataAPIService` - Update documentation of API descriptions as needed in support of temporary credentials with IAM identity.
+* `Aws\ServiceCatalog` - Updates description for property
+
+## 3.263.5 - 2023-04-06
+
+* `Aws\CloudFormation` - Including UPDATE_COMPLETE as a failed status for DeleteStack waiter.
+* `Aws\GreengrassV2` - Add support for SUCCEEDED value in coreDeviceExecutionStatus field. Documentation updates for Greengrass V2.
+* `Aws\Proton` - This release adds support for the AWS Proton service sync feature. Service sync enables managing an AWS Proton service (creating and updating instances) and all of it's corresponding service instances from a Git repository.
+* `Aws\RDS` - Adds and updates the SDK examples
+
+## 3.263.4 - 2023-04-05
+
+* `Aws\AppRunner` - App Runner adds support for seven new vCPU and memory configurations.
+* `Aws\ConfigService` - This release adds resourceType enums for types released in March 2023.
+* `Aws\ECS` - This is a document only updated to add information about Amazon Elastic Inference (EI).
+* `Aws\IVSRealTime` - Fix ParticipantToken ExpirationTime format
+* `Aws\IdentityStore` - Documentation updates for Identity Store CLI command reference.
+* `Aws\NetworkFirewall` - AWS Network Firewall now supports IPv6-only subnets.
+* `Aws\ServiceCatalog` - removed incorrect product type value
+* `Aws\VPCLattice` - This release removes the entities in the API doc model package for auth policies.
+
+## 3.263.3 - 2023-04-04
+
+* `Aws\AmplifyUIBuilder` - Support StorageField and custom displays for data-bound options in form builder. Support non-string operands for predicates in collections. Support choosing client to get token from.
+* `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling
+* `Aws\DataExchange` - This release updates the value of MaxResults.
+* `Aws\EC2` - C6in, M6in, M6idn, R6in and R6idn bare metal instances are powered by 3rd Generation Intel Xeon Scalable processors and offer up to 200 Gbps of network bandwidth.
+* `Aws\ElasticInference` - Updated public documentation for the Describe and Tagging APIs.
+* `Aws\SageMaker` - Amazon SageMaker Asynchronous Inference now allows customer's to receive failure model responses in S3 and receive success/failure model responses in SNS notifications.
+* `Aws\SageMakerRuntime` - Amazon SageMaker Asynchronous Inference now provides customers a FailureLocation as a response parameter in InvokeEndpointAsync API to capture the model failure responses.
+* `Aws\WAFV2` - This release rolls back association config feature for webACLs that protect CloudFront protections.
+
+## 3.263.2 - 2023-04-03
+
+* `Aws\Glue` - Add support for database-level federation
+* `Aws\LakeFormation` - Add support for database-level federation
+* `Aws\LicenseManager` - This release adds grant override options to the CreateGrantVersion API. These options can be used to specify grant replacement behavior during grant activation.
+* `Aws\MWAA` - This Amazon MWAA release adds the ability to customize the Apache Airflow environment by launching a shell script at startup. This shell script is hosted in your environment's Amazon S3 bucket. Amazon MWAA runs the script before installing requirements and initializing the Apache Airflow process.
+* `Aws\ServiceCatalog` - This release introduces Service Catalog support for Terraform open source. It enables 1. The notify* APIs to Service Catalog. These APIs are used by the terraform engine to notify the result of the provisioning engine execution. 2. Adds a new TERRAFORM_OPEN_SOURCE product type in CreateProduct API.
+* `Aws\WAFV2` - For web ACLs that protect CloudFront protections, the default request body inspection size is now 16 KB, and you can use the new association configuration to increase the inspection size further, up to 64 KB. Sizes over 16 KB can incur additional costs.
+
+## 3.263.1 - 2023-03-31
+
+* `Aws\EC2` - Documentation updates for EC2 On Demand Capacity Reservations
+* `Aws\InternetMonitor` - This release adds a new feature for Amazon CloudWatch Internet Monitor that enables customers to deliver internet measurements to Amazon S3 buckets as well as CloudWatch Logs.
+* `Aws\ResilienceHub` - Adding EKS related documentation for appTemplateBody
+* `Aws\S3` - Documentation updates for Amazon S3
+* `Aws\SMS` - Deprecating AWS Server Migration Service.
+* `Aws\SageMakerFeatureStoreRuntime` - In this release, you can now chose between soft delete and hard delete when calling the DeleteRecord API, so you have more flexibility when it comes to managing online store data.
+
+## 3.263.0 - 2023-03-30
+
+* `Aws\Athena` - Make DefaultExecutorDpuSize and CoordinatorDpuSize fields optional in StartSession
+* `Aws\AutoScaling` - Amazon EC2 Auto Scaling now supports Elastic Load Balancing traffic sources with the AttachTrafficSources, DetachTrafficSources, and DescribeTrafficSources APIs. This release also introduces a new activity status, "WaitingForConnectionDraining", for VPC Lattice to the DescribeScalingActivities API.
+* `Aws\Batch` - This feature allows Batch on EKS to support configuration of Pod Labels through Metadata for Batch on EKS Jobs.
+* `Aws\ComputeOptimizer` - This release adds support for HDD EBS volume types and io2 Block Express. We are also adding support for 61 new instance types and instances that have non consecutive runtime.
+* `Aws\Credentials` - Fixes a bug with the new SSO login flow where the wrong index was being looked at for the SSO client provider region
+* `Aws\EC2` - This release adds support for Tunnel Endpoint Lifecycle control, a new feature that provides Site-to-Site VPN customers with better visibility and control of their VPN tunnel maintenance updates.
+* `Aws\EMR` - Updated DescribeCluster and ListClusters API responses to include ErrorDetail that specifies error code, programmatically accessible error data,and an error message. ErrorDetail provides the underlying reason for cluster failure and recommends actions to simplify troubleshooting of EMR clusters.
+* `Aws\Glue` - This release adds support for AWS Glue Data Quality, which helps you evaluate and monitor the quality of your data and includes the API for creating, deleting, or updating data quality rulesets, runs and evaluations.
+* `Aws\GuardDuty` - Added EKS Runtime Monitoring feature support to existing detector, finding APIs and introducing new Coverage APIs
+* `Aws\IVS` - Amazon Interactive Video Service (IVS) now offers customers the ability to configure IVS channels to allow insecure RTMP ingest.
+* `Aws\NetworkFirewall` - AWS Network Firewall added TLS inspection configurations to allow TLS traffic inspection.
+* `Aws\SageMakerGeospatial` - Amazon SageMaker geospatial capabilities now supports server-side encryption with customer managed KMS key and SageMaker notebooks with a SageMaker geospatial image in a Amazon SageMaker Domain with VPC only mode.
+* `Aws\Token` - Removes an instance of the utf8_encode function that was deprecated as of 8.2
+* `Aws\VPCLattice` - General Availability (GA) release of Amazon VPC Lattice
+* `Aws\WellArchitected` - AWS Well-Architected SDK now supports getting consolidated report metrics and generating a consolidated report PDF.
+* `Aws\drs` - Adding a field to the replication configuration APIs to support the auto replicate new disks feature. We also deprecated RetryDataReplication.
+* `Aws\imagebuilder` - Adds support for new image workflow details and image vulnerability detection.
+* `Aws\kendra` - AWS Kendra now supports featured results for a query.
+
+## 3.262.4 - 2023-03-29
+
+* `Aws\OpenSearchServerless` - This release includes two new exception types "ServiceQuotaExceededException" and "OcuLimitExceededException".
+* `Aws\RDS` - Add support for creating a read replica DB instance from a Multi-AZ DB cluster.
+
 ## 3.262.3 - 2023-03-28
 
 * `Aws\IoTDataPlane` - Add endpoint ruleset support for cn-north-1.

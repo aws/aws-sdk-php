@@ -853,38 +853,11 @@ class CredentialProvider
     }
 
     /**
-     * @param array $ssoProfile
-     * @param string $accessToken
-     * @param array $config
-     * @return array|null
-     */
-    private static function getCredentialsFromSsoService($ssoProfile, $clientRegion, $accessToken, $config)
-    {
-        if (empty($config['ssoClient'])) {
-            $ssoClient = new Aws\SSO\SSOClient([
-                'region' => $clientRegion,
-                'version' => '2019-06-10',
-                'credentials' => false
-            ]);
-        } else {
-            $ssoClient = $config['ssoClient'];
-        }
-        $ssoResponse = $ssoClient->getRoleCredentials([
-            'accessToken' => $accessToken,
-            'accountId' => $ssoProfile['sso_account_id'],
-            'roleName' => $ssoProfile['sso_role_name']
-        ]);
-
-        $ssoCredentials = $ssoResponse['roleCredentials'];
-        return $ssoCredentials;
-    }
-
-    /**
-     * @param $ssoProfile
      * @param $profiles
-     * @param $filename
      * @param $ssoProfileName
-     * @return Promise\FulfilledPromise|Promise\Promise|Promise\PromiseInterface|Promise\RejectedPromise
+     * @param $filename
+     * @param $config
+     * @return Promise\PromiseInterface
      */
     private static function getSsoCredentials($profiles, $ssoProfileName, $filename, $config)
     {
@@ -930,15 +903,15 @@ class CredentialProvider
     }
 
     /**
-     * @param $ssoProfile
+     * @param $profiles
      * @param $ssoProfileName
      * @param $filename
      * @param $config
-     * @return Promise\FulfilledPromise|Promise\Promise|Promise\PromiseInterface|Promise\RejectedPromise
+     * @return Promise\PromiseInterface
      */
     private static function getSsoCredentialsLegacy($profiles, $ssoProfileName, $filename, $config)
     {
-        $ssoProfile = $profiles['ssoProfileName'];
+        $ssoProfile = $profiles[$ssoProfileName];
         if (empty($ssoProfile['sso_start_url'])
             || empty($ssoProfile['sso_region'])
             || empty($ssoProfile['sso_account_id'])
@@ -987,4 +960,32 @@ class CredentialProvider
             )
         );
     }
+    /**
+     * @param array $ssoProfile
+     * @param string $clientRegion
+     * @param string $accessToken
+     * @param array $config
+     * @return array|null
+     */
+    private static function getCredentialsFromSsoService($ssoProfile, $clientRegion, $accessToken, $config)
+    {
+        if (empty($config['ssoClient'])) {
+            $ssoClient = new Aws\SSO\SSOClient([
+                'region' => $clientRegion,
+                'version' => '2019-06-10',
+                'credentials' => false
+            ]);
+        } else {
+            $ssoClient = $config['ssoClient'];
+        }
+        $ssoResponse = $ssoClient->getRoleCredentials([
+            'accessToken' => $accessToken,
+            'accountId' => $ssoProfile['sso_account_id'],
+            'roleName' => $ssoProfile['sso_role_name']
+        ]);
+
+        $ssoCredentials = $ssoResponse['roleCredentials'];
+        return $ssoCredentials;
+    }
 }
+

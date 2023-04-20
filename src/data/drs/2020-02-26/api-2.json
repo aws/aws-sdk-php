@@ -32,6 +32,24 @@
         {"shape":"UninitializedAccountException"}
       ]
     },
+    "CreateLaunchConfigurationTemplate":{
+      "name":"CreateLaunchConfigurationTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateLaunchConfigurationTemplate",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateLaunchConfigurationTemplateRequest"},
+      "output":{"shape":"CreateLaunchConfigurationTemplateResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
     "CreateReplicationConfigurationTemplate":{
       "name":"CreateReplicationConfigurationTemplate",
       "http":{
@@ -59,6 +77,24 @@
       },
       "input":{"shape":"DeleteJobRequest"},
       "output":{"shape":"DeleteJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteLaunchConfigurationTemplate":{
+      "name":"DeleteLaunchConfigurationTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteLaunchConfigurationTemplate",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteLaunchConfigurationTemplateRequest"},
+      "output":{"shape":"DeleteLaunchConfigurationTemplateResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -146,6 +182,23 @@
       "input":{"shape":"DescribeJobsRequest"},
       "output":{"shape":"DescribeJobsResponse"},
       "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "DescribeLaunchConfigurationTemplates":{
+      "name":"DescribeLaunchConfigurationTemplates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DescribeLaunchConfigurationTemplates",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeLaunchConfigurationTemplatesRequest"},
+      "output":{"shape":"DescribeLaunchConfigurationTemplatesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -383,7 +436,9 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"WARNING: RetryDataReplication is deprecated"
     },
     "ReverseReplication":{
       "name":"ReverseReplication",
@@ -574,6 +629,24 @@
       ],
       "idempotent":true
     },
+    "UpdateLaunchConfigurationTemplate":{
+      "name":"UpdateLaunchConfigurationTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateLaunchConfigurationTemplate",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateLaunchConfigurationTemplateRequest"},
+      "output":{"shape":"UpdateLaunchConfigurationTemplateResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
     "UpdateReplicationConfiguration":{
       "name":"UpdateReplicationConfiguration",
       "http":{
@@ -700,8 +773,8 @@
     },
     "ConversionMap":{
       "type":"map",
-      "key":{"shape":"ebsSnapshot"},
-      "value":{"shape":"ebsSnapshot"}
+      "key":{"shape":"EbsSnapshot"},
+      "value":{"shape":"EbsSnapshot"}
     },
     "ConversionProperties":{
       "type":"structure",
@@ -733,6 +806,23 @@
         "sourceServer":{"shape":"SourceServer"}
       }
     },
+    "CreateLaunchConfigurationTemplateRequest":{
+      "type":"structure",
+      "members":{
+        "copyPrivateIp":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "licensing":{"shape":"Licensing"},
+        "tags":{"shape":"TagsMap"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+      }
+    },
+    "CreateLaunchConfigurationTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "launchConfigurationTemplate":{"shape":"LaunchConfigurationTemplate"}
+      }
+    },
     "CreateReplicationConfigurationTemplateRequest":{
       "type":"structure",
       "required":[
@@ -751,6 +841,7 @@
       ],
       "members":{
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
         "bandwidthThrottling":{"shape":"PositiveInteger"},
         "createPublicIP":{"shape":"Boolean"},
         "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
@@ -892,6 +983,18 @@
       "members":{
       }
     },
+    "DeleteLaunchConfigurationTemplateRequest":{
+      "type":"structure",
+      "required":["launchConfigurationTemplateID"],
+      "members":{
+        "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"}
+      }
+    },
+    "DeleteLaunchConfigurationTemplateResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteRecoveryInstanceRequest":{
       "type":"structure",
       "required":["recoveryInstanceID"],
@@ -965,6 +1068,21 @@
       "type":"structure",
       "members":{
         "items":{"shape":"JobsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribeLaunchConfigurationTemplatesRequest":{
+      "type":"structure",
+      "members":{
+        "launchConfigurationTemplateIDs":{"shape":"LaunchConfigurationTemplateIDs"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribeLaunchConfigurationTemplatesResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"LaunchConfigurationTemplates"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1113,9 +1231,13 @@
       "max":255,
       "min":0
     },
+    "EbsSnapshot":{
+      "type":"string",
+      "pattern":"^snap-[0-9a-zA-Z]{17}$"
+    },
     "EbsSnapshotsList":{
       "type":"list",
-      "member":{"shape":"ebsSnapshot"}
+      "member":{"shape":"EbsSnapshot"}
     },
     "EbsVolumeID":{
       "type":"string",
@@ -1386,6 +1508,37 @@
         "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
       }
     },
+    "LaunchConfigurationTemplate":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ARN"},
+        "copyPrivateIp":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
+        "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "licensing":{"shape":"Licensing"},
+        "tags":{"shape":"TagsMap"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+      }
+    },
+    "LaunchConfigurationTemplateID":{
+      "type":"string",
+      "max":21,
+      "min":21,
+      "pattern":"^lct-[0-9a-zA-Z]{17}$"
+    },
+    "LaunchConfigurationTemplateIDs":{
+      "type":"list",
+      "member":{"shape":"LaunchConfigurationTemplateID"},
+      "max":1,
+      "min":0
+    },
+    "LaunchConfigurationTemplates":{
+      "type":"list",
+      "member":{"shape":"LaunchConfigurationTemplate"},
+      "max":200,
+      "min":0
+    },
     "LaunchDisposition":{
       "type":"string",
       "enum":[
@@ -1498,6 +1651,11 @@
     "MaxResultsReplicatingSourceServers":{
       "type":"integer",
       "max":300,
+      "min":1
+    },
+    "MaxResultsType":{
+      "type":"integer",
+      "max":1000,
       "min":1
     },
     "NetworkInterface":{
@@ -1794,6 +1952,7 @@
       "type":"structure",
       "members":{
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
         "bandwidthThrottling":{"shape":"PositiveInteger"},
         "createPublicIP":{"shape":"Boolean"},
         "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
@@ -1869,6 +2028,7 @@
       "members":{
         "arn":{"shape":"ARN"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
         "bandwidthThrottling":{"shape":"PositiveInteger"},
         "createPublicIP":{"shape":"Boolean"},
         "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
@@ -1933,7 +2093,9 @@
       "required":["sourceServerID"],
       "members":{
         "sourceServerID":{"shape":"SourceServerID"}
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"WARNING: RetryDataReplication is deprecated"
     },
     "ReverseReplicationRequest":{
       "type":"structure",
@@ -1993,7 +2155,8 @@
         "networkInterfaces":{"shape":"NetworkInterfaces"},
         "os":{"shape":"OS"},
         "ramBytes":{"shape":"PositiveInteger"},
-        "recommendedInstanceType":{"shape":"EC2InstanceType"}
+        "recommendedInstanceType":{"shape":"EC2InstanceType"},
+        "supportsNitroInstances":{"shape":"Boolean"}
       }
     },
     "SourceServer":{
@@ -2275,11 +2438,30 @@
         "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
       }
     },
+    "UpdateLaunchConfigurationTemplateRequest":{
+      "type":"structure",
+      "required":["launchConfigurationTemplateID"],
+      "members":{
+        "copyPrivateIp":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
+        "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "licensing":{"shape":"Licensing"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+      }
+    },
+    "UpdateLaunchConfigurationTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "launchConfigurationTemplate":{"shape":"LaunchConfigurationTemplate"}
+      }
+    },
     "UpdateReplicationConfigurationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
         "bandwidthThrottling":{"shape":"PositiveInteger"},
         "createPublicIP":{"shape":"Boolean"},
         "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
@@ -2303,6 +2485,7 @@
       "members":{
         "arn":{"shape":"ARN"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
         "bandwidthThrottling":{"shape":"PositiveInteger"},
         "createPublicIP":{"shape":"Boolean"},
         "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
@@ -2361,10 +2544,6 @@
       "type":"map",
       "key":{"shape":"LargeBoundedString"},
       "value":{"shape":"PositiveInteger"}
-    },
-    "ebsSnapshot":{
-      "type":"string",
-      "pattern":"^snap-[0-9a-zA-Z]{17}$"
     }
   }
 }

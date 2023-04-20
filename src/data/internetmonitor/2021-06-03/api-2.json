@@ -235,10 +235,7 @@
     },
     "CreateMonitorInput":{
       "type":"structure",
-      "required":[
-        "MonitorName",
-        "MaxCityNetworksToMonitor"
-      ],
+      "required":["MonitorName"],
       "members":{
         "MonitorName":{"shape":"ResourceName"},
         "Resources":{"shape":"SetOfARNs"},
@@ -247,7 +244,9 @@
           "idempotencyToken":true
         },
         "Tags":{"shape":"TagMap"},
-        "MaxCityNetworksToMonitor":{"shape":"MaxCityNetworksToMonitor"}
+        "MaxCityNetworksToMonitor":{"shape":"MaxCityNetworksToMonitor"},
+        "InternetMeasurementsLogDelivery":{"shape":"InternetMeasurementsLogDelivery"},
+        "TrafficPercentageToMonitor":{"shape":"TrafficPercentageToMonitor"}
       }
     },
     "CreateMonitorOutput":{
@@ -343,8 +342,7 @@
         "Resources",
         "Status",
         "CreatedAt",
-        "ModifiedAt",
-        "MaxCityNetworksToMonitor"
+        "ModifiedAt"
       ],
       "members":{
         "MonitorName":{"shape":"ResourceName"},
@@ -356,7 +354,9 @@
         "ProcessingStatus":{"shape":"MonitorProcessingStatusCode"},
         "ProcessingStatusInfo":{"shape":"String"},
         "Tags":{"shape":"TagMap"},
-        "MaxCityNetworksToMonitor":{"shape":"MaxCityNetworksToMonitor"}
+        "MaxCityNetworksToMonitor":{"shape":"MaxCityNetworksToMonitor"},
+        "InternetMeasurementsLogDelivery":{"shape":"InternetMeasurementsLogDelivery"},
+        "TrafficPercentageToMonitor":{"shape":"TrafficPercentageToMonitor"}
       }
     },
     "HealthEvent":{
@@ -463,6 +463,12 @@
         "Performance":{"shape":"PerformanceMeasurement"}
       }
     },
+    "InternetMeasurementsLogDelivery":{
+      "type":"structure",
+      "members":{
+        "S3Config":{"shape":"S3Config"}
+      }
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -562,6 +568,13 @@
       "members":{
         "Tags":{"shape":"TagMap"}
       }
+    },
+    "LogDeliveryStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "Long":{
       "type":"long",
@@ -694,6 +707,18 @@
         "P95":{"shape":"Double"}
       }
     },
+    "S3Config":{
+      "type":"structure",
+      "members":{
+        "BucketName":{"shape":"S3ConfigBucketNameString"},
+        "BucketPrefix":{"shape":"String"},
+        "LogDeliveryStatus":{"shape":"LogDeliveryStatus"}
+      }
+    },
+    "S3ConfigBucketNameString":{
+      "type":"string",
+      "min":3
+    },
     "SetOfARNs":{
       "type":"list",
       "member":{"shape":"Arn"}
@@ -770,6 +795,11 @@
       "exception":true,
       "retryable":{"throttling":true}
     },
+    "TrafficPercentageToMonitor":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
     "TriangulationEventType":{
       "type":"string",
       "enum":[
@@ -817,7 +847,9 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "MaxCityNetworksToMonitor":{"shape":"MaxCityNetworksToMonitor"}
+        "MaxCityNetworksToMonitor":{"shape":"MaxCityNetworksToMonitor"},
+        "InternetMeasurementsLogDelivery":{"shape":"InternetMeasurementsLogDelivery"},
+        "TrafficPercentageToMonitor":{"shape":"TrafficPercentageToMonitor"}
       }
     },
     "UpdateMonitorOutput":{

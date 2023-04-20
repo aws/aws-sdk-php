@@ -648,6 +648,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionTransfer(array $args = [])
  * @method \Aws\Translate\TranslateClient createTranslate(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTranslate(array $args = [])
+ * @method \Aws\VPCLattice\VPCLatticeClient createVPCLattice(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionVPCLattice(array $args = [])
  * @method \Aws\VoiceID\VoiceIDClient createVoiceID(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionVoiceID(array $args = [])
  * @method \Aws\WAFV2\WAFV2Client createWAFV2(array $args = [])
@@ -689,7 +691,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.262.3';
+    const VERSION = '3.263.13';
 
     /** @var array Arguments for creating clients */
     private $args;

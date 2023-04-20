@@ -31,6 +31,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise exportLensAsync(array $args = [])
  * @method \Aws\Result getAnswer(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAnswerAsync(array $args = [])
+ * @method \Aws\Result getConsolidatedReport(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getConsolidatedReportAsync(array $args = [])
  * @method \Aws\Result getLens(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLensAsync(array $args = [])
  * @method \Aws\Result getLensReview(array $args = [])
