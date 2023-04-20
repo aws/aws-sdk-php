@@ -225,12 +225,19 @@ $(window).load(function() {
 	function showSplitter() {
 		$right.removeClass('container');
 		$rightInner.removeClass('row');
+		$left.css({"width" : "", "background-color" : ""})
+		$right.css('margin-left', '')
+		if (null !== splitterPosition) {
+			setSplitterPosition(splitterPosition);
+		}
 		$left.insertAfter($navigation);
 		$splitter.show();
 		$dropdown.hide();
+		if (null !== splitterPosition) {
+			setSplitterPosition(splitterPosition);
+		}
 		setNavigationPosition();
 		setContentWidth();
-		setSplitterPosition(splitterPosition)
 	}
 
 	function checkWindowSize() {
