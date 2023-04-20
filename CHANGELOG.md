@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.263.14 - 2023-04-20
 
 * `Aws\Chime` - Adds support for Hindi and Thai languages and additional Amazon Transcribe parameters to the StartMeetingTranscription API.
 * `Aws\ChimeSDKMediaPipelines` - This release adds support for specifying the recording file format in an S3 recording sink configuration.
