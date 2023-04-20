@@ -214,6 +214,7 @@ $(window).load(function() {
 		$.cookie('splitterBackup', splitterPositionBackup, {expires: 365});
 	}
 	function collapseSplitter() {
+		splitterPosition = $.cookie('splitter') ? parseInt($.cookie('splitter')) : null;
 		$splitter.hide();
 		$right.css('margin-left', '0px')
 		$dropdown.show();
@@ -227,10 +228,9 @@ $(window).load(function() {
 		$left.insertAfter($navigation);
 		$splitter.show();
 		$dropdown.hide();
-		$left.css("width", "")
-		setSplitterPosition(splitterPosition)
 		setNavigationPosition();
 		setContentWidth();
+		setSplitterPosition(splitterPosition)
 	}
 
 	function checkWindowSize() {
