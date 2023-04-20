@@ -232,7 +232,6 @@ $(window).load(function() {
 		}
 		$left.insertAfter($navigation);
 		$splitter.show();
-		$dropdown.hide();
 		if (null !== splitterPosition) {
 			setSplitterPosition(splitterPosition);
 		}
@@ -257,6 +256,7 @@ $(window).load(function() {
 			if ($splitter.is(':hidden')) {
 				showSplitter();
 			}
+			$dropdown.hide();
 			$('.form-group').removeClass('container');
 		}
 	}
