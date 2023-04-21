@@ -12,8 +12,10 @@ $(window).load(function() {
 	var hasFocusedTabindexMinusOne = false;
 	var $skipMenuContent = $('#skip-to-content');
 	var $mainContent = $('#right .page-header h1')
+	var $dropdown = $('.dropdown');
+	var $index = $('.index');
 
-	//mechanism for skipping menu content
+	// mechanism for skipping menu content
 	$mainContent.attr('id', 'main-content')
 	$skipMenuContent.click(function(event) {
 		$mainContent.attr('tabindex', -1).focus();
@@ -101,22 +103,22 @@ $(window).load(function() {
 				$list.width(Math.max(maxWidth + 10, $search.innerWidth()));
 			}
 		}).result(function(event, data) {
-			autocompleteFound = true;
-			var location = window.location.href.split('/');
-			location.pop();
-			location.push(data.link);
-			window.location = location.join('/');
+		autocompleteFound = true;
+		var location = window.location.href.split('/');
+		location.pop();
+		location.push(data.link);
+		window.location = location.join('/');
 
-			// Workaround for Opera bug
-			$(this).closest('form').attr('action', location.join('/'));
-		}).closest('form')
-			.submit(function() {
-				var query = $search.val();
-				if ('' === query) {
-					return false;
-				}
-				return !autocompleteFound && '' !== $('#search input[name=cx]').val();
-			});
+		// Workaround for Opera bug
+		$(this).closest('form').attr('action', location.join('/'));
+	}).closest('form')
+		.submit(function() {
+			var query = $search.val();
+			if ('' === query) {
+				return false;
+			}
+			return !autocompleteFound && '' !== $('#search input[name=cx]').val();
+		});
 
 	// Save natural order
 	$('table.summary tr[data-order]', $content).each(function(index) {
@@ -129,7 +131,7 @@ $(window).load(function() {
 	// Switch between natural and alphabetical order
 	var $caption = $('table.summary', $content)
 		.filter(':has(tr[data-order])')
-			.prev('h2');
+		.prev('h2');
 	$caption
 		.click(function() {
 			var $this = $(this);
@@ -140,9 +142,9 @@ $(window).load(function() {
 			var attr = 'alphabetical' === order ? 'data-order' : 'data-order-natural';
 			$this
 				.next('table')
-					.find('tr').sortElements(function(a, b) {
-						return $(a).attr(attr) > $(b).attr(attr) ? 1 : -1;
-					});
+				.find('tr').sortElements(function(a, b) {
+				return $(a).attr(attr) > $(b).attr(attr) ? 1 : -1;
+			});
 			return false;
 		})
 		.addClass('switchable')
@@ -156,15 +158,16 @@ $(window).load(function() {
 
 	$('[data-suggest]').on('input', function() {
 		$suggestionsHelp.text(
-				'There are suggestions. Use the up and down arrows to browse.'
-			);
+			'There are suggestions. Use the up and down arrows to browse.'
+		);
 	});
 
 	// Open details
 	if (ApiGen.config.options.elementDetailsCollapsed) {
 		$(document.body).on('click', 'tr', function(ev) {
+
 			var short = this.querySelector('.short')
-			, detailed = this.querySelector('.detailed')
+				, detailed = this.querySelector('.detailed')
 
 			if (!short || !detailed) return
 
@@ -214,7 +217,6 @@ $(window).load(function() {
 		$.cookie('splitterBackup', splitterPositionBackup, {expires: 365});
 	}
 	function collapseSplitter() {
-		splitterPosition = $.cookie('splitter') ? parseInt($.cookie('splitter')) : null;
 		$splitter.hide();
 		$right.css('margin-left', '0px')
 		$dropdown.show();
@@ -227,9 +229,6 @@ $(window).load(function() {
 		$rightInner.removeClass('row');
 		$left.css({"width" : "", "background-color" : ""})
 		$right.css('margin-left', '')
-		if (null !== splitterPosition) {
-			setSplitterPosition(splitterPosition);
-		}
 		$left.insertAfter($navigation);
 		$splitter.show();
 		if (null !== splitterPosition) {
@@ -253,10 +252,10 @@ $(window).load(function() {
 			$('.form-group').addClass('container');
 			collapseSplitter();
 		} else {
-			$dropdown.hide();
 			if ($splitter.is(':hidden')) {
 				showSplitter();
 			}
+			$dropdown.hide();
 			$('.form-group').removeClass('container');
 		}
 	}
