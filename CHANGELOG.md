@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 3.263.15 - 2023-04-21
+## 3.268.16 - 2023-04-21
 
 * `Aws\Connect` - This release adds a new API CreateParticipant. For Amazon Connect Chat, you can use this new API to customize chat flow experiences.
 * `Aws\ECS` - Documentation update to address various Amazon ECS tickets.
