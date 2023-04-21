@@ -13,7 +13,7 @@ $(window).load(function() {
 	var $skipMenuContent = $('#skip-to-content');
 	var $mainContent = $('#right .page-header h1')
 	var $dropdown = $('.dropdown');
-	var $index = $('.index')
+	var $index = $('.index');
 
 	// mechanism for skipping menu content
 	$mainContent.attr('id', 'main-content')
@@ -21,13 +21,13 @@ $(window).load(function() {
 		$mainContent.attr('tabindex', -1).focus();
 	});
 
-	//tabindex
+	//tabindex for menu links
 	if ($activatedSideLink) {
 		$activatedSideLink.attr('tabindex', '-1');
 		$document.on('keydown', function(e) {
-			if (!hasFocusedTabindexMinusOne && e.keyCode === 9) { // check if the key pressed is the tab key (keyCode 9)
+			if (!hasFocusedTabindexMinusOne && e.keyCode === 9) {
 				$activatedSideLink.focus();
-				hasFocusedTabindexMinusOne = true// find the first element with a tabindex of -1 and give it focus
+				hasFocusedTabindexMinusOne = true
 			}
 		});
 	}
