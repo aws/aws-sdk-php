@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This release adds a new API CreateParticipant. For Amazon Connect Chat, you can use this new API to customize chat flow experiences.
+* `Aws\ECS` - Documentation update to address various Amazon ECS tickets.
+* `Aws\FMS` - AWS Firewall Manager adds support for multiple administrators. You can now delegate more than one administrator per organization.
+
 ## 3.263.14 - 2023-04-20
 
 * `Aws\Chime` - Adds support for Hindi and Thai languages and additional Amazon Transcribe parameters to the StartMeetingTranscription API.

@@ -39,6 +39,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createInstanceAsync(array $args = [])
  * @method \Aws\Result createIntegrationAssociation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createIntegrationAssociationAsync(array $args = [])
+ * @method \Aws\Result createParticipant(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createParticipantAsync(array $args = [])
  * @method \Aws\Result createQueue(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createQueueAsync(array $args = [])
  * @method \Aws\Result createQuickConnect(array $args = [])
