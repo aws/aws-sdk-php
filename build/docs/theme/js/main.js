@@ -253,10 +253,10 @@ $(window).load(function() {
 			$('.form-group').addClass('container');
 			collapseSplitter();
 		} else {
+			$dropdown.hide();
 			if ($splitter.is(':hidden')) {
 				showSplitter();
 			}
-			$dropdown.hide();
 			$('.form-group').removeClass('container');
 		}
 	}
