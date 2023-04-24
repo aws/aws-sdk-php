@@ -367,6 +367,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
       ]
     },
@@ -835,6 +836,7 @@
         {"shape":"LimitExceededException"},
         {"shape":"InvalidNodeException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidSignalsException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -881,7 +883,11 @@
         "allowedValues":{"shape":"listOfStrings"},
         "min":{"shape":"double"},
         "max":{"shape":"double"},
-        "assignedValue":{"shape":"string"}
+        "assignedValue":{
+          "shape":"string",
+          "deprecated":true,
+          "deprecatedMessage":"assignedValue is no longer in use"
+        }
       }
     },
     "AmazonResourceName":{
@@ -919,7 +925,11 @@
         "allowedValues":{"shape":"listOfStrings"},
         "min":{"shape":"double"},
         "max":{"shape":"double"},
-        "assignedValue":{"shape":"string"},
+        "assignedValue":{
+          "shape":"string",
+          "deprecated":true,
+          "deprecatedMessage":"assignedValue is no longer in use"
+        },
         "defaultValue":{"shape":"string"}
       }
     },
@@ -1303,7 +1313,8 @@
       "type":"structure",
       "members":{
         "invalidSignals":{"shape":"InvalidSignalDecoders"},
-        "invalidNetworkInterfaces":{"shape":"InvalidNetworkInterfaces"}
+        "invalidNetworkInterfaces":{"shape":"InvalidNetworkInterfaces"},
+        "message":{"shape":"string"}
       },
       "exception":true
     },
@@ -1769,7 +1780,8 @@
       "type":"structure",
       "members":{
         "invalidNodes":{"shape":"Nodes"},
-        "reason":{"shape":"string"}
+        "reason":{"shape":"string"},
+        "message":{"shape":"string"}
       },
       "exception":true
     },
@@ -2812,7 +2824,8 @@
     },
     "createVehicleRequestItems":{
       "type":"list",
-      "member":{"shape":"CreateVehicleRequestItem"}
+      "member":{"shape":"CreateVehicleRequestItem"},
+      "min":1
     },
     "createVehicleResponses":{
       "type":"list",
@@ -2928,7 +2941,8 @@
     },
     "updateVehicleRequestItems":{
       "type":"list",
-      "member":{"shape":"UpdateVehicleRequestItem"}
+      "member":{"shape":"UpdateVehicleRequestItem"},
+      "min":1
     },
     "updateVehicleResponseItems":{
       "type":"list",

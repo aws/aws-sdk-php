@@ -75,6 +75,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetLatestAssessmentId":{
+      "name":"GetLatestAssessmentId",
+      "http":{
+        "method":"GET",
+        "requestUri":"/get-latest-assessment-id",
+        "responseCode":200
+      },
+      "input":{"shape":"GetLatestAssessmentIdRequest"},
+      "output":{"shape":"GetLatestAssessmentIdResponse"},
+      "errors":[
+        {"shape":"DependencyException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetPortfolioPreferences":{
       "name":"GetPortfolioPreferences",
       "http":{
@@ -350,6 +366,45 @@
       },
       "exception":true
     },
+    "AnalysisStatusUnion":{
+      "type":"structure",
+      "members":{
+        "runtimeAnalysisStatus":{"shape":"RuntimeAnalysisStatus"},
+        "srcCodeOrDbAnalysisStatus":{"shape":"SrcCodeOrDbAnalysisStatus"}
+      },
+      "union":true
+    },
+    "AnalysisType":{
+      "type":"string",
+      "enum":[
+        "SOURCE_CODE_ANALYSIS",
+        "DATABASE_ANALYSIS",
+        "RUNTIME_ANALYSIS",
+        "BINARY_ANALYSIS"
+      ]
+    },
+    "AnalyzerNameUnion":{
+      "type":"structure",
+      "members":{
+        "binaryAnalyzerName":{"shape":"BinaryAnalyzerName"},
+        "runTimeAnalyzerName":{"shape":"RunTimeAnalyzerName"},
+        "sourceCodeAnalyzerName":{"shape":"SourceCodeAnalyzerName"}
+      },
+      "union":true
+    },
+    "AntipatternReportResult":{
+      "type":"structure",
+      "members":{
+        "analyzerName":{"shape":"AnalyzerNameUnion"},
+        "antiPatternReportS3Object":{"shape":"S3Object"},
+        "antipatternReportStatus":{"shape":"AntipatternReportStatus"},
+        "antipatternReportStatusMessage":{"shape":"StatusMessage"}
+      }
+    },
+    "AntipatternReportResultList":{
+      "type":"list",
+      "member":{"shape":"AntipatternReportResult"}
+    },
     "AntipatternReportStatus":{
       "type":"string",
       "enum":[
@@ -373,7 +428,39 @@
         "SQLServer",
         "IIS",
         "Oracle",
-        "Other"
+        "Other",
+        "Tomcat",
+        "JBoss",
+        "Spring",
+        "Mongo DB",
+        "DB2",
+        "Maria DB",
+        "MySQL",
+        "Sybase",
+        "PostgreSQLServer",
+        "Cassandra",
+        "IBM WebSphere",
+        "Oracle WebLogic",
+        "Visual Basic",
+        "Unknown",
+        "DotnetCore",
+        "Dotnet"
+      ]
+    },
+    "AppUnitError":{
+      "type":"structure",
+      "members":{
+        "appUnitErrorCategory":{"shape":"AppUnitErrorCategory"}
+      }
+    },
+    "AppUnitErrorCategory":{
+      "type":"string",
+      "enum":[
+        "CREDENTIAL_ERROR",
+        "CONNECTIVITY_ERROR",
+        "PERMISSION_ERROR",
+        "UNSUPPORTED_ERROR",
+        "OTHER_ERROR"
       ]
     },
     "ApplicationComponentCriteria":{
@@ -384,7 +471,9 @@
         "SERVER_ID",
         "APP_TYPE",
         "STRATEGY",
-        "DESTINATION"
+        "DESTINATION",
+        "ANALYSIS_STATUS",
+        "ERROR_CATEGORY"
       ]
     },
     "ApplicationComponentDetail":{
@@ -395,6 +484,7 @@
         "antipatternReportStatus":{"shape":"AntipatternReportStatus"},
         "antipatternReportStatusMessage":{"shape":"StatusMessage"},
         "appType":{"shape":"AppType"},
+        "appUnitError":{"shape":"AppUnitError"},
         "associatedServerId":{"shape":"ServerId"},
         "databaseConfigDetail":{"shape":"DatabaseConfigDetail"},
         "id":{"shape":"ResourceId"},
@@ -407,6 +497,9 @@
         "osVersion":{"shape":"String"},
         "recommendationSet":{"shape":"RecommendationSet"},
         "resourceSubType":{"shape":"ResourceSubType"},
+        "resultList":{"shape":"ResultList"},
+        "runtimeStatus":{"shape":"RuntimeAnalysisStatus"},
+        "runtimeStatusMessage":{"shape":"StatusMessage"},
         "sourceCodeRepositories":{"shape":"SourceCodeRepositories"},
         "statusMessage":{"shape":"StatusMessage"}
       }
@@ -420,6 +513,13 @@
       "max":44,
       "min":0,
       "pattern":"[0-9a-zA-Z-]+"
+    },
+    "ApplicationComponentStatusSummary":{
+      "type":"structure",
+      "members":{
+        "count":{"shape":"Integer"},
+        "srcCodeOrDbAnalysisStatus":{"shape":"SrcCodeOrDbAnalysisStatus"}
+      }
     },
     "ApplicationComponentStrategies":{
       "type":"list",
@@ -440,6 +540,14 @@
         "count":{"shape":"Integer"}
       }
     },
+    "ApplicationMode":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "KNOWN",
+        "UNKNOWN"
+      ]
+    },
     "ApplicationPreferences":{
       "type":"structure",
       "members":{
@@ -455,6 +563,12 @@
         "STOPPED"
       ]
     },
+    "AssessmentStatusMessage":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":".*\\S.*"
+    },
     "AssessmentSummary":{
       "type":"structure",
       "members":{
@@ -463,11 +577,36 @@
         "antipatternReportStatusMessage":{"shape":"StatusMessage"},
         "lastAnalyzedTimestamp":{"shape":"TimeStamp"},
         "listAntipatternSeveritySummary":{"shape":"ListAntipatternSeveritySummary"},
+        "listApplicationComponentStatusSummary":{"shape":"ListApplicationComponentStatusSummary"},
         "listApplicationComponentStrategySummary":{"shape":"ListStrategySummary"},
         "listApplicationComponentSummary":{"shape":"ListApplicationComponentSummary"},
+        "listServerStatusSummary":{"shape":"ListServerStatusSummary"},
         "listServerStrategySummary":{"shape":"ListStrategySummary"},
         "listServerSummary":{"shape":"ListServerSummary"}
       }
+    },
+    "AssessmentTarget":{
+      "type":"structure",
+      "required":[
+        "condition",
+        "name",
+        "values"
+      ],
+      "members":{
+        "condition":{"shape":"Condition"},
+        "name":{"shape":"String"},
+        "values":{"shape":"AssessmentTargetValues"}
+      }
+    },
+    "AssessmentTargetValues":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "AssessmentTargets":{
+      "type":"list",
+      "member":{"shape":"AssessmentTarget"},
+      "max":10,
+      "min":0
     },
     "AssociatedApplication":{
       "type":"structure",
@@ -490,6 +629,14 @@
       "min":0,
       "pattern":"[0-9a-z-:]+"
     },
+    "AuthType":{
+      "type":"string",
+      "enum":[
+        "NTLM",
+        "SSH",
+        "CERT"
+      ]
+    },
     "AwsManagedResources":{
       "type":"structure",
       "required":["targetDestination"],
@@ -510,6 +657,13 @@
       "member":{"shape":"AwsManagedTargetDestination"},
       "max":1,
       "min":1
+    },
+    "BinaryAnalyzerName":{
+      "type":"string",
+      "enum":[
+        "DLL_ANALYZER",
+        "BYTECODE_ANALYZER"
+      ]
     },
     "Boolean":{
       "type":"boolean",
@@ -536,6 +690,7 @@
         "collectorHealth":{"shape":"CollectorHealth"},
         "collectorId":{"shape":"String"},
         "collectorVersion":{"shape":"String"},
+        "configurationSummary":{"shape":"ConfigurationSummary"},
         "hostName":{"shape":"String"},
         "ipAddress":{"shape":"String"},
         "lastActivityTimeStamp":{"shape":"String"},
@@ -552,6 +707,25 @@
     "Collectors":{
       "type":"list",
       "member":{"shape":"Collector"}
+    },
+    "Condition":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "NOT_EQUALS",
+        "CONTAINS",
+        "NOT_CONTAINS"
+      ]
+    },
+    "ConfigurationSummary":{
+      "type":"structure",
+      "members":{
+        "ipAddressBasedRemoteInfoList":{"shape":"IPAddressBasedRemoteInfoList"},
+        "pipelineInfoList":{"shape":"PipelineInfoList"},
+        "remoteSourceCodeAnalysisServerInfo":{"shape":"RemoteSourceCodeAnalysisServerInfo"},
+        "vcenterBasedRemoteInfoList":{"shape":"VcenterBasedRemoteInfoList"},
+        "versionControlInfoList":{"shape":"VersionControlInfoList"}
+      }
     },
     "ConflictException":{
       "type":"structure",
@@ -574,6 +748,7 @@
         "servers":{"shape":"Integer"},
         "startTime":{"shape":"TimeStamp"},
         "status":{"shape":"AssessmentStatus"},
+        "statusMessage":{"shape":"AssessmentStatusMessage"},
         "success":{"shape":"Integer"}
       }
     },
@@ -581,7 +756,8 @@
       "type":"string",
       "enum":[
         "ApplicationDiscoveryService",
-        "MPA"
+        "MPA",
+        "Import"
       ]
     },
     "DatabaseConfigDetail":{
@@ -613,6 +789,15 @@
         "databaseManagementPreference":{"shape":"DatabaseManagementPreference"},
         "databaseMigrationPreference":{"shape":"DatabaseMigrationPreference"}
       }
+    },
+    "DependencyException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"errorMessage"}
+      },
+      "error":{"httpStatusCode":500},
+      "exception":true,
+      "fault":true
     },
     "GetApplicationComponentDetailsRequest":{
       "type":"structure",
@@ -665,6 +850,7 @@
     "GetAssessmentResponse":{
       "type":"structure",
       "members":{
+        "assessmentTargets":{"shape":"AssessmentTargets"},
         "dataCollectionDetails":{"shape":"DataCollectionDetails"},
         "id":{"shape":"AsyncTaskId"}
       }
@@ -696,6 +882,17 @@
         "statusReportS3Key":{"shape":"importS3Key"}
       }
     },
+    "GetLatestAssessmentIdRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetLatestAssessmentIdResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"AsyncTaskId"}
+      }
+    },
     "GetPortfolioPreferencesRequest":{
       "type":"structure",
       "members":{
@@ -704,6 +901,7 @@
     "GetPortfolioPreferencesResponse":{
       "type":"structure",
       "members":{
+        "applicationMode":{"shape":"ApplicationMode"},
         "applicationPreferences":{"shape":"ApplicationPreferences"},
         "databasePreferences":{"shape":"DatabasePreferences"},
         "prioritizeBusinessGoals":{"shape":"PrioritizeBusinessGoals"}
@@ -797,7 +995,10 @@
     },
     "GroupName":{
       "type":"string",
-      "enum":["ExternalId"]
+      "enum":[
+        "ExternalId",
+        "ExternalSourceType"
+      ]
     },
     "Heterogeneous":{
       "type":"structure",
@@ -848,6 +1049,18 @@
       "max":15,
       "min":0,
       "pattern":"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+    },
+    "IPAddressBasedRemoteInfo":{
+      "type":"structure",
+      "members":{
+        "authType":{"shape":"AuthType"},
+        "ipAddressConfigurationTimeStamp":{"shape":"String"},
+        "osType":{"shape":"OSType"}
+      }
+    },
+    "IPAddressBasedRemoteInfoList":{
+      "type":"list",
+      "member":{"shape":"IPAddressBasedRemoteInfo"}
     },
     "ImportFileTaskInformation":{
       "type":"structure",
@@ -907,6 +1120,10 @@
     "ListAntipatternSeveritySummary":{
       "type":"list",
       "member":{"shape":"AntipatternSeveritySummary"}
+    },
+    "ListApplicationComponentStatusSummary":{
+      "type":"list",
+      "member":{"shape":"ApplicationComponentStatusSummary"}
     },
     "ListApplicationComponentSummary":{
       "type":"list",
@@ -983,6 +1200,10 @@
         "nextToken":{"shape":"String"},
         "taskInfos":{"shape":"ListImportFileTaskInformation"}
       }
+    },
+    "ListServerStatusSummary":{
+      "type":"list",
+      "member":{"shape":"ServerStatusSummary"}
     },
     "ListServerSummary":{
       "type":"list",
@@ -1124,15 +1345,37 @@
         "Json"
       ]
     },
+    "PipelineInfo":{
+      "type":"structure",
+      "members":{
+        "pipelineConfigurationTimeStamp":{"shape":"String"},
+        "pipelineType":{"shape":"PipelineType"}
+      }
+    },
+    "PipelineInfoList":{
+      "type":"list",
+      "member":{"shape":"PipelineInfo"}
+    },
+    "PipelineType":{
+      "type":"string",
+      "enum":["AZURE_DEVOPS"]
+    },
     "PrioritizeBusinessGoals":{
       "type":"structure",
       "members":{
         "businessGoals":{"shape":"BusinessGoals"}
       }
     },
+    "ProjectName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
     "PutPortfolioPreferencesRequest":{
       "type":"structure",
       "members":{
+        "applicationMode":{"shape":"ApplicationMode"},
         "applicationPreferences":{"shape":"ApplicationPreferences"},
         "databasePreferences":{"shape":"DatabasePreferences"},
         "prioritizeBusinessGoals":{"shape":"PrioritizeBusinessGoals"}
@@ -1183,6 +1426,12 @@
       "min":0,
       "pattern":"[0-9a-z-:]+"
     },
+    "RemoteSourceCodeAnalysisServerInfo":{
+      "type":"structure",
+      "members":{
+        "remoteSourceCodeAnalysisServerConfigurationTimestamp":{"shape":"String"}
+      }
+    },
     "ResourceId":{
       "type":"string",
       "max":44,
@@ -1209,6 +1458,29 @@
         "DatabaseProcess"
       ]
     },
+    "Result":{
+      "type":"structure",
+      "members":{
+        "analysisStatus":{"shape":"AnalysisStatusUnion"},
+        "analysisType":{"shape":"AnalysisType"},
+        "antipatternReportResultList":{"shape":"AntipatternReportResultList"},
+        "statusMessage":{"shape":"StatusMessage"}
+      }
+    },
+    "ResultList":{
+      "type":"list",
+      "member":{"shape":"Result"}
+    },
+    "RunTimeAnalyzerName":{
+      "type":"string",
+      "enum":[
+        "A2C_ANALYZER",
+        "REHOST_ANALYZER",
+        "EMP_PA_ANALYZER",
+        "DATABASE_ANALYZER",
+        "SCT_ANALYZER"
+      ]
+    },
     "RunTimeAssessmentStatus":{
       "type":"string",
       "enum":[
@@ -1219,6 +1491,15 @@
         "dataCollectionTaskSuccess",
         "dataCollectionTaskFailed",
         "dataCollectionTaskPartialSuccess"
+      ]
+    },
+    "RuntimeAnalysisStatus":{
+      "type":"string",
+      "enum":[
+        "ANALYSIS_TO_BE_SCHEDULED",
+        "ANALYSIS_STARTED",
+        "ANALYSIS_SUCCESS",
+        "ANALYSIS_FAILED"
       ]
     },
     "S3Bucket":{
@@ -1280,7 +1561,9 @@
         "OS_NAME",
         "STRATEGY",
         "DESTINATION",
-        "SERVER_ID"
+        "SERVER_ID",
+        "ANALYSIS_STATUS",
+        "ERROR_CATEGORY"
       ]
     },
     "ServerDetail":{
@@ -1296,6 +1579,7 @@
         "listAntipatternSeveritySummary":{"shape":"ListAntipatternSeveritySummary"},
         "name":{"shape":"ResourceName"},
         "recommendationSet":{"shape":"RecommendationSet"},
+        "serverError":{"shape":"ServerError"},
         "serverType":{"shape":"String"},
         "statusMessage":{"shape":"StatusMessage"},
         "systemInfo":{"shape":"SystemInfo"}
@@ -1304,6 +1588,22 @@
     "ServerDetails":{
       "type":"list",
       "member":{"shape":"ServerDetail"}
+    },
+    "ServerError":{
+      "type":"structure",
+      "members":{
+        "serverErrorCategory":{"shape":"ServerErrorCategory"}
+      }
+    },
+    "ServerErrorCategory":{
+      "type":"string",
+      "enum":[
+        "CONNECTIVITY_ERROR",
+        "CREDENTIAL_ERROR",
+        "PERMISSION_ERROR",
+        "ARCHITECTURE_ERROR",
+        "OTHER_ERROR"
+      ]
     },
     "ServerId":{
       "type":"string",
@@ -1320,6 +1620,13 @@
         "Redhat",
         "Other"
       ]
+    },
+    "ServerStatusSummary":{
+      "type":"structure",
+      "members":{
+        "count":{"shape":"Integer"},
+        "runTimeAssessmentStatus":{"shape":"RunTimeAssessmentStatus"}
+      }
     },
     "ServerStrategies":{
       "type":"list",
@@ -1383,9 +1690,19 @@
       "type":"structure",
       "members":{
         "location":{"shape":"Location"},
+        "projectName":{"shape":"ProjectName"},
         "sourceVersion":{"shape":"SourceVersion"},
         "versionControl":{"shape":"VersionControl"}
       }
+    },
+    "SourceCodeAnalyzerName":{
+      "type":"string",
+      "enum":[
+        "CSHARP_ANALYZER",
+        "JAVA_ANALYZER",
+        "BYTECODE_ANALYZER",
+        "PORTING_ASSISTANT"
+      ]
     },
     "SourceCodeList":{
       "type":"list",
@@ -1399,6 +1716,7 @@
       "type":"structure",
       "members":{
         "branch":{"shape":"String"},
+        "projectName":{"shape":"String"},
         "repository":{"shape":"String"},
         "versionControlType":{"shape":"String"}
       }
@@ -1415,12 +1733,16 @@
         "ANALYSIS_TO_BE_SCHEDULED",
         "ANALYSIS_STARTED",
         "ANALYSIS_SUCCESS",
-        "ANALYSIS_FAILED"
+        "ANALYSIS_FAILED",
+        "ANALYSIS_PARTIAL_SUCCESS",
+        "UNCONFIGURED",
+        "CONFIGURED"
       ]
     },
     "StartAssessmentRequest":{
       "type":"structure",
       "members":{
+        "assessmentTargets":{"shape":"AssessmentTargets"},
         "s3bucketForAnalysisData":{"shape":"StartAssessmentRequestS3bucketForAnalysisDataString"},
         "s3bucketForReportData":{"shape":"StartAssessmentRequestS3bucketForReportDataString"}
       }
@@ -1534,7 +1856,8 @@
       "enum":[
         "recommended",
         "viableOption",
-        "notRecommended"
+        "notRecommended",
+        "potential"
       ]
     },
     "StrategySummary":{
@@ -1595,7 +1918,8 @@
         "Amazon Relational Database Service on PostgreSQL",
         "Amazon DocumentDB",
         "Amazon DynamoDB",
-        "Amazon Relational Database Service"
+        "Amazon Relational Database Service",
+        "Babelfish for Aurora PostgreSQL"
       ]
     },
     "ThrottlingException":{
@@ -1649,7 +1973,9 @@
       "type":"structure",
       "required":["applicationComponentId"],
       "members":{
+        "appType":{"shape":"AppType"},
         "applicationComponentId":{"shape":"ApplicationComponentId"},
+        "configureOnly":{"shape":"Boolean"},
         "inclusionStatus":{"shape":"InclusionStatus"},
         "secretsManagerKey":{"shape":"SecretsManagerKey"},
         "sourceCodeList":{"shape":"SourceCodeList"},
@@ -1685,11 +2011,42 @@
       },
       "exception":true
     },
+    "VcenterBasedRemoteInfo":{
+      "type":"structure",
+      "members":{
+        "osType":{"shape":"OSType"},
+        "vcenterConfigurationTimeStamp":{"shape":"String"}
+      }
+    },
+    "VcenterBasedRemoteInfoList":{
+      "type":"list",
+      "member":{"shape":"VcenterBasedRemoteInfo"}
+    },
     "VersionControl":{
       "type":"string",
       "enum":[
         "GITHUB",
-        "GITHUB_ENTERPRISE"
+        "GITHUB_ENTERPRISE",
+        "AZURE_DEVOPS_GIT"
+      ]
+    },
+    "VersionControlInfo":{
+      "type":"structure",
+      "members":{
+        "versionControlConfigurationTimeStamp":{"shape":"String"},
+        "versionControlType":{"shape":"VersionControlType"}
+      }
+    },
+    "VersionControlInfoList":{
+      "type":"list",
+      "member":{"shape":"VersionControlInfo"}
+    },
+    "VersionControlType":{
+      "type":"string",
+      "enum":[
+        "GITHUB",
+        "GITHUB_ENTERPRISE",
+        "AZURE_DEVOPS_GIT"
       ]
     },
     "errorMessage":{"type":"string"},

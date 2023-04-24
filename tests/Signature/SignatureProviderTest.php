@@ -16,8 +16,14 @@ class SignatureProviderTest extends TestCase
             ['v4', 'Aws\Signature\S3SignatureV4', 's3'],
             ['v4', 'Aws\Signature\S3SignatureV4', 's3control'],
             ['v4', 'Aws\Signature\S3SignatureV4', 's3-object-lambda'],
+            ['v4a', 'Aws\Signature\S3SignatureV4', 's3'],
+            ['v4a', 'Aws\Signature\S3SignatureV4', 's3control'],
+            ['v4a', 'Aws\Signature\S3SignatureV4', 's3-object-lambda'],
+            ['v4a', 'Aws\Signature\SignatureV4', 'eventbridge'],
+            ['v4a', 'Aws\Signature\SignatureV4', 'eventbridge'],
+            ['v4a', 'Aws\Signature\SignatureV4', 'eventbridge'],
             ['v4-unsigned-body', 'Aws\Signature\SignatureV4', 'foo'],
-            ['anonymous', 'Aws\Signature\AnonymousSignature', 's3'],
+            ['anonymous', 'Aws\Signature\AnonymousSignature', 's3']
         ];
     }
 

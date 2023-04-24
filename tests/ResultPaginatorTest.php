@@ -2,6 +2,7 @@
 namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
+use Aws\CloudWatchLogs\CloudWatchLogsClient;
 use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Result;
@@ -412,5 +413,48 @@ class ResultPaginatorTest extends TestCase
         foreach ($paginator->search('a') as $b) {
 
         }
+    }
+
+    public function testLastPageHasPreviousToken()
+    {
+        $config = ['input_token' => 'nextToken', 'output_token' => 'nextForwardToken'];
+        $provider = ApiProvider::defaultProvider();
+        $client = new CloudWatchLogsClient([
+            'region'  => 'us-west-2',
+            'version' => 'latest',
+            'api_provider' => function ($t, $s, $v) use ($provider, $config) {
+                if ($t === 'paginator') {
+                    $res = $provider($t, $s, $v);
+                    $res['pagination']['GetLogEvents'] = $config
+                        + $res['pagination']['GetLogEvents'];
+                    return $res;
+                }
+
+                return $provider($t, $s, $v);
+            }
+        ]);
+        $results = [
+            new Result(['nextToken' => 'foo', 'nextForwardToken' => 'foo']),
+            new Result(['nextToken' => 'bar', 'nextForwardToken' => 'bar']),
+            new Result(['nextToken' => 'bar', 'nextForwardToken' => 'bar']),
+            new Result(['nextToken' => 'baz', 'nextForwardToken' => 'baz']),
+        ];
+        $requestCount = 0;
+        $this->addMockResults(
+            $client,
+            $results,
+            function () use (&$requestCount) {
+                $requestCount++;
+            }
+        );
+        $paginator = $client->getPaginator('GetLogEvents', [
+            "logGroupName" => "foo",
+            "logStreamName" => 'bar',
+        ]);
+        // Iterate over the paginator
+        foreach ($paginator as $key => $result) {}
+        // Make sure the paginator yields the expected results
+        $this->assertInstanceOf('Aws\\Result', $result);
+        $this->assertEquals(3, $requestCount);
     }
 }

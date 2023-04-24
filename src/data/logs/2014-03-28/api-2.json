@@ -86,6 +86,20 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DeleteDataProtectionPolicy":{
+      "name":"DeleteDataProtectionPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteDataProtectionPolicyRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "DeleteDestination":{
       "name":"DeleteDestination",
       "http":{
@@ -346,6 +360,21 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "GetDataProtectionPolicy":{
+      "name":"GetDataProtectionPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDataProtectionPolicyRequest"},
+      "output":{"shape":"GetDataProtectionPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "GetLogEvents":{
       "name":"GetLogEvents",
       "http":{
@@ -404,6 +433,20 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "ListTagsLogGroup":{
       "name":"ListTagsLogGroup",
       "http":{
@@ -413,6 +456,24 @@
       "input":{"shape":"ListTagsLogGroupRequest"},
       "output":{"shape":"ListTagsLogGroupResponse"},
       "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"Please use the generic tagging API ListTagsForResource"
+    },
+    "PutDataProtectionPolicy":{
+      "name":"PutDataProtectionPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutDataProtectionPolicyRequest"},
+      "output":{"shape":"PutDataProtectionPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"OperationAbortedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceUnavailableException"}
       ]
@@ -574,6 +635,22 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"}
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"Please use the generic tagging API TagResource"
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyTagsException"}
       ]
     },
     "TestMetricFilter":{
@@ -598,6 +675,21 @@
       "input":{"shape":"UntagLogGroupRequest"},
       "errors":[
         {"shape":"ResourceNotFoundException"}
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"Please use the generic tagging API UntagResource"
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
       ]
     }
   },
@@ -605,6 +697,24 @@
     "AccessPolicy":{
       "type":"string",
       "min":1
+    },
+    "AccountId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"^\\d{12}$"
+    },
+    "AccountIds":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":20,
+      "min":0
+    },
+    "AmazonResourceName":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"[\\w+=/:,.@-]*"
     },
     "Arn":{"type":"string"},
     "AssociateKmsKeyRequest":{
@@ -676,8 +786,25 @@
       },
       "exception":true
     },
+    "DataProtectionPolicyDocument":{"type":"string"},
+    "DataProtectionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVATED",
+        "DELETED",
+        "ARCHIVED",
+        "DISABLED"
+      ]
+    },
     "Days":{"type":"integer"},
     "DefaultValue":{"type":"double"},
+    "DeleteDataProtectionPolicyRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifier"],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"}
+      }
+    },
     "DeleteDestinationRequest":{
       "type":"structure",
       "required":["destinationName"],
@@ -791,9 +918,12 @@
     "DescribeLogGroupsRequest":{
       "type":"structure",
       "members":{
+        "accountIdentifiers":{"shape":"AccountIds"},
         "logGroupNamePrefix":{"shape":"LogGroupName"},
+        "logGroupNamePattern":{"shape":"LogGroupNamePattern"},
         "nextToken":{"shape":"NextToken"},
-        "limit":{"shape":"DescribeLimit"}
+        "limit":{"shape":"DescribeLimit"},
+        "includeLinkedAccounts":{"shape":"IncludeLinkedAccounts"}
       }
     },
     "DescribeLogGroupsResponse":{
@@ -805,9 +935,9 @@
     },
     "DescribeLogStreamsRequest":{
       "type":"structure",
-      "required":["logGroupName"],
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
         "logStreamNamePrefix":{"shape":"LogStreamName"},
         "orderBy":{"shape":"OrderBy"},
         "descending":{"shape":"Descending"},
@@ -1039,9 +1169,9 @@
     "FilterCount":{"type":"integer"},
     "FilterLogEventsRequest":{
       "type":"structure",
-      "required":["logGroupName"],
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
         "logStreamNames":{"shape":"InputLogStreamNames"},
         "logStreamNamePrefix":{"shape":"LogStreamName"},
         "startTime":{"shape":"Timestamp"},
@@ -1053,7 +1183,8 @@
           "shape":"Interleaved",
           "deprecated":true,
           "deprecatedMessage":"Starting on June 17, 2019, this parameter will be ignored and the value will be assumed to be true. The response from this operation will always interleave events from multiple log streams within a log group."
-        }
+        },
+        "unmask":{"shape":"Unmask"}
       }
     },
     "FilterLogEventsResponse":{
@@ -1090,20 +1221,34 @@
       "member":{"shape":"FilteredLogEvent"}
     },
     "ForceUpdate":{"type":"boolean"},
+    "GetDataProtectionPolicyRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifier"],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"}
+      }
+    },
+    "GetDataProtectionPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "policyDocument":{"shape":"DataProtectionPolicyDocument"},
+        "lastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
     "GetLogEventsRequest":{
       "type":"structure",
-      "required":[
-        "logGroupName",
-        "logStreamName"
-      ],
+      "required":["logStreamName"],
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
         "logStreamName":{"shape":"LogStreamName"},
         "startTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
         "nextToken":{"shape":"NextToken"},
         "limit":{"shape":"EventsLimit"},
-        "startFromHead":{"shape":"StartFromHead"}
+        "startFromHead":{"shape":"StartFromHead"},
+        "unmask":{"shape":"Unmask"}
       }
     },
     "GetLogEventsResponse":{
@@ -1116,10 +1261,10 @@
     },
     "GetLogGroupFieldsRequest":{
       "type":"structure",
-      "required":["logGroupName"],
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
-        "time":{"shape":"Timestamp"}
+        "time":{"shape":"Timestamp"},
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"}
       }
     },
     "GetLogGroupFieldsResponse":{
@@ -1132,7 +1277,8 @@
       "type":"structure",
       "required":["logRecordPointer"],
       "members":{
-        "logRecordPointer":{"shape":"LogRecordPointer"}
+        "logRecordPointer":{"shape":"LogRecordPointer"},
+        "unmask":{"shape":"Unmask"}
       }
     },
     "GetLogRecordResponse":{
@@ -1156,6 +1302,7 @@
         "status":{"shape":"QueryStatus"}
       }
     },
+    "IncludeLinkedAccounts":{"type":"boolean"},
     "InputLogEvent":{
       "type":"structure",
       "required":[
@@ -1209,18 +1356,35 @@
       },
       "exception":true
     },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"Tags"}
+      }
+    },
     "ListTagsLogGroupRequest":{
       "type":"structure",
       "required":["logGroupName"],
       "members":{
         "logGroupName":{"shape":"LogGroupName"}
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"Please use the generic tagging API model ListTagsForResourceRequest and ListTagsForResourceResponse"
     },
     "ListTagsLogGroupResponse":{
       "type":"structure",
       "members":{
         "tags":{"shape":"Tags"}
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"Please use the generic tagging API model ListTagsForResourceRequest and ListTagsForResourceResponse"
     },
     "LogEventIndex":{"type":"integer"},
     "LogGroup":{
@@ -1232,7 +1396,8 @@
         "metricFilterCount":{"shape":"FilterCount"},
         "arn":{"shape":"Arn"},
         "storedBytes":{"shape":"StoredBytes"},
-        "kmsKeyId":{"shape":"KmsKeyId"}
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "dataProtectionStatus":{"shape":"DataProtectionStatus"}
       }
     },
     "LogGroupField":{
@@ -1246,11 +1411,27 @@
       "type":"list",
       "member":{"shape":"LogGroupField"}
     },
+    "LogGroupIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[\\w#+=/:,.@-]*"
+    },
+    "LogGroupIdentifiers":{
+      "type":"list",
+      "member":{"shape":"LogGroupIdentifier"}
+    },
     "LogGroupName":{
       "type":"string",
       "max":512,
       "min":1,
       "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
+    "LogGroupNamePattern":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"[\\.\\-_/#A-Za-z0-9]*"
     },
     "LogGroupNames":{
       "type":"list",
@@ -1404,6 +1585,25 @@
       "min":1
     },
     "PolicyName":{"type":"string"},
+    "PutDataProtectionPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "logGroupIdentifier",
+        "policyDocument"
+      ],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "policyDocument":{"shape":"DataProtectionPolicyDocument"}
+      }
+    },
+    "PutDataProtectionPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "policyDocument":{"shape":"DataProtectionPolicyDocument"},
+        "lastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
     "PutDestinationPolicyRequest":{
       "type":"structure",
       "required":[
@@ -1426,7 +1626,8 @@
       "members":{
         "destinationName":{"shape":"DestinationName"},
         "targetArn":{"shape":"TargetArn"},
-        "roleArn":{"shape":"RoleArn"}
+        "roleArn":{"shape":"RoleArn"},
+        "tags":{"shape":"Tags"}
       }
     },
     "PutDestinationResponse":{
@@ -1563,8 +1764,7 @@
     "QueryDefinitionName":{
       "type":"string",
       "max":255,
-      "min":1,
-      "pattern":"^([^:*\\/]+\\/?)*[^:*\\/]+$"
+      "min":1
     },
     "QueryDefinitionString":{
       "type":"string",
@@ -1736,6 +1936,7 @@
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
         "logGroupNames":{"shape":"LogGroupNames"},
+        "logGroupIdentifiers":{"shape":"LogGroupIdentifiers"},
         "startTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
         "queryString":{"shape":"QueryString"},
@@ -1789,6 +1990,12 @@
       "min":1,
       "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]+)$"
     },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":50,
+      "min":0
+    },
     "TagList":{
       "type":"list",
       "member":{"shape":"TagKey"},
@@ -1802,6 +2009,19 @@
       ],
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
+        "tags":{"shape":"Tags"}
+      },
+      "deprecated":true,
+      "deprecatedMessage":"Please use the generic tagging API model TagResourceRequest"
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tags"
+      ],
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1849,6 +2069,15 @@
       "min":0
     },
     "Token":{"type":"string"},
+    "TooManyTagsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"Message"},
+        "resourceName":{"shape":"AmazonResourceName"}
+      },
+      "exception":true
+    },
+    "Unmask":{"type":"boolean"},
     "UnrecognizedClientException":{
       "type":"structure",
       "members":{
@@ -1864,6 +2093,19 @@
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
         "tags":{"shape":"TagList"}
+      },
+      "deprecated":true,
+      "deprecatedMessage":"Please use the generic tagging API model UntagResourceRequest"
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "tagKeys":{"shape":"TagKeyList"}
       }
     },
     "Value":{"type":"string"}

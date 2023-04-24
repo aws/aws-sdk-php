@@ -16,6 +16,8 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 class EcsCredentialProviderTest extends TestCase
 {
     private $uripath;
+    private $fulluripath;
+    private $authtokenpath;
 
     private function clearEnv()
     {

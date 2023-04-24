@@ -43,6 +43,37 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "BatchAssociateResource":{
+      "name":"BatchAssociateResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchAssociateResourceRequest"},
+      "output":{"shape":"BatchAssociateResourceResponse"},
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "BatchDisassociateResource":{
+      "name":"BatchDisassociateResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchDisassociateResourceRequest"},
+      "output":{"shape":"BatchDisassociateResourceResponse"},
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DeleteAppsList":{
       "name":"DeleteAppsList",
       "http":{
@@ -97,6 +128,20 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "DeleteResourceSet":{
+      "name":"DeleteResourceSet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourceSetRequest"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidOperationException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "DisassociateAdminAccount":{
       "name":"DisassociateAdminAccount",
       "http":{
@@ -135,6 +180,21 @@
       "output":{"shape":"GetAdminAccountResponse"},
       "errors":[
         {"shape":"InvalidOperationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "GetAdminScope":{
+      "name":"GetAdminScope",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAdminScopeRequest"},
+      "output":{"shape":"GetAdminScopeResponse"},
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalErrorException"}
       ]
@@ -225,6 +285,21 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "GetResourceSet":{
+      "name":"GetResourceSet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourceSetRequest"},
+      "output":{"shape":"GetResourceSetResponse"},
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "GetThirdPartyFirewallAssociationStatus":{
       "name":"GetThirdPartyFirewallAssociationStatus",
       "http":{
@@ -248,6 +323,34 @@
       },
       "input":{"shape":"GetViolationDetailsRequest"},
       "output":{"shape":"GetViolationDetailsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "ListAdminAccountsForOrganization":{
+      "name":"ListAdminAccountsForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAdminAccountsForOrganizationRequest"},
+      "output":{"shape":"ListAdminAccountsForOrganizationResponse"},
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "ListAdminsManagingAccount":{
+      "name":"ListAdminsManagingAccount",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAdminsManagingAccountRequest"},
+      "output":{"shape":"ListAdminsManagingAccountResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidInputException"},
@@ -279,6 +382,20 @@
       "output":{"shape":"ListComplianceStatusResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "ListDiscoveredResources":{
+      "name":"ListDiscoveredResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDiscoveredResourcesRequest"},
+      "output":{"shape":"ListDiscoveredResourcesResponse"},
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"InvalidInputException"},
         {"shape":"InternalErrorException"}
       ]
     },
@@ -324,6 +441,35 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "ListResourceSetResources":{
+      "name":"ListResourceSetResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListResourceSetResourcesRequest"},
+      "output":{"shape":"ListResourceSetResourcesResponse"},
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListResourceSets":{
+      "name":"ListResourceSets",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListResourceSetsRequest"},
+      "output":{"shape":"ListResourceSetsResponse"},
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -352,6 +498,20 @@
         {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalErrorException"}
+      ]
+    },
+    "PutAdminAccount":{
+      "name":"PutAdminAccount",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAdminAccountRequest"},
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "PutAppsList":{
@@ -416,6 +576,21 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "PutResourceSet":{
+      "name":"PutResourceSet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutResourceSetRequest"},
+      "output":{"shape":"PutResourceSetResponse"},
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -455,6 +630,26 @@
       "min":1,
       "pattern":"^[0-9]+$"
     },
+    "AWSAccountIdList":{
+      "type":"list",
+      "member":{"shape":"AWSAccountId"}
+    },
+    "AWSRegion":{
+      "type":"string",
+      "max":32,
+      "min":6,
+      "pattern":"^(af|ap|ca|eu|il|me|mx|sa|us|cn|us-gov)-\\w+-\\d+$"
+    },
+    "AWSRegionList":{
+      "type":"list",
+      "member":{"shape":"AWSRegion"},
+      "max":64,
+      "min":0
+    },
+    "AccountIdList":{
+      "type":"list",
+      "member":{"shape":"AWSAccountId"}
+    },
     "AccountRoleStatus":{
       "type":"string",
       "enum":[
@@ -465,11 +660,40 @@
         "DELETED"
       ]
     },
+    "AccountScope":{
+      "type":"structure",
+      "members":{
+        "Accounts":{"shape":"AccountIdList"},
+        "AllAccountsEnabled":{"shape":"Boolean"},
+        "ExcludeSpecifiedAccounts":{"shape":"Boolean"}
+      }
+    },
     "ActionTarget":{
       "type":"structure",
       "members":{
         "ResourceId":{"shape":"ResourceId"},
         "Description":{"shape":"LengthBoundedString"}
+      }
+    },
+    "AdminAccountSummary":{
+      "type":"structure",
+      "members":{
+        "AdminAccount":{"shape":"AWSAccountId"},
+        "DefaultAdmin":{"shape":"Boolean"},
+        "Status":{"shape":"OrganizationStatus"}
+      }
+    },
+    "AdminAccountSummaryList":{
+      "type":"list",
+      "member":{"shape":"AdminAccountSummary"}
+    },
+    "AdminScope":{
+      "type":"structure",
+      "members":{
+        "AccountScope":{"shape":"AccountScope"},
+        "OrganizationalUnitScope":{"shape":"OrganizationalUnitScope"},
+        "RegionScope":{"shape":"RegionScope"},
+        "PolicyTypeScope":{"shape":"PolicyTypeScope"}
       }
     },
     "App":{
@@ -565,10 +789,60 @@
         "PossibleSecurityGroupRemediationActions":{"shape":"SecurityGroupRemediationActions"}
       }
     },
+    "Base62Id":{
+      "type":"string",
+      "max":22,
+      "min":22,
+      "pattern":"^[a-z0-9A-Z]{22}$"
+    },
     "BasicInteger":{
       "type":"integer",
       "max":2147483647,
       "min":-2147483648
+    },
+    "BatchAssociateResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceSetIdentifier",
+        "Items"
+      ],
+      "members":{
+        "ResourceSetIdentifier":{"shape":"Identifier"},
+        "Items":{"shape":"IdentifierList"}
+      }
+    },
+    "BatchAssociateResourceResponse":{
+      "type":"structure",
+      "required":[
+        "ResourceSetIdentifier",
+        "FailedItems"
+      ],
+      "members":{
+        "ResourceSetIdentifier":{"shape":"Identifier"},
+        "FailedItems":{"shape":"FailedItemList"}
+      }
+    },
+    "BatchDisassociateResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceSetIdentifier",
+        "Items"
+      ],
+      "members":{
+        "ResourceSetIdentifier":{"shape":"Identifier"},
+        "Items":{"shape":"IdentifierList"}
+      }
+    },
+    "BatchDisassociateResourceResponse":{
+      "type":"structure",
+      "required":[
+        "ResourceSetIdentifier",
+        "FailedItems"
+      ],
+      "members":{
+        "ResourceSetIdentifier":{"shape":"Identifier"},
+        "FailedItems":{"shape":"FailedItemList"}
+      }
     },
     "Boolean":{"type":"boolean"},
     "CIDR":{
@@ -617,6 +891,13 @@
       "key":{"shape":"CustomerPolicyScopeIdType"},
       "value":{"shape":"CustomerPolicyScopeIdList"}
     },
+    "CustomerPolicyStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "OUT_OF_ADMIN_SCOPE"
+      ]
+    },
     "DeleteAppsListRequest":{
       "type":"structure",
       "required":["ListId"],
@@ -644,6 +925,13 @@
         "ListId":{"shape":"ListId"}
       }
     },
+    "DeleteResourceSetRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"Base62Id"}
+      }
+    },
     "DependentServiceName":{
       "type":"string",
       "enum":[
@@ -652,6 +940,11 @@
         "AWSSHIELD_ADVANCED",
         "AWSVPC"
       ]
+    },
+    "Description":{
+      "type":"string",
+      "max":256,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
     "DestinationType":{
       "type":"string",
@@ -663,7 +956,7 @@
     },
     "DetailedInfo":{
       "type":"string",
-      "max":1024,
+      "max":4096,
       "min":1,
       "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=,+\\-@]*)$"
     },
@@ -684,6 +977,19 @@
       "members":{
         "ThirdPartyFirewallStatus":{"shape":"ThirdPartyFirewallAssociationStatus"}
       }
+    },
+    "DiscoveredResource":{
+      "type":"structure",
+      "members":{
+        "URI":{"shape":"Identifier"},
+        "AccountId":{"shape":"AWSAccountId"},
+        "Type":{"shape":"ResourceType"},
+        "Name":{"shape":"ResourceName"}
+      }
+    },
+    "DiscoveredResourceList":{
+      "type":"list",
+      "member":{"shape":"DiscoveredResource"}
     },
     "DnsDuplicateRuleGroupViolation":{
       "type":"structure",
@@ -832,6 +1138,28 @@
         "FirewallCreationConfig":{"shape":"ManagedServiceData"}
       }
     },
+    "FailedItem":{
+      "type":"structure",
+      "members":{
+        "URI":{"shape":"Identifier"},
+        "Reason":{"shape":"FailedItemReason"}
+      }
+    },
+    "FailedItemList":{
+      "type":"list",
+      "member":{"shape":"FailedItem"}
+    },
+    "FailedItemReason":{
+      "type":"string",
+      "enum":[
+        "NOT_VALID_ARN",
+        "NOT_VALID_PARTITION",
+        "NOT_VALID_REGION",
+        "NOT_VALID_SERVICE",
+        "NOT_VALID_RESOURCE_TYPE",
+        "NOT_VALID_ACCOUNT_ID"
+      ]
+    },
     "FirewallDeploymentModel":{
       "type":"string",
       "enum":[
@@ -880,6 +1208,20 @@
       "members":{
         "AdminAccount":{"shape":"AWSAccountId"},
         "RoleStatus":{"shape":"AccountRoleStatus"}
+      }
+    },
+    "GetAdminScopeRequest":{
+      "type":"structure",
+      "required":["AdminAccount"],
+      "members":{
+        "AdminAccount":{"shape":"AWSAccountId"}
+      }
+    },
+    "GetAdminScopeResponse":{
+      "type":"structure",
+      "members":{
+        "AdminScope":{"shape":"AdminScope"},
+        "Status":{"shape":"OrganizationStatus"}
       }
     },
     "GetAppsListRequest":{
@@ -976,6 +1318,24 @@
         "ProtocolsListArn":{"shape":"ResourceArn"}
       }
     },
+    "GetResourceSetRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"Base62Id"}
+      }
+    },
+    "GetResourceSetResponse":{
+      "type":"structure",
+      "required":[
+        "ResourceSet",
+        "ResourceSetArn"
+      ],
+      "members":{
+        "ResourceSet":{"shape":"ResourceSet"},
+        "ResourceSetArn":{"shape":"ResourceArn"}
+      }
+    },
     "GetThirdPartyFirewallAssociationStatusRequest":{
       "type":"structure",
       "required":["ThirdPartyFirewall"],
@@ -1015,6 +1375,16 @@
       "type":"long",
       "max":65535,
       "min":0
+    },
+    "Identifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+    },
+    "IdentifierList":{
+      "type":"list",
+      "member":{"shape":"Identifier"}
     },
     "InternalErrorException":{
       "type":"structure",
@@ -1065,6 +1435,34 @@
       },
       "exception":true
     },
+    "ListAdminAccountsForOrganizationRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"PaginationMaxResults"}
+      }
+    },
+    "ListAdminAccountsForOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "AdminAccounts":{"shape":"AdminAccountSummaryList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListAdminsManagingAccountRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"PaginationMaxResults"}
+      }
+    },
+    "ListAdminsManagingAccountResponse":{
+      "type":"structure",
+      "members":{
+        "AdminAccounts":{"shape":"AccountIdList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListAppsListsRequest":{
       "type":"structure",
       "required":["MaxResults"],
@@ -1094,6 +1492,26 @@
       "type":"structure",
       "members":{
         "PolicyComplianceStatusList":{"shape":"PolicyComplianceStatusList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListDiscoveredResourcesRequest":{
+      "type":"structure",
+      "required":[
+        "MemberAccountIds",
+        "ResourceType"
+      ],
+      "members":{
+        "MemberAccountIds":{"shape":"AWSAccountIdList"},
+        "ResourceType":{"shape":"ResourceType"},
+        "MaxResults":{"shape":"PaginationMaxResults"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListDiscoveredResourcesResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"DiscoveredResourceList"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1147,6 +1565,37 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListResourceSetResourcesRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"ResourceId"},
+        "MaxResults":{"shape":"PaginationMaxResults"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListResourceSetResourcesResponse":{
+      "type":"structure",
+      "required":["Items"],
+      "members":{
+        "Items":{"shape":"ResourceList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListResourceSetsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"PaginationMaxResults"}
+      }
+    },
+    "ListResourceSetsResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceSets":{"shape":"ResourceSetSummaryList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -1181,7 +1630,7 @@
     },
     "ManagedServiceData":{
       "type":"string",
-      "max":8192,
+      "max":10000,
       "min":1,
       "pattern":"^((?!\\\\[nr]).)+"
     },
@@ -1196,6 +1645,12 @@
     "MemberAccounts":{
       "type":"list",
       "member":{"shape":"AWSAccountId"}
+    },
+    "Name":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
     "NetworkFirewallAction":{
       "type":"string",
@@ -1293,6 +1748,10 @@
         "TargetViolationReason":{"shape":"TargetViolationReason"}
       }
     },
+    "NetworkFirewallOverrideAction":{
+      "type":"string",
+      "enum":["DROP_TO_ALERT"]
+    },
     "NetworkFirewallPolicy":{
       "type":"structure",
       "members":{
@@ -1325,6 +1784,12 @@
       "min":1,
       "pattern":"^[a-zA-Z0-9-]+$"
     },
+    "NetworkFirewallStatefulRuleGroupOverride":{
+      "type":"structure",
+      "members":{
+        "Action":{"shape":"NetworkFirewallOverrideAction"}
+      }
+    },
     "NetworkFirewallUnexpectedFirewallRoutesViolation":{
       "type":"structure",
       "members":{
@@ -1347,6 +1812,33 @@
     "OrderedRemediationActions":{
       "type":"list",
       "member":{"shape":"RemediationActionWithOrder"}
+    },
+    "OrganizationStatus":{
+      "type":"string",
+      "enum":[
+        "ONBOARDING",
+        "ONBOARDING_COMPLETE",
+        "OFFBOARDING",
+        "OFFBOARDING_COMPLETE"
+      ]
+    },
+    "OrganizationalUnitId":{
+      "type":"string",
+      "max":68,
+      "min":16,
+      "pattern":"^ou-[0-9a-z]{4,32}-[a-z0-9]{8,32}$"
+    },
+    "OrganizationalUnitIdList":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitId"}
+    },
+    "OrganizationalUnitScope":{
+      "type":"structure",
+      "members":{
+        "OrganizationalUnits":{"shape":"OrganizationalUnitIdList"},
+        "AllOrganizationalUnitsEnabled":{"shape":"Boolean"},
+        "ExcludeSpecifiedOrganizationalUnits":{"shape":"Boolean"}
+      }
     },
     "PaginationMaxResults":{
       "type":"integer",
@@ -1391,7 +1883,10 @@
         "RemediationEnabled":{"shape":"Boolean"},
         "DeleteUnusedFMManagedResources":{"shape":"Boolean"},
         "IncludeMap":{"shape":"CustomerPolicyScopeMap"},
-        "ExcludeMap":{"shape":"CustomerPolicyScopeMap"}
+        "ExcludeMap":{"shape":"CustomerPolicyScopeMap"},
+        "ResourceSetIds":{"shape":"ResourceSetIds"},
+        "PolicyDescription":{"shape":"ResourceDescription"},
+        "PolicyStatus":{"shape":"CustomerPolicyStatus"}
       }
     },
     "PolicyComplianceDetail":{
@@ -1451,12 +1946,20 @@
         "ResourceType":{"shape":"ResourceType"},
         "SecurityServiceType":{"shape":"SecurityServiceType"},
         "RemediationEnabled":{"shape":"Boolean"},
-        "DeleteUnusedFMManagedResources":{"shape":"Boolean"}
+        "DeleteUnusedFMManagedResources":{"shape":"Boolean"},
+        "PolicyStatus":{"shape":"CustomerPolicyStatus"}
       }
     },
     "PolicySummaryList":{
       "type":"list",
       "member":{"shape":"PolicySummary"}
+    },
+    "PolicyTypeScope":{
+      "type":"structure",
+      "members":{
+        "PolicyTypes":{"shape":"SecurityServiceTypeList"},
+        "AllPolicyTypesEnabled":{"shape":"Boolean"}
+      }
     },
     "PolicyUpdateToken":{
       "type":"string",
@@ -1541,6 +2044,14 @@
       "type":"list",
       "member":{"shape":"ProtocolsListDataSummary"}
     },
+    "PutAdminAccountRequest":{
+      "type":"structure",
+      "required":["AdminAccount"],
+      "members":{
+        "AdminAccount":{"shape":"AWSAccountId"},
+        "AdminScope":{"shape":"AdminScope"}
+      }
+    },
     "PutAppsListRequest":{
       "type":"structure",
       "required":["AppsList"],
@@ -1597,7 +2108,33 @@
         "ProtocolsListArn":{"shape":"ResourceArn"}
       }
     },
+    "PutResourceSetRequest":{
+      "type":"structure",
+      "required":["ResourceSet"],
+      "members":{
+        "ResourceSet":{"shape":"ResourceSet"},
+        "TagList":{"shape":"TagList"}
+      }
+    },
+    "PutResourceSetResponse":{
+      "type":"structure",
+      "required":[
+        "ResourceSet",
+        "ResourceSetArn"
+      ],
+      "members":{
+        "ResourceSet":{"shape":"ResourceSet"},
+        "ResourceSetArn":{"shape":"ResourceArn"}
+      }
+    },
     "ReferenceRule":{"type":"string"},
+    "RegionScope":{
+      "type":"structure",
+      "members":{
+        "Regions":{"shape":"AWSRegionList"},
+        "AllRegionsEnabled":{"shape":"Boolean"}
+      }
+    },
     "RemediationAction":{
       "type":"structure",
       "members":{
@@ -1632,6 +2169,14 @@
         "Order":{"shape":"BasicInteger"}
       }
     },
+    "Resource":{
+      "type":"structure",
+      "required":["URI"],
+      "members":{
+        "URI":{"shape":"Identifier"},
+        "AccountId":{"shape":"AWSAccountId"}
+      }
+    },
     "ResourceArn":{
       "type":"string",
       "max":1024,
@@ -1642,6 +2187,11 @@
       "type":"long",
       "min":0
     },
+    "ResourceDescription":{
+      "type":"string",
+      "max":256,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+    },
     "ResourceId":{
       "type":"string",
       "max":1024,
@@ -1651,6 +2201,10 @@
     "ResourceIdList":{
       "type":"list",
       "member":{"shape":"ResourceId"}
+    },
+    "ResourceList":{
+      "type":"list",
+      "member":{"shape":"Resource"}
     },
     "ResourceName":{
       "type":"string",
@@ -1664,6 +2218,47 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "ResourceSet":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "ResourceTypeList"
+      ],
+      "members":{
+        "Id":{"shape":"Base62Id"},
+        "Name":{"shape":"Name"},
+        "Description":{"shape":"Description"},
+        "UpdateToken":{"shape":"UpdateToken"},
+        "ResourceTypeList":{"shape":"ResourceTypeList"},
+        "LastUpdateTime":{"shape":"TimeStamp"},
+        "ResourceSetStatus":{"shape":"ResourceSetStatus"}
+      }
+    },
+    "ResourceSetIds":{
+      "type":"list",
+      "member":{"shape":"Base62Id"}
+    },
+    "ResourceSetStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "OUT_OF_ADMIN_SCOPE"
+      ]
+    },
+    "ResourceSetSummary":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"Base62Id"},
+        "Name":{"shape":"Name"},
+        "Description":{"shape":"Description"},
+        "LastUpdateTime":{"shape":"TimeStamp"},
+        "ResourceSetStatus":{"shape":"ResourceSetStatus"}
+      }
+    },
+    "ResourceSetSummaryList":{
+      "type":"list",
+      "member":{"shape":"ResourceSetSummary"}
     },
     "ResourceTag":{
       "type":"structure",
@@ -1813,8 +2408,15 @@
         "SECURITY_GROUPS_USAGE_AUDIT",
         "NETWORK_FIREWALL",
         "DNS_FIREWALL",
-        "THIRD_PARTY_FIREWALL"
+        "THIRD_PARTY_FIREWALL",
+        "IMPORT_NETWORK_FIREWALL"
       ]
+    },
+    "SecurityServiceTypeList":{
+      "type":"list",
+      "member":{"shape":"SecurityServiceType"},
+      "max":32,
+      "min":0
     },
     "StatefulEngineOptions":{
       "type":"structure",
@@ -1827,7 +2429,8 @@
       "members":{
         "RuleGroupName":{"shape":"NetworkFirewallResourceName"},
         "ResourceId":{"shape":"ResourceId"},
-        "Priority":{"shape":"PriorityNumber"}
+        "Priority":{"shape":"PriorityNumber"},
+        "Override":{"shape":"NetworkFirewallStatefulRuleGroupOverride"}
       }
     },
     "StatefulRuleGroupList":{
@@ -1929,7 +2532,10 @@
     },
     "ThirdPartyFirewall":{
       "type":"string",
-      "enum":["PALO_ALTO_NETWORKS_CLOUD_NGFW"]
+      "enum":[
+        "PALO_ALTO_NETWORKS_CLOUD_NGFW",
+        "FORTIGATE_CLOUD_NATIVE_FIREWALL"
+      ]
     },
     "ThirdPartyFirewallAssociationStatus":{
       "type":"string",

@@ -43,7 +43,8 @@
         {"shape":"InternalServiceError"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceExistsException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateConnector":{
@@ -59,7 +60,8 @@
         {"shape":"InternalServiceError"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceExistsException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateProfile":{
@@ -74,7 +76,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalServiceError"},
         {"shape":"InvalidRequestException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateServer":{
@@ -793,7 +796,8 @@
         {"shape":"InternalServiceError"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceExistsException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateAgreement":{
@@ -809,7 +813,8 @@
         {"shape":"InternalServiceError"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceExistsException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateCertificate":{
@@ -824,7 +829,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalServiceError"},
         {"shape":"InvalidRequestException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateConnector":{
@@ -840,7 +846,8 @@
         {"shape":"InternalServiceError"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceExistsException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateHostKey":{
@@ -871,7 +878,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalServiceError"},
         {"shape":"InvalidRequestException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateServer":{
@@ -1265,6 +1273,20 @@
       "min":1
     },
     "DateImported":{"type":"timestamp"},
+    "DecryptStepDetails":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "DestinationFileLocation"
+      ],
+      "members":{
+        "Name":{"shape":"WorkflowStepName"},
+        "Type":{"shape":"EncryptionType"},
+        "SourceFileLocation":{"shape":"SourceFileLocation"},
+        "OverwriteExisting":{"shape":"OverwriteExisting"},
+        "DestinationFileLocation":{"shape":"InputFileLocation"}
+      }
+    },
     "DeleteAccessRequest":{
       "type":"structure",
       "required":[
@@ -1756,8 +1778,13 @@
       "enum":[
         "AES128_CBC",
         "AES192_CBC",
-        "AES256_CBC"
+        "AES256_CBC",
+        "NONE"
       ]
+    },
+    "EncryptionType":{
+      "type":"string",
+      "enum":["PGP"]
     },
     "EndpointDetails":{
       "type":"structure",
@@ -2459,6 +2486,11 @@
       "type":"string",
       "max":2048,
       "pattern":"^$|arn:.*role/.*"
+    },
+    "OnPartialUploadWorkflowDetails":{
+      "type":"list",
+      "member":{"shape":"WorkflowDetail"},
+      "max":1
     },
     "OnUploadWorkflowDetails":{
       "type":"list",
@@ -3189,9 +3221,9 @@
     },
     "WorkflowDetails":{
       "type":"structure",
-      "required":["OnUpload"],
       "members":{
-        "OnUpload":{"shape":"OnUploadWorkflowDetails"}
+        "OnUpload":{"shape":"OnUploadWorkflowDetails"},
+        "OnPartialUpload":{"shape":"OnPartialUploadWorkflowDetails"}
       }
     },
     "WorkflowId":{
@@ -3207,7 +3239,8 @@
         "CopyStepDetails":{"shape":"CopyStepDetails"},
         "CustomStepDetails":{"shape":"CustomStepDetails"},
         "DeleteStepDetails":{"shape":"DeleteStepDetails"},
-        "TagStepDetails":{"shape":"TagStepDetails"}
+        "TagStepDetails":{"shape":"TagStepDetails"},
+        "DecryptStepDetails":{"shape":"DecryptStepDetails"}
       }
     },
     "WorkflowStepName":{
@@ -3221,7 +3254,8 @@
         "COPY",
         "CUSTOM",
         "TAG",
-        "DELETE"
+        "DELETE",
+        "DECRYPT"
       ]
     },
     "WorkflowSteps":{

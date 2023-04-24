@@ -12,7 +12,7 @@ require_once __DIR__ . '/../Signature/sig_hack.php';
 /**
  * @covers Aws\DocDB\DocDBClient
  */
-class DocDbClientTestClientTest extends TestCase
+class DocDbClientTest extends TestCase
 {
     public static function set_up_before_class()
     {

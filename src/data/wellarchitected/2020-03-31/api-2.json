@@ -97,6 +97,7 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -230,6 +231,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetConsolidatedReport":{
+      "name":"GetConsolidatedReport",
+      "http":{
+        "method":"GET",
+        "requestUri":"/consolidatedReport"
+      },
+      "input":{"shape":"GetConsolidatedReportInput"},
+      "output":{"shape":"GetConsolidatedReportOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "GetLens":{
       "name":"GetLens",
       "http":{
@@ -356,6 +373,38 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListCheckDetails":{
+      "name":"ListCheckDetails",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workloads/{WorkloadId}/checks"
+      },
+      "input":{"shape":"ListCheckDetailsInput"},
+      "output":{"shape":"ListCheckDetailsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListCheckSummaries":{
+      "name":"ListCheckSummaries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workloads/{WorkloadId}/checkSummaries"
+      },
+      "input":{"shape":"ListCheckSummariesInput"},
+      "output":{"shape":"ListCheckSummariesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
       ]
@@ -666,6 +715,11 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "AccountSummary":{
+      "type":"map",
+      "key":{"shape":"CheckStatus"},
+      "value":{"shape":"CheckStatusCount"}
+    },
     "AdditionalResourceType":{
       "type":"string",
       "enum":[
@@ -731,6 +785,11 @@
         "Reason":{"shape":"AnswerReason"}
       }
     },
+    "ApplicationArn":{
+      "type":"string",
+      "max":2084,
+      "pattern":"arn:aws[-a-z]*:servicecatalog:[a-z]{2}(-gov)?-[a-z]+-\\d:\\d{12}:/applications/[a-z0-9]+"
+    },
     "AssociateLensesInput":{
       "type":"structure",
       "required":[
@@ -755,6 +814,90 @@
       "max":100
     },
     "Base64String":{"type":"string"},
+    "BestPractice":{
+      "type":"structure",
+      "members":{
+        "ChoiceId":{"shape":"ChoiceId"},
+        "ChoiceTitle":{"shape":"ChoiceTitle"}
+      }
+    },
+    "BestPractices":{
+      "type":"list",
+      "member":{"shape":"BestPractice"}
+    },
+    "CheckDescription":{"type":"string"},
+    "CheckDetail":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"CheckId"},
+        "Name":{"shape":"CheckName"},
+        "Description":{"shape":"CheckDescription"},
+        "Provider":{"shape":"CheckProvider"},
+        "LensArn":{"shape":"LensArn"},
+        "PillarId":{"shape":"PillarId"},
+        "QuestionId":{"shape":"QuestionId"},
+        "ChoiceId":{"shape":"ChoiceId"},
+        "Status":{"shape":"CheckStatus"},
+        "AccountId":{"shape":"AwsAccountId"},
+        "FlaggedResources":{"shape":"FlaggedResources"},
+        "Reason":{"shape":"CheckFailureReason"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "CheckDetails":{
+      "type":"list",
+      "member":{"shape":"CheckDetail"}
+    },
+    "CheckFailureReason":{
+      "type":"string",
+      "enum":[
+        "ASSUME_ROLE_ERROR",
+        "ACCESS_DENIED",
+        "UNKNOWN_ERROR",
+        "PREMIUM_SUPPORT_REQUIRED"
+      ]
+    },
+    "CheckId":{"type":"string"},
+    "CheckName":{"type":"string"},
+    "CheckProvider":{
+      "type":"string",
+      "enum":["TRUSTED_ADVISOR"]
+    },
+    "CheckStatus":{
+      "type":"string",
+      "enum":[
+        "OKAY",
+        "WARNING",
+        "ERROR",
+        "NOT_AVAILABLE",
+        "FETCH_FAILED"
+      ]
+    },
+    "CheckStatusCount":{
+      "type":"integer",
+      "max":101,
+      "min":1
+    },
+    "CheckSummaries":{
+      "type":"list",
+      "member":{"shape":"CheckSummary"}
+    },
+    "CheckSummary":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"CheckId"},
+        "Name":{"shape":"CheckName"},
+        "Provider":{"shape":"CheckProvider"},
+        "Description":{"shape":"CheckDescription"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "LensArn":{"shape":"LensArn"},
+        "PillarId":{"shape":"PillarId"},
+        "QuestionId":{"shape":"QuestionId"},
+        "ChoiceId":{"shape":"ChoiceId"},
+        "Status":{"shape":"CheckStatus"},
+        "AccountSummary":{"shape":"AccountSummary"}
+      }
+    },
     "Choice":{
       "type":"structure",
       "members":{
@@ -891,6 +1034,23 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "ConsolidatedReportMetric":{
+      "type":"structure",
+      "members":{
+        "MetricType":{"shape":"MetricType"},
+        "RiskCounts":{"shape":"RiskCounts"},
+        "WorkloadId":{"shape":"WorkloadId"},
+        "WorkloadName":{"shape":"WorkloadName"},
+        "WorkloadArn":{"shape":"WorkloadArn"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "Lenses":{"shape":"LensMetrics"},
+        "LensesAppliedCount":{"shape":"LensesAppliedCount"}
+      }
+    },
+    "ConsolidatedReportMetrics":{
+      "type":"list",
+      "member":{"shape":"ConsolidatedReportMetric"}
+    },
     "Count":{
       "type":"integer",
       "min":0
@@ -1003,7 +1163,9 @@
           "shape":"ClientRequestToken",
           "idempotencyToken":true
         },
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "DiscoveryConfig":{"shape":"WorkloadDiscoveryConfig"},
+        "Applications":{"shape":"WorkloadApplications"}
       }
     },
     "CreateWorkloadOutput":{
@@ -1193,6 +1355,11 @@
         "LensJSON":{"shape":"LensJSON"}
       }
     },
+    "FlaggedResources":{
+      "type":"integer",
+      "max":9999,
+      "min":1
+    },
     "GetAnswerInput":{
       "type":"structure",
       "required":[
@@ -1231,6 +1398,45 @@
         "LensAlias":{"shape":"LensAlias"},
         "LensArn":{"shape":"LensArn"},
         "Answer":{"shape":"Answer"}
+      }
+    },
+    "GetConsolidatedReportInput":{
+      "type":"structure",
+      "required":["Format"],
+      "members":{
+        "Format":{
+          "shape":"ReportFormat",
+          "location":"querystring",
+          "locationName":"Format"
+        },
+        "IncludeSharedResources":{
+          "shape":"IncludeSharedResources",
+          "location":"querystring",
+          "locationName":"IncludeSharedResources"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"GetConsolidatedReportMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "GetConsolidatedReportMaxResults":{
+      "type":"integer",
+      "max":15,
+      "min":1
+    },
+    "GetConsolidatedReportOutput":{
+      "type":"structure",
+      "members":{
+        "Metrics":{"shape":"ConsolidatedReportMetrics"},
+        "NextToken":{"shape":"NextToken"},
+        "Base64String":{"shape":"Base64String"}
       }
     },
     "GetLensInput":{
@@ -1450,6 +1656,7 @@
         "ImprovementPlans":{"shape":"ChoiceImprovementPlans"}
       }
     },
+    "IncludeSharedResources":{"type":"boolean"},
     "InternalServerException":{
       "type":"structure",
       "required":["Message"],
@@ -1495,6 +1702,18 @@
       "type":"string",
       "max":500000,
       "min":2
+    },
+    "LensMetric":{
+      "type":"structure",
+      "members":{
+        "LensArn":{"shape":"LensArn"},
+        "Pillars":{"shape":"PillarMetrics"},
+        "RiskCounts":{"shape":"RiskCounts"}
+      }
+    },
+    "LensMetrics":{
+      "type":"list",
+      "member":{"shape":"LensMetric"}
     },
     "LensName":{
       "type":"string",
@@ -1619,6 +1838,10 @@
       "max":32,
       "min":1
     },
+    "LensesAppliedCount":{
+      "type":"integer",
+      "min":0
+    },
     "ListAnswersInput":{
       "type":"structure",
       "required":[
@@ -1671,6 +1894,66 @@
         "LensAlias":{"shape":"LensAlias"},
         "LensArn":{"shape":"LensArn"},
         "AnswerSummaries":{"shape":"AnswerSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCheckDetailsInput":{
+      "type":"structure",
+      "required":[
+        "WorkloadId",
+        "LensArn",
+        "PillarId",
+        "QuestionId",
+        "ChoiceId"
+      ],
+      "members":{
+        "WorkloadId":{
+          "shape":"WorkloadId",
+          "location":"uri",
+          "locationName":"WorkloadId"
+        },
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"},
+        "LensArn":{"shape":"LensArn"},
+        "PillarId":{"shape":"PillarId"},
+        "QuestionId":{"shape":"QuestionId"},
+        "ChoiceId":{"shape":"ChoiceId"}
+      }
+    },
+    "ListCheckDetailsOutput":{
+      "type":"structure",
+      "members":{
+        "CheckDetails":{"shape":"CheckDetails"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCheckSummariesInput":{
+      "type":"structure",
+      "required":[
+        "WorkloadId",
+        "LensArn",
+        "PillarId",
+        "QuestionId",
+        "ChoiceId"
+      ],
+      "members":{
+        "WorkloadId":{
+          "shape":"WorkloadId",
+          "location":"uri",
+          "locationName":"WorkloadId"
+        },
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"},
+        "LensArn":{"shape":"LensArn"},
+        "PillarId":{"shape":"PillarId"},
+        "QuestionId":{"shape":"QuestionId"},
+        "ChoiceId":{"shape":"ChoiceId"}
+      }
+    },
+    "ListCheckSummariesOutput":{
+      "type":"structure",
+      "members":{
+        "CheckSummaries":{"shape":"CheckSummaries"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -2008,6 +2291,10 @@
       "max":50,
       "min":1
     },
+    "MetricType":{
+      "type":"string",
+      "enum":["WORKLOAD"]
+    },
     "Milestone":{
       "type":"structure",
       "members":{
@@ -2095,6 +2382,18 @@
       "max":64,
       "min":1
     },
+    "PillarMetric":{
+      "type":"structure",
+      "members":{
+        "PillarId":{"shape":"PillarId"},
+        "RiskCounts":{"shape":"RiskCounts"},
+        "Questions":{"shape":"QuestionMetrics"}
+      }
+    },
+    "PillarMetrics":{
+      "type":"list",
+      "member":{"shape":"PillarMetric"}
+    },
     "PillarName":{
       "type":"string",
       "max":128,
@@ -2140,12 +2439,31 @@
       "max":128,
       "min":1
     },
+    "QuestionMetric":{
+      "type":"structure",
+      "members":{
+        "QuestionId":{"shape":"QuestionId"},
+        "Risk":{"shape":"Risk"},
+        "BestPractices":{"shape":"BestPractices"}
+      }
+    },
+    "QuestionMetrics":{
+      "type":"list",
+      "member":{"shape":"QuestionMetric"}
+    },
     "QuestionTitle":{
       "type":"string",
       "max":512,
       "min":1
     },
     "QuotaCode":{"type":"string"},
+    "ReportFormat":{
+      "type":"string",
+      "enum":[
+        "PDF",
+        "JSON"
+      ]
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "required":[
@@ -2330,6 +2648,13 @@
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
+    "TrustedAdvisorIntegrationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "UntagResourceInput":{
       "type":"structure",
       "required":[
@@ -2470,7 +2795,9 @@
         "IndustryType":{"shape":"WorkloadIndustryType"},
         "Industry":{"shape":"WorkloadIndustry"},
         "Notes":{"shape":"Notes"},
-        "ImprovementStatus":{"shape":"WorkloadImprovementStatus"}
+        "ImprovementStatus":{"shape":"WorkloadImprovementStatus"},
+        "DiscoveryConfig":{"shape":"WorkloadDiscoveryConfig"},
+        "Applications":{"shape":"WorkloadApplications"}
       }
     },
     "UpdateWorkloadOutput":{
@@ -2600,7 +2927,9 @@
         "Lenses":{"shape":"WorkloadLenses"},
         "Owner":{"shape":"AwsAccountId"},
         "ShareInvitationId":{"shape":"ShareInvitationId"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "DiscoveryConfig":{"shape":"WorkloadDiscoveryConfig"},
+        "Applications":{"shape":"WorkloadApplications"}
       }
     },
     "WorkloadAccountIds":{
@@ -2608,9 +2937,15 @@
       "member":{"shape":"AwsAccountId"},
       "max":100
     },
+    "WorkloadApplications":{
+      "type":"list",
+      "member":{"shape":"ApplicationArn"},
+      "max":1
+    },
     "WorkloadArchitecturalDesign":{
       "type":"string",
-      "max":2048
+      "max":2048,
+      "pattern":"^(|(https?|ftp):\\/\\/[^\\s/$.?#].[^\\s]*)$"
     },
     "WorkloadArn":{"type":"string"},
     "WorkloadAwsRegions":{
@@ -2622,6 +2957,12 @@
       "type":"string",
       "max":250,
       "min":3
+    },
+    "WorkloadDiscoveryConfig":{
+      "type":"structure",
+      "members":{
+        "TrustedAdvisorIntegrationStatus":{"shape":"TrustedAdvisorIntegrationStatus"}
+      }
     },
     "WorkloadEnvironment":{
       "type":"string",

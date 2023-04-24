@@ -355,22 +355,6 @@
       ],
       "idempotent":true
     },
-    "PutFeedback":{
-      "name":"PutFeedback",
-      "http":{
-        "method":"PUT",
-        "requestUri":"/assistants/{assistantId}/feedback",
-        "responseCode":200
-      },
-      "input":{"shape":"PutFeedbackRequest"},
-      "output":{"shape":"PutFeedbackResponse"},
-      "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ],
-      "idempotent":true
-    },
     "QueryAssistant":{
       "name":"QueryAssistant",
       "http":{
@@ -521,10 +505,7 @@
     },
     "AppIntegrationsConfiguration":{
       "type":"structure",
-      "required":[
-        "appIntegrationArn",
-        "objectFields"
-      ],
+      "required":["appIntegrationArn"],
       "members":{
         "appIntegrationArn":{"shape":"GenericArn"},
         "objectFields":{"shape":"ObjectFieldsList"}
@@ -775,7 +756,7 @@
     },
     "ContentType":{
       "type":"string",
-      "pattern":"^(text/(plain|html))|(application/x\\.wisdom-json;source=(salesforce|servicenow|zendesk))$"
+      "pattern":"^(text/(plain|html))|(application/(pdf|vnd\\.openxmlformats-officedocument\\.wordprocessingml\\.document))|(application/x\\.wisdom-json;source=(salesforce|servicenow|zendesk))$"
     },
     "CreateAssistantAssociationRequest":{
       "type":"structure",
@@ -851,7 +832,7 @@
         "overrideLinkOutUri":{"shape":"Uri"},
         "tags":{"shape":"Tags"},
         "title":{"shape":"ContentTitle"},
-        "uploadId":{"shape":"NonEmptyString"}
+        "uploadId":{"shape":"UploadId"}
       }
     },
     "CreateContentResponse":{
@@ -1013,13 +994,6 @@
       "members":{
         "highlights":{"shape":"Highlights"},
         "text":{"shape":"SensitiveString"}
-      }
-    },
-    "FeedbackData":{
-      "type":"structure",
-      "required":["relevance"],
-      "members":{
-        "relevance":{"shape":"Relevance"}
       }
     },
     "Filter":{
@@ -1515,42 +1489,6 @@
       },
       "exception":true
     },
-    "PutFeedbackRequest":{
-      "type":"structure",
-      "required":[
-        "assistantId",
-        "feedback",
-        "targetId",
-        "targetType"
-      ],
-      "members":{
-        "assistantId":{
-          "shape":"UuidOrArn",
-          "location":"uri",
-          "locationName":"assistantId"
-        },
-        "feedback":{"shape":"FeedbackData"},
-        "targetId":{"shape":"String"},
-        "targetType":{"shape":"TargetType"}
-      }
-    },
-    "PutFeedbackResponse":{
-      "type":"structure",
-      "required":[
-        "assistantArn",
-        "assistantId",
-        "feedback",
-        "targetId",
-        "targetType"
-      ],
-      "members":{
-        "assistantArn":{"shape":"UuidOrArn"},
-        "assistantId":{"shape":"Uuid"},
-        "feedback":{"shape":"FeedbackData"},
-        "targetId":{"shape":"Uuid"},
-        "targetType":{"shape":"TargetType"}
-      }
-    },
     "QueryAssistantRequest":{
       "type":"structure",
       "required":[
@@ -1655,13 +1593,6 @@
     "RecommendationType":{
       "type":"string",
       "enum":["KNOWLEDGE_CONTENT"]
-    },
-    "Relevance":{
-      "type":"string",
-      "enum":[
-        "HELPFUL",
-        "NOT_HELPFUL"
-      ]
     },
     "RelevanceLevel":{
       "type":"string",
@@ -1881,7 +1812,7 @@
       ],
       "members":{
         "headersToInclude":{"shape":"Headers"},
-        "uploadId":{"shape":"NonEmptyString"},
+        "uploadId":{"shape":"UploadId"},
         "url":{"shape":"Url"},
         "urlExpiry":{"shape":"SyntheticTimestamp_epoch_seconds"}
       }
@@ -1932,13 +1863,6 @@
       "type":"map",
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"}
-    },
-    "TargetType":{
-      "type":"string",
-      "enum":[
-        "RECOMMENDATION",
-        "RESULT"
-      ]
     },
     "TooManyTagsException":{
       "type":"structure",
@@ -1998,7 +1922,7 @@
         "removeOverrideLinkOutUri":{"shape":"Boolean"},
         "revisionId":{"shape":"NonEmptyString"},
         "title":{"shape":"ContentTitle"},
-        "uploadId":{"shape":"NonEmptyString"}
+        "uploadId":{"shape":"UploadId"}
       }
     },
     "UpdateContentResponse":{
@@ -2027,6 +1951,11 @@
       "members":{
         "knowledgeBase":{"shape":"KnowledgeBaseData"}
       }
+    },
+    "UploadId":{
+      "type":"string",
+      "max":1200,
+      "min":1
     },
     "Uri":{
       "type":"string",

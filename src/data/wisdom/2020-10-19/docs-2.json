@@ -1,11 +1,11 @@
 {
   "version": "2.0",
-  "service": "<p>Amazon Connect Wisdom delivers agents the information they need to solve customer issues as they're actively speaking with customers. Agents can search across connected repositories from within their agent desktop to find answers quickly. Use the Amazon Connect Wisdom APIs to create an assistant and a knowledge base, for example, or manage content by uploading custom files.</p>",
+  "service": "<p>Amazon Connect Wisdom delivers agents the information they need to solve customer issues as they're actively speaking with customers. Agents can search across connected repositories from within their agent desktop to find answers quickly. Use Amazon Connect Wisdom to create an assistant and a knowledge base, for example, or manage content by uploading custom files.</p>",
   "operations": {
     "CreateAssistant": "<p>Creates an Amazon Connect Wisdom assistant.</p>",
     "CreateAssistantAssociation": "<p>Creates an association between an Amazon Connect Wisdom assistant and another resource. Currently, the only supported association is with a knowledge base. An assistant can have only a single association.</p>",
     "CreateContent": "<p>Creates Wisdom content. Before to calling this API, use <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_StartContentUpload.html\">StartContentUpload</a> to upload an asset.</p>",
-    "CreateKnowledgeBase": "<p>Creates a knowledge base.</p> <note> <p>When using this API, you cannot reuse <a href=\"https://docs.aws.amazon.com/appintegrations/latest/APIReference/Welcome.html\">Amazon AppIntegrations</a> DataIntegrations with external knowledge bases such as Salesforce and ServiceNow. If you do, you'll get an <code>InvalidRequestException</code> error. </p> <pre><code> &lt;p&gt;For example, you're programmatically managing your external knowledge base, and you want to add or remove one of the fields that is being ingested from Salesforce. Do the following:&lt;/p&gt; &lt;ol&gt; &lt;li&gt; &lt;p&gt;Call &lt;a href=&quot;https://docs.aws.amazon.com/wisdom/latest/APIReference/API_DeleteKnowledgeBase.html&quot;&gt;DeleteKnowledgeBase&lt;/a&gt;.&lt;/p&gt; &lt;/li&gt; &lt;li&gt; &lt;p&gt;Call &lt;a href=&quot;https://docs.aws.amazon.com/appintegrations/latest/APIReference/API_DeleteDataIntegration.html&quot;&gt;DeleteDataIntegration&lt;/a&gt;.&lt;/p&gt; &lt;/li&gt; &lt;li&gt; &lt;p&gt;Call &lt;a href=&quot;https://docs.aws.amazon.com/appintegrations/latest/APIReference/API_CreateDataIntegration.html&quot;&gt;CreateDataIntegration&lt;/a&gt; to recreate the DataIntegration or a create different one.&lt;/p&gt; &lt;/li&gt; &lt;li&gt; &lt;p&gt;Call CreateKnowledgeBase.&lt;/p&gt; &lt;/li&gt; &lt;/ol&gt; &lt;/note&gt; </code></pre>",
+    "CreateKnowledgeBase": "<p>Creates a knowledge base.</p> <note> <p>When using this API, you cannot reuse <a href=\"https://docs.aws.amazon.com/appintegrations/latest/APIReference/Welcome.html\">Amazon AppIntegrations</a> DataIntegrations with external knowledge bases such as Salesforce and ServiceNow. If you do, you'll get an <code>InvalidRequestException</code> error. </p> <p>For example, you're programmatically managing your external knowledge base, and you want to add or remove one of the fields that is being ingested from Salesforce. Do the following:</p> <ol> <li> <p>Call <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_DeleteKnowledgeBase.html\">DeleteKnowledgeBase</a>.</p> </li> <li> <p>Call <a href=\"https://docs.aws.amazon.com/appintegrations/latest/APIReference/API_DeleteDataIntegration.html\">DeleteDataIntegration</a>.</p> </li> <li> <p>Call <a href=\"https://docs.aws.amazon.com/appintegrations/latest/APIReference/API_CreateDataIntegration.html\">CreateDataIntegration</a> to recreate the DataIntegration or a create different one.</p> </li> <li> <p>Call CreateKnowledgeBase.</p> </li> </ol> </note>",
     "CreateSession": "<p>Creates a session. A session is a contextual container used for generating recommendations. Amazon Connect creates a new Wisdom session for each contact on which Wisdom is enabled.</p>",
     "DeleteAssistant": "<p>Deletes an assistant.</p>",
     "DeleteAssistantAssociation": "<p>Deletes an assistant association.</p>",
@@ -24,7 +24,6 @@
     "ListKnowledgeBases": "<p>Lists the knowledge bases.</p>",
     "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
     "NotifyRecommendationsReceived": "<p>Removes the specified recommendations from the specified assistant's queue of newly available recommendations. You can use this API in conjunction with <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a> and a <code>waitTimeSeconds</code> input for long-polling behavior and avoiding duplicate recommendations.</p>",
-    "PutFeedback": "<p>Submits feedback to Wisdom. The feedback is used to improve future recommendations from <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a> or results from <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_QueryAssistant.html\">QueryAssistant</a>. Feedback can be resubmitted up to 6 hours after submission. </p>",
     "QueryAssistant": "<p>Performs a manual search against the specified assistant. To retrieve recommendations for an assistant, use <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a>. </p>",
     "RemoveKnowledgeBaseTemplateUri": "<p>Removes a URI template from a knowledge base.</p>",
     "SearchContent": "<p>Searches for content in a specified knowledge base. Can be used to get a specific content resource by its name.</p>",
@@ -156,9 +155,9 @@
     "ClientToken": {
       "base": null,
       "refs": {
-        "CreateAssistantAssociationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
-        "CreateAssistantRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
-        "CreateSessionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+        "CreateAssistantAssociationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "CreateAssistantRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "CreateSessionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>"
       }
     },
     "ConflictException": {
@@ -344,13 +343,6 @@
         "Document$title": "<p>The title of the document.</p>"
       }
     },
-    "FeedbackData": {
-      "base": "<p>The feedback to submit to Wisdom.</p>",
-      "refs": {
-        "PutFeedbackRequest$feedback": "<p>The feedback.</p>",
-        "PutFeedbackResponse$feedback": "<p>The feedback.</p>"
-      }
-    },
     "Filter": {
       "base": "<p>A search filter.</p>",
       "refs": {
@@ -378,7 +370,7 @@
     "GenericArn": {
       "base": null,
       "refs": {
-        "AppIntegrationsConfiguration$appIntegrationArn": "<p>The Amazon Resource Name (ARN) of the AppIntegrations DataIntegration to use for ingesting content.</p>"
+        "AppIntegrationsConfiguration$appIntegrationArn": "<p>The Amazon Resource Name (ARN) of the AppIntegrations DataIntegration to use for ingesting content.</p> <ul> <li> <p> For <a href=\"https://developer.salesforce.com/docs/atlas.en-us.knowledge_dev.meta/knowledge_dev/sforce_api_objects_knowledge__kav.htm\"> Salesforce</a>, your AppIntegrations DataIntegration must have an ObjectConfiguration if objectFields is not provided, including at least <code>Id</code>, <code>ArticleNumber</code>, <code>VersionNumber</code>, <code>Title</code>, <code>PublishStatus</code>, and <code>IsDeleted</code> as source fields. </p> </li> <li> <p> For <a href=\"https://developer.servicenow.com/dev.do#!/reference/api/rome/rest/knowledge-management-api\"> ServiceNow</a>, your AppIntegrations DataIntegration must have an ObjectConfiguration if objectFields is not provided, including at least <code>number</code>, <code>short_description</code>, <code>sys_mod_count</code>, <code>workflow_state</code>, and <code>active</code> as source fields. </p> </li> <li> <p> For <a href=\"https://developer.zendesk.com/api-reference/help_center/help-center-api/articles/\"> Zendesk</a>, your AppIntegrations DataIntegration must have an ObjectConfiguration if <code>objectFields</code> is not provided, including at least <code>id</code>, <code>title</code>, <code>updated_at</code>, and <code>draft</code> as source fields. </p> </li> <li> <p> For <a href=\"https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/sharepoint-net-server-csom-jsom-and-rest-api-index\"> SharePoint</a>, your AppIntegrations DataIntegration must have a FileConfiguration, including only file extensions that are among <code>docx</code>, <code>pdf</code>, <code>html</code>, <code>htm</code>, and <code>txt</code>. </p> </li> </ul>"
       }
     },
     "GetAssistantAssociationRequest": {
@@ -620,9 +612,8 @@
         "ContentMetadata$key": null,
         "ContentMetadata$value": null,
         "ContentSummary$revisionId": "<p>The identifier of the revision of the content.</p>",
-        "CreateContentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
-        "CreateContentRequest$uploadId": "<p>A pointer to the uploaded asset. This value is returned by <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_StartContentUpload.html\">StartContentUpload</a>.</p>",
-        "CreateKnowledgeBaseRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CreateContentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "CreateKnowledgeBaseRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "Filter$value": "<p>The desired field value on which to filter.</p>",
         "Headers$key": null,
         "Headers$value": null,
@@ -630,9 +621,7 @@
         "ListKnowledgeBasesResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ObjectFieldsList$member": null,
         "ServerSideEncryptionConfiguration$kmsKeyId": "<p>The KMS key. For information about valid ID values, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id\">Key identifiers (KeyId)</a>.</p>",
-        "StartContentUploadResponse$uploadId": "<p>The identifier of the upload.</p>",
-        "UpdateContentRequest$revisionId": "<p>The <code>revisionId</code> of the content resource to update, taken from an earlier call to <code>GetContent</code>, <code>GetContentSummary</code>, <code>SearchContent</code>, or <code>ListContents</code>. If included, this argument acts as an optimistic lock to ensure content was not modified since it was last read. If it has been modified, this API throws a <code>PreconditionFailedException</code>.</p>",
-        "UpdateContentRequest$uploadId": "<p>A pointer to the uploaded asset. This value is returned by <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_StartContentUpload.html\">StartContentUpload</a>. </p>"
+        "UpdateContentRequest$revisionId": "<p>The <code>revisionId</code> of the content resource to update, taken from an earlier call to <code>GetContent</code>, <code>GetContentSummary</code>, <code>SearchContent</code>, or <code>ListContents</code>. If included, this argument acts as an optimistic lock to ensure content was not modified since it was last read. If it has been modified, this API throws a <code>PreconditionFailedException</code>.</p>"
       }
     },
     "NotifyRecommendationsReceivedError": {
@@ -666,21 +655,11 @@
     "ObjectFieldsList": {
       "base": null,
       "refs": {
-        "AppIntegrationsConfiguration$objectFields": "<p>The fields from the source that are made available to your agents in Wisdom. </p> <ul> <li> <p> For <a href=\"https://developer.salesforce.com/docs/atlas.en-us.knowledge_dev.meta/knowledge_dev/sforce_api_objects_knowledge__kav.htm\"> Salesforce</a>, you must include at least <code>Id</code>, <code>ArticleNumber</code>, <code>VersionNumber</code>, <code>Title</code>, <code>PublishStatus</code>, and <code>IsDeleted</code>. </p> </li> <li> <p>For <a href=\"https://developer.servicenow.com/dev.do#!/reference/api/rome/rest/knowledge-management-api\"> ServiceNow</a>, you must include at least <code>number</code>, <code>short_description</code>, <code>sys_mod_count</code>, <code>workflow_state</code>, and <code>active</code>. </p> </li> </ul> <p>Make sure to include additional fields. These fields are indexed and used to source recommendations. </p>"
+        "AppIntegrationsConfiguration$objectFields": "<p>The fields from the source that are made available to your agents in Wisdom. Optional if ObjectConfiguration is included in the provided DataIntegration. </p> <ul> <li> <p> For <a href=\"https://developer.salesforce.com/docs/atlas.en-us.knowledge_dev.meta/knowledge_dev/sforce_api_objects_knowledge__kav.htm\"> Salesforce</a>, you must include at least <code>Id</code>, <code>ArticleNumber</code>, <code>VersionNumber</code>, <code>Title</code>, <code>PublishStatus</code>, and <code>IsDeleted</code>. </p> </li> <li> <p>For <a href=\"https://developer.servicenow.com/dev.do#!/reference/api/rome/rest/knowledge-management-api\"> ServiceNow</a>, you must include at least <code>number</code>, <code>short_description</code>, <code>sys_mod_count</code>, <code>workflow_state</code>, and <code>active</code>. </p> </li> <li> <p>For <a href=\"https://developer.zendesk.com/api-reference/help_center/help-center-api/articles/\"> Zendesk</a>, you must include at least <code>id</code>, <code>title</code>, <code>updated_at</code>, and <code>draft</code>. </p> </li> </ul> <p>Make sure to include additional fields. These fields are indexed and used to source recommendations. </p>"
       }
     },
     "PreconditionFailedException": {
       "base": "<p>The provided <code>revisionId</code> does not match, indicating the content has been modified since it was last read.</p>",
-      "refs": {
-      }
-    },
-    "PutFeedbackRequest": {
-      "base": null,
-      "refs": {
-      }
-    },
-    "PutFeedbackResponse": {
-      "base": null,
       "refs": {
       }
     },
@@ -767,12 +746,6 @@
       "base": null,
       "refs": {
         "RecommendationData$type": "<p>The type of recommendation.</p>"
-      }
-    },
-    "Relevance": {
-      "base": null,
-      "refs": {
-        "FeedbackData$relevance": "<p>The relevance of the target this feedback is for.</p>"
       }
     },
     "RelevanceLevel": {
@@ -910,7 +883,6 @@
         "ConflictException$message": null,
         "NotifyRecommendationsReceivedError$recommendationId": "<p>The identifier of the recommendation that is in error.</p>",
         "PreconditionFailedException$message": null,
-        "PutFeedbackRequest$targetId": "<p>The identifier of a recommendation. or The identifier of the result data.</p>",
         "RecommendationData$recommendationId": "<p>The identifier of the recommendation.</p>",
         "RecommendationIdList$member": null,
         "ResourceNotFoundException$message": null,
@@ -979,13 +951,6 @@
         "TagResourceRequest$tags": "<p>The tags used to organize, track, or control access for this resource.</p>"
       }
     },
-    "TargetType": {
-      "base": null,
-      "refs": {
-        "PutFeedbackRequest$targetType": "<p>The type of the targetId for which The feedback. is targeted.</p>",
-        "PutFeedbackResponse$targetType": "<p>The type of the targetId for which The feedback. is targeted.</p>"
-      }
-    },
     "TooManyTagsException": {
       "base": "<p>Amazon Connect Wisdom throws this exception if you have too many tags in your tag set.</p>",
       "refs": {
@@ -1021,12 +986,20 @@
       "refs": {
       }
     },
+    "UploadId": {
+      "base": null,
+      "refs": {
+        "CreateContentRequest$uploadId": "<p>A pointer to the uploaded asset. This value is returned by <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_StartContentUpload.html\">StartContentUpload</a>.</p>",
+        "StartContentUploadResponse$uploadId": "<p>The identifier of the upload.</p>",
+        "UpdateContentRequest$uploadId": "<p>A pointer to the uploaded asset. This value is returned by <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_StartContentUpload.html\">StartContentUpload</a>. </p>"
+      }
+    },
     "Uri": {
       "base": null,
       "refs": {
         "ContentData$linkOutUri": "<p>The URI of the content.</p>",
         "CreateContentRequest$overrideLinkOutUri": "<p>The URI you want to use for the article. If the knowledge base has a templateUri, setting this argument overrides it for this piece of content.</p>",
-        "RenderingConfiguration$templateUri": "<p>A URI template containing exactly one variable in <code>${variableName} </code>format. This can only be set for <code>EXTERNAL</code> knowledge bases. For Salesforce and ServiceNow, the variable must be one of the following:</p> <ul> <li> <p>Salesforce: <code>Id</code>, <code>ArticleNumber</code>, <code>VersionNumber</code>, <code>Title</code>, <code>PublishStatus</code>, or <code>IsDeleted</code> </p> </li> <li> <p>ServiceNow: <code>number</code>, <code>short_description</code>, <code>sys_mod_count</code>, <code>workflow_state</code>, or <code>active</code> </p> </li> </ul> <pre><code> &lt;p&gt;The variable is replaced with the actual value for a piece of content when calling &lt;a href=&quot;https://docs.aws.amazon.com/wisdom/latest/APIReference/API_GetContent.html&quot;&gt;GetContent&lt;/a&gt;. &lt;/p&gt; </code></pre>",
+        "RenderingConfiguration$templateUri": "<p>A URI template containing exactly one variable in <code>${variableName} </code>format. This can only be set for <code>EXTERNAL</code> knowledge bases. For Salesforce, ServiceNow, and Zendesk, the variable must be one of the following:</p> <ul> <li> <p>Salesforce: <code>Id</code>, <code>ArticleNumber</code>, <code>VersionNumber</code>, <code>Title</code>, <code>PublishStatus</code>, or <code>IsDeleted</code> </p> </li> <li> <p>ServiceNow: <code>number</code>, <code>short_description</code>, <code>sys_mod_count</code>, <code>workflow_state</code>, or <code>active</code> </p> </li> <li> <p>Zendesk: <code>id</code>, <code>title</code>, <code>updated_at</code>, or <code>draft</code> </p> </li> </ul> <p>The variable is replaced with the actual value for a piece of content when calling <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_GetContent.html\">GetContent</a>. </p>",
         "UpdateContentRequest$overrideLinkOutUri": "<p>The URI for the article. If the knowledge base has a templateUri, setting this argument overrides it for this piece of content. To remove an existing <code>overrideLinkOurUri</code>, exclude this argument and set <code>removeOverrideLinkOutUri</code> to true.</p>",
         "UpdateKnowledgeBaseTemplateUriRequest$templateUri": "<p>The template URI to update.</p>"
       }
@@ -1057,8 +1030,6 @@
         "KnowledgeBaseAssociationData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "KnowledgeBaseData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "KnowledgeBaseSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
-        "PutFeedbackResponse$assistantId": "<p>The identifier of the Wisdom assistant.</p>",
-        "PutFeedbackResponse$targetId": "<p>The identifier of a recommendation. or The identifier of the result data.</p>",
         "RecommendationTrigger$id": "<p>The identifier of the recommendation trigger.</p>",
         "ResultData$resultId": "<p>The identifier of the result data.</p>",
         "SessionData$sessionId": "<p>The identifier of the session.</p>",
@@ -1094,8 +1065,6 @@
         "ListContentsRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "NotifyRecommendationsReceivedRequest$assistantId": "<p>The identifier of the Wisdom assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "NotifyRecommendationsReceivedRequest$sessionId": "<p>The identifier of the session. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "PutFeedbackRequest$assistantId": "<p>The identifier of the Wisdom assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "PutFeedbackResponse$assistantArn": "<p>The Amazon Resource Name (ARN) of the Wisdom assistant.</p>",
         "QueryAssistantRequest$assistantId": "<p>The identifier of the Wisdom assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "RemoveKnowledgeBaseTemplateUriRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "SearchContentRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",

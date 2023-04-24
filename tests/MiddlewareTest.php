@@ -108,6 +108,11 @@ class MiddlewareTest extends TestCase
         $this->assertTrue($req->hasHeader('Authorization'));
     }
 
+    public function TestOverridesAuthScheme()
+    {
+
+    }
+
     public function testBuildsRequests()
     {
         $r = new Request('GET', 'http://www.foo.com');
@@ -163,6 +168,65 @@ class MiddlewareTest extends TestCase
         }
 
         $handler(new Command('foo'));
+    }
+
+    public function testHandlesModifiedServiceModel()
+    {
+        $list = new HandlerList();
+        $list->setHandler(new MockHandler([new Result()]));
+        $api = new Service(
+            [
+                'metadata' => [
+                    'endpointPrefix' => 'a',
+                    'apiVersion'     => 'b'
+                ],
+                'operations' => [
+                    'foo' => [
+                        'input' => ['shape'=> 'foo']
+                    ]
+                ],
+                'shapes' => [
+                    'foo' => [
+                        'type' => 'structure',
+                        'required' => ['a'],
+                        'members' => [
+                            'a' => ['shape' => 'a']
+                        ]
+                    ],
+                    'a' => ['type' => 'string']
+                ]
+            ],
+            function () { return []; }
+        );
+        $list->appendValidate(Middleware::validation($api));
+        $api->setDefinition(
+            [
+                'metadata' => [
+                    'endpointPrefix' => 'a',
+                    'apiVersion'     => 'b'
+                ],
+                'operations' => [
+                    'foo' => [
+                        'input' => ['shape'=> 'foo']
+                    ]
+                ],
+                'shapes' => [
+                    'foo' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'a' => ['shape' => 'a']
+                        ]
+                    ],
+                    'a' => ['type' => 'string']
+                ]
+            ]
+        );
+        $handler = $list->resolve();
+        $result = $handler(new Command('foo', []), new Request('GET', 'http://foo.com'))->wait();
+        $this->assertInstanceOf(
+            Aws\Result::class,
+            $result
+        );
     }
 
     public function testExtractsSourceFileIntoBody()

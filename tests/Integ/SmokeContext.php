@@ -3,7 +3,6 @@ namespace Aws\Test\Integ;
 
 use Aws;
 use Aws\Exception\AwsException;
-use Aws\JsonCompiler;
 use Aws\Result;
 use Aws\Sdk;
 use Behat\Behat\Context\Context;

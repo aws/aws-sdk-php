@@ -6,11 +6,12 @@ use Aws\Result;
 use Aws\Credentials\CredentialProvider;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use PHPUnit\Framework\Assert;
 
 /**
  * Defines application features from the specific context.
  */
-class CredentialsContext extends \PHPUnit_Framework_Assert implements
+class CredentialsContext extends Assert implements
     Context,
     SnippetAcceptingContext
 {
@@ -150,6 +151,6 @@ EOT;
     public function theValueAtShouldBeA($key, $value)
     {
         $this->assertInstanceOf(Result::class, $this->result);
-        $this->assertContains($value, $this->result->search($key));
+        $this->assertStringContainsString($value, $this->result->search($key));
     }
 }

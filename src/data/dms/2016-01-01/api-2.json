@@ -36,6 +36,20 @@
         {"shape":"ResourceNotFoundFault"}
       ]
     },
+    "BatchStartRecommendations":{
+      "name":"BatchStartRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchStartRecommendationsRequest"},
+      "output":{"shape":"BatchStartRecommendationsResponse"},
+      "errors":[
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"AccessDeniedFault"},
+        {"shape":"ResourceNotFoundFault"}
+      ]
+    },
     "CancelReplicationTaskAssessmentRun":{
       "name":"CancelReplicationTaskAssessmentRun",
       "http":{
@@ -479,6 +493,32 @@
         {"shape":"ResourceNotFoundFault"}
       ]
     },
+    "DescribeRecommendationLimitations":{
+      "name":"DescribeRecommendationLimitations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeRecommendationLimitationsRequest"},
+      "output":{"shape":"DescribeRecommendationLimitationsResponse"},
+      "errors":[
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"AccessDeniedFault"}
+      ]
+    },
+    "DescribeRecommendations":{
+      "name":"DescribeRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeRecommendationsRequest"},
+      "output":{"shape":"DescribeRecommendationsResponse"},
+      "errors":[
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"AccessDeniedFault"}
+      ]
+    },
     "DescribeRefreshSchemasStatus":{
       "name":"DescribeRefreshSchemasStatus",
       "http":{
@@ -796,6 +836,19 @@
         {"shape":"ResourceNotFoundFault"}
       ]
     },
+    "StartRecommendations":{
+      "name":"StartRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartRecommendationsRequest"},
+      "errors":[
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"AccessDeniedFault"},
+        {"shape":"ResourceNotFoundFault"}
+      ]
+    },
     "StartReplicationTask":{
       "name":"StartReplicationTask",
       "http":{
@@ -972,6 +1025,30 @@
     "AvailabilityZonesList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "BatchStartRecommendationsErrorEntry":{
+      "type":"structure",
+      "members":{
+        "DatabaseId":{"shape":"String"},
+        "Message":{"shape":"String"},
+        "Code":{"shape":"String"}
+      }
+    },
+    "BatchStartRecommendationsErrorEntryList":{
+      "type":"list",
+      "member":{"shape":"BatchStartRecommendationsErrorEntry"}
+    },
+    "BatchStartRecommendationsRequest":{
+      "type":"structure",
+      "members":{
+        "Data":{"shape":"StartRecommendationsRequestEntryList"}
+      }
+    },
+    "BatchStartRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "ErrorEntries":{"shape":"BatchStartRecommendationsErrorEntryList"}
+      }
     },
     "Boolean":{"type":"boolean"},
     "BooleanOptional":{"type":"boolean"},
@@ -1224,7 +1301,8 @@
         "KmsKeyId":{"shape":"String"},
         "PubliclyAccessible":{"shape":"BooleanOptional"},
         "DnsNameServers":{"shape":"String"},
-        "ResourceIdentifier":{"shape":"String"}
+        "ResourceIdentifier":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "CreateReplicationInstanceResponse":{
@@ -1734,6 +1812,36 @@
       "members":{
         "PendingMaintenanceActions":{"shape":"PendingMaintenanceActions"},
         "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeRecommendationLimitationsRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"FilterList"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeRecommendationLimitationsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "Limitations":{"shape":"LimitationList"}
+      }
+    },
+    "DescribeRecommendationsRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"FilterList"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "Recommendations":{"shape":"RecommendationList"}
       }
     },
     "DescribeRefreshSchemasStatusMessage":{
@@ -2291,6 +2399,13 @@
       },
       "exception":true
     },
+    "KafkaSaslMechanism":{
+      "type":"string",
+      "enum":[
+        "scram-sha-512",
+        "plain"
+      ]
+    },
     "KafkaSecurityProtocol":{
       "type":"string",
       "enum":[
@@ -2320,7 +2435,8 @@
         "SslCaCertificateArn":{"shape":"String"},
         "SaslUsername":{"shape":"String"},
         "SaslPassword":{"shape":"SecretString"},
-        "NoHexPrefix":{"shape":"BooleanOptional"}
+        "NoHexPrefix":{"shape":"BooleanOptional"},
+        "SaslMechanism":{"shape":"KafkaSaslMechanism"}
       }
     },
     "KeyList":{
@@ -2341,6 +2457,21 @@
         "IncludeNullAndEmpty":{"shape":"BooleanOptional"},
         "NoHexPrefix":{"shape":"BooleanOptional"}
       }
+    },
+    "Limitation":{
+      "type":"structure",
+      "members":{
+        "DatabaseId":{"shape":"String"},
+        "EngineName":{"shape":"String"},
+        "Name":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Impact":{"shape":"String"},
+        "Type":{"shape":"String"}
+      }
+    },
+    "LimitationList":{
+      "type":"list",
+      "member":{"shape":"Limitation"}
     },
     "ListTagsForResourceMessage":{
       "type":"structure",
@@ -2381,7 +2512,9 @@
         "UseThirdPartyBackupDevice":{"shape":"BooleanOptional"},
         "SecretsManagerAccessRoleArn":{"shape":"String"},
         "SecretsManagerSecretId":{"shape":"String"},
-        "TrimSpaceInChar":{"shape":"BooleanOptional"}
+        "TrimSpaceInChar":{"shape":"BooleanOptional"},
+        "TlogAccessMode":{"shape":"TlogAccessMode"},
+        "ForceLobLookup":{"shape":"BooleanOptional"}
       }
     },
     "MigrationTypeValue":{
@@ -2468,7 +2601,8 @@
         "EngineVersion":{"shape":"String"},
         "AllowMajorVersionUpgrade":{"shape":"Boolean"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
-        "ReplicationInstanceIdentifier":{"shape":"String"}
+        "ReplicationInstanceIdentifier":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "ModifyReplicationInstanceResponse":{
@@ -2637,7 +2771,8 @@
         "SecretsManagerSecretId":{"shape":"String"},
         "SecretsManagerOracleAsmAccessRoleArn":{"shape":"String"},
         "SecretsManagerOracleAsmSecretId":{"shape":"String"},
-        "TrimSpaceInChar":{"shape":"BooleanOptional"}
+        "TrimSpaceInChar":{"shape":"BooleanOptional"},
+        "ConvertTimestampWithZoneToUTC":{"shape":"BooleanOptional"}
       }
     },
     "OrderableReplicationInstance":{
@@ -2713,7 +2848,39 @@
         "PluginName":{"shape":"PluginNameValue"},
         "SecretsManagerAccessRoleArn":{"shape":"String"},
         "SecretsManagerSecretId":{"shape":"String"},
-        "TrimSpaceInChar":{"shape":"BooleanOptional"}
+        "TrimSpaceInChar":{"shape":"BooleanOptional"},
+        "MapBooleanAsBoolean":{"shape":"BooleanOptional"}
+      }
+    },
+    "RdsConfiguration":{
+      "type":"structure",
+      "members":{
+        "EngineEdition":{"shape":"String"},
+        "InstanceType":{"shape":"String"},
+        "InstanceVcpu":{"shape":"DoubleOptional"},
+        "InstanceMemory":{"shape":"DoubleOptional"},
+        "StorageType":{"shape":"String"},
+        "StorageSize":{"shape":"IntegerOptional"},
+        "StorageIops":{"shape":"IntegerOptional"},
+        "DeploymentOption":{"shape":"String"}
+      }
+    },
+    "RdsRecommendation":{
+      "type":"structure",
+      "members":{
+        "RequirementsToTarget":{"shape":"RdsRequirements"},
+        "TargetConfiguration":{"shape":"RdsConfiguration"}
+      }
+    },
+    "RdsRequirements":{
+      "type":"structure",
+      "members":{
+        "EngineEdition":{"shape":"String"},
+        "InstanceVcpu":{"shape":"DoubleOptional"},
+        "InstanceMemory":{"shape":"DoubleOptional"},
+        "StorageSize":{"shape":"IntegerOptional"},
+        "StorageIops":{"shape":"IntegerOptional"},
+        "DeploymentOption":{"shape":"String"}
       }
     },
     "RebootReplicationInstanceMessage":{
@@ -2729,6 +2896,39 @@
       "type":"structure",
       "members":{
         "ReplicationInstance":{"shape":"ReplicationInstance"}
+      }
+    },
+    "Recommendation":{
+      "type":"structure",
+      "members":{
+        "DatabaseId":{"shape":"String"},
+        "EngineName":{"shape":"String"},
+        "CreatedDate":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "Preferred":{"shape":"BooleanOptional"},
+        "Settings":{"shape":"RecommendationSettings"},
+        "Data":{"shape":"RecommendationData"}
+      }
+    },
+    "RecommendationData":{
+      "type":"structure",
+      "members":{
+        "RdsEngine":{"shape":"RdsRecommendation"}
+      }
+    },
+    "RecommendationList":{
+      "type":"list",
+      "member":{"shape":"Recommendation"}
+    },
+    "RecommendationSettings":{
+      "type":"structure",
+      "required":[
+        "InstanceSizingType",
+        "WorkloadType"
+      ],
+      "members":{
+        "InstanceSizingType":{"shape":"String"},
+        "WorkloadType":{"shape":"String"}
       }
     },
     "RedisAuthTypeValue":{
@@ -2787,7 +2987,8 @@
         "Username":{"shape":"String"},
         "WriteBufferSize":{"shape":"IntegerOptional"},
         "SecretsManagerAccessRoleArn":{"shape":"String"},
-        "SecretsManagerSecretId":{"shape":"String"}
+        "SecretsManagerSecretId":{"shape":"String"},
+        "MapBooleanAsBoolean":{"shape":"BooleanOptional"}
       }
     },
     "RefreshSchemasMessage":{
@@ -2827,7 +3028,10 @@
     },
     "ReleaseStatusValues":{
       "type":"string",
-      "enum":["beta"]
+      "enum":[
+        "beta",
+        "prod"
+      ]
     },
     "ReloadOptionValue":{
       "type":"string",
@@ -2905,11 +3109,17 @@
         },
         "ReplicationInstancePublicIpAddresses":{"shape":"ReplicationInstancePublicIpAddressList"},
         "ReplicationInstancePrivateIpAddresses":{"shape":"ReplicationInstancePrivateIpAddressList"},
+        "ReplicationInstanceIpv6Addresses":{"shape":"ReplicationInstanceIpv6AddressList"},
         "PubliclyAccessible":{"shape":"Boolean"},
         "SecondaryAvailabilityZone":{"shape":"String"},
         "FreeUntil":{"shape":"TStamp"},
-        "DnsNameServers":{"shape":"String"}
+        "DnsNameServers":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
+    },
+    "ReplicationInstanceIpv6AddressList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "ReplicationInstanceList":{
       "type":"list",
@@ -2941,7 +3151,8 @@
         "ReplicationInstanceClass":{"shape":"String"},
         "AllocatedStorage":{"shape":"IntegerOptional"},
         "MultiAZ":{"shape":"BooleanOptional"},
-        "EngineVersion":{"shape":"String"}
+        "EngineVersion":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "ReplicationSubnetGroup":{
@@ -2951,7 +3162,8 @@
         "ReplicationSubnetGroupDescription":{"shape":"String"},
         "VpcId":{"shape":"String"},
         "SubnetGroupStatus":{"shape":"String"},
-        "Subnets":{"shape":"SubnetList"}
+        "Subnets":{"shape":"SubnetList"},
+        "SupportedNetworkTypes":{"shape":"StringList"}
       }
     },
     "ReplicationSubnetGroupDoesNotCoverEnoughAZs":{
@@ -3160,7 +3372,8 @@
         "Rfc4180":{"shape":"BooleanOptional"},
         "DatePartitionTimezone":{"shape":"String"},
         "AddTrailingPaddingCharacter":{"shape":"BooleanOptional"},
-        "ExpectedBucketOwner":{"shape":"String"}
+        "ExpectedBucketOwner":{"shape":"String"},
+        "GlueCatalogGeneration":{"shape":"BooleanOptional"}
       }
     },
     "SNSInvalidTopicFault":{
@@ -3239,6 +3452,32 @@
         "plaintext",
         "ssl-encryption"
       ]
+    },
+    "StartRecommendationsRequest":{
+      "type":"structure",
+      "required":[
+        "DatabaseId",
+        "Settings"
+      ],
+      "members":{
+        "DatabaseId":{"shape":"String"},
+        "Settings":{"shape":"RecommendationSettings"}
+      }
+    },
+    "StartRecommendationsRequestEntry":{
+      "type":"structure",
+      "required":[
+        "DatabaseId",
+        "Settings"
+      ],
+      "members":{
+        "DatabaseId":{"shape":"String"},
+        "Settings":{"shape":"RecommendationSettings"}
+      }
+    },
+    "StartRecommendationsRequestEntryList":{
+      "type":"list",
+      "member":{"shape":"StartRecommendationsRequestEntry"}
     },
     "StartReplicationTaskAssessmentMessage":{
       "type":"structure",
@@ -3395,6 +3634,10 @@
         "Deletes":{"shape":"Long"},
         "Updates":{"shape":"Long"},
         "Ddls":{"shape":"Long"},
+        "AppliedInserts":{"shape":"LongOptional"},
+        "AppliedDeletes":{"shape":"LongOptional"},
+        "AppliedUpdates":{"shape":"LongOptional"},
+        "AppliedDdls":{"shape":"LongOptional"},
         "FullLoadRows":{"shape":"Long"},
         "FullLoadCondtnlChkFailedRows":{"shape":"Long"},
         "FullLoadErrorRows":{"shape":"Long"},
@@ -3460,6 +3703,15 @@
       "members":{
         "Connection":{"shape":"Connection"}
       }
+    },
+    "TlogAccessMode":{
+      "type":"string",
+      "enum":[
+        "BackupOnly",
+        "PreferBackup",
+        "PreferTlog",
+        "TlogOnly"
+      ]
     },
     "UpdateSubscriptionsToEventBridgeMessage":{
       "type":"structure",
