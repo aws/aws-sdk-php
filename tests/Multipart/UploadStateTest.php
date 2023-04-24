@@ -70,17 +70,29 @@ class UploadStateTest extends TestCase
         $this->assertTrue($newState->isInitiated());
         $this->assertArrayHasKey('foo', $newState->getId());
     }
-
-    public function testDisplayProgressPrints()
+    /**
+     * @dataProvider getDisplayProgressCases
+     */
+    public function testDisplayProgressPrints($totalSize, $totalUploaded, $progressBar)
     {
-        ob_start();
+//        ob_start();
 
         $state = new UploadState([]);
-        $state->setProgressThresholds(100);
-        $state->displayProgress(13);
+        $state->setProgressThresholds($totalSize);
+        $state->displayProgress($totalUploaded);
+//
+//        $output = ob_get_contents();
+//        ob_end_clean();
+//        $this->assertEquals($progressBar, $output);
+        $this->expectOutputString($progressBar);
+    }
 
-        $output = ob_end_clean();
-//        echo $output;
-        $this->assertEquals("Transfer initiated...\n|                    | 0.0%\n|==                  | 12.5%\n", $output);
+    public function getDisplayProgressCases()
+    {
+        return [
+            [100, 10, "Transfer initiated...\n|                    | 0.0%\n"],
+            [100, 0, "Transfer initiated...\n|                    | 0.0%\n"],
+            [100, 13, "Transfer initiated...\n|                    | 0.0%\n|==                  | 12.5%\n"]
+        ];
     }
 }
