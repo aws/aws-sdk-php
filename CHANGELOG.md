@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.268.17 - 2023-04-24
 
 * `Aws\Appflow` - Increased the max length for RefreshToken and AuthCode from 2048 to 4096.
 * `Aws\CodeCatalyst` - Documentation updates for Amazon CodeCatalyst.
