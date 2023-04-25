@@ -1073,7 +1073,8 @@
     },
     "CoordinatorDpuSize":{
       "type":"integer",
-      "max":5000,
+      "box":true,
+      "max":1,
       "min":1
     },
     "CreateDataCatalogInput":{
@@ -1258,7 +1259,8 @@
     },
     "DefaultExecutorDpuSize":{
       "type":"integer",
-      "max":5000,
+      "box":true,
+      "max":1,
       "min":1
     },
     "DeleteDataCatalogInput":{
@@ -2238,7 +2240,8 @@
         "Statistics":{"shape":"QueryExecutionStatistics"},
         "WorkGroup":{"shape":"WorkGroupName"},
         "EngineVersion":{"shape":"EngineVersion"},
-        "ExecutionParameters":{"shape":"ExecutionParameters"}
+        "ExecutionParameters":{"shape":"ExecutionParameters"},
+        "SubstatementType":{"shape":"String"}
       }
     },
     "QueryExecutionContext":{
@@ -2925,7 +2928,8 @@
         "EngineVersion":{"shape":"EngineVersion"},
         "AdditionalConfiguration":{"shape":"NameString"},
         "ExecutionRole":{"shape":"RoleArn"},
-        "CustomerContentEncryptionConfiguration":{"shape":"CustomerContentEncryptionConfiguration"}
+        "CustomerContentEncryptionConfiguration":{"shape":"CustomerContentEncryptionConfiguration"},
+        "EnableMinimumEncryptionConfiguration":{"shape":"BoxedBoolean"}
       }
     },
     "WorkGroupConfigurationUpdates":{
@@ -2941,7 +2945,8 @@
         "RemoveCustomerContentEncryptionConfiguration":{"shape":"BoxedBoolean"},
         "AdditionalConfiguration":{"shape":"NameString"},
         "ExecutionRole":{"shape":"RoleArn"},
-        "CustomerContentEncryptionConfiguration":{"shape":"CustomerContentEncryptionConfiguration"}
+        "CustomerContentEncryptionConfiguration":{"shape":"CustomerContentEncryptionConfiguration"},
+        "EnableMinimumEncryptionConfiguration":{"shape":"BoxedBoolean"}
       }
     },
     "WorkGroupDescriptionString":{

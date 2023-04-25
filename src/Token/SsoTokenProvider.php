@@ -18,11 +18,9 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     private $ssoOidcClient;
 
     /**
-     * Constructs a new SSO token object, with the specified AWS
-     * token
-     *
-     * @param string $token   Security token to use
-     * @param int    $expires UNIX timestamp for when the token expires
+     * Constructs a new SsoTokenProvider object, which will fetch a token from an authenticated SSO profile
+     * @param string $ssoProfileName The name of the profile that contains the sso_session key
+     * @param int    $filename Name of the config file to sso profile from
      */
     public function __construct($ssoProfileName, $filename = null, $ssoOidcClient = null) {
         $profileName = getenv(self::ENV_PROFILE) ?: 'default';
@@ -42,7 +40,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     {
         return Promise\Coroutine::of(function () {
             if (!@is_readable($this->filename)) {
-                throw new TokenException("Cannot read token from $this->filename");
+                throw new TokenException("Cannot read profiles from $this->filename");
             }
             $profiles = self::loadProfiles($this->filename);
             if (!isset($profiles[$this->ssoProfileName])) {

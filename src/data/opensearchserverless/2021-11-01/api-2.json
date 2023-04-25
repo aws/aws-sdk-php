@@ -50,7 +50,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -63,9 +64,11 @@
       "input":{"shape":"CreateCollectionRequest"},
       "output":{"shape":"CreateCollectionResponse"},
       "errors":[
+        {"shape":"OcuLimitExceededException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -80,7 +83,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -95,7 +99,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -110,7 +115,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -352,7 +358,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "UntagResource":{
@@ -442,7 +449,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -1140,10 +1148,18 @@
       "type":"long",
       "box":true
     },
+    "OcuLimitExceededException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "PolicyDescription":{
       "type":"string",
       "max":1000,
-      "min":1
+      "min":0
     },
     "PolicyDocument":{
       "type":"string",
@@ -1286,6 +1302,21 @@
         "encryption",
         "network"
       ]
+    },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "required":[
+        "message",
+        "serviceCode"
+      ],
+      "members":{
+        "message":{"shape":"String"},
+        "quotaCode":{"shape":"String"},
+        "resourceId":{"shape":"String"},
+        "resourceType":{"shape":"String"},
+        "serviceCode":{"shape":"String"}
+      },
+      "exception":true
     },
     "String":{"type":"string"},
     "SubnetId":{

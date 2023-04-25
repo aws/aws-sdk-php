@@ -91,7 +91,7 @@ class NativeStreamContext extends TestCase implements
      */
     public function iCreateASubdirectory($subdir)
     {
-        mkdir($this->getS3Path($subdir));
+        mkdir($this->getS3Path($subdir), 520);
         sleep(1);
     }
 

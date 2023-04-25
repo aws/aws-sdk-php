@@ -13,6 +13,16 @@
     "uid":"mediatailor-2018-04-23"
   },
   "operations":{
+    "ConfigureLogsForChannel":{
+      "name":"ConfigureLogsForChannel",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/configureLogs/channel",
+        "responseCode":200
+      },
+      "input":{"shape":"ConfigureLogsForChannelRequest"},
+      "output":{"shape":"ConfigureLogsForChannelResponse"}
+    },
     "ConfigureLogsForPlaybackConfiguration":{
       "name":"ConfigureLogsForPlaybackConfiguration",
       "http":{
@@ -442,6 +452,17 @@
       "output":{"shape":"UpdateLiveSourceResponse"},
       "idempotent":true
     },
+    "UpdateProgram":{
+      "name":"UpdateProgram",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/channel/{ChannelName}/program/{ProgramName}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateProgramRequest"},
+      "output":{"shape":"UpdateProgramResponse"},
+      "idempotent":true
+    },
     "UpdateSourceLocation":{
       "name":"UpdateSourceLocation",
       "http":{
@@ -562,6 +583,7 @@
         "Arn",
         "ChannelName",
         "ChannelState",
+        "LogConfiguration",
         "Outputs",
         "PlaybackMode",
         "Tier"
@@ -573,6 +595,7 @@
         "CreationTime":{"shape":"__timestampUnix"},
         "FillerSlate":{"shape":"SlateSource"},
         "LastModifiedTime":{"shape":"__timestampUnix"},
+        "LogConfiguration":{"shape":"LogConfigurationForChannel"},
         "Outputs":{"shape":"ResponseOutputs"},
         "PlaybackMode":{"shape":"__string"},
         "Tags":{
@@ -589,6 +612,13 @@
         "STOPPED"
       ]
     },
+    "ClipRange":{
+      "type":"structure",
+      "required":["EndOffsetMillis"],
+      "members":{
+        "EndOffsetMillis":{"shape":"__long"}
+      }
+    },
     "ConfigurationAliasesRequest":{
       "type":"map",
       "key":{"shape":"__string"},
@@ -598,6 +628,24 @@
       "type":"map",
       "key":{"shape":"__string"},
       "value":{"shape":"__mapOf__string"}
+    },
+    "ConfigureLogsForChannelRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelName",
+        "LogTypes"
+      ],
+      "members":{
+        "ChannelName":{"shape":"__string"},
+        "LogTypes":{"shape":"LogTypes"}
+      }
+    },
+    "ConfigureLogsForChannelResponse":{
+      "type":"structure",
+      "members":{
+        "ChannelName":{"shape":"__string"},
+        "LogTypes":{"shape":"LogTypes"}
+      }
     },
     "ConfigureLogsForPlaybackConfigurationRequest":{
       "type":"structure",
@@ -766,7 +814,9 @@
         "AdBreaks":{"shape":"__listOfAdBreak"},
         "Arn":{"shape":"__string"},
         "ChannelName":{"shape":"__string"},
+        "ClipRange":{"shape":"ClipRange"},
         "CreationTime":{"shape":"__timestampUnix"},
+        "DurationMillis":{"shape":"__long"},
         "LiveSourceName":{"shape":"__string"},
         "ProgramName":{"shape":"__string"},
         "ScheduledStartTime":{"shape":"__timestampUnix"},
@@ -1056,6 +1106,7 @@
     },
     "DescribeChannelResponse":{
       "type":"structure",
+      "required":["LogConfiguration"],
       "members":{
         "Arn":{"shape":"__string"},
         "ChannelName":{"shape":"__string"},
@@ -1063,6 +1114,7 @@
         "CreationTime":{"shape":"__timestampUnix"},
         "FillerSlate":{"shape":"SlateSource"},
         "LastModifiedTime":{"shape":"__timestampUnix"},
+        "LogConfiguration":{"shape":"LogConfigurationForChannel"},
         "Outputs":{"shape":"ResponseOutputs"},
         "PlaybackMode":{"shape":"__string"},
         "Tags":{
@@ -1131,7 +1183,9 @@
         "AdBreaks":{"shape":"__listOfAdBreak"},
         "Arn":{"shape":"__string"},
         "ChannelName":{"shape":"__string"},
+        "ClipRange":{"shape":"ClipRange"},
         "CreationTime":{"shape":"__timestampUnix"},
+        "DurationMillis":{"shape":"Long"},
         "LiveSourceName":{"shape":"__string"},
         "ProgramName":{"shape":"__string"},
         "ScheduledStartTime":{"shape":"__timestampUnix"},
@@ -1585,6 +1639,24 @@
         "PercentEnabled":{"shape":"__integer"}
       }
     },
+    "LogConfigurationForChannel":{
+      "type":"structure",
+      "members":{
+        "LogTypes":{"shape":"LogTypes"}
+      }
+    },
+    "LogType":{
+      "type":"string",
+      "enum":["AS_RUN"]
+    },
+    "LogTypes":{
+      "type":"list",
+      "member":{"shape":"LogType"}
+    },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
     "ManifestProcessingRules":{
       "type":"structure",
       "members":{
@@ -1817,6 +1889,7 @@
       "type":"structure",
       "required":["Transition"],
       "members":{
+        "ClipRange":{"shape":"ClipRange"},
         "Transition":{"shape":"Transition"}
       }
     },
@@ -2090,6 +2163,58 @@
           "shape":"__mapOf__string",
           "locationName":"tags"
         }
+      }
+    },
+    "UpdateProgramRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelName",
+        "ProgramName",
+        "ScheduleConfiguration"
+      ],
+      "members":{
+        "AdBreaks":{"shape":"__listOfAdBreak"},
+        "ChannelName":{
+          "shape":"__string",
+          "location":"uri",
+          "locationName":"ChannelName"
+        },
+        "ProgramName":{
+          "shape":"__string",
+          "location":"uri",
+          "locationName":"ProgramName"
+        },
+        "ScheduleConfiguration":{"shape":"UpdateProgramScheduleConfiguration"}
+      }
+    },
+    "UpdateProgramResponse":{
+      "type":"structure",
+      "members":{
+        "AdBreaks":{"shape":"__listOfAdBreak"},
+        "Arn":{"shape":"__string"},
+        "ChannelName":{"shape":"__string"},
+        "ClipRange":{"shape":"ClipRange"},
+        "CreationTime":{"shape":"__timestampUnix"},
+        "DurationMillis":{"shape":"__long"},
+        "LiveSourceName":{"shape":"__string"},
+        "ProgramName":{"shape":"__string"},
+        "ScheduledStartTime":{"shape":"__timestampUnix"},
+        "SourceLocationName":{"shape":"__string"},
+        "VodSourceName":{"shape":"__string"}
+      }
+    },
+    "UpdateProgramScheduleConfiguration":{
+      "type":"structure",
+      "members":{
+        "ClipRange":{"shape":"ClipRange"},
+        "Transition":{"shape":"UpdateProgramTransition"}
+      }
+    },
+    "UpdateProgramTransition":{
+      "type":"structure",
+      "members":{
+        "DurationMillis":{"shape":"__long"},
+        "ScheduledStartTimeMillis":{"shape":"__long"}
       }
     },
     "UpdateSourceLocationRequest":{

@@ -188,7 +188,9 @@
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"},
         {"shape":"GlueEncryptionException"},
-        {"shape":"InvalidStateException"}
+        {"shape":"InvalidStateException"},
+        {"shape":"FederationSourceException"},
+        {"shape":"FederationSourceRetryableException"}
       ]
     },
     "BatchGetTriggers":{
@@ -436,7 +438,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"GlueEncryptionException"},
-        {"shape":"ConcurrentModificationException"}
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"FederatedResourceAlreadyExistsException"}
       ]
     },
     "CreateDevEndpoint":{
@@ -1352,7 +1355,8 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"FederationSourceException"}
       ]
     },
     "GetDatabases":{
@@ -1578,7 +1582,9 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"FederationSourceException"},
+        {"shape":"FederationSourceRetryableException"}
       ]
     },
     "GetPartitionIndexes":{
@@ -1612,7 +1618,9 @@
         {"shape":"InternalServiceException"},
         {"shape":"GlueEncryptionException"},
         {"shape":"InvalidStateException"},
-        {"shape":"ResourceNotReadyException"}
+        {"shape":"ResourceNotReadyException"},
+        {"shape":"FederationSourceException"},
+        {"shape":"FederationSourceRetryableException"}
       ]
     },
     "GetPlan":{
@@ -1811,7 +1819,9 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"GlueEncryptionException"},
-        {"shape":"ResourceNotReadyException"}
+        {"shape":"ResourceNotReadyException"},
+        {"shape":"FederationSourceException"},
+        {"shape":"FederationSourceRetryableException"}
       ]
     },
     "GetTableVersion":{
@@ -1859,7 +1869,9 @@
         {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"FederationSourceException"},
+        {"shape":"FederationSourceRetryableException"}
       ]
     },
     "GetTags":{
@@ -1921,7 +1933,9 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"GlueEncryptionException"},
-        {"shape":"PermissionTypeMismatchException"}
+        {"shape":"PermissionTypeMismatchException"},
+        {"shape":"FederationSourceException"},
+        {"shape":"FederationSourceRetryableException"}
       ]
     },
     "GetUnfilteredPartitionsMetadata":{
@@ -1938,7 +1952,9 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"GlueEncryptionException"},
-        {"shape":"PermissionTypeMismatchException"}
+        {"shape":"PermissionTypeMismatchException"},
+        {"shape":"FederationSourceException"},
+        {"shape":"FederationSourceRetryableException"}
       ]
     },
     "GetUnfilteredTableMetadata":{
@@ -1955,7 +1971,9 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"GlueEncryptionException"},
-        {"shape":"PermissionTypeMismatchException"}
+        {"shape":"PermissionTypeMismatchException"},
+        {"shape":"FederationSourceException"},
+        {"shape":"FederationSourceRetryableException"}
       ]
     },
     "GetUserDefinedFunction":{
@@ -3911,6 +3929,21 @@
       "members":{
       }
     },
+    "CatalogDeltaSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "AdditionalDeltaOptions":{"shape":"AdditionalOptions"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
     "CatalogEncryptionMode":{
       "type":"string",
       "enum":[
@@ -3938,6 +3971,21 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "CatalogHudiSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "AdditionalHudiOptions":{"shape":"AdditionalOptions"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
     },
     "CatalogIdString":{
       "type":"string",
@@ -4145,7 +4193,18 @@
         "OracleSQLCatalogTarget":{"shape":"OracleSQLCatalogTarget"},
         "PostgreSQLCatalogTarget":{"shape":"PostgreSQLCatalogTarget"},
         "DynamicTransform":{"shape":"DynamicTransform"},
-        "EvaluateDataQuality":{"shape":"EvaluateDataQuality"}
+        "EvaluateDataQuality":{"shape":"EvaluateDataQuality"},
+        "S3CatalogHudiSource":{"shape":"S3CatalogHudiSource"},
+        "CatalogHudiSource":{"shape":"CatalogHudiSource"},
+        "S3HudiSource":{"shape":"S3HudiSource"},
+        "S3HudiCatalogTarget":{"shape":"S3HudiCatalogTarget"},
+        "S3HudiDirectTarget":{"shape":"S3HudiDirectTarget"},
+        "DirectJDBCSource":{"shape":"DirectJDBCSource"},
+        "S3CatalogDeltaSource":{"shape":"S3CatalogDeltaSource"},
+        "CatalogDeltaSource":{"shape":"CatalogDeltaSource"},
+        "S3DeltaSource":{"shape":"S3DeltaSource"},
+        "S3DeltaCatalogTarget":{"shape":"S3DeltaCatalogTarget"},
+        "S3DeltaDirectTarget":{"shape":"S3DeltaDirectTarget"}
       }
     },
     "CodeGenConfigurationNodes":{
@@ -5596,7 +5655,8 @@
         "CreateTime":{"shape":"Timestamp"},
         "CreateTableDefaultPermissions":{"shape":"PrincipalPermissionsList"},
         "TargetDatabase":{"shape":"DatabaseIdentifier"},
-        "CatalogId":{"shape":"CatalogIdString"}
+        "CatalogId":{"shape":"CatalogIdString"},
+        "FederatedDatabase":{"shape":"FederatedDatabase"}
       }
     },
     "DatabaseIdentifier":{
@@ -5615,7 +5675,8 @@
         "LocationUri":{"shape":"URI"},
         "Parameters":{"shape":"ParametersMap"},
         "CreateTableDefaultPermissions":{"shape":"PrincipalPermissionsList"},
-        "TargetDatabase":{"shape":"DatabaseIdentifier"}
+        "TargetDatabase":{"shape":"DatabaseIdentifier"},
+        "FederatedDatabase":{"shape":"FederatedDatabase"}
       }
     },
     "DatabaseList":{
@@ -6063,6 +6124,13 @@
         "CreateNativeDeltaTable":{"shape":"NullableBoolean"}
       }
     },
+    "DeltaTargetCompressionType":{
+      "type":"string",
+      "enum":[
+        "uncompressed",
+        "snappy"
+      ]
+    },
     "DeltaTargetList":{
       "type":"list",
       "member":{"shape":"DeltaTarget"}
@@ -6129,6 +6197,24 @@
       "member":{"shape":"GenericString"},
       "max":25,
       "min":1
+    },
+    "DirectJDBCSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table",
+        "ConnectionName",
+        "ConnectionType"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "ConnectionName":{"shape":"EnclosedInStringProperty"},
+        "ConnectionType":{"shape":"JDBCConnectionType"},
+        "RedshiftTmpDir":{"shape":"EnclosedInStringProperty"}
+      }
     },
     "DirectKafkaSource":{
       "type":"structure",
@@ -6327,7 +6413,8 @@
     "EntityNotFoundException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"MessageString"}
+        "Message":{"shape":"MessageString"},
+        "FromFederationSource":{"shape":"NullableBoolean"}
       },
       "exception":true
     },
@@ -6418,6 +6505,60 @@
     "ExtendedString":{
       "type":"string",
       "pattern":"[\\s\\S]*"
+    },
+    "FederatedDatabase":{
+      "type":"structure",
+      "members":{
+        "Identifier":{"shape":"FederationIdentifier"},
+        "ConnectionName":{"shape":"NameString"}
+      }
+    },
+    "FederatedResourceAlreadyExistsException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"},
+        "AssociatedGlueResource":{"shape":"GlueResourceArn"}
+      },
+      "exception":true
+    },
+    "FederatedTable":{
+      "type":"structure",
+      "members":{
+        "Identifier":{"shape":"FederationIdentifier"},
+        "DatabaseIdentifier":{"shape":"FederationIdentifier"},
+        "ConnectionName":{"shape":"NameString"}
+      }
+    },
+    "FederationIdentifier":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
+    "FederationSourceErrorCode":{
+      "type":"string",
+      "enum":[
+        "InvalidResponseException",
+        "OperationTimeoutException",
+        "OperationNotSupportedException",
+        "InternalServiceException",
+        "ThrottlingException"
+      ]
+    },
+    "FederationSourceException":{
+      "type":"structure",
+      "members":{
+        "FederationSourceErrorCode":{"shape":"FederationSourceErrorCode"},
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
+    },
+    "FederationSourceRetryableException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
     },
     "FieldName":{
       "type":"string",
@@ -7932,6 +8073,15 @@
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
+    "HudiTargetCompressionType":{
+      "type":"string",
+      "enum":[
+        "gzip",
+        "lzo",
+        "uncompressed",
+        "snappy"
+      ]
+    },
     "IdString":{
       "type":"string",
       "max":255,
@@ -8002,7 +8152,8 @@
     "InvalidInputException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"MessageString"}
+        "Message":{"shape":"MessageString"},
+        "FromFederationSource":{"shape":"NullableBoolean"}
       },
       "exception":true
     },
@@ -8014,6 +8165,16 @@
       "exception":true
     },
     "IsVersionValid":{"type":"boolean"},
+    "JDBCConnectionType":{
+      "type":"string",
+      "enum":[
+        "sqlserver",
+        "mysql",
+        "oracle",
+        "postgresql",
+        "redshift"
+      ]
+    },
     "JDBCConnectorOptions":{
       "type":"structure",
       "members":{
@@ -8373,7 +8534,10 @@
         "NumRetries":{"shape":"BoxedNonNegativeInt"},
         "RetryIntervalMs":{"shape":"BoxedNonNegativeLong"},
         "MaxOffsetsPerTrigger":{"shape":"BoxedNonNegativeLong"},
-        "MinPartitions":{"shape":"BoxedNonNegativeInt"}
+        "MinPartitions":{"shape":"BoxedNonNegativeInt"},
+        "IncludeHeaders":{"shape":"BoxedBoolean"},
+        "AddRecordTimestamp":{"shape":"EnclosedInStringProperty"},
+        "EmitConsumerLagMetrics":{"shape":"EnclosedInStringProperty"}
       }
     },
     "KeyList":{
@@ -8423,7 +8587,9 @@
         "AvoidEmptyBatches":{"shape":"BoxedBoolean"},
         "StreamArn":{"shape":"EnclosedInStringProperty"},
         "RoleArn":{"shape":"EnclosedInStringProperty"},
-        "RoleSessionName":{"shape":"EnclosedInStringProperty"}
+        "RoleSessionName":{"shape":"EnclosedInStringProperty"},
+        "AddRecordTimestamp":{"shape":"EnclosedInStringProperty"},
+        "EmitConsumerLagMetrics":{"shape":"EnclosedInStringProperty"}
       }
     },
     "KmsKeyArn":{
@@ -9909,7 +10075,8 @@
       "type":"string",
       "enum":[
         "FOREIGN",
-        "ALL"
+        "ALL",
+        "FEDERATED"
       ]
     },
     "ResourceType":{
@@ -9985,6 +10152,36 @@
         "Id":{"shape":"IntegerValue"}
       }
     },
+    "S3CatalogDeltaSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "AdditionalDeltaOptions":{"shape":"AdditionalOptions"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
+    "S3CatalogHudiSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "AdditionalHudiOptions":{"shape":"AdditionalOptions"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
     "S3CatalogSource":{
       "type":"structure",
       "required":[
@@ -10044,6 +10241,58 @@
         "WriteHeader":{"shape":"BoxedBoolean"},
         "SkipFirst":{"shape":"BoxedBoolean"},
         "OptimizePerformance":{"shape":"BooleanValue"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
+    "S3DeltaCatalogTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Table",
+        "Database"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "AdditionalOptions":{"shape":"AdditionalOptions"},
+        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"}
+      }
+    },
+    "S3DeltaDirectTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Path",
+        "Compression",
+        "Format"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
+        "Path":{"shape":"EnclosedInStringProperty"},
+        "Compression":{"shape":"DeltaTargetCompressionType"},
+        "Format":{"shape":"TargetFormat"},
+        "AdditionalOptions":{"shape":"AdditionalOptions"},
+        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
+      }
+    },
+    "S3DeltaSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Paths"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Paths":{"shape":"EnclosedInStringProperties"},
+        "AdditionalDeltaOptions":{"shape":"AdditionalOptions"},
+        "AdditionalOptions":{"shape":"S3DirectSourceAdditionalOptions"},
         "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
@@ -10107,6 +10356,60 @@
         "Path":{"shape":"EnclosedInStringProperty"},
         "Compression":{"shape":"ParquetCompressionType"},
         "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
+      }
+    },
+    "S3HudiCatalogTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Table",
+        "Database",
+        "AdditionalOptions"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "AdditionalOptions":{"shape":"AdditionalOptions"},
+        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"}
+      }
+    },
+    "S3HudiDirectTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Path",
+        "Compression",
+        "Format",
+        "AdditionalOptions"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "Path":{"shape":"EnclosedInStringProperty"},
+        "Compression":{"shape":"HudiTargetCompressionType"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
+        "Format":{"shape":"TargetFormat"},
+        "AdditionalOptions":{"shape":"AdditionalOptions"},
+        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
+      }
+    },
+    "S3HudiSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Paths"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Paths":{"shape":"EnclosedInStringProperties"},
+        "AdditionalHudiOptions":{"shape":"AdditionalOptions"},
+        "AdditionalOptions":{"shape":"S3DirectSourceAdditionalOptions"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
     "S3JsonSource":{
@@ -11052,7 +11355,8 @@
         "IsRegisteredWithLakeFormation":{"shape":"Boolean"},
         "TargetTable":{"shape":"TableIdentifier"},
         "CatalogId":{"shape":"CatalogIdString"},
-        "VersionId":{"shape":"VersionString"}
+        "VersionId":{"shape":"VersionString"},
+        "FederatedTable":{"shape":"FederatedTable"}
       }
     },
     "TableError":{
@@ -11172,7 +11476,9 @@
         "csv",
         "avro",
         "orc",
-        "parquet"
+        "parquet",
+        "hudi",
+        "delta"
       ]
     },
     "TaskRun":{
@@ -11671,7 +11977,6 @@
       "required":["Name"],
       "members":{
         "Name":{"shape":"NameString"},
-        "UpdatedName":{"shape":"NameString"},
         "Description":{"shape":"DescriptionString"},
         "Ruleset":{"shape":"DataQualityRulesetString"}
       }

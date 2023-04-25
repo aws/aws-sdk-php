@@ -982,6 +982,11 @@
           "box":true,
           "location":"header",
           "locationName":"Latest-Version-Number"
+        },
+        "VersionLabel":{
+          "shape":"VersionLabel",
+          "location":"header",
+          "locationName":"VersionLabel"
         }
       },
       "payload":"Content"
@@ -1120,7 +1125,9 @@
         "PercentageComplete":{"shape":"Percentage"},
         "StartedAt":{"shape":"Iso8601DateTime"},
         "CompletedAt":{"shape":"Iso8601DateTime"},
-        "AppliedExtensions":{"shape":"AppliedExtensions"}
+        "AppliedExtensions":{"shape":"AppliedExtensions"},
+        "KmsKeyArn":{"shape":"Arn"},
+        "KmsKeyIdentifier":{"shape":"Identifier"}
       }
     },
     "DeploymentEvent":{
@@ -1529,6 +1536,11 @@
           "shape":"StringWithLengthBetween1And255",
           "location":"header",
           "locationName":"Content-Type"
+        },
+        "VersionLabel":{
+          "shape":"VersionLabel",
+          "location":"header",
+          "locationName":"VersionLabel"
         }
       },
       "payload":"Content"
@@ -1540,7 +1552,8 @@
         "ConfigurationProfileId":{"shape":"Id"},
         "VersionNumber":{"shape":"Integer"},
         "Description":{"shape":"Description"},
-        "ContentType":{"shape":"StringWithLengthBetween1And255"}
+        "ContentType":{"shape":"StringWithLengthBetween1And255"},
+        "VersionLabel":{"shape":"VersionLabel"}
       }
     },
     "HostedConfigurationVersionSummaryList":{
@@ -1782,6 +1795,11 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"next_token"
+        },
+        "VersionLabel":{
+          "shape":"QueryName",
+          "location":"querystring",
+          "locationName":"version_label"
         }
       }
     },
@@ -1937,7 +1955,8 @@
         "ConfigurationProfileId":{"shape":"Id"},
         "ConfigurationVersion":{"shape":"Version"},
         "Description":{"shape":"Description"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "KmsKeyIdentifier":{"shape":"Identifier"}
       }
     },
     "StopDeploymentRequest":{
@@ -2230,6 +2249,12 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "VersionLabel":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":".*[^0-9].*"
     }
   }
 }

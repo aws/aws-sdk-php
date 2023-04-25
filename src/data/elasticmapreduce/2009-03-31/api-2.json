@@ -1007,7 +1007,8 @@
       "members":{
         "State":{"shape":"ClusterState"},
         "StateChangeReason":{"shape":"ClusterStateChangeReason"},
-        "Timeline":{"shape":"ClusterTimeline"}
+        "Timeline":{"shape":"ClusterTimeline"},
+        "ErrorDetails":{"shape":"ErrorDetailList"}
       }
     },
     "ClusterSummary":{
@@ -1374,6 +1375,22 @@
       "max":256,
       "min":1
     },
+    "ErrorData":{
+      "type":"list",
+      "member":{"shape":"StringMap"}
+    },
+    "ErrorDetail":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"String"},
+        "ErrorData":{"shape":"ErrorData"},
+        "ErrorMessage":{"shape":"String"}
+      }
+    },
+    "ErrorDetailList":{
+      "type":"list",
+      "member":{"shape":"ErrorDetail"}
+    },
     "ErrorMessage":{"type":"string"},
     "ExecutionEngineConfig":{
       "type":"structure",
@@ -1537,7 +1554,8 @@
         "ProvisionedOnDemandCapacity":{"shape":"WholeNumber"},
         "ProvisionedSpotCapacity":{"shape":"WholeNumber"},
         "InstanceTypeSpecifications":{"shape":"InstanceTypeSpecificationList"},
-        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"}
+        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"},
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
       }
     },
     "InstanceFleetConfig":{
@@ -1549,7 +1567,8 @@
         "TargetOnDemandCapacity":{"shape":"WholeNumber"},
         "TargetSpotCapacity":{"shape":"WholeNumber"},
         "InstanceTypeConfigs":{"shape":"InstanceTypeConfigList"},
-        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"}
+        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"},
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
       }
     },
     "InstanceFleetConfigList":{
@@ -1567,7 +1586,8 @@
       "members":{
         "InstanceFleetId":{"shape":"InstanceFleetId"},
         "TargetOnDemandCapacity":{"shape":"WholeNumber"},
-        "TargetSpotCapacity":{"shape":"WholeNumber"}
+        "TargetSpotCapacity":{"shape":"WholeNumber"},
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
       }
     },
     "InstanceFleetProvisioningSpecifications":{
@@ -1575,6 +1595,13 @@
       "members":{
         "SpotSpecification":{"shape":"SpotProvisioningSpecification"},
         "OnDemandSpecification":{"shape":"OnDemandProvisioningSpecification"}
+      }
+    },
+    "InstanceFleetResizingSpecifications":{
+      "type":"structure",
+      "members":{
+        "SpotResizeSpecification":{"shape":"SpotResizingSpecification"},
+        "OnDemandResizeSpecification":{"shape":"OnDemandResizingSpecification"}
       }
     },
     "InstanceFleetState":{
@@ -2388,6 +2415,13 @@
         "CapacityReservationOptions":{"shape":"OnDemandCapacityReservationOptions"}
       }
     },
+    "OnDemandResizingSpecification":{
+      "type":"structure",
+      "required":["TimeoutDurationMinutes"],
+      "members":{
+        "TimeoutDurationMinutes":{"shape":"WholeNumber"}
+      }
+    },
     "OptionalArnType":{
       "type":"string",
       "max":2048,
@@ -2797,6 +2831,13 @@
         "SWITCH_TO_ON_DEMAND",
         "TERMINATE_CLUSTER"
       ]
+    },
+    "SpotResizingSpecification":{
+      "type":"structure",
+      "required":["TimeoutDurationMinutes"],
+      "members":{
+        "TimeoutDurationMinutes":{"shape":"WholeNumber"}
+      }
     },
     "StartNotebookExecutionInput":{
       "type":"structure",

@@ -112,6 +112,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCloudSearchDomain(array $args = [])
  * @method \Aws\CloudTrail\CloudTrailClient createCloudTrail(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudTrail(array $args = [])
+ * @method \Aws\CloudTrailData\CloudTrailDataClient createCloudTrailData(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCloudTrailData(array $args = [])
  * @method \Aws\CloudWatch\CloudWatchClient createCloudWatch(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudWatch(array $args = [])
  * @method \Aws\CloudWatchEvents\CloudWatchEventsClient createCloudWatchEvents(array $args = [])
@@ -290,6 +292,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionHoneycode(array $args = [])
  * @method \Aws\IVS\IVSClient createIVS(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIVS(array $args = [])
+ * @method \Aws\IVSRealTime\IVSRealTimeClient createIVSRealTime(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionIVSRealTime(array $args = [])
  * @method \Aws\Iam\IamClient createIam(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIam(array $args = [])
  * @method \Aws\IdentityStore\IdentityStoreClient createIdentityStore(array $args = [])
@@ -300,6 +304,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionInspector(array $args = [])
  * @method \Aws\Inspector2\Inspector2Client createInspector2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionInspector2(array $args = [])
+ * @method \Aws\InternetMonitor\InternetMonitorClient createInternetMonitor(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionInternetMonitor(array $args = [])
  * @method \Aws\IoT1ClickDevicesService\IoT1ClickDevicesServiceClient createIoT1ClickDevicesService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoT1ClickDevicesService(array $args = [])
  * @method \Aws\IoT1ClickProjects\IoT1ClickProjectsClient createIoT1ClickProjects(array $args = [])
@@ -634,12 +640,16 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionTimestreamQuery(array $args = [])
  * @method \Aws\TimestreamWrite\TimestreamWriteClient createTimestreamWrite(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTimestreamWrite(array $args = [])
+ * @method \Aws\Tnb\TnbClient createTnb(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionTnb(array $args = [])
  * @method \Aws\TranscribeService\TranscribeServiceClient createTranscribeService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTranscribeService(array $args = [])
  * @method \Aws\Transfer\TransferClient createTransfer(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTransfer(array $args = [])
  * @method \Aws\Translate\TranslateClient createTranslate(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTranslate(array $args = [])
+ * @method \Aws\VPCLattice\VPCLatticeClient createVPCLattice(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionVPCLattice(array $args = [])
  * @method \Aws\VoiceID\VoiceIDClient createVoiceID(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionVoiceID(array $args = [])
  * @method \Aws\WAFV2\WAFV2Client createWAFV2(array $args = [])
@@ -681,7 +691,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.257.3';
+    const VERSION = '3.268.17';
 
     /** @var array Arguments for creating clients */
     private $args;

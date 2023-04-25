@@ -81,7 +81,7 @@ class ComposerTest extends TestCase
         }
         $filesystem->mkdir( $clientPath . 'Api');
 
-        $unsafeForDeletion = ['Kms', 'S3', 'SSO', 'Sts'];
+        $unsafeForDeletion = ['Kms', 'S3', 'SSO', 'SSOOIDC', 'Sts'];
         if (in_array('DynamoDbStreams', $servicesToKeep)) {
             $unsafeForDeletion[] = 'DynamoDb';
         }

@@ -24,6 +24,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteClusterAsync(array $args = [])
  * @method \Aws\Result deleteService(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteServiceAsync(array $args = [])
+ * @method \Aws\Result deleteTaskDefinitions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteTaskDefinitionsAsync(array $args = [])
  * @method \Aws\Result deleteTaskSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteTaskSetAsync(array $args = [])
  * @method \Aws\Result deregisterContainerInstance(array $args = [])
