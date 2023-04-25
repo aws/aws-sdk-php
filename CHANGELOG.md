@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.268.18 - 2023-04-25
 
 * `Aws\ChimeSDKMessaging` - Remove non actionable field from UpdateChannelReadMarker and DeleteChannelRequest. Add precise exceptions to DeleteChannel and DeleteStreamingConfigurations error cases.
 * `Aws\Connect` - Amazon Connect, Contact Lens Evaluation API release including ability to manage forms and to submit contact evaluations.
