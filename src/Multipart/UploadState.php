@@ -42,7 +42,7 @@ class UploadState
     /**
      * @param array $id Params used to identity the upload.
      */
-    public function __construct(array $id)
+    public function __construct(array $id, $config=[])
     {
         $this->id = $id;
         echo array_shift($this->progressBar);
@@ -96,6 +96,7 @@ class UploadState
         for ($i=1;$i<=8;$i++) {
             $this->progressThresholds []= round($totalSize*($i/8));
         }
+        return $this->progressThresholds;
     }
 
     public function displayProgress($totalUploaded)

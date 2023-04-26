@@ -73,26 +73,57 @@ class UploadStateTest extends TestCase
     /**
      * @dataProvider getDisplayProgressCases
      */
-    public function testDisplayProgressPrints($totalSize, $totalUploaded, $progressBar)
-    {
-//        ob_start();
-
+    public function testDisplayProgressPrints(
+        $totalSize,
+        $totalUploaded,
+        $progressBar
+    ) {
         $state = new UploadState([]);
         $state->setProgressThresholds($totalSize);
         $state->displayProgress($totalUploaded);
-//
-//        $output = ob_get_contents();
-//        ob_end_clean();
-//        $this->assertEquals($progressBar, $output);
+
         $this->expectOutputString($progressBar);
     }
 
     public function getDisplayProgressCases()
     {
+        $progressBar = [
+            "Transfer initiated...\n|                    | 0.0%\n",
+            "|==                  | 12.5%\n",
+            "|=====               | 25.0%\n",
+            "|=======             | 37.5%\n",
+            "|==========          | 50.0%\n",
+            "|============        | 62.5%\n",
+            "|===============     | 75.0%\n",
+            "|=================   | 87.5%\n",
+            "|====================| 100.0%\nTransfer complete!\n"
+        ];
         return [
-            [100, 10, "Transfer initiated...\n|                    | 0.0%\n"],
-            [100, 0, "Transfer initiated...\n|                    | 0.0%\n"],
-            [100, 13, "Transfer initiated...\n|                    | 0.0%\n|==                  | 12.5%\n"]
+            [100000, 0, $progressBar[0]],
+            [100000, 12499, $progressBar[0]],
+            [100000, 12500, "$progressBar[0]$progressBar[1]"],
+            [100000, 100000, implode($progressBar)]
+        ];
+    }
+
+    /**
+     * @dataProvider getThresholdCases
+     */
+    public function testUploadThresholds($totalSize)
+    {
+        $state = new UploadState([]);
+        $threshold = $state->setProgressThresholds($totalSize);
+
+        $this->assertIsArray($threshold);
+        $this->assertCount(8, $threshold);
+    }
+
+    public function getThresholdCases()
+    {
+        return [
+            [0],
+            [100000],
+            [100001]
         ];
     }
 }
