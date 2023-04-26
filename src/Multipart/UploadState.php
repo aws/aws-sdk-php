@@ -42,7 +42,7 @@ class UploadState
     /**
      * @param array $id Params used to identity the upload.
      */
-    public function __construct(array $id, $config=[])
+    public function __construct(array $id)
     {
         $this->id = $id;
         echo array_shift($this->progressBar);
