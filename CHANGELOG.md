@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.0 - 2023-04-26
 
 * `Aws\OSIS` - Initial release for OpenSearch Ingestion
 
