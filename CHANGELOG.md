@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OSIS` - Initial release for OpenSearch Ingestion
+
 ## 3.268.18 - 2023-04-25
 
 * `Aws\ChimeSDKMessaging` - Remove non actionable field from UpdateChannelReadMarker and DeleteChannelRequest. Add precise exceptions to DeleteChannel and DeleteStreamingConfigurations error cases.
