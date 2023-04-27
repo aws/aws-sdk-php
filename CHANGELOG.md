@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.1 - 2023-04-27
 
 * `Aws\` - Takes explicit dependency on psr/http-message >= 1.0 to avoid conflicts.
 * `Aws\EC2` - This release adds support for AMD SEV-SNP on EC2 instances.
