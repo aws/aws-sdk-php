@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Takes explicit dependency on psr/http-message >= 1.0 to avoid conflicts.
+* `Aws\EC2` - This release adds support for AMD SEV-SNP on EC2 instances.
+* `Aws\EMRContainers` - This release adds GetManagedEndpointSessionCredentials, a new API that allows customers to generate an auth token to connect to a managed endpoint, enabling features such as self-hosted Jupyter notebooks for EMR on EKS.
+* `Aws\GuardDuty` - Added API support to initiate on-demand malware scan on specific resources.
+* `Aws\IoTDeviceAdvisor` - AWS IoT Core Device Advisor now supports MQTT over WebSocket. With this update, customers can run all three test suites of AWS IoT Core Device Advisor - qualification, custom, and long duration tests - using Signature Version 4 for MQTT over WebSocket.
+* `Aws\Kafka` - Amazon MSK has added new APIs that allows multi-VPC private connectivity and cluster policy support for Amazon MSK clusters that simplify connectivity and access between your Apache Kafka clients hosted in different VPCs and AWS accounts and your Amazon MSK clusters.
+* `Aws\Lambda` - Add Java 17 (java17) support to AWS Lambda
+* `Aws\MarketplaceCatalog` - Enabled Pagination for List Entities and List Change Sets operations
+* `Aws\OSIS` - Documentation updates for OpenSearch Ingestion
+* `Aws\QLDB` - Documentation updates for Amazon QLDB
+* `Aws\SageMaker` - Added ml.p4d.24xlarge and ml.p4de.24xlarge as supported instances for SageMaker Studio
+* `Aws\XRay` - Updated X-Ray documentation with Resource Policy API descriptions.
+
 ## 3.269.0 - 2023-04-26
 
 * `Aws\OSIS` - Initial release for OpenSearch Ingestion
