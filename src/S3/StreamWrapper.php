@@ -362,10 +362,6 @@ class StreamWrapper
             return false;
         }
 
-        if (!isset($params['ACL'])) {
-            $params['ACL'] = $this->determineAcl($mode);
-        }
-
         return empty($params['Key'])
             ? $this->createBucket($path, $params)
             : $this->createSubfolder($path, $params);
@@ -817,7 +813,6 @@ class StreamWrapper
             return $this->triggerError("Bucket already exists: {$path}");
         }
 
-        unset($params['ACL']);
         return $this->boolCall(function () use ($params, $path) {
             $this->getClient()->createBucket($params);
             $this->clearCacheKey($path);
@@ -884,22 +879,6 @@ class StreamWrapper
         return $result['CommonPrefixes']
             ? $this->triggerError('Subfolder contains nested folders')
             : true;
-    }
-
-    /**
-     * Determine the most appropriate ACL based on a file mode.
-     *
-     * @param int $mode File mode
-     *
-     * @return string
-     */
-    private function determineAcl($mode)
-    {
-        switch (substr(decoct($mode), 0, 1)) {
-            case '7': return 'public-read';
-            case '6': return 'authenticated-read';
-            default: return 'private';
-        }
     }
 
     /**

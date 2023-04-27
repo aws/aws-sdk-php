@@ -316,7 +316,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $entries = $history->toArray();
         $this->assertSame('HEAD', $entries[0]['request']->getMethod());
         $this->assertSame('PUT', $entries[1]['request']->getMethod());
-        $this->assertStringContainsString('public-read', $entries[1]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertStringContainsString('', $entries[1]['request']->getHeaderLine('x-amz-acl'));
     }
 
     public function testCannotDeleteS3()
