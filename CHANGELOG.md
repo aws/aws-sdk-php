@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.2 - 2023-04-28
 
 * `Aws\Appflow` - Adds Jwt Support for Salesforce Credentials.
 * `Aws\Athena` - You can now use capacity reservations on Amazon Athena to run SQL queries on fully-managed compute capacity.
