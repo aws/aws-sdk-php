@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Appflow` - Adds Jwt Support for Salesforce Credentials.
+* `Aws\Athena` - You can now use capacity reservations on Amazon Athena to run SQL queries on fully-managed compute capacity.
+* `Aws\DirectConnect` - This release corrects the jumbo frames MTU from 9100 to 8500.
+* `Aws\EFS` - This release adds PAUSED and PAUSING state as a returned value for DescribeReplicationConfigurations response.
+* `Aws\IoT` - This release allows AWS IoT Core users to specify a TLS security policy when creating and updating AWS IoT Domain Configurations.
+* `Aws\ManagedGrafana` - This release adds support for the grafanaVersion parameter in CreateWorkspace.
+* `Aws\Rekognition` - Added support for aggregating moderation labels by video segment timestamps for Stored Video Content Moderation APIs and added additional information about the job to all Stored Video Get API responses.
+* `Aws\SimSpaceWeaver` - Added a new CreateSnapshot API. For the StartSimulation API, SchemaS3Location is now optional, added a new SnapshotS3Location parameter. For the DescribeSimulation API, added SNAPSHOT_IN_PROGRESS simulation state, deprecated SchemaError, added new fields: StartError and SnapshotS3Location.
+* `Aws\WAFV2` - You can now associate a web ACL with a Verified Access instance.
+* `Aws\WorkSpaces` - Added Windows 11 to support Microsoft_Office_2019
+
 ## 3.269.1 - 2023-04-27
 
 * `Aws\` - Takes explicit dependency on psr/http-message >= 1.0 to avoid conflicts.
