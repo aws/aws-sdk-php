@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.3 - 2023-05-01
 
 * `Aws\ComputeOptimizer` - support for tag filtering within compute optimizer. ability to filter recommendation results by tag and tag key value pairs. ability to filter by inferred workload type added.
 * `Aws\KMS` - This release makes the NitroEnclave request parameter Recipient and the response field for CiphertextForRecipient available in AWS SDKs. It also adds the regex pattern for CloudHsmClusterId validation.
