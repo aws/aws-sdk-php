@@ -172,7 +172,7 @@ class UploadStateTest extends TestCase
         $threshold = $state->setProgressThresholds($totalSize);
 
         $this->assertIsArray($threshold);
-        $this->assertCount(8, $threshold);
+        $this->assertCount(9, $threshold);
     }
 
     public function getThresholdCases()

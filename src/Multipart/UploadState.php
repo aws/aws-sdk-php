@@ -45,7 +45,6 @@ class UploadState
     public function __construct(array $id)
     {
         $this->id = $id;
-        echo array_shift($this->progressBar);
     }
 
     /**
@@ -93,9 +92,11 @@ class UploadState
 
     public function setProgressThresholds($totalSize)
     {
+        $this->progressThresholds[0] = 0;
         for ($i=1;$i<=8;$i++) {
             $this->progressThresholds []= round($totalSize*($i/8));
         }
+        $this->progressBar = array_combine($this->progressThresholds, $this->progressBar);
         return $this->progressThresholds;
     }
 
