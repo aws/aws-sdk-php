@@ -2292,4 +2292,33 @@ EOXML;
         );
         $s3->execute($command);
     }
+
+    /**
+     * @dataProvider  clientRetrySettingsProvider
+     * @param $retrySettings
+     */
+    public function testRetriesFailOn400Errors($retrySettings) {
+        $retryCount = 0;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retrySettings,
+            'http_handler' => function () use (&$retryCount) {
+                $retryCount++;
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $this->getMockBuilder(S3Exception::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'response' => new Response(404, [], null),
+                ]);
+            },
+        ]);
+        $client->getObjectAsync([
+            'Bucket' => 'bucket',
+            'Key' => 'key'
+        ])->otherwise(function () {})->wait();
+
+        $this->assertSame(1, $retryCount);
+    }
 }
