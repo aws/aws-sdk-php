@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Appflow` - This release adds new API to cancel flow executions.
+* `Aws\Connect` - Amazon Connect Service Rules API update: Added OnContactEvaluationSubmit event source to support user configuring evaluation form rules.
+* `Aws\ECS` - Documentation only update to address Amazon ECS tickets.
+* `Aws\ResilienceHub` - This release will improve resource level transparency in applications by discovering previously hidden resources.
+* `Aws\SageMaker` - Amazon Sagemaker Autopilot supports training models with sample weights and additional objective metrics.
+* `Aws\kendra` - AWS Kendra now supports configuring document fields/attributes via the GetQuerySuggestions API. You can now base query suggestions on the contents of document fields.
+
 ## 3.269.3 - 2023-05-01
 
 * `Aws\ComputeOptimizer` - support for tag filtering within compute optimizer. ability to filter recommendation results by tag and tag key value pairs. ability to filter by inferred workload type added.

@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Appflow** service.
+ * @method \Aws\Result cancelFlowExecutions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelFlowExecutionsAsync(array $args = [])
  * @method \Aws\Result createConnectorProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createConnectorProfileAsync(array $args = [])
  * @method \Aws\Result createFlow(array $args = [])
