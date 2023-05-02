@@ -102,11 +102,11 @@ class UploadState
 
     public function displayProgress($totalUploaded)
     {
-        while (!empty($this->progressThresholds)
-                && $totalUploaded >= $this->progressThresholds[0])
+        while (!empty($this->progressBar)
+                && $totalUploaded >= array_key_first($this->progressBar))
         {
-            echo $this->progressBar[$this->progressThresholds[0]];
-            array_shift($this->progressThresholds);
+            echo $this->progressBar[array_key_first($this->progressBar)];
+            unset($this->progressBar[array_key_first($this->progressBar)]);
         }
     }
 
