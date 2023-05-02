@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.4 - 2023-05-02
 
 * `Aws\Appflow` - This release adds new API to cancel flow executions.
 * `Aws\Connect` - Amazon Connect Service Rules API update: Added OnContactEvaluationSubmit event source to support user configuring evaluation form rules.
