@@ -460,6 +460,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionNimbleStudio(array $args = [])
  * @method \Aws\OAM\OAMClient createOAM(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOAM(array $args = [])
+ * @method \Aws\OSIS\OSISClient createOSIS(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionOSIS(array $args = [])
  * @method \Aws\Omics\OmicsClient createOmics(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOmics(array $args = [])
  * @method \Aws\OpenSearchServerless\OpenSearchServerlessClient createOpenSearchServerless(array $args = [])
@@ -691,7 +693,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.263.6';
+    const VERSION = '3.269.4';
 
     /** @var array Arguments for creating clients */
     private $args;

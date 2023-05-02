@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS SimSpace Weaver** service.
+ * @method \Aws\Result createSnapshot(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createSnapshotAsync(array $args = [])
  * @method \Aws\Result deleteApp(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAppAsync(array $args = [])
  * @method \Aws\Result deleteSimulation(array $args = [])

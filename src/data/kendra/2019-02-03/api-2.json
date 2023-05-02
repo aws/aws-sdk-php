@@ -1267,6 +1267,36 @@
       "type":"list",
       "member":{"shape":"AttributeFilter"}
     },
+    "AttributeSuggestionsDescribeConfig":{
+      "type":"structure",
+      "members":{
+        "SuggestableConfigList":{"shape":"SuggestableConfigList"},
+        "AttributeSuggestionsMode":{"shape":"AttributeSuggestionsMode"}
+      }
+    },
+    "AttributeSuggestionsGetConfig":{
+      "type":"structure",
+      "members":{
+        "SuggestionAttributes":{"shape":"DocumentAttributeKeyList"},
+        "AdditionalResponseAttributes":{"shape":"DocumentAttributeKeyList"},
+        "AttributeFilter":{"shape":"AttributeFilter"},
+        "UserContext":{"shape":"UserContext"}
+      }
+    },
+    "AttributeSuggestionsMode":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "AttributeSuggestionsUpdateConfig":{
+      "type":"structure",
+      "members":{
+        "SuggestableConfigList":{"shape":"SuggestableConfigList"},
+        "AttributeSuggestionsMode":{"shape":"AttributeSuggestionsMode"}
+      }
+    },
     "AuthenticationConfiguration":{
       "type":"structure",
       "members":{
@@ -2599,7 +2629,8 @@
         "MinimumQueryCount":{"shape":"MinimumQueryCount"},
         "LastSuggestionsBuildTime":{"shape":"Timestamp"},
         "LastClearTime":{"shape":"Timestamp"},
-        "TotalSuggestionsCount":{"shape":"Integer"}
+        "TotalSuggestionsCount":{"shape":"Integer"},
+        "AttributeSuggestionsConfig":{"shape":"AttributeSuggestionsDescribeConfig"}
       }
     },
     "DescribeThesaurusRequest":{
@@ -3334,7 +3365,9 @@
       "members":{
         "IndexId":{"shape":"IndexId"},
         "QueryText":{"shape":"SuggestionQueryText"},
-        "MaxSuggestionsCount":{"shape":"Integer"}
+        "MaxSuggestionsCount":{"shape":"Integer"},
+        "SuggestionTypes":{"shape":"SuggestionTypes"},
+        "AttributeSuggestionsConfig":{"shape":"AttributeSuggestionsGetConfig"}
       }
     },
     "GetQuerySuggestionsResponse":{
@@ -5063,6 +5096,18 @@
         "SortOrder":{"shape":"SortOrder"}
       }
     },
+    "SourceDocument":{
+      "type":"structure",
+      "members":{
+        "DocumentId":{"shape":"String"},
+        "SuggestionAttributes":{"shape":"DocumentAttributeKeyList"},
+        "AdditionalAttributes":{"shape":"DocumentAttributeList"}
+      }
+    },
+    "SourceDocuments":{
+      "type":"list",
+      "member":{"shape":"SourceDocument"}
+    },
     "SpellCorrectedQuery":{
       "type":"structure",
       "members":{
@@ -5162,6 +5207,17 @@
       "max":6,
       "min":1
     },
+    "SuggestableConfig":{
+      "type":"structure",
+      "members":{
+        "AttributeName":{"shape":"DocumentAttributeKey"},
+        "Suggestable":{"shape":"ObjectBoolean"}
+      }
+    },
+    "SuggestableConfigList":{
+      "type":"list",
+      "member":{"shape":"SuggestableConfig"}
+    },
     "SuggestedQueryText":{
       "type":"string",
       "max":1000,
@@ -5171,7 +5227,8 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"ResultId"},
-        "Value":{"shape":"SuggestionValue"}
+        "Value":{"shape":"SuggestionValue"},
+        "SourceDocuments":{"shape":"SourceDocuments"}
       }
     },
     "SuggestionHighlight":{
@@ -5199,6 +5256,17 @@
         "Text":{"shape":"String"},
         "Highlights":{"shape":"SuggestionHighlightList"}
       }
+    },
+    "SuggestionType":{
+      "type":"string",
+      "enum":[
+        "QUERY",
+        "DOCUMENT_ATTRIBUTES"
+      ]
+    },
+    "SuggestionTypes":{
+      "type":"list",
+      "member":{"shape":"SuggestionType"}
     },
     "SuggestionValue":{
       "type":"structure",
@@ -5535,7 +5603,8 @@
         "QueryLogLookBackWindowInDays":{"shape":"Integer"},
         "IncludeQueriesWithoutUserInformation":{"shape":"ObjectBoolean"},
         "MinimumNumberOfQueryingUsers":{"shape":"MinimumNumberOfQueryingUsers"},
-        "MinimumQueryCount":{"shape":"MinimumQueryCount"}
+        "MinimumQueryCount":{"shape":"MinimumQueryCount"},
+        "AttributeSuggestionsConfig":{"shape":"AttributeSuggestionsUpdateConfig"}
       }
     },
     "UpdateThesaurusRequest":{

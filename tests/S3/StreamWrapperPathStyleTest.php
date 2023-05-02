@@ -268,7 +268,7 @@ class StreamWrapperPathStyleTest extends TestCase
         mkdir('s3://already-existing-bucket/key');
     }
 
-    public function testCreatingBucketsSetsAclBasedOnPermissions()
+    public function testCreatingBucketsDoesNotSetAcl()
     {
         $history = new History();
         $this->client->getHandlerList()->appendSign(Middleware::history($history));
@@ -296,9 +296,9 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertSame('PUT', $entries[1]['request']->getMethod());
         $this->assertSame('/bucket/', $entries[1]['request']->getUri()->getPath());
         $this->assertSame('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
-        $this->assertSame('public-read', (string) $entries[1]['request']->getHeaderLine('x-amz-acl'));
-        $this->assertSame('authenticated-read', (string) $entries[3]['request']->getHeaderLine('x-amz-acl'));
-        $this->assertSame('private', (string) $entries[5]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertSame('', (string) $entries[1]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertSame('', (string) $entries[3]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertSame('', (string) $entries[5]['request']->getHeaderLine('x-amz-acl'));
     }
 
     public function testCreatesNestedSubfolder()

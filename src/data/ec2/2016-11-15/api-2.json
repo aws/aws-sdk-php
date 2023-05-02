@@ -6192,6 +6192,13 @@
         "locationName":"item"
       }
     },
+    "AmdSevSnpSpecification":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
+    },
     "AnalysisAclRule":{
       "type":"structure",
       "members":{
@@ -8824,6 +8831,10 @@
         }
       }
     },
+    "ClientSecretType":{
+      "type":"string",
+      "sensitive":true
+    },
     "ClientVpnAssociationId":{"type":"string"},
     "ClientVpnAuthentication":{
       "type":"structure",
@@ -9646,6 +9657,10 @@
         "ThreadsPerCore":{
           "shape":"Integer",
           "locationName":"threadsPerCore"
+        },
+        "AmdSevSnp":{
+          "shape":"AmdSevSnpSpecification",
+          "locationName":"amdSevSnp"
         }
       }
     },
@@ -9653,7 +9668,8 @@
       "type":"structure",
       "members":{
         "CoreCount":{"shape":"Integer"},
-        "ThreadsPerCore":{"shape":"Integer"}
+        "ThreadsPerCore":{"shape":"Integer"},
+        "AmdSevSnp":{"shape":"AmdSevSnpSpecification"}
       }
     },
     "CreateCapacityReservationFleetRequest":{
@@ -11964,7 +11980,7 @@
         "TokenEndpoint":{"shape":"String"},
         "UserInfoEndpoint":{"shape":"String"},
         "ClientId":{"shape":"String"},
-        "ClientSecret":{"shape":"String"},
+        "ClientSecret":{"shape":"ClientSecretType"},
         "Scope":{"shape":"String"}
       }
     },
@@ -19601,7 +19617,7 @@
           "locationName":"format"
         },
         "ImportManifestUrl":{
-          "shape":"String",
+          "shape":"ImportManifestUrl",
           "locationName":"importManifestUrl"
         },
         "Size":{
@@ -28899,6 +28915,10 @@
         "ThreadsPerCore":{
           "shape":"Integer",
           "locationName":"threadsPerCore"
+        },
+        "AmdSevSnp":{
+          "shape":"AmdSevSnpSpecification",
+          "locationName":"amdSevSnp"
         }
       }
     },
@@ -28906,7 +28926,8 @@
       "type":"structure",
       "members":{
         "CoreCount":{"shape":"Integer"},
-        "ThreadsPerCore":{"shape":"Integer"}
+        "ThreadsPerCore":{"shape":"Integer"},
+        "AmdSevSnp":{"shape":"AmdSevSnpSpecification"}
       }
     },
     "LaunchTemplateEbsBlockDevice":{
@@ -31685,6 +31706,12 @@
     "ModifyVerifiedAccessTrustProviderOidcOptions":{
       "type":"structure",
       "members":{
+        "Issuer":{"shape":"String"},
+        "AuthorizationEndpoint":{"shape":"String"},
+        "TokenEndpoint":{"shape":"String"},
+        "UserInfoEndpoint":{"shape":"String"},
+        "ClientId":{"shape":"String"},
+        "ClientSecret":{"shape":"ClientSecretType"},
         "Scope":{"shape":"String"}
       }
     },
@@ -33319,7 +33346,7 @@
           "locationName":"clientId"
         },
         "ClientSecret":{
-          "shape":"String",
+          "shape":"ClientSecretType",
           "locationName":"clientSecret"
         },
         "Scope":{
@@ -34452,6 +34479,10 @@
         "SustainedClockSpeedInGhz":{
           "shape":"ProcessorSustainedClockSpeed",
           "locationName":"sustainedClockSpeedInGhz"
+        },
+        "SupportedFeatures":{
+          "shape":"SupportedAdditionalProcessorFeatureList",
+          "locationName":"supportedFeatures"
         }
       }
     },
@@ -40074,6 +40105,17 @@
         "not-applicable",
         "initializing"
       ]
+    },
+    "SupportedAdditionalProcessorFeature":{
+      "type":"string",
+      "enum":["amd-sev-snp"]
+    },
+    "SupportedAdditionalProcessorFeatureList":{
+      "type":"list",
+      "member":{
+        "shape":"SupportedAdditionalProcessorFeature",
+        "locationName":"item"
+      }
     },
     "SupportedIpAddressTypes":{
       "type":"list",

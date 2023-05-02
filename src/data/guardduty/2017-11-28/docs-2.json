@@ -55,6 +55,7 @@
     "ListPublishingDestinations": "<p>Returns a list of publishing destinations associated with the specified <code>detectorId</code>.</p>",
     "ListTagsForResource": "<p>Lists tags for a resource. Tagging is currently supported for detectors, finding filters, IP sets, and threat intel sets, with a limit of 50 tags per resource. When invoked, this operation returns all assigned tags for a given resource.</p>",
     "ListThreatIntelSets": "<p>Lists the ThreatIntelSets of the GuardDuty service specified by the detector ID. If you use this operation from a member account, the ThreatIntelSets associated with the administrator account are returned.</p>",
+    "StartMalwareScan": "<p>Initiates the malware scan. Invoking this API will automatically create the <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/slr-permissions-malware-protection.html\">Service-linked role </a> in the corresponding account.</p>",
     "StartMonitoringMembers": "<p>Turns on GuardDuty monitoring of the specified member accounts. Use this operation to restart monitoring of accounts that you stopped monitoring with the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_StopMonitoringMembers.html\">StopMonitoringMembers</a> operation.</p>",
     "StopMonitoringMembers": "<p>Stops GuardDuty monitoring for the specified member accounts. Use the <code>StartMonitoringMembers</code> operation to restart monitoring for those accounts.</p> <p>With <code>autoEnableOrganizationMembers</code> configuration for your organization set to <code>ALL</code>, you'll receive an error if you attempt to stop monitoring the member accounts in your organization.</p>",
     "TagResource": "<p>Adds tags to a resource.</p>",
@@ -321,6 +322,11 @@
       "base": "<p>Contains information about the condition.</p>",
       "refs": {
         "Criterion$value": null
+      }
+    },
+    "ConflictException": {
+      "base": "<p>A request conflict exception object.</p>",
+      "refs": {
       }
     },
     "Container": {
@@ -1576,6 +1582,12 @@
         "KubernetesDetails$KubernetesWorkloadDetails": "<p>Details about the Kubernetes workload involved in a Kubernetes finding.</p>"
       }
     },
+    "LambdaDetails": {
+      "base": "<p>Information about the Lambda function involved in the finding.</p>",
+      "refs": {
+        "Resource$LambdaDetails": "<p>Contains information about the Lambda function that was involved in a finding.</p>"
+      }
+    },
     "Lineage": {
       "base": null,
       "refs": {
@@ -1924,6 +1936,7 @@
         "FilterCondition$EqualsValue": "<p>Represents an <i>equal</i> <b/> condition to be applied to a single field when querying for scan entries.</p>",
         "Scan$ScanId": "<p>The unique scan ID associated with a scan entry.</p>",
         "Scan$FailureReason": "<p>Represents the reason for FAILED scan status.</p>",
+        "StartMalwareScanResponse$ScanId": "<p>A unique identifier that gets generated when you invoke the API without any error. Each malware scan has a corresponding scan ID. Using this scan ID, you can monitor the status of your malware scan.</p>",
         "TriggerDetails$GuardDutyFindingId": "<p>The ID of the GuardDuty finding that triggered the malware scan.</p>",
         "TriggerDetails$Description": "<p>The description of the scan trigger.</p>"
       }
@@ -2235,6 +2248,12 @@
         "Finding$Resource": null
       }
     },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "StartMalwareScanRequest$ResourceArn": "<p>Amazon Resource Name (ARN) of the resource for which you invoked the API.</p>"
+      }
+    },
     "ResourceDetails": {
       "base": "<p>Represents the resources that were scanned in the scan entry.</p>",
       "refs": {
@@ -2382,6 +2401,13 @@
         "ThreatDetectedByName$ThreatNames": "<p>List of identified threats with details, organized by threat name.</p>"
       }
     },
+    "ScanType": {
+      "base": null,
+      "refs": {
+        "EbsVolumeScanDetails$ScanType": "<p>Specifies the scan type that invoked the malware scan.</p>",
+        "Scan$ScanType": "<p>Specifies the scan type that invoked the malware scan.</p>"
+      }
+    },
     "ScannedItemCount": {
       "base": "<p>Total number of scanned files.</p>",
       "refs": {
@@ -2409,7 +2435,8 @@
     "SecurityGroups": {
       "base": null,
       "refs": {
-        "NetworkInterface$SecurityGroups": "<p>The security groups associated with the EC2 instance.</p>"
+        "NetworkInterface$SecurityGroups": "<p>The security groups associated with the EC2 instance.</p>",
+        "VpcConfig$SecurityGroups": "<p>The identifier of the security group attached to the Lambda function.</p>"
       }
     },
     "Service": {
@@ -2442,6 +2469,16 @@
       "base": null,
       "refs": {
         "EbsVolumeScanDetails$Sources": "<p>Contains list of threat intelligence sources used to detect threats.</p>"
+      }
+    },
+    "StartMalwareScanRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartMalwareScanResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "StartMonitoringMembersRequest": {
@@ -2493,6 +2530,8 @@
         "BadRequestException$Message": "<p>The error message.</p>",
         "BadRequestException$Type": "<p>The error type.</p>",
         "City$CityName": "<p>The city name of the remote IP address.</p>",
+        "ConflictException$Message": "<p>The error message.</p>",
+        "ConflictException$Type": "<p>The error type.</p>",
         "Container$ContainerRuntime": "<p>The container runtime (such as, Docker or containerd) used to run the container.</p>",
         "Container$Id": "<p>Container ID.</p>",
         "Container$Name": "<p>Container name.</p>",
@@ -2598,6 +2637,12 @@
         "KubernetesWorkloadDetails$Type": "<p>Kubernetes workload type (e.g. Pod, Deployment, etc.).</p>",
         "KubernetesWorkloadDetails$Uid": "<p>Kubernetes workload ID.</p>",
         "KubernetesWorkloadDetails$Namespace": "<p>Kubernetes namespace that the workload is part of.</p>",
+        "LambdaDetails$FunctionArn": "<p>Amazon Resource Name (ARN) of the Lambda function.</p>",
+        "LambdaDetails$FunctionName": "<p>Name of the Lambda function.</p>",
+        "LambdaDetails$Description": "<p>Description of the Lambda function.</p>",
+        "LambdaDetails$RevisionId": "<p>The revision ID of the Lambda function version.</p>",
+        "LambdaDetails$FunctionVersion": "<p>The version of the Lambda function.</p>",
+        "LambdaDetails$Role": "<p>The execution role of the Lambda function.</p>",
         "LineageObject$Name": "<p>The name of the process.</p>",
         "LineageObject$Uuid": "<p>The unique ID assigned to the process by GuardDuty.</p>",
         "LineageObject$ExecutablePath": "<p>The absolute path of the process executable file.</p>",
@@ -2716,6 +2761,7 @@
         "SortCriteria$AttributeName": "<p>Represents the finding attribute, such as <code>accountId</code>, that sorts the findings.</p>",
         "SourceIps$member": null,
         "Sources$member": null,
+        "SubnetIds$member": null,
         "Tag$Key": "<p>The EC2 instance tag key.</p>",
         "Tag$Value": "<p>The EC2 instance tag value.</p>",
         "ThreatIntelSetIds$member": null,
@@ -2738,7 +2784,14 @@
         "VolumeDetail$SnapshotArn": "<p>Snapshot Arn of the EBS volume.</p>",
         "VolumeDetail$KmsKeyArn": "<p>KMS key Arn used to encrypt the EBS volume.</p>",
         "VolumeMount$Name": "<p>Volume mount name.</p>",
-        "VolumeMount$MountPath": "<p>Volume mount path.</p>"
+        "VolumeMount$MountPath": "<p>Volume mount path.</p>",
+        "VpcConfig$VpcId": "<p>The identifier of the Amazon Virtual Private Cloud.</p>"
+      }
+    },
+    "SubnetIds": {
+      "base": null,
+      "refs": {
+        "VpcConfig$SubnetIds": "<p>The identifiers of the subnets that are associated with your Lambda function.</p>"
       }
     },
     "Tag": {
@@ -2800,6 +2853,7 @@
         "EcsTaskDetails$Tags": "<p>The tags of the ECS Task.</p>",
         "EksClusterDetails$Tags": "<p>The EKS cluster tags.</p>",
         "InstanceDetails$Tags": "<p>The tags of the EC2 instance.</p>",
+        "LambdaDetails$Tags": "<p>A list of tags attached to this resource, listed in the format of <code>key</code>:<code>value</code> pair.</p>",
         "RdsDbInstanceDetails$Tags": "<p>Instance tag key-value pairs associated with the database instance ID.</p>",
         "S3BucketDetail$Tags": "<p>All tags attached to the S3 bucket</p>"
       }
@@ -2864,6 +2918,7 @@
         "EcsTaskDetails$TaskCreatedAt": "<p>The Unix timestamp for the time when the task was created.</p>",
         "EcsTaskDetails$StartedAt": "<p>The Unix timestamp for the time when the task started.</p>",
         "EksClusterDetails$CreatedAt": "<p>The timestamp when the EKS cluster was created.</p>",
+        "LambdaDetails$LastModifiedAt": "<p>The timestamp when the Lambda function was last modified. This field is in the UTC date string format <code>(2023-03-22T19:37:20.168Z)</code>.</p>",
         "LineageObject$StartTime": "<p>The time when the process started. This is in UTC format.</p>",
         "MemberAdditionalConfigurationResult$UpdatedAt": "<p>The timestamp at which the additional configuration was set for the member account. This is in UTC format.</p>",
         "MemberFeaturesConfigurationResult$UpdatedAt": "<p>The timestamp at which the feature object was updated.</p>",
@@ -3145,6 +3200,12 @@
       "refs": {
         "EcsTaskDetails$Volumes": "<p>The list of data volume definitions for the task.</p>",
         "KubernetesWorkloadDetails$Volumes": "<p>Volumes used by the Kubernetes workload.</p>"
+      }
+    },
+    "VpcConfig": {
+      "base": "<p>Amazon Virtual Private Cloud configuration details associated with your Lambda function.</p>",
+      "refs": {
+        "LambdaDetails$VpcConfig": "<p>Amazon Virtual Private Cloud configuration details associated with your Lambda function.</p>"
       }
     }
   }

@@ -111,6 +111,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result listThreatIntelSets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listThreatIntelSetsAsync(array $args = [])
+ * @method \Aws\Result startMalwareScan(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startMalwareScanAsync(array $args = [])
  * @method \Aws\Result startMonitoringMembers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startMonitoringMembersAsync(array $args = [])
  * @method \Aws\Result stopMonitoringMembers(array $args = [])

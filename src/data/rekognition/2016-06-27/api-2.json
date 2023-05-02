@@ -89,6 +89,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "CreateFaceLivenessSession":{
+      "name":"CreateFaceLivenessSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateFaceLivenessSessionRequest"},
+      "output":{"shape":"CreateFaceLivenessSessionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"}
+      ],
+      "idempotent":true
+    },
     "CreateProject":{
       "name":"CreateProject",
       "http":{
@@ -562,6 +579,23 @@
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetFaceLivenessSessionResults":{
+      "name":"GetFaceLivenessSessionResults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetFaceLivenessSessionResultsRequest"},
+      "output":{"shape":"GetFaceLivenessSessionResultsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"SessionNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"}
       ]
     },
     "GetFaceSearch":{
@@ -1192,7 +1226,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ProvisionedThroughputExceededException"}
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"ResourceInUseException"}
       ]
     }
   },
@@ -1243,6 +1278,23 @@
     "AudioMetadataList":{
       "type":"list",
       "member":{"shape":"AudioMetadata"}
+    },
+    "AuditImage":{
+      "type":"structure",
+      "members":{
+        "Bytes":{"shape":"LivenessImageBlob"},
+        "S3Object":{"shape":"S3Object"},
+        "BoundingBox":{"shape":"BoundingBox"}
+      }
+    },
+    "AuditImages":{
+      "type":"list",
+      "member":{"shape":"AuditImage"}
+    },
+    "AuditImagesLimit":{
+      "type":"integer",
+      "max":4,
+      "min":0
     },
     "Beard":{
       "type":"structure",
@@ -1447,11 +1499,21 @@
       "member":{"shape":"ContentClassifier"},
       "max":256
     },
+    "ContentModerationAggregateBy":{
+      "type":"string",
+      "enum":[
+        "TIMESTAMPS",
+        "SEGMENTS"
+      ]
+    },
     "ContentModerationDetection":{
       "type":"structure",
       "members":{
         "Timestamp":{"shape":"Timestamp"},
-        "ModerationLabel":{"shape":"ModerationLabel"}
+        "ModerationLabel":{"shape":"ModerationLabel"},
+        "StartTimestampMillis":{"shape":"ULong"},
+        "EndTimestampMillis":{"shape":"ULong"},
+        "DurationMillis":{"shape":"ULong"}
       }
     },
     "ContentModerationDetections":{
@@ -1529,6 +1591,28 @@
       "type":"structure",
       "members":{
         "DatasetArn":{"shape":"DatasetArn"}
+      }
+    },
+    "CreateFaceLivenessSessionRequest":{
+      "type":"structure",
+      "members":{
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "Settings":{"shape":"CreateFaceLivenessSessionRequestSettings"},
+        "ClientRequestToken":{"shape":"ClientRequestToken"}
+      }
+    },
+    "CreateFaceLivenessSessionRequestSettings":{
+      "type":"structure",
+      "members":{
+        "OutputConfig":{"shape":"LivenessOutputConfig"},
+        "AuditImagesLimit":{"shape":"AuditImagesLimit"}
+      }
+    },
+    "CreateFaceLivenessSessionResponse":{
+      "type":"structure",
+      "required":["SessionId"],
+      "members":{
+        "SessionId":{"shape":"LivenessSessionId"}
       }
     },
     "CreateProjectRequest":{
@@ -2394,7 +2478,10 @@
         "StatusMessage":{"shape":"StatusMessage"},
         "VideoMetadata":{"shape":"VideoMetadata"},
         "NextToken":{"shape":"PaginationToken"},
-        "Celebrities":{"shape":"CelebrityRecognitions"}
+        "Celebrities":{"shape":"CelebrityRecognitions"},
+        "JobId":{"shape":"JobId"},
+        "Video":{"shape":"Video"},
+        "JobTag":{"shape":"JobTag"}
       }
     },
     "GetContentModerationRequest":{
@@ -2404,7 +2491,15 @@
         "JobId":{"shape":"JobId"},
         "MaxResults":{"shape":"MaxResults"},
         "NextToken":{"shape":"PaginationToken"},
-        "SortBy":{"shape":"ContentModerationSortBy"}
+        "SortBy":{"shape":"ContentModerationSortBy"},
+        "AggregateBy":{"shape":"ContentModerationAggregateBy"}
+      }
+    },
+    "GetContentModerationRequestMetadata":{
+      "type":"structure",
+      "members":{
+        "SortBy":{"shape":"ContentModerationSortBy"},
+        "AggregateBy":{"shape":"ContentModerationAggregateBy"}
       }
     },
     "GetContentModerationResponse":{
@@ -2415,7 +2510,11 @@
         "VideoMetadata":{"shape":"VideoMetadata"},
         "ModerationLabels":{"shape":"ContentModerationDetections"},
         "NextToken":{"shape":"PaginationToken"},
-        "ModerationModelVersion":{"shape":"String"}
+        "ModerationModelVersion":{"shape":"String"},
+        "JobId":{"shape":"JobId"},
+        "Video":{"shape":"Video"},
+        "JobTag":{"shape":"JobTag"},
+        "GetRequestMetadata":{"shape":"GetContentModerationRequestMetadata"}
       }
     },
     "GetFaceDetectionRequest":{
@@ -2434,7 +2533,31 @@
         "StatusMessage":{"shape":"StatusMessage"},
         "VideoMetadata":{"shape":"VideoMetadata"},
         "NextToken":{"shape":"PaginationToken"},
-        "Faces":{"shape":"FaceDetections"}
+        "Faces":{"shape":"FaceDetections"},
+        "JobId":{"shape":"JobId"},
+        "Video":{"shape":"Video"},
+        "JobTag":{"shape":"JobTag"}
+      }
+    },
+    "GetFaceLivenessSessionResultsRequest":{
+      "type":"structure",
+      "required":["SessionId"],
+      "members":{
+        "SessionId":{"shape":"LivenessSessionId"}
+      }
+    },
+    "GetFaceLivenessSessionResultsResponse":{
+      "type":"structure",
+      "required":[
+        "SessionId",
+        "Status"
+      ],
+      "members":{
+        "SessionId":{"shape":"LivenessSessionId"},
+        "Status":{"shape":"LivenessSessionStatus"},
+        "Confidence":{"shape":"Percent"},
+        "ReferenceImage":{"shape":"AuditImage"},
+        "AuditImages":{"shape":"AuditImages"}
       }
     },
     "GetFaceSearchRequest":{
@@ -2454,7 +2577,10 @@
         "StatusMessage":{"shape":"StatusMessage"},
         "NextToken":{"shape":"PaginationToken"},
         "VideoMetadata":{"shape":"VideoMetadata"},
-        "Persons":{"shape":"PersonMatches"}
+        "Persons":{"shape":"PersonMatches"},
+        "JobId":{"shape":"JobId"},
+        "Video":{"shape":"Video"},
+        "JobTag":{"shape":"JobTag"}
       }
     },
     "GetLabelDetectionRequest":{
@@ -2468,6 +2594,13 @@
         "AggregateBy":{"shape":"LabelDetectionAggregateBy"}
       }
     },
+    "GetLabelDetectionRequestMetadata":{
+      "type":"structure",
+      "members":{
+        "SortBy":{"shape":"LabelDetectionSortBy"},
+        "AggregateBy":{"shape":"LabelDetectionAggregateBy"}
+      }
+    },
     "GetLabelDetectionResponse":{
       "type":"structure",
       "members":{
@@ -2476,7 +2609,11 @@
         "VideoMetadata":{"shape":"VideoMetadata"},
         "NextToken":{"shape":"PaginationToken"},
         "Labels":{"shape":"LabelDetections"},
-        "LabelModelVersion":{"shape":"String"}
+        "LabelModelVersion":{"shape":"String"},
+        "JobId":{"shape":"JobId"},
+        "Video":{"shape":"Video"},
+        "JobTag":{"shape":"JobTag"},
+        "GetRequestMetadata":{"shape":"GetLabelDetectionRequestMetadata"}
       }
     },
     "GetPersonTrackingRequest":{
@@ -2496,7 +2633,10 @@
         "StatusMessage":{"shape":"StatusMessage"},
         "VideoMetadata":{"shape":"VideoMetadata"},
         "NextToken":{"shape":"PaginationToken"},
-        "Persons":{"shape":"PersonDetections"}
+        "Persons":{"shape":"PersonDetections"},
+        "JobId":{"shape":"JobId"},
+        "Video":{"shape":"Video"},
+        "JobTag":{"shape":"JobTag"}
       }
     },
     "GetSegmentDetectionRequest":{
@@ -2517,7 +2657,10 @@
         "AudioMetadata":{"shape":"AudioMetadataList"},
         "NextToken":{"shape":"PaginationToken"},
         "Segments":{"shape":"SegmentDetections"},
-        "SelectedSegmentTypes":{"shape":"SegmentTypesInfo"}
+        "SelectedSegmentTypes":{"shape":"SegmentTypesInfo"},
+        "JobId":{"shape":"JobId"},
+        "Video":{"shape":"Video"},
+        "JobTag":{"shape":"JobTag"}
       }
     },
     "GetTextDetectionRequest":{
@@ -2537,7 +2680,10 @@
         "VideoMetadata":{"shape":"VideoMetadata"},
         "TextDetections":{"shape":"TextDetectionResults"},
         "NextToken":{"shape":"PaginationToken"},
-        "TextModelVersion":{"shape":"String"}
+        "TextModelVersion":{"shape":"String"},
+        "JobId":{"shape":"JobId"},
+        "Video":{"shape":"Video"},
+        "JobTag":{"shape":"JobTag"}
       }
     },
     "GroundTruthBlob":{
@@ -2735,9 +2881,9 @@
     },
     "JobTag":{
       "type":"string",
-      "max":256,
+      "max":1024,
       "min":1,
-      "pattern":"[a-zA-Z0-9_.\\-:]+"
+      "pattern":"[a-zA-Z0-9_.\\-:+=\\/]+"
     },
     "KinesisDataArn":{
       "type":"string",
@@ -3050,6 +3196,41 @@
       "members":{
         "Tags":{"shape":"TagMap"}
       }
+    },
+    "LivenessImageBlob":{
+      "type":"blob",
+      "max":204800,
+      "min":1,
+      "sensitive":true
+    },
+    "LivenessOutputConfig":{
+      "type":"structure",
+      "required":["S3Bucket"],
+      "members":{
+        "S3Bucket":{"shape":"S3Bucket"},
+        "S3KeyPrefix":{"shape":"LivenessS3KeyPrefix"}
+      }
+    },
+    "LivenessS3KeyPrefix":{
+      "type":"string",
+      "max":950,
+      "pattern":"\\S*"
+    },
+    "LivenessSessionId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "LivenessSessionStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED",
+        "EXPIRED"
+      ]
     },
     "MalformedPolicyDocumentException":{
       "type":"structure",
@@ -3660,6 +3841,12 @@
       "member":{"shape":"SegmentTypeInfo"}
     },
     "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "SessionNotFoundException":{
       "type":"structure",
       "members":{
       },
