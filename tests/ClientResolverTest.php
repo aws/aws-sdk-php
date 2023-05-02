@@ -1012,13 +1012,13 @@ EOT;
                 [
                     'X-Amz-User-Agent',
                     new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode\/adaptive/'
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#adaptive/'
                     )
                 ],
                 [
                     'User-Agent',
                     new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode\/adaptive/'
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#adaptive/'
                     )
                 ]
             )
@@ -1063,13 +1063,13 @@ EOT;
                 [
                     'X-Amz-User-Agent',
                     new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode\/standard/'
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#standard/'
                     )
                 ],
                 [
                     'User-Agent',
                     new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode\/standard/'
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#standard/'
                     )
                 ]
             )

@@ -862,14 +862,14 @@ class ClientResolver
         if (function_exists('php_uname')
             && !in_array('php_uname', $disabledFunctions, true)
         ) {
-            $osName = "OS/" . php_uname('s') . '/' . php_uname('r');
+            $osName = "OS/" . php_uname('s') . '#' . php_uname('r');
             if (!empty($osName)) {
                 $userAgent []= $osName;
             }
         }
 
         //Add the language version
-        $userAgent []= 'lang/php/' . phpversion();
+        $userAgent []= 'lang/php#' . phpversion();
 
         //Add exec environment if present
         if ($executionEnvironment = getenv('AWS_EXECUTION_ENV')) {
@@ -893,11 +893,11 @@ class ClientResolver
         //Add retry mode if set
         if (isset($args['retries'])) {
             if ($args['retries'] instanceof \Aws\Retry\Configuration) {
-                $userAgent []= 'cfg/retry-mode/' . $args["retries"]->getMode();
+                $userAgent []= 'cfg/retry-mode#' . $args["retries"]->getMode();
             } elseif (is_array($args['retries'])
                 && isset($args["retries"]["mode"])
             ) {
-                $userAgent []= 'cfg/retry-mode/' . $args["retries"]["mode"];
+                $userAgent []= 'cfg/retry-mode#' . $args["retries"]["mode"];
             }
         }
         //Add the input to the end
