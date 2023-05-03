@@ -184,21 +184,37 @@ class UploadStateTest extends TestCase
         ];
     }
 
-    public function testSetProgressThresholdsThrowsException()
+    /**
+     * @dataProvider getInvalidIntCases
+     */
+    public function testSetProgressThresholdsThrowsException($totalSize)
     {
         $state = new UploadState([]);
         $this->expectExceptionMessage('The total size of the upload must be an int.');
         $this->expectException(\InvalidArgumentException::class);
 
-        $state->setProgressThresholds('');
+        $state->setProgressThresholds($totalSize);
     }
 
-    public function testDisplayProgressThrowsException()
+    /**
+     * @dataProvider getInvalidIntCases
+     */
+    public function testDisplayProgressThrowsException($totalUploaded)
     {
         $state = new UploadState([]);
         $this->expectExceptionMessage('The size of the bytes being uploaded must be an int.');
         $this->expectException(\InvalidArgumentException::class);
 
-        $state->displayProgress('');
+        $state->displayProgress($totalUploaded);
+    }
+
+    public function getInvalidIntCases()
+    {
+        return [
+            [''],
+            [null],
+            ['1234'],
+            ['aws'],
+        ];
     }
 }

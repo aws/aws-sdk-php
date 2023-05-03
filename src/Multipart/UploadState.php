@@ -92,7 +92,7 @@ class UploadState
 
     public function setProgressThresholds($totalSize)
     {
-        if(!is_numeric($totalSize)) {
+        if(!is_int($totalSize)) {
             throw new \InvalidArgumentException('The total size of the upload must be an int.');
         }
 
@@ -106,7 +106,7 @@ class UploadState
 
     public function displayProgress($totalUploaded)
     {
-        if(!is_numeric($totalUploaded)) {
+        if(!is_int($totalUploaded)) {
             throw new \InvalidArgumentException('The size of the bytes being uploaded must be an int.');
         }
 
