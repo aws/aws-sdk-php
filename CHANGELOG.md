@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.5 - 2023-05-03
 
 * `Aws\AppSync` - Private API support for AWS AppSync. With Private APIs, you can now create GraphQL APIs that can only be accessed from your Amazon Virtual Private Cloud ("VPC").
 * `Aws\EC2` - Adds an SDK paginator for GetNetworkInsightsAccessScopeAnalysisFindings
