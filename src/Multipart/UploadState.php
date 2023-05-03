@@ -92,6 +92,10 @@ class UploadState
 
     public function setProgressThresholds($totalSize)
     {
+        if(!is_numeric($totalSize)) {
+            throw new \InvalidArgumentException('The total size of the upload must be an int.');
+        }
+
         $this->progressThresholds[0] = 0;
         for ($i=1;$i<=8;$i++) {
             $this->progressThresholds []= round($totalSize*($i/8));
@@ -102,6 +106,10 @@ class UploadState
 
     public function displayProgress($totalUploaded)
     {
+        if(!is_numeric($totalUploaded)) {
+            throw new \InvalidArgumentException('The size of the bytes being uploaded must be an int.');
+        }
+
         while (!empty($this->progressBar)
                 && $totalUploaded >= array_key_first($this->progressBar))
         {

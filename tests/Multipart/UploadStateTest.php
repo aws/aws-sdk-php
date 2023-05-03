@@ -183,4 +183,22 @@ class UploadStateTest extends TestCase
             [100001]
         ];
     }
+
+    public function testSetProgressThresholdsThrowsException()
+    {
+        $state = new UploadState([]);
+        $this->expectExceptionMessage('The total size of the upload must be an int.');
+        $this->expectException(\InvalidArgumentException::class);
+
+        $state->setProgressThresholds('');
+    }
+
+    public function testDisplayProgressThrowsException()
+    {
+        $state = new UploadState([]);
+        $this->expectExceptionMessage('The size of the bytes being uploaded must be an int.');
+        $this->expectException(\InvalidArgumentException::class);
+
+        $state->displayProgress('');
+    }
 }
