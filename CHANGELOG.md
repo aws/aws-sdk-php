@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.6 - 2023-05-04
 
 * `Aws\CloudWatch` - Adds support for filtering by metric names in CloudWatch Metric Streams.
 * `Aws\ConfigService` - Updated ResourceType enum with new resource types onboarded by AWS Config in April 2023.
