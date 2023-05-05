@@ -70,6 +70,16 @@ class UploadStateTest extends TestCase
         $this->assertTrue($newState->isInitiated());
         $this->assertArrayHasKey('foo', $newState->getId());
     }
+
+    public function testEmptyUploadStateOutputWithConfigFalse()
+    {
+        $config['track_upload'] = false;
+        $state = new UploadState([], $config);
+        $state->setProgressThresholds(100);
+        $state->displayProgress(13);
+        $this->expectOutputString('');
+    }
+
     /**
      * @dataProvider getDisplayProgressCases
      */
@@ -78,7 +88,8 @@ class UploadStateTest extends TestCase
         $totalUploaded,
         $progressBar
     ) {
-        $state = new UploadState([]);
+        $config['track_upload'] = true;
+        $state = new UploadState([], $config);
         $state->setProgressThresholds($totalSize);
         $state->displayProgress($totalUploaded);
 
@@ -168,7 +179,8 @@ class UploadStateTest extends TestCase
      */
     public function testUploadThresholds($totalSize)
     {
-        $state = new UploadState([]);
+        $config['track_upload'] = true;
+        $state = new UploadState([], $config);
         $threshold = $state->setProgressThresholds($totalSize);
 
         $this->assertIsArray($threshold);
