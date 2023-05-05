@@ -65,6 +65,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result listUsageTotals(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listUsageTotalsAsync(array $args = [])
+ * @method \Aws\Result searchVulnerabilities(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchVulnerabilitiesAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
