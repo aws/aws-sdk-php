@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - We don't do release notes https://w.amazon.com/bin/view/AWSDocs/common-tasks/release-notes
+* `Aws\GuardDuty` - Add AccessDeniedException 403 Error message code to support 3 Tagging related APIs
+* `Aws\IoTSiteWise` - Provide support for 20,000 max results for GetAssetPropertyValueHistory/BatchGetAssetPropertyValueHistory and 15 minute aggregate resolution for GetAssetPropertyAggregates/BatchGetAssetPropertyAggregates
+* `Aws\STS` - Documentation updates for AWS Security Token Service.
+
 ## 3.269.7 - 2023-05-05
 
 * `Aws\EC2` - This release adds support the inf2 and trn1n instances. inf2 instances are purpose built for deep learning inference while trn1n instances are powered by AWS Trainium accelerators and they build on the capabilities of Trainium-powered trn1 instances.
