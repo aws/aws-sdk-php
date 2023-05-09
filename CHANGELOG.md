@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - With this release, Amazon SageMaker Serverless Inference customers can use Application Auto Scaling to auto scale the provisioned concurrency of their serverless endpoints.
+* `Aws\Glue` - This release adds AmazonRedshift Source and Target nodes in addition to DynamicTransform OutputSchemas
+* `Aws\SageMaker` - This release includes support for (1) Provisioned Concurrency for Amazon SageMaker Serverless Inference and (2) UpdateEndpointWeightsAndCapacities API for Serverless endpoints.
+
 ## 3.269.8 - 2023-05-08
 
 * `Aws\Glue` - Support large worker types G.4x and G.8x for Glue Spark
