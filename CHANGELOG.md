@@ -2,7 +2,7 @@
 
 ## 3.269.8 - 2023-05-08
 
-* `Aws\Glue` - We don't do release notes https://w.amazon.com/bin/view/AWSDocs/common-tasks/release-notes
+* `Aws\Glue` - Support large worker types G.4x and G.8x for Glue Spark
 * `Aws\GuardDuty` - Add AccessDeniedException 403 Error message code to support 3 Tagging related APIs
 * `Aws\IoTSiteWise` - Provide support for 20,000 max results for GetAssetPropertyValueHistory/BatchGetAssetPropertyValueHistory and 15 minute aggregate resolution for GetAssetPropertyAggregates/BatchGetAssetPropertyAggregates
 * `Aws\STS` - Documentation updates for AWS Security Token Service.
