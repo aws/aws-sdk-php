@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.9 - 2023-05-09
 
 * `Aws\ApplicationAutoScaling` - With this release, Amazon SageMaker Serverless Inference customers can use Application Auto Scaling to auto scale the provisioned concurrency of their serverless endpoints.
 * `Aws\Glue` - This release adds AmazonRedshift Source and Target nodes in addition to DynamicTransform OutputSchemas
