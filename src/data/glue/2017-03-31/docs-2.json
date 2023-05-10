@@ -284,6 +284,37 @@
       "refs": {
       }
     },
+    "AmazonRedshiftAdvancedOption": {
+      "base": "<p>Specifies an Amazon Redshift data store.</p>",
+      "refs": {
+        "AmazonRedshiftAdvancedOptions$member": null
+      }
+    },
+    "AmazonRedshiftAdvancedOptions": {
+      "base": null,
+      "refs": {
+        "AmazonRedshiftNodeData$AdvancedOptions": "<p>Optional values when connecting to the Redshift cluster.</p>"
+      }
+    },
+    "AmazonRedshiftNodeData": {
+      "base": "<p>Specifies an Amazon Redshift node.</p>",
+      "refs": {
+        "AmazonRedshiftSource$Data": "<p>Specifies the data of the Amazon Reshift source node.</p>",
+        "AmazonRedshiftTarget$Data": "<p>Specifies the data of the Amazon Reshift target node.</p>"
+      }
+    },
+    "AmazonRedshiftSource": {
+      "base": "<p>Specifies an Amazon Redshift source.</p>",
+      "refs": {
+        "CodeGenConfigurationNode$AmazonRedshiftSource": "<p>Specifies a target that writes to a data source in Amazon Redshift.</p>"
+      }
+    },
+    "AmazonRedshiftTarget": {
+      "base": "<p>Specifies an Amazon Redshift target.</p>",
+      "refs": {
+        "CodeGenConfigurationNode$AmazonRedshiftTarget": "<p>Specifies a target that writes to a data target in Amazon Redshift.</p>"
+      }
+    },
     "ApplyMapping": {
       "base": "<p>Specifies a transform that maps data property keys in the data source to data property keys in the data target. You can rename keys, modify the data types for keys, and choose which keys to drop from the dataset.</p>",
       "refs": {
@@ -726,6 +757,7 @@
     "BooleanValue": {
       "base": null,
       "refs": {
+        "AmazonRedshiftNodeData$Upsert": "<p>The action used on Redshift sinks when doing an APPEND.</p>",
         "CreateTriggerRequest$StartOnCreation": "<p>Set to <code>true</code> to start <code>SCHEDULED</code> and <code>CONDITIONAL</code> triggers when created. True is not supported for <code>ON_DEMAND</code> triggers.</p>",
         "GetJobRunRequest$PredecessorsIncluded": "<p>True if a list of predecessor runs should be returned.</p>",
         "S3CsvSource$OptimizePerformance": "<p>A Boolean value that specifies whether to use the advanced SIMD CSV reader along with Apache Arrow based columnar memory formats. Only available in Glue version 3.0.</p>",
@@ -2707,6 +2739,7 @@
       "refs": {
         "AdditionalOptions$key": null,
         "AdditionalOptions$value": null,
+        "AmazonRedshiftNodeData$TempDir": "<p>The Amazon S3 path where temporary data can be staged when copying out of the database.</p>",
         "AthenaConnectorSource$ConnectionName": "<p>The name of the connection that is associated with the connector.</p>",
         "AthenaConnectorSource$ConnectorName": "<p>The name of a connector that assists with accessing the data store in Glue Studio.</p>",
         "AthenaConnectorSource$ConnectionType": "<p>The type of connection, such as marketplace.athena or custom.athena, designating a connection to an Amazon Athena data store.</p>",
@@ -2790,6 +2823,9 @@
         "MySQLCatalogTarget$Database": "<p>The name of the database to write to.</p>",
         "MySQLCatalogTarget$Table": "<p>The name of the table in the database to write to.</p>",
         "NullValueField$Value": "<p>The value of the null placeholder.</p>",
+        "Option$Value": "<p>Specifies the value of the option.</p>",
+        "Option$Label": "<p>Specifies the label of the option.</p>",
+        "Option$Description": "<p>Specifies the description of the option.</p>",
         "OracleSQLCatalogSource$Database": "<p>The name of the database to read from.</p>",
         "OracleSQLCatalogSource$Table": "<p>The name of the table in the database to read from.</p>",
         "OracleSQLCatalogTarget$Database": "<p>The name of the database to write to.</p>",
@@ -3176,6 +3212,12 @@
     "GenericLimitedString": {
       "base": null,
       "refs": {
+        "AmazonRedshiftNodeData$AccessType": "<p>The access type for the Redshift connection. Can be a direct connection or catalog connections.</p>",
+        "AmazonRedshiftNodeData$SourceType": "<p>The source type to specify whether a specific table is the source or a custom query.</p>",
+        "AmazonRedshiftNodeData$TablePrefix": "<p>Specifies the prefix to a table.</p>",
+        "AmazonRedshiftNodeData$MergeAction": "<p>The action used when to detemine how a MERGE in a Redshift sink will be handled.</p>",
+        "AmazonRedshiftNodeData$MergeWhenMatched": "<p>The action used when to detemine how a MERGE in a Redshift sink will be handled when an existing record matches a new record.</p>",
+        "AmazonRedshiftNodeData$MergeWhenNotMatched": "<p>The action used when to detemine how a MERGE in a Redshift sink will be handled when an existing record doesn't match a new record.</p>",
         "DQResultsPublishingOptions$EvaluationContext": "<p>The context of the evaluation.</p>",
         "Datatype$Id": "<p>The datatype of the value.</p>",
         "Datatype$Label": "<p>A label assigned to the datatype.</p>",
@@ -3201,6 +3243,17 @@
       "refs": {
         "AdditionalPlanOptionsMap$key": null,
         "AdditionalPlanOptionsMap$value": null,
+        "AmazonRedshiftAdvancedOption$Key": "<p>The key when specifying a key-value pair.</p>",
+        "AmazonRedshiftAdvancedOption$Value": "<p>The value when specifying a key-value pair.</p>",
+        "AmazonRedshiftNodeData$CatalogRedshiftSchema": "<p>The Redshift schema name when working with a data catalog.</p>",
+        "AmazonRedshiftNodeData$CatalogRedshiftTable": "<p>The database table to read from.</p>",
+        "AmazonRedshiftNodeData$SampleQuery": "<p>The SQL used to fetch the data from a Redshift sources when the SourceType is 'query'.</p>",
+        "AmazonRedshiftNodeData$PreAction": "<p>The SQL used before a MERGE or APPEND with upsert is run.</p>",
+        "AmazonRedshiftNodeData$PostAction": "<p>The SQL used before a MERGE or APPEND with upsert is run.</p>",
+        "AmazonRedshiftNodeData$Action": "<p>Specifies how writing to a Redshift cluser will occur.</p>",
+        "AmazonRedshiftNodeData$MergeClause": "<p>The SQL used in a custom merge to deal with matching records.</p>",
+        "AmazonRedshiftNodeData$CrawlerConnection": "<p>Specifies the name of the connection that is associated with the catalog table used.</p>",
+        "AmazonRedshiftNodeData$StagingTable": "<p>The name of the temporary staging table that is used when doing a MERGE or APPEND with upsert.</p>",
         "Blueprint$BlueprintLocation": "<p>Specifies the path in Amazon S3 where the blueprint is published.</p>",
         "Blueprint$BlueprintServiceLocation": "<p>Specifies a path in Amazon S3 where the blueprint is copied when you call <code>CreateBlueprint/UpdateBlueprint</code> to register the blueprint in Glue.</p>",
         "CrawlsFilter$FieldValue": "<p>The value provided for comparison on the crawl field. </p>",
@@ -4030,6 +4083,7 @@
         "CatalogDeltaSource$OutputSchemas": "<p>Specifies the data schema for the Delta Lake source.</p>",
         "CatalogHudiSource$OutputSchemas": "<p>Specifies the data schema for the Hudi source.</p>",
         "CustomCode$OutputSchemas": "<p>Specifies the data schema for the custom code transform.</p>",
+        "DynamicTransform$OutputSchemas": "<p>Specifies the data schema for the dynamic transform.</p>",
         "JDBCConnectorSource$OutputSchemas": "<p>Specifies the data schema for the custom JDBC source.</p>",
         "JDBCConnectorTarget$OutputSchemas": "<p>Specifies the data schema for the JDBC target.</p>",
         "S3CatalogDeltaSource$OutputSchemas": "<p>Specifies the data schema for the Delta Lake source.</p>",
@@ -5527,6 +5581,8 @@
       "base": null,
       "refs": {
         "Aggregate$Name": "<p>The name of the transform node.</p>",
+        "AmazonRedshiftSource$Name": "<p>The name of the Amazon Redshift source.</p>",
+        "AmazonRedshiftTarget$Name": "<p>The name of the Amazon Redshift target.</p>",
         "ApplyMapping$Name": "<p>The name of the transform node.</p>",
         "AthenaConnectorSource$Name": "<p>The name of the data source.</p>",
         "BasicCatalogTarget$Name": "<p>The name of your data target.</p>",
@@ -5720,7 +5776,7 @@
         "CreateSessionRequest$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that can be allocated when the job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB memory. </p>",
         "DynamoDBTarget$scanRate": "<p>The percentage of the configured read capacity units to use by the Glue crawler. Read capacity units is a term defined by DynamoDB, and is a numeric value that acts as rate limiter for the number of reads that can be performed on that table per second.</p> <p>The valid values are null or a value between 0.1 to 1.5. A null value is used when user does not provide a value, and defaults to 0.5 of the configured Read Capacity Unit (for provisioned tables), or 0.25 of the max configured Read Capacity Unit (for tables using on-demand mode).</p>",
         "GetMLTransformResponse$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>. </p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
-        "Job$MaxCapacity": "<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul> <p>For Glue version 2.0 jobs, you cannot instead specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p>",
+        "Job$MaxCapacity": "<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>.</p> <p>For Glue version 2.0 or later jobs, you cannot specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p> <p>Do not set <code>MaxCapacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "JobRun$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\"), you can allocate a minimum of 2 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "JobRun$DPUSeconds": "<p>This field populates only for Auto Scaling job runs, and represents the total time each executor ran during the lifecycle of a job run in seconds, multiplied by a DPU factor (1 for <code>G.1X</code>, 2 for <code>G.2X</code>, or 0.25 for <code>G.025X</code> workers). This value may be different than the <code>executionEngineRuntime</code> * <code>MaxCapacity</code> as in the case of Auto Scaling jobs, as the number of executors running at a given time may be less than the <code>MaxCapacity</code>. Therefore, it is possible that the value of <code>DPUSeconds</code> is less than <code>executionEngineRuntime</code> * <code>MaxCapacity</code>.</p>",
         "JobUpdate$MaxCapacity": "<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate a minimum of 2 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul> <p>For Glue version 2.0 jobs, you cannot instead specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p>",
@@ -5767,6 +5823,7 @@
       "base": null,
       "refs": {
         "Aggregate$Inputs": "<p>Specifies the fields and rows to use as inputs for the aggregate transform.</p>",
+        "AmazonRedshiftTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
         "ApplyMapping$Inputs": "<p>The data inputs identified by their node names.</p>",
         "BasicCatalogTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
         "DropDuplicates$Inputs": "<p>The data inputs identified by their node names.</p>",
@@ -5802,6 +5859,25 @@
     "OperationTimeoutException": {
       "base": "<p>The operation timed out.</p>",
       "refs": {
+      }
+    },
+    "Option": {
+      "base": "<p>Specifies an option value.</p>",
+      "refs": {
+        "AmazonRedshiftNodeData$Connection": "<p>The Glue connection to the Redshift cluster.</p>",
+        "AmazonRedshiftNodeData$Schema": "<p>The Redshift schema name when working with a direct connection.</p>",
+        "AmazonRedshiftNodeData$Table": "<p>The Redshift table name when working with a direct connection.</p>",
+        "AmazonRedshiftNodeData$CatalogDatabase": "<p>The name of the Glue Data Catalog database when working with a data catalog.</p>",
+        "AmazonRedshiftNodeData$CatalogTable": "<p>The Glue Data Catalog table name when working with a data catalog.</p>",
+        "AmazonRedshiftNodeData$IamRole": "<p>Optional. The role name use when connection to S3. The IAM role ill default to the role on the job when left blank.</p>",
+        "OptionList$member": null
+      }
+    },
+    "OptionList": {
+      "base": null,
+      "refs": {
+        "AmazonRedshiftNodeData$TableSchema": "<p>The array of schema output for a given node.</p>",
+        "AmazonRedshiftNodeData$SelectedColumns": "<p>The list of column names used to determine a matching record when doing a MERGE or APPEND with upsert.</p>"
       }
     },
     "OracleSQLCatalogSource": {
@@ -8395,7 +8471,7 @@
         "CreateSessionRequest$WorkerType": "<p>The type of predefined worker that is allocated to use for the session. Accepts a value of Standard, G.1X, G.2X, or G.025X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of memory, 128 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> <li> <p>For the <code>G.025X</code> worker type, each worker maps to 0.25 DPU (2 vCPU, 4 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 streaming jobs.</p> </li> </ul>",
         "DevEndpoint$WorkerType": "<p>The type of predefined worker that is allocated to the development endpoint. Accepts a value of Standard, G.1X, or G.2X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of memory, 128 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> </ul> <p>Known issue: when a development endpoint is created with the <code>G.2X</code> <code>WorkerType</code> configuration, the Spark drivers for the development endpoint will run on 4 vCPU, 16 GB of memory, and a 64 GB disk. </p>",
         "GetMLTransformResponse$WorkerType": "<p>The type of predefined worker that is allocated when this task runs. Accepts a value of Standard, G.1X, or G.2X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 64GB disk, and 1 executor per worker.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker provides 8 vCPU, 32 GB of memory and a 128GB disk, and 1 executor per worker.</p> </li> </ul>",
-        "Job$WorkerType": "<p>The type of predefined worker that is allocated when a job runs. Accepts a value of Standard, G.1X, G.2X, or G.025X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of memory, 128 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> <li> <p>For the <code>G.025X</code> worker type, each worker maps to 0.25 DPU (2 vCPU, 4 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 streaming jobs.</p> </li> </ul>",
+        "Job$WorkerType": "<p>The type of predefined worker that is allocated when a job runs. Accepts a value of Standard, G.1X, G.2X, or G.025X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of memory, 128 GB disk), and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.4X</code> worker type, each worker maps to 4 DPU (16 vCPU, 64 GB of memory, 256 GB disk), and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later jobs.</p> </li> <li> <p>For the <code>G.8X</code> worker type, each worker maps to 8 DPU (32 vCPU, 128 GB of memory, 512 GB disk), and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later jobs.</p> </li> <li> <p>For the <code>G.025X</code> worker type, each worker maps to 0.25 DPU (2 vCPU, 4 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 streaming jobs.</p> </li> </ul>",
         "JobRun$WorkerType": "<p>The type of predefined worker that is allocated when a job runs. Accepts a value of Standard, G.1X, G.2X, or G.025X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 64GB disk, and 1 executor per worker.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker provides 8 vCPU, 32 GB of memory and a 128GB disk, and 1 executor per worker.</p> </li> <li> <p>For the <code>G.025X</code> worker type, each worker maps to 0.25 DPU (2 vCPU, 4 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 streaming jobs.</p> </li> </ul>",
         "JobUpdate$WorkerType": "<p>The type of predefined worker that is allocated when a job runs. Accepts a value of Standard, G.1X, G.2X, or G.025X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of memory, 128 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> <li> <p>For the <code>G.025X</code> worker type, each worker maps to 0.25 DPU (2 vCPU, 4 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 streaming jobs.</p> </li> </ul>",
         "MLTransform$WorkerType": "<p>The type of predefined worker that is allocated when a task of this transform runs. Accepts a value of Standard, G.1X, or G.2X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 64GB disk, and 1 executor per worker.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker provides 8 vCPU, 32 GB of memory and a 128GB disk, and 1 executor per worker.</p> </li> </ul> <p> <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p> <ul> <li> <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p> </li> <li> <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p> </li> <li> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p> </li> <li> <p> <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p> </li> </ul>",

@@ -722,7 +722,13 @@ EOT;
         $html->open('div', 'operation-container');
 
         // Name
-        $html->section(3, $html->glyph('cog') . ' ' . $name, null, 'method-title');
+        $html->section(
+            3,
+            $html->glyph('cog') . ' ' . $name,
+            null,
+            'method-title',
+            $name
+        );
 
         // Code
         $html->elem(
@@ -912,7 +918,6 @@ EOT;
         ksort($members);
         foreach ($members as $name => $member) {
             $html->open('dt', 'param-def');
-            $html->elem('a', ['href' => '#' . $this->memberSlug($name)], '');
             $html->elem('span', 'term', $name);
             $html->close();
             $html->open('dd', 'param-def');

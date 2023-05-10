@@ -62,6 +62,38 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "BatchGetMemberEc2DeepInspectionStatus":{
+      "name":"BatchGetMemberEc2DeepInspectionStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ec2deepinspectionstatus/member/batch/get",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetMemberEc2DeepInspectionStatusRequest"},
+      "output":{"shape":"BatchGetMemberEc2DeepInspectionStatusResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "BatchUpdateMemberEc2DeepInspectionStatus":{
+      "name":"BatchUpdateMemberEc2DeepInspectionStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ec2deepinspectionstatus/member/batch/update",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchUpdateMemberEc2DeepInspectionStatusRequest"},
+      "output":{"shape":"BatchUpdateMemberEc2DeepInspectionStatusResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CancelFindingsReport":{
       "name":"CancelFindingsReport",
       "http":{
@@ -265,6 +297,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetEc2DeepInspectionConfiguration":{
+      "name":"GetEc2DeepInspectionConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ec2deepinspectionconfiguration/get",
+        "responseCode":200
+      },
+      "input":{"shape":"GetEc2DeepInspectionConfigurationRequest"},
+      "output":{"shape":"GetEc2DeepInspectionConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetFindingsReportStatus":{
       "name":"GetFindingsReportStatus",
       "http":{
@@ -455,6 +503,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "SearchVulnerabilities":{
+      "name":"SearchVulnerabilities",
+      "http":{
+        "method":"POST",
+        "requestUri":"/vulnerabilities/search",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchVulnerabilitiesRequest"},
+      "output":{"shape":"SearchVulnerabilitiesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -505,6 +569,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateEc2DeepInspectionConfiguration":{
+      "name":"UpdateEc2DeepInspectionConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ec2deepinspectionconfiguration/update",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateEc2DeepInspectionConfigurationRequest"},
+      "output":{"shape":"UpdateEc2DeepInspectionConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateFilter":{
       "name":"UpdateFilter",
       "http":{
@@ -518,6 +598,22 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateOrgEc2DeepInspectionConfiguration":{
+      "name":"UpdateOrgEc2DeepInspectionConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ec2deepinspectionconfiguration/org/update",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateOrgEc2DeepInspectionConfigurationRequest"},
+      "output":{"shape":"UpdateOrgEc2DeepInspectionConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
@@ -757,6 +853,15 @@
         "accountId":{"shape":"AccountId"}
       }
     },
+    "AtigData":{
+      "type":"structure",
+      "members":{
+        "firstSeen":{"shape":"FirstSeen"},
+        "lastSeen":{"shape":"LastSeen"},
+        "targets":{"shape":"Targets"},
+        "ttps":{"shape":"Ttps"}
+      }
+    },
     "AutoEnable":{
       "type":"structure",
       "required":[
@@ -907,6 +1012,33 @@
         "failedAccounts":{"shape":"FreeTrialInfoErrorList"}
       }
     },
+    "BatchGetMemberEc2DeepInspectionStatusRequest":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"AccountIdSet"}
+      }
+    },
+    "BatchGetMemberEc2DeepInspectionStatusResponse":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"MemberAccountEc2DeepInspectionStatusStateList"},
+        "failedAccountIds":{"shape":"FailedMemberAccountEc2DeepInspectionStatusStateList"}
+      }
+    },
+    "BatchUpdateMemberEc2DeepInspectionStatusRequest":{
+      "type":"structure",
+      "required":["accountIds"],
+      "members":{
+        "accountIds":{"shape":"MemberAccountEc2DeepInspectionStatusList"}
+      }
+    },
+    "BatchUpdateMemberEc2DeepInspectionStatusResponse":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"MemberAccountEc2DeepInspectionStatusStateList"},
+        "failedAccountIds":{"shape":"FailedMemberAccountEc2DeepInspectionStatusStateList"}
+      }
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -925,6 +1057,20 @@
         "reportId":{"shape":"ReportId"}
       }
     },
+    "CisaAction":{
+      "type":"string",
+      "min":0
+    },
+    "CisaData":{
+      "type":"structure",
+      "members":{
+        "action":{"shape":"CisaAction"},
+        "dateAdded":{"shape":"CisaDateAdded"},
+        "dateDue":{"shape":"CisaDateDue"}
+      }
+    },
+    "CisaDateAdded":{"type":"timestamp"},
+    "CisaDateDue":{"type":"timestamp"},
     "ClientToken":{
       "type":"string",
       "max":64,
@@ -1106,6 +1252,30 @@
       "type":"string",
       "enum":["USD"]
     },
+    "Cvss2":{
+      "type":"structure",
+      "members":{
+        "baseScore":{"shape":"Cvss2BaseScore"},
+        "scoringVector":{"shape":"Cvss2ScoringVector"}
+      }
+    },
+    "Cvss2BaseScore":{"type":"double"},
+    "Cvss2ScoringVector":{
+      "type":"string",
+      "min":0
+    },
+    "Cvss3":{
+      "type":"structure",
+      "members":{
+        "baseScore":{"shape":"Cvss3BaseScore"},
+        "scoringVector":{"shape":"Cvss3ScoringVector"}
+      }
+    },
+    "Cvss3BaseScore":{"type":"double"},
+    "Cvss3ScoringVector":{
+      "type":"string",
+      "min":0
+    },
     "CvssScore":{
       "type":"structure",
       "required":[
@@ -1156,6 +1326,15 @@
     "CvssScoreList":{
       "type":"list",
       "member":{"shape":"CvssScore"}
+    },
+    "Cwe":{
+      "type":"string",
+      "min":0
+    },
+    "Cwes":{
+      "type":"list",
+      "member":{"shape":"Cwe"},
+      "min":0
     },
     "DateFilter":{
       "type":"structure",
@@ -1236,6 +1415,12 @@
         "kmsKeyArn":{"shape":"String"}
       }
     },
+    "DetectionPlatforms":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "max":100,
+      "min":0
+    },
     "DisableDelegatedAdminAccountRequest":{
       "type":"structure",
       "required":["delegatedAdminAccountId"],
@@ -1288,6 +1473,15 @@
     "Double":{
       "type":"double",
       "box":true
+    },
+    "Ec2DeepInspectionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVATED",
+        "DEACTIVATED",
+        "PENDING",
+        "FAILED"
+      ]
     },
     "Ec2InstanceAggregation":{
       "type":"structure",
@@ -1440,6 +1634,13 @@
         "failedAccounts":{"shape":"FailedAccountList"}
       }
     },
+    "Epss":{
+      "type":"structure",
+      "members":{
+        "score":{"shape":"EpssScore"}
+      }
+    },
+    "EpssScore":{"type":"double"},
     "ErrorCode":{
       "type":"string",
       "enum":[
@@ -1470,6 +1671,13 @@
         "YES",
         "NO"
       ]
+    },
+    "ExploitObserved":{
+      "type":"structure",
+      "members":{
+        "firstSeen":{"shape":"FirstSeen"},
+        "lastSeen":{"shape":"LastSeen"}
+      }
     },
     "ExploitabilityDetails":{
       "type":"structure",
@@ -1504,6 +1712,21 @@
     "FailedAccountList":{
       "type":"list",
       "member":{"shape":"FailedAccount"},
+      "max":100,
+      "min":0
+    },
+    "FailedMemberAccountEc2DeepInspectionStatusState":{
+      "type":"structure",
+      "required":["accountId"],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "ec2ScanStatus":{"shape":"Status"},
+        "errorMessage":{"shape":"NonEmptyString"}
+      }
+    },
+    "FailedMemberAccountEc2DeepInspectionStatusStateList":{
+      "type":"list",
+      "member":{"shape":"FailedMemberAccountEc2DeepInspectionStatusState"},
       "max":100,
       "min":0
     },
@@ -1652,8 +1875,9 @@
     },
     "FindingArn":{
       "type":"string",
-      "max":1024,
-      "min":1
+      "max":100,
+      "min":1,
+      "pattern":"^arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:finding/[a-f0-9]{32}$"
     },
     "FindingDescription":{
       "type":"string",
@@ -1710,6 +1934,7 @@
         "ALL"
       ]
     },
+    "FirstSeen":{"type":"timestamp"},
     "FixAvailable":{
       "type":"string",
       "enum":[
@@ -1815,6 +2040,20 @@
       "type":"structure",
       "members":{
         "delegatedAdmin":{"shape":"DelegatedAdmin"}
+      }
+    },
+    "GetEc2DeepInspectionConfigurationRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetEc2DeepInspectionConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "errorMessage":{"shape":"NonEmptyString"},
+        "orgPackagePaths":{"shape":"PathList"},
+        "packagePaths":{"shape":"PathList"},
+        "status":{"shape":"Ec2DeepInspectionStatus"}
       }
     },
     "GetFindingsReportStatusRequest":{
@@ -2039,6 +2278,7 @@
         "vpcId":{"shape":"VpcId"}
       }
     },
+    "LastSeen":{"type":"timestamp"},
     "LayerList":{
       "type":"list",
       "member":{"shape":"LambdaLayerArn"},
@@ -2304,6 +2544,38 @@
         "updatedAt":{"shape":"DateTimeTimestamp"}
       }
     },
+    "MemberAccountEc2DeepInspectionStatus":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "activateDeepInspection"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "activateDeepInspection":{"shape":"Boolean"}
+      }
+    },
+    "MemberAccountEc2DeepInspectionStatusList":{
+      "type":"list",
+      "member":{"shape":"MemberAccountEc2DeepInspectionStatus"},
+      "max":100,
+      "min":0
+    },
+    "MemberAccountEc2DeepInspectionStatusState":{
+      "type":"structure",
+      "required":["accountId"],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "errorMessage":{"shape":"NonEmptyString"},
+        "status":{"shape":"Ec2DeepInspectionStatus"}
+      }
+    },
+    "MemberAccountEc2DeepInspectionStatusStateList":{
+      "type":"list",
+      "member":{"shape":"MemberAccountEc2DeepInspectionStatusState"},
+      "max":100,
+      "min":0
+    },
     "MemberList":{
       "type":"list",
       "member":{"shape":"Member"},
@@ -2444,7 +2716,8 @@
         "PIP",
         "PYTHONPKG",
         "NODEPKG",
-        "POM"
+        "POM",
+        "GEMSPEC"
       ]
     },
     "PackageName":{
@@ -2495,6 +2768,18 @@
         "vulnerabilityId":{"shape":"VulnerabilityId"},
         "vulnerablePackages":{"shape":"VulnerablePackageList"}
       }
+    },
+    "Path":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^(?:/(?:\\.[-\\w]+|[-\\w]+(?:\\.[-\\w]+)?))+/?$"
+    },
+    "PathList":{
+      "type":"list",
+      "member":{"shape":"Path"},
+      "max":5,
+      "min":0
     },
     "Permission":{
       "type":"structure",
@@ -2554,6 +2839,16 @@
         "Url":{"shape":"NonEmptyString"},
         "text":{"shape":"NonEmptyString"}
       }
+    },
+    "RelatedVulnerabilities":{
+      "type":"list",
+      "member":{"shape":"RelatedVulnerability"},
+      "max":100,
+      "min":0
+    },
+    "RelatedVulnerability":{
+      "type":"string",
+      "min":0
     },
     "RelationshipStatus":{
       "type":"string",
@@ -2780,7 +3075,13 @@
         "NO_INVENTORY",
         "STALE_INVENTORY",
         "EXCLUDED_BY_TAG",
-        "UNSUPPORTED_RUNTIME"
+        "UNSUPPORTED_RUNTIME",
+        "UNSUPPORTED_MEDIA_TYPE",
+        "UNSUPPORTED_CONFIG_FILE",
+        "DEEP_INSPECTION_PACKAGE_COLLECTION_LIMIT_EXCEEDED",
+        "DEEP_INSPECTION_DAILY_SSM_INVENTORY_LIMIT_EXCEEDED",
+        "DEEP_INSPECTION_COLLECTION_TIME_LIMIT_EXCEEDED",
+        "DEEP_INSPECTION_NO_INVENTORY"
       ]
     },
     "ScanType":{
@@ -2789,6 +3090,29 @@
         "NETWORK",
         "PACKAGE"
       ]
+    },
+    "SearchVulnerabilitiesFilterCriteria":{
+      "type":"structure",
+      "required":["vulnerabilityIds"],
+      "members":{
+        "vulnerabilityIds":{"shape":"VulnIdList"}
+      }
+    },
+    "SearchVulnerabilitiesRequest":{
+      "type":"structure",
+      "required":["filterCriteria"],
+      "members":{
+        "filterCriteria":{"shape":"SearchVulnerabilitiesFilterCriteria"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "SearchVulnerabilitiesResponse":{
+      "type":"structure",
+      "required":["vulnerabilities"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "vulnerabilities":{"shape":"Vulnerabilities"}
+      }
     },
     "SecurityGroupId":{
       "type":"string",
@@ -3016,6 +3340,16 @@
       "members":{
       }
     },
+    "Target":{
+      "type":"string",
+      "max":50,
+      "min":0
+    },
+    "Targets":{
+      "type":"list",
+      "member":{"shape":"Target"},
+      "min":0
+    },
     "ThrottlingException":{
       "type":"structure",
       "required":["message"],
@@ -3063,6 +3397,16 @@
         "ALL"
       ]
     },
+    "Ttp":{
+      "type":"string",
+      "max":30,
+      "min":0
+    },
+    "Ttps":{
+      "type":"list",
+      "member":{"shape":"Ttp"},
+      "min":0
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -3099,6 +3443,22 @@
       "members":{
       }
     },
+    "UpdateEc2DeepInspectionConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "activateDeepInspection":{"shape":"Boolean"},
+        "packagePaths":{"shape":"PathList"}
+      }
+    },
+    "UpdateEc2DeepInspectionConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "errorMessage":{"shape":"NonEmptyString"},
+        "orgPackagePaths":{"shape":"PathList"},
+        "packagePaths":{"shape":"PathList"},
+        "status":{"shape":"Ec2DeepInspectionStatus"}
+      }
+    },
     "UpdateFilterRequest":{
       "type":"structure",
       "required":["filterArn"],
@@ -3116,6 +3476,18 @@
       "required":["arn"],
       "members":{
         "arn":{"shape":"FilterArn"}
+      }
+    },
+    "UpdateOrgEc2DeepInspectionConfigurationRequest":{
+      "type":"structure",
+      "required":["orgPackagePaths"],
+      "members":{
+        "orgPackagePaths":{"shape":"PathList"}
+      }
+    },
+    "UpdateOrgEc2DeepInspectionConfigurationResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "UpdateOrganizationConfigurationRequest":{
@@ -3219,6 +3591,13 @@
         "OTHER"
       ]
     },
+    "VendorCreatedAt":{"type":"timestamp"},
+    "VendorSeverity":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "VendorUpdatedAt":{"type":"timestamp"},
     "Version":{
       "type":"string",
       "pattern":"^\\$LATEST|[0-9]+$"
@@ -3227,6 +3606,46 @@
       "type":"string",
       "pattern":"^vpc-([a-z0-9]{8}|[a-z0-9]{17}|\\*)$"
     },
+    "VulnId":{
+      "type":"string",
+      "pattern":"^CVE-[12][0-9]{3}-[0-9]{1,10}$"
+    },
+    "VulnIdList":{
+      "type":"list",
+      "member":{"shape":"VulnId"},
+      "max":1,
+      "min":1
+    },
+    "Vulnerabilities":{
+      "type":"list",
+      "member":{"shape":"Vulnerability"},
+      "max":1,
+      "min":0
+    },
+    "Vulnerability":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "atigData":{"shape":"AtigData"},
+        "cisaData":{"shape":"CisaData"},
+        "cvss2":{"shape":"Cvss2"},
+        "cvss3":{"shape":"Cvss3"},
+        "cwes":{"shape":"Cwes"},
+        "description":{"shape":"VulnerabilityDescription"},
+        "detectionPlatforms":{"shape":"DetectionPlatforms"},
+        "epss":{"shape":"Epss"},
+        "exploitObserved":{"shape":"ExploitObserved"},
+        "id":{"shape":"NonEmptyString"},
+        "referenceUrls":{"shape":"VulnerabilityReferenceUrls"},
+        "relatedVulnerabilities":{"shape":"RelatedVulnerabilities"},
+        "source":{"shape":"VulnerabilitySource"},
+        "sourceUrl":{"shape":"VulnerabilitySourceUrl"},
+        "vendorCreatedAt":{"shape":"VendorCreatedAt"},
+        "vendorSeverity":{"shape":"VendorSeverity"},
+        "vendorUpdatedAt":{"shape":"VendorUpdatedAt"}
+      }
+    },
+    "VulnerabilityDescription":{"type":"string"},
     "VulnerabilityId":{
       "type":"string",
       "max":128,
@@ -3235,6 +3654,24 @@
     "VulnerabilityIdList":{
       "type":"list",
       "member":{"shape":"VulnerabilityId"}
+    },
+    "VulnerabilityReferenceUrl":{
+      "type":"string",
+      "min":0
+    },
+    "VulnerabilityReferenceUrls":{
+      "type":"list",
+      "member":{"shape":"VulnerabilityReferenceUrl"},
+      "max":100,
+      "min":0
+    },
+    "VulnerabilitySource":{
+      "type":"string",
+      "enum":["NVD"]
+    },
+    "VulnerabilitySourceUrl":{
+      "type":"string",
+      "min":0
     },
     "VulnerablePackage":{
       "type":"structure",

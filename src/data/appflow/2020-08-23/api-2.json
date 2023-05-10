@@ -12,6 +12,22 @@
     "uid":"appflow-2020-08-23"
   },
   "operations":{
+    "CancelFlowExecutions":{
+      "name":"CancelFlowExecutions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cancel-flow-executions"
+      },
+      "input":{"shape":"CancelFlowExecutionsRequest"},
+      "output":{"shape":"CancelFlowExecutionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateConnectorProfile":{
       "name":"CreateConnectorProfile",
       "http":{
@@ -489,7 +505,7 @@
     },
     "AuthCode":{
       "type":"string",
-      "max":2048,
+      "max":4096,
       "pattern":"\\S+"
     },
     "AuthCodeUrl":{
@@ -563,6 +579,20 @@
       "type":"string",
       "max":18,
       "pattern":"\\S+"
+    },
+    "CancelFlowExecutionsRequest":{
+      "type":"structure",
+      "required":["flowName"],
+      "members":{
+        "flowName":{"shape":"FlowName"},
+        "executionIds":{"shape":"ExecutionIds"}
+      }
+    },
+    "CancelFlowExecutionsResponse":{
+      "type":"structure",
+      "members":{
+        "invalidExecutions":{"shape":"ExecutionIds"}
+      }
     },
     "CatalogType":{
       "type":"string",
@@ -1554,6 +1584,12 @@
       "max":256,
       "pattern":"\\S+"
     },
+    "ExecutionIds":{
+      "type":"list",
+      "member":{"shape":"ExecutionId"},
+      "max":100,
+      "min":0
+    },
     "ExecutionMessage":{
       "type":"string",
       "max":2048,
@@ -1586,7 +1622,9 @@
       "enum":[
         "InProgress",
         "Successful",
-        "Error"
+        "Error",
+        "CancelStarted",
+        "Canceled"
       ]
     },
     "FieldType":{"type":"string"},
@@ -1865,6 +1903,12 @@
       "exception":true
     },
     "JavaBoolean":{"type":"boolean"},
+    "JwtToken":{
+      "type":"string",
+      "max":8000,
+      "pattern":"^([a-zA-Z0-9_=]+)\\.([a-zA-Z0-9_=]+)\\.([a-zA-Z0-9_\\-\\+\\/=]*)",
+      "sensitive":true
+    },
     "KMSArn":{
       "type":"string",
       "max":2048,
@@ -2120,7 +2164,8 @@
       "type":"string",
       "enum":[
         "CLIENT_CREDENTIALS",
-        "AUTHORIZATION_CODE"
+        "AUTHORIZATION_CODE",
+        "JWT_BEARER"
       ]
     },
     "OAuth2GrantTypeSupportedList":{
@@ -2471,7 +2516,7 @@
     },
     "RefreshToken":{
       "type":"string",
-      "max":2048,
+      "max":4096,
       "pattern":"\\S+"
     },
     "Region":{
@@ -2706,7 +2751,9 @@
         "accessToken":{"shape":"AccessToken"},
         "refreshToken":{"shape":"RefreshToken"},
         "oAuthRequest":{"shape":"ConnectorOAuthRequest"},
-        "clientCredentialsArn":{"shape":"ClientCredentialsArn"}
+        "clientCredentialsArn":{"shape":"ClientCredentialsArn"},
+        "oAuth2GrantType":{"shape":"OAuth2GrantType"},
+        "jwtToken":{"shape":"JwtToken"}
       }
     },
     "SalesforceConnectorProfileProperties":{
@@ -2744,7 +2791,8 @@
       "type":"structure",
       "members":{
         "oAuthScopes":{"shape":"OAuthScopeList"},
-        "dataTransferApis":{"shape":"SalesforceDataTransferApiList"}
+        "dataTransferApis":{"shape":"SalesforceDataTransferApiList"},
+        "oauth2GrantTypesSupported":{"shape":"OAuth2GrantTypeSupportedList"}
       }
     },
     "SalesforceSourceProperties":{

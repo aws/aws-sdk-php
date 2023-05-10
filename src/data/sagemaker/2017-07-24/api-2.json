@@ -3755,7 +3755,9 @@
         "ml.g5.12xlarge",
         "ml.g5.24xlarge",
         "ml.g5.48xlarge",
-        "ml.geospatial.interactive"
+        "ml.geospatial.interactive",
+        "ml.p4d.24xlarge",
+        "ml.p4de.24xlarge"
       ]
     },
     "AppList":{
@@ -4155,7 +4157,8 @@
         "CompressionType":{"shape":"CompressionType"},
         "TargetAttributeName":{"shape":"TargetAttributeName"},
         "ContentType":{"shape":"ContentType"},
-        "ChannelType":{"shape":"AutoMLChannelType"}
+        "ChannelType":{"shape":"AutoMLChannelType"},
+        "SampleWeightAttributeName":{"shape":"SampleWeightAttributeName"}
       }
     },
     "AutoMLChannelType":{
@@ -4714,7 +4717,8 @@
     "CanvasAppSettings":{
       "type":"structure",
       "members":{
-        "TimeSeriesForecastingSettings":{"shape":"TimeSeriesForecastingSettings"}
+        "TimeSeriesForecastingSettings":{"shape":"TimeSeriesForecastingSettings"},
+        "ModelRegisterSettings":{"shape":"ModelRegisterSettings"}
       }
     },
     "CapacitySize":{
@@ -9352,7 +9356,8 @@
       "members":{
         "VariantName":{"shape":"VariantName"},
         "DesiredWeight":{"shape":"VariantWeight"},
-        "DesiredInstanceCount":{"shape":"TaskCount"}
+        "DesiredInstanceCount":{"shape":"TaskCount"},
+        "ServerlessUpdateConfig":{"shape":"ProductionVariantServerlessUpdateConfig"}
       }
     },
     "DesiredWeightAndCapacityList":{
@@ -15101,6 +15106,13 @@
         "GroundTruthS3Input":{"shape":"MonitoringGroundTruthS3Input"}
       }
     },
+    "ModelRegisterSettings":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"FeatureStatus"},
+        "CrossAccountModelRegisterRoleArn":{"shape":"RoleArn"}
+      }
+    },
     "ModelSortKey":{
       "type":"string",
       "enum":[
@@ -16929,7 +16941,13 @@
         "ml.r6gd.8xlarge",
         "ml.r6gd.12xlarge",
         "ml.r6gd.16xlarge",
-        "ml.p4de.24xlarge"
+        "ml.p4de.24xlarge",
+        "ml.trn1.2xlarge",
+        "ml.trn1.32xlarge",
+        "ml.inf2.xlarge",
+        "ml.inf2.8xlarge",
+        "ml.inf2.24xlarge",
+        "ml.inf2.48xlarge"
       ]
     },
     "ProductionVariantList":{
@@ -16952,7 +16970,15 @@
       ],
       "members":{
         "MemorySizeInMB":{"shape":"ServerlessMemorySizeInMB"},
-        "MaxConcurrency":{"shape":"ServerlessMaxConcurrency"}
+        "MaxConcurrency":{"shape":"ServerlessMaxConcurrency"},
+        "ProvisionedConcurrency":{"shape":"ServerlessProvisionedConcurrency"}
+      }
+    },
+    "ProductionVariantServerlessUpdateConfig":{
+      "type":"structure",
+      "members":{
+        "MaxConcurrency":{"shape":"ServerlessMaxConcurrency"},
+        "ProvisionedConcurrency":{"shape":"ServerlessProvisionedConcurrency"}
       }
     },
     "ProductionVariantStatus":{
@@ -17984,6 +18010,12 @@
         "Disabled"
       ]
     },
+    "SampleWeightAttributeName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_-]+$"
+    },
     "SamplingPercentage":{
       "type":"integer",
       "max":100,
@@ -18178,6 +18210,11 @@
       "type":"integer",
       "max":6144,
       "min":1024
+    },
+    "ServerlessProvisionedConcurrency":{
+      "type":"integer",
+      "max":200,
+      "min":1
     },
     "ServiceCatalogEntityId":{
       "type":"string",

@@ -27,6 +27,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeManagedEndpointAsync(array $args = [])
  * @method \Aws\Result describeVirtualCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeVirtualClusterAsync(array $args = [])
+ * @method \Aws\Result getManagedEndpointSessionCredentials(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getManagedEndpointSessionCredentialsAsync(array $args = [])
  * @method \Aws\Result listJobRuns(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listJobRunsAsync(array $args = [])
  * @method \Aws\Result listJobTemplates(array $args = [])

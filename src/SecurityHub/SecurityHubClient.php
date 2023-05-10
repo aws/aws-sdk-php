@@ -79,6 +79,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getEnabledStandardsAsync(array $args = [])
  * @method \Aws\Result getFindingAggregator(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFindingAggregatorAsync(array $args = [])
+ * @method \Aws\Result getFindingHistory(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getFindingHistoryAsync(array $args = [])
  * @method \Aws\Result getFindings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFindingsAsync(array $args = [])
  * @method \Aws\Result getInsightResults(array $args = [])
