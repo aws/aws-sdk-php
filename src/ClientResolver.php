@@ -862,20 +862,44 @@ class ClientResolver
         if (function_exists('php_uname')
             && !in_array('php_uname', $disabledFunctions, true)
         ) {
-            $osName = "OS/" . php_uname('s') . '/' . php_uname('r');
+            $osName = "OS/" . php_uname('s') . '#' . php_uname('r');
             if (!empty($osName)) {
                 $userAgent []= $osName;
             }
         }
 
         //Add the language version
-        $userAgent []= 'lang/php/' . phpversion();
+        $userAgent []= 'lang/php#' . phpversion();
 
         //Add exec environment if present
         if ($executionEnvironment = getenv('AWS_EXECUTION_ENV')) {
             $userAgent []= $executionEnvironment;
         }
 
+        //Add endpoint discovery if set
+        if (isset($args['endpoint_discovery'])) {
+            if (($args['endpoint_discovery'] instanceof \Aws\EndpointDiscovery\Configuration
+                && $args['endpoint_discovery']->isEnabled())
+            ) {
+                $userAgent []= 'cfg/endpoint-discovery';
+            } elseif (is_array($args['endpoint_discovery'])
+                && isset($args['endpoint_discovery']['enabled'])
+                && $args['endpoint_discovery']['enabled']
+            ) {
+                $userAgent []= 'cfg/endpoint-discovery';
+            }
+        }
+
+        //Add retry mode if set
+        if (isset($args['retries'])) {
+            if ($args['retries'] instanceof \Aws\Retry\Configuration) {
+                $userAgent []= 'cfg/retry-mode#' . $args["retries"]->getMode();
+            } elseif (is_array($args['retries'])
+                && isset($args["retries"]["mode"])
+            ) {
+                $userAgent []= 'cfg/retry-mode#' . $args["retries"]["mode"];
+            }
+        }
         //Add the input to the end
         if ($inputUserAgent){
             if (!is_array($inputUserAgent)) {
