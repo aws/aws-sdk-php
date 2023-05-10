@@ -142,7 +142,10 @@ $.Autocompleter = function(input, options) {
 
 			// matches also semicolon
 			case options.multiple && $.trim(options.multipleSeparator) == "," && KEY.COMMA:
-			case KEY.TAB:
+				event.preventDefault();
+				blockSubmit = true;
+				return false;
+				break;
 			case KEY.RETURN:
 				if( selectCurrent() ) {
 					// stop default to prevent a form submit, Opera needs special handling
@@ -151,7 +154,7 @@ $.Autocompleter = function(input, options) {
 					return false;
 				}
 				break;
-
+			case KEY.TAB:
 			case KEY.ESC:
 				select.hide();
 				break;
