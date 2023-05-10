@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.10 - 2023-05-10
 
 * `Aws\EMR` - EMR Studio now supports programmatically executing a Notebooks on an EMR on EKS cluster. In addition, notebooks can now be executed by specifying its location in S3.
 * `Aws\RDS` - Amazon Relational Database Service (RDS) updates for the new Aurora I/O-Optimized storage type for Amazon Aurora DB clusters
