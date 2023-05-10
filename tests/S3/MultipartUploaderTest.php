@@ -317,7 +317,7 @@ class MultipartUploaderTest extends TestCase
         $uploader->upload();
     }
 
-    public function testFailedUploadPrintsPartialProgressBar($counterLimit)
+    public function testFailedUploadPrintsPartialProgressBar()
     {
         $partialBar = [ "Transfer initiated...\n|                    | 0.0%\n",
                         "|==                  | 12.5%\n",
@@ -355,7 +355,8 @@ class MultipartUploaderTest extends TestCase
             $source,
             [
                 'bucket' => 'test-bucket',
-                'key' => 'test-key'
+                'key' => 'test-key',
+                'track_upload' => 'true'
             ]
         );
         $uploader->upload();

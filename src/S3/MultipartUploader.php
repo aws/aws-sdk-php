@@ -70,8 +70,9 @@ class MultipartUploader extends AbstractUploader
             'key'    => null,
             'exception_class' => S3MultipartUploadException::class,
         ]);
-
-        $this->getState()->setProgressThresholds($this->source->getSize());
+        if (isset($config['track_upload']) && $config['track_upload']) {
+            $this->getState()->setProgressThresholds($this->source->getSize());
+        }
     }
 
     protected function loadUploadWorkflowInfo()

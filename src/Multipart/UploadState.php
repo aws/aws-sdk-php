@@ -39,19 +39,14 @@ class UploadState
 
     private $progressThresholds = [];
 
-    private $displayUploadProgress;
+//    private $displayUploadProgress;
 
     /**
      * @param array $id Params used to identity the upload.
      */
-    public function __construct(array $id, array $config = [])
+    public function __construct(array $id)
     {
         $this->id = $id;
-        if (isset($config['track_upload']) && $config['track_upload']) {
-            $this->displayUploadProgress = true;
-        } else {
-            $this->displayUploadProgress = false;
-        }
     }
 
     /**
@@ -117,7 +112,8 @@ class UploadState
             throw new \InvalidArgumentException('The size of the bytes being uploaded must be an int.');
         }
 
-        while (!empty($this->progressBar && $this->displayUploadProgress)
+        while ($this->progressThresholds
+                && !empty($this->progressBar)
                 && $totalUploaded >= array_key_first($this->progressBar))
         {
             echo $this->progressBar[array_key_first($this->progressBar)];

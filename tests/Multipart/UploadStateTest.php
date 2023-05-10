@@ -89,7 +89,7 @@ class UploadStateTest extends TestCase
         $progressBar
     ) {
         $config['track_upload'] = true;
-        $state = new UploadState([], $config);
+        $state = new UploadState([]);
         $state->setProgressThresholds($totalSize);
         $state->displayProgress($totalUploaded);
 
@@ -180,7 +180,7 @@ class UploadStateTest extends TestCase
     public function testUploadThresholds($totalSize)
     {
         $config['track_upload'] = true;
-        $state = new UploadState([], $config);
+        $state = new UploadState([]);
         $threshold = $state->setProgressThresholds($totalSize);
 
         $this->assertIsArray($threshold);

@@ -76,9 +76,11 @@ class MultipartCopy extends AbstractUploadManager
             array_change_key_case($config) + ['source_metadata' => null]
         );
 
-        $this->getState()->setProgressThresholds(
-            $this->sourceMetadata["ContentLength"]
-        );
+        if (isset($config['track_upload']) && $config['track_upload']) {
+            $this->getState()->setProgressThresholds(
+                $this->sourceMetadata["ContentLength"]
+            );
+        }
     }
 
     /**
