@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.11 - 2023-05-11
 
 * `Aws\Connect` - This release updates GetMetricDataV2 API, to support metric data up-to last 35 days
 * `Aws\ElastiCache` - Added support to modify the cluster mode configuration for the existing ElastiCache ReplicationGroups. Customers can now modify the configuration from cluster mode disabled to cluster mode enabled.
