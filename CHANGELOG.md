@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.269.10 - 2023-05-10
+
+* `Aws\EMR` - EMR Studio now supports programmatically executing a Notebooks on an EMR on EKS cluster. In addition, notebooks can now be executed by specifying its location in S3.
+* `Aws\RDS` - Amazon Relational Database Service (RDS) updates for the new Aurora I/O-Optimized storage type for Amazon Aurora DB clusters
+* `Aws\SWF` - This release adds a new API parameter to exclude old history events from decision tasks.
+
 ## 3.269.9 - 2023-05-09
 
 * `Aws\ApplicationAutoScaling` - With this release, Amazon SageMaker Serverless Inference customers can use Application Auto Scaling to auto scale the provisioned concurrency of their serverless endpoints.
