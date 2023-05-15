@@ -7,7 +7,7 @@ use Aws\ResultInterface;
 
 trait MultipartUploadingTrait
 {
-    private $uploadedBytes = 0;
+//    private $uploadedBytes = 0;
 
     /**
      * Creates an UploadState object for a multipart upload by querying the
@@ -53,13 +53,14 @@ trait MultipartUploadingTrait
 
     protected function handleResult(CommandInterface $command, ResultInterface $result)
     {
-        $this->getState()->markPartAsUploaded($command['PartNumber'], [
+        $this->getState()->markPartAsUploaded($command['PartNumber'], $command["ContentLength"],
+            [
             'PartNumber' => $command['PartNumber'],
             'ETag'       => $this->extractETag($result),
         ]);
 
-        $this->uploadedBytes += $command["ContentLength"];
-        $this->getState()->displayProgress($this->uploadedBytes);
+//        $this->uploadedBytes += $command["ContentLength"];
+//        $this->getState()->displayProgress($this->uploadedBytes);
     }
 
     abstract protected function extractETag(ResultInterface $result);

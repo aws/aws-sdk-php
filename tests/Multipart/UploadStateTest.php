@@ -88,7 +88,6 @@ class UploadStateTest extends TestCase
         $totalUploaded,
         $progressBar
     ) {
-        $config['track_upload'] = true;
         $state = new UploadState([]);
         $state->setProgressThresholds($totalSize);
         $state->displayProgress($totalUploaded);
@@ -179,7 +178,6 @@ class UploadStateTest extends TestCase
      */
     public function testUploadThresholds($totalSize)
     {
-        $config['track_upload'] = true;
         $state = new UploadState([]);
         $threshold = $state->setProgressThresholds($totalSize);
 
@@ -214,7 +212,7 @@ class UploadStateTest extends TestCase
     public function testDisplayProgressThrowsException($totalUploaded)
     {
         $state = new UploadState([]);
-        $this->expectExceptionMessage('The size of the bytes being uploaded must be an int.');
+        $this->expectExceptionMessage('The size of the bytes being uploaded must be a number.');
         $this->expectException(\InvalidArgumentException::class);
 
         $state->displayProgress($totalUploaded);
@@ -225,8 +223,7 @@ class UploadStateTest extends TestCase
         return [
             [''],
             [null],
-            ['1234'],
-            ['aws'],
+            ['aws']
         ];
     }
 }

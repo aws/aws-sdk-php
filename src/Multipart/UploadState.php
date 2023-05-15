@@ -39,7 +39,7 @@ class UploadState
 
     private $progressThresholds = [];
 
-//    private $displayUploadProgress;
+    private $uploadedBytes = 0;
 
     /**
      * @param array $id Params used to identity the upload.
@@ -61,7 +61,7 @@ class UploadState
     }
 
     /**
-     * Set's the "upload_id", or 3rd part of the upload's ID. This typically
+     * Sets the "upload_id", or 3rd part of the upload's ID. This typically
      * only needs to be done after initiating an upload.
      *
      * @param string $key   The param key of the upload_id.
@@ -108,8 +108,8 @@ class UploadState
 
     public function displayProgress($totalUploaded)
     {
-        if(!is_int($totalUploaded)) {
-            throw new \InvalidArgumentException('The size of the bytes being uploaded must be an int.');
+        if(!is_numeric($totalUploaded)) {
+            throw new \InvalidArgumentException('The size of the bytes being uploaded must be a number.');
         }
 
         while ($this->progressThresholds
@@ -128,9 +128,13 @@ class UploadState
      * @param array $partData   Data from the upload operation that needs to be
      *                          recalled during the complete operation.
      */
-    public function markPartAsUploaded($partNumber, array $partData = [])
+    public function markPartAsUploaded($partNumber, $contentBytes, array $partData = [])
     {
         $this->uploadedParts[$partNumber] = $partData;
+//        change contentBytes to contentLength depending on whether glacier has that too
+        $this->uploadedBytes += $contentBytes;
+        $this->displayProgress($this->uploadedBytes);
+
     }
 
     /**
