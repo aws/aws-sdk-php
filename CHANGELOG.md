@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.12 - 2023-05-15
 
 * `Aws\Athena` - You can now define custom spark properties at start of the session for use cases like cluster encryption, table formats, and general Spark tuning.
 * `Aws\CodeCatalyst` - With this release, the users can list the active sessions connected to their Dev Environment on AWS CodeCatalyst
