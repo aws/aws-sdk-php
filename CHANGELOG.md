@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Detective` - Added and updated API operations in Detective to support the integration of ASFF Security Hub findings.
+* `Aws\DirectConnect` - This release includes an update to the mtu value for CreateTransitVirtualInterface from 9001 mtu to 8500 mtu.
+* `Aws\Glue` - Add Support for Tags for Custom Entity Types
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+* `Aws\WAFV2` - My AWS Service (placeholder) - You can now rate limit web requests based on aggregation keys other than IP addresses, and you can aggregate using combinations of keys. You can also rate limit all requests that match a scope-down statement, without further aggregation.
+
 ## 3.269.12 - 2023-05-15
 
 * `Aws\Athena` - You can now define custom spark properties at start of the session for use cases like cluster encryption, table formats, and general Spark tuning.
