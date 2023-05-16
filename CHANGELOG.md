@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.13 - 2023-05-16
 
 * `Aws\Detective` - Added and updated API operations in Detective to support the integration of ASFF Security Hub findings.
 * `Aws\DirectConnect` - This release includes an update to the mtu value for CreateTransitVirtualInterface from 9001 mtu to 8500 mtu.
