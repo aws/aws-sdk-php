@@ -5,8 +5,8 @@ use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
-use Aws\OperationTrait\RequestCompressionTrait\RequestCompressionMiddleware;
 use Aws\EndpointV2\EndpointProviderV2;
+use Aws\RequestCompression\RequestCompressionMiddleware;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
 
@@ -449,6 +449,7 @@ class AwsClient implements AwsClientInterface
             'signer'
         );
     }
+
     private function addRequestCompressionMiddleware($config)
     {
         if (empty($config['disable_request_compression'])

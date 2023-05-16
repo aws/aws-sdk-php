@@ -1,8 +1,8 @@
 <?php
-namespace Aws\OperationTrait\RequestCompressionTrait\DisableRequestCompression;
+namespace Aws\RequestCompression\DisableRequestCompression;
 
 use Aws;
-use Aws\OperationTrait\RequestCompressionTrait\Exception\ConfigurationException;
+use Aws\RequestCompression\Exception\ConfigurationException;
 
 class Configuration implements ConfigurationInterface
 {

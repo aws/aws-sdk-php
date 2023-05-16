@@ -1,5 +1,5 @@
 <?php
-namespace Aws\OperationTrait\RequestCompressionTrait\Exception;
+namespace Aws\RequestCompression\Exception;
 
 use Aws\HasMonitoringEventsTrait;
 use Aws\MonitoringEventsInterface;

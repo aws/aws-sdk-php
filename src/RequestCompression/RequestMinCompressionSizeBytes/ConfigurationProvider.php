@@ -1,15 +1,16 @@
 <?php
-namespace Aws\OperationTrait\RequestCompressionTrait\DisableRequestCompression;
+namespace Aws\RequestCompression\RequestMinCompressionSizeBytes;
 
 use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
 use Aws\ConfigurationProviderInterface;
-use Aws\OperationTrait\RequestCompressionTrait\Exception\ConfigurationException;
+use Aws\RequestCompression\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 
 /**
  * A configuration provider is a function that returns a promise that is
- * fulfilled with a {@see Aws\OperationTrait\RequestCompressionTrait\ConfigurationInterface}
+ * fulfilled with a
+ * {@see Aws\OperationTrait\RequestCompressionTrait\RequestMinCompressionSizeBytes\ConfigurationInterface}
  * or rejected with an {@see Aws\OperationTrait\RequestCompressionTrait\Exception}.
  *
  * <code>
@@ -22,8 +23,8 @@ use GuzzleHttp\Promise;
  * Configuration providers can be composed to create configuration using
  * conditional logic that can create different configurations in different
  * environments. You can compose multiple providers into a single provider using
- * {@see Aws\OperationTrait\RequestCompressionTrait\ConfigurationInterface::chain}. This function
- * accepts providers as variadic arguments and returns a new function that will
+ * {@see Aws\OperationTrait\RequestCompressionTrait\RequestMinCompressionSizeBytes\ConfigurationInterface::chain}.
+ * This function accepts providers as variadic arguments and returns a new function that will
  * invoke each provider until a successful configuration is returned.
  *
  * <code>
@@ -44,11 +45,11 @@ use GuzzleHttp\Promise;
 class ConfigurationProvider extends AbstractConfigurationProvider
     implements ConfigurationProviderInterface
 {
-    const DEFAULT_DISABLE_REQUEST_COMPRESSION = false;
-    const ENV_DISABLE_REQUEST_COMPRESSION = 'AWS_DISABLE_REQUEST_COMPRESSION';
-    const INI_DISABLE_REQUEST_COMPRESSION = 'disable_request_compression';
+    const DEFAULT_MIN_COMPRESSION_SIZE_BYTES = 10240;
+    const ENV_MIN_COMPRESSION_SIZE_BYTES = 'AWS_REQUEST_MIN_COMPRESSION_SIZE_BYTES';
+    const INI_MIN_COMPRESSION_SIZE_BYTES = 'request_min_compression_size_bytes';
 
-    public static $cacheKey = 'aws_cached_disable_request_compression_config';
+    public static $cacheKey = 'aws_cached_request_min_compression_size_bytes';
 
     protected static $interfaceClass = ConfigurationInterface::class;
     protected static $exceptionClass = ConfigurationException::class;
@@ -83,10 +84,10 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             call_user_func_array([ConfigurationProvider::class, 'chain'], $configProviders)
         );
 
-        if (isset($config['disable_request_compression'])
-            && $config['disable_request_compression'] instanceof CacheInterface
+        if (isset($config['min_compression_size_bytes'])
+            && $config['min_compression_size_bytes'] instanceof CacheInterface
         ) {
-            return self::cache($memo, $config['disable_request_compression'], self::$cacheKey);
+            return self::cache($memo, $config['min_compression_size_bytes'], self::$cacheKey);
         }
 
         return $memo;
@@ -101,7 +102,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     {
         return function () {
             // Use config from environment variables, if available
-            $disableRequestCompression = getenv(self::ENV_DISABLE_REQUEST_COMPRESSION);
+            $disableRequestCompression = getenv(self::ENV_MIN_COMPRESSION_SIZE_BYTES);
             if (!empty($disableRequestCompression)) {
                 return Promise\Create::promiseFor(
                     new Configuration($disableRequestCompression)
@@ -109,7 +110,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             }
 
             return self::reject('Could not find environment variable config'
-                . ' in ' . self::ENV_DISABLE_REQUEST_COMPRESSION);
+                . ' in ' . self::ENV_MIN_COMPRESSION_SIZE_BYTES);
         };
     }
 
@@ -143,18 +144,17 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in config file");
             }
-            if (!isset($data[$profile][self::INI_DISABLE_REQUEST_COMPRESSION])) {
-                return self::reject("Required 'disable_request_compression' config values
+            if (!isset($data[$profile][self::INI_MIN_COMPRESSION_SIZE_BYTES])) {
+                return self::reject("Required 'min_compression_size_bytes' config values
                     not present in INI profile '{$profile}' ({$filename})");
             }
 
-            // INI_SCANNER_NORMAL parses false-y values as an empty string
-            if ($data[$profile][self::INI_DISABLE_REQUEST_COMPRESSION] === "") {
-                $data[$profile][self::INI_DISABLE_REQUEST_COMPRESSION] = false;
-            }
+            $minCompressionSize = isset($data[$profile][self::INI_MIN_COMPRESSION_SIZE_BYTES])
+                ? $data[$profile][self::INI_MIN_COMPRESSION_SIZE_BYTES]
+                : self::DEFAULT_MIN_COMPRESSION_SIZE_BYTES;
 
             return Promise\Create::promiseFor(
-                new Configuration($data[$profile][self::INI_DISABLE_REQUEST_COMPRESSION])
+                new Configuration($minCompressionSize)
             );
         };
     }
@@ -167,7 +167,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function fallback()
     {
         return function () {
-            $configuration = new Configuration(self::DEFAULT_DISABLE_REQUEST_COMPRESSION);
+            $configuration = new Configuration(self::DEFAULT_MIN_COMPRESSION_SIZE_BYTES);
             return Promise\Create::promiseFor($configuration);
         };
     }

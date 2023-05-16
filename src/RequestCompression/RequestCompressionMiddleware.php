@@ -1,9 +1,9 @@
 <?php
-namespace Aws\OperationTrait\RequestCompressionTrait;
+namespace Aws\RequestCompression;
 
 use Aws\CommandInterface;
-use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Used to compress request payloads if the service/operation support it.
@@ -73,7 +73,7 @@ class RequestCompressionMiddleware
     }
 
     private function compressRequestBody(
-        RequestInterface $request,
+        RequestInterface $request
     ) {
         $fn = $this->determineEncoding();
         if (is_null($fn)) {

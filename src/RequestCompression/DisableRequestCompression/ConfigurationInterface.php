@@ -1,5 +1,5 @@
 <?php
-namespace Aws\OperationTrait\RequestCompressionTrait\RequestMinCompressionSizeBytes;
+namespace Aws\RequestCompression\DisableRequestCompression;
 
 interface ConfigurationInterface
 {
@@ -8,7 +8,7 @@ interface ConfigurationInterface
      *
      * @return bool
      */
-    public function getMinCompressionSize();
+    public function isDisableRequestCompression();
 
     /**
      * Returns the configuration as an associative array

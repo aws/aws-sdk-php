@@ -24,12 +24,12 @@ use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\Exception\InvalidRegionException;
-use Aws\OperationTrait\RequestCompressionTrait\DisableRequestCompression\Configuration as DisableRequestCompressionConfig;
-use Aws\OperationTrait\RequestCompressionTrait\DisableRequestCompression\ConfigurationInterface as DisableRequestCompressionConfigurationInterface;
-use Aws\OperationTrait\RequestCompressionTrait\DisableRequestCompression\ConfigurationProvider as DisableRequestCompressionConfigProvider;
-use Aws\OperationTrait\RequestCompressionTrait\RequestMinCompressionSizeBytes\Configuration as MinCompressionSizeConfig;
-use Aws\OperationTrait\RequestCompressionTrait\RequestMinCompressionSizeBytes\ConfigurationInterface as MinCompressionSizeConfigurationInterface;
-use Aws\OperationTrait\RequestCompressionTrait\RequestMinCompressionSizeBytes\ConfigurationProvider as MinCompressionSizeConfigProvider;
+use Aws\RequestCompression\DisableRequestCompression\Configuration as DisableRequestCompressionConfig;
+use Aws\RequestCompression\DisableRequestCompression\ConfigurationInterface as DisableRequestCompressionConfigurationInterface;
+use Aws\RequestCompression\DisableRequestCompression\ConfigurationProvider as DisableRequestCompressionConfigProvider;
+use Aws\RequestCompression\RequestMinCompressionSizeBytes\Configuration as MinCompressionSizeConfig;
+use Aws\RequestCompression\RequestMinCompressionSizeBytes\ConfigurationInterface as MinCompressionSizeConfigurationInterface;
+use Aws\RequestCompression\RequestMinCompressionSizeBytes\ConfigurationProvider as MinCompressionSizeConfigProvider;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
 use Aws\Signature\SignatureProvider;
@@ -586,7 +586,6 @@ class ClientResolver
     public static function _default_min_compression_size(array &$args) {
         return MinCompressionSizeConfigProvider::defaultProvider($args);
     }
-
 
     public static function _apply_credentials($value, array &$args)
     {

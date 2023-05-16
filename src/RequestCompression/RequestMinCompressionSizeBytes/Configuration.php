@@ -1,8 +1,8 @@
 <?php
-namespace Aws\OperationTrait\RequestCompressionTrait\RequestMinCompressionSizeBytes;
+namespace Aws\RequestCompression\RequestMinCompressionSizeBytes;
 
 use Aws;
-use Aws\OperationTrait\RequestCompressionTrait\Exception\ConfigurationException;
+use Aws\RequestCompression\Exception\ConfigurationException;
 
 class Configuration implements ConfigurationInterface
 {
