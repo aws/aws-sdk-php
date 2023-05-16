@@ -11,6 +11,7 @@ class Operation extends AbstractModel
     private $errors;
     private $staticContextParams = [];
     private $contextParams;
+    private $traits = [];
 
     public function __construct(array $definition, ShapeMap $shapeMap)
     {
@@ -26,6 +27,10 @@ class Operation extends AbstractModel
 
         if (isset($definition['staticContextParams'])) {
             $this->staticContextParams = $definition['staticContextParams'];
+        }
+
+        if (isset($definition['requestcompression'])) {
+            $this->traits['requestCompression'] = $definition['requestcompression'];
         }
 
         parent::__construct($definition, $shapeMap);
@@ -138,5 +143,30 @@ class Operation extends AbstractModel
             }
         }
         return $contextParams;
+    }
+
+    /**
+     * Returns an associative array of operation traits.  Operation traits are
+     * used perform augmentation on requests, when modeled.
+     *
+     * @return array
+     */
+    public function getTraits()
+    {
+        return $this->traits;
+    }
+
+    /**
+     * Returns an associative array of operation traits.  Operation traits are
+     * used perform augmentation on requests, when modeled.
+     *
+     * @return array
+     */
+    public function getTrait($traitName)
+    {
+        if (isset($this->traits[$traitName])) {
+            return $this->traits[$traitName];
+        }
+        return null;
     }
 }

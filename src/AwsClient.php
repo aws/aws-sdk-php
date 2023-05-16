@@ -5,6 +5,7 @@ use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
+use Aws\OperationTrait\RequestCompressionTrait\RequestCompressionMiddleware;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
@@ -235,6 +236,7 @@ class AwsClient implements AwsClientInterface
         $this->addInvocationId();
         $this->addEndpointParameterMiddleware($args);
         $this->addEndpointDiscoveryMiddleware($config, $args);
+        $this->addRequestCompressionMiddleware($config);
         $this->loadAliases();
         $this->addStreamRequestPayload();
         $this->addRecursionDetection();
@@ -446,6 +448,20 @@ class AwsClient implements AwsClientInterface
             Middleware::signer($this->credentialProvider, $resolver, $this->tokenProvider),
             'signer'
         );
+    }
+    private function addRequestCompressionMiddleware($config)
+    {
+        if (empty($config['disable_request_compression'])
+            || !$config['disable_request_compression']()
+                ->wait()
+                ->isDisableRequestCompression()
+        ) {
+            $list = $this->getHandlerList();
+            $list->appendBuild(
+                RequestCompressionMiddleware::wrap($config),
+                'request_compression'
+            );
+        }
     }
 
     private function addInvocationId()

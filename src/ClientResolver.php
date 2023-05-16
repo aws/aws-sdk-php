@@ -1,36 +1,42 @@
 <?php
 namespace Aws;
 
-use Aws\Api\Validator;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
+use Aws\Api\Validator;
 use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\Configuration;
+use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
+use Aws\DefaultsMode\ConfigurationInterface as ConfigModeInterface;
+use Aws\DefaultsMode\ConfigurationProvider as ConfigModeProvider;
+use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
-use Aws\Endpoint\UseFipsEndpoint\Configuration as UseFipsEndpointConfiguration;
-use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider as UseFipsConfigProvider;
-use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface as UseFipsEndpointConfigurationInterface;
 use Aws\Endpoint\UseDualstackEndpoint\Configuration as UseDualStackEndpointConfiguration;
-use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider as UseDualStackConfigProvider;
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface as UseDualStackEndpointConfigurationInterface;
+use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider as UseDualStackConfigProvider;
+use Aws\Endpoint\UseFipsEndpoint\Configuration as UseFipsEndpointConfiguration;
+use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface as UseFipsEndpointConfigurationInterface;
+use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider as UseFipsConfigProvider;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\Exception\InvalidRegionException;
+use Aws\OperationTrait\RequestCompressionTrait\DisableRequestCompression\Configuration as DisableRequestCompressionConfig;
+use Aws\OperationTrait\RequestCompressionTrait\DisableRequestCompression\ConfigurationInterface as DisableRequestCompressionConfigurationInterface;
+use Aws\OperationTrait\RequestCompressionTrait\DisableRequestCompression\ConfigurationProvider as DisableRequestCompressionConfigProvider;
+use Aws\OperationTrait\RequestCompressionTrait\RequestMinCompressionSizeBytes\Configuration as MinCompressionSizeConfig;
+use Aws\OperationTrait\RequestCompressionTrait\RequestMinCompressionSizeBytes\ConfigurationInterface as MinCompressionSizeConfigurationInterface;
+use Aws\OperationTrait\RequestCompressionTrait\RequestMinCompressionSizeBytes\ConfigurationProvider as MinCompressionSizeConfigProvider;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
-use Aws\DefaultsMode\ConfigurationInterface as ConfigModeInterface;
-use Aws\DefaultsMode\ConfigurationProvider as ConfigModeProvider;
 use Aws\Signature\SignatureProvider;
-use Aws\Endpoint\EndpointProvider;
 use Aws\Token\Token;
 use Aws\Token\TokenInterface;
 use Aws\Token\TokenProvider;
 use GuzzleHttp\Promise\PromiseInterface;
-use Aws\Credentials\CredentialProvider;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\RequestInterface;
 
@@ -217,6 +223,20 @@ class ClientResolver
             'valid' => ['bool', 'array'],
             'doc'   => 'Set to true to display debug information when sending requests. Alternatively, you can provide an associative array with the following keys: logfn: (callable) Function that is invoked with log messages; stream_size: (int) When the size of a stream is greater than this number, the stream data will not be logged (set to "0" to not log any stream data); scrub_auth: (bool) Set to false to disable the scrubbing of auth data from the logged messages; http: (bool) Set to false to disable the "debug" feature of lower level HTTP adapters (e.g., verbose curl output).',
             'fn'    => [__CLASS__, '_apply_debug'],
+        ],
+        'disable_request_compression' => [
+            'type'      => 'value',
+            'valid'     => ['bool', DisableRequestCompressionConfiguration::class, CacheInterface::class, 'callable'],
+            'doc'       => 'Set to true to disable request compression for supported operations',
+            'fn'        => [__CLASS__, '_apply_disable_request_compression'],
+            'default'   => [__CLASS__, '_default_disable_request_compression'],
+        ],
+        'request_min_compression_size_bytes' => [
+            'type'      => 'value',
+            'valid'     => ['int', MinCompressionSizeConfig::class, CacheInterface::class, 'callable'],
+            'doc'       => 'Set to a value between between 0 and 10485760 bytes, inclusive',
+            'fn'        => [__CLASS__, '_apply_min_compression_size'],
+            'default'   => [__CLASS__, '_default_min_compression_size'],
         ],
         'csm' => [
             'type'     => 'value',
@@ -518,6 +538,55 @@ class ClientResolver
             }
         }
     }
+
+    public static function _apply_disable_request_compression($value, array &$args) {
+        if ($value instanceof CacheInterface) {
+            $value = DisableRequestCompressionConfigProvider::defaultProvider($args);
+        }
+        if (is_callable($value)) {
+            $value = $value();
+        }
+        if ($value instanceof PromiseInterface) {
+            $value = $value->wait();
+        }
+        if ($value instanceof DisableRequestCompressionConfigurationInterface) {
+            $args['config']['disable_request_compression'] = $value;
+        } else {
+            // The Configuration class itself will validate other inputs
+            $args['config']['disable_request_compression'] = new DisableRequestCompressionConfig(
+                $value
+            );
+        }
+    }
+
+    public static function _default_disable_request_compression(array &$args) {
+        return DisableRequestCompressionConfigProvider::defaultProvider($args);
+    }
+
+    public static function _apply_min_compression_size($value, array &$args) {
+        if ($value instanceof CacheInterface) {
+            $value = MinCompressionSizeConfigProvider::defaultProvider($args);
+        }
+        if (is_callable($value)) {
+            $value = $value();
+        }
+        if ($value instanceof PromiseInterface) {
+            $value = $value->wait();
+        }
+        if ($value instanceof MinCompressionSizeConfigurationInterface) {
+            $args['config']['request_min_compression_size_bytes'] = $value;
+        } else {
+            // The Configuration class itself will validate other inputs
+            $args['config']['request_min_compression_size_bytes'] = new MinCompressionSizeConfig(
+                $value
+            );
+        }
+    }
+
+    public static function _default_min_compression_size(array &$args) {
+        return MinCompressionSizeConfigProvider::defaultProvider($args);
+    }
+
 
     public static function _apply_credentials($value, array &$args)
     {
