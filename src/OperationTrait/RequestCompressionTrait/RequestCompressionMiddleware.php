@@ -14,16 +14,13 @@ use GuzzleHttp\Psr7;
  */
 class RequestCompressionMiddleware
 {
-//    const REQUEST_MIN_COMPRESSION_SIZE_BYTES = 10240; // real default
-    const REQUEST_MIN_COMPRESSION_SIZE_BYTES = 441;
+    const REQUEST_MIN_COMPRESSION_SIZE_BYTES = 10240;
+
     private $api;
     private $minimumCompressionSize;
     private $nextHandler;
-
     private $encodings;
-
     private $encoding;
-
     private $encodingMap = [
         'gzip' => 'gzencode'
     ];
@@ -150,6 +147,7 @@ class RequestCompressionMiddleware
 
         return self::REQUEST_MIN_COMPRESSION_SIZE_BYTES;
     }
+
     private function isValidCompressionSize($compressionSize)
     {
         if (is_numeric($compressionSize)

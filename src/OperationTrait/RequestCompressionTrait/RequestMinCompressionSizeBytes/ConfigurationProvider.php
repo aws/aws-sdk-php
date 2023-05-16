@@ -45,9 +45,7 @@ use GuzzleHttp\Promise;
 class ConfigurationProvider extends AbstractConfigurationProvider
     implements ConfigurationProviderInterface
 {
-//    const DEFAULT_MIN_COMPRESSION_SIZE_BYTES = 10240;
-
-    const DEFAULT_MIN_COMPRESSION_SIZE_BYTES = 441;
+    const DEFAULT_MIN_COMPRESSION_SIZE_BYTES = 10240;
     const ENV_MIN_COMPRESSION_SIZE_BYTES = 'AWS_REQUEST_MIN_COMPRESSION_SIZE_BYTES';
     const INI_MIN_COMPRESSION_SIZE_BYTES = 'request_min_compression_size_bytes';
 
