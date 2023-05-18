@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.269.14 - 2023-05-18
 
 * `Aws\Athena` - Removing SparkProperties from EngineConfiguration object for StartSession API call
 * `Aws\CloudTrail` - Add ConflictException to PutEventSelectors, add (Channel/EDS)ARNInvalidException to Tag APIs. These exceptions provide customers with more specific error messages instead of internal errors.
