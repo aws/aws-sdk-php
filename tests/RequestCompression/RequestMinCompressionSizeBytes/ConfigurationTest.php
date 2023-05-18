@@ -47,6 +47,6 @@ class ConfigurationTest extends TestCase
             "'min_compression_size_bytes' config option must be an integer between 0 and 10485760, inclusive."
         );
         $this->expectException(ConfigurationException::class);
-        new Configuration( $minRequestSize);
+        new Configuration($minRequestSize);
     }
 }

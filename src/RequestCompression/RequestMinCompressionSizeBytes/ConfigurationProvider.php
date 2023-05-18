@@ -102,10 +102,10 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     {
         return function () {
             // Use config from environment variables, if available
-            $disableRequestCompression = getenv(self::ENV_MIN_COMPRESSION_SIZE_BYTES);
-            if (!empty($disableRequestCompression)) {
+            $minCompressionSize = getenv(self::ENV_MIN_COMPRESSION_SIZE_BYTES);
+            if (!empty($$minCompressionSize)) {
                 return Promise\Create::promiseFor(
-                    new Configuration($disableRequestCompression)
+                    new Configuration($minCompressionSize)
                 );
             }
 

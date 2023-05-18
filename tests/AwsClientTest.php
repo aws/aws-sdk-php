@@ -9,6 +9,8 @@ use Aws\Credentials\Credentials;
 use Aws\Ec2\Ec2Client;
 use Aws\Endpoint\UseFipsEndpoint\Configuration as FipsConfiguration;
 use Aws\Endpoint\UseDualStackEndpoint\Configuration as DualStackConfiguration;
+use Aws\RequestCompression\DisableRequestCompression\Configuration as DisableRequestCompressionConfiguration;
+use Aws\RequestCompression\RequestMinCompressionSizeBytes\Configuration as RequestMinCompressionSizeBytesConfiguration;
 use Aws\Ses\SesClient;
 use Aws\MockHandler;
 use Aws\Result;
@@ -466,7 +468,13 @@ class AwsClientTest extends TestCase
                 'signing_name' => 'foo',
                 'signing_region' => 'foo',
                 'use_fips_endpoint' => new FipsConfiguration(false),
-                'use_dual_stack_endpoint' => new DualStackConfiguration(false, "foo")
+                'use_dual_stack_endpoint' => new DualStackConfiguration(false, "foo"),
+                'disable_request_compression' => new DisableRequestCompressionConfiguration(
+                    false
+                ),
+                'request_min_compression_size_bytes' => new RequestMinCompressionSizeBytesConfiguration(
+                    10240
+                )
             ],
             $client->getConfig()
         );

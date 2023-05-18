@@ -34,7 +34,7 @@ class Configuration implements ConfigurationInterface
     public function toArray()
     {
         return [
-            'disable_request_compression' => $this->isDisableRequestCompression(),
+            'request_min_compression_size_bytes' => $this->getMinCompressionSize(),
         ];
     }
 
