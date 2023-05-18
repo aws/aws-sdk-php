@@ -49,7 +49,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     const ENV_MIN_COMPRESSION_SIZE_BYTES = 'AWS_REQUEST_MIN_COMPRESSION_SIZE_BYTES';
     const INI_MIN_COMPRESSION_SIZE_BYTES = 'request_min_compression_size_bytes';
 
-    public static $cacheKey = 'aws_cached_request_min_compression_size_bytes';
+    public static $cacheKey = 'aws_cached_request_min_compression_size_bytes_config';
 
     protected static $interfaceClass = ConfigurationInterface::class;
     protected static $exceptionClass = ConfigurationException::class;
@@ -103,7 +103,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         return function () {
             // Use config from environment variables, if available
             $minCompressionSize = getenv(self::ENV_MIN_COMPRESSION_SIZE_BYTES);
-            if (!empty($$minCompressionSize)) {
+            if (!empty($minCompressionSize)) {
                 return Promise\Create::promiseFor(
                     new Configuration($minCompressionSize)
                 );
