@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.270.0 - 2023-05-19
 
 * `Aws\Backup` - Add ResourceArn, ResourceType, and BackupVaultName to ListRecoveryPointsByLegalHold API response.
 * `Aws\ConnectCases` - This release adds the ability to create fields with type Url through the CreateField API. For more information see https://docs.aws.amazon.com/cases/latest/APIReference/Welcome.html
