@@ -226,7 +226,7 @@ class ClientResolver
         ],
         'disable_request_compression' => [
             'type'      => 'value',
-            'valid'     => ['bool', DisableRequestCompressionConfiguration::class, CacheInterface::class, 'callable'],
+            'valid'     => ['bool', DisableRequestCompressionConfig::class, CacheInterface::class, 'callable'],
             'doc'       => 'Set to true to disable request compression for supported operations',
             'fn'        => [__CLASS__, '_apply_disable_request_compression'],
             'default'   => [__CLASS__, '_default_disable_request_compression'],
