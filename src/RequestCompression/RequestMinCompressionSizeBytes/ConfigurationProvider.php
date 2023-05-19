@@ -84,10 +84,14 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             call_user_func_array([ConfigurationProvider::class, 'chain'], $configProviders)
         );
 
-        if (isset($config['min_compression_size_bytes'])
-            && $config['min_compression_size_bytes'] instanceof CacheInterface
+        if (isset($config['request_min_compression_size_bytes'])
+            && $config['request_min_compression_size_bytes'] instanceof CacheInterface
         ) {
-            return self::cache($memo, $config['min_compression_size_bytes'], self::$cacheKey);
+            return self::cache(
+                $memo,
+                $config['request_min_compression_size_bytes'],
+                self::$cacheKey
+            );
         }
 
         return $memo;
