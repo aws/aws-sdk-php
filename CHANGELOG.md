@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Backup` - Add ResourceArn, ResourceType, and BackupVaultName to ListRecoveryPointsByLegalHold API response.
+* `Aws\ConnectCases` - This release adds the ability to create fields with type Url through the CreateField API. For more information see https://docs.aws.amazon.com/cases/latest/APIReference/Welcome.html
+* `Aws\MediaPackageV2` - Adds support for the MediaPackage Live v2 API
+* `Aws\SESv2` - This release allows customers to update scaling mode property of dedicated IP pools with PutDedicatedIpPoolScalingAttributes call.
+
 ## 3.269.14 - 2023-05-18
 
 * `Aws\Athena` - Removing SparkProperties from EngineConfiguration object for StartSession API call
