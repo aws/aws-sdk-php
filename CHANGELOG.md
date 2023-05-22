@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.270.1 - 2023-05-22
 
 * `Aws\Backup` - Added support for tags on restore.
 * `Aws\Pinpoint` - Amazon Pinpoint is deprecating the tags parameter in the UpdateSegment, UpdateCampaign, UpdateEmailTemplate, UpdateSmsTemplate, UpdatePushTemplate, UpdateInAppTemplate and UpdateVoiceTemplate. Amazon Pinpoint will end support tags parameter by May 22, 2023.
