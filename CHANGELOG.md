@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.271.0 - 2023-05-23
 
 * `Aws\` - Added support for calling TranslateDocument API.
 * `Aws\` - Added ModelNameEquals, ModelPackageVersionArnEquals in request and ModelName, SamplePayloadUrl, ModelPackageVersionArn in response of ListInferenceRecommendationsJobs API. Added Invocation timestamps in response of DescribeInferenceRecommendationsJob API & ListInferenceRecommendationsJobSteps API.
