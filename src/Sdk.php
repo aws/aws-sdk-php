@@ -428,6 +428,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMediaLive(array $args = [])
  * @method \Aws\MediaPackage\MediaPackageClient createMediaPackage(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMediaPackage(array $args = [])
+ * @method \Aws\MediaPackageV2\MediaPackageV2Client createMediaPackageV2(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMediaPackageV2(array $args = [])
  * @method \Aws\MediaPackageVod\MediaPackageVodClient createMediaPackageVod(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMediaPackageVod(array $args = [])
  * @method \Aws\MediaStore\MediaStoreClient createMediaStore(array $args = [])
@@ -693,7 +695,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.269.14';
+    const VERSION = '3.270.1';
 
     /** @var array Arguments for creating clients */
     private $args;
