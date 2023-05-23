@@ -1235,7 +1235,7 @@ EOT;
             [
                 ['service' => 'iot', 'region' => 'us-west-2'] + $invocationArgs,
                 'signing_name',
-                'execute-api',
+                'iot',
             ],
             // signingRegion
             [
