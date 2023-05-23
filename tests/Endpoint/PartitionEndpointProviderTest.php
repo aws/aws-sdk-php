@@ -138,7 +138,7 @@ class PartitionEndpointProviderTest extends TestCase
                     'endpoint' => 'https://iot.us-east-1.amazonaws.com',
                     'signatureVersion' => 'v4',
                     'signingRegion' => 'us-east-1',
-                    'signingName' => 'execute-api',
+                    'signingName' => 'iot',
                 ],
             ],
             [
