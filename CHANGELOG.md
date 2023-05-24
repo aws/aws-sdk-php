@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.271.1 - 2023-05-24
 
 * `Aws\AppSync` - This release introduces AppSync Merged APIs, which provide the ability to compose multiple source APIs into a single federated/merged API.
 * `Aws\Connect` - Amazon Connect Evaluation Capabilities: validation improvements
