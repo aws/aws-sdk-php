@@ -73,9 +73,7 @@ class UploadStateTest extends TestCase
 
     public function testEmptyUploadStateOutputWithConfigFalse()
     {
-        $config['track_upload'] = false;
-        $state = new UploadState([], $config);
-        $state->setProgressThresholds(100);
+        $state = new UploadState([]);
         $state->displayProgress(13);
         $this->expectOutputString('');
     }
@@ -200,7 +198,7 @@ class UploadStateTest extends TestCase
     public function testSetProgressThresholdsThrowsException($totalSize)
     {
         $state = new UploadState([]);
-        $this->expectExceptionMessage('The total size of the upload must be an int.');
+        $this->expectExceptionMessage('The total size of the upload must be a number.');
         $this->expectException(\InvalidArgumentException::class);
 
         $state->setProgressThresholds($totalSize);

@@ -52,6 +52,8 @@ class MultipartCopy extends AbstractUploadManager
      *   options are ignored.
      * - source_metadata: (Aws\ResultInterface) An object that represents the
      *   result of executing a HeadObject command on the copy source.
+     * - track_upload: (boolean) Tracks status in 1/8th increments of upload.
+     *   Prints progress when truthy value provided.
      *
      * @param S3ClientInterface $client Client used for the upload.
      * @param string|array $source Location of the data to be copied (in the
