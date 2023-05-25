@@ -39,8 +39,8 @@ class RequestCompressionMiddleware
 
     public function __construct(callable $nextHandler, $config)
     {
-        $this->api = $config['api'];
         $this->minimumCompressionSize = $this->determineMinimumCompressionSize($config);
+        $this->api = $config['api'];
         $this->nextHandler = $nextHandler;
     }
 
@@ -136,9 +136,13 @@ class RequestCompressionMiddleware
 
     private function determineMinimumCompressionSize($config) {
         if (isset($config['request_min_compression_size_bytes'])) {
-            $minCompressionSz = is_numeric($config['request_min_compression_size_bytes'])
-                ? $config['request_min_compression_size_bytes']
-                : $config['request_min_compression_size_bytes']()->wait()->getMinCompressionSize();
+            if (is_callable($config['request_min_compression_size_bytes'])) {
+                $minCompressionSz = $config['request_min_compression_size_bytes']()
+                    ->wait()
+                    ->getMinCompressionSize();
+            } else {
+                $minCompressionSz = $config['request_min_compression_size_bytes'];
+            }
 
             if ($this->isValidCompressionSize($minCompressionSz)) {
                 return $minCompressionSz;
@@ -151,7 +155,7 @@ class RequestCompressionMiddleware
     private function isValidCompressionSize($compressionSize)
     {
         if (is_numeric($compressionSize)
-            && ($compressionSize >= 0 && $compressionSize <= 10240)
+            && ($compressionSize >= 0 && $compressionSize <= 10485760)
         ) {
             return true;
         }
