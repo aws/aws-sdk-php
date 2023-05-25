@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.271.2 - 2023-05-25
 
 * `Aws\ApplicationAutoScaling` - With this release, ElastiCache customers will be able to use predefined metricType "ElastiCacheDatabaseCapacityUsageCountedForEvictPercentage" for their ElastiCache instances.
 * `Aws\CodePipeline` - Add PollingDisabledAt time information in PipelineMetadata object of GetPipeline API.
