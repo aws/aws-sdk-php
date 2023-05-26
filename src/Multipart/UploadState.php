@@ -109,7 +109,6 @@ class UploadState
         for ($i=1;$i<=8;$i++) {
             $this->progressThresholds []= round($totalSize*($i/8));
         }
-        $this->progressBar = array_combine($this->progressThresholds, $this->progressBar);
         return $this->progressThresholds;
     }
 
@@ -124,12 +123,12 @@ class UploadState
             throw new \InvalidArgumentException('The size of the bytes being uploaded must be a number.');
         }
 
-        while ($this->progressThresholds
+        while (!empty($this->progressThresholds)
                 && !empty($this->progressBar)
-                && $totalUploaded >= array_key_first($this->progressBar))
+                && $totalUploaded >= $this->progressThresholds[0])
         {
-            echo $this->progressBar[array_key_first($this->progressBar)];
-            unset($this->progressBar[array_key_first($this->progressBar)]);
+            echo array_shift($this->progressBar);
+            array_shift($this->progressThresholds);
         }
     }
 
