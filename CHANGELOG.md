@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Documentation update for a new Initiation Method value in DescribeContact API
+* `Aws\IoTWireless` - Add Multicast Group support in Network Analyzer Configuration.
+* `Aws\SageMaker` - Added ml.p4d and ml.inf1 as supported instance type families for SageMaker Notebook Instances.
+
 ## 3.271.2 - 2023-05-25
 
 * `Aws\ApplicationAutoScaling` - With this release, ElastiCache customers will be able to use predefined metricType "ElastiCacheDatabaseCapacityUsageCountedForEvictPercentage" for their ElastiCache instances.
