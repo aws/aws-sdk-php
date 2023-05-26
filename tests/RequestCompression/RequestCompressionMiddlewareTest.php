@@ -80,7 +80,8 @@ class RequestCompressionMiddlewareTest extends TestCase
         $client = $this->generateTestClient(
             $service, ['request_min_compression_size_bytes' => $minSize]
         );
-        $metricData = self::getMockMetricData($numMetricData);
+        $metricData = $numMetricData ? self::getMockMetricData($numMetricData)
+            : [];
 
         $list = $client->getHandlerList();
         $list->before(
@@ -299,8 +300,6 @@ XML;
     {
         //40 brings the request body size above the default minimum
         // compression threshold of 10240. 10919 to be exact.
-
-        if ($numElements) {
             return array_fill(
                 0,
                 $numElements,
@@ -319,21 +318,6 @@ XML;
                 ]
             );
         }
-        return
-            [
-                'MetricName' => 'MyMetric',
-                'Timestamp' => time(),
-                'Dimensions' => [
-                    [
-                        'Name' => 'MyDimension1',
-                        'Value' => 'MyValue1'
-
-                    ],
-                ],
-                'Unit' => 'Count',
-                'Value' => 1
-            ];
-    }
 }
 
 
