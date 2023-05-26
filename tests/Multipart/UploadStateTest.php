@@ -2,7 +2,7 @@
 namespace Aws\Test\Multipart;
 
 use Aws\Multipart\UploadState;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Multipart\UploadState
