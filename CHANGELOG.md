@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.271.3 - 2023-05-26
 
 * `Aws\Connect` - Documentation update for a new Initiation Method value in DescribeContact API
 * `Aws\IoTWireless` - Add Multicast Group support in Network Analyzer Configuration.
