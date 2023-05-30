@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKVoice` - Added optional CallLeg field to StartSpeakerSearchTask API request
+* `Aws\Glue` - Added Runtime parameter to allow selection of Ray Runtime
+* `Aws\GroundStation` - Updating description of GetMinuteUsage to be clearer.
+* `Aws\IoTFleetWise` - Campaigns now support selecting Timestream or S3 as the data destination, Signal catalogs now support "Deprecation" keyword released in VSS v2.1 and "Comment" keyword released in VSS v3.0
+* `Aws\LocationService` - This release adds API support for political views for the maps service APIs: CreateMap, UpdateMap, DescribeMap.
+* `Aws\MemoryDB` - Amazon MemoryDB for Redis now supports AWS Identity and Access Management authentication access to Redis clusters starting with redis-engine version 7.0
+* `Aws\Personalize` - This release provides support for the exclusion of certain columns for training when creating a solution and creating or updating a recommender with Amazon Personalize.
+* `Aws\Polly` - Amazon Polly adds 2 new voices - Sofie (da-DK) and Niamh (en-IE)
+* `Aws\SecurityHub` - Added new resource detail objects to ASFF, including resources for AwsGuardDutyDetector, AwsAmazonMqBroker, AwsEventSchemasRegistry, AwsAppSyncGraphQlApi and AwsStepFunctionStateMachine.
+* `Aws\SecurityLake` - Log sources are now versioned. AWS log sources and custom sources will now come with a version identifier that enables producers to vend multiple schema versions to subscribers. Security Lake API have been refactored to more closely align with AWS API conventions.
+* `Aws\WAFV2` - This SDK release provides customers the ability to use Header Order as a field to match.
+
 ## 3.271.3 - 2023-05-26
 
 * `Aws\Connect` - Documentation update for a new Initiation Method value in DescribeContact API
