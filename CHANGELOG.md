@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.271.4 - 2023-05-30
 
 * `Aws\ChimeSDKVoice` - Added optional CallLeg field to StartSpeakerSearchTask API request
 * `Aws\Glue` - Added Runtime parameter to allow selection of Ray Runtime
