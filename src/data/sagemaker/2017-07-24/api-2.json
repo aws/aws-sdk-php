@@ -4478,11 +4478,39 @@
         "Descending"
       ]
     },
+    "AutoParameter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "ValueHint"
+      ],
+      "members":{
+        "Name":{"shape":"ParameterKey"},
+        "ValueHint":{"shape":"ParameterValue"}
+      }
+    },
+    "AutoParameters":{
+      "type":"list",
+      "member":{"shape":"AutoParameter"},
+      "max":100,
+      "min":0
+    },
     "AutoRollbackConfig":{
       "type":"structure",
       "members":{
         "Alarms":{"shape":"AlarmList"}
       }
+    },
+    "Autotune":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"AutotuneMode"}
+      }
+    },
+    "AutotuneMode":{
+      "type":"string",
+      "enum":["Enabled"]
     },
     "AwsManagedHumanLoopRequestSource":{
       "type":"string",
@@ -6066,7 +6094,8 @@
         "TrainingJobDefinition":{"shape":"HyperParameterTrainingJobDefinition"},
         "TrainingJobDefinitions":{"shape":"HyperParameterTrainingJobDefinitions"},
         "WarmStartConfig":{"shape":"HyperParameterTuningJobWarmStartConfig"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "Autotune":{"shape":"Autotune"}
       }
     },
     "CreateHyperParameterTuningJobResponse":{
@@ -7546,6 +7575,14 @@
         "AutoRollbackConfiguration":{"shape":"AutoRollbackConfig"}
       }
     },
+    "DeploymentRecommendation":{
+      "type":"structure",
+      "required":["RecommendationStatus"],
+      "members":{
+        "RecommendationStatus":{"shape":"RecommendationStatus"},
+        "RealTimeInferenceRecommendations":{"shape":"RealTimeInferenceRecommendations"}
+      }
+    },
     "DeploymentStage":{
       "type":"structure",
       "required":[
@@ -8410,7 +8447,8 @@
         "WarmStartConfig":{"shape":"HyperParameterTuningJobWarmStartConfig"},
         "FailureReason":{"shape":"FailureReason"},
         "TuningJobCompletionDetails":{"shape":"HyperParameterTuningJobCompletionDetails"},
-        "ConsumedResources":{"shape":"HyperParameterTuningJobConsumedResources"}
+        "ConsumedResources":{"shape":"HyperParameterTuningJobConsumedResources"},
+        "Autotune":{"shape":"Autotune"}
       }
     },
     "DescribeImageRequest":{
@@ -8754,7 +8792,8 @@
         "VpcConfig":{"shape":"VpcConfig"},
         "CreationTime":{"shape":"Timestamp"},
         "ModelArn":{"shape":"ModelArn"},
-        "EnableNetworkIsolation":{"shape":"Boolean"}
+        "EnableNetworkIsolation":{"shape":"Boolean"},
+        "DeploymentRecommendation":{"shape":"DeploymentRecommendation"}
       }
     },
     "DescribeModelPackageGroupInput":{
@@ -11879,7 +11918,9 @@
         "Metrics":{"shape":"RecommendationMetrics"},
         "EndpointConfiguration":{"shape":"EndpointOutputConfiguration"},
         "ModelConfiguration":{"shape":"ModelConfiguration"},
-        "RecommendationId":{"shape":"String"}
+        "RecommendationId":{"shape":"String"},
+        "InvocationEndTime":{"shape":"InvocationEndTime"},
+        "InvocationStartTime":{"shape":"InvocationStartTime"}
       }
     },
     "InferenceRecommendations":{
@@ -11910,7 +11951,10 @@
         "CompletionTime":{"shape":"Timestamp"},
         "RoleArn":{"shape":"RoleArn"},
         "LastModifiedTime":{"shape":"LastModifiedTime"},
-        "FailureReason":{"shape":"FailureReason"}
+        "FailureReason":{"shape":"FailureReason"},
+        "ModelName":{"shape":"ModelName"},
+        "SamplePayloadUrl":{"shape":"S3Uri"},
+        "ModelPackageVersionArn":{"shape":"ModelPackageArn"}
       }
     },
     "InferenceRecommendationsJobStep":{
@@ -12103,7 +12147,13 @@
         "ml.g5.16xlarge",
         "ml.g5.12xlarge",
         "ml.g5.24xlarge",
-        "ml.g5.48xlarge"
+        "ml.g5.48xlarge",
+        "ml.inf1.xlarge",
+        "ml.inf1.2xlarge",
+        "ml.inf1.6xlarge",
+        "ml.inf1.24xlarge",
+        "ml.p4d.24xlarge",
+        "ml.p4de.24xlarge"
       ]
     },
     "Integer":{"type":"integer"},
@@ -12139,6 +12189,8 @@
       "min":0
     },
     "IntegerValue":{"type":"integer"},
+    "InvocationEndTime":{"type":"timestamp"},
+    "InvocationStartTime":{"type":"timestamp"},
     "InvocationsMaxRetries":{
       "type":"integer",
       "max":3,
@@ -13272,7 +13324,9 @@
         "SortBy":{"shape":"ListInferenceRecommendationsJobsSortBy"},
         "SortOrder":{"shape":"SortOrder"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"MaxResults"}
+        "MaxResults":{"shape":"MaxResults"},
+        "ModelNameEquals":{"shape":"ModelName"},
+        "ModelPackageVersionArnEquals":{"shape":"ModelPackageArn"}
       }
     },
     "ListInferenceRecommendationsJobsResponse":{
@@ -14340,7 +14394,8 @@
         "CreationTime":{"shape":"Timestamp"},
         "ModelArn":{"shape":"ModelArn"},
         "EnableNetworkIsolation":{"shape":"Boolean"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "DeploymentRecommendation":{"shape":"DeploymentRecommendation"}
       }
     },
     "ModelApprovalStatus":{
@@ -16119,7 +16174,8 @@
       "members":{
         "IntegerParameterRanges":{"shape":"IntegerParameterRanges"},
         "ContinuousParameterRanges":{"shape":"ContinuousParameterRanges"},
-        "CategoricalParameterRanges":{"shape":"CategoricalParameterRanges"}
+        "CategoricalParameterRanges":{"shape":"CategoricalParameterRanges"},
+        "AutoParameters":{"shape":"AutoParameters"}
       }
     },
     "ParameterType":{
@@ -17397,6 +17453,24 @@
         "InstanceCount":{"shape":"TaskCount"}
       }
     },
+    "RealTimeInferenceRecommendation":{
+      "type":"structure",
+      "required":[
+        "RecommendationId",
+        "InstanceType"
+      ],
+      "members":{
+        "RecommendationId":{"shape":"String"},
+        "InstanceType":{"shape":"ProductionVariantInstanceType"},
+        "Environment":{"shape":"EnvironmentMap"}
+      }
+    },
+    "RealTimeInferenceRecommendations":{
+      "type":"list",
+      "member":{"shape":"RealTimeInferenceRecommendation"},
+      "max":3,
+      "min":0
+    },
     "RealtimeInferenceInstanceTypes":{
       "type":"list",
       "member":{"shape":"ProductionVariantInstanceType"}
@@ -17450,7 +17524,9 @@
         "EndpointConfiguration":{"shape":"EndpointOutputConfiguration"},
         "ModelConfiguration":{"shape":"ModelConfiguration"},
         "FailureReason":{"shape":"RecommendationFailureReason"},
-        "EndpointMetrics":{"shape":"InferenceMetrics"}
+        "EndpointMetrics":{"shape":"InferenceMetrics"},
+        "InvocationEndTime":{"shape":"InvocationEndTime"},
+        "InvocationStartTime":{"shape":"InvocationStartTime"}
       }
     },
     "RecommendationJobInputConfig":{
@@ -17577,6 +17653,15 @@
         "CpuUtilization":{"shape":"UtilizationMetric"},
         "MemoryUtilization":{"shape":"UtilizationMetric"}
       }
+    },
+    "RecommendationStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "NOT_APPLICABLE"
+      ]
     },
     "RecommendationStepType":{
       "type":"string",

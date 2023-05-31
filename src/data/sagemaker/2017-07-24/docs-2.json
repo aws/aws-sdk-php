@@ -131,7 +131,7 @@
     "DescribeHub": "<p>Describe a hub.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>",
     "DescribeHubContent": "<p>Describe the content of a hub.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>",
     "DescribeHumanTaskUi": "<p>Returns information about the requested human task user interface (worker task template).</p>",
-    "DescribeHyperParameterTuningJob": "<p>Gets a description of a hyperparameter tuning job.</p>",
+    "DescribeHyperParameterTuningJob": "<p>Returns a description of a hyperparameter tuning job, depending on the fields selected. These fields can include the name, Amazon Resource Name (ARN), job status of your tuning job and more.</p>",
     "DescribeImage": "<p>Describes a SageMaker image.</p>",
     "DescribeImageVersion": "<p>Describes a version of a SageMaker image.</p>",
     "DescribeInferenceExperiment": "<p>Returns details about an inference experiment.</p>",
@@ -1229,10 +1229,35 @@
         "ListCandidatesForAutoMLJobRequest$SortOrder": "<p>The sort order for the results. The default is <code>Ascending</code>.</p>"
       }
     },
+    "AutoParameter": {
+      "base": "<p>The name and an example value of the hyperparameter that you want to use in Autotune. If Automatic model tuning (AMT) determines that your hyperparameter is eligible for Autotune, an optimal hyperparameter range is selected for you.</p>",
+      "refs": {
+        "AutoParameters$member": null
+      }
+    },
+    "AutoParameters": {
+      "base": null,
+      "refs": {
+        "ParameterRanges$AutoParameters": "<p>A list containing hyperparameter names and example values to be used by Autotune to determine optimal ranges for your tuning job.</p>"
+      }
+    },
     "AutoRollbackConfig": {
       "base": "<p>Automatic rollback configuration for handling endpoint deployment failures and recovery.</p>",
       "refs": {
         "DeploymentConfig$AutoRollbackConfiguration": "<p>Automatic rollback configuration for handling endpoint deployment failures and recovery.</p>"
+      }
+    },
+    "Autotune": {
+      "base": "<p>A flag to indicate if you want to use Autotune to automatically find optimal values for the following fields:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_HyperParameterTuningJobConfig.html#sagemaker-Type-HyperParameterTuningJobConfig-ParameterRanges\">ParameterRanges</a>: The names and ranges of parameters that a hyperparameter tuning job can optimize.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ResourceLimits.html\">ResourceLimits</a>: The maximum resources that can be used for a training job. These resources include the maximum number of training jobs, the maximum runtime of a tuning job, and the maximum number of training jobs to run at the same time.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_HyperParameterTuningJobConfig.html#sagemaker-Type-HyperParameterTuningJobConfig-TrainingJobEarlyStoppingType\">TrainingJobEarlyStoppingType</a>: A flag that specifies whether or not to use early stopping for training jobs launched by a hyperparameter tuning job.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_HyperParameterTrainingJobDefinition.html#sagemaker-Type-HyperParameterTrainingJobDefinition-RetryStrategy\">RetryStrategy</a>: The number of times to retry a training job.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_HyperParameterTuningJobConfig.html\">Strategy</a>: Specifies how hyperparameter tuning chooses the combinations of hyperparameter values to use for the training jobs that it launches.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ConvergenceDetected.html\">ConvergenceDetected</a>: A flag to indicate that Automatic model tuning (AMT) has detected model convergence.</p> </li> </ul>",
+      "refs": {
+        "CreateHyperParameterTuningJobRequest$Autotune": "<p>Configures SageMaker Automatic model tuning (AMT) to automatically find optimal parameters for the following fields:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_HyperParameterTuningJobConfig.html#sagemaker-Type-HyperParameterTuningJobConfig-ParameterRanges\">ParameterRanges</a>: The names and ranges of parameters that a hyperparameter tuning job can optimize.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ResourceLimits.html\">ResourceLimits</a>: The maximum resources that can be used for a training job. These resources include the maximum number of training jobs, the maximum runtime of a tuning job, and the maximum number of training jobs to run at the same time.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_HyperParameterTuningJobConfig.html#sagemaker-Type-HyperParameterTuningJobConfig-TrainingJobEarlyStoppingType\">TrainingJobEarlyStoppingType</a>: A flag that specifies whether or not to use early stopping for training jobs launched by a hyperparameter tuning job.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_HyperParameterTrainingJobDefinition.html#sagemaker-Type-HyperParameterTrainingJobDefinition-RetryStrategy\">RetryStrategy</a>: The number of times to retry a training job.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_HyperParameterTuningJobConfig.html\">Strategy</a>: Specifies how hyperparameter tuning chooses the combinations of hyperparameter values to use for the training jobs that it launches.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ConvergenceDetected.html\">ConvergenceDetected</a>: A flag to indicate that Automatic model tuning (AMT) has detected model convergence.</p> </li> </ul>",
+        "DescribeHyperParameterTuningJobResponse$Autotune": "<p>A flag to indicate if autotune is enabled for the hyperparameter tuning job.</p>"
+      }
+    },
+    "AutotuneMode": {
+      "base": null,
+      "refs": {
+        "Autotune$Mode": "<p>Set <code>Mode</code> to <code>Enabled</code> if you want to use Autotune.</p>"
       }
     },
     "AwsManagedHumanLoopRequestSource": {
@@ -3303,6 +3328,13 @@
         "UpdateEndpointInput$DeploymentConfig": "<p>The deployment configuration for an endpoint, which contains the desired deployment strategy and rollback configurations.</p>"
       }
     },
+    "DeploymentRecommendation": {
+      "base": "<p>A set of recommended deployment configurations for the model.</p>",
+      "refs": {
+        "DescribeModelOutput$DeploymentRecommendation": "<p>A set of recommended deployment configurations for the model.</p>",
+        "Model$DeploymentRecommendation": "<p>A set of recommended deployment configurations for the model.</p>"
+      }
+    },
     "DeploymentStage": {
       "base": "<p>Contains information about a stage in an edge deployment plan.</p>",
       "refs": {
@@ -4858,7 +4890,8 @@
       "refs": {
         "AutoMLContainerDefinition$Environment": "<p>The environment variables to set in the container. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ContainerDefinition.html\"> ContainerDefinition</a>.</p>",
         "ContainerDefinition$Environment": "<p>The environment variables to set in the Docker container. Each key and value in the <code>Environment</code> string to string map can have length of up to 1024. We support up to 16 entries in the map. </p>",
-        "ModelPackageContainerDefinition$Environment": "<p>The environment variables to set in the Docker container. Each key and value in the <code>Environment</code> string to string map can have length of up to 1024. We support up to 16 entries in the map.</p>"
+        "ModelPackageContainerDefinition$Environment": "<p>The environment variables to set in the Docker container. Each key and value in the <code>Environment</code> string to string map can have length of up to 1024. We support up to 16 entries in the map.</p>",
+        "RealTimeInferenceRecommendation$Environment": "<p>The recommended environment variables to set in the model container for Real-Time Inference.</p>"
       }
     },
     "EnvironmentParameter": {
@@ -6066,7 +6099,7 @@
       "refs": {
         "CreateHyperParameterTuningJobRequest$HyperParameterTuningJobName": "<p>The name of the tuning job. This name is the prefix for the names of all training jobs that this tuning job launches. The name must be unique within the same Amazon Web Services account and Amazon Web Services Region. The name must have 1 to 32 characters. Valid characters are a-z, A-Z, 0-9, and : + = @ _ % - (hyphen). The name is not case sensitive.</p>",
         "DescribeHyperParameterTuningJobRequest$HyperParameterTuningJobName": "<p>The name of the tuning job.</p>",
-        "DescribeHyperParameterTuningJobResponse$HyperParameterTuningJobName": "<p>The name of the tuning job.</p>",
+        "DescribeHyperParameterTuningJobResponse$HyperParameterTuningJobName": "<p>The name of the hyperparameter tuning job.</p>",
         "HyperParameterTrainingJobSummary$TuningJobName": "<p>The HyperParameter tuning job that launched the training job.</p>",
         "HyperParameterTuningJobSearchEntity$HyperParameterTuningJobName": "<p>The name of a hyperparameter tuning job.</p>",
         "HyperParameterTuningJobSummary$HyperParameterTuningJobName": "<p>The name of the tuning job.</p>",
@@ -6622,10 +6655,10 @@
     "InputDataConfig": {
       "base": null,
       "refs": {
-        "CreateTrainingJobRequest$InputDataConfig": "<p>An array of <code>Channel</code> objects. Each channel is a named input source. <code>InputDataConfig</code> describes the input data and its location. </p> <p>Algorithms can accept input data from one or more channels. For example, an algorithm might have two channels of input data, <code>training_data</code> and <code>validation_data</code>. The configuration for each channel provides the S3, EFS, or FSx location where the input data is stored. It also provides information about the stored data: the MIME type, compression method, and whether the data is wrapped in RecordIO format. </p> <p>Depending on the input mode that the algorithm supports, SageMaker either copies input data files from an S3 bucket to a local directory in the Docker container, or makes it available as input streams. For example, if you specify an EFS location, input data files are available as input streams. They do not need to be downloaded.</p>",
+        "CreateTrainingJobRequest$InputDataConfig": "<p>An array of <code>Channel</code> objects. Each channel is a named input source. <code>InputDataConfig</code> describes the input data and its location. </p> <p>Algorithms can accept input data from one or more channels. For example, an algorithm might have two channels of input data, <code>training_data</code> and <code>validation_data</code>. The configuration for each channel provides the S3, EFS, or FSx location where the input data is stored. It also provides information about the stored data: the MIME type, compression method, and whether the data is wrapped in RecordIO format. </p> <p>Depending on the input mode that the algorithm supports, SageMaker either copies input data files from an S3 bucket to a local directory in the Docker container, or makes it available as input streams. For example, if you specify an EFS location, input data files are available as input streams. They do not need to be downloaded.</p> <p>Your input must be in the same Amazon Web Services region as your training job.</p>",
         "DescribeTrainingJobResponse$InputDataConfig": "<p>An array of <code>Channel</code> objects that describes each data input channel. </p>",
         "HyperParameterTrainingJobDefinition$InputDataConfig": "<p>An array of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Channel.html\">Channel</a> objects that specify the input for the training jobs that the tuning job launches.</p>",
-        "TrainingJob$InputDataConfig": "<p>An array of <code>Channel</code> objects that describes each data input channel.</p>",
+        "TrainingJob$InputDataConfig": "<p>An array of <code>Channel</code> objects that describes each data input channel.</p> <p>Your input must be in the same Amazon Web Services region as your training job.</p>",
         "TrainingJobDefinition$InputDataConfig": "<p>An array of <code>Channel</code> objects, each of which specifies an input source.</p>"
       }
     },
@@ -6739,6 +6772,20 @@
       "base": null,
       "refs": {
         "PipelineExecutionStep$AttemptCount": "<p>The current attempt of the execution step. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/pipelines-retry-policy.html\">Retry Policy for SageMaker Pipelines steps</a>.</p>"
+      }
+    },
+    "InvocationEndTime": {
+      "base": null,
+      "refs": {
+        "InferenceRecommendation$InvocationEndTime": "<p>A timestamp that shows when the benchmark completed.</p>",
+        "RecommendationJobInferenceBenchmark$InvocationEndTime": "<p>A timestamp that shows when the benchmark completed.</p>"
+      }
+    },
+    "InvocationStartTime": {
+      "base": null,
+      "refs": {
+        "InferenceRecommendation$InvocationStartTime": "<p>A timestamp that shows when the benchmark started.</p>",
+        "RecommendationJobInferenceBenchmark$InvocationStartTime": "<p>A timestamp that shows when the benchmark started.</p>"
       }
     },
     "InvocationsMaxRetries": {
@@ -8745,6 +8792,8 @@
         "DescribeModelInput$ModelName": "<p>The name of the model.</p>",
         "DescribeModelOutput$ModelName": "<p>Name of the SageMaker model.</p>",
         "DescribeTransformJobResponse$ModelName": "<p>The name of the model used in the transform job.</p>",
+        "InferenceRecommendationsJob$ModelName": "<p>The name of the created model.</p>",
+        "ListInferenceRecommendationsJobsRequest$ModelNameEquals": "<p>A filter that returns only jobs that were created for this model.</p>",
         "Model$ModelName": "<p>The name of the model.</p>",
         "ModelSummary$ModelName": "<p>The name of the model that you want a summary for.</p>",
         "ModelVariantConfig$ModelName": "<p>The name of the Amazon SageMaker Model entity.</p>",
@@ -8775,6 +8824,8 @@
         "CreateModelPackageOutput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the new model package.</p>",
         "DescribeCompilationJobResponse$ModelPackageVersionArn": "<p>The Amazon Resource Name (ARN) of the versioned model package that was provided to SageMaker Neo when you initiated a compilation job.</p>",
         "DescribeModelPackageOutput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
+        "InferenceRecommendationsJob$ModelPackageVersionArn": "<p>The Amazon Resource Name (ARN) of a versioned model package.</p>",
+        "ListInferenceRecommendationsJobsRequest$ModelPackageVersionArnEquals": "<p>A filter that returns only jobs that were created for this versioned model package.</p>",
         "ModelPackage$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "ModelPackageArnList$member": null,
         "ModelPackageSummaries$key": null,
@@ -10141,6 +10192,7 @@
     "ParameterKey": {
       "base": null,
       "refs": {
+        "AutoParameter$Name": "<p>The name of the hyperparameter to optimize using Autotune.</p>",
         "CategoricalParameterRange$Name": "<p>The name of the categorical hyperparameter to tune.</p>",
         "ContinuousParameterRange$Name": "<p>The name of the continuous hyperparameter to tune.</p>",
         "IntegerParameterRange$Name": "<p>The name of the hyperparameter to search.</p>"
@@ -10182,6 +10234,7 @@
     "ParameterValue": {
       "base": null,
       "refs": {
+        "AutoParameter$ValueHint": "<p>An example value of the hyperparameter to optimize using Autotune.</p>",
         "ContinuousParameterRange$MinValue": "<p>The minimum value for the hyperparameter. The tuning job uses floating-point values between this value and <code>MaxValue</code>for tuning.</p>",
         "ContinuousParameterRange$MaxValue": "<p>The maximum value for the hyperparameter. The tuning job uses floating-point values between <code>MinValue</code> value and this value for tuning.</p>",
         "ContinuousParameterRangeSpecification$MinValue": "<p>The minimum floating-point value allowed.</p>",
@@ -10778,6 +10831,7 @@
         "EndpointOutputConfiguration$InstanceType": "<p>The instance type recommended by Amazon SageMaker Inference Recommender.</p>",
         "PendingProductionVariantSummary$InstanceType": "<p>The type of instances associated with the variant.</p>",
         "ProductionVariant$InstanceType": "<p>The ML compute instance type.</p>",
+        "RealTimeInferenceRecommendation$InstanceType": "<p>The recommended instance type for Real-Time Inference.</p>",
         "RealtimeInferenceInstanceTypes$member": null
       }
     },
@@ -11167,6 +11221,18 @@
         "ModelInfrastructureConfig$RealTimeInferenceConfig": "<p>The infrastructure configuration for deploying the model to real-time inference.</p>"
       }
     },
+    "RealTimeInferenceRecommendation": {
+      "base": "<p>The recommended configuration to use for Real-Time Inference.</p>",
+      "refs": {
+        "RealTimeInferenceRecommendations$member": null
+      }
+    },
+    "RealTimeInferenceRecommendations": {
+      "base": null,
+      "refs": {
+        "DeploymentRecommendation$RealTimeInferenceRecommendations": "<p>A list of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_RealTimeInferenceRecommendation.html\">RealTimeInferenceRecommendation</a> items.</p>"
+      }
+    },
     "RealtimeInferenceInstanceTypes": {
       "base": null,
       "refs": {
@@ -11335,6 +11401,12 @@
       "refs": {
         "InferenceRecommendation$Metrics": "<p>The metrics used to decide what recommendation to make.</p>",
         "RecommendationJobInferenceBenchmark$Metrics": null
+      }
+    },
+    "RecommendationStatus": {
+      "base": null,
+      "refs": {
+        "DeploymentRecommendation$RecommendationStatus": "<p>Status of the deployment recommendation. <code>NOT_APPLICABLE</code> means that SageMaker is unable to provide a default recommendation for the model using the information provided.</p>"
       }
     },
     "RecommendationStepType": {
@@ -11713,7 +11785,7 @@
       }
     },
     "S3DataSource": {
-      "base": "<p>Describes the S3 data source.</p>",
+      "base": "<p>Describes the S3 data source.</p> <p>Your input bucket must be in the same Amazon Web Services region as your training job.</p>",
       "refs": {
         "DataSource$S3DataSource": "<p>The S3 location of the data source that is associated with a channel.</p>"
       }
@@ -11757,6 +11829,7 @@
         "EdgeOutputConfig$S3OutputLocation": "<p>The Amazon Simple Storage (S3) bucker URI.</p>",
         "FileSource$S3Uri": "<p>The Amazon S3 URI for the file source.</p>",
         "FlowDefinitionOutputConfig$S3OutputPath": "<p>The Amazon S3 path where the object containing human output will be made available.</p> <p>To learn more about the format of Amazon A2I output data, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/a2i-output-data.html\">Amazon A2I Output Data</a>.</p>",
+        "InferenceRecommendationsJob$SamplePayloadUrl": "<p>The Amazon Simple Storage Service (Amazon S3) path where the sample payload is stored. This path must point to a single gzip compressed tar archive (.tar.gz suffix).</p>",
         "InputConfig$S3Uri": "<p>The S3 path where the model artifacts, which result from model training, are stored. This path must point to a single gzip compressed tar archive (.tar.gz suffix).</p>",
         "LabelingJobOutput$OutputDatasetS3Uri": "<p>The Amazon S3 bucket location of the manifest file for labeled data. </p>",
         "LabelingJobOutputConfig$S3OutputPath": "<p>The Amazon S3 location to write output data.</p>",
@@ -11782,7 +11855,7 @@
         "ProfilerRuleConfiguration$S3OutputPath": "<p>Path to Amazon S3 storage location for rules.</p>",
         "RecommendationJobCompiledOutputConfig$S3OutputUri": "<p>Identifies the Amazon S3 bucket where you want SageMaker to store the compiled model artifacts.</p>",
         "RedshiftDatasetDefinition$OutputS3Uri": "<p>The location in Amazon S3 where the Redshift query results are stored.</p>",
-        "S3DataSource$S3Uri": "<p>Depending on the value specified for the <code>S3DataType</code>, identifies either a key name prefix or a manifest. For example: </p> <ul> <li> <p> A key name prefix might look like this: <code>s3://bucketname/exampleprefix</code> </p> </li> <li> <p> A manifest might look like this: <code>s3://bucketname/example.manifest</code> </p> <p> A manifest is an S3 object which is a JSON file consisting of an array of elements. The first element is a prefix which is followed by one or more suffixes. SageMaker appends the suffix elements to the prefix to get a full set of <code>S3Uri</code>. Note that the prefix must be a valid non-empty <code>S3Uri</code> that precludes users from specifying a manifest whose individual <code>S3Uri</code> is sourced from different S3 buckets.</p> <p> The following code example shows a valid manifest format: </p> <p> <code>[ {\"prefix\": \"s3://customer_bucket/some/prefix/\"},</code> </p> <p> <code> \"relative/path/to/custdata-1\",</code> </p> <p> <code> \"relative/path/custdata-2\",</code> </p> <p> <code> ...</code> </p> <p> <code> \"relative/path/custdata-N\"</code> </p> <p> <code>]</code> </p> <p> This JSON is equivalent to the following <code>S3Uri</code> list:</p> <p> <code>s3://customer_bucket/some/prefix/relative/path/to/custdata-1</code> </p> <p> <code>s3://customer_bucket/some/prefix/relative/path/custdata-2</code> </p> <p> <code>...</code> </p> <p> <code>s3://customer_bucket/some/prefix/relative/path/custdata-N</code> </p> <p>The complete set of <code>S3Uri</code> in this manifest is the input data for the channel for this data source. The object that each <code>S3Uri</code> points to must be readable by the IAM role that SageMaker uses to perform tasks on your behalf. </p> </li> </ul>",
+        "S3DataSource$S3Uri": "<p>Depending on the value specified for the <code>S3DataType</code>, identifies either a key name prefix or a manifest. For example: </p> <ul> <li> <p> A key name prefix might look like this: <code>s3://bucketname/exampleprefix</code> </p> </li> <li> <p> A manifest might look like this: <code>s3://bucketname/example.manifest</code> </p> <p> A manifest is an S3 object which is a JSON file consisting of an array of elements. The first element is a prefix which is followed by one or more suffixes. SageMaker appends the suffix elements to the prefix to get a full set of <code>S3Uri</code>. Note that the prefix must be a valid non-empty <code>S3Uri</code> that precludes users from specifying a manifest whose individual <code>S3Uri</code> is sourced from different S3 buckets.</p> <p> The following code example shows a valid manifest format: </p> <p> <code>[ {\"prefix\": \"s3://customer_bucket/some/prefix/\"},</code> </p> <p> <code> \"relative/path/to/custdata-1\",</code> </p> <p> <code> \"relative/path/custdata-2\",</code> </p> <p> <code> ...</code> </p> <p> <code> \"relative/path/custdata-N\"</code> </p> <p> <code>]</code> </p> <p> This JSON is equivalent to the following <code>S3Uri</code> list:</p> <p> <code>s3://customer_bucket/some/prefix/relative/path/to/custdata-1</code> </p> <p> <code>s3://customer_bucket/some/prefix/relative/path/custdata-2</code> </p> <p> <code>...</code> </p> <p> <code>s3://customer_bucket/some/prefix/relative/path/custdata-N</code> </p> <p>The complete set of <code>S3Uri</code> in this manifest is the input data for the channel for this data source. The object that each <code>S3Uri</code> points to must be readable by the IAM role that SageMaker uses to perform tasks on your behalf. </p> </li> </ul> <p>Your input bucket must be located in same Amazon Web Services region as your training job.</p>",
         "S3StorageConfig$S3Uri": "<p>The S3 URI, or location in Amazon S3, of <code>OfflineStore</code>.</p> <p>S3 URIs have a format similar to the following: <code>s3://example-bucket/prefix/</code>.</p>",
         "S3StorageConfig$ResolvedOutputS3Uri": "<p>The S3 path where offline records are written.</p>",
         "SharingSettings$S3OutputPath": "<p>When <code>NotebookOutputOption</code> is <code>Allowed</code>, the Amazon S3 bucket used to store the shared notebook snapshots.</p>",
@@ -12538,6 +12611,7 @@
         "RStudioServerProDomainSettings$RStudioPackageManagerUrl": "<p>A URL pointing to an RStudio Package Manager server.</p>",
         "RStudioServerProDomainSettingsForUpdate$RStudioConnectUrl": "<p>A URL pointing to an RStudio Connect server.</p>",
         "RStudioServerProDomainSettingsForUpdate$RStudioPackageManagerUrl": "<p>A URL pointing to an RStudio Package Manager server.</p>",
+        "RealTimeInferenceRecommendation$RecommendationId": "<p>The recommendation ID which uniquely identifies each recommendation.</p>",
         "RecommendationJobContainerConfig$Domain": "<p>The machine learning domain of the model and its components.</p> <p>Valid Values: <code>COMPUTER_VISION | NATURAL_LANGUAGE_PROCESSING | MACHINE_LEARNING</code> </p>",
         "RecommendationJobContainerConfig$Task": "<p>The machine learning task that the model accomplishes.</p> <p>Valid Values: <code>IMAGE_CLASSIFICATION | OBJECT_DETECTION | TEXT_GENERATION | IMAGE_SEGMENTATION | FILL_MASK | CLASSIFICATION | REGRESSION | OTHER</code> </p>",
         "RecommendationJobContainerConfig$Framework": "<p>The machine learning framework of the container image.</p> <p>Valid Values: <code>TENSORFLOW | PYTORCH | XGBOOST | SAGEMAKER-SCIKIT-LEARN</code> </p>",
@@ -14412,7 +14486,7 @@
         "ClarifyShapBaselineConfig$ShapBaselineUri": "<p>The uniform resource identifier (URI) of the S3 bucket where the SHAP baseline file is stored. The format of the SHAP baseline file should be the same format as the format of the training dataset. For example, if the training dataset is in CSV format, and each record in the training dataset has four features, and all features are numerical, then the baseline file should also have this same format. Each record should contain only the features. If you are using a virtual private cloud (VPC), the <code>ShapBaselineUri</code> should be accessible to the VPC. For more information about setting up endpoints with Amazon Virtual Private Cloud, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-give-access.html\">Give SageMaker access to Resources in your Amazon Virtual Private Cloud</a>.</p>",
         "ContainerDefinition$ModelDataUrl": "<p>The S3 path where the model artifacts, which result from model training, are stored. This path must point to a single gzip compressed tar archive (.tar.gz suffix). The S3 path is required for SageMaker built-in algorithms, but not if you use your own algorithms. For more information on built-in algorithms, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-algo-docker-registry-paths.html\">Common Parameters</a>. </p> <note> <p>The model artifacts must be in an S3 bucket that is in the same region as the model or endpoint you are creating.</p> </note> <p>If you provide a value for this parameter, SageMaker uses Amazon Web Services Security Token Service to download model artifacts from the S3 path you provide. Amazon Web Services STS is activated in your Amazon Web Services account by default. If you previously deactivated Amazon Web Services STS for a region, you need to reactivate Amazon Web Services STS for that region. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html\">Activating and Deactivating Amazon Web Services STS in an Amazon Web Services Region</a> in the <i>Amazon Web Services Identity and Access Management User Guide</i>.</p> <important> <p>If you use a built-in algorithm to create a model, SageMaker requires that you provide a S3 path to the model artifacts in <code>ModelDataUrl</code>.</p> </important>",
         "ModelPackageContainerDefinition$ModelDataUrl": "<p>The Amazon S3 path where the model artifacts, which result from model training, are stored. This path must point to a single <code>gzip</code> compressed tar archive (<code>.tar.gz</code> suffix).</p> <note> <p>The model artifacts must be in an S3 bucket that is in the same region as the model package.</p> </note>",
-        "SourceAlgorithm$ModelDataUrl": "<p>The Amazon S3 path where the model artifacts, which result from model training, are stored. This path must point to a single <code>gzip</code> compressed tar archive (<code>.tar.gz</code> suffix).</p> <note> <p>The model artifacts must be in an S3 bucket that is in the same region as the algorithm.</p> </note>"
+        "SourceAlgorithm$ModelDataUrl": "<p>The Amazon S3 path where the model artifacts, which result from model training, are stored. This path must point to a single <code>gzip</code> compressed tar archive (<code>.tar.gz</code> suffix).</p> <note> <p>The model artifacts must be in an S3 bucket that is in the same Amazon Web Services region as the algorithm.</p> </note>"
       }
     },
     "UserContext": {
