@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.271.5 - 2023-05-31
 
 * `Aws\ConfigService` - Resource Types Exclusion feature launch by AWS Config
 * `Aws\FraudDetector` - This release enables publishing event predictions from Amazon Fraud Detector (AFD) to Amazon EventBridge. For example, after getting predictions from AFD, Amazon EventBridge rules can be configured to trigger notification through an SNS topic, send a message with SES, or trigger Lambda workflows.
