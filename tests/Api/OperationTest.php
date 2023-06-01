@@ -130,4 +130,40 @@ class OperationTest extends TestCase
            $contextParams
         );
     }
+
+    public function testGetTrait()
+    {
+        $expected = [
+            'requestCompression' => [
+                'encodings' => ['gzip']
+            ]
+        ];
+        $o = new Operation([
+            'input' => ['shape' => 'FooOperationRequest'],
+            'requestcompression' => [
+                'encodings' => ['gzip']
+            ]
+        ], new ShapeMap([
+            'FooOperationRequest' => [
+                'type' => 'structure',
+                'members' => [
+                    'Foo' => [
+                        'shape' => 'Foo',
+                    ]
+                ]
+            ],
+            'Foo' => [
+                'type' => 'string'
+            ]
+        ]));
+
+        $this->assertSame(
+            $expected['requestCompression'],
+            $o->getTrait('requestCompression')
+        );
+        $this->assertSame(
+            $expected,
+            $o->getTraits()
+        );
+    }
 }
