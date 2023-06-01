@@ -1,7 +1,12 @@
 <?php
 namespace Aws\Test\Api;
 
+use Aws\Api\ErrorParser;
+use Aws\Api\Operation;
+use Aws\Api\Parser;
 use Aws\Api\Parser\QueryParser;
+use Aws\Api\Parser\XmlParser;
+use Aws\Api\Serializer;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
 use Aws\Test\TestServiceTrait;
@@ -90,7 +95,7 @@ class ServiceTest extends TestCase
             function () { return []; }
         );
         $this->assertTrue($s->hasOperation('foo'));
-        $this->assertInstanceOf('Aws\Api\Operation', $s->getOperation('foo'));
+        $this->assertInstanceOf(Operation::class, $s->getOperation('foo'));
         $this->assertArrayHasKey('foo', $s->getOperations());
     }
 
@@ -142,10 +147,10 @@ class ServiceTest extends TestCase
     public function errorParserProvider()
     {
         return [
-            ['json', 'Aws\Api\ErrorParser\JsonRpcErrorParser'],
-            ['rest-json', 'Aws\Api\ErrorParser\RestJsonErrorParser'],
-            ['query', 'Aws\Api\ErrorParser\XmlErrorParser'],
-            ['rest-xml', 'Aws\Api\ErrorParser\XmlErrorParser']
+            ['json', ErrorParser\JsonRpcErrorParser::class],
+            ['rest-json', ErrorParser\RestJsonErrorParser::class],
+            ['query', ErrorParser\XmlErrorParser::class],
+            ['rest-xml', ErrorParser\XmlErrorParser::class]
         ];
     }
 
@@ -166,11 +171,11 @@ class ServiceTest extends TestCase
     public function serializerDataProvider()
     {
         return [
-            ['json', 'Aws\Api\Serializer\JsonRpcSerializer'],
-            ['rest-json', 'Aws\Api\Serializer\RestJsonSerializer'],
-            ['rest-xml', 'Aws\Api\Serializer\RestXmlSerializer'],
-            ['query', 'Aws\Api\Serializer\QuerySerializer'],
-            ['ec2', 'Aws\Api\Serializer\QuerySerializer'],
+            ['json', Serializer\JsonRpcSerializer::class],
+            ['rest-json', Serializer\RestJsonSerializer::class],
+            ['rest-xml', Serializer\RestXmlSerializer::class],
+            ['query', Serializer\QuerySerializer::class],
+            ['ec2', Serializer\QuerySerializer::class],
         ];
     }
 
@@ -194,11 +199,11 @@ class ServiceTest extends TestCase
     public function parserDataProvider()
     {
         return [
-            ['json', 'Aws\Api\Parser\JsonRpcParser'],
-            ['rest-json', 'Aws\Api\Parser\RestJsonParser'],
-            ['rest-xml', 'Aws\Api\Parser\RestXmlParser'],
-            ['query', 'Aws\Api\Parser\QueryParser'],
-            ['ec2', 'Aws\Api\Parser\QueryParser'],
+            ['json', Parser\JsonRpcParser::class],
+            ['rest-json', Parser\RestJsonParser::class],
+            ['rest-xml', Parser\RestXmlParser::class],
+            ['query', Parser\QueryParser::class],
+            ['ec2', Parser\QueryParser::class],
         ];
     }
 
@@ -216,7 +221,7 @@ class ServiceTest extends TestCase
 
         if ($parser instanceof QueryParser) {
             $this->assertInstanceOf(
-                'Aws\Api\Parser\XmlParser',
+                XmlParser::class,
                 $this->getPropertyValue($parser, 'parser')
             );
         }

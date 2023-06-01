@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test;
 
+use Aws\HasMonitoringEventsTrait;
 use PHPUnit\Framework\TestCase;
 
 
@@ -25,7 +26,7 @@ class HasMonitoringEventsTraitTest extends TestCase
             ]
         ];
 
-        $mock = $this->getMockForTrait('Aws\HasMonitoringEventsTrait');
+        $mock = $this->getMockForTrait(HasMonitoringEventsTrait::class);
         foreach($events as $event) {
             $mock->appendMonitoringEvent($event);
         }

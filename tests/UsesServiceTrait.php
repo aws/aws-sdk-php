@@ -2,6 +2,7 @@
 namespace Aws\Test;
 
 use Aws\AwsClientInterface;
+use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
@@ -101,9 +102,9 @@ trait UsesServiceTrait
         $message = null
     ) {
         $code = $code ?: 'ERROR';
-        $type = $type ?: 'Aws\Exception\AwsException';
+        $type = $type ?: AwsException::class;
 
-        $client = $this->getMockBuilder('Aws\AwsClientInterface')
+        $client = $this->getMockBuilder(AwsClientInterface::class)
             ->setMethods(['getApi'])
             ->getMockForAbstractClass();
 
@@ -122,7 +123,7 @@ trait UsesServiceTrait
 
         return new $type(
             $message ?: 'Test error',
-            $this->getMockBuilder('Aws\CommandInterface')->getMock(),
+            $this->getMockBuilder(CommandInterface::class)->getMock(),
             [
                 'message' => $message ?: 'Test error',
                 'code'    => $code

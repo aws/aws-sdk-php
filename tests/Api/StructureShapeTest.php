@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Api;
 
+use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\StructureShape;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -23,7 +24,7 @@ class StructureShapeTest extends TestCase
             'members' => ['foo' => ['type' => 'string']]
         ], new ShapeMap([]));
         $this->assertTrue($s->hasMember('foo'));
-        $this->assertInstanceOf('Aws\Api\Shape', $s->getMember('foo'));
+        $this->assertInstanceOf(Shape::class, $s->getMember('foo'));
         $this->assertSame('string', $s->getMember('foo')->getType());
     }
 
@@ -37,8 +38,8 @@ class StructureShapeTest extends TestCase
         ], new ShapeMap([]));
         $members = $s->getMembers();
         $this->assertIsArray($members);
-        $this->assertInstanceOf('Aws\Api\Shape', $members['foo']);
-        $this->assertInstanceOf('Aws\Api\Shape', $members['baz']);
+        $this->assertInstanceOf(Shape::class, $members['foo']);
+        $this->assertInstanceOf(Shape::class, $members['baz']);
         $this->assertSame('string', $members['foo']->getType());
         $this->assertSame('integer', $members['baz']->getType());
     }

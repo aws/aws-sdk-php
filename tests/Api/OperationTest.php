@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Api;
 
+use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\Operation;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -20,8 +21,8 @@ class OperationTest extends TestCase
     public function testReturnsEmptyShapes()
     {
         $o = new Operation([], new ShapeMap([]));
-        $this->assertInstanceOf('Aws\Api\Shape', $o->getInput());
-        $this->assertInstanceOf('Aws\Api\Shape', $o->getOutput());
+        $this->assertInstanceOf(Shape::class, $o->getInput());
+        $this->assertInstanceOf(Shape::class, $o->getOutput());
         $this->assertIsArray($o->getErrors());
     }
 
@@ -33,7 +34,7 @@ class OperationTest extends TestCase
             'i' => ['type' => 'structure']
         ]));
         $i = $o->getInput();
-        $this->assertInstanceOf('Aws\Api\Shape', $i);
+        $this->assertInstanceOf(Shape::class, $i);
         $this->assertSame('structure', $i->getType());
         $this->assertSame($i, $o->getInput());
     }
@@ -46,7 +47,7 @@ class OperationTest extends TestCase
             'os' => ['type' => 'structure']
         ]));
         $os = $o->getOutput();
-        $this->assertInstanceOf('Aws\Api\Shape', $os);
+        $this->assertInstanceOf(Shape::class, $os);
         $this->assertSame('structure', $os->getType());
         $this->assertSame($os, $o->getOutput());
     }
@@ -61,8 +62,8 @@ class OperationTest extends TestCase
         ]));
         $e = $o->getErrors();
         $this->assertIsArray($e);
-        $this->assertInstanceOf('Aws\Api\Shape', $e[0]);
-        $this->assertInstanceOf('Aws\Api\Shape', $e[1]);
+        $this->assertInstanceOf(Shape::class , $e[0]);
+        $this->assertInstanceOf(Shape::class, $e[1]);
         $this->assertSame('structure', $e[0]->getType());
         $this->assertSame('list', $e[1]->getType());
     }

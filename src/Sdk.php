@@ -695,7 +695,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.271.4';
+    const VERSION = '3.271.6';
 
     /** @var array Arguments for creating clients */
     private $args;
@@ -761,7 +761,7 @@ class Sdk
         $namespace = $service['namespace'];
 
         $klass = "Aws\\{$namespace}\\{$namespace}MultiRegionClient";
-        $klass = class_exists($klass) ? $klass : 'Aws\\MultiRegionClient';
+        $klass = class_exists($klass) ? $klass : MultiRegionClient::class;
 
         return new $klass($this->mergeArgs($namespace, $service, $args));
     }

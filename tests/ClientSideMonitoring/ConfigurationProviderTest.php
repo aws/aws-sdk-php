@@ -2,6 +2,7 @@
 
 namespace Aws\Test\ClientSideMonitoring;
 
+use Aws\CacheInterface;
 use Aws\ClientSideMonitoring\Configuration;
 use Aws\ClientSideMonitoring\ConfigurationInterface;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
@@ -12,7 +13,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 
 /**
- * @covers \Aws\ClientSideMonitoring\ConfigurationProvider
+ * @covers ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
@@ -315,7 +316,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\Michael\\Home');
-        $ref = new \ReflectionClass('Aws\ClientSideMonitoring\ConfigurationProvider');
+        $ref = new \ReflectionClass(ConfigurationProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\Michael\\Home', $meth->invoke(null));
@@ -418,7 +419,7 @@ EOT;
     public function testCreatesFromCache()
     {
         $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
-        $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
+        $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())

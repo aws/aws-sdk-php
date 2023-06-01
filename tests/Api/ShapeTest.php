@@ -6,7 +6,7 @@ use Aws\Api\ShapeMap;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers \Aws\Api\Shape
+ * @covers Shape
  * @covers \Aws\Api\AbstractModel
  */
 class ShapeTest extends TestCase
@@ -41,7 +41,7 @@ class ShapeTest extends TestCase
         $s = new Shape(['foo' => ['type' => 'string']], new ShapeMap([]));
         $m = new \ReflectionMethod($s, 'shapeAt');
         $m->setAccessible(true);
-        $this->assertInstanceOf('Aws\Api\Shape', $m->invoke($s, 'foo'));
+        $this->assertInstanceOf(Shape::class, $m->invoke($s, 'foo'));
     }
 
     public function testReturnsNestedShapeReferences()
@@ -53,7 +53,7 @@ class ShapeTest extends TestCase
         $m = new \ReflectionMethod($s, 'shapeAt');
         $m->setAccessible(true);
         $result = $m->invoke($s, 'foo');
-        $this->assertInstanceOf('Aws\Api\Shape', $result);
+        $this->assertInstanceOf(Shape::class, $result);
         $this->assertSame('string', $result->getType());
     }
 
@@ -63,7 +63,7 @@ class ShapeTest extends TestCase
             ['shape' => 'bar'],
             new ShapeMap(['bar' => ['type' => 'float']])
         );
-        $this->assertInstanceOf('Aws\Api\Shape', $s);
+        $this->assertInstanceOf(Shape::class, $s);
         $this->assertSame('float', $s->getType());
     }
 

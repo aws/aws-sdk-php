@@ -135,9 +135,9 @@ class HandlerListTest extends TestCase
         $lines = explode("\n", (string) $list);
         $this->assertCount(6, $lines);
         $this->assertStringContainsString('0) Step: init, Name: foo, Function: callable(', $lines[0]);
-        $this->assertSame("1) Step: init, Name: bar, Function: callable(['Aws\\Test\\HandlerListTest', 'bar'])", $lines[1]);
-        $this->assertSame('2) Step: validate, Function: callable(Aws\Test\HandlerListTest::foo)', $lines[2]);
-        $this->assertSame("3) Step: sign, Name: baz, Function: callable(['Aws\\Middleware', 'tap'])", $lines[3]);
+        $this->assertSame("1) Step: init, Name: bar, Function: callable(['" . HandlerListTest::class . "', 'bar'])", $lines[1]);
+        $this->assertSame('2) Step: validate, Function: callable(' . HandlerListTest::class . '::foo)', $lines[2]);
+        $this->assertSame("3) Step: sign, Name: baz, Function: callable(['" . Middleware::class . "', 'tap'])", $lines[3]);
         $this->assertStringContainsString('4) Handler: callable(', $lines[4]);
     }
 

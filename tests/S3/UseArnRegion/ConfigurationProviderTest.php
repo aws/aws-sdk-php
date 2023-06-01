@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3\UseArnRegion;
 
+use Aws\CacheInterface;
 use Aws\LruArrayCache;
 use Aws\S3\UseArnRegion\Configuration;
 use Aws\S3\UseArnRegion\ConfigurationInterface;
@@ -10,7 +11,7 @@ use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers \Aws\S3\UseArnRegion\ConfigurationProvider
+ * @covers ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
@@ -245,7 +246,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\My\\Home');
-        $ref = new \ReflectionClass('Aws\S3\UseArnRegion\ConfigurationProvider');
+        $ref = new \ReflectionClass(ConfigurationProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\My\\Home', $meth->invoke(null));
@@ -337,7 +338,7 @@ EOT;
     public function testCreatesFromCache()
     {
         $expected = new Configuration(true);
-        $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
+        $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())

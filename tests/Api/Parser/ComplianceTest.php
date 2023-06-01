@@ -1,6 +1,10 @@
 <?php
 namespace Aws\Test\Api\Parser;
 
+use Aws\Api\ListShape;
+use Aws\Api\MapShape;
+use Aws\Api\StructureShape;
+use Aws\Api\TimestampShape;
 use Aws\Command;
 use Aws\Api\Service;
 use Aws\Api\Shape;
@@ -120,7 +124,7 @@ class ComplianceTest extends TestCase
     private function fixTimestamps(&$data, Shape $shape)
     {
         switch (get_class($shape)) {
-            case 'Aws\Api\StructureShape':
+            case StructureShape::class:
                 if ($data && !$shape['document']) {
                     foreach ($data as $key => &$value) {
                         if ($shape->hasMember($key)) {
@@ -129,17 +133,17 @@ class ComplianceTest extends TestCase
                     }
                 }
                 break;
-            case 'Aws\Api\ListShape':
+            case ListShape::class:
                 foreach ($data as &$value) {
                     $this->fixTimestamps($value, $shape->getMember());
                 }
                 break;
-            case 'Aws\Api\MapShape':
+            case MapShape::class:
                 foreach ($data as &$value) {
                     $this->fixTimestamps($value, $shape->getValue());
                 }
                 break;
-            case 'Aws\Api\TimestampShape':
+            case TimestampShape::class:
                 // Format the DateTimeResult as a Unix timestamp.
                 $data = $data->format('U');
                 break;

@@ -28,7 +28,7 @@ class LogFileIteratorTest extends TestCase
         $json = '{"trailList":[{"IncludeGlobalServiceEvents":true,"Name":"Default","S3BucketName":"log-bucket"}]}';
         $this->addMockResults($cloudTrailClient, [new Result(json_decode($json, true))]);
         $files = LogFileIterator::forTrail($s3Client, $cloudTrailClient);
-        $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
+        $this->assertInstanceOf(LogFileIterator::class, $files);
     }
 
     public function testFactoryErrorsOnUnknownBucket()
@@ -50,7 +50,7 @@ class LogFileIteratorTest extends TestCase
     {
         $s3Client = $this->getMockS3Client();
         $files = new LogFileIterator($s3Client, 'test-bucket');
-        $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
+        $this->assertInstanceOf(LogFileIterator::class, $files);
     }
 
     public function testConstructorWorksWithDates()
@@ -60,7 +60,7 @@ class LogFileIteratorTest extends TestCase
             LogFileIterator::START_DATE => new \DateTime('2013-11-01'),
             LogFileIterator::END_DATE   => '2013-12-01',
         ]);
-        $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
+        $this->assertInstanceOf(LogFileIterator::class, $files);
     }
 
     public function testConstructorErrorsOnInvalidDate()

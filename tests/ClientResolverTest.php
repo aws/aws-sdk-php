@@ -8,6 +8,7 @@ use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\CommandInterface;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Credentials\CredentialsInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Endpoint\Partition;
 use Aws\EndpointV2\EndpointProviderV2;
@@ -282,7 +283,7 @@ class ClientResolverTest extends TestCase
             'version' => 'latest'
         ], new HandlerList());
         $c = call_user_func($conf['credentials'])->wait();
-        $this->assertInstanceOf('Aws\Credentials\CredentialsInterface', $c);
+        $this->assertInstanceOf(CredentialsInterface::class, $c);
         $this->assertSame('foo', $c->getAccessKeyId());
         $this->assertSame('bar', $c->getSecretKey());
         putenv(CredentialProvider::ENV_KEY . "=$key");
@@ -375,7 +376,7 @@ class ClientResolverTest extends TestCase
             'version' => 'latest'
         ], new HandlerList());
         $creds = call_user_func($conf['credentials'])->wait();
-        $this->assertInstanceOf('Aws\Credentials\Credentials', $creds);
+        $this->assertInstanceOf(Credentials::class, $creds);
         $this->assertSame('anonymous', $conf['config']['signature_version']);
     }
 
