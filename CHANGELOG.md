@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.271.6 - 2023-06-01
 
 * `Aws\AlexaForBusiness` - Alexa for Business has been deprecated and is no longer supported.
 * `Aws\Appflow` - Added ability to select DataTransferApiType for DescribeConnector and CreateFlow requests when using Async supported connectors. Added supportedDataTransferType to DescribeConnector/DescribeConnectors/ListConnector response.
