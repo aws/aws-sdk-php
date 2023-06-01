@@ -19,6 +19,7 @@ use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface as UseDualStackEndp
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointV2\EndpointDefinitionProvider;
+use Aws\Exception\AwsException;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
@@ -66,7 +67,7 @@ class ClientResolver
             'type'     => 'value',
             'valid'    => ['string'],
             'doc'      => 'Exception class to create when an error occurs.',
-            'default'  => 'Aws\Exception\AwsException',
+            'default'  => AwsException::class,
             'internal' => true
         ],
         'scheme' => [
@@ -548,7 +549,7 @@ class ClientResolver
             $args['credentials'] = CredentialProvider::defaultProvider($args);
         } else {
             throw new IAE('Credentials must be an instance of '
-                . 'Aws\Credentials\CredentialsInterface, an associative '
+                . "'" . CredentialsInterface::class . ', an associative '
                 . 'array that contains "key", "secret", and an optional "token" '
                 . 'key-value pairs, a credentials provider function, or false.');
         }
@@ -580,7 +581,7 @@ class ClientResolver
             $args['token'] = TokenProvider::defaultProvider($args);
         } else {
             throw new IAE('Token must be an instance of '
-                . 'Aws\Token\TokenInterface, an associative '
+                . TokenInterface::class . ', an associative '
                 . 'array that contains "token" and an optional "expires" '
                 . 'key-value pairs, a token provider function, or false.');
         }

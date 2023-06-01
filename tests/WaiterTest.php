@@ -6,6 +6,7 @@ use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
 use Aws\Result;
+use Aws\Waiter;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -259,7 +260,7 @@ class WaiterTest extends TestCase
      */
     public function testMatchers($matcher, $result, $acceptor, $expected)
     {
-        $waiter = new \ReflectionClass('Aws\Waiter');
+        $waiter = new \ReflectionClass(Waiter::class);
         $matcher = $waiter->getMethod($matcher);
         $matcher->setAccessible(true);
         $waiter = $waiter->newInstanceWithoutConstructor();
@@ -389,7 +390,7 @@ class WaiterTest extends TestCase
     {
         if (is_string($data)) {
             return new AwsException('ERROR',
-                $this->getMockBuilder('Aws\CommandInterface')->getMock(),
+                $this->getMockBuilder(CommandInterface::class)->getMock(),
                 [
                     'code'   => $data,
                     'result' => new Result(['@metadata' => ['statusCode' => 200]])

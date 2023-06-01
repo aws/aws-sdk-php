@@ -21,7 +21,7 @@ class SdkTest extends TestCase
 
     public function testHasMagicMethods()
     {
-        $sdk = $this->getMockBuilder('Aws\Sdk')
+        $sdk = $this->getMockBuilder(Sdk::class)
             ->setMethods(['createClient'])
             ->getMock();
         $sdk->expects($this->once())

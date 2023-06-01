@@ -41,7 +41,7 @@ class LogRecordIteratorTest extends TestCase
             ])
         ]);
         $records = LogRecordIterator::forTrail($s3, $cloudTrailClient);
-        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
+        $this->assertInstanceOf(LogRecordIterator::class, $records);
     }
 
     public function testFactoryCanCreateForBucket()
@@ -52,7 +52,7 @@ class LogRecordIteratorTest extends TestCase
             'version'     => 'latest'
         ]);
         $records = LogRecordIterator::forBucket($s3, 'test-bucket');
-        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
+        $this->assertInstanceOf(LogRecordIterator::class, $records);
     }
 
     public function testFactoryCanCreateForFile()
@@ -63,12 +63,12 @@ class LogRecordIteratorTest extends TestCase
             'version'     => 'latest'
         ]);
         $records = LogRecordIterator::forFile($s3, 'test-bucket', 'test-key');
-        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
+        $this->assertInstanceOf(LogRecordIterator::class, $records);
     }
 
     public function testIteratorBehavesCorrectlyBeforeRewind()
     {
-        $logFileReader = $this->getMockBuilder('Aws\CloudTrail\LogFileReader')
+        $logFileReader = $this->getMockBuilder(LogFileReader::class)
             ->disableOriginalConstructor()
             ->getMock();
         $logFileIterator = new \ArrayIterator;

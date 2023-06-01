@@ -3,6 +3,7 @@ namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\Endpoint\PatternEndpointProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -33,7 +34,7 @@ class EndpointProviderTest extends TestCase
         $p = EndpointProvider::patterns([
             '*/*' => ['endpoint' => 'foo.com']
         ]);
-        $this->assertInstanceOf('Aws\Endpoint\PatternEndpointProvider', $p);
+        $this->assertInstanceOf(PatternEndpointProvider::class, $p);
         $result = EndpointProvider::resolve($p, []);
         $this->assertSame('https://foo.com', $result['endpoint']);
     }

@@ -4,6 +4,8 @@ namespace Aws\Test\Credentials;
 use Aws\Api\DateTimeResult;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Credentials\EcsCredentialProvider;
+use Aws\Credentials\InstanceProfileProvider;
 use Aws\History;
 use Aws\LruArrayCache;
 use Aws\Result;
@@ -14,7 +16,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 
 /**
- * @covers \Aws\Credentials\CredentialProvider
+ * @covers CredentialProvider
  */
 class CredentialProviderTest extends TestCase
 {
@@ -561,13 +563,13 @@ EOT;
     public function testCreatesFromInstanceProfileProvider()
     {
         $p = CredentialProvider::instanceProfile();
-        $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $p);
+        $this->assertInstanceOf(InstanceProfileProvider::class, $p);
     }
 
     public function testCreatesFromEcsCredentialProvider()
     {
         $p = CredentialProvider::ecsCredentials();
-        $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $p);
+        $this->assertInstanceOf(EcsCredentialProvider::class, $p);
     }
 
     public function testCreatesFromRoleArn()
@@ -1809,7 +1811,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\Michael\\Home');
-        $ref = new \ReflectionClass('Aws\Credentials\CredentialProvider');
+        $ref = new \ReflectionClass(CredentialProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\Michael\\Home', $meth->invoke(null));
