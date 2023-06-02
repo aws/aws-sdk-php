@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.271.7 - 2023-06-02
 
 * `Aws\Athena` - This release introduces the DeleteCapacityReservation API and the ability to manage capacity reservations using CloudFormation
 * `Aws\CloudTrail` - This feature allows users to start and stop event ingestion on a CloudTrail Lake event data store.
