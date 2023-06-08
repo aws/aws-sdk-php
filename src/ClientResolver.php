@@ -7,6 +7,7 @@ use Aws\Api\Validator;
 use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\Configuration;
+use Aws\Configuration\ConfigurationResolver;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
@@ -226,7 +227,7 @@ class ClientResolver
         ],
         'disable_request_compression' => [
             'type'      => 'value',
-            'valid'     => ['bool', DisableRequestCompressionConfig::class, CacheInterface::class, 'callable'],
+            'valid'     => ['bool', 'callable'],
             'doc'       => 'Set to true to disable request compression for supported operations',
             'fn'        => [__CLASS__, '_apply_disable_request_compression'],
             'default'   => [__CLASS__, '_default_disable_request_compression'],
@@ -540,27 +541,26 @@ class ClientResolver
     }
 
     public static function _apply_disable_request_compression($value, array &$args) {
-        if ($value instanceof CacheInterface) {
-            $value = DisableRequestCompressionConfigProvider::defaultProvider($args);
-        }
         if (is_callable($value)) {
             $value = $value();
         }
-        if ($value instanceof PromiseInterface) {
-            $value = $value->wait();
+        if (!is_bool($value)) {
+            $value = false;
         }
-        if ($value instanceof DisableRequestCompressionConfigurationInterface) {
-            $args['config']['disable_request_compression'] = $value;
-        } else {
-            // The Configuration class itself will validate other inputs
-            $args['config']['disable_request_compression'] = new DisableRequestCompressionConfig(
-                $value
-            );
-        }
+        $args['config']['disable_request_compression'] = $value;
     }
 
+//    public static function _default_disable_request_compression(array &$args) {
+//        return DisableRequestCompressionConfigProvider::defaultProvider($args);
+//    }
+
     public static function _default_disable_request_compression(array &$args) {
-        return DisableRequestCompressionConfigProvider::defaultProvider($args);
+        return ConfigurationResolver::resolve(
+            'disable_request_compression',
+            false,
+            'bool',
+            $args
+        );
     }
 
     public static function _apply_min_compression_size($value, array &$args) {

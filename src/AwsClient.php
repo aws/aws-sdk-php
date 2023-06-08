@@ -452,12 +452,7 @@ class AwsClient implements AwsClientInterface
 
     private function addRequestCompressionMiddleware($config)
     {
-        if (empty($config['disable_request_compression'])
-            || (is_callable($config['disable_request_compression'])
-                && !$config['disable_request_compression']()
-                ->wait()
-                ->isDisableRequestCompression())
-        ) {
+        if (empty($config['disable_request_compression'])) {
             $list = $this->getHandlerList();
             $list->appendBuild(
                 RequestCompressionMiddleware::wrap($config),
