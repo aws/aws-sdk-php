@@ -78,6 +78,6 @@ jobs:
         make package
 
     #generate code coverage
-    - if: ${{ (matrix.php-versions == '7.2.3' || matrix.php-versions == '8.0') && matrix.composer-options == '' }}
+    - if: ${{ (matrix.php-versions == '7.2.5' || matrix.php-versions == '8.0') && matrix.composer-options == '' }}
       name: Code coverage
       run: bash <(curl -s https://codecov.io/bash)
