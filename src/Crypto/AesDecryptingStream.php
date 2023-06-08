@@ -65,7 +65,7 @@ class AesDecryptingStream implements AesStreamInterface
         return $this->cipherMethod->getCurrentIv();
     }
 
-    public function getSize():
+    public function getSize(): ?int:
     {
         $plainTextSize = $this->stream->getSize();
 
