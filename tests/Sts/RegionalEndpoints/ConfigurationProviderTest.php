@@ -2,6 +2,7 @@
 
 namespace Aws\Test\Sts\RegionalEndpoints;
 
+use Aws\CacheInterface;
 use Aws\LruArrayCache;
 use Aws\Sts\RegionalEndpoints\Configuration;
 use Aws\Sts\RegionalEndpoints\ConfigurationInterface;
@@ -245,7 +246,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\My\\Home');
-        $ref = new \ReflectionClass('Aws\Sts\RegionalEndpoints\ConfigurationProvider');
+        $ref = new \ReflectionClass(ConfigurationProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\My\\Home', $meth->invoke(null));
@@ -337,7 +338,7 @@ EOT;
     public function testCreatesFromCache()
     {
         $expected = new Configuration('regional');
-        $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
+        $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())

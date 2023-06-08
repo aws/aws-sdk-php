@@ -2,6 +2,7 @@
 
 namespace Aws\Test\S3\RegionalEndpoint;
 
+use Aws\CacheInterface;
 use Aws\LruArrayCache;
 use Aws\S3\RegionalEndpoint\Configuration;
 use Aws\S3\RegionalEndpoint\ConfigurationInterface;
@@ -246,7 +247,7 @@ EOT;
     public function testCreatesFromCache()
     {
         $expected = new Configuration('regional');
-        $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
+        $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())

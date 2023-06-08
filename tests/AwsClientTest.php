@@ -9,12 +9,16 @@ use Aws\Credentials\Credentials;
 use Aws\Ec2\Ec2Client;
 use Aws\Endpoint\UseFipsEndpoint\Configuration as FipsConfiguration;
 use Aws\Endpoint\UseDualStackEndpoint\Configuration as DualStackConfiguration;
+use Aws\EndpointV2\EndpointProviderV2;
+use Aws\ResultPaginator;
+use Aws\S3\Exception\S3Exception;
 use Aws\Ses\SesClient;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Signature\SignatureV4;
 use Aws\Sts\StsClient;
+use Aws\Waiter;
 use Aws\WrappedHttpHandler;
 use Exception;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -83,7 +87,7 @@ class AwsClientTest extends TestCase
         ]);
 
         $this->assertInstanceOf(
-            'Aws\CommandInterface',
+            CommandInterface::class,
             $client->getCommand('foo')
         );
     }
@@ -104,7 +108,7 @@ class AwsClientTest extends TestCase
             },
             $parser,
             $errorParser,
-            'Aws\S3\Exception\S3Exception'
+            S3Exception::class
         );
 
         $client = $this->createClient(
@@ -123,7 +127,7 @@ class AwsClientTest extends TestCase
         ]]]);
 
         $this->assertInstanceOf(
-            'Aws\CommandInterface',
+            CommandInterface::class,
             $client->getCommand('foo')
         );
     }
@@ -180,7 +184,7 @@ class AwsClientTest extends TestCase
         ]]);
 
         $this->assertInstanceOf(
-            'Aws\ResultPaginator',
+            ResultPaginator::class,
             $client->getPaginator('ListObjects', ['Bucket' => 'foobar'])
         );
     }
@@ -220,7 +224,7 @@ class AwsClientTest extends TestCase
             new Result(['@metadata' => ['statusCode' => '200']])
         ]));
         $waiter = $s3->getWaiter('BucketExists', ['Bucket' => 'foo']);
-        $this->assertInstanceOf('Aws\Waiter', $waiter);
+        $this->assertInstanceOf(Waiter::class, $waiter);
         $promise = $waiter->promise();
         $promise->wait();
     }
@@ -231,7 +235,7 @@ class AwsClientTest extends TestCase
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $this->assertInstanceOf('Aws\Sts\StsClient', $client);
+        $this->assertInstanceOf(StsClient::class, $client);
         $this->assertSame('us-west-2', $client->getRegion());
     }
 
@@ -480,7 +484,7 @@ class AwsClientTest extends TestCase
         ]);
 
         $this->assertInstanceOf(
-            'Aws\EndpointV2\EndpointProviderV2',
+            EndpointProviderV2::class,
             $client->getEndpointProvider()
         );
     }

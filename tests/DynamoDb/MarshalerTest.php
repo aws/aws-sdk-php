@@ -338,7 +338,7 @@ JSON;
             'foo' => ['NS' => ['99999999999999999999', '9']],
             'bar' => ['N' => '99999999999999999999.99999999999999999999'],
         ]);
-        $this->assertInstanceOf('Aws\DynamoDb\NumberValue', $result['bar']);
+        $this->assertInstanceOf(NumberValue::class, $result['bar']);
         $this->assertSame('99999999999999999999', (string) iterator_to_array($result['foo'])[0]);
         $this->assertSame('99999999999999999999.99999999999999999999', (string) $result['bar']);
     }

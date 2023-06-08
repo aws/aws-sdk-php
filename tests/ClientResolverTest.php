@@ -8,6 +8,7 @@ use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\CommandInterface;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Credentials\CredentialsInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Endpoint\Partition;
 use Aws\EndpointV2\EndpointProviderV2;
@@ -282,7 +283,7 @@ class ClientResolverTest extends TestCase
             'version' => 'latest'
         ], new HandlerList());
         $c = call_user_func($conf['credentials'])->wait();
-        $this->assertInstanceOf('Aws\Credentials\CredentialsInterface', $c);
+        $this->assertInstanceOf(CredentialsInterface::class, $c);
         $this->assertSame('foo', $c->getAccessKeyId());
         $this->assertSame('bar', $c->getSecretKey());
         putenv(CredentialProvider::ENV_KEY . "=$key");
@@ -375,7 +376,7 @@ class ClientResolverTest extends TestCase
             'version' => 'latest'
         ], new HandlerList());
         $creds = call_user_func($conf['credentials'])->wait();
-        $this->assertInstanceOf('Aws\Credentials\Credentials', $creds);
+        $this->assertInstanceOf(Credentials::class, $creds);
         $this->assertSame('anonymous', $conf['config']['signature_version']);
     }
 
@@ -879,6 +880,216 @@ EOT;
         call_user_func($list->resolve(), $command, $request);
     }
 
+    public function testUserAgentAddsEndpointDiscoveryConfiguration()
+    {
+        $command = $this->getMockBuilder(CommandInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->exactly(2))
+            ->method('getHeader')
+            ->withConsecutive(
+                ['X-Amz-User-Agent'],
+                ['User-Agent']
+            )
+            ->willReturnOnConsecutiveCalls(
+                ["MockBuilder"],
+                ['MockBuilder']
+            );
+
+        $request->expects($this->exactly(2))
+            ->method('withHeader')
+            ->withConsecutive(
+                [
+                    'X-Amz-User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
+                    )
+                ],
+                [
+                    'User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
+                    )
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $request,
+                $request
+            );
+
+        $args = [
+            'endpoint_discovery' => new \Aws\EndpointDiscovery\Configuration (
+                true,
+                1000
+            ),
+        ];
+        $list = new HandlerList(function () {
+        });
+        ClientResolver::_apply_user_agent([], $args, $list);
+        call_user_func($list->resolve(), $command, $request);
+    }
+
+
+    public function testUserAgentAddsEndpointDiscoveryArray()
+    {
+        $command = $this->getMockBuilder(CommandInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->exactly(2))
+            ->method('getHeader')
+            ->withConsecutive(
+                ['X-Amz-User-Agent'],
+                ['User-Agent']
+            )
+            ->willReturnOnConsecutiveCalls(
+                ["MockBuilder"],
+                ['MockBuilder']
+            );
+
+        $request->expects($this->exactly(2))
+            ->method('withHeader')
+            ->withConsecutive(
+                [
+                    'X-Amz-User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
+                    )
+                ],
+                [
+                    'User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
+                    )
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $request,
+                $request
+            );
+
+        $args = [
+            'endpoint_discovery' => [
+                'enabled' => true,
+                'cache_limit' => 1000
+            ],
+        ];
+        $list = new HandlerList(function () {
+        });
+        ClientResolver::_apply_user_agent([], $args, $list);
+        call_user_func($list->resolve(), $command, $request);
+    }
+
+    public function testUserAgentAddsRetryModeConfiguration()
+    {
+        $command = $this->getMockBuilder(CommandInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->exactly(2))
+            ->method('getHeader')
+            ->withConsecutive(
+                ['X-Amz-User-Agent'],
+                ['User-Agent']
+            )
+            ->willReturnOnConsecutiveCalls(
+                ["MockBuilder"],
+                ['MockBuilder']
+            );
+
+        $request->expects($this->exactly(2))
+            ->method('withHeader')
+            ->withConsecutive(
+                [
+                    'X-Amz-User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#adaptive/'
+                    )
+                ],
+                [
+                    'User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#adaptive/'
+                    )
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $request,
+                $request
+            );
+
+        $args = [
+            'retries' => new \Aws\Retry\Configuration('adaptive', 10)
+        ];
+        $list = new HandlerList(function () {
+        });
+        ClientResolver::_apply_user_agent([], $args, $list);
+        call_user_func($list->resolve(), $command, $request);
+    }
+
+
+    public function testUserAgentAddsRetryWithArray()
+    {
+        $command = $this->getMockBuilder(CommandInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->exactly(2))
+            ->method('getHeader')
+            ->withConsecutive(
+                ['X-Amz-User-Agent'],
+                ['User-Agent']
+            )
+            ->willReturnOnConsecutiveCalls(
+                ["MockBuilder"],
+                ['MockBuilder']
+            );
+
+        $request->expects($this->exactly(2))
+            ->method('withHeader')
+            ->withConsecutive(
+                [
+                    'X-Amz-User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#standard/'
+                    )
+                ],
+                [
+                    'User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#standard/'
+                    )
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $request,
+                $request
+            );
+
+        $args = [
+            'retries' => [
+                'mode' => 'standard',
+            ],
+        ];
+        $list = new HandlerList(function () {
+        });
+        ClientResolver::_apply_user_agent([], $args, $list);
+        call_user_func($list->resolve(), $command, $request);
+    }
+
 
     /**
      * @dataProvider statValueProvider
@@ -1025,7 +1236,7 @@ EOT;
             [
                 ['service' => 'iot', 'region' => 'us-west-2'] + $invocationArgs,
                 'signing_name',
-                'execute-api',
+                'iot',
             ],
             // signingRegion
             [

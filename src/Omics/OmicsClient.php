@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Omics** service.
+ * @method \Aws\Result abortMultipartReadSetUpload(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise abortMultipartReadSetUploadAsync(array $args = [])
  * @method \Aws\Result batchDeleteReadSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDeleteReadSetAsync(array $args = [])
  * @method \Aws\Result cancelAnnotationImportJob(array $args = [])
@@ -13,8 +15,12 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise cancelRunAsync(array $args = [])
  * @method \Aws\Result cancelVariantImportJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelVariantImportJobAsync(array $args = [])
+ * @method \Aws\Result completeMultipartReadSetUpload(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise completeMultipartReadSetUploadAsync(array $args = [])
  * @method \Aws\Result createAnnotationStore(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createAnnotationStoreAsync(array $args = [])
+ * @method \Aws\Result createMultipartReadSetUpload(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createMultipartReadSetUploadAsync(array $args = [])
  * @method \Aws\Result createReferenceStore(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createReferenceStoreAsync(array $args = [])
  * @method \Aws\Result createRunGroup(array $args = [])
@@ -81,12 +87,16 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAnnotationImportJobsAsync(array $args = [])
  * @method \Aws\Result listAnnotationStores(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAnnotationStoresAsync(array $args = [])
+ * @method \Aws\Result listMultipartReadSetUploads(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listMultipartReadSetUploadsAsync(array $args = [])
  * @method \Aws\Result listReadSetActivationJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listReadSetActivationJobsAsync(array $args = [])
  * @method \Aws\Result listReadSetExportJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listReadSetExportJobsAsync(array $args = [])
  * @method \Aws\Result listReadSetImportJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listReadSetImportJobsAsync(array $args = [])
+ * @method \Aws\Result listReadSetUploadParts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listReadSetUploadPartsAsync(array $args = [])
  * @method \Aws\Result listReadSets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listReadSetsAsync(array $args = [])
  * @method \Aws\Result listReferenceImportJobs(array $args = [])
@@ -137,5 +147,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateVariantStoreAsync(array $args = [])
  * @method \Aws\Result updateWorkflow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkflowAsync(array $args = [])
+ * @method \Aws\Result uploadReadSetPart(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise uploadReadSetPartAsync(array $args = [])
  */
 class OmicsClient extends AwsClient {}
