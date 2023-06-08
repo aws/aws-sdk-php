@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.272.0 - 2023-06-08
 
 * `Aws\Athena` - You can now define custom spark properties at start of the session for use cases like cluster encryption, table formats, and general Spark tuning.
 * `Aws\ComprehendMedical` - This release supports a new set of entities and traits.
