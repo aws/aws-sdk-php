@@ -709,13 +709,13 @@ class StreamWrapper
         return true;
     }
 
-    private function openWriteStream()
+    private function openWriteStream(): bool
     {
         $this->body = new Stream(fopen('php://temp', 'r+'));
         return true;
     }
 
-    private function openAppendStream()
+    private function openAppendStream(): bool
     {
         try {
             // Get the body of the object and seek to the end of the stream
