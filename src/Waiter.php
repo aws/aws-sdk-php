@@ -89,7 +89,7 @@ class Waiter implements PromisorInterface
     /**
      * @return Coroutine
      */
-    public function promise()
+    public function promise(): \GuzzleHttp\Promise\PromiseInterface
     {
         return Coroutine::of(function () {
             $name = $this->config['operation'];

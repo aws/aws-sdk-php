@@ -79,7 +79,7 @@ class ObjectCopier implements PromisorInterface
      *
      * @return Coroutine
      */
-    public function promise()
+    public function promise(): \GuzzleHttp\Promise\PromiseInterface
     {
         return Coroutine::of(function () {
             $headObjectCommand = $this->client->getCommand(
