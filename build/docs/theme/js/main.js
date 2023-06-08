@@ -154,7 +154,7 @@ $(window).load(function() {
 	}
 
 	// Announce results in Autocomplete
-	var $suggestionsHelp = $('.suggestions-help');
+	var $suggestionsHelp = $('#suggestions-help');
 
 	$('[data-suggest]').on('input', function() {
 		$suggestionsHelp.text(
