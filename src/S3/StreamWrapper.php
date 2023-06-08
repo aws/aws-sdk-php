@@ -109,9 +109,9 @@ class StreamWrapper
      */
     public static function register(
         S3ClientInterface $client,
-        $protocol = 's3',
+                          $protocol = 's3',
         CacheInterface $cache = null,
-        $v2Existence = false
+                          $v2Existence = false
     ) {
         self::$useV2Existence = $v2Existence;
         if (in_array($protocol, stream_get_wrappers())) {
@@ -135,7 +135,10 @@ class StreamWrapper
 
     public function stream_close()
     {
-        if ($this->body->getSize() === 0 && !($this->isFlushed)) {
+        if (!$this->isFlushed
+            && empty($this->body->getSize())
+            && $this->mode !== 'r'
+        ) {
             $this->stream_flush();
         }
         $this->body = $this->cache = null;
@@ -168,6 +171,14 @@ class StreamWrapper
 
     public function stream_flush()
     {
+        // Check if stream body size has been
+        // calculated via a flush or close
+        if($this->body->getSize() === null && $this->mode !== 'r') {
+            return $this->triggerError(
+                "Unable to determine stream size. Did you forget to close or flush the stream?"
+            );
+        }
+
         $this->isFlushed = true;
         if ($this->mode == 'r') {
             return false;
@@ -558,9 +569,9 @@ class StreamWrapper
             );
             // Delete the original object
             $this->getClient()->deleteObject([
-                'Bucket' => $partsFrom['Bucket'],
-                'Key'    => $partsFrom['Key']
-            ] + $options);
+                    'Bucket' => $partsFrom['Bucket'],
+                    'Key'    => $partsFrom['Key']
+                ] + $options);
             return true;
         });
     }
@@ -709,13 +720,13 @@ class StreamWrapper
         return true;
     }
 
-    private function openWriteStream(): bool
+    private function openWriteStream()
     {
         $this->body = new Stream(fopen('php://temp', 'r+'));
         return true;
     }
 
-    private function openAppendStream(): bool
+    private function openAppendStream()
     {
         try {
             // Get the body of the object and seek to the end of the stream
