@@ -60,8 +60,10 @@ trait MultipartUploadingTrait
 
         // Updates counter for uploaded bytes.
         $this->uploadedBytes += $command["ContentLength"];
-        // Sends uploaded bytes to progress tracker.
-        $this->getState()->displayProgress($this->uploadedBytes);
+        // Sends uploaded bytes to progress tracker if getDisplayProgress set
+        if ($this->getState()->displayProgress) {
+            $this->getState()->getDisplayProgress($this->uploadedBytes);
+        }
     }
 
     abstract protected function extractETag(ResultInterface $result);

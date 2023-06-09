@@ -79,7 +79,7 @@ class MultipartCopy extends AbstractUploadManager
         );
 
         if (isset($config['track_upload']) && $config['track_upload']) {
-            $this->getState()->setProgressThresholds(
+            $this->getState()->setDisplayProgress(
                 $this->sourceMetadata["ContentLength"]
             );
         }

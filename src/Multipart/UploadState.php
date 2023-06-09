@@ -92,6 +92,17 @@ class UploadState
     }
 
     /**
+     * Set displayProgress. Sends object size to setProgressThresholds.
+     *
+     * @param $totalSize int Size of object to upload.
+     */
+    public function setDisplayProgress($totalSize)
+    {
+        $this->setProgressThresholds($totalSize);
+        $this->displayProgress = true;
+    }
+
+    /**
      * Sets the 1/8th thresholds array. $totalSize is only sent if
      * 'track_upload' is true.
      *
@@ -117,18 +128,18 @@ class UploadState
      *
      * @param $totalUploaded numeric Size of upload so far.
      */
-    public function displayProgress($totalUploaded)
+    public function getDisplayProgress($totalUploaded)
     {
-        if(!is_numeric($totalUploaded)) {
+        if (!is_numeric($totalUploaded)) {
             throw new \InvalidArgumentException('The size of the bytes being uploaded must be a number.');
         }
 
-        while (!empty($this->progressThresholds)
-                && !empty($this->progressBar)
-                && $totalUploaded >= $this->progressThresholds[0])
-        {
-            echo array_shift($this->progressBar);
-            array_shift($this->progressThresholds);
+        if ($this->displayProgress) {
+            while (!empty($this->progressBar)
+                && $totalUploaded >= $this->progressThresholds[0]) {
+                echo array_shift($this->progressBar);
+                array_shift($this->progressThresholds);
+            }
         }
     }
 
@@ -173,7 +184,6 @@ class UploadState
      * @param int $status Status is an integer code defined by the constants
      *                    CREATED, INITIATED, and COMPLETED on this class.
      */
-
     public function setStatus($status)
     {
         $this->status = $status;

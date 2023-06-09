@@ -74,21 +74,22 @@ class UploadStateTest extends TestCase
     public function testEmptyUploadStateOutputWithConfigFalse()
     {
         $state = new UploadState([]);
-        $state->displayProgress(13);
+        $state->displayProgress = false;
+        $state->getDisplayProgress(13);
         $this->expectOutputString('');
     }
 
     /**
      * @dataProvider getDisplayProgressCases
      */
-    public function testDisplayProgressPrintsProgress(
+    public function testGetDisplayProgressPrintsProgress(
         $totalSize,
         $totalUploaded,
         $progressBar
     ) {
         $state = new UploadState([]);
-        $state->setProgressThresholds($totalSize);
-        $state->displayProgress($totalUploaded);
+        $state->setDisplayProgress($totalSize);
+        $state->getDisplayProgress($totalUploaded);
 
         $this->expectOutputString($progressBar);
     }
@@ -212,8 +213,7 @@ class UploadStateTest extends TestCase
         $state = new UploadState([]);
         $this->expectExceptionMessage('The size of the bytes being uploaded must be a number.');
         $this->expectException(\InvalidArgumentException::class);
-
-        $state->displayProgress($totalUploaded);
+        $state->getDisplayProgress($totalUploaded);
     }
 
     public function getInvalidIntCases()
