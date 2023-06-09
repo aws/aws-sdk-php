@@ -56,8 +56,7 @@ class HashingStream implements StreamInterface
             $this->hash->reset();
             $this->stream->seek($offset);
         }
-
         // Seeking arbitrarily is not supported.
-        return ;
+        return;
     }
 }
