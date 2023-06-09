@@ -6,7 +6,7 @@ use Aws\Api\ShapeMap;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers Shape
+ * @covers \Aws\Api\Shape
  * @covers \Aws\Api\AbstractModel
  */
 class ShapeTest extends TestCase
