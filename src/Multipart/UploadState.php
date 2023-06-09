@@ -40,6 +40,9 @@ class UploadState
     /** @var array Thresholds for progress of the upload. */
     private $progressThresholds = [];
 
+    /** @var boolean Determines status for tracking the upload */
+    public $displayProgress = false;
+
     /**
      * @param array $id Params used to identity the upload.
      */
