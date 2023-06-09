@@ -26,12 +26,7 @@ use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\Exception\AwsException;
 use Aws\Exception\InvalidRegionException;
-use Aws\RequestCompression\DisableRequestCompression\Configuration as DisableRequestCompressionConfig;
-use Aws\RequestCompression\DisableRequestCompression\ConfigurationInterface as DisableRequestCompressionConfigurationInterface;
-use Aws\RequestCompression\DisableRequestCompression\ConfigurationProvider as DisableRequestCompressionConfigProvider;
 use Aws\RequestCompression\RequestMinCompressionSizeBytes\Configuration as MinCompressionSizeConfig;
-use Aws\RequestCompression\RequestMinCompressionSizeBytes\ConfigurationInterface as MinCompressionSizeConfigurationInterface;
-use Aws\RequestCompression\RequestMinCompressionSizeBytes\ConfigurationProvider as MinCompressionSizeConfigProvider;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
 use Aws\Signature\SignatureProvider;
@@ -551,10 +546,6 @@ class ClientResolver
         $args['config']['disable_request_compression'] = $value;
     }
 
-//    public static function _default_disable_request_compression(array &$args) {
-//        return DisableRequestCompressionConfigProvider::defaultProvider($args);
-//    }
-
     public static function _default_disable_request_compression(array &$args) {
         return ConfigurationResolver::resolve(
             'disable_request_compression',
@@ -565,27 +556,26 @@ class ClientResolver
     }
 
     public static function _apply_min_compression_size($value, array &$args) {
-        if ($value instanceof CacheInterface) {
-            $value = MinCompressionSizeConfigProvider::defaultProvider($args);
-        }
         if (is_callable($value)) {
             $value = $value();
         }
-        if ($value instanceof PromiseInterface) {
-            $value = $value->wait();
+        if (!is_int($value)
+            || (is_int($value)
+            && ($value < 0 || $value > 10485760))
+        ) {
+            throw new IAE("'min_compression_size_bytes' config option"
+                . " must be an integer between 0 and 10485760, inclusive.");
         }
-        if ($value instanceof MinCompressionSizeConfigurationInterface) {
-            $args['config']['request_min_compression_size_bytes'] = $value;
-        } else {
-            // The Configuration class itself will validate other inputs
-            $args['config']['request_min_compression_size_bytes'] = new MinCompressionSizeConfig(
-                $value
-            );
-        }
+        $args['config']['request_min_compression_size_bytes'] = $value;
     }
 
     public static function _default_min_compression_size(array &$args) {
-        return MinCompressionSizeConfigProvider::defaultProvider($args);
+        return ConfigurationResolver::resolve(
+            'request_min_compression_size_bytes',
+            10240,
+            'int',
+            $args
+        );
     }
 
     public static function _apply_credentials($value, array &$args)

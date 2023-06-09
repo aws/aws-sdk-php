@@ -4,8 +4,7 @@ namespace Aws\Test\RequestCompression;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Middleware;
-use Aws\RequestCompression\Exception\ConfigurationException;
-use Aws\RequestCompression\RequestCompressionMiddleware;
+use Aws\RequestCompressionMiddleware;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -211,7 +210,7 @@ class RequestCompressionMiddlewareTest extends TestCase
     public function testThrowsExceptionWhenInvalidMinCompressionSizeOnClient($minRequestSize)
     {
         if (is_int($minRequestSize)) {
-            $this->expectException(ConfigurationException::class);
+            $this->expectException(\InvalidArgumentException::class);
             $this->expectExceptionMessage(
                 "'min_compression_size_bytes' config option must be an integer between 0 and 10485760, inclusive."
             );

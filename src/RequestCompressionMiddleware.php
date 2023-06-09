@@ -1,7 +1,6 @@
 <?php
-namespace Aws\RequestCompression;
+namespace Aws;
 
-use Aws\CommandInterface;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 
@@ -137,9 +136,7 @@ class RequestCompressionMiddleware
     private function determineMinimumCompressionSize($config) {
         if (isset($config['request_min_compression_size_bytes'])) {
             if (is_callable($config['request_min_compression_size_bytes'])) {
-                $minCompressionSz = $config['request_min_compression_size_bytes']()
-                    ->wait()
-                    ->getMinCompressionSize();
+                $minCompressionSz = $config['request_min_compression_size_bytes']();
             } else {
                 $minCompressionSz = $config['request_min_compression_size_bytes'];
             }

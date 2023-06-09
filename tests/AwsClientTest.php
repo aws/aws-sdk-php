@@ -473,12 +473,8 @@ class AwsClientTest extends TestCase
                 'signing_region' => 'foo',
                 'use_fips_endpoint' => new FipsConfiguration(false),
                 'use_dual_stack_endpoint' => new DualStackConfiguration(false, "foo"),
-                'disable_request_compression' => new DisableRequestCompressionConfiguration(
-                    false
-                ),
-                'request_min_compression_size_bytes' => new RequestMinCompressionSizeBytesConfiguration(
-                    10240
-                )
+                'disable_request_compression' => false,
+                'request_min_compression_size_bytes' => 10240
             ],
             $client->getConfig()
         );
