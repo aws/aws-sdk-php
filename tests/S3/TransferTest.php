@@ -346,7 +346,7 @@ class TransferTest extends TestCase
                         && __DIR__ . '/' . $args['Key'] === $args['SourceFile'];
                 })
             )
-            ->willReturn($this->getMockBuilder('Aws\CommandInterface')->getMock());
+            ->willReturn($this->getMockBuilder(CommandInterface::class)->getMock());
 
         (new Transfer($s3, __DIR__, 's3://bare-bucket'))
             ->transfer();
@@ -370,7 +370,7 @@ class TransferTest extends TestCase
                         && __DIR__ . '/' . $args['Key'] === $args['SourceFile'];
                 })
             )
-            ->willReturn($this->getMockBuilder('Aws\CommandInterface')->getMock());
+            ->willReturn($this->getMockBuilder(CommandInterface::class)->getMock());
 
         $uploader = new Transfer($s3, new \ArrayIterator($justThisFile), 's3://bucket', [
             'base_dir' => __DIR__,
@@ -393,7 +393,7 @@ class TransferTest extends TestCase
                         && $args['Key'] === 'path/to/key';
                 })
             )
-            ->willReturn($this->getMockBuilder('Aws\CommandInterface')->getMock());
+            ->willReturn($this->getMockBuilder(CommandInterface::class)->getMock());
 
         $downloader = new Transfer($s3, $justOneFile, sys_get_temp_dir() . '/downloads', [
             'base_dir' => 's3://bucket/path',

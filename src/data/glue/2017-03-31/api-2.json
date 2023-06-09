@@ -3195,6 +3195,10 @@
       "type":"list",
       "member":{"shape":"Action"}
     },
+    "AdditionalOptionKeys":{
+      "type":"string",
+      "enum":["performanceTuning.caching"]
+    },
     "AdditionalOptions":{
       "type":"map",
       "key":{"shape":"EnclosedInStringProperty"},
@@ -3263,6 +3267,63 @@
         "Message":{"shape":"MessageString"}
       },
       "exception":true
+    },
+    "AmazonRedshiftAdvancedOption":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"GenericString"},
+        "Value":{"shape":"GenericString"}
+      }
+    },
+    "AmazonRedshiftAdvancedOptions":{
+      "type":"list",
+      "member":{"shape":"AmazonRedshiftAdvancedOption"}
+    },
+    "AmazonRedshiftNodeData":{
+      "type":"structure",
+      "members":{
+        "AccessType":{"shape":"GenericLimitedString"},
+        "SourceType":{"shape":"GenericLimitedString"},
+        "Connection":{"shape":"Option"},
+        "Schema":{"shape":"Option"},
+        "Table":{"shape":"Option"},
+        "CatalogDatabase":{"shape":"Option"},
+        "CatalogTable":{"shape":"Option"},
+        "CatalogRedshiftSchema":{"shape":"GenericString"},
+        "CatalogRedshiftTable":{"shape":"GenericString"},
+        "TempDir":{"shape":"EnclosedInStringProperty"},
+        "IamRole":{"shape":"Option"},
+        "AdvancedOptions":{"shape":"AmazonRedshiftAdvancedOptions"},
+        "SampleQuery":{"shape":"GenericString"},
+        "PreAction":{"shape":"GenericString"},
+        "PostAction":{"shape":"GenericString"},
+        "Action":{"shape":"GenericString"},
+        "TablePrefix":{"shape":"GenericLimitedString"},
+        "Upsert":{"shape":"BooleanValue"},
+        "MergeAction":{"shape":"GenericLimitedString"},
+        "MergeWhenMatched":{"shape":"GenericLimitedString"},
+        "MergeWhenNotMatched":{"shape":"GenericLimitedString"},
+        "MergeClause":{"shape":"GenericString"},
+        "CrawlerConnection":{"shape":"GenericString"},
+        "TableSchema":{"shape":"OptionList"},
+        "StagingTable":{"shape":"GenericString"},
+        "SelectedColumns":{"shape":"OptionList"}
+      }
+    },
+    "AmazonRedshiftSource":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Data":{"shape":"AmazonRedshiftNodeData"}
+      }
+    },
+    "AmazonRedshiftTarget":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Data":{"shape":"AmazonRedshiftNodeData"},
+        "Inputs":{"shape":"OneInput"}
+      }
     },
     "ApplyMapping":{
       "type":"structure",
@@ -4204,7 +4265,10 @@
         "CatalogDeltaSource":{"shape":"CatalogDeltaSource"},
         "S3DeltaSource":{"shape":"S3DeltaSource"},
         "S3DeltaCatalogTarget":{"shape":"S3DeltaCatalogTarget"},
-        "S3DeltaDirectTarget":{"shape":"S3DeltaDirectTarget"}
+        "S3DeltaDirectTarget":{"shape":"S3DeltaDirectTarget"},
+        "AmazonRedshiftSource":{"shape":"AmazonRedshiftSource"},
+        "AmazonRedshiftTarget":{"shape":"AmazonRedshiftTarget"},
+        "EvaluateDataQualityMultiFrame":{"shape":"EvaluateDataQualityMultiFrame"}
       }
     },
     "CodeGenConfigurationNodes":{
@@ -4867,7 +4931,8 @@
       "members":{
         "Name":{"shape":"NameString"},
         "RegexString":{"shape":"NameString"},
-        "ContextWords":{"shape":"ContextWords"}
+        "ContextWords":{"shape":"ContextWords"},
+        "Tags":{"shape":"TagsMap"}
       }
     },
     "CreateCustomEntityTypeResponse":{
@@ -5394,6 +5459,16 @@
       "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
+    "DQAdditionalOptions":{
+      "type":"map",
+      "key":{"shape":"AdditionalOptionKeys"},
+      "value":{"shape":"GenericString"}
+    },
+    "DQDLAliases":{
+      "type":"map",
+      "key":{"shape":"NodeName"},
+      "value":{"shape":"EnclosedInStringProperty"}
+    },
     "DQDLString":{
       "type":"string",
       "max":65536,
@@ -5554,7 +5629,8 @@
         "Name":{"shape":"NameString"},
         "Description":{"shape":"DescriptionString"},
         "EvaluationMessage":{"shape":"DescriptionString"},
-        "Result":{"shape":"DataQualityRuleResultStatus"}
+        "Result":{"shape":"DataQualityRuleResultStatus"},
+        "EvaluatedMetrics":{"shape":"EvaluatedMetricsMap"}
       }
     },
     "DataQualityRuleResultStatus":{
@@ -5634,7 +5710,8 @@
       ],
       "members":{
         "TableName":{"shape":"NameString"},
-        "DatabaseName":{"shape":"NameString"}
+        "DatabaseName":{"shape":"NameString"},
+        "CatalogId":{"shape":"NameString"}
       }
     },
     "DataSource":{
@@ -5643,6 +5720,11 @@
       "members":{
         "GlueTable":{"shape":"GlueTable"}
       }
+    },
+    "DataSourceMap":{
+      "type":"map",
+      "key":{"shape":"NameString"},
+      "value":{"shape":"DataSource"}
     },
     "Database":{
       "type":"structure",
@@ -6328,7 +6410,8 @@
         "Parameters":{"shape":"TransformConfigParameterList"},
         "FunctionName":{"shape":"EnclosedInStringProperty"},
         "Path":{"shape":"EnclosedInStringProperty"},
-        "Version":{"shape":"EnclosedInStringProperty"}
+        "Version":{"shape":"EnclosedInStringProperty"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
     "DynamoDBCatalogSource":{
@@ -6455,6 +6538,28 @@
         "PublishingOptions":{"shape":"DQResultsPublishingOptions"},
         "StopJobOnFailureOptions":{"shape":"DQStopJobOnFailureOptions"}
       }
+    },
+    "EvaluateDataQualityMultiFrame":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Ruleset"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"ManyInputs"},
+        "AdditionalDataSources":{"shape":"DQDLAliases"},
+        "Ruleset":{"shape":"DQDLString"},
+        "PublishingOptions":{"shape":"DQResultsPublishingOptions"},
+        "AdditionalOptions":{"shape":"DQAdditionalOptions"},
+        "StopJobOnFailureOptions":{"shape":"DQStopJobOnFailureOptions"}
+      }
+    },
+    "EvaluatedMetricsMap":{
+      "type":"map",
+      "key":{"shape":"NameString"},
+      "value":{"shape":"NullableDouble"}
     },
     "EvaluationMetrics":{
       "type":"structure",
@@ -7044,7 +7149,8 @@
         "CompletedOn":{"shape":"Timestamp"},
         "ExecutionTime":{"shape":"ExecutionTime"},
         "RulesetNames":{"shape":"RulesetNames"},
-        "ResultIds":{"shape":"DataQualityResultIdList"}
+        "ResultIds":{"shape":"DataQualityResultIdList"},
+        "AdditionalDataSources":{"shape":"DataSourceMap"}
       }
     },
     "GetDataQualityRulesetRequest":{
@@ -8360,7 +8466,8 @@
       "members":{
         "Name":{"shape":"GenericString"},
         "ScriptLocation":{"shape":"ScriptLocationString"},
-        "PythonVersion":{"shape":"PythonVersionString"}
+        "PythonVersion":{"shape":"PythonVersionString"},
+        "Runtime":{"shape":"RuntimeNameString"}
       }
     },
     "JobList":{
@@ -8712,7 +8819,8 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"PaginationToken"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"PageSize"},
+        "Tags":{"shape":"TagsMap"}
       }
     },
     "ListCustomEntityTypesResponse":{
@@ -9363,6 +9471,18 @@
         "Message":{"shape":"MessageString"}
       },
       "exception":true
+    },
+    "Option":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"EnclosedInStringProperty"},
+        "Label":{"shape":"EnclosedInStringProperty"},
+        "Description":{"shape":"EnclosedInStringProperty"}
+      }
+    },
+    "OptionList":{
+      "type":"list",
+      "member":{"shape":"Option"}
     },
     "OracleSQLCatalogSource":{
       "type":"structure",
@@ -10151,6 +10271,11 @@
       "members":{
         "Id":{"shape":"IntegerValue"}
       }
+    },
+    "RuntimeNameString":{
+      "type":"string",
+      "max":64,
+      "pattern":".*"
     },
     "S3CatalogDeltaSource":{
       "type":"structure",
@@ -11033,7 +11158,8 @@
         "Timeout":{"shape":"Timeout"},
         "ClientToken":{"shape":"HashString"},
         "AdditionalRunOptions":{"shape":"DataQualityEvaluationRunAdditionalRunOptions"},
-        "RulesetNames":{"shape":"RulesetNames"}
+        "RulesetNames":{"shape":"RulesetNames"},
+        "AdditionalDataSources":{"shape":"DataSourceMap"}
       }
     },
     "StartDataQualityRulesetEvaluationRunResponse":{
@@ -12348,7 +12474,10 @@
         "Standard",
         "G.1X",
         "G.2X",
-        "G.025X"
+        "G.025X",
+        "G.4X",
+        "G.8X",
+        "Z.2X"
       ]
     },
     "Workflow":{

@@ -27,6 +27,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createPresignedNotebookUrlAsync(array $args = [])
  * @method \Aws\Result createWorkGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createWorkGroupAsync(array $args = [])
+ * @method \Aws\Result deleteCapacityReservation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteCapacityReservationAsync(array $args = [])
  * @method \Aws\Result deleteDataCatalog(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDataCatalogAsync(array $args = [])
  * @method \Aws\Result deleteNamedQuery(array $args = [])

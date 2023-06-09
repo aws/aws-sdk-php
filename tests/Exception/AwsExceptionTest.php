@@ -105,8 +105,8 @@ class AwsExceptionTest extends TestCase
         $e = new AwsException('Foo', $command);
 
         $exceptionString = version_compare(PHP_VERSION, '7', '>=') ?
-            'Aws\\Exception\\AwsException: Foo'
-            : "exception 'Aws\\Exception\\AwsException' with message 'Foo' in ";
+            (AwsException::class . ': Foo')
+            : ("exception '" . AwsException::class . "' with message 'Foo' in ");
 
         $this->assertStringStartsWith($exceptionString, $e->__toString());
     }
@@ -117,7 +117,7 @@ class AwsExceptionTest extends TestCase
         $command = new Command('foo');
         $e = new AwsException('Foo', $command, [], $prev);
         $this->assertStringStartsWith(
-            "exception 'Aws\\Exception\\AwsException' with message 'Foo'",
+            "exception '" . AwsException::class . "' with message 'Foo'",
             $e->__toString()
         );
     }

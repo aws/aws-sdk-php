@@ -160,6 +160,20 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "DeleteCapacityReservation":{
+      "name":"DeleteCapacityReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCapacityReservationInput"},
+      "output":{"shape":"DeleteCapacityReservationOutput"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeleteDataCatalog":{
       "name":"DeleteDataCatalog",
       "http":{
@@ -1469,6 +1483,18 @@
       "max":1,
       "min":1
     },
+    "DeleteCapacityReservationInput":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"CapacityReservationName"}
+      }
+    },
+    "DeleteCapacityReservationOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteDataCatalogInput":{
       "type":"structure",
       "required":["Name"],
@@ -1565,7 +1591,8 @@
         "CoordinatorDpuSize":{"shape":"CoordinatorDpuSize"},
         "MaxConcurrentDpus":{"shape":"MaxConcurrentDpus"},
         "DefaultExecutorDpuSize":{"shape":"DefaultExecutorDpuSize"},
-        "AdditionalConfigs":{"shape":"ParametersMap"}
+        "AdditionalConfigs":{"shape":"ParametersMap"},
+        "SparkProperties":{"shape":"ParametersMap"}
       }
     },
     "EngineVersion":{

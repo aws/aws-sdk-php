@@ -7,6 +7,7 @@ use Aws\Api\Parser\JsonRpcParser;
 use Aws\Api\Service;
 use Aws\Command;
 use Aws\Exception\AwsException;
+use Aws\ResultInterface;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -28,7 +29,7 @@ class Crc32ValidatingParserTest extends TestCase
         $wrapped = $this->getWrapped();
         $command = new Command('GetItem');
         $response = new Response(200, [], '{"foo": "bar"}');
-        $this->assertInstanceOf('Aws\ResultInterface', $wrapped($command, $response));
+        $this->assertInstanceOf(ResultInterface::class, $wrapped($command, $response));
     }
 
     public function testThrowsWhenMismatch()
@@ -50,6 +51,6 @@ class Crc32ValidatingParserTest extends TestCase
         $wrapped = $this->getWrapped();
         $command = new Command('GetItem');
         $response = new Response(200, ['x-amz-crc32' => '11124959'], '{"foo": "bar"}');
-        $this->assertInstanceOf('Aws\ResultInterface', $wrapped($command, $response));
+        $this->assertInstanceOf(ResultInterface::class, $wrapped($command, $response));
     }
 }

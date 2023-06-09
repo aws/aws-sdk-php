@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Retry;
 
+use Aws\CacheInterface;
 use Aws\LruArrayCache;
 use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationInterface;
@@ -254,7 +255,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\My\\Home');
-        $ref = new \ReflectionClass('Aws\S3\UseArnRegion\ConfigurationProvider');
+        $ref = new \ReflectionClass(ConfigurationProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\My\\Home', $meth->invoke(null));
@@ -347,7 +348,7 @@ EOT;
     public function testCreatesFromCache()
     {
         $expected = new Configuration('adaptive', 54);
-        $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
+        $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())

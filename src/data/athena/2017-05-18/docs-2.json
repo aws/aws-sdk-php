@@ -5,7 +5,7 @@
     "BatchGetNamedQuery": "<p>Returns the details of a single named query or a list of up to 50 queries, which you provide as an array of query ID strings. Requires you to have access to the workgroup in which the queries were saved. Use <a>ListNamedQueriesInput</a> to get the list of named query IDs in the specified workgroup. If information could not be retrieved for a submitted query ID, information about the query ID submitted is listed under <a>UnprocessedNamedQueryId</a>. Named queries differ from executed queries. Use <a>BatchGetQueryExecutionInput</a> to get details about each unique query execution, and <a>ListQueryExecutionsInput</a> to get a list of query execution IDs.</p>",
     "BatchGetPreparedStatement": "<p>Returns the details of a single prepared statement or a list of up to 256 prepared statements for the array of prepared statement names that you provide. Requires you to have access to the workgroup to which the prepared statements belong. If a prepared statement cannot be retrieved for the name specified, the statement is listed in <code>UnprocessedPreparedStatementNames</code>.</p>",
     "BatchGetQueryExecution": "<p>Returns the details of a single query execution or a list of up to 50 query executions, which you provide as an array of query execution ID strings. Requires you to have access to the workgroup in which the queries ran. To get a list of query execution IDs, use <a>ListQueryExecutionsInput$WorkGroup</a>. Query executions differ from named (saved) queries. Use <a>BatchGetNamedQueryInput</a> to get details about named queries.</p>",
-    "CancelCapacityReservation": "<p>Cancels the capacity reservation with the specified name.</p>",
+    "CancelCapacityReservation": "<p>Cancels the capacity reservation with the specified name. Cancelled reservations remain in your account and will be deleted 45 days after cancellation. During the 45 days, you cannot re-purpose or reuse a reservation that has been cancelled, but you can refer to its tags and view it for historical reference. </p>",
     "CreateCapacityReservation": "<p>Creates a capacity reservation with the specified name and number of requested data processing units.</p>",
     "CreateDataCatalog": "<p>Creates (registers) a data catalog with the specified name and properties. Catalogs created are visible to all users of the same Amazon Web Services account.</p>",
     "CreateNamedQuery": "<p>Creates a named query in the specified workgroup. Requires that you have access to the workgroup.</p> <p>For code samples using the Amazon Web Services SDK for Java, see <a href=\"http://docs.aws.amazon.com/athena/latest/ug/code-samples.html\">Examples and Code Samples</a> in the <i>Amazon Athena User Guide</i>.</p>",
@@ -13,6 +13,7 @@
     "CreatePreparedStatement": "<p>Creates a prepared statement for use with SQL queries in Athena.</p>",
     "CreatePresignedNotebookUrl": "<p>Gets an authentication token and the URL at which the notebook can be accessed. During programmatic access, <code>CreatePresignedNotebookUrl</code> must be called every 10 minutes to refresh the authentication token. For information about granting programmatic access, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/setting-up.html#setting-up-grant-programmatic-access\">Grant programmatic access</a>.</p>",
     "CreateWorkGroup": "<p>Creates a workgroup with the specified name. A workgroup can be an Apache Spark enabled workgroup or an Athena SQL workgroup.</p>",
+    "DeleteCapacityReservation": "<p>Deletes a cancelled capacity reservation. A reservation must be cancelled before it can be deleted. A deleted reservation is immediately removed from your account and can no longer be referenced, including by its ARN. A deleted reservation cannot be called by <code>GetCapacityReservation</code>, and deleted reservations do not appear in the output of <code>ListCapacityReservations</code>.</p>",
     "DeleteDataCatalog": "<p>Deletes a data catalog.</p>",
     "DeleteNamedQuery": "<p>Deletes the named query if you have access to the workgroup in which the query was saved.</p> <p>For code samples using the Amazon Web Services SDK for Java, see <a href=\"http://docs.aws.amazon.com/athena/latest/ug/code-samples.html\">Examples and Code Samples</a> in the <i>Amazon Athena User Guide</i>.</p>",
     "DeleteNotebook": "<p>Deletes the specified notebook.</p>",
@@ -185,7 +186,7 @@
         "WorkGroupConfigurationUpdates$PublishCloudWatchMetricsEnabled": "<p>Indicates whether this workgroup enables publishing metrics to Amazon CloudWatch.</p>",
         "WorkGroupConfigurationUpdates$RemoveBytesScannedCutoffPerQuery": "<p>Indicates that the data usage control limit per query is removed. <a>WorkGroupConfiguration$BytesScannedCutoffPerQuery</a> </p>",
         "WorkGroupConfigurationUpdates$RequesterPaysEnabled": "<p>If set to <code>true</code>, allows members assigned to a workgroup to specify Amazon S3 Requester Pays buckets in queries. If set to <code>false</code>, workgroup members cannot query data from Requester Pays buckets, and queries that retrieve data from Requester Pays buckets cause an error. The default is <code>false</code>. For more information about Requester Pays buckets, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html\">Requester Pays Buckets</a> in the <i>Amazon Simple Storage Service Developer Guide</i>.</p>",
-        "WorkGroupConfigurationUpdates$RemoveCustomerContentEncryptionConfiguration": "<p>Removes content encryption configuration for a workgroup.</p>",
+        "WorkGroupConfigurationUpdates$RemoveCustomerContentEncryptionConfiguration": "<p>Removes content encryption configuration from an Apache Spark-enabled Athena workgroup.</p>",
         "WorkGroupConfigurationUpdates$EnableMinimumEncryptionConfiguration": "<p>Enforces a minimal level of encryption for the workgroup for query and calculation results that are written to Amazon S3. When enabled, workgroup users can set encryption only to the minimum level set by the administrator or higher when they submit queries. This setting does not apply to Spark-enabled workgroups.</p> <p>The <code>EnforceWorkGroupConfiguration</code> setting takes precedence over the <code>EnableMinimumEncryptionConfiguration</code> flag. This means that if <code>EnforceWorkGroupConfiguration</code> is true, the <code>EnableMinimumEncryptionConfiguration</code> flag is ignored, and the workgroup configuration for encryption is used.</p>"
       }
     },
@@ -317,6 +318,7 @@
         "CapacityAssignmentConfiguration$CapacityReservationName": "<p>The name of the reservation that the capacity assignment configuration is for.</p>",
         "CapacityReservation$Name": "<p>The name of the capacity reservation.</p>",
         "CreateCapacityReservationInput$Name": "<p>The name of the capacity reservation to create.</p>",
+        "DeleteCapacityReservationInput$Name": "<p>The name of the capacity reservation to delete.</p>",
         "GetCapacityAssignmentConfigurationInput$CapacityReservationName": "<p>The name of the capacity reservation to retrieve the capacity assignment configuration for.</p>",
         "GetCapacityReservationInput$Name": "<p>The name of the capacity reservation.</p>",
         "PutCapacityAssignmentConfigurationInput$CapacityReservationName": "<p>The name of the capacity reservation to put a capacity assignment configuration for.</p>",
@@ -482,9 +484,9 @@
       }
     },
     "CustomerContentEncryptionConfiguration": {
-      "base": "<p>Specifies the KMS key that is used to encrypt the user's data stores in Athena.</p>",
+      "base": "<p>Specifies the KMS key that is used to encrypt the user's data stores in Athena. This setting does not apply to Athena SQL workgroups.</p>",
       "refs": {
-        "WorkGroupConfiguration$CustomerContentEncryptionConfiguration": "<p>Specifies the KMS key that is used to encrypt the user's data stores in Athena.</p>",
+        "WorkGroupConfiguration$CustomerContentEncryptionConfiguration": "<p>Specifies the KMS key that is used to encrypt the user's data stores in Athena. This setting does not apply to Athena SQL workgroups.</p>",
         "WorkGroupConfigurationUpdates$CustomerContentEncryptionConfiguration": null
       }
     },
@@ -566,6 +568,16 @@
       "base": null,
       "refs": {
         "EngineConfiguration$DefaultExecutorDpuSize": "<p>The default number of DPUs to use for executors. An executor is the smallest unit of compute that a notebook session can request from Athena. The default is 1.</p>"
+      }
+    },
+    "DeleteCapacityReservationInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteCapacityReservationOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "DeleteDataCatalogInput": {
@@ -723,7 +735,7 @@
     "ExecutionParameters": {
       "base": null,
       "refs": {
-        "QueryExecution$ExecutionParameters": "<p>A list of values for the parameters in a query. The values are applied sequentially to the parameters in the query in the order in which the parameters occur.</p>",
+        "QueryExecution$ExecutionParameters": "<p>A list of values for the parameters in a query. The values are applied sequentially to the parameters in the query in the order in which the parameters occur. The list of parameters is not returned in the response.</p>",
         "StartQueryExecutionInput$ExecutionParameters": "<p>A list of values for the parameters in a query. The values are applied sequentially to the parameters in the query in the order in which the parameters occur.</p>"
       }
     },
@@ -1428,6 +1440,7 @@
         "DataCatalog$Parameters": "<p>Specifies the Lambda function or functions to use for the data catalog. This is a mapping whose values depend on the catalog type. </p> <ul> <li> <p>For the <code>HIVE</code> data catalog type, use the following syntax. The <code>metadata-function</code> parameter is required. <code>The sdk-version</code> parameter is optional and defaults to the currently supported version.</p> <p> <code>metadata-function=<i>lambda_arn</i>, sdk-version=<i>version_number</i> </code> </p> </li> <li> <p>For the <code>LAMBDA</code> data catalog type, use one of the following sets of required parameters, but not both.</p> <ul> <li> <p>If you have one Lambda function that processes metadata and another for reading the actual data, use the following syntax. Both parameters are required.</p> <p> <code>metadata-function=<i>lambda_arn</i>, record-function=<i>lambda_arn</i> </code> </p> </li> <li> <p> If you have a composite Lambda function that processes both metadata and data, use the following syntax to specify your Lambda function.</p> <p> <code>function=<i>lambda_arn</i> </code> </p> </li> </ul> </li> <li> <p>The <code>GLUE</code> type takes a catalog ID parameter and is required. The <code> <i>catalog_id</i> </code> is the account ID of the Amazon Web Services account to which the Glue catalog belongs.</p> <p> <code>catalog-id=<i>catalog_id</i> </code> </p> <ul> <li> <p>The <code>GLUE</code> data catalog type also applies to the default <code>AwsDataCatalog</code> that already exists in your account, of which you can have only one and cannot modify.</p> </li> <li> <p>Queries that specify a Glue Data Catalog other than the default <code>AwsDataCatalog</code> must be run on Athena engine version 2.</p> </li> </ul> </li> </ul>",
         "Database$Parameters": "<p>A set of custom key/value pairs.</p>",
         "EngineConfiguration$AdditionalConfigs": "<p>Contains additional notebook engine <code>MAP&lt;string, string&gt;</code> parameter mappings in the form of key-value pairs. To specify an Athena notebook that the Jupyter server will download and serve, specify a value for the <a>StartSessionRequest$NotebookVersion</a> field, and then add a key named <code>NotebookId</code> to <code>AdditionalConfigs</code> that has the value of the Athena notebook ID.</p>",
+        "EngineConfiguration$SparkProperties": "<p>Specifies custom jar files and Spark properties for use cases like cluster encryption, table formats, and general Spark tuning.</p>",
         "TableMetadata$Parameters": "<p>A set of custom key/value pairs for table properties.</p>",
         "UpdateDataCatalogInput$Parameters": "<p>Specifies the Lambda function or functions to use for updating the data catalog. This is a mapping whose values depend on the catalog type. </p> <ul> <li> <p>For the <code>HIVE</code> data catalog type, use the following syntax. The <code>metadata-function</code> parameter is required. <code>The sdk-version</code> parameter is optional and defaults to the currently supported version.</p> <p> <code>metadata-function=<i>lambda_arn</i>, sdk-version=<i>version_number</i> </code> </p> </li> <li> <p>For the <code>LAMBDA</code> data catalog type, use one of the following sets of required parameters, but not both.</p> <ul> <li> <p>If you have one Lambda function that processes metadata and another for reading the actual data, use the following syntax. Both parameters are required.</p> <p> <code>metadata-function=<i>lambda_arn</i>, record-function=<i>lambda_arn</i> </code> </p> </li> <li> <p> If you have a composite Lambda function that processes both metadata and data, use the following syntax to specify your Lambda function.</p> <p> <code>function=<i>lambda_arn</i> </code> </p> </li> </ul> </li> </ul>"
       }

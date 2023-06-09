@@ -1607,7 +1607,8 @@
         "description":{"shape":"Description"},
         "capabilities":{"shape":"SceneCapabilities"},
         "sceneMetadata":{"shape":"SceneMetadataMap"},
-        "generatedSceneMetadata":{"shape":"GeneratedSceneMetadataMap"}
+        "generatedSceneMetadata":{"shape":"GeneratedSceneMetadataMap"},
+        "error":{"shape":"SceneError"}
       }
     },
     "GetSyncJobRequest":{
@@ -2322,6 +2323,17 @@
       "max":256,
       "min":0,
       "pattern":".*"
+    },
+    "SceneError":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"SceneErrorCode"},
+        "message":{"shape":"ErrorMessage"}
+      }
+    },
+    "SceneErrorCode":{
+      "type":"string",
+      "enum":["MATTERPORT_ERROR"]
     },
     "SceneMetadataMap":{
       "type":"map",

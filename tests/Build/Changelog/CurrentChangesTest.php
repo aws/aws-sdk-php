@@ -58,7 +58,7 @@ class CurrentChangesTest extends TestCase
             }
 
             if (!isset($data[0]['category'])) {
-                $this->fail('Missing required key `cetegory` in `'
+                $this->fail('Missing required key `category` in `'
                     . $name . '` changelog document.');
             }
 

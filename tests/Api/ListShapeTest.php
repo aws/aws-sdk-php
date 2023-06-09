@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Api;
 
+use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\ListShape;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -18,7 +19,7 @@ class ListShapeTest extends TestCase
         );
 
         $m = $s->getMember();
-        $this->assertInstanceOf('Aws\Api\Shape', $m);
+        $this->assertInstanceOf(Shape::class, $m);
         $this->assertSame($m, $s->getMember());
         $this->assertSame('string', $m->getType());
     }

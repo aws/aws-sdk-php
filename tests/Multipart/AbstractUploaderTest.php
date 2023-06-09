@@ -8,6 +8,7 @@ use Aws\Multipart\UploadState;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
+use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -150,7 +151,7 @@ class AbstractUploaderTest extends TestCase
 
         $promise = $uploader->promise();
         $this->assertSame($promise, $uploader->promise());
-        $this->assertInstanceOf('Aws\Result', $promise->wait());
+        $this->assertInstanceOf(Result::class, $promise->wait());
         $this->assertSame(6, $called);
     }
 
@@ -167,7 +168,7 @@ class AbstractUploaderTest extends TestCase
         // CASE 1: Filename exists.
         $uploader = $this->getTestUploader(__FILE__, $config);
         $this->assertInstanceOf(
-            'Psr\Http\Message\StreamInterface',
+            StreamInterface::class,
             $this->getPropertyValue($uploader, 'source')
         );
 

@@ -42,8 +42,8 @@ class MiddlewareTest extends TestCase
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
         Promise\queue()->run();
         $this->assertCount(2, $called);
-        $this->assertInstanceOf('Aws\CommandInterface', $called[0]);
-        $this->assertInstanceOf('Psr\Http\Message\RequestInterface', $called[1]);
+        $this->assertInstanceOf(CommandInterface::class, $called[0]);
+        $this->assertInstanceOf(RequestInterface::class, $called[1]);
     }
 
     public function testWrapsWithRetryMiddleware()

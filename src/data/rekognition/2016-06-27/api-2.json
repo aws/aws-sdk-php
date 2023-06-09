@@ -1259,7 +1259,19 @@
       "type":"string",
       "enum":[
         "DEFAULT",
-        "ALL"
+        "ALL",
+        "AGE_RANGE",
+        "BEARD",
+        "EMOTIONS",
+        "EYE_DIRECTION",
+        "EYEGLASSES",
+        "EYES_OPEN",
+        "GENDER",
+        "MOUTH_OPEN",
+        "MUSTACHE",
+        "FACE_OCCLUDED",
+        "SMILE",
+        "SUNGLASSES"
       ]
     },
     "Attributes":{
@@ -2278,6 +2290,14 @@
       "min":1,
       "pattern":"[a-zA-Z0-9_.\\-:]+"
     },
+    "EyeDirection":{
+      "type":"structure",
+      "members":{
+        "Yaw":{"shape":"Degree"},
+        "Pitch":{"shape":"Degree"},
+        "Confidence":{"shape":"Percent"}
+      }
+    },
     "EyeOpen":{
       "type":"structure",
       "members":{
@@ -2327,7 +2347,9 @@
         "Landmarks":{"shape":"Landmarks"},
         "Pose":{"shape":"Pose"},
         "Quality":{"shape":"ImageQuality"},
-        "Confidence":{"shape":"Percent"}
+        "Confidence":{"shape":"Percent"},
+        "FaceOccluded":{"shape":"FaceOccluded"},
+        "EyeDirection":{"shape":"EyeDirection"}
       }
     },
     "FaceDetailList":{
@@ -2373,6 +2395,13 @@
     "FaceModelVersionList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "FaceOccluded":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"Boolean"},
+        "Confidence":{"shape":"Percent"}
+      }
     },
     "FaceRecord":{
       "type":"structure",

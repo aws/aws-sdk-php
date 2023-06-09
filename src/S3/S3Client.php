@@ -819,19 +819,21 @@ class S3Client extends AwsClient implements S3ClientInterface
                                     && $attempts < $config->getMaxAttempts()
                                 ) {
                                     if (!empty($result->getResponse())
-                                        && strpos(
-                                            $result->getResponse()->getBody(),
-                                            'Your socket connection to the server'
-                                        ) !== false
+                                        && $result->getResponse()->getStatusCode() >= 400
                                     ) {
-                                        $isRetryable = false;
+                                        return strpos(
+                                                $result->getResponse()->getBody(),
+                                                'Your socket connection to the server'
+                                            ) !== false;
                                     }
+
                                     if ($result->getPrevious() instanceof RequestException
                                         && $cmd->getName() !== 'CompleteMultipartUpload'
                                     ) {
                                         $isRetryable = true;
                                     }
                                 }
+
                                 return $isRetryable;
                             }
                         ]

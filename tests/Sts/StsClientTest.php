@@ -2,6 +2,7 @@
 namespace Aws\Test\Sts;
 
 use Aws\Api\DateTimeResult;
+use Aws\Credentials\CredentialsInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\LruArrayCache;
 use Aws\Result;
@@ -29,7 +30,7 @@ class StsClientTest extends TestCase
         $client = new StsClient(['region' => 'us-east-1', 'version' => 'latest']);
         $credentials = $client->createCredentials($result);
         $this->assertInstanceOf(
-            'Aws\Credentials\CredentialsInterface',
+            CredentialsInterface::class,
             $credentials
         );
         $this->assertSame('foo', $credentials->getAccessKeyId());

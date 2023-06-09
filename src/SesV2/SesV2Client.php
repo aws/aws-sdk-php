@@ -137,6 +137,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putConfigurationSetVdmOptionsAsync(array $args = [])
  * @method \Aws\Result putDedicatedIpInPool(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putDedicatedIpInPoolAsync(array $args = [])
+ * @method \Aws\Result putDedicatedIpPoolScalingAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putDedicatedIpPoolScalingAttributesAsync(array $args = [])
  * @method \Aws\Result putDedicatedIpWarmupAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putDedicatedIpWarmupAttributesAsync(array $args = [])
  * @method \Aws\Result putDeliverabilityDashboardOption(array $args = [])
