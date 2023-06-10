@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\EndpointV2;
 
-use Aws\EndpointV2\Rule\RuleCreator;
+use Aws\EndpointV2\Rule;
 use Aws\Exception\UnresolvedEndpointException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -23,7 +23,7 @@ class RuleCreatorTest extends TestCase
                     'properties' => [],
                     'headers' => []
                 ],
-                'EndpointRule'
+                Rule\EndpointRule::class
             ],
             [
                 [
@@ -31,7 +31,7 @@ class RuleCreatorTest extends TestCase
                     'conditions' => [],
                     'error' => 'This is an error'
                 ],
-                'ErrorRule'
+                Rule\ErrorRule::class
             ],
             [
                 [
@@ -39,7 +39,7 @@ class RuleCreatorTest extends TestCase
                     'conditions' => [],
                     'rules' => []
                 ],
-                'TreeRule'
+                Rule\TreeRule::class
             ]
         ];
     }
@@ -48,8 +48,8 @@ class RuleCreatorTest extends TestCase
      * @dataProvider RuleCreationProvider
      */
     public function testRuleCreation($spec, $expected) {
-        $result = RuleCreator::create($spec['type'], $spec);
-        $this->assertInstanceOf('Aws\EndpointV2\Rule\\' . $expected, $result);
+        $result = Rule\RuleCreator::create($spec['type'], $spec);
+        $this->assertInstanceOf($expected, $result);
     }
 
     public function invalidRuleTypeProvider()
@@ -71,6 +71,6 @@ class RuleCreatorTest extends TestCase
             'Unknown rule type ' . $input .
             ' must be of type `endpoint`, `tree` or `error`'
         );
-        RuleCreator::create($input, null);
+        Rule\RuleCreator::create($input, null);
     }
 }

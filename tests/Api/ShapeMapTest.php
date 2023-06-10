@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Api;
 
+use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -26,7 +27,7 @@ class ShapeMapTest extends TestCase
     {
         $sm = new ShapeMap(['foo' => ['type' => 'string']]);
         $s = $sm->resolve(['shape' => 'foo']);
-        $this->assertInstanceOf('Aws\Api\Shape', $s);
+        $this->assertInstanceOf(Shape::class, $s);
         $this->assertArrayNotHasKey('shape', $s->toArray());
         $this->assertSame($s, $sm->resolve(['shape' => 'foo']));
     }

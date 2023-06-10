@@ -31,6 +31,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getUserDetailsAsync(array $args = [])
  * @method \Aws\Result listAccessTokens(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAccessTokensAsync(array $args = [])
+ * @method \Aws\Result listDevEnvironmentSessions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listDevEnvironmentSessionsAsync(array $args = [])
  * @method \Aws\Result listDevEnvironments(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDevEnvironmentsAsync(array $args = [])
  * @method \Aws\Result listEventLogs(array $args = [])

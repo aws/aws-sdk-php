@@ -1940,6 +1940,13 @@
         "IsCaller":{"shape":"Boolean"}
       }
     },
+    "CallLegType":{
+      "type":"string",
+      "enum":[
+        "Caller",
+        "Callee"
+      ]
+    },
     "CallingName":{
       "type":"string",
       "pattern":"^$|^[a-zA-Z0-9 ]{2,15}$",
@@ -2096,7 +2103,8 @@
       "members":{
         "AwsRegion":{"shape":"String"},
         "Name":{"shape":"SipMediaApplicationName"},
-        "Endpoints":{"shape":"SipMediaApplicationEndpointList"}
+        "Endpoints":{"shape":"SipMediaApplicationEndpointList"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateSipMediaApplicationResponse":{
@@ -2149,7 +2157,8 @@
       "members":{
         "Name":{"shape":"VoiceConnectorName"},
         "AwsRegion":{"shape":"VoiceConnectorAwsRegion"},
-        "RequireEncryption":{"shape":"Boolean"}
+        "RequireEncryption":{"shape":"Boolean"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateVoiceConnectorResponse":{
@@ -3869,7 +3878,8 @@
         "Name":{"shape":"SipMediaApplicationName"},
         "Endpoints":{"shape":"SipMediaApplicationEndpointList"},
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
-        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"}
+        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "SipMediaApplicationArn":{"shape":"NonEmptyString"}
       }
     },
     "SipMediaApplicationAlexaSkillConfiguration":{
@@ -4007,7 +4017,8 @@
         },
         "TransactionId":{"shape":"NonEmptyString256"},
         "VoiceProfileDomainId":{"shape":"NonEmptyString256"},
-        "ClientRequestToken":{"shape":"ClientRequestId"}
+        "ClientRequestToken":{"shape":"ClientRequestId"},
+        "CallLeg":{"shape":"CallLegType"}
       }
     },
     "StartSpeakerSearchTaskResponse":{

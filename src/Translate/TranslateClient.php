@@ -35,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopTextTranslationJobAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result translateDocument(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise translateDocumentAsync(array $args = [])
  * @method \Aws\Result translateText(array $args = [])
  * @method \GuzzleHttp\Promise\Promise translateTextAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

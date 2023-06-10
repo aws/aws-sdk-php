@@ -1597,7 +1597,9 @@
         {"shape":"InvalidDBSecurityGroupStateFault"},
         {"shape":"InvalidDBInstanceStateFault"},
         {"shape":"DBClusterAlreadyExistsFault"},
-        {"shape":"DomainNotFoundFault"}
+        {"shape":"DBInstanceAlreadyExistsFault"},
+        {"shape":"DomainNotFoundFault"},
+        {"shape":"StorageTypeNotAvailableFault"}
       ]
     },
     "ModifyDBClusterEndpoint":{
@@ -2096,7 +2098,8 @@
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"DomainNotFoundFault"},
-        {"shape":"InsufficientStorageClusterCapacityFault"}
+        {"shape":"InsufficientStorageClusterCapacityFault"},
+        {"shape":"StorageTypeNotSupportedFault"}
       ]
     },
     "RestoreDBClusterFromSnapshot":{
@@ -2937,7 +2940,8 @@
         "EngineVersion":{"shape":"String"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
         "AllocatedStorage":{"shape":"IntegerOptional"},
-        "Iops":{"shape":"IntegerOptional"}
+        "Iops":{"shape":"IntegerOptional"},
+        "StorageType":{"shape":"String"}
       }
     },
     "ConnectionPoolConfiguration":{
@@ -3696,7 +3700,8 @@
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfigurationInfo"},
         "NetworkType":{"shape":"String"},
         "DBSystemId":{"shape":"String"},
-        "MasterUserSecret":{"shape":"MasterUserSecret"}
+        "MasterUserSecret":{"shape":"MasterUserSecret"},
+        "IOOptimizedNextAllowedModificationTime":{"shape":"TStamp"}
       },
       "wrapper":true
     },
@@ -4013,7 +4018,8 @@
         "SourceDBClusterSnapshotArn":{"shape":"String"},
         "IAMDatabaseAuthenticationEnabled":{"shape":"Boolean"},
         "TagList":{"shape":"TagList"},
-        "DBSystemId":{"shape":"String"}
+        "DBSystemId":{"shape":"String"},
+        "StorageType":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -6701,7 +6707,9 @@
         "NetworkType":{"shape":"String"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "RotateMasterUserPassword":{"shape":"BooleanOptional"},
-        "MasterUserSecretKmsKeyId":{"shape":"String"}
+        "MasterUserSecretKmsKeyId":{"shape":"String"},
+        "EngineMode":{"shape":"String"},
+        "AllowEngineModeChange":{"shape":"Boolean"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -6795,7 +6803,8 @@
         "StorageThroughput":{"shape":"IntegerOptional"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "RotateMasterUserPassword":{"shape":"BooleanOptional"},
-        "MasterUserSecretKmsKeyId":{"shape":"String"}
+        "MasterUserSecretKmsKeyId":{"shape":"String"},
+        "Engine":{"shape":"String"}
       }
     },
     "ModifyDBInstanceResult":{
@@ -7359,7 +7368,8 @@
         "IAMDatabaseAuthenticationEnabled":{"shape":"BooleanOptional"},
         "AutomationMode":{"shape":"AutomationMode"},
         "ResumeFullAutomationModeTime":{"shape":"TStamp"},
-        "StorageThroughput":{"shape":"IntegerOptional"}
+        "StorageThroughput":{"shape":"IntegerOptional"},
+        "Engine":{"shape":"String"}
       }
     },
     "PointInTimeRestoreNotEnabledFault":{
@@ -7806,7 +7816,8 @@
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "NetworkType":{"shape":"String"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
-        "MasterUserSecretKmsKeyId":{"shape":"String"}
+        "MasterUserSecretKmsKeyId":{"shape":"String"},
+        "StorageType":{"shape":"String"}
       }
     },
     "RestoreDBClusterFromS3Result":{
@@ -8408,6 +8419,17 @@
       },
       "error":{
         "code":"StorageQuotaExceeded",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "StorageTypeNotAvailableFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"StorageTypeNotAvailableFault",
         "httpStatusCode":400,
         "senderFault":true
       },

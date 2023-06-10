@@ -428,6 +428,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMediaLive(array $args = [])
  * @method \Aws\MediaPackage\MediaPackageClient createMediaPackage(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMediaPackage(array $args = [])
+ * @method \Aws\MediaPackageV2\MediaPackageV2Client createMediaPackageV2(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMediaPackageV2(array $args = [])
  * @method \Aws\MediaPackageVod\MediaPackageVodClient createMediaPackageVod(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMediaPackageVod(array $args = [])
  * @method \Aws\MediaStore\MediaStoreClient createMediaStore(array $args = [])
@@ -460,6 +462,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionNimbleStudio(array $args = [])
  * @method \Aws\OAM\OAMClient createOAM(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOAM(array $args = [])
+ * @method \Aws\OSIS\OSISClient createOSIS(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionOSIS(array $args = [])
  * @method \Aws\Omics\OmicsClient createOmics(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOmics(array $args = [])
  * @method \Aws\OpenSearchServerless\OpenSearchServerlessClient createOpenSearchServerless(array $args = [])
@@ -478,6 +482,10 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPI(array $args = [])
  * @method \Aws\Panorama\PanoramaClient createPanorama(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPanorama(array $args = [])
+ * @method \Aws\PaymentCryptography\PaymentCryptographyClient createPaymentCryptography(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPaymentCryptography(array $args = [])
+ * @method \Aws\PaymentCryptographyData\PaymentCryptographyDataClient createPaymentCryptographyData(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPaymentCryptographyData(array $args = [])
  * @method \Aws\Personalize\PersonalizeClient createPersonalize(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPersonalize(array $args = [])
  * @method \Aws\PersonalizeEvents\PersonalizeEventsClient createPersonalizeEvents(array $args = [])
@@ -691,7 +699,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.263.7';
+    const VERSION = '3.272.1';
 
     /** @var array Arguments for creating clients */
     private $args;
@@ -757,7 +765,7 @@ class Sdk
         $namespace = $service['namespace'];
 
         $klass = "Aws\\{$namespace}\\{$namespace}MultiRegionClient";
-        $klass = class_exists($klass) ? $klass : 'Aws\\MultiRegionClient';
+        $klass = class_exists($klass) ? $klass : MultiRegionClient::class;
 
         return new $klass($this->mergeArgs($namespace, $service, $args));
     }

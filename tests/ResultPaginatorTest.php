@@ -67,7 +67,7 @@ class ResultPaginatorTest extends TestCase
         }
 
         // Make sure the paginator yields the expected results
-        $this->assertInstanceOf('Aws\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertEquals($expectedRequestCount, $requestCount);
         $this->assertEquals($expectedRequestCount - 1, $lastKey);
         $this->assertEquals($expectedTableNames, $tableNames);
@@ -92,7 +92,7 @@ class ResultPaginatorTest extends TestCase
         })->wait();
 
         // Make sure the paginator yields the expected results
-        $this->assertInstanceOf('Aws\\Result', $lastResult);
+        $this->assertInstanceOf(Result::class, $lastResult);
         $this->assertEquals($expectedTableNames, $tables);
     }
 
@@ -454,7 +454,7 @@ class ResultPaginatorTest extends TestCase
         // Iterate over the paginator
         foreach ($paginator as $key => $result) {}
         // Make sure the paginator yields the expected results
-        $this->assertInstanceOf('Aws\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertEquals(3, $requestCount);
     }
 }

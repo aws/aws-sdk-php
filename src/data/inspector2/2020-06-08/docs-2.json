@@ -2,12 +2,14 @@
   "version": "2.0",
   "service": "<p>Amazon Inspector is a vulnerability discovery service that automates continuous scanning for security vulnerabilities within your Amazon EC2 and Amazon ECR environments.</p>",
   "operations": {
-    "AssociateMember": "<p>Associates an Amazon Web Services account with an Amazon Inspector delegated administrator.</p>",
+    "AssociateMember": "<p>Associates an Amazon Web Services account with an Amazon Inspector delegated administrator. An HTTP 200 response indicates the association was successfully started, but doesn’t indicate whether it was completed. You can check if the association completed by using <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_ListMembers.html\">ListMembers</a> for multiple accounts or <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_GetMember.html\">GetMembers</a> for a single account.</p>",
     "BatchGetAccountStatus": "<p>Retrieves the Amazon Inspector status of multiple Amazon Web Services accounts within your environment.</p>",
     "BatchGetFreeTrialInfo": "<p>Gets free trial status for multiple Amazon Web Services accounts.</p>",
+    "BatchGetMemberEc2DeepInspectionStatus": "<p>Retrieves Amazon Inspector deep inspection activation status of multiple member accounts within your organization. You must be the delegated administrator of an organization in Amazon Inspector to use this API.</p>",
+    "BatchUpdateMemberEc2DeepInspectionStatus": "<p>Activates or deactivates Amazon Inspector deep inspection for the provided member accounts in your organization. You must be the delegated administrator of an organization in Amazon Inspector to use this API.</p>",
     "CancelFindingsReport": "<p>Cancels the given findings report.</p>",
     "CreateFilter": "<p>Creates a filter resource using specified filter criteria.</p>",
-    "CreateFindingsReport": "<p>Creates a finding report.</p>",
+    "CreateFindingsReport": "<p>Creates a finding report. By default only <code>ACTIVE</code> findings are returned in the report. To see <code>SUPRESSED</code> or <code>CLOSED</code> findings you must specify a value for the <code>findingStatus</code> filter criteria. </p>",
     "DeleteFilter": "<p>Deletes a filter resource.</p>",
     "DescribeOrganizationConfiguration": "<p>Describe Amazon Inspector configuration settings for an Amazon Web Services organization.</p>",
     "Disable": "<p>Disables Amazon Inspector scans for one or more Amazon Web Services accounts. Disabling all scan types in an account disables the Amazon Inspector service.</p>",
@@ -17,6 +19,7 @@
     "EnableDelegatedAdminAccount": "<p>Enables the Amazon Inspector delegated administrator for your Organizations organization.</p>",
     "GetConfiguration": "<p>Retrieves setting configurations for Inspector scans.</p>",
     "GetDelegatedAdminAccount": "<p>Retrieves information about the Amazon Inspector delegated administrator for your organization.</p>",
+    "GetEc2DeepInspectionConfiguration": "<p>Retrieves the activation status of Amazon Inspector deep inspection and custom paths associated with your account. </p>",
     "GetFindingsReportStatus": "<p>Gets the status of a findings report.</p>",
     "GetMember": "<p>Gets member information for your organization.</p>",
     "ListAccountPermissions": "<p>Lists the permissions an account has to configure Amazon Inspector.</p>",
@@ -29,10 +32,13 @@
     "ListMembers": "<p>List members associated with the Amazon Inspector delegated administrator for your organization.</p>",
     "ListTagsForResource": "<p>Lists all tags attached to a given resource.</p>",
     "ListUsageTotals": "<p>Lists the Amazon Inspector usage totals over the last 30 days.</p>",
+    "SearchVulnerabilities": "<p>Lists Amazon Inspector coverage details for a specific vulnerability.</p>",
     "TagResource": "<p>Adds tags to a resource.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
     "UpdateConfiguration": "<p>Updates setting configurations for your Amazon Inspector account. When you use this API as an Amazon Inspector delegated administrator this updates the setting for all accounts you manage. Member accounts in an organization cannot update this setting.</p>",
+    "UpdateEc2DeepInspectionConfiguration": "<p>Activates, deactivates Amazon Inspector deep inspection, or updates custom paths for your account. </p>",
     "UpdateFilter": "<p>Specifies the action that is to be applied to the findings that match the filter.</p>",
+    "UpdateOrgEc2DeepInspectionConfiguration": "<p>Updates the Amazon Inspector deep inspection custom paths for your organization. You must be an Amazon Inspector delegated administrator to use this API.</p>",
     "UpdateOrganizationConfiguration": "<p>Updates the configurations for your Amazon Inspector organization.</p>"
   },
   "shapes": {
@@ -80,6 +86,7 @@
         "EnableDelegatedAdminAccountRequest$delegatedAdminAccountId": "<p>The Amazon Web Services account ID of the Amazon Inspector delegated administrator.</p>",
         "EnableDelegatedAdminAccountResponse$delegatedAdminAccountId": "<p>The Amazon Web Services account ID of the successfully Amazon Inspector delegated administrator.</p>",
         "FailedAccount$accountId": "<p>The Amazon Web Services account ID.</p>",
+        "FailedMemberAccountEc2DeepInspectionStatusState$accountId": "<p>The unique identifier for the Amazon Web Services account of the organization member that failed to activate Amazon Inspector deep inspection.</p>",
         "Finding$awsAccountId": "<p>The Amazon Web Services account ID associated with the finding.</p>",
         "FindingTypeAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account associated with the findings.</p>",
         "GetMemberRequest$accountId": "<p>The Amazon Web Services account ID of the member account to retrieve information on.</p>",
@@ -88,6 +95,8 @@
         "LambdaLayerAggregationResponse$accountId": "<p>The account ID of the AWS Lambda function layer.</p>",
         "Member$accountId": "<p>The Amazon Web Services account ID of the member account.</p>",
         "Member$delegatedAdminAccountId": "<p>The Amazon Web Services account ID of the Amazon Inspector delegated administrator for this member account.</p>",
+        "MemberAccountEc2DeepInspectionStatus$accountId": "<p>The unique identifier for the Amazon Web Services account of the organization member.</p>",
+        "MemberAccountEc2DeepInspectionStatusState$accountId": "<p>The unique identifier for the Amazon Web Services account of the organization member</p>",
         "PackageAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account associated with the findings.</p>",
         "RepositoryAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account associated with the findings.</p>",
         "TitleAggregationResponse$accountId": "<p>The ID of the Amazon Web Services account associated with the findings.</p>"
@@ -97,6 +106,7 @@
       "base": null,
       "refs": {
         "BatchGetAccountStatusRequest$accountIds": "<p>The 12-digit Amazon Web Services account IDs of the accounts to retrieve Amazon Inspector status for.</p>",
+        "BatchGetMemberEc2DeepInspectionStatusRequest$accountIds": "<p>The unique identifiers for the Amazon Web Services accounts to retrieve Amazon Inspector deep inspection activation status for. <pre><code> &lt;/p&gt; </code></pre>",
         "DisableRequest$accountIds": "<p>An array of account IDs you want to disable Amazon Inspector scans for.</p>",
         "EnableRequest$accountIds": "<p>A list of account IDs you want to enable Amazon Inspector scans for.</p>"
       }
@@ -228,6 +238,12 @@
       "refs": {
       }
     },
+    "AtigData": {
+      "base": "<p>The Amazon Web Services Threat Intel Group (ATIG) details for a specific vulnerability.</p>",
+      "refs": {
+        "Vulnerability$atigData": "<p>An object that contains information about the Amazon Web Services Threat Intel Group (ATIG) details for the vulnerability.</p>"
+      }
+    },
     "AutoEnable": {
       "base": "<p>Represents which scan types are automatically enabled for new members of your Amazon Inspector organization.</p>",
       "refs": {
@@ -303,14 +319,36 @@
       "refs": {
       }
     },
+    "BatchGetMemberEc2DeepInspectionStatusRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchGetMemberEc2DeepInspectionStatusResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateMemberEc2DeepInspectionStatusRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateMemberEc2DeepInspectionStatusResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
         "AutoEnable$ec2": "<p>Represents whether Amazon EC2 scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
         "AutoEnable$ecr": "<p>Represents whether Amazon ECR scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
-        "AutoEnable$lambda": "<p>Represents whether AWS Lambda scans are automatically enabled for new members of your Amazon Inspector organization. </p>",
+        "AutoEnable$lambda": "<p>Represents whether AWS Lambda standard scans are automatically enabled for new members of your Amazon Inspector organization. </p>",
         "DescribeOrganizationConfigurationResponse$maxAccountLimitReached": "<p>Represents whether your organization has reached the maximum Amazon Web Services account limit for Amazon Inspector.</p>",
-        "ListMembersRequest$onlyAssociated": "<p>Specifies whether to list only currently associated members if <code>True</code> or to list all members within the organization if <code>False</code>.</p>"
+        "ListMembersRequest$onlyAssociated": "<p>Specifies whether to list only currently associated members if <code>True</code> or to list all members within the organization if <code>False</code>.</p>",
+        "MemberAccountEc2DeepInspectionStatus$activateDeepInspection": "<p>Whether Amazon Inspector deep inspection is active in the account. If <code>TRUE</code> Amazon Inspector deep inspection is active, if <code>FALSE</code> it is not active.</p>",
+        "UpdateEc2DeepInspectionConfigurationRequest$activateDeepInspection": "<p>Specify <code>TRUE</code> to activate Amazon Inspector deep inspection in your account, or <code>FALSE</code> to deactivate. Member accounts in an organization cannot deactivate deep inspection, instead the delegated administrator for the organization can deactivate a member account using <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_BatchUpdateMemberEc2DeepInspectionStatus.html\">BatchUpdateMemberEc2DeepInspectionStatus</a>.</p>"
       }
     },
     "CancelFindingsReportRequest": {
@@ -321,6 +359,30 @@
     "CancelFindingsReportResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "CisaAction": {
+      "base": null,
+      "refs": {
+        "CisaData$action": "<p>The remediation action recommended by CISA for this vulnerability.</p>"
+      }
+    },
+    "CisaData": {
+      "base": "<p>The Cybersecurity and Infrastructure Security Agency (CISA) details for a specific vulnerability.</p>",
+      "refs": {
+        "Vulnerability$cisaData": "<p>An object that contains the Cybersecurity and Infrastructure Security Agency (CISA) details for the vulnerability.</p>"
+      }
+    },
+    "CisaDateAdded": {
+      "base": null,
+      "refs": {
+        "CisaData$dateAdded": "<p>The date and time CISA added this vulnerability to their catalogue.</p>"
+      }
+    },
+    "CisaDateDue": {
+      "base": null,
+      "refs": {
+        "CisaData$dateDue": "<p>The date and time CISA expects a fix to have been provided vulnerability.</p>"
       }
     },
     "ClientToken": {
@@ -357,6 +419,18 @@
       "base": null,
       "refs": {
         "ListCoverageStatisticsResponse$countsByGroup": "<p>An array with the number for each group.</p>"
+      }
+    },
+    "CoverageDateFilter": {
+      "base": "<p>Contains details of a coverage date filter.</p>",
+      "refs": {
+        "CoverageDateFilterList$member": null
+      }
+    },
+    "CoverageDateFilterList": {
+      "base": null,
+      "refs": {
+        "CoverageFilterCriteria$lastScannedAt": "<p>Filters Amazon Web Services resources based on whether Amazon Inspector has checked them for vulnerabilities within the specified time range.</p>"
       }
     },
     "CoverageFilterCriteria": {
@@ -412,7 +486,7 @@
         "CoverageFilterCriteria$lambdaFunctionName": "<p>Returns coverage statistics for AWS Lambda functions filtered by function names.</p>",
         "CoverageFilterCriteria$lambdaFunctionRuntime": "<p>Returns coverage statistics for AWS Lambda functions filtered by runtime.</p>",
         "CoverageFilterCriteria$resourceId": "<p>An array of Amazon Web Services resource IDs to return coverage statistics for.</p>",
-        "CoverageFilterCriteria$resourceType": "<p>An array of Amazon Web Services resource types to return coverage statistics for. The values can be <code>AWS_EC2_INSTANCE</code> or <code>AWS_ECR_REPOSITORY</code>.</p>",
+        "CoverageFilterCriteria$resourceType": "<p>An array of Amazon Web Services resource types to return coverage statistics for. The values can be <code>AWS_EC2_INSTANCE</code>, <code>AWS_LAMBDA_FUNCTION</code> or <code>AWS_ECR_REPOSITORY</code>.</p>",
         "CoverageFilterCriteria$scanStatusCode": "<p>The scan status code to filter on.</p>",
         "CoverageFilterCriteria$scanStatusReason": "<p>The scan status reason to filter on.</p>",
         "CoverageFilterCriteria$scanType": "<p>An array of Amazon Inspector scan types to return coverage statistics for.</p>"
@@ -462,6 +536,42 @@
         "Usage$currency": "<p>The currency type used when calculating usage data.</p>"
       }
     },
+    "Cvss2": {
+      "base": "<p>The Common Vulnerability Scoring System (CVSS) version 2 details for the vulnerability.</p>",
+      "refs": {
+        "Vulnerability$cvss2": "<p>An object that contains the Common Vulnerability Scoring System (CVSS) Version 2 details for the vulnerability.</p>"
+      }
+    },
+    "Cvss2BaseScore": {
+      "base": null,
+      "refs": {
+        "Cvss2$baseScore": "<p>The CVSS v2 base score for the vulnerability.</p>"
+      }
+    },
+    "Cvss2ScoringVector": {
+      "base": null,
+      "refs": {
+        "Cvss2$scoringVector": "<p>The scoring vector associated with the CVSS v2 score.</p>"
+      }
+    },
+    "Cvss3": {
+      "base": "<p>The Common Vulnerability Scoring System (CVSS) version 3 details for the vulnerability.</p>",
+      "refs": {
+        "Vulnerability$cvss3": "<p>An object that contains the Common Vulnerability Scoring System (CVSS) Version 3 details for the vulnerability.</p>"
+      }
+    },
+    "Cvss3BaseScore": {
+      "base": null,
+      "refs": {
+        "Cvss3$baseScore": "<p>The CVSS v3 base score for the vulnerability.</p>"
+      }
+    },
+    "Cvss3ScoringVector": {
+      "base": null,
+      "refs": {
+        "Cvss3$scoringVector": "<p>The scoring vector associated with the CVSS v3 score.</p>"
+      }
+    },
     "CvssScore": {
       "base": "<p>The CVSS score for a finding.</p>",
       "refs": {
@@ -492,6 +602,18 @@
         "PackageVulnerabilityDetails$cvss": "<p>An object that contains details about the CVSS score of a finding.</p>"
       }
     },
+    "Cwe": {
+      "base": null,
+      "refs": {
+        "Cwes$member": null
+      }
+    },
+    "Cwes": {
+      "base": null,
+      "refs": {
+        "Vulnerability$cwes": "<p>The Common Weakness Enumeration (CWE) associated with the vulnerability.</p>"
+      }
+    },
     "DateFilter": {
       "base": "<p>Contains details on the time range used to filter findings.</p>",
       "refs": {
@@ -513,6 +635,9 @@
       "refs": {
         "AwsEc2InstanceDetails$launchedAt": "<p>The date and time the Amazon EC2 instance was launched at.</p>",
         "AwsEcrContainerImageDetails$pushedAt": "<p>The date and time the Amazon ECR container image was pushed.</p>",
+        "CoverageDateFilter$endInclusive": "<p>A timestamp representing the end of the time period to filter results by.</p>",
+        "CoverageDateFilter$startInclusive": "<p>A timestamp representing the start of the time period to filter results by.</p>",
+        "CoveredResource$lastScannedAt": "<p>The date and time the resource was last checked for vulnerabilities.</p>",
         "EcrRescanDurationState$updatedAt": "<p>A timestamp representing when the last time the ECR scan duration setting was changed.</p>",
         "ExploitabilityDetails$lastKnownExploitAt": "<p>The date and time of the last exploit associated with a finding discovered in your environment.</p>",
         "Filter$createdAt": "<p>The date and time this filter was created at.</p>",
@@ -577,6 +702,12 @@
         "GetFindingsReportStatusResponse$destination": "<p>The destination of the report.</p>"
       }
     },
+    "DetectionPlatforms": {
+      "base": null,
+      "refs": {
+        "Vulnerability$detectionPlatforms": "<p>Platforms that the vulnerability can be detected on.</p>"
+      }
+    },
     "DisableDelegatedAdminAccountRequest": {
       "base": null,
       "refs": {
@@ -621,6 +752,14 @@
         "Finding$inspectorScore": "<p>The Amazon Inspector score given to the finding.</p>",
         "NumberFilter$lowerInclusive": "<p>The lowest number to be included in the filter.</p>",
         "NumberFilter$upperInclusive": "<p>The highest number to be included in the filter.</p>"
+      }
+    },
+    "Ec2DeepInspectionStatus": {
+      "base": null,
+      "refs": {
+        "GetEc2DeepInspectionConfigurationResponse$status": "<p>The activation status of Amazon Inspector deep inspection in your account.</p>",
+        "MemberAccountEc2DeepInspectionStatusState$status": "<p>The state of Amazon Inspector deep inspection in the member account.</p>",
+        "UpdateEc2DeepInspectionConfigurationResponse$status": "<p>The status of Amazon Inspector deep inspection in your account.</p>"
       }
     },
     "Ec2InstanceAggregation": {
@@ -728,6 +867,18 @@
       "refs": {
       }
     },
+    "Epss": {
+      "base": "<p>Details about the Exploit Prediction Scoring System (EPSS) score.</p>",
+      "refs": {
+        "Vulnerability$epss": "<p>An object that contains the Exploit Prediction Scoring System (EPSS) score.</p>"
+      }
+    },
+    "EpssScore": {
+      "base": null,
+      "refs": {
+        "Epss$score": "<p>The Exploit Prediction Scoring System (EPSS) score.</p>"
+      }
+    },
     "ErrorCode": {
       "base": null,
       "refs": {
@@ -751,6 +902,12 @@
       "base": null,
       "refs": {
         "Finding$exploitAvailable": "<p>If a finding discovered in your environment has an exploit available.</p>"
+      }
+    },
+    "ExploitObserved": {
+      "base": "<p>Contains information on when this exploit was observed.</p>",
+      "refs": {
+        "Vulnerability$exploitObserved": "<p>An object that contains details on when the exploit was observed.</p>"
       }
     },
     "ExploitabilityDetails": {
@@ -777,6 +934,19 @@
         "BatchGetAccountStatusResponse$failedAccounts": "<p>An array of objects detailing any accounts that failed to enable Amazon Inspector and why.</p>",
         "DisableResponse$failedAccounts": "<p>Information on any accounts for which Amazon Inspector scans could not be disabled. Details are provided for each account.</p>",
         "EnableResponse$failedAccounts": "<p>Information on any accounts for which Amazon Inspector scans could not be enabled. Details are provided for each account.</p>"
+      }
+    },
+    "FailedMemberAccountEc2DeepInspectionStatusState": {
+      "base": "<p>An object that contains details about a member account in your organization that failed to activate Amazon Inspector deep inspection.</p>",
+      "refs": {
+        "FailedMemberAccountEc2DeepInspectionStatusStateList$member": null
+      }
+    },
+    "FailedMemberAccountEc2DeepInspectionStatusStateList": {
+      "base": null,
+      "refs": {
+        "BatchGetMemberEc2DeepInspectionStatusResponse$failedAccountIds": "<p>An array of objects that provide details on any accounts that failed to activate Amazon Inspector deep inspection and why. <pre><code> &lt;/p&gt; </code></pre>",
+        "BatchUpdateMemberEc2DeepInspectionStatusResponse$failedAccountIds": "<p>An array of objects that provide details for each of the accounts that Amazon Inspector deep inspection status could not be successfully changed for. </p>"
       }
     },
     "FilePath": {
@@ -919,6 +1089,13 @@
         "FindingTypeAggregation$sortBy": "<p>The value to sort results by.</p>"
       }
     },
+    "FirstSeen": {
+      "base": null,
+      "refs": {
+        "AtigData$firstSeen": "<p>The date and time this vulnerability was first observed.</p>",
+        "ExploitObserved$firstSeen": "<p>The date an time when the exploit was first seen.</p>"
+      }
+    },
     "FixAvailable": {
       "base": null,
       "refs": {
@@ -1001,6 +1178,16 @@
       }
     },
     "GetDelegatedAdminAccountResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetEc2DeepInspectionConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetEc2DeepInspectionConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -1163,6 +1350,13 @@
       "base": "<p>The VPC security groups and subnets that are attached to an AWS Lambda function. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html\">VPC Settings</a>.</p>",
       "refs": {
         "AwsLambdaFunctionDetails$vpcConfig": "<p>The AWS Lambda function's networking configuration.</p>"
+      }
+    },
+    "LastSeen": {
+      "base": null,
+      "refs": {
+        "AtigData$lastSeen": "<p>The date and time this vulnerability was last observed.</p>",
+        "ExploitObserved$lastSeen": "<p>The date an time when the exploit was last seen.</p>"
       }
     },
     "LayerList": {
@@ -1380,6 +1574,31 @@
         "MemberList$member": null
       }
     },
+    "MemberAccountEc2DeepInspectionStatus": {
+      "base": "<p>An object that contains details about the status of Amazon Inspector deep inspection for a member account in your organization.</p>",
+      "refs": {
+        "MemberAccountEc2DeepInspectionStatusList$member": null
+      }
+    },
+    "MemberAccountEc2DeepInspectionStatusList": {
+      "base": null,
+      "refs": {
+        "BatchUpdateMemberEc2DeepInspectionStatusRequest$accountIds": "<p>The unique identifiers for the Amazon Web Services accounts to change Amazon Inspector deep inspection status for.</p>"
+      }
+    },
+    "MemberAccountEc2DeepInspectionStatusState": {
+      "base": "<p>An object that contains details about the state of Amazon Inspector deep inspection for a member account.</p>",
+      "refs": {
+        "MemberAccountEc2DeepInspectionStatusStateList$member": null
+      }
+    },
+    "MemberAccountEc2DeepInspectionStatusStateList": {
+      "base": null,
+      "refs": {
+        "BatchGetMemberEc2DeepInspectionStatusResponse$accountIds": "<p>An array of objects that provide details on the activation status of Amazon Inspector deep inspection for each of the requested accounts. <pre><code> &lt;/p&gt; </code></pre>",
+        "BatchUpdateMemberEc2DeepInspectionStatusResponse$accountIds": "<p>An array of objects that provide details for each of the accounts that Amazon Inspector deep inspection status was successfully changed for. </p>"
+      }
+    },
     "MemberList": {
       "base": null,
       "refs": {
@@ -1437,7 +1656,9 @@
         "ListFindingsRequest$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the <code>NextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
         "ListFindingsResponse$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the <code>NextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
         "ListMembersRequest$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the <code>NextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
-        "ListMembersResponse$nextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>"
+        "ListMembersResponse$nextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>",
+        "SearchVulnerabilitiesRequest$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the <code>NextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
+        "SearchVulnerabilitiesResponse$nextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>"
       }
     },
     "NonEmptyString": {
@@ -1465,8 +1686,11 @@
         "CvssScoreDetails$scoreSource": "<p>The source for the CVSS score.</p>",
         "CvssScoreDetails$scoringVector": "<p>The vector for the CVSS score.</p>",
         "CvssScoreDetails$version": "<p>The CVSS version used in scoring.</p>",
+        "DetectionPlatforms$member": null,
         "Ec2InstanceAggregationResponse$instanceId": "<p>The Amazon EC2 instance ID.</p>",
         "FailedAccount$errorMessage": "<p>The error message received when the account failed to enable Amazon Inspector.</p>",
+        "FailedMemberAccountEc2DeepInspectionStatusState$errorMessage": "<p>The error message explaining why the account failed to activate Amazon Inspector deep inspection.</p>",
+        "GetEc2DeepInspectionConfigurationResponse$errorMessage": "<p>An error message explaining why Amazon Inspector deep inspection configurations could not be retrieved for your account.</p>",
         "ImageLayerAggregationResponse$layerHash": "<p>The layer hash.</p>",
         "ImageLayerAggregationResponse$repository": "<p>The repository the layer resides in.</p>",
         "ImageLayerAggregationResponse$resourceId": "<p>The resource ID of the container image layer.</p>",
@@ -1475,6 +1699,7 @@
         "LambdaLayerAggregationResponse$functionName": "<p>The names of the AWS Lambda functions associated with the layers.</p>",
         "LambdaLayerAggregationResponse$layerArn": "<p>The Amazon Resource Name (ARN) of the AWS Lambda function layer.</p>",
         "LambdaLayerAggregationResponse$resourceId": "<p>The Resource ID of the AWS Lambda function layer.</p>",
+        "MemberAccountEc2DeepInspectionStatusState$errorMessage": "<p>The error message explaining why the account failed to activate Amazon Inspector deep inspection.</p>",
         "NonEmptyStringList$member": null,
         "PackageAggregationResponse$packageName": "<p>The name of the operating system package.</p>",
         "PackageVulnerabilityDetails$source": "<p>The source of the vulnerability information.</p>",
@@ -1488,7 +1713,9 @@
         "Resource$region": "<p>The Amazon Web Services Region the impacted resource is located in.</p>",
         "State$errorMessage": "<p>The error message received when the account failed to enable Amazon Inspector.</p>",
         "StringList$member": null,
-        "TitleAggregationResponse$title": "<p>The title that the findings were aggregated on.</p>"
+        "TitleAggregationResponse$title": "<p>The title that the findings were aggregated on.</p>",
+        "UpdateEc2DeepInspectionConfigurationResponse$errorMessage": "<p>An error message explaining why new Amazon Inspector deep inspection custom paths could not be added.</p>",
+        "Vulnerability$id": "<p>The ID for the specific vulnerability.</p>"
       }
     },
     "NonEmptyStringList": {
@@ -1601,6 +1828,23 @@
         "Finding$packageVulnerabilityDetails": "<p>An object that contains the details of a package vulnerability finding.</p>"
       }
     },
+    "Path": {
+      "base": null,
+      "refs": {
+        "PathList$member": null
+      }
+    },
+    "PathList": {
+      "base": null,
+      "refs": {
+        "GetEc2DeepInspectionConfigurationResponse$orgPackagePaths": "<p>The Amazon Inspector deep inspection custom paths for your organization.</p>",
+        "GetEc2DeepInspectionConfigurationResponse$packagePaths": "<p>The Amazon Inspector deep inspection custom paths for your account.</p>",
+        "UpdateEc2DeepInspectionConfigurationRequest$packagePaths": "<p>The Amazon Inspector deep inspection custom paths you are adding for your account.</p>",
+        "UpdateEc2DeepInspectionConfigurationResponse$orgPackagePaths": "<p>The current Amazon Inspector deep inspection custom paths for the organization.</p>",
+        "UpdateEc2DeepInspectionConfigurationResponse$packagePaths": "<p>The current Amazon Inspector deep inspection custom paths for your account.</p>",
+        "UpdateOrgEc2DeepInspectionConfigurationRequest$orgPackagePaths": "<p>The Amazon Inspector deep inspection custom paths you are adding for your organization.</p>"
+      }
+    },
     "Permission": {
       "base": "<p>Contains information on the permissions an account has within Amazon Inspector.</p>",
       "refs": {
@@ -1651,6 +1895,18 @@
       "base": "<p>Details about the recommended course of action to remediate the finding.</p>",
       "refs": {
         "Remediation$recommendation": "<p>An object that contains information about the recommended course of action to remediate the finding.</p>"
+      }
+    },
+    "RelatedVulnerabilities": {
+      "base": null,
+      "refs": {
+        "Vulnerability$relatedVulnerabilities": "<p>A list of related vulnerabilities.</p>"
+      }
+    },
+    "RelatedVulnerability": {
+      "base": null,
+      "refs": {
+        "RelatedVulnerabilities$member": null
       }
     },
     "RelationshipStatus": {
@@ -1798,6 +2054,22 @@
         "CoveredResource$scanType": "<p>The Amazon Inspector scan type covering the resource.</p>"
       }
     },
+    "SearchVulnerabilitiesFilterCriteria": {
+      "base": "<p>Details on the criteria used to define the filter for a vulnerability search. </p>",
+      "refs": {
+        "SearchVulnerabilitiesRequest$filterCriteria": "<p>The criteria used to filter the results of a vulnerability search.</p>"
+      }
+    },
+    "SearchVulnerabilitiesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SearchVulnerabilitiesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "SecurityGroupId": {
       "base": null,
       "refs": {
@@ -1893,9 +2165,10 @@
       "refs": {
         "Account$status": "<p>The status of Amazon Inspector for the account.</p>",
         "FailedAccount$status": "<p>The status of Amazon Inspector for the account.</p>",
+        "FailedMemberAccountEc2DeepInspectionStatusState$ec2ScanStatus": "<p>The status of EC2 scanning in the account that failed to activate Amazon Inspector deep inspection.</p>",
         "ResourceStatus$ec2": "<p>The status of Amazon Inspector scanning for Amazon EC2 resources.</p>",
         "ResourceStatus$ecr": "<p>The status of Amazon Inspector scanning for Amazon ECR resources.</p>",
-        "ResourceStatus$lambda": "<p>The status of Amazon Inspector scanning for AWS Lambda function resources.</p>",
+        "ResourceStatus$lambda": "<p>The status of Amazon Inspector scanning for AWS Lambda function.</p>",
         "State$status": "<p>The status of Amazon Inspector for the account.</p>"
       }
     },
@@ -1924,7 +2197,7 @@
         "ConflictException$resourceId": "<p>The ID of the conflicting resource.</p>",
         "ConflictException$resourceType": "<p>The type of the conflicting resource.</p>",
         "Destination$bucketName": "<p>The name of the Amazon S3 bucket to export findings to.</p>",
-        "Destination$keyPrefix": "<p>The prefix of the KMS key used to export findings.</p>",
+        "Destination$keyPrefix": "<p>The prefix of the Amazon S3 bucket used to export findings.</p>",
         "Destination$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt data when exporting findings.</p>",
         "Ec2InstanceAggregationResponse$accountId": "<p>The Amazon Web Services account for the Amazon EC2 instance.</p>",
         "Ec2InstanceAggregationResponse$operatingSystem": "<p>The operating system of the Amazon EC2 instance.</p>",
@@ -2087,6 +2360,18 @@
       "refs": {
       }
     },
+    "Target": {
+      "base": null,
+      "refs": {
+        "Targets$member": null
+      }
+    },
+    "Targets": {
+      "base": null,
+      "refs": {
+        "AtigData$targets": "<p>The commercial sectors this vulnerability targets.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>The limit on the number of requests per second was exceeded.</p>",
       "refs": {
@@ -2120,6 +2405,18 @@
         "TitleAggregation$sortBy": "<p>The value to sort results by.</p>"
       }
     },
+    "Ttp": {
+      "base": null,
+      "refs": {
+        "Ttps$member": null
+      }
+    },
+    "Ttps": {
+      "base": null,
+      "refs": {
+        "AtigData$ttps": "<p>The <a href=\"https://attack.mitre.org/\">MITRE ATT&amp;CK</a> tactics, techniques, and procedures (TTPs) associated with vulnerability.</p>"
+      }
+    },
     "UntagResourceRequest": {
       "base": null,
       "refs": {
@@ -2140,12 +2437,32 @@
       "refs": {
       }
     },
+    "UpdateEc2DeepInspectionConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateEc2DeepInspectionConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateFilterRequest": {
       "base": null,
       "refs": {
       }
     },
     "UpdateFilterResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateOrgEc2DeepInspectionConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateOrgEc2DeepInspectionConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -2231,6 +2548,24 @@
         "ValidationException$reason": "<p>The reason for the validation failure.</p>"
       }
     },
+    "VendorCreatedAt": {
+      "base": null,
+      "refs": {
+        "Vulnerability$vendorCreatedAt": "<p>The date and time when the vendor created this vulnerability.</p>"
+      }
+    },
+    "VendorSeverity": {
+      "base": null,
+      "refs": {
+        "Vulnerability$vendorSeverity": "<p>The severity assigned by the vendor.</p>"
+      }
+    },
+    "VendorUpdatedAt": {
+      "base": null,
+      "refs": {
+        "Vulnerability$vendorUpdatedAt": "<p>The date and time when the vendor last updated this vulnerability.</p>"
+      }
+    },
     "Version": {
       "base": null,
       "refs": {
@@ -2241,6 +2576,36 @@
       "base": null,
       "refs": {
         "LambdaVpcConfig$vpcId": "<p>The ID of the VPC.</p>"
+      }
+    },
+    "VulnId": {
+      "base": null,
+      "refs": {
+        "VulnIdList$member": null
+      }
+    },
+    "VulnIdList": {
+      "base": null,
+      "refs": {
+        "SearchVulnerabilitiesFilterCriteria$vulnerabilityIds": "<p>The IDs for specific vulnerabilities.</p>"
+      }
+    },
+    "Vulnerabilities": {
+      "base": null,
+      "refs": {
+        "SearchVulnerabilitiesResponse$vulnerabilities": "<p>Details about the listed vulnerability.</p>"
+      }
+    },
+    "Vulnerability": {
+      "base": "<p>Contains details about a specific vulnerability Amazon Inspector can detect.</p>",
+      "refs": {
+        "Vulnerabilities$member": null
+      }
+    },
+    "VulnerabilityDescription": {
+      "base": null,
+      "refs": {
+        "Vulnerability$description": "<p>A description of the vulnerability.</p>"
       }
     },
     "VulnerabilityId": {
@@ -2254,6 +2619,30 @@
       "base": null,
       "refs": {
         "PackageVulnerabilityDetails$relatedVulnerabilities": "<p>One or more vulnerabilities related to the one identified in this finding.</p>"
+      }
+    },
+    "VulnerabilityReferenceUrl": {
+      "base": null,
+      "refs": {
+        "VulnerabilityReferenceUrls$member": null
+      }
+    },
+    "VulnerabilityReferenceUrls": {
+      "base": null,
+      "refs": {
+        "Vulnerability$referenceUrls": "<p>Links to various resources with more information on this vulnerability. </p>"
+      }
+    },
+    "VulnerabilitySource": {
+      "base": null,
+      "refs": {
+        "Vulnerability$source": "<p>The source of the vulnerability information.</p>"
+      }
+    },
+    "VulnerabilitySourceUrl": {
+      "base": null,
+      "refs": {
+        "Vulnerability$sourceUrl": "<p>A link to the official source material for this vulnerability.</p>"
       }
     },
     "VulnerablePackage": {

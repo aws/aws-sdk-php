@@ -2430,7 +2430,8 @@
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
           "idempotencyToken":true
-        }
+        },
+        "MulticastGroups":{"shape":"NetworkAnalyzerMulticastGroupList"}
       }
     },
     "CreateNetworkAnalyzerConfigurationResponse":{
@@ -3334,6 +3335,11 @@
         "DownlinkFrequency":{"shape":"DownlinkFrequency"}
       }
     },
+    "GatewayMaxEirp":{
+      "type":"float",
+      "max":30,
+      "min":0
+    },
     "GenAppKey":{
       "type":"string",
       "pattern":"[a-fA-F0-9]{32}"
@@ -3502,7 +3508,8 @@
         "WirelessGateways":{"shape":"WirelessGatewayList"},
         "Description":{"shape":"Description"},
         "Arn":{"shape":"NetworkAnalyzerConfigurationArn"},
-        "Name":{"shape":"NetworkAnalyzerConfigurationName"}
+        "Name":{"shape":"NetworkAnalyzerConfigurationName"},
+        "MulticastGroups":{"shape":"NetworkAnalyzerMulticastGroupList"}
       }
     },
     "GetPartnerAccountRequest":{
@@ -4686,7 +4693,8 @@
         "JoinEuiFilters":{"shape":"JoinEuiFilters"},
         "NetIdFilters":{"shape":"NetIdFilters"},
         "SubBands":{"shape":"SubBands"},
-        "Beaconing":{"shape":"Beaconing"}
+        "Beaconing":{"shape":"Beaconing"},
+        "MaxEirp":{"shape":"GatewayMaxEirp"}
       }
     },
     "LoRaWANGatewayCurrentVersion":{
@@ -4785,7 +4793,8 @@
         "DlDr":{"shape":"DlDr"},
         "DlFreq":{"shape":"DlFreq"},
         "SessionStartTime":{"shape":"SessionStartTimeTimestamp"},
-        "SessionTimeout":{"shape":"SessionTimeout"}
+        "SessionTimeout":{"shape":"SessionTimeout"},
+        "PingSlotPeriod":{"shape":"PingSlotPeriod"}
       }
     },
     "LoRaWANSendDataToDevice":{
@@ -4800,7 +4809,9 @@
       "members":{
         "AddGwMetadata":{"shape":"AddGwMetadata"},
         "DrMin":{"shape":"DrMinBox"},
-        "DrMax":{"shape":"DrMaxBox"}
+        "DrMax":{"shape":"DrMaxBox"},
+        "PrAllowed":{"shape":"PrAllowed"},
+        "RaAllowed":{"shape":"RaAllowed"}
       }
     },
     "LoRaWANStartFuotaTask":{
@@ -4988,6 +4999,13 @@
       "type":"string",
       "max":256
     },
+    "MulticastFrameInfo":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "MulticastGroup":{
       "type":"structure",
       "members":{
@@ -5067,6 +5085,12 @@
         "Arn":{"shape":"NetworkAnalyzerConfigurationArn"},
         "Name":{"shape":"NetworkAnalyzerConfigurationName"}
       }
+    },
+    "NetworkAnalyzerMulticastGroupList":{
+      "type":"list",
+      "member":{"shape":"MulticastGroupId"},
+      "max":10,
+      "min":0
     },
     "NetworkId":{
       "type":"integer",
@@ -5183,7 +5207,7 @@
     "PingSlotPeriod":{
       "type":"integer",
       "max":4096,
-      "min":128
+      "min":32
     },
     "PnOffset":{
       "type":"integer",
@@ -6078,7 +6102,8 @@
       "type":"structure",
       "members":{
         "WirelessDeviceFrameInfo":{"shape":"WirelessDeviceFrameInfo"},
-        "LogLevel":{"shape":"LogLevel"}
+        "LogLevel":{"shape":"LogLevel"},
+        "MulticastFrameInfo":{"shape":"MulticastFrameInfo"}
       }
     },
     "TransmissionInterval":{
@@ -6268,7 +6293,9 @@
         "WirelessDevicesToRemove":{"shape":"WirelessDeviceList"},
         "WirelessGatewaysToAdd":{"shape":"WirelessGatewayList"},
         "WirelessGatewaysToRemove":{"shape":"WirelessGatewayList"},
-        "Description":{"shape":"Description"}
+        "Description":{"shape":"Description"},
+        "MulticastGroupsToAdd":{"shape":"NetworkAnalyzerMulticastGroupList"},
+        "MulticastGroupsToRemove":{"shape":"NetworkAnalyzerMulticastGroupList"}
       }
     },
     "UpdateNetworkAnalyzerConfigurationResponse":{
@@ -6450,7 +6477,8 @@
         "Name":{"shape":"WirelessGatewayName"},
         "Description":{"shape":"Description"},
         "JoinEuiFilters":{"shape":"JoinEuiFilters"},
-        "NetIdFilters":{"shape":"NetIdFilters"}
+        "NetIdFilters":{"shape":"NetIdFilters"},
+        "MaxEirp":{"shape":"GatewayMaxEirp"}
       }
     },
     "UpdateWirelessGatewayResponse":{

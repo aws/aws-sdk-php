@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Endpoint\UseFipsEndpoint;
 
+use Aws\CacheInterface;
 use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider;
 use Aws\LruArrayCache;
 use Aws\Endpoint\UseFipsEndpoint\Configuration;
@@ -10,7 +11,7 @@ use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers \Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider
+ * @covers ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
@@ -254,7 +255,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\My\\Home');
-        $ref = new \ReflectionClass('Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider');
+        $ref = new \ReflectionClass(ConfigurationProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\My\\Home', $meth->invoke(null));
@@ -346,7 +347,7 @@ EOT;
     public function testCreatesFromCache()
     {
         $expected = new Configuration(true);
-        $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
+        $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())

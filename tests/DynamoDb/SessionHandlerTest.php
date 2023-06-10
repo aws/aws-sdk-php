@@ -1,7 +1,10 @@
 <?php
 namespace Aws\Test\DynamoDb;
 
+use Aws\DynamoDb\LockingSessionConnection;
+use Aws\DynamoDb\SessionConnectionInterface;
 use Aws\DynamoDb\SessionHandler;
+use Aws\DynamoDb\StandardSessionConnection;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -19,11 +22,11 @@ class SessionHandlerTest extends TestCase
         $sh2 = SessionHandler::fromClient($client, ['locking' => true]);
 
         $this->assertInstanceOf(
-            'Aws\DynamoDb\StandardSessionConnection',
+            StandardSessionConnection::class,
             $this->getPropertyValue($sh1, 'connection')
         );
         $this->assertInstanceOf(
-            'Aws\DynamoDb\LockingSessionConnection',
+            LockingSessionConnection::class,
             $this->getPropertyValue($sh2, 'connection')
         );
     }
@@ -32,7 +35,7 @@ class SessionHandlerTest extends TestCase
     {
         $data = ['fizz' => 'buzz'];
         $connection = $this->getMockForAbstractClass(
-            'Aws\DynamoDb\SessionConnectionInterface',
+            SessionConnectionInterface::class,
             array(),
             '',
             true,
@@ -69,7 +72,7 @@ class SessionHandlerTest extends TestCase
     public function testHandlerWhenNothingWritten()
     {
         $connection = $this->getMockForAbstractClass(
-            'Aws\DynamoDb\SessionConnectionInterface',
+            SessionConnectionInterface::class,
             array(),
             '',
             true,
@@ -98,7 +101,7 @@ class SessionHandlerTest extends TestCase
     {
         $data = 'serializedData';
         $connection = $this->getMockForAbstractClass(
-            'Aws\DynamoDb\SessionConnectionInterface',
+            SessionConnectionInterface::class,
             array(),
             '',
             true,
