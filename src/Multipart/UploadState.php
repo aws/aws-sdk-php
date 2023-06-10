@@ -97,7 +97,7 @@ class UploadState
     /**
      * Set displayProgress. Sends object size to setProgressThresholds.
      *
-     * @param $totalSize int Size of object to upload.
+     * @param $totalSize numeric Size of object to upload.
      */
     public function setDisplayProgress($totalSize)
     {
@@ -116,7 +116,9 @@ class UploadState
     public function setProgressThresholds($totalSize)
     {
         if(!is_numeric($totalSize)) {
-            throw new \InvalidArgumentException('The total size of the upload must be a number.');
+            throw new \InvalidArgumentException(
+                'The total size of the upload must be a number.'
+            );
         }
 
         $this->progressThresholds[0] = 0;
@@ -134,7 +136,9 @@ class UploadState
     public function getDisplayProgress($totalUploaded)
     {
         if (!is_numeric($totalUploaded)) {
-            throw new \InvalidArgumentException('The size of the bytes being uploaded must be a number.');
+            throw new \InvalidArgumentException(
+                'The size of the bytes being uploaded must be a number.'
+            );
         }
 
         if ($this->displayProgress) {
