@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.272.2 - 2023-06-12
 
 * `Aws\AmplifyUIBuilder` - AWS Amplify UIBuilder is launching Codegen UI, a new feature that enables you to generate your amplify uibuilder components and forms.
 * `Aws\DynamoDB` - Documentation updates for DynamoDB
