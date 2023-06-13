@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## 3.272.2 - 2023-06-12
+
+* `Aws\AmplifyUIBuilder` - AWS Amplify UIBuilder is launching Codegen UI, a new feature that enables you to generate your amplify uibuilder components and forms.
+* `Aws\DynamoDB` - Documentation updates for DynamoDB
+* `Aws\DynamoDBStreams` - Documentation updates for DynamoDB Streams
+* `Aws\FSx` - Amazon FSx for NetApp ONTAP now supports joining a storage virtual machine (SVM) to Active Directory after the SVM has been created.
+* `Aws\OpenSearchService` - This release adds support for SkipUnavailable connection property for cross cluster search
+* `Aws\Rekognition` - This release adds support for improved accuracy with user vector in Amazon Rekognition Face Search. Adds new APIs: AssociateFaces, CreateUser, DeleteUser, DisassociateFaces, ListUsers, SearchUsers, SearchUsersByImage. Also adds new face metadata that can be stored: user vector.
+* `Aws\SageMaker` - Sagemaker Neo now supports compilation for inferentia2 (ML_INF2) and Trainium1 (ML_TRN1) as available targets. With these devices, you can run your workloads at highest performance with lowest cost. inferentia2 (ML_INF2) is available in CMH and Trainium1 (ML_TRN1) is available in IAD currently
+
+## 3.272.1 - 2023-06-09
+
+* `Aws\ACMPCA` - Document-only update to refresh CLI documentation for AWS Private CA. No change to the service.
+* `Aws\Connect` - This release adds search APIs for Prompts, Quick Connects and Hours of Operations, which can be used to search for those resources within a Connect Instance.
+* `Aws\S3` - Fixes a bug with checksum calculation of CRC32 in flexible checksums
+
+## 3.272.0 - 2023-06-08
+
+* `Aws\Athena` - You can now define custom spark properties at start of the session for use cases like cluster encryption, table formats, and general Spark tuning.
+* `Aws\ComprehendMedical` - This release supports a new set of entities and traits.
+* `Aws\PaymentCryptography` - Initial release of AWS Payment Cryptography Control Plane service for creating and managing cryptographic keys used during card payment processing.
+* `Aws\PaymentCryptographyData` - Initial release of AWS Payment Cryptography DataPlane Plane service for performing cryptographic operations typically used during card payment processing.
+* `Aws\ServiceCatalog` - New parameter added in ServiceCatalog DescribeProvisioningArtifact api - IncludeProvisioningArtifactParameters. This parameter can be used to return information about the parameters used to provision the product
+* `Aws\TimestreamWrite` - This release adds the capability for customers to define how their data should be partitioned, optimizing for certain access patterns. This definition will take place as a part of the table creation.
+
 ## 3.271.10 - 2023-06-07
 
 * `Aws\CloudFormation` - AWS CloudFormation StackSets is updating the deployment experience for all stackset operations to skip suspended AWS accounts during deployments. StackSets will skip target AWS accounts that are suspended and set the Detailed Status of the corresponding stack instances as SKIPPED_SUSPENDED_ACCOUNT
