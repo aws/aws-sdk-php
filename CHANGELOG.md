@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.273.0 - 2023-06-13
 
 * `Aws\CloudTrail` - This feature allows users to view dashboards for CloudTrail Lake event data stores.
 * `Aws\CodeGuruSecurity` - Initial release of Amazon CodeGuru Security APIs
