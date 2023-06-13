@@ -91,7 +91,7 @@ class MockHandlerTest extends TestCase
         $cmd = new Command('foo');
         $h($cmd, $request);
         $h($cmd, $request);
-        Promise\queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertEquals([$r1, $e], $thens);
     }
 

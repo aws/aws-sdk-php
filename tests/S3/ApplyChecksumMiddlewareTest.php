@@ -121,6 +121,17 @@ class ApplyChecksumMiddlewareTest extends TestCase
                 [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
+                    'ChecksumAlgorithm' => 'crc32c',
+                    'Body' => 'abc'
+                ],
+                true,
+                'oD04yw=='
+            ],
+            [
+                'PutObject',
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
                     'ChecksumAlgorithm' => 'sha256'
                 ],
                 true,
