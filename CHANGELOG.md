@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## 3.273.0 - 2023-06-13
+
+* `Aws\CloudTrail` - This feature allows users to view dashboards for CloudTrail Lake event data stores.
+* `Aws\CodeGuruSecurity` - Initial release of Amazon CodeGuru Security APIs
+* `Aws\EC2` - This release introduces a new feature, EC2 Instance Connect Endpoint, that enables you to connect to a resource over TCP, without requiring the resource to have a public IPv4 address.
+* `Aws\Lightsail` - This release adds pagination for the Get Certificates API operation.
+* `Aws\S3` - Integrate double encryption feature to SDKs.
+* `Aws\SecurityHub` - Add support for Security Hub Automation Rules
+* `Aws\SimSpaceWeaver` - This release fixes using aws-us-gov ARNs in API calls and adds documentation for snapshot APIs.
+* `Aws\VerifiedPermissions` - GA release of Amazon Verified Permissions.
+* `Aws\WAFV2` - You can now detect and block fraudulent account creation attempts with the new AWS WAF Fraud Control account creation fraud prevention (ACFP) managed rule group AWSManagedRulesACFPRuleSet.
+* `Aws\WellArchitected` - AWS Well-Architected now supports Profiles that help customers prioritize which questions to focus on first by providing a list of prioritized questions that are better aligned with their business goals and outcomes.
+* `Aws\drs` - Added APIs to support network replication and recovery using AWS Elastic Disaster Recovery.
+* `Aws\imagebuilder` - Change the Image Builder ImagePipeline dateNextRun field to more accurately describe the data.
+
 ## 3.272.2 - 2023-06-12
 
 * `Aws\AmplifyUIBuilder` - AWS Amplify UIBuilder is launching Codegen UI, a new feature that enables you to generate your amplify uibuilder components and forms.
