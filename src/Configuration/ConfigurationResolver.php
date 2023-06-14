@@ -7,7 +7,7 @@ class ConfigurationResolver
     const ENV_PROFILE = 'AWS_PROFILE';
     const ENV_CONFIG_FILE = 'AWS_CONFIG_FILE';
 
-    private static $envPrefix = 'AWS_';
+    public static $envPrefix = 'AWS_';
 
     /**
      * Generic configuration resolver that first checks for environment
@@ -30,8 +30,7 @@ class ConfigurationResolver
         $key,
         $defaultValue,
         $expectedType,
-        $config = [],
-        $additionalArgs = []
+        $config = []
     )
     {
         $envValue = self::env($key, $expectedType);
@@ -100,7 +99,7 @@ class ConfigurationResolver
         }
         // Use INI_SCANNER_NORMAL instead of INI_SCANNER_TYPED for PHP 5.5 compatibility
         //TODO change after deprecation
-        $data = \Aws\parse_ini_file($filename, true, INI_SCANNER_NORMAL);
+        $data = @\Aws\parse_ini_file($filename, true, INI_SCANNER_NORMAL);
         if ($data === false
             || !isset($data[$profile])
             || !isset($data[$profile][$key])
@@ -166,9 +165,9 @@ class ConfigurationResolver
     private static function convertType($value, $type)
     {
         if ($type === 'bool'
-            && filter_var($value, FILTER_VALIDATE_BOOLEAN)
+            && !is_null($convertedValue = \Aws\boolean_value($value))
         ) {
-            $value = \Aws\boolean_value($value);
+            return $convertedValue;
         }
 
         if ($type === 'int'

@@ -26,7 +26,6 @@ use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\Exception\AwsException;
 use Aws\Exception\InvalidRegionException;
-use Aws\RequestCompression\RequestMinCompressionSizeBytes\Configuration as MinCompressionSizeConfig;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
 use Aws\Signature\SignatureProvider;
