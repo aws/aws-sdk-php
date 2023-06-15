@@ -540,7 +540,10 @@ class ClientResolver
             $value = $value();
         }
         if (!is_bool($value)) {
-            $value = false;
+           throw new IAE(
+              "Invalid configuration value provided for 'disable_request_compression'."
+              . " value must be a bool."
+           );
         }
         $args['config']['disable_request_compression'] = $value;
     }
@@ -562,8 +565,8 @@ class ClientResolver
             || (is_int($value)
             && ($value < 0 || $value > 10485760))
         ) {
-            throw new IAE("'min_compression_size_bytes' config option"
-                . " must be an integer between 0 and 10485760, inclusive.");
+            throw new IAE(" Invalid configuration value provided for 'min_compression_size_bytes'."
+            . " value must be an integer between 0 and 10485760, inclusive.");
         }
         $args['config']['request_min_compression_size_bytes'] = $value;
     }
