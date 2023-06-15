@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AuditManager` - This release introduces 2 Audit Manager features: CSV exports and new manual evidence options. You can now export your evidence finder results in CSV format. In addition, you can now add manual evidence to a control by entering free-form text or uploading a file from your browser.
+* `Aws\EFS` - Documentation updates for EFS.
+* `Aws\GuardDuty` - Updated descriptions for some APIs.
+* `Aws\LocationService` - Amazon Location Service adds categories to places, including filtering on those categories in searches. Also, you can now add metadata properties to your geofences.
+
 ## 3.273.0 - 2023-06-13
 
 * `Aws\CloudTrail` - This feature allows users to view dashboards for CloudTrail Lake event data stores.
