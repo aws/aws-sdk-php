@@ -229,7 +229,7 @@ class ClientResolver
         ],
         'request_min_compression_size_bytes' => [
             'type'      => 'value',
-            'valid'     => ['int', MinCompressionSizeConfig::class, CacheInterface::class, 'callable'],
+            'valid'     => ['int', 'callable'],
             'doc'       => 'Set to a value between between 0 and 10485760 bytes, inclusive',
             'fn'        => [__CLASS__, '_apply_min_compression_size'],
             'default'   => [__CLASS__, '_default_min_compression_size'],
