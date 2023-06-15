@@ -9,8 +9,6 @@ use Aws\Credentials\Credentials;
 use Aws\Ec2\Ec2Client;
 use Aws\Endpoint\UseFipsEndpoint\Configuration as FipsConfiguration;
 use Aws\Endpoint\UseDualStackEndpoint\Configuration as DualStackConfiguration;
-use Aws\RequestCompression\DisableRequestCompression\Configuration as DisableRequestCompressionConfiguration;
-use Aws\RequestCompression\RequestMinCompressionSizeBytes\Configuration as RequestMinCompressionSizeBytesConfiguration;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\ResultPaginator;
 use Aws\S3\Exception\S3Exception;
