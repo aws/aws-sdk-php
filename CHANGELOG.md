@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.273.1 - 2023-06-15
 
 * `Aws\AuditManager` - This release introduces 2 Audit Manager features: CSV exports and new manual evidence options. You can now export your evidence finder results in CSV format. In addition, you can now add manual evidence to a control by entering free-form text or uploading a file from your browser.
 * `Aws\EFS` - Documentation updates for EFS.
