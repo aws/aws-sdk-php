@@ -211,8 +211,8 @@ class RequestCompressionMiddlewareTest extends TestCase
     {
         if (is_int($minRequestSize)) {
             $this->expectException(\InvalidArgumentException::class);
-            $this->expectExceptionMessage(
-                "'min_compression_size_bytes' config option must be an integer between 0 and 10485760, inclusive."
+            $this->expectExceptionMessageMatches(
+                "/value must be an integer between 0 and 10485760, inclusive./"
             );
         } else {
             $this->expectException(\InvalidArgumentException::class);
