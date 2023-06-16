@@ -88,7 +88,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
      *
      * @return PromiseInterface
      */
-    public function promise()
+    public function promise(): PromiseInterface
     {
         if ($this->promise) {
             return $this->promise;
