@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.273.2 - 2023-06-16
 
 * `Aws\Account` - Improve pagination support for ListRegions
 * `Aws\ApplicationDiscoveryService` - Add Amazon EC2 instance recommendations export
