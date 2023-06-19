@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.273.3 - 2023-06-19
 
 * `Aws\CloudFormation` - Specify desired CloudFormation behavior in the event of ChangeSet execution failure using the CreateChangeSet OnStackFailure parameter
 * `Aws\EC2` - API changes to AWS Verified Access to include data from trust providers in logs
