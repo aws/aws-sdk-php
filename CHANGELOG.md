@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Specify desired CloudFormation behavior in the event of ChangeSet execution failure using the CreateChangeSet OnStackFailure parameter
+* `Aws\EC2` - API changes to AWS Verified Access to include data from trust providers in logs
+* `Aws\ECS` - Documentation only update to address various tickets.
+* `Aws\Glue` - This release adds support for creating cross region table/database resource links
+* `Aws\Pricing` - This release updates the PriceListArn regex pattern.
+* `Aws\Route53Domains` - Update MaxItems upper bound to 1000 for ListPricesRequest
+* `Aws\SageMaker` - Amazon Sagemaker Autopilot releases CreateAutoMLJobV2 and DescribeAutoMLJobV2 for Autopilot customers with ImageClassification, TextClassification and Tabular problem type config support.
+
 ## 3.273.2 - 2023-06-16
 
 * `Aws\Account` - Improve pagination support for ListRegions
