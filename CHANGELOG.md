@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.273.4 - 2023-06-20
 
 * `Aws\Appflow` - This release adds new API to reset connector metadata cache
 * `Aws\ConfigService` - Updated ResourceType enum with new resource types onboarded by AWS Config in May 2023.
