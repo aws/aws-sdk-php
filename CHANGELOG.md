@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.273.5 - 2023-06-21
 
 * `Aws\DynamoDB` - Documentation updates for DynamoDB
 * `Aws\EMR` - This release introduces a new Amazon EMR EPI called ListSupportedInstanceTypes that returns a list of all instance types supported by a given EMR release.
