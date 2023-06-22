@@ -876,6 +876,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "Retrieve":{
+      "name":"Retrieve",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RetrieveRequest"},
+      "output":{"shape":"RetrieveResult"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StartDataSourceSyncJob":{
       "name":"StartDataSourceSyncJob",
       "http":{
@@ -1783,6 +1801,7 @@
         "SecretArn":{"shape":"SecretArn"}
       }
     },
+    "Content":{"type":"string"},
     "ContentSourceConfiguration":{
       "type":"structure",
       "members":{
@@ -2070,7 +2089,11 @@
         "QuipConfiguration":{"shape":"QuipConfiguration"},
         "JiraConfiguration":{"shape":"JiraConfiguration"},
         "GitHubConfiguration":{"shape":"GitHubConfiguration"},
-        "AlfrescoConfiguration":{"shape":"AlfrescoConfiguration"},
+        "AlfrescoConfiguration":{
+          "shape":"AlfrescoConfiguration",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated AlfrescoConfiguration in favor of TemplateConfiguration"
+        },
         "TemplateConfiguration":{"shape":"TemplateConfiguration"}
       }
     },
@@ -2118,12 +2141,12 @@
     "DataSourceInclusionsExclusionsStrings":{
       "type":"list",
       "member":{"shape":"DataSourceInclusionsExclusionsStringsMember"},
-      "max":100,
+      "max":250,
       "min":0
     },
     "DataSourceInclusionsExclusionsStringsMember":{
       "type":"string",
-      "max":150,
+      "max":300,
       "min":1
     },
     "DataSourceName":{
@@ -2901,6 +2924,7 @@
       "type":"list",
       "member":{"shape":"Status"}
     },
+    "DocumentTitle":{"type":"string"},
     "DocumentsMetadataConfiguration":{
       "type":"structure",
       "members":{
@@ -4488,11 +4512,7 @@
         "UPDATING"
       ]
     },
-    "QueryText":{
-      "type":"string",
-      "max":1000,
-      "min":1
-    },
+    "QueryText":{"type":"string"},
     "QueryTextList":{
       "type":"list",
       "member":{"shape":"QueryText"},
@@ -4601,6 +4621,45 @@
       "type":"string",
       "max":73,
       "min":1
+    },
+    "RetrieveRequest":{
+      "type":"structure",
+      "required":[
+        "IndexId",
+        "QueryText"
+      ],
+      "members":{
+        "IndexId":{"shape":"IndexId"},
+        "QueryText":{"shape":"QueryText"},
+        "AttributeFilter":{"shape":"AttributeFilter"},
+        "RequestedDocumentAttributes":{"shape":"DocumentAttributeKeyList"},
+        "DocumentRelevanceOverrideConfigurations":{"shape":"DocumentRelevanceOverrideConfigurationList"},
+        "PageNumber":{"shape":"Integer"},
+        "PageSize":{"shape":"Integer"},
+        "UserContext":{"shape":"UserContext"}
+      }
+    },
+    "RetrieveResult":{
+      "type":"structure",
+      "members":{
+        "QueryId":{"shape":"QueryId"},
+        "ResultItems":{"shape":"RetrieveResultItemList"}
+      }
+    },
+    "RetrieveResultItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"ResultId"},
+        "DocumentId":{"shape":"DocumentId"},
+        "DocumentTitle":{"shape":"DocumentTitle"},
+        "Content":{"shape":"Content"},
+        "DocumentURI":{"shape":"Url"},
+        "DocumentAttributes":{"shape":"DocumentAttributeList"}
+      }
+    },
+    "RetrieveResultItemList":{
+      "type":"list",
+      "member":{"shape":"RetrieveResultItem"}
     },
     "RoleArn":{
       "type":"string",
