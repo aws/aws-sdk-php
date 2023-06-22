@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.273.6 - 2023-06-22
 
 * `Aws\ChimeSDKIdentity` - AppInstanceBots can be configured to be invoked or not using the Target or the CHIME.mentions attribute for ChannelMessages
 * `Aws\ChimeSDKMessaging` - ChannelMessages can be made visible to sender and intended recipient rather than all channel members with the target attribute. For example, a user can send messages to a bot and receive messages back in a group channel without other members seeing them.
