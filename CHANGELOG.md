@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.273.7 - 2023-06-23
 
 * `Aws\DevOpsGuru` - This release adds support for encryption via customer managed keys.
 * `Aws\FSx` - Update to Amazon FSx documentation.
