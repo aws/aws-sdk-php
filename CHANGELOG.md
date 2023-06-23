@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DevOpsGuru` - This release adds support for encryption via customer managed keys.
+* `Aws\FSx` - Update to Amazon FSx documentation.
+* `Aws\RDS` - Documentation improvements for create, describe, and modify DB clusters and DB instances.
+* `Aws\VerifiedPermissions` - Added improved descriptions and new code samples to SDK documentation.
+
 ## 3.273.6 - 2023-06-22
 
 * `Aws\ChimeSDKIdentity` - AppInstanceBots can be configured to be invoked or not using the Target or the CHIME.mentions attribute for ChannelMessages
