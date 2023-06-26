@@ -120,9 +120,10 @@ class RequestCompressionMiddleware
     private function hasStreamingTraitWithoutRequiresLength($command, $operation)
     {
         foreach ($operation->getInput()->getMembers() as $name => $member) {
-            if (!empty($member['streaming'])
+            if (isset($command[$name])
+                && !empty($member['streaming'])
                 && empty($member['requiresLength'])
-                && isset($command[$name])) {
+            ){
                 return true;
             }
         }
