@@ -28,10 +28,6 @@ class Operation extends AbstractModel
             $this->staticContextParams = $definition['staticContextParams'];
         }
 
-        if (isset($definition['requestcompression'])) {
-            $this->traits['requestCompression'] = $definition['requestcompression'];
-        }
-
         parent::__construct($definition, $shapeMap);
         $this->contextParams = $this->setContextParams();
     }
