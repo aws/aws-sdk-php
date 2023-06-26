@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This release provides a way to search for existing tags within an instance. Before tagging a resource, ensure consistency by searching for pre-existing key:value pairs.
+* `Aws\Glue` - Timestamp Starting Position For Kinesis and Kafka Data Sources in a Glue Streaming Job
+* `Aws\GuardDuty` - Add support for user.extra.sessionName in Kubernetes Audit Logs Findings.
+* `Aws\IAM` - Support for a new API "GetMFADevice" to present MFA device metadata such as device certifications
+* `Aws\Pinpoint` - Added time zone estimation support for journeys
+
 ## 3.273.7 - 2023-06-23
 
 * `Aws\DevOpsGuru` - This release adds support for encryption via customer managed keys.
