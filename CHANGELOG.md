@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.273.8 - 2023-06-26
 
 * `Aws\Connect` - This release provides a way to search for existing tags within an instance. Before tagging a resource, ensure consistency by searching for pre-existing key:value pairs.
 * `Aws\Glue` - Timestamp Starting Position For Kinesis and Kafka Data Sources in a Glue Streaming Job
