@@ -52,12 +52,12 @@ class RequestCompressionMiddleware
         $nextHandler = $this->nextHandler;
         $operation = $this->api->getOperation($command->getName());
         $requestBodySize = $request->getBody()->getSize();
-        $compressionTrait = isset($operation['requestcompression'])
+        $compressionInfo = isset($operation['requestcompression'])
             ? $operation['requestcompression']
             : null;
 
         if (!$this->shouldCompressRequestBody(
-            $compressionTrait,
+            $compressionInfo,
             $command,
             $operation,
             $requestBodySize
@@ -65,7 +65,7 @@ class RequestCompressionMiddleware
             return $nextHandler($command, $request);
         }
 
-        $this->encodings = $compressionTrait['encodings'];
+        $this->encodings = $compressionInfo['encodings'];
         $request = $this->compressRequestBody($request);
 
         return $nextHandler($command, $request);
@@ -98,12 +98,12 @@ class RequestCompressionMiddleware
     }
 
     private function shouldCompressRequestBody(
-        $compressionTrait,
+        $compressionInfo,
         $command,
         $operation,
         $requestBodySize
     ){
-        if ($compressionTrait) {
+        if ($compressionInfo) {
             if (isset($command['@disable_request_compression'])
                 && $command['@disable_request_compression'] === true
             ) {
@@ -131,16 +131,14 @@ class RequestCompressionMiddleware
     }
 
     private function determineMinimumCompressionSize($config) {
-        if (isset($config['request_min_compression_size_bytes'])) {
-            if (is_callable($config['request_min_compression_size_bytes'])) {
-                $minCompressionSz = $config['request_min_compression_size_bytes']();
-            } else {
-                $minCompressionSz = $config['request_min_compression_size_bytes'];
-            }
+        if (is_callable($config['request_min_compression_size_bytes'])) {
+            $minCompressionSz = $config['request_min_compression_size_bytes']();
+        } else {
+            $minCompressionSz = $config['request_min_compression_size_bytes'];
+        }
 
-            if ($this->isValidCompressionSize($minCompressionSz)) {
-                return $minCompressionSz;
-            }
+        if ($this->isValidCompressionSize($minCompressionSz)) {
+            return $minCompressionSz;
         }
     }
 
