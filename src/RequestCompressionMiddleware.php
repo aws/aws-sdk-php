@@ -119,18 +119,14 @@ class RequestCompressionMiddleware
 
     private function hasStreamingTraitWithoutRequiresLength($command, $operation)
     {
-        $hasStreaming = false;
-        $requiresLength = false;
         foreach ($operation->getInput()->getMembers() as $name => $member) {
-            if (!empty($member['streaming']) && isset($command[$name])) {
-                $hasStreaming = true;
-                if (!empty($member['requiresLength'])) {
-                    $requiresLength = true;
-                }
+            if (!empty($member['streaming'])
+                && empty($member['requiresLength'])
+                && isset($command[$name])) {
+                return true;
             }
         }
-
-        return $hasStreaming && !$requiresLength;
+        return false;
     }
 
     private function determineMinimumCompressionSize($config) {
