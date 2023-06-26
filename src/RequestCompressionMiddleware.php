@@ -13,8 +13,6 @@ use Psr\Http\Message\RequestInterface;
  */
 class RequestCompressionMiddleware
 {
-    const REQUEST_MIN_COMPRESSION_SIZE_BYTES = 10240;
-
     private $api;
     private $minimumCompressionSize;
     private $nextHandler;
@@ -143,8 +141,6 @@ class RequestCompressionMiddleware
                 return $minCompressionSz;
             }
         }
-
-        return self::REQUEST_MIN_COMPRESSION_SIZE_BYTES;
     }
 
     private function isValidCompressionSize($compressionSize)

@@ -230,7 +230,7 @@ class ClientResolver
         'request_min_compression_size_bytes' => [
             'type'      => 'value',
             'valid'     => ['int', 'callable'],
-            'doc'       => 'Set to a value between between 0 and 10485760 bytes, inclusive',
+            'doc'       => 'Set to a value between between 0 and 10485760 bytes, inclusive. This value will be ignored if `disable_request_compression` is set to `true`',
             'fn'        => [__CLASS__, '_apply_min_compression_size'],
             'default'   => [__CLASS__, '_default_min_compression_size'],
         ],
