@@ -356,7 +356,7 @@ class MultipartUploaderTest extends TestCase
             [
                 'bucket' => 'test-bucket',
                 'key' => 'test-key',
-                'track_upload' => 'true'
+                'track_upload' => true
             ]
         );
         $uploader->upload();
