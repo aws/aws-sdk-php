@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.274.0 - 2023-06-27
 
 * `Aws\AppFabric` - Initial release of AWS AppFabric for connecting SaaS applications for better productivity and security.
 * `Aws\Appflow` - This release adds support to bypass SSO with the SAPOData connector when connecting to an SAP instance.
