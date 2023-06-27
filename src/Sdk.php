@@ -32,6 +32,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAppConfig(array $args = [])
  * @method \Aws\AppConfigData\AppConfigDataClient createAppConfigData(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppConfigData(array $args = [])
+ * @method \Aws\AppFabric\AppFabricClient createAppFabric(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAppFabric(array $args = [])
  * @method \Aws\AppIntegrationsService\AppIntegrationsServiceClient createAppIntegrationsService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppIntegrationsService(array $args = [])
  * @method \Aws\AppMesh\AppMeshClient createAppMesh(array $args = [])

@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppFabric` - Initial release of AWS AppFabric for connecting SaaS applications for better productivity and security.
+* `Aws\Appflow` - This release adds support to bypass SSO with the SAPOData connector when connecting to an SAP instance.
+* `Aws\EMRServerless` - This release adds support to update the release label of an EMR Serverless application to upgrade it to a different version of Amazon EMR via UpdateApplication API.
+* `Aws\IVS` - IVS customers can now revoke the viewer session associated with an auth token, to prevent and stop playback using that token.
+* `Aws\KinesisVideo` - General Availability (GA) release of Kinesis Video Streams at Edge, enabling customers to provide a configuration for the Kinesis Video Streams EdgeAgent running on an on-premise IoT device. Customers can now locally record from cameras and stream videos to the cloud on a configured schedule.
+* `Aws\Macie2` - This release adds support for configuring new classification jobs to use the set of managed data identifiers that we recommend for jobs. For the managed data identifier selection type (managedDataIdentifierSelector), specify RECOMMENDED.
+* `Aws\PrivateNetworks` - This release allows Private5G customers to choose different commitment plans (60-days, 1-year, 3-years) when placing new orders, enables automatic renewal option for 1-year and 3-years commitments. It also allows customers to update the commitment plan of an existing radio unit.
+* `Aws\SSM` - Systems Manager doc-only update for June 2023.
+* `Aws\SageMaker` - Introducing TTL for online store records in feature groups.
+* `Aws\SageMakerFeatureStoreRuntime` - Introducing TTL for online store records for feature groups.
+* `Aws\VerifiedPermissions` - This update fixes several broken links to the Cedar documentation.
+
 ## 3.273.8 - 2023-06-26
 
 * `Aws\Connect` - This release provides a way to search for existing tags within an instance. Before tagging a resource, ensure consistency by searching for pre-existing key:value pairs.
