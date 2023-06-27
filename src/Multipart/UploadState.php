@@ -95,17 +95,6 @@ class UploadState
     }
 
     /**
-     * Set displayProgress. Sends object size to setProgressThresholds.
-     *
-     * @param $totalSize numeric Size of object to upload.
-     */
-    public function setDisplayProgress($totalSize)
-    {
-        $this->setProgressThresholds($totalSize);
-        $this->displayProgress = true;
-    }
-
-    /**
      * Sets the 1/8th thresholds array. $totalSize is only sent if
      * 'track_upload' is true.
      *

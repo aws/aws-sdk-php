@@ -74,7 +74,8 @@ class MultipartUploader extends AbstractUploader
         ]);
 
         if (isset($config['track_upload']) && $config['track_upload'] === true) {
-            $this->getState()->setDisplayProgress($this->source->getSize());
+            $this->getState()->setProgressThresholds($this->source->getSize());
+            $this->getState()->displayProgress = true;
         }
     }
 

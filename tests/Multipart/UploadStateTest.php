@@ -88,7 +88,8 @@ class UploadStateTest extends TestCase
         $progressBar
     ) {
         $state = new UploadState([]);
-        $state->setDisplayProgress($totalSize);
+        $state->displayProgress = true;
+        $state->setProgressThresholds($totalSize);
         $state->getDisplayProgress($totalUploaded);
 
         $this->expectOutputString($progressBar);
