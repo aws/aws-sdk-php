@@ -73,7 +73,7 @@ class MultipartUploader extends AbstractUploader
             'exception_class' => S3MultipartUploadException::class,
         ]);
 
-        if (isset($config['track_upload']) && $config['track_upload']) {
+        if (isset($config['track_upload']) && $config['track_upload'] === true) {
             $this->getState()->setDisplayProgress($this->source->getSize());
         }
     }
