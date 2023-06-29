@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds support for automatically compressing request bodies when a service supports it.
+* `Aws\AppStream` - This release introduces app block builder, allowing customers to provision a resource to package applications into an app block
+* `Aws\Chime` - The Amazon Chime SDK APIs in the Chime namespace are no longer supported. Customers should use APIs in the dedicated Amazon Chime SDK namespaces: ChimeSDKIdentity, ChimeSDKMediaPipelines, ChimeSDKMeetings, ChimeSDKMessaging, and ChimeSDKVoice.
+* `Aws\CleanRooms` - This release adds support for the OR operator in RSQL join match conditions and the ability to control which operators (AND, OR) are allowed in a join match condition.
+* `Aws\DynamoDB` - This release adds ReturnValuesOnConditionCheckFailure parameter to PutItem, UpdateItem, DeleteItem, ExecuteStatement, BatchExecuteStatement and ExecuteTransaction APIs. When set to ALL_OLD, API returns a copy of the item as it was when a conditional write failed
+* `Aws\GameLift` - Amazon GameLift now supports game builds that use the Amazon Linux 2023 (AL2023) operating system.
+* `Aws\Glue` - This release adds support for AWS Glue Crawler with Iceberg Tables, allowing Crawlers to discover Iceberg Tables in S3 and register them in Glue Data Catalog for query engines to query against.
+* `Aws\SageMaker` - Adding support for timeseries forecasting in the CreateAutoMLJobV2 API.
+
 ## 3.274.1 - 2023-06-28
 
 * `Aws\InternetMonitor` - This release adds a new feature for Amazon CloudWatch Internet Monitor that enables customers to set custom thresholds, for performance and availability drops, for triggering when to create a health event.
