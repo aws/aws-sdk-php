@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.275.0 - 2023-06-29
 
 * `Aws\` - Adds support for automatically compressing request bodies when a service supports it.
 * `Aws\AppStream` - This release introduces app block builder, allowing customers to provision a resource to package applications into an app block
