@@ -23,7 +23,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * @covers EndpointDiscoveryMiddleware
+ * @covers Aws\EndpointDiscovery\EndpointDiscoveryMiddleware
  */
 class EndpointDiscoveryMiddlewareTest extends TestCase
 {

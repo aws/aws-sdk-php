@@ -16,7 +16,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 
 /**
- * @covers CredentialProvider
+ * @covers Aws\Credentials\CredentialProvider
  */
 class CredentialProviderTest extends TestCase
 {

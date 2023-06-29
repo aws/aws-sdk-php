@@ -11,7 +11,7 @@ use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers ConfigurationProvider
+ * @covers Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {

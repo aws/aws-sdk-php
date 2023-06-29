@@ -12,8 +12,8 @@ use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers ApiCallMonitoringMiddleware
- * @covers \Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
+ * @covers Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware
+ * @covers Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
  */
 class ApiCallMonitoringMiddlewareTest extends TestCase
 {
