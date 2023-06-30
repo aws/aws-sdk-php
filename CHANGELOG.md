@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - Added new field "credentialspecs" to the ecs task definition to support gMSA of windows/linux in both domainless and domain-joined mode
+* `Aws\IVS` - Corrects the HTTP response code in the generated docs for PutMetadata and DeleteRecordingConfiguration APIs.
+* `Aws\MediaConvert` - This release includes improved color handling of overlays and general updates to user documentation.
+* `Aws\PrometheusService` - AWS SDK service model generation tool version upgrade.
+* `Aws\SageMaker` - This release adds support for rolling deployment in SageMaker Inference.
+* `Aws\Transfer` - Add outbound Basic authentication support to AS2 connectors
+* `Aws\VerifiedPermissions` - This release corrects several broken links in the documentation.
+
 ## 3.275.0 - 2023-06-29
 
 * `Aws\` - Adds support for automatically compressing request bodies when a service supports it.
