@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.275.1 - 2023-06-30
 
 * `Aws\ECS` - Added new field "credentialspecs" to the ecs task definition to support gMSA of windows/linux in both domainless and domain-joined mode
 * `Aws\IVS` - Corrects the HTTP response code in the generated docs for PutMetadata and DeleteRecordingConfiguration APIs.
