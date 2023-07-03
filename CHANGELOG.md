@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.275.2 - 2023-07-03
 
 * `Aws\Batch` - This feature allows customers to use AWS Batch with Linux with ARM64 CPU Architecture and X86_64 CPU Architecture with Windows OS on Fargate Platform.
 * `Aws\SageMaker` - SageMaker Inference Recommender now accepts new fields SupportedEndpointType and ServerlessConfiguration to support serverless endpoints.
