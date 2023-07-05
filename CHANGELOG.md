@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ComprehendMedical` - Update to Amazon Comprehend Medical documentation.
+* `Aws\Connect` - GetMetricDataV2 API: Channels filters do not count towards overall limitation of 100 filter values.
+* `Aws\KMS` - Added Dry Run Feature to cryptographic and cross-account mutating KMS APIs (14 in all). This feature allows users to test their permissions and parameters before making the actual API call.
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub
+* `Aws\mgn` - This release introduces the Global view feature and new Replication state APIs.
+
 ## 3.275.2 - 2023-07-03
 
 * `Aws\Batch` - This feature allows customers to use AWS Batch with Linux with ARM64 CPU Architecture and X86_64 CPU Architecture with Windows OS on Fargate Platform.
