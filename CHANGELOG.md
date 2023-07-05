@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.275.3 - 2023-07-05
 
 * `Aws\ComprehendMedical` - Update to Amazon Comprehend Medical documentation.
 * `Aws\Connect` - GetMetricDataV2 API: Channels filters do not count towards overall limitation of 100 filter values.
