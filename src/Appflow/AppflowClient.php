@@ -37,6 +37,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result registerConnector(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerConnectorAsync(array $args = [])
+ * @method \Aws\Result resetConnectorMetadataCache(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise resetConnectorMetadataCacheAsync(array $args = [])
  * @method \Aws\Result startFlow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startFlowAsync(array $args = [])
  * @method \Aws\Result stopFlow(array $args = [])

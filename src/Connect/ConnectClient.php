@@ -277,6 +277,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise searchQueuesAsync(array $args = [])
  * @method \Aws\Result searchQuickConnects(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchQuickConnectsAsync(array $args = [])
+ * @method \Aws\Result searchResourceTags(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchResourceTagsAsync(array $args = [])
  * @method \Aws\Result searchRoutingProfiles(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchRoutingProfilesAsync(array $args = [])
  * @method \Aws\Result searchSecurityProfiles(array $args = [])

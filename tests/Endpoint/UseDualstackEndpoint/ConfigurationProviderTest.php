@@ -12,7 +12,7 @@ use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers ConfigurationProvider
+ * @covers Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {

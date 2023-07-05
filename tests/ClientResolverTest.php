@@ -1333,4 +1333,90 @@ EOT;
             ],
         ];
     }
+
+    public function invalidDisableRequestCompressionValues()
+    {
+        return [
+            ['foo'],
+            [ 1 ],
+            [function () {return 'nothing';}]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidDisableRequestCompressionValues
+     */
+    public function testInvalidDisableRequestCompressionTypeThrowsException($invalidType)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/Invalid configuration value provided/');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+            'disable_request_compression' => $invalidType
+        ], $list);
+        $this->assertArrayHasKey('disable_request_compression', $conf);
+        $this->assertFalse($conf['disable_request_compression']);
+    }
+
+    public function testDisableRequestCompressionDefault()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+        ], $list);
+        $this->assertArrayHasKey('disable_request_compression', $conf);
+        $this->assertFalse($conf['disable_request_compression']);
+    }
+
+    public function invalidMinCompressionSizeValues()
+    {
+        return [
+            [ true ],
+            [ 'foo' ],
+            [function () {return 'nothing';}],
+            [ 99999999 ],
+            [ -1 ]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidMinCompressionSizeValues
+     */
+    public function testInvalidMinCompressionSizeValues($invalidType)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/Invalid configuration value provided/');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+            'request_min_compression_size_bytes' => $invalidType
+        ], $list);
+    }
+
+    public function testMinCompressionSizeDefault()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+        ], $list);
+        $this->assertArrayHasKey('request_min_compression_size_bytes', $conf);
+        $this->assertEquals(10240, $conf['request_min_compression_size_bytes']);
+    }
 }
