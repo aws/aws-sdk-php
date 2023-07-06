@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Add Nitro Enclaves support on DescribeInstanceTypes
+* `Aws\LocationService` - This release adds support for authenticating with Amazon Location Service's Places & Routes APIs with an API Key. Also, with this release developers can publish tracked device position updates to Amazon EventBridge.
+* `Aws\Outposts` - Added paginator support to several APIs. Added the ISOLATED enum value to AssetState.
+* `Aws\QuickSight` - This release includes below three changes: small multiples axes improvement, field based coloring, removed required trait from Aggregation function for TopBottomFilter.
+* `Aws\RDS` - Updates Amazon RDS documentation for creating DB instances and creating Aurora global clusters.
+
 ## 3.275.3 - 2023-07-05
 
 * `Aws\ComprehendMedical` - Update to Amazon Comprehend Medical documentation.
