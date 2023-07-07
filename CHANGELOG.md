@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.275.5 - 2023-07-07
 
 * `Aws\CloudWatchLogs` - Add CMK encryption support for CloudWatch Logs Insights query result data
 * `Aws\DatabaseMigrationService` - Releasing DMS Serverless. Adding support for PostgreSQL 15.x as source and target endpoint. Adding support for DocDB Elastic Clusters with sharded collections, PostgreSQL datatype mapping customization and disabling hostname validation of the certificate authority in Kafka endpoint settings
