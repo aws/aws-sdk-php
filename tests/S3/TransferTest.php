@@ -75,6 +75,14 @@ class TransferTest extends TestCase
         new Transfer($s3, __DIR__, 's3://foo/bar', ['before' => 'cheese']);
     }
 
+    public function testEnsuresAfterIsCallable()
+    {
+        $this->expectExceptionMessage("after must be a callable");
+        $this->expectException(\InvalidArgumentException::class);
+        $s3 = $this->getTestClient('s3');
+        new Transfer($s3, __DIR__, 's3://foo/bar', ['after' => 'cheese']);
+    }
+
     public function testCanSetBeforeOptionForUploadsAndUsedWithDebug()
     {
         $s3 = $this->getTestClient('s3');
