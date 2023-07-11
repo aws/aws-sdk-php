@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentityProvider` - API model updated in Amazon Cognito
+
 ## 3.275.5 - 2023-07-07
 
 * `Aws\CloudWatchLogs` - Add CMK encryption support for CloudWatch Logs Insights query result data
