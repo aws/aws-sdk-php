@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.275.6 - 2023-07-11
 
 * `Aws\CognitoIdentityProvider` - API model updated in Amazon Cognito
 
