@@ -53,6 +53,11 @@ class Transfer implements PromisorInterface
      *   callback accepts a single argument: Aws\CommandInterface $command.
      *   The provided command will be either a GetObject, PutObject,
      *   InitiateMultipartUpload, or UploadPart command.
+     * - after: (callable) A callback to invoke after each transfer promise is fulfilled.
+     *   The function is invoked with three arguments: the fulfillment value, the index
+     *   position from the iterable list of the promise, and the aggregate
+     *   promise that manages all the promises. The aggregate promise may
+     *   be resolved from within the callback to short-circuit the promise.
      * - mup_threshold: (int) Size in bytes in which a multipart upload should
      *   be used instead of PutObject. Defaults to 20971520 (20 MB).
      * - concurrency: (int, default=5) Number of files to upload concurrently.
