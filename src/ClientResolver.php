@@ -92,8 +92,9 @@ class ClientResolver
         'region' => [
             'type'     => 'value',
             'valid'    => ['string'],
-            'required' => [__CLASS__, '_missing_region'],
             'doc'      => 'Region to connect to. See http://docs.aws.amazon.com/general/latest/gr/rande.html for a list of available regions.',
+            'fn'       => [__CLASS__, '_apply_region'],
+            'default'  => [__CLASS__, '_resolve_region']
         ],
         'version' => [
             'type'     => 'value',
@@ -230,7 +231,7 @@ class ClientResolver
         'request_min_compression_size_bytes' => [
             'type'      => 'value',
             'valid'     => ['int', 'callable'],
-            'doc'       => 'Set to a value between between 0 and 10485760 bytes, inclusive. This value will be ignored if `disable_request_compression` is set to `true`',
+            'doc'       => 'Set to a value between between 0 and 10485760 bytes, inclusive',
             'fn'        => [__CLASS__, '_apply_min_compression_size'],
             'default'   => [__CLASS__, '_default_min_compression_size'],
         ],
@@ -540,10 +541,10 @@ class ClientResolver
             $value = $value();
         }
         if (!is_bool($value)) {
-           throw new IAE(
-              "Invalid configuration value provided for 'disable_request_compression'."
-              . " value must be a bool."
-           );
+            throw new IAE(
+                "Invalid configuration value provided for 'disable_request_compression'."
+                . " value must be a bool."
+            );
         }
         $args['config']['disable_request_compression'] = $value;
     }
@@ -563,10 +564,10 @@ class ClientResolver
         }
         if (!is_int($value)
             || (is_int($value)
-            && ($value < 0 || $value > 10485760))
+                && ($value < 0 || $value > 10485760))
         ) {
             throw new IAE(" Invalid configuration value provided for 'min_compression_size_bytes'."
-            . " value must be an integer between 0 and 10485760, inclusive.");
+                . " value must be an integer between 0 and 10485760, inclusive.");
         }
         $args['config']['request_min_compression_size_bytes'] = $value;
     }
@@ -1164,15 +1165,33 @@ the SDK.
 EOT;
     }
 
+    public static function _apply_region($value, array &$args)
+    {
+        if (empty($value)) {
+            self::_missing_region($args);
+        }
+        $args['region'] = $value;
+    }
+
+    public static function _resolve_region(&$args)
+    {
+        return ConfigurationResolver::resolve('region', '', 'string');
+    }
+
     public static function _missing_region(array $args)
     {
         $service = isset($args['service']) ? $args['service'] : '';
 
-        return <<<EOT
+        $msg = <<<EOT
+Missing required client configuration options:
+
+region: (string)
+
 A "region" configuration value is required for the "{$service}" service
 (e.g., "us-west-2"). A list of available public regions and endpoints can be
 found at http://docs.aws.amazon.com/general/latest/gr/rande.html.
 EOT;
+        throw new IAE($msg);
     }
 
     /**
@@ -1187,7 +1206,7 @@ EOT;
         $optionKeys = [
             'sts_regional_endpoints',
             's3_us_east_1_regional_endpoint',
-            ];
+        ];
         $configKeys = [
             'use_dual_stack_endpoint',
             'use_fips_endpoint',
@@ -1219,7 +1238,7 @@ EOT;
     private function _apply_client_context_params(array $args)
     {
         if (isset($args['api'])
-           && !empty($args['api']->getClientContextParams()))
+            && !empty($args['api']->getClientContextParams()))
         {
             $clientContextParams = $args['api']->getClientContextParams();
             foreach($clientContextParams as $paramName => $paramDefinition) {
@@ -1254,7 +1273,7 @@ EOT;
             return false;
         }
         return is_dir(
-          __DIR__ . "/data/{$service}/$apiVersion"
+            __DIR__ . "/data/{$service}/$apiVersion"
         );
     }
 }
