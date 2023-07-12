@@ -75,14 +75,6 @@ class TransferTest extends TestCase
         new Transfer($s3, __DIR__, 's3://foo/bar', ['before' => 'cheese']);
     }
 
-    public function testEnsuresAfterIsCallable()
-    {
-        $this->expectExceptionMessage("after must be a callable");
-        $this->expectException(\InvalidArgumentException::class);
-        $s3 = $this->getTestClient('s3');
-        new Transfer($s3, __DIR__, 's3://foo/bar', ['after' => 'cheese']);
-    }
-
     public function testCanSetBeforeOptionForUploadsAndUsedWithDebug()
     {
         $s3 = $this->getTestClient('s3');
@@ -117,6 +109,64 @@ class TransferTest extends TestCase
             $this->assertSame('foo', $test['Bucket']);
             $this->assertStringStartsWith('bar/', $test['Key']);
             $this->assertStringContainsString($test['SourceFile'] . ' -> s3://foo/bar', $output);
+        }
+    }
+
+    public function testEnsuresAfterIsCallable()
+    {
+        $this->expectExceptionMessage("after must be a callable");
+        $this->expectException(\InvalidArgumentException::class);
+        $s3 = $this->getTestClient('s3');
+        new Transfer($s3, __DIR__, 's3://foo/bar', ['after' => 'cheese']);
+    }
+
+    public function testCanSetAfterOptionForUploads()
+    {
+        $s3 = $this->getTestClient('s3');
+        $s3->getHandlerList()->appendSign(
+            $this->mockResult(function() {
+                return new Result();
+            }),
+            's3.test'
+        );
+
+        $results = [];
+        $indices = [];
+        $aggregatePromises = [];
+        $i = \Aws\recursive_dir_iterator(__DIR__ . '/Crypto');
+        $t = new Transfer($s3, $i, 's3://foo/bar', [
+            'after' => function ($result, $index, $aggregatePromise) use (&$results, &$indices, &$aggregatePromises) {
+                $results[] = $result;
+                $indices[] = $index;
+                $aggregatePromises[] = $aggregatePromise;
+            },
+            'debug' => true,
+            'base_dir' => __DIR__,
+        ]);
+
+        ob_start();
+        $p = $t->promise();
+        $p2 = $t->promise();
+        $this->assertSame($p, $p2);
+        $p->wait();
+        $output = ob_get_clean();
+        $this->assertNotEmpty($results);
+        $this->assertNotEmpty($indices);
+        $this->assertNotEmpty($aggregatePromises);
+
+        $this->assertCount(7, $results);
+        $this->assertCount(7, $indices);
+        $this->assertCount(7, $aggregatePromises);
+
+        /** @var Result $result */
+        foreach ($results as $result) {
+            $this->assertIsIterable($result);
+            $this->assertArrayHasKey("ObjectURL", iterator_to_array($result));
+        }
+        $this->assertSame(range(0, 6), $indices);
+        /** @var Promise\Promise $aggregatePromise */
+        foreach ($aggregatePromises as $aggregatePromise) {
+            $this->assertSame('fulfilled', $aggregatePromise->getState());
         }
     }
 
