@@ -123,17 +123,21 @@ class TransferTest extends TestCase
     public function testCanSetAfterOptionForUploads()
     {
         $s3 = $this->getTestClient('s3');
-        $s3->getHandlerList()->appendSign(
+        $s3->getHandlerList()->appendInit(
             $this->mockResult(function() {
-                return new Result();
+                return new Result(['ObjectURL' => 'file_url']);
             }),
             's3.test'
         );
 
+        $path = __DIR__ . '/Crypto';
+        $filesCount = iterator_count(\Aws\recursive_dir_iterator($path));
+
         $results = [];
         $indices = [];
         $aggregatePromises = [];
-        $i = \Aws\recursive_dir_iterator(__DIR__ . '/Crypto');
+
+        $i = \Aws\recursive_dir_iterator($path);
         $t = new Transfer($s3, $i, 's3://foo/bar', [
             'after' => function ($result, $index, $aggregatePromise) use (&$results, &$indices, &$aggregatePromises) {
                 $results[] = $result;
@@ -149,21 +153,22 @@ class TransferTest extends TestCase
         $p2 = $t->promise();
         $this->assertSame($p, $p2);
         $p->wait();
-        $output = ob_get_clean();
+        ob_get_clean();
         $this->assertNotEmpty($results);
         $this->assertNotEmpty($indices);
         $this->assertNotEmpty($aggregatePromises);
 
-        $this->assertCount(7, $results);
-        $this->assertCount(7, $indices);
-        $this->assertCount(7, $aggregatePromises);
+        $this->assertCount($filesCount, $results);
+        $this->assertCount($filesCount, $indices);
+        $this->assertCount($filesCount, $aggregatePromises);
 
         /** @var Result $result */
         foreach ($results as $result) {
             $this->assertIsIterable($result);
             $this->assertArrayHasKey("ObjectURL", iterator_to_array($result));
+            $this->assertSame("file_url", $result["ObjectURL"]);
         }
-        $this->assertSame(range(0, 6), $indices);
+        $this->assertSame(range(0, $filesCount-1), $indices);
         /** @var Promise\Promise $aggregatePromise */
         foreach ($aggregatePromises as $aggregatePromise) {
             $this->assertSame('fulfilled', $aggregatePromise->getState());
