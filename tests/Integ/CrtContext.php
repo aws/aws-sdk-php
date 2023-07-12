@@ -125,7 +125,7 @@ class CrtContext implements Context, SnippetAcceptingContext
         ]);
         $currentEndpoints = $eventBridgeClient->listEndpoints();
         $testEndpointExists = false;
-        foreach ($currentEndpoints as $endpoint) {
+        foreach ($currentEndpoints['Endpoints'] as $endpoint) {
             if ($endpoint['Name'] == 'test-endpoint') {
                 $testEndpointExists = true;
                 break;
