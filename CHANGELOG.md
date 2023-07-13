@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.275.7 - 2023-07-13
 
 * `Aws\CognitoIdentityProvider` - API model updated in Amazon Cognito
 * `Aws\Connect` - Add support for deleting Queues and Routing Profiles.
