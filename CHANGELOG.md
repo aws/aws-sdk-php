@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.275.8 - 2023-07-17
 
 * `Aws\CodeArtifact` - Doc only update for AWS CodeArtifact
 * `Aws\DocDB` - Added major version upgrade option in ModifyDBCluster API
