@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.275.9 - 2023-07-18
 
 * `Aws\CodeGuruSecurity` - Documentation updates for CodeGuru Security.
 * `Aws\Connect` - GetMetricDataV2 API: Update to include Contact Lens Conversational Analytics Metrics
