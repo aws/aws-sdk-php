@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## 3.275.8 - 2023-07-17
+
+* `Aws\CodeArtifact` - Doc only update for AWS CodeArtifact
+* `Aws\DocDB` - Added major version upgrade option in ModifyDBCluster API
+* `Aws\EC2` - Add Nitro TPM support on DescribeInstanceTypes
+* `Aws\Glue` - Adding new supported permission type flags to get-unfiltered endpoints that callers may pass to indicate support for enforcing Lake Formation fine-grained access control on nested column attributes.
+* `Aws\IVS` - This release provides the flexibility to configure what renditions or thumbnail qualities to record when creating recording configuration.
+* `Aws\LakeFormation` - Adds supports for ReadOnlyAdmins and AllowFullTableExternalDataAccess. Adds NESTED_PERMISSION and NESTED_CELL_PERMISSION to SUPPORTED_PERMISSION_TYPES enum. Adds CREATE_LF_TAG on catalog resource and ALTER, DROP, and GRANT_WITH_LF_TAG_EXPRESSION on LF Tag resource.
+
+## 3.275.7 - 2023-07-13
+
+* `Aws\CognitoIdentityProvider` - API model updated in Amazon Cognito
+* `Aws\Connect` - Add support for deleting Queues and Routing Profiles.
+* `Aws\DataSync` - Added LunCount to the response object of DescribeStorageSystemResourcesResponse, LunCount represents the number of LUNs on a storage system resource.
+* `Aws\DatabaseMigrationService` - Enhanced PostgreSQL target endpoint settings for providing Babelfish support.
+* `Aws\EC2` - This release adds support for the C7gn and Hpc7g instances. C7gn instances are powered by AWS Graviton3 processors and the fifth-generation AWS Nitro Cards. Hpc7g instances are powered by AWS Graviton 3E processors and provide up to 200 Gbps network bandwidth.
+* `Aws\FSx` - Amazon FSx for NetApp ONTAP now supports SnapLock, an ONTAP feature that enables you to protect your files in a volume by transitioning them to a write once, read many (WORM) state.
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\MediaTailor` - Adds categories to MediaTailor channel assembly alerts
+* `Aws\Personalize` - This release provides ability to customers to change schema associated with their datasets in Amazon Personalize
+* `Aws\Proton` - This release adds support for deployment history for Proton provisioned resources
+* `Aws\S3` - S3 Inventory now supports Object Access Control List and Object Owner as available object metadata fields in inventory reports.
+* `Aws\SageMaker` - Amazon SageMaker Canvas adds WorkspeceSettings support for CanvasAppSettings
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+
 ## 3.275.6 - 2023-07-11
 
 * `Aws\CognitoIdentityProvider` - API model updated in Amazon Cognito
