@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.276.0 - 2023-07-19
 
 * `Aws\CloudFormation` - SDK and documentation updates for GetTemplateSummary API (unrecognized resources)
 * `Aws\EC2` - Amazon EC2 documentation updates.
