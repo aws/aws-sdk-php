@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - SDK and documentation updates for GetTemplateSummary API (unrecognized resources)
+* `Aws\EC2` - Amazon EC2 documentation updates.
+* `Aws\ManagedGrafana` - Amazon Managed Grafana now supports grafanaVersion update for existing workspaces with UpdateWorkspaceConfiguration API. DescribeWorkspaceConfiguration API additionally returns grafanaVersion. A new ListVersions API lists available versions or, if given a workspaceId, the versions it can upgrade to.
+* `Aws\MedicalImaging` - General Availability (GA) release of AWS Health Imaging, enabling customers to store, transform, and analyze medical imaging data at petabyte-scale.
+* `Aws\RAM` - This release adds support for securely sharing with AWS service principals.
+* `Aws\SsmSap` - Added support for SAP Hana High Availability discovery (primary and secondary nodes) and Backint agent installation with SSM for SAP.
+* `Aws\WAFV2` - Added the URI path to the custom aggregation keys that you can specify for a rate-based rule.
+
 ## 3.275.9 - 2023-07-18
 
 * `Aws\CodeGuruSecurity` - Documentation updates for CodeGuru Security.
