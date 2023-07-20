@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.276.1 - 2023-07-20
 
 * `Aws\SavingsPlans` - Savings Plans endpoints update
 
