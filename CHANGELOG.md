@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SavingsPlans` - Savings Plans endpoints update
+
 ## 3.276.0 - 2023-07-19
 
 * `Aws\CloudFormation` - SDK and documentation updates for GetTemplateSummary API (unrecognized resources)
