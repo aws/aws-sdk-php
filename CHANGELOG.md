@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.276.2 - 2023-07-20
 
 * `Aws\CodeCatalyst` - This release adds support for updating and deleting spaces and projects in Amazon CodeCatalyst. It also adds support for creating, getting, and deleting source repositories in CodeCatalyst projects.
 * `Aws\ConnectCases` - This release adds the ability to assign a case to a queue or user.
