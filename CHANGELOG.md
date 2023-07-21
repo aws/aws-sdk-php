@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.276.3 - 2023-07-21
 
 * `Aws\Glue` - This release adds support for AWS Glue Crawler with Apache Hudi Tables, allowing Crawlers to discover Hudi Tables in S3 and register them in Glue Data Catalog for query engines to query against.
 * `Aws\MediaConvert` - This release includes improvements to Preserve 444 handling, compatibility of HEVC sources without frame rates, and general improvements to MP4 outputs.
