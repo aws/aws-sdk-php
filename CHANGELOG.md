@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - This release adds support for AWS Glue Crawler with Apache Hudi Tables, allowing Crawlers to discover Hudi Tables in S3 and register them in Glue Data Catalog for query engines to query against.
+* `Aws\MediaConvert` - This release includes improvements to Preserve 444 handling, compatibility of HEVC sources without frame rates, and general improvements to MP4 outputs.
+* `Aws\RDS` - Adds support for the DBSystemID parameter of CreateDBInstance to RDS Custom for Oracle.
+* `Aws\WorkSpaces` - Fixed VolumeEncryptionKey descriptions
+
 ## 3.276.2 - 2023-07-20
 
 * `Aws\CodeCatalyst` - This release adds support for updating and deleting spaces and projects in Amazon CodeCatalyst. It also adds support for creating, getting, and deleting source repositories in CodeCatalyst projects.
