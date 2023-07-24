@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.276.4 - 2023-07-24
 
 * `Aws\ApiGatewayV2` - Documentation updates for Amazon API Gateway.
 * `Aws\ChimeSDKMediaPipelines` - AWS Media Pipeline compositing enhancement and Media Insights Pipeline auto language identification.
