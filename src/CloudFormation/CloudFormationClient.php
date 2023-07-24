@@ -94,6 +94,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listExportsAsync(array $args = [])
  * @method \Aws\Result listImports(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listImportsAsync(array $args = [])
+ * @method \Aws\Result listStackInstanceResourceDrifts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listStackInstanceResourceDriftsAsync(array $args = [])
  * @method \Aws\Result listStackInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listStackInstancesAsync(array $args = [])
  * @method \Aws\Result listStackResources(array $args = [])

@@ -4268,7 +4268,8 @@
         "S3DeltaDirectTarget":{"shape":"S3DeltaDirectTarget"},
         "AmazonRedshiftSource":{"shape":"AmazonRedshiftSource"},
         "AmazonRedshiftTarget":{"shape":"AmazonRedshiftTarget"},
-        "EvaluateDataQualityMultiFrame":{"shape":"EvaluateDataQualityMultiFrame"}
+        "EvaluateDataQualityMultiFrame":{"shape":"EvaluateDataQualityMultiFrame"},
+        "Recipe":{"shape":"Recipe"}
       }
     },
     "CodeGenConfigurationNodes":{
@@ -4816,7 +4817,8 @@
         "DynamoDBTargets":{"shape":"DynamoDBTargetList"},
         "CatalogTargets":{"shape":"CatalogTargetList"},
         "DeltaTargets":{"shape":"DeltaTargetList"},
-        "IcebergTargets":{"shape":"IcebergTargetList"}
+        "IcebergTargets":{"shape":"IcebergTargetList"},
+        "HudiTargets":{"shape":"HudiTargetList"}
       }
     },
     "CrawlsFilter":{
@@ -8182,6 +8184,15 @@
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
+    "HudiTarget":{
+      "type":"structure",
+      "members":{
+        "Paths":{"shape":"PathList"},
+        "ConnectionName":{"shape":"ConnectionName"},
+        "Exclusions":{"shape":"PathList"},
+        "MaximumTraversalDepth":{"shape":"NullableInteger"}
+      }
+    },
     "HudiTargetCompressionType":{
       "type":"string",
       "enum":[
@@ -8190,6 +8201,10 @@
         "uncompressed",
         "snappy"
       ]
+    },
+    "HudiTargetList":{
+      "type":"list",
+      "member":{"shape":"HudiTarget"}
     },
     "IcebergInput":{
       "type":"structure",
@@ -10053,6 +10068,35 @@
         "single_quote",
         "disabled"
       ]
+    },
+    "Recipe":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "RecipeReference"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "RecipeReference":{"shape":"RecipeReference"}
+      }
+    },
+    "RecipeReference":{
+      "type":"structure",
+      "required":[
+        "RecipeArn",
+        "RecipeVersion"
+      ],
+      "members":{
+        "RecipeArn":{"shape":"EnclosedInStringProperty"},
+        "RecipeVersion":{"shape":"RecipeVersion"}
+      }
+    },
+    "RecipeVersion":{
+      "type":"string",
+      "max":16,
+      "min":1
     },
     "RecordsCount":{
       "type":"long",

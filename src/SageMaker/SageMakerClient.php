@@ -463,6 +463,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listProcessingJobsAsync(array $args = [])
  * @method \Aws\Result listProjects(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listProjectsAsync(array $args = [])
+ * @method \Aws\Result listResourceCatalogs(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listResourceCatalogsAsync(array $args = [])
  * @method \Aws\Result listSpaces(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSpacesAsync(array $args = [])
  * @method \Aws\Result listStageDevices(array $args = [])

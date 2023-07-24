@@ -1,5 +1,48 @@
 # CHANGELOG
 
+## 3.276.4 - 2023-07-24
+
+* `Aws\ApiGatewayV2` - Documentation updates for Amazon API Gateway.
+* `Aws\ChimeSDKMediaPipelines` - AWS Media Pipeline compositing enhancement and Media Insights Pipeline auto language identification.
+* `Aws\CloudFormation` - This release supports filtering by DRIFT_STATUS for existing API ListStackInstances and adds support for a new API ListStackInstanceResourceDrifts. Customers can now view resource drift information from their StackSet management accounts.
+* `Aws\CostExplorer` - This release introduces the new API 'GetSavingsPlanPurchaseRecommendationDetails', which retrieves the details for a Savings Plan recommendation. It also updates the existing API 'GetSavingsPlansPurchaseRecommendation' to include the recommendation detail ID.
+* `Aws\EC2` - Add "disabled" enum value to SpotInstanceState.
+* `Aws\Glue` - Added support for Data Preparation Recipe node in Glue Studio jobs
+* `Aws\QuickSight` - This release launches new Snapshot APIs for CSV and PDF exports, adds support for info icon for filters and parameters in Exploration APIs, adds modeled exception to the DeleteAccountCustomization API, and introduces AttributeAggregationFunction's ability to add UNIQUE_VALUE aggregation in tooltips.
+
+## 3.276.3 - 2023-07-21
+
+* `Aws\Glue` - This release adds support for AWS Glue Crawler with Apache Hudi Tables, allowing Crawlers to discover Hudi Tables in S3 and register them in Glue Data Catalog for query engines to query against.
+* `Aws\MediaConvert` - This release includes improvements to Preserve 444 handling, compatibility of HEVC sources without frame rates, and general improvements to MP4 outputs.
+* `Aws\RDS` - Adds support for the DBSystemID parameter of CreateDBInstance to RDS Custom for Oracle.
+* `Aws\WorkSpaces` - Fixed VolumeEncryptionKey descriptions
+
+## 3.276.2 - 2023-07-20
+
+* `Aws\CodeCatalyst` - This release adds support for updating and deleting spaces and projects in Amazon CodeCatalyst. It also adds support for creating, getting, and deleting source repositories in CodeCatalyst projects.
+* `Aws\ConnectCases` - This release adds the ability to assign a case to a queue or user.
+* `Aws\LexModelsV2` - This release updates type for Channel field in SessionSpecification and UtteranceSpecification
+* `Aws\Route53Resolver` - This release adds support for Route 53 On Outposts, a new feature that allows customers to run Route 53 Resolver and Resolver endpoints locally on their Outposts.
+* `Aws\S3` - Improve performance of S3 clients by simplifying and optimizing endpoint resolution.
+* `Aws\SageMaker` - Cross account support for SageMaker Feature Store
+* `Aws\SageMakerFeatureStoreRuntime` - Cross account support for SageMaker Feature Store
+* `Aws\SecurityLake` - Adding support for Tags on Create and Resource Tagging API.
+* `Aws\TranscribeService` - Added API argument --toxicity-detection to startTranscriptionJob API, which allows users to view toxicity scores of submitted audio.
+
+## 3.276.1 - 2023-07-20
+
+* `Aws\SavingsPlans` - Savings Plans endpoints update
+
+## 3.276.0 - 2023-07-19
+
+* `Aws\CloudFormation` - SDK and documentation updates for GetTemplateSummary API (unrecognized resources)
+* `Aws\EC2` - Amazon EC2 documentation updates.
+* `Aws\ManagedGrafana` - Amazon Managed Grafana now supports grafanaVersion update for existing workspaces with UpdateWorkspaceConfiguration API. DescribeWorkspaceConfiguration API additionally returns grafanaVersion. A new ListVersions API lists available versions or, if given a workspaceId, the versions it can upgrade to.
+* `Aws\MedicalImaging` - General Availability (GA) release of AWS Health Imaging, enabling customers to store, transform, and analyze medical imaging data at petabyte-scale.
+* `Aws\RAM` - This release adds support for securely sharing with AWS service principals.
+* `Aws\SsmSap` - Added support for SAP Hana High Availability discovery (primary and secondary nodes) and Backint agent installation with SSM for SAP.
+* `Aws\WAFV2` - Added the URI path to the custom aggregation keys that you can specify for a rate-based rule.
+
 ## 3.275.9 - 2023-07-18
 
 * `Aws\CodeGuruSecurity` - Documentation updates for CodeGuru Security.
