@@ -292,7 +292,8 @@ class FunctionsTest extends TestCase
                 'latest'     => '2006-03-01',
                 '2006-03-01' => '2006-03-01'
             ],
-            'endpoint'  => 's3'
+            'endpoint'  => 's3',
+            'serviceIdentifier' => 's3'
         ];
         $this->assertEquals($data, $manifest);
     }
@@ -309,7 +310,8 @@ class FunctionsTest extends TestCase
                 'latest'     => '2015-05-28',
                 '2015-05-28' => '2015-05-28'
             ],
-            'endpoint'  => 'data.iot'
+            'endpoint'  => 'data.iot',
+            'serviceIdentifier' => 'iot_data_plane'
         ];
         $this->assertEquals($data, $manifest);
     }
