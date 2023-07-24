@@ -43,6 +43,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getReservationUtilizationAsync(array $args = [])
  * @method \Aws\Result getRightsizingRecommendation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRightsizingRecommendationAsync(array $args = [])
+ * @method \Aws\Result getSavingsPlanPurchaseRecommendationDetails(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getSavingsPlanPurchaseRecommendationDetailsAsync(array $args = [])
  * @method \Aws\Result getSavingsPlansCoverage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSavingsPlansCoverageAsync(array $args = [])
  * @method \Aws\Result getSavingsPlansPurchaseRecommendation(array $args = [])
