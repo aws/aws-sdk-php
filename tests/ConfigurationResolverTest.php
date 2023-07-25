@@ -303,6 +303,11 @@ EOT;
             ['service' => 's3', 'key' => 'endpoint_url']
         );
         $this->assertSame('https://test.com', $result);
+        putenv(
+            ConfigurationResolver::$envPrefix
+            . 'ENDPOINT_URL_S3'
+            . '='
+        );
     }
 
     public function testResolvesServiceIni()
@@ -324,5 +329,10 @@ EOT;
             ['service' => 's3', 'key' => 'endpoint_url']
         );
         $this->assertSame('https://exmaple.com', $result);
+        putenv(
+            ConfigurationResolver::$envPrefix
+            . 'ENDPOINT_URL'
+            . '='
+        );
     }
 }
