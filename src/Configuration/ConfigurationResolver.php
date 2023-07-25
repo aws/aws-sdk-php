@@ -30,7 +30,8 @@ class ConfigurationResolver
         $key,
         $defaultValue,
         $expectedType,
-        $config = []
+        $config = [],
+        $options = []
     )
     {
         $envValue = self::env($key, $expectedType);
@@ -41,7 +42,13 @@ class ConfigurationResolver
         if (!isset($config['use_aws_shared_config_files'])
             || $config['use_aws_shared_config_files'] != false
         ) {
-            $iniValue = self::ini($key, $expectedType);
+            $iniValue = self::ini(
+                $key,
+                $expectedType,
+                null,
+                null,
+                $options
+            );
             if(!is_null($iniValue)) {
                 return $iniValue;
             }
@@ -89,8 +96,13 @@ class ConfigurationResolver
      *
      * @return null | mixed
      */
-    public static function ini($key, $expectedType, $profile = null, $filename = null)
-    {
+    public static function ini(
+        $key,
+        $expectedType,
+        $profile = null,
+        $filename = null,
+        $options = []
+    ){
         $filename = $filename ?: (self::getDefaultConfigFilename());
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
@@ -100,6 +112,17 @@ class ConfigurationResolver
         // Use INI_SCANNER_NORMAL instead of INI_SCANNER_TYPED for PHP 5.5 compatibility
         //TODO change after deprecation
         $data = @\Aws\parse_ini_file($filename, true, INI_SCANNER_NORMAL);
+
+        if (isset($options['service']) && isset($options['key'])) {
+            return self::retrieveValueFromIniServices(
+                $data,
+                $profile,
+                $filename,
+                $expectedType,
+                $options
+            );
+        }
+
         if ($data === false
             || !isset($data[$profile])
             || !isset($data[$profile][$key])
@@ -176,5 +199,35 @@ class ConfigurationResolver
             $value = intVal($value);
         }
         return $value;
+    }
+
+    private static function retrieveValueFromIniServices(
+        $data,
+        $profile,
+        $filename,
+        $expectedType,
+        $options
+    ){
+        if ($data === false
+            || !isset($data[$profile]['services'])
+            || !isset($data['services ' . $data[$profile]['services']])
+        ) {
+            return null;
+        }
+
+        $services_section = \Aws\parse_ini_services_section(
+            $filename,
+            "services {$data[$profile]['services']}"
+        );
+
+        if (!isset($services_section[$options['service']][$options['key']])
+        ) {
+            return null;
+        }
+
+        return self::convertType(
+            $services_section[$options['service']][$options['key']],
+            $expectedType
+        );
     }
 }

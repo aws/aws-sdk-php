@@ -511,6 +511,21 @@ class AwsClientTest extends TestCase
         );
     }
 
+    public function testPrefersEndpointUrlToEndpoint()
+    {
+        $client = new StsClient([
+            'region'  => 'us-west-2',
+            'version' => 'latest',
+            'endpoint' => 'https://foo-bar.com',
+            'endpoint_url' => 'https://exmaple.com'
+        ]);
+        $builtIns = $client->getClientBuiltIns();
+        $this->assertEquals(
+            $builtIns['SDK::Endpoint'],
+            'https://exmaple.com'
+        );
+    }
+
     public function testGetEndpointProviderArgs()
     {
         $client = new StsClient([

@@ -503,6 +503,42 @@ function boolean_value($input)
     return null;
 }
 
+function parse_ini_services_section($filename, $section_name) {
+    $config = [];
+    $ini_content = file_get_contents($filename);
+    $lines = explode("\n", $ini_content);
+
+    $section_start = false;
+    $current_service = '';
+
+    foreach ($lines as $line) {
+        $line = trim($line);
+
+        if (empty($line) || strpos($line, ';') === 0 || strpos($line, '#') === 0) {
+            continue; // Ignore empty lines and comments
+        }
+
+        if (strpos($line, '[') === 0) {
+            $current_service = '';
+            $section_start = (trim($line, '[]') === $section_name);
+        } elseif ($section_start) {
+            if (strpos($line, ' = ') !== false) {
+                list($key, $value) = explode(' = ', $line, 2);
+                if (empty($current_service)) {
+                    $config[$key] = $value;
+                } else {
+                    $config[$current_service][$key] = $value;
+                }
+            } elseif (!empty($line)) {
+                $current_service = trim(str_replace('=', '', $line));
+                $config[$current_service] = [];
+            }
+        }
+    }
+    return $config;
+}
+
+
 /**
  * Checks if an input is a valid epoch time
  *

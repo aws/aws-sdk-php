@@ -287,6 +287,20 @@ class ClientResolver
             'default'   => false,
             'fn'        => [__CLASS__, '_apply_suppress_php_deprecation_warning']
         ],
+        'ignore_configured_endpoint_urls' => [
+            'type'      => 'value',
+            'valid'     => ['bool'],
+            'doc'       => 'Set to true to disable configured endpoint urls.',
+            'fn'        => [__CLASS__, '_apply_ignore_configured_endpoint_urls'],
+            'default'   => [__CLASS__, '_default_ignore_configured_endpoint_urls'],
+        ],
+        'endpoint_url' => [
+            'type'      => 'value',
+            'valid'     => ['string'],
+            'doc'       => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3). This will take precedence over the `endpoint` configuration option.',
+            'fn'        => [__CLASS__, '_apply_endpoint_url'],
+            'default'   => [__CLASS__, '_resolve_endpoint_url'],
+        ]
     ];
 
     /**
@@ -1135,6 +1149,59 @@ class ClientResolver
         return isset($args['__partition_result']['signingRegion'])
             ? $args['__partition_result']['signingRegion']
             : $args['region'];
+    }
+
+    public static function _apply_ignore_configured_endpoint_urls($value, array &$args)
+    {
+        $args['config']['ignore_configured_endpoint_urls'] = $value;
+    }
+
+    public static function _default_ignore_configured_endpoint_urls(array &$args)
+    {
+        return ConfigurationResolver::resolve(
+            'ignore_configured_endpoint_urls',
+            false,
+            'bool',
+            $args
+        );
+    }
+
+    public static function _apply_endpoint_url($value, array &$args)
+    {
+        if (empty($value)) {
+            return;
+        }
+
+        $args['config']['endpoint_url'] = $value;
+    }
+
+    public static function _resolve_endpoint_url(array &$args)
+    {
+        if ($args['config']['ignore_configured_endpoint_urls']
+            || !self::isValidService($args['service'])
+        ) {
+            return '';
+        }
+
+        $serviceIdentifier = \Aws\manifest($args['service'])['serviceIdentifier'];
+        $value =  ConfigurationResolver::resolve(
+            'endpoint_url_' . $serviceIdentifier,
+            '',
+            'string',
+            $args,
+            ['service' => $serviceIdentifier, 'key' => 'endpoint_url']
+        );
+
+        if (empty($value)) {
+            $value = ConfigurationResolver::resolve(
+                'endpoint_url',
+                '',
+                'string',
+                $args
+            );
+        }
+
+        return $value;
     }
 
     public static function _missing_region(array $args)

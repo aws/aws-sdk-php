@@ -23,12 +23,21 @@ foo_configuration_option = 25
 foo_configuration_option = 15
 EOT;
 
-
     private $stringIniFile = <<<EOT
 [custom]
 foo_configuration_option = experimental
 [default]
 foo_configuration_option = standard
+EOT;
+
+    private $servicesIniFile = <<<EOT
+[default]
+foo_configuration_option = standard
+services = my-services
+
+[services my-services]
+s3 = 
+  endpoint_url = https://exmaple.com
 EOT;
 
     public static function set_up_before_class()
@@ -273,5 +282,47 @@ EOT;
         );
         $this->assertFalse($result);
         unlink($dir . '/config');
+    }
+
+    public function testResolvesServiceEnv()
+    {
+        $dir = $this->clearEnv();
+        putenv(
+            ConfigurationResolver::$envPrefix
+            . 'ENDPOINT_URL_S3'
+            . '='
+            . 'https://test.com'
+        );
+        file_put_contents($dir . '/config', $this->servicesIniFile);
+        putenv('HOME=' . dirname($dir));
+        $result = ConfigurationResolver::resolve(
+            'endpoint_url_s3',
+            '',
+            'string',
+            [],
+            ['service' => 's3', 'key' => 'endpoint_url']
+        );
+        $this->assertSame('https://test.com', $result);
+    }
+
+    public function testResolvesServiceIni()
+    {
+        $dir = $this->clearEnv();
+        putenv(
+            ConfigurationResolver::$envPrefix
+            . 'ENDPOINT_URL'
+            . '='
+            . 'https://test.com'
+        );
+        file_put_contents($dir . '/config', $this->servicesIniFile);
+        putenv('HOME=' . dirname($dir));
+        $result = ConfigurationResolver::resolve(
+            'endpoint_url_s3',
+            '',
+            'string',
+            [],
+            ['service' => 's3', 'key' => 'endpoint_url']
+        );
+        $this->assertSame('https://exmaple.com', $result);
     }
 }

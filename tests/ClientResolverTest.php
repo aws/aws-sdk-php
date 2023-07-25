@@ -1417,4 +1417,89 @@ EOT;
         $this->assertArrayHasKey('request_min_compression_size_bytes', $conf);
         $this->assertEquals(10240, $conf['request_min_compression_size_bytes']);
     }
+
+    /**
+     * @dataProvider endpointUrlResolutionProvider
+     *
+     * @param $ini
+     * @param $env
+     * @param $expected
+     */
+    public function testEndpointUrlResolutionOrder($ini, $env, $expected)
+    {
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        if ($env){
+            putenv($env['key'] . '=' . $env['value']);
+        }
+
+        file_put_contents($dir . '/config', $ini);
+        $home = getenv('HOME');
+        putenv('HOME=' . dirname($dir));
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 's3',
+            'region' => 'x',
+            'version' => 'latest'
+        ], new HandlerList());
+        $this->assertEquals($conf['endpoint_url'], $expected);
+        unlink($dir . '/config');
+        putenv("HOME=$home");
+        if ($env){
+            putenv($env['key'] . '=');
+        }
+    }
+
+    public function endpointUrlResolutionProvider()
+    {
+        return [
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT,
+                ['key' => 'AWS_ENDPOINT_URL_S3', 'value' => 'https://test.com'],
+                'https://test.com'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT,
+                null,
+                'https://test-foo.com'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+
+EOT,
+                ['key' => 'AWS_ENDPOINT_URL', 'value' => 'https://baz.com'],
+                'https://baz.com'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+
+EOT,
+                null,
+                'https://foo-bar.com'
+            ]
+        ];
+    }
 }

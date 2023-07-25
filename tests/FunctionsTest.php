@@ -471,4 +471,43 @@ EOT
             ],
         ];
     }
+
+    /**
+     * @covers Aws\parse_ini_services_section()
+     * @dataProvider getIniFileServiceTestCases
+     */
+    public function testParsesIniServicesSection($ini, $expected)
+    {
+        $tmpFile = sys_get_temp_dir() . '/test.ini';
+        file_put_contents($tmpFile, $ini);
+        $this->assertEquals(
+            $expected,
+            Aws\parse_ini_services_section($tmpFile, 'services my-services')
+        );
+        unlink($tmpFile);
+    }
+
+    public function getIniFileServiceTestCases()
+    {
+        return [
+            [
+                <<<EOT
+[services my-services]
+s3 =
+  endpoint_url = https://exmaple.com
+elastic_beanstalk =
+  endpoint_url = https://exmaple.com
+EOT
+                ,
+                [
+                    's3' => [
+                        'endpoint_url' => 'https://exmaple.com'
+                    ],
+                    'elastic_beanstalk' => [
+                        'endpoint_url' => 'https://exmaple.com',
+                    ]
+                ]
+            ]
+        ];
+    }
 }
