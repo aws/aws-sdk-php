@@ -472,7 +472,8 @@ class AwsClientTest extends TestCase
                 'use_fips_endpoint' => new FipsConfiguration(false),
                 'use_dual_stack_endpoint' => new DualStackConfiguration(false, "foo"),
                 'disable_request_compression' => false,
-                'request_min_compression_size_bytes' => 10240
+                'request_min_compression_size_bytes' => 10240,
+                'ignore_configured_endpoint_urls' => false
             ],
             $client->getConfig()
         );
