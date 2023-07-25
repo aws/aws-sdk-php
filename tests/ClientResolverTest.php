@@ -1465,7 +1465,8 @@ services = my-services
 [services my-services]
 s3 =
   endpoint_url = https://test-foo.com
-EOT,
+EOT
+                ,
                 ['key' => 'AWS_ENDPOINT_URL_S3', 'value' => 'https://test.com'],
                 'https://test.com'
             ],
@@ -1478,7 +1479,8 @@ services = my-services
 [services my-services]
 s3 =
   endpoint_url = https://test-foo.com
-EOT,
+EOT
+                ,
                 null,
                 'https://test-foo.com'
             ],
@@ -1487,7 +1489,8 @@ EOT,
 [default]
 endpoint_url = https://foo-bar.com
 
-EOT,
+EOT
+                ,
                 ['key' => 'AWS_ENDPOINT_URL', 'value' => 'https://baz.com'],
                 'https://baz.com'
             ],
@@ -1496,7 +1499,8 @@ EOT,
 [default]
 endpoint_url = https://foo-bar.com
 
-EOT,
+EOT
+                ,
                 null,
                 'https://foo-bar.com'
             ]
