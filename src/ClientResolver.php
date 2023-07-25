@@ -98,8 +98,8 @@ class ClientResolver
         'version' => [
             'type'     => 'value',
             'valid'    => ['string'],
-            'required' => [__CLASS__, '_missing_version'],
             'doc'      => 'The version of the webservice to utilize (e.g., 2006-03-01).',
+            'default' => 'latest',
         ],
         'signature_provider' => [
             'type'    => 'value',
@@ -1135,33 +1135,6 @@ class ClientResolver
         return isset($args['__partition_result']['signingRegion'])
             ? $args['__partition_result']['signingRegion']
             : $args['region'];
-    }
-
-    public static function _missing_version(array $args)
-    {
-        $service = isset($args['service']) ? $args['service'] : '';
-        $versions = ApiProvider::defaultProvider()->getVersions($service);
-        $versions = implode("\n", array_map(function ($v) {
-            return "* \"$v\"";
-        }, $versions)) ?: '* (none found)';
-
-        return <<<EOT
-A "version" configuration value is required. Specifying a version constraint
-ensures that your code will not be affected by a breaking change made to the
-service. For example, when using Amazon S3, you can lock your API version to
-"2006-03-01".
-
-Your build of the SDK has the following version(s) of "{$service}": {$versions}
-
-You may provide "latest" to the "version" configuration value to utilize the
-most recent available API version that your client's API provider can find.
-Note: Using 'latest' in a production application is not recommended.
-
-A list of available API versions can be found on each client's API documentation
-page: http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html. If you are
-unable to load a specific API version, then you may need to update your copy of
-the SDK.
-EOT;
     }
 
     public static function _missing_region(array $args)
