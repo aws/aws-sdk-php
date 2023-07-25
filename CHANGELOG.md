@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.276.5 - 2023-07-25
 
 * `Aws\BillingConductor` - Added support for Auto-Assocate Billing Groups for CreateBillingGroup, UpdateBillingGroup, and ListBillingGroups.
 * `Aws\ConnectWisdomService` - This release added two new data types: AssistantIntegrationConfiguration, and SessionIntegrationConfiguration to support Wisdom integration with Amazon Connect Chat
