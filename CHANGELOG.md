@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudControlApi` - Updates the documentation for CreateResource.
+* `Aws\EntityResolution` - AWS Entity Resolution can effectively match a source record from a customer relationship management (CRM) system with a source record from a marketing system containing campaign information.
+* `Aws\Glue` - Release Glue Studio Snowflake Connector Node for SDK/CLI
+* `Aws\HealthLake` - Updating the HealthLake service documentation.
+* `Aws\ManagedBlockchainQuery` - Amazon Managed Blockchain (AMB) Query provides serverless access to standardized, multi-blockchain datasets with developer-friendly APIs.
+* `Aws\MediaConvert` - This release includes general updates to user documentation.
+* `Aws\Omics` - The service is renaming as a part of AWS Health.
+* `Aws\OpenSearchServerless` - This release adds new collection type VectorSearch.
+* `Aws\Polly` - Amazon Polly adds 1 new voice - Lisa (nl-BE)
+* `Aws\Route53` - Update that corrects the documents for received feedback.
+
 ## 3.276.5 - 2023-07-25
 
 * `Aws\BillingConductor` - Added support for Auto-Assocate Billing Groups for CreateBillingGroup, UpdateBillingGroup, and ListBillingGroups.
