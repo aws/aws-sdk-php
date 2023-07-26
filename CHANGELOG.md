@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.0 - 2023-07-26
 
 * `Aws\CloudControlApi` - Updates the documentation for CreateResource.
 * `Aws\EntityResolution` - AWS Entity Resolution can effectively match a source record from a customer relationship management (CRM) system with a source record from a marketing system containing campaign information.
