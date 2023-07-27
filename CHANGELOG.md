@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.1 - 2023-07-27
 
 * `Aws\AutoScaling` - This release updates validation for instance types used in the AllowedInstanceTypes and ExcludedInstanceTypes parameters of the InstanceRequirements property of a MixedInstancesPolicy.
 * `Aws\EBS` - SDK and documentation updates for Amazon Elastic Block Store API
