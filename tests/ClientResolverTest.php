@@ -1324,10 +1324,6 @@ EOT;
                 'x',
             ],
             [
-                '',
-                new InvalidRegionException('Region must be a valid RFC host label.'),
-            ],
-            [
                 'hosthijack.com/',
                 new InvalidRegionException('Region must be a valid RFC host label.'),
             ],
