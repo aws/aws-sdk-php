@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.2 - 2023-07-28
 
 * `Aws\SQS` - Documentation changes related to SQS APIs.
 
