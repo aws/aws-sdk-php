@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.3 - 2023-07-28
 
 * `Aws\ApplicationInsights` - This release enable customer to add/remove/update more than one workload for a component
 * `Aws\CloudFormation` - This SDK release is for the feature launch of AWS CloudFormation RetainExceptOnCreate. It adds a new parameter retainExceptOnCreate in the following APIs: CreateStack, UpdateStack, RollbackStack, ExecuteChangeSet.
