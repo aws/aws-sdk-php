@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.5 - 2023-07-31
 
 * `Aws\AmplifyUIBuilder` - Amplify Studio releases GraphQL support for codegen job action.
 * `Aws\AutoScaling` - You can now configure an instance refresh to set its status to 'failed' when it detects that a specified CloudWatch alarm has gone into the ALARM state. You can also choose to roll back the instance refresh automatically when the alarm threshold is met.
