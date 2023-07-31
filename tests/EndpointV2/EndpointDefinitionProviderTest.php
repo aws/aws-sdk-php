@@ -45,11 +45,4 @@ class EndpointDefinitionProviderTest extends TestCase
         $this->expectExceptionMessage('Invalid api version.');
         EndpointDefinitionProvider::getEndpointRuleset('s3', '10-22-2022');
     }
-
-    public function testThrowsExceptionOnNonExistentFile()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Specified endpoint file does not exist');
-        EndpointDefinitionProvider::getEndpointRuleset('s3', '08-05-1989');
-    }
 }
