@@ -54,8 +54,12 @@ class EndpointDefinitionProvider
 
         if (file_exists($rulesetPath . $fileName . '.json.php')) {
             return require($rulesetPath . $fileName . '.json.php');
-        } else {
+        } elseif (file_exists($rulesetPath . $fileName . '.json')) {
             return json_decode(file_get_contents($rulesetPath . $fileName . '.json'), true);
+        } else {
+            throw new \InvalidArgumentException(
+                'Specified ' . $type . ' endpoint file for ' . $service . ' with api version ' . $apiVersion . ' does not exist.'
+            );
         }
     }
 
