@@ -2,10 +2,13 @@
 namespace Aws\S3;
 
 use Aws\Credentials\CredentialsInterface;
+use Aws\Credentials\SsoCredentials;
+use Aws\Exception\CredentialsException;
 use GuzzleHttp\Psr7\Uri;
 use Aws\Signature\SignatureTrait;
 use Aws\Signature\SignatureV4 as SignatureV4;
 use Aws\Api\TimestampShape as TimestampShape;
+use http\Exception\InvalidArgumentException;
 
 /**
  * Encapsulates the logic for getting the data for an S3 object POST upload form
@@ -56,8 +59,8 @@ class PostObjectV4
         $credentials   = $this->client->getCredentials()->wait();
 
         if ($securityToken = $credentials->getSecurityToken()) {
-            $options [] = ['x-amz-security-token' => $securityToken];
-            $formInputs['X-Amz-Security-Token'] = $securityToken;
+            $options [] = ['x-amz-session-token' => $securityToken];
+            $formInputs['X-Amz-Session-Token'] = $securityToken;
         }
 
         // setup basic policy

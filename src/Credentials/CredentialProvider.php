@@ -893,7 +893,7 @@ class CredentialProvider
         );
         $expiration = $ssoCredentials['expiration'];
         return Promise\Create::promiseFor(
-            new Credentials(
+            new SsoCredentials(
                 $ssoCredentials['accessKeyId'],
                 $ssoCredentials['secretAccessKey'],
                 $ssoCredentials['sessionToken'],
