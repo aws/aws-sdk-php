@@ -17,8 +17,7 @@ use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit_Framework_Error_Warning;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 class S3EncryptionClientV2Test extends TestCase
@@ -273,6 +272,8 @@ class S3EncryptionClientV2Test extends TestCase
     ) {
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
+        } else {
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
         }
 
         $s3 = $this->getS3Client();
@@ -312,6 +313,8 @@ class S3EncryptionClientV2Test extends TestCase
     ) {
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
+        } else {
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
         }
 
         $cipherOptions = [
@@ -409,12 +412,11 @@ EOXML;
      * Note that outside of PHPUnit, normal code execution will continue through
      * this warning unless configured otherwise. PHPUnit throws it as an
      * exception here for testing.
-     *
-     * @expectedException PHPUnit_Framework_Error_Warning
-     * @expectedExceptionMessage 'Aad' has been supplied for content encryption with AES/GCM/NoPadding
      */
     public function testTriggersWarningForGcmEncryptionWithAad()
     {
+        $this->expectExceptionMessage("'Aad' has been supplied for content encryption with AES/GCM/NoPadding");
+        $this->expectWarning();
         $s3 = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
@@ -503,12 +505,10 @@ EOXML;
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage Unrecognized or unsupported AESName for reverse lookup.
-     */
     public function testGetObjectThrowsOnInvalidCipher()
     {
+        $this->expectExceptionMessage("Unrecognized or unsupported AESName for reverse lookup.");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProviderV2($kms, 'foo');
         $this->addMockResults($kms, [
@@ -539,12 +539,10 @@ EOXML;
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage The requested object is encrypted with the keywrap schema 'my_first_keywrap'
-     */
     public function testGetObjectThrowsOnInvalidKeywrap()
     {
+        $this->expectExceptionMessage("The requested object is encrypted with the keywrap schema 'my_first_keywrap'");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProviderV2($kms, 'foo');
         $this->addMockResults($kms, [
@@ -574,12 +572,10 @@ EOXML;
         ]);
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage The requested object is encrypted with V1 encryption schemas that have been disabled by client configuration @SecurityProfile=V2
-     */
     public function testGetObjectThrowsOnLegacyKeywrap()
     {
+        $this->expectExceptionMessage("The requested object is encrypted with V1 encryption schemas that have been disabled by client configuration @SecurityProfile=V2");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProviderV2($kms, 'foo');
         $this->addMockResults($kms, [
@@ -609,12 +605,10 @@ EOXML;
         ]);
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage There is a mismatch in specified content encryption algrithm between the materials description value and the metadata envelope value
-     */
     public function testGetObjectThrowsOnMismatchAlgorithm()
     {
+        $this->expectExceptionMessage("There is a mismatch in specified content encryption algrithm between the materials description value and the metadata envelope value");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProviderV2($kms, 'foo');
         $this->addMockResults($kms, [
@@ -657,7 +651,7 @@ EOXML;
                 ],
                 $cmd['EncryptionContext']
             );
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Result(['Plaintext' => random_bytes(32)])
             );
         });
@@ -705,7 +699,7 @@ EOXML;
                 ],
                 $cmd['EncryptionContext']
             );
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Result(['Plaintext' => random_bytes(32)])
             );
         });
@@ -749,7 +743,7 @@ EOXML;
                 ],
                 $cmd['EncryptionContext']
             );
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Result(['Plaintext' => random_bytes(32)])
             );
         });
@@ -908,12 +902,10 @@ EOXML;
         $this->assertStringEqualsFile($file, (string)$result['Body']);
     }
 
-    /**
-     * @expectedException PHPUnit_Framework_Error_Warning
-     * @expectedExceptionMessage This S3 Encryption Client operation is configured to read encrypted data with legacy encryption modes
-     */
     public function testEmitsWarningForLegacySecurityProfile()
     {
+        $this->expectExceptionMessage("This S3 Encryption Client operation is configured to read encrypted data with legacy encryption modes");
+        $this->expectWarning();
         $kms = $this->getKmsClient();
         $list = $kms->getHandlerList();
         $list->setHandler(function($cmd, $req) {
@@ -925,7 +917,7 @@ EOXML;
                 ],
                 $cmd['EncryptionContext']
             );
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Result(['Plaintext' => random_bytes(32)])
             );
         });
@@ -955,12 +947,10 @@ EOXML;
         ]);
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage The requested object is encrypted with V1 encryption schemas that have been disabled by client configuration @SecurityProfile=V2
-     */
     public function testThrowsForV2ProfileAndLegacyObject()
     {
+        $this->expectExceptionMessage("The requested object is encrypted with V1 encryption schemas that have been disabled by client configuration @SecurityProfile=V2");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         $kms = $this->getKmsClient();
         $list = $kms->getHandlerList();
         $list->setHandler(function($cmd, $req) {
@@ -972,7 +962,7 @@ EOXML;
                 ],
                 $cmd['EncryptionContext']
             );
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Result(['Plaintext' => random_bytes(32)])
             );
         });
@@ -1003,12 +993,10 @@ EOXML;
         ]);
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage @SecurityProfile is required and must be set to 'V2' or 'V2_AND_LEGACY'
-     */
     public function testThrowsForNoSecurityProfile()
     {
+        $this->expectExceptionMessage("@SecurityProfile is required and must be set to 'V2' or 'V2_AND_LEGACY'");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         $s3 = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
@@ -1024,12 +1012,10 @@ EOXML;
         ]);
     }
 
-    /**
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage @SecurityProfile is required and must be set to 'V2' or 'V2_AND_LEGACY'
-     */
     public function testThrowsForIncorrectSecurityProfile()
     {
+        $this->expectExceptionMessage("@SecurityProfile is required and must be set to 'V2' or 'V2_AND_LEGACY'");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         $s3 = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
@@ -1058,11 +1044,11 @@ EOXML;
             'region' => 'us-west-2',
             'version' => 'latest',
             'http_handler' => function (RequestInterface $req) use ($provider) {
-                $this->assertContains(
-                    'S3CryptoV' . S3EncryptionClientV2::CRYPTO_VERSION,
+                $this->assertStringContainsString(
+                    'feat/s3-encrypt/' . S3EncryptionClientV2::CRYPTO_VERSION,
                     $req->getHeaderLine('User-Agent')
                 );
-                return Promise\promise_for(new Response(
+                return Promise\Create::promiseFor(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
                         $this->getValidV2GcmMetadataFields($provider)

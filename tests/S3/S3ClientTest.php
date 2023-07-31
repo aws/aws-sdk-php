@@ -9,6 +9,7 @@ use Aws\LruArrayCache;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Middleware;
 use Aws\Result;
+use Aws\S3\Exception\PermanentRedirectException;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\RegionalEndpoint\Configuration;
 use Aws\S3\S3Client;
@@ -25,7 +26,8 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 use http\Exception\InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Aws\Exception\UnresolvedEndpointException;
 
 /**
  * @covers Aws\S3\S3Client
@@ -65,7 +67,14 @@ class S3ClientTest extends TestCase
             ['my.bucket.com', true],
             ['test-fooCaps', false],
             ['w-w', true],
-            ['w------', false]
+            ['w------', false],
+            ['', false],
+            [null,false],
+            [false,false],
+            [true,false],
+            [1,false],
+            [[],false],
+            [new \stdClass(),false]
         ];
     }
 
@@ -87,9 +96,9 @@ class S3ClientTest extends TestCase
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://foo.s3.amazonaws.com/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testCreatesPresignedRequestsWithAccessPointArn()
@@ -108,9 +117,9 @@ class S3ClientTest extends TestCase
         );
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://myendpoint-123456789012.s3-accesspoint.us-east-1.amazonaws.com/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testCreatesPresignedRequestsWithStartTime()
@@ -127,9 +136,9 @@ class S3ClientTest extends TestCase
             ['start_time' => 1562349366]
         )->getUri();
         $this->assertStringStartsWith('https://foo.s3.amazonaws.com/bar?', $url);
-        $this->assertContains('X-Amz-Expires=1200', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=61a9940ecdd901be8e36833f6d47123c0c719fc6aa82042144a6c5cf44a25988', $url);
+        $this->assertStringContainsString('X-Amz-Expires=1200', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=61a9940ecdd901be8e36833f6d47123c0c719fc6aa82042144a6c5cf44a25988', $url);
     }
 
     public function testCreatesPresignedRequestsWithPathStyleFallback()
@@ -142,9 +151,9 @@ class S3ClientTest extends TestCase
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo.baz', 'Key' => 'bar']);
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://s3.amazonaws.com/foo.baz/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testCreatesPresignedRequestsWithPathStyle()
@@ -158,9 +167,9 @@ class S3ClientTest extends TestCase
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://s3.amazonaws.com/foo/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testCreatingPresignedUrlDoesNotPermanentlyRemoveSigner()
@@ -175,7 +184,7 @@ class S3ClientTest extends TestCase
                 foreach (['X-Amz-Date', 'Authorization'] as $signatureHeader) {
                     $this->assertTrue($request->hasHeader($signatureHeader));
                 }
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
         ]);
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
@@ -197,7 +206,7 @@ class S3ClientTest extends TestCase
         ]);
         $url = $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertSame('/foobar.test.abc/%2B%25.a', $url->getPath());
-        $query = Psr7\parse_query($url->getQuery());
+        $query = Psr7\Query::parse($url->getQuery());
         $this->assertArrayHasKey('X-Amz-Credential', $query);
         $this->assertArrayHasKey('X-Amz-Signature', $query);
     }
@@ -216,9 +225,30 @@ class S3ClientTest extends TestCase
         ]);
         $url = $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertSame('/foobar.test.abc/%2B%25.a', $url->getPath());
-        $query = Psr7\parse_query($url->getQuery());
+        $query = Psr7\Query::parse($url->getQuery());
         $this->assertArrayHasKey('X-Amz-Credential', $query);
         $this->assertArrayHasKey('X-Amz-Signature', $query);
+    }
+
+    public function testCreatesPresignedRequestsForObjectLambdaService()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region'      => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/lambda-access-point',
+                'Key' => 'bar'
+            ]
+        );
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringStartsWith('https://lambda-access-point-123456789012.s3-object-lambda.us-east-1.amazonaws.com/bar?', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testRegistersStreamWrapper()
@@ -231,6 +261,13 @@ class S3ClientTest extends TestCase
 
     public function doesExistProvider()
     {
+        $redirectException = new PermanentRedirectException(
+            '',
+            new Command('mockCommand'),
+            ['response' => new Response(301)]
+        );
+        $deleteMarkerMock = $this->getS3ErrorMock('Foo', 404, true);
+
         return [
             ['foo', null, true, []],
             ['foo', 'bar', true, []],
@@ -240,14 +277,34 @@ class S3ClientTest extends TestCase
             ['foo', 'bar', false, $this->getS3ErrorMock('Foo', 401)],
             ['foo', null, -1, $this->getS3ErrorMock('Foo', 500)],
             ['foo', 'bar', -1, $this->getS3ErrorMock('Foo', 500)],
+            ['foo', null, true, [], true],
+            ['foo', 'bar', true, [] , true],
+            ['foo', null, false, $this->getS3ErrorMock('Foo', 404), true],
+            ['foo', 'bar', false, $this->getS3ErrorMock('Foo', 404), true],
+            ['foo', null, -1, $this->getS3ErrorMock('Forbidden', 403), true],
+            ['foo', 'bar', -1, $this->getS3ErrorMock('Forbidden', 403), true],
+            ['foo', null, true, $this->getS3ErrorMock('Forbidden', 403), true, true],
+            ['foo', 'bar', true, $deleteMarkerMock, true, false, true],
+            ['foo', 'bar', false, $deleteMarkerMock, true, false, false],
+            ['foo', null, true, $redirectException, true],
         ];
     }
 
-    private function getS3ErrorMock($errCode, $statusCode)
+    private function getS3ErrorMock(
+        $errCode,
+        $statusCode,
+        $deleteMarker = false
+    )
     {
+        $response = new Response($statusCode);
+        $deleteMarker && $response = $response->withHeader(
+            'x-amz-delete-marker',
+            'true'
+        );
+
         $context = [
             'code' => $errCode,
-            'response' => new Response($statusCode),
+            'response' => $response,
         ];
         return new S3Exception('', new Command('mockCommand'), $context);
     }
@@ -255,16 +312,32 @@ class S3ClientTest extends TestCase
     /**
      * @dataProvider doesExistProvider
      */
-    public function testsIfExists($bucket, $key, $exists, $result)
+    public function testsIfExists(
+        $bucket,
+        $key,
+        $exists,
+        $result,
+        $V2 = false,
+        $accept403 = false,
+        $acceptDeleteMarkers = false
+    )
     {
         /** @var S3Client $s3 */
         $s3 = $this->getTestClient('S3', ['region' => 'us-east-1']);
         $this->addMockResults($s3, [$result]);
         try {
-            if ($key) {
-                $this->assertSame($exists, $s3->doesObjectExist($bucket, $key));
+            if ($V2) {
+                if ($key) {
+                    $this->assertSame($exists, $s3->doesObjectExistV2($bucket, $key, $acceptDeleteMarkers));
+                } else {
+                    $this->assertSame($exists, $s3->doesBucketExistV2($bucket, $accept403));
+                }
             } else {
-                $this->assertSame($exists, $s3->doesBucketExist($bucket));
+                if ($key) {
+                    $this->assertSame($exists, $s3->doesObjectExist($bucket, $key));
+                } else {
+                    $this->assertSame($exists, $s3->doesBucketExist($bucket));
+                }
             }
         } catch (\Exception $e) {
             $this->assertSame(-1, $exists);
@@ -277,7 +350,10 @@ class S3ClientTest extends TestCase
             'region'      => 'us-east-1',
             'credentials' => false
         ]);
-        $this->assertSame('https://foo.s3.amazonaws.com/bar', $s3->getObjectUrl('foo', 'bar'));
+        $this->assertSame(
+            'https://foo.s3.amazonaws.com/bar',
+            $s3->getObjectUrl('foo', 'bar')
+        );
     }
 
     public function testReturnsObjectUrlWithPathStyleFallback()
@@ -286,7 +362,10 @@ class S3ClientTest extends TestCase
             'region'      => 'us-east-1',
             'credentials' => false,
         ]);
-        $this->assertSame('https://s3.amazonaws.com/foo.baz/bar', $s3->getObjectUrl('foo.baz', 'bar'));
+        $this->assertSame(
+            'https://s3.amazonaws.com/foo.baz/bar',
+            $s3->getObjectUrl('foo.baz', 'bar')
+        );
     }
 
     public function testReturnsObjectUrlWithPathStyle()
@@ -296,7 +375,10 @@ class S3ClientTest extends TestCase
             'credentials' => false,
             'use_path_style_endpoint' => true
         ]);
-        $this->assertSame('https://s3.amazonaws.com/foo/bar', $s3->getObjectUrl('foo', 'bar'));
+        $this->assertSame(
+            'https://s3.amazonaws.com/foo/bar',
+            $s3->getObjectUrl('foo', 'bar')
+        );
     }
 
     public function testReturnsObjectUrlViaPath()
@@ -339,12 +421,10 @@ class S3ClientTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The DeleteObject operation requires non-empty parameter: Bucket
-     */
     public function testEnsuresMandatoryInputVariables()
     {
+        $this->expectExceptionMessage("The DeleteObject operation requires non-empty parameter: Bucket");
+        $this->expectException(\InvalidArgumentException::class);
         /** @var S3Client $client */
         $client = $this->getTestClient('S3');
         $client->deleteObject([
@@ -353,11 +433,9 @@ class S3ClientTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testEnsuresPrefixOrRegexSuppliedForDeleteMatchingObjects()
     {
+        $this->expectException(\RuntimeException::class);
         /** @var S3Client $client */
         $client = $this->getTestClient('S3');
         $client->deleteMatchingObjects('foo');
@@ -369,7 +447,7 @@ class S3ClientTest extends TestCase
         $client = $this->getTestClient('S3');
         $client->getHandlerList()->setHandler(function ($c, $r) {
             $this->assertSame('bucket', $c['Bucket']);
-            return Promise\promise_for(new Result([
+            return Promise\Create::promiseFor(new Result([
                 'IsTruncated' => false,
                 'Marker' => '',
                 'Contents' => [
@@ -395,42 +473,34 @@ class S3ClientTest extends TestCase
         $this->assertEquals(['foo/bar/baz', 'foo/bar/bam'], $agg);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Mock queue is empty. Trying to send a PutObject
-     */
     public function testProxiesToTransferObjectPut()
     {
+        $this->expectExceptionMessage("Mock queue is empty. Trying to send a PutObject");
+        $this->expectException(\RuntimeException::class);
         $client = $this->getTestClient('S3');
         $client->uploadDirectory(__DIR__, 'test');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Mock queue is empty. Trying to send a ListObjects
-     */
     public function testProxiesToTransferObjectGet()
     {
+        $this->expectExceptionMessage("Mock queue is empty. Trying to send a ListObjects");
+        $this->expectException(\RuntimeException::class);
         $client = $this->getTestClient('S3');
         $client->downloadBucket(__DIR__, 'test');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Mock queue is empty. Trying to send a PutObject
-     */
     public function testProxiesToObjectUpload()
     {
+        $this->expectExceptionMessage("Mock queue is empty. Trying to send a PutObject");
+        $this->expectException(\RuntimeException::class);
         $client = $this->getTestClient('S3');
         $client->upload('bucket', 'key', 'body');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Mock queue is empty. Trying to send a HeadObject
-     */
     public function testProxiesToObjectCopy()
     {
+        $this->expectExceptionMessage("Mock queue is empty. Trying to send a HeadObject");
+        $this->expectException(\RuntimeException::class);
         $client = $this->getTestClient('S3');
         $client->copy('from-bucket', 'fromKey', 'to-bucket', 'toKey');
     }
@@ -450,9 +520,9 @@ class S3ClientTest extends TestCase
         $text = "<LocationConstraint>{$target}</LocationConstraint>";
         $body = (string) \Aws\serialize($command)->getBody();
         if ($contains) {
-            $this->assertContains($text, $body);
+            $this->assertStringContainsString($text, $body);
         } else {
-            $this->assertNotContains($text, $body);
+            $this->assertStringNotContainsString($text, $body);
         }
     }
 
@@ -472,7 +542,7 @@ class S3ClientTest extends TestCase
         $client = $this->getTestClient('S3', [
             'http_handler' => function ($request, array $options) {
                 $this->assertArrayHasKey('sink', $options);
-                return Promise\promise_for(
+                return Promise\Create::promiseFor(
                     new Psr7\Response(200, [], 'sink=' . $options['sink'])
                 );
             }
@@ -492,12 +562,12 @@ class S3ClientTest extends TestCase
         $key = 'aaa:bbb';
         $s3 = $this->getTestClient('S3', [
             'http_handler' => function (RequestInterface $request) use ($key) {
-                $this->assertContains(
+                $this->assertStringContainsString(
                     urlencode($key),
                     (string) $request->getUri()
                 );
 
-                return Promise\promise_for(new Psr7\Response);
+                return Promise\Create::promiseFor(new Psr7\Response);
             }
         ]);
 
@@ -805,12 +875,11 @@ EOXML;
      * @dataProvider clientRetrySettingsProvider
      *
      * @param array $retrySettings
-     *
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessageRegExp /Your socket connection to the server/
      */
     public function testClientSocketTimeoutErrorsAreNotRetriedIndefinitely($retrySettings)
     {
+        $this->expectExceptionMessageMatches("/Your socket connection to the server/");
+        $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
@@ -829,7 +898,7 @@ EOXML;
         $client->putObject([
             'Bucket' => 'bucket',
             'Key' => 'key',
-            'Body' => Psr7\stream_for('x'),
+            'Body' => Psr7\Utils::streamFor('x'),
         ]);
     }
 
@@ -888,12 +957,11 @@ EOXML;
      * @dataProvider clientRetrySettingsProvider
      *
      * @param array $retrySettings
-     *
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessageRegExp /CompleteMultipartUpload/
      */
     public function testNetworkingErrorsAreNotRetriedOnNonIdempotentCommands($retrySettings)
     {
+        $this->expectExceptionMessageMatches("/CompleteMultipartUpload/");
+        $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $networkingError = $this->getMockBuilder(RequestException::class)
             ->disableOriginalConstructor()
             ->setMethods([])
@@ -964,13 +1032,42 @@ EOXML;
         $this->assertSame(0, $retries);
     }
 
+    /**
+     * @dataProvider  clientRetrySettingsProvider
+     * @param $retrySettings
+     */
+    public function testRetriesFailOn400Errors($retrySettings) {
+        $retryCount = 0;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retrySettings,
+            'http_handler' => function () use (&$retryCount) {
+                $retryCount++;
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $this->getMockBuilder(S3Exception::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'response' => new Response(404, [], null),
+                ]);
+            },
+        ]);
+        $client->getObjectAsync([
+            'Bucket' => 'bucket',
+            'Key' => 'key'
+        ])->otherwise(function () {})->wait();
+
+        $this->assertSame(1, $retryCount);
+    }
+
     public function testListObjectsAppliesUrlEncodingWhenNoneSupplied()
     {
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
             'http_handler' => function (RequestInterface $request) {
-                $query = Psr7\parse_query($request->getUri()->getQuery());
+                $query = Psr7\Query::parse($request->getUri()->getQuery());
                 $this->assertArrayHasKey('encoding-type', $query);
                 $this->assertSame('url', $query['encoding-type']);
 
@@ -1082,7 +1179,7 @@ EOXML;
                 $this->assertArrayHasKey('decode_content', $opts);
                 $this->assertFalse($opts['decode_content']);
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             }
         ]);
 
@@ -1099,7 +1196,7 @@ EOXML;
                 $this->assertArrayHasKey('decode_content', $opts);
                 $this->assertFalse($opts['decode_content']);
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             }
         ]);
 
@@ -1115,7 +1212,7 @@ EOXML;
                 $this->assertArrayHasKey('decode_content', $opts);
                 $this->assertFalse($opts['decode_content']);
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             }
         ]);
 
@@ -1157,11 +1254,9 @@ EOXML;
         $this->assertSame('us-west-2', $client->determineBucketRegion('bucket'));
     }
 
-    /**
-     * @expectedException \Aws\Exception\AwsException
-     */
     public function testDetermineBucketRegionExposeException()
     {
+        $this->expectException(\Aws\Exception\AwsException::class);
         $client = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
@@ -1190,7 +1285,7 @@ EOXML;
                 '/key',
                 $req->getUri()->getPath()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $accelerateClient = new S3Client([
@@ -1218,82 +1313,6 @@ EOXML;
         ]);
     }
 
-    public function testAppliesS3EndpointMiddlewareDualstackInvalidAccelerate()
-    {
-        // test applies dualstack solo for invalid accelerate operations
-        // when both endpoint is enabled
-        $handler = function (RequestInterface $req) {
-            $this->assertSame(
-                'bucket.s3.dualstack.us-west-2.amazonaws.com',
-                $req->getUri()->getHost()
-            );
-            $this->assertSame(
-                '/',
-                $req->getUri()->getPath()
-            );
-            return Promise\promise_for(new Response);
-        };
-
-        $accelerateClient = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-west-2',
-            'use_accelerate_endpoint' => true,
-            'use_dual_stack_endpoint' => true,
-            'http_handler' => $handler,
-        ]);
-        $accelerateClient->createBucket([
-            'Bucket' => 'bucket',
-        ]);
-
-        $client = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-west-2',
-            'http_handler' => $handler,
-        ]);
-        $client->createBucket([
-            'Bucket' => 'bucket',
-            '@use_accelerate_endpoint' => true,
-            '@use_dual_stack_endpoint' => true,
-        ]);
-    }
-
-    public function testAppliesS3EndpointMiddlewareDualstackInvalidAccelerateWithPathStyle()
-    {
-        // test applies dualstack solo for invalid accelerate operations
-        // when both endpoint is enabled and forcing path style
-        $handler = function (RequestInterface $req) {
-            $this->assertSame(
-                's3.dualstack.us-west-2.amazonaws.com',
-                $req->getUri()->getHost()
-            );
-            return Promise\promise_for(new Response);
-        };
-
-        $accelerateClient = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-west-2',
-            'use_accelerate_endpoint' => true,
-            'use_dual_stack_endpoint' => true,
-            'use_path_style_endpoint' => true,
-            'http_handler' => $handler,
-        ]);
-        $accelerateClient->createBucket([
-            'Bucket' => 'bucket',
-        ]);
-
-        $client = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-west-2',
-            'http_handler' => $handler,
-        ]);
-        $client->createBucket([
-            'Bucket' => 'bucket',
-            '@use_accelerate_endpoint' => true,
-            '@use_dual_stack_endpoint' => true,
-            '@use_path_style_endpoint' => true,
-        ]);
-    }
-
     public function testAppliesS3EndpointMiddlewareAccelerate()
     {
         // test applies s3-accelerate for valid operations
@@ -1302,7 +1321,7 @@ EOXML;
                 'bucket.s3-accelerate.amazonaws.com',
                 $req->getUri()->getHost()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $accelerateClient = new S3Client([
@@ -1340,7 +1359,7 @@ EOXML;
                 '/',
                 $req->getUri()->getPath()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $dualStackClient = new S3Client([
@@ -1373,10 +1392,10 @@ EOXML;
                 $req->getUri()->getHost()
             );
             $this->assertSame(
-                '/bucket',
+                '/bucket/',
                 $req->getUri()->getPath()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $dualStackClient = new S3Client([
@@ -1402,12 +1421,10 @@ EOXML;
         ]);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid configuration value provided for "use_arn_region"
-     */
     public function testAddsUseArnRegionArgument()
     {
+        $this->expectExceptionMessage("Invalid configuration value provided for \"use_arn_region\"");
+        $this->expectException(\InvalidArgumentException::class);
         new S3Client([
             'region' => 'us-east-1',
             'version' => 'latest',
@@ -1482,12 +1499,10 @@ EOXML;
         $client->execute($command);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Configuration parameter must either be 'legacy' or 'regional'.
-     */
     public function testAddsS3RegionalEndpointArgument()
     {
+        $this->expectExceptionMessage("Configuration parameter must either be 'legacy' or 'regional'.");
+        $this->expectException(\InvalidArgumentException::class);
         new S3Client([
             'region' => 'us-east-1',
             'version' => 'latest',
@@ -1539,25 +1554,11 @@ EOXML;
     public function optionsToEndpointsCases()
     {
         $handler = function ($cmd, $req) {
-            return Promise\promise_for(new Result([]));
+            return Promise\Create::promiseFor(new Result([]));
         };
         $data = json_decode(
             file_get_contents(__DIR__ . '/../Endpoint/fixtures/s3_us_east_1_regional_endpoint.json'),
             true
-        );
-        $regionalProvider = new PartitionEndpointProvider(
-            $data['partitions'],
-            'aws',
-            [
-                's3_us_east_1_regional_endpoint' => 'regional',
-            ]
-        );
-        $legacyProvider = new PartitionEndpointProvider(
-            $data['partitions'],
-            'aws',
-            [
-                's3_us_east_1_regional_endpoint' => 'legacy',
-            ]
         );
 
         return [
@@ -1566,7 +1567,6 @@ EOXML;
                     'region' => 'us-east-1',
                     'version' => 'latest',
                     'handler' => $handler,
-                    'endpoint_provider' => $legacyProvider,
                 ],
                 's3.amazonaws.com'
             ],
@@ -1575,7 +1575,7 @@ EOXML;
                     'region' => 'us-east-1',
                     'version' => 'latest',
                     'handler' => $handler,
-                    'endpoint_provider' => $regionalProvider,
+                    's3_us_east_1_regional_endpoint' => 'regional'
                 ],
                 's3.us-east-1.amazonaws.com'
             ],
@@ -1584,7 +1584,6 @@ EOXML;
                     'region' => 'us-west-2',
                     'version' => 'latest',
                     'handler' => $handler,
-                    'endpoint_provider' => $legacyProvider,
                 ],
                 's3.us-west-2.amazonaws.com'
             ],
@@ -1593,7 +1592,6 @@ EOXML;
                     'region' => 'us-west-2',
                     'version' => 'latest',
                     'handler' => $handler,
-                    'endpoint_provider' => $regionalProvider,
                 ],
                 's3.us-west-2.amazonaws.com'
             ],
@@ -1602,7 +1600,6 @@ EOXML;
                     'region' => 'us-east-1',
                     'version' => 'latest',
                     'handler' => $handler,
-                    'endpoint_provider' => $legacyProvider,
                     'use_dual_stack_endpoint' => true,
                 ],
                 's3.dualstack.us-east-1.amazonaws.com'
@@ -1612,7 +1609,6 @@ EOXML;
                     'region' => 'us-east-1',
                     'version' => 'latest',
                     'handler' => $handler,
-                    'endpoint_provider' => $regionalProvider,
                     'use_dual_stack_endpoint' => true,
                 ],
                 's3.dualstack.us-east-1.amazonaws.com'
@@ -1620,14 +1616,12 @@ EOXML;
         ];
     }
 
-    /**
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessage An error connecting to the service occurred while performing the CopyObject operation
-     */
     public function testAppliesAmbiguousSuccessParsing()
     {
+        $this->expectExceptionMessage("An error connecting to the service occurred while performing the CopyObject operation");
+        $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $httpHandler = function ($request, array $options) {
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Psr7\Response(200, [], "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n\n")
             );
         };
@@ -1656,7 +1650,7 @@ EOXML;
             }
             $counter++;
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Psr7\Response(200, [], $body)
             );
         };
@@ -1675,77 +1669,656 @@ EOXML;
         $this->assertSame(3, $counter);
     }
 
-    public function privateLinkSuccessProvider() {
+    public function multiRegionSuccessProvider()
+    {
+
         return [
-            ['listObjects', ['Bucket' => 'bucketname'], 'beta.example.com' , ['s3' => ['use_dual_stack_endpoint' => false, 'addressing_style' => 'virtual', 'use_arn_region' => false]], 'us-west-2', 'bucketname.beta.example.com', ['name' => 's3', 'region' => 'us-west-2']],
-            ['listObjects', ['Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint'], 'beta.example.com' , ['s3' => ['use_dual_stack_endpoint' => false, 'addressing_style' => 'virtual', 'use_arn_region' => false]], 'us-west-2' , 'myendpoint-123456789012.beta.example.com' , ['name' => 's3', 'region' => 'us-west-2']],
-            ['listObjects', ['Bucket' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'], 'beta.example.com', ['s3' => ['use_dual_stack_endpoint' => false, 'addressing_style' => 'virtual', 'use_arn_region' => false]] , 'us-west-2' , 'myaccesspoint-123456789012.op-01234567890123456.beta.example.com' , ['name' => 's3-outposts', 'region' => 'us-west-2']],
-            ['listBuckets', [], 'bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', '[]' , 'us-west-2', 'bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com' , ['name' => 's3', 'region' => 'us-west-2']],
-            ['listObjects', ['Bucket' => 'bucketname'], 'bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', ['s3' => ['use_path_style_endpoint' => true]], 'us-west-2', 'bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', ['name' => 's3', 'region' => 'us-west-2']],
-            ['listObjects', ['Bucket' => 'bucketname'], 'bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', ['s3' => ['addressing_style' => 'virtual']], 'us-west-2', 'bucketname.bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', ['name' => 's3', 'region' => 'us-west-2']],
-            ['listObjects', ['Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint'], 'accesspoint.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', ['s3' => ['use_arn_region' => true]], 'eu-west-1' , 'myendpoint-123456789012.accesspoint.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com' , ['name' => 's3', 'region' => 'us-west-2']],
+            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-east-1", null, null, false, "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
+            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", null, null, false, "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
+            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "aws-global", null, null, false, "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
+            ["arn:aws-cn:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "cn-north-1", null, null, false, "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com.cn", "x-amz-region-set:*"],
+            ["arn:aws:s3::123456789012:accesspoint:myendpoint", "us-west-2", null, null, false, "myendpoint.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
+            ["arn:aws:s3::123456789012:accesspoint:my.bucket", "us-west-2", null, null, false, "my.bucket.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
         ];
     }
+
     /**
-     * @dataProvider privateLinkSuccessProvider
-     * @param $operation
-     * @param $parameters
-     * @param $endpoint_url
-     * @param $configuration
-     * @param $region
-     * @param $expectedEndpoint
-     * @param $expectedSignature
+     * @dataProvider multiRegionSuccessProvider
      */
-    public function testListObjectsWithPrivateLinkSuccess(
-        $operation,
-        $parameters,
-        $endpoint_url,
-        $configuration,
-        $region,
+    public function testMrapParsing(
+        $bucketFieldInput,
+        $clientRegion,
+        $additionalFlags,
+        $useArnRegion,
+        $disableMraps,
         $expectedEndpoint,
-        $expectedSignature
+        $expectedHeaders
+    ) {
+        if (!extension_loaded('awscrt')) {
+            $this->markTestSkipped();
+        }
+        $client = new S3Client([
+            'region' => $clientRegion,
+            'use_arn_region' => $useArnRegion,
+            'version' => 'latest',
+            'disable_multiregion_access_points' => $disableMraps,
+            'handler' => function (CommandInterface $cmd, RequestInterface $req)
+            use ($expectedEndpoint, $expectedHeaders) {
+                $this->assertSame(
+                    $expectedEndpoint,
+                    $req->getUri()->getHost()
+                );
+                $this->assertSame(
+                    '/Bar/Baz',
+                    $req->getUri()->getPath()
+                );
+                $expectedHeaders = explode(',', $expectedHeaders);
+                foreach ($expectedHeaders as $expectedHeader) {
+                    $header = explode(':', $expectedHeader);
+                    $this->assertSame($header[1], $req->getHeader($header[0])[0]);
+                }
+
+                return new Result([]);
+            },
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $bucketFieldInput,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $client->execute($command);
+    }
+
+    public function mrapExceptionTestProvider() {
+        return [
+            [
+                "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", null, null, true,
+                "Invalid configuration: Multi-Region Access Point ARNs are disabled."
+            ],
+            [
+                "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "aws-global", null, null, true,
+                "Invalid configuration: Multi-Region Access Point ARNs are disabled."
+            ],
+            [
+                "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", "dualstack", null, false,
+                "S3 MRAP does not support dual-stack"
+            ],
+            [
+                "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", "accelerate", null, false,
+                "S3 MRAP does not support S3 Accelerate"
+            ],
+            [
+                "arn:aws:s3::123456789012:accesspoint:myendpoint", "us-west-2", null, null, true,
+                "Invalid configuration: Multi-Region Access Point ARNs are disabled."
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider mrapExceptionTestProvider
+     */
+    public function testMrapExceptions(
+        $bucketFieldInput,
+        $clientRegion,
+        $additionalFlags,
+        $useArnRegion,
+        $disableMraps,
+        $expectedException
+    ) {
+        $client = new S3Client([
+            'region' => $clientRegion,
+            'use_arn_region' => $useArnRegion,
+            'version' => 'latest',
+            'disable_multiregion_access_points' => $disableMraps,
+            'use_dual_stack_endpoint' => !empty($additionalFlags) && $additionalFlags == 'dualstack',
+            'use_accelerate_endpoint' => !empty($additionalFlags) && $additionalFlags == 'accelerate',
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $bucketFieldInput,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        try {
+            $client->execute($command);
+            self::fail("exception should have been thrown");
+        } catch (\Exception $e) {
+            self::assertTrue(
+                $e instanceof  UnresolvedEndpointException
+                || $e instanceof S3Exception
+            );
+            self::assertStringContainsString($expectedException, $e->getMessage());
+        }
+    }
+
+    /**
+     * @dataProvider AccessPointFailureProvider
+     * @param $bucketFieldInput
+     * @param $clientRegion
+     * @param $additionalFlags
+     * @param $useArnRegion
+     * @param $disableMraps
+     * @param $expectedException
+     */
+    public function testAccessPointFailures (
+        $bucketFieldInput,
+        $clientRegion,
+        $additionalFlags,
+        $useArnRegion,
+        $disableMraps,
+        $expectedException
+    ){
+        $client = new S3Client([
+            'region' => $clientRegion,
+            'use_arn_region' => $useArnRegion,
+            'version' => 'latest',
+            'disable_multiregion_access_points' => $disableMraps,
+            'use_dual_stack_endpoint' => !empty($additionalFlags) && $additionalFlags == 'dualstack',
+            'use_accelerate_endpoint' => !empty($additionalFlags) && $additionalFlags == 'accelerate',
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $bucketFieldInput,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        try {
+            $client->execute($command);
+            self::fail("exception should have been thrown");
+        } catch (\Exception $e) {
+            self::assertTrue(
+                $e instanceof  UnresolvedEndpointException
+                || $e instanceof S3Exception
+            );
+            self::assertStringContainsString($expectedException, $e->getMessage());
+        }
+    }
+    public function AccessPointFailureProvider()
+    {
+        return [
+            [
+                "arn:aws:sqs:us-west-2:123456789012:someresource", "us-west-2", null, null, null,
+                "Invalid ARN: Unrecognized format: arn:aws:sqs:us-west-2:123456789012:someresource (type: someresource)"
+            ],
+            [
+                "arn:aws:s3:us-west-2:123456789012:bucket_name:mybucket", "us-west-2", null, null, null,
+                "Invalid ARN: Unrecognized format: arn:aws:s3:us-west-2:123456789012:bucket_name:mybucket (type: bucket_name)"
+            ],
+            [
+                "arn:aws:s3:us-west-2::accesspoint:myendpoint", "us-west-2", null, null, null,
+                "Invalid ARN: The account id may only contain a-z, A-Z, 0-9 and `-`. Found: ``",
+            ],
+            [
+                "arn:aws:s3:us-west-2:123.45678.9012:accesspoint:mybucket", "us-west-2", null, null, null,
+                "Invalid ARN: The account id may only contain a-z, A-Z, 0-9 and `-`. Found: `123.45678.9012`"
+            ],
+            [
+                "arn:aws:s3:us-west-2:123456789012:accesspoint", "us-west-2", null, null, null,
+                "Invalid ARN: Expected a resource of the format `accesspoint:<accesspoint name>` but no name was provided"
+            ],
+            [
+                "arn:aws:s3:us-west-2:123456789012:accesspoint:*", "us-west-2", null, null, null,
+                "Invalid ARN: The access point name may only contain a-z, A-Z, 0-9 and `-`. Found: `*`"
+            ],
+            [
+                "arn:aws:s3:us-west-2:123456789012:accesspoint:my.bucket", "us-west-2", null, null, null,
+                "Invalid ARN: The access point name may only contain a-z, A-Z, 0-9 and `-`"
+            ],
+            [
+                "arn:aws:s3:us-west-2:123456789012:accesspoint:mybucket:object:foo", "us-west-2", null, null, null,
+                "Invalid ARN: The ARN may only contain a single resource component after `accesspoint`."
+            ],
+        ];
+    }
+
+    public function testPresignedMrapSuccess ()
+    {
+        if (!extension_loaded('awscrt')) {
+            $this->markTestSkipped();
+        }
+        $arn = 'arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap';
+        $expectedEndpoint = "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com";
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'disable_multiregion_access_points' => false,
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $arn,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $presigned = $client->createPresignedRequest($command, time() + 10000);
+        self::assertSame($expectedEndpoint, $presigned->getUri()->getHost());
+        $url = (string) $presigned->getUri();
+        $this->assertStringContainsString('Amz-Region-Set=%2A', $url);
+        $this->assertStringContainsString('X-Amz-Algorithm=AWS4-ECDSA-P256-SHA256', $url);
+    }
+
+    public function testPresignedMrapFailure ()
+    {
+        $arn = 'arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap';
+        $expectedException = "Invalid configuration: Multi-Region Access Point ARNs are disabled.";
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'disable_multiregion_access_points' => true,
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $arn,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        try {
+            $client->createPresignedRequest($command, time() + 10000);
+            self::fail("exception should have been thrown");
+        } catch (\Exception $e) {
+            self::assertTrue($e instanceof  UnresolvedEndpointException);
+            self::assertStringContainsString($expectedException, $e->getMessage());
+        }
+    }
+
+    public function jsonCaseProvider()
+    {
+        return json_decode(
+            file_get_contents(__DIR__ . '/test_cases/uri_addressing.json'),
+            true
+        );
+    }
+
+    /**
+     * @dataProvider jsonCaseProvider
+     *
+     * @param array $testCase
+     */
+    public function testPassesCompliance(
+        $bucket,
+        $configuredAddressingStyle,
+        $expectedUri,
+        $region,
+        $useDualstack,
+        $useS3Accelerate
+    ) {
+        $key = 'key';
+        $client = new S3Client([
+            'region' => $region,
+            'version' => 'latest',
+            'validate' => false,
+            'use_dual_stack_endpoint' => $useDualstack,
+            'use_accelerate_endpoint' => $useS3Accelerate,
+            'use_path_style_endpoint' => $configuredAddressingStyle === 'path',
+            'handler' => function (
+                CommandInterface $cmd,
+                RequestInterface $req
+            ) use ($key, $expectedUri) {
+                $this->assertEquals($expectedUri . '/' . $key, trim($req->getUri(), '/'));
+                return Promise\Create::promiseFor(new Result());
+            },
+        ]);
+
+        $client->getObject([
+            'Bucket' => $bucket,
+            'Key' => $key,
+        ]);
+    }
+
+    /**
+     * @dataProvider objectLambdasSuccessProvider
+     *
+     * @param $bucketFieldInput
+     * @param $clientRegion
+     * @param $additionalFlags
+     * @param $useArnRegion
+     * @param $endpointUrl
+     * @param $expectedEndpoint
+     */
+    public function testObjectLambdaArnSuccess(
+        $bucketFieldInput,
+        $clientRegion,
+        $additionalFlags,
+        $useArnRegion,
+        $endpointUrl,
+        $expectedEndpoint)
+    {
+        //additional flags is not used yet, will be in the future if dualstack support is added
+        $clientConfig = [
+            'region' => $clientRegion,
+            'use_arn_region' => $useArnRegion,
+            'version' => 'latest',
+            'handler' => function (CommandInterface $cmd, RequestInterface $req)
+            use ($expectedEndpoint) {
+                $this->assertSame(
+                    $expectedEndpoint,
+                    $req->getUri()->getHost()
+                );
+                $this->assertSame(
+                    '/Bar/Baz',
+                    $req->getUri()->getPath()
+                );
+                return new Result([]);
+            },
+        ];
+        if (!empty($endpointUrl)) {
+            $clientConfig['endpoint'] = $endpointUrl;
+        }
+        if (is_array($additionalFlags) && in_array('fips', $additionalFlags)) {
+            $clientConfig['use_fips_endpoint'] = true;
+        }
+        $client = new S3Client($clientConfig);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $bucketFieldInput,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $client->execute($command);
+    }
+
+    public function objectLambdasSuccessProvider()
+    {
+        return [
+            ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-east-1", "none", false, null, "mybanner-123456789012.s3-object-lambda.us-east-1.amazonaws.com"],
+            ["arn:aws:s3-object-lambda:us-west-2:123456789012:accesspoint/mybanner", "us-west-2", "none", false, null, "mybanner-123456789012.s3-object-lambda.us-west-2.amazonaws.com"],
+            ["arn:aws:s3-object-lambda:us-west-2:123456789012:accesspoint:mybanner", "us-west-2", "none", false, null, "mybanner-123456789012.s3-object-lambda.us-west-2.amazonaws.com"],
+            ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-west-2", "none", true, null, "mybanner-123456789012.s3-object-lambda.us-east-1.amazonaws.com"],
+            ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "s3-external-1", "none", true, null, "mybanner-123456789012.s3-object-lambda.us-east-1.amazonaws.com"],
+            ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "aws-global", "none", true, null, "mybanner-123456789012.s3-object-lambda.us-east-1.amazonaws.com"],
+            ["arn:aws-cn:s3-object-lambda:cn-north-1:123456789012:accesspoint/mybanner", "cn-north-1", "none", true, null, "mybanner-123456789012.s3-object-lambda.cn-north-1.amazonaws.com.cn"],
+            ["arn:aws-cn:s3-object-lambda:cn-north-1:123456789012:accesspoint/mybanner", "cn-north-1", "none", false, null, "mybanner-123456789012.s3-object-lambda.cn-north-1.amazonaws.com.cn"],
+            ["arn:aws-cn:s3-object-lambda:cn-northwest-1:123456789012:accesspoint/mybanner", "cn-north-1", "none", true, null, "mybanner-123456789012.s3-object-lambda.cn-northwest-1.amazonaws.com.cn"],
+            ["arn:aws-us-gov:s3-object-lambda:us-gov-east-1:123456789012:accesspoint/mybanner", "us-gov-east-1", "none", true, null, "mybanner-123456789012.s3-object-lambda.us-gov-east-1.amazonaws.com"],
+            ["arn:aws-us-gov:s3-object-lambda:us-gov-east-1:123456789012:accesspoint/mybanner", "fips-us-gov-east-1", "none", true, null, "mybanner-123456789012.s3-object-lambda-fips.us-gov-east-1.amazonaws.com"],
+            ["arn:aws-us-gov:s3-object-lambda:us-gov-east-1:123456789012:accesspoint/mybanner", "fips-us-gov-east-1", "none", false, null, "mybanner-123456789012.s3-object-lambda-fips.us-gov-east-1.amazonaws.com"],
+            ["arn:aws-us-gov:s3-object-lambda:us-gov-east-1:123456789012:accesspoint/mybanner", "us-gov-east-1", ["fips"], false, null, "mybanner-123456789012.s3-object-lambda-fips.us-gov-east-1.amazonaws.com"],
+            ["arn:aws-us-gov:s3-object-lambda:us-gov-west-1:123456789012:accesspoint/mybanner", "fips-us-gov-east-1", "none", true, null, "mybanner-123456789012.s3-object-lambda-fips.us-gov-west-1.amazonaws.com"],
+            ["arn:aws-us-gov:s3-object-lambda:us-gov-west-1:123456789012:accesspoint/mybanner", "us-gov-east-1", ["fips"], true, null, "mybanner-123456789012.s3-object-lambda-fips.us-gov-west-1.amazonaws.com"],
+        ];
+    }
+
+    /**
+     * @dataProvider objectLambdasFailureProvider
+     *
+     * @param $bucketFieldInput
+     * @param $clientRegion
+     * @param $additionalFlags
+     * @param $useArnRegion
+     * @param $endpointUrl
+     * @param $expectedException
+     */
+    public function testObjectLambdaArnFailures(
+        $bucketFieldInput,
+        $clientRegion,
+        $additionalFlags,
+        $useArnRegion,
+        $endpointUrl,
+        $expectedException)
+    {
+        $clientConfig = [
+            'region' => $clientRegion,
+            'use_arn_region' => $useArnRegion,
+            'version' => 'latest',
+            'handler' => function (CommandInterface $cmd, RequestInterface $req)
+            use ($expectedException) {
+                $this->assertSame(
+                    $expectedException,
+                    $req->getUri()->getHost()
+                );
+                $this->assertSame(
+                    '/Bar/Baz',
+                    $req->getUri()->getPath()
+                );
+                return new Result([]);
+            },
+        ];
+        if (!empty($additionalFlags) && $additionalFlags == 'dualstack') {
+            $clientConfig['use_dual_stack_endpoint'] = true;
+        }
+        if (!empty($additionalFlags) && $additionalFlags == 'accelerate') {
+            $clientConfig['use_accelerate_endpoint'] = true;
+        }
+        $client = new S3Client($clientConfig);
+
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $bucketFieldInput,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        try {
+            $client->execute($command);
+            $this->fail("did not catch exception: " . $expectedException);
+        } catch (\Exception $e) {
+            $this->assertStringContainsString($expectedException, $e->getMessage());
+        }
+    }
+
+    public function objectLambdasFailureProvider()
+    {
+        return [
+            [
+                "arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-west-2", "none", false, null,
+                'Invalid configuration: region from ARN `us-east-1` does not match client region `us-west-2` and UseArnRegion is `false`'            ]
+            ,
+            [
+                "arn:aws:s3-object-lambda:us-west-2:123456789012:accesspoint/mybanner", "us-west-2", "dualstack", true, null,
+                'S3 Object Lambda does not support Dual-stack'
+            ],
+            [
+                "arn:aws-cn:s3-object-lambda:cn-north-1:123456789012:accesspoint/mybanner", "us-west-2", "none", true, null,
+                'Client was configured for partition `aws` but ARN (`arn:aws-cn:s3-object-lambda:cn-north-1:123456789012:accesspoint/mybanner`) has `aws-cn`'
+            ],
+            [
+                "arn:aws:s3-object-lambda:us-west-2:123456789012:accesspoint/mybanner", "us-west-2", "accelerate", null, null,
+                'S3 Object Lambda does not support S3 Accelerate'
+            ],
+            [
+                "arn:aws:sqs:us-west-2:123456789012:someresource", "us-west-2", "n/a", null, null,
+                'Invalid ARN: Unrecognized format: arn:aws:sqs:us-west-2:123456789012:someresource (type: someresource)'
+            ],
+            [
+                "arn:aws:s3-object-lambda:us-west-2:123456789012:bucket_name:mybucket", "us-west-2", "n/a", null, null,
+                'Invalid ARN: Object Lambda ARNs only support `accesspoint` arn types, but found: `bucket_name`'
+            ],
+            [
+                "arn:aws:s3-object-lambda::123456789012:accesspoint/mybanner", "us-west-2", "none", null, null,
+                'Invalid ARN: bucket ARN is missing a region'
+            ],
+            [
+                "arn:aws:s3-object-lambda:us-west-2::accesspoint/mybanner", "us-west-2", "none", null, null,
+                'Invalid ARN: Missing account id'
+            ],
+            [
+                "arn:aws:s3-object-lambda:us-west-2:123.45678.9012:accesspoint:mybucket", "us-west-2", "n/a", null, null,
+                'Invalid ARN: The account id may only contain a-z, A-Z, 0-9 and `-`. Found: `123.45678.9012`'
+            ],
+            [
+                "arn:aws:s3-object-lambda:us-west-2:123456789012:accesspoint", "us-west-2", "n/a", null, null,
+                'Invalid ARN: Expected a resource of the format `accesspoint:<accesspoint name>` but no name was provided'
+            ],
+            [
+                "arn:aws:s3-object-lambda:us-west-2:123456789012:accesspoint:*", "us-west-2", "n/a", null, null,
+                'Invalid ARN: The access point name may only contain a-z, A-Z, 0-9 and `-`. Found: `*`'
+            ],
+            [
+                "arn:aws:s3-object-lambda:us-west-2:123456789012:accesspoint:my.bucket", "us-west-2", "n/a", null, null,
+                'Invalid ARN: The access point name may only contain a-z, A-Z, 0-9 and `-`. Found: `my.bucket`'
+            ],
+            [
+                "arn:aws:s3-object-lambda:us-west-2:123456789012:accesspoint:mybucket:object:foo", "us-west-2", "n/a", null, null,
+                'Invalid ARN: The ARN may only contain a single resource component after `accesspoint`.'
+            ],
+            [
+                "arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "s3-external-1", "none", false, null,
+                'Invalid configuration: region from ARN `us-east-1` does not match client region `s3-external-1` and UseArnRegion is `false`'
+            ],
+            [
+                "arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "aws-global", "none", false, null,
+                'Invalid configuration: region from ARN `us-east-1` does not match client region `aws-global` and UseArnRegion is `false`'
+            ],
+            [
+                "arn:aws-us-gov:s3-object-lambda:us-gov-west-1:123456789012:accesspoint/mybanner", "fips-us-gov-east-1", "none", false, null,
+                'Invalid configuration: region from ARN `us-gov-west-1` does not match client region `us-gov-east-1` and UseArnRegion is `false`'
+            ],
+        ];
+    }
+
+
+    /**
+     * @dataProvider writeGetObjectResponseProvider
+     *
+     * @param $clientRegion
+     * @param $route
+     * @param $endpointUrl
+     * @param $expectedEndpoint
+     */
+    public function testWriteGetObjectResponse(
+        $clientRegion,
+        $route,
+        $endpointUrl,
+        $expectedEndpoint
     )
     {
-        $s3ClientConfig = [
-            'version'     => 'latest',
-            'region'      => $region,
-            'endpoint' => $endpoint_url,
+        $clientConfig = [
+            'region' => $clientRegion,
+            'version' => 'latest',
+            'handler' => function (CommandInterface $cmd, RequestInterface $req)
+            use ($expectedEndpoint) {
+                $this->assertSame(
+                    $expectedEndpoint,
+                    $req->getUri()->getHost()
+                );
+                return new Result([]);
+            },
         ];
-        if (!empty($configuration['s3']['use_dual_stack_endpoint'])) {
-            $s3ClientConfig['use_dual_stack_endpoint'] = $configuration['s3']['use_dual_stack_endpoint'];
+        if (!empty($endpointUrl)) {
+            $clientConfig['endpoint'] = $endpointUrl;
         }
-        if (!empty($configuration['s3']['addressing_style'])) {
-            $s3ClientConfig['addressing_style'] = $configuration['s3']['addressing_style'];
-        }
-        if (!empty($configuration['s3']['use_arn_region'])) {
-            $s3ClientConfig['use_arn_region'] = $configuration['s3']['use_arn_region'];
-        }
-        if (!empty($configuration['s3']['use_path_style_endpoint'])) {
-            $s3ClientConfig['use_path_style_endpoint'] = $configuration['s3']['use_path_style_endpoint'];
-        }
-        $s3Client = new S3Client($s3ClientConfig);
-        $command = $s3Client->getCommand($operation, $parameters);
-        $request = \Aws\serialize($command);
-        $service = "";
-        $signerRegion = "";
-        if (ArnParser::isArn($command['Bucket'])) {
-            $bucketArn = ArnParser::parse($command['Bucket']);
-            $service = $bucketArn->getService();
-            $signerRegion = $bucketArn->getRegion();
-        } else {
-            $service = 's3';
-            $signerRegion = $region;
-        }
-        $signer = new SignatureV4(
-            $service,
-            $signerRegion
+        $client = new S3Client($clientConfig);
+        $command = $client->getCommand(
+            'WriteGetObjectResponse',
+            [
+                'RequestRoute' => $route,
+                'RequestToken' => 'def'
+            ]
         );
-        $requestUri = $signer->presign($request, $s3Client->getCredentials()->wait(), time())->getUri();
+        $client->execute($command);
+    }
 
-        self::assertSame($expectedEndpoint, $requestUri->getHost());
+    public function writeGetObjectResponseProvider()
+    {
+        return [
+            ["us-west-2", "route", null, 'route.s3-object-lambda.us-west-2.amazonaws.com'],
+            ["us-east-1", "route", null, 'route.s3-object-lambda.us-east-1.amazonaws.com'],
+        ];
+    }
 
-        foreach ($expectedSignature as $expectedInSignature) {
-            self::assertContains($expectedInSignature, $requestUri->getQuery());
-        }
+    public function testLeadingForwardSlashIsEncoded()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('listObjects', ['Bucket' => 'foo', 'Prefix' => '/']);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame('foo.s3.amazonaws.com', $req->getUri()->getHost());
+                $this->assertSame('/?prefix=%2F&encoding-type=url', $req->getRequestTarget());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function testHandlesTrailingForwardSlashInCustomEndpoint()
+    {
+        $s3 = $this->getTestClient('s3', ['endpoint' => 'https://test.com/']);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('listObjects', ['Bucket' => 'foo', 'Prefix' => '/']);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame('foo.test.com', $req->getUri()->getHost());
+                $this->assertSame('/?prefix=%2F&encoding-type=url', $req->getRequestTarget());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function testAddsForwardSlashIfEmptyPathAndQuery()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('listObjectsV2', ['Bucket' => 'foo']);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame('/', $req->getUri()->getPath());
+                $this->assertSame('list-type=2', $req->getUri()->getQuery());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function addMD5Provider() {
+        return [
+           [
+               ['Bucket' => 'foo', 'Key' => 'foo', 'Body' => 'test'],
+               'PutObject'
+           ],
+           [
+               [
+                   'Bucket' => 'foo',
+                   'Key' => 'foo',
+                   'Body' => 'test',
+                   'PartNumber' => 1,
+                   'UploadId' => 'foo',
+               ],
+               'UploadPart'
+           ]
+        ];
+    }
+
+    /**
+     * @dataProvider addMD5Provider
+     */
+    public function testAutomaticallyComputesMD5($options, $operation)
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $options['AddContentMD5'] = true;
+        $command = $s3->getCommand($operation, $options);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame(
+                    'CY9rzUYh03PK3k6DJie09g==',
+                    $req->getHeader('Content-MD5')[0]
+                );
+            })
+        );
+        $s3->execute($command);
+    }
+
+    /**
+     * @dataProvider addMD5Provider
+     */
+    public function testDoesNotComputeMD5($options, $operation)
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $options['AddContentMD5'] = false;
+        $command = $s3->getCommand($operation, $options);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertFalse(
+                    $req->hasHeader('Content-MD5')
+                );
+            })
+        );
+        $s3->execute($command);
     }
 }

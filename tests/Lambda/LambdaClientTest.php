@@ -3,11 +3,14 @@ namespace Aws\Test\Lambda;
 
 use Aws\Lambda\LambdaClient;
 use Aws\Result;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class LambdaClientTest extends TestCase
 {
+    use ArraySubsetAsserts;
+
     function testsAddsDefaultCurlOptions()
     {
         if (!extension_loaded('curl')) {
@@ -29,7 +32,7 @@ class LambdaClientTest extends TestCase
                 ],
                 $command['@http']
             );
-            return Promise\promise_for(new Result([]));
+            return Promise\Create::promiseFor(new Result([]));
         });
 
         $client->listFunctions();

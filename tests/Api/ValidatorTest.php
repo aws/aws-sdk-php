@@ -4,8 +4,8 @@ namespace Aws\Test\Api;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\Validator;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Validator
@@ -346,7 +346,7 @@ class ValidatorTest extends TestCase
                     'type' => 'structure',
                     'members' => ['foo' => ['type' => 'blob']]
                 ],
-                ['foo' => Psr7\stream_for('test')],
+                ['foo' => Psr7\Utils::streamFor('test')],
                 true
             ],
             [
@@ -413,7 +413,194 @@ class ValidatorTest extends TestCase
                 ['caps' => 'ABCd'],
                 "Found 1 error while validating the input provided for the Foo operation:\n"
                 . "[caps] Pattern /^[A-Z]+$/ failed to match 'ABCd'"
-            ]
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => null],
+                true
+            ],
+           [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => false],
+                true
+            ],
+           [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => 0],
+                true
+            ],
+           [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => "stringDocument"],
+                true
+            ],
+           [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["string"]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["nestedArray" => ['nestedAgain' => 0]]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["nestedVal" => [0]]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' =>  new \DateTime()],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[documentVal] is not a valid document type"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["nestedArray" => ['badVal1' => new \DateTime(), "badVal2" => new \DateTime()]]],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[documentVal] is not a valid document type"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["nestedArray" => [0 => "val1", "mixedTypeKey" => "val2"]]],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[documentVal] is not a valid document type"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' => ["nestedVal" => [0]]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' => ["nestedVal" => ["doubleNestedVal" => [0]]]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' =>  null],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[unionVal] is a union type and must have exactly one non null value"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' =>  ['nestedVal' => true, 'nestedVal2' => false], ],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[unionVal] is a union type and must have exactly one non null value"
+            ],
         ];
     }
 
@@ -432,6 +619,7 @@ class ValidatorTest extends TestCase
 
         try {
             $validator->validate('Foo', $shape, $input);
+            $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
             if ($result !== true) {
                 $this->fail('Should have failed with ' . $result);
             }
@@ -444,12 +632,10 @@ class ValidatorTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage expected string length to be >= 1, but found string length of 0
-     */
     public function testValidatesMinByDefault()
     {
+        $this->expectExceptionMessage("expected string length to be >= 1, but found string length of 0");
+        $this->expectException(\InvalidArgumentException::class);
         $shape = Shape::create(
             [
                 'type' => 'structure',
@@ -461,6 +647,7 @@ class ValidatorTest extends TestCase
         $validator->validate('Foo', $shape, ['foo' => '']);
     }
 
+    /** @doesNotPerformAssertions */
     public function testDoesNotValidateMaxByDefault()
     {
         $shape = Shape::create(
@@ -474,6 +661,7 @@ class ValidatorTest extends TestCase
         $validator->validate('Foo', $shape, ['foo' => '1234567890']);
     }
 
+    /** @doesNotPerformAssertions */
     public function testDoesNotValidatePatternsByDefault()
     {
         $validator = new Validator();
@@ -492,6 +680,7 @@ class ValidatorTest extends TestCase
         $validator->validate('Foo', $shape, ['caps' => 'abc']);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanDisableRequiredTrait()
     {
         $validator = new Validator(['required' => false]);

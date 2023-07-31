@@ -218,7 +218,8 @@
             "type": "structure",
             "required": [
                 "name",
-                "timeToLive"
+                "timeToLive",
+                "contextAttributes"
             ],
             "members": {
                 "name": {
@@ -562,6 +563,12 @@
                 },
                 "slotToElicit": {
                     "shape": "NonEmptyString"
+                },
+                "slotElicitationStyle": {
+                    "shape": "StyleType"
+                },
+                "subSlotToElicit": {
+                    "shape": "ElicitSubSlot"
                 }
             }
         },
@@ -572,7 +579,8 @@
                 "ConfirmIntent",
                 "Delegate",
                 "ElicitIntent",
-                "ElicitSlot"
+                "ElicitSlot",
+                "None"
             ]
         },
         "DisconnectionEvent": {
@@ -589,6 +597,20 @@
         },
         "Double": {
             "type": "double"
+        },
+        "ElicitSubSlot": {
+            "type": "structure",
+            "required": [
+                "name"
+            ],
+            "members": {
+                "name": {
+                    "shape": "NonEmptyString"
+                },
+                "subSlotToElicit": {
+                    "shape": "ElicitSubSlot"
+                }
+            }
         },
         "EpochMillis": {
             "type": "long"
@@ -724,6 +746,9 @@
                 },
                 "eventId": {
                     "shape": "EventId"
+                },
+                "recognizedBotMember": {
+                    "shape": "RecognizedBotMember"
                 }
             },
             "event": true
@@ -735,7 +760,8 @@
                 "Fulfilled",
                 "InProgress",
                 "ReadyForFulfillment",
-                "Waiting"
+                "Waiting",
+                "FulfillmentInProgress"
             ]
         },
         "InternalServerException": {
@@ -781,6 +807,9 @@
         },
         "Message": {
             "type": "structure",
+            "required": [
+                "contentType"
+            ],
             "members": {
                 "content": {
                     "shape": "Text"
@@ -808,6 +837,12 @@
                 "shape": "Message"
             },
             "max": 10
+        },
+        "Name": {
+            "type": "string",
+            "max": 100,
+            "min": 1,
+            "pattern": "^([0-9a-zA-Z][_-]?)+$"
         },
         "NonEmptyString": {
             "type": "string",
@@ -991,6 +1026,9 @@
                 },
                 "sessionId": {
                     "shape": "SessionId"
+                },
+                "recognizedBotMember": {
+                    "shape": "RecognizedBotMember"
                 }
             }
         },
@@ -1095,9 +1133,28 @@
                 },
                 "audioStream": {
                     "shape": "BlobStream"
+                },
+                "recognizedBotMember": {
+                    "shape": "NonEmptyString",
+                    "location": "header",
+                    "locationName": "x-amz-lex-recognized-bot-member"
                 }
             },
             "payload": "audioStream"
+        },
+        "RecognizedBotMember": {
+            "type": "structure",
+            "required": [
+                "botId"
+            ],
+            "members": {
+                "botId": {
+                    "shape": "BotIdentifier"
+                },
+                "botName": {
+                    "shape": "Name"
+                }
+            }
         },
         "ResourceNotFoundException": {
             "type": "structure",
@@ -1113,6 +1170,49 @@
                 "httpStatusCode": 404
             },
             "exception": true
+        },
+        "RuntimeHintDetails": {
+            "type": "structure",
+            "members": {
+                "runtimeHintValues": {
+                    "shape": "RuntimeHintValuesList"
+                },
+                "subSlotHints": {
+                    "shape": "SlotHintsSlotMap"
+                }
+            }
+        },
+        "RuntimeHintPhrase": {
+            "type": "string",
+            "max": 140,
+            "min": 1
+        },
+        "RuntimeHintValue": {
+            "type": "structure",
+            "required": [
+                "phrase"
+            ],
+            "members": {
+                "phrase": {
+                    "shape": "RuntimeHintPhrase"
+                }
+            }
+        },
+        "RuntimeHintValuesList": {
+            "type": "list",
+            "member": {
+                "shape": "RuntimeHintValue"
+            },
+            "max": 100,
+            "min": 1
+        },
+        "RuntimeHints": {
+            "type": "structure",
+            "members": {
+                "slotHints": {
+                    "shape": "SlotHintsIntentMap"
+                }
+            }
         },
         "SensitiveNonEmptyString": {
             "type": "string",
@@ -1178,15 +1278,53 @@
                 },
                 "originatingRequestId": {
                     "shape": "NonEmptyString"
+                },
+                "runtimeHints": {
+                    "shape": "RuntimeHints"
                 }
             }
+        },
+        "Shape": {
+            "type": "string",
+            "enum": [
+                "Scalar",
+                "List",
+                "Composite"
+            ]
         },
         "Slot": {
             "type": "structure",
             "members": {
                 "value": {
                     "shape": "Value"
+                },
+                "shape": {
+                    "shape": "Shape"
+                },
+                "values": {
+                    "shape": "Values"
+                },
+                "subSlots": {
+                    "shape": "Slots"
                 }
+            }
+        },
+        "SlotHintsIntentMap": {
+            "type": "map",
+            "key": {
+                "shape": "Name"
+            },
+            "value": {
+                "shape": "SlotHintsSlotMap"
+            }
+        },
+        "SlotHintsSlotMap": {
+            "type": "map",
+            "key": {
+                "shape": "Name"
+            },
+            "value": {
+                "shape": "RuntimeHintDetails"
             }
         },
         "Slots": {
@@ -1338,6 +1476,14 @@
                 "shape": "String"
             }
         },
+        "StyleType": {
+            "type": "string",
+            "enum": [
+                "Default",
+                "SpellByLetter",
+                "SpellByWord"
+            ]
+        },
         "Text": {
             "type": "string",
             "max": 1024,
@@ -1431,6 +1577,12 @@
                 "resolvedValues": {
                     "shape": "StringList"
                 }
+            }
+        },
+        "Values": {
+            "type": "list",
+            "member": {
+                "shape": "Slot"
             }
         }
     }

@@ -528,5 +528,183 @@
         }
       }
     ]
+  },
+  {
+    "description": "Serialize document with standalone primitive type in a JSON response",
+    "metadata": {
+      "protocol": "json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "inlineDocument": {
+            "shape": "DocumentType"
+          }
+        }
+      },
+      "DocumentType": {
+        "type": "structure",
+        "document": true
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "inlineDocument": "foo"
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"inlineDocument\": \"foo\"}"
+        }
+      },
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "inlineDocument": 123
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"inlineDocument\": 123}"
+        }
+      },
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "inlineDocument": true
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"inlineDocument\": true}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Serialize inline document in a JSON response",
+    "metadata": {
+      "protocol": "json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "inlineDocument": {
+            "shape": "DocumentType"
+          }
+        }
+      },
+      "DocumentType": {
+        "type": "structure",
+        "document": true
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "inlineDocument": {"foo": "bar"}
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"inlineDocument\": {\"foo\": \"bar\"}}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Serialize aggregate documents in a JSON response",
+    "metadata": {
+      "protocol": "json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "parentDocument": {
+            "shape": "DocumentType"
+          }
+        }
+      },
+      "DocumentType": {
+        "type": "structure",
+        "document": true
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "parentDocument": {
+            "childDocument1": {
+              "foo": "test"
+            },
+            "childDocument2": {
+              "bar": true
+            },
+            "childDocument3": 123
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"parentDocument\": {\"childDocument1\": {\"foo\": \"test\"}, \"childDocument2\": {\"bar\": true}, \"childDocument3\": 123}}"
+        }
+      },
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "parentDocument": [
+            {
+              "foo": "test"
+            },
+            {
+              "bar": true
+            },
+            123
+          ]
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"parentDocument\": [{\"foo\": \"test\"}, {\"bar\": true}, 123]}"
+        }
+      }
+    ]
   }
 ]

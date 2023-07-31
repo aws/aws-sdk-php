@@ -61,6 +61,15 @@ foreach (glob(__DIR__ . '/../src/data/**/**/api-2.json') as $file) {
             : $metadata['serviceFullName'];
         $ns = str_replace(['Amazon', 'AWS', 'Beta', '(', ')', ' ', '/', '-'], '', $ns);
 
+        //check if it's a grandfathered namespace
+        $grandfatheredServices = json_decode(
+            file_get_contents(__DIR__ . '/../src/data/grandfathered-services.json'),
+            true
+        )['grandfathered-services'];
+        if (!in_array($ns, $grandfatheredServices)) {
+            $ns = str_replace(' ', '', ucwords($metadata['serviceId']));
+        }
+
         if (!isset($possibleNamespaces[strtolower($ns)])) {
             throw new \Exception('NS not found: ' . $ns);
         }
@@ -75,6 +84,14 @@ foreach (glob(__DIR__ . '/../src/data/**/**/api-2.json') as $file) {
 
     $manifest[$identifier]['versions'][$metadata['apiVersion']]
         = $metadata['apiVersion'];
+
+    $serviceIdentifier = isset($metadata['serviceId'])
+        ? str_replace(' ', '_', strtolower($metadata['serviceId']))
+        : '';
+
+    if (!empty($serviceIdentifier)) {
+        $manifest[$identifier]['serviceIdentifier'] = $serviceIdentifier;
+    }
 }
 
 foreach ($manifest as $identifier => &$metadata) {

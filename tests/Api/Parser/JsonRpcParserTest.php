@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class JsonRpcParserTest extends TestCase
 {
+    /** @doesNotPerformAssertions */
     public function testCanHandleNullResponses()
     {
         $operation = $this->getMockBuilder(Operation::class)

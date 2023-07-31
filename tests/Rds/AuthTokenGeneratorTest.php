@@ -4,7 +4,7 @@ namespace Aws\Test\Rds;
 use Aws\Credentials\Credentials;
 use Aws\Rds\AuthTokenGenerator;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Rds\AuthTokenGenerator
@@ -21,13 +21,13 @@ class AuthTokenGeneratorTest extends TestCase
             'myDBUser'
         );
 
-        $this->assertContains('prod-instance.us-east-1.rds.amazonaws.com:3306', $token);
-        $this->assertContains('us-west-2', $token);
-        $this->assertContains('X-Amz-Credential=foo', $token);
-        $this->assertContains('X-Amz-Expires=900', $token);
-        $this->assertContains('X-Amz-SignedHeaders=host', $token);
-        $this->assertContains('DBUser=myDBUser', $token);
-        $this->assertContains('Action=connect', $token);
+        $this->assertStringContainsString('prod-instance.us-east-1.rds.amazonaws.com:3306', $token);
+        $this->assertStringContainsString('us-west-2', $token);
+        $this->assertStringContainsString('X-Amz-Credential=foo', $token);
+        $this->assertStringContainsString('X-Amz-Expires=900', $token);
+        $this->assertStringContainsString('X-Amz-SignedHeaders=host', $token);
+        $this->assertStringContainsString('DBUser=myDBUser', $token);
+        $this->assertStringContainsString('Action=connect', $token);
     }
 
     public function testCanCreateAuthTokenWthCredentialProvider()
@@ -35,7 +35,7 @@ class AuthTokenGeneratorTest extends TestCase
         $accessKeyId = 'AKID';
         $secretKeyId = 'SECRET';
         $provider = function () use ($accessKeyId, $secretKeyId) {
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Credentials($accessKeyId, $secretKeyId)
             );
         };
@@ -47,13 +47,13 @@ class AuthTokenGeneratorTest extends TestCase
             'myDBUser'
         );
 
-        $this->assertContains('prod-instance.us-east-1.rds.amazonaws.com:3306', $token);
-        $this->assertContains('us-west-2', $token);
-        $this->assertContains('X-Amz-Credential=AKID', $token);
-        $this->assertContains('X-Amz-Expires=900', $token);
-        $this->assertContains('X-Amz-SignedHeaders=host', $token);
-        $this->assertContains('DBUser=myDBUser', $token);
-        $this->assertContains('Action=connect', $token);
+        $this->assertStringContainsString('prod-instance.us-east-1.rds.amazonaws.com:3306', $token);
+        $this->assertStringContainsString('us-west-2', $token);
+        $this->assertStringContainsString('X-Amz-Credential=AKID', $token);
+        $this->assertStringContainsString('X-Amz-Expires=900', $token);
+        $this->assertStringContainsString('X-Amz-SignedHeaders=host', $token);
+        $this->assertStringContainsString('DBUser=myDBUser', $token);
+        $this->assertStringContainsString('Action=connect', $token);
     }
 
     public function lifetimeProvider()
@@ -82,13 +82,13 @@ class AuthTokenGeneratorTest extends TestCase
             $lifetime
         );
         $lifetimeInSeconds = $lifetime * 60;
-        $this->assertContains('prod-instance.us-east-1.rds.amazonaws.com:3306', $token);
-        $this->assertContains('us-west-2', $token);
-        $this->assertContains('X-Amz-Credential=foo', $token);
-        $this->assertContains("X-Amz-Expires={$lifetimeInSeconds}", $token);
-        $this->assertContains('X-Amz-SignedHeaders=host', $token);
-        $this->assertContains('DBUser=myDBUser', $token);
-        $this->assertContains('Action=connect', $token);
+        $this->assertStringContainsString('prod-instance.us-east-1.rds.amazonaws.com:3306', $token);
+        $this->assertStringContainsString('us-west-2', $token);
+        $this->assertStringContainsString('X-Amz-Credential=foo', $token);
+        $this->assertStringContainsString("X-Amz-Expires={$lifetimeInSeconds}", $token);
+        $this->assertStringContainsString('X-Amz-SignedHeaders=host', $token);
+        $this->assertStringContainsString('DBUser=myDBUser', $token);
+        $this->assertStringContainsString('Action=connect', $token);
     }
 
     public function lifetimeFailureProvider()
@@ -106,13 +106,13 @@ class AuthTokenGeneratorTest extends TestCase
 
     /**
      * @dataProvider lifetimeFailureProvider
-     * @param $lifetime
      *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Lifetime must be a positive number less than or equal to 15, was
+     * @param $lifetime
      */
     public function testThrowsExceptionWithInvalidLifetime($lifetime)
     {
+        $this->expectExceptionMessage("Lifetime must be a positive number less than or equal to 15, was");
+        $this->expectException(\InvalidArgumentException::class);
         $creds = new Credentials('foo', 'bar', 'baz');
         $connect = new AuthTokenGenerator($creds);
         $connect->createToken(

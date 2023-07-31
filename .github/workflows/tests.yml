@@ -7,13 +7,16 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: read
+
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       #for each of the following versions of PHP, with and without --prefer-lowest
       matrix:
-        php-versions: ['5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4']
+        php-versions: ['5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
         composer-options: ['', '--prefer-lowest']
     #set the name for each job
     name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
@@ -22,6 +25,7 @@ jobs:
       AWS_ACCESS_KEY_ID: foo
       AWS_SECRET_ACCESS_KEY: bar
       AWS_CSM_ENABLED: false
+      AWS_SUPPRESS_PHP_DEPRECATION_WARNING: true
     steps:
     #sets up the correct version of PHP with necessary config options
     - name: Setup PHP with Xdebug
@@ -33,34 +37,38 @@ jobs:
 
     #checkout the codebase from github
     - name: Checkout codebase
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     #validate composer files
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    #downgrade to supported php unit
-    - if: ${{ matrix.php-versions <= '7.1'  && matrix.php-versions > 5.5}}
-      name: PHP 5.6-7.1 specific setup
-      run: composer require --dev --ignore-platform-reqs phpunit/phpunit "^5.7.11"
-
-    #downgrade to supported php unit and remove incompatible xdebug file
+    #remove incompatible xdebug file if it exists
     - if: ${{ matrix.php-versions == '5.5' }}
-      name: PHP 5.5 specific setup
+      name: PHP 5.5
       run: |
-        sudo rm /etc/php5/cli/conf.d/20-xdebug.ini
-        composer require --dev --ignore-platform-reqs phpunit/phpunit "4.8.36"
+        sudo rm -f /etc/php5/cli/conf.d/20-xdebug.ini
 
     #get dependencies
     - name: Install dependencies
       run: composer update ${{ matrix.composer-options }} --no-interaction --prefer-source
 
+    #php 8.x requirements
+    - if: ${{ matrix.php-versions >= '8.0' && matrix.composer-options != '' }}
+      name: PHP 8.x
+      run: composer require --dev phpunit/phpunit "^9.5" --no-interaction --prefer-source --with-all-dependencies
+
+    #php 8.1+ requirements
+    - if: ${{ matrix.php-versions >= '8.1' && matrix.composer-options != '' }}
+      name: PHP 8.1+
+      run: composer require --dev guzzlehttp/guzzle "^7.4.5" --no-interaction --prefer-source --with-all-dependencies
+
     #run tests
     - name: Run test suite
       run: make test
 
-      #static analysis
-    - if: ${{ matrix.php-versions >= '7.1' && matrix.php-versions <= 7.4 && matrix.composer-options == '' }}
+    #static analysis
+    - if: ${{ matrix.php-versions >= '7.1' && matrix.php-versions < '8.0' && matrix.composer-options == '' }}
       name: Static analysis
       run: |
         composer require --dev nette/neon "^3.0"
@@ -70,9 +78,12 @@ jobs:
     #generate package
     - if:  ${{ matrix.composer-options == '' }}
       name: Package generation
-      run: make package
+      run: |
+        composer require guzzlehttp/psr7 "^1.9.1"
+        composer update
+        make package
 
     #generate code coverage
-    - if: ${{ matrix.php-versions == '7.1' && matrix.composer-options == '' }}
+    - if: ${{ (matrix.php-versions == '7.1' || matrix.php-versions == '8.0') && matrix.composer-options == '' }}
       name: Code coverage
       run: bash <(curl -s https://codecov.io/bash)

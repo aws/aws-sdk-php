@@ -3,7 +3,7 @@
 namespace Aws\Test\S3\RegionalEndpoint;
 
 use Aws\Sts\RegionalEndpoints\Configuration;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\S3\RegionalEndpoint\Configuration
@@ -31,12 +31,10 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->toArray());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Configuration parameter must either be 'legacy' or 'regional'.
-     */
     public function testThrowsOnInvalidEndpointsType()
     {
+        $this->expectExceptionMessage("Configuration parameter must either be 'legacy' or 'regional'.");
+        $this->expectException(\InvalidArgumentException::class);
         new Configuration('invalid_type');
     }
 }

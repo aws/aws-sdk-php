@@ -6,7 +6,7 @@ use Aws\Glacier\GlacierClient;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Glacier\GlacierClient
@@ -45,14 +45,12 @@ class GlacierClientTest extends TestCase
         $this->assertSame($hash, $request->getHeaderLine('x-amz-sha256-tree-hash'));
     }
 
-    /**
-     * @expectedException \Aws\Exception\CouldNotCreateChecksumException
-     */
     public function testErrorWhenHashingNonSeekableStream()
     {
+        $this->expectException(\Aws\Exception\CouldNotCreateChecksumException::class);
         $this->getTestClient('Glacier')->uploadArchive([
             'vaultName' => 'foo',
-            'body'      => new NoSeekStream(Psr7\stream_for('foo')),
+            'body'      => new NoSeekStream(Psr7\Utils::streamFor('foo')),
         ]);
     }
 }

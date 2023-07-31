@@ -9,7 +9,7 @@ use Aws\Middleware;
 use Aws\Test\S3Control\S3ControlTestingTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -43,7 +43,7 @@ class EndpointArnMiddlewareTest extends TestCase
         $signingService
     ) {
         $options['http_handler'] = function($req) {
-            return Promise\promise_for(new Response());
+            return Promise\Create::promiseFor(new Response());
         };
         $s3control = $this->getTestClient($options);
         $command = $s3control->getCommand($cmdName, $cmdParams);
@@ -58,7 +58,7 @@ class EndpointArnMiddlewareTest extends TestCase
                     $req->getUri()->getHost()
                 );
                 $this->assertSame("/{$target}", $req->getRequestTarget());
-                $this->assertContains(
+                $this->assertStringContainsString(
                     "/{$signingRegion}/{$signingService}",
                     $req->getHeader('Authorization')[0]
                 );
@@ -137,13 +137,34 @@ class EndpointArnMiddlewareTest extends TestCase
                 'GetAccessPoint',
                 [
                     'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-us-gov:s3-outposts:us-gov-west-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'us-gov-west-1',
+                    'use_fips_endpoint' => true,
+                ],
+                's3-outposts-fips.us-gov-west-1.amazonaws.com',
+                'v20180820/accesspoint/myaccesspoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-gov-west-1',
+                's3-outposts',
+            ],
+            // Outposts accesspoint ARN, fips flag, use arn region
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
                     'Name' => 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
                 ],
                 [
-                    'region' => 'fips-us-gov-east-1',
+                    'region' => 'us-gov-west-1',
+                    'use_fips_endpoint' => true,
                     'use_arn_region' => true,
                 ],
-                's3-outposts.us-gov-east-1.amazonaws.com',
+                's3-outposts-fips.us-gov-east-1.amazonaws.com',
                 'v20180820/accesspoint/myaccesspoint',
                 [
                     'x-amz-account-id' => '123456789012',
@@ -230,7 +251,7 @@ class EndpointArnMiddlewareTest extends TestCase
                 'us-gov-east-1',
                 's3-outposts',
             ],
-            // Outposts bucket ARN, aws-us-gov, fips
+            // Outposts bucket ARN, aws-us-gov, use fips region
             [
                 'DeleteBucket',
                 [
@@ -238,16 +259,37 @@ class EndpointArnMiddlewareTest extends TestCase
                     'Bucket' => 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
                 ],
                 [
-                    'region' => 'fips-us-gov-east-1',
+                    'region' => 'us-gov-west-1',
                     'use_arn_region' => true,
+                    'use_fips_endpoint' => true,
                 ],
-                's3-outposts.us-gov-east-1.amazonaws.com',
+                's3-outposts-fips.us-gov-east-1.amazonaws.com',
                 'v20180820/bucket/mybucket',
                 [
                     'x-amz-account-id' => '123456789012',
                     'x-amz-outpost-id' => 'op-01234567890123456',
                 ],
                 'us-gov-east-1',
+                's3-outposts',
+            ],
+            // Outposts bucket ARN, aws-us-gov
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-us-gov:s3-outposts:us-gov-west-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-gov-west-1',
+                    'use_fips_endpoint' => true,
+                ],
+                's3-outposts-fips.us-gov-west-1.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-gov-west-1',
                 's3-outposts',
             ],
             // Special case: CreateBucket, normal parameter
@@ -395,7 +437,7 @@ class EndpointArnMiddlewareTest extends TestCase
         \Exception $expectedException
     ) {
         $options['http_handler'] = function($req) {
-            return Promise\promise_for(new Response());
+            return Promise\Create::promiseFor(new Response());
         };
         $s3control = $this->getTestClient($options);
         $command = $s3control->getCommand($cmdName, $cmdParams);
@@ -422,9 +464,11 @@ class EndpointArnMiddlewareTest extends TestCase
                 ],
                 [
                     'region' => 'us-west-2',
+                    'use_arn_region' => false,
                 ],
-                new InvalidRegionException("The region specified in the ARN"
-                    . " (us-east-1) does not match the client region (us-west-2)."),
+                new UnresolvedEndpointException(
+                    'Invalid configuration: region from ARN `us-east-1` does not match client region `us-west-2` and UseArnRegion is `false`'
+                ),
             ],
             // Outposts accesspoint ARN, different partition
             [
@@ -437,37 +481,35 @@ class EndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_arn_region' => true,
                 ],
-                new InvalidRegionException("The supplied ARN partition does not"
-                    . " match the client's partition."),
-            ],
-            // Outposts accesspoint ARN, fips
-            [
-                'GetAccessPoint',
-                [
-                    'AccountId' => '123456789012',
-                    'Name' => 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
-                ],
-                [
-                    'region' => 'fips-us-gov-east-1',
-                ],
-                new InvalidRegionException("Fips is currently not supported with"
-                    . " S3 Outposts access points. Please provide a non-fips"
-                    . " region or do not supply an access point ARN."),
+                new UnresolvedEndpointException(
+                    'Client was configured for partition `aws` but ARN has `aws-cn`'
+                ),
             ],
             // Outposts accesspoint ARN, fips, use_arn_region true
             [
                 'GetAccessPoint',
                 [
                     'AccountId' => '123456789012',
-                    'Name' => 'arn:aws-us-gov:s3-outposts:fips-us-gov-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                    'Name' => 'arn:aws:s3-outposts:us-gov-west-1-fips:123456789012:outpost:op-01234567890123456:bucket:mybucket'
                 ],
                 [
-                    'region' => 'fips-us-gov-east-1',
-                    'use_arn_region' => true,
+                    'region' => 'us-gov-east-1',
                 ],
-                new InvalidRegionException("Fips is currently not supported with"
-                    . " S3 Outposts access points. Please provide a non-fips"
-                    . " region or do not supply an access point ARN."),
+                new UnresolvedEndpointException(
+                    'Client was configured for partition `aws-us-gov` but ARN has `aws`'
+                )
+            ],
+            // Outposts bucket ARN, fips, use_arn_region true
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-us-gov:s3-outposts:us-gov-west-1-fips:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'us-gov-east-1',
+                ],
+                new UnresolvedEndpointException("Client was configured for partition `aws-us-gov` but ARN has `aws`")
             ],
             // Outposts accesspoint ARN, dualstack
             [
@@ -480,9 +522,7 @@ class EndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_dual_stack_endpoint' => true,
                 ],
-                new UnresolvedEndpointException("Dualstack is currently not"
-                    . " supported with S3 Outposts ARNs. Please disable"
-                    . " dualstack or do not supply an Outposts ARN."),
+                new UnresolvedEndpointException("Invalid configuration: Outpost Access Points do not support dual-stack"),
             ],
             // Outposts accesspoint ARN, invalid ARN
             [
@@ -494,21 +534,7 @@ class EndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'us-west-2',
                 ],
-                new InvalidArnException("Provided ARN was not a valid S3 access"
-                    . " point ARN."),
-            ],
-            // Outposts bucket ARN, different region
-            [
-                'DeleteBucket',
-                [
-                    'AccountId' => '123456789012',
-                    'Bucket' => 'arn:aws:s3-outposts:us-east-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
-                ],
-                [
-                    'region' => 'us-west-2',
-                ],
-                new InvalidRegionException("The region specified in the ARN"
-                    . " (us-east-1) does not match the client region (us-west-2)."),
+                new UnresolvedEndpointException('Invalid ARN: The Outpost Id was not set'),
             ],
             // Outposts bucket ARN, different partition
             [
@@ -520,37 +546,24 @@ class EndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'us-west-2',
                 ],
-                new InvalidRegionException("The supplied ARN partition does not"
-                    . " match the client's partition."),
+                new UnresolvedEndpointException(
+                    'Client was configured for partition `aws` but ARN has `aws-cn`'
+                ),
             ],
-            // Outposts bucket ARN, fips
+            // Outposts bucket ARN, fips, use_arn_region false
             [
                 'DeleteBucket',
                 [
                     'AccountId' => '123456789012',
-                    'Bucket' => 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                    'Bucket' => 'arn:aws-us-gov:s3-outposts:fips-us-gov-west-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
                 ],
                 [
                     'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => false
                 ],
-                new InvalidRegionException("Fips is currently not supported with"
-                    . " S3 Outposts access points. Please provide a non-fips"
-                    . " region or do not supply an access point ARN."),
-            ],
-            // Outposts bucket ARN, fips, use_arn_region true
-            [
-                'DeleteBucket',
-                [
-                    'AccountId' => '123456789012',
-                    'Bucket' => 'arn:aws-us-gov:s3-outposts:fips-us-gov-east-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
-                ],
-                [
-                    'region' => 'fips-us-gov-east-1',
-                    'use_arn_region' => true
-                ],
-                new InvalidRegionException("Fips is currently not supported with"
-                    . " S3 Outposts access points. Please provide a non-fips"
-                    . " region or do not supply an access point ARN."),
+                new UnresolvedEndpointException(
+                    'Invalid configuration: region from ARN `fips-us-gov-west-1` does not match client region `us-gov-east-1` and UseArnRegion is `false`'
+                )
             ],
             // Outposts bucket ARN, dualstack
             [
@@ -563,9 +576,9 @@ class EndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_dual_stack_endpoint' => true,
                 ],
-                new UnresolvedEndpointException("Dualstack is currently not"
-                    . " supported with S3 Outposts ARNs. Please disable dualstack"
-                    . " or do not supply an Outposts ARN."),
+                new UnresolvedEndpointException(
+                    "Invalid configuration: Outpost buckets do not support dual-stack"
+                ),
             ],
             // Outposts bucket ARN, invalid ARN
             [
@@ -577,8 +590,7 @@ class EndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'us-west-2',
                 ],
-                new InvalidArnException("Provided ARN was not a valid S3 bucket"
-                    . " ARN."),
+                new UnresolvedEndpointException("Invalid ARN: The Outpost Id was not set"),
             ],
         ];
     }

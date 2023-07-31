@@ -188,9 +188,10 @@
       "type":"list",
       "member":{"shape":"AttachmentItem"}
     },
+    "Bool":{"type":"boolean"},
     "ChatContent":{
       "type":"string",
-      "max":1024,
+      "max":16384,
       "min":1
     },
     "ChatContentType":{
@@ -215,7 +216,9 @@
         "MESSAGE",
         "EVENT",
         "ATTACHMENT",
-        "CONNECTION_ACK"
+        "CONNECTION_ACK",
+        "MESSAGE_DELIVERED",
+        "MESSAGE_READ"
       ]
     },
     "ClientToken":{
@@ -287,17 +290,15 @@
     },
     "CreateParticipantConnectionRequest":{
       "type":"structure",
-      "required":[
-        "Type",
-        "ParticipantToken"
-      ],
+      "required":["ParticipantToken"],
       "members":{
         "Type":{"shape":"ConnectionTypeList"},
         "ParticipantToken":{
           "shape":"ParticipantToken",
           "location":"header",
           "locationName":"X-Amz-Bearer"
-        }
+        },
+        "ConnectParticipant":{"shape":"Bool"}
       }
     },
     "CreateParticipantConnectionResponse":{
@@ -409,7 +410,10 @@
         "ParticipantId":{"shape":"ParticipantId"},
         "DisplayName":{"shape":"DisplayName"},
         "ParticipantRole":{"shape":"ParticipantRole"},
-        "Attachments":{"shape":"Attachments"}
+        "Attachments":{"shape":"Attachments"},
+        "MessageMetadata":{"shape":"MessageMetadata"},
+        "RelatedContactId":{"shape":"ContactId"},
+        "ContactId":{"shape":"ContactId"}
       }
     },
     "MaxResults":{
@@ -418,6 +422,13 @@
       "min":0
     },
     "Message":{"type":"string"},
+    "MessageMetadata":{
+      "type":"structure",
+      "members":{
+        "MessageId":{"shape":"ChatItemId"},
+        "Receipts":{"shape":"Receipts"}
+      }
+    },
     "MostRecent":{
       "type":"integer",
       "max":100,
@@ -465,6 +476,18 @@
       "type":"string",
       "max":2000,
       "min":1
+    },
+    "Receipt":{
+      "type":"structure",
+      "members":{
+        "DeliveredTimestamp":{"shape":"Instant"},
+        "ReadTimestamp":{"shape":"Instant"},
+        "RecipientParticipantId":{"shape":"ParticipantId"}
+      }
+    },
+    "Receipts":{
+      "type":"list",
+      "member":{"shape":"Receipt"}
     },
     "ScanDirection":{
       "type":"string",

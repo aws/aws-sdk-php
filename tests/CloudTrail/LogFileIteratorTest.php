@@ -8,7 +8,7 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\CloudTrail\LogFileIterator
@@ -28,14 +28,12 @@ class LogFileIteratorTest extends TestCase
         $json = '{"trailList":[{"IncludeGlobalServiceEvents":true,"Name":"Default","S3BucketName":"log-bucket"}]}';
         $this->addMockResults($cloudTrailClient, [new Result(json_decode($json, true))]);
         $files = LogFileIterator::forTrail($s3Client, $cloudTrailClient);
-        $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
+        $this->assertInstanceOf(LogFileIterator::class, $files);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryErrorsOnUnknownBucket()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s3Client = $this->getMockS3Client();
         $cloudTrailClient = CloudTrailClient::factory([
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
@@ -52,7 +50,7 @@ class LogFileIteratorTest extends TestCase
     {
         $s3Client = $this->getMockS3Client();
         $files = new LogFileIterator($s3Client, 'test-bucket');
-        $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
+        $this->assertInstanceOf(LogFileIterator::class, $files);
     }
 
     public function testConstructorWorksWithDates()
@@ -62,14 +60,12 @@ class LogFileIteratorTest extends TestCase
             LogFileIterator::START_DATE => new \DateTime('2013-11-01'),
             LogFileIterator::END_DATE   => '2013-12-01',
         ]);
-        $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
+        $this->assertInstanceOf(LogFileIterator::class, $files);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testConstructorErrorsOnInvalidDate()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s3Client = $this->getMockS3Client();
         new LogFileIterator($s3Client, 'test-bucket', [
             LogFileIterator::START_DATE => true,

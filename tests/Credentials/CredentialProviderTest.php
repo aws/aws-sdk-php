@@ -4,18 +4,19 @@ namespace Aws\Test\Credentials;
 use Aws\Api\DateTimeResult;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Credentials\EcsCredentialProvider;
+use Aws\Credentials\InstanceProfileProvider;
 use Aws\History;
 use Aws\LruArrayCache;
-use Aws\Middleware;
 use Aws\Result;
-use Aws\Sts\StsClient;
+use Aws\Token\SsoTokenProvider;
 use GuzzleHttp\Promise;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 
 /**
- * @covers \Aws\Credentials\CredentialProvider
+ * @covers Aws\Credentials\CredentialProvider
  */
 class CredentialProviderTest extends TestCase
 {
@@ -36,6 +37,8 @@ EOT;
         putenv(CredentialProvider::ENV_SECRET . '=');
         putenv(CredentialProvider::ENV_PROFILE . '=');
         putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI');
+        putenv('AWS_CONTAINER_CREDENTIALS_FULL_URI');
+        putenv('AWS_CONTAINER_AUTHORIZATION_TOKEN');
         putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG');
         putenv('AWS_WEB_IDENTITY_TOKEN_FILE');
         putenv('AWS_ROLE_ARN');
@@ -46,6 +49,8 @@ EOT;
         unset($_SERVER[CredentialProvider::ENV_SECRET]);
         unset($_SERVER[CredentialProvider::ENV_PROFILE]);
         unset($_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI']);
+        unset($_SERVER['AWS_CONTAINER_CREDENTIALS_FULL_URI']);
+        unset($_SERVER['AWS_CONTAINER_AUTHORIZATION_TOKEN']);
         unset($_SERVER['AWS_SDK_LOAD_NONDEFAULT_CONFIG']);
         unset($_SERVER['AWS_WEB_IDENTITY_TOKEN_FILE']);
         unset($_SERVER['AWS_ROLE_ARN']);
@@ -61,7 +66,7 @@ EOT;
         return $dir;
     }
 
-    public function setUp()
+    public function set_up()
     {
         $this->home = getenv('HOME');
         $this->homedrive = getenv('HOMEDRIVE');
@@ -71,7 +76,7 @@ EOT;
         $this->profile = getenv(CredentialProvider::ENV_PROFILE);
     }
 
-    public function tearDown()
+    public function tear_down()
     {
         putenv('HOME=' . $this->home);
         putenv('HOMEDRIVE=' . $this->homedrive);
@@ -113,7 +118,7 @@ EOT;
         $timesCalled = 0;
         $recordKeepingProvider = function () use (&$timesCalled) {
             ++$timesCalled;
-            return Promise\promise_for(new Credentials('foo', 'bar', 'baz', PHP_INT_MAX));
+            return Promise\Create::promiseFor(new Credentials('foo', 'bar', 'baz', PHP_INT_MAX));
         };
 
         call_user_func(
@@ -135,7 +140,7 @@ EOT;
             if (0 === $timesCalled) {
                 ++$timesCalled;
 
-                return Promise\promise_for($creds);
+                return Promise\Create::promiseFor($creds);
             }
 
             throw new \BadFunctionCallException('I was called too many times!');
@@ -260,12 +265,10 @@ EOT;
         unlink($dir . '/credentials');
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service
-     */
     public function testIgnoresIniWithUseAwsConfigFileFalse()
     {
+        $this->expectExceptionMessage("Error retrieving credentials from the instance profile metadata service");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/credentials', self::$standardIni);
         $expectedCreds = [
@@ -283,12 +286,10 @@ EOT;
         unlink($dir . '/credentials');
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Invalid credentials file:
-     */
     public function testEnsuresIniFileIsValid()
     {
+        $this->expectExceptionMessage("Invalid credentials file:");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/credentials', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
@@ -301,21 +302,17 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     */
     public function testEnsuresIniFileExists()
     {
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
         call_user_func(CredentialProvider::ini())->wait();
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     */
     public function testEnsuresProfileIsNotEmpty()
     {
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = "[default]\naws_access_key_id = foo\n"
             . "aws_secret_access_key = baz\n[foo]";
@@ -330,12 +327,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage 'foo' not found in
-     */
     public function testEnsuresFileIsNotEmpty()
     {
+        $this->expectExceptionMessage("'foo' not found in");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/credentials', '');
         putenv('HOME=' . dirname($dir));
@@ -480,12 +475,10 @@ EOT;
         $this->assertSame($expires, $creds->getExpiration());
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage No credential_process present in INI profile
-     */
     public function testEnsuresProcessCredentialIsPresent()
     {
+        $this->expectExceptionMessage("No credential_process present in INI profile");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
@@ -504,12 +497,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage credential_process does not return Version == 1
-     */
     public function testEnsuresProcessCredentialVersion()
     {
+        $this->expectExceptionMessage("credential_process does not return Version == 1");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
@@ -527,12 +518,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage credential_process returned expired credentials
-     */
     public function testEnsuresProcessCredentialsAreCurrent()
     {
+        $this->expectExceptionMessage("credential_process returned expired credentials");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
@@ -550,12 +539,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage credential_process returned invalid expiration
-     */
     public function testEnsuresProcessCredentialsExpirationIsValid()
     {
+        $this->expectExceptionMessage("credential_process returned invalid expiration");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
@@ -576,13 +563,13 @@ EOT;
     public function testCreatesFromInstanceProfileProvider()
     {
         $p = CredentialProvider::instanceProfile();
-        $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $p);
+        $this->assertInstanceOf(InstanceProfileProvider::class, $p);
     }
 
     public function testCreatesFromEcsCredentialProvider()
     {
         $p = CredentialProvider::ecsCredentials();
-        $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $p);
+        $this->assertInstanceOf(EcsCredentialProvider::class, $p);
     }
 
     public function testCreatesFromRoleArn()
@@ -628,11 +615,11 @@ EOT;
             ))->wait();
 
             $body = (string) $history->getLastRequest()->getBody();
-            $this->assertContains('RoleSessionName=foobar', $body);
+            $this->assertStringContainsString('RoleSessionName=foobar', $body);
             $this->assertSame('foo', $creds->getAccessKeyId());
             $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
-            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {
             throw $e;
@@ -641,12 +628,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Circular source_profile reference found.
-     */
     public function testCreatesFromRoleArnCatchesCircular()
     {
+        $this->expectExceptionMessage("Circular source_profile reference found.");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [assume1]
@@ -715,7 +700,7 @@ EOT;
 
             $last = $history->getLastRequest();
             $body = (string) $history->getLastRequest()->getBody();
-            $this->assertRegExp('/RoleSessionName=aws-sdk-php-\d{13}/', $body);
+            $this->assertMatchesRegularExpression('/RoleSessionName=aws-sdk-php-\d{13}/', $body);
         } catch (\Exception $e) {
             throw $e;
         } finally {
@@ -723,12 +708,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Role assumption profiles are disabled. Failed to load profile assume
-     */
     public function testEnsuresAssumeRoleCanBeDisabled()
     {
+        $this->expectExceptionMessage("Role assumption profiles are disabled. Failed to load profile assume");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
@@ -759,12 +742,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Either source_profile or credential_source must be set using profile assume, but not both
-     */
     public function testEnsuresSourceProfileIsSpecified()
     {
+        $this->expectExceptionMessage("Either source_profile or credential_source must be set using profile assume, but not both");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
@@ -786,12 +767,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage A role_arn must be provided with credential_source in
-     */
     public function testAssumeRoleInConfigFromCredentialSourceNoRoleArn()
     {
+        $this->expectExceptionMessage("A role_arn must be provided with credential_source in");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         putenv(CredentialProvider::ENV_KEY . '=abc');
         putenv(CredentialProvider::ENV_SESSION . '');
@@ -815,12 +794,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Could not find environment variable credentials in AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY
-     */
     public function testAssumeRoleInConfigFromFailingCredentialsSource()
     {
+        $this->expectExceptionMessage("Could not find environment variable credentials in AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         putenv(CredentialProvider::ENV_KEY . '=abc');
         putenv(CredentialProvider::ENV_SESSION . '');
@@ -879,12 +856,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service
-     */
     public function testAssumeRoleInConfigFromCredentialsSourceEc2InstanceMetadata()
     {
+        $this->expectExceptionMessage("Error retrieving credentials from the instance profile metadata service");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
 
         $credentials = <<<EOT
@@ -910,12 +885,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error retrieving credential from ECS
-     */
     public function testAssumeRoleInConfigFromCredentialsSourceEcsContainer()
     {
+        $this->expectExceptionMessage("Error retrieving credential from ECS");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
 
         $credentials = <<<EOT
@@ -941,12 +914,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Invalid credential_source found in config file: InvalidSource. Valid inputs include Environment, Ec2InstanceMetadata, and EcsContainer.
-     */
     public function testAssumeRoleInConfigFromInvalidCredentialsSource()
     {
+        $this->expectExceptionMessage("Invalid credential_source found in config file: InvalidSource. Valid inputs include Environment, Ec2InstanceMetadata, and EcsContainer.");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
 
         $credentials = <<<EOT
@@ -971,12 +942,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Either source_profile or credential_source must be set using profile assume, but not both
-     */
     public function testAssumeRoleInConfigFromCredentialsSourceAndSourceProfile()
     {
+        $this->expectExceptionMessage("Either source_profile or credential_source must be set using profile assume, but not both");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [assume]
@@ -997,12 +966,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage source_profile default using profile assume does not exist
-     */
     public function testEnsuresSourceProfileConfigIsSpecified()
     {
+        $this->expectExceptionMessage("source_profile default using profile assume does not exist");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [assume]
@@ -1022,12 +989,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage No credentials present in INI profile 'default'
-     */
     public function testEnsuresSourceProfileHasCredentials()
     {
+        $this->expectExceptionMessage("No credentials present in INI profile 'default'");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
@@ -1049,7 +1014,7 @@ EOT;
     }
 
 
-    public function testSsoProfileProvider()
+    public function testLegacySsoProfileProvider()
     {
         $dir = $this->clearEnv();
         $expiration = DateTimeResult::fromEpoch(time() + 1000);
@@ -1075,7 +1040,7 @@ EOT;
         file_put_contents(
             $tokenFileName, $tokenFile
         );
-        putenv('HOME=' . dirname($dir));
+
         $configFilename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
@@ -1114,6 +1079,87 @@ EOT;
         }
     }
 
+    public function testSsoProfileProviderWithNewFileFormat()
+    {
+        $dir = $this->clearEnv();
+        $expiration = time() + 1000;
+        $ini = <<<EOT
+[default]
+sso_account_id = 12345
+sso_session = session-name
+sso_role_name = roleName
+
+[sso-session session-name]
+sso_start_url = url.co.uk
+sso_region = us-west-2
+
+
+EOT;
+        $tokenFile = <<<EOT
+{
+    "startUrl": "https://d-123.awsapps.com/start",
+    "region": "us-west-2",
+    "accessToken": "token",
+    "expiresAt": "2500-12-25T21:30:00Z"
+}
+EOT;
+
+        putenv('HOME=' . dirname($dir));
+
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+
+        $tokenFileDirectory = $dir . "/sso/cache/";
+        if (!is_dir($tokenFileDirectory)) {
+            mkdir($tokenFileDirectory, 0777, true);
+        }
+        $tokenLocation = SsoTokenProvider::getTokenLocation('session-name');
+        if (!is_dir(dirname($tokenLocation))) {
+            mkdir(dirname($tokenLocation), 0777, true);
+        }
+        file_put_contents(
+            $tokenLocation, $tokenFile
+        );
+
+        $configFilename = $dir . '/config';
+
+        $result = [
+            'roleCredentials' => [
+                'accessKeyId'     => 'foo',
+                'secretAccessKey' => 'assumedSecret',
+                'sessionToken'    => null,
+                'expiration'      => $expiration
+            ],
+        ];
+
+        $sso = $this->getTestClient('Sso', ['credentials' => false]);
+        $this->addMockResults($sso, [
+            new Result($result)
+        ]);
+
+        try {
+            $creds = call_user_func(CredentialProvider::sso(
+                'default',
+                $configFilename,
+                [
+                    'ssoClient' => $sso
+                ]
+            ))->wait();
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertGreaterThan(
+                DateTimeResult::fromEpoch(time())->getTimestamp(),
+                $creds->getExpiration()
+            );
+        } finally {
+            unlink($dir . '/config');
+            unlink($tokenLocation);
+            rmdir($tokenFileDirectory);
+            rmdir($dir . "/sso/");
+        }
+    }
+
 
     public function testSsoProfileProviderAddedToDefaultChain()
     {
@@ -1141,7 +1187,7 @@ EOT;
         file_put_contents(
             $tokenFileName, $tokenFile
         );
-        putenv('HOME=' . dirname($dir));
+
         $configFilename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
@@ -1178,12 +1224,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage must contain an access token and an expiration
-     */
     public function testSsoProfileProviderMissingTokenData()
     {
+        $this->expectExceptionMessage("must contain an access token and an expiration");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
@@ -1207,7 +1251,7 @@ EOT;
         file_put_contents(
             $tokenFileName, $tokenFile
         );
-        putenv('HOME=' . dirname($dir));
+
         $configFilename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
@@ -1239,12 +1283,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Profile nonExistingProfile does not exist in
-     */
     public function testSsoProfileProviderMissingProfile()
     {
+        $this->expectExceptionMessage("Profile nonExistingProfile does not exist in");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
@@ -1300,12 +1342,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage  Cannot read credentials from
-     */
     public function testSsoProfileProviderBadFile()
     {
+        $this->expectExceptionMessage("Cannot read credentials from");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
 
         $filename = $dir . '/config';
@@ -1315,12 +1355,30 @@ EOT;
 
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage  must contain the following keys: sso_start_url, sso_region, sso_account_id, and sso_role_name
-     */
+    public function testSsoProfileProviderFailsWithBadSsoSessionName()
+    {
+        $this->expectExceptionMessage("Could not find sso-session fakeSessionName in");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+sso_session = fakeSessionName
+EOT;
+        $filename = $dir . '/config';
+        file_put_contents($filename, $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            call_user_func(CredentialProvider::sso('default', $filename))->wait();
+        } finally {
+            unlink($dir . '/config');
+        }
+    }
+
     public function testSsoProfileProviderMissingData()
     {
+        $this->expectExceptionMessage("must contain the following keys: sso_start_url, sso_region, sso_account_id, and sso_role_name");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
@@ -1379,7 +1437,7 @@ EOT;
             $this->assertSame('foo', $creds->getAccessKeyId());
             $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
-            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {
             throw $e;
@@ -1432,7 +1490,7 @@ EOT;
             $this->assertSame('foo', $creds->getAccessKeyId());
             $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
-            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {
             throw $e;
@@ -1482,7 +1540,7 @@ EOT;
             $this->assertSame('foo', $creds->getAccessKeyId());
             $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
-            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {
             throw $e;
@@ -1522,7 +1580,7 @@ EOT;
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 $this->assertSame('fooEnv', $c->toArray()['RoleSessionName']);
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
 
@@ -1536,7 +1594,7 @@ EOT;
             $this->assertSame('foo', $creds->getAccessKeyId());
             $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
-            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {
             throw $e;
@@ -1574,7 +1632,7 @@ EOT;
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 $this->assertSame('fooCreds', $c->toArray()['RoleSessionName']);
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
 
@@ -1588,7 +1646,7 @@ EOT;
             $this->assertSame('foo', $creds->getAccessKeyId());
             $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
-            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {
             throw $e;
@@ -1626,7 +1684,7 @@ EOT;
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 $this->assertSame('fooConfig', $c->toArray()['RoleSessionName']);
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
 
@@ -1640,7 +1698,7 @@ EOT;
             $this->assertSame('foo', $creds->getAccessKeyId());
             $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
-            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {
             throw $e;
@@ -1677,7 +1735,7 @@ EOT;
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 $this->assertSame('fooRole', $c->toArray()['RoleSessionName']);
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
 
@@ -1692,7 +1750,7 @@ EOT;
             $this->assertSame('foo', $creds->getAccessKeyId());
             $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
-            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {
             throw $e;
@@ -1702,12 +1760,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Unknown profile: fooProfile
-     */
     public function testEnsuresAssumeRoleWebIdentityProfileIsPresent()
     {
+        $this->expectExceptionMessage("Unknown profile: fooProfile");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         putenv('AWS_PROFILE=fooProfile');
 
@@ -1729,12 +1785,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Unknown profile: fooProfile
-     */
     public function testEnsuresAssumeRoleWebIdentityProfileInDefaultFiles()
     {
+        $this->expectExceptionMessage("Unknown profile: fooProfile");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         putenv('AWS_PROFILE=fooProfile');
         touch($dir . '/credentials');
@@ -1757,7 +1811,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\Michael\\Home');
-        $ref = new \ReflectionClass('Aws\Credentials\CredentialProvider');
+        $ref = new \ReflectionClass(CredentialProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\Michael\\Home', $meth->invoke(null));
@@ -1769,7 +1823,7 @@ EOT;
         $creds = new Credentials('foo', 'bar');
         $f = function () use (&$called, $creds) {
             $called++;
-            return Promise\promise_for($creds);
+            return Promise\Create::promiseFor($creds);
         };
         $p = CredentialProvider::memoize($f);
         $this->assertSame($creds, $p()->wait());
@@ -1783,7 +1837,7 @@ EOT;
         $called = 0;
         $f = function () use (&$called) {
             $called++;
-            return Promise\rejection_for('Error');
+            return Promise\Create::rejectionFor('Error');
         };
         $p = CredentialProvider::memoize($f);
         $p()->wait(false);
@@ -1819,6 +1873,7 @@ EOT;
         $credsForCache = new Credentials('foo', 'bar', 'baz', PHP_INT_MAX);
         foreach ($cacheable as $provider) {
             $this->clearEnv();
+
             if ($provider == 'ecs') putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
             $cache = new LruArrayCache;
             $cache->set('aws_cached_' . $provider . '_credentials', $credsForCache);
@@ -1826,6 +1881,7 @@ EOT;
                 'credentials' => $cache,
             ]))
                 ->wait();
+
             $this->assertSame($credsForCache->getAccessKeyId(), $credentials->getAccessKeyId());
             $this->assertSame($credsForCache->getSecretKey(), $credentials->getSecretKey());
         }
@@ -1854,6 +1910,18 @@ EOT;
             'credentials' => $cache,
         ]))
             ->wait();
+    
+        $this->assertSame($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
+        $this->assertSame($ecsCredential->getSecretKey(), $credentials->getSecretKey());
+
+        $this->clearEnv();
+        putenv('AWS_CONTAINER_CREDENTIALS_FULL_URI=http://localhost/test/metadata');
+        putenv('AWS_CONTAINER_AUTHORIZATION_TOKEN=1AAA+BBBBB=');
+        $credentials = call_user_func(CredentialProvider::defaultProvider([
+            'credentials' => $cache,
+        ]))
+            ->wait();
+            
         $this->assertSame($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
         $this->assertSame($ecsCredential->getSecretKey(), $credentials->getSecretKey());
     }
@@ -1903,5 +1971,38 @@ EOT;
         $creds = $provider()->wait();
         unlink($dir . '/config');
         $this->assertSame('configFoo', $creds->getAccessKeyId());
+    }
+
+    /**
+     * @dataProvider shouldUseEcsProvider
+     *
+     * @param string $relative
+     * @param string $serverRelative
+     * @param string $full
+     * @param string $serverFull
+     * @param bool $expected
+     */
+    public function testShouldUseEcs(
+        $relative, $serverRelative, $full, $serverFull, $expected
+    )
+    {
+        $this->clearEnv();
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI' . $relative);
+        $_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = $serverRelative;
+        putenv('AWS_CONTAINER_CREDENTIALS_FULL_URI' . $full);
+        $_SERVER['AWS_CONTAINER_CREDENTIALS_FULL_URI'] = $serverFull;
+        $result = CredentialProvider::shouldUseEcs();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function shouldUseEcsProvider()
+    {
+        return [
+            ['=foo', '', '', '', true],
+            ['', 'foo', '', '', true],
+            ['', '', '=bar', '', true],
+            ['', '', '', 'bar', true],
+            ['', '', '', '', false]
+        ];
     }
 }

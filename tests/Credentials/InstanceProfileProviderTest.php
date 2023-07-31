@@ -5,13 +5,16 @@ use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\InstanceProfileProvider;
 use Aws\Exception\CredentialsException;
+use Aws\MockHandler;
+use Aws\Result;
+use Aws\S3\S3Client;
 use Aws\Sdk;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -21,13 +24,13 @@ class InstanceProfileProviderTest extends TestCase
 {
     static $originalFlag;
 
-    public static function setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalFlag = getenv(InstanceProfileProvider::ENV_DISABLE) ?: '';
         putenv(InstanceProfileProvider::ENV_DISABLE. '=false');
     }
 
-    public static function tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(InstanceProfileProvider::ENV_DISABLE. '=' . self::$originalFlag);
     }
@@ -116,18 +119,18 @@ class InstanceProfileProviderTest extends TestCase
                 && $request->getUri()->getPath() === '/latest/api/token'
             ) {
                 if (empty($request->getHeader('x-aws-ec2-metadata-token-ttl-seconds'))) {
-                    return Promise\rejection_for([
+                    return Promise\Create::rejectionFor([
                         'exception' => new \Exception('400 Bad Request - TTL header required')
                     ]);
                 }
                 if (isset($responses['put'])) {
                     return $responses['put'][$putRequests++];
                 } else {
-                    return Promise\promise_for(
+                    return Promise\Create::promiseFor(
                         new Response(
                             200,
                             [],
-                            Psr7\stream_for('MOCK_TOKEN_VALUE')
+                            Psr7\Utils::streamFor('MOCK_TOKEN_VALUE')
                         )
                     );
                 }
@@ -150,7 +153,7 @@ class InstanceProfileProviderTest extends TestCase
                         );
                     }
 
-                    return Promise\rejection_for(['exception' => $exception]);
+                    return Promise\Create::rejectionFor(['exception' => $exception]);
                 }
                 switch ($request->getUri()->getPath()) {
                     case '/latest/meta-data/iam/security-credentials':
@@ -158,8 +161,8 @@ class InstanceProfileProviderTest extends TestCase
                         if (isset($responses['get_profile'])) {
                             return $responses['get_profile'][$getProfileRequests++];
                         }
-                        return Promise\promise_for(
-                            new Response(200, [], Psr7\stream_for($profile))
+                        return Promise\Create::promiseFor(
+                            new Response(200, [], Psr7\Utils::streamFor($profile))
                         );
                         break;
 
@@ -168,14 +171,14 @@ class InstanceProfileProviderTest extends TestCase
                         if (isset($responses['get_creds'])) {
                             return $responses['get_creds'][$getCredsRequests++];
                         }
-                        return Promise\promise_for(
+                        return Promise\Create::promiseFor(
                             new Response(
                                 200,
                                 [],
-                                Psr7\stream_for(
+                                Psr7\Utils::streamFor(
                                     json_encode(call_user_func_array(
                                         [$this, 'getCredentialArray'],
-                                        $creds
+                                        array_values($creds)
                                     ))
                                 )
                             )
@@ -184,7 +187,7 @@ class InstanceProfileProviderTest extends TestCase
                 }
             }
 
-            return Promise\rejection_for([
+            return Promise\Create::rejectionFor([
                 'exception' => new \Exception(
                     'Invalid path passed to test server'
                 )
@@ -246,7 +249,7 @@ class InstanceProfileProviderTest extends TestCase
                     );
                 }
 
-                return Promise\rejection_for(['exception' => $exception]);
+                return Promise\Create::rejectionFor(['exception' => $exception]);
             }
             if ($request->getMethod() === 'GET') {
                 switch ($request->getUri()->getPath()) {
@@ -255,8 +258,8 @@ class InstanceProfileProviderTest extends TestCase
                         if (isset($responses['get_profile'])) {
                             return $responses['get_profile'][$getProfileRequests++];
                         }
-                        return Promise\promise_for(
-                            new Response(200, [], Psr7\stream_for($profile))
+                        return Promise\Create::promiseFor(
+                            new Response(200, [], Psr7\Utils::streamFor($profile))
                         );
                         break;
 
@@ -265,11 +268,11 @@ class InstanceProfileProviderTest extends TestCase
                         if (isset($responses['get_creds'])) {
                             return $responses['get_creds'][$getCredsRequests++];
                         }
-                        return Promise\promise_for(
+                        return Promise\Create::promiseFor(
                             new Response(
                                 200,
                                 [],
-                                Psr7\stream_for(
+                                Psr7\Utils::streamFor(
                                     json_encode(call_user_func_array(
                                         [$this, 'getCredentialArray'],
                                         $creds
@@ -281,7 +284,7 @@ class InstanceProfileProviderTest extends TestCase
                 }
             }
 
-            return Promise\rejection_for([
+            return Promise\Create::rejectionFor([
                 'exception' => new \Exception(
                     'Invalid path passed to test server'
                 )
@@ -297,7 +300,8 @@ class InstanceProfileProviderTest extends TestCase
      */
     public function testHandlesSuccessScenarios(
         callable $client,
-        CredentialsInterface $expected
+        CredentialsInterface $expected,
+        $expectedAttempts = null
     ) {
         $provider = new InstanceProfileProvider([
             'client' => $client,
@@ -322,6 +326,9 @@ class InstanceProfileProviderTest extends TestCase
             $expected->getExpiration(),
             $credentials->getExpiration()
         );
+        if ($expectedAttempts) {
+            $this->assertEquals($expectedAttempts, $this->getPropertyValue($provider, 'attempts'));
+        }
     }
 
     public function successTestCases()
@@ -347,25 +354,25 @@ class InstanceProfileProviderTest extends TestCase
             $throttledResponse
         );
 
-        $promiseProfile = Promise\promise_for(
-            new Response(200, [], Psr7\stream_for('MockProfile'))
+        $promiseProfile = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor('MockProfile'))
         );
-        $promiseCreds = Promise\promise_for(
-            new Response(200, [], Psr7\stream_for(
+        $promiseCreds = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor(
                 json_encode(call_user_func_array(
                     [$this, 'getCredentialArray'],
                     $creds
                 )))
             )
         );
-        $promiseBadJsonCreds = Promise\promise_for(
-            new Response(200, [], Psr7\stream_for('{'))
+        $promiseBadJsonCreds = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor('{'))
         );
 
-        $rejectionThrottleProfile = Promise\rejection_for([
+        $rejectionThrottleProfile = Promise\Create::rejectionFor([
             'exception' => $getThrottleException
         ]);
-        $rejectionThrottleCreds = Promise\rejection_for([
+        $rejectionThrottleCreds = Promise\Create::rejectionFor([
             'exception' => $getThrottleException
         ]);
 
@@ -387,11 +394,11 @@ class InstanceProfileProviderTest extends TestCase
                 $this->getSecureTestClient(
                     [
                         'put' => [
-                            Promise\rejection_for([
+                            Promise\Create::rejectionFor([
                                 'exception' => $putThrottleException
                             ]),
-                            Promise\promise_for(
-                                new Response(200, [], Psr7\stream_for('MOCK_TOKEN_VALUE'))
+                            Promise\Create::promiseFor(
+                                new Response(200, [], Psr7\Utils::streamFor('MOCK_TOKEN_VALUE'))
                             )
                         ],
                         'get_profile' => [
@@ -406,7 +413,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                6
             ],
 
             // Insecure data flow, with retries for request exception
@@ -425,7 +433,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                5
             ],
 
             // Secure data flow, with retries for json exception
@@ -440,7 +449,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                4
             ],
 
             // Insecure data flow, with retries for json exception
@@ -455,7 +465,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                4
             ],
 
             // Secure data flow, with retries for ConnectException (Guzzle 7)
@@ -463,11 +474,11 @@ class InstanceProfileProviderTest extends TestCase
                 $this->getSecureTestClient(
                     [
                         'put' => [
-                            Promise\rejection_for([
+                            Promise\Create::rejectionFor([
                                 'exception' => $putThrottleException
                             ]),
-                            Promise\promise_for(
-                                new Response(200, [], Psr7\stream_for('MOCK_TOKEN_VALUE'))
+                            Promise\Create::promiseFor(
+                                new Response(200, [], Psr7\Utils::streamFor('MOCK_TOKEN_VALUE'))
                             )
                         ],
                         'get_profile' => [
@@ -483,7 +494,8 @@ class InstanceProfileProviderTest extends TestCase
                     $creds,
                     true
                 ),
-                $credsObject
+                $credsObject,
+                6
             ],
 
             // Insecure data flow, with retries for ConnectException (Guzzle 7)
@@ -503,7 +515,8 @@ class InstanceProfileProviderTest extends TestCase
                     $creds,
                     true
                 ),
-                $credsObject
+                $credsObject,
+                5
             ],
         ];
     }
@@ -537,38 +550,38 @@ class InstanceProfileProviderTest extends TestCase
         $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
         $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
 
-        $promiseBadJsonCreds = Promise\promise_for(
-            new Response(200, [], Psr7\stream_for('{'))
+        $promiseBadJsonCreds = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor('{'))
         );
-        $rejectionThrottleToken = Promise\rejection_for([
+        $rejectionThrottleToken = Promise\Create::rejectionFor([
             'exception' => new RequestException(
                 '503 ThrottlingException',
                 $putRequest,
                 new $responseClass(503)
             )
         ]);
-        $rejectionProfile = Promise\rejection_for([
+        $rejectionProfile = Promise\Create::rejectionFor([
             'exception' => new RequestException(
                 '401 Unathorized',
                 $getRequest,
                 new $responseClass(401)
             )
         ]);
-        $rejectionThrottleProfile = Promise\rejection_for([
+        $rejectionThrottleProfile = Promise\Create::rejectionFor([
             'exception' => new RequestException(
                 '503 ThrottlingException',
                 $getRequest,
                 new $responseClass(503)
             )
         ]);
-        $rejectionCreds = Promise\rejection_for([
+        $rejectionCreds = Promise\Create::rejectionFor([
             'exception' => new RequestException(
                 '401 Unathorized',
                 $getRequest,
                 new $responseClass(401)
             )
         ]);
-        $rejectionThrottleCreds = Promise\rejection_for([
+        $rejectionThrottleCreds = Promise\Create::rejectionFor([
             'exception' => new RequestException(
                 '503 ThrottlingException',
                 $getRequest,
@@ -794,12 +807,10 @@ class InstanceProfileProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service. (999 Expected Exception)
-     */
     public function testSwitchesBackToSecureModeOn401()
     {
+        $this->expectExceptionMessage("Error retrieving credentials from the instance profile metadata service. (999 Expected Exception)");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $requestClass = $this->getRequestClass();
         $responseClass = $this->getResponseClass();
         $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
@@ -817,7 +828,7 @@ class InstanceProfileProviderTest extends TestCase
                 && $request->getUri()->getPath() === '/latest/api/token'
             ) {
                 if ($reqNumber === 1) {
-                    return Promise\rejection_for([
+                    return Promise\Create::rejectionFor([
                         'exception' => new RequestException('404 Not Found',
                             $putRequest,
                             new $responseClass(404)
@@ -825,12 +836,12 @@ class InstanceProfileProviderTest extends TestCase
                     ]);
                 }
 
-                return Promise\rejection_for([
+                return Promise\Create::rejectionFor([
                     'exception' => new \Exception('999 Expected Exception')
                 ]);
             }
             if ($request->getMethod() === 'GET') {
-                return Promise\rejection_for([
+                return Promise\Create::rejectionFor([
                     'exception' => new RequestException(
                         '401 Unauthorized - Valid unexpired token required',
                         $getRequest,
@@ -870,14 +881,14 @@ class InstanceProfileProviderTest extends TestCase
 
     public function testAddsUserAgentToRequest()
     {
-        $response = new Response(200, [], Psr7\stream_for('test'));
+        $response = new Response(200, [], Psr7\Utils::streamFor('test'));
         $client = function (RequestInterface $request) use ($response) {
             $this->assertSame(
                 'aws-sdk-php/' . Sdk::VERSION . ' ' . \Aws\default_user_agent(),
                 $request->getHeader('User-Agent')[0]
             );
 
-            return Promise\promise_for($response);
+            return Promise\Create::promiseFor($response);
         };
         $provider = new InstanceProfileProvider(['client' => $client]);
         return $provider();
@@ -896,23 +907,23 @@ class InstanceProfileProviderTest extends TestCase
         $this->assertSame($t, $c->getExpiration());
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Unexpected instance profile response
-     */
     public function testThrowsExceptionOnInvalidMetadata()
     {
+        $this->expectExceptionMessage("Unexpected instance profile response");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $this->getTestCreds(
             $this->getCredentialArray(null, null, null, null, false),
             'foo'
         )->wait();
     }
 
+    /** @doesNotPerformAssertions */
     public function testDoesNotRequireConfig()
     {
         new InstanceProfileProvider();
     }
 
+    /** @doesNotPerformAssertions */
     public function testEnvDisableFlag()
     {
         $flag = getenv(InstanceProfileProvider::ENV_DISABLE);
@@ -941,14 +952,14 @@ class InstanceProfileProviderTest extends TestCase
 
         $t = time() + 1000;
         $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
-        $responses = [new Response(200, [], Psr7\stream_for($result))];
+        $responses = [new Response(200, [], Psr7\Utils::streamFor($result))];
 
         $client = function () use (&$retries, $responses) {
             if (0 === $retries--) {
-                return Promise\promise_for(array_shift($responses));
+                return Promise\Create::promiseFor(array_shift($responses));
             }
 
-            return Promise\rejection_for([
+            return Promise\Create::rejectionFor([
                 'exception' => $this->getRequestException()
             ]);
         };
@@ -963,5 +974,234 @@ class InstanceProfileProviderTest extends TestCase
         $this->assertSame('baz', $c->getSecretKey());
         $this->assertNull($c->getSecurityToken());
         $this->assertSame($t, $c->getExpiration());
+    }
+
+    /**
+     * @dataProvider returnsExpiredCredsProvider
+     *
+     * @param $client
+     */
+    public function testExtendsExpirationAndSendsRequestIfImdsYieldsExpiredCreds($client)
+    {
+        //expect warning emitted from extension
+        $this->expectWarning();
+        $this->expectWarningMessageMatches(
+            '/Attempting credential expiration extension/'
+        );
+
+        $provider = new InstanceProfileProvider([
+            'client' => $client
+        ]);
+        $creds = $provider()->wait();
+
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('baz', $creds->getSecretKey());
+        $this->assertFalse($creds->isExpired());
+
+        $requestHandler = new MockHandler([
+            new Result(['message' => 'Request sent']),
+            new Result(['message' => 'Request sent']),
+            new Result(['message' => 'Request sent'])
+        ]);
+
+        $s3Client = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => $creds,
+            'handler' => $requestHandler
+        ]);
+        $s3Client->listBuckets();
+        $s3Client->listBuckets();
+        $result = $s3Client->listBuckets();
+
+        $this->assertEquals('Request sent', $result['message']);
+        $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
+    }
+
+    public function returnsExpiredCredsProvider()
+    {
+        $expiredTime = time() - 1000;
+        $expiredCreds = ['foo', 'baz', null, "@{$expiredTime}"];
+
+        $promiseCreds = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor(
+                json_encode(call_user_func_array(
+                    [$this, 'getCredentialArray'],
+                    $expiredCreds
+                )))
+            )
+        );
+
+        return [
+            [
+                $client = $this->getSecureTestClient(
+                    [
+                        'get_creds' => [
+                            $promiseCreds
+                        ]
+                    ],
+                    'MockProfile',
+                    $expiredCreds
+                )
+            ],
+            [
+                $client = $this->getInsecureTestClient(
+                    [
+                        'get_creds' => [
+                            $promiseCreds
+                        ]
+                    ],
+                    'MockProfile',
+                    $expiredCreds
+                )
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider imdsUnavailableProvider
+     *
+     * @param $client
+     */
+    public function testExtendsExpirationAndSendsRequestIfImdsUnavailable($client)
+    {
+        //expect warning emitted from extension
+        $this->expectWarning();
+        $this->expectWarningMessageMatches(
+            '/Attempting credential expiration extension/'
+        );
+
+        $expiredTime = time() - 1000;
+        $expiredCreds = new Credentials('foo', 'baz', null, $expiredTime);
+        $this->assertTrue($expiredCreds->isExpired());
+
+        $provider = new InstanceProfileProvider([
+            'client' => $client
+        ]);
+        $creds = $provider($expiredCreds)->wait();
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('baz', $creds->getSecretKey());
+        $this->assertFalse($expiredCreds->isExpired());
+
+        $requestHandler = new MockHandler([
+            new Result(['message' => 'Request sent']),
+            new Result(['message' => 'Request sent']),
+            new Result(['message' => 'Request sent'])
+        ]);
+
+        $s3Client = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => $creds,
+            'handler' => $requestHandler
+        ]);
+        $s3Client -> listBuckets();
+        $s3Client -> listBuckets();
+        $result = $s3Client->listBuckets();
+
+        $this->assertEquals('Request sent', $result['message']);
+        $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
+    }
+
+    public function imdsUnavailableProvider()
+    {
+        $requestClass = $this->getRequestClass();
+        $responseClass = $this->getResponseClass();
+        $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
+        $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
+
+        $profileRejection500 = Promise\Create::rejectionFor([
+            'exception' => new RequestException(
+                '500 internal server error',
+                $putRequest,
+                new $responseClass(500)
+            )
+        ]);
+        $credsRejection500 = Promise\Create::rejectionFor([
+            'exception' => new RequestException(
+                '500 internal server error',
+                $getRequest,
+                new $responseClass(500)
+            )
+        ]);
+        $credsRejectionReadTimeout = Promise\Create::rejectionFor([
+            'exception' => new ConnectException(
+                'cURL error 28: Operation timed out',
+                $getRequest
+            )
+        ]);
+
+        return [
+            [
+                $client = $this->getSecureTestClient(
+                    [
+                        'put' => [
+                            $profileRejection500
+                        ]
+                    ],
+                    'MockProfile'
+                )
+            ],
+            [
+                $client = $this->getSecureTestClient(
+                    [
+                        'get_creds' => [
+                            $credsRejection500
+                        ]
+                    ],
+                    'MockProfile'
+                )
+            ],
+            [
+                $client = $this->getSecureTestClient(
+                    [
+                        'get_creds' => [
+                            $credsRejectionReadTimeout
+                        ]
+                    ],
+                    'MockProfile'
+                )
+            ],
+            [
+                $client = $this->getInsecureTestClient(
+                    [
+                        'get_creds' => [
+                            $credsRejection500
+                        ]
+                    ],
+                    'MockProfile'
+                )
+            ],
+            [
+                $client = $this->getInsecureTestClient(
+                    [
+                        'get_creds' => [
+                            $credsRejectionReadTimeout
+                        ]
+                    ],
+                    'MockProfile'
+                )
+            ]
+        ];
+    }
+
+    public function testResetsAttempts()
+    {
+        $now = time() + 10000;
+        $creds = ['foo', 'baz', null, "@{$now}"];
+
+        $client = $this->getSecureTestClient(
+            [],
+            'MockProfile',
+            $creds
+        );
+
+        $provider = new InstanceProfileProvider([
+            'client' => $client
+        ]);
+
+        $provider()->wait();
+        $provider()->wait();
+        $this->assertLessThanOrEqual(3, $this->getPropertyValue($provider, 'attempts'));
     }
 }

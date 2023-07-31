@@ -48,18 +48,31 @@ trait ParserTestServiceTrait
      */
     private function generateTestService($protocol)
     {
+        $metadata = [
+            "protocol" => "{$protocol}",
+            "apiVersion" => "2014-01-01"
+        ];
+        if ($protocol === 'json') {
+            $metadata['jsonVersion'] = "1.1";
+        }
+
         return new Service(
             [
-                'metadata' => [
-                    "protocol" => "{$protocol}",
-                    "apiVersion" => "2014-01-01"
-                ],
+                'metadata' => $metadata,
                 'shapes' => [
                     "ParseIso8601Response" => [
                         "type" => "structure",
                         "members" => [
                             "Timestamp" => [
                                 "shape" => "__timestampIso8601",
+                            ]
+                        ]
+                    ],
+                    "ParseDocTypeResponse" => [
+                        "type" => "structure",
+                        "members" => [
+                            "DocumentValue" => [
+                                "shape" => "DocumentType",
                             ]
                         ]
                     ],
@@ -79,6 +92,10 @@ trait ParserTestServiceTrait
                             ]
                         ]
                     ],
+                    "DocumentType" => [
+                        "type" => "structure",
+                        "document" => true
+                    ],
                     "__timestampIso8601" => [
                         "type" => "timestamp",
                         "timestampFormat" => "iso8601"
@@ -92,6 +109,17 @@ trait ParserTestServiceTrait
                     ],
                 ],
                 'operations' => [
+                    "ParseDocType" => [
+                        "name" => "ParseDocType",
+                        "http" => [
+                            "method" => "GET",
+                            "requestUri" => "/",
+                            "responseCode" => 200
+                        ],
+                        "output" => [
+                            "shape" => "ParseDocTypeResponse"
+                        ]
+                    ],
                     "ParseIso8601" => [
                         "name" => "ParseIso8601",
                         "http" => [

@@ -4,7 +4,7 @@ namespace Aws\Test\Crypto;
 use Aws\Crypto\AesGcmDecryptingStream;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class AesGcmDecryptingStreamTest extends TestCase
 {
@@ -43,7 +43,7 @@ class AesGcmDecryptingStreamTest extends TestCase
         );
 
         $decryptingStream = new AesGcmDecryptingStream(
-            Psr7\stream_for($cipherText),
+            Psr7\Utils::streamFor($cipherText),
             $key,
             $iv,
             $tag,
@@ -61,8 +61,6 @@ class AesGcmDecryptingStreamTest extends TestCase
 
     /**
      * @dataProvider cartesianJoinInputKeySizeProvider
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage The requested object could not be decrypted due to an invalid authentication tag
      *
      * @param StreamInterface $plainText
      * @param int $keySize
@@ -71,6 +69,8 @@ class AesGcmDecryptingStreamTest extends TestCase
         StreamInterface $plainText,
         $keySize
     ) {
+        $this->expectExceptionMessage("The requested object could not be decrypted due to an invalid authentication tag");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         if (version_compare(PHP_VERSION, '7.1', '<')) {
             $this->markTestSkipped(
                 'AES-GCM decryption is only supported in PHP 7.1 or greater'
@@ -94,7 +94,7 @@ class AesGcmDecryptingStreamTest extends TestCase
         );
 
         $decryptingStream = new AesGcmDecryptingStream(
-            Psr7\stream_for($cipherText),
+            Psr7\Utils::streamFor($cipherText),
             $key,
             $iv,
             'invalid_tag',
@@ -124,7 +124,7 @@ class AesGcmDecryptingStreamTest extends TestCase
             'Tag' => hex2bin('cba38431a0c28712778de8e8c6ec4594')
         ];
         $stream = new AesGcmDecryptingStream(
-            Psr7\stream_for($knownAnswerTest['CT']),
+            Psr7\Utils::streamFor($knownAnswerTest['CT']),
             $knownAnswerTest['KEY'],
             $knownAnswerTest['IV'],
             $knownAnswerTest['Tag'],
@@ -140,7 +140,7 @@ class AesGcmDecryptingStreamTest extends TestCase
     public function testIsNotWritable()
     {
         $decryptingStream = new AesGcmDecryptingStream(
-            Psr7\stream_for(''),
+            Psr7\Utils::streamFor(''),
             'key',
             random_bytes(openssl_cipher_iv_length('aes-256-gcm')),
             'tag'

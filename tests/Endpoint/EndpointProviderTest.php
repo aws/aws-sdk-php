@@ -3,26 +3,23 @@ namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
-use PHPUnit\Framework\TestCase;
+use Aws\Endpoint\PatternEndpointProvider;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Endpoint\EndpointProvider
  */
 class EndpointProviderTest extends TestCase
 {
-    /**
-     * @expectedException \Aws\Exception\UnresolvedEndpointException
-     */
     public function testThrowsWhenUnresolved()
     {
+        $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);
         EndpointProvider::resolve(function() {}, []);
     }
 
-    /**
-     * @expectedException \Aws\Exception\UnresolvedEndpointException
-     */
     public function testThrowsWhenNotArray()
     {
+        $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);
         EndpointProvider::resolve(function() { return 'foo'; }, []);
     }
 
@@ -37,7 +34,7 @@ class EndpointProviderTest extends TestCase
         $p = EndpointProvider::patterns([
             '*/*' => ['endpoint' => 'foo.com']
         ]);
-        $this->assertInstanceOf('Aws\Endpoint\PatternEndpointProvider', $p);
+        $this->assertInstanceOf(PatternEndpointProvider::class, $p);
         $result = EndpointProvider::resolve($p, []);
         $this->assertSame('https://foo.com', $result['endpoint']);
     }

@@ -6,7 +6,7 @@ $projectRoot = __DIR__ . '/../';
 $burgomaster = new \Burgomaster($stageDirectory, $projectRoot);
 $autoloaderFilename = 'aws-autoloader.php';
 
-$metaFiles = ['README.md', 'LICENSE.md', 'NOTICE.md', 'CHANGELOG.md'];
+$metaFiles = ['README.md', 'LICENSE', 'NOTICE', 'CHANGELOG.md'];
 foreach ($metaFiles as $file) {
     $burgomaster->deepCopy($file, $file);
 }
@@ -21,7 +21,7 @@ $sdkFiles = new CallbackFilterIterator($sdkFiles, function (SplFileInfo $file) {
     ]);
 });
 
-$burgomaster->recursiveCopy('src', 'Aws', ['php'], $sdkFiles);
+$burgomaster->recursiveCopy('src', 'Aws', ['php', 'php.gz'], $sdkFiles);
 $burgomaster->recursiveCopy('vendor/aws/aws-php-sns-message-validator/src', 'Aws/Sns');
 $burgomaster->recursiveCopy('vendor/mtdowling/jmespath.php/src', 'JmesPath');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/guzzle/src', 'GuzzleHttp');

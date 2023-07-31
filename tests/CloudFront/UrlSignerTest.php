@@ -1,24 +1,25 @@
 <?php
+
 namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\UrlSigner;
 use GuzzleHttp\Psr7\Uri;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\CloudFront\UrlSigner
  */
 class UrlSignerTest extends TestCase
 {
-    public function setUp()
+
+    protected $key;
+    protected $kp;
+
+    public function set_up()
     {
-        foreach (['CF_PRIVATE_KEY', 'CF_KEY_PAIR_ID'] as $k) {
-            if (!isset($_SERVER[$k]) || $_SERVER[$k] == 'change_me') {
-                $this->markTestSkipped('$_SERVER[\'' . $k . '\'] not set in '
-                    . 'phpunit.xml');
-            }
-        }
+        openssl_pkey_export(openssl_pkey_new(),$this->key);
+        $this->kp  = 'test';
     }
 
     public function testCreatesUrlSignersForHttp()
@@ -29,29 +30,27 @@ class UrlSignerTest extends TestCase
             'version' => 'latest'
         ]);
         $ts = time() + 1000;
-        $key = $_SERVER['CF_PRIVATE_KEY'];
-        $kp = $_SERVER['CF_KEY_PAIR_ID'];
 
         $url = $client->getSignedUrl([
             'url'         => 'http://abc.cloudfront.net/images/image.jpg?color=red',
             'expires'     => $ts,
-            'private_key' => $key,
-            'key_pair_id' => $kp
+            'private_key' => $this->key,
+            'key_pair_id' => $this->kp
         ]);
 
-        $this->assertContains("Key-Pair-Id={$kp}", $url);
+        $this->assertStringContainsString("Key-Pair-Id={$this->kp}", $url);
         $this->assertStringStartsWith(
             "http://abc.cloudfront.net/images/image.jpg?color=red&Expires={$ts}&Signature=",
             $url
         );
         $urlObject = new Uri($url);
-        $query = \GuzzleHttp\Psr7\parse_query($urlObject->getQuery());
+        $query = \GuzzleHttp\Psr7\Query::parse($urlObject->getQuery());
         $signature = $query['Signature'];
-        $this->assertNotContains('?', $signature);
-        $this->assertNotContains('=', $signature);
-        $this->assertNotContains('/', $signature);
-        $this->assertNotContains('&', $signature);
-        $this->assertNotContains('+', $signature);
+        $this->assertStringNotContainsString('?', $signature);
+        $this->assertStringNotContainsString('=', $signature);
+        $this->assertStringNotContainsString('/', $signature);
+        $this->assertStringNotContainsString('&', $signature);
+        $this->assertStringNotContainsString('+', $signature);
     }
 
     public function testCreatesUrlSignersWithSpecialCharacters()
@@ -62,8 +61,6 @@ class UrlSignerTest extends TestCase
             'version' => 'latest'
         ]);
         $ts = time() + 1000;
-        $key = $_SERVER['CF_PRIVATE_KEY'];
-        $kp = $_SERVER['CF_KEY_PAIR_ID'];
 
         $invalidUri = 'http://abc.cloudfront.net/images/éüàçµñåœŒ.jpg?query key=query value';
         $uri = new Uri($invalidUri);
@@ -72,12 +69,12 @@ class UrlSignerTest extends TestCase
         $url = $client->getSignedUrl([
             'url'         => $invalidUri,
             'expires'     => $ts,
-            'private_key' => $key,
-            'key_pair_id' => $kp
+            'private_key' => $this->key,
+            'key_pair_id' => $this->kp
         ]);
 
-        $this->assertContains("Key-Pair-Id={$kp}", $url);
-        $this->assertContains((string) $uri, $url);
+        $this->assertStringContainsString("Key-Pair-Id={$this->kp}", $url);
+        $this->assertStringContainsString((string) $uri, $url);
         $this->assertStringStartsWith(
             "{$uri}&Expires={$ts}&Signature=",
             $url
@@ -92,13 +89,13 @@ class UrlSignerTest extends TestCase
             'version' => 'latest'
         ]);
         $url = $client->getSignedUrl(array(
-            'url'    => 'http://abc.cloudfront.net/images/image.jpg',
+            'url' => 'http://abc.cloudfront.net/images/image.jpg',
             'policy' => '{}',
-            'private_key' => $_SERVER['CF_PRIVATE_KEY'],
-            'key_pair_id' => $_SERVER['CF_KEY_PAIR_ID']
+            'private_key' => $this->key,
+            'key_pair_id' => $this->kp
         ));
         $policy = (new Uri($url))->getQuery();
-        $this->assertRegExp('/Policy=[0-9a-zA-Z-_~]+/', $policy);
+        $this->assertMatchesRegularExpression('/Policy=[0-9a-zA-Z-_~]+/', $policy);
     }
 
     public function testCreatesUrlSignersForRtmp()
@@ -108,47 +105,42 @@ class UrlSignerTest extends TestCase
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $ts = time() + 1000;
-        $kp = $_SERVER['CF_KEY_PAIR_ID'];
-        $url = $client->getSignedUrl(array(
+        $ts     = time() + 1000;
+        $url    = $client->getSignedUrl(array(
             'url'         => 'rtmp://foo.cloudfront.net/test.mp4?a=b',
             'expires'     => $ts,
-            'private_key' => $_SERVER['CF_PRIVATE_KEY'],
-            'key_pair_id' => $kp
+            'private_key' => $this->key,
+            'key_pair_id' => $this->kp
         ));
         $this->assertStringStartsWith("test.mp4?a=b&Expires={$ts}&Signature=", $url);
-        $this->assertContains("Key-Pair-Id={$kp}", $url);
+        $this->assertStringContainsString("Key-Pair-Id={$this->kp}", $url);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid URI scheme
-     */
     public function testEnsuresUriSchemeIsValid()
     {
-        $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
+        $this->expectExceptionMessage("Invalid URI scheme");
+        $this->expectException(\InvalidArgumentException::class);
+        $s = new UrlSigner('a', $this->key);
         $s->getSignedUrl('foo://bar.com', strtotime('+10 minutes'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid URL: bar.com
-     */
     public function testEnsuresUriSchemeIsPresent()
     {
-        $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
+        $this->expectExceptionMessage("Invalid URL: bar.com");
+        $this->expectException(\InvalidArgumentException::class);
+        $s = new UrlSigner('a', $this->key);
         $s->getSignedUrl('bar.com');
     }
 
     /**
      * @dataProvider urlAndResourceProvider
      *
-     * @param string $url
-     * @param string $resource
+     * @param  string  $url
+     * @param  string  $resource
      */
     public function testIsolatesResourceIUrls($url, $resource)
     {
-        $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
+        $s = new UrlSigner('a', $this->key);
         $m = new \ReflectionMethod(get_class($s), 'createResource');
         $m->setAccessible(true);
 

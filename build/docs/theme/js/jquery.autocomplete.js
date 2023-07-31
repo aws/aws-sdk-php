@@ -142,7 +142,10 @@ $.Autocompleter = function(input, options) {
 
 			// matches also semicolon
 			case options.multiple && $.trim(options.multipleSeparator) == "," && KEY.COMMA:
-			case KEY.TAB:
+				event.preventDefault();
+				blockSubmit = true;
+				return false;
+				break;
 			case KEY.RETURN:
 				if( selectCurrent() ) {
 					// stop default to prevent a form submit, Opera needs special handling
@@ -151,7 +154,7 @@ $.Autocompleter = function(input, options) {
 					return false;
 				}
 				break;
-
+			case KEY.TAB:
 			case KEY.ESC:
 				select.hide();
 				break;
@@ -443,7 +446,7 @@ $.Autocompleter.defaults = {
 	max: 1000,
 	mustMatch: false,
 	extraParams: {},
-	selectFirst: true,
+	selectFirst: false,
 	formatItem: function(row) { return row[0]; },
 	formatMatch: null,
 	autoFill: false,
@@ -701,7 +704,11 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			var formatted = options.formatItem(data[i].data, i+1, max, data[i].value, term);
 			if ( formatted === false )
 				continue;
-			var li = $("<li/>").html( options.highlight(formatted, term) ).addClass(i%2 == 0 ? "ac_even" : "ac_odd").appendTo(list)[0];
+			var li = $("<li/>").html( options.highlight(formatted, term) )
+				.attr('role', 'option')
+				.attr('aria-label', data[i].result)
+				.addClass(i%2 == 0 ? "ac_even" : "ac_odd")
+				.appendTo(list)[0];
 			$.data(li, "ac_data", data[i]);
 		}
 		listItems = list.find("li");

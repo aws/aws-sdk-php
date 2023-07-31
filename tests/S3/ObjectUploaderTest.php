@@ -224,7 +224,7 @@ class ObjectUploaderTest extends TestCase
 
     private function generateStream($size, $sizeKnown = true, $seekable = true)
     {
-        return FnStream::decorate(Psr7\stream_for(str_repeat('.', $size)), [
+        return FnStream::decorate(Psr7\Utils::streamFor(str_repeat('.', $size)), [
             'getSize' => function () use ($sizeKnown, $size) {
                 return $sizeKnown ? $size : null;
             },
@@ -238,15 +238,26 @@ class ObjectUploaderTest extends TestCase
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
+        $client->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $name = $cmd->getName();
+                if ($name === 'UploadPart') {
+                    $this->assertTrue(
+                        $req->hasHeader('Content-MD5')
+                    );
+                }
+            })
+        );
         $uploadOptions = [
             'params'          => ['RequestPayer' => 'test'],
+            'add_content_md5' => true,
             'before_upload'   => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
         ];
         $url = 'https://foo.s3.amazonaws.com/bar';
         $data = str_repeat('.', 1 * self::MB);
-        $source = Psr7\stream_for($data);
+        $source = Psr7\Utils::streamFor($data);
 
         $this->addMockResults($client, [
             new Result(['UploadId' => 'baz']),
@@ -272,9 +283,20 @@ class ObjectUploaderTest extends TestCase
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
+        $client->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $name = $cmd->getName();
+                if ($name === 'UploadPart') {
+                    $this->assertTrue(
+                        $req->hasHeader('Content-MD5')
+                    );
+                }
+            })
+        );
         $uploadOptions = [
             'mup_threshold'   => self::MB * 4,
             'params'          => ['RequestPayer' => 'test'],
+            'add_content_md5' => true,
             'before_initiate' => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
@@ -287,7 +309,7 @@ class ObjectUploaderTest extends TestCase
         ];
         $url = 'https://foo.s3.amazonaws.com/bar';
         $data = str_repeat('.', 12 * self::MB);
-        $source = Psr7\stream_for($data);
+        $source = Psr7\Utils::streamFor($data);
 
         $this->addMockResults($client, [
             new Result(['UploadId' => 'baz']),

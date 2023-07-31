@@ -6,11 +6,11 @@ use GuzzleHttp\Promise\RejectionException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class GuzzleV5HandlerTest extends TestCase
 {
-    public function setUp()
+    public function set_up()
     {
         if (!class_exists('GuzzleHttp\Ring\Core')) {
             $this->markTestSkipped();
@@ -24,9 +24,9 @@ class GuzzleV5HandlerTest extends TestCase
             'PUT',
             "http://httpbin.org/put?a=1&b=2",
             ['c' => '3', 'd' => '4'],
-            Psr7\stream_for('{"f":6,"g":7}')
+            Psr7\Utils::streamFor('{"f":6,"g":7}')
         );
-        $sink = Psr7\stream_for();
+        $sink = Psr7\Utils::streamFor();
 
         /** @var \GuzzleHttp\Promise\Promise $responsePromise */
         $responsePromise = $handler($request, ['sink' => $sink, 'foo' => 'bar']);

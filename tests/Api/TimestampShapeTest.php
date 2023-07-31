@@ -3,7 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\TimestampShape;
 use Aws\Api\ShapeMap;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\Api\TimestampShape
@@ -22,7 +22,10 @@ class TimestampShapeTest extends TestCase
             [$t, 'rfc822', 'Tue, 05 Jan 1999 00:00:00 GMT'],
             [new \DateTime('january 5, 1999'), 'unixTimestamp', '915494400'],
             [new \DateTime('january 5, 1999'), 'iso8601', '1999-01-05T00:00:00Z'],
-            [new \DateTime('january 5, 1999'), 'rfc822', 'Tue, 05 Jan 1999 00:00:00 GMT']
+            [new \DateTime('january 5, 1999'), 'rfc822', 'Tue, 05 Jan 1999 00:00:00 GMT'],
+            [new \DateTimeImmutable('january 5, 1999'), 'unixTimestamp', '915494400'],
+            [new \DateTimeImmutable('january 5, 1999'), 'iso8601', '1999-01-05T00:00:00Z'],
+            [new \DateTimeImmutable('january 5, 1999'), 'rfc822', 'Tue, 05 Jan 1999 00:00:00 GMT']
         ];
     }
 
@@ -35,20 +38,16 @@ class TimestampShapeTest extends TestCase
         $this->assertEquals($result, $s->format($value, $format));
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testValidatesTimestampFormat()
     {
+        $this->expectException(\UnexpectedValueException::class);
         $s = new TimestampShape([], new ShapeMap([]));
         $s->format('now', 'foo');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testValidatesTimestampValue()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s = new TimestampShape([], new ShapeMap([]));
         $s->format(true, 'iso8601');
     }

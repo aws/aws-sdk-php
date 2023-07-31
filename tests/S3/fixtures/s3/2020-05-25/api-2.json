@@ -23,7 +23,10 @@
       "output":{"shape":"DeleteObjectsOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html",
       "alias":"DeleteMultipleObjects",
-      "httpChecksumRequired":true
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      }
     },
     "GetObject":{
       "name":"GetObject",
@@ -31,12 +34,35 @@
         "method":"GET",
         "requestUri":"/{Bucket}/{Key+}"
       },
+      "httpChecksum":{
+        "requestValidationModeMember":"ChecksumMode",
+        "responseAlgorithms":[
+          "CRC32",
+          "CRC32C",
+          "SHA256",
+          "SHA1"
+        ]
+      },
       "input":{"shape":"GetObjectRequest"},
       "output":{"shape":"GetObjectOutput"},
       "errors":[
         {"shape":"NoSuchKey"}
       ],
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGET.html"
+    },
+    "PutObject":{
+      "name":"PutObject",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}/{Key+}"
+      },
+      "input":{"shape":"PutObjectRequest"},
+      "output":{"shape":"PutObjectOutput"},
+      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html",
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":false
+      }
     },
     "PutBucketLogging":{
       "name":"PutBucketLogging",
@@ -46,10 +72,14 @@
       },
       "input":{"shape":"PutBucketLoggingRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html",
-      "httpChecksumRequired":true
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      }
     }
   },
   "shapes":{
+    "Body":{"type":"blob"},
     "Bucket":{
       "type":"structure",
       "members":{
@@ -65,6 +95,23 @@
     },
     "BucketName":{"type":"string"},
     "BypassGovernanceRetention":{"type":"boolean"},
+    "ChecksumAlgorithm":{
+      "type":"string",
+      "enum":[
+        "CRC32",
+        "CRC32C",
+        "SHA1",
+        "SHA256"
+      ]
+    },
+    "ChecksumCRC32":{"type":"string"},
+    "ChecksumCRC32C":{"type":"string"},
+    "ChecksumMode":{
+      "type":"string",
+      "enum":["ENABLED"]
+    },
+    "ChecksumSHA1":{"type":"string"},
+    "ChecksumSHA256":{"type":"string"},
     "ContentMD5":{"type":"string"},
     "Delete":{
       "type":"structure",
@@ -138,6 +185,11 @@
           "shape":"ObjectKey",
           "location":"uri",
           "locationName":"Key"
+        },
+        "ChecksumMode":{
+          "shape":"ChecksumMode",
+          "location":"header",
+          "locationName":"x-amz-checksum-mode"
         }
       }
     },
@@ -198,6 +250,74 @@
         }
       },
       "payload":"BucketLoggingStatus"
+    },
+    "PutObjectOutput": {
+      "type": "structure",
+      "members": {
+        "ChecksumCRC32": {
+          "shape": "ChecksumCRC32",
+          "location": "header",
+          "locationName": "x-amz-checksum-crc32"
+        },
+        "ChecksumCRC32C": {
+          "shape": "ChecksumCRC32C",
+          "location": "header",
+          "locationName": "x-amz-checksum-crc32c"
+        },
+        "ChecksumSHA1": {
+          "shape": "ChecksumSHA1",
+          "location": "header",
+          "locationName": "x-amz-checksum-sha1"
+        },
+        "ChecksumSHA256": {
+          "shape": "ChecksumSHA256",
+          "location": "header",
+          "locationName": "x-amz-checksum-sha256"
+        }
+      }
+    },
+    "PutObjectRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "Key"
+      ],
+      "members":{
+        "Body":{
+          "shape":"Body",
+          "streaming":true
+        },
+        "Bucket":{
+          "shape":"BucketName",
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "ChecksumAlgorithm":{
+          "shape":"ChecksumAlgorithm",
+          "location":"header",
+          "locationName":"x-amz-sdk-checksum-algorithm"
+        },
+        "ChecksumCRC32":{
+          "shape":"ChecksumCRC32",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc32"
+        },
+        "ChecksumCRC32C":{
+          "shape":"ChecksumCRC32C",
+          "location":"header",
+          "locationName":"x-amz-checksum-crc32c"
+        },
+        "ChecksumSHA1":{
+          "shape":"ChecksumSHA1",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha1"
+        },
+        "ChecksumSHA256":{
+          "shape":"ChecksumSHA256",
+          "location":"header",
+          "locationName":"x-amz-checksum-sha256"
+      }
+      }
     },
     "Quiet":{"type":"boolean"},
     "RequestPayer":{

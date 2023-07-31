@@ -18,7 +18,7 @@ class MultipartUploaderTest extends TestCase
     const MB = 1048576;
     const FILENAME = '_aws-sdk-php-glacier-mup-test-dots.txt';
 
-    public static function tearDownAfterClass()
+    public static function _tearDownAfterClass()
     {
         @unlink(sys_get_temp_dir() . '/' . self::FILENAME);
     }
@@ -28,7 +28,7 @@ class MultipartUploaderTest extends TestCase
      */
     public function testGlacierMultipartUploadWorkflow(
         array $uploadOptions = [],
-        StreamInterface $source,
+        StreamInterface $source = null,
         $error = false
     ) {
         $client = $this->getTestClient('glacier');
@@ -70,16 +70,16 @@ class MultipartUploaderTest extends TestCase
         return [
             [ // Seekable stream
                 $defaults,
-                Psr7\stream_for(fopen($filename, 'r'))
+                Psr7\Utils::streamFor(fopen($filename, 'r'))
             ],
             [ // Non-seekable stream
                 $defaults,
-                Psr7\stream_for($data)
+                Psr7\Utils::streamFor($data)
             ],
             [ // Error: bad part_size
                 ['part_size' => 1] + $defaults,
                 Psr7\FnStream::decorate(
-                    Psr7\stream_for($data), [
+                    Psr7\Utils::streamFor($data), [
                         'getSize' => function () {return null;}
                     ]
                 ),
@@ -112,7 +112,7 @@ class MultipartUploaderTest extends TestCase
         ]);
 
         $state = MultipartUploader::getStateFromService($client, 'foo', 'bar', 'baz');
-        $source = Psr7\stream_for(str_repeat('.', (int) (2.2 * self::MB)));
+        $source = Psr7\Utils::streamFor(str_repeat('.', (int) (2.2 * self::MB)));
         $uploader = new MultipartUploader($client, $source, ['state' => $state]);
 
         $parts = $state->getUploadedParts();

@@ -206,6 +206,8 @@
         {"shape":"DescriptionTooLongException"},
         {"shape":"DeploymentLimitExceededException"},
         {"shape":"InvalidTargetInstancesException"},
+        {"shape":"InvalidAlarmConfigException"},
+        {"shape":"AlarmsLimitExceededException"},
         {"shape":"InvalidAutoRollbackConfigException"},
         {"shape":"InvalidLoadBalancerInfoException"},
         {"shape":"InvalidFileExistsBehaviorException"},
@@ -1235,6 +1237,7 @@
         "triggerConfigurations":{"shape":"TriggerConfigList"},
         "alarmConfiguration":{"shape":"AlarmConfiguration"},
         "autoRollbackConfiguration":{"shape":"AutoRollbackConfiguration"},
+        "outdatedInstancesStrategy":{"shape":"OutdatedInstancesStrategy"},
         "deploymentStyle":{"shape":"DeploymentStyle"},
         "blueGreenDeploymentConfiguration":{"shape":"BlueGreenDeploymentConfiguration"},
         "loadBalancerInfo":{"shape":"LoadBalancerInfo"},
@@ -1263,7 +1266,8 @@
         "targetInstances":{"shape":"TargetInstances"},
         "autoRollbackConfiguration":{"shape":"AutoRollbackConfiguration"},
         "updateOutdatedInstancesOnly":{"shape":"Boolean"},
-        "fileExistsBehavior":{"shape":"FileExistsBehavior"}
+        "fileExistsBehavior":{"shape":"FileExistsBehavior"},
+        "overrideAlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "CreateDeploymentOutput":{
@@ -1396,6 +1400,7 @@
         "autoscaling",
         "codeDeployRollback",
         "CodeDeploy",
+        "CodeDeployAutoUpdate",
         "CloudFormation",
         "CloudFormationRollback"
       ]
@@ -1435,6 +1440,7 @@
         "alarmConfiguration":{"shape":"AlarmConfiguration"},
         "autoRollbackConfiguration":{"shape":"AutoRollbackConfiguration"},
         "deploymentStyle":{"shape":"DeploymentStyle"},
+        "outdatedInstancesStrategy":{"shape":"OutdatedInstancesStrategy"},
         "blueGreenDeploymentConfiguration":{"shape":"BlueGreenDeploymentConfiguration"},
         "loadBalancerInfo":{"shape":"LoadBalancerInfo"},
         "lastSuccessfulDeployment":{"shape":"LastDeploymentInfo"},
@@ -1507,7 +1513,9 @@
         "fileExistsBehavior":{"shape":"FileExistsBehavior"},
         "deploymentStatusMessages":{"shape":"DeploymentStatusMessageList"},
         "computePlatform":{"shape":"ComputePlatform"},
-        "externalId":{"shape":"ExternalId"}
+        "externalId":{"shape":"ExternalId"},
+        "relatedDeployments":{"shape":"RelatedDeployments"},
+        "overrideAlarmConfiguration":{"shape":"AlarmConfiguration"}
       }
     },
     "DeploymentIsNotInReadyStateException":{
@@ -2207,12 +2215,6 @@
       },
       "exception":true
     },
-    "InvalidDeploymentConfigIdException":{
-      "type":"structure",
-      "members":{
-      },
-      "exception":true
-    },
     "InvalidDeploymentConfigNameException":{
       "type":"structure",
       "members":{
@@ -2761,8 +2763,8 @@
     "MinimumHealthyHosts":{
       "type":"structure",
       "members":{
-        "value":{"shape":"MinimumHealthyHostsValue"},
-        "type":{"shape":"MinimumHealthyHostsType"}
+        "type":{"shape":"MinimumHealthyHostsType"},
+        "value":{"shape":"MinimumHealthyHostsValue"}
       }
     },
     "MinimumHealthyHostsType":{
@@ -2796,6 +2798,13 @@
       "members":{
       },
       "exception":true
+    },
+    "OutdatedInstancesStrategy":{
+      "type":"string",
+      "enum":[
+        "UPDATE",
+        "IGNORE"
+      ]
     },
     "Percentage":{"type":"integer"},
     "PutLifecycleEventHookExecutionStatusInput":{
@@ -2850,6 +2859,13 @@
         "Registered",
         "Deregistered"
       ]
+    },
+    "RelatedDeployments":{
+      "type":"structure",
+      "members":{
+        "autoUpdateOutdatedInstancesRootDeploymentId":{"shape":"DeploymentId"},
+        "autoUpdateOutdatedInstancesDeploymentIds":{"shape":"DeploymentsList"}
+      }
     },
     "RemoveTagsFromOnPremisesInstancesInput":{
       "type":"structure",
@@ -3259,6 +3275,7 @@
         "triggerConfigurations":{"shape":"TriggerConfigList"},
         "alarmConfiguration":{"shape":"AlarmConfiguration"},
         "autoRollbackConfiguration":{"shape":"AutoRollbackConfiguration"},
+        "outdatedInstancesStrategy":{"shape":"OutdatedInstancesStrategy"},
         "deploymentStyle":{"shape":"DeploymentStyle"},
         "blueGreenDeploymentConfiguration":{"shape":"BlueGreenDeploymentConfiguration"},
         "loadBalancerInfo":{"shape":"LoadBalancerInfo"},

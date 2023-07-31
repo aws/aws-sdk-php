@@ -152,6 +152,20 @@
       "min":0,
       "pattern":"[0-9A-Za-z _-]+"
     },
+    "ArchiveRetainRule":{
+      "type":"structure",
+      "required":["RetentionArchiveTier"],
+      "members":{
+        "RetentionArchiveTier":{"shape":"RetentionArchiveTier"}
+      }
+    },
+    "ArchiveRule":{
+      "type":"structure",
+      "required":["RetainRule"],
+      "members":{
+        "RetainRule":{"shape":"ArchiveRetainRule"}
+      }
+    },
     "AvailabilityZone":{
       "type":"string",
       "max":16,
@@ -208,6 +222,7 @@
     "CreateRule":{
       "type":"structure",
       "members":{
+        "Location":{"shape":"LocationValues"},
         "Interval":{"shape":"Interval"},
         "IntervalUnit":{"shape":"IntervalUnitValues"},
         "Times":{"shape":"TimesList"},
@@ -238,6 +253,13 @@
       "max":3,
       "min":0
     },
+    "CrossRegionCopyDeprecateRule":{
+      "type":"structure",
+      "members":{
+        "Interval":{"shape":"Interval"},
+        "IntervalUnit":{"shape":"RetentionIntervalUnitValues"}
+      }
+    },
     "CrossRegionCopyRetainRule":{
       "type":"structure",
       "members":{
@@ -247,16 +269,15 @@
     },
     "CrossRegionCopyRule":{
       "type":"structure",
-      "required":[
-        "TargetRegion",
-        "Encrypted"
-      ],
+      "required":["Encrypted"],
       "members":{
         "TargetRegion":{"shape":"TargetRegion"},
+        "Target":{"shape":"Target"},
         "Encrypted":{"shape":"Encrypted"},
         "CmkArn":{"shape":"CmkArn"},
         "CopyTags":{"shape":"CopyTagsNullable"},
-        "RetainRule":{"shape":"CrossRegionCopyRetainRule"}
+        "RetainRule":{"shape":"CrossRegionCopyRetainRule"},
+        "DeprecateRule":{"shape":"CrossRegionCopyDeprecateRule"}
       }
     },
     "CrossRegionCopyRules":{
@@ -279,6 +300,14 @@
     "DeleteLifecyclePolicyResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "DeprecateRule":{
+      "type":"structure",
+      "members":{
+        "Count":{"shape":"Count"},
+        "Interval":{"shape":"Interval"},
+        "IntervalUnit":{"shape":"RetentionIntervalUnitValues"}
       }
     },
     "DescriptionRegex":{
@@ -328,6 +357,12 @@
       "enum":["shareSnapshot"]
     },
     "ExcludeBootVolume":{"type":"boolean"},
+    "ExcludeDataVolumeTagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":50,
+      "min":0
+    },
     "ExecutionRoleArn":{
       "type":"string",
       "max":2048,
@@ -489,6 +524,13 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "LocationValues":{
+      "type":"string",
+      "enum":[
+        "CLOUD",
+        "OUTPOST_LOCAL"
+      ]
+    },
     "NoReboot":{"type":"boolean"},
     "Parameter":{"type":"string"},
     "ParameterList":{
@@ -499,7 +541,8 @@
       "type":"structure",
       "members":{
         "ExcludeBootVolume":{"shape":"ExcludeBootVolume"},
-        "NoReboot":{"shape":"NoReboot"}
+        "NoReboot":{"shape":"NoReboot"},
+        "ExcludeDataVolumeTags":{"shape":"ExcludeDataVolumeTagList"}
       }
     },
     "PolicyArn":{
@@ -519,6 +562,7 @@
       "members":{
         "PolicyType":{"shape":"PolicyTypeValues"},
         "ResourceTypes":{"shape":"ResourceTypeValuesList"},
+        "ResourceLocations":{"shape":"ResourceLocationList"},
         "TargetTags":{"shape":"TargetTagList"},
         "Schedules":{"shape":"ScheduleList"},
         "Parameters":{"shape":"Parameters"},
@@ -542,6 +586,19 @@
         "EBS_SNAPSHOT_MANAGEMENT",
         "IMAGE_MANAGEMENT",
         "EVENT_BASED_POLICY"
+      ]
+    },
+    "ResourceLocationList":{
+      "type":"list",
+      "member":{"shape":"ResourceLocationValues"},
+      "max":1,
+      "min":1
+    },
+    "ResourceLocationValues":{
+      "type":"string",
+      "enum":[
+        "CLOUD",
+        "OUTPOST"
       ]
     },
     "ResourceNotFoundException":{
@@ -571,6 +628,14 @@
     "RetainRule":{
       "type":"structure",
       "members":{
+        "Count":{"shape":"StandardTierRetainRuleCount"},
+        "Interval":{"shape":"StandardTierRetainRuleInterval"},
+        "IntervalUnit":{"shape":"RetentionIntervalUnitValues"}
+      }
+    },
+    "RetentionArchiveTier":{
+      "type":"structure",
+      "members":{
         "Count":{"shape":"Count"},
         "Interval":{"shape":"Interval"},
         "IntervalUnit":{"shape":"RetentionIntervalUnitValues"}
@@ -596,7 +661,9 @@
         "RetainRule":{"shape":"RetainRule"},
         "FastRestoreRule":{"shape":"FastRestoreRule"},
         "CrossRegionCopyRules":{"shape":"CrossRegionCopyRules"},
-        "ShareRules":{"shape":"ShareRules"}
+        "ShareRules":{"shape":"ShareRules"},
+        "DeprecateRule":{"shape":"DeprecateRule"},
+        "ArchiveRule":{"shape":"ArchiveRule"}
       }
     },
     "ScheduleList":{
@@ -642,6 +709,15 @@
       "type":"list",
       "member":{"shape":"AwsAccountId"},
       "max":50,
+      "min":0
+    },
+    "StandardTierRetainRuleCount":{
+      "type":"integer",
+      "max":1000,
+      "min":0
+    },
+    "StandardTierRetainRuleInterval":{
+      "type":"integer",
       "min":0
     },
     "StatusMessage":{
@@ -731,9 +807,9 @@
     },
     "Target":{
       "type":"string",
-      "max":16,
+      "max":2048,
       "min":0,
-      "pattern":"^[\\\\w:\\\\-\\\\/\\\\*]+$"
+      "pattern":"^[\\w:\\-\\/\\*]+$"
     },
     "TargetRegion":{
       "type":"string",

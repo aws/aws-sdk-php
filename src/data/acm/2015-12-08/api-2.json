@@ -26,7 +26,8 @@
         {"shape":"InvalidTagException"},
         {"shape":"TooManyTagsException"},
         {"shape":"TagPolicyException"},
-        {"shape":"InvalidParameterException"}
+        {"shape":"InvalidParameterException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DeleteCertificate":{
@@ -39,6 +40,9 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceInUseException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"InvalidArnException"}
       ]
     },
@@ -69,6 +73,18 @@
         {"shape":"InvalidArnException"}
       ]
     },
+    "GetAccountConfiguration":{
+      "name":"GetAccountConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "output":{"shape":"GetAccountConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetCertificate":{
       "name":"GetCertificate",
       "http":{
@@ -97,7 +113,8 @@
         {"shape":"InvalidTagException"},
         {"shape":"TooManyTagsException"},
         {"shape":"TagPolicyException"},
-        {"shape":"InvalidParameterException"}
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidArnException"}
       ]
     },
     "ListCertificates":{
@@ -109,7 +126,8 @@
       "input":{"shape":"ListCertificatesRequest"},
       "output":{"shape":"ListCertificatesResponse"},
       "errors":[
-        {"shape":"InvalidArgsException"}
+        {"shape":"InvalidArgsException"},
+        {"shape":"ValidationException"}
       ]
     },
     "ListTagsForCertificate":{
@@ -125,6 +143,20 @@
         {"shape":"InvalidArnException"}
       ]
     },
+    "PutAccountConfiguration":{
+      "name":"PutAccountConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAccountConfigurationRequest"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "RemoveTagsFromCertificate":{
       "name":"RemoveTagsFromCertificate",
       "http":{
@@ -137,7 +169,8 @@
         {"shape":"InvalidArnException"},
         {"shape":"InvalidTagException"},
         {"shape":"TagPolicyException"},
-        {"shape":"InvalidParameterException"}
+        {"shape":"InvalidParameterException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "RenewCertificate":{
@@ -200,6 +233,14 @@
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ServiceErrorMessage"}
+      },
+      "exception":true,
+      "synthetic":true
+    },
     "AddTagsToCertificateRequest":{
       "type":"structure",
       "required":[
@@ -215,8 +256,9 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:[\\w+=/,.@-]+:[\\w+=/,.@-]+:[\\w+=/,.@-]*:[0-9]+:[\\w+=,.@-]+(/[\\w+=,.@-]+)*"
+      "pattern":"arn:[\\w+=/,.@-]+:acm:[\\w+=/,.@-]*:[0-9]+:[\\w+=,.@-]+(/[\\w+=,.@-]+)*"
     },
+    "AvailabilityErrorMessage":{"type":"string"},
     "CertificateBody":{
       "type":"string",
       "max":32768,
@@ -296,7 +338,32 @@
       "type":"structure",
       "members":{
         "CertificateArn":{"shape":"Arn"},
-        "DomainName":{"shape":"DomainNameString"}
+        "DomainName":{"shape":"DomainNameString"},
+        "SubjectAlternativeNameSummaries":{"shape":"DomainList"},
+        "HasAdditionalSubjectAlternativeNames":{
+          "shape":"NullableBoolean",
+          "box":true
+        },
+        "Status":{"shape":"CertificateStatus"},
+        "Type":{"shape":"CertificateType"},
+        "KeyAlgorithm":{"shape":"KeyAlgorithm"},
+        "KeyUsages":{"shape":"KeyUsageNames"},
+        "ExtendedKeyUsages":{"shape":"ExtendedKeyUsageNames"},
+        "InUse":{
+          "shape":"NullableBoolean",
+          "box":true
+        },
+        "Exported":{
+          "shape":"NullableBoolean",
+          "box":true
+        },
+        "RenewalEligibility":{"shape":"RenewalEligibility"},
+        "NotBefore":{"shape":"TStamp"},
+        "NotAfter":{"shape":"TStamp"},
+        "CreatedAt":{"shape":"TStamp"},
+        "IssuedAt":{"shape":"TStamp"},
+        "ImportedAt":{"shape":"TStamp"},
+        "RevokedAt":{"shape":"TStamp"}
       }
     },
     "CertificateSummaryList":{
@@ -317,6 +384,13 @@
         "AMAZON_ISSUED",
         "PRIVATE"
       ]
+    },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
     },
     "DeleteCertificateRequest":{
       "type":"structure",
@@ -393,6 +467,12 @@
       "max":100,
       "min":1
     },
+    "ExpiryEventsConfiguration":{
+      "type":"structure",
+      "members":{
+        "DaysBeforeExpiry":{"shape":"PositiveInteger"}
+      }
+    },
     "ExportCertificateRequest":{
       "type":"structure",
       "required":[
@@ -444,6 +524,10 @@
         "CUSTOM"
       ]
     },
+    "ExtendedKeyUsageNames":{
+      "type":"list",
+      "member":{"shape":"ExtendedKeyUsageName"}
+    },
     "FailureReason":{
       "type":"string",
       "enum":[
@@ -472,6 +556,12 @@
         "extendedKeyUsage":{"shape":"ExtendedKeyUsageFilterList"},
         "keyUsage":{"shape":"KeyUsageFilterList"},
         "keyTypes":{"shape":"KeyAlgorithmList"}
+      }
+    },
+    "GetAccountConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ExpiryEvents":{"shape":"ExpiryEventsConfiguration"}
       }
     },
     "GetCertificateRequest":{
@@ -563,8 +653,9 @@
     "KeyAlgorithm":{
       "type":"string",
       "enum":[
-        "RSA_2048",
         "RSA_1024",
+        "RSA_2048",
+        "RSA_3072",
         "RSA_4096",
         "EC_prime256v1",
         "EC_secp384r1",
@@ -605,6 +696,10 @@
         "CUSTOM"
       ]
     },
+    "KeyUsageNames":{
+      "type":"list",
+      "member":{"shape":"KeyUsageName"}
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -618,7 +713,9 @@
         "CertificateStatuses":{"shape":"CertificateStatuses"},
         "Includes":{"shape":"Filters"},
         "NextToken":{"shape":"NextToken"},
-        "MaxItems":{"shape":"MaxItems"}
+        "MaxItems":{"shape":"MaxItems"},
+        "SortBy":{"shape":"SortBy"},
+        "SortOrder":{"shape":"SortOrder"}
       }
     },
     "ListCertificatesResponse":{
@@ -652,11 +749,22 @@
       "min":1,
       "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]*"
     },
+    "NullableBoolean":{"type":"boolean"},
     "PassphraseBlob":{
       "type":"blob",
       "max":128,
       "min":4,
       "sensitive":true
+    },
+    "PcaArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:[\\w+=/,.@-]+:acm-pca:[\\w+=/,.@-]*:[0-9]+:[\\w+=,.@-]+(/[\\w+=,.@-]+)*"
+    },
+    "PositiveInteger":{
+      "type":"integer",
+      "min":1
     },
     "PrivateKey":{
       "type":"string",
@@ -670,6 +778,14 @@
       "max":5120,
       "min":1,
       "sensitive":true
+    },
+    "PutAccountConfigurationRequest":{
+      "type":"structure",
+      "required":["IdempotencyToken"],
+      "members":{
+        "ExpiryEvents":{"shape":"ExpiryEventsConfiguration"},
+        "IdempotencyToken":{"shape":"IdempotencyToken"}
+      }
     },
     "RecordType":{
       "type":"string",
@@ -733,8 +849,9 @@
         "IdempotencyToken":{"shape":"IdempotencyToken"},
         "DomainValidationOptions":{"shape":"DomainValidationOptionList"},
         "Options":{"shape":"CertificateOptions"},
-        "CertificateAuthorityArn":{"shape":"Arn"},
-        "Tags":{"shape":"TagList"}
+        "CertificateAuthorityArn":{"shape":"PcaArn"},
+        "Tags":{"shape":"TagList"},
+        "KeyAlgorithm":{"shape":"KeyAlgorithm"}
       }
     },
     "RequestCertificateResponse":{
@@ -805,6 +922,18 @@
         "A_A_COMPROMISE"
       ]
     },
+    "ServiceErrorMessage":{"type":"string"},
+    "SortBy":{
+      "type":"string",
+      "enum":["CREATED_AT"]
+    },
+    "SortOrder":{
+      "type":"string",
+      "enum":[
+        "ASCENDING",
+        "DESCENDING"
+      ]
+    },
     "String":{"type":"string"},
     "TStamp":{"type":"timestamp"},
     "Tag":{
@@ -840,6 +969,14 @@
       "min":0,
       "pattern":"[\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*"
     },
+    "ThrottlingException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"AvailabilityErrorMessage"}
+      },
+      "exception":true,
+      "synthetic":true
+    },
     "TooManyTagsException":{
       "type":"structure",
       "members":{
@@ -862,6 +999,15 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "ValidationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ValidationExceptionMessage"}
+      },
+      "exception":true,
+      "synthetic":true
+    },
+    "ValidationExceptionMessage":{"type":"string"},
     "ValidationMethod":{
       "type":"string",
       "enum":[

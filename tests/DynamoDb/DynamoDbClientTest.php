@@ -4,6 +4,7 @@ namespace Aws\Test\DynamoDb;
 use Aws\Command;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\DynamoDb\LockingSessionConnection;
 use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
@@ -11,7 +12,7 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\DynamoDb\DynamoDbClient
@@ -20,16 +21,13 @@ class DynamoDbClientTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testRegisterSessionHandlerReturnsHandler()
     {
         $client = $this->getTestSdk()->createDynamoDb();
-        $sh = $client->registerSessionHandler(['locking' => true]);
+        @$sh = $client->registerSessionHandler(['locking' => true]);
         $this->assertInstanceOf(
-            'Aws\DynamoDb\LockingSessionConnection',
-            $this->readAttribute($sh, 'connection')
+            LockingSessionConnection::class,
+            $this->getPropertyValue($sh, 'connection')
         );
     }
 
@@ -173,7 +171,7 @@ class DynamoDbClientTest extends TestCase
                 $this->assertSame(0, $options['delay']);
             }
 
-            return \GuzzleHttp\Promise\promise_for(array_shift($queue));
+            return \GuzzleHttp\Promise\Create::promiseFor(array_shift($queue));
         };
 
         $client = new DynamoDbClient([

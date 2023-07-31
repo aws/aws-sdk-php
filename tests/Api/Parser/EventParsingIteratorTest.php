@@ -11,7 +11,7 @@ use Aws\Api\StructureShape;
 use Aws\Exception\EventStreamDataException;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\Parser\EventParsingIterator
@@ -29,7 +29,7 @@ class EventParsingIteratorTest extends TestCase
     /** @var StructureShape */
     private $eventstreamShape;
 
-    public function setUp()
+    public function set_up()
     {
         $shape = json_decode(
             file_get_contents(
@@ -81,7 +81,7 @@ class EventParsingIteratorTest extends TestCase
      */
     public function testEmitsEvents($input, $output, $expectedCount)
     {
-        $stream = Psr7\stream_for($input);
+        $stream = Psr7\Utils::streamFor($input);
         $iterator = new EventParsingIterator(
             $stream,
             $this->eventstreamShape,
@@ -106,7 +106,7 @@ class EventParsingIteratorTest extends TestCase
 
     public function testThrowsOnErrorEvent()
     {
-        $stream = Psr7\stream_for(
+        $stream = Psr7\Utils::streamFor(
             base64_decode(file_get_contents(
                 __DIR__ . '/../eventstream_fixtures/input/error_event'
             ))
@@ -131,13 +131,11 @@ class EventParsingIteratorTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException Aws\Api\Parser\Exception\ParserException
-     * @expectedExceptionMessage Failed to parse unknown message type.
-     */
     public function testThrowsOnUnknownMessageType()
     {
-        $stream = Psr7\stream_for(
+        $this->expectExceptionMessage("Failed to parse unknown message type.");
+        $this->expectException(\Aws\Api\Parser\Exception\ParserException::class);
+        $stream = Psr7\Utils::streamFor(
             base64_decode(file_get_contents(
                 __DIR__ . '/../eventstream_fixtures/input/unknown_message_type'
             ))
@@ -153,13 +151,11 @@ class EventParsingIteratorTest extends TestCase
         $iterator->current();
     }
 
-    /**
-     * @expectedException Aws\Api\Parser\Exception\ParserException
-     * @expectedExceptionMessage Failed to parse without event type.
-     */
     public function testThrowsOnUnknownEventType()
     {
-        $stream = Psr7\stream_for(
+        $this->expectExceptionMessage("Failed to parse without event type.");
+        $this->expectException(\Aws\Api\Parser\Exception\ParserException::class);
+        $stream = Psr7\Utils::streamFor(
             base64_decode(file_get_contents(
                 __DIR__ . '/../eventstream_fixtures/input/unknown_event_type'
             ))

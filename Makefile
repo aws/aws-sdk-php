@@ -25,7 +25,7 @@ clear-cache:
 
 test:
 	@AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_CSM_ENABLED=false \
-	vendor/bin/phpunit --testsuite=unit $(TEST) 
+	vendor/bin/phpunit --testsuite=unit $(TEST)
 
 test-phar: package
 	[ -f build/artifacts/behat.phar ] || (cd build/artifacts && \
@@ -59,6 +59,12 @@ sync-models: check-models-dir
 
 integ:
 	vendor/bin/behat --format=progress --tags=integ
+
+integ-nocrt:
+	vendor/bin/behat --format=progress --tags='@integ&&~@crt'
+
+integ-standalone:
+	vendor/bin/behat --format=progress --tags='@integ&&~@requiresUniqueResources'
 
 smoke:
 	vendor/bin/behat --format=progress --suite=smoke

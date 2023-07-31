@@ -51,10 +51,10 @@ class TestUploader extends AbstractUploader
     protected function createPart($seekable, $number)
     {
         if ($seekable) {
-            $body = Psr7\stream_for(fopen($this->source->getMetadata('uri'), 'r'));
+            $body = Psr7\Utils::streamFor(fopen($this->source->getMetadata('uri'), 'r'));
             $body = $this->limitPartStream($body);
         } else {
-            $body = Psr7\stream_for($this->source->read($this->state->getPartSize()));
+            $body = Psr7\Utils::streamFor($this->source->read($this->state->getPartSize()));
         }
 
         // Do not create a part if the body size is zero.

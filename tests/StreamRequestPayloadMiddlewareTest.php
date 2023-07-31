@@ -9,9 +9,10 @@ use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\StreamRequestPayloadMiddleware;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -19,6 +20,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class StreamRequestPayloadMiddlewareTest extends TestCase
 {
+    use ArraySubsetAsserts;
 
     /**
      * @dataProvider generateTestCases
@@ -56,7 +58,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
     {
         $service = $this->generateTestService();
         $client = $this->generateTestClient($service);
-        $inputStream = Psr7\stream_for('test');
+        $inputStream = Psr7\Utils::streamFor('test');
 
         return [
             [
@@ -67,7 +69,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                     ]
                 ),
                 [],
-                [ 'transfer-encoding', 'content-length' ],
+                [ 'transfer-encoding', 'content-length'],
             ],
             [
                 $client->getCommand(
@@ -112,26 +114,25 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \Aws\Exception\IncalculablePayloadException
-     * @expectedExceptionMessage Payload content length is required and can not be calculated.
-     */
     public function testThrowsExceptionOnIncalculableSize()
     {
+        $this->expectExceptionMessage("Payload content length is required and can not be calculated.");
+        $this->expectException(\Aws\Exception\IncalculablePayloadException::class);
         $service = $this->generateTestService();
         $client = $this->generateTestClient($service);
         $command = $client->getCommand(
             'StreamingOp',
             [
-                'InputStream' => Psr7\stream_for('test'),
+                'InputStream' => Psr7\Utils::streamFor('test'),
             ]
         );
         $middleware = StreamRequestPayloadMiddleware::wrap($service);
         $invokable = $middleware(function($cmd, $req) {});
 
         // Mock a request with a body whose size returns null
-        $streamMock = $this->getMockBuilder(\stdClass::class)
-            ->setMethods(['getSize'])
+        $filestream = tmpfile();
+        $streamMock = $this->getMockBuilder(Psr7\Stream::class)
+            ->setConstructorArgs([$filestream])
             ->getMock();
         $streamMock->expects($this->any())
             ->method('getSize')
@@ -145,6 +146,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
             ->willReturn($streamMock);
 
         $invokable($command, $requestMock);
+        fclose($filestream);
     }
 
     private function generateTestHandlerList()

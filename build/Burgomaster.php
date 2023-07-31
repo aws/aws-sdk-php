@@ -126,7 +126,7 @@ class Burgomaster
      * @throws \RuntimeException if the file cannot be copied.
      */
     public function deepCopy($from, $to)
-    {
+    { 
         if (!is_file($from)) {
             throw new \InvalidArgumentException("File not found: {$from}");
         }
@@ -163,7 +163,7 @@ class Burgomaster
     function recursiveCopy(
         $sourceDir,
         $destDir,
-        $extensions = array('php'),
+        $extensions = array('php', 'php.gz'),
         Iterator $files = null
     ) {
         if (!realpath($sourceDir)) {
@@ -185,11 +185,18 @@ class Burgomaster
 
         $this->startSection('copy');
         $this->debug("Starting to copy files from $sourceDir");
-
         foreach ($files as $file) {
-            if (isset($exts[$file->getExtension()])
-                || $file->getBaseName() == 'LICENSE'
-            ) {
+            $shouldCopyFile = false;
+            if ($file->getBaseName() == 'LICENSE') {
+                $shouldCopyFile = true;
+            } else {
+                foreach ($extensions as $extension) {
+                    if (substr($file->getFilename(), -strlen($extension)) == $extension) {
+                        $shouldCopyFile = true;
+                    }
+                }
+            }
+            if ($shouldCopyFile) {
                 // Remove the source directory from the destination path
                 $toPath = str_replace($sourceDir, '', (string) $file);
                 $toPath = $destDir . '/' . $toPath;

@@ -26,7 +26,8 @@
         {"shape":"RepositoryNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ServerException"},
-        {"shape":"RegistryNotFoundException"}
+        {"shape":"RegistryNotFoundException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "BatchDeleteImage":{
@@ -40,7 +41,8 @@
       "errors":[
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"RepositoryNotFoundException"}
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "CompleteLayerUpload":{
@@ -75,8 +77,11 @@
       "errors":[
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"InvalidTagParameterException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"RepositoryAlreadyExistsException"},
-        {"shape":"LimitExceededException"}
+        {"shape":"LimitExceededException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "DeleteRepository":{
@@ -91,7 +96,8 @@
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
         {"shape":"RepositoryNotFoundException"},
-        {"shape":"RepositoryNotEmptyException"}
+        {"shape":"RepositoryNotEmptyException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "DeleteRepositoryPolicy":{
@@ -106,7 +112,8 @@
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
         {"shape":"RepositoryNotFoundException"},
-        {"shape":"RepositoryPolicyNotFoundException"}
+        {"shape":"RepositoryPolicyNotFoundException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "DescribeImageTags":{
@@ -120,7 +127,8 @@
       "errors":[
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"RepositoryNotFoundException"}
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "DescribeImages":{
@@ -135,7 +143,8 @@
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
         {"shape":"RepositoryNotFoundException"},
-        {"shape":"ImageNotFoundException"}
+        {"shape":"ImageNotFoundException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "DescribeRegistries":{
@@ -163,7 +172,8 @@
       "errors":[
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"RepositoryNotFoundException"}
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "GetAuthorizationToken":{
@@ -176,7 +186,8 @@
       "output":{"shape":"GetAuthorizationTokenResponse"},
       "errors":[
         {"shape":"ServerException"},
-        {"shape":"InvalidParameterException"}
+        {"shape":"InvalidParameterException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "GetRegistryCatalogData":{
@@ -203,7 +214,9 @@
       "errors":[
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"RepositoryNotFoundException"}
+        {"shape":"RepositoryCatalogDataNotFoundException"},
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "GetRepositoryPolicy":{
@@ -218,7 +231,8 @@
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
         {"shape":"RepositoryNotFoundException"},
-        {"shape":"RepositoryPolicyNotFoundException"}
+        {"shape":"RepositoryPolicyNotFoundException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "InitiateLayerUpload":{
@@ -235,6 +249,21 @@
         {"shape":"RepositoryNotFoundException"},
         {"shape":"RegistryNotFoundException"},
         {"shape":"UnsupportedCommandException"}
+      ]
+    },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"UnsupportedCommandException"},
+        {"shape":"ServerException"}
       ]
     },
     "PutImage":{
@@ -284,7 +313,8 @@
       "errors":[
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"RepositoryNotFoundException"}
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"UnsupportedCommandException"}
       ]
     },
     "SetRepositoryPolicy":{
@@ -298,7 +328,42 @@
       "errors":[
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"RepositoryNotFoundException"}
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"UnsupportedCommandException"}
+      ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidTagParameterException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"UnsupportedCommandException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidTagParameterException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"UnsupportedCommandException"},
+        {"shape":"ServerException"}
       ]
     },
     "UploadLayerPart":{
@@ -324,7 +389,7 @@
   "shapes":{
     "AboutText":{
       "type":"string",
-      "max":10240
+      "max":25600
     },
     "Architecture":{
       "type":"string",
@@ -336,7 +401,11 @@
       "member":{"shape":"Architecture"},
       "max":50
     },
-    "Arn":{"type":"string"},
+    "Arn":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "AuthorizationData":{
       "type":"structure",
       "members":{
@@ -374,7 +443,7 @@
         "imageIds"
       ],
       "members":{
-        "registryId":{"shape":"RegistryId"},
+        "registryId":{"shape":"RegistryIdOrAlias"},
         "repositoryName":{"shape":"RepositoryName"},
         "imageIds":{"shape":"ImageIdentifierList"}
       }
@@ -425,7 +494,8 @@
       "required":["repositoryName"],
       "members":{
         "repositoryName":{"shape":"RepositoryName"},
-        "catalogData":{"shape":"RepositoryCatalogDataInput"}
+        "catalogData":{"shape":"RepositoryCatalogDataInput"},
+        "tags":{"shape":"TagList"}
       }
     },
     "CreateRepositoryResponse":{
@@ -758,6 +828,13 @@
       },
       "exception":true
     },
+    "InvalidTagParameterException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
     "Layer":{
       "type":"structure",
       "members":{
@@ -841,6 +918,19 @@
         "message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{"shape":"Arn"}
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"TagList"}
+      }
     },
     "LogoImageBlob":{
       "type":"blob",
@@ -1007,8 +1097,8 @@
     },
     "RegistryIdOrAlias":{
       "type":"string",
-      "max":256,
-      "min":1
+      "max":50,
+      "min":2
     },
     "RegistryList":{
       "type":"list",
@@ -1061,6 +1151,13 @@
         "aboutText":{"shape":"AboutText"},
         "usageText":{"shape":"UsageText"}
       }
+    },
+    "RepositoryCatalogDataNotFoundException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
     },
     "RepositoryDescription":{
       "type":"string",
@@ -1141,12 +1238,80 @@
         "policyText":{"shape":"RepositoryPolicyText"}
       }
     },
+    "Tag":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"TagKey"},
+        "Value":{"shape":"TagValue"}
+      }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":200,
+      "min":0
+    },
+    "TagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":200,
+      "min":0
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tags"
+      ],
+      "members":{
+        "resourceArn":{"shape":"Arn"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "TooManyTagsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
     "UnsupportedCommandException":{
       "type":"structure",
       "members":{
         "message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceArn":{"shape":"Arn"},
+        "tagKeys":{"shape":"TagKeyList"}
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "UploadId":{
       "type":"string",
@@ -1189,7 +1354,7 @@
     "Url":{"type":"string"},
     "UsageText":{
       "type":"string",
-      "max":10240
+      "max":25600
     }
   }
 }

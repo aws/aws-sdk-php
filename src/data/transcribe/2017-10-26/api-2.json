@@ -13,6 +13,21 @@
     "uid":"transcribe-2017-10-26"
   },
   "operations":{
+    "CreateCallAnalyticsCategory":{
+      "name":"CreateCallAnalyticsCategory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCallAnalyticsCategoryRequest"},
+      "output":{"shape":"CreateCallAnalyticsCategoryResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "CreateLanguageModel":{
       "name":"CreateLanguageModel",
       "http":{
@@ -71,6 +86,35 @@
         {"shape":"LimitExceededException"},
         {"shape":"InternalFailureException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "DeleteCallAnalyticsCategory":{
+      "name":"DeleteCallAnalyticsCategory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCallAnalyticsCategoryRequest"},
+      "output":{"shape":"DeleteCallAnalyticsCategoryResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DeleteCallAnalyticsJob":{
+      "name":"DeleteCallAnalyticsJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCallAnalyticsJobRequest"},
+      "output":{"shape":"DeleteCallAnalyticsJobResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "DeleteLanguageModel":{
@@ -169,6 +213,36 @@
         {"shape":"NotFoundException"}
       ]
     },
+    "GetCallAnalyticsCategory":{
+      "name":"GetCallAnalyticsCategory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCallAnalyticsCategoryRequest"},
+      "output":{"shape":"GetCallAnalyticsCategoryResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "GetCallAnalyticsJob":{
+      "name":"GetCallAnalyticsJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCallAnalyticsJobRequest"},
+      "output":{"shape":"GetCallAnalyticsJobResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"}
+      ]
+    },
     "GetMedicalTranscriptionJob":{
       "name":"GetMedicalTranscriptionJob",
       "http":{
@@ -244,6 +318,34 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "ListCallAnalyticsCategories":{
+      "name":"ListCallAnalyticsCategories",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCallAnalyticsCategoriesRequest"},
+      "output":{"shape":"ListCallAnalyticsCategoriesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListCallAnalyticsJobs":{
+      "name":"ListCallAnalyticsJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCallAnalyticsJobsRequest"},
+      "output":{"shape":"ListCallAnalyticsJobsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "ListLanguageModels":{
       "name":"ListLanguageModels",
       "http":{
@@ -282,6 +384,21 @@
       "output":{"shape":"ListMedicalVocabulariesResponse"},
       "errors":[
         {"shape":"BadRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
         {"shape":"LimitExceededException"},
         {"shape":"InternalFailureException"}
       ]
@@ -328,6 +445,21 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "StartCallAnalyticsJob":{
+      "name":"StartCallAnalyticsJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartCallAnalyticsJobRequest"},
+      "output":{"shape":"StartCallAnalyticsJobResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "StartMedicalTranscriptionJob":{
       "name":"StartMedicalTranscriptionJob",
       "http":{
@@ -355,6 +487,54 @@
         {"shape":"BadRequestException"},
         {"shape":"LimitExceededException"},
         {"shape":"InternalFailureException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"NotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateCallAnalyticsCategory":{
+      "name":"UpdateCallAnalyticsCategory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCallAnalyticsCategoryRequest"},
+      "output":{"shape":"UpdateCallAnalyticsCategoryResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"},
         {"shape":"ConflictException"}
       ]
     },
@@ -407,6 +587,15 @@
     }
   },
   "shapes":{
+    "AbsoluteTimeRange":{
+      "type":"structure",
+      "members":{
+        "StartTime":{"shape":"TimestampMilliseconds"},
+        "EndTime":{"shape":"TimestampMilliseconds"},
+        "First":{"shape":"TimestampMilliseconds"},
+        "Last":{"shape":"TimestampMilliseconds"}
+      }
+    },
     "BadRequestException":{
       "type":"structure",
       "members":{
@@ -424,7 +613,116 @@
     "Boolean":{"type":"boolean"},
     "CLMLanguageCode":{
       "type":"string",
-      "enum":["en-US"]
+      "enum":[
+        "en-US",
+        "hi-IN",
+        "es-US",
+        "en-GB",
+        "en-AU",
+        "de-DE",
+        "ja-JP"
+      ]
+    },
+    "CallAnalyticsJob":{
+      "type":"structure",
+      "members":{
+        "CallAnalyticsJobName":{"shape":"CallAnalyticsJobName"},
+        "CallAnalyticsJobStatus":{"shape":"CallAnalyticsJobStatus"},
+        "LanguageCode":{"shape":"LanguageCode"},
+        "MediaSampleRateHertz":{"shape":"MediaSampleRateHertz"},
+        "MediaFormat":{"shape":"MediaFormat"},
+        "Media":{"shape":"Media"},
+        "Transcript":{"shape":"Transcript"},
+        "StartTime":{"shape":"DateTime"},
+        "CreationTime":{"shape":"DateTime"},
+        "CompletionTime":{"shape":"DateTime"},
+        "FailureReason":{"shape":"FailureReason"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
+        "IdentifiedLanguageScore":{"shape":"IdentifiedLanguageScore"},
+        "Settings":{"shape":"CallAnalyticsJobSettings"},
+        "ChannelDefinitions":{"shape":"ChannelDefinitions"}
+      }
+    },
+    "CallAnalyticsJobName":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z._-]+"
+    },
+    "CallAnalyticsJobSettings":{
+      "type":"structure",
+      "members":{
+        "VocabularyName":{"shape":"VocabularyName"},
+        "VocabularyFilterName":{"shape":"VocabularyFilterName"},
+        "VocabularyFilterMethod":{"shape":"VocabularyFilterMethod"},
+        "LanguageModelName":{"shape":"ModelName"},
+        "ContentRedaction":{"shape":"ContentRedaction"},
+        "LanguageOptions":{"shape":"LanguageOptions"},
+        "LanguageIdSettings":{"shape":"LanguageIdSettingsMap"}
+      }
+    },
+    "CallAnalyticsJobStatus":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "IN_PROGRESS",
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
+    "CallAnalyticsJobSummaries":{
+      "type":"list",
+      "member":{"shape":"CallAnalyticsJobSummary"}
+    },
+    "CallAnalyticsJobSummary":{
+      "type":"structure",
+      "members":{
+        "CallAnalyticsJobName":{"shape":"CallAnalyticsJobName"},
+        "CreationTime":{"shape":"DateTime"},
+        "StartTime":{"shape":"DateTime"},
+        "CompletionTime":{"shape":"DateTime"},
+        "LanguageCode":{"shape":"LanguageCode"},
+        "CallAnalyticsJobStatus":{"shape":"CallAnalyticsJobStatus"},
+        "FailureReason":{"shape":"FailureReason"}
+      }
+    },
+    "CategoryName":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z._-]+"
+    },
+    "CategoryProperties":{
+      "type":"structure",
+      "members":{
+        "CategoryName":{"shape":"CategoryName"},
+        "Rules":{"shape":"RuleList"},
+        "CreateTime":{"shape":"DateTime"},
+        "LastUpdateTime":{"shape":"DateTime"},
+        "InputType":{"shape":"InputType"}
+      }
+    },
+    "CategoryPropertiesList":{
+      "type":"list",
+      "member":{"shape":"CategoryProperties"}
+    },
+    "ChannelDefinition":{
+      "type":"structure",
+      "members":{
+        "ChannelId":{"shape":"ChannelId"},
+        "ParticipantRole":{"shape":"ParticipantRole"}
+      }
+    },
+    "ChannelDefinitions":{
+      "type":"list",
+      "member":{"shape":"ChannelDefinition"},
+      "max":2,
+      "min":2
+    },
+    "ChannelId":{
+      "type":"integer",
+      "max":1,
+      "min":0
     },
     "ConflictException":{
       "type":"structure",
@@ -441,7 +739,26 @@
       ],
       "members":{
         "RedactionType":{"shape":"RedactionType"},
-        "RedactionOutput":{"shape":"RedactionOutput"}
+        "RedactionOutput":{"shape":"RedactionOutput"},
+        "PiiEntityTypes":{"shape":"PiiEntityTypes"}
+      }
+    },
+    "CreateCallAnalyticsCategoryRequest":{
+      "type":"structure",
+      "required":[
+        "CategoryName",
+        "Rules"
+      ],
+      "members":{
+        "CategoryName":{"shape":"CategoryName"},
+        "Rules":{"shape":"RuleList"},
+        "InputType":{"shape":"InputType"}
+      }
+    },
+    "CreateCallAnalyticsCategoryResponse":{
+      "type":"structure",
+      "members":{
+        "CategoryProperties":{"shape":"CategoryProperties"}
       }
     },
     "CreateLanguageModelRequest":{
@@ -456,7 +773,8 @@
         "LanguageCode":{"shape":"CLMLanguageCode"},
         "BaseModelName":{"shape":"BaseModelName"},
         "ModelName":{"shape":"ModelName"},
-        "InputDataConfig":{"shape":"InputDataConfig"}
+        "InputDataConfig":{"shape":"InputDataConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateLanguageModelResponse":{
@@ -479,7 +797,8 @@
       "members":{
         "VocabularyName":{"shape":"VocabularyName"},
         "LanguageCode":{"shape":"LanguageCode"},
-        "VocabularyFileUri":{"shape":"Uri"}
+        "VocabularyFileUri":{"shape":"Uri"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateMedicalVocabularyResponse":{
@@ -502,7 +821,9 @@
         "VocabularyFilterName":{"shape":"VocabularyFilterName"},
         "LanguageCode":{"shape":"LanguageCode"},
         "Words":{"shape":"Words"},
-        "VocabularyFilterFileUri":{"shape":"Uri"}
+        "VocabularyFilterFileUri":{"shape":"Uri"},
+        "Tags":{"shape":"TagList"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
     },
     "CreateVocabularyFilterResponse":{
@@ -523,7 +844,9 @@
         "VocabularyName":{"shape":"VocabularyName"},
         "LanguageCode":{"shape":"LanguageCode"},
         "Phrases":{"shape":"Phrases"},
-        "VocabularyFileUri":{"shape":"Uri"}
+        "VocabularyFileUri":{"shape":"Uri"},
+        "Tags":{"shape":"TagList"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
     },
     "CreateVocabularyResponse":{
@@ -543,6 +866,30 @@
       "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso-{0,1}[a-z]{0,1}):iam::[0-9]{0,63}:role/[A-Za-z0-9:_/+=,@.-]{0,1024}$"
     },
     "DateTime":{"type":"timestamp"},
+    "DeleteCallAnalyticsCategoryRequest":{
+      "type":"structure",
+      "required":["CategoryName"],
+      "members":{
+        "CategoryName":{"shape":"CategoryName"}
+      }
+    },
+    "DeleteCallAnalyticsCategoryResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteCallAnalyticsJobRequest":{
+      "type":"structure",
+      "required":["CallAnalyticsJobName"],
+      "members":{
+        "CallAnalyticsJobName":{"shape":"CallAnalyticsJobName"}
+      }
+    },
+    "DeleteCallAnalyticsJobResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteLanguageModelRequest":{
       "type":"structure",
       "required":["ModelName"],
@@ -598,7 +945,34 @@
         "LanguageModel":{"shape":"LanguageModel"}
       }
     },
+    "DurationInSeconds":{"type":"float"},
     "FailureReason":{"type":"string"},
+    "GetCallAnalyticsCategoryRequest":{
+      "type":"structure",
+      "required":["CategoryName"],
+      "members":{
+        "CategoryName":{"shape":"CategoryName"}
+      }
+    },
+    "GetCallAnalyticsCategoryResponse":{
+      "type":"structure",
+      "members":{
+        "CategoryProperties":{"shape":"CategoryProperties"}
+      }
+    },
+    "GetCallAnalyticsJobRequest":{
+      "type":"structure",
+      "required":["CallAnalyticsJobName"],
+      "members":{
+        "CallAnalyticsJobName":{"shape":"CallAnalyticsJobName"}
+      }
+    },
+    "GetCallAnalyticsJobResponse":{
+      "type":"structure",
+      "members":{
+        "CallAnalyticsJob":{"shape":"CallAnalyticsJob"}
+      }
+    },
     "GetMedicalTranscriptionJobRequest":{
       "type":"structure",
       "required":["MedicalTranscriptionJobName"],
@@ -690,6 +1064,13 @@
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
     },
+    "InputType":{
+      "type":"string",
+      "enum":[
+        "REAL_TIME",
+        "POST_CALL"
+      ]
+    },
     "InternalFailureException":{
       "type":"structure",
       "members":{
@@ -698,12 +1079,29 @@
       "exception":true,
       "fault":true
     },
+    "InterruptionFilter":{
+      "type":"structure",
+      "members":{
+        "Threshold":{"shape":"TimestampMilliseconds"},
+        "ParticipantRole":{"shape":"ParticipantRole"},
+        "AbsoluteTimeRange":{"shape":"AbsoluteTimeRange"},
+        "RelativeTimeRange":{"shape":"RelativeTimeRange"},
+        "Negate":{"shape":"Boolean"}
+      }
+    },
     "JobExecutionSettings":{
       "type":"structure",
       "members":{
         "AllowDeferredExecution":{"shape":"Boolean"},
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
+    },
+    "KMSEncryptionContextMap":{
+      "type":"map",
+      "key":{"shape":"NonEmptyString"},
+      "value":{"shape":"NonEmptyString"},
+      "max":10,
+      "min":1
     },
     "KMSKeyId":{
       "type":"string",
@@ -717,7 +1115,6 @@
         "af-ZA",
         "ar-AE",
         "ar-SA",
-        "cy-GB",
         "da-DK",
         "de-CH",
         "de-DE",
@@ -733,8 +1130,6 @@
         "fa-IR",
         "fr-CA",
         "fr-FR",
-        "ga-IE",
-        "gd-GB",
         "he-IL",
         "hi-IN",
         "id-ID",
@@ -749,8 +1144,40 @@
         "ta-IN",
         "te-IN",
         "tr-TR",
-        "zh-CN"
+        "zh-CN",
+        "zh-TW",
+        "th-TH",
+        "en-ZA",
+        "en-NZ",
+        "vi-VN",
+        "sv-SE"
       ]
+    },
+    "LanguageCodeItem":{
+      "type":"structure",
+      "members":{
+        "LanguageCode":{"shape":"LanguageCode"},
+        "DurationInSeconds":{"shape":"DurationInSeconds"}
+      }
+    },
+    "LanguageCodeList":{
+      "type":"list",
+      "member":{"shape":"LanguageCodeItem"}
+    },
+    "LanguageIdSettings":{
+      "type":"structure",
+      "members":{
+        "VocabularyName":{"shape":"VocabularyName"},
+        "VocabularyFilterName":{"shape":"VocabularyFilterName"},
+        "LanguageModelName":{"shape":"ModelName"}
+      }
+    },
+    "LanguageIdSettingsMap":{
+      "type":"map",
+      "key":{"shape":"LanguageCode"},
+      "value":{"shape":"LanguageIdSettings"},
+      "max":5,
+      "min":1
     },
     "LanguageModel":{
       "type":"structure",
@@ -769,7 +1196,7 @@
     "LanguageOptions":{
       "type":"list",
       "member":{"shape":"LanguageCode"},
-      "min":2
+      "min":1
     },
     "LimitExceededException":{
       "type":"structure",
@@ -777,6 +1204,37 @@
         "Message":{"shape":"String"}
       },
       "exception":true
+    },
+    "ListCallAnalyticsCategoriesRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListCallAnalyticsCategoriesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "Categories":{"shape":"CategoryPropertiesList"}
+      }
+    },
+    "ListCallAnalyticsJobsRequest":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"CallAnalyticsJobStatus"},
+        "JobNameContains":{"shape":"CallAnalyticsJobName"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListCallAnalyticsJobsResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"CallAnalyticsJobStatus"},
+        "NextToken":{"shape":"NextToken"},
+        "CallAnalyticsJobSummaries":{"shape":"CallAnalyticsJobSummaries"}
+      }
     },
     "ListLanguageModelsRequest":{
       "type":"structure",
@@ -826,6 +1284,20 @@
         "Status":{"shape":"VocabularyState"},
         "NextToken":{"shape":"NextToken"},
         "Vocabularies":{"shape":"Vocabularies"}
+      }
+    },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"TranscribeArn"}
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"TranscribeArn"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "ListTranscriptionJobsRequest":{
@@ -895,7 +1367,8 @@
     "Media":{
       "type":"structure",
       "members":{
-        "MediaFileUri":{"shape":"Uri"}
+        "MediaFileUri":{"shape":"Uri"},
+        "RedactedMediaFileUri":{"shape":"Uri"}
       }
     },
     "MediaFormat":{
@@ -915,6 +1388,15 @@
       "max":48000,
       "min":8000
     },
+    "MedicalContentIdentificationType":{
+      "type":"string",
+      "enum":["PHI"]
+    },
+    "MedicalMediaSampleRateHertz":{
+      "type":"integer",
+      "max":48000,
+      "min":16000
+    },
     "MedicalTranscript":{
       "type":"structure",
       "members":{
@@ -927,7 +1409,7 @@
         "MedicalTranscriptionJobName":{"shape":"TranscriptionJobName"},
         "TranscriptionJobStatus":{"shape":"TranscriptionJobStatus"},
         "LanguageCode":{"shape":"LanguageCode"},
-        "MediaSampleRateHertz":{"shape":"MediaSampleRateHertz"},
+        "MediaSampleRateHertz":{"shape":"MedicalMediaSampleRateHertz"},
         "MediaFormat":{"shape":"MediaFormat"},
         "Media":{"shape":"Media"},
         "Transcript":{"shape":"MedicalTranscript"},
@@ -936,8 +1418,10 @@
         "CompletionTime":{"shape":"DateTime"},
         "FailureReason":{"shape":"FailureReason"},
         "Settings":{"shape":"MedicalTranscriptionSetting"},
+        "ContentIdentificationType":{"shape":"MedicalContentIdentificationType"},
         "Specialty":{"shape":"Specialty"},
-        "Type":{"shape":"Type"}
+        "Type":{"shape":"Type"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "MedicalTranscriptionJobSummaries":{
@@ -956,6 +1440,7 @@
         "FailureReason":{"shape":"FailureReason"},
         "OutputLocationType":{"shape":"OutputLocationType"},
         "Specialty":{"shape":"Specialty"},
+        "ContentIdentificationType":{"shape":"MedicalContentIdentificationType"},
         "Type":{"shape":"Type"}
       }
     },
@@ -999,6 +1484,21 @@
       "max":8192,
       "pattern":".+"
     },
+    "NonEmptyString":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
+    "NonTalkTimeFilter":{
+      "type":"structure",
+      "members":{
+        "Threshold":{"shape":"TimestampMilliseconds"},
+        "AbsoluteTimeRange":{"shape":"AbsoluteTimeRange"},
+        "RelativeTimeRange":{"shape":"RelativeTimeRange"},
+        "Negate":{"shape":"Boolean"}
+      }
+    },
     "NotFoundException":{
       "type":"structure",
       "members":{
@@ -1024,6 +1524,18 @@
         "SERVICE_BUCKET"
       ]
     },
+    "ParticipantRole":{
+      "type":"string",
+      "enum":[
+        "AGENT",
+        "CUSTOMER"
+      ]
+    },
+    "Percentage":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
     "Phrase":{
       "type":"string",
       "max":256,
@@ -1033,6 +1545,29 @@
     "Phrases":{
       "type":"list",
       "member":{"shape":"Phrase"}
+    },
+    "PiiEntityType":{
+      "type":"string",
+      "enum":[
+        "BANK_ACCOUNT_NUMBER",
+        "BANK_ROUTING",
+        "CREDIT_DEBIT_NUMBER",
+        "CREDIT_DEBIT_CVV",
+        "CREDIT_DEBIT_EXPIRY",
+        "PIN",
+        "EMAIL",
+        "ADDRESS",
+        "NAME",
+        "PHONE",
+        "SSN",
+        "ALL"
+      ]
+    },
+    "PiiEntityTypes":{
+      "type":"list",
+      "member":{"shape":"PiiEntityType"},
+      "max":11,
+      "min":0
     },
     "RedactionOutput":{
       "type":"string",
@@ -1044,6 +1579,57 @@
     "RedactionType":{
       "type":"string",
       "enum":["PII"]
+    },
+    "RelativeTimeRange":{
+      "type":"structure",
+      "members":{
+        "StartPercentage":{"shape":"Percentage"},
+        "EndPercentage":{"shape":"Percentage"},
+        "First":{"shape":"Percentage"},
+        "Last":{"shape":"Percentage"}
+      }
+    },
+    "Rule":{
+      "type":"structure",
+      "members":{
+        "NonTalkTimeFilter":{"shape":"NonTalkTimeFilter"},
+        "InterruptionFilter":{"shape":"InterruptionFilter"},
+        "TranscriptFilter":{"shape":"TranscriptFilter"},
+        "SentimentFilter":{"shape":"SentimentFilter"}
+      },
+      "union":true
+    },
+    "RuleList":{
+      "type":"list",
+      "member":{"shape":"Rule"},
+      "max":20,
+      "min":1
+    },
+    "SentimentFilter":{
+      "type":"structure",
+      "required":["Sentiments"],
+      "members":{
+        "Sentiments":{"shape":"SentimentValueList"},
+        "AbsoluteTimeRange":{"shape":"AbsoluteTimeRange"},
+        "RelativeTimeRange":{"shape":"RelativeTimeRange"},
+        "ParticipantRole":{"shape":"ParticipantRole"},
+        "Negate":{"shape":"Boolean"}
+      }
+    },
+    "SentimentValue":{
+      "type":"string",
+      "enum":[
+        "POSITIVE",
+        "NEGATIVE",
+        "NEUTRAL",
+        "MIXED"
+      ]
+    },
+    "SentimentValueList":{
+      "type":"list",
+      "member":{"shape":"SentimentValue"},
+      "max":1,
+      "min":1
     },
     "Settings":{
       "type":"structure",
@@ -1062,6 +1648,28 @@
       "type":"string",
       "enum":["PRIMARYCARE"]
     },
+    "StartCallAnalyticsJobRequest":{
+      "type":"structure",
+      "required":[
+        "CallAnalyticsJobName",
+        "Media"
+      ],
+      "members":{
+        "CallAnalyticsJobName":{"shape":"CallAnalyticsJobName"},
+        "Media":{"shape":"Media"},
+        "OutputLocation":{"shape":"Uri"},
+        "OutputEncryptionKMSKeyId":{"shape":"KMSKeyId"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
+        "Settings":{"shape":"CallAnalyticsJobSettings"},
+        "ChannelDefinitions":{"shape":"ChannelDefinitions"}
+      }
+    },
+    "StartCallAnalyticsJobResponse":{
+      "type":"structure",
+      "members":{
+        "CallAnalyticsJob":{"shape":"CallAnalyticsJob"}
+      }
+    },
     "StartMedicalTranscriptionJobRequest":{
       "type":"structure",
       "required":[
@@ -1075,15 +1683,18 @@
       "members":{
         "MedicalTranscriptionJobName":{"shape":"TranscriptionJobName"},
         "LanguageCode":{"shape":"LanguageCode"},
-        "MediaSampleRateHertz":{"shape":"MediaSampleRateHertz"},
+        "MediaSampleRateHertz":{"shape":"MedicalMediaSampleRateHertz"},
         "MediaFormat":{"shape":"MediaFormat"},
         "Media":{"shape":"Media"},
         "OutputBucketName":{"shape":"OutputBucketName"},
         "OutputKey":{"shape":"OutputKey"},
         "OutputEncryptionKMSKeyId":{"shape":"KMSKeyId"},
+        "KMSEncryptionContext":{"shape":"KMSEncryptionContextMap"},
         "Settings":{"shape":"MedicalTranscriptionSetting"},
+        "ContentIdentificationType":{"shape":"MedicalContentIdentificationType"},
         "Specialty":{"shape":"Specialty"},
-        "Type":{"shape":"Type"}
+        "Type":{"shape":"Type"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartMedicalTranscriptionJobResponse":{
@@ -1107,12 +1718,18 @@
         "OutputBucketName":{"shape":"OutputBucketName"},
         "OutputKey":{"shape":"OutputKey"},
         "OutputEncryptionKMSKeyId":{"shape":"KMSKeyId"},
+        "KMSEncryptionContext":{"shape":"KMSEncryptionContextMap"},
         "Settings":{"shape":"Settings"},
         "ModelSettings":{"shape":"ModelSettings"},
         "JobExecutionSettings":{"shape":"JobExecutionSettings"},
         "ContentRedaction":{"shape":"ContentRedaction"},
         "IdentifyLanguage":{"shape":"Boolean"},
-        "LanguageOptions":{"shape":"LanguageOptions"}
+        "IdentifyMultipleLanguages":{"shape":"Boolean"},
+        "LanguageOptions":{"shape":"LanguageOptions"},
+        "Subtitles":{"shape":"Subtitles"},
+        "Tags":{"shape":"TagList"},
+        "LanguageIdSettings":{"shape":"LanguageIdSettingsMap"},
+        "ToxicityDetection":{"shape":"ToxicityDetection"}
       }
     },
     "StartTranscriptionJobResponse":{
@@ -1122,12 +1739,154 @@
       }
     },
     "String":{"type":"string"},
+    "StringTargetList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "min":1
+    },
+    "SubtitleFileUris":{
+      "type":"list",
+      "member":{"shape":"Uri"}
+    },
+    "SubtitleFormat":{
+      "type":"string",
+      "enum":[
+        "vtt",
+        "srt"
+      ]
+    },
+    "SubtitleFormats":{
+      "type":"list",
+      "member":{"shape":"SubtitleFormat"}
+    },
+    "SubtitleOutputStartIndex":{
+      "type":"integer",
+      "max":1,
+      "min":0
+    },
+    "Subtitles":{
+      "type":"structure",
+      "members":{
+        "Formats":{"shape":"SubtitleFormats"},
+        "OutputStartIndex":{"shape":"SubtitleOutputStartIndex"}
+      }
+    },
+    "SubtitlesOutput":{
+      "type":"structure",
+      "members":{
+        "Formats":{"shape":"SubtitleFormats"},
+        "SubtitleFileUris":{"shape":"SubtitleFileUris"},
+        "OutputStartIndex":{"shape":"SubtitleOutputStartIndex"}
+      }
+    },
+    "Tag":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"TagKey"},
+        "Value":{"shape":"TagValue"}
+      }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":200,
+      "min":1
+    },
+    "TagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":200,
+      "min":1
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Tags"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"TranscribeArn"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "TimestampMilliseconds":{
+      "type":"long",
+      "max":14400000,
+      "min":0
+    },
+    "ToxicityCategories":{
+      "type":"list",
+      "member":{"shape":"ToxicityCategory"},
+      "max":1,
+      "min":1
+    },
+    "ToxicityCategory":{
+      "type":"string",
+      "enum":["ALL"]
+    },
+    "ToxicityDetection":{
+      "type":"list",
+      "member":{"shape":"ToxicityDetectionSettings"},
+      "max":1,
+      "min":1
+    },
+    "ToxicityDetectionSettings":{
+      "type":"structure",
+      "required":["ToxicityCategories"],
+      "members":{
+        "ToxicityCategories":{"shape":"ToxicityCategories"}
+      }
+    },
+    "TranscribeArn":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:transcribe:[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-Z-]*/[0-9a-zA-Z._-]+"
+    },
     "Transcript":{
       "type":"structure",
       "members":{
         "TranscriptFileUri":{"shape":"Uri"},
         "RedactedTranscriptFileUri":{"shape":"Uri"}
       }
+    },
+    "TranscriptFilter":{
+      "type":"structure",
+      "required":[
+        "TranscriptFilterType",
+        "Targets"
+      ],
+      "members":{
+        "TranscriptFilterType":{"shape":"TranscriptFilterType"},
+        "AbsoluteTimeRange":{"shape":"AbsoluteTimeRange"},
+        "RelativeTimeRange":{"shape":"RelativeTimeRange"},
+        "ParticipantRole":{"shape":"ParticipantRole"},
+        "Negate":{"shape":"Boolean"},
+        "Targets":{"shape":"StringTargetList"}
+      }
+    },
+    "TranscriptFilterType":{
+      "type":"string",
+      "enum":["EXACT"]
     },
     "TranscriptionJob":{
       "type":"structure",
@@ -1148,8 +1907,14 @@
         "JobExecutionSettings":{"shape":"JobExecutionSettings"},
         "ContentRedaction":{"shape":"ContentRedaction"},
         "IdentifyLanguage":{"shape":"Boolean"},
+        "IdentifyMultipleLanguages":{"shape":"Boolean"},
         "LanguageOptions":{"shape":"LanguageOptions"},
-        "IdentifiedLanguageScore":{"shape":"IdentifiedLanguageScore"}
+        "IdentifiedLanguageScore":{"shape":"IdentifiedLanguageScore"},
+        "LanguageCodes":{"shape":"LanguageCodeList"},
+        "Tags":{"shape":"TagList"},
+        "Subtitles":{"shape":"SubtitlesOutput"},
+        "LanguageIdSettings":{"shape":"LanguageIdSettingsMap"},
+        "ToxicityDetection":{"shape":"ToxicityDetection"}
       }
     },
     "TranscriptionJobName":{
@@ -1185,7 +1950,10 @@
         "ContentRedaction":{"shape":"ContentRedaction"},
         "ModelSettings":{"shape":"ModelSettings"},
         "IdentifyLanguage":{"shape":"Boolean"},
-        "IdentifiedLanguageScore":{"shape":"IdentifiedLanguageScore"}
+        "IdentifyMultipleLanguages":{"shape":"Boolean"},
+        "IdentifiedLanguageScore":{"shape":"IdentifiedLanguageScore"},
+        "LanguageCodes":{"shape":"LanguageCodeList"},
+        "ToxicityDetection":{"shape":"ToxicityDetection"}
       }
     },
     "Type":{
@@ -1195,11 +1963,46 @@
         "DICTATION"
       ]
     },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "TagKeys"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"TranscribeArn"},
+        "TagKeys":{"shape":"TagKeyList"}
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateCallAnalyticsCategoryRequest":{
+      "type":"structure",
+      "required":[
+        "CategoryName",
+        "Rules"
+      ],
+      "members":{
+        "CategoryName":{"shape":"CategoryName"},
+        "Rules":{"shape":"RuleList"},
+        "InputType":{"shape":"InputType"}
+      }
+    },
+    "UpdateCallAnalyticsCategoryResponse":{
+      "type":"structure",
+      "members":{
+        "CategoryProperties":{"shape":"CategoryProperties"}
+      }
+    },
     "UpdateMedicalVocabularyRequest":{
       "type":"structure",
       "required":[
         "VocabularyName",
-        "LanguageCode"
+        "LanguageCode",
+        "VocabularyFileUri"
       ],
       "members":{
         "VocabularyName":{"shape":"VocabularyName"},
@@ -1222,7 +2025,8 @@
       "members":{
         "VocabularyFilterName":{"shape":"VocabularyFilterName"},
         "Words":{"shape":"Words"},
-        "VocabularyFilterFileUri":{"shape":"Uri"}
+        "VocabularyFilterFileUri":{"shape":"Uri"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
     },
     "UpdateVocabularyFilterResponse":{
@@ -1243,7 +2047,8 @@
         "VocabularyName":{"shape":"VocabularyName"},
         "LanguageCode":{"shape":"LanguageCode"},
         "Phrases":{"shape":"Phrases"},
-        "VocabularyFileUri":{"shape":"Uri"}
+        "VocabularyFileUri":{"shape":"Uri"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
     },
     "UpdateVocabularyResponse":{
@@ -1277,7 +2082,8 @@
       "type":"string",
       "enum":[
         "remove",
-        "mask"
+        "mask",
+        "tag"
       ]
     },
     "VocabularyFilterName":{

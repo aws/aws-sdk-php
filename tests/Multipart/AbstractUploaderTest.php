@@ -8,7 +8,8 @@ use Aws\Multipart\UploadState;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
-use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\StreamInterface;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Multipart\AbstractUploader
@@ -24,7 +25,7 @@ class AbstractUploaderTest extends TestCase
         $state->setStatus($status);
 
         return $this->getTestUploader(
-            $source ?: Psr7\stream_for(),
+            $source ?: Psr7\Utils::streamFor(),
             ['state' => $state],
             $results
         );
@@ -41,25 +42,21 @@ class AbstractUploaderTest extends TestCase
         ]);
         $this->addMockResults($client, $results);
 
-        return new TestUploader($client, $source ?: Psr7\stream_for(), $config);
+        return new TestUploader($client, $source ?: Psr7\Utils::streamFor(), $config);
     }
 
-    /**
-     * @expectedException \Aws\S3\Exception\S3MultipartUploadException
-     */
     public function testThrowsExceptionOnBadInitiateRequest()
     {
+        $this->expectException(\Aws\S3\Exception\S3MultipartUploadException::class);
         $uploader = $this->getUploaderWithState(UploadState::CREATED, [
             new AwsException('Failed', new Command('Initiate')),
         ]);
         $uploader->upload();
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testThrowsExceptionIfStateIsCompleted()
     {
+        $this->expectException(\LogicException::class);
         $uploader = $this->getUploaderWithState(UploadState::COMPLETED);
         $this->assertTrue($uploader->getState()->isCompleted());
         $uploader->upload();
@@ -73,21 +70,19 @@ class AbstractUploaderTest extends TestCase
             new Result(), // Upload
             new Result(), // Upload
             new Result(['test' => 'foo']) // Complete
-        ], Psr7\stream_for('abcdef'));
+        ], Psr7\Utils::streamFor('abcdef'));
         $this->assertSame('foo', $uploader->upload()['test']);
         $this->assertTrue($uploader->getState()->isCompleted());
     }
 
-    /**
-     * @expectedException \Aws\S3\Exception\S3MultipartUploadException
-     */
     public function testThrowsExceptionOnBadCompleteRequest()
     {
+        $this->expectException(\Aws\S3\Exception\S3MultipartUploadException::class);
         $uploader = $this->getUploaderWithState(UploadState::CREATED, [
             new Result(), // Initiate
             new Result(), // Upload
             new AwsException('Failed', new Command('Complete')),
-        ], Psr7\stream_for('a'));
+        ], Psr7\Utils::streamFor('a'));
         $uploader->upload();
     }
 
@@ -100,15 +95,15 @@ class AbstractUploaderTest extends TestCase
             new Result(), // Upload
             new AwsException('Failed[4]', new Command('Upload', ['PartNumber' => 4])),
             new Result(), // Upload
-        ], Psr7\stream_for('abcdefghi'));
+        ], Psr7\Utils::streamFor('abcdefghi'));
 
         try {
             $uploader->upload();
             $this->fail('No exception was thrown.');
         } catch (MultipartUploadException $e) {
             $message = $e->getMessage();
-            $this->assertContains('Failed[1]', $message);
-            $this->assertContains('Failed[4]', $message);
+            $this->assertStringContainsString('Failed[1]', $message);
+            $this->assertStringContainsString('Failed[4]', $message);
             $uploadedParts = $e->getState()->getUploadedParts();
             $this->assertCount(3, $uploadedParts);
             $this->assertArrayHasKey(2, $uploadedParts);
@@ -119,7 +114,7 @@ class AbstractUploaderTest extends TestCase
             $serializedState = serialize($e->getState());
             $state = unserialize($serializedState);
             $secondChance = $this->getTestUploader(
-                Psr7\stream_for('abcdefghi'),
+                Psr7\Utils::streamFor('abcdefghi'),
                 ['state' => $state],
                 [
                     new Result(), // Upload
@@ -139,7 +134,7 @@ class AbstractUploaderTest extends TestCase
             $called++;
         };
 
-        $uploader = $this->getTestUploader(Psr7\stream_for('abcde'), [
+        $uploader = $this->getTestUploader(Psr7\Utils::streamFor('abcde'), [
             'bucket'              => 'foo',
             'key'                 => 'bar',
             'prepare_data_source' => $fn,
@@ -156,16 +151,14 @@ class AbstractUploaderTest extends TestCase
 
         $promise = $uploader->promise();
         $this->assertSame($promise, $uploader->promise());
-        $this->assertInstanceOf('Aws\Result', $promise->wait());
+        $this->assertInstanceOf(Result::class, $promise->wait());
         $this->assertSame(6, $called);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRequiresIdParams()
     {
-        $this->getTestUploader(Psr7\stream_for());
+        $this->expectException(\InvalidArgumentException::class);
+        $this->getTestUploader(Psr7\Utils::streamFor());
     }
 
     public function testCanSetSourceFromFilenameIfExists()
@@ -175,8 +168,8 @@ class AbstractUploaderTest extends TestCase
         // CASE 1: Filename exists.
         $uploader = $this->getTestUploader(__FILE__, $config);
         $this->assertInstanceOf(
-            'Psr\Http\Message\StreamInterface',
-            $this->readAttribute($uploader, 'source')
+            StreamInterface::class,
+            $this->getPropertyValue($uploader, 'source')
         );
 
         // CASE 2: Filename does not exist.
@@ -206,7 +199,7 @@ class AbstractUploaderTest extends TestCase
         UploadState $state,
         array $expectedBodies
     ) {
-        $source = Psr7\stream_for(fopen(__DIR__ . '/source.txt', 'r'));
+        $source = Psr7\Utils::streamFor(fopen(__DIR__ . '/source.txt', 'r'));
         if (!$seekable) {
             $source = new Psr7\NoSeekStream($source);
         }

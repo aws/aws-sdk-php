@@ -6,18 +6,16 @@ use Aws\CommandInterface;
 use Aws\HandlerList;
 use Aws\Middleware;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\HandlerList
  */
 class HandlerListTest extends TestCase
 {
-    /**
-     * @expectedException \LogicException
-     */
     public function testEnsuresHandlerIsSet()
     {
+        $this->expectException(\LogicException::class);
         $list = new HandlerList();
         $this->assertFalse($list->hasHandler());
         $list->resolve();
@@ -60,6 +58,7 @@ class HandlerListTest extends TestCase
         $this->assertSame($handler, $list->resolve());
     }
 
+    /** @doesNotPerformAssertions */
     public function testIgnoreWhenNameNotFound()
     {
         $list = new HandlerList();
@@ -135,11 +134,11 @@ class HandlerListTest extends TestCase
         $list->setHandler(function () {});
         $lines = explode("\n", (string) $list);
         $this->assertCount(6, $lines);
-        $this->assertContains('0) Step: init, Name: foo, Function: callable(', $lines[0]);
-        $this->assertSame("1) Step: init, Name: bar, Function: callable(['Aws\\Test\\HandlerListTest', 'bar'])", $lines[1]);
-        $this->assertSame('2) Step: validate, Function: callable(Aws\Test\HandlerListTest::foo)', $lines[2]);
-        $this->assertSame("3) Step: sign, Name: baz, Function: callable(['Aws\\Middleware', 'tap'])", $lines[3]);
-        $this->assertContains('4) Handler: callable(', $lines[4]);
+        $this->assertStringContainsString('0) Step: init, Name: foo, Function: callable(', $lines[0]);
+        $this->assertSame("1) Step: init, Name: bar, Function: callable(['" . HandlerListTest::class . "', 'bar'])", $lines[1]);
+        $this->assertSame('2) Step: validate, Function: callable(' . HandlerListTest::class . '::foo)', $lines[2]);
+        $this->assertSame("3) Step: sign, Name: baz, Function: callable(['" . Middleware::class . "', 'tap'])", $lines[3]);
+        $this->assertStringContainsString('4) Handler: callable(', $lines[4]);
     }
 
     public static function foo() {}
@@ -152,8 +151,8 @@ class HandlerListTest extends TestCase
         $list->appendBuild(function () {}, 'test');
         $list->before('test', 'a', function () {});
         $lines = explode("\n", (string) $list);
-        $this->assertContains("1) Step: build, Name: a", $lines[1]);
-        $this->assertContains("2) Step: build, Name: test", $lines[2]);
+        $this->assertStringContainsString("1) Step: build, Name: a", $lines[1]);
+        $this->assertStringContainsString("2) Step: build, Name: test", $lines[2]);
     }
 
     public function testCanAddAfter()
@@ -164,16 +163,14 @@ class HandlerListTest extends TestCase
         $list->appendInit(function () {});
         $list->after('test', 'a', function () {});
         $lines = explode("\n", (string) $list);
-        $this->assertContains("1) Step: build, Name: test", $lines[1]);
-        $this->assertContains("2) Step: build, Name: a", $lines[2]);
-        $this->assertContains("3) Step: build, Name: after_test", $lines[3]);
+        $this->assertStringContainsString("1) Step: build, Name: test", $lines[1]);
+        $this->assertStringContainsString("2) Step: build, Name: a", $lines[2]);
+        $this->assertStringContainsString("3) Step: build, Name: after_test", $lines[3]);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testMustExistByNameToPrependOrAppend()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $list = new HandlerList();
         $list->before('foo', '', function () {});
     }

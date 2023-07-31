@@ -2,6 +2,8 @@
 namespace Aws\S3;
 
 use Aws\Arn\ArnParser;
+use Aws\Arn\ObjectLambdaAccessPointArn;
+use Aws\ClientResolver;
 use Aws\CommandInterface;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
@@ -96,7 +98,9 @@ class S3EndpointMiddleware
                     $request = $this->applyHostStyleEndpoint($command, $request);
                     break;
                 case self::NO_PATTERN:
+                    break;
                 case self::PATH_STYLE:
+                    $request = $this->applyPathStyleEndpointCustomizations($command, $request);
                     break;
                 case self::DUALSTACK:
                     $request = $this->applyDualStackEndpoint($command, $request);
@@ -203,6 +207,32 @@ class S3EndpointMiddleware
         return $request;
     }
 
+    private function applyPathStyleEndpointCustomizations(
+        CommandInterface $command,
+        RequestInterface $request
+    ) {
+        if ($command->getName() == 'WriteGetObjectResponse') {
+            $dnsSuffix = $this->endpointProvider
+                ->getPartition($this->region, 's3')
+                ->getDnsSuffix();
+            $fips = \Aws\is_fips_pseudo_region($this->region) ? "-fips" : "";
+            $region = \Aws\strip_fips_pseudo_regions($this->region);
+            $host =
+                "{$command['RequestRoute']}.s3-object-lambda{$fips}.{$region}.{$dnsSuffix}";
+
+            $uri = $request->getUri();
+            $request = $request->withUri(
+                $uri->withHost($host)
+                    ->withPath($this->getBucketlessPath(
+                        $uri->getPath(),
+                        $command
+                    ))
+            );
+        }
+        return $request;
+    }
+
+
     private function applyDualStackEndpoint(
         CommandInterface $command,
         RequestInterface $request
@@ -255,7 +285,11 @@ class S3EndpointMiddleware
     private function getBucketlessPath($path, CommandInterface $command)
     {
         $pattern = '/^\\/' . preg_quote($command['Bucket'], '/') . '/';
-        return preg_replace($pattern, '', $path) ?: '/';
+        $path = preg_replace($pattern, '', $path) ?: '/';
+        if (substr($path, 0 , 1) !== '/') {
+            $path = '/' . $path;
+        }
+        return $path;
     }
 
     private function applyEndpoint(
@@ -270,9 +304,23 @@ class S3EndpointMiddleware
             if ($outpost && $dualStack) {
                 throw new InvalidArgumentException("Outposts + dualstack is not supported");
             }
+            if ($arn instanceof ObjectLambdaAccessPointArn) {
+                return $request;
+            }
         }
         if ($dualStack) {
             throw new InvalidArgumentException("Custom Endpoint + Dualstack not supported");
+        }
+        if ($command->getName() == 'WriteGetObjectResponse') {
+            $host = "{$command['RequestRoute']}.{$this->endpoint}";
+            $uri = $request->getUri();
+            return $request = $request->withUri(
+                $uri->withHost($host)
+                    ->withPath($this->getBucketlessPath(
+                        $uri->getPath(),
+                        $command
+                    ))
+            );
         }
         $host = ($this->pathStyleByDefault) ?
             $this->endpoint :
@@ -280,10 +328,9 @@ class S3EndpointMiddleware
                 $command,
                 $this->endpoint
             );
-        $uri = new Uri($host);
+        $uri = $request->getUri();
         $scheme = $uri->getScheme();
         if(empty($scheme)){
-            //The host contains s3-outposts here, that's where it gets added
             $request = $request->withUri(
                 $uri->withHost($host)
             );
@@ -293,5 +340,4 @@ class S3EndpointMiddleware
 
         return $request;
     }
-
 }

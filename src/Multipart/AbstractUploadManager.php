@@ -31,7 +31,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
         'before_initiate'     => null,
         'before_upload'       => null,
         'before_complete'     => null,
-        'exception_class'     => 'Aws\Exception\MultipartUploadException',
+        'exception_class'     => MultipartUploadException::class,
     ];
 
     /** @var Client Client used for the upload. */
@@ -94,7 +94,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
             return $this->promise;
         }
 
-        return $this->promise = Promise\coroutine(function () {
+        return $this->promise = Promise\Coroutine::of(function () {
             // Initiate the upload.
             if ($this->state->isCompleted()) {
                 throw new \LogicException('This multipart upload has already '

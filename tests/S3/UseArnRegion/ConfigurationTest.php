@@ -2,7 +2,7 @@
 namespace Aws\Test\S3\UseArnRegion;
 
 use Aws\S3\UseArnRegion\Configuration;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\S3\UseArnRegion\Configuration
@@ -44,12 +44,10 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->toArray());
     }
 
-    /**
-     * @expectedException \Aws\S3\UseArnRegion\Exception\ConfigurationException
-     * @expectedExceptionMessage 'use_arn_region' config option must be a boolean value.
-     */
     public function testThrowsOnInvalidEndpointsType()
     {
+        $this->expectExceptionMessage("'use_arn_region' config option must be a boolean value.");
+        $this->expectException(\Aws\S3\UseArnRegion\Exception\ConfigurationException::class);
         new Configuration('not a boolean');
     }
 }

@@ -6,7 +6,7 @@ use Aws\DynamoDb\BinaryValue;
 use Aws\DynamoDb\NumberValue;
 use Aws\DynamoDb\SetValue;
 use GuzzleHttp\Psr7;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\DynamoDb\Marshaler
@@ -166,7 +166,7 @@ class MarshalerTest extends TestCase
             // Binary
             [$m->binary('foo'), ['B' => 'foo']],
             [$resource, ['B' => 'foo']],
-            [Psr7\stream_for('foo'), ['B' => 'foo']],
+            [Psr7\Utils::streamFor('foo'), ['B' => 'foo']],
 
             // Set
             [$m->set(['a', 'b', 'c']), ['SS' => ['a', 'b', 'c']]],
@@ -233,11 +233,9 @@ JSON;
         $this->assertEquals($expected, $m->marshalItem($array));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testErrorIfMarshalingBadJsonDoc()
     {
+        $this->expectException(\InvalidArgumentException::class);
         (new Marshaler)->marshalJson('foo');
     }
 
@@ -297,11 +295,9 @@ JSON;
         $this->assertSame('b', $result->a);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testErrorIfUnmarshalingUnknownType()
     {
+        $this->expectException(\UnexpectedValueException::class);
         $m = new Marshaler;
         $m->unmarshalValue(['BOMB' => 'BOOM']);
     }
@@ -342,7 +338,7 @@ JSON;
             'foo' => ['NS' => ['99999999999999999999', '9']],
             'bar' => ['N' => '99999999999999999999.99999999999999999999'],
         ]);
-        $this->assertInstanceOf('Aws\DynamoDb\NumberValue', $result['bar']);
+        $this->assertInstanceOf(NumberValue::class, $result['bar']);
         $this->assertSame('99999999999999999999', (string) iterator_to_array($result['foo'])[0]);
         $this->assertSame('99999999999999999999.99999999999999999999', (string) $result['bar']);
     }

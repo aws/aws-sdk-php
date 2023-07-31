@@ -240,6 +240,17 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "AnalysisType":{
+      "type":"string",
+      "enum":[
+        "Security",
+        "CodeQuality"
+      ]
+    },
+    "AnalysisTypes":{
+      "type":"list",
+      "member":{"shape":"AnalysisType"}
+    },
     "Arn":{
       "type":"string",
       "max":1600,
@@ -255,7 +266,8 @@
           "shape":"ClientRequestToken",
           "idempotencyToken":true
         },
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "KMSKeyDetails":{"shape":"KMSKeyDetails"}
       }
     },
     "AssociateRepositoryResponse":{
@@ -276,16 +288,41 @@
       "max":64,
       "min":1
     },
+    "BranchDiffSourceCodeType":{
+      "type":"structure",
+      "required":[
+        "SourceBranchName",
+        "DestinationBranchName"
+      ],
+      "members":{
+        "SourceBranchName":{"shape":"BranchName"},
+        "DestinationBranchName":{"shape":"BranchName"}
+      }
+    },
     "BranchName":{
       "type":"string",
       "max":256,
       "min":1
+    },
+    "BuildArtifactsObjectKey":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^\\S(.*\\S)?$"
     },
     "ClientRequestToken":{
       "type":"string",
       "max":64,
       "min":1,
       "pattern":"^[\\w-]+$"
+    },
+    "CodeArtifacts":{
+      "type":"structure",
+      "required":["SourceCodeArtifactsObjectKey"],
+      "members":{
+        "SourceCodeArtifactsObjectKey":{"shape":"SourceCodeArtifactsObjectKey"},
+        "BuildArtifactsObjectKey":{"shape":"BuildArtifactsObjectKey"}
+      }
     },
     "CodeCommitRepository":{
       "type":"structure",
@@ -310,7 +347,9 @@
         "PullRequestId":{"shape":"PullRequestId"},
         "SourceCodeType":{"shape":"SourceCodeType"},
         "AssociationArn":{"shape":"AssociationArn"},
-        "Metrics":{"shape":"Metrics"}
+        "Metrics":{"shape":"Metrics"},
+        "AnalysisTypes":{"shape":"AnalysisTypes"},
+        "ConfigFileState":{"shape":"ConfigFileState"}
       }
     },
     "CodeReviewName":{
@@ -336,27 +375,38 @@
         "LastUpdatedTimeStamp":{"shape":"TimeStamp"},
         "Type":{"shape":"Type"},
         "PullRequestId":{"shape":"PullRequestId"},
-        "MetricsSummary":{"shape":"MetricsSummary"}
+        "MetricsSummary":{"shape":"MetricsSummary"},
+        "SourceCodeType":{"shape":"SourceCodeType"}
       }
     },
     "CodeReviewType":{
       "type":"structure",
       "required":["RepositoryAnalysis"],
       "members":{
-        "RepositoryAnalysis":{"shape":"RepositoryAnalysis"}
+        "RepositoryAnalysis":{"shape":"RepositoryAnalysis"},
+        "AnalysisTypes":{"shape":"AnalysisTypes"}
       }
     },
     "CommitDiffSourceCodeType":{
       "type":"structure",
       "members":{
         "SourceCommit":{"shape":"CommitId"},
-        "DestinationCommit":{"shape":"CommitId"}
+        "DestinationCommit":{"shape":"CommitId"},
+        "MergeBaseCommit":{"shape":"CommitId"}
       }
     },
     "CommitId":{
       "type":"string",
       "max":64,
       "min":6
+    },
+    "ConfigFileState":{
+      "type":"string",
+      "enum":[
+        "Present",
+        "Absent",
+        "PresentWithErrors"
+      ]
     },
     "ConflictException":{
       "type":"structure",
@@ -478,7 +528,33 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "EncryptionOption":{
+      "type":"string",
+      "enum":[
+        "AWS_OWNED_CMK",
+        "CUSTOMER_MANAGED_CMK"
+      ]
+    },
     "ErrorMessage":{"type":"string"},
+    "EventInfo":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"EventName"},
+        "State":{"shape":"EventState"}
+      }
+    },
+    "EventName":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"^[ \\-A-Z_a-z]+$"
+    },
+    "EventState":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"^[ \\-A-Z_a-z]+$"
+    },
     "FilePath":{
       "type":"string",
       "max":1024,
@@ -509,7 +585,21 @@
       "max":3,
       "min":1
     },
+    "KMSKeyDetails":{
+      "type":"structure",
+      "members":{
+        "KMSKeyId":{"shape":"KMSKeyId"},
+        "EncryptionOption":{"shape":"EncryptionOption"}
+      }
+    },
+    "KMSKeyId":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
+    },
     "LineNumber":{"type":"integer"},
+    "LinesOfCodeCount":{"type":"long"},
     "ListCodeReviewsMaxResults":{
       "type":"integer",
       "max":100,
@@ -596,6 +686,11 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListRecommendationsMaxResults":{
+      "type":"integer",
+      "max":300,
+      "min":1
+    },
     "ListRecommendationsRequest":{
       "type":"structure",
       "required":["CodeReviewArn"],
@@ -606,7 +701,7 @@
           "locationName":"NextToken"
         },
         "MaxResults":{
-          "shape":"MaxResults",
+          "shape":"ListRecommendationsMaxResults",
           "location":"querystring",
           "locationName":"MaxResults"
         },
@@ -683,23 +778,30 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "LongDescription":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "pattern":"^\\S(.*\\S)?$"
+    },
     "MaxResults":{
       "type":"integer",
       "max":100,
       "min":1
     },
-    "MeteredLinesOfCodeCount":{"type":"long"},
     "Metrics":{
       "type":"structure",
       "members":{
-        "MeteredLinesOfCodeCount":{"shape":"MeteredLinesOfCodeCount"},
+        "MeteredLinesOfCodeCount":{"shape":"LinesOfCodeCount"},
+        "SuppressedLinesOfCodeCount":{"shape":"LinesOfCodeCount"},
         "FindingsCount":{"shape":"FindingsCount"}
       }
     },
     "MetricsSummary":{
       "type":"structure",
       "members":{
-        "MeteredLinesOfCodeCount":{"shape":"MeteredLinesOfCodeCount"},
+        "MeteredLinesOfCodeCount":{"shape":"LinesOfCodeCount"},
+        "SuppressedLinesOfCodeCount":{"shape":"LinesOfCodeCount"},
         "FindingsCount":{"shape":"FindingsCount"}
       }
     },
@@ -746,7 +848,8 @@
         "CodeCommit",
         "GitHub",
         "Bitbucket",
-        "GitHubEnterpriseServer"
+        "GitHubEnterpriseServer",
+        "S3Bucket"
       ]
     },
     "ProviderTypes":{
@@ -790,6 +893,22 @@
       "member":{"shape":"Reaction"},
       "max":1,
       "min":0
+    },
+    "RecommendationCategory":{
+      "type":"string",
+      "enum":[
+        "AWSBestPractices",
+        "AWSCloudFormationIssues",
+        "DuplicateCode",
+        "CodeMaintenanceIssues",
+        "ConcurrencyIssues",
+        "InputValidations",
+        "PythonBestPractices",
+        "JavaBestPractices",
+        "ResourceLeaks",
+        "SecurityIssues",
+        "CodeInconsistencies"
+      ]
     },
     "RecommendationFeedback":{
       "type":"structure",
@@ -836,7 +955,10 @@
         "RecommendationId":{"shape":"RecommendationId"},
         "StartLine":{"shape":"LineNumber"},
         "EndLine":{"shape":"LineNumber"},
-        "Description":{"shape":"Text"}
+        "Description":{"shape":"Text"},
+        "RecommendationCategory":{"shape":"RecommendationCategory"},
+        "RuleMetadata":{"shape":"RuleMetadata"},
+        "Severity":{"shape":"Severity"}
       }
     },
     "Repository":{
@@ -844,14 +966,15 @@
       "members":{
         "CodeCommit":{"shape":"CodeCommitRepository"},
         "Bitbucket":{"shape":"ThirdPartySourceRepository"},
-        "GitHubEnterpriseServer":{"shape":"ThirdPartySourceRepository"}
+        "GitHubEnterpriseServer":{"shape":"ThirdPartySourceRepository"},
+        "S3Bucket":{"shape":"S3Repository"}
       }
     },
     "RepositoryAnalysis":{
       "type":"structure",
-      "required":["RepositoryHead"],
       "members":{
-        "RepositoryHead":{"shape":"RepositoryHeadSourceCodeType"}
+        "RepositoryHead":{"shape":"RepositoryHeadSourceCodeType"},
+        "SourceCodeType":{"shape":"SourceCodeType"}
       }
     },
     "RepositoryAssociation":{
@@ -866,7 +989,9 @@
         "State":{"shape":"RepositoryAssociationState"},
         "StateReason":{"shape":"StateReason"},
         "LastUpdatedTimeStamp":{"shape":"TimeStamp"},
-        "CreatedTimeStamp":{"shape":"TimeStamp"}
+        "CreatedTimeStamp":{"shape":"TimeStamp"},
+        "KMSKeyDetails":{"shape":"KMSKeyDetails"},
+        "S3RepositoryDetails":{"shape":"S3RepositoryDetails"}
       }
     },
     "RepositoryAssociationState":{
@@ -915,6 +1040,26 @@
       "max":100,
       "min":1
     },
+    "RequestId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "RequestMetadata":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"RequestId"},
+        "Requester":{"shape":"Requester"},
+        "EventInfo":{"shape":"EventInfo"},
+        "VendorName":{"shape":"VendorName"}
+      }
+    },
+    "Requester":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^\\S(.*\\S)?$"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -923,11 +1068,102 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "RuleId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^\\S+\\/[a-zA-Z0-9-]+@v\\d+\\.\\d+$"
+    },
+    "RuleMetadata":{
+      "type":"structure",
+      "members":{
+        "RuleId":{"shape":"RuleId"},
+        "RuleName":{"shape":"RuleName"},
+        "ShortDescription":{"shape":"ShortDescription"},
+        "LongDescription":{"shape":"LongDescription"},
+        "RuleTags":{"shape":"RuleTags"}
+      }
+    },
+    "RuleName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^\\S(.*\\S)?$"
+    },
+    "RuleTag":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"^\\S(.*\\S)?$"
+    },
+    "RuleTags":{
+      "type":"list",
+      "member":{"shape":"RuleTag"},
+      "max":20,
+      "min":1
+    },
+    "S3BucketName":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"^\\S(.*\\S)?$"
+    },
+    "S3BucketRepository":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"Name"},
+        "Details":{"shape":"S3RepositoryDetails"}
+      }
+    },
+    "S3Repository":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "BucketName"
+      ],
+      "members":{
+        "Name":{"shape":"Name"},
+        "BucketName":{"shape":"S3BucketName"}
+      }
+    },
+    "S3RepositoryDetails":{
+      "type":"structure",
+      "members":{
+        "BucketName":{"shape":"S3BucketName"},
+        "CodeArtifacts":{"shape":"CodeArtifacts"}
+      }
+    },
+    "Severity":{
+      "type":"string",
+      "enum":[
+        "Info",
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ]
+    },
+    "ShortDescription":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"^\\S(.*\\S)?$"
+    },
+    "SourceCodeArtifactsObjectKey":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^\\S(.*\\S)?$"
+    },
     "SourceCodeType":{
       "type":"structure",
       "members":{
         "CommitDiff":{"shape":"CommitDiffSourceCodeType"},
-        "RepositoryHead":{"shape":"RepositoryHeadSourceCodeType"}
+        "RepositoryHead":{"shape":"RepositoryHeadSourceCodeType"},
+        "BranchDiff":{"shape":"BranchDiffSourceCodeType"},
+        "S3BucketRepository":{"shape":"S3BucketRepository"},
+        "RequestMetadata":{"shape":"RequestMetadata"}
       }
     },
     "StateReason":{
@@ -979,7 +1215,7 @@
     },
     "Text":{
       "type":"string",
-      "max":2048,
+      "max":5000,
       "min":1
     },
     "ThirdPartySourceRepository":{
@@ -1053,6 +1289,14 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "VendorName":{
+      "type":"string",
+      "enum":[
+        "GitHub",
+        "GitLab",
+        "NativeS3"
+      ]
     }
   }
 }

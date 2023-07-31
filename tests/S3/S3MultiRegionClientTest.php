@@ -15,7 +15,7 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class S3MultiRegionClientTest extends TestCase
 {
@@ -100,24 +100,22 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
         ]);
 
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string)$client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://foo.s3.us-west-2.amazonaws.com/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
-    /**
-     * @expectedException \Aws\Exception\AwsException
-     * @expectedExceptionMessageRegExp /AWS HTTP error/
-     */
     public function testRethrowsOnNoResponseException()
     {
+        $this->expectExceptionMessageMatches("/AWS HTTP error/");
+        $this->expectException(\Aws\Exception\AwsException::class);
         $client = new S3MultiRegionClient([
             'region' => 'us-east-1',
             'version' => 'latest',
@@ -131,7 +129,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
         ]);
 
@@ -139,12 +137,10 @@ EOXML;
         $client->createPresignedRequest($command, 1342138769)->getUri();
     }
 
-    /**
-     * @expectedException \Aws\Exception\AwsException
-     * @expectedExceptionMessageRegExp /The authorization header is malformed/
-     */
     public function testRethrowsOnAuthHeaderMalformedWithoutRegion()
     {
+        $this->expectExceptionMessageMatches("/The authorization header is malformed/");
+        $this->expectException(\Aws\Exception\AwsException::class);
         $client = new S3MultiRegionClient([
             'region' => 'us-east-1',
             'version' => 'latest',
@@ -159,7 +155,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
         ]);
 
@@ -187,16 +183,16 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             }
         ]);
 
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string)$client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://foo.s3.us-west-2.amazonaws.com/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testCreatesPresignedRequestsForCorrectRegionWithPathStyle()
@@ -207,10 +203,10 @@ EOXML;
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
-                    return Promise\promise_for(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
+                    return Promise\Create::promiseFor(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
             'use_path_style_endpoint' => true
         ]);
@@ -218,9 +214,9 @@ EOXML;
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string)$client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://s3.us-west-2.amazonaws.com/foo/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testCreatesObjectUrlsForCorrectRegion()
@@ -239,7 +235,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
         ]);
 
@@ -255,10 +251,10 @@ EOXML;
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
-                    return Promise\promise_for(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
+                    return Promise\Create::promiseFor(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
             'use_path_style_endpoint' => true
         ]);
@@ -283,20 +279,18 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
-        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
+        $this->assertSame('us-west-2', $this->getPropertyValue($client, 'cache')->get('aws:s3:foo:location'));
     }
 
-    /**
-     * @expectedException \Aws\Exception\AwsException
-     * @expectedExceptionMessageRegExp /Your socket connection to the server was not read from or written to within the timeout period./
-     */
     public function testRethrowsAwsExceptionViaMiddleware()
     {
+        $this->expectExceptionMessageMatches("/Your socket connection to the server was not read from or written to within the timeout period./");
+        $this->expectException(\Aws\Exception\AwsException::class);
         $client = new S3MultiRegionClient([
             'region' => 'us-east-1',
             'version' => 'latest',
@@ -311,19 +305,17 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
     }
 
-    /**
-     * @expectedException \Aws\Exception\AwsException
-     * @expectedExceptionMessageRegExp /The authorization header is malformed/
-     */
     public function testRethrowsOnAuthHeaderMalformedWithoutRegionViaMiddleware()
     {
+        $this->expectExceptionMessageMatches("/The authorization header is malformed/");
+        $this->expectException(\Aws\Exception\AwsException::class);
         $client = new S3MultiRegionClient([
             'region' => 'us-east-1',
             'version' => 'latest',
@@ -338,7 +330,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
@@ -356,20 +348,20 @@ EOXML;
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
                     if (!$redirected) {
                         $redirected = true;
-                        return Promise\promise_for(new Response(301));
+                        return Promise\Create::promiseFor(new Response(301));
                     }
-                    return Promise\promise_for(new Response(301, [
+                    return Promise\Create::promiseFor(new Response(301, [
                         'X-Amz-Bucket-Region' => 'us-west-2',
                     ]));
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
             'use_path_style_endpoint' => true
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
-        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
+        $this->assertSame('us-west-2', $this->getPropertyValue($client, 'cache')->get('aws:s3:foo:location'));
     }
 
     public function testCachesBucketLocationWithPathStyle()
@@ -380,18 +372,18 @@ EOXML;
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
-                    return Promise\promise_for(new Response(301, [
+                    return Promise\Create::promiseFor(new Response(301, [
                         'X-Amz-Bucket-Region' => 'us-west-2',
                     ]));
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
             'use_path_style_endpoint' => true
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
-        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
+        $this->assertSame('us-west-2', $this->getPropertyValue($client, 'cache')->get('aws:s3:foo:location'));
     }
 
     public function testReadsBucketLocationFromCache()
@@ -412,7 +404,7 @@ EOXML;
                     $this->fail('The us-east-1 endpoint should never have been called.');
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
@@ -437,7 +429,7 @@ EOXML;
                     $this->fail('The us-east-1 endpoint should never have been called.');
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
             'use_path_style_endpoint' => true
         ]);
@@ -457,7 +449,7 @@ EOXML;
             'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 'foo.s3.us-west-2.amazonaws.com') {
-                    return Promise\promise_for(new Response(200, [], 'object!'));
+                    return Promise\Create::promiseFor(new Response(200, [], 'object!'));
                 }
 
                 return new RejectedPromise([
@@ -485,10 +477,10 @@ EOXML;
             'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.us-west-2.amazonaws.com') {
-                    return Promise\promise_for(new Response(200, [], 'object!'));
+                    return Promise\Create::promiseFor(new Response(200, [], 'object!'));
                 }
 
-                return Promise\promise_for(new Response(301, [
+                return Promise\Create::promiseFor(new Response(301, [
                     'X-Amz-Bucket-Region' => 'us-west-2',
                 ]));
             },
@@ -511,6 +503,7 @@ EOXML;
                     'signatureVersions' => ['v4'],
                 ],
                 'partition' => 'aws_test',
+                // no longer used in endpoint resolution
                 'dnsSuffix' => 'amazonaws.test',
                 'regions' => [
                     'foo-region' => [
@@ -527,8 +520,8 @@ EOXML;
             ]),
             'http_handler' => function (RequestInterface $request) {
                 $this->assertSame('https', $request->getUri()->getScheme());
-                $this->assertSame('foo.s3.foo-region.amazonaws.test', $request->getUri()->getHost());
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                $this->assertSame('foo.s3.foo-region.amazonaws.com', $request->getUri()->getHost());
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
@@ -547,6 +540,7 @@ EOXML;
                     'signatureVersions' => ['v4'],
                 ],
                 'partition' => 'aws_test',
+                // no longer used in endpoint resolution
                 'dnsSuffix' => 'amazonaws.test',
                 'regions' => [
                     'foo-region' => [
@@ -563,10 +557,11 @@ EOXML;
             ]),
             'http_handler' => function (RequestInterface $request) {
                 $this->assertSame('https', $request->getUri()->getScheme());
-                $this->assertSame('s3.foo-region.amazonaws.test', $request->getUri()->getHost());
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                $this->assertSame('s3.foo-region.amazonaws.com', $request->getUri()->getHost());
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
-            'use_path_style_endpoint' => true
+            'use_path_style_endpoint' => true,
+            'endpoint_v1' => true
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
@@ -584,7 +579,7 @@ EOXML;
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
@@ -596,7 +591,7 @@ EOXML;
             ->appendSign(function (callable $handler) {
                 return function (CommandInterface $c) use ($handler) {
                     return $handler($c)->then(function (ResultInterface $result) {
-                        $result['Body'] = Psr7\stream_for(str_repeat($result['Body'], 2));
+                        $result['Body'] = Psr7\Utils::streamFor(str_repeat($result['Body'], 2));
                         return $result;
                     });
                 };

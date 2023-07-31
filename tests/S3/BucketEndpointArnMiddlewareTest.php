@@ -11,7 +11,7 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -60,18 +60,20 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     $req->getUri()->getHost()
                 );
                 $this->assertSame("/{$key}", $req->getRequestTarget());
-                $this->assertEquals(
-                    $signingRegion,
-                    $cmd['@context']['signing_region']
-                );
-                if (!empty($signingService)) {
+                if (isset($cmd['@context']['signing_region'])) {
+                    $this->assertEquals(
+                        $signingRegion,
+                        $cmd['@context']['signing_region']
+                    );
+                }
+                if (!empty($signingService) && isset($cmd['@context']['signing_service'])) {
                     $this->assertEquals(
                         $signingService,
                         $cmd['@context']['signing_service']
                     );
                 }
 
-                $this->assertContains(
+                $this->assertStringContainsString(
                     "/{$signingRegion}/s3",
                     $req->getHeader('Authorization')[0]
                 );
@@ -118,18 +120,6 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'us-east-1',
                 null,
             ],
-            // s3-external, use_arn_region false
-            [
-                'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
-                [
-                    'region' => 's3-external-1',
-                    'use_arn_region' => false,
-                ],
-                'myendpoint-123456789012.s3-accesspoint.s3-external-1.amazonaws.com',
-                'Bar/Baz',
-                'us-east-1',
-                null,
-            ],
             // With dual-stack endpoint
             [
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
@@ -140,6 +130,19 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'myendpoint-123456789012.s3-accesspoint.dualstack.us-west-2.amazonaws.com',
                 'Bar/Baz',
                 'us-west-2',
+                null,
+            ],
+            // With dual-stack fips endpoint, use_arn_region true
+            [
+                'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_dual_stack_endpoint' => true,
+                    'use_arn_region' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint-fips.dualstack.us-gov-east-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-east-1',
                 null,
             ],
             // Non-aws partition, use_arn_region true
@@ -197,7 +200,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'fips-us-gov-east-1',
                     'use_arn_region' => true,
                 ],
-                'myendpoint-123456789012.s3-accesspoint.us-gov-east-1.amazonaws.com',
+                'myendpoint-123456789012.s3-accesspoint-fips.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
                 'us-gov-east-1',
                 null,
@@ -210,9 +213,46 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'use_arn_region' => true,
                     'use_dual_stack_endpoint' => true,
                 ],
-                'myendpoint-123456789012.s3-accesspoint.dualstack.us-gov-east-1.amazonaws.com',
+                'myendpoint-123456789012.s3-accesspoint-fips.dualstack.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
                 'us-gov-east-1',
+                null,
+            ],
+            // Fips region, use arn region
+            [
+                'arn:aws-us-gov:s3:us-gov-west-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint-fips.us-gov-west-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-west-1',
+                null,
+            ],
+            // Fips region with dualstack and use fips region
+            [
+                'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'us-gov-east-1',
+                    'use_fips_endpoint' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint-fips.us-gov-east-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-east-1',
+                null,
+            ],
+            // Fips region with dualstack and use fips region and use arn region
+            [
+                'arn:aws-us-gov:s3:us-gov-west-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'us-gov-east-1',
+                    'use_arn_region' => true,
+                    'use_fips_endpoint' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint-fips.us-gov-west-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-west-1',
                 null,
             ],
             // S3 outposts, standard case
@@ -254,18 +294,6 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
                 [
                     'region' => 'us-gov-east-1',
-                    'use_arn_region' => true,
-                ],
-                'myaccesspoint-123456789012.op-01234567890123456.s3-outposts.us-gov-east-1.amazonaws.com',
-                'Bar/Baz',
-                'us-gov-east-1',
-                's3-outposts',
-            ],
-            // S3 outposts, fips client region, differing arn region, use_arn_region true
-            [
-                'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
-                [
-                    'region' => 'fips-us-gov-east-1',
                     'use_arn_region' => true,
                 ],
                 'myaccesspoint-123456789012.op-01234567890123456.s3-outposts.us-gov-east-1.amazonaws.com',
@@ -329,20 +357,6 @@ class BucketEndpointArnMiddlewareTest extends TestCase
     public function incorrectUsageProvider()
     {
         return [
-            // Non-matching regions
-            [
-                new Command(
-                    'GetObject',
-                    [
-                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
-                        'Key' => 'Bar/Baz',
-                    ]
-                ),
-                ['region' => 'us-west-2'],
-                new InvalidRegionException('The region specified in the ARN'
-                    . ' (us-east-1) does not match the client region (us-west-2).')
-            ],
-            // Accelerate with access point ARN
             [
                 new Command(
                     'GetObject',
@@ -355,9 +369,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_accelerate_endpoint' => true,
                 ],
-                new UnresolvedEndpointException('Accelerate is currently not'
-                    . ' supported with access points. Please disable accelerate'
-                    . ' or do not supply an access point ARN.')
+                new UnresolvedEndpointException(
+            'Access Points do not support S3 Accelerate'
+                )
             ],
             // Path-style with access point ARN
             [
@@ -372,9 +386,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_path_style_endpoint' => true,
                 ],
-                new UnresolvedEndpointException('Path-style addressing is'
-                    . ' currently not supported with access points. Please'
-                    . ' disable path-style or do not supply an access point ARN.')
+                new UnresolvedEndpointException(
+                    'Path-style addressing cannot be used with ARN buckets'
+                )
             ],
             // Wrong ARN type
             [
@@ -386,11 +400,8 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     ]
                 ),
                 ['region' => 'us-west-2'],
-                new S3Exception(
-                    'Bucket parameter parsed as ARN and failed with: Provided'
-                        . ' ARN was not a valid S3 access point ARN or S3'
-                        . ' Outposts access point ARN.',
-                    new Command([])
+                new UnresolvedEndpointException(
+                    'Invalid ARN: Unrecognized format: arn:aws:s3:us-east-1:123456789012:some_type:myendpoint (type: some_type)'
                 )
             ],
             // Invalid ARN
@@ -403,14 +414,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     ]
                 ),
                 ['region' => 'us-west-2'],
-                new S3Exception(
-                    'Bucket parameter parsed as ARN and failed with: The 6th'
-                        . ' component of an ARN represents the resource'
-                        . ' information and must not be empty. Individual'
-                        . ' service ARNs may include additional delimiters to'
-                        . ' further qualify resources.',
-                    new Command([])
-                )
+                new UnresolvedEndpointException('Invalid ARN: `arn:not:valid` was not a valid ARN')
             ],
             // Non-matching partition
             [
@@ -425,8 +429,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     's3_use_arn_region' => true,
                 ],
-                new InvalidRegionException('The supplied ARN partition does not'
-                    . " match the client's partition.")
+                new UnresolvedEndpointException(
+                    'Client was configured for partition `aws` but ARN (`arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint`) has `aws-cn`'
+                )
             ],
             // Non-matching calculated partition
             [
@@ -441,39 +446,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-east-1',
                     's3_use_arn_region' => true,
                 ],
-                new InvalidRegionException('The corresponding partition for the'
-                    . " supplied ARN region does not match the client's partition.")
-            ],
-            // CreateBucket operation with access point ARN
-            [
-                new Command(
-                    'CreateBucket',
-                    [
-                        'Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
-                    ]
-                ),
-                [
-                    'region' => 'us-west-2',
-                    's3_use_arn_region' => true,
-                ],
-                new S3Exception(
-                    'ARN values cannot be used in the bucket field for the'
-                        . ' CreateBucket operation.',
-                    new Command([])
+                new UnresolvedEndpointException(
+                    'Client was configured for partition `aws` but ARN (`arn:aws:s3:cn-north-1:123456789012:accesspoint:myendpoint`) has `aws-cn`'
                 )
-            ],
-            // S3 Outposts, non-matching regions
-            [
-                new Command(
-                    'GetObject',
-                    [
-                        'Bucket' => 'arn:aws:s3-outposts:us-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
-                        'Key' => 'Bar/Baz',
-                    ]
-                ),
-                ['region' => 'us-west-2'],
-                new InvalidRegionException('The region specified in the ARN'
-                    . ' (us-east-1) does not match the client region (us-west-2).')
             ],
             // S3 Outposts, non-matching partition
             [
@@ -488,22 +463,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     's3_use_arn_region' => true,
                 ],
-                new InvalidRegionException('The supplied ARN partition does not'
-                    . " match the client's partition.")
-            ],
-            // S3 Outposts, fips region
-            [
-                new Command(
-                    'GetObject',
-                    [
-                        'Bucket' => 'arn:aws-us-gov:s3-outposts:fips-us-gov-west-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
-                        'Key' => 'Bar/Baz',
-                    ]
-                ),
-                ['region' => 'fips-us-gov-west-1'],
-                new InvalidRegionException('Fips is currently not supported with'
-                    . ' S3 Outposts access points. Please provide a non-fips'
-                    . ' region or do not supply an access point ARN.')
+                new UnresolvedEndpointException(
+                    'Client was configured for partition `aws` but ARN (`arn:aws-cn:s3-outposts:cn-north-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint`) has `aws-cn`'
+                )
             ],
             // S3 Outposts, dualstack
             [
@@ -518,9 +480,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_dual_stack_endpoint' => true,
                 ],
-                new UnresolvedEndpointException('Dualstack is currently not'
-                    . ' supported with S3 Outposts access points. Please disable'
-                    . ' dualstack or do not supply an access point ARN.')
+                new UnresolvedEndpointException(
+                    'S3 Outposts does not support Dual-stack'
+                )
             ],
             // S3 Outposts, accelerate
             [
@@ -535,9 +497,42 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_accelerate_endpoint' => true,
                 ],
-                new UnresolvedEndpointException('Accelerate is currently not'
-                    . ' supported with access points. Please disable accelerate'
-                    . ' or do not supply an access point ARN.')
+                new UnresolvedEndpointException(
+        'S3 Outposts does not support S3 Accelerate'                )
+            ],
+            // s3-external, use_arn_region false
+            [
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                [
+                    'region' => 's3-external-1',
+                    'use_arn_region' => false,
+                ],
+                new UnresolvedEndpointException(
+                    'Invalid configuration: region from ARN `us-east-1` does not match client region `s3-external-1` and UseArnRegion is `false`'
+                )
+            ],
+            // aws-global, use_arn_region false
+            [
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                [
+                    'region' => 'aws-global',
+                    'use_arn_region' => false,
+                ],
+                new UnresolvedEndpointException(
+                    'Invalid configuration: region from ARN `us-east-1` does not match client region `aws-global` and UseArnRegion is `false`'
+                )
             ],
             // S3 Outposts, invalid ARN
             [
@@ -549,11 +544,8 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     ]
                 ),
                 ['region' => 'us-west-2'],
-                new S3Exception(
-                    'Bucket parameter parsed as ARN and failed with: Provided'
-                    . ' ARN was not a valid S3 access point ARN or S3 Outposts'
-                    . ' access point ARN.',
-                    new Command([])
+                new UnresolvedEndpointException(
+                    'Invalid ARN: The Outpost Id was not set'
                 )
             ],
         ];
@@ -574,7 +566,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint/myobject',
                     $req->getHeader('x-amz-copy-source')[0]
                 );
-                return Promise\promise_for(new Result([]));
+                return Promise\Create::promiseFor(new Result([]));
             }
         ]);
         $command = $s3->getCommand(

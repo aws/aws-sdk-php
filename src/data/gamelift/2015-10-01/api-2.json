@@ -92,7 +92,27 @@
         {"shape":"LimitExceededException"},
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"TaggingFailedException"}
+        {"shape":"TaggingFailedException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
+    "CreateFleetLocations":{
+      "name":"CreateFleetLocations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateFleetLocationsInput"},
+      "output":{"shape":"CreateFleetLocationsOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InvalidFleetStatusException"},
+        {"shape":"UnsupportedRegionException"},
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "CreateGameServerGroup":{
@@ -129,7 +149,8 @@
         {"shape":"NotFoundException"},
         {"shape":"FleetCapacityExceededException"},
         {"shape":"LimitExceededException"},
-        {"shape":"IdempotentParameterMismatchException"}
+        {"shape":"IdempotentParameterMismatchException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "CreateGameSessionQueue":{
@@ -145,7 +166,25 @@
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
         {"shape":"LimitExceededException"},
+        {"shape":"NotFoundException"},
         {"shape":"TaggingFailedException"}
+      ]
+    },
+    "CreateLocation":{
+      "name":"CreateLocation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateLocationInput"},
+      "output":{"shape":"CreateLocationOutput"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"TaggingFailedException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "CreateMatchmakingConfiguration":{
@@ -175,6 +214,7 @@
       "output":{"shape":"CreateMatchmakingRuleSetOutput"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
         {"shape":"InternalServiceException"},
         {"shape":"UnsupportedRegionException"},
         {"shape":"TaggingFailedException"}
@@ -308,6 +348,22 @@
         {"shape":"TaggingFailedException"}
       ]
     },
+    "DeleteFleetLocations":{
+      "name":"DeleteFleetLocations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteFleetLocationsInput"},
+      "output":{"shape":"DeleteFleetLocationsOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
     "DeleteGameServerGroup":{
       "name":"DeleteGameServerGroup",
       "http":{
@@ -337,6 +393,21 @@
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
         {"shape":"TaggingFailedException"}
+      ]
+    },
+    "DeleteLocation":{
+      "name":"DeleteLocation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteLocationInput"},
+      "output":{"shape":"DeleteLocationOutput"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "DeleteMatchmakingConfiguration":{
@@ -430,6 +501,21 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DeregisterCompute":{
+      "name":"DeregisterCompute",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeregisterComputeInput"},
+      "output":{"shape":"DeregisterComputeOutput"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "DeregisterGameServer":{
       "name":"DeregisterGameServer",
       "http":{
@@ -474,6 +560,21 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DescribeCompute":{
+      "name":"DescribeCompute",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeComputeInput"},
+      "output":{"shape":"DescribeComputeOutput"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "DescribeEC2InstanceLimits":{
       "name":"DescribeEC2InstanceLimits",
       "http":{
@@ -485,7 +586,8 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceException"},
-        {"shape":"UnauthorizedException"}
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "DescribeFleetAttributes":{
@@ -533,6 +635,54 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "DescribeFleetLocationAttributes":{
+      "name":"DescribeFleetLocationAttributes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFleetLocationAttributesInput"},
+      "output":{"shape":"DescribeFleetLocationAttributesOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
+    "DescribeFleetLocationCapacity":{
+      "name":"DescribeFleetLocationCapacity",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFleetLocationCapacityInput"},
+      "output":{"shape":"DescribeFleetLocationCapacityOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
+    "DescribeFleetLocationUtilization":{
+      "name":"DescribeFleetLocationUtilization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFleetLocationUtilizationInput"},
+      "output":{"shape":"DescribeFleetLocationUtilizationOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
     "DescribeFleetPortSettings":{
       "name":"DescribeFleetPortSettings",
       "http":{
@@ -545,7 +695,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"NotFoundException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"UnauthorizedException"}
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "DescribeFleetUtilization":{
@@ -621,7 +772,8 @@
         {"shape":"NotFoundException"},
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"TerminalRoutingStrategyException"}
+        {"shape":"TerminalRoutingStrategyException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "DescribeGameSessionPlacement":{
@@ -667,7 +819,8 @@
         {"shape":"NotFoundException"},
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"TerminalRoutingStrategyException"}
+        {"shape":"TerminalRoutingStrategyException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "DescribeInstances":{
@@ -682,7 +835,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"InvalidRequestException"},
         {"shape":"NotFoundException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "DescribeMatchmaking":{
@@ -770,7 +924,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"NotFoundException"}
+        {"shape":"NotFoundException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "DescribeScript":{
@@ -810,6 +965,36 @@
       },
       "input":{"shape":"DescribeVpcPeeringConnectionsInput"},
       "output":{"shape":"DescribeVpcPeeringConnectionsOutput"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "GetComputeAccess":{
+      "name":"GetComputeAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetComputeAccessInput"},
+      "output":{"shape":"GetComputeAccessOutput"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "GetComputeAuthToken":{
+      "name":"GetComputeAuthToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetComputeAuthTokenInput"},
+      "output":{"shape":"GetComputeAuthTokenOutput"},
       "errors":[
         {"shape":"UnauthorizedException"},
         {"shape":"InvalidRequestException"},
@@ -875,6 +1060,20 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "ListCompute":{
+      "name":"ListCompute",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListComputeInput"},
+      "output":{"shape":"ListComputeOutput"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "ListFleets":{
       "name":"ListFleets",
       "http":{
@@ -915,6 +1114,20 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListLocations":{
+      "name":"ListLocations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListLocationsInput"},
+      "output":{"shape":"ListLocationsOutput"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceException"}
       ]
     },
@@ -962,6 +1175,21 @@
         {"shape":"NotFoundException"}
       ]
     },
+    "RegisterCompute":{
+      "name":"RegisterCompute",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RegisterComputeInput"},
+      "output":{"shape":"RegisterComputeOutput"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "RegisterGameServer":{
       "name":"RegisterGameServer",
       "http":{
@@ -974,8 +1202,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ConflictException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InternalServiceException"},
-        {"shape":"LimitExceededException"}
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "RequestUploadCredentials":{
@@ -1037,7 +1265,8 @@
         {"shape":"NotFoundException"},
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"TerminalRoutingStrategyException"}
+        {"shape":"TerminalRoutingStrategyException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "StartFleetActions":{
@@ -1052,7 +1281,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"NotFoundException"}
+        {"shape":"NotFoundException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "StartGameSessionPlacement":{
@@ -1112,7 +1342,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"NotFoundException"}
+        {"shape":"NotFoundException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "StopGameSessionPlacement":{
@@ -1253,7 +1484,8 @@
         {"shape":"InvalidFleetStatusException"},
         {"shape":"InternalServiceException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"UnauthorizedException"}
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "UpdateFleetPortSettings":{
@@ -1456,6 +1688,13 @@
       "max":1011,
       "min":1
     },
+    "AnywhereConfiguration":{
+      "type":"structure",
+      "required":["Cost"],
+      "members":{
+        "Cost":{"shape":"NonNegativeLimitedLengthDouble"}
+      }
+    },
     "ArnStringModel":{
       "type":"string",
       "max":256,
@@ -1465,10 +1704,10 @@
     "AttributeValue":{
       "type":"structure",
       "members":{
-        "S":{"shape":"NonZeroAndMaxString"},
+        "S":{"shape":"PlayerAttributeString"},
         "N":{"shape":"DoubleObject"},
-        "SL":{"shape":"StringList"},
-        "SDM":{"shape":"StringDoubleMap"}
+        "SL":{"shape":"PlayerAttributeStringList"},
+        "SDM":{"shape":"PlayerAttributeStringDoubleMap"}
       }
     },
     "AutoScalingGroupArn":{
@@ -1512,7 +1751,8 @@
         "Status":{"shape":"BuildStatus"},
         "SizeOnDisk":{"shape":"PositiveLong"},
         "OperatingSystem":{"shape":"OperatingSystem"},
-        "CreationTime":{"shape":"Timestamp"}
+        "CreationTime":{"shape":"Timestamp"},
+        "ServerSdkVersion":{"shape":"ServerSdkVersion"}
       }
     },
     "BuildArn":{
@@ -1553,13 +1793,20 @@
         "GENERATED"
       ]
     },
+    "ClaimFilterOption":{
+      "type":"structure",
+      "members":{
+        "InstanceStatuses":{"shape":"FilterInstanceStatuses"}
+      }
+    },
     "ClaimGameServerInput":{
       "type":"structure",
       "required":["GameServerGroupName"],
       "members":{
         "GameServerGroupName":{"shape":"GameServerGroupNameOrArn"},
         "GameServerId":{"shape":"GameServerId"},
-        "GameServerData":{"shape":"GameServerData"}
+        "GameServerData":{"shape":"GameServerData"},
+        "FilterOption":{"shape":"ClaimFilterOption"}
       }
     },
     "ClaimGameServerOutput":{
@@ -1575,6 +1822,64 @@
         "GreaterThanThreshold",
         "LessThanThreshold",
         "LessThanOrEqualToThreshold"
+      ]
+    },
+    "Compute":{
+      "type":"structure",
+      "members":{
+        "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"},
+        "ComputeName":{"shape":"ComputeName"},
+        "ComputeArn":{"shape":"ComputeArn"},
+        "IpAddress":{"shape":"IpAddress"},
+        "DnsName":{"shape":"DnsName"},
+        "ComputeStatus":{"shape":"ComputeStatus"},
+        "Location":{"shape":"LocationStringModel"},
+        "CreationTime":{"shape":"Timestamp"},
+        "OperatingSystem":{"shape":"OperatingSystem"},
+        "Type":{"shape":"EC2InstanceType"},
+        "GameLiftServiceSdkEndpoint":{"shape":"GameLiftServiceSdkEndpointOutput"}
+      }
+    },
+    "ComputeArn":{
+      "type":"string",
+      "max":1024,
+      "pattern":"^arn:.*:compute\\/[a-zA-Z0-9\\-]+"
+    },
+    "ComputeAuthToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\-]+"
+    },
+    "ComputeList":{
+      "type":"list",
+      "member":{"shape":"Compute"}
+    },
+    "ComputeName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\-]+"
+    },
+    "ComputeNameOrArn":{
+      "type":"string",
+      "max":1024,
+      "pattern":"[a-zA-Z0-9\\-]+|^arn:.*:compute\\/[a-zA-Z0-9\\-]+"
+    },
+    "ComputeStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "ACTIVE",
+        "TERMINATING"
+      ]
+    },
+    "ComputeType":{
+      "type":"string",
+      "enum":[
+        "EC2",
+        "ANYWHERE"
       ]
     },
     "ConflictException":{
@@ -1610,7 +1915,8 @@
         "Version":{"shape":"NonZeroAndMaxString"},
         "StorageLocation":{"shape":"S3Location"},
         "OperatingSystem":{"shape":"OperatingSystem"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "ServerSdkVersion":{"shape":"ServerSdkVersion"}
       }
     },
     "CreateBuildOutput":{
@@ -1623,17 +1929,14 @@
     },
     "CreateFleetInput":{
       "type":"structure",
-      "required":[
-        "Name",
-        "EC2InstanceType"
-      ],
+      "required":["Name"],
       "members":{
         "Name":{"shape":"NonZeroAndMaxString"},
         "Description":{"shape":"NonZeroAndMaxString"},
         "BuildId":{"shape":"BuildIdOrArn"},
         "ScriptId":{"shape":"ScriptIdOrArn"},
-        "ServerLaunchPath":{"shape":"NonZeroAndMaxString"},
-        "ServerLaunchParameters":{"shape":"NonZeroAndMaxString"},
+        "ServerLaunchPath":{"shape":"LaunchPathStringModel"},
+        "ServerLaunchParameters":{"shape":"LaunchParametersStringModel"},
         "LogPaths":{"shape":"StringList"},
         "EC2InstanceType":{"shape":"EC2InstanceType"},
         "EC2InboundPermissions":{"shape":"IpPermissionsList"},
@@ -1646,13 +1949,36 @@
         "FleetType":{"shape":"FleetType"},
         "InstanceRoleArn":{"shape":"NonEmptyString"},
         "CertificateConfiguration":{"shape":"CertificateConfiguration"},
-        "Tags":{"shape":"TagList"}
+        "Locations":{"shape":"LocationConfigurationList"},
+        "Tags":{"shape":"TagList"},
+        "ComputeType":{"shape":"ComputeType"},
+        "AnywhereConfiguration":{"shape":"AnywhereConfiguration"}
+      }
+    },
+    "CreateFleetLocationsInput":{
+      "type":"structure",
+      "required":[
+        "FleetId",
+        "Locations"
+      ],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "Locations":{"shape":"LocationConfigurationList"}
+      }
+    },
+    "CreateFleetLocationsOutput":{
+      "type":"structure",
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "FleetArn":{"shape":"FleetArn"},
+        "LocationStates":{"shape":"LocationStateList"}
       }
     },
     "CreateFleetOutput":{
       "type":"structure",
       "members":{
-        "FleetAttributes":{"shape":"FleetAttributes"}
+        "FleetAttributes":{"shape":"FleetAttributes"},
+        "LocationStates":{"shape":"LocationStateList"}
       }
     },
     "CreateGameServerGroupInput":{
@@ -1697,7 +2023,8 @@
         "CreatorId":{"shape":"NonZeroAndMaxString"},
         "GameSessionId":{"shape":"IdStringModel"},
         "IdempotencyToken":{"shape":"IdStringModel"},
-        "GameSessionData":{"shape":"GameSessionData"}
+        "GameSessionData":{"shape":"LargeGameSessionData"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "CreateGameSessionOutput":{
@@ -1714,6 +2041,10 @@
         "TimeoutInSeconds":{"shape":"WholeNumber"},
         "PlayerLatencyPolicies":{"shape":"PlayerLatencyPolicyList"},
         "Destinations":{"shape":"GameSessionQueueDestinationList"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "PriorityConfiguration":{"shape":"PriorityConfiguration"},
+        "CustomEventData":{"shape":"QueueCustomEventData"},
+        "NotificationTarget":{"shape":"QueueSnsArnStringModel"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1721,6 +2052,20 @@
       "type":"structure",
       "members":{
         "GameSessionQueue":{"shape":"GameSessionQueue"}
+      }
+    },
+    "CreateLocationInput":{
+      "type":"structure",
+      "required":["LocationName"],
+      "members":{
+        "LocationName":{"shape":"CustomInputLocationStringModel"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateLocationOutput":{
+      "type":"structure",
+      "members":{
+        "Location":{"shape":"LocationModel"}
       }
     },
     "CreateMatchmakingConfigurationInput":{
@@ -1866,6 +2211,18 @@
       "max":256,
       "min":0
     },
+    "CustomInputLocationStringModel":{
+      "type":"string",
+      "max":64,
+      "min":8,
+      "pattern":"^custom-[A-Za-z0-9\\-]+"
+    },
+    "CustomLocationNameOrArnModel":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^custom-[A-Za-z0-9\\-]+|^arn:.*:location\\/custom-\\S+"
+    },
     "DeleteAliasInput":{
       "type":"structure",
       "required":["AliasId"],
@@ -1885,6 +2242,25 @@
       "required":["FleetId"],
       "members":{
         "FleetId":{"shape":"FleetIdOrArn"}
+      }
+    },
+    "DeleteFleetLocationsInput":{
+      "type":"structure",
+      "required":[
+        "FleetId",
+        "Locations"
+      ],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "Locations":{"shape":"LocationList"}
+      }
+    },
+    "DeleteFleetLocationsOutput":{
+      "type":"structure",
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "FleetArn":{"shape":"FleetArn"},
+        "LocationStates":{"shape":"LocationStateList"}
       }
     },
     "DeleteGameServerGroupInput":{
@@ -1909,6 +2285,18 @@
       }
     },
     "DeleteGameSessionQueueOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteLocationInput":{
+      "type":"structure",
+      "required":["LocationName"],
+      "members":{
+        "LocationName":{"shape":"CustomLocationNameOrArnModel"}
+      }
+    },
+    "DeleteLocationOutput":{
       "type":"structure",
       "members":{
       }
@@ -1987,6 +2375,22 @@
       "members":{
       }
     },
+    "DeregisterComputeInput":{
+      "type":"structure",
+      "required":[
+        "FleetId",
+        "ComputeName"
+      ],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "ComputeName":{"shape":"ComputeNameOrArn"}
+      }
+    },
+    "DeregisterComputeOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeregisterGameServerInput":{
       "type":"structure",
       "required":[
@@ -2024,10 +2428,28 @@
         "Build":{"shape":"Build"}
       }
     },
+    "DescribeComputeInput":{
+      "type":"structure",
+      "required":[
+        "FleetId",
+        "ComputeName"
+      ],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "ComputeName":{"shape":"ComputeNameOrArn"}
+      }
+    },
+    "DescribeComputeOutput":{
+      "type":"structure",
+      "members":{
+        "Compute":{"shape":"Compute"}
+      }
+    },
     "DescribeEC2InstanceLimitsInput":{
       "type":"structure",
       "members":{
-        "EC2InstanceType":{"shape":"EC2InstanceType"}
+        "EC2InstanceType":{"shape":"EC2InstanceType"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "DescribeEC2InstanceLimitsOutput":{
@@ -2084,17 +2506,75 @@
         "NextToken":{"shape":"NonZeroAndMaxString"}
       }
     },
+    "DescribeFleetLocationAttributesInput":{
+      "type":"structure",
+      "required":["FleetId"],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "Locations":{"shape":"LocationList"},
+        "Limit":{"shape":"PositiveInteger"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
+    "DescribeFleetLocationAttributesOutput":{
+      "type":"structure",
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "FleetArn":{"shape":"FleetArn"},
+        "LocationAttributes":{"shape":"LocationAttributesList"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
+    "DescribeFleetLocationCapacityInput":{
+      "type":"structure",
+      "required":[
+        "FleetId",
+        "Location"
+      ],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "Location":{"shape":"LocationStringModel"}
+      }
+    },
+    "DescribeFleetLocationCapacityOutput":{
+      "type":"structure",
+      "members":{
+        "FleetCapacity":{"shape":"FleetCapacity"}
+      }
+    },
+    "DescribeFleetLocationUtilizationInput":{
+      "type":"structure",
+      "required":[
+        "FleetId",
+        "Location"
+      ],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "Location":{"shape":"LocationStringModel"}
+      }
+    },
+    "DescribeFleetLocationUtilizationOutput":{
+      "type":"structure",
+      "members":{
+        "FleetUtilization":{"shape":"FleetUtilization"}
+      }
+    },
     "DescribeFleetPortSettingsInput":{
       "type":"structure",
       "required":["FleetId"],
       "members":{
-        "FleetId":{"shape":"FleetIdOrArn"}
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "DescribeFleetPortSettingsOutput":{
       "type":"structure",
       "members":{
-        "InboundPermissions":{"shape":"IpPermissionsList"}
+        "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"},
+        "InboundPermissions":{"shape":"IpPermissionsList"},
+        "UpdateStatus":{"shape":"LocationUpdateStatus"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "DescribeFleetUtilizationInput":{
@@ -2165,6 +2645,7 @@
         "FleetId":{"shape":"FleetIdOrArn"},
         "GameSessionId":{"shape":"ArnStringModel"},
         "AliasId":{"shape":"AliasIdOrArn"},
+        "Location":{"shape":"LocationStringModel"},
         "StatusFilter":{"shape":"NonZeroAndMaxString"},
         "Limit":{"shape":"PositiveInteger"},
         "NextToken":{"shape":"NonZeroAndMaxString"}
@@ -2211,6 +2692,7 @@
         "FleetId":{"shape":"FleetIdOrArn"},
         "GameSessionId":{"shape":"ArnStringModel"},
         "AliasId":{"shape":"AliasIdOrArn"},
+        "Location":{"shape":"LocationStringModel"},
         "StatusFilter":{"shape":"NonZeroAndMaxString"},
         "Limit":{"shape":"PositiveInteger"},
         "NextToken":{"shape":"NonZeroAndMaxString"}
@@ -2230,7 +2712,8 @@
         "FleetId":{"shape":"FleetIdOrArn"},
         "InstanceId":{"shape":"InstanceId"},
         "Limit":{"shape":"PositiveInteger"},
-        "NextToken":{"shape":"NonZeroAndMaxString"}
+        "NextToken":{"shape":"NonZeroAndMaxString"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "DescribeInstancesOutput":{
@@ -2323,7 +2806,8 @@
         "FleetId":{"shape":"FleetIdOrArn"},
         "StatusFilter":{"shape":"ScalingStatusType"},
         "Limit":{"shape":"PositiveInteger"},
-        "NextToken":{"shape":"NonZeroAndMaxString"}
+        "NextToken":{"shape":"NonZeroAndMaxString"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "DescribeScalingPoliciesOutput":{
@@ -2381,6 +2865,12 @@
       "member":{"shape":"DesiredPlayerSession"}
     },
     "DnsName":{"type":"string"},
+    "DnsNameInput":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z_\\-\\.]+"
+    },
     "Double":{"type":"double"},
     "DoubleObject":{"type":"double"},
     "EC2InstanceCounts":{
@@ -2400,7 +2890,8 @@
       "members":{
         "EC2InstanceType":{"shape":"EC2InstanceType"},
         "CurrentInstances":{"shape":"WholeNumber"},
-        "InstanceLimit":{"shape":"WholeNumber"}
+        "InstanceLimit":{"shape":"WholeNumber"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "EC2InstanceLimitList":{
@@ -2491,7 +2982,39 @@
         "m5a.8xlarge",
         "m5a.12xlarge",
         "m5a.16xlarge",
-        "m5a.24xlarge"
+        "m5a.24xlarge",
+        "c5d.large",
+        "c5d.xlarge",
+        "c5d.2xlarge",
+        "c5d.4xlarge",
+        "c5d.9xlarge",
+        "c5d.12xlarge",
+        "c5d.18xlarge",
+        "c5d.24xlarge",
+        "c6a.large",
+        "c6a.xlarge",
+        "c6a.2xlarge",
+        "c6a.4xlarge",
+        "c6a.8xlarge",
+        "c6a.12xlarge",
+        "c6a.16xlarge",
+        "c6a.24xlarge",
+        "c6i.large",
+        "c6i.xlarge",
+        "c6i.2xlarge",
+        "c6i.4xlarge",
+        "c6i.8xlarge",
+        "c6i.12xlarge",
+        "c6i.16xlarge",
+        "c6i.24xlarge",
+        "r5d.large",
+        "r5d.xlarge",
+        "r5d.2xlarge",
+        "r5d.4xlarge",
+        "r5d.8xlarge",
+        "r5d.12xlarge",
+        "r5d.16xlarge",
+        "r5d.24xlarge"
       ]
     },
     "Event":{
@@ -2540,12 +3063,30 @@
         "FLEET_VPC_PEERING_SUCCEEDED",
         "FLEET_VPC_PEERING_FAILED",
         "FLEET_VPC_PEERING_DELETED",
-        "INSTANCE_INTERRUPTED"
+        "INSTANCE_INTERRUPTED",
+        "INSTANCE_RECYCLED"
       ]
     },
     "EventList":{
       "type":"list",
       "member":{"shape":"Event"}
+    },
+    "FilterConfiguration":{
+      "type":"structure",
+      "members":{
+        "AllowedLocations":{"shape":"LocationList"}
+      }
+    },
+    "FilterInstanceStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DRAINING"
+      ]
+    },
+    "FilterInstanceStatuses":{
+      "type":"list",
+      "member":{"shape":"FilterInstanceStatus"}
     },
     "FleetAction":{
       "type":"string",
@@ -2577,8 +3118,8 @@
         "BuildArn":{"shape":"BuildArn"},
         "ScriptId":{"shape":"ScriptId"},
         "ScriptArn":{"shape":"ScriptArn"},
-        "ServerLaunchPath":{"shape":"NonZeroAndMaxString"},
-        "ServerLaunchParameters":{"shape":"NonZeroAndMaxString"},
+        "ServerLaunchPath":{"shape":"LaunchPathStringModel"},
+        "ServerLaunchParameters":{"shape":"LaunchParametersStringModel"},
         "LogPaths":{"shape":"StringList"},
         "NewGameSessionProtectionPolicy":{"shape":"ProtectionPolicy"},
         "OperatingSystem":{"shape":"OperatingSystem"},
@@ -2586,7 +3127,9 @@
         "MetricGroups":{"shape":"MetricGroupList"},
         "StoppedActions":{"shape":"FleetActionList"},
         "InstanceRoleArn":{"shape":"NonEmptyString"},
-        "CertificateConfiguration":{"shape":"CertificateConfiguration"}
+        "CertificateConfiguration":{"shape":"CertificateConfiguration"},
+        "ComputeType":{"shape":"ComputeType"},
+        "AnywhereConfiguration":{"shape":"AnywhereConfiguration"}
       }
     },
     "FleetAttributesList":{
@@ -2597,8 +3140,10 @@
       "type":"structure",
       "members":{
         "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"},
         "InstanceType":{"shape":"EC2InstanceType"},
-        "InstanceCounts":{"shape":"EC2InstanceCounts"}
+        "InstanceCounts":{"shape":"EC2InstanceCounts"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "FleetCapacityExceededException":{
@@ -2641,7 +3186,8 @@
         "ACTIVE",
         "DELETING",
         "ERROR",
-        "TERMINATED"
+        "TERMINATED",
+        "NOT_FOUND"
       ]
     },
     "FleetType":{
@@ -2655,10 +3201,12 @@
       "type":"structure",
       "members":{
         "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"},
         "ActiveServerProcessCount":{"shape":"WholeNumber"},
         "ActiveGameSessionCount":{"shape":"WholeNumber"},
         "CurrentPlayerSessionCount":{"shape":"WholeNumber"},
-        "MaximumPlayerSessionCount":{"shape":"WholeNumber"}
+        "MaximumPlayerSessionCount":{"shape":"WholeNumber"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "FleetUtilizationList":{
@@ -2674,6 +3222,11 @@
     },
     "Float":{"type":"float"},
     "FreeText":{"type":"string"},
+    "GameLiftServiceSdkEndpointOutput":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "GameProperty":{
       "type":"structure",
       "required":[
@@ -2795,6 +3348,22 @@
         "c5.12xlarge",
         "c5.18xlarge",
         "c5.24xlarge",
+        "c5a.large",
+        "c5a.xlarge",
+        "c5a.2xlarge",
+        "c5a.4xlarge",
+        "c5a.8xlarge",
+        "c5a.12xlarge",
+        "c5a.16xlarge",
+        "c5a.24xlarge",
+        "c6g.medium",
+        "c6g.large",
+        "c6g.xlarge",
+        "c6g.2xlarge",
+        "c6g.4xlarge",
+        "c6g.8xlarge",
+        "c6g.12xlarge",
+        "c6g.16xlarge",
         "r4.large",
         "r4.xlarge",
         "r4.2xlarge",
@@ -2809,6 +3378,22 @@
         "r5.12xlarge",
         "r5.16xlarge",
         "r5.24xlarge",
+        "r5a.large",
+        "r5a.xlarge",
+        "r5a.2xlarge",
+        "r5a.4xlarge",
+        "r5a.8xlarge",
+        "r5a.12xlarge",
+        "r5a.16xlarge",
+        "r5a.24xlarge",
+        "r6g.medium",
+        "r6g.large",
+        "r6g.xlarge",
+        "r6g.2xlarge",
+        "r6g.4xlarge",
+        "r6g.8xlarge",
+        "r6g.12xlarge",
+        "r6g.16xlarge",
         "m4.large",
         "m4.xlarge",
         "m4.2xlarge",
@@ -2821,7 +3406,23 @@
         "m5.8xlarge",
         "m5.12xlarge",
         "m5.16xlarge",
-        "m5.24xlarge"
+        "m5.24xlarge",
+        "m5a.large",
+        "m5a.xlarge",
+        "m5a.2xlarge",
+        "m5a.4xlarge",
+        "m5a.8xlarge",
+        "m5a.12xlarge",
+        "m5a.16xlarge",
+        "m5a.24xlarge",
+        "m6g.medium",
+        "m6g.large",
+        "m6g.xlarge",
+        "m6g.2xlarge",
+        "m6g.4xlarge",
+        "m6g.8xlarge",
+        "m6g.12xlarge",
+        "m6g.16xlarge"
       ]
     },
     "GameServerGroupName":{
@@ -2932,8 +3533,9 @@
         "Port":{"shape":"PortNumber"},
         "PlayerSessionCreationPolicy":{"shape":"PlayerSessionCreationPolicy"},
         "CreatorId":{"shape":"NonZeroAndMaxString"},
-        "GameSessionData":{"shape":"GameSessionData"},
-        "MatchmakerData":{"shape":"MatchmakerData"}
+        "GameSessionData":{"shape":"LargeGameSessionData"},
+        "MatchmakerData":{"shape":"MatchmakerData"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "GameSessionActivationTimeoutSeconds":{
@@ -2945,7 +3547,7 @@
       "type":"structure",
       "members":{
         "GameSessionArn":{"shape":"ArnStringModel"},
-        "IpAddress":{"shape":"StringModel"},
+        "IpAddress":{"shape":"IpAddress"},
         "DnsName":{"shape":"DnsName"},
         "Port":{"shape":"PositiveInteger"},
         "MatchedPlayerSessions":{"shape":"MatchedPlayerSessionList"}
@@ -2997,7 +3599,7 @@
         "DnsName":{"shape":"DnsName"},
         "Port":{"shape":"PortNumber"},
         "PlacedPlayerSessions":{"shape":"PlacedPlayerSessionList"},
-        "GameSessionData":{"shape":"GameSessionData"},
+        "GameSessionData":{"shape":"LargeGameSessionData"},
         "MatchmakerData":{"shape":"MatchmakerData"}
       }
     },
@@ -3018,7 +3620,11 @@
         "GameSessionQueueArn":{"shape":"GameSessionQueueArn"},
         "TimeoutInSeconds":{"shape":"WholeNumber"},
         "PlayerLatencyPolicies":{"shape":"PlayerLatencyPolicyList"},
-        "Destinations":{"shape":"GameSessionQueueDestinationList"}
+        "Destinations":{"shape":"GameSessionQueueDestinationList"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "PriorityConfiguration":{"shape":"PriorityConfiguration"},
+        "CustomEventData":{"shape":"QueueCustomEventData"},
+        "NotificationTarget":{"shape":"QueueSnsArnStringModel"}
       }
     },
     "GameSessionQueueArn":{
@@ -3070,6 +3676,49 @@
     "GameSessionStatusReason":{
       "type":"string",
       "enum":["INTERRUPTED"]
+    },
+    "GetComputeAccessInput":{
+      "type":"structure",
+      "required":[
+        "FleetId",
+        "ComputeName"
+      ],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "ComputeName":{"shape":"ComputeNameOrArn"}
+      }
+    },
+    "GetComputeAccessOutput":{
+      "type":"structure",
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "FleetArn":{"shape":"FleetArn"},
+        "ComputeName":{"shape":"ComputeNameOrArn"},
+        "ComputeArn":{"shape":"ComputeArn"},
+        "Credentials":{"shape":"AwsCredentials"}
+      }
+    },
+    "GetComputeAuthTokenInput":{
+      "type":"structure",
+      "required":[
+        "FleetId",
+        "ComputeName"
+      ],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "ComputeName":{"shape":"ComputeNameOrArn"}
+      }
+    },
+    "GetComputeAuthTokenOutput":{
+      "type":"structure",
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "FleetArn":{"shape":"FleetArn"},
+        "ComputeName":{"shape":"ComputeNameOrArn"},
+        "ComputeArn":{"shape":"ComputeArn"},
+        "AuthToken":{"shape":"ComputeAuthToken"},
+        "ExpirationTimestamp":{"shape":"Timestamp"}
+      }
     },
     "GetGameSessionLogUrlInput":{
       "type":"structure",
@@ -3124,13 +3773,15 @@
       "type":"structure",
       "members":{
         "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"},
         "InstanceId":{"shape":"InstanceId"},
         "IpAddress":{"shape":"IpAddress"},
         "DnsName":{"shape":"DnsName"},
         "OperatingSystem":{"shape":"OperatingSystem"},
         "Type":{"shape":"EC2InstanceType"},
         "Status":{"shape":"InstanceStatus"},
-        "CreationTime":{"shape":"Timestamp"}
+        "CreationTime":{"shape":"Timestamp"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "InstanceAccess":{
@@ -3211,7 +3862,12 @@
       },
       "exception":true
     },
-    "IpAddress":{"type":"string"},
+    "IpAddress":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9A-Fa-f\\:\\.]+"
+    },
     "IpPermission":{
       "type":"structure",
       "required":[
@@ -3239,10 +3895,27 @@
         "UDP"
       ]
     },
+    "LargeGameSessionData":{
+      "type":"string",
+      "max":262144,
+      "min":1
+    },
     "LatencyMap":{
       "type":"map",
       "key":{"shape":"NonEmptyString"},
       "value":{"shape":"PositiveInteger"}
+    },
+    "LaunchParametersStringModel":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[A-Za-z0-9_:.+\\/\\\\\\- =@;{},?'\\[\\]\"]+"
+    },
+    "LaunchPathStringModel":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[A-Za-z0-9_:.+\\/\\\\\\- ]+"
     },
     "LaunchTemplateId":{
       "type":"string",
@@ -3308,6 +3981,23 @@
         "NextToken":{"shape":"NonEmptyString"}
       }
     },
+    "ListComputeInput":{
+      "type":"structure",
+      "required":["FleetId"],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "Location":{"shape":"LocationStringModel"},
+        "Limit":{"shape":"PositiveInteger"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
+    "ListComputeOutput":{
+      "type":"structure",
+      "members":{
+        "ComputeList":{"shape":"ComputeList"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
     "ListFleetsInput":{
       "type":"structure",
       "members":{
@@ -3355,6 +4045,26 @@
         "NextToken":{"shape":"NonZeroAndMaxString"}
       }
     },
+    "ListLocationsInput":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"LocationFilterList"},
+        "Limit":{"shape":"ListLocationsLimit"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
+    "ListLocationsLimit":{
+      "type":"integer",
+      "max":200,
+      "min":1
+    },
+    "ListLocationsOutput":{
+      "type":"structure",
+      "members":{
+        "Locations":{"shape":"LocationModelList"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
     "ListScriptsInput":{
       "type":"structure",
       "members":{
@@ -3381,6 +4091,88 @@
       "members":{
         "Tags":{"shape":"TagList"}
       }
+    },
+    "LocationArnModel":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^arn:.*:location\\/custom-\\S+"
+    },
+    "LocationAttributes":{
+      "type":"structure",
+      "members":{
+        "LocationState":{"shape":"LocationState"},
+        "StoppedActions":{"shape":"FleetActionList"},
+        "UpdateStatus":{"shape":"LocationUpdateStatus"}
+      }
+    },
+    "LocationAttributesList":{
+      "type":"list",
+      "member":{"shape":"LocationAttributes"}
+    },
+    "LocationConfiguration":{
+      "type":"structure",
+      "required":["Location"],
+      "members":{
+        "Location":{"shape":"LocationStringModel"}
+      }
+    },
+    "LocationConfigurationList":{
+      "type":"list",
+      "member":{"shape":"LocationConfiguration"},
+      "max":100,
+      "min":1
+    },
+    "LocationFilter":{
+      "type":"string",
+      "enum":[
+        "AWS",
+        "CUSTOM"
+      ]
+    },
+    "LocationFilterList":{
+      "type":"list",
+      "member":{"shape":"LocationFilter"},
+      "max":2,
+      "min":1
+    },
+    "LocationList":{
+      "type":"list",
+      "member":{"shape":"LocationStringModel"},
+      "max":100,
+      "min":1
+    },
+    "LocationModel":{
+      "type":"structure",
+      "members":{
+        "LocationName":{"shape":"LocationStringModel"},
+        "LocationArn":{"shape":"LocationArnModel"}
+      }
+    },
+    "LocationModelList":{
+      "type":"list",
+      "member":{"shape":"LocationModel"}
+    },
+    "LocationState":{
+      "type":"structure",
+      "members":{
+        "Location":{"shape":"LocationStringModel"},
+        "Status":{"shape":"FleetStatus"}
+      }
+    },
+    "LocationStateList":{
+      "type":"list",
+      "member":{"shape":"LocationState"}
+    },
+    "LocationStringModel":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[A-Za-z0-9\\-]+"
+    },
+    "LocationUpdateStatus":{
+      "type":"string",
+      "enum":["PENDING_UPDATE"]
     },
     "MatchedPlayerSession":{
       "type":"structure",
@@ -3548,7 +4340,8 @@
         "PercentAvailableGameSessions",
         "PercentIdleInstances",
         "QueueDepth",
-        "WaitTime"
+        "WaitTime",
+        "ConcurrentActivatableGameSessions"
       ]
     },
     "NonBlankAndLengthConstraintString":{
@@ -3569,6 +4362,12 @@
       "type":"double",
       "min":0
     },
+    "NonNegativeLimitedLengthDouble":{
+      "type":"string",
+      "max":11,
+      "min":1,
+      "pattern":"^\\d{1,5}(?:\\.\\d{1,5})?$"
+    },
     "NonZeroAndMaxString":{
       "type":"string",
       "max":1024,
@@ -3586,7 +4385,9 @@
       "enum":[
         "WINDOWS_2012",
         "AMAZON_LINUX",
-        "AMAZON_LINUX_2"
+        "AMAZON_LINUX_2",
+        "WINDOWS_2016",
+        "AMAZON_LINUX_2023"
       ]
     },
     "OutOfCapacityException":{
@@ -3620,6 +4421,20 @@
       "type":"map",
       "key":{"shape":"NonZeroAndMaxString"},
       "value":{"shape":"AttributeValue"}
+    },
+    "PlayerAttributeString":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "PlayerAttributeStringDoubleMap":{
+      "type":"map",
+      "key":{"shape":"PlayerAttributeString"},
+      "value":{"shape":"DoubleObject"}
+    },
+    "PlayerAttributeStringList":{
+      "type":"list",
+      "member":{"shape":"PlayerAttributeString"}
     },
     "PlayerData":{
       "type":"string",
@@ -3725,6 +4540,28 @@
       "type":"long",
       "min":1
     },
+    "PriorityConfiguration":{
+      "type":"structure",
+      "members":{
+        "PriorityOrder":{"shape":"PriorityTypeList"},
+        "LocationOrder":{"shape":"LocationList"}
+      }
+    },
+    "PriorityType":{
+      "type":"string",
+      "enum":[
+        "LATENCY",
+        "COST",
+        "DESTINATION",
+        "LOCATION"
+      ]
+    },
+    "PriorityTypeList":{
+      "type":"list",
+      "member":{"shape":"PriorityType"},
+      "max":4,
+      "min":1
+    },
     "ProtectionPolicy":{
       "type":"string",
       "enum":[
@@ -3761,6 +4598,39 @@
     "QueueArnsList":{
       "type":"list",
       "member":{"shape":"ArnStringModel"}
+    },
+    "QueueCustomEventData":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[\\s\\S]*"
+    },
+    "QueueSnsArnStringModel":{
+      "type":"string",
+      "max":300,
+      "min":0,
+      "pattern":"[a-zA-Z0-9:_-]*(\\.fifo)?"
+    },
+    "RegisterComputeInput":{
+      "type":"structure",
+      "required":[
+        "FleetId",
+        "ComputeName"
+      ],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "ComputeName":{"shape":"ComputeName"},
+        "CertificatePath":{"shape":"NonZeroAndMaxString"},
+        "DnsName":{"shape":"DnsNameInput"},
+        "IpAddress":{"shape":"IpAddress"},
+        "Location":{"shape":"LocationStringModel"}
+      }
+    },
+    "RegisterComputeOutput":{
+      "type":"structure",
+      "members":{
+        "Compute":{"shape":"Compute"}
+      }
     },
     "RegisterGameServerInput":{
       "type":"structure",
@@ -3889,6 +4759,7 @@
       "type":"structure",
       "members":{
         "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"},
         "Name":{"shape":"NonZeroAndMaxString"},
         "Status":{"shape":"ScalingStatusType"},
         "ScalingAdjustment":{"shape":"Integer"},
@@ -3898,7 +4769,9 @@
         "EvaluationPeriods":{"shape":"PositiveInteger"},
         "MetricName":{"shape":"MetricName"},
         "PolicyType":{"shape":"PolicyType"},
-        "TargetConfiguration":{"shape":"TargetConfiguration"}
+        "TargetConfiguration":{"shape":"TargetConfiguration"},
+        "UpdateStatus":{"shape":"LocationUpdateStatus"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "ScalingPolicyList":{
@@ -3950,6 +4823,7 @@
       "members":{
         "FleetId":{"shape":"FleetIdOrArn"},
         "AliasId":{"shape":"AliasIdOrArn"},
+        "Location":{"shape":"LocationStringModel"},
         "FilterExpression":{"shape":"NonZeroAndMaxString"},
         "SortExpression":{"shape":"NonZeroAndMaxString"},
         "Limit":{"shape":"PositiveInteger"},
@@ -3970,8 +4844,8 @@
         "ConcurrentExecutions"
       ],
       "members":{
-        "LaunchPath":{"shape":"NonZeroAndMaxString"},
-        "Parameters":{"shape":"NonZeroAndMaxString"},
+        "LaunchPath":{"shape":"LaunchPathStringModel"},
+        "Parameters":{"shape":"LaunchParametersStringModel"},
         "ConcurrentExecutions":{"shape":"PositiveInteger"}
       }
     },
@@ -3981,11 +4855,16 @@
       "max":50,
       "min":1
     },
+    "ServerSdkVersion":{
+      "type":"string",
+      "max":128,
+      "pattern":"^\\d+\\.\\d+\\.\\d+$"
+    },
     "SnsArnStringModel":{
       "type":"string",
       "max":300,
       "min":0,
-      "pattern":"[a-zA-Z0-9:_/-]*"
+      "pattern":"[a-zA-Z0-9:_/-]*(.fifo)?"
     },
     "SortOrder":{
       "type":"string",
@@ -4002,12 +4881,15 @@
       ],
       "members":{
         "FleetId":{"shape":"FleetIdOrArn"},
-        "Actions":{"shape":"FleetActionList"}
+        "Actions":{"shape":"FleetActionList"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "StartFleetActionsOutput":{
       "type":"structure",
       "members":{
+        "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"}
       }
     },
     "StartGameSessionPlacementInput":{
@@ -4025,7 +4907,7 @@
         "GameSessionName":{"shape":"NonZeroAndMaxString"},
         "PlayerLatencies":{"shape":"PlayerLatencyList"},
         "DesiredPlayerSessions":{"shape":"DesiredPlayerSessionList"},
-        "GameSessionData":{"shape":"GameSessionData"}
+        "GameSessionData":{"shape":"LargeGameSessionData"}
       }
     },
     "StartGameSessionPlacementOutput":{
@@ -4079,12 +4961,15 @@
       ],
       "members":{
         "FleetId":{"shape":"FleetIdOrArn"},
-        "Actions":{"shape":"FleetActionList"}
+        "Actions":{"shape":"FleetActionList"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "StopFleetActionsOutput":{
       "type":"structure",
       "members":{
+        "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"}
       }
     },
     "StopGameSessionPlacementInput":{
@@ -4111,11 +4996,6 @@
       "type":"structure",
       "members":{
       }
-    },
-    "StringDoubleMap":{
-      "type":"map",
-      "key":{"shape":"NonZeroAndMaxString"},
-      "value":{"shape":"DoubleObject"}
     },
     "StringList":{
       "type":"list",
@@ -4287,13 +5167,15 @@
         "Description":{"shape":"NonZeroAndMaxString"},
         "NewGameSessionProtectionPolicy":{"shape":"ProtectionPolicy"},
         "ResourceCreationLimitPolicy":{"shape":"ResourceCreationLimitPolicy"},
-        "MetricGroups":{"shape":"MetricGroupList"}
+        "MetricGroups":{"shape":"MetricGroupList"},
+        "AnywhereConfiguration":{"shape":"AnywhereConfiguration"}
       }
     },
     "UpdateFleetAttributesOutput":{
       "type":"structure",
       "members":{
-        "FleetId":{"shape":"FleetId"}
+        "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"}
       }
     },
     "UpdateFleetCapacityInput":{
@@ -4303,13 +5185,16 @@
         "FleetId":{"shape":"FleetIdOrArn"},
         "DesiredInstances":{"shape":"WholeNumber"},
         "MinSize":{"shape":"WholeNumber"},
-        "MaxSize":{"shape":"WholeNumber"}
+        "MaxSize":{"shape":"WholeNumber"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "UpdateFleetCapacityOutput":{
       "type":"structure",
       "members":{
-        "FleetId":{"shape":"FleetId"}
+        "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"},
+        "Location":{"shape":"LocationStringModel"}
       }
     },
     "UpdateFleetPortSettingsInput":{
@@ -4324,7 +5209,8 @@
     "UpdateFleetPortSettingsOutput":{
       "type":"structure",
       "members":{
-        "FleetId":{"shape":"FleetId"}
+        "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"}
       }
     },
     "UpdateGameServerGroupInput":{
@@ -4388,7 +5274,11 @@
         "Name":{"shape":"GameSessionQueueNameOrArn"},
         "TimeoutInSeconds":{"shape":"WholeNumber"},
         "PlayerLatencyPolicies":{"shape":"PlayerLatencyPolicyList"},
-        "Destinations":{"shape":"GameSessionQueueDestinationList"}
+        "Destinations":{"shape":"GameSessionQueueDestinationList"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "PriorityConfiguration":{"shape":"PriorityConfiguration"},
+        "CustomEventData":{"shape":"QueueCustomEventData"},
+        "NotificationTarget":{"shape":"QueueSnsArnStringModel"}
       }
     },
     "UpdateGameSessionQueueOutput":{

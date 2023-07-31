@@ -16,7 +16,7 @@ use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\WrappedHttpHandler
@@ -59,12 +59,10 @@ class WrappedHttpHandlerTest extends TestCase
         ], $result['@metadata']);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage The HTTP handler was rejected without an "exception" key value pair.
-     */
     public function testEnsuresErrorHasExceptionKey()
     {
+        $this->expectExceptionMessage("The HTTP handler was rejected without an \"exception\" key value pair.");
+        $this->expectException(\RuntimeException::class);
         $cmd = new Command('foo');
         $req = new Request('GET', 'http://foo.com');
         $handler = function () { return new RejectedPromise([]); };
@@ -373,7 +371,7 @@ class WrappedHttpHandlerTest extends TestCase
     {
         $handler = function ($request, array $options) {
             $this->assertArrayHasKey('http_stats_receiver', $options);
-            $this->assertInternalType('callable', $options['http_stats_receiver']);
+            $this->assertIsCallable($options['http_stats_receiver']);
             return new Response;
         };
 

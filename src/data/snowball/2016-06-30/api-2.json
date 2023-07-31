@@ -85,6 +85,18 @@
         {"shape":"Ec2RequestFailedException"}
       ]
     },
+    "CreateLongTermPricing":{
+      "name":"CreateLongTermPricing",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateLongTermPricingRequest"},
+      "output":{"shape":"CreateLongTermPricingResult"},
+      "errors":[
+        {"shape":"InvalidResourceException"}
+      ]
+    },
     "CreateReturnShippingLabel":{
       "name":"CreateReturnShippingLabel",
       "http":{
@@ -262,6 +274,44 @@
         {"shape":"InvalidNextTokenException"}
       ]
     },
+    "ListLongTermPricing":{
+      "name":"ListLongTermPricing",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListLongTermPricingRequest"},
+      "output":{"shape":"ListLongTermPricingResult"},
+      "errors":[
+        {"shape":"InvalidResourceException"},
+        {"shape":"InvalidNextTokenException"}
+      ]
+    },
+    "ListPickupLocations":{
+      "name":"ListPickupLocations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListPickupLocationsRequest"},
+      "output":{"shape":"ListPickupLocationsResult"},
+      "errors":[
+        {"shape":"InvalidResourceException"}
+      ]
+    },
+    "ListServiceVersions":{
+      "name":"ListServiceVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListServiceVersionsRequest"},
+      "output":{"shape":"ListServiceVersionsResult"},
+      "errors":[
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"InvalidResourceException"}
+      ]
+    },
     "UpdateCluster":{
       "name":"UpdateCluster",
       "http":{
@@ -307,6 +357,18 @@
         {"shape":"InvalidResourceException"},
         {"shape":"InvalidJobStateException"}
       ]
+    },
+    "UpdateLongTermPricing":{
+      "name":"UpdateLongTermPricing",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLongTermPricingRequest"},
+      "output":{"shape":"UpdateLongTermPricingResult"},
+      "errors":[
+        {"shape":"InvalidResourceException"}
+      ]
     }
   },
   "shapes":{
@@ -326,7 +388,8 @@
         "Country":{"shape":"String"},
         "PostalCode":{"shape":"String"},
         "PhoneNumber":{"shape":"String"},
-        "IsRestricted":{"shape":"Boolean"}
+        "IsRestricted":{"shape":"Boolean"},
+        "Type":{"shape":"AddressType"}
       }
     },
     "AddressId":{
@@ -338,6 +401,13 @@
     "AddressList":{
       "type":"list",
       "member":{"shape":"Address"}
+    },
+    "AddressType":{
+      "type":"string",
+      "enum":[
+        "CUST_PICKUP",
+        "AWS_SHIP"
+      ]
     },
     "AmiId":{
       "type":"string",
@@ -412,7 +482,8 @@
         "ShippingOption":{"shape":"ShippingOption"},
         "Notification":{"shape":"Notification"},
         "ForwardingAddressId":{"shape":"AddressId"},
-        "TaxDocuments":{"shape":"TaxDocuments"}
+        "TaxDocuments":{"shape":"TaxDocuments"},
+        "OnDeviceServiceConfiguration":{"shape":"OnDeviceServiceConfiguration"}
       }
     },
     "ClusterState":{
@@ -461,14 +532,14 @@
       "type":"structure",
       "required":[
         "JobType",
-        "Resources",
         "AddressId",
-        "RoleARN",
+        "SnowballType",
         "ShippingOption"
       ],
       "members":{
         "JobType":{"shape":"JobType"},
         "Resources":{"shape":"JobResource"},
+        "OnDeviceServiceConfiguration":{"shape":"OnDeviceServiceConfiguration"},
         "Description":{"shape":"String"},
         "AddressId":{"shape":"AddressId"},
         "KmsKeyARN":{"shape":"KmsKeyARN"},
@@ -477,13 +548,19 @@
         "ShippingOption":{"shape":"ShippingOption"},
         "Notification":{"shape":"Notification"},
         "ForwardingAddressId":{"shape":"AddressId"},
-        "TaxDocuments":{"shape":"TaxDocuments"}
+        "TaxDocuments":{"shape":"TaxDocuments"},
+        "RemoteManagement":{"shape":"RemoteManagement"},
+        "InitialClusterSize":{"shape":"InitialClusterSize"},
+        "ForceCreateJobs":{"shape":"Boolean"},
+        "LongTermPricingIds":{"shape":"LongTermPricingIdList"},
+        "SnowballCapacityPreference":{"shape":"SnowballCapacity"}
       }
     },
     "CreateClusterResult":{
       "type":"structure",
       "members":{
-        "ClusterId":{"shape":"ClusterId"}
+        "ClusterId":{"shape":"ClusterId"},
+        "JobListEntries":{"shape":"JobListEntryList"}
       }
     },
     "CreateJobRequest":{
@@ -491,6 +568,7 @@
       "members":{
         "JobType":{"shape":"JobType"},
         "Resources":{"shape":"JobResource"},
+        "OnDeviceServiceConfiguration":{"shape":"OnDeviceServiceConfiguration"},
         "Description":{"shape":"String"},
         "AddressId":{"shape":"AddressId"},
         "KmsKeyARN":{"shape":"KmsKeyARN"},
@@ -502,13 +580,35 @@
         "SnowballType":{"shape":"SnowballType"},
         "ForwardingAddressId":{"shape":"AddressId"},
         "TaxDocuments":{"shape":"TaxDocuments"},
-        "DeviceConfiguration":{"shape":"DeviceConfiguration"}
+        "DeviceConfiguration":{"shape":"DeviceConfiguration"},
+        "RemoteManagement":{"shape":"RemoteManagement"},
+        "LongTermPricingId":{"shape":"LongTermPricingId"},
+        "ImpactLevel":{"shape":"ImpactLevel"},
+        "PickupDetails":{"shape":"PickupDetails"}
       }
     },
     "CreateJobResult":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"}
+      }
+    },
+    "CreateLongTermPricingRequest":{
+      "type":"structure",
+      "required":[
+        "LongTermPricingType",
+        "SnowballType"
+      ],
+      "members":{
+        "LongTermPricingType":{"shape":"LongTermPricingType"},
+        "IsLongTermPricingAutoRenew":{"shape":"JavaBoolean"},
+        "SnowballType":{"shape":"SnowballType"}
+      }
+    },
+    "CreateLongTermPricingResult":{
+      "type":"structure",
+      "members":{
+        "LongTermPricingId":{"shape":"LongTermPricingId"}
       }
     },
     "CreateReturnShippingLabelRequest":{
@@ -533,6 +633,17 @@
         "TotalBytes":{"shape":"Long"},
         "TotalObjects":{"shape":"Long"}
       }
+    },
+    "DependentService":{
+      "type":"structure",
+      "members":{
+        "ServiceName":{"shape":"ServiceName"},
+        "ServiceVersion":{"shape":"ServiceVersion"}
+      }
+    },
+    "DependentServiceList":{
+      "type":"list",
+      "member":{"shape":"DependentService"}
     },
     "DescribeAddressRequest":{
       "type":"structure",
@@ -590,6 +701,7 @@
     },
     "DescribeReturnShippingLabelRequest":{
       "type":"structure",
+      "required":["JobId"],
       "members":{
         "JobId":{"shape":"JobId"}
       }
@@ -598,13 +710,34 @@
       "type":"structure",
       "members":{
         "Status":{"shape":"ShippingLabelStatus"},
-        "ExpirationDate":{"shape":"Timestamp"}
+        "ExpirationDate":{"shape":"Timestamp"},
+        "ReturnShippingLabelURI":{"shape":"String"}
       }
     },
     "DeviceConfiguration":{
       "type":"structure",
       "members":{
         "SnowconeDeviceConfiguration":{"shape":"SnowconeDeviceConfiguration"}
+      }
+    },
+    "DevicePickupId":{
+      "type":"string",
+      "max":40,
+      "min":40,
+      "pattern":"DPID[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "DeviceServiceName":{
+      "type":"string",
+      "enum":[
+        "NFS_ON_DEVICE_SERVICE",
+        "S3_ON_DEVICE_SERVICE"
+      ]
+    },
+    "EKSOnDeviceServiceConfiguration":{
+      "type":"structure",
+      "members":{
+        "KubernetesVersion":{"shape":"String"},
+        "EKSAnywhereVersion":{"shape":"String"}
       }
     },
     "Ec2AmiResource":{
@@ -626,6 +759,13 @@
       },
       "exception":true
     },
+    "Email":{
+      "type":"string",
+      "max":320,
+      "min":3,
+      "pattern":"^(?=.{3,100}$).+@.+[.].+$",
+      "sensitive":true
+    },
     "EventTriggerDefinition":{
       "type":"structure",
       "members":{
@@ -638,6 +778,8 @@
     },
     "GSTIN":{
       "type":"string",
+      "max":15,
+      "min":15,
       "pattern":"\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}"
     },
     "GetJobManifestRequest":{
@@ -697,6 +839,21 @@
         "GSTIN":{"shape":"GSTIN"}
       }
     },
+    "ImpactLevel":{
+      "type":"string",
+      "enum":[
+        "IL2",
+        "IL4",
+        "IL5",
+        "IL6",
+        "IL99"
+      ]
+    },
+    "InitialClusterSize":{
+      "type":"integer",
+      "max":16,
+      "min":0
+    },
     "Integer":{"type":"integer"},
     "InvalidAddressException":{
       "type":"structure",
@@ -734,6 +891,7 @@
       },
       "exception":true
     },
+    "JavaBoolean":{"type":"boolean"},
     "JobId":{
       "type":"string",
       "max":39,
@@ -785,7 +943,13 @@
         "ClusterId":{"shape":"String"},
         "ForwardingAddressId":{"shape":"AddressId"},
         "TaxDocuments":{"shape":"TaxDocuments"},
-        "DeviceConfiguration":{"shape":"DeviceConfiguration"}
+        "DeviceConfiguration":{"shape":"DeviceConfiguration"},
+        "RemoteManagement":{"shape":"RemoteManagement"},
+        "LongTermPricingId":{"shape":"LongTermPricingId"},
+        "OnDeviceServiceConfiguration":{"shape":"OnDeviceServiceConfiguration"},
+        "ImpactLevel":{"shape":"ImpactLevel"},
+        "PickupDetails":{"shape":"PickupDetails"},
+        "SnowballId":{"shape":"String"}
       }
     },
     "JobMetadataList":{
@@ -923,18 +1087,160 @@
       "max":100,
       "min":0
     },
+    "ListLongTermPricingRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListLimit"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListLongTermPricingResult":{
+      "type":"structure",
+      "members":{
+        "LongTermPricingEntries":{"shape":"LongTermPricingEntryList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListPickupLocationsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListLimit"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListPickupLocationsResult":{
+      "type":"structure",
+      "members":{
+        "Addresses":{"shape":"AddressList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListServiceVersionsRequest":{
+      "type":"structure",
+      "required":["ServiceName"],
+      "members":{
+        "ServiceName":{"shape":"ServiceName"},
+        "DependentServices":{"shape":"DependentServiceList"},
+        "MaxResults":{"shape":"ListLimit"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListServiceVersionsResult":{
+      "type":"structure",
+      "required":[
+        "ServiceVersions",
+        "ServiceName"
+      ],
+      "members":{
+        "ServiceVersions":{"shape":"ServiceVersionList"},
+        "ServiceName":{"shape":"ServiceName"},
+        "DependentServices":{"shape":"DependentServiceList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "Long":{"type":"long"},
+    "LongTermPricingAssociatedJobIdList":{
+      "type":"list",
+      "member":{"shape":"JobId"}
+    },
+    "LongTermPricingEntryList":{
+      "type":"list",
+      "member":{"shape":"LongTermPricingListEntry"}
+    },
+    "LongTermPricingId":{
+      "type":"string",
+      "max":41,
+      "min":41,
+      "pattern":"LTPID[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "LongTermPricingIdList":{
+      "type":"list",
+      "member":{"shape":"LongTermPricingId"}
+    },
+    "LongTermPricingListEntry":{
+      "type":"structure",
+      "members":{
+        "LongTermPricingId":{"shape":"LongTermPricingId"},
+        "LongTermPricingEndDate":{"shape":"Timestamp"},
+        "LongTermPricingStartDate":{"shape":"Timestamp"},
+        "LongTermPricingType":{"shape":"LongTermPricingType"},
+        "CurrentActiveJob":{"shape":"JobId"},
+        "ReplacementJob":{"shape":"JobId"},
+        "IsLongTermPricingAutoRenew":{"shape":"JavaBoolean"},
+        "LongTermPricingStatus":{"shape":"String"},
+        "SnowballType":{"shape":"SnowballType"},
+        "JobIds":{"shape":"LongTermPricingAssociatedJobIdList"}
+      }
+    },
+    "LongTermPricingType":{
+      "type":"string",
+      "enum":[
+        "OneYear",
+        "ThreeYear",
+        "OneMonth"
+      ]
+    },
+    "NFSOnDeviceServiceConfiguration":{
+      "type":"structure",
+      "members":{
+        "StorageLimit":{"shape":"StorageLimit"},
+        "StorageUnit":{"shape":"StorageUnit"}
+      }
+    },
+    "NodeFaultTolerance":{
+      "type":"integer",
+      "max":4,
+      "min":1
+    },
     "Notification":{
       "type":"structure",
       "members":{
         "SnsTopicARN":{"shape":"SnsTopicARN"},
         "JobStatesToNotify":{"shape":"JobStateList"},
-        "NotifyAll":{"shape":"Boolean"}
+        "NotifyAll":{"shape":"Boolean"},
+        "DevicePickupSnsTopicARN":{"shape":"SnsTopicARN"}
       }
+    },
+    "OnDeviceServiceConfiguration":{
+      "type":"structure",
+      "members":{
+        "NFSOnDeviceService":{"shape":"NFSOnDeviceServiceConfiguration"},
+        "TGWOnDeviceService":{"shape":"TGWOnDeviceServiceConfiguration"},
+        "EKSOnDeviceService":{"shape":"EKSOnDeviceServiceConfiguration"},
+        "S3OnDeviceService":{"shape":"S3OnDeviceServiceConfiguration"}
+      }
+    },
+    "PhoneNumber":{
+      "type":"string",
+      "max":30,
+      "min":7,
+      "pattern":"^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$",
+      "sensitive":true
+    },
+    "PickupDetails":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "PhoneNumber":{"shape":"PhoneNumber"},
+        "Email":{"shape":"Email"},
+        "IdentificationNumber":{"shape":"String"},
+        "IdentificationExpirationDate":{"shape":"Timestamp"},
+        "IdentificationIssuingOrg":{"shape":"String"},
+        "DevicePickupId":{"shape":"DevicePickupId"}
+      }
+    },
+    "RemoteManagement":{
+      "type":"string",
+      "enum":[
+        "INSTALLED_ONLY",
+        "INSTALLED_AUTOSTART",
+        "NOT_INSTALLED"
+      ]
     },
     "ResourceARN":{
       "type":"string",
-      "max":255
+      "max":255,
+      "pattern":"arn:aws.*:*"
     },
     "ReturnShippingLabelAlreadyExistsException":{
       "type":"structure",
@@ -948,16 +1254,52 @@
       "max":255,
       "pattern":"arn:aws.*:iam::[0-9]{12}:role/.*"
     },
+    "S3OnDeviceServiceConfiguration":{
+      "type":"structure",
+      "members":{
+        "StorageLimit":{"shape":"S3StorageLimit"},
+        "StorageUnit":{"shape":"StorageUnit"},
+        "ServiceSize":{"shape":"ServiceSize"},
+        "FaultTolerance":{"shape":"NodeFaultTolerance"}
+      }
+    },
     "S3Resource":{
       "type":"structure",
       "members":{
         "BucketArn":{"shape":"ResourceARN"},
-        "KeyRange":{"shape":"KeyRange"}
+        "KeyRange":{"shape":"KeyRange"},
+        "TargetOnDeviceServices":{"shape":"TargetOnDeviceServiceList"}
       }
     },
     "S3ResourceList":{
       "type":"list",
       "member":{"shape":"S3Resource"}
+    },
+    "S3StorageLimit":{
+      "type":"double",
+      "min":0.0
+    },
+    "ServiceName":{
+      "type":"string",
+      "enum":[
+        "KUBERNETES",
+        "EKS_ANYWHERE"
+      ]
+    },
+    "ServiceSize":{
+      "type":"integer",
+      "max":16,
+      "min":3
+    },
+    "ServiceVersion":{
+      "type":"structure",
+      "members":{
+        "Version":{"shape":"String"}
+      }
+    },
+    "ServiceVersionList":{
+      "type":"list",
+      "member":{"shape":"ServiceVersion"}
     },
     "Shipment":{
       "type":"structure",
@@ -1008,7 +1350,11 @@
         "T42",
         "T98",
         "T8",
-        "NoPreference"
+        "T14",
+        "T32",
+        "NoPreference",
+        "T240",
+        "T13"
       ]
     },
     "SnowballType":{
@@ -1019,7 +1365,11 @@
         "EDGE_C",
         "EDGE_CG",
         "EDGE_S",
-        "SNC1_HDD"
+        "SNC1_HDD",
+        "SNC1_SSD",
+        "V3_5C",
+        "V3_5S",
+        "RACK_5U_C"
       ]
     },
     "SnowconeDeviceConfiguration":{
@@ -1033,9 +1383,37 @@
       "max":255,
       "pattern":"arn:aws.*:sns:.*:[0-9]{12}:.*"
     },
+    "StorageLimit":{
+      "type":"integer",
+      "min":0
+    },
+    "StorageUnit":{
+      "type":"string",
+      "enum":["TB"]
+    },
     "String":{
       "type":"string",
-      "min":1
+      "max":1024,
+      "min":1,
+      "pattern":".*"
+    },
+    "TGWOnDeviceServiceConfiguration":{
+      "type":"structure",
+      "members":{
+        "StorageLimit":{"shape":"StorageLimit"},
+        "StorageUnit":{"shape":"StorageUnit"}
+      }
+    },
+    "TargetOnDeviceService":{
+      "type":"structure",
+      "members":{
+        "ServiceName":{"shape":"DeviceServiceName"},
+        "TransferOption":{"shape":"TransferOption"}
+      }
+    },
+    "TargetOnDeviceServiceList":{
+      "type":"list",
+      "member":{"shape":"TargetOnDeviceService"}
     },
     "TaxDocuments":{
       "type":"structure",
@@ -1044,6 +1422,14 @@
       }
     },
     "Timestamp":{"type":"timestamp"},
+    "TransferOption":{
+      "type":"string",
+      "enum":[
+        "IMPORT",
+        "EXPORT",
+        "LOCAL_USE"
+      ]
+    },
     "UnsupportedAddressException":{
       "type":"structure",
       "members":{
@@ -1059,6 +1445,7 @@
         "RoleARN":{"shape":"RoleARN"},
         "Description":{"shape":"String"},
         "Resources":{"shape":"JobResource"},
+        "OnDeviceServiceConfiguration":{"shape":"OnDeviceServiceConfiguration"},
         "AddressId":{"shape":"AddressId"},
         "ShippingOption":{"shape":"ShippingOption"},
         "Notification":{"shape":"Notification"},
@@ -1078,11 +1465,13 @@
         "RoleARN":{"shape":"RoleARN"},
         "Notification":{"shape":"Notification"},
         "Resources":{"shape":"JobResource"},
+        "OnDeviceServiceConfiguration":{"shape":"OnDeviceServiceConfiguration"},
         "AddressId":{"shape":"AddressId"},
         "ShippingOption":{"shape":"ShippingOption"},
         "Description":{"shape":"String"},
         "SnowballCapacityPreference":{"shape":"SnowballCapacity"},
-        "ForwardingAddressId":{"shape":"AddressId"}
+        "ForwardingAddressId":{"shape":"AddressId"},
+        "PickupDetails":{"shape":"PickupDetails"}
       }
     },
     "UpdateJobResult":{
@@ -1102,6 +1491,20 @@
       }
     },
     "UpdateJobShipmentStateResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateLongTermPricingRequest":{
+      "type":"structure",
+      "required":["LongTermPricingId"],
+      "members":{
+        "LongTermPricingId":{"shape":"LongTermPricingId"},
+        "ReplacementJob":{"shape":"JobId"},
+        "IsLongTermPricingAutoRenew":{"shape":"JavaBoolean"}
+      }
+    },
+    "UpdateLongTermPricingResult":{
       "type":"structure",
       "members":{
       }

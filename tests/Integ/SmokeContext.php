@@ -3,7 +3,6 @@ namespace Aws\Test\Integ;
 
 use Aws;
 use Aws\Exception\AwsException;
-use Aws\JsonCompiler;
 use Aws\Result;
 use Aws\Sdk;
 use Behat\Behat\Context\Context;
@@ -15,9 +14,9 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use JmesPath\Env;
-use PHPUnit_Framework_Assert;
+use PHPUnit\Framework\Assert;
 
-class SmokeContext extends PHPUnit_Framework_Assert implements
+class SmokeContext extends Assert implements
     Context,
     SnippetAcceptingContext
 {
@@ -350,7 +349,11 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
     public function theValueAtShouldBeAList($key)
     {
         $this->assertInstanceOf(Result::class, $this->response);
-        $this->assertInternalType('array', $this->response->search($key));
+        if (method_exists($this, 'assertIsArray')) {
+            $this->assertIsArray($this->response->search($key));
+        } else {
+            $this->assertInternalType('array', $this->response->search($key));
+        }
     }
 
     /**

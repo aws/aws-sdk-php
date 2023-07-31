@@ -2,14 +2,14 @@
 namespace Aws\Test\Sts;
 
 use Aws\Api\DateTimeResult;
-use Aws\Endpoint\Partition;
+use Aws\Credentials\CredentialsInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\Sts\RegionalEndpoints\Configuration;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Psr7\Uri;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Sts\StsClient
@@ -30,32 +30,28 @@ class StsClientTest extends TestCase
         $client = new StsClient(['region' => 'us-east-1', 'version' => 'latest']);
         $credentials = $client->createCredentials($result);
         $this->assertInstanceOf(
-            'Aws\Credentials\CredentialsInterface',
+            CredentialsInterface::class,
             $credentials
         );
         $this->assertSame('foo', $credentials->getAccessKeyId());
         $this->assertSame('bar', $credentials->getSecretKey());
         $this->assertSame('baz', $credentials->getSecurityToken());
-        $this->assertInternalType('int', $credentials->getExpiration());
+        $this->assertIsInt($credentials->getExpiration());
         $this->assertFalse($credentials->isExpired());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Result contains no credentials
-     */
     public function testThrowsExceptionWhenCreatingCredentialsFromInvalidInput()
     {
+        $this->expectExceptionMessage("Result contains no credentials");
+        $this->expectException(\InvalidArgumentException::class);
         $client = new StsClient(['region' => 'us-east-1', 'version' => 'latest']);
         $client->createCredentials(new Result());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Configuration parameter must either be 'legacy' or 'regional'.
-     */
     public function testAddsStsRegionalEndpointsArgument()
     {
+        $this->expectExceptionMessage("Configuration parameter must either be 'legacy' or 'regional'.");
+        $this->expectException(\InvalidArgumentException::class);
         new StsClient([
             'region' => 'us-east-1',
             'version' => 'latest',

@@ -6,6 +6,7 @@ use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
+use Aws\ResultInterface;
 use Aws\RetryMiddleware;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
@@ -13,7 +14,7 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\RetryMiddleware
@@ -348,10 +349,10 @@ class RetryMiddlewareTest extends TestCase
         );
 
         $result = $wrapped($command, $request)->wait();
-        $this->assertInstanceOf('Aws\ResultInterface', $result);
+        $this->assertInstanceOf(ResultInterface::class, $result);
         $this->assertCount(2, $called);
-        $this->assertInstanceOf('Aws\Exception\AwsException', $called[0][0]);
-        $this->assertInstanceOf('Aws\ResultInterface', $called[1][0]);
+        $this->assertInstanceOf(AwsException::class, $called[0][0]);
+        $this->assertInstanceOf(ResultInterface::class, $called[1][0]);
     }
 
     public function testForwardRejectionWhenExceptionDoesNotMatch()
@@ -380,7 +381,7 @@ class RetryMiddlewareTest extends TestCase
             $this->fail();
         } catch (AwsException $e) {
             $this->assertCount(1, $called);
-            $this->assertContains('foo', $e->getMessage());
+            $this->assertStringContainsString('foo', $e->getMessage());
         }
     }
 

@@ -71,6 +71,92 @@ class ApplyChecksumMiddlewareTest extends TestCase
     }
 
     /**
+     * @dataProvider getFlexibleChecksumUseCases
+     */
+    public function testAddsFlexibleChecksumAsAppropriate($operation, $args, $headerAdded, $headerValue)
+    {
+        if (isset($args['ChecksumAlgorithm'])
+            && $args['ChecksumAlgorithm'] === 'crc32c'
+            && !extension_loaded('awscrt')
+        ) {
+            $this->markTestSkipped("Cannot test crc32c without the CRT");
+        }
+        $s3 = $this->getTestClient(
+            's3',
+            ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
+        );
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand($operation, $args);
+        $command->getHandlerList()->appendBuild(
+            Middleware::tap(function ($cmd, RequestInterface $request) use ($headerAdded, $headerValue, $args) {
+                $checksumName = isset($args['ChecksumAlgorithm']) ? $args['ChecksumAlgorithm'] : "";
+                $this->assertSame($headerAdded, $request->hasHeader("x-amz-checksum-{$checksumName}"));
+                $this->assertEquals($headerValue, $request->getHeaderLine("x-amz-checksum-{$checksumName}"));
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function getFlexibleChecksumUseCases()
+    {
+        return [
+            // Test that explicitly proviced Content MD5 is passed through
+            [
+                'GetObject',
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ChecksumMode' => 'ENABLED'
+                ],
+                false,
+                ''
+            ],
+            [
+                'PutObject',
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ChecksumAlgorithm' => 'crc32',
+                    'Body' => 'abc'
+                ],
+                true,
+                'EZo2zw=='
+            ],
+            [
+                'PutObject',
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ChecksumAlgorithm' => 'crc32c',
+                    'Body' => 'abc'
+                ],
+                true,
+                'oD04yw=='
+            ],
+            [
+                'PutObject',
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ChecksumAlgorithm' => 'sha256'
+                ],
+                true,
+                'OmJVpLQxEjty3SMySBLGRfWtoBQ/ZXT2cT2Cjuly4XY='
+            ],
+            [
+                'PutObject',
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ChecksumAlgorithm' => 'SHA1'
+                ],
+                true,
+                'KckkIVRT7cC010EHaNNNuun5VBY='
+            ],
+        ];
+    }
+
+    /**
      * @dataProvider getContentSha256UseCases
      */
     public function testAddsContentSHA256AsAppropriate($operation, $args, $hashAdded, $hashValue)

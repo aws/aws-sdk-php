@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Middleware;
 use Aws\S3\MultipartUploader;
 use Aws\Result;
 use Aws\S3\S3Client;
@@ -8,7 +9,7 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\S3\MultipartUploader
@@ -20,7 +21,7 @@ class MultipartUploaderTest extends TestCase
     const MB = 1048576;
     const FILENAME = '_aws-sdk-php-s3-mup-test-dots.txt';
 
-    public static function tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         @unlink(sys_get_temp_dir() . '/' . self::FILENAME);
     }
@@ -31,7 +32,7 @@ class MultipartUploaderTest extends TestCase
     public function testS3MultipartUploadWorkflow(
         array $clientOptions = [],
         array $uploadOptions = [],
-        StreamInterface $source,
+        StreamInterface $source = null,
         $error = false
     ) {
         $client = $this->getTestClient('s3', $clientOptions);
@@ -74,18 +75,18 @@ class MultipartUploaderTest extends TestCase
             [ // Seekable stream, regular config
                 [],
                 ['acl' => 'private'] + $defaults,
-                Psr7\stream_for(fopen($filename, 'r'))
+                Psr7\Utils::streamFor(fopen($filename, 'r'))
             ],
             [ // Non-seekable stream
                 [],
                 $defaults,
-                Psr7\stream_for($data)
+                Psr7\Utils::streamFor($data)
             ],
             [ // Error: bad part_size
                 [],
                 ['part_size' => 1] + $defaults,
                 Psr7\FnStream::decorate(
-                    Psr7\stream_for($data), [
+                    Psr7\Utils::streamFor($data), [
                         'getSize' => function () {return null;}
                     ]
                 ),
@@ -108,7 +109,7 @@ class MultipartUploaderTest extends TestCase
         ]);
 
         $state = MultipartUploader::getStateFromService($client, 'foo', 'bar', 'baz');
-        $source = Psr7\stream_for(str_repeat('.', 9 * self::MB));
+        $source = Psr7\Utils::streamFor(str_repeat('.', 9 * self::MB));
         $uploader = new MultipartUploader($client, $source, ['state' => $state]);
         $result = $uploader->upload();
 
@@ -120,11 +121,11 @@ class MultipartUploaderTest extends TestCase
     public function testCanUseCaseInsensitiveConfigKeys()
     {
         $client = $this->getTestClient('s3');
-        $putObjectMup = new MultipartUploader($client, Psr7\stream_for('x'), [
+        $putObjectMup = new MultipartUploader($client, Psr7\Utils::streamFor('x'), [
             'Bucket' => 'bucket',
             'Key' => 'key',
         ]);
-        $classicMup = new MultipartUploader($client, Psr7\stream_for('x'), [
+        $classicMup = new MultipartUploader($client, Psr7\Utils::streamFor('x'), [
             'bucket' => 'bucket',
             'key' => 'key',
         ]);
@@ -135,6 +136,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
     }
 
+    /** @doesNotPerformAssertions */
     public function testMultipartSuccessStreams()
     {
         $size = 12 * self::MB;
@@ -144,11 +146,11 @@ class MultipartUploaderTest extends TestCase
 
         return [
             [ // Seekable stream, regular config
-                Psr7\stream_for(fopen($filename, 'r')),
+                Psr7\Utils::streamFor(fopen($filename, 'r')),
                 $size,
             ],
             [ // Non-seekable stream
-                Psr7\stream_for($data),
+                Psr7\Utils::streamFor($data),
                 $size,
             ]
         ];
@@ -161,9 +163,20 @@ class MultipartUploaderTest extends TestCase
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
+        $client->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $name = $cmd->getName();
+                if ($name === 'UploadPart') {
+                    $this->assertTrue(
+                        $req->hasHeader('Content-MD5')
+                    );
+                }
+            })
+        );
         $uploadOptions = [
             'bucket'          => 'foo',
             'key'             => 'bar',
+            'add_content_md5' => true,
             'params'          => [
                 'RequestPayer'  => 'test',
                 'ContentLength' => $size
@@ -205,22 +218,22 @@ class MultipartUploaderTest extends TestCase
 
         return [
             [ // Successful lookup from filename via stream
-                Psr7\stream_for(fopen($filename, 'r')),
+                Psr7\Utils::streamFor(fopen($filename, 'r')),
                 [],
                 'text/plain'
             ],
             [ // Unsuccessful lookup because of no file name
-                Psr7\stream_for($data),
+                Psr7\Utils::streamFor($data),
                 [],
                 'application/octet-stream'
             ],
             [ // Successful override of known type from filename
-                Psr7\stream_for(fopen($filename, 'r')),
+                Psr7\Utils::streamFor(fopen($filename, 'r')),
                 ['ContentType' => 'TestType'],
                 'TestType'
             ],
             [ // Successful override of unknown type
-                Psr7\stream_for($data),
+                Psr7\Utils::streamFor($data),
                 ['ContentType' => 'TestType'],
                 'TestType'
             ]
@@ -265,12 +278,10 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    /**
-     * @expectedException \Aws\S3\Exception\S3MultipartUploadException
-     * @expectedExceptionMessage An exception occurred while uploading parts to a multipart upload
-     */
     public function testAppliesAmbiguousSuccessParsing()
     {
+        $this->expectExceptionMessage("An exception occurred while uploading parts to a multipart upload");
+        $this->expectException(\Aws\S3\Exception\S3MultipartUploadException::class);
         $counter = 0;
 
         $httpHandler = function ($request, array $options) use (&$counter) {
@@ -281,7 +292,7 @@ class MultipartUploaderTest extends TestCase
             }
             $counter++;
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Psr7\Response(200, [], $body)
             );
         };
@@ -293,7 +304,7 @@ class MultipartUploaderTest extends TestCase
         ]);
 
         $data = str_repeat('.', 12 * 1048576);
-        $source = Psr7\stream_for($data);
+        $source = Psr7\Utils::streamFor($data);
 
         $uploader = new MultipartUploader(
             $s3,

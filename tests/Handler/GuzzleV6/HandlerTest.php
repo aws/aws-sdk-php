@@ -10,14 +10,14 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\TransferStats;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Handler\GuzzleV6\GuzzleHandler
  */
 class HandlerTest extends TestCase
 {
-    public function setUp()
+    public function set_up()
     {
         if (!class_exists('GuzzleHttp\HandlerStack')) {
             $this->markTestSkipped();
@@ -26,7 +26,7 @@ class HandlerTest extends TestCase
 
     public function testHandlerWorksWithSuccessfulRequest()
     {
-        $mock = new MockHandler([new Response(200, [], Psr7\stream_for('foo'))]);
+        $mock = new MockHandler([new Response(200, [], Psr7\Utils::streamFor('foo'))]);
         $client = new Client(['handler' => $mock]);
         $handler = new GuzzleHandler($client);
 
@@ -74,7 +74,7 @@ class HandlerTest extends TestCase
 
     public function testHandlerWillInvokeOnTransferStatsCallback()
     {
-        $mock = new MockHandler([new Response(200, [], Psr7\stream_for('foo'))]);
+        $mock = new MockHandler([new Response(200, [], Psr7\Utils::streamFor('foo'))]);
         $client = new Client(['handler' => $mock]);
         $handler = new GuzzleHandler($client);
 
@@ -93,7 +93,7 @@ class HandlerTest extends TestCase
 
     public function testHandlerWillStillInvokeOnStatsCallback()
     {
-        $mock = new MockHandler([new Response(200, [], Psr7\stream_for('foo'))]);
+        $mock = new MockHandler([new Response(200, [], Psr7\Utils::streamFor('foo'))]);
         $client = new Client(['handler' => $mock]);
         $handler = new GuzzleHandler($client);
 
@@ -112,13 +112,17 @@ class HandlerTest extends TestCase
 
     public function testHandlerWorksWithErroredRequest()
     {
+        if (version_compare(PHP_VERSION, '7.0', '>=')) {
+            $this->markTestSkipped(
+                'Error class was introduced in 7.0'
+            );
+            return;
+        }
         $wasRejected = false;
         $request = new Request('PUT', 'http://example.com');
         $mock = new MockHandler(
             [
-                new RejectionException(
                     new \Error('error message')
-                )
             ]
         );
         $client = new Client(['handler' => $mock]);
@@ -134,9 +138,9 @@ class HandlerTest extends TestCase
             $this->fail('An exception should have been thrown.');
         } catch (RejectionException $e) {
             $error = $e->getReason();
-            $this->assertInstanceOf(\Error::class, $error['exception']->getReason());
+            $this->assertInstanceOf(\Error::class, $error['exception']);
             $this->assertFalse($error['connection_error']);
-            $this->assertContains("error message", $error['exception']->getMessage());
+            $this->assertStringContainsString("error message", $error['exception']->getMessage());
         }
 
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');

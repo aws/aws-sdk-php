@@ -18,6 +18,7 @@ if (empty($options['namespace']) || empty($options['model'])) {
 }
 
 $options['model'] = \Aws\load_compiled_json($options['model']);
+$options['namespace'] = ucfirst($options['namespace']);
 
 $options += [
     'clientPath' => dirname(__DIR__)

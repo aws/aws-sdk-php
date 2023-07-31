@@ -6,7 +6,7 @@ use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\ResultInterface;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\AbstractConfigurationProvider
@@ -39,7 +39,7 @@ class AbstractConfigurationProviderTest extends TestCase
         $expected = ['expected', 'value'];
         $f = function () use (&$called, $expected) {
             $called++;
-            return Promise\promise_for($expected);
+            return Promise\Create::promiseFor($expected);
         };
         $p = call_user_func([$this->provider, 'memoize'], $f);
         $this->assertSame($expected, $p()->wait());
@@ -52,10 +52,10 @@ class AbstractConfigurationProviderTest extends TestCase
     {
         $expected = ['expected', 'value'];
         $a = function () {
-            return Promise\rejection_for(new \Exception('Failure'));
+            return Promise\Create::rejectionFor(new \Exception('Failure'));
         };
         $b = function () use ($expected) {
-            return Promise\promise_for($expected);
+            return Promise\Create::promiseFor($expected);
         };
         $c = function () {
             $this->fail('Should not have called');
@@ -65,11 +65,9 @@ class AbstractConfigurationProviderTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testChainThrowsExceptionOnEmptyArgs()
     {
+        $this->expectException(\InvalidArgumentException::class);
         call_user_func([$this->provider, 'chain']);
     }
 
@@ -88,7 +86,7 @@ class AbstractConfigurationProviderTest extends TestCase
         $volatileProvider = function () use ($expected, &$timesCalled) {
             if (0 === $timesCalled) {
                 ++$timesCalled;
-                return Promise\promise_for($expected);
+                return Promise\Create::promiseFor($expected);
             }
 
             throw new \BadFunctionCallException('I was called too many times!');

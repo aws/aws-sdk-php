@@ -12,7 +12,7 @@ use Aws\S3\PostObject;
 use Aws\S3\PostObjectV4;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
-use PHPUnit_Framework_Assert as Assert;
+use PHPUnit\Framework\Assert;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -68,12 +68,12 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @BeforeFeature
+     * @BeforeSuite
      */
     public static function createTestBucket()
     {
         $client = self::getSdk()->createS3();
-        if (!$client->doesBucketExist(self::getResourceName())) {
+        if (!$client->doesBucketExistV2(self::getResourceName())) {
             $client->createBucket(['Bucket' => self::getResourceName()]);
             $client->waitUntil('BucketExists', [
                 'Bucket' => self::getResourceName(),
@@ -82,7 +82,7 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @AfterFeature
+     * @AfterSuite
      */
     public static function deleteTestBucket()
     {
@@ -129,7 +129,7 @@ class S3Context implements Context, SnippetAcceptingContext
         $logBucket = self::INTEG_LOG_BUCKET_PREFIX . "-{$identity['Account']}";
 
         // Log bucket deletion result
-        if (!($client->doesBucketExist($logBucket))) {
+        if (!($client->doesBucketExistV2($logBucket))) {
             $client->createBucket([
                 'Bucket' => $logBucket
             ]);
@@ -203,7 +203,7 @@ class S3Context implements Context, SnippetAcceptingContext
     public function iChangeTheBodyOfThePreSignedRequestToBe($body)
     {
         $this->presignedRequest = $this->presignedRequest
-            ->withBody(Psr7\stream_for($body));
+            ->withBody(Psr7\Utils::streamFor($body));
     }
 
     /**
@@ -212,7 +212,7 @@ class S3Context implements Context, SnippetAcceptingContext
     public function iHaveAnClientAndIHaveAFile()
     {
         $this->s3Client = self::getSdk()->createS3();
-        $this->stream = Psr7\stream_for(Psr7\try_fopen(self::$tempFile, 'r'));
+        $this->stream = Psr7\Utils::streamFor(Psr7\Utils::tryFopen(self::$tempFile, 'r'));
     }
 
     /**
@@ -223,32 +223,6 @@ class S3Context implements Context, SnippetAcceptingContext
         foreach ($table as $row) {
             $this->formInputs += [$row['key'] => $row['value']];
         }
-    }
-
-    /**
-     * @Given I provide a json string policy as following:
-     */
-    public function iProvideAJsonStringPolicyAsFollowing(PyStringNode $string)
-    {
-        $policy = json_decode($string->getRaw(),true);
-        $policy['conditions'][] = ["bucket" => self::getResourceName()];
-        $policy['conditions'][] = ["starts-with", '$key', ""];
-
-        $this->jsonPolicy = json_encode($policy);
-    }
-
-    /**
-     * @When I create a POST object SigV2 with inputs and policy
-     */
-    public function iCreateAPostObjectSigvWithInputsAndPolicy()
-    {
-        $postObject = new PostObject(
-            $this->s3Client,
-            self::getResourceName(),
-            $this->formInputs,
-            $this->jsonPolicy
-        );
-        $this->preparePostData($postObject);
     }
 
     /**
@@ -328,6 +302,40 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Given I have uploaded an object to S3 with BucketKey enabled
+     */
+    public function iHaveUploadedAnObjectToS3WithBucketKeyEnabled()
+    {
+        self::getSdk()
+            ->createS3()
+            ->putObject([
+                'Bucket' => self::getResourceName(),
+                'Key' => 'test.dat',
+                'Body' => 'foo',
+                'BucketKeyEnabled' => true,
+                'ServerSideEncryption' => 'aws:kms'
+            ]);
+    }
+
+    /**
+     * @Then I can verify Bucket Key is enabled at the object level
+     */
+    public function iCanVerifyBucketKeyIsEnabledAtTheObjectLevel()
+    {
+        $response = self::getSdk()
+            ->createS3()
+            ->headObject([
+                'Bucket' => self::getResourceName(),
+                'Key' => 'test.dat',
+            ]);
+        $responseHeaders = $response['@metadata']['headers'];
+        Assert::assertEquals(
+            'true',
+            $responseHeaders['x-amz-server-side-encryption-bucket-key-enabled']
+        );
+    }
+
+    /**
      * Prepare form inputs and attribute for POST
      */
     private function preparePostData($postObject)
@@ -377,7 +385,7 @@ class S3Context implements Context, SnippetAcceptingContext
                     throw $e;
                 }
                 $attempts++;
-                sleep(pow(1.2, $attempts));
+                sleep((int) pow(1.2, $attempts));
             }
         }
     }

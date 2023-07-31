@@ -5,13 +5,15 @@ use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Command;
 use Aws\CommandInterface;
+use Aws\Exception\AwsException;
 use Aws\HandlerList;
+use Aws\MockHandler;
 use Aws\MultiRegionClient;
 use Aws\Result;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class MultiRegionClientTest extends TestCase
 {
@@ -20,7 +22,7 @@ class MultiRegionClientTest extends TestCase
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $mockRegionalClient;
 
-    public function setUp()
+    public function set_up()
     {
         $this->mockRegionalClient = $this->getMockBuilder(AwsClient::class)
             ->disableOriginalConstructor()
@@ -136,14 +138,38 @@ class MultiRegionClientTest extends TestCase
         $this->assertSame('aws', $mrc->getConfig('partition')->getName());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRejectsUnrecognizedPartitions()
     {
+        $this->expectException(\InvalidArgumentException::class);
         new MultiRegionClient([
             'service' => 'ec2',
             'partition' => 'foo',
         ]);
+    }
+
+    public function testUseCustomHandler()
+    {
+        $mockHandler = new MockHandler();
+        $mockHandler->append(new Result(["foo" => "bar"]));
+        $mockHandler->append(function (CommandInterface $cmd, RequestInterface $req) {
+            return new AwsException('Mock exception', $cmd);
+        });
+        $s3 = new MultiRegionClient([
+            'service' => 's3',
+            'version' => 'latest',
+            'region' => 'us-east-1'
+        ]);
+        $s3->useCustomHandler($mockHandler);
+
+        $response = $s3->listBuckets();
+        $this->assertEquals('bar', $response['foo']);
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(AwsException::class);
+            $this->expectExceptionMessage('Mock exception');
+        } else {
+            $this->setExpectedException(AwsException::class);
+        }
+        $s3->listBuckets();
     }
 }

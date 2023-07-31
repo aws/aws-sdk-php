@@ -41,7 +41,7 @@ class LogRecordIteratorTest extends TestCase
             ])
         ]);
         $records = LogRecordIterator::forTrail($s3, $cloudTrailClient);
-        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
+        $this->assertInstanceOf(LogRecordIterator::class, $records);
     }
 
     public function testFactoryCanCreateForBucket()
@@ -52,7 +52,7 @@ class LogRecordIteratorTest extends TestCase
             'version'     => 'latest'
         ]);
         $records = LogRecordIterator::forBucket($s3, 'test-bucket');
-        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
+        $this->assertInstanceOf(LogRecordIterator::class, $records);
     }
 
     public function testFactoryCanCreateForFile()
@@ -63,12 +63,12 @@ class LogRecordIteratorTest extends TestCase
             'version'     => 'latest'
         ]);
         $records = LogRecordIterator::forFile($s3, 'test-bucket', 'test-key');
-        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
+        $this->assertInstanceOf(LogRecordIterator::class, $records);
     }
 
     public function testIteratorBehavesCorrectlyBeforeRewind()
     {
-        $logFileReader = $this->getMockBuilder('Aws\CloudTrail\LogFileReader')
+        $logFileReader = $this->getMockBuilder(LogFileReader::class)
             ->disableOriginalConstructor()
             ->getMock();
         $logFileIterator = new \ArrayIterator;
@@ -103,9 +103,9 @@ class LogRecordIteratorTest extends TestCase
         ]);
 
         $this->addMockResults($client, [
-            new Result(['Body' => Psr7\stream_for('{"Records":[{"r1":"r1"},{"r2":"r2"},{"r3":"r3"}]}')]),
-            new Result(['Body' => Psr7\stream_for('{}')]),
-            new Result(['Body' => Psr7\stream_for('{"Records":[{"r4":"r4"},{"r5":"r5"}]}')]),
+            new Result(['Body' => Psr7\Utils::streamFor('{"Records":[{"r1":"r1"},{"r2":"r2"},{"r3":"r3"}]}')]),
+            new Result(['Body' => Psr7\Utils::streamFor('{}')]),
+            new Result(['Body' => Psr7\Utils::streamFor('{"Records":[{"r4":"r4"},{"r5":"r5"}]}')]),
         ]);
 
         return $client;

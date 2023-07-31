@@ -38,7 +38,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceFault"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"MissingRequiredParameterException"}
+        {"shape":"MissingRequiredParameterException"},
+        {"shape":"InvalidParameterCombinationException"}
       ]
     },
     "DeleteDashboards":{
@@ -70,6 +71,23 @@
         "resultWrapper":"DeleteInsightRulesResult"
       },
       "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingRequiredParameterException"}
+      ]
+    },
+    "DeleteMetricStream":{
+      "name":"DeleteMetricStream",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteMetricStreamInput"},
+      "output":{
+        "shape":"DeleteMetricStreamOutput",
+        "resultWrapper":"DeleteMetricStreamResult"
+      },
+      "errors":[
+        {"shape":"InternalServiceFault"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"MissingRequiredParameterException"}
       ]
@@ -130,7 +148,8 @@
       "errors":[
         {"shape":"InvalidNextToken"},
         {"shape":"InternalServiceFault"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidParameterCombinationException"}
       ]
     },
     "DescribeInsightRules":{
@@ -264,6 +283,25 @@
         {"shape":"InternalServiceFault"}
       ]
     },
+    "GetMetricStream":{
+      "name":"GetMetricStream",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetMetricStreamInput"},
+      "output":{
+        "shape":"GetMetricStreamOutput",
+        "resultWrapper":"GetMetricStreamResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingRequiredParameterException"},
+        {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
     "GetMetricWidgetImage":{
       "name":"GetMetricWidgetImage",
       "http":{
@@ -290,6 +328,41 @@
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"InternalServiceFault"}
+      ]
+    },
+    "ListManagedInsightRules":{
+      "name":"ListManagedInsightRules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListManagedInsightRulesInput"},
+      "output":{
+        "shape":"ListManagedInsightRulesOutput",
+        "resultWrapper":"ListManagedInsightRulesResult"
+      },
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingRequiredParameterException"},
+        {"shape":"InvalidNextToken"}
+      ]
+    },
+    "ListMetricStreams":{
+      "name":"ListMetricStreams",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListMetricStreamsInput"},
+      "output":{
+        "shape":"ListMetricStreamsOutput",
+        "resultWrapper":"ListMetricStreamsResult"
+      },
+      "errors":[
+        {"shape":"InvalidNextToken"},
+        {"shape":"InternalServiceFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingRequiredParameterException"}
       ]
     },
     "ListMetrics":{
@@ -340,7 +413,8 @@
         {"shape":"LimitExceededException"},
         {"shape":"InternalServiceFault"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"MissingRequiredParameterException"}
+        {"shape":"MissingRequiredParameterException"},
+        {"shape":"InvalidParameterCombinationException"}
       ]
     },
     "PutCompositeAlarm":{
@@ -387,6 +461,22 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "PutManagedInsightRules":{
+      "name":"PutManagedInsightRules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutManagedInsightRulesInput"},
+      "output":{
+        "shape":"PutManagedInsightRulesOutput",
+        "resultWrapper":"PutManagedInsightRulesResult"
+      },
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingRequiredParameterException"}
+      ]
+    },
     "PutMetricAlarm":{
       "name":"PutMetricAlarm",
       "http":{
@@ -412,6 +502,25 @@
         {"shape":"InternalServiceFault"}
       ]
     },
+    "PutMetricStream":{
+      "name":"PutMetricStream",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutMetricStreamInput"},
+      "output":{
+        "shape":"PutMetricStreamOutput",
+        "resultWrapper":"PutMetricStreamResult"
+      },
+      "errors":[
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InternalServiceFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingRequiredParameterException"},
+        {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
     "SetAlarmState":{
       "name":"SetAlarmState",
       "http":{
@@ -422,6 +531,40 @@
       "errors":[
         {"shape":"ResourceNotFound"},
         {"shape":"InvalidFormatFault"}
+      ]
+    },
+    "StartMetricStreams":{
+      "name":"StartMetricStreams",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartMetricStreamsInput"},
+      "output":{
+        "shape":"StartMetricStreamsOutput",
+        "resultWrapper":"StartMetricStreamsResult"
+      },
+      "errors":[
+        {"shape":"InternalServiceFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingRequiredParameterException"}
+      ]
+    },
+    "StopMetricStreams":{
+      "name":"StopMetricStreams",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopMetricStreamsInput"},
+      "output":{
+        "shape":"StopMetricStreamsOutput",
+        "resultWrapper":"StopMetricStreamsResult"
+      },
+      "errors":[
+        {"shape":"InternalServiceFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingRequiredParameterException"}
       ]
     },
     "TagResource":{
@@ -462,12 +605,30 @@
     }
   },
   "shapes":{
+    "AccountId":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "ActionPrefix":{
       "type":"string",
       "max":1024,
       "min":1
     },
     "ActionsEnabled":{"type":"boolean"},
+    "ActionsSuppressedBy":{
+      "type":"string",
+      "enum":[
+        "WaitPeriod",
+        "ExtensionPeriod",
+        "Alarm"
+      ]
+    },
+    "ActionsSuppressedReason":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "AlarmArn":{
       "type":"string",
       "max":1600,
@@ -532,12 +693,30 @@
     "AnomalyDetector":{
       "type":"structure",
       "members":{
-        "Namespace":{"shape":"Namespace"},
-        "MetricName":{"shape":"MetricName"},
-        "Dimensions":{"shape":"Dimensions"},
-        "Stat":{"shape":"AnomalyDetectorMetricStat"},
+        "Namespace":{
+          "shape":"Namespace",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector.Namespace property."
+        },
+        "MetricName":{
+          "shape":"MetricName",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector.MetricName property."
+        },
+        "Dimensions":{
+          "shape":"Dimensions",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector.Dimensions property."
+        },
+        "Stat":{
+          "shape":"AnomalyDetectorMetricStat",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector.Stat property."
+        },
         "Configuration":{"shape":"AnomalyDetectorConfiguration"},
-        "StateValue":{"shape":"AnomalyDetectorStateValue"}
+        "StateValue":{"shape":"AnomalyDetectorStateValue"},
+        "SingleMetricAnomalyDetector":{"shape":"SingleMetricAnomalyDetector"},
+        "MetricMathAnomalyDetector":{"shape":"MetricMathAnomalyDetector"}
       }
     },
     "AnomalyDetectorConfiguration":{
@@ -553,7 +732,8 @@
     },
     "AnomalyDetectorMetricStat":{
       "type":"string",
-      "pattern":"(SampleCount|Average|Sum|Minimum|Maximum|p(\\d{1,2}|100)(\\.\\d{0,2})?|[ou]\\d+(\\.\\d*)?)(_E|_L|_H)?"
+      "max":50,
+      "pattern":"(SampleCount|Average|Sum|Minimum|Maximum|IQM|(p|tc|tm|ts|wm)(\\d{1,2}(\\.\\d{0,10})?|100)|[ou]\\d+(\\.\\d*)?)(_E|_L|_H)?|(TM|TC|TS|WM)\\(((((\\d{1,2})(\\.\\d{0,10})?|100(\\.0{0,10})?)%)?:((\\d{1,2})(\\.\\d{0,10})?|100(\\.0{0,10})?)%|((\\d{1,2})(\\.\\d{0,10})?|100(\\.0{0,10})?)%:(((\\d{1,2})(\\.\\d{0,10})?|100(\\.0{0,10})?)%)?)\\)|(TM|TC|TS|WM|PR)\\(((\\d+(\\.\\d{0,10})?|(\\d+(\\.\\d{0,10})?[Ee][+-]?\\d+)):((\\d+(\\.\\d{0,10})?|(\\d+(\\.\\d{0,10})?[Ee][+-]?\\d+)))?|((\\d+(\\.\\d{0,10})?|(\\d+(\\.\\d{0,10})?[Ee][+-]?\\d+)))?:(\\d+(\\.\\d{0,10})?|(\\d+(\\.\\d{0,10})?[Ee][+-]?\\d+)))\\)"
     },
     "AnomalyDetectorMetricTimezone":{
       "type":"string",
@@ -567,6 +747,18 @@
         "TRAINED_INSUFFICIENT_DATA",
         "TRAINED"
       ]
+    },
+    "AnomalyDetectorType":{
+      "type":"string",
+      "enum":[
+        "SINGLE_METRIC",
+        "METRIC_MATH"
+      ]
+    },
+    "AnomalyDetectorTypes":{
+      "type":"list",
+      "member":{"shape":"AnomalyDetectorType"},
+      "max":2
     },
     "AnomalyDetectors":{
       "type":"list",
@@ -604,7 +796,13 @@
         "StateReason":{"shape":"StateReason"},
         "StateReasonData":{"shape":"StateReasonData"},
         "StateUpdatedTimestamp":{"shape":"Timestamp"},
-        "StateValue":{"shape":"StateValue"}
+        "StateValue":{"shape":"StateValue"},
+        "StateTransitionedTimestamp":{"shape":"Timestamp"},
+        "ActionsSuppressedBy":{"shape":"ActionsSuppressedBy"},
+        "ActionsSuppressedReason":{"shape":"ActionsSuppressedReason"},
+        "ActionsSuppressor":{"shape":"AlarmArn"},
+        "ActionsSuppressorWaitPeriod":{"shape":"SuppressorPeriod"},
+        "ActionsSuppressorExtensionPeriod":{"shape":"SuppressorPeriod"}
       },
       "xmlOrder":[
         "ActionsEnabled",
@@ -619,7 +817,13 @@
         "StateReason",
         "StateReasonData",
         "StateUpdatedTimestamp",
-        "StateValue"
+        "StateValue",
+        "StateTransitionedTimestamp",
+        "ActionsSuppressedBy",
+        "ActionsSuppressedReason",
+        "ActionsSuppressor",
+        "ActionsSuppressorWaitPeriod",
+        "ActionsSuppressorExtensionPeriod"
       ]
     },
     "CompositeAlarms":{
@@ -750,16 +954,29 @@
     },
     "DeleteAnomalyDetectorInput":{
       "type":"structure",
-      "required":[
-        "Namespace",
-        "MetricName",
-        "Stat"
-      ],
       "members":{
-        "Namespace":{"shape":"Namespace"},
-        "MetricName":{"shape":"MetricName"},
-        "Dimensions":{"shape":"Dimensions"},
-        "Stat":{"shape":"AnomalyDetectorMetricStat"}
+        "Namespace":{
+          "shape":"Namespace",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector."
+        },
+        "MetricName":{
+          "shape":"MetricName",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector."
+        },
+        "Dimensions":{
+          "shape":"Dimensions",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector."
+        },
+        "Stat":{
+          "shape":"AnomalyDetectorMetricStat",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector."
+        },
+        "SingleMetricAnomalyDetector":{"shape":"SingleMetricAnomalyDetector"},
+        "MetricMathAnomalyDetector":{"shape":"MetricMathAnomalyDetector"}
       }
     },
     "DeleteAnomalyDetectorOutput":{
@@ -790,6 +1007,18 @@
       "type":"structure",
       "members":{
         "Failures":{"shape":"BatchFailures"}
+      }
+    },
+    "DeleteMetricStreamInput":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"MetricStreamName"}
+      }
+    },
+    "DeleteMetricStreamOutput":{
+      "type":"structure",
+      "members":{
       }
     },
     "DescribeAlarmHistoryInput":{
@@ -863,7 +1092,8 @@
         "MaxResults":{"shape":"MaxReturnedResultsCount"},
         "Namespace":{"shape":"Namespace"},
         "MetricName":{"shape":"MetricName"},
-        "Dimensions":{"shape":"Dimensions"}
+        "Dimensions":{"shape":"Dimensions"},
+        "AnomalyDetectorTypes":{"shape":"AnomalyDetectorTypes"}
       }
     },
     "DescribeAnomalyDetectorsOutput":{
@@ -922,13 +1152,13 @@
     },
     "DimensionValue":{
       "type":"string",
-      "max":255,
+      "max":1024,
       "min":1
     },
     "Dimensions":{
       "type":"list",
       "member":{"shape":"Dimension"},
-      "max":10
+      "max":30
     },
     "DisableAlarmActionsInput":{
       "type":"structure",
@@ -984,11 +1214,12 @@
       "type":"integer",
       "min":1
     },
-    "ExceptionType":{"type":"string"},
-    "ExtendedStatistic":{
+    "EvaluationState":{
       "type":"string",
-      "pattern":"p(\\d{1,2}(\\.\\d{0,2})?|100)"
+      "enum":["PARTIAL_DATA"]
     },
+    "ExceptionType":{"type":"string"},
+    "ExtendedStatistic":{"type":"string"},
     "ExtendedStatistics":{
       "type":"list",
       "member":{"shape":"ExtendedStatistic"},
@@ -1098,6 +1329,30 @@
         "Datapoints":{"shape":"Datapoints"}
       }
     },
+    "GetMetricStreamInput":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"MetricStreamName"}
+      }
+    },
+    "GetMetricStreamOutput":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"AmazonResourceName"},
+        "Name":{"shape":"MetricStreamName"},
+        "IncludeFilters":{"shape":"MetricStreamFilters"},
+        "ExcludeFilters":{"shape":"MetricStreamFilters"},
+        "FirehoseArn":{"shape":"AmazonResourceName"},
+        "RoleArn":{"shape":"AmazonResourceName"},
+        "State":{"shape":"MetricStreamState"},
+        "CreationDate":{"shape":"Timestamp"},
+        "LastUpdateDate":{"shape":"Timestamp"},
+        "OutputFormat":{"shape":"MetricStreamOutputFormat"},
+        "StatisticsConfigurations":{"shape":"MetricStreamStatisticsConfigurations"},
+        "IncludeLinkedAccountsMetrics":{"shape":"IncludeLinkedAccountsMetrics"}
+      }
+    },
     "GetMetricWidgetImageInput":{
       "type":"structure",
       "required":["MetricWidget"],
@@ -1130,6 +1385,8 @@
       "max":255,
       "min":1
     },
+    "IncludeLinkedAccounts":{"type":"boolean"},
+    "IncludeLinkedAccountsMetrics":{"type":"boolean"},
     "InsightRule":{
       "type":"structure",
       "required":[
@@ -1142,7 +1399,8 @@
         "Name":{"shape":"InsightRuleName"},
         "State":{"shape":"InsightRuleState"},
         "Schema":{"shape":"InsightRuleSchema"},
-        "Definition":{"shape":"InsightRuleDefinition"}
+        "Definition":{"shape":"InsightRuleDefinition"},
+        "ManagedRule":{"shape":"InsightRuleIsManaged"}
       }
     },
     "InsightRuleAggregationStatistic":{"type":"string"},
@@ -1194,6 +1452,7 @@
       "min":1,
       "pattern":"[\\x00-\\x7F]+"
     },
+    "InsightRuleIsManaged":{"type":"boolean"},
     "InsightRuleMaxResults":{
       "type":"integer",
       "max":500,
@@ -1363,6 +1622,41 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListManagedInsightRulesInput":{
+      "type":"structure",
+      "required":["ResourceARN"],
+      "members":{
+        "ResourceARN":{"shape":"AmazonResourceName"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"InsightRuleMaxResults"}
+      }
+    },
+    "ListManagedInsightRulesOutput":{
+      "type":"structure",
+      "members":{
+        "ManagedRules":{"shape":"ManagedRuleDescriptions"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListMetricStreamsInput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"ListMetricStreamsMaxResults"}
+      }
+    },
+    "ListMetricStreamsMaxResults":{
+      "type":"integer",
+      "max":500,
+      "min":1
+    },
+    "ListMetricStreamsOutput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "Entries":{"shape":"MetricStreamEntries"}
+      }
+    },
     "ListMetricsInput":{
       "type":"structure",
       "members":{
@@ -1370,18 +1664,22 @@
         "MetricName":{"shape":"MetricName"},
         "Dimensions":{"shape":"DimensionFilters"},
         "NextToken":{"shape":"NextToken"},
-        "RecentlyActive":{"shape":"RecentlyActive"}
+        "RecentlyActive":{"shape":"RecentlyActive"},
+        "IncludeLinkedAccounts":{"shape":"IncludeLinkedAccounts"},
+        "OwningAccount":{"shape":"AccountId"}
       }
     },
     "ListMetricsOutput":{
       "type":"structure",
       "members":{
         "Metrics":{"shape":"Metrics"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "OwningAccounts":{"shape":"OwningAccounts"}
       },
       "xmlOrder":[
         "Metrics",
-        "NextToken"
+        "NextToken",
+        "OwningAccounts"
       ]
     },
     "ListTagsForResourceInput":{
@@ -1396,6 +1694,45 @@
       "members":{
         "Tags":{"shape":"TagList"}
       }
+    },
+    "ManagedRule":{
+      "type":"structure",
+      "required":[
+        "TemplateName",
+        "ResourceARN"
+      ],
+      "members":{
+        "TemplateName":{"shape":"TemplateName"},
+        "ResourceARN":{"shape":"AmazonResourceName"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "ManagedRuleDescription":{
+      "type":"structure",
+      "members":{
+        "TemplateName":{"shape":"TemplateName"},
+        "ResourceARN":{"shape":"AmazonResourceName"},
+        "RuleState":{"shape":"ManagedRuleState"}
+      }
+    },
+    "ManagedRuleDescriptions":{
+      "type":"list",
+      "member":{"shape":"ManagedRuleDescription"}
+    },
+    "ManagedRuleState":{
+      "type":"structure",
+      "required":[
+        "RuleName",
+        "State"
+      ],
+      "members":{
+        "RuleName":{"shape":"InsightRuleName"},
+        "State":{"shape":"InsightRuleState"}
+      }
+    },
+    "ManagedRules":{
+      "type":"list",
+      "member":{"shape":"ManagedRule"}
     },
     "MaxRecords":{
       "type":"integer",
@@ -1458,7 +1795,9 @@
         "TreatMissingData":{"shape":"TreatMissingData"},
         "EvaluateLowSampleCountPercentile":{"shape":"EvaluateLowSampleCountPercentile"},
         "Metrics":{"shape":"MetricDataQueries"},
-        "ThresholdMetricId":{"shape":"MetricId"}
+        "ThresholdMetricId":{"shape":"MetricId"},
+        "EvaluationState":{"shape":"EvaluationState"},
+        "StateTransitionedTimestamp":{"shape":"Timestamp"}
       },
       "xmlOrder":[
         "AlarmName",
@@ -1487,7 +1826,9 @@
         "EvaluateLowSampleCountPercentile",
         "DatapointsToAlarm",
         "Metrics",
-        "ThresholdMetricId"
+        "ThresholdMetricId",
+        "EvaluationState",
+        "StateTransitionedTimestamp"
       ]
     },
     "MetricAlarms":{
@@ -1511,7 +1852,8 @@
         "Expression":{"shape":"MetricExpression"},
         "Label":{"shape":"MetricLabel"},
         "ReturnData":{"shape":"ReturnData"},
-        "Period":{"shape":"Period"}
+        "Period":{"shape":"Period"},
+        "AccountId":{"shape":"AccountId"}
       }
     },
     "MetricDataResult":{
@@ -1550,7 +1892,7 @@
     },
     "MetricExpression":{
       "type":"string",
-      "max":1024,
+      "max":2048,
       "min":1
     },
     "MetricId":{
@@ -1559,6 +1901,12 @@
       "min":1
     },
     "MetricLabel":{"type":"string"},
+    "MetricMathAnomalyDetector":{
+      "type":"structure",
+      "members":{
+        "MetricDataQueries":{"shape":"MetricDataQueries"}
+      }
+    },
     "MetricName":{
       "type":"string",
       "max":255,
@@ -1576,6 +1924,91 @@
         "Period":{"shape":"Period"},
         "Stat":{"shape":"Stat"},
         "Unit":{"shape":"StandardUnit"}
+      }
+    },
+    "MetricStreamEntries":{
+      "type":"list",
+      "member":{"shape":"MetricStreamEntry"}
+    },
+    "MetricStreamEntry":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"AmazonResourceName"},
+        "CreationDate":{"shape":"Timestamp"},
+        "LastUpdateDate":{"shape":"Timestamp"},
+        "Name":{"shape":"MetricStreamName"},
+        "FirehoseArn":{"shape":"AmazonResourceName"},
+        "State":{"shape":"MetricStreamState"},
+        "OutputFormat":{"shape":"MetricStreamOutputFormat"}
+      }
+    },
+    "MetricStreamFilter":{
+      "type":"structure",
+      "members":{
+        "Namespace":{"shape":"Namespace"},
+        "MetricNames":{"shape":"MetricStreamFilterMetricNames"}
+      }
+    },
+    "MetricStreamFilterMetricNames":{
+      "type":"list",
+      "member":{"shape":"MetricName"}
+    },
+    "MetricStreamFilters":{
+      "type":"list",
+      "member":{"shape":"MetricStreamFilter"}
+    },
+    "MetricStreamName":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "MetricStreamNames":{
+      "type":"list",
+      "member":{"shape":"MetricStreamName"}
+    },
+    "MetricStreamOutputFormat":{
+      "type":"string",
+      "enum":[
+        "json",
+        "opentelemetry0.7"
+      ],
+      "max":255,
+      "min":1
+    },
+    "MetricStreamState":{"type":"string"},
+    "MetricStreamStatistic":{"type":"string"},
+    "MetricStreamStatisticsAdditionalStatistics":{
+      "type":"list",
+      "member":{"shape":"MetricStreamStatistic"}
+    },
+    "MetricStreamStatisticsConfiguration":{
+      "type":"structure",
+      "required":[
+        "IncludeMetrics",
+        "AdditionalStatistics"
+      ],
+      "members":{
+        "IncludeMetrics":{"shape":"MetricStreamStatisticsIncludeMetrics"},
+        "AdditionalStatistics":{"shape":"MetricStreamStatisticsAdditionalStatistics"}
+      }
+    },
+    "MetricStreamStatisticsConfigurations":{
+      "type":"list",
+      "member":{"shape":"MetricStreamStatisticsConfiguration"}
+    },
+    "MetricStreamStatisticsIncludeMetrics":{
+      "type":"list",
+      "member":{"shape":"MetricStreamStatisticsMetric"}
+    },
+    "MetricStreamStatisticsMetric":{
+      "type":"structure",
+      "required":[
+        "Namespace",
+        "MetricName"
+      ],
+      "members":{
+        "Namespace":{"shape":"Namespace"},
+        "MetricName":{"shape":"MetricName"}
       }
     },
     "MetricWidget":{"type":"string"},
@@ -1605,6 +2038,10 @@
     },
     "NextToken":{"type":"string"},
     "OutputFormat":{"type":"string"},
+    "OwningAccounts":{
+      "type":"list",
+      "member":{"shape":"AccountId"}
+    },
     "PartialFailure":{
       "type":"structure",
       "members":{
@@ -1620,17 +2057,30 @@
     },
     "PutAnomalyDetectorInput":{
       "type":"structure",
-      "required":[
-        "Namespace",
-        "MetricName",
-        "Stat"
-      ],
       "members":{
-        "Namespace":{"shape":"Namespace"},
-        "MetricName":{"shape":"MetricName"},
-        "Dimensions":{"shape":"Dimensions"},
-        "Stat":{"shape":"AnomalyDetectorMetricStat"},
-        "Configuration":{"shape":"AnomalyDetectorConfiguration"}
+        "Namespace":{
+          "shape":"Namespace",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector."
+        },
+        "MetricName":{
+          "shape":"MetricName",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector."
+        },
+        "Dimensions":{
+          "shape":"Dimensions",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector."
+        },
+        "Stat":{
+          "shape":"AnomalyDetectorMetricStat",
+          "deprecated":true,
+          "deprecatedMessage":"Use SingleMetricAnomalyDetector."
+        },
+        "Configuration":{"shape":"AnomalyDetectorConfiguration"},
+        "SingleMetricAnomalyDetector":{"shape":"SingleMetricAnomalyDetector"},
+        "MetricMathAnomalyDetector":{"shape":"MetricMathAnomalyDetector"}
       }
     },
     "PutAnomalyDetectorOutput":{
@@ -1652,7 +2102,10 @@
         "AlarmRule":{"shape":"AlarmRule"},
         "InsufficientDataActions":{"shape":"ResourceList"},
         "OKActions":{"shape":"ResourceList"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "ActionsSuppressor":{"shape":"AlarmArn"},
+        "ActionsSuppressorWaitPeriod":{"shape":"SuppressorPeriod"},
+        "ActionsSuppressorExtensionPeriod":{"shape":"SuppressorPeriod"}
       }
     },
     "PutDashboardInput":{
@@ -1688,6 +2141,19 @@
     "PutInsightRuleOutput":{
       "type":"structure",
       "members":{
+      }
+    },
+    "PutManagedInsightRulesInput":{
+      "type":"structure",
+      "required":["ManagedRules"],
+      "members":{
+        "ManagedRules":{"shape":"ManagedRules"}
+      }
+    },
+    "PutManagedInsightRulesOutput":{
+      "type":"structure",
+      "members":{
+        "Failures":{"shape":"BatchFailures"}
       }
     },
     "PutMetricAlarmInput":{
@@ -1731,6 +2197,32 @@
       "members":{
         "Namespace":{"shape":"Namespace"},
         "MetricData":{"shape":"MetricData"}
+      }
+    },
+    "PutMetricStreamInput":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "FirehoseArn",
+        "RoleArn",
+        "OutputFormat"
+      ],
+      "members":{
+        "Name":{"shape":"MetricStreamName"},
+        "IncludeFilters":{"shape":"MetricStreamFilters"},
+        "ExcludeFilters":{"shape":"MetricStreamFilters"},
+        "FirehoseArn":{"shape":"AmazonResourceName"},
+        "RoleArn":{"shape":"AmazonResourceName"},
+        "OutputFormat":{"shape":"MetricStreamOutputFormat"},
+        "Tags":{"shape":"TagList"},
+        "StatisticsConfigurations":{"shape":"MetricStreamStatisticsConfigurations"},
+        "IncludeLinkedAccountsMetrics":{"shape":"IncludeLinkedAccountsMetrics"}
+      }
+    },
+    "PutMetricStreamOutput":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"AmazonResourceName"}
       }
     },
     "Range":{
@@ -1811,6 +2303,15 @@
         "StateReasonData":{"shape":"StateReasonData"}
       }
     },
+    "SingleMetricAnomalyDetector":{
+      "type":"structure",
+      "members":{
+        "Namespace":{"shape":"Namespace"},
+        "MetricName":{"shape":"MetricName"},
+        "Dimensions":{"shape":"Dimensions"},
+        "Stat":{"shape":"AnomalyDetectorMetricStat"}
+      }
+    },
     "Size":{"type":"long"},
     "StandardUnit":{
       "type":"string",
@@ -1843,6 +2344,18 @@
         "Count/Second",
         "None"
       ]
+    },
+    "StartMetricStreamsInput":{
+      "type":"structure",
+      "required":["Names"],
+      "members":{
+        "Names":{"shape":"MetricStreamNames"}
+      }
+    },
+    "StartMetricStreamsOutput":{
+      "type":"structure",
+      "members":{
+      }
     },
     "Stat":{"type":"string"},
     "StateReason":{
@@ -1899,13 +2412,27 @@
       "enum":[
         "Complete",
         "InternalError",
-        "PartialData"
+        "PartialData",
+        "Forbidden"
       ]
+    },
+    "StopMetricStreamsInput":{
+      "type":"structure",
+      "required":["Names"],
+      "members":{
+        "Names":{"shape":"MetricStreamNames"}
+      }
+    },
+    "StopMetricStreamsOutput":{
+      "type":"structure",
+      "members":{
+      }
     },
     "StorageResolution":{
       "type":"integer",
       "min":1
     },
+    "SuppressorPeriod":{"type":"integer"},
     "Tag":{
       "type":"structure",
       "required":[
@@ -1950,6 +2477,12 @@
       "type":"string",
       "max":256,
       "min":0
+    },
+    "TemplateName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[0-9A-Za-z][\\-\\.\\_0-9A-Za-z]{0,126}[0-9A-Za-z]"
     },
     "Threshold":{"type":"double"},
     "Timestamp":{"type":"timestamp"},

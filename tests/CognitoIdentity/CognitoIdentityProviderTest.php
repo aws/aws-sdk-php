@@ -5,7 +5,7 @@ use Aws\Api\DateTimeResult;
 use Aws\CognitoIdentity\CognitoIdentityProvider;
 use Aws\MockHandler;
 use Aws\Result;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class CognitoIdentityProviderTest extends TestCase
 {
@@ -50,7 +50,7 @@ class CognitoIdentityProviderTest extends TestCase
         $provider->updateLogin('www.amazon.com', 'access-token-new');
         $this->assertSame(
             'access-token-new',
-            $this->readAttribute($provider, 'logins')['www.amazon.com']
+            $this->getPropertyValue($provider, 'logins')['www.amazon.com']
         );
     }
 }

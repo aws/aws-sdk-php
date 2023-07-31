@@ -9,19 +9,17 @@ use Aws\Result;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\MockHandler
  */
 class MockHandlerTest extends TestCase
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected an Aws\ResultInterface or Exception
-     */
     public function testValidatesEachResult()
     {
+        $this->expectExceptionMessage("Expected an Aws\ResultInterface or Exception");
+        $this->expectException(\InvalidArgumentException::class);
         new MockHandler(['foo']);
     }
 
@@ -30,6 +28,12 @@ class MockHandlerTest extends TestCase
         $h = new Mockhandler([new Result([]), new Result([])]);
         $h->append(new Result([]));
         $this->assertCount(3, $h);
+    }
+
+    public function testCanCountEmpty()
+    {
+        $h = new Mockhandler();
+        $this->assertCount(0, $h);
     }
 
     public function testReturnsMockResultsFromQueue()
@@ -44,24 +48,20 @@ class MockHandlerTest extends TestCase
         $this->assertSame($r2, $h($cmd, $request)->wait());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Mock queue is empty
-     */
     public function testThrowsWhenNoResultsInQueue()
     {
+        $this->expectExceptionMessage("Mock queue is empty");
+        $this->expectException(\RuntimeException::class);
         $h = new MockHandler();
         $cmd = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
         $h($cmd, $request);
     }
 
-    /**
-     * @expectedException \Aws\Exception\AwsException
-     * @expectedExceptionMessage Error
-     */
     public function testThrowsExceptionsFromQueue()
     {
+        $this->expectExceptionMessage("Error");
+        $this->expectException(\Aws\Exception\AwsException::class);
         $cmd = new Command('foo');
         $e = new AwsException('Error', $cmd);
         $request = new Request('GET', 'http://www.example.com');
@@ -91,7 +91,7 @@ class MockHandlerTest extends TestCase
         $cmd = new Command('foo');
         $h($cmd, $request);
         $h($cmd, $request);
-        Promise\queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertEquals([$r1, $e], $thens);
     }
 

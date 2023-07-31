@@ -11,14 +11,14 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Tester\Exception\PendingException;
 use Aws\Crypto\AbstractCryptoClient;
 use Aws\Kms\KmsClient;
-use PHPUnit_Framework_Assert as Assert;
+use PHPUnit\Framework\Assert;
 
 class S3EncryptionContext implements Context, SnippetAcceptingContext
 {
     use IntegUtils;
 
     const DEFAULT_REGION = 'us-west-2';
-    const DEFAULT_BUCKET = 'aws-s3-shared-tests';
+    const DEFAULT_BUCKET = 'aws-sdk-php-crypto-tests';
 
     private $plaintexts;
     private $decrypted;
@@ -148,7 +148,7 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
                 . '/language_' . $language
                 . '/ciphertext_test_case_' . $fileKeyPart;
             $params['Body'] = $plaintext;
-            
+
             $s3EncryptionClient->putObject($params);
         }
     }
@@ -235,3 +235,4 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
         return '';
     }
 }
+

@@ -4,6 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="robots" content="noindex" n:if="!$robots">
     <meta name="guide-name" content="aws-sdk-php-guide"> <!-- Documentation Guide Name for s.prop65 -->
     <meta name="service-name" content="aws-sdk-php"> <!-- Documentation Service Name for s.prop66 -->
@@ -45,19 +46,30 @@
     <nav id="navigation" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
+                <button type="button"
+                        class="navbar-toggle"
+                        data-toggle="collapse"
+                        data-target=".navbar-collapse">
+
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a href="index.html" class="navbar-brand">{if $config->title}{$config->title}{else}Overview{/if}</a>
             </div>
             <div class="collapse navbar-collapse">
-
-                <form{if $config->googleCseId} action="http://www.google.com/cse"{/if} id="search" class="navbar-form navbar-left" role="search">
-                    <input type="hidden" name="cx" value="{$config->googleCseId}">
-                    <input type="hidden" name="ie" value="UTF-8">
-                    <div class="form-group">
-                        <input type="text" name="q" class="search-query form-control" placeholder="Search"{if 'overview' === $active} autofocus{/if}>
-                    </div>
-                </form>
-
                 <ul class="nav navbar-nav">
+                    <li>
+                        <form{if $config->googleCseId} action="http://www.google.com/cse"{/if} id="search" class="navbar-form navbar-left" role="search">
+                            <input type="hidden" name="cx" value="{$config->googleCseId}">
+                            <input type="hidden" name="ie" value="UTF-8">
+                            <div class="form-group">
+                                <div class="visually-hidden" id="suggestions-help" role="status" aria-live="polite"></div>
+                                <input data-suggest type="text" aria-autocomplete="list" aria-label="Search" type="text" name="q" class="search-query form-control" placeholder="Search"{if 'overview' === $active} autofocus{/if}>
+                            </div>
+                        </form>
+                    </li>
                     <li n:class="'package' === $active ? active" n:if="$packages">
                         <a n:tag-if="'package' !== $active && $package" href="{$package|packageUrl}" title="Summary of {$package}"><span>Package</span></a>
                     </li>
@@ -94,21 +106,29 @@
                         <a href="{$archive}" title="Download documentation as ZIP archive"><span>Download</span></a>
                     </li>
                 </ul>
-                <div class="feedback-message"><span>Did this page help you? <a href="https://docs-feedback.aws.amazon.com/feedback.jsp?hidden_service_name=AWS%20SDK%20for%20PHP">SUBMIT FEEDBACK!</a></span></div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://docs-feedback.aws.amazon.com/feedback.jsp?hidden_service_name=AWS%20SDK%20for%20PHP">Submit Feedback</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Index<span class="caret"></span></a>
+                        <ul class="dropdown-menu index"></ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
     <div id="left">
+        <a href="#main-content" id="skip-to-content">Skip to main content</a>
         <div id="menu">
             {define group}
                 <ul>
                 {foreach $groups as $group}
                     {var $nextLevel = substr_count($iterator->nextValue, '\\') > substr_count($group, '\\')}
                     <li n:class="$actualGroup === $group || 0 === strpos($actualGroup, $group . '\\') ? active, $config->main && 0 === strpos($group, $config->main) ? main">
-                        <a href="{if $groupBy === 'package'}{$group|packageUrl}{else}{$group|namespaceUrl}{/if}">
-                            {$group|subgroupName}<span n:tag-if="$nextLevel"></span>
-                        </a>
+                        <a href="{if $groupBy === 'package'}{$group|packageUrl}{else}{$group|namespaceUrl}{/if}">{$group|subgroupName}</a>
+                        <button n:tag-if="$nextLevel" aria-label="{$group|subgroupName} child nodes" aria-expanded="true"></button>
                         {if $nextLevel}
                 <ul>
                         {else}
@@ -123,10 +143,10 @@
 
             <div id="groups">
             {if $namespaces}
-                <h3>Namespaces</h3>
+                <h2>Namespaces</h2>
                 {include group, groups => $namespaces, actualGroup => $namespace, groupBy => 'namespace'}
             {elseif $packages}
-                <h3>Packages</h3>
+                <h2>Packages</h2>
                 {include group, groups => $packages, actualGroup => $package, groupBy => 'package'}
             {/if}
             </div>
@@ -139,32 +159,32 @@
 
             <div id="elements">
                 {if $classes}
-                <h3>Classes</h3>
+                <h2>Classes</h2>
                 {include elements, elements => $classes, activeElement => $class}
                 {/if}
 
                 {if $interfaces}
-                <h3>Interfaces</h3>
+                <h2>Interfaces</h2>
                 {include elements, elements => $interfaces, activeElement => $class}
                 {/if}
 
                 {if $traits}
-                <h3>Traits</h3>
+                <h2>Traits</h2>
                 {include elements, elements => $traits, activeElement => $class}
                 {/if}
 
                 {if $exceptions}
-                <h3>Exceptions</h3>
+                <h2>Exceptions</h2>
                 {include elements, elements => $exceptions, activeElement => $class}
                 {/if}
 
                 {if $constants}
-                <h3>Constants</h3>
+                <h2>Constants</h2>
                 {include elements, elements => $constants, activeElement => $constant}
                 {/if}
 
                 {if $functions}
-                <h3>Functions</h3>
+                <h2>Functions</h2>
                 {include elements, elements => $functions, activeElement => $function}
                 {/if}
             </div>

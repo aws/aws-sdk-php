@@ -4,8 +4,10 @@ namespace Aws\Test\Api\Serializer;
 use Aws\Api\Service;
 use Aws\Command;
 use Aws\Api\Serializer\RestJsonSerializer;
+use Aws\EndpointV2\EndpointDefinitionProvider;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\Serializer\RestJsonSerializer
@@ -20,24 +22,42 @@ class RestJsonSerializerTest extends TestCase
             [
                 'metadata'=> [
                     'targetPrefix' => 'test',
-                    'jsonVersion' => '1.1'
+                    'jsonVersion' => '1.1',
+                    'protocol' => 'rest-json',
+                    'serviceIdentifier' => 'foo'
                 ],
                 'operations' => [
                     'foo' => [
-                        'http' => ['httpMethod' => 'POST'],
+                        'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'FooInput'],
                     ],
+                    'doctype' => [
+                        'http' => ['method' => 'POST'],
+                        'input' => ['shape' => 'DocTypeInput'],
+                    ],
                     'bar' => [
-                        'http' => ['httpMethod' => 'POST'],
+                        'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'BarInput'],
                     ],
                     'baz' => [
-                        'http' => ['httpMethod' => 'POST'],
+                        'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'BazInput']
                     ],
                     'foobar' => [
-                        'http' => ['httpMethod' => 'POST'],
+                        'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'FooBarInput']
+                    ],
+                    'qux' => [
+                        'http' => ['method' => 'POST'],
+                        'input' => ['shape' => 'QuxInput']
+                    ],
+                    'noPayload' => [
+                        'http' => ['method' => 'GET'],
+                        'input' => ['shape' => 'NoPayloadInput']
+                    ],
+                    'boolHeader' => [
+                        'http' => ['method' => 'POST'],
+                        'input' => ['shape' => 'BoolHeaderInput']
                     ]
                 ],
                 'shapes' => [
@@ -46,6 +66,18 @@ class RestJsonSerializerTest extends TestCase
                         'members' => [
                             'baz' => ['shape' => 'BazShape']
                         ]
+                    ],
+                    'DocTypeInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            "DocumentValue" => [
+                                "shape" => "DocumentType",
+                            ]
+                        ]
+                    ],
+                    "DocumentType" => [
+                        "type" => "structure",
+                        "document" => true
                     ],
                     'BarInput' => [
                         'type' => 'structure',
@@ -67,11 +99,45 @@ class RestJsonSerializerTest extends TestCase
                                 'location' => 'header',
                                 'locationname' => 'Bar',
                                 'jsonvalue' => true
+                            ],
+                        ]
+                    ],
+                    'QuxInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'bar' => [
+                                'shape' => 'BazShape',
+                                'location' => 'header',
+                                'locationname' => 'Bar',
+                                'jsonvalue' => true
+                            ],
+                            'baz' => ['shape' => 'BazShape']
+                        ]
+                    ],
+                    'NoPayloadInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'baz' => [
+                                'shape' => 'BazShape',
+                                'location' => 'header',
+                                'locationname' => 'Bar',
+                                'jsonvalue' => true
                             ]
                         ]
                     ],
+                    'BoolHeaderInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'bool' => [
+                                'shape' => 'BoolShape',
+                                'location' => 'header',
+                                'locationName' => 'Is-Bool',
+                            ],
+                        ]
+                    ],
                     'BlobShape' => ['type' => 'blob'],
-                    'BazShape'  => ['type' => 'string']
+                    'BazShape'  => ['type' => 'string'],
+                    'BoolShape' => ['type' => 'boolean'],
                 ]
             ],
             function () {}
@@ -159,11 +225,9 @@ class RestJsonSerializerTest extends TestCase
         $this->assertSame('', $request->getHeaderLine('Content-Type'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testPreparesRequestsWithJsonValueTraitThrowsException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $obj = new \stdClass();
         $obj->obj = $obj;
         $this->getRequest('foobar', ['baz' => $obj]);
@@ -180,4 +244,118 @@ class RestJsonSerializerTest extends TestCase
             $request->getHeaderLine('Content-Type')
         );
     }
+
+    /**
+     * @dataProvider doctypeTestProvider
+     * @param string $operation
+     *
+     */
+    public function testHandlesDoctype($input, $expectedOutput)
+    {
+        $request = $this->getRequest('doctype', $input);
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame($expectedOutput, $request->getBody()->getContents());
+        $this->assertSame(
+            'application/json',
+            $request->getHeaderLine('Content-Type')
+        );
+    }
+
+
+    public function doctypeTestProvider() {
+        return [
+            [
+                ['DocumentValue' =>
+                    ['DocumentType' =>
+                        [
+                            'name' => "John",
+                            'age'=> 31,
+                            'active'=> true
+                        ]
+                    ]
+                ],
+                '{"DocumentValue":{"DocumentType":{"name":"John","age":31,"active":true}}}'
+            ],
+            [
+                ['DocumentValue' =>
+                    [
+                        'DocumentType' => true
+                    ]
+                ],
+                '{"DocumentValue":{"DocumentType":true}}'
+            ],
+            [
+                ['DocumentValue' =>
+                    [
+                        'DocumentType' => 2
+                    ]
+                ],
+                '{"DocumentValue":{"DocumentType":2}}'
+            ],
+        ];
+    }
+
+
+    /**
+     * @dataProvider restJsonContentTypeProvider
+     * @param string $operation
+     * @param string $input
+     */
+    public function testRestJsonContentTypeNoPayload($operation, $input) {
+        $request = $this->getRequest($operation, $input);
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame("", $request->getBody()->getContents());
+        $this->assertSame(
+            "",
+            $request->getHeaderLine('Content-Type')
+        );
+        self::assertEmpty($request->getHeader("Content-length"));
+    }
+
+
+    public function restJsonContentTypeProvider() {
+        return [
+            [
+                "noPayload", ['baz' => 'bar'],
+            ],
+            [
+                "noPayload", [],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider boolProvider
+     * @param bool $arg
+     * @param string $expected
+     */
+    public function testSerializesHeaderValueToBoolString($arg, $expected)
+    {
+        $request = $this->getRequest('boolHeader', ['bool' => $arg]);
+        $this->assertSame($expected, $request->getHeaderLine('Is-Bool'));
+    }
+
+    public function boolProvider() {
+        return [
+            [true, 'true'],
+            [false, 'false']
+        ];
+    }
+
+    public function testDoesNotOverrideScheme()
+    {
+        $serializer = new RestJsonSerializer($this->getTestService(), 'http://foo.com');
+        $cmd = new Command('foo', ['baz' => 'bar']);
+        $endpointProvider = new EndpointProviderV2(
+            json_decode(
+                file_get_contents(__DIR__ . '/../../EndpointV2/valid-rules/aws-region.json'),
+                true
+            ),
+            EndpointDefinitionProvider::getPartitions()
+        );
+        $request = $serializer($cmd, $endpointProvider, ['Region' => 'us-east-1']);
+        $this->assertSame('http://us-east-1.amazonaws.com/', (string) $request->getUri());
+    }
 }
+

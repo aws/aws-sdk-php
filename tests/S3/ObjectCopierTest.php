@@ -78,6 +78,7 @@ class ObjectCopierTest extends TestCase
             function (CommandInterface $cmd, RequestInterface $req) {
 
                 switch($cmd->getName()) {
+                    case 'UploadPartCopy':
                     case 'CopyObject':
                         $this->assertEquals(
                             'mydest-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
@@ -89,12 +90,12 @@ class ObjectCopierTest extends TestCase
                             $cmd['Bucket']
                         );
                         $this->assertEquals(
-                            '/arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/sourceKey',
+                            'arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/object/sourceKey',
                             $cmd['CopySource']
                         );
                         $this->assertEquals(
-                            '/arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/sourceKey',
-                            $req->getHeader('x-amz-copy-source')[0]
+                                'arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/object/sourceKey',
+                                $req->getHeader('x-amz-copy-source')[0]
                         );
                         break;
 
@@ -111,26 +112,6 @@ class ObjectCopierTest extends TestCase
                         );
                         break;
 
-                    case 'UploadPartCopy':
-                        $this->assertEquals(
-                            'mydest-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
-                            $req->getUri()->getHost()
-                        );
-                        $this->assertEquals('/destKey', $req->getUri()->getPath());
-                        $this->assertEquals(
-                            'arn:aws:s3:us-west-2:123456789012:accesspoint:mydest',
-                            $cmd['Bucket']
-                        );
-                        $this->assertEquals(
-                            '/arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/sourceKey',
-                            $cmd['CopySource']
-                        );
-                        $this->assertEquals(
-                            '/arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/sourceKey',
-                            $req->getHeader('x-amz-copy-source')[0]
-                        );
-                        break;
-
                     case 'HeadObject':
                         $this->assertEquals(
                             'mysource-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
@@ -144,7 +125,7 @@ class ObjectCopierTest extends TestCase
 
                 }
 
-                return Promise\promise_for(new Result([]));
+                return Promise\Create::promiseFor(new Result([]));
             }
         ));
         $this->addMockResults($client, $mockedResults);
@@ -306,9 +287,9 @@ class ObjectCopierTest extends TestCase
             ->will($this->returnValueMap([
                 [
                     $headObjectCommand,
-                    Promise\promise_for(new Result(['ContentLength' => 1024 * 1024 * 6]))
+                    Promise\Create::promiseFor(new Result(['ContentLength' => 1024 * 1024 * 6]))
                 ],
-                [$copyObjectCommand, Promise\promise_for(new Result)],
+                [$copyObjectCommand, Promise\Create::promiseFor(new Result)],
             ]));
 
         (new ObjectCopier(

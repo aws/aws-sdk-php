@@ -105,7 +105,6 @@
     },
     "GetRecommendationsRequest":{
       "type":"structure",
-      "required":["campaignArn"],
       "members":{
         "campaignArn":{"shape":"Arn"},
         "itemId":{"shape":"ItemID"},
@@ -113,7 +112,9 @@
         "numResults":{"shape":"NumResults"},
         "context":{"shape":"Context"},
         "filterArn":{"shape":"Arn"},
-        "filterValues":{"shape":"FilterValues"}
+        "filterValues":{"shape":"FilterValues"},
+        "recommenderArn":{"shape":"Arn"},
+        "promotions":{"shape":"PromotionList"}
       }
     },
     "GetRecommendationsResponse":{
@@ -143,16 +144,42 @@
       "type":"list",
       "member":{"shape":"PredictedItem"}
     },
+    "Name":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9\\-_]*"
+    },
     "NumResults":{
       "type":"integer",
       "min":0
+    },
+    "PercentPromotedItems":{
+      "type":"integer",
+      "max":100,
+      "min":1
     },
     "PredictedItem":{
       "type":"structure",
       "members":{
         "itemId":{"shape":"ItemID"},
-        "score":{"shape":"Score"}
+        "score":{"shape":"Score"},
+        "promotionName":{"shape":"Name"}
       }
+    },
+    "Promotion":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"Name"},
+        "percentPromotedItems":{"shape":"PercentPromotedItems"},
+        "filterArn":{"shape":"Arn"},
+        "filterValues":{"shape":"FilterValues"}
+      }
+    },
+    "PromotionList":{
+      "type":"list",
+      "member":{"shape":"Promotion"},
+      "max":1
     },
     "RecommendationID":{"type":"string"},
     "ResourceNotFoundException":{

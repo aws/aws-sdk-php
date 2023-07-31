@@ -3,6 +3,7 @@ namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
+use Aws\Signature\SignatureInterface;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -21,6 +22,7 @@ class ComplianceTest extends TestCase
 {
     use UsesServiceTrait;
 
+    /** @doesNotPerformAssertions */
     public function testCaseProvider()
     {
         $cases = [];
@@ -79,7 +81,7 @@ class ComplianceTest extends TestCase
                 return $service->toArray();
             },
             'credentials'  => false,
-            'signature'    => $this->getMockBuilder('Aws\Signature\SignatureInterface')->getMock(),
+            'signature'    => $this->getMockBuilder(SignatureInterface::class)->getMock(),
             'region'       => 'us-west-2',
             'endpoint'     => $ep,
             'error_parser' => Service::createErrorParser($service->getProtocol()),
@@ -126,6 +128,11 @@ class ComplianceTest extends TestCase
         if (isset($serialized['headers'])) {
             foreach ($serialized['headers'] as $key => $value) {
                 $this->assertSame($value, $request->getHeaderLine($key));
+            }
+        }
+        if (isset($serialized['forbidHeaders'])) {
+            foreach ($serialized['forbidHeaders'] as $key => $value) {
+                $this->assertTrue(!isset($request->getHeaders()[$key]));
             }
         }
     }

@@ -10,21 +10,24 @@ use Aws\EndpointDiscovery\Configuration;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\Exception\AwsException;
 use Aws\Exception\UnresolvedEndpointException;
+use Aws\Middleware;
 use Aws\Result;
 use Aws\ResultInterface;
 use Aws\Sdk;
+use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * @covers \Aws\EndpointDiscovery\EndpointDiscoveryMiddleware
+ * @covers Aws\EndpointDiscovery\EndpointDiscoveryMiddleware
  */
 class EndpointDiscoveryMiddlewareTest extends TestCase
 {
+    use UsesServiceTrait;
 
     /**
      * @backupStaticAttributes enabled
@@ -51,17 +54,20 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ) use ($expected, $describeResult) {
             // Simulate the DescribeEndpoints API with the supplied result
             if ($cmd->getName() === 'DescribeEndpoints') {
-                return Promise\promise_for($describeResult);
+                return Promise\Create::promiseFor($describeResult);
             }
-            $this->assertEquals(
-                $expected->getHeader('User-Agent'),
-                $req->getHeader('User-Agent')
-            );
+            $expectedUserAgentParts = explode(' ', $expected->getHeader('User-Agent')[0]);
+            foreach ($expectedUserAgentParts as $expectedUserAgentPart) {
+                $this->assertStringContainsString(
+                    $expectedUserAgentPart,
+                    $req->getHeader('User-Agent')[0]
+                );
+            }
             $uri = $req->getUri();
             $expectedUri = $expected->getUri();
             $this->assertSame($expectedUri->getHost(), $uri->getHost());
             $this->assertSame($expectedUri->getPath(), $uri->getPath());
-            return Promise\promise_for(new Result([]));
+            return Promise\Create::promiseFor(new Result([]));
         });
         $command = $client->getCommand($commandArgs[0], $commandArgs[1]);
         $client->execute($command);
@@ -331,7 +337,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
         $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) {
             if ($cmd->getName() === 'DescribeEndpoints') {
-                return Promise\promise_for(new Result([
+                return Promise\Create::promiseFor(new Result([
                     'Endpoints' => [
                         [
                             'Address' => '#!@$',
@@ -415,7 +421,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ) use (&$operationCounter, &$describeCounter) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $describeCounter++;
-                return Promise\promise_for(new Result([
+                return Promise\Create::promiseFor(new Result([
                     'Endpoints' => [
                         [
                             'Address' => "discovered.com/{$cmd['Identifiers']['Sdk']}",
@@ -652,7 +658,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         // Use Reflection to set private static discoveryCooldown variable to 0
         // to avoid having to wait for default 60 seconds for testing
         $reflection = new \ReflectionProperty(
-            'Aws\EndpointDiscovery\EndpointDiscoveryMiddleware',
+            EndpointDiscoveryMiddleware::class,
             'discoveryCooldown'
         );
         $reflection->setAccessible(true);
@@ -748,11 +754,11 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     /**
      * @backupStaticAttributes enabled
-     * @expectedException \Aws\Exception\UnresolvedEndpointException
-     * @expectedExceptionMessage This operation requires the use of endpoint discovery, but this has been disabled
      */
     public function testThrowsExceptionForRequiredOpWhenDisabled()
     {
+        $this->expectExceptionMessage("This operation requires the use of endpoint discovery, but this has been disabled");
+        $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);
         $client = $this->generateTestClient(
             $this->generateTestService(),
             [
@@ -836,7 +842,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     private function generateDescribeException(CommandInterface $cmd)
     {
-        return Promise\rejection_for(new AwsException(
+        return Promise\Create::rejectionFor(new AwsException(
            'Test describe endpoints exception',
            $cmd
         ));
@@ -844,13 +850,13 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     private function generateGenericResult()
     {
-        return Promise\promise_for(new Result([]));
+        return Promise\Create::promiseFor(new Result([]));
     }
 
     private function generateInvalidEndpointException()
     {
         $message = 'Test invalid endpoint exception';
-        return Promise\rejection_for(new AwsException(
+        return Promise\Create::rejectionFor(new AwsException(
             $message,
             new Command('', []),
             [
@@ -863,7 +869,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     private function generate421Exception()
     {
         $message = 'Test invalid endpoint exception';
-        return Promise\rejection_for(new AwsException(
+        return Promise\Create::rejectionFor(new AwsException(
             $message,
             new Command('', []),
             [
@@ -876,7 +882,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     private function generateMultiDescribeResults()
     {
-        return Promise\promise_for(new Result([
+        return Promise\Create::promiseFor(new Result([
             'Endpoints' => [
                 [
                     'Address' => "discovered.com/some/path",
@@ -892,7 +898,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     private function generateSingleDescribeResult()
     {
-        return Promise\promise_for(new Result([
+        return Promise\Create::promiseFor(new Result([
             'Endpoints' => [
                 [
                     'Address' => 'discovered.com/some/path',
@@ -1148,5 +1154,35 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                 return [];
             }
         );
+    }
+
+    public function testEndpointDiscoveryUsedOnRequiredOperations()
+    {
+        $timestreamClient = $this->getTestClient('timestream-write');
+        $this->addMockResults($timestreamClient, [
+            new Result([
+                'Endpoints' => [
+                    [
+                        'Address' => 'ingest-cell1.timestream.eu-west-1.amazonaws.com',
+                        'CachePeriodInMinutes' => '10'
+                    ]
+                ]
+            ]),
+            []
+        ]);
+        $command = $timestreamClient->getCommand('writeRecords', [
+            'DatabaseName' => 'test',
+            'Records' => [['foo' => 'bar']],
+            'TableName' => 'someTable'
+        ]);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertEquals(
+                    'https://ingest-cell1.timestream.eu-west-1.amazonaws.com',
+                    (string) $req->getUri()
+                );
+            })
+        );
+        $timestreamClient->execute($command);
     }
 }

@@ -161,7 +161,9 @@
         "TransitiveTagKeys":{"shape":"tagKeyListType"},
         "ExternalId":{"shape":"externalIdType"},
         "SerialNumber":{"shape":"serialNumberType"},
-        "TokenCode":{"shape":"tokenCodeType"}
+        "TokenCode":{"shape":"tokenCodeType"},
+        "SourceIdentity":{"shape":"sourceIdentityType"},
+        "ProvidedContexts":{"shape":"ProvidedContextsListType"}
       }
     },
     "AssumeRoleResponse":{
@@ -169,7 +171,8 @@
       "members":{
         "Credentials":{"shape":"Credentials"},
         "AssumedRoleUser":{"shape":"AssumedRoleUser"},
-        "PackedPolicySize":{"shape":"nonNegativeIntegerType"}
+        "PackedPolicySize":{"shape":"nonNegativeIntegerType"},
+        "SourceIdentity":{"shape":"sourceIdentityType"}
       }
     },
     "AssumeRoleWithSAMLRequest":{
@@ -198,7 +201,8 @@
         "SubjectType":{"shape":"SubjectType"},
         "Issuer":{"shape":"Issuer"},
         "Audience":{"shape":"Audience"},
-        "NameQualifier":{"shape":"NameQualifier"}
+        "NameQualifier":{"shape":"NameQualifier"},
+        "SourceIdentity":{"shape":"sourceIdentityType"}
       }
     },
     "AssumeRoleWithWebIdentityRequest":{
@@ -226,7 +230,8 @@
         "AssumedRoleUser":{"shape":"AssumedRoleUser"},
         "PackedPolicySize":{"shape":"nonNegativeIntegerType"},
         "Provider":{"shape":"Issuer"},
-        "Audience":{"shape":"Audience"}
+        "Audience":{"shape":"Audience"},
+        "SourceIdentity":{"shape":"sourceIdentityType"}
       }
     },
     "AssumedRoleUser":{
@@ -431,6 +436,18 @@
         "arn":{"shape":"arnType"}
       }
     },
+    "ProvidedContext":{
+      "type":"structure",
+      "members":{
+        "ProviderArn":{"shape":"arnType"},
+        "ContextAssertion":{"shape":"contextAssertionType"}
+      }
+    },
+    "ProvidedContextsListType":{
+      "type":"list",
+      "member":{"shape":"ProvidedContext"},
+      "max":5
+    },
     "RegionDisabledException":{
       "type":"structure",
       "members":{
@@ -446,7 +463,8 @@
     "SAMLAssertionType":{
       "type":"string",
       "max":100000,
-      "min":4
+      "min":4,
+      "sensitive":true
     },
     "Subject":{"type":"string"},
     "SubjectType":{"type":"string"},
@@ -467,7 +485,10 @@
       "min":16,
       "pattern":"[\\w]*"
     },
-    "accessKeySecretType":{"type":"string"},
+    "accessKeySecretType":{
+      "type":"string",
+      "sensitive":true
+    },
     "accountType":{"type":"string"},
     "arnType":{
       "type":"string",
@@ -482,6 +503,12 @@
       "pattern":"[\\w+=,.@:-]*"
     },
     "clientTokenType":{
+      "type":"string",
+      "max":20000,
+      "min":4,
+      "sensitive":true
+    },
+    "contextAssertionType":{
       "type":"string",
       "max":2048,
       "min":4
@@ -548,6 +575,12 @@
       "max":2048,
       "min":1,
       "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
+    },
+    "sourceIdentityType":{
+      "type":"string",
+      "max":64,
+      "min":2,
+      "pattern":"[\\w+=,.@-]*"
     },
     "tagKeyListType":{
       "type":"list",

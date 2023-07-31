@@ -5,7 +5,7 @@ use Aws;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class FunctionsTest extends TestCase
 {
@@ -67,12 +67,11 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     *
      * @covers Aws\load_compiled_json()
      */
     public function testUsesJsonCompiler()
     {
+        $this->expectException(\InvalidArgumentException::class);
         Aws\load_compiled_json('/path/to/not/here.json');
     }
 
@@ -293,7 +292,8 @@ class FunctionsTest extends TestCase
                 'latest'     => '2006-03-01',
                 '2006-03-01' => '2006-03-01'
             ],
-            'endpoint'  => 's3'
+            'endpoint'  => 's3',
+            'serviceIdentifier' => 's3'
         ];
         $this->assertEquals($data, $manifest);
     }
@@ -310,17 +310,18 @@ class FunctionsTest extends TestCase
                 'latest'     => '2015-05-28',
                 '2015-05-28' => '2015-05-28'
             ],
-            'endpoint'  => 'data.iot'
+            'endpoint'  => 'data.iot',
+            'serviceIdentifier' => 'iot_data_plane'
         ];
         $this->assertEquals($data, $manifest);
     }
 
     /**
      * @covers Aws\manifest()
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidManifest()
     {
+        $this->expectException(\InvalidArgumentException::class);
         Aws\manifest('notarealservicename');
     }
 

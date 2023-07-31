@@ -37,8 +37,16 @@
                 },
                 {
                     "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "CreateStream": {
             "name": "CreateStream",
@@ -82,8 +90,16 @@
                 },
                 {
                     "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "DeleteStream": {
             "name": "DeleteStream",
@@ -103,8 +119,19 @@
                 },
                 {
                     "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "DeregisterStreamConsumer": {
             "name": "DeregisterStreamConsumer",
@@ -125,7 +152,12 @@
                 {
                     "shape": "InvalidArgumentException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "DescribeLimits": {
             "name": "DescribeLimits",
@@ -163,8 +195,19 @@
                 },
                 {
                     "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "DescribeStreamConsumer": {
             "name": "DescribeStreamConsumer",
@@ -188,7 +231,12 @@
                 {
                     "shape": "InvalidArgumentException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "DescribeStreamSummary": {
             "name": "DescribeStreamSummary",
@@ -208,8 +256,19 @@
                 },
                 {
                     "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "DisableEnhancedMonitoring": {
             "name": "DisableEnhancedMonitoring",
@@ -235,8 +294,16 @@
                 },
                 {
                     "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "EnableEnhancedMonitoring": {
             "name": "EnableEnhancedMonitoring",
@@ -262,8 +329,16 @@
                 },
                 {
                     "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "GetRecords": {
             "name": "GetRecords",
@@ -307,8 +382,16 @@
                 },
                 {
                     "shape": "KMSThrottlingException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "data"
+                }
+            }
         },
         "GetShardIterator": {
             "name": "GetShardIterator",
@@ -331,8 +414,16 @@
                 },
                 {
                     "shape": "ProvisionedThroughputExceededException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "data"
+                }
+            }
         },
         "IncreaseStreamRetentionPeriod": {
             "name": "IncreaseStreamRetentionPeriod",
@@ -355,8 +446,16 @@
                 },
                 {
                     "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "ListShards": {
             "name": "ListShards",
@@ -385,8 +484,16 @@
                 },
                 {
                     "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "ListStreamConsumers": {
             "name": "ListStreamConsumers",
@@ -416,7 +523,12 @@
                 {
                     "shape": "ResourceInUseException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "ListStreams": {
             "name": "ListStreams",
@@ -433,6 +545,12 @@
             "errors": [
                 {
                     "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "ExpiredNextTokenException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
                 }
             ]
         },
@@ -457,8 +575,16 @@
                 },
                 {
                     "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "MergeShards": {
             "name": "MergeShards",
@@ -481,8 +607,19 @@
                 },
                 {
                     "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "PutRecord": {
             "name": "PutRecord",
@@ -523,8 +660,16 @@
                 },
                 {
                     "shape": "KMSThrottlingException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "data"
+                }
+            }
         },
         "PutRecords": {
             "name": "PutRecords",
@@ -565,8 +710,16 @@
                 },
                 {
                     "shape": "KMSThrottlingException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "data"
+                }
+            }
         },
         "RegisterStreamConsumer": {
             "name": "RegisterStreamConsumer",
@@ -593,7 +746,12 @@
                 {
                     "shape": "ResourceNotFoundException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "RemoveTagsFromStream": {
             "name": "RemoveTagsFromStream",
@@ -616,8 +774,16 @@
                 },
                 {
                     "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "SplitShard": {
             "name": "SplitShard",
@@ -640,8 +806,19 @@
                 },
                 {
                     "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "StartStreamEncryption": {
             "name": "StartStreamEncryption",
@@ -682,8 +859,16 @@
                 },
                 {
                     "shape": "KMSThrottlingException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "StopStreamEncryption": {
             "name": "StopStreamEncryption",
@@ -706,8 +891,16 @@
                 },
                 {
                     "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         },
         "UpdateShardCount": {
             "name": "UpdateShardCount",
@@ -733,15 +926,63 @@
                 },
                 {
                     "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
-            ]
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
+        "UpdateStreamMode": {
+            "name": "UpdateStreamMode",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "UpdateStreamModeInput"
+            },
+            "errors": [
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
         }
     },
     "shapes": {
+        "AccessDeniedException": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "shape": "ErrorMessage"
+                }
+            },
+            "exception": true
+        },
         "AddTagsToStreamInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "Tags"
             ],
             "members": {
@@ -750,11 +991,42 @@
                 },
                 "Tags": {
                     "shape": "TagMap"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
         "BooleanObject": {
             "type": "boolean"
+        },
+        "ChildShard": {
+            "type": "structure",
+            "required": [
+                "ShardId",
+                "ParentShards",
+                "HashKeyRange"
+            ],
+            "members": {
+                "ShardId": {
+                    "shape": "ShardId"
+                },
+                "ParentShards": {
+                    "shape": "ShardIdList"
+                },
+                "HashKeyRange": {
+                    "shape": "HashKeyRange"
+                }
+            }
+        },
+        "ChildShardList": {
+            "type": "list",
+            "member": {
+                "shape": "ChildShard"
+            }
         },
         "Consumer": {
             "type": "structure",
@@ -840,8 +1112,7 @@
         "CreateStreamInput": {
             "type": "structure",
             "required": [
-                "StreamName",
-                "ShardCount"
+                "StreamName"
             ],
             "members": {
                 "StreamName": {
@@ -849,6 +1120,9 @@
                 },
                 "ShardCount": {
                     "shape": "PositiveIntegerObject"
+                },
+                "StreamModeDetails": {
+                    "shape": "StreamModeDetails"
                 }
             }
         },
@@ -860,7 +1134,6 @@
         "DecreaseStreamRetentionPeriodInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "RetentionPeriodHours"
             ],
             "members": {
@@ -869,20 +1142,29 @@
                 },
                 "RetentionPeriodHours": {
                     "shape": "RetentionPeriodHours"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
         "DeleteStreamInput": {
             "type": "structure",
-            "required": [
-                "StreamName"
-            ],
             "members": {
                 "StreamName": {
                     "shape": "StreamName"
                 },
                 "EnforceConsumerDeletion": {
                     "shape": "BooleanObject"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -890,13 +1172,19 @@
             "type": "structure",
             "members": {
                 "StreamARN": {
-                    "shape": "StreamARN"
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 },
                 "ConsumerName": {
                     "shape": "ConsumerName"
                 },
                 "ConsumerARN": {
-                    "shape": "ConsumerARN"
+                    "shape": "ConsumerARN",
+                    "contextParam": {
+                        "name": "ConsumerARN"
+                    }
                 }
             }
         },
@@ -908,7 +1196,9 @@
             "type": "structure",
             "required": [
                 "ShardLimit",
-                "OpenShardCount"
+                "OpenShardCount",
+                "OnDemandStreamCount",
+                "OnDemandStreamCountLimit"
             ],
             "members": {
                 "ShardLimit": {
@@ -916,6 +1206,12 @@
                 },
                 "OpenShardCount": {
                     "shape": "ShardCountObject"
+                },
+                "OnDemandStreamCount": {
+                    "shape": "OnDemandStreamCountObject"
+                },
+                "OnDemandStreamCountLimit": {
+                    "shape": "OnDemandStreamCountLimitObject"
                 }
             }
         },
@@ -923,13 +1219,19 @@
             "type": "structure",
             "members": {
                 "StreamARN": {
-                    "shape": "StreamARN"
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 },
                 "ConsumerName": {
                     "shape": "ConsumerName"
                 },
                 "ConsumerARN": {
-                    "shape": "ConsumerARN"
+                    "shape": "ConsumerARN",
+                    "contextParam": {
+                        "name": "ConsumerARN"
+                    }
                 }
             }
         },
@@ -946,9 +1248,6 @@
         },
         "DescribeStreamInput": {
             "type": "structure",
-            "required": [
-                "StreamName"
-            ],
             "members": {
                 "StreamName": {
                     "shape": "StreamName"
@@ -958,6 +1257,12 @@
                 },
                 "ExclusiveStartShardId": {
                     "shape": "ShardId"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -979,12 +1284,15 @@
         },
         "DescribeStreamSummaryInput": {
             "type": "structure",
-            "required": [
-                "StreamName"
-            ],
             "members": {
                 "StreamName": {
                     "shape": "StreamName"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1002,7 +1310,6 @@
         "DisableEnhancedMonitoringInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "ShardLevelMetrics"
             ],
             "members": {
@@ -1011,13 +1318,18 @@
                 },
                 "ShardLevelMetrics": {
                     "shape": "MetricsNameList"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
         "EnableEnhancedMonitoringInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "ShardLevelMetrics"
             ],
             "members": {
@@ -1026,6 +1338,12 @@
                 },
                 "ShardLevelMetrics": {
                     "shape": "MetricsNameList"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1061,6 +1379,9 @@
                 },
                 "DesiredShardLevelMetrics": {
                     "shape": "MetricsNameList"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN"
                 }
             }
         },
@@ -1099,6 +1420,12 @@
                 },
                 "Limit": {
                     "shape": "GetRecordsInputLimit"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1121,13 +1448,15 @@
                 },
                 "MillisBehindLatest": {
                     "shape": "MillisBehindLatest"
+                },
+                "ChildShards": {
+                    "shape": "ChildShardList"
                 }
             }
         },
         "GetShardIteratorInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "ShardId",
                 "ShardIteratorType"
             ],
@@ -1146,6 +1475,12 @@
                 },
                 "Timestamp": {
                     "shape": "Timestamp"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1179,7 +1514,6 @@
         "IncreaseStreamRetentionPeriodInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "RetentionPeriodHours"
             ],
             "members": {
@@ -1188,6 +1522,12 @@
                 },
                 "RetentionPeriodHours": {
                     "shape": "RetentionPeriodHours"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1295,6 +1635,15 @@
                 },
                 "StreamCreationTimestamp": {
                     "shape": "Timestamp"
+                },
+                "ShardFilter": {
+                    "shape": "ShardFilter"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1321,7 +1670,10 @@
             ],
             "members": {
                 "StreamARN": {
-                    "shape": "StreamARN"
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 },
                 "NextToken": {
                     "shape": "NextToken"
@@ -1358,6 +1710,9 @@
                 },
                 "ExclusiveStartStreamName": {
                     "shape": "StreamName"
+                },
+                "NextToken": {
+                    "shape": "NextToken"
                 }
             }
         },
@@ -1378,14 +1733,17 @@
                 },
                 "HasMoreStreams": {
                     "shape": "BooleanObject"
+                },
+                "NextToken": {
+                    "shape": "NextToken"
+                },
+                "StreamSummaries": {
+                    "shape": "StreamSummaryList"
                 }
             }
         },
         "ListTagsForStreamInput": {
             "type": "structure",
-            "required": [
-                "StreamName"
-            ],
             "members": {
                 "StreamName": {
                     "shape": "StreamName"
@@ -1395,6 +1753,12 @@
                 },
                 "Limit": {
                     "shape": "ListTagsForStreamInputLimit"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1421,7 +1785,6 @@
         "MergeShardsInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "ShardToMerge",
                 "AdjacentShardToMerge"
             ],
@@ -1434,6 +1797,12 @@
                 },
                 "AdjacentShardToMerge": {
                     "shape": "ShardId"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1467,6 +1836,16 @@
             "max": 1048576,
             "min": 1
         },
+        "OnDemandStreamCountLimitObject": {
+            "type": "integer",
+            "max": 1000000,
+            "min": 0
+        },
+        "OnDemandStreamCountObject": {
+            "type": "integer",
+            "max": 1000000,
+            "min": 0
+        },
         "PartitionKey": {
             "type": "string",
             "max": 256,
@@ -1474,7 +1853,6 @@
         },
         "PositiveIntegerObject": {
             "type": "integer",
-            "max": 100000,
             "min": 1
         },
         "ProvisionedThroughputExceededException": {
@@ -1489,7 +1867,6 @@
         "PutRecordInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "Data",
                 "PartitionKey"
             ],
@@ -1508,6 +1885,12 @@
                 },
                 "SequenceNumberForOrdering": {
                     "shape": "SequenceNumber"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1532,8 +1915,7 @@
         "PutRecordsInput": {
             "type": "structure",
             "required": [
-                "Records",
-                "StreamName"
+                "Records"
             ],
             "members": {
                 "Records": {
@@ -1541,6 +1923,12 @@
                 },
                 "StreamName": {
                     "shape": "StreamName"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1651,7 +2039,10 @@
             ],
             "members": {
                 "StreamARN": {
-                    "shape": "StreamARN"
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 },
                 "ConsumerName": {
                     "shape": "ConsumerName"
@@ -1672,7 +2063,6 @@
         "RemoveTagsFromStreamInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "TagKeys"
             ],
             "members": {
@@ -1681,6 +2071,12 @@
                 },
                 "TagKeys": {
                     "shape": "TagKeyList"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1703,9 +2099,7 @@
             "exception": true
         },
         "RetentionPeriodHours": {
-            "type": "integer",
-            "max": 168,
-            "min": 1
+            "type": "integer"
         },
         "ScalingType": {
             "type": "string",
@@ -1761,11 +2155,45 @@
             "max": 1000000,
             "min": 0
         },
+        "ShardFilter": {
+            "type": "structure",
+            "required": [
+                "Type"
+            ],
+            "members": {
+                "Type": {
+                    "shape": "ShardFilterType"
+                },
+                "ShardId": {
+                    "shape": "ShardId"
+                },
+                "Timestamp": {
+                    "shape": "Timestamp"
+                }
+            }
+        },
+        "ShardFilterType": {
+            "type": "string",
+            "enum": [
+                "AFTER_SHARD_ID",
+                "AT_TRIM_HORIZON",
+                "FROM_TRIM_HORIZON",
+                "AT_LATEST",
+                "AT_TIMESTAMP",
+                "FROM_TIMESTAMP"
+            ]
+        },
         "ShardId": {
             "type": "string",
             "max": 128,
             "min": 1,
             "pattern": "[a-zA-Z0-9_.-]+"
+        },
+        "ShardIdList": {
+            "type": "list",
+            "member": {
+                "shape": "ShardId"
+            }
         },
         "ShardIterator": {
             "type": "string",
@@ -1791,7 +2219,6 @@
         "SplitShardInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "ShardToSplit",
                 "NewStartingHashKey"
             ],
@@ -1804,13 +2231,18 @@
                 },
                 "NewStartingHashKey": {
                     "shape": "HashKey"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
         "StartStreamEncryptionInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "EncryptionType",
                 "KeyId"
             ],
@@ -1823,6 +2255,12 @@
                 },
                 "KeyId": {
                     "shape": "KeyId"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1846,7 +2284,6 @@
         "StopStreamEncryptionInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "EncryptionType",
                 "KeyId"
             ],
@@ -1859,6 +2296,12 @@
                 },
                 "KeyId": {
                     "shape": "KeyId"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -1866,7 +2309,7 @@
             "type": "string",
             "max": 2048,
             "min": 1,
-            "pattern": "arn:aws.*:kinesis:.*:\\d{12}:stream\/.*"
+            "pattern": "arn:aws.*:kinesis:.*:\\d{12}:stream\/\\S+"
         },
         "StreamDescription": {
             "type": "structure",
@@ -1889,6 +2332,9 @@
                 },
                 "StreamStatus": {
                     "shape": "StreamStatus"
+                },
+                "StreamModeDetails": {
+                    "shape": "StreamModeDetails"
                 },
                 "Shards": {
                     "shape": "ShardList"
@@ -1934,8 +2380,11 @@
                 "StreamStatus": {
                     "shape": "StreamStatus"
                 },
+                "StreamModeDetails": {
+                    "shape": "StreamModeDetails"
+                },
                 "RetentionPeriodHours": {
-                    "shape": "PositiveIntegerObject"
+                    "shape": "RetentionPeriodHours"
                 },
                 "StreamCreationTimestamp": {
                     "shape": "Timestamp"
@@ -1954,6 +2403,24 @@
                 },
                 "ConsumerCount": {
                     "shape": "ConsumerCountObject"
+                }
+            }
+        },
+        "StreamMode": {
+            "type": "string",
+            "enum": [
+                "PROVISIONED",
+                "ON_DEMAND"
+            ]
+        },
+        "StreamModeDetails": {
+            "type": "structure",
+            "required": [
+                "StreamMode"
+            ],
+            "members": {
+                "StreamMode": {
+                    "shape": "StreamMode"
                 }
             }
         },
@@ -1978,6 +2445,37 @@
                 "UPDATING"
             ]
         },
+        "StreamSummary": {
+            "type": "structure",
+            "required": [
+                "StreamName",
+                "StreamARN",
+                "StreamStatus"
+            ],
+            "members": {
+                "StreamName": {
+                    "shape": "StreamName"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN"
+                },
+                "StreamStatus": {
+                    "shape": "StreamStatus"
+                },
+                "StreamModeDetails": {
+                    "shape": "StreamModeDetails"
+                },
+                "StreamCreationTimestamp": {
+                    "shape": "Timestamp"
+                }
+            }
+        },
+        "StreamSummaryList": {
+            "type": "list",
+            "member": {
+                "shape": "StreamSummary"
+            }
+        },
         "SubscribeToShardEvent": {
             "type": "structure",
             "required": [
@@ -1994,6 +2492,9 @@
                 },
                 "MillisBehindLatest": {
                     "shape": "MillisBehindLatest"
+                },
+                "ChildShards": {
+                    "shape": "ChildShardList"
                 }
             },
             "event": true
@@ -2046,7 +2547,10 @@
             ],
             "members": {
                 "ConsumerARN": {
-                    "shape": "ConsumerARN"
+                    "shape": "ConsumerARN",
+                    "contextParam": {
+                        "name": "ConsumerARN"
+                    }
                 },
                 "ShardId": {
                     "shape": "ShardId"
@@ -2099,6 +2603,7 @@
             "member": {
                 "shape": "Tag"
             },
+            "max": 200,
             "min": 0
         },
         "TagMap": {
@@ -2109,7 +2614,7 @@
             "value": {
                 "shape": "TagValue"
             },
-            "max": 50,
+            "max": 200,
             "min": 1
         },
         "TagValue": {
@@ -2123,7 +2628,6 @@
         "UpdateShardCountInput": {
             "type": "structure",
             "required": [
-                "StreamName",
                 "TargetShardCount",
                 "ScalingType"
             ],
@@ -2136,6 +2640,12 @@
                 },
                 "ScalingType": {
                     "shape": "ScalingType"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
                 }
             }
         },
@@ -2150,8 +2660,38 @@
                 },
                 "TargetShardCount": {
                     "shape": "PositiveIntegerObject"
+                },
+                "StreamARN": {
+                    "shape": "StreamARN"
                 }
             }
+        },
+        "UpdateStreamModeInput": {
+            "type": "structure",
+            "required": [
+                "StreamARN",
+                "StreamModeDetails"
+            ],
+            "members": {
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
+                },
+                "StreamModeDetails": {
+                    "shape": "StreamModeDetails"
+                }
+            }
+        },
+        "ValidationException": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "shape": "ErrorMessage"
+                }
+            },
+            "exception": true
         }
     }
 }

@@ -6,7 +6,7 @@ use Aws\Api\Parser\DecodingEventStreamIterator;
 use Aws\Api\Parser\Exception\ParserException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Stream;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Api\Parser\DecodingEventStreamIterator
@@ -26,10 +26,10 @@ class DecodingEventStreamIteratorTest extends TestCase
             }
 
             $case = [
-                Psr7\stream_for(
+                Psr7\Utils::streamFor(
                     file_get_contents($file)
                 ),
-                Psr7\stream_for(
+                Psr7\Utils::streamFor(
                     file_get_contents(
                         str_replace('encoded', 'decoded', $file)
                     )
@@ -130,11 +130,10 @@ class DecodingEventStreamIteratorTest extends TestCase
                 $this->fail('Unsuccessful parse of event from valid source.');
             }
 
-            $this->assertContains(
+            $this->assertStringContainsStringIgnoringCase(
                 (string) $decodedData,
                 $e->getMessage(),
-                '',
-                true
+                ''
             );
         }
     }

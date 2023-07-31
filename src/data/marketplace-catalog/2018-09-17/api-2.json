@@ -30,6 +30,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/DeleteResourcePolicy"
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DescribeChangeSet":{
       "name":"DescribeChangeSet",
       "http":{
@@ -59,6 +75,22 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotSupportedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetResourcePolicy":{
+      "name":"GetResourcePolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/GetResourcePolicy"
+      },
+      "input":{"shape":"GetResourcePolicyRequest"},
+      "output":{"shape":"GetResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ]
@@ -94,6 +126,38 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListTagsForResource"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/PutResourcePolicy"
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "StartChangeSet":{
       "name":"StartChangeSet",
       "http":{
@@ -111,6 +175,38 @@
         {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"}
       ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/TagResource"
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UntagResource"
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
     }
   },
   "shapes":{
@@ -123,7 +219,7 @@
     "AccessDeniedException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"StringValue"}
+        "Message":{"shape":"ExceptionMessageContent"}
       },
       "error":{"httpStatusCode":403},
       "exception":true,
@@ -171,8 +267,16 @@
       "members":{
         "ChangeType":{"shape":"ChangeType"},
         "Entity":{"shape":"Entity"},
-        "Details":{"shape":"Json"}
+        "EntityTags":{"shape":"TagList"},
+        "Details":{"shape":"Json"},
+        "ChangeName":{"shape":"ChangeName"}
       }
+    },
+    "ChangeName":{
+      "type":"string",
+      "max":72,
+      "min":1,
+      "pattern":"^[a-zA-Z]$"
     },
     "ChangeSetDescription":{
       "type":"list",
@@ -217,7 +321,8 @@
         "ChangeType":{"shape":"ChangeType"},
         "Entity":{"shape":"Entity"},
         "Details":{"shape":"Json"},
-        "ErrorDetailList":{"shape":"ErrorDetailList"}
+        "ErrorDetailList":{"shape":"ErrorDetailList"},
+        "ChangeName":{"shape":"ChangeName"}
       }
     },
     "ChangeType":{
@@ -228,15 +333,31 @@
     },
     "ClientRequestToken":{
       "type":"string",
-      "max":36,
+      "max":64,
       "min":1,
-      "pattern":"^[\\w\\-]+$"
+      "pattern":"^[!-~]+$"
     },
     "DateTimeISO8601":{
       "type":"string",
       "max":20,
       "min":20,
       "pattern":"^([\\d]{4})\\-(1[0-2]|0[1-9])\\-(3[01]|0[1-9]|[12][\\d])T(2[0-3]|[01][\\d]):([0-5][\\d]):([0-5][\\d])Z$"
+    },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"ResourceARN",
+          "location":"querystring",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "DeleteResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "DescribeChangeSetRequest":{
       "type":"structure",
@@ -267,7 +388,7 @@
         "EndTime":{"shape":"DateTimeISO8601"},
         "Status":{"shape":"ChangeStatus"},
         "FailureCode":{"shape":"FailureCode"},
-        "FailureDescription":{"shape":"StringValue"},
+        "FailureDescription":{"shape":"ExceptionMessageContent"},
         "ChangeSet":{"shape":"ChangeSetDescription"}
       }
     },
@@ -296,7 +417,7 @@
         "EntityType":{"shape":"EntityType"},
         "EntityIdentifier":{"shape":"Identifier"},
         "EntityArn":{"shape":"ARN"},
-        "LastModifiedDate":{"shape":"StringValue"},
+        "LastModifiedDate":{"shape":"DateTimeISO8601"},
         "Details":{"shape":"Json"}
       }
     },
@@ -308,15 +429,21 @@
         "Identifier":{"shape":"Identifier"}
       }
     },
+    "EntityNameString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^\\\\S+[\\\\S\\\\s]*"
+    },
     "EntitySummary":{
       "type":"structure",
       "members":{
-        "Name":{"shape":"StringValue"},
+        "Name":{"shape":"EntityNameString"},
         "EntityType":{"shape":"EntityType"},
         "EntityId":{"shape":"ResourceId"},
         "EntityArn":{"shape":"ARN"},
-        "LastModifiedDate":{"shape":"StringValue"},
-        "Visibility":{"shape":"StringValue"}
+        "LastModifiedDate":{"shape":"DateTimeISO8601"},
+        "Visibility":{"shape":"VisibilityValue"}
       }
     },
     "EntitySummaryList":{
@@ -329,16 +456,28 @@
       "min":1,
       "pattern":"^[a-zA-Z]+$"
     },
+    "ErrorCodeString":{
+      "type":"string",
+      "max":72,
+      "min":1,
+      "pattern":"^[a-zA-Z_]+$"
+    },
     "ErrorDetail":{
       "type":"structure",
       "members":{
-        "ErrorCode":{"shape":"StringValue"},
-        "ErrorMessage":{"shape":"StringValue"}
+        "ErrorCode":{"shape":"ErrorCodeString"},
+        "ErrorMessage":{"shape":"ExceptionMessageContent"}
       }
     },
     "ErrorDetailList":{
       "type":"list",
       "member":{"shape":"ErrorDetail"}
+    },
+    "ExceptionMessageContent":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^(.)+$"
     },
     "FailureCode":{
       "type":"string",
@@ -366,6 +505,29 @@
       "min":1,
       "pattern":"^[a-zA-Z]+$"
     },
+    "FilterValueContent":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^(.)+$"
+    },
+    "GetResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"ResourceARN",
+          "location":"querystring",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "GetResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "Policy":{"shape":"ResourcePolicyJson"}
+      }
+    },
     "Identifier":{
       "type":"string",
       "max":255,
@@ -375,7 +537,7 @@
     "InternalServiceException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"StringValue"}
+        "Message":{"shape":"ExceptionMessageContent"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -387,6 +549,12 @@
       "min":2,
       "pattern":"^[\\s]*\\{[\\s\\S]*\\}[\\s]*$"
     },
+    "ListChangeSetsMaxResultInteger":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":1
+    },
     "ListChangeSetsRequest":{
       "type":"structure",
       "required":["Catalog"],
@@ -394,7 +562,7 @@
         "Catalog":{"shape":"Catalog"},
         "FilterList":{"shape":"FilterList"},
         "Sort":{"shape":"Sort"},
-        "MaxResults":{"shape":"MaxResultInteger"},
+        "MaxResults":{"shape":"ListChangeSetsMaxResultInteger"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -404,6 +572,12 @@
         "ChangeSetSummaryList":{"shape":"ChangeSetSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
+    },
+    "ListEntitiesMaxResultInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
     },
     "ListEntitiesRequest":{
       "type":"structure",
@@ -417,7 +591,8 @@
         "FilterList":{"shape":"FilterList"},
         "Sort":{"shape":"Sort"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"MaxResultInteger"}
+        "MaxResults":{"shape":"ListEntitiesMaxResultInteger"},
+        "OwnershipType":{"shape":"OwnershipType"}
       }
     },
     "ListEntitiesResponse":{
@@ -427,11 +602,19 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
-    "MaxResultInteger":{
-      "type":"integer",
-      "box":true,
-      "max":20,
-      "min":1
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ResourceARN"}
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"ResourceARN"},
+        "Tags":{"shape":"TagList"}
+      }
     },
     "NextToken":{
       "type":"string",
@@ -439,11 +622,40 @@
       "min":1,
       "pattern":"^[\\w+=.:@\\-\\/]$"
     },
+    "OwnershipType":{
+      "type":"string",
+      "enum":[
+        "SELF",
+        "SHARED"
+      ]
+    },
+    "PutResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Policy"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ResourceARN"},
+        "Policy":{"shape":"ResourcePolicyJson"}
+      }
+    },
+    "PutResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "RequestedChangeList":{
       "type":"list",
       "member":{"shape":"Change"},
       "max":20,
       "min":1
+    },
+    "ResourceARN":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^arn:[\\w+=/,.@-]+:aws-marketplace:[\\w+=/,.@-]*:[0-9]+:[\\w+=,.@-]+(/[\\w+=,.@-]+)*$"
     },
     "ResourceId":{
       "type":"string",
@@ -458,7 +670,7 @@
     "ResourceInUseException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"StringValue"}
+        "Message":{"shape":"ExceptionMessageContent"}
       },
       "error":{"httpStatusCode":423},
       "exception":true,
@@ -467,7 +679,7 @@
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"StringValue"}
+        "Message":{"shape":"ExceptionMessageContent"}
       },
       "error":{"httpStatusCode":404},
       "exception":true,
@@ -476,16 +688,22 @@
     "ResourceNotSupportedException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"StringValue"}
+        "Message":{"shape":"ExceptionMessageContent"}
       },
       "error":{"httpStatusCode":415},
       "exception":true,
       "synthetic":true
     },
+    "ResourcePolicyJson":{
+      "type":"string",
+      "max":10240,
+      "min":1,
+      "pattern":"^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"StringValue"}
+        "Message":{"shape":"ExceptionMessageContent"}
       },
       "error":{"httpStatusCode":402},
       "exception":true,
@@ -521,7 +739,11 @@
         "Catalog":{"shape":"Catalog"},
         "ChangeSet":{"shape":"RequestedChangeList"},
         "ChangeSetName":{"shape":"ChangeSetName"},
-        "ClientRequestToken":{"shape":"ClientRequestToken"}
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "ChangeSetTags":{"shape":"TagList"}
       }
     },
     "StartChangeSetResponse":{
@@ -531,20 +753,86 @@
         "ChangeSetArn":{"shape":"ARN"}
       }
     },
-    "StringValue":{"type":"string"},
+    "Tag":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"TagKey"},
+        "Value":{"shape":"TagValue"}
+      }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":200,
+      "min":1
+    },
+    "TagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":200,
+      "min":1
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Tags"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ResourceARN"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"StringValue"}
+        "Message":{"shape":"ExceptionMessageContent"}
       },
       "error":{"httpStatusCode":429},
       "exception":true,
       "synthetic":true
     },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "TagKeys"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ResourceARN"},
+        "TagKeys":{"shape":"TagKeyList"}
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "ValidationException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"StringValue"}
+        "Message":{"shape":"ExceptionMessageContent"}
       },
       "error":{"httpStatusCode":422},
       "exception":true,
@@ -552,9 +840,15 @@
     },
     "ValueList":{
       "type":"list",
-      "member":{"shape":"StringValue"},
+      "member":{"shape":"FilterValueContent"},
       "max":10,
       "min":1
+    },
+    "VisibilityValue":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z]+$"
     }
   }
 }

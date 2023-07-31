@@ -45,7 +45,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"MalformedPolicyDocumentException"},
         {"shape":"InternalServiceError"},
-        {"shape":"PreconditionNotMetException"}
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"DecryptionFailure"}
       ]
     },
     "DeleteResourcePolicy":{
@@ -59,7 +60,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceError"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "DeleteSecret":{
@@ -87,7 +89,8 @@
       "output":{"shape":"DescribeSecretResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceError"}
+        {"shape":"InternalServiceError"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "GetRandomPassword":{
@@ -115,7 +118,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceError"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "GetSecretValue":{
@@ -145,7 +149,8 @@
       "errors":[
         {"shape":"InvalidNextTokenException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceError"}
+        {"shape":"InternalServiceError"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "ListSecrets":{
@@ -194,6 +199,37 @@
         {"shape":"EncryptionFailure"},
         {"shape":"ResourceExistsException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"DecryptionFailure"}
+      ]
+    },
+    "RemoveRegionsFromReplication":{
+      "name":"RemoveRegionsFromReplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RemoveRegionsFromReplicationRequest"},
+      "output":{"shape":"RemoveRegionsFromReplicationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServiceError"}
+      ]
+    },
+    "ReplicateSecretToRegions":{
+      "name":"ReplicateSecretToRegions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ReplicateSecretToRegionsRequest"},
+      "output":{"shape":"ReplicateSecretToRegionsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceError"}
       ]
     },
@@ -225,6 +261,21 @@
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceError"},
         {"shape":"InvalidRequestException"}
+      ]
+    },
+    "StopReplicationToReplica":{
+      "name":"StopReplicationToReplica",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopReplicationToReplicaRequest"},
+      "output":{"shape":"StopReplicationToReplicaResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServiceError"}
       ]
     },
     "TagResource":{
@@ -272,7 +323,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"MalformedPolicyDocumentException"},
         {"shape":"InternalServiceError"},
-        {"shape":"PreconditionNotMetException"}
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"DecryptionFailure"}
       ]
     },
     "UpdateSecretVersionStage":{
@@ -309,6 +361,11 @@
     }
   },
   "shapes":{
+    "AddReplicaRegionListType":{
+      "type":"list",
+      "member":{"shape":"ReplicaRegionType"},
+      "min":1
+    },
     "AutomaticallyRotateAfterDaysType":{
       "type":"long",
       "max":1000,
@@ -348,7 +405,9 @@
         "KmsKeyId":{"shape":"KmsKeyIdType"},
         "SecretBinary":{"shape":"SecretBinaryType"},
         "SecretString":{"shape":"SecretStringType"},
-        "Tags":{"shape":"TagListType"}
+        "Tags":{"shape":"TagListType"},
+        "AddReplicaRegions":{"shape":"AddReplicaRegionListType"},
+        "ForceOverwriteReplicaSecret":{"shape":"BooleanType"}
       }
     },
     "CreateSecretResponse":{
@@ -356,7 +415,8 @@
       "members":{
         "ARN":{"shape":"SecretARNType"},
         "Name":{"shape":"SecretNameType"},
-        "VersionId":{"shape":"SecretVersionIdType"}
+        "VersionId":{"shape":"SecretVersionIdType"},
+        "ReplicationStatus":{"shape":"ReplicationStatusListType"}
       }
     },
     "CreatedDateType":{"type":"timestamp"},
@@ -445,18 +505,27 @@
           "shape":"DeletedDateType",
           "box":true
         },
+        "NextRotationDate":{"shape":"NextRotationDateType"},
         "Tags":{"shape":"TagListType"},
         "VersionIdsToStages":{"shape":"SecretVersionsToStagesMapType"},
         "OwningService":{"shape":"OwningServiceType"},
         "CreatedDate":{
           "shape":"TimestampType",
           "box":true
-        }
+        },
+        "PrimaryRegion":{"shape":"RegionType"},
+        "ReplicationStatus":{"shape":"ReplicationStatusListType"}
       }
     },
     "DescriptionType":{
       "type":"string",
       "max":2048
+    },
+    "DurationType":{
+      "type":"string",
+      "max":3,
+      "min":2,
+      "pattern":"[0-9h]+"
     },
     "EncryptionFailure":{
       "type":"structure",
@@ -489,14 +558,15 @@
         "name",
         "tag-key",
         "tag-value",
+        "primary-region",
+        "owning-service",
         "all"
       ]
     },
     "FilterValueStringType":{
       "type":"string",
       "max":512,
-      "min":1,
-      "pattern":"[a-zA-Z0-9 :_@\\/\\+\\=\\.\\-]+"
+      "pattern":"^\\!?[a-zA-Z0-9 :_@\\/\\+\\=\\.\\-\\!]*$"
     },
     "FilterValuesStringList":{
       "type":"list",
@@ -618,6 +688,10 @@
       },
       "exception":true
     },
+    "KmsKeyIdListType":{
+      "type":"list",
+      "member":{"shape":"KmsKeyIdType"}
+    },
     "KmsKeyIdType":{
       "type":"string",
       "max":2048,
@@ -661,6 +735,10 @@
     "ListSecretsRequest":{
       "type":"structure",
       "members":{
+        "IncludePlannedDeletion":{
+          "shape":"BooleanType",
+          "box":true
+        },
         "MaxResults":{
           "shape":"MaxResultsType",
           "box":true
@@ -694,6 +772,7 @@
       "max":512,
       "min":1
     },
+    "NextRotationDateType":{"type":"timestamp"},
     "NextTokenType":{
       "type":"string",
       "max":4096,
@@ -780,6 +859,75 @@
       "sensitive":true
     },
     "RecoveryWindowInDaysType":{"type":"long"},
+    "RegionType":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^([a-z]+-)+\\d+$"
+    },
+    "RemoveRegionsFromReplicationRequest":{
+      "type":"structure",
+      "required":[
+        "SecretId",
+        "RemoveReplicaRegions"
+      ],
+      "members":{
+        "SecretId":{"shape":"SecretIdType"},
+        "RemoveReplicaRegions":{"shape":"RemoveReplicaRegionListType"}
+      }
+    },
+    "RemoveRegionsFromReplicationResponse":{
+      "type":"structure",
+      "members":{
+        "ARN":{"shape":"SecretARNType"},
+        "ReplicationStatus":{"shape":"ReplicationStatusListType"}
+      }
+    },
+    "RemoveReplicaRegionListType":{
+      "type":"list",
+      "member":{"shape":"RegionType"},
+      "min":1
+    },
+    "ReplicaRegionType":{
+      "type":"structure",
+      "members":{
+        "Region":{"shape":"RegionType"},
+        "KmsKeyId":{"shape":"KmsKeyIdType"}
+      }
+    },
+    "ReplicateSecretToRegionsRequest":{
+      "type":"structure",
+      "required":[
+        "SecretId",
+        "AddReplicaRegions"
+      ],
+      "members":{
+        "SecretId":{"shape":"SecretIdType"},
+        "AddReplicaRegions":{"shape":"AddReplicaRegionListType"},
+        "ForceOverwriteReplicaSecret":{"shape":"BooleanType"}
+      }
+    },
+    "ReplicateSecretToRegionsResponse":{
+      "type":"structure",
+      "members":{
+        "ARN":{"shape":"SecretARNType"},
+        "ReplicationStatus":{"shape":"ReplicationStatusListType"}
+      }
+    },
+    "ReplicationStatusListType":{
+      "type":"list",
+      "member":{"shape":"ReplicationStatusType"}
+    },
+    "ReplicationStatusType":{
+      "type":"structure",
+      "members":{
+        "Region":{"shape":"RegionType"},
+        "KmsKeyId":{"shape":"KmsKeyIdType"},
+        "Status":{"shape":"StatusType"},
+        "StatusMessage":{"shape":"StatusMessageType"},
+        "LastAccessedDate":{"shape":"LastAccessedDateType"}
+      }
+    },
     "RequireEachIncludedTypeType":{"type":"boolean"},
     "ResourceExistsException":{
       "type":"structure",
@@ -819,7 +967,11 @@
           "idempotencyToken":true
         },
         "RotationLambdaARN":{"shape":"RotationLambdaARNType"},
-        "RotationRules":{"shape":"RotationRulesType"}
+        "RotationRules":{"shape":"RotationRulesType"},
+        "RotateImmediately":{
+          "shape":"BooleanType",
+          "box":true
+        }
       }
     },
     "RotateSecretResponse":{
@@ -845,8 +997,16 @@
         "AutomaticallyAfterDays":{
           "shape":"AutomaticallyRotateAfterDaysType",
           "box":true
-        }
+        },
+        "Duration":{"shape":"DurationType"},
+        "ScheduleExpression":{"shape":"ScheduleExpressionType"}
       }
+    },
+    "ScheduleExpressionType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[0-9A-Za-z\\(\\)#\\?\\*\\-\\/, ]+"
     },
     "SecretARNType":{
       "type":"string",
@@ -856,7 +1016,7 @@
     "SecretBinaryType":{
       "type":"blob",
       "max":65536,
-      "min":0,
+      "min":1,
       "sensitive":true
     },
     "SecretIdType":{
@@ -890,13 +1050,15 @@
           "box":true
         },
         "DeletedDate":{"shape":"DeletedDateType"},
+        "NextRotationDate":{"shape":"NextRotationDateType"},
         "Tags":{"shape":"TagListType"},
         "SecretVersionsToStages":{"shape":"SecretVersionsToStagesMapType"},
         "OwningService":{"shape":"OwningServiceType"},
         "CreatedDate":{
           "shape":"TimestampType",
           "box":true
-        }
+        },
+        "PrimaryRegion":{"shape":"RegionType"}
       }
     },
     "SecretListType":{
@@ -911,7 +1073,7 @@
     "SecretStringType":{
       "type":"string",
       "max":65536,
-      "min":0,
+      "min":1,
       "sensitive":true
     },
     "SecretVersionIdType":{
@@ -942,7 +1104,8 @@
         "CreatedDate":{
           "shape":"CreatedDateType",
           "box":true
-        }
+        },
+        "KmsKeyIds":{"shape":"KmsKeyIdListType"}
       }
     },
     "SecretVersionsListType":{
@@ -960,6 +1123,32 @@
         "asc",
         "desc"
       ]
+    },
+    "StatusMessageType":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
+    "StatusType":{
+      "type":"string",
+      "enum":[
+        "InSync",
+        "Failed",
+        "InProgress"
+      ]
+    },
+    "StopReplicationToReplicaRequest":{
+      "type":"structure",
+      "required":["SecretId"],
+      "members":{
+        "SecretId":{"shape":"SecretIdType"}
+      }
+    },
+    "StopReplicationToReplicaResponse":{
+      "type":"structure",
+      "members":{
+        "ARN":{"shape":"SecretARNType"}
+      }
     },
     "Tag":{
       "type":"structure",

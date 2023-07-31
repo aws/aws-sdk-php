@@ -15,8 +15,8 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware
- * @covers \Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
+ * @covers Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware
+ * @covers Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
  */
 class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 {
@@ -43,7 +43,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
      */
     protected function getMethod($name)
     {
-        $class = new \ReflectionClass('Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware');
+        $class = new \ReflectionClass(ApiCallAttemptMonitoringMiddleware::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         return $method;

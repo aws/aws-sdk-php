@@ -256,6 +256,19 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "UpdateLedgerPermissionsMode":{
+      "name":"UpdateLedgerPermissionsMode",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/ledgers/{name}/permissions-mode"
+      },
+      "input":{"shape":"UpdateLedgerPermissionsModeRequest"},
+      "output":{"shape":"UpdateLedgerPermissionsModeResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
     }
   },
   "shapes":{
@@ -300,7 +313,8 @@
         "Name":{"shape":"LedgerName"},
         "Tags":{"shape":"Tags"},
         "PermissionsMode":{"shape":"PermissionsMode"},
-        "DeletionProtection":{"shape":"DeletionProtection"}
+        "DeletionProtection":{"shape":"DeletionProtection"},
+        "KmsKey":{"shape":"KmsKey"}
       }
     },
     "CreateLedgerResponse":{
@@ -310,7 +324,9 @@
         "Arn":{"shape":"Arn"},
         "State":{"shape":"LedgerState"},
         "CreationDateTime":{"shape":"Timestamp"},
-        "DeletionProtection":{"shape":"DeletionProtection"}
+        "PermissionsMode":{"shape":"PermissionsMode"},
+        "DeletionProtection":{"shape":"DeletionProtection"},
+        "KmsKeyArn":{"shape":"Arn"}
       }
     },
     "DeleteLedgerRequest":{
@@ -394,13 +410,23 @@
         "Arn":{"shape":"Arn"},
         "State":{"shape":"LedgerState"},
         "CreationDateTime":{"shape":"Timestamp"},
-        "DeletionProtection":{"shape":"DeletionProtection"}
+        "PermissionsMode":{"shape":"PermissionsMode"},
+        "DeletionProtection":{"shape":"DeletionProtection"},
+        "EncryptionDescription":{"shape":"LedgerEncryptionDescription"}
       }
     },
     "Digest":{
       "type":"blob",
       "max":32,
       "min":32
+    },
+    "EncryptionStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "UPDATING",
+        "KMS_KEY_INACCESSIBLE"
+      ]
     },
     "ErrorCause":{
       "type":"string",
@@ -428,7 +454,8 @@
         "InclusiveStartTime":{"shape":"Timestamp"},
         "ExclusiveEndTime":{"shape":"Timestamp"},
         "S3ExportConfiguration":{"shape":"S3ExportConfiguration"},
-        "RoleArn":{"shape":"Arn"}
+        "RoleArn":{"shape":"Arn"},
+        "OutputFormat":{"shape":"OutputFormat"}
       }
     },
     "ExportJournalToS3Response":{
@@ -581,7 +608,8 @@
         "InclusiveStartTime":{"shape":"Timestamp"},
         "ExclusiveEndTime":{"shape":"Timestamp"},
         "S3ExportConfiguration":{"shape":"S3ExportConfiguration"},
-        "RoleArn":{"shape":"Arn"}
+        "RoleArn":{"shape":"Arn"},
+        "OutputFormat":{"shape":"OutputFormat"}
       }
     },
     "JournalS3ExportList":{
@@ -594,6 +622,22 @@
       "members":{
         "StreamArn":{"shape":"Arn"},
         "AggregationEnabled":{"shape":"Boolean"}
+      }
+    },
+    "KmsKey":{
+      "type":"string",
+      "max":1600
+    },
+    "LedgerEncryptionDescription":{
+      "type":"structure",
+      "required":[
+        "KmsKeyArn",
+        "EncryptionStatus"
+      ],
+      "members":{
+        "KmsKeyArn":{"shape":"Arn"},
+        "EncryptionStatus":{"shape":"EncryptionStatus"},
+        "InaccessibleKmsKeyDateTime":{"shape":"Timestamp"}
       }
     },
     "LedgerList":{
@@ -760,10 +804,21 @@
       "min":4,
       "pattern":"^[A-Za-z-0-9+/=]+$"
     },
+    "OutputFormat":{
+      "type":"string",
+      "enum":[
+        "ION_BINARY",
+        "ION_TEXT",
+        "JSON"
+      ]
+    },
     "ParameterName":{"type":"string"},
     "PermissionsMode":{
       "type":"string",
-      "enum":["ALLOW_ALL"]
+      "enum":[
+        "ALLOW_ALL",
+        "STANDARD"
+      ]
     },
     "ResourceAlreadyExistsException":{
       "type":"structure",
@@ -966,6 +1021,29 @@
       "members":{
       }
     },
+    "UpdateLedgerPermissionsModeRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "PermissionsMode"
+      ],
+      "members":{
+        "Name":{
+          "shape":"LedgerName",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "PermissionsMode":{"shape":"PermissionsMode"}
+      }
+    },
+    "UpdateLedgerPermissionsModeResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"LedgerName"},
+        "Arn":{"shape":"Arn"},
+        "PermissionsMode":{"shape":"PermissionsMode"}
+      }
+    },
     "UpdateLedgerRequest":{
       "type":"structure",
       "required":["Name"],
@@ -975,7 +1053,8 @@
           "location":"uri",
           "locationName":"name"
         },
-        "DeletionProtection":{"shape":"DeletionProtection"}
+        "DeletionProtection":{"shape":"DeletionProtection"},
+        "KmsKey":{"shape":"KmsKey"}
       }
     },
     "UpdateLedgerResponse":{
@@ -985,7 +1064,8 @@
         "Arn":{"shape":"Arn"},
         "State":{"shape":"LedgerState"},
         "CreationDateTime":{"shape":"Timestamp"},
-        "DeletionProtection":{"shape":"DeletionProtection"}
+        "DeletionProtection":{"shape":"DeletionProtection"},
+        "EncryptionDescription":{"shape":"LedgerEncryptionDescription"}
       }
     },
     "ValueHolder":{

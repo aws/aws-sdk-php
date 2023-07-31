@@ -29,6 +29,43 @@
       ],
       "idempotent":true
     },
+    "CancelPolicyGeneration":{
+      "name":"CancelPolicyGeneration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/policy/generation/{jobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelPolicyGenerationRequest"},
+      "output":{"shape":"CancelPolicyGenerationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "CreateAccessPreview":{
+      "name":"CreateAccessPreview",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/access-preview",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateAccessPreviewRequest"},
+      "output":{"shape":"CreateAccessPreviewResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "CreateAnalyzer":{
       "name":"CreateAnalyzer",
       "http":{
@@ -101,6 +138,23 @@
       ],
       "idempotent":true
     },
+    "GetAccessPreview":{
+      "name":"GetAccessPreview",
+      "http":{
+        "method":"GET",
+        "requestUri":"/access-preview/{accessPreviewId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAccessPreviewRequest"},
+      "output":{"shape":"GetAccessPreviewResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetAnalyzedResource":{
       "name":"GetAnalyzedResource",
       "http":{
@@ -161,6 +215,57 @@
       },
       "input":{"shape":"GetFindingRequest"},
       "output":{"shape":"GetFindingResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetGeneratedPolicy":{
+      "name":"GetGeneratedPolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy/generation/{jobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetGeneratedPolicyRequest"},
+      "output":{"shape":"GetGeneratedPolicyResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListAccessPreviewFindings":{
+      "name":"ListAccessPreviewFindings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/access-preview/{accessPreviewId}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAccessPreviewFindingsRequest"},
+      "output":{"shape":"ListAccessPreviewFindingsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListAccessPreviews":{
+      "name":"ListAccessPreviews",
+      "http":{
+        "method":"GET",
+        "requestUri":"/access-preview",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAccessPreviewsRequest"},
+      "output":{"shape":"ListAccessPreviewsResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
@@ -235,6 +340,22 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListPolicyGenerations":{
+      "name":"ListPolicyGenerations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy/generation",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPolicyGenerationsRequest"},
+      "output":{"shape":"ListPolicyGenerationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -251,6 +372,25 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
+    },
+    "StartPolicyGeneration":{
+      "name":"StartPolicyGeneration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/policy/generation",
+        "responseCode":200
+      },
+      "input":{"shape":"StartPolicyGenerationRequest"},
+      "output":{"shape":"StartPolicyGenerationResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "StartResourceScan":{
       "name":"StartResourceScan",
@@ -337,6 +477,22 @@
         {"shape":"AccessDeniedException"}
       ],
       "idempotent":true
+    },
+    "ValidatePolicy":{
+      "name":"ValidatePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/policy/validation",
+        "responseCode":200
+      },
+      "input":{"shape":"ValidatePolicyRequest"},
+      "output":{"shape":"ValidatePolicyResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
     }
   },
   "shapes":{
@@ -352,6 +508,128 @@
       },
       "exception":true
     },
+    "AccessPointArn":{
+      "type":"string",
+      "pattern":"arn:[^:]*:s3:[^:]*:[^:]*:accesspoint/.*"
+    },
+    "AccessPointPolicy":{"type":"string"},
+    "AccessPreview":{
+      "type":"structure",
+      "required":[
+        "id",
+        "analyzerArn",
+        "configurations",
+        "createdAt",
+        "status"
+      ],
+      "members":{
+        "id":{"shape":"AccessPreviewId"},
+        "analyzerArn":{"shape":"AnalyzerArn"},
+        "configurations":{"shape":"ConfigurationsMap"},
+        "createdAt":{"shape":"Timestamp"},
+        "status":{"shape":"AccessPreviewStatus"},
+        "statusReason":{"shape":"AccessPreviewStatusReason"}
+      }
+    },
+    "AccessPreviewFinding":{
+      "type":"structure",
+      "required":[
+        "id",
+        "resourceType",
+        "createdAt",
+        "changeType",
+        "status",
+        "resourceOwnerAccount"
+      ],
+      "members":{
+        "id":{"shape":"AccessPreviewFindingId"},
+        "existingFindingId":{"shape":"FindingId"},
+        "existingFindingStatus":{"shape":"FindingStatus"},
+        "principal":{"shape":"PrincipalMap"},
+        "action":{"shape":"ActionList"},
+        "condition":{"shape":"ConditionKeyMap"},
+        "resource":{"shape":"String"},
+        "isPublic":{"shape":"Boolean"},
+        "resourceType":{"shape":"ResourceType"},
+        "createdAt":{"shape":"Timestamp"},
+        "changeType":{"shape":"FindingChangeType"},
+        "status":{"shape":"FindingStatus"},
+        "resourceOwnerAccount":{"shape":"String"},
+        "error":{"shape":"String"},
+        "sources":{"shape":"FindingSourceList"}
+      }
+    },
+    "AccessPreviewFindingId":{"type":"string"},
+    "AccessPreviewFindingsList":{
+      "type":"list",
+      "member":{"shape":"AccessPreviewFinding"}
+    },
+    "AccessPreviewId":{
+      "type":"string",
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
+    "AccessPreviewStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLETED",
+        "CREATING",
+        "FAILED"
+      ]
+    },
+    "AccessPreviewStatusReason":{
+      "type":"structure",
+      "required":["code"],
+      "members":{
+        "code":{"shape":"AccessPreviewStatusReasonCode"}
+      }
+    },
+    "AccessPreviewStatusReasonCode":{
+      "type":"string",
+      "enum":[
+        "INTERNAL_ERROR",
+        "INVALID_CONFIGURATION"
+      ]
+    },
+    "AccessPreviewSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "analyzerArn",
+        "createdAt",
+        "status"
+      ],
+      "members":{
+        "id":{"shape":"AccessPreviewId"},
+        "analyzerArn":{"shape":"AnalyzerArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "status":{"shape":"AccessPreviewStatus"},
+        "statusReason":{"shape":"AccessPreviewStatusReason"}
+      }
+    },
+    "AccessPreviewsList":{
+      "type":"list",
+      "member":{"shape":"AccessPreviewSummary"}
+    },
+    "AclCanonicalId":{"type":"string"},
+    "AclGrantee":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"AclCanonicalId"},
+        "uri":{"shape":"AclUri"}
+      },
+      "union":true
+    },
+    "AclPermission":{
+      "type":"string",
+      "enum":[
+        "READ",
+        "WRITE",
+        "READ_ACP",
+        "WRITE_ACP",
+        "FULL_CONTROL"
+      ]
+    },
+    "AclUri":{"type":"string"},
     "ActionList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -359,26 +637,26 @@
     "AnalyzedResource":{
       "type":"structure",
       "required":[
-        "analyzedAt",
-        "createdAt",
-        "isPublic",
         "resourceArn",
-        "resourceOwnerAccount",
         "resourceType",
-        "updatedAt"
+        "createdAt",
+        "analyzedAt",
+        "updatedAt",
+        "isPublic",
+        "resourceOwnerAccount"
       ],
       "members":{
-        "actions":{"shape":"ActionList"},
-        "analyzedAt":{"shape":"Timestamp"},
-        "createdAt":{"shape":"Timestamp"},
-        "error":{"shape":"String"},
-        "isPublic":{"shape":"Boolean"},
         "resourceArn":{"shape":"ResourceArn"},
-        "resourceOwnerAccount":{"shape":"String"},
         "resourceType":{"shape":"ResourceType"},
+        "createdAt":{"shape":"Timestamp"},
+        "analyzedAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "isPublic":{"shape":"Boolean"},
+        "actions":{"shape":"ActionList"},
         "sharedVia":{"shape":"SharedViaList"},
         "status":{"shape":"FindingStatus"},
-        "updatedAt":{"shape":"Timestamp"}
+        "resourceOwnerAccount":{"shape":"String"},
+        "error":{"shape":"String"}
       }
     },
     "AnalyzedResourceSummary":{
@@ -400,7 +678,7 @@
     },
     "AnalyzerArn":{
       "type":"string",
-      "pattern":"^[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:analyzer/.{1,255}$"
+      "pattern":"[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:analyzer/.{1,255}"
     },
     "AnalyzerStatus":{
       "type":"string",
@@ -415,21 +693,21 @@
       "type":"structure",
       "required":[
         "arn",
-        "createdAt",
         "name",
-        "status",
-        "type"
+        "type",
+        "createdAt",
+        "status"
       ],
       "members":{
         "arn":{"shape":"AnalyzerArn"},
+        "name":{"shape":"Name"},
+        "type":{"shape":"Type"},
         "createdAt":{"shape":"Timestamp"},
         "lastResourceAnalyzed":{"shape":"String"},
         "lastResourceAnalyzedAt":{"shape":"Timestamp"},
-        "name":{"shape":"Name"},
-        "status":{"shape":"AnalyzerStatus"},
-        "statusReason":{"shape":"StatusReason"},
         "tags":{"shape":"TagsMap"},
-        "type":{"shape":"Type"}
+        "status":{"shape":"AnalyzerStatus"},
+        "statusReason":{"shape":"StatusReason"}
       }
     },
     "AnalyzersList":{
@@ -444,25 +722,25 @@
       ],
       "members":{
         "analyzerArn":{"shape":"AnalyzerArn"},
+        "ruleName":{"shape":"Name"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
-        },
-        "ruleName":{"shape":"Name"}
+        }
       }
     },
     "ArchiveRuleSummary":{
       "type":"structure",
       "required":[
-        "createdAt",
-        "filter",
         "ruleName",
+        "filter",
+        "createdAt",
         "updatedAt"
       ],
       "members":{
-        "createdAt":{"shape":"Timestamp"},
-        "filter":{"shape":"FilterCriteriaMap"},
         "ruleName":{"shape":"Name"},
+        "filter":{"shape":"FilterCriteriaMap"},
+        "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"}
       }
     },
@@ -474,11 +752,81 @@
       "type":"boolean",
       "box":true
     },
+    "CancelPolicyGenerationRequest":{
+      "type":"structure",
+      "required":["jobId"],
+      "members":{
+        "jobId":{
+          "shape":"JobId",
+          "location":"uri",
+          "locationName":"jobId"
+        }
+      }
+    },
+    "CancelPolicyGenerationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "CloudTrailArn":{
+      "type":"string",
+      "pattern":"arn:[^:]*:cloudtrail:[^:]*:[^:]*:trail/.{1,576}"
+    },
+    "CloudTrailDetails":{
+      "type":"structure",
+      "required":[
+        "trails",
+        "accessRole",
+        "startTime"
+      ],
+      "members":{
+        "trails":{"shape":"TrailList"},
+        "accessRole":{"shape":"RoleArn"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"}
+      }
+    },
+    "CloudTrailProperties":{
+      "type":"structure",
+      "required":[
+        "trailProperties",
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "trailProperties":{"shape":"TrailPropertiesList"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"}
+      }
+    },
     "ConditionKeyMap":{
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "Configuration":{
+      "type":"structure",
+      "members":{
+        "ebsSnapshot":{"shape":"EbsSnapshotConfiguration"},
+        "ecrRepository":{"shape":"EcrRepositoryConfiguration"},
+        "iamRole":{"shape":"IamRoleConfiguration"},
+        "efsFileSystem":{"shape":"EfsFileSystemConfiguration"},
+        "kmsKey":{"shape":"KmsKeyConfiguration"},
+        "rdsDbClusterSnapshot":{"shape":"RdsDbClusterSnapshotConfiguration"},
+        "rdsDbSnapshot":{"shape":"RdsDbSnapshotConfiguration"},
+        "secretsManagerSecret":{"shape":"SecretsManagerSecretConfiguration"},
+        "s3Bucket":{"shape":"S3BucketConfiguration"},
+        "snsTopic":{"shape":"SnsTopicConfiguration"},
+        "sqsQueue":{"shape":"SqsQueueConfiguration"}
+      },
+      "union":true
+    },
+    "ConfigurationsMap":{
+      "type":"map",
+      "key":{"shape":"ConfigurationsMapKey"},
+      "value":{"shape":"Configuration"}
+    },
+    "ConfigurationsMapKey":{"type":"string"},
     "ConflictException":{
       "type":"structure",
       "required":[
@@ -497,6 +845,28 @@
       },
       "exception":true
     },
+    "CreateAccessPreviewRequest":{
+      "type":"structure",
+      "required":[
+        "analyzerArn",
+        "configurations"
+      ],
+      "members":{
+        "analyzerArn":{"shape":"AnalyzerArn"},
+        "configurations":{"shape":"ConfigurationsMap"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateAccessPreviewResponse":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"AccessPreviewId"}
+      }
+    },
     "CreateAnalyzerRequest":{
       "type":"structure",
       "required":[
@@ -505,13 +875,13 @@
       ],
       "members":{
         "analyzerName":{"shape":"Name"},
+        "type":{"shape":"Type"},
         "archiveRules":{"shape":"InlineArchiveRulesList"},
+        "tags":{"shape":"TagsMap"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
-        },
-        "tags":{"shape":"TagsMap"},
-        "type":{"shape":"Type"}
+        }
       }
     },
     "CreateAnalyzerResponse":{
@@ -524,8 +894,8 @@
       "type":"structure",
       "required":[
         "analyzerName",
-        "filter",
-        "ruleName"
+        "ruleName",
+        "filter"
       ],
       "members":{
         "analyzerName":{
@@ -533,21 +903,21 @@
           "location":"uri",
           "locationName":"analyzerName"
         },
+        "ruleName":{"shape":"Name"},
+        "filter":{"shape":"FilterCriteriaMap"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
-        },
-        "filter":{"shape":"FilterCriteriaMap"},
-        "ruleName":{"shape":"Name"}
+        }
       }
     },
     "Criterion":{
       "type":"structure",
       "members":{
-        "contains":{"shape":"ValueList"},
         "eq":{"shape":"ValueList"},
-        "exists":{"shape":"Boolean"},
-        "neq":{"shape":"ValueList"}
+        "neq":{"shape":"ValueList"},
+        "contains":{"shape":"ValueList"},
+        "exists":{"shape":"Boolean"}
       }
     },
     "DeleteAnalyzerRequest":{
@@ -579,19 +949,52 @@
           "location":"uri",
           "locationName":"analyzerName"
         },
+        "ruleName":{
+          "shape":"Name",
+          "location":"uri",
+          "locationName":"ruleName"
+        },
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true,
           "location":"querystring",
           "locationName":"clientToken"
-        },
-        "ruleName":{
-          "shape":"Name",
-          "location":"uri",
-          "locationName":"ruleName"
         }
       }
     },
+    "EbsGroup":{"type":"string"},
+    "EbsGroupList":{
+      "type":"list",
+      "member":{"shape":"EbsGroup"}
+    },
+    "EbsSnapshotConfiguration":{
+      "type":"structure",
+      "members":{
+        "userIds":{"shape":"EbsUserIdList"},
+        "groups":{"shape":"EbsGroupList"},
+        "kmsKeyId":{"shape":"EbsSnapshotDataEncryptionKeyId"}
+      }
+    },
+    "EbsSnapshotDataEncryptionKeyId":{"type":"string"},
+    "EbsUserId":{"type":"string"},
+    "EbsUserIdList":{
+      "type":"list",
+      "member":{"shape":"EbsUserId"}
+    },
+    "EcrRepositoryConfiguration":{
+      "type":"structure",
+      "members":{
+        "repositoryPolicy":{"shape":"EcrRepositoryPolicy"}
+      }
+    },
+    "EcrRepositoryPolicy":{"type":"string"},
+    "EfsFileSystemConfiguration":{
+      "type":"structure",
+      "members":{
+        "fileSystemPolicy":{"shape":"EfsFileSystemPolicy"}
+      }
+    },
+    "EfsFileSystemPolicy":{"type":"string"},
     "FilterCriteriaMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -600,31 +1003,39 @@
     "Finding":{
       "type":"structure",
       "required":[
-        "analyzedAt",
+        "id",
+        "resourceType",
         "condition",
         "createdAt",
-        "id",
-        "resourceOwnerAccount",
-        "resourceType",
+        "analyzedAt",
+        "updatedAt",
         "status",
-        "updatedAt"
+        "resourceOwnerAccount"
       ],
       "members":{
+        "id":{"shape":"FindingId"},
+        "principal":{"shape":"PrincipalMap"},
         "action":{"shape":"ActionList"},
-        "analyzedAt":{"shape":"Timestamp"},
+        "resource":{"shape":"String"},
+        "isPublic":{"shape":"Boolean"},
+        "resourceType":{"shape":"ResourceType"},
         "condition":{"shape":"ConditionKeyMap"},
         "createdAt":{"shape":"Timestamp"},
-        "error":{"shape":"String"},
-        "id":{"shape":"FindingId"},
-        "isPublic":{"shape":"Boolean"},
-        "principal":{"shape":"PrincipalMap"},
-        "resource":{"shape":"String"},
-        "resourceOwnerAccount":{"shape":"String"},
-        "resourceType":{"shape":"ResourceType"},
-        "sources":{"shape":"FindingSourceList"},
+        "analyzedAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
         "status":{"shape":"FindingStatus"},
-        "updatedAt":{"shape":"Timestamp"}
+        "resourceOwnerAccount":{"shape":"String"},
+        "error":{"shape":"String"},
+        "sources":{"shape":"FindingSourceList"}
       }
+    },
+    "FindingChangeType":{
+      "type":"string",
+      "enum":[
+        "CHANGED",
+        "NEW",
+        "UNCHANGED"
+      ]
     },
     "FindingId":{"type":"string"},
     "FindingIdList":{
@@ -635,14 +1046,15 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "detail":{"shape":"FindingSourceDetail"},
-        "type":{"shape":"FindingSourceType"}
+        "type":{"shape":"FindingSourceType"},
+        "detail":{"shape":"FindingSourceDetail"}
       }
     },
     "FindingSourceDetail":{
       "type":"structure",
       "members":{
-        "accessPointArn":{"shape":"String"}
+        "accessPointArn":{"shape":"String"},
+        "accessPointAccount":{"shape":"String"}
       }
     },
     "FindingSourceList":{
@@ -654,7 +1066,8 @@
       "enum":[
         "POLICY",
         "BUCKET_ACL",
-        "S3_ACCESS_POINT"
+        "S3_ACCESS_POINT",
+        "S3_ACCESS_POINT_ACCOUNT"
       ]
     },
     "FindingStatus":{
@@ -675,35 +1088,89 @@
     "FindingSummary":{
       "type":"structure",
       "required":[
-        "analyzedAt",
+        "id",
+        "resourceType",
         "condition",
         "createdAt",
-        "id",
-        "resourceOwnerAccount",
-        "resourceType",
+        "analyzedAt",
+        "updatedAt",
         "status",
-        "updatedAt"
+        "resourceOwnerAccount"
       ],
       "members":{
+        "id":{"shape":"FindingId"},
+        "principal":{"shape":"PrincipalMap"},
         "action":{"shape":"ActionList"},
-        "analyzedAt":{"shape":"Timestamp"},
+        "resource":{"shape":"String"},
+        "isPublic":{"shape":"Boolean"},
+        "resourceType":{"shape":"ResourceType"},
         "condition":{"shape":"ConditionKeyMap"},
         "createdAt":{"shape":"Timestamp"},
-        "error":{"shape":"String"},
-        "id":{"shape":"FindingId"},
-        "isPublic":{"shape":"Boolean"},
-        "principal":{"shape":"PrincipalMap"},
-        "resource":{"shape":"String"},
-        "resourceOwnerAccount":{"shape":"String"},
-        "resourceType":{"shape":"ResourceType"},
-        "sources":{"shape":"FindingSourceList"},
+        "analyzedAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
         "status":{"shape":"FindingStatus"},
-        "updatedAt":{"shape":"Timestamp"}
+        "resourceOwnerAccount":{"shape":"String"},
+        "error":{"shape":"String"},
+        "sources":{"shape":"FindingSourceList"}
       }
     },
     "FindingsList":{
       "type":"list",
       "member":{"shape":"FindingSummary"}
+    },
+    "GeneratedPolicy":{
+      "type":"structure",
+      "required":["policy"],
+      "members":{
+        "policy":{"shape":"String"}
+      }
+    },
+    "GeneratedPolicyList":{
+      "type":"list",
+      "member":{"shape":"GeneratedPolicy"}
+    },
+    "GeneratedPolicyProperties":{
+      "type":"structure",
+      "required":["principalArn"],
+      "members":{
+        "isComplete":{"shape":"Boolean"},
+        "principalArn":{"shape":"PrincipalArn"},
+        "cloudTrailProperties":{"shape":"CloudTrailProperties"}
+      }
+    },
+    "GeneratedPolicyResult":{
+      "type":"structure",
+      "required":["properties"],
+      "members":{
+        "properties":{"shape":"GeneratedPolicyProperties"},
+        "generatedPolicies":{"shape":"GeneratedPolicyList"}
+      }
+    },
+    "GetAccessPreviewRequest":{
+      "type":"structure",
+      "required":[
+        "accessPreviewId",
+        "analyzerArn"
+      ],
+      "members":{
+        "accessPreviewId":{
+          "shape":"AccessPreviewId",
+          "location":"uri",
+          "locationName":"accessPreviewId"
+        },
+        "analyzerArn":{
+          "shape":"AnalyzerArn",
+          "location":"querystring",
+          "locationName":"analyzerArn"
+        }
+      }
+    },
+    "GetAccessPreviewResponse":{
+      "type":"structure",
+      "required":["accessPreview"],
+      "members":{
+        "accessPreview":{"shape":"AccessPreview"}
+      }
     },
     "GetAnalyzedResourceRequest":{
       "type":"structure",
@@ -799,15 +1266,55 @@
         "finding":{"shape":"Finding"}
       }
     },
+    "GetGeneratedPolicyRequest":{
+      "type":"structure",
+      "required":["jobId"],
+      "members":{
+        "jobId":{
+          "shape":"JobId",
+          "location":"uri",
+          "locationName":"jobId"
+        },
+        "includeResourcePlaceholders":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeResourcePlaceholders"
+        },
+        "includeServiceLevelTemplate":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeServiceLevelTemplate"
+        }
+      }
+    },
+    "GetGeneratedPolicyResponse":{
+      "type":"structure",
+      "required":[
+        "jobDetails",
+        "generatedPolicyResult"
+      ],
+      "members":{
+        "jobDetails":{"shape":"JobDetails"},
+        "generatedPolicyResult":{"shape":"GeneratedPolicyResult"}
+      }
+    },
+    "GranteePrincipal":{"type":"string"},
+    "IamRoleConfiguration":{
+      "type":"structure",
+      "members":{
+        "trustPolicy":{"shape":"IamTrustPolicy"}
+      }
+    },
+    "IamTrustPolicy":{"type":"string"},
     "InlineArchiveRule":{
       "type":"structure",
       "required":[
-        "filter",
-        "ruleName"
+        "ruleName",
+        "filter"
       ],
       "members":{
-        "filter":{"shape":"FilterCriteriaMap"},
-        "ruleName":{"shape":"Name"}
+        "ruleName":{"shape":"Name"},
+        "filter":{"shape":"FilterCriteriaMap"}
       }
     },
     "InlineArchiveRulesList":{
@@ -834,14 +1341,191 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "InternetConfiguration":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "IssueCode":{"type":"string"},
+    "IssuingAccount":{"type":"string"},
+    "JobDetails":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "status",
+        "startedOn"
+      ],
+      "members":{
+        "jobId":{"shape":"JobId"},
+        "status":{"shape":"JobStatus"},
+        "startedOn":{"shape":"Timestamp"},
+        "completedOn":{"shape":"Timestamp"},
+        "jobError":{"shape":"JobError"}
+      }
+    },
+    "JobError":{
+      "type":"structure",
+      "required":[
+        "code",
+        "message"
+      ],
+      "members":{
+        "code":{"shape":"JobErrorCode"},
+        "message":{"shape":"String"}
+      }
+    },
+    "JobErrorCode":{
+      "type":"string",
+      "enum":[
+        "AUTHORIZATION_ERROR",
+        "RESOURCE_NOT_FOUND_ERROR",
+        "SERVICE_QUOTA_EXCEEDED_ERROR",
+        "SERVICE_ERROR"
+      ]
+    },
+    "JobId":{"type":"string"},
+    "JobStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELED"
+      ]
+    },
+    "KmsConstraintsKey":{"type":"string"},
+    "KmsConstraintsMap":{
+      "type":"map",
+      "key":{"shape":"KmsConstraintsKey"},
+      "value":{"shape":"KmsConstraintsValue"}
+    },
+    "KmsConstraintsValue":{"type":"string"},
+    "KmsGrantConfiguration":{
+      "type":"structure",
+      "required":[
+        "operations",
+        "granteePrincipal",
+        "issuingAccount"
+      ],
+      "members":{
+        "operations":{"shape":"KmsGrantOperationsList"},
+        "granteePrincipal":{"shape":"GranteePrincipal"},
+        "retiringPrincipal":{"shape":"RetiringPrincipal"},
+        "constraints":{"shape":"KmsGrantConstraints"},
+        "issuingAccount":{"shape":"IssuingAccount"}
+      }
+    },
+    "KmsGrantConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"KmsGrantConfiguration"}
+    },
+    "KmsGrantConstraints":{
+      "type":"structure",
+      "members":{
+        "encryptionContextEquals":{"shape":"KmsConstraintsMap"},
+        "encryptionContextSubset":{"shape":"KmsConstraintsMap"}
+      }
+    },
+    "KmsGrantOperation":{
+      "type":"string",
+      "enum":[
+        "CreateGrant",
+        "Decrypt",
+        "DescribeKey",
+        "Encrypt",
+        "GenerateDataKey",
+        "GenerateDataKeyPair",
+        "GenerateDataKeyPairWithoutPlaintext",
+        "GenerateDataKeyWithoutPlaintext",
+        "GetPublicKey",
+        "ReEncryptFrom",
+        "ReEncryptTo",
+        "RetireGrant",
+        "Sign",
+        "Verify"
+      ]
+    },
+    "KmsGrantOperationsList":{
+      "type":"list",
+      "member":{"shape":"KmsGrantOperation"}
+    },
+    "KmsKeyConfiguration":{
+      "type":"structure",
+      "members":{
+        "keyPolicies":{"shape":"KmsKeyPoliciesMap"},
+        "grants":{"shape":"KmsGrantConfigurationsList"}
+      }
+    },
+    "KmsKeyPoliciesMap":{
+      "type":"map",
+      "key":{"shape":"PolicyName"},
+      "value":{"shape":"KmsKeyPolicy"}
+    },
+    "KmsKeyPolicy":{"type":"string"},
+    "LearnMoreLink":{"type":"string"},
+    "ListAccessPreviewFindingsRequest":{
+      "type":"structure",
+      "required":[
+        "accessPreviewId",
+        "analyzerArn"
+      ],
+      "members":{
+        "accessPreviewId":{
+          "shape":"AccessPreviewId",
+          "location":"uri",
+          "locationName":"accessPreviewId"
+        },
+        "analyzerArn":{"shape":"AnalyzerArn"},
+        "filter":{"shape":"FilterCriteriaMap"},
+        "nextToken":{"shape":"Token"},
+        "maxResults":{"shape":"Integer"}
+      }
+    },
+    "ListAccessPreviewFindingsResponse":{
+      "type":"structure",
+      "required":["findings"],
+      "members":{
+        "findings":{"shape":"AccessPreviewFindingsList"},
+        "nextToken":{"shape":"Token"}
+      }
+    },
+    "ListAccessPreviewsRequest":{
+      "type":"structure",
+      "required":["analyzerArn"],
+      "members":{
+        "analyzerArn":{
+          "shape":"AnalyzerArn",
+          "location":"querystring",
+          "locationName":"analyzerArn"
+        },
+        "nextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"Integer",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListAccessPreviewsResponse":{
+      "type":"structure",
+      "required":["accessPreviews"],
+      "members":{
+        "accessPreviews":{"shape":"AccessPreviewsList"},
+        "nextToken":{"shape":"Token"}
+      }
+    },
     "ListAnalyzedResourcesRequest":{
       "type":"structure",
       "required":["analyzerArn"],
       "members":{
         "analyzerArn":{"shape":"AnalyzerArn"},
-        "maxResults":{"shape":"Integer"},
+        "resourceType":{"shape":"ResourceType"},
         "nextToken":{"shape":"Token"},
-        "resourceType":{"shape":"ResourceType"}
+        "maxResults":{"shape":"Integer"}
       }
     },
     "ListAnalyzedResourcesResponse":{
@@ -855,15 +1539,15 @@
     "ListAnalyzersRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{
-          "shape":"Integer",
-          "location":"querystring",
-          "locationName":"maxResults"
-        },
         "nextToken":{
           "shape":"Token",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"Integer",
+          "location":"querystring",
+          "locationName":"maxResults"
         },
         "type":{
           "shape":"Type",
@@ -889,15 +1573,15 @@
           "location":"uri",
           "locationName":"analyzerName"
         },
-        "maxResults":{
-          "shape":"Integer",
-          "location":"querystring",
-          "locationName":"maxResults"
-        },
         "nextToken":{
           "shape":"Token",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"Integer",
+          "location":"querystring",
+          "locationName":"maxResults"
         }
       }
     },
@@ -915,9 +1599,9 @@
       "members":{
         "analyzerArn":{"shape":"AnalyzerArn"},
         "filter":{"shape":"FilterCriteriaMap"},
-        "maxResults":{"shape":"Integer"},
+        "sort":{"shape":"SortCriteria"},
         "nextToken":{"shape":"Token"},
-        "sort":{"shape":"SortCriteria"}
+        "maxResults":{"shape":"Integer"}
       }
     },
     "ListFindingsResponse":{
@@ -925,6 +1609,39 @@
       "required":["findings"],
       "members":{
         "findings":{"shape":"FindingsList"},
+        "nextToken":{"shape":"Token"}
+      }
+    },
+    "ListPolicyGenerationsRequest":{
+      "type":"structure",
+      "members":{
+        "principalArn":{
+          "shape":"PrincipalArn",
+          "location":"querystring",
+          "locationName":"principalArn"
+        },
+        "maxResults":{
+          "shape":"ListPolicyGenerationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListPolicyGenerationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "ListPolicyGenerationsResponse":{
+      "type":"structure",
+      "required":["policyGenerations"],
+      "members":{
+        "policyGenerations":{"shape":"PolicyGenerationList"},
         "nextToken":{"shape":"Token"}
       }
     },
@@ -945,11 +1662,49 @@
         "tags":{"shape":"TagsMap"}
       }
     },
+    "Locale":{
+      "type":"string",
+      "enum":[
+        "DE",
+        "EN",
+        "ES",
+        "FR",
+        "IT",
+        "JA",
+        "KO",
+        "PT_BR",
+        "ZH_CN",
+        "ZH_TW"
+      ]
+    },
+    "Location":{
+      "type":"structure",
+      "required":[
+        "path",
+        "span"
+      ],
+      "members":{
+        "path":{"shape":"PathElementList"},
+        "span":{"shape":"Span"}
+      }
+    },
+    "LocationList":{
+      "type":"list",
+      "member":{"shape":"Location"}
+    },
     "Name":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[A-Za-z][A-Za-z0-9_.-]*$"
+      "pattern":"[A-Za-z][A-Za-z0-9_.-]*"
+    },
+    "NetworkOriginConfiguration":{
+      "type":"structure",
+      "members":{
+        "vpcConfiguration":{"shape":"VpcConfiguration"},
+        "internetConfiguration":{"shape":"InternetConfiguration"}
+      },
+      "union":true
     },
     "OrderBy":{
       "type":"string",
@@ -958,11 +1713,131 @@
         "DESC"
       ]
     },
+    "PathElement":{
+      "type":"structure",
+      "members":{
+        "index":{"shape":"Integer"},
+        "key":{"shape":"String"},
+        "substring":{"shape":"Substring"},
+        "value":{"shape":"String"}
+      },
+      "union":true
+    },
+    "PathElementList":{
+      "type":"list",
+      "member":{"shape":"PathElement"}
+    },
+    "PolicyDocument":{"type":"string"},
+    "PolicyGeneration":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "principalArn",
+        "status",
+        "startedOn"
+      ],
+      "members":{
+        "jobId":{"shape":"JobId"},
+        "principalArn":{"shape":"PrincipalArn"},
+        "status":{"shape":"JobStatus"},
+        "startedOn":{"shape":"Timestamp"},
+        "completedOn":{"shape":"Timestamp"}
+      }
+    },
+    "PolicyGenerationDetails":{
+      "type":"structure",
+      "required":["principalArn"],
+      "members":{
+        "principalArn":{"shape":"PrincipalArn"}
+      }
+    },
+    "PolicyGenerationList":{
+      "type":"list",
+      "member":{"shape":"PolicyGeneration"}
+    },
+    "PolicyName":{"type":"string"},
+    "PolicyType":{
+      "type":"string",
+      "enum":[
+        "IDENTITY_POLICY",
+        "RESOURCE_POLICY",
+        "SERVICE_CONTROL_POLICY"
+      ]
+    },
+    "Position":{
+      "type":"structure",
+      "required":[
+        "line",
+        "column",
+        "offset"
+      ],
+      "members":{
+        "line":{"shape":"Integer"},
+        "column":{"shape":"Integer"},
+        "offset":{"shape":"Integer"}
+      }
+    },
+    "PrincipalArn":{
+      "type":"string",
+      "pattern":"arn:[^:]*:iam::[^:]*:(role|user)/.{1,576}"
+    },
     "PrincipalMap":{
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "RdsDbClusterSnapshotAccountId":{"type":"string"},
+    "RdsDbClusterSnapshotAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"RdsDbClusterSnapshotAccountId"}
+    },
+    "RdsDbClusterSnapshotAttributeName":{"type":"string"},
+    "RdsDbClusterSnapshotAttributeValue":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"RdsDbClusterSnapshotAccountIdsList"}
+      },
+      "union":true
+    },
+    "RdsDbClusterSnapshotAttributesMap":{
+      "type":"map",
+      "key":{"shape":"RdsDbClusterSnapshotAttributeName"},
+      "value":{"shape":"RdsDbClusterSnapshotAttributeValue"}
+    },
+    "RdsDbClusterSnapshotConfiguration":{
+      "type":"structure",
+      "members":{
+        "attributes":{"shape":"RdsDbClusterSnapshotAttributesMap"},
+        "kmsKeyId":{"shape":"RdsDbClusterSnapshotKmsKeyId"}
+      }
+    },
+    "RdsDbClusterSnapshotKmsKeyId":{"type":"string"},
+    "RdsDbSnapshotAccountId":{"type":"string"},
+    "RdsDbSnapshotAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"RdsDbSnapshotAccountId"}
+    },
+    "RdsDbSnapshotAttributeName":{"type":"string"},
+    "RdsDbSnapshotAttributeValue":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"RdsDbSnapshotAccountIdsList"}
+      },
+      "union":true
+    },
+    "RdsDbSnapshotAttributesMap":{
+      "type":"map",
+      "key":{"shape":"RdsDbSnapshotAttributeName"},
+      "value":{"shape":"RdsDbSnapshotAttributeValue"}
+    },
+    "RdsDbSnapshotConfiguration":{
+      "type":"structure",
+      "members":{
+        "attributes":{"shape":"RdsDbSnapshotAttributesMap"},
+        "kmsKeyId":{"shape":"RdsDbSnapshotKmsKeyId"}
+      }
+    },
+    "RdsDbSnapshotKmsKeyId":{"type":"string"},
     "ReasonCode":{
       "type":"string",
       "enum":[
@@ -972,9 +1847,13 @@
         "SERVICE_LINKED_ROLE_CREATION_FAILED"
       ]
     },
+    "RegionList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ResourceArn":{
       "type":"string",
-      "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*$"
+      "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1003,9 +1882,78 @@
         "AWS::Lambda::Function",
         "AWS::Lambda::LayerVersion",
         "AWS::KMS::Key",
-        "AWS::SecretsManager::Secret"
+        "AWS::SecretsManager::Secret",
+        "AWS::EFS::FileSystem",
+        "AWS::EC2::Snapshot",
+        "AWS::ECR::Repository",
+        "AWS::RDS::DBSnapshot",
+        "AWS::RDS::DBClusterSnapshot",
+        "AWS::SNS::Topic"
       ]
     },
+    "RetiringPrincipal":{"type":"string"},
+    "RoleArn":{
+      "type":"string",
+      "pattern":"arn:[^:]*:iam::[^:]*:role/.{1,576}"
+    },
+    "S3AccessPointConfiguration":{
+      "type":"structure",
+      "members":{
+        "accessPointPolicy":{"shape":"AccessPointPolicy"},
+        "publicAccessBlock":{"shape":"S3PublicAccessBlockConfiguration"},
+        "networkOrigin":{"shape":"NetworkOriginConfiguration"}
+      }
+    },
+    "S3AccessPointConfigurationsMap":{
+      "type":"map",
+      "key":{"shape":"AccessPointArn"},
+      "value":{"shape":"S3AccessPointConfiguration"}
+    },
+    "S3BucketAclGrantConfiguration":{
+      "type":"structure",
+      "required":[
+        "permission",
+        "grantee"
+      ],
+      "members":{
+        "permission":{"shape":"AclPermission"},
+        "grantee":{"shape":"AclGrantee"}
+      }
+    },
+    "S3BucketAclGrantConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"S3BucketAclGrantConfiguration"}
+    },
+    "S3BucketConfiguration":{
+      "type":"structure",
+      "members":{
+        "bucketPolicy":{"shape":"S3BucketPolicy"},
+        "bucketAclGrants":{"shape":"S3BucketAclGrantConfigurationsList"},
+        "bucketPublicAccessBlock":{"shape":"S3PublicAccessBlockConfiguration"},
+        "accessPoints":{"shape":"S3AccessPointConfigurationsMap"}
+      }
+    },
+    "S3BucketPolicy":{"type":"string"},
+    "S3PublicAccessBlockConfiguration":{
+      "type":"structure",
+      "required":[
+        "ignorePublicAcls",
+        "restrictPublicBuckets"
+      ],
+      "members":{
+        "ignorePublicAcls":{"shape":"Boolean"},
+        "restrictPublicBuckets":{"shape":"Boolean"}
+      }
+    },
+    "SecretsManagerSecretConfiguration":{
+      "type":"structure",
+      "members":{
+        "kmsKeyId":{"shape":"SecretsManagerSecretKmsId"},
+        "secretPolicy":{"shape":"SecretsManagerSecretPolicy"}
+      }
+    },
+    "SecretsManagerSecretKmsId":{"type":"string"},
+    "SecretsManagerSecretPolicy":{"type":"string"},
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -1028,11 +1976,59 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "SnsTopicConfiguration":{
+      "type":"structure",
+      "members":{
+        "topicPolicy":{"shape":"SnsTopicPolicy"}
+      }
+    },
+    "SnsTopicPolicy":{
+      "type":"string",
+      "max":30720,
+      "min":0
+    },
     "SortCriteria":{
       "type":"structure",
       "members":{
         "attributeName":{"shape":"String"},
         "orderBy":{"shape":"OrderBy"}
+      }
+    },
+    "Span":{
+      "type":"structure",
+      "required":[
+        "start",
+        "end"
+      ],
+      "members":{
+        "start":{"shape":"Position"},
+        "end":{"shape":"Position"}
+      }
+    },
+    "SqsQueueConfiguration":{
+      "type":"structure",
+      "members":{
+        "queuePolicy":{"shape":"SqsQueuePolicy"}
+      }
+    },
+    "SqsQueuePolicy":{"type":"string"},
+    "StartPolicyGenerationRequest":{
+      "type":"structure",
+      "required":["policyGenerationDetails"],
+      "members":{
+        "policyGenerationDetails":{"shape":"PolicyGenerationDetails"},
+        "cloudTrailDetails":{"shape":"CloudTrailDetails"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartPolicyGenerationResponse":{
+      "type":"structure",
+      "required":["jobId"],
+      "members":{
+        "jobId":{"shape":"JobId"}
       }
     },
     "StartResourceScanRequest":{
@@ -1043,7 +2039,8 @@
       ],
       "members":{
         "analyzerArn":{"shape":"AnalyzerArn"},
-        "resourceArn":{"shape":"ResourceArn"}
+        "resourceArn":{"shape":"ResourceArn"},
+        "resourceOwnerAccount":{"shape":"String"}
       }
     },
     "StatusReason":{
@@ -1054,6 +2051,17 @@
       }
     },
     "String":{"type":"string"},
+    "Substring":{
+      "type":"structure",
+      "required":[
+        "start",
+        "length"
+      ],
+      "members":{
+        "start":{"shape":"Integer"},
+        "length":{"shape":"Integer"}
+      }
+    },
     "TagKeys":{
       "type":"list",
       "member":{"shape":"String"}
@@ -1106,6 +2114,32 @@
       "timestampFormat":"iso8601"
     },
     "Token":{"type":"string"},
+    "Trail":{
+      "type":"structure",
+      "required":["cloudTrailArn"],
+      "members":{
+        "cloudTrailArn":{"shape":"CloudTrailArn"},
+        "regions":{"shape":"RegionList"},
+        "allRegions":{"shape":"Boolean"}
+      }
+    },
+    "TrailList":{
+      "type":"list",
+      "member":{"shape":"Trail"}
+    },
+    "TrailProperties":{
+      "type":"structure",
+      "required":["cloudTrailArn"],
+      "members":{
+        "cloudTrailArn":{"shape":"CloudTrailArn"},
+        "regions":{"shape":"RegionList"},
+        "allRegions":{"shape":"Boolean"}
+      }
+    },
+    "TrailPropertiesList":{
+      "type":"list",
+      "member":{"shape":"TrailProperties"}
+    },
     "Type":{
       "type":"string",
       "enum":[
@@ -1141,8 +2175,8 @@
       "type":"structure",
       "required":[
         "analyzerName",
-        "filter",
-        "ruleName"
+        "ruleName",
+        "filter"
       ],
       "members":{
         "analyzerName":{
@@ -1150,15 +2184,15 @@
           "location":"uri",
           "locationName":"analyzerName"
         },
-        "clientToken":{
-          "shape":"String",
-          "idempotencyToken":true
-        },
-        "filter":{"shape":"FilterCriteriaMap"},
         "ruleName":{
           "shape":"Name",
           "location":"uri",
           "locationName":"ruleName"
+        },
+        "filter":{"shape":"FilterCriteriaMap"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
         }
       }
     },
@@ -1170,13 +2204,84 @@
       ],
       "members":{
         "analyzerArn":{"shape":"AnalyzerArn"},
+        "status":{"shape":"FindingStatusUpdate"},
+        "ids":{"shape":"FindingIdList"},
+        "resourceArn":{"shape":"ResourceArn"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
+        }
+      }
+    },
+    "ValidatePolicyFinding":{
+      "type":"structure",
+      "required":[
+        "findingDetails",
+        "findingType",
+        "issueCode",
+        "learnMoreLink",
+        "locations"
+      ],
+      "members":{
+        "findingDetails":{"shape":"String"},
+        "findingType":{"shape":"ValidatePolicyFindingType"},
+        "issueCode":{"shape":"IssueCode"},
+        "learnMoreLink":{"shape":"LearnMoreLink"},
+        "locations":{"shape":"LocationList"}
+      }
+    },
+    "ValidatePolicyFindingList":{
+      "type":"list",
+      "member":{"shape":"ValidatePolicyFinding"}
+    },
+    "ValidatePolicyFindingType":{
+      "type":"string",
+      "enum":[
+        "ERROR",
+        "SECURITY_WARNING",
+        "SUGGESTION",
+        "WARNING"
+      ]
+    },
+    "ValidatePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "policyDocument",
+        "policyType"
+      ],
+      "members":{
+        "locale":{"shape":"Locale"},
+        "maxResults":{
+          "shape":"Integer",
+          "location":"querystring",
+          "locationName":"maxResults"
         },
-        "ids":{"shape":"FindingIdList"},
-        "resourceArn":{"shape":"ResourceArn"},
-        "status":{"shape":"FindingStatusUpdate"}
+        "nextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "policyDocument":{"shape":"PolicyDocument"},
+        "policyType":{"shape":"PolicyType"},
+        "validatePolicyResourceType":{"shape":"ValidatePolicyResourceType"}
+      }
+    },
+    "ValidatePolicyResourceType":{
+      "type":"string",
+      "enum":[
+        "AWS::S3::Bucket",
+        "AWS::S3::AccessPoint",
+        "AWS::S3::MultiRegionAccessPoint",
+        "AWS::S3ObjectLambda::AccessPoint",
+        "AWS::IAM::AssumeRolePolicyDocument"
+      ]
+    },
+    "ValidatePolicyResponse":{
+      "type":"structure",
+      "required":["findings"],
+      "members":{
+        "findings":{"shape":"ValidatePolicyFindingList"},
+        "nextToken":{"shape":"Token"}
       }
     },
     "ValidationException":{
@@ -1186,9 +2291,9 @@
         "reason"
       ],
       "members":{
-        "fieldList":{"shape":"ValidationExceptionFieldList"},
         "message":{"shape":"String"},
-        "reason":{"shape":"ValidationExceptionReason"}
+        "reason":{"shape":"ValidationExceptionReason"},
+        "fieldList":{"shape":"ValidationExceptionFieldList"}
       },
       "error":{
         "httpStatusCode":400,
@@ -1199,12 +2304,12 @@
     "ValidationExceptionField":{
       "type":"structure",
       "required":[
-        "message",
-        "name"
+        "name",
+        "message"
       ],
       "members":{
-        "message":{"shape":"String"},
-        "name":{"shape":"String"}
+        "name":{"shape":"String"},
+        "message":{"shape":"String"}
       }
     },
     "ValidationExceptionFieldList":{
@@ -1225,6 +2330,17 @@
       "member":{"shape":"String"},
       "max":20,
       "min":1
+    },
+    "VpcConfiguration":{
+      "type":"structure",
+      "required":["vpcId"],
+      "members":{
+        "vpcId":{"shape":"VpcId"}
+      }
+    },
+    "VpcId":{
+      "type":"string",
+      "pattern":"vpc-([0-9a-f]){8}(([0-9a-f]){9})?"
     }
   }
 }

@@ -7,7 +7,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\DynamoDb\WriteRequestBatch;
 use Aws\Test\UsesServiceTrait;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\DynamoDb\WriteRequestBatch
@@ -20,15 +20,15 @@ class WriteRequestBatchTest extends TestCase
     {
         // Ensure threshold is correctly calculated
         $batch = new WriteRequestBatch($this->getTestClient('DynamoDb'), ['pool_size' => 2]);
-        $this->assertSame(50, $this->readAttribute($batch, 'config')['threshold']);
+        $this->assertSame(50, $this->getPropertyValue($batch, 'config')['threshold']);
     }
 
     /**
      * @dataProvider getInvalidArgUseCases
-     * @expectedException \InvalidArgumentException
      */
     public function testInstantiationFailsOnInvalidArgs($config)
     {
+        $this->expectException(\InvalidArgumentException::class);
         new WriteRequestBatch($this->getTestClient('DynamoDb'), $config);
     }
 
@@ -61,15 +61,13 @@ class WriteRequestBatchTest extends TestCase
                     'data'  => ['DeleteRequest' => ['Key' => ['c' => 'd']]],
                 ]
             ],
-            $this->readAttribute($batch, 'queue')
+            $this->getPropertyValue($batch, 'queue')
         );
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testMustProvideTable()
     {
+        $this->expectException(\RuntimeException::class);
         $batch = new WriteRequestBatch($this->getTestClient('DynamoDb'));
         $batch->put(['a' => 'b']);
     }
@@ -108,7 +106,7 @@ class WriteRequestBatchTest extends TestCase
 
         // Ensure that 2 commands and 1 flush happened, with 1 left in queue.
         $this->assertEquals([1, 1], $commandCount);
-        $this->assertCount(1, $this->readAttribute($batch, 'queue'));
+        $this->assertCount(1, $this->getPropertyValue($batch, 'queue'));
     }
 
     public function testUnprocessedItemsAreRequeued()
@@ -142,11 +140,11 @@ class WriteRequestBatchTest extends TestCase
                     'data'  => ['DeleteRequest' => ['Key' => ['id' => ['S' => 'c']]]],
                 ]
             ],
-            $this->readAttribute($batch, 'queue')
+            $this->getPropertyValue($batch, 'queue')
         );
 
         $batch->flush();
-        $this->assertCount(0, $this->readAttribute($batch, 'queue'));
+        $this->assertCount(0, $this->getPropertyValue($batch, 'queue'));
     }
 
     public function testErrorsAreHandled()
@@ -189,13 +187,13 @@ class WriteRequestBatchTest extends TestCase
         $batch->put(['id' => ['S' => 'b']]);
 
         // There should be two items in the queue before we flush.
-        $this->assertCount(2, $this->readAttribute($batch, 'queue'));
+        $this->assertCount(2, $this->getPropertyValue($batch, 'queue'));
 
         $batch->flush(false);
 
         // The 1st response should be a ProvisionedThroughputExceededException,
         // which means the items should be re-queued, keeping the count at 2.
-        $this->assertCount(2, $this->readAttribute($batch, 'queue'));
+        $this->assertCount(2, $this->getPropertyValue($batch, 'queue'));
 
         $batch->flush();
         $batch->put(['id' => ['S' => 'c']]);
@@ -203,7 +201,7 @@ class WriteRequestBatchTest extends TestCase
 
         // After 2 complete flushes, the queue should be empty, and there should
         // been 2 unhandled errors that would have triggered the callback.
-        $this->assertCount(0, $this->readAttribute($batch, 'queue'));
+        $this->assertCount(0, $this->getPropertyValue($batch, 'queue'));
         $this->assertSame(2, $unhandledErrors);
     }
 }

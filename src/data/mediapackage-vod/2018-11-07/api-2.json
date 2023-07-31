@@ -12,6 +12,40 @@
     "uid": "mediapackage-vod-2018-11-07"
   },
   "operations": {
+    "ConfigureLogs": {
+      "errors": [
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "http": {
+        "method": "PUT",
+        "requestUri": "/packaging_groups/{id}/configure_logs",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ConfigureLogsRequest"
+      },
+      "name": "ConfigureLogs",
+      "output": {
+        "shape": "ConfigureLogsResponse"
+      }
+    },
     "CreateAsset": {
       "errors": [
         {
@@ -648,6 +682,10 @@
     },
     "CmafEncryption": {
       "members": {
+        "ConstantInitializationVector": {
+          "locationName": "constantInitializationVector",
+          "shape": "__string"
+        },
         "SpekeKeyProvider": {
           "locationName": "spekeKeyProvider",
           "shape": "SpekeKeyProvider"
@@ -668,6 +706,10 @@
           "locationName": "hlsManifests",
           "shape": "__listOfHlsManifest"
         },
+        "IncludeEncoderConfigurationInSegments": {
+          "locationName": "includeEncoderConfigurationInSegments",
+          "shape": "__boolean"
+        },
         "SegmentDurationSeconds": {
           "locationName": "segmentDurationSeconds",
           "shape": "__integer"
@@ -676,6 +718,65 @@
       "required": [
         "HlsManifests"
       ],
+      "type": "structure"
+    },
+    "ConfigureLogsParameters": {
+      "members": {
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        }
+      },
+      "type": "structure"
+    },
+    "ConfigureLogsRequest": {
+      "members": {
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
+        "Id": {
+          "location": "uri",
+          "locationName": "id",
+          "shape": "__string"
+        }
+      },
+      "required": [
+        "Id"
+      ],
+      "type": "structure"
+    },
+    "ConfigureLogsResponse": {
+      "members": {
+        "Arn": {
+          "locationName": "arn",
+          "shape": "__string"
+        },
+        "Authorization": {
+          "locationName": "authorization",
+          "shape": "Authorization"
+        },
+        "CreatedAt": {
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
+        "DomainName": {
+          "locationName": "domainName",
+          "shape": "__string"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
+        "Id": {
+          "locationName": "id",
+          "shape": "__string"
+        },
+        "Tags": {
+          "locationName": "tags",
+          "shape": "Tags"
+        }
+      },
       "type": "structure"
     },
     "CreateAssetRequest": {
@@ -801,6 +902,10 @@
           "locationName": "cmafPackage",
           "shape": "CmafPackage"
         },
+        "CreatedAt": {
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "DashPackage": {
           "locationName": "dashPackage",
           "shape": "DashPackage"
@@ -834,6 +939,10 @@
           "locationName": "authorization",
           "shape": "Authorization"
         },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
         "Id": {
           "locationName": "id",
           "shape": "__string"
@@ -858,9 +967,17 @@
           "locationName": "authorization",
           "shape": "Authorization"
         },
+        "CreatedAt": {
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "DomainName": {
           "locationName": "domainName",
           "shape": "__string"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
         },
         "Id": {
           "locationName": "id",
@@ -903,6 +1020,10 @@
           "locationName": "profile",
           "shape": "Profile"
         },
+        "ScteMarkersSource": {
+          "locationName": "scteMarkersSource",
+          "shape": "ScteMarkersSource"
+        },
         "StreamSelection": {
           "locationName": "streamSelection",
           "shape": "StreamSelection"
@@ -919,6 +1040,14 @@
         "Encryption": {
           "locationName": "encryption",
           "shape": "DashEncryption"
+        },
+        "IncludeEncoderConfigurationInSegments": {
+          "locationName": "includeEncoderConfigurationInSegments",
+          "shape": "__boolean"
+        },
+        "IncludeIframeOnlyStream": {
+          "locationName": "includeIframeOnlyStream",
+          "shape": "__boolean"
         },
         "PeriodTriggers": {
           "locationName": "periodTriggers",
@@ -1066,6 +1195,10 @@
           "locationName": "cmafPackage",
           "shape": "CmafPackage"
         },
+        "CreatedAt": {
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "DashPackage": {
           "locationName": "dashPackage",
           "shape": "DashPackage"
@@ -1108,6 +1241,10 @@
     },
     "DescribePackagingGroupResponse": {
       "members": {
+        "ApproximateAssetCount": {
+          "locationName": "approximateAssetCount",
+          "shape": "__integer"
+        },
         "Arn": {
           "locationName": "arn",
           "shape": "__string"
@@ -1116,9 +1253,17 @@
           "locationName": "authorization",
           "shape": "Authorization"
         },
+        "CreatedAt": {
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "DomainName": {
           "locationName": "domainName",
           "shape": "__string"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
         },
         "Id": {
           "locationName": "id",
@@ -1131,10 +1276,23 @@
       },
       "type": "structure"
     },
+    "EgressAccessLogs": {
+      "members": {
+        "LogGroupName": {
+          "locationName": "logGroupName",
+          "shape": "__string"
+        }
+      },
+      "type": "structure"
+    },
     "EgressEndpoint": {
       "members": {
         "PackagingConfigurationId": {
           "locationName": "packagingConfigurationId",
+          "shape": "__string"
+        },
+        "Status": {
+          "locationName": "status",
           "shape": "__string"
         },
         "Url": {
@@ -1142,6 +1300,23 @@
           "shape": "__string"
         }
       },
+      "type": "structure"
+    },
+    "EncryptionContractConfiguration": {
+      "members": {
+        "PresetSpeke20Audio": {
+          "locationName": "presetSpeke20Audio",
+          "shape": "PresetSpeke20Audio"
+        },
+        "PresetSpeke20Video": {
+          "locationName": "presetSpeke20Video",
+          "shape": "PresetSpeke20Video"
+        }
+      },
+      "required": [
+        "PresetSpeke20Audio",
+        "PresetSpeke20Video"
+      ],
       "type": "structure"
     },
     "EncryptionMethod": {
@@ -1222,6 +1397,10 @@
         "HlsManifests": {
           "locationName": "hlsManifests",
           "shape": "__listOfHlsManifest"
+        },
+        "IncludeDvbSubtitles": {
+          "locationName": "includeDvbSubtitles",
+          "shape": "__boolean"
         },
         "SegmentDurationSeconds": {
           "locationName": "segmentDurationSeconds",
@@ -1446,6 +1625,10 @@
           "locationName": "cmafPackage",
           "shape": "CmafPackage"
         },
+        "CreatedAt": {
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "DashPackage": {
           "locationName": "dashPackage",
           "shape": "DashPackage"
@@ -1525,6 +1708,10 @@
     },
     "PackagingGroup": {
       "members": {
+        "ApproximateAssetCount": {
+          "locationName": "approximateAssetCount",
+          "shape": "__integer"
+        },
         "Arn": {
           "locationName": "arn",
           "shape": "__string"
@@ -1533,9 +1720,17 @@
           "locationName": "authorization",
           "shape": "Authorization"
         },
+        "CreatedAt": {
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "DomainName": {
           "locationName": "domainName",
           "shape": "__string"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
         },
         "Id": {
           "locationName": "id",
@@ -1553,6 +1748,10 @@
         "Authorization": {
           "locationName": "authorization",
           "shape": "Authorization"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
         },
         "Id": {
           "locationName": "id",
@@ -1590,10 +1789,42 @@
       },
       "type": "structure"
     },
+    "PresetSpeke20Audio": {
+      "enum": [
+        "PRESET-AUDIO-1",
+        "PRESET-AUDIO-2",
+        "PRESET-AUDIO-3",
+        "SHARED",
+        "UNENCRYPTED"
+      ],
+      "type": "string"
+    },
+    "PresetSpeke20Video": {
+      "enum": [
+        "PRESET-VIDEO-1",
+        "PRESET-VIDEO-2",
+        "PRESET-VIDEO-3",
+        "PRESET-VIDEO-4",
+        "PRESET-VIDEO-5",
+        "PRESET-VIDEO-6",
+        "PRESET-VIDEO-7",
+        "PRESET-VIDEO-8",
+        "SHARED",
+        "UNENCRYPTED"
+      ],
+      "type": "string"
+    },
     "Profile": {
       "enum": [
         "NONE",
         "HBBTV_1_5"
+      ],
+      "type": "string"
+    },
+    "ScteMarkersSource": {
+      "enum": [
+        "SEGMENTS",
+        "MANIFEST"
       ],
       "type": "string"
     },
@@ -1620,6 +1851,10 @@
     },
     "SpekeKeyProvider": {
       "members": {
+        "EncryptionContractConfiguration": {
+          "locationName": "encryptionContractConfiguration",
+          "shape": "EncryptionContractConfiguration"
+        },
         "RoleArn": {
           "locationName": "roleArn",
           "shape": "__string"
@@ -1768,6 +2003,10 @@
     },
     "UpdatePackagingGroupResponse": {
       "members": {
+        "ApproximateAssetCount": {
+          "locationName": "approximateAssetCount",
+          "shape": "__integer"
+        },
         "Arn": {
           "locationName": "arn",
           "shape": "__string"
@@ -1776,9 +2015,17 @@
           "locationName": "authorization",
           "shape": "Authorization"
         },
+        "CreatedAt": {
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "DomainName": {
           "locationName": "domainName",
           "shape": "__string"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
         },
         "Id": {
           "locationName": "id",

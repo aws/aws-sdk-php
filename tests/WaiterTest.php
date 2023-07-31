@@ -6,6 +6,7 @@ use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
 use Aws\Result;
+use Aws\Waiter;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -14,7 +15,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Waiter
@@ -23,11 +24,9 @@ class WaiterTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testErrorOnBadConfig()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $provider = ApiProvider::defaultProvider();
         $client = new DynamoDbClient([
             'region' => 'foo',
@@ -44,11 +43,9 @@ class WaiterTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testErrorOnBadBeforeCallback()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $client = $this->getTestClient('DynamoDb');
         $client->waitUntil(
             'TableExists',
@@ -59,6 +56,7 @@ class WaiterTest extends TestCase
         );
     }
 
+    /** @doesNotPerformAssertions */
     public function testContinueWaitingOnHandlerError()
     {
         $retries = 10;
@@ -72,7 +70,7 @@ class WaiterTest extends TestCase
             ) use (&$retries) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response(200, [],
-                        Psr7\stream_for('{"Table":{"TableStatus":"ACTIVE"}}')
+                        Psr7\Utils::streamFor('{"Table":{"TableStatus":"ACTIVE"}}')
                     ));
                 }
 
@@ -91,6 +89,7 @@ class WaiterTest extends TestCase
         ]);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanCancel()
     {
         $client = $this->getTestClient('DynamoDb');
@@ -113,7 +112,7 @@ class WaiterTest extends TestCase
 
             $promise = new Promise\Promise();
             $promise->resolve(new Response(200, [],
-                Psr7\stream_for(sprintf(
+                Psr7\Utils::streamFor(sprintf(
                     '{"Table":{"TableStatus":"%s"}}',
                     $statusQueue[$iteration]
                 ))
@@ -221,6 +220,7 @@ class WaiterTest extends TestCase
                     'metadata' => [
                         'endpointPrefix' => 'foo',
                         'protocol' => 'json',
+                        'jsonVersion' => '1.1',
                         'signatureVersion' => 'v4'
                     ],
                 ];
@@ -260,7 +260,7 @@ class WaiterTest extends TestCase
      */
     public function testMatchers($matcher, $result, $acceptor, $expected)
     {
-        $waiter = new \ReflectionClass('Aws\Waiter');
+        $waiter = new \ReflectionClass(Waiter::class);
         $matcher = $waiter->getMethod($matcher);
         $matcher->setAccessible(true);
         $waiter = $waiter->newInstanceWithoutConstructor();
@@ -390,7 +390,7 @@ class WaiterTest extends TestCase
     {
         if (is_string($data)) {
             return new AwsException('ERROR',
-                $this->getMockBuilder('Aws\CommandInterface')->getMock(),
+                $this->getMockBuilder(CommandInterface::class)->getMock(),
                 [
                     'code'   => $data,
                     'result' => new Result(['@metadata' => ['statusCode' => 200]])

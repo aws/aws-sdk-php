@@ -11,11 +11,13 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use GuzzleHttp\Promise;
+use PHPUnit\Framework\Assert;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * Defines application features from the specific context.
  */
-class BlockingContext extends \PHPUnit_Framework_Assert implements Context, SnippetAcceptingContext
+class BlockingContext extends TestCase implements Context, SnippetAcceptingContext
 {
     use IntegUtils;
 
@@ -136,7 +138,7 @@ class BlockingContext extends \PHPUnit_Framework_Assert implements Context, Snip
      */
     public function iCanWaitOnAllPromises()
     {
-        Promise\all($this->promises)
+        Promise\Utils::all($this->promises)
             ->wait();
     }
 

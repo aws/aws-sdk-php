@@ -27,7 +27,7 @@ class CommandTest extends TestCase
     public function testHasDefaultHandlerList()
     {
         $c = new Command('foo');
-        $this->assertInstanceOf('Aws\HandlerList', $c->getHandlerList());
+        $this->assertInstanceOf(HandlerList::class, $c->getHandlerList());
     }
 
     public function testHasSpecifricHandlerList()

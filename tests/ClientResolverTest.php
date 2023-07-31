@@ -8,8 +8,10 @@ use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\CommandInterface;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Credentials\CredentialsInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Endpoint\Partition;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Exception\InvalidRegionException;
 use Aws\LruArrayCache;
 use Aws\S3\S3Client;
@@ -17,7 +19,7 @@ use Aws\HandlerList;
 use Aws\Sdk;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\ClientResolver
@@ -26,20 +28,19 @@ class ClientResolverTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Missing required client configuration options
-     */
     public function testEnsuresRequiredArgumentsAreProvided()
     {
+        $this->expectExceptionMessage("Missing required client configuration options");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([], new HandlerList());
     }
 
+    /** @doesNotPerformAssertions */
     public function testAddsValidationSubscriber()
     {
         $c = new DynamoDbClient([
-            'region'  => 'x',
+            'region' => 'x',
             'version' => 'latest'
         ]);
 
@@ -47,14 +48,16 @@ class ClientResolverTest extends TestCase
             // CreateTable requires actual input parameters.
             $c->createTable([]);
             $this->fail('Did not validate');
-        } catch (\InvalidArgumentException $e) {}
+        } catch (\InvalidArgumentException $e) {
+        }
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanDisableValidation()
     {
         $c = new DynamoDbClient([
-            'region'   => 'x',
-            'version'  => 'latest',
+            'region' => 'x',
+            'version' => 'latest',
             'validate' => false
         ]);
         $command = $c->getCommand('CreateTable');
@@ -63,11 +66,12 @@ class ClientResolverTest extends TestCase
         $c->execute($command);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanDisableSpecificValidationConstraints()
     {
         $c = new DynamoDbClient([
-            'region'   => 'x',
-            'version'  => 'latest',
+            'region' => 'x',
+            'version' => 'latest',
             'validate' => [
                 'min' => true,
                 'max' => true,
@@ -80,6 +84,16 @@ class ClientResolverTest extends TestCase
         $c->execute($command);
     }
 
+    public function testAppliesLegacyDefaults()
+    {
+        $c = new DynamoDbClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+        ]);
+        self::assertFalse(isset($c->getConfig()['retries']));
+        self::assertFalse(isset($c->getConfig()['sts_regional_endpoints']));
+    }
+
     public function testAppliesApiProvider()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -87,10 +101,10 @@ class ClientResolverTest extends TestCase
             return ['metadata' => ['protocol' => 'query']];
         };
         $conf = $r->resolve([
-            'service'      => 'dynamodb',
-            'region'       => 'x',
+            'service' => 'dynamodb',
+            'region' => 'x',
             'api_provider' => $provider,
-            'version'      => 'latest'
+            'version' => 'latest'
         ], new HandlerList());
         $this->assertArrayHasKey('api', $conf);
         $this->assertArrayHasKey('error_parser', $conf);
@@ -102,15 +116,15 @@ class ClientResolverTest extends TestCase
         $signingName = 'foo';
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
-            'service'      => 'dynamodb',
-            'region'       => 'x',
+            'service' => 'dynamodb',
+            'region' => 'x',
             'api_provider' => function () use ($signingName) {
                 return ['metadata' => [
                     'protocol' => 'query',
                     'signingName' => $signingName,
                 ]];
             },
-            'version'      => 'latest'
+            'version' => 'latest'
         ], new HandlerList());
         $this->assertSame($conf['config']['signing_name'], $signingName);
     }
@@ -119,12 +133,43 @@ class ClientResolverTest extends TestCase
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
-            'service'      => 'dynamodb',
-            'region'       => 'x',
+            'service' => 'dynamodb',
+            'region' => 'x',
             'use_aws_shared_config_files' => false,
-            'version'      => 'latest'
+            'version' => 'latest'
         ], new HandlerList());
         $this->assertSame($conf['use_aws_shared_config_files'], false);
+    }
+
+    public function testAppliesEndpointProviderV2()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'dynamodb',
+            'region' => 'x',
+            'version' => 'latest'
+        ], new HandlerList());
+        $this->assertInstanceOf(
+            EndpointProviderV2::class,
+            $conf['endpoint_provider']
+        );
+    }
+
+    public function testAppliesClientContextParams()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Invalid configuration value provided for "Accelerate". Expected boolean, but got string(3) "foo"'
+            . "\n\n" . 'Accelerate: (boolean)' . "\n\n"
+            . '  Enables this client to use S3 Transfer Acceleration endpoints.'
+        );
+        $conf = $r->resolve([
+            'service' => 's3',
+            'version' => 'latest',
+            'region' => 'x',
+            'Accelerate' => 'foo',
+        ], new HandlerList());
     }
 
     public function testPrefersApiProviderNameToPartitionName()
@@ -132,8 +177,8 @@ class ClientResolverTest extends TestCase
         $signingName = 'foo';
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
-            'service'      => 'dynamodb',
-            'region'       => 'x',
+            'service' => 'dynamodb',
+            'region' => 'x',
             'api_provider' => function () use ($signingName) {
                 return ['metadata' => [
                     'protocol' => 'query',
@@ -146,36 +191,32 @@ class ClientResolverTest extends TestCase
                     'signingName' => "not_$signingName",
                 ];
             },
-            'version'      => 'latest'
+            'version' => 'latest'
         ], new HandlerList());
         $this->assertSame($conf['config']['signing_name'], $signingName);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid configuration value provided for "foo". Expected string, but got int(-1)
-     */
     public function testValidatesInput()
     {
+        $this->expectExceptionMessage("Invalid configuration value provided for \"foo\". Expected string, but got int(-1)");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver([
             'foo' => [
-                'type'  => 'value',
+                'type' => 'value',
                 'valid' => ['string']
             ]
         ]);
         $r->resolve(['foo' => -1], new HandlerList());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid configuration value provided for "foo". Expected callable, but got string(1) "c"
-     */
     public function testValidatesCallables()
     {
+        $this->expectExceptionMessage("Invalid configuration value provided for \"foo\". Expected callable, but got string(1) \"c\"");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver([
             'foo' => [
-                'type'   => 'value',
-                'valid'  => ['callable']
+                'type' => 'value',
+                'valid' => ['callable']
             ]
         ]);
         $r->resolve(['foo' => 'c'], new HandlerList());
@@ -196,35 +237,33 @@ class ClientResolverTest extends TestCase
         $this->assertSame('callable_test', $res['foo']);
     }
 
-    public function checkCallable()
+    public static function checkCallable()
     {
         return "testcall";
     }
 
     public function testValidatesNotInvokeStringCallable()
     {
-        $callableFunction = '\Aws\test\ClientResolverTest::checkCallable';
+        $callableFunction = '\Aws\Test\ClientResolverTest::checkCallable';
         $r = new ClientResolver([
             'foo' => [
-                'type'    => 'value',
-                'valid'   => ['string'],
+                'type' => 'value',
+                'valid' => ['string'],
                 'default' => $callableFunction
             ]
         ]);
         $res = $r->resolve([], new HandlerList());
-        $this->assertInternalType('callable', $callableFunction);
+        $this->assertIsCallable($callableFunction);
         $this->assertSame(
-            '\Aws\test\ClientResolverTest::checkCallable',
+            '\Aws\Test\ClientResolverTest::checkCallable',
             $res['foo']
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Credentials must be an
-     */
     public function testValidatesCredentials()
     {
+        $this->expectExceptionMessage("Credentials must be an");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver([
             'credentials' => ClientResolver::getDefaultArguments()['credentials']
         ]);
@@ -244,7 +283,7 @@ class ClientResolverTest extends TestCase
             'version' => 'latest'
         ], new HandlerList());
         $c = call_user_func($conf['credentials'])->wait();
-        $this->assertInstanceOf('Aws\Credentials\CredentialsInterface', $c);
+        $this->assertInstanceOf(CredentialsInterface::class, $c);
         $this->assertSame('foo', $c->getAccessKeyId());
         $this->assertSame('bar', $c->getSecretKey());
         putenv(CredentialProvider::ENV_KEY . "=$key");
@@ -256,13 +295,13 @@ class ClientResolverTest extends TestCase
         $exp = time() + 500;
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
-            'service'     => 'sqs',
-            'region'      => 'x',
-            'version'     => 'latest',
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest',
             'credentials' => [
-                'key'     => 'foo',
-                'secret'  => 'baz',
-                'token'   => 'tok',
+                'key' => 'foo',
+                'secret' => 'baz',
+                'token' => 'tok',
                 'expires' => $exp
             ]
         ], new HandlerList());
@@ -273,50 +312,54 @@ class ClientResolverTest extends TestCase
         $this->assertSame($exp, $creds->getExpiration());
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanDisableRetries()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
-            'service'      => 's3',
-            'region'       => 'baz',
-            'version'      => 'latest',
-            'retries'      => 0,
+            'service' => 's3',
+            'region' => 'baz',
+            'version' => 'latest',
+            'retries' => 0,
         ], new HandlerList());
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanEnableRetries()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
-            'service'      => 's3',
-            'region'       => 'baz',
-            'version'      => 'latest',
-            'retries'      => 2,
+            'service' => 's3',
+            'region' => 'baz',
+            'version' => 'latest',
+            'retries' => 2,
         ], new HandlerList());
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanEnableRetriesStandardMode()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
-            'service'      => 's3',
-            'region'       => 'baz',
-            'version'      => 'latest',
-            'retries'      => [
+            'service' => 's3',
+            'region' => 'baz',
+            'version' => 'latest',
+            'retries' => [
                 'mode' => 'standard',
                 'max_attempts' => 10,
             ]
         ], new HandlerList());
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanEnableRetriesAdaptivedMode()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
-            'service'      => 's3',
-            'region'       => 'baz',
-            'version'      => 'latest',
-            'retries'      => [
+            'service' => 's3',
+            'region' => 'baz',
+            'version' => 'latest',
+            'retries' => [
                 'mode' => 'adaptive',
                 'max_attempts' => 10,
             ]
@@ -333,7 +376,7 @@ class ClientResolverTest extends TestCase
             'version' => 'latest'
         ], new HandlerList());
         $creds = call_user_func($conf['credentials'])->wait();
-        $this->assertInstanceOf('Aws\Credentials\Credentials', $creds);
+        $this->assertInstanceOf(Credentials::class, $creds);
         $this->assertSame('anonymous', $conf['config']['signature_version']);
     }
 
@@ -342,12 +385,12 @@ class ClientResolverTest extends TestCase
         $c = new Credentials('foo', 'bar');
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
-            'service'     => 'sqs',
-            'region'      => 'x',
+            'service' => 'sqs',
+            'region' => 'x',
             'credentials' => function () use ($c) {
-                return \GuzzleHttp\Promise\promise_for($c);
+                return \GuzzleHttp\Promise\Create::promiseFor($c);
             },
-            'version'     => 'latest'
+            'version' => 'latest'
         ], new HandlerList());
         $this->assertSame($c, call_user_func($conf['credentials'])->wait());
     }
@@ -370,7 +413,7 @@ EOT;
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
             'service' => 'sqs',
-            'region'  => 'x',
+            'region' => 'x',
             'profile' => 'foo',
             'version' => 'latest'
         ], new HandlerList());
@@ -387,10 +430,10 @@ EOT;
         $c = new Credentials('foo', 'bar');
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
-            'service'     => 'sqs',
-            'region'      => 'x',
+            'service' => 'sqs',
+            'region' => 'x',
             'credentials' => $c,
-            'version'     => 'latest'
+            'version' => 'latest'
         ], new HandlerList());
         $this->assertSame($c, call_user_func($conf['credentials'])->wait());
     }
@@ -417,10 +460,10 @@ EOT;
         $cache->set('aws_cached_instance_credentials', $c);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
-            'service'     => 'sqs',
-            'region'      => 'x',
+            'service' => 'sqs',
+            'region' => 'x',
             'credentials' => $cache,
-            'version'     => 'latest'
+            'version' => 'latest'
         ], new HandlerList());
 
         $cached = call_user_func($conf['credentials'])->wait();
@@ -437,10 +480,10 @@ EOT;
         $config = new Configuration(true, 'foohost', 1111, 'barid');
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $resolver->resolve([
-            'service'     => 'sqs',
-            'region'      => 'x',
-            'csm'         => $config,
-            'version'     => 'latest'
+            'service' => 'sqs',
+            'region' => 'x',
+            'csm' => $config,
+            'version' => 'latest'
         ], new HandlerList());
         $this->assertEquals($config->toArray(), $conf['csm']->toArray());
     }
@@ -451,10 +494,10 @@ EOT;
         $configArray = $config->toArray();
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $resolver->resolve([
-            'service'     => 'sqs',
-            'region'      => 'x',
-            'csm'         => $configArray,
-            'version'     => 'latest'
+            'service' => 'sqs',
+            'region' => 'x',
+            'csm' => $configArray,
+            'version' => 'latest'
         ], new HandlerList());
         $this->assertEquals($configArray, $conf['csm']);
     }
@@ -469,10 +512,10 @@ EOT;
         );
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $resolver->resolve([
-            'service'     => 'sqs',
-            'region'      => 'x',
-            'csm'         => false,
-            'version'     => 'latest'
+            'service' => 'sqs',
+            'region' => 'x',
+            'csm' => false,
+            'version' => 'latest'
         ], new HandlerList());
         $this->assertEquals($config->toArray(), $conf['csm']->toArray());
     }
@@ -504,17 +547,103 @@ EOT;
         $partition = new Partition($data['partitions'][0]);
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $resolver->resolve([
-            'service'                   => 'sts',
-            'region'                    => 'us-west-2',
-            'sts_regional_endpoints'    => 'regional',
-            'version'                   => 'latest',
-            'endpoint_provider'         => $partition
+            'service' => 'sts',
+            'region' => 'us-west-2',
+            'sts_regional_endpoints' => 'regional',
+            'version' => 'latest',
+            'endpoint_provider' => $partition
         ], new HandlerList());
 
         $this->assertSame(
             'https://sts.us-west-2.amazonaws.com',
             $conf['endpoint']
         );
+    }
+
+    /**
+     * @dataProvider dualStackEndpointCases
+     *
+     * @param $service
+     * @param $useDualstackEndpoint
+     * @param $useFipsEndpoint
+     * @param $region
+     * @param $expectedEndpoint
+     */
+    public function testDualstackEndpoints(
+        $service,
+        $useDualstackEndpoint,
+        $useFipsEndpoint,
+        $region,
+        $expectedEndpoint
+    )
+    {
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $resolver->resolve([
+            'service' => $service,
+            'region' => $region,
+            'use_dual_stack_endpoint' => $useDualstackEndpoint,
+            'use_fips_endpoint' => $useFipsEndpoint,
+            'version' => 'latest',
+        ], new HandlerList());
+
+        $this->assertSame(
+            'https://' . $expectedEndpoint,
+            $conf['endpoint']
+        );
+    }
+
+    public function dualStackEndpointCases()
+    {
+        return [
+            ["ec2", false, false, "us-west-2", "ec2.us-west-2.amazonaws.com",],
+            ["ec2", false, false, "us-east-2", "ec2.us-east-2.amazonaws.com",],
+            ["ec2", true, false, "us-west-2", "ec2.us-west-2.api.aws",],
+            ["ec2", true, false, "us-east-2", 'ec2.us-east-2.api.aws',],
+            ["s3", false, false, "us-west-2", "s3.us-west-2.amazonaws.com",],
+            ["s3", false, false, "us-east-2", "s3.us-east-2.amazonaws.com",],
+            ["s3", true, false, "us-west-2", 's3.dualstack.us-west-2.amazonaws.com'],
+            ["s3", true, false, "us-east-2", "s3.dualstack.us-east-2.amazonaws.com",],
+            ["route53", false, false, "us-west-2", "route53.amazonaws.com",],
+            ["route53", false, false, "us-east-2", "route53.amazonaws.com",],
+            ["route53", true, false, "us-west-2", "route53.us-west-2.api.aws",],
+            ["route53", true, false, "us-east-2", 'route53.us-east-2.api.aws',],
+            ["dynamodb", false, false, "us-west-2", "dynamodb.us-west-2.amazonaws.com",],
+            ["dynamodb", false, false, "us-east-2", "dynamodb.us-east-2.amazonaws.com",],
+            ["dynamodb", true, false, "us-west-2", "dynamodb.us-west-2.api.aws",],
+            ["dynamodb", true, false, "us-east-2", "dynamodb.us-east-2.api.aws",],
+            ["dynamodb", false, true, "us-west-2", "dynamodb-fips.us-west-2.amazonaws.com",],
+            ["dynamodb", true, true, "us-west-2", "dynamodb-fips.us-west-2.api.aws",],
+        ];
+    }
+
+    public function testDualstackEndpointInIsoPartition()
+    {
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $resolver->resolve([
+            'service' => 'ec2',
+            'region' => 'us-iso-east-1',
+            'use_dual_stack_endpoint' => false,
+            'use_fips_endpoint' => false,
+            'version' => 'latest',
+        ], new HandlerList());
+        $this->assertSame(
+            'https://ec2.us-iso-east-1.c2s.ic.gov',
+            $conf['endpoint']
+        );
+    }
+
+    public function testDualstackEndpointFailureOnDualstackNotSupported()
+    {
+        $this->expectException(\Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException::class);
+        $this->expectExceptionMessage("Dual-stack is not supported in ISO regions");
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        $resolver->resolve([
+            'service' => 'ec2',
+            'region' => 'us-iso-east-1',
+            'use_dual_stack_endpoint' => true,
+            'use_fips_endpoint' => false,
+            'version' => 'latest',
+        ], new HandlerList());
     }
 
     /**
@@ -532,11 +661,11 @@ EOT;
         $partition = new Partition($data['partitions'][0]);
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $resolver->resolve([
-            'service'                           => 's3',
-            'region'                            => 'us-east-1',
-            's3_us_east_1_regional_endpoint'    => $config,
-            'version'                           => 'latest',
-            'endpoint_provider'                 => $partition
+            'service' => 's3',
+            'region' => 'us-east-1',
+            's3_us_east_1_regional_endpoint' => $config,
+            'version' => 'latest',
+            'endpoint_provider' => $partition
         ], new HandlerList());
         $this->assertEquals($endpoint, $conf['endpoint']);
     }
@@ -549,28 +678,30 @@ EOT;
         ];
     }
 
+    /** @doesNotPerformAssertions */
     public function testAddsLoggerWithDebugSettings()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
-            'service'      => 'sqs',
-            'region'       => 'x',
+            'service' => 'sqs',
+            'region' => 'x',
             'retry_logger' => 'debug',
-            'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
-            'version'      => 'latest'
+            'endpoint' => 'http://us-east-1.foo.amazonaws.com',
+            'version' => 'latest'
         ], new HandlerList());
     }
 
+    /** @doesNotPerformAssertions */
     public function testAddsDebugListener()
     {
         $em = new HandlerList();
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
-            'service'  => 'sqs',
-            'region'   => 'x',
-            'debug'    => true,
+            'service' => 'sqs',
+            'region' => 'x',
+            'debug' => true,
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
-            'version'  => 'latest'
+            'version' => 'latest'
         ], $em);
     }
 
@@ -579,11 +710,11 @@ EOT;
         $em = new HandlerList();
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
-            'service'  => 'sqs',
-            'region'   => 'x',
-            'debug'    => false,
+            'service' => 'sqs',
+            'region' => 'x',
+            'debug' => false,
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
-            'version'  => 'latest'
+            'version' => 'latest'
         ], $em);
     }
 
@@ -592,9 +723,9 @@ EOT;
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
             'service' => 'sqs',
-            'region'  => 'x',
+            'region' => 'x',
             'version' => 'latest',
-            'http'    => ['foo' => 'bar']
+            'http' => ['foo' => 'bar']
         ], new HandlerList());
         $this->assertSame('bar', $conf['http']['foo']);
     }
@@ -602,75 +733,68 @@ EOT;
     public function testCanAddConfigOptions()
     {
         $c = new S3Client([
-            'version'         => 'latest',
-            'region'          => 'us-west-2',
+            'version' => 'latest',
+            'region' => 'us-west-2',
             'bucket_endpoint' => true,
         ]);
         $this->assertTrue($c->getConfig('bucket_endpoint'));
     }
 
+    /** @doesNotPerformAssertions */
     public function testSkipsNonRequiredKeys()
     {
         $r = new ClientResolver([
             'foo' => [
                 'valid' => ['int'],
-                'type'  => 'value'
+                'type' => 'value'
             ]
         ]);
         $r->resolve([], new HandlerList());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A "version" configuration value is required
-     */
     public function testHasSpecificMessageForMissingVersion()
     {
+        $this->expectExceptionMessage("A \"version\" configuration value is required");
+        $this->expectException(\InvalidArgumentException::class);
         $args = ClientResolver::getDefaultArguments()['version'];
         $r = new ClientResolver(['version' => $args]);
         $r->resolve(['service' => 'foo'], new HandlerList());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A "version" configuration value is required
-     */
     public function testHasSpecificMessageForNullRequiredVersion()
     {
+        $this->expectExceptionMessage("A \"version\" configuration value is required");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $list = new HandlerList();
         $r->resolve([
-            'service'     => 'foo',
-            'region'      => 'x',
+            'service' => 'foo',
+            'region' => 'x',
             'credentials' => ['key' => 'a', 'secret' => 'b'],
-            'version'     => null,
+            'version' => null,
         ], $list);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A "region" configuration value is required for the "foo" service
-     */
     public function testHasSpecificMessageForMissingRegion()
     {
+        $this->expectExceptionMessage("A \"region\" configuration value is required for the \"foo\" service");
+        $this->expectException(\InvalidArgumentException::class);
         $args = ClientResolver::getDefaultArguments()['region'];
         $r = new ClientResolver(['region' => $args]);
         $r->resolve(['service' => 'foo'], new HandlerList());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A "region" configuration value is required for the "foo" service
-     */
     public function testHasSpecificMessageForNullRequiredRegion()
     {
+        $this->expectExceptionMessage("A \"region\" configuration value is required for the \"foo\" service");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $list = new HandlerList();
         $r->resolve([
-            'service'     => 'foo',
-            'region'      => null,
+            'service' => 'foo',
+            'region' => null,
             'credentials' => ['key' => 'a', 'secret' => 'b'],
-            'version'     => 'latest',
+            'version' => 'latest',
         ], $list);
     }
 
@@ -679,14 +803,16 @@ EOT;
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $list = new HandlerList();
         $r->resolve([
-            'service'     => 'sqs',
-            'region'      => 'x',
+            'service' => 'sqs',
+            'region' => 'x',
             'credentials' => ['key' => 'a', 'secret' => 'b'],
-            'version'     => 'latest',
-            'debug'       => ['logfn' => function ($value) use (&$str) { $str .= $value; }]
+            'version' => 'latest',
+            'debug' => ['logfn' => function ($value) use (&$str) {
+                $str .= $value;
+            }]
         ], $list);
-        $value = $this->readAttribute($list, 'interposeFn');
-        $this->assertInternalType('callable', $value);
+        $value = $this->getPropertyValue($list, 'interposeFn');
+        $this->assertIsCallable($value);
     }
 
     public function testAppliesUserAgent()
@@ -694,14 +820,14 @@ EOT;
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $list = new HandlerList();
         $conf = $r->resolve([
-            'service'     => 'sqs',
-            'region'      => 'x',
+            'service' => 'sqs',
+            'region' => 'x',
             'credentials' => ['key' => 'a', 'secret' => 'b'],
-            'version'     => 'latest',
+            'version' => 'latest',
             'ua_append' => 'PHPUnit/Unit',
         ], $list);
         $this->assertArrayHasKey('ua_append', $conf);
-        $this->assertInternalType('array', $conf['ua_append']);
+        $this->assertIsArray($conf['ua_append']);
         $this->assertContains('PHPUnit/Unit', $conf['ua_append']);
         $this->assertContains('aws-sdk-php/' . Sdk::VERSION, $conf['ua_append']);
     }
@@ -715,25 +841,255 @@ EOT;
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request->expects($this->once())
+        $request->expects($this->exactly(2))
             ->method('getHeader')
-            ->with('User-Agent')
-            ->willReturn(['MockBuilder']);
+            ->withConsecutive(
+                ['X-Amz-User-Agent'],
+                ['User-Agent']
+            )
+            ->willReturnOnConsecutiveCalls(
+                ["MockBuilder"],
+                ['MockBuilder']
+            );
 
-        $request->expects($this->once())
+        $request->expects($this->exactly(2))
             ->method('withHeader')
-            ->with(
-                'User-Agent',
-                new \PHPUnit\Framework\Constraint\RegularExpression(
-                    '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
-                )
+            ->withConsecutive(
+                [
+                    'X-Amz-User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
+                    )
+                ],
+                [
+                    'User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
+                    )
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $request,
+                $request
             );
 
         $args = [];
-        $list = new HandlerList(function () {});
+        $list = new HandlerList(function () {
+        });
         ClientResolver::_apply_user_agent([], $args, $list);
         call_user_func($list->resolve(), $command, $request);
     }
+
+    public function testUserAgentAddsEndpointDiscoveryConfiguration()
+    {
+        $command = $this->getMockBuilder(CommandInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->exactly(2))
+            ->method('getHeader')
+            ->withConsecutive(
+                ['X-Amz-User-Agent'],
+                ['User-Agent']
+            )
+            ->willReturnOnConsecutiveCalls(
+                ["MockBuilder"],
+                ['MockBuilder']
+            );
+
+        $request->expects($this->exactly(2))
+            ->method('withHeader')
+            ->withConsecutive(
+                [
+                    'X-Amz-User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
+                    )
+                ],
+                [
+                    'User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
+                    )
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $request,
+                $request
+            );
+
+        $args = [
+            'endpoint_discovery' => new \Aws\EndpointDiscovery\Configuration (
+                true,
+                1000
+            ),
+        ];
+        $list = new HandlerList(function () {
+        });
+        ClientResolver::_apply_user_agent([], $args, $list);
+        call_user_func($list->resolve(), $command, $request);
+    }
+
+
+    public function testUserAgentAddsEndpointDiscoveryArray()
+    {
+        $command = $this->getMockBuilder(CommandInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->exactly(2))
+            ->method('getHeader')
+            ->withConsecutive(
+                ['X-Amz-User-Agent'],
+                ['User-Agent']
+            )
+            ->willReturnOnConsecutiveCalls(
+                ["MockBuilder"],
+                ['MockBuilder']
+            );
+
+        $request->expects($this->exactly(2))
+            ->method('withHeader')
+            ->withConsecutive(
+                [
+                    'X-Amz-User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
+                    )
+                ],
+                [
+                    'User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
+                    )
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $request,
+                $request
+            );
+
+        $args = [
+            'endpoint_discovery' => [
+                'enabled' => true,
+                'cache_limit' => 1000
+            ],
+        ];
+        $list = new HandlerList(function () {
+        });
+        ClientResolver::_apply_user_agent([], $args, $list);
+        call_user_func($list->resolve(), $command, $request);
+    }
+
+    public function testUserAgentAddsRetryModeConfiguration()
+    {
+        $command = $this->getMockBuilder(CommandInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->exactly(2))
+            ->method('getHeader')
+            ->withConsecutive(
+                ['X-Amz-User-Agent'],
+                ['User-Agent']
+            )
+            ->willReturnOnConsecutiveCalls(
+                ["MockBuilder"],
+                ['MockBuilder']
+            );
+
+        $request->expects($this->exactly(2))
+            ->method('withHeader')
+            ->withConsecutive(
+                [
+                    'X-Amz-User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#adaptive/'
+                    )
+                ],
+                [
+                    'User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#adaptive/'
+                    )
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $request,
+                $request
+            );
+
+        $args = [
+            'retries' => new \Aws\Retry\Configuration('adaptive', 10)
+        ];
+        $list = new HandlerList(function () {
+        });
+        ClientResolver::_apply_user_agent([], $args, $list);
+        call_user_func($list->resolve(), $command, $request);
+    }
+
+
+    public function testUserAgentAddsRetryWithArray()
+    {
+        $command = $this->getMockBuilder(CommandInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->exactly(2))
+            ->method('getHeader')
+            ->withConsecutive(
+                ['X-Amz-User-Agent'],
+                ['User-Agent']
+            )
+            ->willReturnOnConsecutiveCalls(
+                ["MockBuilder"],
+                ['MockBuilder']
+            );
+
+        $request->expects($this->exactly(2))
+            ->method('withHeader')
+            ->withConsecutive(
+                [
+                    'X-Amz-User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#standard/'
+                    )
+                ],
+                [
+                    'User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#standard/'
+                    )
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $request,
+                $request
+            );
+
+        $args = [
+            'retries' => [
+                'mode' => 'standard',
+            ],
+        ];
+        $list = new HandlerList(function () {
+        });
+        ClientResolver::_apply_user_agent([], $args, $list);
+        call_user_func($list->resolve(), $command, $request);
+    }
+
 
     /**
      * @dataProvider statValueProvider
@@ -787,10 +1143,11 @@ EOT;
      */
     public function testResolvesValuesReturnedByEndpointProvider(
         array $args,
-        $argName,
-        $expected,
-        $override
-    ) {
+              $argName,
+              $expected,
+              $override
+    )
+    {
         $resolverArgs = array_intersect_key(
             ClientResolver::getDefaultArguments(),
             array_flip(['endpoint_provider', 'service', 'region', 'scheme', $argName])
@@ -850,9 +1207,10 @@ EOT;
      */
     public function testSigningValuesAreFetchedFromPartition(
         array $args,
-        $argName,
-        $expected
-    ) {
+              $argName,
+              $expected
+    )
+    {
         $resolverArgs = array_intersect_key(
             ClientResolver::getDefaultArguments(),
             array_flip(['endpoint_provider', 'endpoint', 'service', 'region', $argName])
@@ -878,7 +1236,7 @@ EOT;
             [
                 ['service' => 'iot', 'region' => 'us-west-2'] + $invocationArgs,
                 'signing_name',
-                'execute-api',
+                'iot',
             ],
             // signingRegion
             [
@@ -898,9 +1256,12 @@ EOT;
     public function testIdempotencyTokenMiddlewareAddedAsAppropriate(
         $value,
         $shouldAddIdempotencyMiddleware
-    ){
+    )
+    {
         $args = [
-            'api' => new Service([], function () { return []; }),
+            'api' => new Service([], function () {
+                return [];
+            }),
         ];
         $list = new HandlerList;
 
@@ -916,7 +1277,9 @@ EOT;
             [false, false],
             ['truthy', false],
             ['openssl_random_pseudo_bytes', true],
-            [function ($length) { return 'foo'; }, true],
+            [function ($length) {
+                return 'foo';
+            }, true],
         ];
     }
 
@@ -969,5 +1332,91 @@ EOT;
                 new InvalidRegionException('Region must be a valid RFC host label.'),
             ],
         ];
+    }
+
+    public function invalidDisableRequestCompressionValues()
+    {
+        return [
+            ['foo'],
+            [ 1 ],
+            [function () {return 'nothing';}]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidDisableRequestCompressionValues
+     */
+    public function testInvalidDisableRequestCompressionTypeThrowsException($invalidType)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/Invalid configuration value provided/');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+            'disable_request_compression' => $invalidType
+        ], $list);
+        $this->assertArrayHasKey('disable_request_compression', $conf);
+        $this->assertFalse($conf['disable_request_compression']);
+    }
+
+    public function testDisableRequestCompressionDefault()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+        ], $list);
+        $this->assertArrayHasKey('disable_request_compression', $conf);
+        $this->assertFalse($conf['disable_request_compression']);
+    }
+
+    public function invalidMinCompressionSizeValues()
+    {
+        return [
+            [ true ],
+            [ 'foo' ],
+            [function () {return 'nothing';}],
+            [ 99999999 ],
+            [ -1 ]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidMinCompressionSizeValues
+     */
+    public function testInvalidMinCompressionSizeValues($invalidType)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/Invalid configuration value provided/');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+            'request_min_compression_size_bytes' => $invalidType
+        ], $list);
+    }
+
+    public function testMinCompressionSizeDefault()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+        ], $list);
+        $this->assertArrayHasKey('request_min_compression_size_bytes', $conf);
+        $this->assertEquals(10240, $conf['request_min_compression_size_bytes']);
     }
 }

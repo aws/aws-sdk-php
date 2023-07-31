@@ -277,6 +277,19 @@
         {"shape":"InvalidNextTokenException"}
       ]
     },
+    "GetSavingsPlanPurchaseRecommendationDetails":{
+      "name":"GetSavingsPlanPurchaseRecommendationDetails",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetSavingsPlanPurchaseRecommendationDetailsRequest"},
+      "output":{"shape":"GetSavingsPlanPurchaseRecommendationDetailsResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"DataUnavailableException"}
+      ]
+    },
     "GetSavingsPlansCoverage":{
       "name":"GetSavingsPlansCoverage",
       "http":{
@@ -361,6 +374,19 @@
         {"shape":"UnresolvableUsageUnitException"}
       ]
     },
+    "ListCostAllocationTags":{
+      "name":"ListCostAllocationTags",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCostAllocationTagsRequest"},
+      "output":{"shape":"ListCostAllocationTagsResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidNextTokenException"}
+      ]
+    },
     "ListCostCategoryDefinitions":{
       "name":"ListCostCategoryDefinitions",
       "http":{
@@ -373,6 +399,33 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "ListSavingsPlansPurchaseRecommendationGeneration":{
+      "name":"ListSavingsPlansPurchaseRecommendationGeneration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSavingsPlansPurchaseRecommendationGenerationRequest"},
+      "output":{"shape":"ListSavingsPlansPurchaseRecommendationGenerationResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"DataUnavailableException"}
+      ]
+    },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "ProvideAnomalyFeedback":{
       "name":"ProvideAnomalyFeedback",
       "http":{
@@ -382,6 +435,48 @@
       "input":{"shape":"ProvideAnomalyFeedbackRequest"},
       "output":{"shape":"ProvideAnomalyFeedbackResponse"},
       "errors":[
+        {"shape":"LimitExceededException"}
+      ]
+    },
+    "StartSavingsPlansPurchaseRecommendationGeneration":{
+      "name":"StartSavingsPlansPurchaseRecommendationGeneration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartSavingsPlansPurchaseRecommendationGenerationRequest"},
+      "output":{"shape":"StartSavingsPlansPurchaseRecommendationGenerationResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"GenerationExistsException"},
+        {"shape":"DataUnavailableException"}
+      ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
         {"shape":"LimitExceededException"}
       ]
     },
@@ -410,6 +505,18 @@
         {"shape":"LimitExceededException"},
         {"shape":"UnknownMonitorException"},
         {"shape":"UnknownSubscriptionException"}
+      ]
+    },
+    "UpdateCostAllocationTagsStatus":{
+      "name":"UpdateCostAllocationTagsStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCostAllocationTagsStatusRequest"},
+      "output":{"shape":"UpdateCostAllocationTagsStatusResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"}
       ]
     },
     "UpdateCostCategoryDefinition":{
@@ -515,7 +622,6 @@
       "required":[
         "MonitorArnList",
         "Subscribers",
-        "Threshold",
         "Frequency",
         "SubscriptionName"
       ],
@@ -524,9 +630,14 @@
         "AccountId":{"shape":"GenericString"},
         "MonitorArnList":{"shape":"MonitorArnList"},
         "Subscribers":{"shape":"Subscribers"},
-        "Threshold":{"shape":"NullableNonNegativeDouble"},
+        "Threshold":{
+          "shape":"NullableNonNegativeDouble",
+          "deprecated":true,
+          "deprecatedMessage":"Threshold has been deprecated in favor of ThresholdExpression"
+        },
         "Frequency":{"shape":"AnomalySubscriptionFrequency"},
-        "SubscriptionName":{"shape":"GenericString"}
+        "SubscriptionName":{"shape":"GenericString"},
+        "ThresholdExpression":{"shape":"Expression"}
       }
     },
     "AnomalySubscriptionFrequency":{
@@ -569,6 +680,67 @@
         "SAVINGS_PLANS"
       ]
     },
+    "CostAllocationTag":{
+      "type":"structure",
+      "required":[
+        "TagKey",
+        "Type",
+        "Status"
+      ],
+      "members":{
+        "TagKey":{"shape":"TagKey"},
+        "Type":{"shape":"CostAllocationTagType"},
+        "Status":{"shape":"CostAllocationTagStatus"}
+      }
+    },
+    "CostAllocationTagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":100,
+      "min":1
+    },
+    "CostAllocationTagList":{
+      "type":"list",
+      "member":{"shape":"CostAllocationTag"},
+      "max":100,
+      "min":0
+    },
+    "CostAllocationTagStatus":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "Inactive"
+      ]
+    },
+    "CostAllocationTagStatusEntry":{
+      "type":"structure",
+      "required":[
+        "TagKey",
+        "Status"
+      ],
+      "members":{
+        "TagKey":{"shape":"TagKey"},
+        "Status":{"shape":"CostAllocationTagStatus"}
+      }
+    },
+    "CostAllocationTagStatusList":{
+      "type":"list",
+      "member":{"shape":"CostAllocationTagStatusEntry"},
+      "max":20,
+      "min":1
+    },
+    "CostAllocationTagType":{
+      "type":"string",
+      "enum":[
+        "AWSGenerated",
+        "UserDefined"
+      ]
+    },
+    "CostAllocationTagsMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
     "CostCategory":{
       "type":"structure",
       "required":[
@@ -585,8 +757,24 @@
         "Name":{"shape":"CostCategoryName"},
         "RuleVersion":{"shape":"CostCategoryRuleVersion"},
         "Rules":{"shape":"CostCategoryRulesList"},
-        "ProcessingStatus":{"shape":"CostCategoryProcessingStatusList"}
+        "SplitChargeRules":{"shape":"CostCategorySplitChargeRulesList"},
+        "ProcessingStatus":{"shape":"CostCategoryProcessingStatusList"},
+        "DefaultValue":{"shape":"CostCategoryValue"}
       }
+    },
+    "CostCategoryInheritedValueDimension":{
+      "type":"structure",
+      "members":{
+        "DimensionName":{"shape":"CostCategoryInheritedValueDimensionName"},
+        "DimensionKey":{"shape":"GenericString"}
+      }
+    },
+    "CostCategoryInheritedValueDimensionName":{
+      "type":"string",
+      "enum":[
+        "LINKED_ACCOUNT_NAME",
+        "TAG"
+      ]
     },
     "CostCategoryMaxResults":{
       "type":"integer",
@@ -595,7 +783,7 @@
     },
     "CostCategoryName":{
       "type":"string",
-      "max":255,
+      "max":50,
       "min":1,
       "pattern":"^(?! )[\\p{L}\\p{N}\\p{Z}-_]*(?<! )$"
     },
@@ -623,7 +811,8 @@
         "EffectiveEnd":{"shape":"ZonedDateTime"},
         "NumberOfRules":{"shape":"NonNegativeInteger"},
         "ProcessingStatus":{"shape":"CostCategoryProcessingStatusList"},
-        "Values":{"shape":"CostCategoryValuesList"}
+        "Values":{"shape":"CostCategoryValuesList"},
+        "DefaultValue":{"shape":"CostCategoryValue"}
       }
     },
     "CostCategoryReferencesList":{
@@ -632,14 +821,19 @@
     },
     "CostCategoryRule":{
       "type":"structure",
-      "required":[
-        "Value",
-        "Rule"
-      ],
       "members":{
         "Value":{"shape":"CostCategoryValue"},
-        "Rule":{"shape":"Expression"}
+        "Rule":{"shape":"Expression"},
+        "InheritedValue":{"shape":"CostCategoryInheritedValueDimension"},
+        "Type":{"shape":"CostCategoryRuleType"}
       }
+    },
+    "CostCategoryRuleType":{
+      "type":"string",
+      "enum":[
+        "REGULAR",
+        "INHERITED_VALUE"
+      ]
     },
     "CostCategoryRuleVersion":{
       "type":"string",
@@ -649,6 +843,67 @@
       "type":"list",
       "member":{"shape":"CostCategoryRule"},
       "max":500,
+      "min":1
+    },
+    "CostCategorySplitChargeMethod":{
+      "type":"string",
+      "enum":[
+        "FIXED",
+        "PROPORTIONAL",
+        "EVEN"
+      ]
+    },
+    "CostCategorySplitChargeRule":{
+      "type":"structure",
+      "required":[
+        "Source",
+        "Targets",
+        "Method"
+      ],
+      "members":{
+        "Source":{"shape":"GenericString"},
+        "Targets":{"shape":"CostCategorySplitChargeRuleTargetsList"},
+        "Method":{"shape":"CostCategorySplitChargeMethod"},
+        "Parameters":{"shape":"CostCategorySplitChargeRuleParametersList"}
+      }
+    },
+    "CostCategorySplitChargeRuleParameter":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Values"
+      ],
+      "members":{
+        "Type":{"shape":"CostCategorySplitChargeRuleParameterType"},
+        "Values":{"shape":"CostCategorySplitChargeRuleParameterValuesList"}
+      }
+    },
+    "CostCategorySplitChargeRuleParameterType":{
+      "type":"string",
+      "enum":["ALLOCATION_PERCENTAGES"]
+    },
+    "CostCategorySplitChargeRuleParameterValuesList":{
+      "type":"list",
+      "member":{"shape":"GenericString"},
+      "max":500,
+      "min":1
+    },
+    "CostCategorySplitChargeRuleParametersList":{
+      "type":"list",
+      "member":{"shape":"CostCategorySplitChargeRuleParameter"},
+      "max":10,
+      "min":1
+    },
+    "CostCategorySplitChargeRuleTargetsList":{
+      "type":"list",
+      "member":{"shape":"GenericString"},
+      "max":500,
+      "min":1
+    },
+    "CostCategorySplitChargeRulesList":{
+      "type":"list",
+      "member":{"shape":"CostCategorySplitChargeRule"},
+      "max":10,
       "min":1
     },
     "CostCategoryStatus":{
@@ -664,7 +919,7 @@
     },
     "CostCategoryValue":{
       "type":"string",
-      "max":255,
+      "max":50,
       "min":1,
       "pattern":"^(?! )[\\p{L}\\p{N}\\p{Z}-_]*(?<! )$"
     },
@@ -730,7 +985,8 @@
       "type":"structure",
       "required":["AnomalyMonitor"],
       "members":{
-        "AnomalyMonitor":{"shape":"AnomalyMonitor"}
+        "AnomalyMonitor":{"shape":"AnomalyMonitor"},
+        "ResourceTags":{"shape":"ResourceTagList"}
       }
     },
     "CreateAnomalyMonitorResponse":{
@@ -744,7 +1000,8 @@
       "type":"structure",
       "required":["AnomalySubscription"],
       "members":{
-        "AnomalySubscription":{"shape":"AnomalySubscription"}
+        "AnomalySubscription":{"shape":"AnomalySubscription"},
+        "ResourceTags":{"shape":"ResourceTagList"}
       }
     },
     "CreateAnomalySubscriptionResponse":{
@@ -763,8 +1020,12 @@
       ],
       "members":{
         "Name":{"shape":"CostCategoryName"},
+        "EffectiveStart":{"shape":"ZonedDateTime"},
         "RuleVersion":{"shape":"CostCategoryRuleVersion"},
-        "Rules":{"shape":"CostCategoryRulesList"}
+        "Rules":{"shape":"CostCategoryRulesList"},
+        "DefaultValue":{"shape":"CostCategoryValue"},
+        "SplitChargeRules":{"shape":"CostCategorySplitChargeRulesList"},
+        "ResourceTags":{"shape":"ResourceTagList"}
       }
     },
     "CreateCostCategoryDefinitionResponse":{
@@ -893,7 +1154,10 @@
         "SAVINGS_PLAN_ARN",
         "PAYMENT_OPTION",
         "AGREEMENT_END_DATE_TIME_AFTER",
-        "AGREEMENT_END_DATE_TIME_BEFORE"
+        "AGREEMENT_END_DATE_TIME_BEFORE",
+        "INVOICING_ENTITY",
+        "ANOMALY_TOTAL_IMPACT_ABSOLUTE",
+        "ANOMALY_TOTAL_IMPACT_PERCENTAGE"
       ]
     },
     "DimensionValues":{
@@ -914,6 +1178,15 @@
     "DimensionValuesWithAttributesList":{
       "type":"list",
       "member":{"shape":"DimensionValuesWithAttributes"}
+    },
+    "DiskResourceUtilization":{
+      "type":"structure",
+      "members":{
+        "DiskReadOpsPerSecond":{"shape":"GenericString"},
+        "DiskWriteOpsPerSecond":{"shape":"GenericString"},
+        "DiskReadBytesPerSecond":{"shape":"GenericString"},
+        "DiskWriteBytesPerSecond":{"shape":"GenericString"}
+      }
     },
     "EBSResourceUtilization":{
       "type":"structure",
@@ -957,7 +1230,9 @@
         "MaxCpuUtilizationPercentage":{"shape":"GenericString"},
         "MaxMemoryUtilizationPercentage":{"shape":"GenericString"},
         "MaxStorageUtilizationPercentage":{"shape":"GenericString"},
-        "EBSResourceUtilization":{"shape":"EBSResourceUtilization"}
+        "EBSResourceUtilization":{"shape":"EBSResourceUtilization"},
+        "DiskResourceUtilization":{"shape":"DiskResourceUtilization"},
+        "NetworkResourceUtilization":{"shape":"NetworkResourceUtilization"}
       }
     },
     "EC2Specification":{
@@ -1005,6 +1280,31 @@
       "type":"list",
       "member":{"shape":"Expression"}
     },
+    "FindingReasonCode":{
+      "type":"string",
+      "enum":[
+        "CPU_OVER_PROVISIONED",
+        "CPU_UNDER_PROVISIONED",
+        "MEMORY_OVER_PROVISIONED",
+        "MEMORY_UNDER_PROVISIONED",
+        "EBS_THROUGHPUT_OVER_PROVISIONED",
+        "EBS_THROUGHPUT_UNDER_PROVISIONED",
+        "EBS_IOPS_OVER_PROVISIONED",
+        "EBS_IOPS_UNDER_PROVISIONED",
+        "NETWORK_BANDWIDTH_OVER_PROVISIONED",
+        "NETWORK_BANDWIDTH_UNDER_PROVISIONED",
+        "NETWORK_PPS_OVER_PROVISIONED",
+        "NETWORK_PPS_UNDER_PROVISIONED",
+        "DISK_IOPS_OVER_PROVISIONED",
+        "DISK_IOPS_UNDER_PROVISIONED",
+        "DISK_THROUGHPUT_OVER_PROVISIONED",
+        "DISK_THROUGHPUT_UNDER_PROVISIONED"
+      ]
+    },
+    "FindingReasonCodes":{
+      "type":"list",
+      "member":{"shape":"FindingReasonCode"}
+    },
     "ForecastResult":{
       "type":"structure",
       "members":{
@@ -1017,6 +1317,35 @@
     "ForecastResultsByTime":{
       "type":"list",
       "member":{"shape":"ForecastResult"}
+    },
+    "GenerationExistsException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "GenerationStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "PROCESSING",
+        "FAILED"
+      ]
+    },
+    "GenerationSummary":{
+      "type":"structure",
+      "members":{
+        "RecommendationId":{"shape":"RecommendationId"},
+        "GenerationStatus":{"shape":"GenerationStatus"},
+        "GenerationStartedTime":{"shape":"ZonedDateTime"},
+        "GenerationCompletionTime":{"shape":"ZonedDateTime"},
+        "EstimatedCompletionTime":{"shape":"ZonedDateTime"}
+      }
+    },
+    "GenerationSummaryList":{
+      "type":"list",
+      "member":{"shape":"GenerationSummary"}
     },
     "GenericBoolean":{"type":"boolean"},
     "GenericDouble":{"type":"double"},
@@ -1083,6 +1412,7 @@
       "type":"structure",
       "required":[
         "TimePeriod",
+        "Granularity",
         "Metrics"
       ],
       "members":{
@@ -1107,6 +1437,7 @@
       "type":"structure",
       "required":[
         "TimePeriod",
+        "Granularity",
         "Filter"
       ],
       "members":{
@@ -1301,6 +1632,20 @@
         "RightsizingRecommendations":{"shape":"RightsizingRecommendationList"},
         "NextPageToken":{"shape":"NextPageToken"},
         "Configuration":{"shape":"RightsizingRecommendationConfiguration"}
+      }
+    },
+    "GetSavingsPlanPurchaseRecommendationDetailsRequest":{
+      "type":"structure",
+      "required":["RecommendationDetailId"],
+      "members":{
+        "RecommendationDetailId":{"shape":"RecommendationDetailId"}
+      }
+    },
+    "GetSavingsPlanPurchaseRecommendationDetailsResponse":{
+      "type":"structure",
+      "members":{
+        "RecommendationDetailId":{"shape":"RecommendationDetailId"},
+        "RecommendationDetailData":{"shape":"RecommendationDetailData"}
       }
     },
     "GetSavingsPlansCoverageRequest":{
@@ -1499,7 +1844,10 @@
       "required":["MaxImpact"],
       "members":{
         "MaxImpact":{"shape":"GenericDouble"},
-        "TotalImpact":{"shape":"GenericDouble"}
+        "TotalImpact":{"shape":"GenericDouble"},
+        "TotalActualSpend":{"shape":"NullableNonNegativeDouble"},
+        "TotalExpectedSpend":{"shape":"NullableNonNegativeDouble"},
+        "TotalImpactPercentage":{"shape":"NullableNonNegativeDouble"}
       }
     },
     "InstanceDetails":{
@@ -1531,6 +1879,26 @@
       },
       "exception":true
     },
+    "ListCostAllocationTagsRequest":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"CostAllocationTagStatus"},
+        "TagKeys":{"shape":"CostAllocationTagKeyList"},
+        "Type":{"shape":"CostAllocationTagType"},
+        "NextToken":{"shape":"NextPageToken"},
+        "MaxResults":{
+          "shape":"CostAllocationTagsMaxResults",
+          "box":true
+        }
+      }
+    },
+    "ListCostAllocationTagsResponse":{
+      "type":"structure",
+      "members":{
+        "CostAllocationTags":{"shape":"CostAllocationTagList"},
+        "NextToken":{"shape":"NextPageToken"}
+      }
+    },
     "ListCostCategoryDefinitionsRequest":{
       "type":"structure",
       "members":{
@@ -1547,6 +1915,35 @@
       "members":{
         "CostCategoryReferences":{"shape":"CostCategoryReferencesList"},
         "NextToken":{"shape":"NextPageToken"}
+      }
+    },
+    "ListSavingsPlansPurchaseRecommendationGenerationRequest":{
+      "type":"structure",
+      "members":{
+        "GenerationStatus":{"shape":"GenerationStatus"},
+        "RecommendationIds":{"shape":"RecommendationIdList"},
+        "PageSize":{"shape":"NonNegativeInteger"},
+        "NextPageToken":{"shape":"NextPageToken"}
+      }
+    },
+    "ListSavingsPlansPurchaseRecommendationGenerationResponse":{
+      "type":"structure",
+      "members":{
+        "GenerationSummaryList":{"shape":"GenerationSummaryList"},
+        "NextPageToken":{"shape":"NextPageToken"}
+      }
+    },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"Arn"}
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceTags":{"shape":"ResourceTagList"}
       }
     },
     "LookbackPeriodInDays":{
@@ -1566,7 +1963,8 @@
         "ENDS_WITH",
         "CONTAINS",
         "CASE_SENSITIVE",
-        "CASE_INSENSITIVE"
+        "CASE_INSENSITIVE",
+        "GREATER_THAN_OR_EQUAL"
       ]
     },
     "MatchOptions":{
@@ -1613,6 +2011,10 @@
       "key":{"shape":"MetricName"},
       "value":{"shape":"MetricValue"}
     },
+    "MetricsOverLookbackPeriod":{
+      "type":"list",
+      "member":{"shape":"RecommendationDetailHourlyMetrics"}
+    },
     "ModifyRecommendationDetail":{
       "type":"structure",
       "members":{
@@ -1635,6 +2037,15 @@
       ]
     },
     "NetRISavings":{"type":"string"},
+    "NetworkResourceUtilization":{
+      "type":"structure",
+      "members":{
+        "NetworkInBytesPerSecond":{"shape":"GenericString"},
+        "NetworkOutBytesPerSecond":{"shape":"GenericString"},
+        "NetworkPacketsInPerSecond":{"shape":"GenericString"},
+        "NetworkPacketsOutPerSecond":{"shape":"GenericString"}
+      }
+    },
     "NextPageToken":{
       "type":"string",
       "max":8192,
@@ -1683,6 +2094,20 @@
         "HEAVY_UTILIZATION"
       ]
     },
+    "PlatformDifference":{
+      "type":"string",
+      "enum":[
+        "HYPERVISOR",
+        "NETWORK_INTERFACE",
+        "STORAGE_INTERFACE",
+        "INSTANCE_STORE_AVAILABILITY",
+        "VIRTUALIZATION_TYPE"
+      ]
+    },
+    "PlatformDifferences":{
+      "type":"list",
+      "member":{"shape":"PlatformDifference"}
+    },
     "PredictionIntervalLevel":{
       "type":"integer",
       "max":99,
@@ -1724,6 +2149,66 @@
     },
     "RICostForUnusedHours":{"type":"string"},
     "RealizedSavings":{"type":"string"},
+    "RecommendationDetailData":{
+      "type":"structure",
+      "members":{
+        "AccountScope":{"shape":"AccountScope"},
+        "LookbackPeriodInDays":{"shape":"LookbackPeriodInDays"},
+        "SavingsPlansType":{"shape":"SupportedSavingsPlansType"},
+        "TermInYears":{"shape":"TermInYears"},
+        "PaymentOption":{"shape":"PaymentOption"},
+        "AccountId":{"shape":"GenericString"},
+        "CurrencyCode":{"shape":"GenericString"},
+        "InstanceFamily":{"shape":"GenericString"},
+        "Region":{"shape":"GenericString"},
+        "OfferingId":{"shape":"GenericString"},
+        "GenerationTimestamp":{"shape":"ZonedDateTime"},
+        "LatestUsageTimestamp":{"shape":"ZonedDateTime"},
+        "CurrentAverageHourlyOnDemandSpend":{"shape":"GenericString"},
+        "CurrentMaximumHourlyOnDemandSpend":{"shape":"GenericString"},
+        "CurrentMinimumHourlyOnDemandSpend":{"shape":"GenericString"},
+        "EstimatedAverageUtilization":{"shape":"GenericString"},
+        "EstimatedMonthlySavingsAmount":{"shape":"GenericString"},
+        "EstimatedOnDemandCost":{"shape":"GenericString"},
+        "EstimatedOnDemandCostWithCurrentCommitment":{"shape":"GenericString"},
+        "EstimatedROI":{"shape":"GenericString"},
+        "EstimatedSPCost":{"shape":"GenericString"},
+        "EstimatedSavingsAmount":{"shape":"GenericString"},
+        "EstimatedSavingsPercentage":{"shape":"GenericString"},
+        "ExistingHourlyCommitment":{"shape":"GenericString"},
+        "HourlyCommitmentToPurchase":{"shape":"GenericString"},
+        "UpfrontCost":{"shape":"GenericString"},
+        "CurrentAverageCoverage":{"shape":"GenericString"},
+        "EstimatedAverageCoverage":{"shape":"GenericString"},
+        "MetricsOverLookbackPeriod":{"shape":"MetricsOverLookbackPeriod"}
+      }
+    },
+    "RecommendationDetailHourlyMetrics":{
+      "type":"structure",
+      "members":{
+        "StartTime":{"shape":"ZonedDateTime"},
+        "EstimatedOnDemandCost":{"shape":"GenericString"},
+        "CurrentCoverage":{"shape":"GenericString"},
+        "EstimatedCoverage":{"shape":"GenericString"},
+        "EstimatedNewCommitmentUtilization":{"shape":"GenericString"}
+      }
+    },
+    "RecommendationDetailId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[\\S\\s]{8}-[\\S\\s]{4}-[\\S\\s]{4}-[\\S\\s]{4}-[\\S\\s]{12}$"
+    },
+    "RecommendationId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[\\S\\s]{8}-[\\S\\s]{4}-[\\S\\s]{4}-[\\S\\s]{4}-[\\S\\s]{12}$"
+    },
+    "RecommendationIdList":{
+      "type":"list",
+      "member":{"shape":"RecommendationId"}
+    },
     "RecommendationTarget":{
       "type":"string",
       "enum":[
@@ -1866,9 +2351,45 @@
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"ErrorMessage"}
+        "Message":{"shape":"ErrorMessage"},
+        "ResourceName":{"shape":"Arn"}
       },
       "exception":true
+    },
+    "ResourceTag":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"ResourceTagKey"},
+        "Value":{"shape":"ResourceTagValue"}
+      }
+    },
+    "ResourceTagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+    },
+    "ResourceTagKeyList":{
+      "type":"list",
+      "member":{"shape":"ResourceTagKey"},
+      "max":200,
+      "min":0
+    },
+    "ResourceTagList":{
+      "type":"list",
+      "member":{"shape":"ResourceTag"},
+      "max":200,
+      "min":0
+    },
+    "ResourceTagValue":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
     "ResourceUtilization":{
       "type":"structure",
@@ -1896,7 +2417,8 @@
         "CurrentInstance":{"shape":"CurrentInstance"},
         "RightsizingType":{"shape":"RightsizingType"},
         "ModifyRecommendationDetail":{"shape":"ModifyRecommendationDetail"},
-        "TerminateRecommendationDetail":{"shape":"TerminateRecommendationDetail"}
+        "TerminateRecommendationDetail":{"shape":"TerminateRecommendationDetail"},
+        "FindingReasonCodes":{"shape":"FindingReasonCodes"}
       }
     },
     "RightsizingRecommendationConfiguration":{
@@ -1945,7 +2467,8 @@
         "Service":{"shape":"GenericString"},
         "Region":{"shape":"GenericString"},
         "LinkedAccount":{"shape":"GenericString"},
-        "UsageType":{"shape":"GenericString"}
+        "UsageType":{"shape":"GenericString"},
+        "LinkedAccountName":{"shape":"GenericString"}
       }
     },
     "RootCauses":{
@@ -2033,7 +2556,8 @@
         "EstimatedMonthlySavingsAmount":{"shape":"GenericString"},
         "CurrentMinimumHourlyOnDemandSpend":{"shape":"GenericString"},
         "CurrentMaximumHourlyOnDemandSpend":{"shape":"GenericString"},
-        "CurrentAverageHourlyOnDemandSpend":{"shape":"GenericString"}
+        "CurrentAverageHourlyOnDemandSpend":{"shape":"GenericString"},
+        "RecommendationDetailId":{"shape":"RecommendationDetailId"}
       }
     },
     "SavingsPlansPurchaseRecommendationDetailList":{
@@ -2164,6 +2688,19 @@
         "DESCENDING"
       ]
     },
+    "StartSavingsPlansPurchaseRecommendationGenerationRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "StartSavingsPlansPurchaseRecommendationGenerationResponse":{
+      "type":"structure",
+      "members":{
+        "RecommendationId":{"shape":"RecommendationId"},
+        "GenerationStartedTime":{"shape":"ZonedDateTime"},
+        "EstimatedCompletionTime":{"shape":"ZonedDateTime"}
+      }
+    },
     "Subscriber":{
       "type":"structure",
       "members":{
@@ -2176,7 +2713,7 @@
       "type":"string",
       "max":302,
       "min":6,
-      "pattern":"(^[a-zA-Z0-9.!#$%&'*+=?^_‘{|}~-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$)|(^arn:(aws[a-zA-Z-]*):sns:[a-zA-Z0-9-]+:[0-9]{12}:[a-zA-Z0-9_-]+$)"
+      "pattern":"(^[a-zA-Z0-9.!#$%&'*+=?^_‘{|}~-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$)|(^arn:(aws[a-zA-Z-]*):sns:[a-zA-Z0-9-]+:[0-9]{12}:[a-zA-Z0-9_-]+(\\.fifo)?$)"
     },
     "SubscriberStatus":{
       "type":"string",
@@ -2200,7 +2737,8 @@
       "type":"string",
       "enum":[
         "COMPUTE_SP",
-        "EC2_INSTANCE_SP"
+        "EC2_INSTANCE_SP",
+        "SAGEMAKER_SP"
       ]
     },
     "TagKey":{
@@ -2212,6 +2750,22 @@
     "TagList":{
       "type":"list",
       "member":{"shape":"Entity"}
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "ResourceTags"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"Arn"},
+        "ResourceTags":{"shape":"ResourceTagList"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "TagValues":{
       "type":"structure",
@@ -2233,7 +2787,8 @@
         "CurrencyCode":{"shape":"GenericString"},
         "DefaultTargetInstance":{"shape":"GenericBoolean"},
         "ResourceDetails":{"shape":"ResourceDetails"},
-        "ExpectedResourceUtilization":{"shape":"ResourceUtilization"}
+        "ExpectedResourceUtilization":{"shape":"ResourceUtilization"},
+        "PlatformDifferences":{"shape":"PlatformDifferences"}
       }
     },
     "TargetInstancesList":{
@@ -2253,6 +2808,14 @@
         "EstimatedMonthlySavings":{"shape":"GenericString"},
         "CurrencyCode":{"shape":"GenericString"}
       }
+    },
+    "TooManyTagsException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"},
+        "ResourceName":{"shape":"Arn"}
+      },
+      "exception":true
     },
     "TotalActualHours":{"type":"string"},
     "TotalActualUnits":{"type":"string"},
@@ -2294,6 +2857,22 @@
       },
       "exception":true
     },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "ResourceTagKeys"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"Arn"},
+        "ResourceTagKeys":{"shape":"ResourceTagKeyList"}
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UnusedHours":{"type":"string"},
     "UnusedUnits":{"type":"string"},
     "UpdateAnomalyMonitorRequest":{
@@ -2316,11 +2895,16 @@
       "required":["SubscriptionArn"],
       "members":{
         "SubscriptionArn":{"shape":"GenericString"},
-        "Threshold":{"shape":"NullableNonNegativeDouble"},
+        "Threshold":{
+          "shape":"NullableNonNegativeDouble",
+          "deprecated":true,
+          "deprecatedMessage":"Threshold has been deprecated in favor of ThresholdExpression"
+        },
         "Frequency":{"shape":"AnomalySubscriptionFrequency"},
         "MonitorArnList":{"shape":"MonitorArnList"},
         "Subscribers":{"shape":"Subscribers"},
-        "SubscriptionName":{"shape":"GenericString"}
+        "SubscriptionName":{"shape":"GenericString"},
+        "ThresholdExpression":{"shape":"Expression"}
       }
     },
     "UpdateAnomalySubscriptionResponse":{
@@ -2328,6 +2912,33 @@
       "required":["SubscriptionArn"],
       "members":{
         "SubscriptionArn":{"shape":"GenericString"}
+      }
+    },
+    "UpdateCostAllocationTagsStatusError":{
+      "type":"structure",
+      "members":{
+        "TagKey":{"shape":"TagKey"},
+        "Code":{"shape":"GenericString"},
+        "Message":{"shape":"ErrorMessage"}
+      }
+    },
+    "UpdateCostAllocationTagsStatusErrors":{
+      "type":"list",
+      "member":{"shape":"UpdateCostAllocationTagsStatusError"},
+      "max":20,
+      "min":0
+    },
+    "UpdateCostAllocationTagsStatusRequest":{
+      "type":"structure",
+      "required":["CostAllocationTagsStatus"],
+      "members":{
+        "CostAllocationTagsStatus":{"shape":"CostAllocationTagStatusList"}
+      }
+    },
+    "UpdateCostAllocationTagsStatusResponse":{
+      "type":"structure",
+      "members":{
+        "Errors":{"shape":"UpdateCostAllocationTagsStatusErrors"}
       }
     },
     "UpdateCostCategoryDefinitionRequest":{
@@ -2339,8 +2950,11 @@
       ],
       "members":{
         "CostCategoryArn":{"shape":"Arn"},
+        "EffectiveStart":{"shape":"ZonedDateTime"},
         "RuleVersion":{"shape":"CostCategoryRuleVersion"},
-        "Rules":{"shape":"CostCategoryRulesList"}
+        "Rules":{"shape":"CostCategoryRulesList"},
+        "DefaultValue":{"shape":"CostCategoryValue"},
+        "SplitChargeRules":{"shape":"CostCategorySplitChargeRulesList"}
       }
     },
     "UpdateCostCategoryDefinitionResponse":{

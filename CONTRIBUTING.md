@@ -57,7 +57,7 @@ Please ensure that your bug report has the following:
     * Any details of your application environment that may be relevant.
     * Debug information, stack trace or logs.
 *  If you are able to create one, include a Minimal Working Example that reproduces the issue.
-* Use Markdown to make the report easier to read; i.e. use code blocks when pasting a 
+* Use [Markdown][] to make the report easier to read; i.e. use code blocks when pasting a 
    code snippet.
 
 ## Feature Requests
@@ -68,15 +68,16 @@ Open an [issue][] with the following:
    good idea of the feature just from reading the title.
 * A detailed description of the the proposed feature. 
     * Why it should be added to the SDK.
-    *  If possible, example code to illustrate how it should work.
-* Use Markdown to make the request easier to read;
+    * If possible, example code to illustrate how it should work.
+* Use [Markdown][] to make the request easier to read;
 * If you intend to implement this feature, indicate that you'd like to the issue to be
    assigned to you.
 
 
 ## Code Contributions
 
-Code contributions to the SDK are done through [Pull Requests][pull-requests]. The list below are guidelines to use when submitting pull requests. These are the 
+Code contributions to the SDK are done through [Pull Requests][pull-requests]. The list below 
+are guidelines to use when submitting pull requests. These are the 
 same set of guidelines that the core contributors use when submitting changes, and 
 we ask the same of all community contributions as well:
 
@@ -157,3 +158,4 @@ category field should exist with the value set to an empty string `""`.
 [sphinx]: http://sphinx-doc.org/
 [restructuredtext]: http://sphinx-doc.org/rest.html
 [docs-readme]: https://github.com/awsdocs/aws-php-developers-guide/blob/master/README.rst
+[markdown]: https://en.wikipedia.org/wiki/Markdown

@@ -8,7 +8,7 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Ring\Future\CompletedFutureArray;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Credentials\EcsCredentialProvider
@@ -16,31 +16,41 @@ use PHPUnit\Framework\TestCase;
 class EcsCredentialProviderTest extends TestCase
 {
     private $uripath;
+    private $fulluripath;
+    private $authtokenpath;
 
     private function clearEnv()
     {
         putenv(EcsCredentialProvider::ENV_URI . '=');
         unset($_SERVER[EcsCredentialProvider::ENV_URI]);
+
+        putenv(EcsCredentialProvider::ENV_FULL_URI . '=');
+        unset($_SERVER[EcsCredentialProvider::ENV_FULL_URI]);
+
+        putenv(EcsCredentialProvider::ENV_AUTH_TOKEN . '=');
+        unset($_SERVER[EcsCredentialProvider::ENV_AUTH_TOKEN]);
     }
 
-    public function setUp()
+    public function set_up()
     {
         $this->uripath = getenv(EcsCredentialProvider::ENV_URI);
+        $this->fulluripath = getenv(EcsCredentialProvider::ENV_FULL_URI);
+        $this->authtokenpath = getenv(EcsCredentialProvider::ENV_AUTH_TOKEN);
     }
 
-    public function tearDown()
+    public function tear_down()
     {
         $this->uripath = getenv(EcsCredentialProvider::ENV_URI);
+        $this->fulluripath = getenv(EcsCredentialProvider::ENV_FULL_URI);
+        $this->authtokenpath = getenv(EcsCredentialProvider::ENV_AUTH_TOKEN);
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error retrieving credential from ECS
-     */
     public function testRejectsIfUriPathIsNotAvailable()
     {
+        $this->expectExceptionMessage("Error retrieving credential from ECS");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $client = function () use (&$responses) {
-            return Promise\rejection_for([
+            return Promise\Create::rejectionFor([
                 'exception' => new \Exception('error')
             ]);
         };
@@ -48,12 +58,10 @@ class EcsCredentialProviderTest extends TestCase
         $p()->wait();
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Unexpected ECS credential value
-     */
     public function testThrowsExceptionOnInvalidEcsCredential()
     {
+        $this->expectExceptionMessage("Unexpected ECS credential value");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $this->getTestCreds(
             $this->getCredentialArray(null, null, null, null, false)
         )->wait();
@@ -71,9 +79,24 @@ class EcsCredentialProviderTest extends TestCase
         $this->assertSame($t, $c->getExpiration());
     }
 
+    /** @doesNotPerformAssertions */
     public function testDoesNotRequireConfig()
     {
         new EcsCredentialProvider();
+    }
+
+    public function testRequestHeaderWithAuthorisationKey(){
+        $this->clearEnv();
+        $provider = new EcsCredentialProvider();
+
+        $TOKEN_VALUE = "GA%24102391AAA+BBBBB4==";
+        $AUTH_KEYNAME = 'Authorization';
+        putenv(EcsCredentialProvider::ENV_FULL_URI . '=http://localhost/test/metadata');
+        putenv(EcsCredentialProvider::ENV_AUTH_TOKEN . '=' . $TOKEN_VALUE);
+
+        $header = $provider->setHeaderForAuthToken();
+        $this->assertArrayHasKey($AUTH_KEYNAME, $header);
+        $this->assertSame($TOKEN_VALUE, $header[$AUTH_KEYNAME]);
     }
 
     private function getCredentialArray(
@@ -91,7 +114,7 @@ class EcsCredentialProviderTest extends TestCase
     private function getTestCreds($result, Response $more = null)
     {
         $responses = [];
-        $responses[] = new Response(200, [], Psr7\stream_for(json_encode($result)));
+        $responses[] = new Response(200, [], Psr7\Utils::streamFor(json_encode($result)));
         if ($more) {
             $responses[] = $more;
         }
@@ -102,7 +125,7 @@ class EcsCredentialProviderTest extends TestCase
             if (empty($responses)) {
                 throw new \Exception('No responses');
             }
-            return Promise\promise_for(array_shift($responses));
+            return Promise\Create::promiseFor(array_shift($responses));
         };
         $args['client'] = $client;
 
@@ -126,7 +149,7 @@ class EcsCredentialProviderTest extends TestCase
                         return new CompletedFutureArray([
                             'status'  => 200,
                             'headers' => [],
-                            'body'    => Psr7\stream_for(
+                            'body'    => Psr7\Utils::streamFor(
                                 json_encode($credentials)
                             ),
                         ]);
@@ -143,11 +166,11 @@ class EcsCredentialProviderTest extends TestCase
                         array $options
                     ) use ($credentials) {
                         $this->assertSame('', $options['proxy']);
-                        return Promise\promise_for(
+                        return Promise\Create::promiseFor(
                             new Response(
                                 200,
                                 [],
-                                Psr7\stream_for(json_encode($credentials))
+                                Psr7\Utils::streamFor(json_encode($credentials))
                             )
                         );
                     }

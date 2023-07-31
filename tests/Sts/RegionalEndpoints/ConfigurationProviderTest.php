@@ -2,16 +2,17 @@
 
 namespace Aws\Test\Sts\RegionalEndpoints;
 
+use Aws\CacheInterface;
 use Aws\LruArrayCache;
 use Aws\Sts\RegionalEndpoints\Configuration;
 use Aws\Sts\RegionalEndpoints\ConfigurationInterface;
 use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 use Aws\Sts\RegionalEndpoints\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers \Aws\Sts\RegionalEndpoints\ConfigurationProvider
+ * git\Sts\RegionalEndpoints\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
@@ -31,12 +32,13 @@ sts_regional_endpoints = legacy
 sts_regional_endpoints = regional
 EOT;
 
-    public static function setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$originalEnv = [
             'endpoints_type' => getenv(ConfigurationProvider::ENV_ENDPOINTS_TYPE) ?: '',
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
+            'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
         ];
     }
 
@@ -44,6 +46,7 @@ EOT;
     {
         putenv(ConfigurationProvider::ENV_ENDPOINTS_TYPE . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
+        putenv(ConfigurationProvider::ENV_PROFILE . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -54,12 +57,14 @@ EOT;
         return $dir;
     }
 
-    public static function tearDownAfterClass()
+    public static function tear_down_after_class()
     {
         putenv(ConfigurationProvider::ENV_ENDPOINTS_TYPE . '=' .
             self::$originalEnv['endpoints_type']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
+            self::$originalEnv['config_file']);
         putenv('HOME=' . self::$originalEnv['home']);
     }
 
@@ -168,21 +173,17 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \Aws\Sts\RegionalEndpoints\Exception\ConfigurationException
-     */
     public function testEnsuresIniFileExists()
     {
+        $this->expectException(\Aws\Sts\RegionalEndpoints\Exception\ConfigurationException::class);
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
         call_user_func(ConfigurationProvider::ini())->wait();
     }
 
-    /**
-     * @expectedException \Aws\Sts\RegionalEndpoints\Exception\ConfigurationException
-     */
     public function testEnsuresProfileIsNotEmpty()
     {
+        $this->expectException(\Aws\Sts\RegionalEndpoints\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         $ini = "[custom]";
         file_put_contents($dir . '/config', $ini);
@@ -196,12 +197,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Sts\RegionalEndpoints\Exception\ConfigurationException
-     * @expectedExceptionMessage 'foo' not found in
-     */
     public function testEnsuresFileIsNotEmpty()
     {
+        $this->expectExceptionMessage("'foo' not found in");
+        $this->expectException(\Aws\Sts\RegionalEndpoints\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', '');
         putenv('HOME=' . dirname($dir));
@@ -214,12 +213,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Sts\RegionalEndpoints\Exception\ConfigurationException
-     * @expectedExceptionMessage Invalid config file:
-     */
     public function testEnsuresIniFileIsValid()
     {
+        $this->expectExceptionMessage("Invalid config file:");
+        $this->expectException(\Aws\Sts\RegionalEndpoints\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
@@ -249,7 +246,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\My\\Home');
-        $ref = new \ReflectionClass('Aws\Sts\RegionalEndpoints\ConfigurationProvider');
+        $ref = new \ReflectionClass(ConfigurationProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\My\\Home', $meth->invoke(null));
@@ -261,7 +258,7 @@ EOT;
         $expected = new Configuration('legacy');
         $f = function () use (&$called, $expected) {
             $called++;
-            return Promise\promise_for($expected);
+            return Promise\Create::promiseFor($expected);
         };
         $p = ConfigurationProvider::memoize($f);
         $this->assertSame($expected, $p()->wait());
@@ -288,11 +285,9 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testChainThrowsExceptionOnEmptyArgs()
     {
+        $this->expectException(\InvalidArgumentException::class);
         ConfigurationProvider::chain();
     }
 
@@ -321,7 +316,7 @@ EOT;
         $volatileProvider = function () use ($expected, &$timesCalled) {
             if (0 === $timesCalled) {
                 ++$timesCalled;
-                return Promise\promise_for($expected);
+                return Promise\Create::promiseFor($expected);
             }
 
             throw new \BadFunctionCallException('I was called too many times!');
@@ -343,7 +338,7 @@ EOT;
     public function testCreatesFromCache()
     {
         $expected = new Configuration('regional');
-        $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
+        $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
@@ -369,7 +364,7 @@ EOT;
                 $expected
             ],
             [
-                Promise\promise_for($expected),
+                Promise\Create::promiseFor($expected),
                 $expected
             ],
             [
@@ -402,12 +397,10 @@ EOT;
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Not a valid STS regional endpoints configuration argument.
-     */
     public function testInvalidConfigurationUnwrap()
     {
+        $this->expectExceptionMessage("Not a valid STS regional endpoints configuration argument.");
+        $this->expectException(\InvalidArgumentException::class);
         ConfigurationProvider::unwrap([]);
     }
 }

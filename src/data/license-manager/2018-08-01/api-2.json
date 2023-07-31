@@ -40,6 +40,7 @@
       "output":{"shape":"CheckInLicenseResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"AuthorizationException"},
@@ -58,6 +59,7 @@
       "output":{"shape":"CheckoutBorrowLicenseResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"NoEntitlementsAllowedException"},
         {"shape":"EntitlementNotAllowedException"},
@@ -79,6 +81,7 @@
       "output":{"shape":"CheckoutLicenseResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"NoEntitlementsAllowedException"},
         {"shape":"UnsupportedDigitalSignatureMethodException"},
@@ -158,6 +161,42 @@
         {"shape":"AuthorizationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"RateLimitExceededException"}
+      ]
+    },
+    "CreateLicenseConversionTaskForResource":{
+      "name":"CreateLicenseConversionTaskForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateLicenseConversionTaskForResourceRequest"},
+      "output":{"shape":"CreateLicenseConversionTaskForResourceResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RateLimitExceededException"}
+      ]
+    },
+    "CreateLicenseManagerReportGenerator":{
+      "name":"CreateLicenseManagerReportGenerator",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateLicenseManagerReportGeneratorRequest"},
+      "output":{"shape":"CreateLicenseManagerReportGeneratorResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"RateLimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "CreateLicenseVersion":{
@@ -249,6 +288,25 @@
         {"shape":"AuthorizationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"RateLimitExceededException"}
+      ]
+    },
+    "DeleteLicenseManagerReportGenerator":{
+      "name":"DeleteLicenseManagerReportGenerator",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteLicenseManagerReportGeneratorRequest"},
+      "output":{"shape":"DeleteLicenseManagerReportGeneratorResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"RateLimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DeleteToken":{
@@ -354,6 +412,41 @@
         {"shape":"RateLimitExceededException"}
       ]
     },
+    "GetLicenseConversionTask":{
+      "name":"GetLicenseConversionTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetLicenseConversionTaskRequest"},
+      "output":{"shape":"GetLicenseConversionTaskResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RateLimitExceededException"}
+      ]
+    },
+    "GetLicenseManagerReportGenerator":{
+      "name":"GetLicenseManagerReportGenerator",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetLicenseManagerReportGeneratorRequest"},
+      "output":{"shape":"GetLicenseManagerReportGeneratorResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"RateLimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetLicenseUsage":{
       "name":"GetLicenseUsage",
       "http":{
@@ -454,6 +547,41 @@
         {"shape":"RateLimitExceededException"}
       ]
     },
+    "ListLicenseConversionTasks":{
+      "name":"ListLicenseConversionTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListLicenseConversionTasksRequest"},
+      "output":{"shape":"ListLicenseConversionTasksResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RateLimitExceededException"}
+      ]
+    },
+    "ListLicenseManagerReportGenerators":{
+      "name":"ListLicenseManagerReportGenerators",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListLicenseManagerReportGeneratorsRequest"},
+      "output":{"shape":"ListLicenseManagerReportGeneratorsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"RateLimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListLicenseSpecificationsForResource":{
       "name":"ListLicenseSpecificationsForResource",
       "http":{
@@ -521,6 +649,24 @@
         {"shape":"RateLimitExceededException"}
       ]
     },
+    "ListReceivedGrantsForOrganization":{
+      "name":"ListReceivedGrantsForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListReceivedGrantsForOrganizationRequest"},
+      "output":{"shape":"ListReceivedGrantsForOrganizationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RateLimitExceededException"}
+      ]
+    },
     "ListReceivedLicenses":{
       "name":"ListReceivedLicenses",
       "http":{
@@ -529,6 +675,24 @@
       },
       "input":{"shape":"ListReceivedLicensesRequest"},
       "output":{"shape":"ListReceivedLicensesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RateLimitExceededException"}
+      ]
+    },
+    "ListReceivedLicensesForOrganization":{
+      "name":"ListReceivedLicensesForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListReceivedLicensesForOrganizationRequest"},
+      "output":{"shape":"ListReceivedLicensesForOrganizationResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InvalidParameterValueException"},
@@ -673,6 +837,25 @@
         {"shape":"ResourceLimitExceededException"}
       ]
     },
+    "UpdateLicenseManagerReportGenerator":{
+      "name":"UpdateLicenseManagerReportGenerator",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLicenseManagerReportGeneratorRequest"},
+      "output":{"shape":"UpdateLicenseManagerReportGeneratorResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"RateLimitExceededException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"AuthorizationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceLimitExceededException"}
+      ]
+    },
     "UpdateLicenseSpecificationsForResource":{
       "name":"UpdateLicenseSpecificationsForResource",
       "http":{
@@ -731,6 +914,13 @@
       },
       "exception":true
     },
+    "ActivationOverrideBehavior":{
+      "type":"string",
+      "enum":[
+        "DISTRIBUTED_GRANTS_ONLY",
+        "ALL_GRANTS_PERMITTED_BY_ISSUER"
+      ]
+    },
     "AllowedOperation":{
       "type":"string",
       "enum":[
@@ -752,7 +942,7 @@
     "Arn":{
       "type":"string",
       "max":2048,
-      "pattern":"^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$"
+      "pattern":"^arn:aws(-(cn|us-gov|iso-b|iso-c|iso-d))?:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$"
     },
     "ArnList":{
       "type":"list",
@@ -857,17 +1047,26 @@
         "SignedToken":{"shape":"SignedToken"},
         "NodeId":{"shape":"String"},
         "IssuedAt":{"shape":"ISO8601DateTime"},
-        "Expiration":{"shape":"ISO8601DateTime"}
+        "Expiration":{"shape":"ISO8601DateTime"},
+        "LicenseArn":{"shape":"String"}
       }
     },
     "CheckoutType":{
       "type":"string",
-      "enum":["PROVISIONAL"]
+      "enum":[
+        "PROVISIONAL",
+        "PERPETUAL"
+      ]
+    },
+    "ClientRequestToken":{
+      "type":"string",
+      "max":36,
+      "min":1
     },
     "ClientToken":{
       "type":"string",
-      "max":64,
-      "pattern":"[a-zA-Z0-9]*"
+      "max":2048,
+      "pattern":"\\S+"
     },
     "ConflictException":{
       "type":"structure",
@@ -906,7 +1105,7 @@
         "AllowedOperations"
       ],
       "members":{
-        "ClientToken":{"shape":"String"},
+        "ClientToken":{"shape":"ClientToken"},
         "GrantName":{"shape":"String"},
         "LicenseArn":{"shape":"Arn"},
         "Principals":{"shape":"PrincipalArnList"},
@@ -929,12 +1128,14 @@
         "GrantArn"
       ],
       "members":{
-        "ClientToken":{"shape":"String"},
+        "ClientToken":{"shape":"ClientToken"},
         "GrantArn":{"shape":"Arn"},
         "GrantName":{"shape":"String"},
         "AllowedOperations":{"shape":"AllowedOperationList"},
         "Status":{"shape":"GrantStatus"},
-        "SourceVersion":{"shape":"String"}
+        "StatusReason":{"shape":"StatusReasonMessage"},
+        "SourceVersion":{"shape":"String"},
+        "Options":{"shape":"Options"}
       }
     },
     "CreateGrantVersionResponse":{
@@ -969,6 +1170,50 @@
         "LicenseConfigurationArn":{"shape":"String"}
       }
     },
+    "CreateLicenseConversionTaskForResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "SourceLicenseContext",
+        "DestinationLicenseContext"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"Arn"},
+        "SourceLicenseContext":{"shape":"LicenseConversionContext"},
+        "DestinationLicenseContext":{"shape":"LicenseConversionContext"}
+      }
+    },
+    "CreateLicenseConversionTaskForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "LicenseConversionTaskId":{"shape":"LicenseConversionTaskId"}
+      }
+    },
+    "CreateLicenseManagerReportGeneratorRequest":{
+      "type":"structure",
+      "required":[
+        "ReportGeneratorName",
+        "Type",
+        "ReportContext",
+        "ReportFrequency",
+        "ClientToken"
+      ],
+      "members":{
+        "ReportGeneratorName":{"shape":"ReportGeneratorName"},
+        "Type":{"shape":"ReportTypeList"},
+        "ReportContext":{"shape":"ReportContext"},
+        "ReportFrequency":{"shape":"ReportFrequency"},
+        "ClientToken":{"shape":"ClientRequestToken"},
+        "Description":{"shape":"String"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateLicenseManagerReportGeneratorResponse":{
+      "type":"structure",
+      "members":{
+        "LicenseManagerReportGeneratorArn":{"shape":"String"}
+      }
+    },
     "CreateLicenseRequest":{
       "type":"structure",
       "required":[
@@ -994,7 +1239,7 @@
         "Beneficiary":{"shape":"String"},
         "ConsumptionConfiguration":{"shape":"ConsumptionConfiguration"},
         "LicenseMetadata":{"shape":"MetadataList"},
-        "ClientToken":{"shape":"String"}
+        "ClientToken":{"shape":"ClientToken"}
       }
     },
     "CreateLicenseResponse":{
@@ -1030,7 +1275,7 @@
         "Entitlements":{"shape":"EntitlementList"},
         "ConsumptionConfiguration":{"shape":"ConsumptionConfiguration"},
         "Status":{"shape":"LicenseStatus"},
-        "ClientToken":{"shape":"String"},
+        "ClientToken":{"shape":"ClientToken"},
         "SourceVersion":{"shape":"String"}
       }
     },
@@ -1053,7 +1298,7 @@
         "RoleArns":{"shape":"ArnList"},
         "ExpirationInDays":{"shape":"Integer"},
         "TokenProperties":{"shape":"MaxSize3StringList"},
-        "ClientToken":{"shape":"IdempotencyToken"}
+        "ClientToken":{"shape":"ClientToken"}
       }
     },
     "CreateTokenResponse":{
@@ -1081,6 +1326,7 @@
       ],
       "members":{
         "GrantArn":{"shape":"Arn"},
+        "StatusReason":{"shape":"StatusReasonMessage"},
         "Version":{"shape":"String"}
       }
     },
@@ -1100,6 +1346,18 @@
       }
     },
     "DeleteLicenseConfigurationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteLicenseManagerReportGeneratorRequest":{
+      "type":"structure",
+      "required":["LicenseManagerReportGeneratorArn"],
+      "members":{
+        "LicenseManagerReportGeneratorArn":{"shape":"String"}
+      }
+    },
+    "DeleteLicenseManagerReportGeneratorResponse":{
       "type":"structure",
       "members":{
       }
@@ -1370,6 +1628,40 @@
         "DisassociateWhenNotFound":{"shape":"BoxBoolean"}
       }
     },
+    "GetLicenseConversionTaskRequest":{
+      "type":"structure",
+      "required":["LicenseConversionTaskId"],
+      "members":{
+        "LicenseConversionTaskId":{"shape":"LicenseConversionTaskId"}
+      }
+    },
+    "GetLicenseConversionTaskResponse":{
+      "type":"structure",
+      "members":{
+        "LicenseConversionTaskId":{"shape":"LicenseConversionTaskId"},
+        "ResourceArn":{"shape":"String"},
+        "SourceLicenseContext":{"shape":"LicenseConversionContext"},
+        "DestinationLicenseContext":{"shape":"LicenseConversionContext"},
+        "StatusMessage":{"shape":"String"},
+        "Status":{"shape":"LicenseConversionTaskStatus"},
+        "StartTime":{"shape":"DateTime"},
+        "LicenseConversionTime":{"shape":"DateTime"},
+        "EndTime":{"shape":"DateTime"}
+      }
+    },
+    "GetLicenseManagerReportGeneratorRequest":{
+      "type":"structure",
+      "required":["LicenseManagerReportGeneratorArn"],
+      "members":{
+        "LicenseManagerReportGeneratorArn":{"shape":"String"}
+      }
+    },
+    "GetLicenseManagerReportGeneratorResponse":{
+      "type":"structure",
+      "members":{
+        "ReportGenerator":{"shape":"ReportGenerator"}
+      }
+    },
     "GetLicenseRequest":{
       "type":"structure",
       "required":["LicenseArn"],
@@ -1433,9 +1725,10 @@
         "GranteePrincipalArn":{"shape":"Arn"},
         "HomeRegion":{"shape":"String"},
         "GrantStatus":{"shape":"GrantStatus"},
-        "StatusReason":{"shape":"String"},
+        "StatusReason":{"shape":"StatusReasonMessage"},
         "Version":{"shape":"String"},
-        "GrantedOperations":{"shape":"AllowedOperationList"}
+        "GrantedOperations":{"shape":"AllowedOperationList"},
+        "Options":{"shape":"Options"}
       }
     },
     "GrantList":{
@@ -1452,7 +1745,8 @@
         "FAILED_WORKFLOW",
         "DELETED",
         "PENDING_DELETE",
-        "DISABLED"
+        "DISABLED",
+        "WORKFLOW_COMPLETED"
       ]
     },
     "GrantedLicense":{
@@ -1483,11 +1777,6 @@
       "type":"string",
       "max":50,
       "pattern":"^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[0-1]|0[1-9]|[1-2][0-9])T(2[0-3]|[0-1][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-](?:2[ 0-3]|[0-1][0-9]):[0-5][0-9])+$"
-    },
-    "IdempotencyToken":{
-      "type":"string",
-      "max":60,
-      "pattern":"\\S+"
     },
     "Integer":{"type":"integer"},
     "InvalidParameterValueException":{
@@ -1625,6 +1914,43 @@
     "LicenseConfigurations":{
       "type":"list",
       "member":{"shape":"LicenseConfiguration"}
+    },
+    "LicenseConversionContext":{
+      "type":"structure",
+      "members":{
+        "UsageOperation":{"shape":"UsageOperation"}
+      }
+    },
+    "LicenseConversionTask":{
+      "type":"structure",
+      "members":{
+        "LicenseConversionTaskId":{"shape":"LicenseConversionTaskId"},
+        "ResourceArn":{"shape":"String"},
+        "SourceLicenseContext":{"shape":"LicenseConversionContext"},
+        "DestinationLicenseContext":{"shape":"LicenseConversionContext"},
+        "Status":{"shape":"LicenseConversionTaskStatus"},
+        "StatusMessage":{"shape":"String"},
+        "StartTime":{"shape":"DateTime"},
+        "LicenseConversionTime":{"shape":"DateTime"},
+        "EndTime":{"shape":"DateTime"}
+      }
+    },
+    "LicenseConversionTaskId":{
+      "type":"string",
+      "max":50,
+      "pattern":"^lct-[a-zA-Z0-9]*"
+    },
+    "LicenseConversionTaskStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "LicenseConversionTasks":{
+      "type":"list",
+      "member":{"shape":"LicenseConversionTask"}
     },
     "LicenseCountingType":{
       "type":"string",
@@ -1764,6 +2090,36 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListLicenseConversionTasksRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"BoxInteger"},
+        "Filters":{"shape":"Filters"}
+      }
+    },
+    "ListLicenseConversionTasksResponse":{
+      "type":"structure",
+      "members":{
+        "LicenseConversionTasks":{"shape":"LicenseConversionTasks"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListLicenseManagerReportGeneratorsRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"FilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"MaxSize100"}
+      }
+    },
+    "ListLicenseManagerReportGeneratorsResponse":{
+      "type":"structure",
+      "members":{
+        "ReportGenerators":{"shape":"ReportGeneratorList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListLicenseSpecificationsForResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -1812,6 +2168,23 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListReceivedGrantsForOrganizationRequest":{
+      "type":"structure",
+      "required":["LicenseArn"],
+      "members":{
+        "LicenseArn":{"shape":"Arn"},
+        "Filters":{"shape":"FilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"MaxSize100"}
+      }
+    },
+    "ListReceivedGrantsForOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "Grants":{"shape":"GrantList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListReceivedGrantsRequest":{
       "type":"structure",
       "members":{
@@ -1825,6 +2198,21 @@
       "type":"structure",
       "members":{
         "Grants":{"shape":"GrantList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListReceivedLicensesForOrganizationRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"FilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"MaxSize100"}
+      }
+    },
+    "ListReceivedLicensesForOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "Licenses":{"shape":"GrantedLicenseList"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -1947,6 +2335,12 @@
       },
       "exception":true
     },
+    "Options":{
+      "type":"structure",
+      "members":{
+        "ActivationOverrideBehavior":{"shape":"ActivationOverrideBehavior"}
+      }
+    },
     "OrganizationConfiguration":{
       "type":"structure",
       "required":["EnableIntegration"],
@@ -1975,7 +2369,6 @@
       "type":"structure",
       "required":[
         "ProductInformationFilterName",
-        "ProductInformationFilterValue",
         "ProductInformationFilterComparator"
       ],
       "members":{
@@ -2010,6 +2403,7 @@
       "type":"structure",
       "members":{
         "ReceivedStatus":{"shape":"ReceivedStatus"},
+        "ReceivedStatusReason":{"shape":"StatusReasonMessage"},
         "AllowedOperations":{"shape":"AllowedOperationList"}
       }
     },
@@ -2022,7 +2416,8 @@
         "ACTIVE",
         "FAILED_WORKFLOW",
         "DELETED",
-        "DISABLED"
+        "DISABLED",
+        "WORKFLOW_COMPLETED"
       ]
     },
     "RedirectException":{
@@ -2055,6 +2450,66 @@
         "Weekly",
         "Monthly"
       ]
+    },
+    "ReportContext":{
+      "type":"structure",
+      "required":["licenseConfigurationArns"],
+      "members":{
+        "licenseConfigurationArns":{"shape":"ArnList"}
+      }
+    },
+    "ReportFrequency":{
+      "type":"structure",
+      "members":{
+        "value":{"shape":"Integer"},
+        "period":{"shape":"ReportFrequencyType"}
+      }
+    },
+    "ReportFrequencyType":{
+      "type":"string",
+      "enum":[
+        "DAY",
+        "WEEK",
+        "MONTH"
+      ]
+    },
+    "ReportGenerator":{
+      "type":"structure",
+      "members":{
+        "ReportGeneratorName":{"shape":"String"},
+        "ReportType":{"shape":"ReportTypeList"},
+        "ReportContext":{"shape":"ReportContext"},
+        "ReportFrequency":{"shape":"ReportFrequency"},
+        "LicenseManagerReportGeneratorArn":{"shape":"String"},
+        "LastRunStatus":{"shape":"String"},
+        "LastRunFailureReason":{"shape":"String"},
+        "LastReportGenerationTime":{"shape":"String"},
+        "ReportCreatorAccount":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "S3Location":{"shape":"S3Location"},
+        "CreateTime":{"shape":"String"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "ReportGeneratorList":{
+      "type":"list",
+      "member":{"shape":"ReportGenerator"}
+    },
+    "ReportGeneratorName":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "ReportType":{
+      "type":"string",
+      "enum":[
+        "LicenseConfigurationSummaryReport",
+        "LicenseConfigurationUsageReport"
+      ]
+    },
+    "ReportTypeList":{
+      "type":"list",
+      "member":{"shape":"ReportType"}
     },
     "ResourceInventory":{
       "type":"structure",
@@ -2095,6 +2550,13 @@
         "SYSTEMS_MANAGER_MANAGED_INSTANCE"
       ]
     },
+    "S3Location":{
+      "type":"structure",
+      "members":{
+        "bucket":{"shape":"String"},
+        "keyPrefix":{"shape":"String"}
+      }
+    },
     "ServerInternalException":{
       "type":"structure",
       "members":{
@@ -2106,6 +2568,11 @@
     "SignedToken":{
       "type":"string",
       "min":4096
+    },
+    "StatusReasonMessage":{
+      "type":"string",
+      "max":400,
+      "pattern":"[\\s\\S]+"
     },
     "String":{"type":"string"},
     "StringList":{
@@ -2211,6 +2678,31 @@
       "members":{
       }
     },
+    "UpdateLicenseManagerReportGeneratorRequest":{
+      "type":"structure",
+      "required":[
+        "LicenseManagerReportGeneratorArn",
+        "ReportGeneratorName",
+        "Type",
+        "ReportContext",
+        "ReportFrequency",
+        "ClientToken"
+      ],
+      "members":{
+        "LicenseManagerReportGeneratorArn":{"shape":"String"},
+        "ReportGeneratorName":{"shape":"ReportGeneratorName"},
+        "Type":{"shape":"ReportTypeList"},
+        "ReportContext":{"shape":"ReportContext"},
+        "ReportFrequency":{"shape":"ReportFrequency"},
+        "ClientToken":{"shape":"ClientRequestToken"},
+        "Description":{"shape":"String"}
+      }
+    },
+    "UpdateLicenseManagerReportGeneratorResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UpdateLicenseSpecificationsForResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -2238,6 +2730,10 @@
       "type":"structure",
       "members":{
       }
+    },
+    "UsageOperation":{
+      "type":"string",
+      "max":50
     },
     "ValidationException":{
       "type":"structure",
