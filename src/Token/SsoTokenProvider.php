@@ -94,53 +94,49 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
      * @return mixed|null
      */
     public function refresh() {
-        try {
-            //try to reload from disk
-            $token = $this();
-            if (
-                $token instanceof SsoToken
-                && !$token->shouldAttemptRefresh()
-            ) {
-                return $token;
-            }
-        } finally {
-            //if reload from disk fails, try refreshing
-            $tokenLocation = self::getTokenLocation($this->ssoProfileName);
-            $tokenData = $this->getTokenData($tokenLocation);
-            if (
-                empty($this->ssoOidcClient)
-                || empty($tokenData['startUrl'])
-            ) {
-                throw new TokenException(
-                    "Cannot refresh this token without an 'ssooidcClient' "
-                    . "and a 'start_url'"
-                );
-            }
-            $response = $this->ssoOidcClient->createToken([
-                'clientId' => $tokenData['clientId'],
-                'clientSecret' => $tokenData['clientSecret'],
-                'grantType' => 'refresh_token', // REQUIRED
-                'refreshToken' => $tokenData['refreshToken'],
-            ]);
-            if ($response['@metadata']['statusCode'] == 200) {
-                $tokenData['accessToken'] = $response['accessToken'];
-                $tokenData['expiresAt'] = time () + $response['expiresIn'];
-                $tokenData['refreshToken'] = $response['refreshToken'];
-                $token = new SsoToken(
-                    $tokenData['accessToken'],
-                    $tokenData['expiresAt'],
-                    $tokenData['refreshToken'],
-                    isset($tokenData['clientId']) ? $tokenData['clientId'] : null,
-                    isset($tokenData['clientSecret']) ? $tokenData['clientSecret'] : null,
-                    isset($tokenData['registrationExpiresAt']) ? $tokenData['registrationExpiresAt'] : null,
-                    isset($tokenData['region']) ? $tokenData['region'] : null,
-                    isset($tokenData['startUrl']) ? $tokenData['startUrl'] : null                );
-
-                $this->writeNewTokenDataToDisk($tokenData, $tokenLocation);
-
-                return $token;
-            }
+        //try to reload from disk
+        $token = $this();
+        if (
+            $token instanceof SsoToken
+            && !$token->shouldAttemptRefresh()
+        ) {
+            return $token;
         }
+        $tokenLocation = self::getTokenLocation($this->ssoProfileName);
+        $tokenData = $this->getTokenData($tokenLocation);
+        if (
+            empty($this->ssoOidcClient)
+            || empty($tokenData['startUrl'])
+        ) {
+            throw new TokenException(
+                "Cannot refresh this token without an 'ssooidcClient' "
+                . "and a 'start_url'"
+            );
+        }
+        $response = $this->ssoOidcClient->createToken([
+            'clientId' => $tokenData['clientId'],
+            'clientSecret' => $tokenData['clientSecret'],
+            'grantType' => 'refresh_token', // REQUIRED
+            'refreshToken' => $tokenData['refreshToken'],
+        ]);
+        if ($response['@metadata']['statusCode'] == 200) {
+            $tokenData['accessToken'] = $response['accessToken'];
+            $tokenData['expiresAt'] = time () + $response['expiresIn'];
+            $tokenData['refreshToken'] = $response['refreshToken'];
+            $token = new SsoToken(
+                $tokenData['accessToken'],
+                $tokenData['expiresAt'],
+                $tokenData['refreshToken'],
+                isset($tokenData['clientId']) ? $tokenData['clientId'] : null,
+                isset($tokenData['clientSecret']) ? $tokenData['clientSecret'] : null,
+                isset($tokenData['registrationExpiresAt']) ? $tokenData['registrationExpiresAt'] : null,
+                isset($tokenData['region']) ? $tokenData['region'] : null,
+                isset($tokenData['startUrl']) ? $tokenData['startUrl'] : null                );
+
+            $this->writeNewTokenDataToDisk($tokenData, $tokenLocation);
+
+            return $token;
+    }
     }
 
     public function shouldAttemptRefresh()

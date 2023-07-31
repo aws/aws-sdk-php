@@ -984,8 +984,7 @@ class CredentialProvider
             'roleName' => $ssoProfile['sso_role_name']
         ]);
 
-        $ssoCredentials = $ssoResponse['roleCredentials'];
-        return $ssoCredentials;
+        return $ssoResponse['roleCredentials'];
     }
 }
 
