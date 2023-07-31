@@ -109,9 +109,9 @@ class StreamWrapper
      */
     public static function register(
         S3ClientInterface $client,
-                          $protocol = 's3',
+        $protocol = 's3',
         CacheInterface $cache = null,
-                          $v2Existence = false
+        $v2Existence = false
     ) {
         self::$useV2Existence = $v2Existence;
         if (in_array($protocol, stream_get_wrappers())) {
