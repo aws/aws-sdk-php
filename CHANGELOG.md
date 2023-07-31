@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.277.4 - 2023-07-28
+
+* `Aws\` - This release adds .json.php artifacts for EntityResolution and ManagedBlockchainQuery services
+
 ## 3.277.3 - 2023-07-28
 
 * `Aws\ApplicationInsights` - This release enable customer to add/remove/update more than one workload for a component
