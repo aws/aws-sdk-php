@@ -11,6 +11,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchGetAccountStatusAsync(array $args = [])
  * @method \Aws\Result batchGetCodeSnippet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetCodeSnippetAsync(array $args = [])
+ * @method \Aws\Result batchGetFindingDetails(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetFindingDetailsAsync(array $args = [])
  * @method \Aws\Result batchGetFreeTrialInfo(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetFreeTrialInfoAsync(array $args = [])
  * @method \Aws\Result batchGetMemberEc2DeepInspectionStatus(array $args = [])
