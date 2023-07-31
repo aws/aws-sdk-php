@@ -1,5 +1,55 @@
 # CHANGELOG
 
+## 3.277.3 - 2023-07-28
+
+* `Aws\ApplicationInsights` - This release enable customer to add/remove/update more than one workload for a component
+* `Aws\CloudFormation` - This SDK release is for the feature launch of AWS CloudFormation RetainExceptOnCreate. It adds a new parameter retainExceptOnCreate in the following APIs: CreateStack, UpdateStack, RollbackStack, ExecuteChangeSet.
+* `Aws\CloudFront` - Add a new JavaScript runtime version for CloudFront Functions.
+* `Aws\Connect` - This release adds support for new number types.
+* `Aws\Kafka` - Amazon MSK has introduced new versions of ListClusterOperations and DescribeClusterOperation APIs. These v2 APIs provide information and insights into the ongoing operations of both MSK Provisioned and MSK Serverless clusters.
+* `Aws\Pinpoint` - Added support for sending push notifications using the FCM v1 API with json credentials. Amazon Pinpoint customers can now deliver messages to Android devices using both FCM v1 API and the legacy FCM/GCM API
+
+## 3.277.2 - 2023-07-28
+
+* `Aws\SQS` - Documentation changes related to SQS APIs.
+
+## 3.277.1 - 2023-07-27
+
+* `Aws\AutoScaling` - This release updates validation for instance types used in the AllowedInstanceTypes and ExcludedInstanceTypes parameters of the InstanceRequirements property of a MixedInstancesPolicy.
+* `Aws\EBS` - SDK and documentation updates for Amazon Elastic Block Store API
+* `Aws\EC2` - SDK and documentation updates for Amazon Elastic Block Store APIs
+* `Aws\EKS` - Add multiple customer error code to handle customer caused failure when managing EKS node groups
+* `Aws\SageMaker` - Expose ProfilerConfig attribute in SageMaker Search API response.
+
+## 3.277.0 - 2023-07-26
+
+* `Aws\CloudControlApi` - Updates the documentation for CreateResource.
+* `Aws\EntityResolution` - AWS Entity Resolution can effectively match a source record from a customer relationship management (CRM) system with a source record from a marketing system containing campaign information.
+* `Aws\Glue` - Release Glue Studio Snowflake Connector Node for SDK/CLI
+* `Aws\HealthLake` - Updating the HealthLake service documentation.
+* `Aws\ManagedBlockchainQuery` - Amazon Managed Blockchain (AMB) Query provides serverless access to standardized, multi-blockchain datasets with developer-friendly APIs.
+* `Aws\MediaConvert` - This release includes general updates to user documentation.
+* `Aws\Omics` - The service is renaming as a part of AWS Health.
+* `Aws\OpenSearchServerless` - This release adds new collection type VectorSearch.
+* `Aws\Polly` - Amazon Polly adds 1 new voice - Lisa (nl-BE)
+* `Aws\Route53` - Update that corrects the documents for received feedback.
+
+## 3.276.5 - 2023-07-25
+
+* `Aws\BillingConductor` - Added support for Auto-Assocate Billing Groups for CreateBillingGroup, UpdateBillingGroup, and ListBillingGroups.
+* `Aws\ConnectWisdomService` - This release added two new data types: AssistantIntegrationConfiguration, and SessionIntegrationConfiguration to support Wisdom integration with Amazon Connect Chat
+* `Aws\CustomerProfiles` - Amazon Connect Customer Profiles now supports rule-based resolution to match and merge similar profiles into unified profiles, helping companies deliver faster and more personalized customer service by providing access to relevant customer information for agents and automated experiences.
+* `Aws\DataSync` - AWS DataSync now supports Microsoft Azure Blob Storage locations.
+* `Aws\DynamoDB` - Documentation updates for DynamoDB
+* `Aws\EC2` - This release adds an instance's peak and baseline network bandwidth as well as the memory sizes of an instance's inference accelerators to DescribeInstanceTypes.
+* `Aws\EMRServerless` - This release adds support for publishing application logs to CloudWatch.
+* `Aws\Lambda` - Add Python 3.11 (python3.11) support to AWS Lambda
+* `Aws\RDS` - This release adds support for monitoring storage optimization progress on the DescribeDBInstances API.
+* `Aws\STS` - API updates for the AWS Security Token Service
+* `Aws\SageMaker` - Mark ContentColumn and TargetLabelColumn as required Targets in TextClassificationJobConfig in CreateAutoMLJobV2API
+* `Aws\SecurityHub` - Add support for CONTAINS and NOT_CONTAINS comparison operators for Automation Rules string filters and map filters
+* `Aws\Transfer` - This release adds support for SFTP Connectors.
+
 ## 3.276.4 - 2023-07-24
 
 * `Aws\ApiGatewayV2` - Documentation updates for Amazon API Gateway.
