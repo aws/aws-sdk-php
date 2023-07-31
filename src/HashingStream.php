@@ -52,11 +52,12 @@ class HashingStream implements StreamInterface
 
     public function seek($offset, $whence = SEEK_SET): void
     {
-        if ($offset === 0) {
-            $this->hash->reset();
-            $this->stream->seek($offset);
-        }
         // Seeking arbitrarily is not supported.
-        return;
+        if ($offset !== 0) {
+            return;
+        }
+
+        $this->hash->reset();
+        $this->stream->seek($offset);
     }
 }
