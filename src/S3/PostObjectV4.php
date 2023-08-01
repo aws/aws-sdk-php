@@ -58,9 +58,13 @@ class PostObjectV4
 
         $credentials   = $this->client->getCredentials()->wait();
 
+        if ($credentials instanceof SsoCredentials) {
+            throw new CredentialsException("Using Sso credentials with PostObjectV4 is not supported");
+        }
+
         if ($securityToken = $credentials->getSecurityToken()) {
-            $options [] = ['x-amz-session-token' => $securityToken];
-            $formInputs['X-Amz-Session-Token'] = $securityToken;
+            $options [] = ['x-amz-security-token' => $securityToken];
+            $formInputs['X-Amz-Security-Token'] = $securityToken;
         }
 
         // setup basic policy
