@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.6 - 2023-08-01
 
 * `Aws\Batch` - This release adds support for price capacity optimized allocation strategy for Spot Instances.
 * `Aws\DatabaseMigrationService` - Adding new API describe-engine-versions which provides information about the lifecycle of a replication instance's version.
