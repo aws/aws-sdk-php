@@ -8,14 +8,14 @@ namespace Aws\EndpointV2;
  */
 class EndpointDefinitionProvider
 {
-    public static function getEndpointRuleset($service, $apiVersion)
+    public static function getEndpointRuleset($service, $apiVersion, $baseDir = null)
     {
-        return self::getData($service, $apiVersion, 'ruleset');
+        return self::getData($service, $apiVersion, 'ruleset', $baseDir);
     }
 
-    public static function getEndpointTests($service, $apiVersion)
+    public static function getEndpointTests($service, $apiVersion, $baseDir = null)
     {
-        return self::getData($service, $apiVersion, 'tests');
+        return self::getData($service, $apiVersion, 'tests', $baseDir);
     }
 
     public static function getPartitions()
@@ -30,9 +30,9 @@ class EndpointDefinitionProvider
         }
     }
 
-    private static function getData($service, $apiVersion, $type)
+    private static function getData($service, $apiVersion, $type, $baseDir)
     {
-        $basePath = __DIR__ . '/../data';
+        $basePath = $baseDir ? $baseDir :  __DIR__ . '/../data';
         $serviceDir = $basePath . "/{$service}";
         if (!is_dir($serviceDir)) {
             throw new \InvalidArgumentException(
