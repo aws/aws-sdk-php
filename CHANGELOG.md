@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - This release adds support for price capacity optimized allocation strategy for Spot Instances.
+* `Aws\DatabaseMigrationService` - Adding new API describe-engine-versions which provides information about the lifecycle of a replication instance's version.
+* `Aws\InternetMonitor` - This release adds a new feature for Amazon CloudWatch Internet Monitor that enables customers to set custom thresholds, for performance and availability drops, for impact limited to a single city-network to trigger creation of a health event.
+* `Aws\MediaLive` - AWS Elemental Link devices now report their Availability Zone. Link devices now support the ability to change their Availability Zone.
+* `Aws\Polly` - Amazon Polly adds new French Belgian voice - Isabelle. Isabelle is available as Neural voice only.
+* `Aws\RDS` - Added support for deleted clusters PiTR.
+* `Aws\SageMaker` - Add Stairs TrafficPattern and FlatInvocations to RecommendationJobStoppingConditions
+
 ## 3.277.5 - 2023-07-31
 
 * `Aws\AmplifyUIBuilder` - Amplify Studio releases GraphQL support for codegen job action.

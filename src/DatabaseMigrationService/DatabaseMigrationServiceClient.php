@@ -63,6 +63,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeEndpointTypesAsync(array $args = [])
  * @method \Aws\Result describeEndpoints(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeEndpointsAsync(array $args = [])
+ * @method \Aws\Result describeEngineVersions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeEngineVersionsAsync(array $args = [])
  * @method \Aws\Result describeEventCategories(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeEventCategoriesAsync(array $args = [])
  * @method \Aws\Result describeEventSubscriptions(array $args = [])
