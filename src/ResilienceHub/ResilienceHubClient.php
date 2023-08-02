@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS Resilience Hub** service.
  * @method \Aws\Result addDraftAppVersionResourceMappings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addDraftAppVersionResourceMappingsAsync(array $args = [])
+ * @method \Aws\Result batchUpdateRecommendationStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchUpdateRecommendationStatusAsync(array $args = [])
  * @method \Aws\Result createApp(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createAppAsync(array $args = [])
  * @method \Aws\Result createAppVersionAppComponent(array $args = [])
@@ -53,6 +55,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise importResourcesToDraftAppVersionAsync(array $args = [])
  * @method \Aws\Result listAlarmRecommendations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAlarmRecommendationsAsync(array $args = [])
+ * @method \Aws\Result listAppAssessmentComplianceDrifts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAppAssessmentComplianceDriftsAsync(array $args = [])
  * @method \Aws\Result listAppAssessments(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAppAssessmentsAsync(array $args = [])
  * @method \Aws\Result listAppComponentCompliances(array $args = [])
