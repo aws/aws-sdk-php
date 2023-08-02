@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.7 - 2023-08-02
 
 * `Aws\Budgets` - As part of CAE tagging integration we need to update our budget names regex filter to prevent customers from using "/action/" in their budget names.
 * `Aws\CognitoIdentityProvider` - New feature that logs Cognito user pool error messages to CloudWatch logs.
