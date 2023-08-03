@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.8 - 2023-08-03
 
 * `Aws\AutoScaling` - Documentation changes related to Amazon EC2 Auto Scaling APIs.
 * `Aws\Cloud9` - Updated the deprecation date for Amazon Linux. Doc only update.
