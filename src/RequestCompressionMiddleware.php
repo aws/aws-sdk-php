@@ -113,8 +113,7 @@ class RequestCompressionMiddleware
                 return true;
             }
 
-            $hasContentLength = $request->hasHeader('content-length');
-            $requestBodySize = $hasContentLength
+            $requestBodySize = $request->hasHeader('content-length')
                 ? (int) $request->getHeaderLine('content-length')
                 : $request->getBody()->getSize();
 
