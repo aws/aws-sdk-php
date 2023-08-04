@@ -51,7 +51,6 @@ class RequestCompressionMiddleware
         }
         $nextHandler = $this->nextHandler;
         $operation = $this->api->getOperation($command->getName());
-//        $requestBodySize = $request->getBody()->getSize();
         $compressionInfo = isset($operation['requestcompression'])
             ? $operation['requestcompression']
             : null;
