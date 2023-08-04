@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.9 - 2023-08-04
 
 * `Aws\ACMPCA` - Documentation correction for AWS Private CA
 * `Aws\Connect` - Added a new API UpdateRoutingProfileAgentAvailabilityTimer to update agent availability timer of a routing profile.
