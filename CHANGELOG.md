@@ -1,8 +1,48 @@
 # CHANGELOG
 
+## 3.277.8 - 2023-08-03
+
+* `Aws\AutoScaling` - Documentation changes related to Amazon EC2 Auto Scaling APIs.
+* `Aws\Cloud9` - Updated the deprecation date for Amazon Linux. Doc only update.
+* `Aws\DatabaseMigrationService` - The release makes public API for DMS Schema Conversion feature.
+* `Aws\EC2` - This release adds new parameter isPrimaryIPv6 to allow assigning an IPv6 address as a primary IPv6 address to a network interface which cannot be changed to give equivalent functionality available for network interfaces with primary IPv4 address.
+* `Aws\SageMaker` - Amazon SageMaker now supports running training jobs on p5.48xlarge instance types.
+
+## 3.277.7 - 2023-08-02
+
+* `Aws\Budgets` - As part of CAE tagging integration we need to update our budget names regex filter to prevent customers from using "/action/" in their budget names.
+* `Aws\CognitoIdentityProvider` - New feature that logs Cognito user pool error messages to CloudWatch logs.
+* `Aws\Glue` - This release includes additional Glue Streaming KAKFA SASL property types.
+* `Aws\ResilienceHub` - Drift Detection capability added when applications policy has moved from a meet to breach state. Customers will be able to exclude operational recommendations and receive credit in their resilience score. Customers can now add ARH permissions to an existing or new role.
+* `Aws\SageMaker` - SageMaker Inference Recommender introduces a new API GetScalingConfigurationRecommendation to recommend auto scaling policies based on completed Inference Recommender jobs.
+
+## 3.277.6 - 2023-08-01
+
+* `Aws\Batch` - This release adds support for price capacity optimized allocation strategy for Spot Instances.
+* `Aws\DatabaseMigrationService` - Adding new API describe-engine-versions which provides information about the lifecycle of a replication instance's version.
+* `Aws\InternetMonitor` - This release adds a new feature for Amazon CloudWatch Internet Monitor that enables customers to set custom thresholds, for performance and availability drops, for impact limited to a single city-network to trigger creation of a health event.
+* `Aws\MediaLive` - AWS Elemental Link devices now report their Availability Zone. Link devices now support the ability to change their Availability Zone.
+* `Aws\Polly` - Amazon Polly adds new French Belgian voice - Isabelle. Isabelle is available as Neural voice only.
+* `Aws\RDS` - Added support for deleted clusters PiTR.
+* `Aws\SageMaker` - Add Stairs TrafficPattern and FlatInvocations to RecommendationJobStoppingConditions
+
+## 3.277.5 - 2023-07-31
+
+* `Aws\AmplifyUIBuilder` - Amplify Studio releases GraphQL support for codegen job action.
+* `Aws\AutoScaling` - You can now configure an instance refresh to set its status to 'failed' when it detects that a specified CloudWatch alarm has gone into the ALARM state. You can also choose to roll back the instance refresh automatically when the alarm threshold is met.
+* `Aws\CleanRooms` - This release introduces custom SQL queries - an expanded set of SQL you can run. This release adds analysis templates, a new resource for storing pre-defined custom SQL queries ahead of time. This release also adds the Custom analysis rule, which lets you approve analysis templates for querying.
+* `Aws\CodeStarconnections` - New integration with the Gitlab provider type.
+* `Aws\Inspector2` - This release adds 1 new API: BatchGetFindingDetails to retrieve enhanced vulnerability intelligence details for findings.
+* `Aws\LookoutEquipment` - This release includes new import resource, model versioning and resource policy features.
+* `Aws\Omics` - Add CreationType filter for ListReadSets
+* `Aws\RDS` - This release adds support for Aurora MySQL local write forwarding, which allows for forwarding of write operations from reader DB instances to the writer DB instance.
+* `Aws\Route53` - Amazon Route 53 now supports the Israel (Tel Aviv) Region (il-central-1) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+* `Aws\Scheduler` - This release introduces automatic deletion of schedules in EventBridge Scheduler. If configured, EventBridge Scheduler automatically deletes a schedule after the schedule has completed its last invocation.
+* `Aws\drs` - Add support for in-aws right sizing
+
 ## 3.277.4 - 2023-07-28
 
-* `Aws\` - This release adds .json.php artifacts for ManagedBlockChainQuery and EntityResolution services 
+* `Aws\` - This release adds .json.php artifacts for EntityResolution and ManagedBlockchainQuery services
 
 ## 3.277.3 - 2023-07-28
 

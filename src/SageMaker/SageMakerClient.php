@@ -343,6 +343,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getModelPackageGroupPolicyAsync(array $args = [])
  * @method \Aws\Result getSagemakerServicecatalogPortfolioStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSagemakerServicecatalogPortfolioStatusAsync(array $args = [])
+ * @method \Aws\Result getScalingConfigurationRecommendation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getScalingConfigurationRecommendationAsync(array $args = [])
  * @method \Aws\Result getSearchSuggestions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSearchSuggestionsAsync(array $args = [])
  * @method \Aws\Result importHubContent(array $args = [])

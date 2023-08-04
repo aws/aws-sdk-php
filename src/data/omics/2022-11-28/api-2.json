@@ -2133,6 +2133,13 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "CreationType":{
+      "type":"string",
+      "enum":[
+        "IMPORT",
+        "UPLOAD"
+      ]
+    },
     "DeleteAnnotationStoreRequest":{
       "type":"structure",
       "required":["name"],
@@ -2655,7 +2662,8 @@
         "sequenceInformation":{"shape":"SequenceInformation"},
         "referenceArn":{"shape":"ReferenceArn"},
         "files":{"shape":"ReadSetFiles"},
-        "statusMessage":{"shape":"ReadSetStatusMessage"}
+        "statusMessage":{"shape":"ReadSetStatusMessage"},
+        "creationType":{"shape":"CreationType"}
       }
     },
     "GetReadSetRequest":{
@@ -4222,7 +4230,8 @@
         "createdBefore":{"shape":"SyntheticTimestamp_date_time"},
         "sampleId":{"shape":"SampleId"},
         "subjectId":{"shape":"SubjectId"},
-        "generatedFrom":{"shape":"GeneratedFrom"}
+        "generatedFrom":{"shape":"GeneratedFrom"},
+        "creationType":{"shape":"CreationType"}
       }
     },
     "ReadSetId":{
@@ -4285,7 +4294,8 @@
         "fileType":{"shape":"FileType"},
         "sequenceInformation":{"shape":"SequenceInformation"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "statusMessage":{"shape":"ReadSetStatusMessage"}
+        "statusMessage":{"shape":"ReadSetStatusMessage"},
+        "creationType":{"shape":"CreationType"}
       }
     },
     "ReadSetName":{
