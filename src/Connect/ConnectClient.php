@@ -367,6 +367,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateQuickConnectConfigAsync(array $args = [])
  * @method \Aws\Result updateQuickConnectName(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateQuickConnectNameAsync(array $args = [])
+ * @method \Aws\Result updateRoutingProfileAgentAvailabilityTimer(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRoutingProfileAgentAvailabilityTimerAsync(array $args = [])
  * @method \Aws\Result updateRoutingProfileConcurrency(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRoutingProfileConcurrencyAsync(array $args = [])
  * @method \Aws\Result updateRoutingProfileDefaultOutboundQueue(array $args = [])

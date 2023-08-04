@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - Documentation correction for AWS Private CA
+* `Aws\Connect` - Added a new API UpdateRoutingProfileAgentAvailabilityTimer to update agent availability timer of a routing profile.
+* `Aws\DataSync` - Display cloud storage used capacity at a cluster level.
+* `Aws\ECS` - This is a documentation update to address various tickets.
+* `Aws\SageMaker` - Including DataCaptureConfig key in the Amazon Sagemaker Search's transform job object
+
 ## 3.277.8 - 2023-08-03
 
 * `Aws\AutoScaling` - Documentation changes related to Amazon EC2 Auto Scaling APIs.
