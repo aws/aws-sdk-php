@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.10 - 2023-08-07
 
 * `Aws\` - Removes validation of supplying the `version` configuration option to client constructors, defaulting to 'latest'`
 * `Aws\Rekognition` - This release adds code snippets for Amazon Rekognition Custom Labels.
