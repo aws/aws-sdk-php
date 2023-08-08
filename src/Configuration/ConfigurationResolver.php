@@ -21,8 +21,7 @@ class ConfigurationResolver
      *                         to retrieve value from the environment or ini file.
      * @param mixed $defaultValue
      * @param string $expectedType  The expected type of the retrieved value.
-     * @param array $config client configuration options.
-     * @param array $options additional arguments for resolving configuration.
+     * @param array $config additional configuration options.
      *
      * @return mixed
      */
@@ -30,10 +29,13 @@ class ConfigurationResolver
         $key,
         $defaultValue,
         $expectedType,
-        $config = [],
-        $options = []
+        $config = []
     )
     {
+        $options = isset($config['config_resolver_options'])
+            ? $config['config_resolver_options']
+            : [];
+
         $envValue = self::env($key, $expectedType);
         if (!is_null($envValue)) {
             return $envValue;
@@ -101,7 +103,7 @@ class ConfigurationResolver
         $expectedType,
         $profile = null,
         $filename = null,
-        $options = []
+        $options
     ){
         $filename = $filename ?: (self::getDefaultConfigFilename());
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');

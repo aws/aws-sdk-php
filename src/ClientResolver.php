@@ -1188,8 +1188,12 @@ class ClientResolver
             'endpoint_url_' . $serviceIdentifier,
             '',
             'string',
-            $args + ,
-            ['service' => $serviceIdentifier, 'key' => 'endpoint_url']
+            $args + [
+                'config_resolver_options' => [
+                    'service' => $serviceIdentifier,
+                    'key' => 'endpoint_url'
+                ]
+            ]
         );
 
         if (empty($value)) {
