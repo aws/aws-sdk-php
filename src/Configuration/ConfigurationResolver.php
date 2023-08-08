@@ -103,7 +103,7 @@ class ConfigurationResolver
         $expectedType,
         $profile = null,
         $filename = null,
-        $options
+        $options = []
     ){
         $filename = $filename ?: (self::getDefaultConfigFilename());
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
