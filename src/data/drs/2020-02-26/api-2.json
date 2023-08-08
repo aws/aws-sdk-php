@@ -13,6 +13,25 @@
     "uid":"drs-2020-02-26"
   },
   "operations":{
+    "AssociateSourceNetworkStack":{
+      "name":"AssociateSourceNetworkStack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/AssociateSourceNetworkStack",
+        "responseCode":202
+      },
+      "input":{"shape":"AssociateSourceNetworkStackRequest"},
+      "output":{"shape":"AssociateSourceNetworkStackResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
     "CreateExtendedSourceServer":{
       "name":"CreateExtendedSourceServer",
       "http":{
@@ -24,6 +43,24 @@
       "output":{"shape":"CreateExtendedSourceServerResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "CreateLaunchConfigurationTemplate":{
+      "name":"CreateLaunchConfigurationTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateLaunchConfigurationTemplate",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateLaunchConfigurationTemplateRequest"},
+      "output":{"shape":"CreateLaunchConfigurationTemplateResponse"},
+      "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
@@ -50,6 +87,25 @@
         {"shape":"UninitializedAccountException"}
       ]
     },
+    "CreateSourceNetwork":{
+      "name":"CreateSourceNetwork",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateSourceNetwork",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateSourceNetworkRequest"},
+      "output":{"shape":"CreateSourceNetworkResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
     "DeleteJob":{
       "name":"DeleteJob",
       "http":{
@@ -59,6 +115,24 @@
       },
       "input":{"shape":"DeleteJobRequest"},
       "output":{"shape":"DeleteJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteLaunchConfigurationTemplate":{
+      "name":"DeleteLaunchConfigurationTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteLaunchConfigurationTemplate",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteLaunchConfigurationTemplateRequest"},
+      "output":{"shape":"DeleteLaunchConfigurationTemplateResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -93,6 +167,24 @@
       },
       "input":{"shape":"DeleteReplicationConfigurationTemplateRequest"},
       "output":{"shape":"DeleteReplicationConfigurationTemplateResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UninitializedAccountException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteSourceNetwork":{
+      "name":"DeleteSourceNetwork",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteSourceNetwork",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteSourceNetworkRequest"},
+      "output":{"shape":"DeleteSourceNetworkResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -152,6 +244,23 @@
         {"shape":"UninitializedAccountException"}
       ]
     },
+    "DescribeLaunchConfigurationTemplates":{
+      "name":"DescribeLaunchConfigurationTemplates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DescribeLaunchConfigurationTemplates",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeLaunchConfigurationTemplatesRequest"},
+      "output":{"shape":"DescribeLaunchConfigurationTemplatesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
     "DescribeRecoveryInstances":{
       "name":"DescribeRecoveryInstances",
       "http":{
@@ -196,6 +305,22 @@
       "output":{"shape":"DescribeReplicationConfigurationTemplatesResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "DescribeSourceNetworks":{
+      "name":"DescribeSourceNetworks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DescribeSourceNetworks",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeSourceNetworksRequest"},
+      "output":{"shape":"DescribeSourceNetworksResponse"},
+      "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -249,6 +374,24 @@
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "ExportSourceNetworkCfnTemplate":{
+      "name":"ExportSourceNetworkCfnTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ExportSourceNetworkCfnTemplate",
+        "responseCode":200
+      },
+      "input":{"shape":"ExportSourceNetworkCfnTemplateRequest"},
+      "output":{"shape":"ExportSourceNetworkCfnTemplateResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
       ]
     },
@@ -383,7 +526,9 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"WARNING: RetryDataReplication is deprecated"
     },
     "ReverseReplication":{
       "name":"ReverseReplication",
@@ -456,6 +601,41 @@
         {"shape":"UninitializedAccountException"}
       ]
     },
+    "StartSourceNetworkRecovery":{
+      "name":"StartSourceNetworkRecovery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartSourceNetworkRecovery",
+        "responseCode":202
+      },
+      "input":{"shape":"StartSourceNetworkRecoveryRequest"},
+      "output":{"shape":"StartSourceNetworkRecoveryResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "StartSourceNetworkReplication":{
+      "name":"StartSourceNetworkReplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartSourceNetworkReplication",
+        "responseCode":200
+      },
+      "input":{"shape":"StartSourceNetworkReplicationRequest"},
+      "output":{"shape":"StartSourceNetworkReplicationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
     "StopFailback":{
       "name":"StopFailback",
       "http":{
@@ -485,6 +665,24 @@
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
+    "StopSourceNetworkReplication":{
+      "name":"StopSourceNetworkReplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StopSourceNetworkReplication",
+        "responseCode":200
+      },
+      "input":{"shape":"StopSourceNetworkReplicationRequest"},
+      "output":{"shape":"StopSourceNetworkReplicationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
       ]
     },
@@ -574,6 +772,24 @@
       ],
       "idempotent":true
     },
+    "UpdateLaunchConfigurationTemplate":{
+      "name":"UpdateLaunchConfigurationTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateLaunchConfigurationTemplate",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateLaunchConfigurationTemplateRequest"},
+      "output":{"shape":"UpdateLaunchConfigurationTemplateResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"UninitializedAccountException"}
+      ]
+    },
     "UpdateReplicationConfiguration":{
       "name":"UpdateReplicationConfiguration",
       "http":{
@@ -656,6 +872,23 @@
       "max":50,
       "min":0
     },
+    "AssociateSourceNetworkStackRequest":{
+      "type":"structure",
+      "required":[
+        "cfnStackName",
+        "sourceNetworkID"
+      ],
+      "members":{
+        "cfnStackName":{"shape":"CfnStackName"},
+        "sourceNetworkID":{"shape":"SourceNetworkID"}
+      }
+    },
+    "AssociateSourceNetworkStackResponse":{
+      "type":"structure",
+      "members":{
+        "job":{"shape":"Job"}
+      }
+    },
     "AwsAvailabilityZone":{
       "type":"string",
       "max":255,
@@ -684,6 +917,13 @@
         "modelName":{"shape":"BoundedString"}
       }
     },
+    "CfnStackName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[a-zA-Z][-a-zA-Z0-9]*$",
+      "sensitive":true
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -700,8 +940,8 @@
     },
     "ConversionMap":{
       "type":"map",
-      "key":{"shape":"ebsSnapshot"},
-      "value":{"shape":"ebsSnapshot"}
+      "key":{"shape":"EbsSnapshot"},
+      "value":{"shape":"EbsSnapshot"}
     },
     "ConversionProperties":{
       "type":"structure",
@@ -733,6 +973,24 @@
         "sourceServer":{"shape":"SourceServer"}
       }
     },
+    "CreateLaunchConfigurationTemplateRequest":{
+      "type":"structure",
+      "members":{
+        "copyPrivateIp":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
+        "exportBucketArn":{"shape":"ARN"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "licensing":{"shape":"Licensing"},
+        "tags":{"shape":"TagsMap"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+      }
+    },
+    "CreateLaunchConfigurationTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "launchConfigurationTemplate":{"shape":"LaunchConfigurationTemplate"}
+      }
+    },
     "CreateReplicationConfigurationTemplateRequest":{
       "type":"structure",
       "required":[
@@ -751,6 +1009,7 @@
       ],
       "members":{
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
         "bandwidthThrottling":{"shape":"PositiveInteger"},
         "createPublicIP":{"shape":"Boolean"},
         "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
@@ -764,6 +1023,26 @@
         "stagingAreaTags":{"shape":"TagsMap"},
         "tags":{"shape":"TagsMap"},
         "useDedicatedReplicationServer":{"shape":"Boolean"}
+      }
+    },
+    "CreateSourceNetworkRequest":{
+      "type":"structure",
+      "required":[
+        "originAccountID",
+        "originRegion",
+        "vpcID"
+      ],
+      "members":{
+        "originAccountID":{"shape":"AccountID"},
+        "originRegion":{"shape":"AwsRegion"},
+        "tags":{"shape":"TagsMap"},
+        "vpcID":{"shape":"VpcID"}
+      }
+    },
+    "CreateSourceNetworkResponse":{
+      "type":"structure",
+      "members":{
+        "sourceNetworkID":{"shape":"SourceNetworkID"}
       }
     },
     "DataReplicationError":{
@@ -800,7 +1079,8 @@
         "dataReplicationState":{"shape":"DataReplicationState"},
         "etaDateTime":{"shape":"ISO8601DatetimeString"},
         "lagDuration":{"shape":"ISO8601DurationString"},
-        "replicatedDisks":{"shape":"DataReplicationInfoReplicatedDisks"}
+        "replicatedDisks":{"shape":"DataReplicationInfoReplicatedDisks"},
+        "stagingAvailabilityZone":{"shape":"AwsAvailabilityZone"}
       }
     },
     "DataReplicationInfoReplicatedDisk":{
@@ -891,6 +1171,18 @@
       "members":{
       }
     },
+    "DeleteLaunchConfigurationTemplateRequest":{
+      "type":"structure",
+      "required":["launchConfigurationTemplateID"],
+      "members":{
+        "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"}
+      }
+    },
+    "DeleteLaunchConfigurationTemplateResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteRecoveryInstanceRequest":{
       "type":"structure",
       "required":["recoveryInstanceID"],
@@ -906,6 +1198,18 @@
       }
     },
     "DeleteReplicationConfigurationTemplateResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteSourceNetworkRequest":{
+      "type":"structure",
+      "required":["sourceNetworkID"],
+      "members":{
+        "sourceNetworkID":{"shape":"SourceNetworkID"}
+      }
+    },
+    "DeleteSourceNetworkResponse":{
       "type":"structure",
       "members":{
       }
@@ -964,6 +1268,21 @@
       "type":"structure",
       "members":{
         "items":{"shape":"JobsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribeLaunchConfigurationTemplatesRequest":{
+      "type":"structure",
+      "members":{
+        "launchConfigurationTemplateIDs":{"shape":"LaunchConfigurationTemplateIDs"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribeLaunchConfigurationTemplatesResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"LaunchConfigurationTemplates"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1030,6 +1349,35 @@
       "type":"structure",
       "members":{
         "items":{"shape":"ReplicationConfigurationTemplates"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribeSourceNetworksRequest":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"DescribeSourceNetworksRequestFilters"},
+        "maxResults":{"shape":"StrictlyPositiveInteger"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribeSourceNetworksRequestFilters":{
+      "type":"structure",
+      "members":{
+        "originAccountID":{"shape":"AccountID"},
+        "originRegion":{"shape":"AwsRegion"},
+        "sourceNetworkIDs":{"shape":"DescribeSourceNetworksRequestFiltersIDs"}
+      }
+    },
+    "DescribeSourceNetworksRequestFiltersIDs":{
+      "type":"list",
+      "member":{"shape":"SourceNetworkID"},
+      "max":100,
+      "min":0
+    },
+    "DescribeSourceNetworksResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"SourceNetworksList"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1112,15 +1460,39 @@
       "max":255,
       "min":0
     },
+    "EbsSnapshot":{
+      "type":"string",
+      "pattern":"^snap-[0-9a-zA-Z]{17}$"
+    },
     "EbsSnapshotsList":{
       "type":"list",
-      "member":{"shape":"ebsSnapshot"}
+      "member":{"shape":"EbsSnapshot"}
     },
     "EbsVolumeID":{
       "type":"string",
       "max":19,
       "min":10,
       "pattern":"^vol-([0-9a-fA-F]{8}|[0-9a-fA-F]{17})$"
+    },
+    "EventResourceData":{
+      "type":"structure",
+      "members":{
+        "sourceNetworkData":{"shape":"SourceNetworkData"}
+      },
+      "union":true
+    },
+    "ExportSourceNetworkCfnTemplateRequest":{
+      "type":"structure",
+      "required":["sourceNetworkID"],
+      "members":{
+        "sourceNetworkID":{"shape":"SourceNetworkID"}
+      }
+    },
+    "ExportSourceNetworkCfnTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "s3DestinationUrl":{"shape":"LargeBoundedString"}
+      }
     },
     "ExtensionStatus":{
       "type":"string",
@@ -1248,7 +1620,10 @@
         "FAILBACK",
         "DIAGNOSTIC",
         "TERMINATE_RECOVERY_INSTANCES",
-        "TARGET_ACCOUNT"
+        "TARGET_ACCOUNT",
+        "CREATE_NETWORK_RECOVERY",
+        "UPDATE_NETWORK_RECOVERY",
+        "ASSOCIATE_NETWORK_RECOVERY"
       ]
     },
     "InternalServerException":{
@@ -1275,6 +1650,7 @@
         "endDateTime":{"shape":"ISO8601DatetimeString"},
         "initiatedBy":{"shape":"InitiatedBy"},
         "jobID":{"shape":"JobID"},
+        "participatingResources":{"shape":"ParticipatingResources"},
         "participatingServers":{"shape":"ParticipatingServers"},
         "status":{"shape":"JobStatus"},
         "tags":{"shape":"TagsMap"},
@@ -1314,7 +1690,17 @@
         "LAUNCH_START",
         "LAUNCH_FAILED",
         "JOB_CANCEL",
-        "JOB_END"
+        "JOB_END",
+        "DEPLOY_NETWORK_CONFIGURATION_START",
+        "DEPLOY_NETWORK_CONFIGURATION_END",
+        "DEPLOY_NETWORK_CONFIGURATION_FAILED",
+        "UPDATE_NETWORK_CONFIGURATION_START",
+        "UPDATE_NETWORK_CONFIGURATION_END",
+        "UPDATE_NETWORK_CONFIGURATION_FAILED",
+        "UPDATE_LAUNCH_TEMPLATE_START",
+        "UPDATE_LAUNCH_TEMPLATE_END",
+        "UPDATE_LAUNCH_TEMPLATE_FAILED",
+        "NETWORK_RECOVERY_FAIL"
       ]
     },
     "JobLogEventData":{
@@ -1322,6 +1708,7 @@
       "members":{
         "conversionProperties":{"shape":"ConversionProperties"},
         "conversionServerID":{"shape":"EC2InstanceID"},
+        "eventResourceData":{"shape":"EventResourceData"},
         "rawError":{"shape":"LargeBoundedString"},
         "sourceServerID":{"shape":"SourceServerID"},
         "targetInstanceID":{"shape":"EC2InstanceID"}
@@ -1385,6 +1772,38 @@
         "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
       }
     },
+    "LaunchConfigurationTemplate":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ARN"},
+        "copyPrivateIp":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
+        "exportBucketArn":{"shape":"ARN"},
+        "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "licensing":{"shape":"Licensing"},
+        "tags":{"shape":"TagsMap"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+      }
+    },
+    "LaunchConfigurationTemplateID":{
+      "type":"string",
+      "max":21,
+      "min":21,
+      "pattern":"^lct-[0-9a-zA-Z]{17}$"
+    },
+    "LaunchConfigurationTemplateIDs":{
+      "type":"list",
+      "member":{"shape":"LaunchConfigurationTemplateID"},
+      "max":1,
+      "min":0
+    },
+    "LaunchConfigurationTemplates":{
+      "type":"list",
+      "member":{"shape":"LaunchConfigurationTemplate"},
+      "max":200,
+      "min":0
+    },
     "LaunchDisposition":{
       "type":"string",
       "enum":[
@@ -1421,7 +1840,8 @@
     "LifeCycleLastLaunch":{
       "type":"structure",
       "members":{
-        "initiated":{"shape":"LifeCycleLastLaunchInitiated"}
+        "initiated":{"shape":"LifeCycleLastLaunchInitiated"},
+        "status":{"shape":"LaunchStatus"}
       }
     },
     "LifeCycleLastLaunchInitiated":{
@@ -1498,6 +1918,11 @@
       "max":300,
       "min":1
     },
+    "MaxResultsType":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
     "NetworkInterface":{
       "type":"structure",
       "members":{
@@ -1559,6 +1984,24 @@
       "max":2048,
       "min":0
     },
+    "ParticipatingResource":{
+      "type":"structure",
+      "members":{
+        "launchStatus":{"shape":"LaunchStatus"},
+        "participatingResourceID":{"shape":"ParticipatingResourceID"}
+      }
+    },
+    "ParticipatingResourceID":{
+      "type":"structure",
+      "members":{
+        "sourceNetworkID":{"shape":"SourceNetworkID"}
+      },
+      "union":true
+    },
+    "ParticipatingResources":{
+      "type":"list",
+      "member":{"shape":"ParticipatingResource"}
+    },
     "ParticipatingServer":{
       "type":"structure",
       "members":{
@@ -1585,6 +2028,7 @@
         "failback":{"shape":"RecoveryInstanceFailback"},
         "isDrill":{"shape":"Boolean"},
         "jobID":{"shape":"JobID"},
+        "originAvailabilityZone":{"shape":"AwsAvailabilityZone"},
         "originEnvironment":{"shape":"OriginEnvironment"},
         "pointInTimeSnapshotDateTime":{"shape":"ISO8601DatetimeString"},
         "recoveryInstanceID":{"shape":"RecoveryInstanceID"},
@@ -1608,7 +2052,8 @@
         "dataReplicationState":{"shape":"RecoveryInstanceDataReplicationState"},
         "etaDateTime":{"shape":"ISO8601DatetimeString"},
         "lagDuration":{"shape":"ISO8601DatetimeString"},
-        "replicatedDisks":{"shape":"RecoveryInstanceDataReplicationInfoReplicatedDisks"}
+        "replicatedDisks":{"shape":"RecoveryInstanceDataReplicationInfoReplicatedDisks"},
+        "stagingAvailabilityZone":{"shape":"AwsAvailabilityZone"}
       }
     },
     "RecoveryInstanceDataReplicationInfoReplicatedDisk":{
@@ -1754,6 +2199,26 @@
       "max":200,
       "min":1
     },
+    "RecoveryLifeCycle":{
+      "type":"structure",
+      "members":{
+        "apiCallDateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "jobID":{"shape":"JobID"},
+        "lastRecoveryResult":{"shape":"RecoveryResult"}
+      }
+    },
+    "RecoveryResult":{
+      "type":"string",
+      "enum":[
+        "NOT_STARTED",
+        "IN_PROGRESS",
+        "SUCCESS",
+        "FAIL",
+        "PARTIAL_SUCCESS",
+        "ASSOCIATE_SUCCESS",
+        "ASSOCIATE_FAIL"
+      ]
+    },
     "RecoverySnapshot":{
       "type":"structure",
       "required":[
@@ -1790,6 +2255,7 @@
       "type":"structure",
       "members":{
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
         "bandwidthThrottling":{"shape":"PositiveInteger"},
         "createPublicIP":{"shape":"Boolean"},
         "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
@@ -1827,7 +2293,8 @@
       "type":"string",
       "enum":[
         "DEFAULT",
-        "CUSTOM"
+        "CUSTOM",
+        "NONE"
       ]
     },
     "ReplicationConfigurationReplicatedDisk":{
@@ -1865,6 +2332,7 @@
       "members":{
         "arn":{"shape":"ARN"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
         "bandwidthThrottling":{"shape":"PositiveInteger"},
         "createPublicIP":{"shape":"Boolean"},
         "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
@@ -1910,6 +2378,15 @@
       "max":32,
       "min":0
     },
+    "ReplicationStatus":{
+      "type":"string",
+      "enum":[
+        "STOPPED",
+        "IN_PROGRESS",
+        "PROTECTED",
+        "ERROR"
+      ]
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -1929,7 +2406,9 @@
       "required":["sourceServerID"],
       "members":{
         "sourceServerID":{"shape":"SourceServerID"}
-      }
+      },
+      "deprecated":true,
+      "deprecatedMessage":"WARNING: RetryDataReplication is deprecated"
     },
     "ReverseReplicationRequest":{
       "type":"structure",
@@ -1949,6 +2428,12 @@
       "max":255,
       "min":0,
       "pattern":"^sg-[0-9a-fA-F]{8,}$"
+    },
+    "SensitiveBoundedString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "sensitive":true
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -1979,6 +2464,41 @@
         "originRegion":{"shape":"AwsRegion"}
       }
     },
+    "SourceNetwork":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ARN"},
+        "cfnStackName":{"shape":"CfnStackName"},
+        "lastRecovery":{"shape":"RecoveryLifeCycle"},
+        "launchedVpcID":{"shape":"VpcID"},
+        "replicationStatus":{"shape":"ReplicationStatus"},
+        "replicationStatusDetails":{"shape":"SensitiveBoundedString"},
+        "sourceAccountID":{"shape":"AccountID"},
+        "sourceNetworkID":{"shape":"SourceNetworkID"},
+        "sourceRegion":{"shape":"AwsRegion"},
+        "sourceVpcID":{"shape":"VpcID"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "SourceNetworkData":{
+      "type":"structure",
+      "members":{
+        "sourceNetworkID":{"shape":"SourceNetworkID"},
+        "sourceVpc":{"shape":"VpcID"},
+        "stackName":{"shape":"LargeBoundedString"},
+        "targetVpc":{"shape":"VpcID"}
+      }
+    },
+    "SourceNetworkID":{
+      "type":"string",
+      "max":20,
+      "min":20,
+      "pattern":"^sn-[0-9a-zA-Z]{17}$"
+    },
+    "SourceNetworksList":{
+      "type":"list",
+      "member":{"shape":"SourceNetwork"}
+    },
     "SourceProperties":{
       "type":"structure",
       "members":{
@@ -1989,7 +2509,8 @@
         "networkInterfaces":{"shape":"NetworkInterfaces"},
         "os":{"shape":"OS"},
         "ramBytes":{"shape":"PositiveInteger"},
-        "recommendedInstanceType":{"shape":"EC2InstanceType"}
+        "recommendedInstanceType":{"shape":"EC2InstanceType"},
+        "supportsNitroInstances":{"shape":"Boolean"}
       }
     },
     "SourceServer":{
@@ -2003,6 +2524,7 @@
         "replicationDirection":{"shape":"ReplicationDirection"},
         "reversedDirectionSourceServerArn":{"shape":"SourceServerARN"},
         "sourceCloudProperties":{"shape":"SourceCloudProperties"},
+        "sourceNetworkID":{"shape":"SourceNetworkID"},
         "sourceProperties":{"shape":"SourceProperties"},
         "sourceServerID":{"shape":"SourceServerID"},
         "stagingArea":{"shape":"StagingArea"},
@@ -2112,6 +2634,48 @@
         "sourceServer":{"shape":"SourceServer"}
       }
     },
+    "StartSourceNetworkRecoveryRequest":{
+      "type":"structure",
+      "required":["sourceNetworks"],
+      "members":{
+        "deployAsNew":{"shape":"Boolean"},
+        "sourceNetworks":{"shape":"StartSourceNetworkRecoveryRequestNetworkEntries"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "StartSourceNetworkRecoveryRequestNetworkEntries":{
+      "type":"list",
+      "member":{"shape":"StartSourceNetworkRecoveryRequestNetworkEntry"},
+      "max":100,
+      "min":1
+    },
+    "StartSourceNetworkRecoveryRequestNetworkEntry":{
+      "type":"structure",
+      "required":["sourceNetworkID"],
+      "members":{
+        "cfnStackName":{"shape":"CfnStackName"},
+        "sourceNetworkID":{"shape":"SourceNetworkID"}
+      }
+    },
+    "StartSourceNetworkRecoveryResponse":{
+      "type":"structure",
+      "members":{
+        "job":{"shape":"Job"}
+      }
+    },
+    "StartSourceNetworkReplicationRequest":{
+      "type":"structure",
+      "required":["sourceNetworkID"],
+      "members":{
+        "sourceNetworkID":{"shape":"SourceNetworkID"}
+      }
+    },
+    "StartSourceNetworkReplicationResponse":{
+      "type":"structure",
+      "members":{
+        "sourceNetwork":{"shape":"SourceNetwork"}
+      }
+    },
     "StopFailbackRequest":{
       "type":"structure",
       "required":["recoveryInstanceID"],
@@ -2132,6 +2696,19 @@
         "sourceServer":{"shape":"SourceServer"}
       }
     },
+    "StopSourceNetworkReplicationRequest":{
+      "type":"structure",
+      "required":["sourceNetworkID"],
+      "members":{
+        "sourceNetworkID":{"shape":"SourceNetworkID"}
+      }
+    },
+    "StopSourceNetworkReplicationResponse":{
+      "type":"structure",
+      "members":{
+        "sourceNetwork":{"shape":"SourceNetwork"}
+      }
+    },
     "StrictlyPositiveInteger":{
       "type":"integer",
       "min":1
@@ -2141,6 +2718,10 @@
       "max":255,
       "min":0,
       "pattern":"^subnet-[0-9a-fA-F]{8,}$"
+    },
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
     },
     "TagKey":{
       "type":"string",
@@ -2182,7 +2763,8 @@
       "type":"string",
       "enum":[
         "NONE",
-        "BASIC"
+        "BASIC",
+        "IN_AWS"
       ]
     },
     "TerminateRecoveryInstancesRequest":{
@@ -2271,11 +2853,31 @@
         "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
       }
     },
+    "UpdateLaunchConfigurationTemplateRequest":{
+      "type":"structure",
+      "required":["launchConfigurationTemplateID"],
+      "members":{
+        "copyPrivateIp":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
+        "exportBucketArn":{"shape":"ARN"},
+        "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "licensing":{"shape":"Licensing"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+      }
+    },
+    "UpdateLaunchConfigurationTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "launchConfigurationTemplate":{"shape":"LaunchConfigurationTemplate"}
+      }
+    },
     "UpdateReplicationConfigurationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
         "bandwidthThrottling":{"shape":"PositiveInteger"},
         "createPublicIP":{"shape":"Boolean"},
         "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
@@ -2299,6 +2901,7 @@
       "members":{
         "arn":{"shape":"ARN"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
         "bandwidthThrottling":{"shape":"PositiveInteger"},
         "createPublicIP":{"shape":"Boolean"},
         "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
@@ -2358,9 +2961,11 @@
       "key":{"shape":"LargeBoundedString"},
       "value":{"shape":"PositiveInteger"}
     },
-    "ebsSnapshot":{
+    "VpcID":{
       "type":"string",
-      "pattern":"^snap-[0-9a-zA-Z]{17}$"
+      "max":21,
+      "min":12,
+      "pattern":"^vpc-[0-9a-fA-F]{8,}$"
     }
   }
 }

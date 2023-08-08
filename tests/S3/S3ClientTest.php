@@ -1032,6 +1032,35 @@ EOXML;
         $this->assertSame(0, $retries);
     }
 
+    /**
+     * @dataProvider  clientRetrySettingsProvider
+     * @param $retrySettings
+     */
+    public function testRetriesFailOn400Errors($retrySettings) {
+        $retryCount = 0;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retrySettings,
+            'http_handler' => function () use (&$retryCount) {
+                $retryCount++;
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $this->getMockBuilder(S3Exception::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'response' => new Response(404, [], null),
+                ]);
+            },
+        ]);
+        $client->getObjectAsync([
+            'Bucket' => 'bucket',
+            'Key' => 'key'
+        ])->otherwise(function () {})->wait();
+
+        $this->assertSame(1, $retryCount);
+    }
+
     public function testListObjectsAppliesUrlEncodingWhenNoneSupplied()
     {
         $client = new S3Client([
@@ -1846,7 +1875,11 @@ EOXML;
         ];
     }
 
-    public function testPresignedMrapSuccess (){
+    public function testPresignedMrapSuccess ()
+    {
+        if (!extension_loaded('awscrt')) {
+            $this->markTestSkipped();
+        }
         $arn = 'arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap';
         $expectedEndpoint = "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com";
         $client = new S3Client([
@@ -1863,11 +1896,13 @@ EOXML;
         );
         $presigned = $client->createPresignedRequest($command, time() + 10000);
         self::assertSame($expectedEndpoint, $presigned->getUri()->getHost());
-        self::assertSame("*", $presigned->getHeader("x-amz-region-set")[0]);
-
+        $url = (string) $presigned->getUri();
+        $this->assertStringContainsString('Amz-Region-Set=%2A', $url);
+        $this->assertStringContainsString('X-Amz-Algorithm=AWS4-ECDSA-P256-SHA256', $url);
     }
 
-    public function testPresignedMrapFailure (){
+    public function testPresignedMrapFailure ()
+    {
         $arn = 'arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap';
         $expectedException = "Invalid configuration: Multi-Region Access Point ARNs are disabled.";
         $client = new S3Client([
@@ -2210,6 +2245,78 @@ EOXML;
             Middleware::tap(function ($cmd, $req) {
                 $this->assertSame('foo.test.com', $req->getUri()->getHost());
                 $this->assertSame('/?prefix=%2F&encoding-type=url', $req->getRequestTarget());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function testAddsForwardSlashIfEmptyPathAndQuery()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('listObjectsV2', ['Bucket' => 'foo']);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame('/', $req->getUri()->getPath());
+                $this->assertSame('list-type=2', $req->getUri()->getQuery());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function addMD5Provider() {
+        return [
+           [
+               ['Bucket' => 'foo', 'Key' => 'foo', 'Body' => 'test'],
+               'PutObject'
+           ],
+           [
+               [
+                   'Bucket' => 'foo',
+                   'Key' => 'foo',
+                   'Body' => 'test',
+                   'PartNumber' => 1,
+                   'UploadId' => 'foo',
+               ],
+               'UploadPart'
+           ]
+        ];
+    }
+
+    /**
+     * @dataProvider addMD5Provider
+     */
+    public function testAutomaticallyComputesMD5($options, $operation)
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $options['AddContentMD5'] = true;
+        $command = $s3->getCommand($operation, $options);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertSame(
+                    'CY9rzUYh03PK3k6DJie09g==',
+                    $req->getHeader('Content-MD5')[0]
+                );
+            })
+        );
+        $s3->execute($command);
+    }
+
+    /**
+     * @dataProvider addMD5Provider
+     */
+    public function testDoesNotComputeMD5($options, $operation)
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $options['AddContentMD5'] = false;
+        $command = $s3->getCommand($operation, $options);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) {
+                $this->assertFalse(
+                    $req->hasHeader('Content-MD5')
+                );
             })
         );
         $s3->execute($command);

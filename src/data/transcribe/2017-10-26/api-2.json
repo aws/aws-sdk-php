@@ -822,7 +822,8 @@
         "LanguageCode":{"shape":"LanguageCode"},
         "Words":{"shape":"Words"},
         "VocabularyFilterFileUri":{"shape":"Uri"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
     },
     "CreateVocabularyFilterResponse":{
@@ -844,7 +845,8 @@
         "LanguageCode":{"shape":"LanguageCode"},
         "Phrases":{"shape":"Phrases"},
         "VocabularyFileUri":{"shape":"Uri"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
     },
     "CreateVocabularyResponse":{
@@ -1726,7 +1728,8 @@
         "LanguageOptions":{"shape":"LanguageOptions"},
         "Subtitles":{"shape":"Subtitles"},
         "Tags":{"shape":"TagList"},
-        "LanguageIdSettings":{"shape":"LanguageIdSettingsMap"}
+        "LanguageIdSettings":{"shape":"LanguageIdSettingsMap"},
+        "ToxicityDetection":{"shape":"ToxicityDetection"}
       }
     },
     "StartTranscriptionJobResponse":{
@@ -1830,6 +1833,29 @@
       "max":14400000,
       "min":0
     },
+    "ToxicityCategories":{
+      "type":"list",
+      "member":{"shape":"ToxicityCategory"},
+      "max":1,
+      "min":1
+    },
+    "ToxicityCategory":{
+      "type":"string",
+      "enum":["ALL"]
+    },
+    "ToxicityDetection":{
+      "type":"list",
+      "member":{"shape":"ToxicityDetectionSettings"},
+      "max":1,
+      "min":1
+    },
+    "ToxicityDetectionSettings":{
+      "type":"structure",
+      "required":["ToxicityCategories"],
+      "members":{
+        "ToxicityCategories":{"shape":"ToxicityCategories"}
+      }
+    },
     "TranscribeArn":{
       "type":"string",
       "max":1011,
@@ -1887,7 +1913,8 @@
         "LanguageCodes":{"shape":"LanguageCodeList"},
         "Tags":{"shape":"TagList"},
         "Subtitles":{"shape":"SubtitlesOutput"},
-        "LanguageIdSettings":{"shape":"LanguageIdSettingsMap"}
+        "LanguageIdSettings":{"shape":"LanguageIdSettingsMap"},
+        "ToxicityDetection":{"shape":"ToxicityDetection"}
       }
     },
     "TranscriptionJobName":{
@@ -1925,7 +1952,8 @@
         "IdentifyLanguage":{"shape":"Boolean"},
         "IdentifyMultipleLanguages":{"shape":"Boolean"},
         "IdentifiedLanguageScore":{"shape":"IdentifiedLanguageScore"},
-        "LanguageCodes":{"shape":"LanguageCodeList"}
+        "LanguageCodes":{"shape":"LanguageCodeList"},
+        "ToxicityDetection":{"shape":"ToxicityDetection"}
       }
     },
     "Type":{
@@ -1997,7 +2025,8 @@
       "members":{
         "VocabularyFilterName":{"shape":"VocabularyFilterName"},
         "Words":{"shape":"Words"},
-        "VocabularyFilterFileUri":{"shape":"Uri"}
+        "VocabularyFilterFileUri":{"shape":"Uri"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
     },
     "UpdateVocabularyFilterResponse":{
@@ -2018,7 +2047,8 @@
         "VocabularyName":{"shape":"VocabularyName"},
         "LanguageCode":{"shape":"LanguageCode"},
         "Phrases":{"shape":"Phrases"},
-        "VocabularyFileUri":{"shape":"Uri"}
+        "VocabularyFileUri":{"shape":"Uri"},
+        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
       }
     },
     "UpdateVocabularyResponse":{

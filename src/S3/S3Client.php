@@ -301,7 +301,9 @@ class S3Client extends AwsClient implements S3ClientInterface
      * - bucket_endpoint: (bool) Set to true to send requests to a
      *   hardcoded bucket endpoint rather than create an endpoint as a result
      *   of injecting the bucket into the URL. This option is useful for
-     *   interacting with CNAME endpoints.
+     *   interacting with CNAME endpoints. Note: if you are using version 2.243.0
+     *   and above and do not expect the bucket name to appear in the host, you will
+     *   also need to set `use_path_style_endpoint` to `true`.
      * - calculate_md5: (bool) Set to false to disable calculating an MD5
      *   for all Amazon S3 signed uploads.
      * - s3_us_east_1_regional_endpoint:
@@ -417,6 +419,9 @@ class S3Client extends AwsClient implements S3ClientInterface
         $stack->appendInit($this->getHeadObjectMiddleware(), 's3.head_object');
         if ($this->isUseEndpointV2()) {
             $this->processEndpointV2Model();
+            $stack->after('builderV2',
+                's3.check_empty_path_with_query',
+                $this->getEmptyPathWithQuery());
         }
     }
 
@@ -468,12 +473,17 @@ class S3Client extends AwsClient implements S3ClientInterface
         $command = clone $command;
         $command->getHandlerList()->remove('signer');
         $request = \Aws\serialize($command);
-        $signing_name = $this->getSigningName($request->getUri()->getHost());
+        $signing_name = empty($command->getAuthSchemes())
+            ? $this->getSigningName($request->getUri()->getHost())
+            : $command->getAuthSchemes()['name'];
+        $signature_version = empty($command->getAuthSchemes())
+            ? $this->getConfig('signature_version')
+            : $command->getAuthSchemes()['version'];
 
         /** @var \Aws\Signature\SignatureInterface $signer */
         $signer = call_user_func(
             $this->getSignatureProvider(),
-            $this->getConfig('signature_version'),
+            $signature_version,
             $signing_name,
             $this->getConfig('signing_region')
         );
@@ -648,6 +658,27 @@ class S3Client extends AwsClient implements S3ClientInterface
     }
 
     /**
+     * Provides a middleware that checks for an empty path and a
+     * non-empty query string.
+     *
+     * @return \Closure
+     */
+    private function getEmptyPathWithQuery()
+    {
+        return static function (callable $handler) {
+            return function (Command $command, RequestInterface $request) use ($handler) {
+                $uri = $request->getUri();
+                if (empty($uri->getPath()) && !empty($uri->getQuery())) {
+                    $uri = $uri->withPath('/');
+                    $request = $request->withUri($uri);
+                }
+
+                return $handler($command, $request);
+            };
+        };
+    }
+
+    /**
      * Special handling for when the service name is s3-object-lambda.
      * So, if the host contains s3-object-lambda, then the service name
      * returned is s3-object-lambda, otherwise the default signing service is returned.
@@ -788,19 +819,21 @@ class S3Client extends AwsClient implements S3ClientInterface
                                     && $attempts < $config->getMaxAttempts()
                                 ) {
                                     if (!empty($result->getResponse())
-                                        && strpos(
-                                            $result->getResponse()->getBody(),
-                                            'Your socket connection to the server'
-                                        ) !== false
+                                        && $result->getResponse()->getStatusCode() >= 400
                                     ) {
-                                        $isRetryable = false;
+                                        return strpos(
+                                                $result->getResponse()->getBody(),
+                                                'Your socket connection to the server'
+                                            ) !== false;
                                     }
+
                                     if ($result->getPrevious() instanceof RequestException
                                         && $cmd->getName() !== 'CompleteMultipartUpload'
                                     ) {
                                         $isRetryable = true;
                                     }
                                 }
+
                                 return $isRetryable;
                             }
                         ]
@@ -872,9 +905,13 @@ class S3Client extends AwsClient implements S3ClientInterface
         $api['shapes']['ContentSHA256'] = ['type' => 'string'];
         $api['shapes']['PutObjectRequest']['members']['ContentSHA256'] = ['shape' => 'ContentSHA256'];
         $api['shapes']['UploadPartRequest']['members']['ContentSHA256'] = ['shape' => 'ContentSHA256'];
-        unset($api['shapes']['PutObjectRequest']['members']['ContentMD5']);
-        unset($api['shapes']['UploadPartRequest']['members']['ContentMD5']);
         $docs['shapes']['ContentSHA256']['append'] = $opt;
+
+        // Add the AddContentMD5 parameter.
+        $docs['shapes']['AddContentMD5']['base'] = 'Set to true to calculate the ContentMD5 for the upload.';
+        $api['shapes']['AddContentMD5'] = ['type' => 'boolean'];
+        $api['shapes']['PutObjectRequest']['members']['AddContentMD5'] = ['shape' => 'AddContentMD5'];
+        $api['shapes']['UploadPartRequest']['members']['AddContentMD5'] = ['shape' => 'AddContentMD5'];
 
         // Add the SaveAs parameter.
         $docs['shapes']['SaveAs']['base'] = 'The path to a file on disk to save the object data.';
@@ -908,9 +945,20 @@ class S3Client extends AwsClient implements S3ClientInterface
             "sa-east-1",
         ];
 
-        // Add a note that the ContentMD5 is optional.
+        // Add a note that the ContentMD5 is automatically computed, except for with PutObject and UploadPart
         $docs['shapes']['ContentMD5']['append'] = '<div class="alert alert-info">The value will be computed on '
             . 'your behalf.</div>';
+        $docs['shapes']['ContentMD5']['excludeAppend'] = ['PutObjectRequest', 'UploadPartRequest'];
+
+        //Add a note to ContentMD5 for PutObject and UploadPart that specifies the value is required
+        // When uploading to a bucket with object lock enabled and that it is not computed automatically
+        $objectLock = '<div class="alert alert-info">This value is required if uploading to a bucket '
+            . 'which has Object Lock enabled. It will not be calculated for you automatically. If you wish to have '
+            . 'the value calculated for you, use the `AddContentMD5` parameter.</div>';
+        $docs['shapes']['ContentMD5']['appendOnly'] = [
+            'message' => $objectLock,
+            'shapes' => ['PutObjectRequest', 'UploadPartRequest']
+        ];
 
         return [
             new Service($api, ApiProvider::defaultProvider()),

@@ -86,6 +86,20 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DeleteAccountPolicy":{
+      "name":"DeleteAccountPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAccountPolicyRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"OperationAbortedException"}
+      ]
+    },
     "DeleteDataProtectionPolicy":{
       "name":"DeleteDataProtectionPolicy",
       "http":{
@@ -208,6 +222,21 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"OperationAbortedException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "DescribeAccountPolicies":{
+      "name":"DescribeAccountPolicies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAccountPoliciesRequest"},
+      "output":{"shape":"DescribeAccountPoliciesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceUnavailableException"}
       ]
     },
@@ -462,6 +491,21 @@
       "deprecated":true,
       "deprecatedMessage":"Please use the generic tagging API ListTagsForResource"
     },
+    "PutAccountPolicy":{
+      "name":"PutAccountPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAccountPolicyRequest"},
+      "output":{"shape":"PutAccountPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "PutDataProtectionPolicy":{
       "name":"PutDataProtectionPolicy",
       "http":{
@@ -710,6 +754,22 @@
       "max":20,
       "min":0
     },
+    "AccountPolicies":{
+      "type":"list",
+      "member":{"shape":"AccountPolicy"}
+    },
+    "AccountPolicy":{
+      "type":"structure",
+      "members":{
+        "policyName":{"shape":"PolicyName"},
+        "policyDocument":{"shape":"AccountPolicyDocument"},
+        "lastUpdatedTime":{"shape":"Timestamp"},
+        "policyType":{"shape":"PolicyType"},
+        "scope":{"shape":"Scope"},
+        "accountId":{"shape":"AccountId"}
+      }
+    },
+    "AccountPolicyDocument":{"type":"string"},
     "AmazonResourceName":{
       "type":"string",
       "max":1011,
@@ -719,13 +779,11 @@
     "Arn":{"type":"string"},
     "AssociateKmsKeyRequest":{
       "type":"structure",
-      "required":[
-        "logGroupName",
-        "kmsKeyId"
-      ],
+      "required":["kmsKeyId"],
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
-        "kmsKeyId":{"shape":"KmsKeyId"}
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "resourceIdentifier":{"shape":"ResourceIdentifier"}
       }
     },
     "CancelExportTaskRequest":{
@@ -798,6 +856,17 @@
     },
     "Days":{"type":"integer"},
     "DefaultValue":{"type":"double"},
+    "DeleteAccountPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "policyName",
+        "policyType"
+      ],
+      "members":{
+        "policyName":{"shape":"PolicyName"},
+        "policyType":{"shape":"PolicyType"}
+      }
+    },
     "DeleteDataProtectionPolicyRequest":{
       "type":"structure",
       "required":["logGroupIdentifier"],
@@ -879,6 +948,21 @@
       }
     },
     "Descending":{"type":"boolean"},
+    "DescribeAccountPoliciesRequest":{
+      "type":"structure",
+      "required":["policyType"],
+      "members":{
+        "policyType":{"shape":"PolicyType"},
+        "policyName":{"shape":"PolicyName"},
+        "accountIdentifiers":{"shape":"AccountIds"}
+      }
+    },
+    "DescribeAccountPoliciesResponse":{
+      "type":"structure",
+      "members":{
+        "accountPolicies":{"shape":"AccountPolicies"}
+      }
+    },
     "DescribeDestinationsRequest":{
       "type":"structure",
       "members":{
@@ -935,7 +1019,6 @@
     },
     "DescribeLogStreamsRequest":{
       "type":"structure",
-      "required":["logGroupName"],
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
         "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
@@ -1078,9 +1161,9 @@
     },
     "DisassociateKmsKeyRequest":{
       "type":"structure",
-      "required":["logGroupName"],
       "members":{
-        "logGroupName":{"shape":"LogGroupName"}
+        "logGroupName":{"shape":"LogGroupName"},
+        "resourceIdentifier":{"shape":"ResourceIdentifier"}
       }
     },
     "Distribution":{
@@ -1089,6 +1172,10 @@
         "Random",
         "ByLogStream"
       ]
+    },
+    "EncryptionKey":{
+      "type":"string",
+      "max":256
     },
     "EventId":{"type":"string"},
     "EventMessage":{
@@ -1170,7 +1257,6 @@
     "FilterCount":{"type":"integer"},
     "FilterLogEventsRequest":{
       "type":"structure",
-      "required":["logGroupName"],
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
         "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
@@ -1240,10 +1326,7 @@
     },
     "GetLogEventsRequest":{
       "type":"structure",
-      "required":[
-        "logGroupName",
-        "logStreamName"
-      ],
+      "required":["logStreamName"],
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
         "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
@@ -1266,7 +1349,6 @@
     },
     "GetLogGroupFieldsRequest":{
       "type":"structure",
-      "required":["logGroupName"],
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
         "time":{"shape":"Timestamp"},
@@ -1305,10 +1387,19 @@
       "members":{
         "results":{"shape":"QueryResults"},
         "statistics":{"shape":"QueryStatistics"},
-        "status":{"shape":"QueryStatus"}
+        "status":{"shape":"QueryStatus"},
+        "encryptionKey":{"shape":"EncryptionKey"}
       }
     },
     "IncludeLinkedAccounts":{"type":"boolean"},
+    "InheritedProperties":{
+      "type":"list",
+      "member":{"shape":"InheritedProperty"}
+    },
+    "InheritedProperty":{
+      "type":"string",
+      "enum":["ACCOUNT_DATA_PROTECTION"]
+    },
     "InputLogEvent":{
       "type":"structure",
       "required":[
@@ -1403,7 +1494,8 @@
         "arn":{"shape":"Arn"},
         "storedBytes":{"shape":"StoredBytes"},
         "kmsKeyId":{"shape":"KmsKeyId"},
-        "dataProtectionStatus":{"shape":"DataProtectionStatus"}
+        "dataProtectionStatus":{"shape":"DataProtectionStatus"},
+        "inheritedProperties":{"shape":"InheritedProperties"}
       }
     },
     "LogGroupField":{
@@ -1591,6 +1683,30 @@
       "min":1
     },
     "PolicyName":{"type":"string"},
+    "PolicyType":{
+      "type":"string",
+      "enum":["DATA_PROTECTION_POLICY"]
+    },
+    "PutAccountPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "policyName",
+        "policyDocument",
+        "policyType"
+      ],
+      "members":{
+        "policyName":{"shape":"PolicyName"},
+        "policyDocument":{"shape":"AccountPolicyDocument"},
+        "policyType":{"shape":"PolicyType"},
+        "scope":{"shape":"Scope"}
+      }
+    },
+    "PutAccountPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "accountPolicy":{"shape":"AccountPolicy"}
+      }
+    },
     "PutDataProtectionPolicyRequest":{
       "type":"structure",
       "required":[
@@ -1770,8 +1886,7 @@
     "QueryDefinitionName":{
       "type":"string",
       "max":255,
-      "min":1,
-      "pattern":"^([^:*\\/]+\\/?)*[^:*\\/]+$"
+      "min":1
     },
     "QueryDefinitionString":{
       "type":"string",
@@ -1845,6 +1960,12 @@
       },
       "exception":true
     },
+    "ResourceIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[\\w+=/:,.@\\-\\*]*"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -1877,6 +1998,10 @@
     "RoleArn":{
       "type":"string",
       "min":1
+    },
+    "Scope":{
+      "type":"string",
+      "enum":["ALL"]
     },
     "SearchedLogStream":{
       "type":"structure",

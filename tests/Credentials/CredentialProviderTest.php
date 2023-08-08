@@ -4,16 +4,19 @@ namespace Aws\Test\Credentials;
 use Aws\Api\DateTimeResult;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Credentials\EcsCredentialProvider;
+use Aws\Credentials\InstanceProfileProvider;
 use Aws\History;
 use Aws\LruArrayCache;
 use Aws\Result;
+use Aws\Token\SsoTokenProvider;
 use GuzzleHttp\Promise;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 
 /**
- * @covers \Aws\Credentials\CredentialProvider
+ * @covers Aws\Credentials\CredentialProvider
  */
 class CredentialProviderTest extends TestCase
 {
@@ -560,13 +563,13 @@ EOT;
     public function testCreatesFromInstanceProfileProvider()
     {
         $p = CredentialProvider::instanceProfile();
-        $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $p);
+        $this->assertInstanceOf(InstanceProfileProvider::class, $p);
     }
 
     public function testCreatesFromEcsCredentialProvider()
     {
         $p = CredentialProvider::ecsCredentials();
-        $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $p);
+        $this->assertInstanceOf(EcsCredentialProvider::class, $p);
     }
 
     public function testCreatesFromRoleArn()
@@ -1011,7 +1014,7 @@ EOT;
     }
 
 
-    public function testSsoProfileProvider()
+    public function testLegacySsoProfileProvider()
     {
         $dir = $this->clearEnv();
         $expiration = DateTimeResult::fromEpoch(time() + 1000);
@@ -1037,7 +1040,7 @@ EOT;
         file_put_contents(
             $tokenFileName, $tokenFile
         );
-        putenv('HOME=' . dirname($dir));
+
         $configFilename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
@@ -1076,6 +1079,87 @@ EOT;
         }
     }
 
+    public function testSsoProfileProviderWithNewFileFormat()
+    {
+        $dir = $this->clearEnv();
+        $expiration = time() + 1000;
+        $ini = <<<EOT
+[default]
+sso_account_id = 12345
+sso_session = session-name
+sso_role_name = roleName
+
+[sso-session session-name]
+sso_start_url = url.co.uk
+sso_region = us-west-2
+
+
+EOT;
+        $tokenFile = <<<EOT
+{
+    "startUrl": "https://d-123.awsapps.com/start",
+    "region": "us-west-2",
+    "accessToken": "token",
+    "expiresAt": "2500-12-25T21:30:00Z"
+}
+EOT;
+
+        putenv('HOME=' . dirname($dir));
+
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+
+        $tokenFileDirectory = $dir . "/sso/cache/";
+        if (!is_dir($tokenFileDirectory)) {
+            mkdir($tokenFileDirectory, 0777, true);
+        }
+        $tokenLocation = SsoTokenProvider::getTokenLocation('session-name');
+        if (!is_dir(dirname($tokenLocation))) {
+            mkdir(dirname($tokenLocation), 0777, true);
+        }
+        file_put_contents(
+            $tokenLocation, $tokenFile
+        );
+
+        $configFilename = $dir . '/config';
+
+        $result = [
+            'roleCredentials' => [
+                'accessKeyId'     => 'foo',
+                'secretAccessKey' => 'assumedSecret',
+                'sessionToken'    => null,
+                'expiration'      => $expiration
+            ],
+        ];
+
+        $sso = $this->getTestClient('Sso', ['credentials' => false]);
+        $this->addMockResults($sso, [
+            new Result($result)
+        ]);
+
+        try {
+            $creds = call_user_func(CredentialProvider::sso(
+                'default',
+                $configFilename,
+                [
+                    'ssoClient' => $sso
+                ]
+            ))->wait();
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertGreaterThan(
+                DateTimeResult::fromEpoch(time())->getTimestamp(),
+                $creds->getExpiration()
+            );
+        } finally {
+            unlink($dir . '/config');
+            unlink($tokenLocation);
+            rmdir($tokenFileDirectory);
+            rmdir($dir . "/sso/");
+        }
+    }
+
 
     public function testSsoProfileProviderAddedToDefaultChain()
     {
@@ -1103,7 +1187,7 @@ EOT;
         file_put_contents(
             $tokenFileName, $tokenFile
         );
-        putenv('HOME=' . dirname($dir));
+
         $configFilename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
@@ -1167,7 +1251,7 @@ EOT;
         file_put_contents(
             $tokenFileName, $tokenFile
         );
-        putenv('HOME=' . dirname($dir));
+
         $configFilename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
@@ -1271,9 +1355,9 @@ EOT;
 
     }
 
-    public function testSsoProfileProviderFailsWithSsoSession()
+    public function testSsoProfileProviderFailsWithBadSsoSessionName()
     {
-        $this->expectExceptionMessage("Profile default contains an sso_session and will rely on the token provider instead of the legacy sso credential provider.");
+        $this->expectExceptionMessage("Could not find sso-session fakeSessionName in");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
@@ -1727,7 +1811,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\Michael\\Home');
-        $ref = new \ReflectionClass('Aws\Credentials\CredentialProvider');
+        $ref = new \ReflectionClass(CredentialProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\Michael\\Home', $meth->invoke(null));

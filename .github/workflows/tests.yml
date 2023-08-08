@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   run:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       #for each of the following versions of PHP, with and without --prefer-lowest
       matrix:
@@ -25,6 +25,7 @@ jobs:
       AWS_ACCESS_KEY_ID: foo
       AWS_SECRET_ACCESS_KEY: bar
       AWS_CSM_ENABLED: false
+      AWS_SUPPRESS_PHP_DEPRECATION_WARNING: true
     steps:
     #sets up the correct version of PHP with necessary config options
     - name: Setup PHP with Xdebug
@@ -60,7 +61,7 @@ jobs:
     #php 8.1+ requirements
     - if: ${{ matrix.php-versions >= '8.1' && matrix.composer-options != '' }}
       name: PHP 8.1+
-      run: composer require --dev guzzlehttp/guzzle "^7.3" --no-interaction --prefer-source --with-all-dependencies
+      run: composer require --dev guzzlehttp/guzzle "^7.4.5" --no-interaction --prefer-source --with-all-dependencies
 
     #run tests
     - name: Run test suite
@@ -78,7 +79,7 @@ jobs:
     - if:  ${{ matrix.composer-options == '' }}
       name: Package generation
       run: |
-        composer require guzzlehttp/psr7 "^1.7.0"
+        composer require guzzlehttp/psr7 "^1.9.1"
         composer update
         make package
 

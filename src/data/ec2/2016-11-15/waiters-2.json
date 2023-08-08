@@ -421,6 +421,25 @@
         }
       ]
     },
+    "SnapshotImported": {
+      "delay": 15,
+      "operation": "DescribeImportSnapshotTasks",
+      "maxAttempts": 40,
+      "acceptors": [
+        {
+          "expected": "completed",
+          "matcher": "pathAll",
+          "state": "success",
+          "argument": "ImportSnapshotTasks[].SnapshotTaskDetail.Status"
+        },
+        {
+          "expected": "error",
+          "matcher": "pathAny",
+          "state": "failure",
+          "argument": "ImportSnapshotTasks[].SnapshotTaskDetail.Status"
+        }
+      ]
+    },
     "SecurityGroupExists": {
       "operation": "DescribeSecurityGroups",
       "delay": 5,
@@ -484,6 +503,31 @@
           "state": "retry",
           "matcher": "error",
           "expected": "InvalidSpotInstanceRequestID.NotFound"
+        }
+      ]
+    },
+    "StoreImageTaskComplete": {
+      "delay": 5,
+      "operation": "DescribeStoreImageTasks",
+      "maxAttempts": 40,
+      "acceptors": [
+        {
+          "expected": "Completed",
+          "matcher": "pathAll",
+          "state": "success",
+          "argument": "StoreImageTaskResults[].StoreTaskState"
+        },
+        {
+          "expected": "Failed",
+          "matcher": "pathAny",
+          "state": "failure",
+          "argument": "StoreImageTaskResults[].StoreTaskState"
+        },
+        {
+          "expected": "InProgress",
+          "matcher": "pathAny",
+          "state": "retry",
+          "argument": "StoreImageTaskResults[].StoreTaskState"
         }
       ]
     },

@@ -205,6 +205,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListVersions":{
+      "name":"ListVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListVersionsRequest"},
+      "output":{"shape":"ListVersionsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListWorkspaces":{
       "name":"ListWorkspaces",
       "http":{
@@ -523,6 +540,8 @@
           "shape":"OverridableConfigurationJson",
           "jsonvalue":true
         },
+        "grafanaVersion":{"shape":"GrafanaVersion"},
+        "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
         "organizationRoleName":{"shape":"OrganizationRoleName"},
         "permissionType":{"shape":"PermissionType"},
         "stackSetName":{"shape":"StackSetName"},
@@ -645,7 +664,8 @@
         "configuration":{
           "shape":"OverridableConfigurationJson",
           "jsonvalue":true
-        }
+        },
+        "grafanaVersion":{"shape":"GrafanaVersion"}
       }
     },
     "DescribeWorkspaceRequest":{
@@ -707,6 +727,10 @@
       "type":"string",
       "max":255,
       "min":1
+    },
+    "GrafanaVersionList":{
+      "type":"list",
+      "member":{"shape":"GrafanaVersion"}
     },
     "IamRoleArn":{
       "type":"string",
@@ -821,6 +845,39 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "ListVersionsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListVersionsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"querystring",
+          "locationName":"workspace-id"
+        }
+      }
+    },
+    "ListVersionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListVersionsResponse":{
+      "type":"structure",
+      "members":{
+        "grafanaVersions":{"shape":"GrafanaVersionList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListWorkspacesRequest":{
       "type":"structure",
       "members":{
@@ -851,6 +908,17 @@
       }
     },
     "LoginValidityDuration":{"type":"integer"},
+    "NetworkAccessConfiguration":{
+      "type":"structure",
+      "required":[
+        "prefixListIds",
+        "vpceIds"
+      ],
+      "members":{
+        "prefixListIds":{"shape":"PrefixListIds"},
+        "vpceIds":{"shape":"VpceIds"}
+      }
+    },
     "NotificationDestinationType":{
       "type":"string",
       "enum":["SNS"]
@@ -898,6 +966,15 @@
         "CUSTOMER_MANAGED",
         "SERVICE_MANAGED"
       ]
+    },
+    "PrefixListId":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "PrefixListIds":{
+      "type":"list",
+      "member":{"shape":"PrefixListId"}
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1210,6 +1287,7 @@
           "shape":"OverridableConfigurationJson",
           "jsonvalue":true
         },
+        "grafanaVersion":{"shape":"GrafanaVersion"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
@@ -1227,8 +1305,10 @@
       "required":["workspaceId"],
       "members":{
         "accountAccessType":{"shape":"AccountAccessType"},
+        "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
         "organizationRoleName":{"shape":"OrganizationRoleName"},
         "permissionType":{"shape":"PermissionType"},
+        "removeNetworkAccessConfiguration":{"shape":"Boolean"},
         "removeVpcConfiguration":{"shape":"Boolean"},
         "stackSetName":{"shape":"StackSetName"},
         "vpcConfiguration":{"shape":"VpcConfiguration"},
@@ -1326,6 +1406,15 @@
         "subnetIds":{"shape":"SubnetIds"}
       }
     },
+    "VpceId":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "VpceIds":{
+      "type":"list",
+      "member":{"shape":"VpceId"}
+    },
     "WorkspaceDescription":{
       "type":"structure",
       "required":[
@@ -1353,6 +1442,7 @@
         "licenseType":{"shape":"LicenseType"},
         "modified":{"shape":"Timestamp"},
         "name":{"shape":"WorkspaceName"},
+        "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
         "notificationDestinations":{"shape":"NotificationDestinationsList"},
         "organizationRoleName":{"shape":"OrganizationRoleName"},
         "organizationalUnits":{"shape":"OrganizationalUnitList"},
@@ -1390,7 +1480,9 @@
         "CREATION_FAILED",
         "UPDATE_FAILED",
         "UPGRADE_FAILED",
-        "LICENSE_REMOVAL_FAILED"
+        "LICENSE_REMOVAL_FAILED",
+        "VERSION_UPDATING",
+        "VERSION_UPDATE_FAILED"
       ]
     },
     "WorkspaceSummary":{

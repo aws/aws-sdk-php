@@ -506,7 +506,8 @@
       "type":"string",
       "enum":[
         "ACTIVE",
-        "RETIRING"
+        "RETIRING",
+        "ISOLATED"
       ]
     },
     "AssetType":{
@@ -1012,7 +1013,9 @@
         "Quantity":{"shape":"LineItemQuantity"},
         "Status":{"shape":"LineItemStatus"},
         "ShipmentInformation":{"shape":"ShipmentInformation"},
-        "AssetInformationList":{"shape":"LineItemAssetInformationList"}
+        "AssetInformationList":{"shape":"LineItemAssetInformationList"},
+        "PreviousLineItemId":{"shape":"LineItemId"},
+        "PreviousOrderId":{"shape":"OrderId"}
       }
     },
     "LineItemAssetInformation":{
@@ -1062,7 +1065,8 @@
         "INSTALLING",
         "INSTALLED",
         "ERROR",
-        "CANCELLED"
+        "CANCELLED",
+        "REPLACED"
       ]
     },
     "LineItemStatusCounts":{
@@ -1336,7 +1340,9 @@
         "LineItems":{"shape":"LineItemListDefinition"},
         "PaymentOption":{"shape":"PaymentOption"},
         "OrderSubmissionDate":{"shape":"ISO8601Timestamp"},
-        "OrderFulfilledDate":{"shape":"ISO8601Timestamp"}
+        "OrderFulfilledDate":{"shape":"ISO8601Timestamp"},
+        "PaymentTerm":{"shape":"PaymentTerm"},
+        "OrderType":{"shape":"OrderType"}
       }
     },
     "OrderId":{
@@ -1477,7 +1483,8 @@
       "enum":[
         "POWER_5_KVA",
         "POWER_10_KVA",
-        "POWER_15_KVA"
+        "POWER_15_KVA",
+        "POWER_30_KVA"
       ]
     },
     "PowerFeedDrop":{
@@ -1645,7 +1652,7 @@
     "StatusList":{
       "type":"list",
       "member":{"shape":"AssetState"},
-      "max":2,
+      "max":3,
       "min":1
     },
     "String":{
@@ -1723,7 +1730,7 @@
     },
     "Token":{
       "type":"string",
-      "max":1005,
+      "max":2048,
       "min":1,
       "pattern":"^(\\d+)##(\\S+)$"
     },

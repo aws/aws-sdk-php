@@ -23,7 +23,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * @covers \Aws\EndpointDiscovery\EndpointDiscoveryMiddleware
+ * @covers Aws\EndpointDiscovery\EndpointDiscoveryMiddleware
  */
 class EndpointDiscoveryMiddlewareTest extends TestCase
 {
@@ -658,7 +658,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         // Use Reflection to set private static discoveryCooldown variable to 0
         // to avoid having to wait for default 60 seconds for testing
         $reflection = new \ReflectionProperty(
-            'Aws\EndpointDiscovery\EndpointDiscoveryMiddleware',
+            EndpointDiscoveryMiddleware::class,
             'discoveryCooldown'
         );
         $reflection->setAccessible(true);

@@ -134,6 +134,7 @@
       "output":{"shape":"DeleteNetworkResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ],
@@ -150,6 +151,7 @@
       "output":{"shape":"DeleteNetworkSiteResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ],
@@ -334,6 +336,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "StartNetworkResourceUpdate":{
+      "name":"StartNetworkResourceUpdate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/network-resources/update",
+        "responseCode":200
+      },
+      "input":{"shape":"StartNetworkResourceUpdateRequest"},
+      "output":{"shape":"StartNetworkResourceUpdateResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -459,6 +477,7 @@
       ],
       "members":{
         "clientToken":{"shape":"ClientToken"},
+        "commitmentConfiguration":{"shape":"CommitmentConfiguration"},
         "networkSiteArn":{"shape":"Arn"},
         "shippingAddress":{"shape":"Address"}
       }
@@ -483,6 +502,7 @@
         "city":{"shape":"AddressContent"},
         "company":{"shape":"AddressContent"},
         "country":{"shape":"AddressContent"},
+        "emailAddress":{"shape":"AddressContent"},
         "name":{"shape":"AddressContent"},
         "phoneNumber":{"shape":"AddressContent"},
         "postalCode":{"shape":"AddressContent"},
@@ -502,10 +522,42 @@
       "type":"string",
       "pattern":"^arn:aws:private-networks:[a-z0-9-]+:[^:]*:.*$"
     },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "ClientToken":{
       "type":"string",
       "max":100,
       "min":1
+    },
+    "CommitmentConfiguration":{
+      "type":"structure",
+      "required":[
+        "automaticRenewal",
+        "commitmentLength"
+      ],
+      "members":{
+        "automaticRenewal":{"shape":"Boolean"},
+        "commitmentLength":{"shape":"CommitmentLength"}
+      }
+    },
+    "CommitmentInformation":{
+      "type":"structure",
+      "required":["commitmentConfiguration"],
+      "members":{
+        "commitmentConfiguration":{"shape":"CommitmentConfiguration"},
+        "expiresOn":{"shape":"Timestamp"},
+        "startAt":{"shape":"Timestamp"}
+      }
+    },
+    "CommitmentLength":{
+      "type":"string",
+      "enum":[
+        "SIXTY_DAYS",
+        "ONE_YEAR",
+        "THREE_YEARS"
+      ]
     },
     "ConfigureAccessPointRequest":{
       "type":"structure",
@@ -857,10 +909,7 @@
       "required":["networkArn"],
       "members":{
         "filters":{"shape":"DeviceIdentifierFilters"},
-        "maxResults":{
-          "shape":"ListDeviceIdentifiersRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListDeviceIdentifiersRequestMaxResultsInteger"},
         "networkArn":{"shape":"Arn"},
         "startToken":{"shape":"PaginationToken"}
       }
@@ -883,10 +932,7 @@
       "required":["networkArn"],
       "members":{
         "filters":{"shape":"NetworkResourceFilters"},
-        "maxResults":{
-          "shape":"ListNetworkResourcesRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListNetworkResourcesRequestMaxResultsInteger"},
         "networkArn":{"shape":"Arn"},
         "startToken":{"shape":"PaginationToken"}
       }
@@ -909,10 +955,7 @@
       "required":["networkArn"],
       "members":{
         "filters":{"shape":"NetworkSiteFilters"},
-        "maxResults":{
-          "shape":"ListNetworkSitesRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListNetworkSitesRequestMaxResultsInteger"},
         "networkArn":{"shape":"Arn"},
         "startToken":{"shape":"PaginationToken"}
       }
@@ -934,10 +977,7 @@
       "type":"structure",
       "members":{
         "filters":{"shape":"NetworkFilters"},
-        "maxResults":{
-          "shape":"ListNetworksRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListNetworksRequestMaxResultsInteger"},
         "startToken":{"shape":"PaginationToken"}
       }
     },
@@ -959,10 +999,7 @@
       "required":["networkArn"],
       "members":{
         "filters":{"shape":"OrderFilters"},
-        "maxResults":{
-          "shape":"ListOrdersRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListOrdersRequestMaxResultsInteger"},
         "networkArn":{"shape":"Arn"},
         "startToken":{"shape":"PaginationToken"}
       }
@@ -1052,6 +1089,7 @@
       "type":"structure",
       "members":{
         "attributes":{"shape":"NameValuePairs"},
+        "commitmentInformation":{"shape":"CommitmentInformation"},
         "createdAt":{"shape":"Timestamp"},
         "description":{"shape":"Description"},
         "health":{"shape":"HealthStatus"},
@@ -1061,6 +1099,7 @@
         "networkSiteArn":{"shape":"Arn"},
         "orderArn":{"shape":"Arn"},
         "position":{"shape":"Position"},
+        "returnInformation":{"shape":"ReturnInformation"},
         "serialNumber":{"shape":"String"},
         "status":{"shape":"NetworkResourceStatus"},
         "statusReason":{"shape":"String"},
@@ -1126,7 +1165,8 @@
         "AVAILABLE",
         "DELETING",
         "PENDING_RETURN",
-        "DELETED"
+        "DELETED",
+        "CREATING_SHIPPING_LABEL"
       ]
     },
     "NetworkResourceType":{
@@ -1204,6 +1244,7 @@
         "networkArn":{"shape":"Arn"},
         "networkSiteArn":{"shape":"Arn"},
         "orderArn":{"shape":"Arn"},
+        "orderedResources":{"shape":"OrderedResourceDefinitions"},
         "shippingAddress":{"shape":"Address"},
         "trackingInformation":{"shape":"TrackingInformationList"}
       }
@@ -1227,6 +1268,27 @@
     "OrderList":{
       "type":"list",
       "member":{"shape":"Order"}
+    },
+    "OrderedResourceDefinition":{
+      "type":"structure",
+      "required":[
+        "count",
+        "type"
+      ],
+      "members":{
+        "commitmentConfiguration":{"shape":"CommitmentConfiguration"},
+        "count":{"shape":"OrderedResourceDefinitionCountInteger"},
+        "type":{"shape":"NetworkResourceDefinitionType"}
+      }
+    },
+    "OrderedResourceDefinitionCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "OrderedResourceDefinitions":{
+      "type":"list",
+      "member":{"shape":"OrderedResourceDefinition"}
     },
     "PaginationToken":{"type":"string"},
     "PingResponse":{
@@ -1263,11 +1325,45 @@
       },
       "exception":true
     },
+    "ReturnInformation":{
+      "type":"structure",
+      "members":{
+        "replacementOrderArn":{"shape":"Arn"},
+        "returnReason":{"shape":"String"},
+        "shippingAddress":{"shape":"Address"},
+        "shippingLabel":{"shape":"String"}
+      }
+    },
     "SitePlan":{
       "type":"structure",
       "members":{
         "options":{"shape":"Options"},
         "resourceDefinitions":{"shape":"NetworkResourceDefinitions"}
+      }
+    },
+    "StartNetworkResourceUpdateRequest":{
+      "type":"structure",
+      "required":[
+        "networkResourceArn",
+        "updateType"
+      ],
+      "members":{
+        "commitmentConfiguration":{"shape":"CommitmentConfiguration"},
+        "networkResourceArn":{"shape":"Arn"},
+        "returnReason":{"shape":"StartNetworkResourceUpdateRequestReturnReasonString"},
+        "shippingAddress":{"shape":"Address"},
+        "updateType":{"shape":"UpdateType"}
+      }
+    },
+    "StartNetworkResourceUpdateRequestReturnReasonString":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
+    "StartNetworkResourceUpdateResponse":{
+      "type":"structure",
+      "members":{
+        "networkResource":{"shape":"NetworkResource"}
       }
     },
     "String":{"type":"string"},
@@ -1395,6 +1491,14 @@
         "networkSite":{"shape":"NetworkSite"},
         "tags":{"shape":"TagMap"}
       }
+    },
+    "UpdateType":{
+      "type":"string",
+      "enum":[
+        "REPLACE",
+        "RETURN",
+        "COMMITMENT"
+      ]
     },
     "ValidationException":{
       "type":"structure",

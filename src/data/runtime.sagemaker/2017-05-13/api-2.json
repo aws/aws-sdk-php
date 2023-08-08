@@ -105,6 +105,11 @@
       "fault":true,
       "synthetic":true
     },
+    "InvocationTimeoutSecondsHeader":{
+      "type":"integer",
+      "max":3600,
+      "min":1
+    },
     "InvokeEndpointAsyncInput":{
       "type":"structure",
       "required":[
@@ -146,6 +151,11 @@
           "shape":"RequestTTLSecondsHeader",
           "location":"header",
           "locationName":"X-Amzn-SageMaker-RequestTTLSeconds"
+        },
+        "InvocationTimeoutSeconds":{
+          "shape":"InvocationTimeoutSecondsHeader",
+          "location":"header",
+          "locationName":"X-Amzn-SageMaker-InvocationTimeoutSeconds"
         }
       }
     },
@@ -157,6 +167,11 @@
           "shape":"Header",
           "location":"header",
           "locationName":"X-Amzn-SageMaker-OutputLocation"
+        },
+        "FailureLocation":{
+          "shape":"Header",
+          "location":"header",
+          "locationName":"X-Amzn-SageMaker-FailureLocation"
         }
       }
     },

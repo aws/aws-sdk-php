@@ -3,7 +3,7 @@
   "service": "<p>Use the Amazon OpenSearch Service configuration API to create, configure, and manage OpenSearch Service domains.</p> <p>For sample code that uses the configuration API, see the <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/opensearch-configuration-samples.html\"> <i>Amazon OpenSearch Service Developer Guide</i> </a>. The guide also contains <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/request-signing.html\">sample code</a> for sending signed HTTP requests to the OpenSearch APIs. The endpoint for configuration service requests is Region specific: es.<i>region</i>.amazonaws.com. For example, es.us-east-1.amazonaws.com. For a current list of supported Regions and endpoints, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#service-regions\">Amazon Web Services service endpoints</a>.</p>",
   "operations": {
     "AcceptInboundConnection": "<p>Allows the destination Amazon OpenSearch Service domain owner to accept an inbound cross-cluster search connection request. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
-    "AddTags": "<p>Attaches tags to an existing Amazon OpenSearch Service domain. Tags are a set of case-sensitive key-value pairs. An domain can have up to 10 tags. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains.html#managedomains-awsresorcetagging\"> Tagging Amazon OpenSearch Service domains</a>.</p>",
+    "AddTags": "<p>Attaches tags to an existing Amazon OpenSearch Service domain. Tags are a set of case-sensitive key-value pairs. A domain can have up to 10 tags. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service domains</a>.</p>",
     "AssociatePackage": "<p>Associates a package with an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "AuthorizeVpcEndpointAccess": "<p>Provides access to an Amazon OpenSearch Service domain through the use of an interface VPC endpoint.</p>",
     "CancelServiceSoftwareUpdate": "<p>Cancels a scheduled service software update for an Amazon OpenSearch Service domain. You can only perform this operation before the <code>AutomatedUpdateDate</code> and when the domain's <code>UpdateStatus</code> is <code>PENDING_UPDATE</code>. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
@@ -20,7 +20,10 @@
     "DescribeDomainAutoTunes": "<p>Returns the list of optimizations that Auto-Tune has made to an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html\">Auto-Tune for Amazon OpenSearch Service</a>.</p>",
     "DescribeDomainChangeProgress": "<p>Returns information about the current blue/green deployment happening on an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-configuration-changes.html\">Making configuration changes in Amazon OpenSearch Service</a>.</p>",
     "DescribeDomainConfig": "<p>Returns the configuration of an Amazon OpenSearch Service domain.</p>",
+    "DescribeDomainHealth": "<p>Returns information about domain and node health, the standby Availability Zone, number of nodes per Availability Zone, and shard count per node.</p>",
+    "DescribeDomainNodes": "<p>Returns information about domain and nodes, including data nodes, master nodes, ultrawarm nodes, Availability Zone(s), standby nodes, node configurations, and node states.</p>",
     "DescribeDomains": "<p>Returns domain configuration information about the specified Amazon OpenSearch Service domains.</p>",
+    "DescribeDryRunProgress": "<p>Describes the progress of a pre-update dry run analysis on an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-configuration-changes#dryrun\">Determining whether a change will cause a blue/green deployment</a>.</p>",
     "DescribeInboundConnections": "<p>Lists all the inbound cross-cluster search connections for a destination (remote) Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "DescribeInstanceTypeLimits": "<p>Describes the instance count, storage, and master node limits for a given OpenSearch or Elasticsearch version and instance type.</p>",
     "DescribeOutboundConnections": "<p>Lists all the outbound cross-cluster connections for a local (source) Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
@@ -30,13 +33,14 @@
     "DescribeVpcEndpoints": "<p>Describes one or more Amazon OpenSearch Service-managed VPC endpoints.</p>",
     "DissociatePackage": "<p>Removes a package from the specified Amazon OpenSearch Service domain. The package can't be in use with any OpenSearch index for the dissociation to succeed. The package is still available in OpenSearch Service for association later. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "GetCompatibleVersions": "<p>Returns a map of OpenSearch or Elasticsearch versions and the versions you can upgrade them to.</p>",
-    "GetPackageVersionHistory": "<p>Returns a list of Amazon OpenSearch Service package versions, along with their creation time and commit message. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
+    "GetPackageVersionHistory": "<p>Returns a list of Amazon OpenSearch Service package versions, along with their creation time, commit message, and plugin properties (if the package is a zip plugin package). For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "GetUpgradeHistory": "<p>Retrieves the complete history of the last 10 upgrades performed on an Amazon OpenSearch Service domain.</p>",
     "GetUpgradeStatus": "<p>Returns the most recent status of the last upgrade or upgrade eligibility check performed on an Amazon OpenSearch Service domain.</p>",
     "ListDomainNames": "<p>Returns the names of all Amazon OpenSearch Service domains owned by the current user in the active Region.</p>",
     "ListDomainsForPackage": "<p>Lists all Amazon OpenSearch Service domains associated with a given package. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "ListInstanceTypeDetails": "<p>Lists all instance types and available features for a given OpenSearch or Elasticsearch version.</p>",
     "ListPackagesForDomain": "<p>Lists all packages associated with an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
+    "ListScheduledActions": "<p>Retrieves a list of configuration changes that are scheduled for a domain. These changes can be <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">service software updates</a> or <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html#auto-tune-types\">blue/green Auto-Tune enhancements</a>.</p>",
     "ListTags": "<p>Returns all resource tags for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service domains</a>.</p>",
     "ListVersions": "<p>Lists all versions of OpenSearch and Elasticsearch that Amazon OpenSearch Service supports.</p>",
     "ListVpcEndpointAccess": "<p>Retrieves information about each Amazon Web Services principal that is allowed to access a given Amazon OpenSearch Service domain through the use of an interface VPC endpoint.</p>",
@@ -47,8 +51,9 @@
     "RemoveTags": "<p>Removes the specified set of tags from an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains.html#managedomains-awsresorcetagging\"> Tagging Amazon OpenSearch Service domains</a>.</p>",
     "RevokeVpcEndpointAccess": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
     "StartServiceSoftwareUpdate": "<p>Schedules a service software update for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
-    "UpdateDomainConfig": "<p>Modifies the cluster configuration of the specified Amazon OpenSearch Service domain.</p>",
+    "UpdateDomainConfig": "<p>Modifies the cluster configuration of the specified Amazon OpenSearch Service domain.sl</p>",
     "UpdatePackage": "<p>Updates a package for use with Amazon OpenSearch Service domains. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
+    "UpdateScheduledAction": "<p>Reschedules a planned domain configuration change for a later time. This change can be a scheduled <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">service software update</a> or a <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html#auto-tune-types\">blue/green Auto-Tune enhancement</a>.</p>",
     "UpdateVpcEndpoint": "<p>Modifies an Amazon OpenSearch Service-managed interface VPC endpoint.</p>",
     "UpgradeDomain": "<p>Allows you to either upgrade your Amazon OpenSearch Service domain or perform an upgrade eligibility check to a compatible version of OpenSearch or Elasticsearch.</p>"
   },
@@ -89,7 +94,7 @@
       }
     },
     "AccessDeniedException": {
-      "base": "<p>An error occurred because user does not have permissions to access the resource. Returns HTTP status code 403.</p>",
+      "base": "<p>An error occurred because you don't have permissions to access the resource.</p>",
       "refs": {
       }
     },
@@ -97,6 +102,25 @@
       "base": "<p>The configured access rules for the domain's search endpoint, and the current status of those rules.</p>",
       "refs": {
         "DomainConfig$AccessPolicies": "<p>Specifies the access policies for the domain.</p>"
+      }
+    },
+    "ActionSeverity": {
+      "base": null,
+      "refs": {
+        "ScheduledAction$Severity": "<p>The severity of the action.</p>"
+      }
+    },
+    "ActionStatus": {
+      "base": null,
+      "refs": {
+        "ScheduledAction$Status": "<p>The current status of the scheduled action.</p>"
+      }
+    },
+    "ActionType": {
+      "base": null,
+      "refs": {
+        "ScheduledAction$Type": "<p>The type of action that will be taken on the domain.</p>",
+        "UpdateScheduledActionRequest$ActionType": "<p>The type of action to reschedule. Can be one of <code>SERVICE_SOFTWARE_UPDATE</code>, <code>JVM_HEAP_SIZE_TUNING</code>, or <code>JVM_YOUNG_GEN_TUNING</code>. To retrieve this value, send a <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/APIReference/API_ListScheduledActions.html\">ListScheduledActions</a> request.</p>"
       }
     },
     "AddTagsRequest": {
@@ -122,7 +146,7 @@
         "AdvancedOptionsStatus$Options": "<p>The status of advanced options for the specified domain.</p>",
         "CreateDomainRequest$AdvancedOptions": "<p>Key-value pairs to specify advanced configuration options. The following key-value pairs are supported:</p> <ul> <li> <p> <code>\"rest.action.multi.allow_explicit_index\": \"true\" | \"false\"</code> - Note the use of a string rather than a boolean. Specifies whether explicit references to indexes are allowed inside the body of HTTP requests. If you want to configure access policies for domain sub-resources, such as specific indexes and domain APIs, you must disable this property. Default is true.</p> </li> <li> <p> <code>\"indices.fielddata.cache.size\": \"80\" </code> - Note the use of a string rather than a boolean. Specifies the percentage of heap space allocated to field data. Default is unbounded.</p> </li> <li> <p> <code>\"indices.query.bool.max_clause_count\": \"1024\"</code> - Note the use of a string rather than a boolean. Specifies the maximum number of clauses allowed in a Lucene boolean query. Default is 1,024. Queries with more than the permitted number of clauses result in a <code>TooManyClauses</code> error.</p> </li> <li> <p> <code>\"override_main_response_version\": \"true\" | \"false\"</code> - Note the use of a string rather than a boolean. Specifies whether the domain reports its version as 7.10 to allow Elasticsearch OSS clients and plugins to continue working with it. Default is false when creating a domain and true when upgrading a domain.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html#createdomain-configure-advanced-options\">Advanced cluster parameters</a>.</p>",
         "DomainStatus$AdvancedOptions": "<p>Key-value pairs that specify advanced configuration options.</p>",
-        "UpdateDomainConfigRequest$AdvancedOptions": "<p>Key-value pairs to specify advanced configuration options. The following key-value pairs are supported:</p> <ul> <li> <p> <code>\"rest.action.multi.allow_explicit_index\": \"true\" | \"false\"</code> - Note the use of a string rather than a boolean. Specifies whether explicit references to indexes are allowed inside the body of HTTP requests. If you want to configure access policies for domain sub-resources, such as specific indexes and domain APIs, you must disable this property. Default is true.</p> </li> <li> <p> <code>\"indices.fielddata.cache.size\": \"80\" </code> - Note the use of a string rather than a boolean. Specifies the percentage of heap space allocated to field data. Default is unbounded.</p> </li> <li> <p> <code>\"indices.query.bool.max_clause_count\": \"1024\"</code> - Note the use of a string rather than a boolean. Specifies the maximum number of clauses allowed in a Lucene boolean query. Default is 1,024. Queries with more than the permitted number of clauses result in a <code>TooManyClauses</code> error.</p> </li> <li> <p> <code>\"override_main_response_version\": \"true\" | \"false\"</code> - Note the use of a string rather than a boolean. Specifies whether the domain reports its version as 7.10 to allow Elasticsearch OSS clients and plugins to continue working with it. Default is false when creating a domain and true when upgrading a domain.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html#createdomain-configure-advanced-options\">Advanced cluster parameters</a>.</p>",
+        "UpdateDomainConfigRequest$AdvancedOptions": "<p>Key-value pairs to specify advanced configuration options. The following key-value pairs are supported:</p> <ul> <li> <p> <code>\"rest.action.multi.allow_explicit_index\": \"true\" | \"false\"</code> - Note the use of a string rather than a boolean. Specifies whether explicit references to indexes are allowed inside the body of HTTP requests. If you want to configure access policies for domain sub-resources, such as specific indexes and domain APIs, you must disable this property. Default is true.</p> </li> <li> <p> <code>\"indices.fielddata.cache.size\": \"80\" </code> - Note the use of a string rather than a boolean. Specifies the percentage of heap space allocated to field data. Default is unbounded.</p> </li> <li> <p> <code>\"indices.query.bool.max_clause_count\": \"1024\"</code> - Note the use of a string rather than a boolean. Specifies the maximum number of clauses allowed in a Lucene boolean query. Default is 1,024. Queries with more than the permitted number of clauses result in a <code>TooManyClauses</code> error.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html#createdomain-configure-advanced-options\">Advanced cluster parameters</a>.</p>",
         "UpgradeDomainRequest$AdvancedOptions": "<p>Only supports the <code>override_main_response_version</code> parameter and not other advanced options. You can only include this option when upgrading to an OpenSearch version. Specifies whether the domain reports its version as 7.10 so that it continues to work with Elasticsearch OSS clients and plugins.</p>",
         "UpgradeDomainResponse$AdvancedOptions": "<p>The advanced options configuration for the domain.</p>"
       }
@@ -218,7 +242,7 @@
       }
     },
     "AutoTuneMaintenanceSchedule": {
-      "base": "<p>The Auto-Tune maintenance schedule. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html\">Auto-Tune for Amazon OpenSearch Service</a>.</p>",
+      "base": "<note> <p>This object is deprecated. Use the domain's <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/off-peak.html\">off-peak window</a> to schedule Auto-Tune optimizations. For migration instructions, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/off-peak.html#off-peak-migrate\">Migrating from Auto-Tune maintenance windows</a>.</p> </note> <p>The Auto-Tune maintenance schedule. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html\">Auto-Tune for Amazon OpenSearch Service</a>.</p>",
       "refs": {
         "AutoTuneMaintenanceScheduleList$member": null
       }
@@ -226,8 +250,8 @@
     "AutoTuneMaintenanceScheduleList": {
       "base": null,
       "refs": {
-        "AutoTuneOptions$MaintenanceSchedules": "<p>A list of maintenance schedules during which Auto-Tune can deploy changes.</p>",
-        "AutoTuneOptionsInput$MaintenanceSchedules": "<p>A list of maintenance schedules during which Auto-Tune can deploy changes. Maintenance schedules are overwrite, not append. If your request includes no schedules, the request deletes all existing schedules. To preserve existing schedules, make a call to <code>DescribeDomainConfig</code> first and use the <code>MaintenanceSchedules</code> portion of the response as the basis for this section.</p>"
+        "AutoTuneOptions$MaintenanceSchedules": "<p>DEPRECATED. Use <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/off-peak.html\">off-peak window</a> instead.</p> <p>A list of maintenance schedules during which Auto-Tune can deploy changes.</p>",
+        "AutoTuneOptionsInput$MaintenanceSchedules": "<p>A list of maintenance schedules during which Auto-Tune can deploy changes. Maintenance windows are deprecated and have been replaced with <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/off-peak.html\">off-peak windows</a>.</p>"
       }
     },
     "AutoTuneOptions": {
@@ -238,7 +262,7 @@
       }
     },
     "AutoTuneOptionsInput": {
-      "base": "<p>Options for configuring Auto-Tune. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html\">Auto-Tune for Amazon OpenSearch Service</a>.</p>",
+      "base": "<p>Options for configuring Auto-Tune. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html\">Auto-Tune for Amazon OpenSearch Service</a> </p>",
       "refs": {
         "CreateDomainRequest$AutoTuneOptions": "<p>Options for Auto-Tune.</p>"
       }
@@ -256,7 +280,7 @@
       }
     },
     "AutoTuneState": {
-      "base": "<p>The Auto-Tune state for the domain. For valid states see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html\"> Auto-Tune for Amazon OpenSearch Service</a>. </p>",
+      "base": "<p>The Auto-Tune state for the domain. For valid states see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html\">Auto-Tune for Amazon OpenSearch Service</a>. </p>",
       "refs": {
         "AutoTuneOptionsOutput$State": "<p>The current state of Auto-Tune on the domain.</p>",
         "AutoTuneStatus$State": "<p>The current state of Auto-Tune on the domain.</p>"
@@ -272,6 +296,32 @@
       "base": "<p>Specifies the Auto-Tune type. Valid value is SCHEDULED_ACTION.</p>",
       "refs": {
         "AutoTune$AutoTuneType": "<p>The type of Auto-Tune action.</p>"
+      }
+    },
+    "AvailabilityZone": {
+      "base": null,
+      "refs": {
+        "AvailabilityZoneInfo$AvailabilityZoneName": "<p>The name of the Availability Zone.</p>",
+        "AvailabilityZoneList$member": null,
+        "DomainNodesStatus$AvailabilityZone": "<p>The Availability Zone of the node.</p>"
+      }
+    },
+    "AvailabilityZoneInfo": {
+      "base": "<p>Information about an Availability Zone on a domain.</p>",
+      "refs": {
+        "AvailabilityZoneInfoList$member": null
+      }
+    },
+    "AvailabilityZoneInfoList": {
+      "base": null,
+      "refs": {
+        "EnvironmentInfo$AvailabilityZoneInformation": "<p> A list of <code>AvailabilityZoneInfo</code> for the domain.</p>"
+      }
+    },
+    "AvailabilityZoneList": {
+      "base": null,
+      "refs": {
+        "InstanceTypeDetails$AvailabilityZones": "<p>The supported Availability Zones for the instance type.</p>"
       }
     },
     "BackendRole": {
@@ -294,12 +344,18 @@
         "AdvancedSecurityOptionsInput$Enabled": "<p>True to enable fine-grained access control.</p>",
         "AdvancedSecurityOptionsInput$InternalUserDatabaseEnabled": "<p>True to enable the internal user database.</p>",
         "AdvancedSecurityOptionsInput$AnonymousAuthEnabled": "<p>True to enable a 30-day migration period during which administrators can create role mappings. Only necessary when <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/fgac.html#fgac-enabling-existing\">enabling fine-grained access control on an existing domain</a>.</p>",
+        "AutoTuneOptions$UseOffPeakWindow": "<p>Whether to use the domain's <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/APIReference/API_OffPeakWindow.html\">off-peak window</a> to deploy configuration changes on the domain rather than a maintenance schedule.</p>",
+        "AutoTuneOptionsInput$UseOffPeakWindow": "<p>Whether to schedule Auto-Tune optimizations that require blue/green deployments during the domain's configured daily off-peak window.</p>",
+        "AutoTuneOptionsOutput$UseOffPeakWindow": "<p>Whether the domain's off-peak window will be used to deploy Auto-Tune changes rather than a maintenance schedule.</p>",
         "AutoTuneStatus$PendingDeletion": "<p>Indicates whether the domain is being deleted.</p>",
         "ClusterConfig$DedicatedMasterEnabled": "<p>Indicates whether dedicated master nodes are enabled for the cluster.<code>True</code> if the cluster will use a dedicated master node.<code>False</code> if the cluster will not.</p>",
         "ClusterConfig$ZoneAwarenessEnabled": "<p>Indicates whether multiple Availability Zones are enabled. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-multiaz.html\">Configuring a multi-AZ domain in Amazon OpenSearch Service</a>.</p>",
         "ClusterConfig$WarmEnabled": "<p>Whether to enable warm storage for the cluster.</p>",
+        "ClusterConfig$MultiAZWithStandbyEnabled": "<p>A boolean that indicates whether a multi-AZ domain is turned on with a standby AZ. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-multiaz.html\">Configuring a multi-AZ domain in Amazon OpenSearch Service</a>. </p>",
         "CognitoOptions$Enabled": "<p>Whether to enable or disable Amazon Cognito authentication for OpenSearch Dashboards.</p>",
         "ColdStorageOptions$Enabled": "<p>Whether to enable or disable cold storage on the domain.</p>",
+        "DescribeDomainHealthResponse$DedicatedMaster": "<p>A boolean that indicates if dedicated master nodes are activated for the domain.</p>",
+        "DescribeDryRunProgressRequest$LoadDryRunConfig": "<p>Whether to include the configuration of the dry run in the response. The configuration specifies the updates that you're planning to make on the domain.</p>",
         "DomainEndpointOptions$EnforceHTTPS": "<p>True to require that all traffic to the domain arrive over HTTPS.</p>",
         "DomainEndpointOptions$CustomEndpointEnabled": "<p>Whether to enable a custom endpoint for the domain.</p>",
         "DomainStatus$Created": "<p>Creation status of an OpenSearch Service domain. True if domain creation is complete. False if domain creation is still in progress.</p>",
@@ -313,14 +369,19 @@
         "InstanceTypeDetails$AppLogsEnabled": "<p>Whether logging is supported for the instance type.</p>",
         "InstanceTypeDetails$AdvancedSecurityEnabled": "<p>Whether fine-grained access control is supported for the instance type.</p>",
         "InstanceTypeDetails$WarmEnabled": "<p>Whether UltraWarm is supported for the instance type.</p>",
+        "ListInstanceTypeDetailsRequest$RetrieveAZs": "<p>An optional parameter that specifies the Availability Zones for the domain.</p>",
         "LogPublishingOption$Enabled": "<p>Whether the log should be published.</p>",
         "NodeToNodeEncryptionOptions$Enabled": "<p>True to enable node-to-node encryption.</p>",
+        "OffPeakWindowOptions$Enabled": "<p>Whether to enable an off-peak window.</p> <p>This option is only available when modifying a domain created prior to February 16, 2023, not when creating a new domain. All domains created after this date have the off-peak window enabled by default. You can't disable the off-peak window after it's enabled for a domain.</p>",
         "OptionStatus$PendingDeletion": "<p>Indicates whether the entity is being deleted.</p>",
         "SAMLOptionsInput$Enabled": "<p>True to enable SAML authentication for a domain.</p>",
         "SAMLOptionsOutput$Enabled": "<p>True if SAML is enabled.</p>",
+        "ScheduledAction$Mandatory": "<p>Whether the action is required or optional.</p>",
+        "ScheduledAction$Cancellable": "<p>Whether or not the scheduled action is cancellable.</p>",
         "ServiceSoftwareOptions$UpdateAvailable": "<p>True if you're able to update your service software version. False if you can't update your service software version.</p>",
         "ServiceSoftwareOptions$Cancellable": "<p> True if you're able to cancel your service software version update. False if you can't cancel your service software update.</p>",
         "ServiceSoftwareOptions$OptionalDeployment": "<p>True if a service software is never automatically updated. False if a service software is automatically updated after the automated update date.</p>",
+        "SoftwareUpdateOptions$AutoSoftwareUpdateEnabled": "<p>Whether automatic service software updates are enabled for the domain.</p>",
         "UpgradeDomainRequest$PerformCheckOnly": "<p>When true, indicates that an upgrade eligibility check needs to be performed. Does not actually perform the upgrade.</p>",
         "UpgradeDomainResponse$PerformCheckOnly": "<p>When true, indicates that an upgrade eligibility check was performed.</p>"
       }
@@ -441,7 +502,7 @@
       }
     },
     "ConflictException": {
-      "base": "<p>An error occurred because the client attempts to remove a resource that is currently in use. Returns HTTP status code 409.</p>",
+      "base": "<p>An error occurred because the client attempts to remove a resource that is currently in use.</p>",
       "refs": {
       }
     },
@@ -463,6 +524,23 @@
         "InboundConnection$ConnectionId": "<p>The unique identifier of the connection.</p>",
         "OutboundConnection$ConnectionId": "<p>Unique identifier of the connection.</p>",
         "RejectInboundConnectionRequest$ConnectionId": "<p>The unique identifier of the inbound connection to reject.</p>"
+      }
+    },
+    "ConnectionMode": {
+      "base": "<p>The connection mode for the cross-cluster connection.</p> <ul> <li> <p> <b>DIRECT</b> - Used for cross-cluster search or cross-cluster replication.</p> </li> <li> <p> <b>VPC_ENDPOINT</b> - Used for remote reindex between Amazon OpenSearch Service VPC domains.</p> </li> </ul>",
+      "refs": {
+        "CreateOutboundConnectionRequest$ConnectionMode": "<p>The connection mode.</p>",
+        "CreateOutboundConnectionResponse$ConnectionMode": "<p>The connection mode.</p>",
+        "InboundConnection$ConnectionMode": "<p>The connection mode.</p>",
+        "OutboundConnection$ConnectionMode": "<p>The connection mode.</p>"
+      }
+    },
+    "ConnectionProperties": {
+      "base": "<p>The connection properties of an outbound connection.</p>",
+      "refs": {
+        "CreateOutboundConnectionRequest$ConnectionProperties": "<p>The <code>ConnectionProperties</code> for the outbound connection.</p>",
+        "CreateOutboundConnectionResponse$ConnectionProperties": "<p>The <code>ConnectionProperties</code> for the newly created connection.</p>",
+        "OutboundConnection$ConnectionProperties": "<p>Properties for the outbound connection.</p>"
       }
     },
     "ConnectionStatusMessage": {
@@ -519,6 +597,12 @@
         "PackageVersionHistory$CreatedAt": "<p>The date and time when the package was created.</p>"
       }
     },
+    "CrossClusterSearchConnectionProperties": {
+      "base": "<p>Cross cluster search specific connection properties.</p>",
+      "refs": {
+        "ConnectionProperties$CrossClusterSearch": "<p>The connection properties for cross cluster search.</p>"
+      }
+    },
     "DeleteDomainRequest": {
       "base": "<p>Container for the parameters to the <code>DeleteDomain</code> operation.</p>",
       "refs": {
@@ -566,6 +650,11 @@
     },
     "DeleteVpcEndpointResponse": {
       "base": null,
+      "refs": {
+      }
+    },
+    "DependencyFailureException": {
+      "base": "<p>An exception for when a failure in one of the dependencies results in the service being unable to fetch details about the resource.</p>",
       "refs": {
       }
     },
@@ -617,6 +706,26 @@
       "refs": {
       }
     },
+    "DescribeDomainHealthRequest": {
+      "base": "<p>Container for the parameters to the <code>DescribeDomainHealth</code> operation.</p>",
+      "refs": {
+      }
+    },
+    "DescribeDomainHealthResponse": {
+      "base": "<p>The result of a <code>DescribeDomainHealth</code> request. Contains health information for the requested domain.</p>",
+      "refs": {
+      }
+    },
+    "DescribeDomainNodesRequest": {
+      "base": "<p>Container for the parameters to the <code>DescribeDomainNodes</code> operation.</p>",
+      "refs": {
+      }
+    },
+    "DescribeDomainNodesResponse": {
+      "base": "<p>The result of a <code>DescribeDomainNodes</code> request. Contains information about the nodes on the requested domain. </p>",
+      "refs": {
+      }
+    },
     "DescribeDomainRequest": {
       "base": "<p>Container for the parameters to the <code>DescribeDomain</code> operation.</p>",
       "refs": {
@@ -634,6 +743,16 @@
     },
     "DescribeDomainsResponse": {
       "base": "<p>Contains the status of the specified domains or all domains owned by the account.</p>",
+      "refs": {
+      }
+    },
+    "DescribeDryRunProgressRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeDryRunProgressResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -694,7 +813,7 @@
     "DescribePackagesFilterValues": {
       "base": null,
       "refs": {
-        "DescribePackagesFilter$Value": "<p>A list of values for the specified filter field.</p>"
+        "DescribePackagesFilter$Value": "<p>A non-empty list of values for the specified filter field.</p>"
       }
     },
     "DescribePackagesRequest": {
@@ -750,7 +869,7 @@
       }
     },
     "DisabledOperationException": {
-      "base": "<p>An error occured because the client wanted to access a not supported operation. Gives http status code of 409.</p>",
+      "base": "<p>An error occured because the client wanted to access an unsupported operation.</p>",
       "refs": {
       }
     },
@@ -767,7 +886,7 @@
     "DomainArn": {
       "base": null,
       "refs": {
-        "CreateVpcEndpointRequest$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain to grant access to.</p>",
+        "CreateVpcEndpointRequest$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain to create the endpoint for.</p>",
         "VpcEndpoint$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain associated with the endpoint.</p>",
         "VpcEndpointSummary$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain associated with the endpoint.</p>"
       }
@@ -792,6 +911,12 @@
       "base": "<p>The configured endpoint options for a domain and their current status.</p>",
       "refs": {
         "DomainConfig$DomainEndpointOptions": "<p>Additional options for the domain endpoint, such as whether to require HTTPS for all traffic.</p>"
+      }
+    },
+    "DomainHealth": {
+      "base": null,
+      "refs": {
+        "DescribeDomainHealthResponse$ClusterHealth": "<p>The current health status of your cluster.</p> <ul> <li> <p> <code>Red</code> - At least one primary shard is not allocated to any node.</p> </li> <li> <p> <code>Yellow</code> - All primary shards are allocated to nodes, but some replicas aren’t.</p> </li> <li> <p> <code>Green</code> - All primary shards and their replicas are allocated to nodes.</p> </li> <li> <p> <code>NotAvailable</code> - Unable to retrieve cluster health.</p> </li> </ul>"
       }
     },
     "DomainId": {
@@ -837,7 +962,10 @@
         "DescribeDomainAutoTunesRequest$DomainName": "<p>Name of the domain that you want Auto-Tune details about.</p>",
         "DescribeDomainChangeProgressRequest$DomainName": "<p>The name of the domain to get progress information for.</p>",
         "DescribeDomainConfigRequest$DomainName": "<p>Name of the OpenSearch Service domain configuration that you want to describe.</p>",
+        "DescribeDomainHealthRequest$DomainName": "<p>The name of the domain.</p>",
+        "DescribeDomainNodesRequest$DomainName": "<p>The name of the domain.</p>",
         "DescribeDomainRequest$DomainName": "<p>The name of the domain that you want information about.</p>",
+        "DescribeDryRunProgressRequest$DomainName": "<p>The name of the domain.</p>",
         "DescribeInstanceTypeLimitsRequest$DomainName": "<p>The name of the domain. Only specify if you need the limits for an existing domain.</p>",
         "DissociatePackageRequest$DomainName": "<p>Name of the domain to dissociate the package from.</p>",
         "DomainInfo$DomainName": "<p>Name of the domain.</p>",
@@ -847,13 +975,15 @@
         "GetCompatibleVersionsRequest$DomainName": "<p>The name of an existing domain. Provide this parameter to limit the results to a single domain.</p>",
         "GetUpgradeHistoryRequest$DomainName": "<p>The name of an existing domain.</p>",
         "GetUpgradeStatusRequest$DomainName": "<p>The domain of the domain to get upgrade status information for.</p>",
-        "ListInstanceTypeDetailsRequest$DomainName": "<p>Name of the domain to list instance type details for.</p>",
+        "ListInstanceTypeDetailsRequest$DomainName": "<p>The name of the domain.</p>",
         "ListPackagesForDomainRequest$DomainName": "<p>The name of the domain for which you want to list associated packages.</p>",
+        "ListScheduledActionsRequest$DomainName": "<p>The name of the domain.</p>",
         "ListVpcEndpointAccessRequest$DomainName": "<p>The name of the OpenSearch Service domain to retrieve access information for.</p>",
         "ListVpcEndpointsForDomainRequest$DomainName": "<p>The name of the domain to list associated VPC endpoints for.</p>",
         "RevokeVpcEndpointAccessRequest$DomainName": "<p>The name of the OpenSearch Service domain.</p>",
         "StartServiceSoftwareUpdateRequest$DomainName": "<p>The name of the domain that you want to update to the latest service software.</p>",
         "UpdateDomainConfigRequest$DomainName": "<p>The name of the domain that you're updating.</p>",
+        "UpdateScheduledActionRequest$DomainName": "<p>The name of the domain to reschedule an action for.</p>",
         "UpgradeDomainRequest$DomainName": "<p>Name of the OpenSearch Service domain that you want to upgrade.</p>",
         "UpgradeDomainResponse$DomainName": "<p>The name of the domain that was upgraded.</p>"
       }
@@ -868,6 +998,18 @@
       "base": "<p>A list of OpenSearch Service domain names.</p>",
       "refs": {
         "DescribeDomainsRequest$DomainNames": "<p>Array of OpenSearch Service domain names that you want information about. If you don't specify any domains, OpenSearch Service returns information about all domains owned by the account.</p>"
+      }
+    },
+    "DomainNodesStatus": {
+      "base": "<p>Container for information about nodes on the domain.</p>",
+      "refs": {
+        "DomainNodesStatusList$member": null
+      }
+    },
+    "DomainNodesStatusList": {
+      "base": "<p>List of <code>DomainNodesStatus</code> with details about nodes on the requested domain.</p>",
+      "refs": {
+        "DescribeDomainNodesResponse$DomainNodesStatusList": "<p>Contains nodes information list <code>DomainNodesStatusList</code> with details about the all nodes on the requested domain.</p>"
       }
     },
     "DomainPackageDetails": {
@@ -891,12 +1033,19 @@
         "DomainPackageDetails$DomainPackageStatus": "<p>State of the association.</p>"
       }
     },
+    "DomainState": {
+      "base": null,
+      "refs": {
+        "DescribeDomainHealthResponse$DomainState": "<p>The current state of the domain.</p> <ul> <li> <p> <code>Processing</code> - The domain has updates in progress.</p> </li> <li> <p> <code>Active</code> - Requested changes have been processed and deployed to the domain.</p> </li> </ul>"
+      }
+    },
     "DomainStatus": {
       "base": "<p>The current status of an OpenSearch Service domain.</p>",
       "refs": {
         "CreateDomainResponse$DomainStatus": "<p>The status of the newly created domain.</p>",
         "DeleteDomainResponse$DomainStatus": "<p>The status of the domain being deleted.</p>",
         "DescribeDomainResponse$DomainStatus": "<p>List that contains the status of each specified OpenSearch Service domain.</p>",
+        "DescribeDryRunProgressResponse$DryRunConfig": "<p>Details about the changes you're planning to make on the domain.</p>",
         "DomainStatusList$member": null
       }
     },
@@ -920,13 +1069,27 @@
     "DryRun": {
       "base": null,
       "refs": {
-        "UpdateDomainConfigRequest$DryRun": "<p>This flag, when set to True, specifies whether the <code>UpdateDomain</code> request should return the results of validation check without actually applying the change.</p>"
+        "UpdateDomainConfigRequest$DryRun": "<p>This flag, when set to True, specifies whether the <code>UpdateDomain</code> request should return the results of a dry run analysis without actually applying the change. A dry run determines what type of deployment the update will cause.</p>"
+      }
+    },
+    "DryRunMode": {
+      "base": null,
+      "refs": {
+        "UpdateDomainConfigRequest$DryRunMode": "<p>The type of dry run to perform.</p> <ul> <li> <p> <code>Basic</code> only returns the type of deployment (blue/green or dynamic) that the update will cause.</p> </li> <li> <p> <code>Verbose</code> runs an additional check to validate the changes you're making. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-configuration-changes#validation-check\">Validating a domain update</a>.</p> </li> </ul>"
+      }
+    },
+    "DryRunProgressStatus": {
+      "base": "<p>Information about the progress of a pre-upgrade dry run analysis.</p>",
+      "refs": {
+        "DescribeDryRunProgressResponse$DryRunProgressStatus": "<p>The current status of the dry run, including any validation errors.</p>",
+        "UpdateDomainConfigResponse$DryRunProgressStatus": "<p>The status of the dry run being performed on the domain, if any.</p>"
       }
     },
     "DryRunResults": {
       "base": "<p>Results of a dry run performed in an update domain request.</p>",
       "refs": {
-        "UpdateDomainConfigResponse$DryRunResults": "<p>Results of a dry run performed in an update domain request.</p>"
+        "DescribeDryRunProgressResponse$DryRunResults": "<p>The results of the dry run. </p>",
+        "UpdateDomainConfigResponse$DryRunResults": "<p>Results of the dry run performed in the update domain request.</p>"
       }
     },
     "Duration": {
@@ -953,7 +1116,7 @@
     "EBSOptionsStatus": {
       "base": "<p>The status of the EBS options for the specified OpenSearch Service domain.</p>",
       "refs": {
-        "DomainConfig$EBSOptions": "<p>Container for EBS options configured for an OpenSearch Service domain.</p>"
+        "DomainConfig$EBSOptions": "<p>Container for EBS options configured for the domain.</p>"
       }
     },
     "EncryptionAtRestOptions": {
@@ -974,6 +1137,7 @@
     "Endpoint": {
       "base": null,
       "refs": {
+        "ConnectionProperties$Endpoint": "<important> <p>The Endpoint attribute cannot be modified. </p> </important> <p>The endpoint of the remote domain. Applicable for VPC_ENDPOINT connection mode.</p>",
         "VpcEndpoint$Endpoint": "<p>The connection endpoint ID for connecting to the domain.</p>"
       }
     },
@@ -988,6 +1152,18 @@
       "refs": {
         "DomainInfo$EngineType": "<p>The type of search engine that the domain is running.<code>OpenSearch</code> for an OpenSearch engine, or <code>Elasticsearch</code> for a legacy Elasticsearch OSS engine.</p>",
         "ListDomainNamesRequest$EngineType": "<p>Filters the output by domain engine type.</p>"
+      }
+    },
+    "EnvironmentInfo": {
+      "base": "<p>Information about the active domain environment.</p>",
+      "refs": {
+        "EnvironmentInfoList$member": null
+      }
+    },
+    "EnvironmentInfoList": {
+      "base": null,
+      "refs": {
+        "DescribeDomainHealthResponse$EnvironmentInformation": "<p>A list of <code>EnvironmentInfo</code> for the domain. </p>"
       }
     },
     "ErrorDetails": {
@@ -1029,8 +1205,10 @@
         "ChangeProgressDetails$ChangeId": "<p>The ID of the configuration change.</p>",
         "ChangeProgressStatusDetails$ChangeId": "<p>The unique change identifier associated with a specific domain configuration change.</p>",
         "DescribeDomainChangeProgressRequest$ChangeId": "<p>The specific change ID for which you want to get progress information. If omitted, the request returns information about the most recent configuration change.</p>",
+        "DescribeDryRunProgressRequest$DryRunId": "<p>The unique identifier of the dry run.</p>",
         "DescribeReservedInstanceOfferingsRequest$ReservedInstanceOfferingId": "<p>The Reserved Instance identifier filter value. Use this parameter to show only the available instance types that match the specified reservation identifier.</p>",
         "DescribeReservedInstancesRequest$ReservedInstanceId": "<p>The reserved instance identifier filter value. Use this parameter to show only the reservation that matches the specified reserved OpenSearch instance ID.</p>",
+        "DryRunProgressStatus$DryRunId": "<p>The unique identifier of the dry run.</p>",
         "PurchaseReservedInstanceOfferingRequest$ReservedInstanceOfferingId": "<p>The ID of the Reserved Instance offering to purchase.</p>",
         "PurchaseReservedInstanceOfferingResponse$ReservedInstanceId": "<p>The ID of the Reserved Instance offering that was purchased.</p>",
         "ReservedInstance$ReservedInstanceId": "<p>The unique identifier for the reservation.</p>",
@@ -1153,6 +1331,12 @@
         "ListInstanceTypeDetailsResponse$InstanceTypeDetails": "<p>Lists all supported instance types and features for the given OpenSearch or Elasticsearch version.</p>"
       }
     },
+    "InstanceTypeString": {
+      "base": null,
+      "refs": {
+        "ListInstanceTypeDetailsRequest$InstanceType": "<p>An optional parameter that lists information for a given instance type.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -1165,7 +1349,7 @@
       "base": null,
       "refs": {
         "ClusterConfig$InstanceCount": "<p>Number of dedicated master nodes in the cluster. This number must be greater than 1, otherwise you receive a validation exception.</p>",
-        "ClusterConfig$DedicatedMasterCount": "<p>Number of dedicated master nodes in the cluster. This number must be greater than 1, otherwise you receive a validation exception.</p>",
+        "ClusterConfig$DedicatedMasterCount": "<p>Number of dedicated master nodes in the cluster. This number must be greater than 2 and not 4, otherwise you receive a validation exception.</p>",
         "ClusterConfig$WarmCount": "<p>The number of warm nodes in the cluster.</p>",
         "EBSOptions$VolumeSize": "<p>Specifies the size (in GiB) of EBS volumes attached to data nodes.</p>",
         "EBSOptions$Iops": "<p>Specifies the baseline input/output (I/O) performance of EBS volumes attached to data nodes. Applicable only for the <code>gp3</code> and provisioned IOPS EBS volume types.</p>",
@@ -1177,17 +1361,17 @@
       }
     },
     "InternalException": {
-      "base": "<p>The request processing has failed because of an unknown error, exception or failure (the failure is internal to the service) . Gives http status code of 500.</p>",
+      "base": "<p>Request processing failed because of an unknown error, exception, or internal failure.</p>",
       "refs": {
       }
     },
     "InvalidPaginationTokenException": {
-      "base": "<p>The request processing has failed because of invalid pagination token provided by customer. Returns an HTTP status code of 400. </p>",
+      "base": "<p>Request processing failed because you provided an invalid pagination token.</p>",
       "refs": {
       }
     },
     "InvalidTypeException": {
-      "base": "<p>An exception for trying to create or access sub-resource that is either invalid or not supported. Gives http status code of 409.</p>",
+      "base": "<p>An exception for trying to create or access a sub-resource that's either invalid or not supported.</p>",
       "refs": {
       }
     },
@@ -1218,7 +1402,7 @@
       }
     },
     "LimitExceededException": {
-      "base": "<p>An exception for trying to create more than allowed resources or sub-resources. Gives http status code of 409.</p>",
+      "base": "<p>An exception for trying to create more than the allowed number of resources or sub-resources.</p>",
       "refs": {
       }
     },
@@ -1294,6 +1478,16 @@
       "refs": {
       }
     },
+    "ListScheduledActionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListScheduledActionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListTagsRequest": {
       "base": "<p>Container for the parameters to the <code>ListTags</code> operation.</p>",
       "refs": {
@@ -1353,16 +1547,16 @@
     "LogPublishingOptions": {
       "base": null,
       "refs": {
-        "CreateDomainRequest$LogPublishingOptions": "<p>Key-value pairs to configure slow log publishing.</p>",
+        "CreateDomainRequest$LogPublishingOptions": "<p>Key-value pairs to configure log publishing.</p>",
         "DomainStatus$LogPublishingOptions": "<p>Log publishing options for the domain.</p>",
         "LogPublishingOptionsStatus$Options": "<p>The log publishing options configured for the domain.</p>",
-        "UpdateDomainConfigRequest$LogPublishingOptions": "<p>Options to publish OpenSearch lots to Amazon CloudWatch Logs.</p>"
+        "UpdateDomainConfigRequest$LogPublishingOptions": "<p>Options to publish OpenSearch logs to Amazon CloudWatch Logs.</p>"
       }
     },
     "LogPublishingOptionsStatus": {
       "base": "<p>The configured log publishing options for the domain and their current status.</p>",
       "refs": {
-        "DomainConfig$LogPublishingOptions": "<p>Key-value pairs to configure slow log publishing.</p>"
+        "DomainConfig$LogPublishingOptions": "<p>Key-value pairs to configure log publishing.</p>"
       }
     },
     "LogType": {
@@ -1374,7 +1568,17 @@
     "Long": {
       "base": null,
       "refs": {
-        "ReservedInstance$BillingSubscriptionId": "<p>The unique identifier of the billing subscription.</p>"
+        "ReservedInstance$BillingSubscriptionId": "<p>The unique identifier of the billing subscription.</p>",
+        "ScheduledAction$ScheduledTime": "<p>The time when the change is scheduled to happen.</p>",
+        "SlotList$member": null,
+        "StartServiceSoftwareUpdateRequest$DesiredStartTime": "<p>The Epoch timestamp when you want the service software update to start. You only need to specify this parameter if you set <code>ScheduleAt</code> to <code>TIMESTAMP</code>.</p>",
+        "UpdateScheduledActionRequest$DesiredStartTime": "<p>The time to implement the change, in Coordinated Universal Time (UTC). Only specify this parameter if you set <code>ScheduleAt</code> to <code>TIMESTAMP</code>.</p>"
+      }
+    },
+    "MasterNodeStatus": {
+      "base": null,
+      "refs": {
+        "DescribeDomainHealthResponse$MasterNode": "<p>Indicates whether the domain has an elected master node.</p> <ul> <li> <p> <b>Available</b> - The domain has an elected master node.</p> </li> <li> <p> <b>UnAvailable</b> - The master node hasn't yet been elected, and a quorum to elect a new master node hasn't been reached.</p> </li> </ul>"
       }
     },
     "MasterUserOptions": {
@@ -1397,6 +1601,7 @@
         "ListDomainsForPackageRequest$MaxResults": "<p>An optional parameter that specifies the maximum number of results to return. You can use <code>nextToken</code> to get the next page of results.</p>",
         "ListInstanceTypeDetailsRequest$MaxResults": "<p>An optional parameter that specifies the maximum number of results to return. You can use <code>nextToken</code> to get the next page of results.</p>",
         "ListPackagesForDomainRequest$MaxResults": "<p>An optional parameter that specifies the maximum number of results to return. You can use <code>nextToken</code> to get the next page of results.</p>",
+        "ListScheduledActionsRequest$MaxResults": "<p>An optional parameter that specifies the maximum number of results to return. You can use <code>nextToken</code> to get the next page of results.</p>",
         "ListVersionsRequest$MaxResults": "<p>An optional parameter that specifies the maximum number of results to return. You can use <code>nextToken</code> to get the next page of results.</p>"
       }
     },
@@ -1438,6 +1643,8 @@
         "ListInstanceTypeDetailsRequest$NextToken": "<p>If your initial <code>ListInstanceTypeDetails</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListInstanceTypeDetails</code> operations, which returns results in the next page.</p>",
         "ListInstanceTypeDetailsResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListPackagesForDomainRequest$NextToken": "<p>If your initial <code>ListPackagesForDomain</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListPackagesForDomain</code> operations, which returns results in the next page.</p>",
+        "ListScheduledActionsRequest$NextToken": "<p>If your initial <code>ListScheduledActions</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListScheduledActions</code> operations, which returns results in the next page.</p>",
+        "ListScheduledActionsResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListVersionsRequest$NextToken": "<p>If your initial <code>ListVersions</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListVersions</code> operations, which returns results in the next page.</p>",
         "ListVersionsResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListVpcEndpointAccessRequest$NextToken": "<p>If your initial <code>ListVpcEndpointAccess</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListVpcEndpointAccess</code> operations, which returns results in the next page.</p>",
@@ -1448,19 +1655,37 @@
         "ListVpcEndpointsResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>"
       }
     },
+    "NodeId": {
+      "base": null,
+      "refs": {
+        "DomainNodesStatus$NodeId": "<p>The ID of the node.</p>"
+      }
+    },
+    "NodeStatus": {
+      "base": null,
+      "refs": {
+        "DomainNodesStatus$NodeStatus": "<p>Indicates if the node is active or in standby.</p>"
+      }
+    },
     "NodeToNodeEncryptionOptions": {
       "base": "<p>Enables or disables node-to-node encryption. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ntn.html\">Node-to-node encryption for Amazon OpenSearch Service</a>.</p>",
       "refs": {
         "CreateDomainRequest$NodeToNodeEncryptionOptions": "<p>Enables node-to-node encryption.</p>",
         "DomainStatus$NodeToNodeEncryptionOptions": "<p>Whether node-to-node encryption is enabled or disabled.</p>",
         "NodeToNodeEncryptionOptionsStatus$Options": "<p>The node-to-node encryption options for the specified domain.</p>",
-        "UpdateDomainConfigRequest$NodeToNodeEncryptionOptions": "<p>Node-To-Node Encryption options for the domain.</p>"
+        "UpdateDomainConfigRequest$NodeToNodeEncryptionOptions": "<p>Node-to-node encryption options for the domain.</p>"
       }
     },
     "NodeToNodeEncryptionOptionsStatus": {
       "base": "<p>Status of the node-to-node encryption options for the specified domain.</p>",
       "refs": {
         "DomainConfig$NodeToNodeEncryptionOptions": "<p>Whether node-to-node encryption is enabled or disabled.</p>"
+      }
+    },
+    "NodeType": {
+      "base": null,
+      "refs": {
+        "DomainNodesStatus$NodeType": "<p>Indicates whether the nodes is a data, master, or ultrawarm node.</p>"
       }
     },
     "NonEmptyString": {
@@ -1470,12 +1695,61 @@
         "ValueStringList$member": null
       }
     },
+    "NumberOfAZs": {
+      "base": null,
+      "refs": {
+        "DescribeDomainHealthResponse$AvailabilityZoneCount": "<p>The number of Availability Zones configured for the domain. If the service is unable to fetch this information, it will return <code>NotAvailable</code>.</p>",
+        "DescribeDomainHealthResponse$ActiveAvailabilityZoneCount": "<p>The number of active Availability Zones configured for the domain. If the service is unable to fetch this information, it will return <code>NotAvailable</code>.</p>",
+        "DescribeDomainHealthResponse$StandByAvailabilityZoneCount": "<p>The number of standby Availability Zones configured for the domain. If the service is unable to fetch this information, it will return <code>NotAvailable</code>.</p>"
+      }
+    },
+    "NumberOfNodes": {
+      "base": null,
+      "refs": {
+        "AvailabilityZoneInfo$ConfiguredDataNodeCount": "<p>The total number of data nodes configured in the Availability Zone.</p>",
+        "AvailabilityZoneInfo$AvailableDataNodeCount": "<p>The number of data nodes active in the Availability Zone.</p>",
+        "DescribeDomainHealthResponse$DataNodeCount": "<p>The number of data nodes configured for the domain. If the service is unable to fetch this information, it will return <code>NotAvailable</code>.</p>",
+        "DescribeDomainHealthResponse$MasterEligibleNodeCount": "<p>The number of nodes that can be elected as a master node. If dedicated master nodes is turned on, this value is the number of dedicated master nodes configured for the domain. If the service is unable to fetch this information, it will return <code>NotAvailable</code>.</p>",
+        "DescribeDomainHealthResponse$WarmNodeCount": "<p>The number of warm nodes configured for the domain.</p>"
+      }
+    },
+    "NumberOfShards": {
+      "base": null,
+      "refs": {
+        "AvailabilityZoneInfo$TotalShards": "<p>The total number of primary and replica shards in the Availability Zone.</p>",
+        "AvailabilityZoneInfo$TotalUnAssignedShards": "<p>The total number of primary and replica shards that aren't allocated to any of the nodes in the Availability Zone.</p>",
+        "DescribeDomainHealthResponse$TotalShards": "<p>The total number of primary and replica shards for the domain.</p>",
+        "DescribeDomainHealthResponse$TotalUnAssignedShards": "<p>The total number of primary and replica shards not allocated to any of the nodes for the cluster.</p>"
+      }
+    },
+    "OffPeakWindow": {
+      "base": "<p>A custom 10-hour, low-traffic window during which OpenSearch Service can perform mandatory configuration changes on the domain. These actions can include scheduled service software updates and blue/green Auto-Tune enhancements. OpenSearch Service will schedule these actions during the window that you specify.</p> <p>If you don't specify a window start time, it defaults to 10:00 P.M. local time.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/off-peak.html\">Defining off-peak maintenance windows for Amazon OpenSearch Service</a>.</p>",
+      "refs": {
+        "OffPeakWindowOptions$OffPeakWindow": "<p>Off-peak window settings for the domain.</p>"
+      }
+    },
+    "OffPeakWindowOptions": {
+      "base": "<p>Options for a domain's <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/APIReference/API_OffPeakWindow.html\">off-peak window</a>, during which OpenSearch Service can perform mandatory configuration changes on the domain.</p>",
+      "refs": {
+        "CreateDomainRequest$OffPeakWindowOptions": "<p>Specifies a daily 10-hour time block during which OpenSearch Service can perform configuration changes on the domain, including service software updates and Auto-Tune enhancements that require a blue/green deployment. If no options are specified, the default start time of 10:00 P.M. local time (for the Region that the domain is created in) is used.</p>",
+        "DomainStatus$OffPeakWindowOptions": "<p>Options that specify a custom 10-hour window during which OpenSearch Service can perform configuration changes on the domain.</p>",
+        "OffPeakWindowOptionsStatus$Options": "<p>The domain's off-peak window configuration.</p>",
+        "UpdateDomainConfigRequest$OffPeakWindowOptions": "<p>Off-peak window options for the domain.</p>"
+      }
+    },
+    "OffPeakWindowOptionsStatus": {
+      "base": "<p>The status of <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/APIReference/API_OffPeakWindow.html\">off-peak window</a> options for a domain.</p>",
+      "refs": {
+        "DomainConfig$OffPeakWindowOptions": "<p>Container for off-peak window options for the domain.</p>"
+      }
+    },
     "OpenSearchPartitionInstanceType": {
       "base": null,
       "refs": {
         "ClusterConfig$InstanceType": "<p>Instance type of data nodes in the cluster.</p>",
         "ClusterConfig$DedicatedMasterType": "<p>OpenSearch Service instance type of the dedicated master nodes in the cluster.</p>",
         "DescribeInstanceTypeLimitsRequest$InstanceType": "<p>The OpenSearch Service instance type for which you need limit information.</p>",
+        "DomainNodesStatus$InstanceType": "<p>The instance type information of the node.</p>",
         "InstanceTypeDetails$InstanceType": "<p>The instance type.</p>",
         "ReservedInstance$InstanceType": "<p>The OpenSearch instance type offered by theReserved Instance offering.</p>",
         "ReservedInstanceOffering$InstanceType": "<p>The OpenSearch instance type offered by the Reserved Instance offering.</p>"
@@ -1506,7 +1780,9 @@
         "EncryptionAtRestOptionsStatus$Status": "<p>The status of the encryption at rest options for the specified domain.</p>",
         "LogPublishingOptionsStatus$Status": "<p>The status of the log publishing options for the domain.</p>",
         "NodeToNodeEncryptionOptionsStatus$Status": "<p>The status of the node-to-node encryption options for the specified domain.</p>",
+        "OffPeakWindowOptionsStatus$Status": "<p>The current status of off-peak window options.</p>",
         "SnapshotOptionsStatus$Status": "<p>The status of a daily automated snapshot.</p>",
+        "SoftwareUpdateOptionsStatus$Status": "<p>The status of service software update options, including creation date and last updated date.</p>",
         "VPCDerivedInfoStatus$Status": "<p>The status of the VPC options for the specified domain.</p>",
         "VersionStatus$Status": "<p>The status of the version options for the specified domain.</p>"
       }
@@ -1591,7 +1867,7 @@
       "refs": {
         "CreatePackageRequest$PackageName": "<p>Unique name for the package.</p>",
         "DomainPackageDetails$PackageName": "<p>User-specified name of the package.</p>",
-        "PackageDetails$PackageName": "<p>User-specified name of the package.</p>"
+        "PackageDetails$PackageName": "<p>The user-specified name of the package.</p>"
       }
     },
     "PackageSource": {
@@ -1604,13 +1880,13 @@
     "PackageStatus": {
       "base": null,
       "refs": {
-        "PackageDetails$PackageStatus": "<p>Current status of the package.</p>"
+        "PackageDetails$PackageStatus": "<p>The current status of the package. The available options are <code>AVAILABLE</code>, <code>COPYING</code>, <code>COPY_FAILED</code>, <code>VALIDATNG</code>, <code>VALIDATION_FAILED</code>, <code>DELETING</code>, and <code>DELETE_FAILED</code>.</p>"
       }
     },
     "PackageType": {
       "base": null,
       "refs": {
-        "CreatePackageRequest$PackageType": "<p>Type of package.</p>",
+        "CreatePackageRequest$PackageType": "<p>The type of package.</p>",
         "DomainPackageDetails$PackageType": "<p>The type of package.</p>",
         "PackageDetails$PackageType": "<p>The type of package.</p>"
       }
@@ -1682,7 +1958,7 @@
     "ReferencePath": {
       "base": null,
       "refs": {
-        "DomainPackageDetails$ReferencePath": "<p>Denotes the location of the package on the OpenSearch Service cluster nodes. It's the same as <code>synonym_path</code> for dictionary files.</p>"
+        "DomainPackageDetails$ReferencePath": "<p>The relative path of the package on the OpenSearch Service cluster nodes. This is <code>synonym_path</code> when the package is for synonym files.</p>"
       }
     },
     "Region": {
@@ -1746,12 +2022,12 @@
       }
     },
     "ResourceAlreadyExistsException": {
-      "base": "<p>An exception for creating a resource that already exists. Gives http status code of 400.</p>",
+      "base": "<p>An exception for creating a resource that already exists.</p>",
       "refs": {
       }
     },
     "ResourceNotFoundException": {
-      "base": "<p>An exception for accessing or deleting a resource that does not exist. Gives http status code of 400.</p>",
+      "base": "<p>An exception for accessing or deleting a resource that doesn't exist.</p>",
       "refs": {
       }
     },
@@ -1820,6 +2096,26 @@
         "AdvancedSecurityOptions$SAMLOptions": "<p>Container for information about the SAML configuration for OpenSearch Dashboards.</p>"
       }
     },
+    "ScheduleAt": {
+      "base": null,
+      "refs": {
+        "StartServiceSoftwareUpdateRequest$ScheduleAt": "<p>When to start the service software update.</p> <ul> <li> <p> <code>NOW</code> - Immediately schedules the update to happen in the current hour if there's capacity available.</p> </li> <li> <p> <code>TIMESTAMP</code> - Lets you specify a custom date and time to apply the update. If you specify this value, you must also provide a value for <code>DesiredStartTime</code>.</p> </li> <li> <p> <code>OFF_PEAK_WINDOW</code> - Marks the update to be picked up during an upcoming off-peak window. There's no guarantee that the update will happen during the next immediate window. Depending on capacity, it might happen in subsequent days.</p> </li> </ul> <p>Default: <code>NOW</code> if you don't specify a value for <code>DesiredStartTime</code>, and <code>TIMESTAMP</code> if you do.</p>",
+        "UpdateScheduledActionRequest$ScheduleAt": "<p>When to schedule the action.</p> <ul> <li> <p> <code>NOW</code> - Immediately schedules the update to happen in the current hour if there's capacity available.</p> </li> <li> <p> <code>TIMESTAMP</code> - Lets you specify a custom date and time to apply the update. If you specify this value, you must also provide a value for <code>DesiredStartTime</code>.</p> </li> <li> <p> <code>OFF_PEAK_WINDOW</code> - Marks the action to be picked up during an upcoming off-peak window. There's no guarantee that the change will be implemented during the next immediate window. Depending on capacity, it might happen in subsequent days.</p> </li> </ul>"
+      }
+    },
+    "ScheduledAction": {
+      "base": "<p>Information about a scheduled configuration change for an OpenSearch Service domain. This actions can be a <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">service software update</a> or a <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html#auto-tune-types\">blue/green Auto-Tune enhancement</a>.</p>",
+      "refs": {
+        "ScheduledActionsList$member": null,
+        "UpdateScheduledActionResponse$ScheduledAction": "<p>Information about the rescheduled action.</p>"
+      }
+    },
+    "ScheduledActionsList": {
+      "base": null,
+      "refs": {
+        "ListScheduledActionsResponse$ScheduledActions": "<p>A list of actions that are scheduled for the domain.</p>"
+      }
+    },
     "ScheduledAutoTuneActionType": {
       "base": "<p>The Auto-Tune action type.</p>",
       "refs": {
@@ -1844,6 +2140,12 @@
         "ScheduledAutoTuneDetails$Severity": "<p>The severity of the Auto-Tune action. Valid values are <code>LOW</code>, <code>MEDIUM</code>, and <code>HIGH</code>.</p>"
       }
     },
+    "ScheduledBy": {
+      "base": null,
+      "refs": {
+        "ScheduledAction$ScheduledBy": "<p>Whether the action was scheduled manually (<code>CUSTOMER</code>, or by OpenSearch Service automatically (<code>SYSTEM</code>).</p>"
+      }
+    },
     "ServiceSoftwareOptions": {
       "base": "<p>The current status of the service software for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
       "refs": {
@@ -1857,6 +2159,23 @@
       "refs": {
         "DomainStatus$Endpoint": "<p>Domain-specific endpoint used to submit index, search, and data upload requests to the domain.</p>",
         "EndpointsMap$value": null
+      }
+    },
+    "SkipUnavailableStatus": {
+      "base": "<p>Status of SkipUnavailable param for outbound connection.</p> <ul> <li> <p> <b>ENABLED</b> - The SkipUnavailable param is enabled for the connection.</p> </li> <li> <p> <b>DISABLED</b> - The SkipUnavailable param is disabled for the connection.</p> </li> </ul>",
+      "refs": {
+        "CrossClusterSearchConnectionProperties$SkipUnavailable": "<p>Status of SkipUnavailable param for outbound connection.</p>"
+      }
+    },
+    "SlotList": {
+      "base": null,
+      "refs": {
+        "SlotNotAvailableException$SlotSuggestions": "<p>Alternate time slots during which OpenSearch Service has available capacity to schedule a domain action.</p>"
+      }
+    },
+    "SlotNotAvailableException": {
+      "base": "<p>An exception for attempting to schedule a domain action during an unavailable time slot.</p>",
+      "refs": {
       }
     },
     "SnapshotOptions": {
@@ -1874,6 +2193,21 @@
         "DomainConfig$SnapshotOptions": "<p>DEPRECATED. Container for parameters required to configure automated snapshots of domain indexes.</p>"
       }
     },
+    "SoftwareUpdateOptions": {
+      "base": "<p>Options for configuring service software updates for a domain.</p>",
+      "refs": {
+        "CreateDomainRequest$SoftwareUpdateOptions": "<p>Software update options for the domain.</p>",
+        "DomainStatus$SoftwareUpdateOptions": "<p>Service software update options for the domain.</p>",
+        "SoftwareUpdateOptionsStatus$Options": "<p>The service software update options for a domain.</p>",
+        "UpdateDomainConfigRequest$SoftwareUpdateOptions": "<p>Service software update options for the domain.</p>"
+      }
+    },
+    "SoftwareUpdateOptionsStatus": {
+      "base": "<p>The status of the service software options for a domain.</p>",
+      "refs": {
+        "DomainConfig$SoftwareUpdateOptions": "<p>Software update options for the domain.</p>"
+      }
+    },
     "StartAt": {
       "base": null,
       "refs": {
@@ -1888,6 +2222,18 @@
     "StartServiceSoftwareUpdateResponse": {
       "base": "<p>Represents the output of a <code>StartServiceSoftwareUpdate</code> operation. Contains the status of the update.</p>",
       "refs": {
+      }
+    },
+    "StartTimeHours": {
+      "base": null,
+      "refs": {
+        "WindowStartTime$Hours": "<p>The start hour of the window in Coordinated Universal Time (UTC), using 24-hour time. For example, <code>17</code> refers to 5:00 P.M. UTC.</p>"
+      }
+    },
+    "StartTimeMinutes": {
+      "base": null,
+      "refs": {
+        "WindowStartTime$Minutes": "<p>The start minute of the window, in UTC.</p>"
       }
     },
     "StartTimestamp": {
@@ -1929,6 +2275,7 @@
     "StorageTypeName": {
       "base": "<p>The type of storage that the domain uses. Can be one of the following:</p> <dl> <dt>instance</dt> <dd> <p>Built-in storage available for the instance.</p> </dd> <dt>ebs</dt> <dd> <p>Elastic Block Storage (EBS) attached to the instance.</p> </dd> </dl>",
       "refs": {
+        "DomainNodesStatus$StorageType": "<p>Indicates if the node has EBS or instance storage. </p>",
         "StorageType$StorageTypeName": "<p>The name of the storage type.</p>"
       }
     },
@@ -1943,6 +2290,9 @@
         "AutoTuneStatus$ErrorMessage": "<p>Any errors that occurred while enabling or disabling Auto-Tune.</p>",
         "DescribePackagesResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "DescribeReservedInstancesResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
+        "DryRunProgressStatus$DryRunStatus": "<p>The current status of the dry run.</p>",
+        "DryRunProgressStatus$CreationDate": "<p>The timestamp when the dry run was initiated.</p>",
+        "DryRunProgressStatus$UpdateDate": "<p>The timestamp when the dry run was last updated.</p>",
         "EndpointsMap$key": null,
         "GetPackageVersionHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "GetUpgradeHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
@@ -1957,12 +2307,17 @@
         "SAMLOptionsInput$RolesKey": "<p>Element of the SAML assertion to use for backend roles. Default is <code>roles</code>.</p>",
         "SAMLOptionsOutput$SubjectKey": "<p>The key used for matching the SAML subject attribute.</p>",
         "SAMLOptionsOutput$RolesKey": "<p>The key used for matching the SAML roles attribute.</p>",
+        "ScheduledAction$Id": "<p>The unique identifier of the scheduled action.</p>",
+        "ScheduledAction$Description": "<p>A description of the action to be taken.</p>",
         "ServiceSoftwareOptions$CurrentVersion": "<p>The current service software version present on the domain.</p>",
         "ServiceSoftwareOptions$NewVersion": "<p>The new service software version, if one is available.</p>",
         "ServiceSoftwareOptions$Description": "<p>A description of the service software update status.</p>",
         "StringList$member": null,
+        "UpdateScheduledActionRequest$ActionID": "<p>The unique identifier of the action to reschedule. To retrieve this ID, send a <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/APIReference/API_ListScheduledActions.html\">ListScheduledActions</a> request.</p>",
         "UpgradeDomainResponse$UpgradeId": "<p>The unique identifier of the domain upgrade.</p>",
         "VPCDerivedInfo$VPCId": "<p>The ID for your VPC. Amazon VPC generates this value when you create a VPC.</p>",
+        "ValidationFailure$Code": "<p>The error code of the failure.</p>",
+        "ValidationFailure$Message": "<p>A message corresponding to the failure.</p>",
         "VpcEndpointError$ErrorMessage": "<p>A message describing the error.</p>",
         "VpcEndpointSummary$VpcEndpointOwner": "<p>The creator of the endpoint.</p>"
       }
@@ -2048,6 +2403,16 @@
     },
     "UpdatePackageResponse": {
       "base": "<p>Container for the response returned by the <code>UpdatePackage</code> operation.</p>",
+      "refs": {
+      }
+    },
+    "UpdateScheduledActionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateScheduledActionResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -2165,8 +2530,20 @@
       }
     },
     "ValidationException": {
-      "base": "<p>An exception for missing / invalid input fields. Gives http status code of 400.</p>",
+      "base": "<p>An exception for accessing or deleting a resource that doesn't exist.</p>",
       "refs": {
+      }
+    },
+    "ValidationFailure": {
+      "base": "<p>A validation failure that occurred as the result of a pre-update validation check (verbose dry run) on a domain.</p>",
+      "refs": {
+        "ValidationFailures$member": null
+      }
+    },
+    "ValidationFailures": {
+      "base": null,
+      "refs": {
+        "DryRunProgressStatus$ValidationFailures": "<p>Any validation failures that occurred as a result of the dry run.</p>"
       }
     },
     "ValueStringList": {
@@ -2195,16 +2572,23 @@
         "CreateDomainRequest$EngineVersion": "<p>String of format Elasticsearch_X.Y or OpenSearch_X.Y to specify the engine version for the OpenSearch Service domain. For example, <code>OpenSearch_1.0</code> or <code>Elasticsearch_7.9</code>. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html#createdomains\">Creating and managing Amazon OpenSearch Service domains</a>.</p>",
         "DescribeInstanceTypeLimitsRequest$EngineVersion": "<p>Version of OpenSearch or Elasticsearch, in the format Elasticsearch_X.Y or OpenSearch_X.Y. Defaults to the latest version of OpenSearch.</p>",
         "DomainStatus$EngineVersion": "<p>Version of OpenSearch or Elasticsearch that the domain is running, in the format <code>Elasticsearch_X.Y</code> or <code>OpenSearch_X.Y</code>.</p>",
-        "ListInstanceTypeDetailsRequest$EngineVersion": "<p>Version of OpenSearch or Elasticsearch, in the format Elasticsearch_X.Y or OpenSearch_X.Y. Defaults to the latest version of OpenSearch.</p>",
+        "ListInstanceTypeDetailsRequest$EngineVersion": "<p>The version of OpenSearch or Elasticsearch, in the format Elasticsearch_X.Y or OpenSearch_X.Y. Defaults to the latest version of OpenSearch.</p>",
         "UpgradeDomainRequest$TargetVersion": "<p>OpenSearch or Elasticsearch version to which you want to upgrade, in the format Opensearch_X.Y or Elasticsearch_X.Y.</p>",
         "UpgradeDomainResponse$TargetVersion": "<p>OpenSearch or Elasticsearch version that the domain was upgraded to.</p>",
         "VersionList$member": null,
         "VersionStatus$Options": "<p>The OpenSearch or Elasticsearch version for the specified domain.</p>"
       }
     },
+    "VolumeSize": {
+      "base": null,
+      "refs": {
+        "DomainNodesStatus$StorageSize": "<p>The storage size of the node, in GiB.</p>"
+      }
+    },
     "VolumeType": {
       "base": "<p>The type of EBS volume that a domain uses. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/opensearch-createupdatedomains.html#opensearch-createdomain-configure-ebs\">Configuring EBS-based storage</a>.</p>",
       "refs": {
+        "DomainNodesStatus$StorageVolumeType": "<p>If the nodes has EBS storage, indicates if the volume type is GP2 or GP3. Only applicable for data nodes. </p>",
         "EBSOptions$VolumeType": "<p>Specifies the type of EBS volumes attached to data nodes.</p>"
       }
     },
@@ -2278,10 +2662,22 @@
         "DescribeVpcEndpointsResponse$VpcEndpoints": "<p>Information about each requested VPC endpoint.</p>"
       }
     },
+    "WindowStartTime": {
+      "base": "<p>The desired start time for an <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/APIReference/API_OffPeakWindow.html\">off-peak maintenance window</a>.</p>",
+      "refs": {
+        "OffPeakWindow$WindowStartTime": "<p>A custom start time for the off-peak window, in Coordinated Universal Time (UTC). The window length will always be 10 hours, so you can't specify an end time. For example, if you specify 11:00 P.M. UTC as a start time, the end time will automatically be set to 9:00 A.M.</p>"
+      }
+    },
     "ZoneAwarenessConfig": {
       "base": "<p>The zone awareness configuration for an Amazon OpenSearch Service domain.</p>",
       "refs": {
         "ClusterConfig$ZoneAwarenessConfig": "<p>Container for zone awareness configuration options. Only required if <code>ZoneAwarenessEnabled</code> is <code>true</code>.</p>"
+      }
+    },
+    "ZoneStatus": {
+      "base": null,
+      "refs": {
+        "AvailabilityZoneInfo$ZoneStatus": "<p>The current state of the Availability Zone. Current options are <code>Active</code> and <code>StandBy</code>.</p> <ul> <li> <p> <code>Active</code> - Data nodes in the Availability Zone are in use.</p> </li> <li> <p> <code>StandBy</code> - Data nodes in the Availability Zone are in a standby state.</p> </li> <li> <p> <code>NotAvailable</code> - Unable to retrieve information.</p> </li> </ul>"
       }
     }
   }

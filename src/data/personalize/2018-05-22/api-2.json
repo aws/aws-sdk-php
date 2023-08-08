@@ -953,6 +953,21 @@
       ],
       "idempotent":true
     },
+    "UpdateDataset":{
+      "name":"UpdateDataset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateDatasetRequest"},
+      "output":{"shape":"UpdateDatasetResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"}
+      ],
+      "idempotent":true
+    },
     "UpdateMetricAttribution":{
       "name":"UpdateMetricAttribution",
       "http":{
@@ -1212,6 +1227,15 @@
       "type":"list",
       "member":{"shape":"CategoricalValue"},
       "max":100
+    },
+    "ColumnName":{
+      "type":"string",
+      "max":150
+    },
+    "ColumnNamesList":{
+      "type":"list",
+      "member":{"shape":"ColumnName"},
+      "max":50
     },
     "ContinuousHyperParameterRange":{
       "type":"structure",
@@ -1548,7 +1572,8 @@
         "schemaArn":{"shape":"Arn"},
         "status":{"shape":"Status"},
         "creationDateTime":{"shape":"Date"},
-        "lastUpdatedDateTime":{"shape":"Date"}
+        "lastUpdatedDateTime":{"shape":"Date"},
+        "latestDatasetUpdate":{"shape":"DatasetUpdateSummary"}
       }
     },
     "DatasetExportJob":{
@@ -1688,6 +1713,16 @@
     "DatasetType":{
       "type":"string",
       "max":256
+    },
+    "DatasetUpdateSummary":{
+      "type":"structure",
+      "members":{
+        "schemaArn":{"shape":"Arn"},
+        "status":{"shape":"Status"},
+        "failureReason":{"shape":"FailureReason"},
+        "creationDateTime":{"shape":"Date"},
+        "lastUpdatedDateTime":{"shape":"Date"}
+      }
     },
     "Datasets":{
       "type":"list",
@@ -2076,6 +2111,12 @@
     "EventValueThreshold":{
       "type":"string",
       "max":256
+    },
+    "ExcludedDatasetColumns":{
+      "type":"map",
+      "key":{"shape":"DatasetType"},
+      "value":{"shape":"ColumnNamesList"},
+      "max":3
     },
     "FailureReason":{"type":"string"},
     "FeatureTransformation":{
@@ -2694,7 +2735,8 @@
       "type":"structure",
       "members":{
         "itemExplorationConfig":{"shape":"HyperParameters"},
-        "minRecommendationRequestsPerSecond":{"shape":"TransactionsPerSecond"}
+        "minRecommendationRequestsPerSecond":{"shape":"TransactionsPerSecond"},
+        "trainingDataConfig":{"shape":"TrainingDataConfig"}
       }
     },
     "RecommenderSummary":{
@@ -2801,7 +2843,8 @@
         "algorithmHyperParameters":{"shape":"HyperParameters"},
         "featureTransformationParameters":{"shape":"FeatureTransformationParameters"},
         "autoMLConfig":{"shape":"AutoMLConfig"},
-        "optimizationObjective":{"shape":"OptimizationObjective"}
+        "optimizationObjective":{"shape":"OptimizationObjective"},
+        "trainingDataConfig":{"shape":"TrainingDataConfig"}
       }
     },
     "SolutionSummary":{
@@ -2962,6 +3005,12 @@
       "type":"string",
       "max":256
     },
+    "TrainingDataConfig":{
+      "type":"structure",
+      "members":{
+        "excludedDatasetColumns":{"shape":"ExcludedDatasetColumns"}
+      }
+    },
     "TrainingHours":{
       "type":"double",
       "min":0
@@ -3018,6 +3067,23 @@
       "type":"structure",
       "members":{
         "campaignArn":{"shape":"Arn"}
+      }
+    },
+    "UpdateDatasetRequest":{
+      "type":"structure",
+      "required":[
+        "datasetArn",
+        "schemaArn"
+      ],
+      "members":{
+        "datasetArn":{"shape":"Arn"},
+        "schemaArn":{"shape":"Arn"}
+      }
+    },
+    "UpdateDatasetResponse":{
+      "type":"structure",
+      "members":{
+        "datasetArn":{"shape":"Arn"}
       }
     },
     "UpdateMetricAttributionRequest":{

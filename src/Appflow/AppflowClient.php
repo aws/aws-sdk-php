@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Appflow** service.
+ * @method \Aws\Result cancelFlowExecutions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelFlowExecutionsAsync(array $args = [])
  * @method \Aws\Result createConnectorProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createConnectorProfileAsync(array $args = [])
  * @method \Aws\Result createFlow(array $args = [])
@@ -35,6 +37,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result registerConnector(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerConnectorAsync(array $args = [])
+ * @method \Aws\Result resetConnectorMetadataCache(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise resetConnectorMetadataCacheAsync(array $args = [])
  * @method \Aws\Result startFlow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startFlowAsync(array $args = [])
  * @method \Aws\Result stopFlow(array $args = [])

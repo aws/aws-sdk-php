@@ -165,6 +165,25 @@
       ],
       "idempotent":true
     },
+    "DeleteDomain":{
+      "name":"DeleteDomain",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{domainId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteDomainRequest"},
+      "output":{"shape":"DeleteDomainResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "GetCase":{
       "name":"GetCase",
       "http":{
@@ -669,11 +688,18 @@
       "members":{
         "andAll":{"shape":"CaseFilterAndAllList"},
         "field":{"shape":"FieldFilter"},
-        "not":{"shape":"CaseFilter"}
+        "not":{"shape":"CaseFilter"},
+        "orAll":{"shape":"CaseFilterOrAllList"}
       },
       "union":true
     },
     "CaseFilterAndAllList":{
+      "type":"list",
+      "member":{"shape":"CaseFilter"},
+      "max":10,
+      "min":0
+    },
+    "CaseFilterOrAllList":{
       "type":"list",
       "member":{"shape":"CaseFilter"},
       "max":10,
@@ -967,6 +993,22 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "DeleteDomainRequest":{
+      "type":"structure",
+      "required":["domainId"],
+      "members":{
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        }
+      }
+    },
+    "DeleteDomainResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DomainArn":{
       "type":"string",
       "max":500,
@@ -1011,6 +1053,11 @@
     "Double":{
       "type":"double",
       "box":true
+    },
+    "EmptyFieldValue":{
+      "type":"structure",
+      "members":{
+      }
     },
     "EventBridgeConfiguration":{
       "type":"structure",
@@ -1178,7 +1225,8 @@
         "Number",
         "Boolean",
         "DateTime",
-        "SingleSelect"
+        "SingleSelect",
+        "Url"
       ]
     },
     "FieldValue":{
@@ -1197,6 +1245,7 @@
       "members":{
         "booleanValue":{"shape":"Boolean"},
         "doubleValue":{"shape":"Double"},
+        "emptyValue":{"shape":"EmptyFieldValue"},
         "stringValue":{"shape":"FieldValueUnionStringValueString"}
       },
       "union":true

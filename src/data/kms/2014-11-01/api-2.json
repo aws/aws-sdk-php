@@ -106,7 +106,8 @@
         {"shape":"KMSInternalException"},
         {"shape":"InvalidGrantTokenException"},
         {"shape":"LimitExceededException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "CreateKey":{
@@ -151,7 +152,8 @@
         {"shape":"DependencyTimeoutException"},
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "DeleteAlias":{
@@ -323,7 +325,8 @@
         {"shape":"InvalidKeyUsageException"},
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "GenerateDataKey":{
@@ -342,7 +345,8 @@
         {"shape":"InvalidKeyUsageException"},
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "GenerateDataKeyPair":{
@@ -362,7 +366,8 @@
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
         {"shape":"KMSInvalidStateException"},
-        {"shape":"UnsupportedOperationException"}
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "GenerateDataKeyPairWithoutPlaintext":{
@@ -382,7 +387,8 @@
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
         {"shape":"KMSInvalidStateException"},
-        {"shape":"UnsupportedOperationException"}
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "GenerateDataKeyWithoutPlaintext":{
@@ -401,7 +407,8 @@
         {"shape":"InvalidKeyUsageException"},
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "GenerateMac":{
@@ -419,7 +426,8 @@
         {"shape":"InvalidKeyUsageException"},
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "GenerateRandom":{
@@ -661,7 +669,8 @@
         {"shape":"InvalidKeyUsageException"},
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "ReplicateKey":{
@@ -699,7 +708,8 @@
         {"shape":"NotFoundException"},
         {"shape":"DependencyTimeoutException"},
         {"shape":"KMSInternalException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "RevokeGrant":{
@@ -715,7 +725,8 @@
         {"shape":"InvalidArnException"},
         {"shape":"InvalidGrantIdException"},
         {"shape":"KMSInternalException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "ScheduleKeyDeletion":{
@@ -750,7 +761,8 @@
         {"shape":"InvalidKeyUsageException"},
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "TagResource":{
@@ -875,7 +887,8 @@
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
         {"shape":"KMSInvalidStateException"},
-        {"shape":"KMSInvalidSignatureException"}
+        {"shape":"KMSInvalidSignatureException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "VerifyMac":{
@@ -894,7 +907,8 @@
         {"shape":"InvalidGrantTokenException"},
         {"shape":"KMSInternalException"},
         {"shape":"KMSInvalidMacException"},
-        {"shape":"KMSInvalidStateException"}
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     }
   },
@@ -905,7 +919,9 @@
       "enum":[
         "RSAES_PKCS1_V1_5",
         "RSAES_OAEP_SHA_1",
-        "RSAES_OAEP_SHA_256"
+        "RSAES_OAEP_SHA_256",
+        "RSA_AES_KEY_WRAP_SHA_1",
+        "RSA_AES_KEY_WRAP_SHA_256"
       ]
     },
     "AliasList":{
@@ -940,6 +956,11 @@
       "max":2048,
       "min":20
     },
+    "AttestationDocumentType":{
+      "type":"blob",
+      "max":262144,
+      "min":1
+    },
     "BooleanType":{"type":"boolean"},
     "CancelKeyDeletionRequest":{
       "type":"structure",
@@ -962,7 +983,8 @@
     "CloudHsmClusterIdType":{
       "type":"string",
       "max":24,
-      "min":19
+      "min":19,
+      "pattern":"cluster-[2-7a-zA-Z]{11,16}"
     },
     "CloudHsmClusterInUseException":{
       "type":"structure",
@@ -1091,7 +1113,8 @@
         "Operations":{"shape":"GrantOperationList"},
         "Constraints":{"shape":"GrantConstraints"},
         "GrantTokens":{"shape":"GrantTokenList"},
-        "Name":{"shape":"GrantNameType"}
+        "Name":{"shape":"GrantNameType"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "CreateGrantResponse":{
@@ -1239,7 +1262,9 @@
         "EncryptionContext":{"shape":"EncryptionContextType"},
         "GrantTokens":{"shape":"GrantTokenList"},
         "KeyId":{"shape":"KeyIdType"},
-        "EncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"}
+        "EncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
+        "Recipient":{"shape":"RecipientInfo"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "DecryptResponse":{
@@ -1247,7 +1272,8 @@
       "members":{
         "KeyId":{"shape":"KeyIdType"},
         "Plaintext":{"shape":"PlaintextType"},
-        "EncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"}
+        "EncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
+        "CiphertextForRecipient":{"shape":"CiphertextType"}
       }
     },
     "DeleteAliasRequest":{
@@ -1353,6 +1379,13 @@
       "members":{
       }
     },
+    "DryRunOperationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessageType"}
+      },
+      "exception":true
+    },
     "EnableKeyRequest":{
       "type":"structure",
       "required":["KeyId"],
@@ -1378,7 +1411,8 @@
         "Plaintext":{"shape":"PlaintextType"},
         "EncryptionContext":{"shape":"EncryptionContextType"},
         "GrantTokens":{"shape":"GrantTokenList"},
-        "EncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"}
+        "EncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "EncryptResponse":{
@@ -1434,7 +1468,9 @@
         "EncryptionContext":{"shape":"EncryptionContextType"},
         "KeyId":{"shape":"KeyIdType"},
         "KeyPairSpec":{"shape":"DataKeyPairSpec"},
-        "GrantTokens":{"shape":"GrantTokenList"}
+        "GrantTokens":{"shape":"GrantTokenList"},
+        "Recipient":{"shape":"RecipientInfo"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "GenerateDataKeyPairResponse":{
@@ -1444,7 +1480,8 @@
         "PrivateKeyPlaintext":{"shape":"PlaintextType"},
         "PublicKey":{"shape":"PublicKeyType"},
         "KeyId":{"shape":"KeyIdType"},
-        "KeyPairSpec":{"shape":"DataKeyPairSpec"}
+        "KeyPairSpec":{"shape":"DataKeyPairSpec"},
+        "CiphertextForRecipient":{"shape":"CiphertextType"}
       }
     },
     "GenerateDataKeyPairWithoutPlaintextRequest":{
@@ -1457,7 +1494,8 @@
         "EncryptionContext":{"shape":"EncryptionContextType"},
         "KeyId":{"shape":"KeyIdType"},
         "KeyPairSpec":{"shape":"DataKeyPairSpec"},
-        "GrantTokens":{"shape":"GrantTokenList"}
+        "GrantTokens":{"shape":"GrantTokenList"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "GenerateDataKeyPairWithoutPlaintextResponse":{
@@ -1477,7 +1515,9 @@
         "EncryptionContext":{"shape":"EncryptionContextType"},
         "NumberOfBytes":{"shape":"NumberOfBytesType"},
         "KeySpec":{"shape":"DataKeySpec"},
-        "GrantTokens":{"shape":"GrantTokenList"}
+        "GrantTokens":{"shape":"GrantTokenList"},
+        "Recipient":{"shape":"RecipientInfo"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "GenerateDataKeyResponse":{
@@ -1485,7 +1525,8 @@
       "members":{
         "CiphertextBlob":{"shape":"CiphertextType"},
         "Plaintext":{"shape":"PlaintextType"},
-        "KeyId":{"shape":"KeyIdType"}
+        "KeyId":{"shape":"KeyIdType"},
+        "CiphertextForRecipient":{"shape":"CiphertextType"}
       }
     },
     "GenerateDataKeyWithoutPlaintextRequest":{
@@ -1496,7 +1537,8 @@
         "EncryptionContext":{"shape":"EncryptionContextType"},
         "KeySpec":{"shape":"DataKeySpec"},
         "NumberOfBytes":{"shape":"NumberOfBytesType"},
-        "GrantTokens":{"shape":"GrantTokenList"}
+        "GrantTokens":{"shape":"GrantTokenList"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "GenerateDataKeyWithoutPlaintextResponse":{
@@ -1517,7 +1559,8 @@
         "Message":{"shape":"PlaintextType"},
         "KeyId":{"shape":"KeyIdType"},
         "MacAlgorithm":{"shape":"MacAlgorithmSpec"},
-        "GrantTokens":{"shape":"GrantTokenList"}
+        "GrantTokens":{"shape":"GrantTokenList"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "GenerateMacResponse":{
@@ -1532,13 +1575,15 @@
       "type":"structure",
       "members":{
         "NumberOfBytes":{"shape":"NumberOfBytesType"},
-        "CustomKeyStoreId":{"shape":"CustomKeyStoreIdType"}
+        "CustomKeyStoreId":{"shape":"CustomKeyStoreIdType"},
+        "Recipient":{"shape":"RecipientInfo"}
       }
     },
     "GenerateRandomResponse":{
       "type":"structure",
       "members":{
-        "Plaintext":{"shape":"PlaintextType"}
+        "Plaintext":{"shape":"PlaintextType"},
+        "CiphertextForRecipient":{"shape":"CiphertextType"}
       }
     },
     "GetKeyPolicyRequest":{
@@ -1814,6 +1859,10 @@
         "message":{"shape":"ErrorMessageType"}
       },
       "exception":true
+    },
+    "KeyEncryptionMechanism":{
+      "type":"string",
+      "enum":["RSAES_OAEP_SHA_256"]
     },
     "KeyIdType":{
       "type":"string",
@@ -2177,7 +2226,8 @@
         "DestinationEncryptionContext":{"shape":"EncryptionContextType"},
         "SourceEncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
         "DestinationEncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
-        "GrantTokens":{"shape":"GrantTokenList"}
+        "GrantTokens":{"shape":"GrantTokenList"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "ReEncryptResponse":{
@@ -2188,6 +2238,13 @@
         "KeyId":{"shape":"KeyIdType"},
         "SourceEncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
         "DestinationEncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"}
+      }
+    },
+    "RecipientInfo":{
+      "type":"structure",
+      "members":{
+        "KeyEncryptionAlgorithm":{"shape":"KeyEncryptionMechanism"},
+        "AttestationDocument":{"shape":"AttestationDocumentType"}
       }
     },
     "RegionType":{
@@ -2224,7 +2281,8 @@
       "members":{
         "GrantToken":{"shape":"GrantTokenType"},
         "KeyId":{"shape":"KeyIdType"},
-        "GrantId":{"shape":"GrantIdType"}
+        "GrantId":{"shape":"GrantIdType"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "RevokeGrantRequest":{
@@ -2235,7 +2293,8 @@
       ],
       "members":{
         "KeyId":{"shape":"KeyIdType"},
-        "GrantId":{"shape":"GrantIdType"}
+        "GrantId":{"shape":"GrantIdType"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "ScheduleKeyDeletionRequest":{
@@ -2267,7 +2326,8 @@
         "Message":{"shape":"PlaintextType"},
         "MessageType":{"shape":"MessageType"},
         "GrantTokens":{"shape":"GrantTokenList"},
-        "SigningAlgorithm":{"shape":"SigningAlgorithmSpec"}
+        "SigningAlgorithm":{"shape":"SigningAlgorithmSpec"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "SignResponse":{
@@ -2433,7 +2493,8 @@
         "KeyId":{"shape":"KeyIdType"},
         "MacAlgorithm":{"shape":"MacAlgorithmSpec"},
         "Mac":{"shape":"CiphertextType"},
-        "GrantTokens":{"shape":"GrantTokenList"}
+        "GrantTokens":{"shape":"GrantTokenList"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "VerifyMacResponse":{
@@ -2458,7 +2519,8 @@
         "MessageType":{"shape":"MessageType"},
         "Signature":{"shape":"CiphertextType"},
         "SigningAlgorithm":{"shape":"SigningAlgorithmSpec"},
-        "GrantTokens":{"shape":"GrantTokenList"}
+        "GrantTokens":{"shape":"GrantTokenList"},
+        "DryRun":{"shape":"NullableBooleanType"}
       }
     },
     "VerifyResponse":{
@@ -2471,7 +2533,11 @@
     },
     "WrappingKeySpec":{
       "type":"string",
-      "enum":["RSA_2048"]
+      "enum":[
+        "RSA_2048",
+        "RSA_3072",
+        "RSA_4096"
+      ]
     },
     "XksKeyAlreadyInUseException":{
       "type":"structure",

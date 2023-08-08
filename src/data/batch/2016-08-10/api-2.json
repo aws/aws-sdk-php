@@ -421,7 +421,8 @@
       "enum":[
         "BEST_FIT",
         "BEST_FIT_PROGRESSIVE",
-        "SPOT_CAPACITY_OPTIMIZED"
+        "SPOT_CAPACITY_OPTIMIZED",
+        "SPOT_PRICE_CAPACITY_OPTIMIZED"
       ]
     },
     "CRType":{
@@ -437,7 +438,8 @@
       "type":"string",
       "enum":[
         "BEST_FIT_PROGRESSIVE",
-        "SPOT_CAPACITY_OPTIMIZED"
+        "SPOT_CAPACITY_OPTIMIZED",
+        "SPOT_PRICE_CAPACITY_OPTIMIZED"
       ]
     },
     "CancelJobRequest":{
@@ -588,7 +590,9 @@
         "logConfiguration":{"shape":"LogConfiguration"},
         "secrets":{"shape":"SecretList"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
-        "fargatePlatformConfiguration":{"shape":"FargatePlatformConfiguration"}
+        "fargatePlatformConfiguration":{"shape":"FargatePlatformConfiguration"},
+        "ephemeralStorage":{"shape":"EphemeralStorage"},
+        "runtimePlatform":{"shape":"RuntimePlatform"}
       }
     },
     "ContainerOverrides":{
@@ -640,7 +644,9 @@
         "logConfiguration":{"shape":"LogConfiguration"},
         "secrets":{"shape":"SecretList"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
-        "fargatePlatformConfiguration":{"shape":"FargatePlatformConfiguration"}
+        "fargatePlatformConfiguration":{"shape":"FargatePlatformConfiguration"},
+        "ephemeralStorage":{"shape":"EphemeralStorage"},
+        "runtimePlatform":{"shape":"RuntimePlatform"}
       }
     },
     "ContainerSummary":{
@@ -1056,10 +1062,21 @@
         "path":{"shape":"String"}
       }
     },
+    "EksLabelsMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
     "EksLimits":{
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"Quantity"}
+    },
+    "EksMetadata":{
+      "type":"structure",
+      "members":{
+        "labels":{"shape":"EksLabelsMap"}
+      }
     },
     "EksPodProperties":{
       "type":"structure",
@@ -1068,7 +1085,8 @@
         "hostNetwork":{"shape":"Boolean"},
         "dnsPolicy":{"shape":"String"},
         "containers":{"shape":"EksContainers"},
-        "volumes":{"shape":"EksVolumes"}
+        "volumes":{"shape":"EksVolumes"},
+        "metadata":{"shape":"EksMetadata"}
       }
     },
     "EksPodPropertiesDetail":{
@@ -1080,13 +1098,15 @@
         "containers":{"shape":"EksContainerDetails"},
         "volumes":{"shape":"EksVolumes"},
         "podName":{"shape":"String"},
-        "nodeName":{"shape":"String"}
+        "nodeName":{"shape":"String"},
+        "metadata":{"shape":"EksMetadata"}
       }
     },
     "EksPodPropertiesOverride":{
       "type":"structure",
       "members":{
-        "containers":{"shape":"EksContainerOverrideList"}
+        "containers":{"shape":"EksContainerOverrideList"},
+        "metadata":{"shape":"EksMetadata"}
       }
     },
     "EksProperties":{
@@ -1137,6 +1157,13 @@
     "EnvironmentVariables":{
       "type":"list",
       "member":{"shape":"KeyValuePair"}
+    },
+    "EphemeralStorage":{
+      "type":"structure",
+      "required":["sizeInGiB"],
+      "members":{
+        "sizeInGiB":{"shape":"Integer"}
+      }
     },
     "EvaluateOnExit":{
       "type":"structure",
@@ -1675,6 +1702,13 @@
       "members":{
         "attempts":{"shape":"Integer"},
         "evaluateOnExit":{"shape":"EvaluateOnExitList"}
+      }
+    },
+    "RuntimePlatform":{
+      "type":"structure",
+      "members":{
+        "operatingSystemFamily":{"shape":"String"},
+        "cpuArchitecture":{"shape":"String"}
       }
     },
     "SchedulingPolicyDetail":{

@@ -30,6 +30,12 @@ class MockHandlerTest extends TestCase
         $this->assertCount(3, $h);
     }
 
+    public function testCanCountEmpty()
+    {
+        $h = new Mockhandler();
+        $this->assertCount(0, $h);
+    }
+
     public function testReturnsMockResultsFromQueue()
     {
         $h = new MockHandler();
@@ -85,7 +91,7 @@ class MockHandlerTest extends TestCase
         $cmd = new Command('foo');
         $h($cmd, $request);
         $h($cmd, $request);
-        Promise\queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertEquals([$r1, $e], $thens);
     }
 

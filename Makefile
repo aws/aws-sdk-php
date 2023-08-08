@@ -60,6 +60,12 @@ sync-models: check-models-dir
 integ:
 	vendor/bin/behat --format=progress --tags=integ
 
+integ-nocrt:
+	vendor/bin/behat --format=progress --tags='@integ&&~@crt'
+
+integ-standalone:
+	vendor/bin/behat --format=progress --tags='@integ&&~@requiresUniqueResources'
+
 smoke:
 	vendor/bin/behat --format=progress --suite=smoke
 

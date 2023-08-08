@@ -11,6 +11,22 @@
     "xmlNamespace":"http://cloudformation.amazonaws.com/doc/2010-05-15/"
   },
   "operations":{
+    "ActivateOrganizationsAccess":{
+      "name":"ActivateOrganizationsAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ActivateOrganizationsAccessInput"},
+      "output":{
+        "shape":"ActivateOrganizationsAccessOutput",
+        "resultWrapper":"ActivateOrganizationsAccessResult"
+      },
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"OperationNotFoundException"}
+      ]
+    },
     "ActivateType":{
       "name":"ActivateType",
       "http":{
@@ -140,6 +156,22 @@
         {"shape":"NameAlreadyExistsException"},
         {"shape":"CreatedButModifiedException"},
         {"shape":"LimitExceededException"}
+      ]
+    },
+    "DeactivateOrganizationsAccess":{
+      "name":"DeactivateOrganizationsAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeactivateOrganizationsAccessInput"},
+      "output":{
+        "shape":"DeactivateOrganizationsAccessOutput",
+        "resultWrapper":"DeactivateOrganizationsAccessResult"
+      },
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"OperationNotFoundException"}
       ]
     },
     "DeactivateType":{
@@ -277,6 +309,22 @@
       },
       "errors":[
         {"shape":"ChangeSetNotFoundException"}
+      ]
+    },
+    "DescribeOrganizationsAccess":{
+      "name":"DescribeOrganizationsAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeOrganizationsAccessInput"},
+      "output":{
+        "shape":"DescribeOrganizationsAccessOutput",
+        "resultWrapper":"DescribeOrganizationsAccessResult"
+      },
+      "errors":[
+        {"shape":"InvalidOperationException"},
+        {"shape":"OperationNotFoundException"}
       ]
     },
     "DescribePublisher":{
@@ -616,6 +664,23 @@
         "shape":"ListImportsOutput",
         "resultWrapper":"ListImportsResult"
       }
+    },
+    "ListStackInstanceResourceDrifts":{
+      "name":"ListStackInstanceResourceDrifts",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListStackInstanceResourceDriftsInput"},
+      "output":{
+        "shape":"ListStackInstanceResourceDriftsOutput",
+        "resultWrapper":"ListStackInstanceResourceDriftsResult"
+      },
+      "errors":[
+        {"shape":"StackSetNotFoundException"},
+        {"shape":"StackInstanceNotFoundException"},
+        {"shape":"OperationNotFoundException"}
+      ]
     },
     "ListStackInstances":{
       "name":"ListStackInstances",
@@ -1044,6 +1109,16 @@
       "min":1,
       "pattern":"(s3://|http(s?)://).+"
     },
+    "ActivateOrganizationsAccessInput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "ActivateOrganizationsAccessOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "ActivateTypeInput":{
       "type":"structure",
       "members":{
@@ -1384,7 +1459,8 @@
         "Description":{"shape":"Description"},
         "ChangeSetType":{"shape":"ChangeSetType"},
         "ResourcesToImport":{"shape":"ResourcesToImport"},
-        "IncludeNestedStacks":{"shape":"IncludeNestedStacks"}
+        "IncludeNestedStacks":{"shape":"IncludeNestedStacks"},
+        "OnStackFailure":{"shape":"OnStackFailure"}
       }
     },
     "CreateChangeSetOutput":{
@@ -1414,7 +1490,8 @@
         "StackPolicyURL":{"shape":"StackPolicyURL"},
         "Tags":{"shape":"Tags"},
         "ClientRequestToken":{"shape":"ClientRequestToken"},
-        "EnableTerminationProtection":{"shape":"EnableTerminationProtection"}
+        "EnableTerminationProtection":{"shape":"EnableTerminationProtection"},
+        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"}
       }
     },
     "CreateStackInstancesInput":{
@@ -1491,6 +1568,16 @@
       "exception":true
     },
     "CreationTime":{"type":"timestamp"},
+    "DeactivateOrganizationsAccessInput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeactivateOrganizationsAccessOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeactivateTypeInput":{
       "type":"structure",
       "members":{
@@ -1663,7 +1750,20 @@
         "NextToken":{"shape":"NextToken"},
         "IncludeNestedStacks":{"shape":"IncludeNestedStacks"},
         "ParentChangeSetId":{"shape":"ChangeSetId"},
-        "RootChangeSetId":{"shape":"ChangeSetId"}
+        "RootChangeSetId":{"shape":"ChangeSetId"},
+        "OnStackFailure":{"shape":"OnStackFailure"}
+      }
+    },
+    "DescribeOrganizationsAccessInput":{
+      "type":"structure",
+      "members":{
+        "CallAs":{"shape":"CallAs"}
+      }
+    },
+    "DescribeOrganizationsAccessOutput":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"OrganizationStatus"}
       }
     },
     "DescribePublisherInput":{
@@ -2004,7 +2104,8 @@
         "ChangeSetName":{"shape":"ChangeSetNameOrId"},
         "StackName":{"shape":"StackNameOrId"},
         "ClientRequestToken":{"shape":"ClientRequestToken"},
-        "DisableRollback":{"shape":"DisableRollback"}
+        "DisableRollback":{"shape":"DisableRollback"},
+        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"}
       }
     },
     "ExecuteChangeSetOutput":{
@@ -2091,7 +2192,8 @@
         "TemplateURL":{"shape":"TemplateURL"},
         "StackName":{"shape":"StackNameOrId"},
         "StackSetName":{"shape":"StackSetNameOrId"},
-        "CallAs":{"shape":"CallAs"}
+        "CallAs":{"shape":"CallAs"},
+        "TemplateSummaryConfig":{"shape":"TemplateSummaryConfig"}
       }
     },
     "GetTemplateSummaryOutput":{
@@ -2105,7 +2207,8 @@
         "Version":{"shape":"Version"},
         "Metadata":{"shape":"Metadata"},
         "DeclaredTransforms":{"shape":"TransformsList"},
-        "ResourceIdentifierSummaries":{"shape":"ResourceIdentifierSummaries"}
+        "ResourceIdentifierSummaries":{"shape":"ResourceIdentifierSummaries"},
+        "Warnings":{"shape":"Warnings"}
       }
     },
     "HandlerErrorCode":{
@@ -2339,6 +2442,32 @@
       "type":"structure",
       "members":{
         "Imports":{"shape":"Imports"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListStackInstanceResourceDriftsInput":{
+      "type":"structure",
+      "required":[
+        "StackSetName",
+        "StackInstanceAccount",
+        "StackInstanceRegion",
+        "OperationId"
+      ],
+      "members":{
+        "StackSetName":{"shape":"StackSetNameOrId"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"},
+        "StackInstanceResourceDriftStatuses":{"shape":"StackResourceDriftStatusFilters"},
+        "StackInstanceAccount":{"shape":"Account"},
+        "StackInstanceRegion":{"shape":"Region"},
+        "OperationId":{"shape":"ClientRequestToken"},
+        "CallAs":{"shape":"CallAs"}
+      }
+    },
+    "ListStackInstanceResourceDriftsOutput":{
+      "type":"structure",
+      "members":{
+        "Summaries":{"shape":"StackInstanceResourceDriftsSummaries"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -2597,6 +2726,14 @@
         "DELETE"
       ]
     },
+    "OnStackFailure":{
+      "type":"string",
+      "enum":[
+        "DO_NOTHING",
+        "ROLLBACK",
+        "DELETE"
+      ]
+    },
     "OperationIdAlreadyExistsException":{
       "type":"structure",
       "members":{
@@ -2675,6 +2812,14 @@
     "OptionalSecureUrl":{
       "type":"string",
       "max":4096
+    },
+    "OrganizationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "DISABLED_PERMANENTLY"
+      ]
     },
     "OrganizationalUnitId":{
       "type":"string",
@@ -3132,6 +3277,7 @@
       "type":"list",
       "member":{"shape":"ResourceToSkip"}
     },
+    "RetainExceptOnCreate":{"type":"boolean"},
     "RetainResources":{
       "type":"list",
       "member":{"shape":"LogicalResourceId"}
@@ -3163,7 +3309,8 @@
       "members":{
         "StackName":{"shape":"StackNameOrId"},
         "RoleARN":{"shape":"RoleARN"},
-        "ClientRequestToken":{"shape":"ClientRequestToken"}
+        "ClientRequestToken":{"shape":"ClientRequestToken"},
+        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"}
       }
     },
     "RollbackStackOutput":{
@@ -3287,7 +3434,8 @@
         "EnableTerminationProtection":{"shape":"EnableTerminationProtection"},
         "ParentId":{"shape":"StackId"},
         "RootId":{"shape":"StackId"},
-        "DriftInformation":{"shape":"StackDriftInformation"}
+        "DriftInformation":{"shape":"StackDriftInformation"},
+        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"}
       }
     },
     "StackDriftDetectionId":{
@@ -3402,7 +3550,8 @@
         "SUCCEEDED",
         "FAILED",
         "CANCELLED",
-        "INOPERABLE"
+        "INOPERABLE",
+        "SKIPPED_SUSPENDED_ACCOUNT"
       ]
     },
     "StackInstanceFilter":{
@@ -3416,7 +3565,8 @@
       "type":"string",
       "enum":[
         "DETAILED_STATUS",
-        "LAST_OPERATION_ID"
+        "LAST_OPERATION_ID",
+        "DRIFT_STATUS"
       ]
     },
     "StackInstanceFilterValues":{
@@ -3428,7 +3578,7 @@
     "StackInstanceFilters":{
       "type":"list",
       "member":{"shape":"StackInstanceFilter"},
-      "max":2
+      "max":3
     },
     "StackInstanceNotFoundException":{
       "type":"structure",
@@ -3440,6 +3590,30 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "StackInstanceResourceDriftsSummaries":{
+      "type":"list",
+      "member":{"shape":"StackInstanceResourceDriftsSummary"}
+    },
+    "StackInstanceResourceDriftsSummary":{
+      "type":"structure",
+      "required":[
+        "StackId",
+        "LogicalResourceId",
+        "ResourceType",
+        "StackResourceDriftStatus",
+        "Timestamp"
+      ],
+      "members":{
+        "StackId":{"shape":"StackId"},
+        "LogicalResourceId":{"shape":"LogicalResourceId"},
+        "PhysicalResourceId":{"shape":"PhysicalResourceId"},
+        "PhysicalResourceIdContext":{"shape":"PhysicalResourceIdContext"},
+        "ResourceType":{"shape":"ResourceType"},
+        "PropertyDifferences":{"shape":"PropertyDifferences"},
+        "StackResourceDriftStatus":{"shape":"StackResourceDriftStatus"},
+        "Timestamp":{"shape":"Timestamp"}
+      }
     },
     "StackInstanceStatus":{
       "type":"string",
@@ -3654,7 +3828,8 @@
         "AutoDeployment":{"shape":"AutoDeployment"},
         "PermissionModel":{"shape":"PermissionModels"},
         "OrganizationalUnitIds":{"shape":"OrganizationalUnitIdList"},
-        "ManagedExecution":{"shape":"ManagedExecution"}
+        "ManagedExecution":{"shape":"ManagedExecution"},
+        "Regions":{"shape":"RegionList"}
       }
     },
     "StackSetARN":{"type":"string"},
@@ -3999,6 +4174,12 @@
         "Processed"
       ]
     },
+    "TemplateSummaryConfig":{
+      "type":"structure",
+      "members":{
+        "TreatUnrecognizedResourceTypesAsWarnings":{"shape":"TreatUnrecognizedResourceTypesAsWarnings"}
+      }
+    },
     "TemplateURL":{
       "type":"string",
       "max":1024,
@@ -4058,6 +4239,7 @@
       "type":"list",
       "member":{"shape":"TransformName"}
     },
+    "TreatUnrecognizedResourceTypesAsWarnings":{"type":"boolean"},
     "Type":{"type":"string"},
     "TypeArn":{
       "type":"string",
@@ -4244,7 +4426,8 @@
         "NotificationARNs":{"shape":"NotificationARNs"},
         "Tags":{"shape":"Tags"},
         "DisableRollback":{"shape":"DisableRollback"},
-        "ClientRequestToken":{"shape":"ClientRequestToken"}
+        "ClientRequestToken":{"shape":"ClientRequestToken"},
+        "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"}
       }
     },
     "UpdateStackInstancesInput":{
@@ -4365,6 +4548,12 @@
         "PUBLIC",
         "PRIVATE"
       ]
+    },
+    "Warnings":{
+      "type":"structure",
+      "members":{
+        "UnrecognizedResourceTypes":{"shape":"ResourceTypes"}
+      }
     }
   }
 }

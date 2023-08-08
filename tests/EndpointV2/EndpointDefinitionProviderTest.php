@@ -45,4 +45,33 @@ class EndpointDefinitionProviderTest extends TestCase
         $this->expectExceptionMessage('Invalid api version.');
         EndpointDefinitionProvider::getEndpointRuleset('s3', '10-22-2022');
     }
+
+    public function getEndpointFileProvider()
+    {
+        return [
+            ['Ruleset'],
+            ['Tests']
+        ];
+    }
+
+    /**
+     * @dataProvider getEndpointFileProvider
+     *
+     * @param $type
+     */
+    public function testThrowsExceptionOnMissingFiles($type)
+    {
+        $method = 'getEndpoint' . $type;
+        $type = strtolower($type);
+        $tmpdir = sys_get_temp_dir();
+        if (!is_dir($tmpdir . '/data/foo-service/08-05-1989/')) {
+            mkdir($tmpdir . '/data/foo-service/08-05-1989/', 0777, true);
+        }
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Specified {$type} endpoint file for foo-service with api version 08-05-1989 does not exist.");
+        EndpointDefinitionProvider::$method('foo-service', '08-05-1989', $tmpdir . '/data');
+        rmdir($tmpdir . 'data/' . 's3/' . '/08-05-1989');
+        rmdir($tmpdir . 'data/' . 's3/');
+        rmdir($tmpdir . 'data');
+    }
 }

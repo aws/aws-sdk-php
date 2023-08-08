@@ -27,6 +27,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listPermissionsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result listVersions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listVersionsAsync(array $args = [])
  * @method \Aws\Result listWorkspaces(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listWorkspacesAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])

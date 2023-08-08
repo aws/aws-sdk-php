@@ -32,19 +32,29 @@
     "GetReplicationConfiguration": "<p>Lists all ReplicationConfigurations, filtered by Source Server ID.</p>",
     "InitializeService": "<p>Initialize Application Migration Service.</p>",
     "ListApplications": "<p>Retrieves all applications or multiple applications by ID.</p>",
+    "ListExportErrors": "<p>List export errors.</p>",
+    "ListExports": "<p>List exports.</p>",
+    "ListImportErrors": "<p>List import errors.</p>",
+    "ListImports": "<p>List imports.</p>",
+    "ListManagedAccounts": "<p>List Managed Accounts.</p>",
     "ListSourceServerActions": "<p>List source server post migration custom actions.</p>",
     "ListTagsForResource": "<p>List all tags for your Application Migration Service resources.</p>",
     "ListTemplateActions": "<p>List template post migration custom actions.</p>",
     "ListWaves": "<p>Retrieves all waves or multiple waves by ID.</p>",
     "MarkAsArchived": "<p>Archives specific Source Servers by setting the SourceServer.isArchived property to true for specified SourceServers by ID. This command only works for SourceServers with a lifecycle. state which equals DISCONNECTED or CUTOVER.</p>",
+    "PauseReplication": "<p>Pause Replication.</p>",
     "PutSourceServerAction": "<p>Put source server post migration custom action.</p>",
     "PutTemplateAction": "<p>Put template post migration custom action.</p>",
     "RemoveSourceServerAction": "<p>Remove source server post migration custom action.</p>",
     "RemoveTemplateAction": "<p>Remove template post migration custom action.</p>",
+    "ResumeReplication": "<p>Resume Replication.</p>",
     "RetryDataReplication": "<p>Causes the data replication initiation sequence to begin immediately upon next Handshake for specified SourceServer IDs, regardless of when the previous initiation started. This command will not work if the SourceServer is not stalled or is in a DISCONNECTED or STOPPED state.</p>",
     "StartCutover": "<p>Launches a Cutover Instance for specific Source Servers. This command starts a LAUNCH job whose initiatedBy property is StartCutover and changes the SourceServer.lifeCycle.state property to CUTTING_OVER.</p>",
+    "StartExport": "<p>Start export.</p>",
+    "StartImport": "<p>Start import.</p>",
     "StartReplication": "<p>Starts replication for SNAPSHOT_SHIPPING agents.</p>",
     "StartTest": "<p>Launches a Test Instance for specific Source Servers. This command starts a LAUNCH job whose initiatedBy property is StartTest and changes the SourceServer.lifeCycle.state property to TESTING.</p>",
+    "StopReplication": "<p>Stop Replication.</p>",
     "TagResource": "<p>Adds or overwrites only the specified tags for the specified Application Migration Service resource or resources. When you specify an existing tag key, the value is overwritten with the new value. Each resource can have a maximum of 50 tags. Each tag consists of a key and optional value.</p>",
     "TerminateTargetInstances": "<p>Starts a job that terminates specific launched EC2 Test and Cutover instances. This command will not work for any Source Server with a lifecycle.state of TESTING, CUTTING_OVER, or CUTOVER.</p>",
     "UnarchiveApplication": "<p>Unarchive application.</p>",
@@ -83,6 +93,75 @@
     "AccessDeniedException": {
       "base": "<p>Operating denied due to a file permission or access check error.</p>",
       "refs": {
+      }
+    },
+    "AccountID": {
+      "base": null,
+      "refs": {
+        "ArchiveApplicationRequest$accountID": "<p>Account ID.</p>",
+        "ArchiveWaveRequest$accountID": "<p>Account ID.</p>",
+        "AssociateApplicationsRequest$accountID": "<p>Account ID.</p>",
+        "AssociateSourceServersRequest$accountID": "<p>Account ID.</p>",
+        "ChangeServerLifeCycleStateRequest$accountID": "<p>The request to change the source server migration account ID.</p>",
+        "CreateApplicationRequest$accountID": "<p>Account ID.</p>",
+        "CreateWaveRequest$accountID": "<p>Account ID.</p>",
+        "DeleteApplicationRequest$accountID": "<p>Account ID.</p>",
+        "DeleteJobRequest$accountID": "<p>Request to delete Job from service by Account ID.</p>",
+        "DeleteSourceServerRequest$accountID": "<p>Request to delete Source Server from service by Account ID.</p>",
+        "DeleteWaveRequest$accountID": "<p>Account ID.</p>",
+        "DescribeJobLogItemsRequest$accountID": "<p>Request to describe Job log Account ID.</p>",
+        "DescribeJobsRequest$accountID": "<p>Request to describe job log items by Account ID.</p>",
+        "DescribeSourceServersRequest$accountID": "<p>Request to filter Source Servers list by Accoun ID.</p>",
+        "DisassociateApplicationsRequest$accountID": "<p>Account ID.</p>",
+        "DisassociateSourceServersRequest$accountID": "<p>Account ID.</p>",
+        "DisconnectFromServiceRequest$accountID": "<p>Request to disconnect Source Server from service by Account ID.</p>",
+        "ExportTask$s3BucketOwner": "<p>Export task s3 bucket owner.</p>",
+        "FinalizeCutoverRequest$accountID": "<p>Request to finalize Cutover by Source Account ID.</p>",
+        "GetLaunchConfigurationRequest$accountID": "<p>Request to get Launch Configuration information by Account ID.</p>",
+        "GetReplicationConfigurationRequest$accountID": "<p>Request to get Replication Configuration by Account ID.</p>",
+        "ImportErrorData$accountID": "<p>Import error data source account ID.</p>",
+        "ListApplicationsRequest$accountID": "<p>Applications list Account ID.</p>",
+        "ListSourceServerActionsRequest$accountID": "<p>Account ID to return when listing source server post migration custom actions.</p>",
+        "ListWavesRequest$accountID": "<p>Request account ID.</p>",
+        "ManagedAccount$accountId": "<p>Managed account, account ID.</p>",
+        "MarkAsArchivedRequest$accountID": "<p>Mark as archived by Account ID.</p>",
+        "PauseReplicationRequest$accountID": "<p>Pause Replication Request account ID.</p>",
+        "PutSourceServerActionRequest$accountID": "<p>Source server post migration custom account ID.</p>",
+        "RemoveSourceServerActionRequest$accountID": "<p>Source server post migration account ID.</p>",
+        "ResumeReplicationRequest$accountID": "<p>Resume Replication Request account ID.</p>",
+        "RetryDataReplicationRequest$accountID": "<p>Retry data replication for Account ID.</p>",
+        "S3BucketSource$s3BucketOwner": "<p>S3 bucket source s3 bucket owner.</p>",
+        "StartCutoverRequest$accountID": "<p>Start Cutover by Account IDs</p>",
+        "StartExportRequest$s3BucketOwner": "<p>Start export request s3 bucket owner.</p>",
+        "StartReplicationRequest$accountID": "<p>Account ID on which to start replication.</p>",
+        "StartTestRequest$accountID": "<p>Start Test for Account ID.</p>",
+        "StopReplicationRequest$accountID": "<p>Stop Replication Request account ID.</p>",
+        "TerminateTargetInstancesRequest$accountID": "<p>Terminate Target instance by Account ID</p>",
+        "UnarchiveApplicationRequest$accountID": "<p>Account ID.</p>",
+        "UnarchiveWaveRequest$accountID": "<p>Account ID.</p>",
+        "UpdateApplicationRequest$accountID": "<p>Account ID.</p>",
+        "UpdateLaunchConfigurationRequest$accountID": "<p>Update Launch configuration Account ID.</p>",
+        "UpdateReplicationConfigurationRequest$accountID": "<p>Update replication configuration Account ID request.</p>",
+        "UpdateSourceServerReplicationTypeRequest$accountID": "<p>Account ID on which to update replication type.</p>",
+        "UpdateWaveRequest$accountID": "<p>Account ID.</p>"
+      }
+    },
+    "ActionCategory": {
+      "base": null,
+      "refs": {
+        "PutSourceServerActionRequest$category": "<p>Source server post migration custom action category.</p>",
+        "PutTemplateActionRequest$category": "<p>Template post migration custom action category.</p>",
+        "SourceServerActionDocument$category": "<p>Source server post migration custom action category.</p>",
+        "TemplateActionDocument$category": "<p>Template post migration custom action category.</p>"
+      }
+    },
+    "ActionDescription": {
+      "base": null,
+      "refs": {
+        "PutSourceServerActionRequest$description": "<p>Source server post migration custom action description.</p>",
+        "PutTemplateActionRequest$description": "<p>Template post migration custom action description.</p>",
+        "SourceServerActionDocument$description": "<p>Source server post migration custom action description.</p>",
+        "TemplateActionDocument$description": "<p>Template post migration custom action description.</p>"
       }
     },
     "ActionID": {
@@ -148,6 +227,7 @@
         "DeleteApplicationRequest$applicationID": "<p>Application ID.</p>",
         "DescribeSourceServersRequestApplicationIDs$member": null,
         "DisassociateSourceServersRequest$applicationID": "<p>Application ID.</p>",
+        "ImportErrorData$applicationID": "<p>Import error data application ID.</p>",
         "SourceServer$applicationID": "<p>Source server application ID.</p>",
         "UnarchiveApplicationRequest$applicationID": "<p>Application ID.</p>",
         "UpdateApplicationRequest$applicationID": "<p>Application ID.</p>"
@@ -222,6 +302,16 @@
       "refs": {
       }
     },
+    "BandwidthThrottling": {
+      "base": null,
+      "refs": {
+        "CreateReplicationConfigurationTemplateRequest$bandwidthThrottling": "<p>Request to configure bandwidth throttling during Replication Settings template creation.</p>",
+        "ReplicationConfiguration$bandwidthThrottling": "<p>Replication Configuration set bandwidth throttling.</p>",
+        "ReplicationConfigurationTemplate$bandwidthThrottling": "<p>Replication Configuration template bandwidth throttling.</p>",
+        "UpdateReplicationConfigurationRequest$bandwidthThrottling": "<p>Update replication configuration bandwidth throttling request.</p>",
+        "UpdateReplicationConfigurationTemplateRequest$bandwidthThrottling": "<p>Update replication configuration template bandwidth throttling request.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -233,6 +323,7 @@
         "CreateReplicationConfigurationTemplateRequest$associateDefaultSecurityGroup": "<p>Request to associate the default Application Migration Service Security group with the Replication Settings template.</p>",
         "CreateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Request to create Public IP during Replication Settings template creation.</p>",
         "CreateReplicationConfigurationTemplateRequest$useDedicatedReplicationServer": "<p>Request to use Dedicated Replication Servers during Replication Settings template creation.</p>",
+        "CreateReplicationConfigurationTemplateRequest$useFipsEndpoint": "<p>Request to use Fips Endpoint during Replication Settings template creation.</p>",
         "DescribeSourceServersRequestFilters$isArchived": "<p>Request to filter Source Servers list by archived.</p>",
         "LaunchConfiguration$copyPrivateIp": "<p>Copy Private IP during Launch Configuration.</p>",
         "LaunchConfiguration$copyTags": "<p>Copy Tags during Launch Configuration.</p>",
@@ -252,10 +343,12 @@
         "ReplicationConfiguration$associateDefaultSecurityGroup": "<p>Replication Configuration associate default Application Migration Service Security Group.</p>",
         "ReplicationConfiguration$createPublicIP": "<p>Replication Configuration create Public IP.</p>",
         "ReplicationConfiguration$useDedicatedReplicationServer": "<p>Replication Configuration use Dedicated Replication Server.</p>",
+        "ReplicationConfiguration$useFipsEndpoint": "<p>Replication Configuration use Fips Endpoint.</p>",
         "ReplicationConfigurationReplicatedDisk$isBootDisk": "<p>Replication Configuration replicated disk boot disk.</p>",
         "ReplicationConfigurationTemplate$associateDefaultSecurityGroup": "<p>Replication Configuration template associate default Application Migration Service Security group.</p>",
         "ReplicationConfigurationTemplate$createPublicIP": "<p>Replication Configuration template create Public IP.</p>",
         "ReplicationConfigurationTemplate$useDedicatedReplicationServer": "<p>Replication Configuration template use Dedicated Replication Server.</p>",
+        "ReplicationConfigurationTemplate$useFipsEndpoint": "<p>Replication Configuration template use Fips Endpoint.</p>",
         "SourceServer$isArchived": "<p>Source server archived status.</p>",
         "SourceServerActionDocument$active": "<p>Source server post migration custom action active status.</p>",
         "SourceServerActionDocument$mustSucceedForCutover": "<p>Source server post migration custom action must succeed for cutover.</p>",
@@ -272,9 +365,11 @@
         "UpdateReplicationConfigurationRequest$associateDefaultSecurityGroup": "<p>Update replication configuration associate default Application Migration Service Security group request.</p>",
         "UpdateReplicationConfigurationRequest$createPublicIP": "<p>Update replication configuration create Public IP request.</p>",
         "UpdateReplicationConfigurationRequest$useDedicatedReplicationServer": "<p>Update replication configuration use dedicated Replication Server request.</p>",
+        "UpdateReplicationConfigurationRequest$useFipsEndpoint": "<p>Update replication configuration use Fips Endpoint.</p>",
         "UpdateReplicationConfigurationTemplateRequest$associateDefaultSecurityGroup": "<p>Update replication configuration template associate default Application Migration Service Security group request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Update replication configuration template create Public IP request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$useDedicatedReplicationServer": "<p>Update replication configuration template use dedicated Replication Server request.</p>",
+        "UpdateReplicationConfigurationTemplateRequest$useFipsEndpoint": "<p>Update replication configuration template use Fips Endpoint request.</p>",
         "Wave$isArchived": "<p>Wave archival status.</p>"
       }
     },
@@ -300,6 +395,7 @@
         "IdentificationHints$hostname": "<p>Hostname identification hint.</p>",
         "IdentificationHints$vmPath": "<p>vCenter VM path identification hint.</p>",
         "IdentificationHints$vmWareUuid": "<p>vmWare UUID identification hint.</p>",
+        "ImportErrorData$ec2LaunchTemplateID": "<p>Import error data ec2 LaunchTemplate ID.</p>",
         "JobPostLaunchActionsLaunchStatus$executionID": "<p>AWS Systems Manager Document's execution ID of the of the Job Post Launch Actions.</p>",
         "JobPostLaunchActionsLaunchStatus$failureReason": "<p>AWS Systems Manager Document's failure reason.</p>",
         "LaunchConfiguration$ec2LaunchTemplateID": "<p>Launch configuration EC2 Launch template ID.</p>",
@@ -310,6 +406,8 @@
         "PutTemplateActionRequest$actionName": "<p>Template post migration custom action name.</p>",
         "PutTemplateActionRequest$documentIdentifier": "<p>Template post migration custom action document identifier.</p>",
         "ReplicationConfigurationReplicatedDisk$deviceName": "<p>Replication Configuration replicated disk device name.</p>",
+        "SourceServer$fqdnForActionFramework": "<p>Source server fqdn for action framework.</p>",
+        "SourceServer$userProvidedID": "<p>Source server user provided ID.</p>",
         "SourceServerActionDocument$documentIdentifier": "<p>Source server post migration custom action document identifier.</p>",
         "SsmDocument$actionName": "<p>User-friendly name for the AWS Systems Manager Document.</p>",
         "TemplateActionDocument$actionName": "<p>Template post migration custom action name.</p>",
@@ -340,6 +438,12 @@
       "base": null,
       "refs": {
         "ChangeServerLifeCycleStateSourceServerLifecycle$state": "<p>The request to change the source server migration lifecycle state.</p>"
+      }
+    },
+    "ClientIdempotencyToken": {
+      "base": null,
+      "refs": {
+        "StartImportRequest$clientToken": "<p>Start import request client token.</p>"
       }
     },
     "CloudWatchLogGroupName": {
@@ -691,6 +795,57 @@
         "ConflictExceptionErrors$member": null
       }
     },
+    "ExportErrorData": {
+      "base": "<p>Export errors data.</p>",
+      "refs": {
+        "ExportTaskError$errorData": "<p>Export task error data.</p>"
+      }
+    },
+    "ExportErrors": {
+      "base": null,
+      "refs": {
+        "ListExportErrorsResponse$items": "<p>List export errors response items.</p>"
+      }
+    },
+    "ExportID": {
+      "base": null,
+      "refs": {
+        "ExportTask$exportID": "<p>Export task id.</p>",
+        "ListExportErrorsRequest$exportID": "<p>List export errors request export id.</p>",
+        "ListExportsRequestFiltersExportIDs$member": null
+      }
+    },
+    "ExportStatus": {
+      "base": null,
+      "refs": {
+        "ExportTask$status": "<p>Export task status.</p>"
+      }
+    },
+    "ExportTask": {
+      "base": "<p>Export task.</p>",
+      "refs": {
+        "ExportsList$member": null,
+        "StartExportResponse$exportTask": "<p>Start export response export task.</p>"
+      }
+    },
+    "ExportTaskError": {
+      "base": "<p>Export task error.</p>",
+      "refs": {
+        "ExportErrors$member": null
+      }
+    },
+    "ExportTaskSummary": {
+      "base": "<p>Export task summary.</p>",
+      "refs": {
+        "ExportTask$summary": "<p>Export task summary.</p>"
+      }
+    },
+    "ExportsList": {
+      "base": null,
+      "refs": {
+        "ListExportsResponse$items": "<p>List export response items.</p>"
+      }
+    },
     "FinalizeCutoverRequest": {
       "base": null,
       "refs": {
@@ -700,6 +855,13 @@
       "base": null,
       "refs": {
         "LaunchedInstance$firstBoot": "<p>Launched instance first boot.</p>"
+      }
+    },
+    "Float": {
+      "base": null,
+      "refs": {
+        "ExportTask$progressPercentage": "<p>Export task progress percentage.</p>",
+        "ImportTask$progressPercentage": "<p>Import task progress percentage.</p>"
       }
     },
     "GetLaunchConfigurationRequest": {
@@ -730,6 +892,12 @@
         "DataReplicationInitiation$startDateTime": "<p>Request to query data initiation start date and time.</p>",
         "DescribeJobsRequestFilters$fromDate": "<p>Request to describe Job log filters by date.</p>",
         "DescribeJobsRequestFilters$toDate": "<p>Request to describe job log items by last date.</p>",
+        "ExportTask$creationDateTime": "<p>Export task creation datetime.</p>",
+        "ExportTask$endDateTime": "<p>Export task end datetime.</p>",
+        "ExportTaskError$errorDateTime": "<p>Export task error datetime.</p>",
+        "ImportTask$creationDateTime": "<p>Import task creation datetime.</p>",
+        "ImportTask$endDateTime": "<p>Import task end datetime.</p>",
+        "ImportTaskError$errorDateTime": "<p>Import task error datetime.</p>",
         "Job$creationDateTime": "<p>Job creation time.</p>",
         "Job$endDateTime": "<p>Job end time.</p>",
         "JobLog$logDateTime": "<p>Job log event date and time.</p>",
@@ -764,6 +932,87 @@
         "SourceProperties$identificationHints": "<p>Source server identification hints.</p>"
       }
     },
+    "ImportErrorData": {
+      "base": "<p>Import error data.</p>",
+      "refs": {
+        "ImportTaskError$errorData": "<p>Import task error data.</p>"
+      }
+    },
+    "ImportErrorType": {
+      "base": null,
+      "refs": {
+        "ImportTaskError$errorType": "<p>Import task error type.</p>"
+      }
+    },
+    "ImportErrors": {
+      "base": null,
+      "refs": {
+        "ListImportErrorsResponse$items": "<p>List imports errors response items.</p>"
+      }
+    },
+    "ImportID": {
+      "base": null,
+      "refs": {
+        "ImportIDsFilter$member": null,
+        "ImportTask$importID": "<p>Import task id.</p>",
+        "ListImportErrorsRequest$importID": "<p>List import errors request import id.</p>"
+      }
+    },
+    "ImportIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListImportsRequestFilters$importIDs": "<p>List imports request filters import IDs.</p>"
+      }
+    },
+    "ImportList": {
+      "base": null,
+      "refs": {
+        "ListImportsResponse$items": "<p>List import response items.</p>"
+      }
+    },
+    "ImportStatus": {
+      "base": null,
+      "refs": {
+        "ImportTask$status": "<p>Import task status.</p>"
+      }
+    },
+    "ImportTask": {
+      "base": "<p>Import task.</p>",
+      "refs": {
+        "ImportList$member": null,
+        "StartImportResponse$importTask": "<p>Start import response import task.</p>"
+      }
+    },
+    "ImportTaskError": {
+      "base": "<p>Import task error.</p>",
+      "refs": {
+        "ImportErrors$member": null
+      }
+    },
+    "ImportTaskSummary": {
+      "base": "<p>Import task summary.</p>",
+      "refs": {
+        "ImportTask$summary": "<p>Import task summary.</p>"
+      }
+    },
+    "ImportTaskSummaryApplications": {
+      "base": "<p>Import task summary applications.</p>",
+      "refs": {
+        "ImportTaskSummary$applications": "<p>Import task summary applications.</p>"
+      }
+    },
+    "ImportTaskSummaryServers": {
+      "base": "<p>Import task summary servers.</p>",
+      "refs": {
+        "ImportTaskSummary$servers": "<p>Import task summary servers.</p>"
+      }
+    },
+    "ImportTaskSummaryWaves": {
+      "base": "<p>Import task summery waves.</p>",
+      "refs": {
+        "ImportTaskSummary$waves": "<p>Import task summary waves.</p>"
+      }
+    },
     "InitializeServiceRequest": {
       "base": null,
       "refs": {
@@ -783,6 +1032,18 @@
     "InternalServerException": {
       "base": "<p>The server encountered an unexpected condition that prevented it from fulfilling the request.</p>",
       "refs": {
+      }
+    },
+    "Iops": {
+      "base": null,
+      "refs": {
+        "LaunchTemplateDiskConf$iops": "<p>Launch template disk iops configuration.</p>"
+      }
+    },
+    "JmesPathString": {
+      "base": null,
+      "refs": {
+        "SsmExternalParameter$dynamicPath": "<p>AWS Systems Manager Document external parameters dynamic path.</p>"
       }
     },
     "Job": {
@@ -867,6 +1128,8 @@
         "ErrorDetails$message": "<p>Error details message.</p>",
         "ErrorDetails$resourceId": "<p>Error details resourceId.</p>",
         "ErrorDetails$resourceType": "<p>Error details resourceType.</p>",
+        "ExportErrorData$rawError": "<p>Export errors data raw error.</p>",
+        "ImportErrorData$rawError": "<p>Import error data raw error.</p>",
         "InternalServerException$message": null,
         "JobLogEventData$rawError": "<p>Job error.</p>",
         "ResourceNotFoundException$code": null,
@@ -1052,6 +1315,74 @@
       "refs": {
       }
     },
+    "ListExportErrorsRequest": {
+      "base": "<p>List export errors request.</p>",
+      "refs": {
+      }
+    },
+    "ListExportErrorsResponse": {
+      "base": "<p>List export errors response.</p>",
+      "refs": {
+      }
+    },
+    "ListExportsRequest": {
+      "base": "<p>List export request.</p>",
+      "refs": {
+      }
+    },
+    "ListExportsRequestFilters": {
+      "base": "<p>List exports request filters.</p>",
+      "refs": {
+        "ListExportsRequest$filters": null
+      }
+    },
+    "ListExportsRequestFiltersExportIDs": {
+      "base": null,
+      "refs": {
+        "ListExportsRequestFilters$exportIDs": "<p>List exports request filters export ids.</p>"
+      }
+    },
+    "ListExportsResponse": {
+      "base": "<p>List export response.</p>",
+      "refs": {
+      }
+    },
+    "ListImportErrorsRequest": {
+      "base": "<p>List import errors request.</p>",
+      "refs": {
+      }
+    },
+    "ListImportErrorsResponse": {
+      "base": "<p>List imports errors response.</p>",
+      "refs": {
+      }
+    },
+    "ListImportsRequest": {
+      "base": "<p>List imports request.</p>",
+      "refs": {
+      }
+    },
+    "ListImportsRequestFilters": {
+      "base": "<p>List imports request filters.</p>",
+      "refs": {
+        "ListImportsRequest$filters": "<p>List imports request filters.</p>"
+      }
+    },
+    "ListImportsResponse": {
+      "base": "<p>List import response.</p>",
+      "refs": {
+      }
+    },
+    "ListManagedAccountsRequest": {
+      "base": "<p>List managed accounts request.</p>",
+      "refs": {
+      }
+    },
+    "ListManagedAccountsResponse": {
+      "base": "<p>List managed accounts response.</p>",
+      "refs": {
+      }
+    },
     "ListSourceServerActionsRequest": {
       "base": null,
       "refs": {
@@ -1098,6 +1429,18 @@
       "refs": {
       }
     },
+    "ManagedAccount": {
+      "base": "<p>Managed account.</p>",
+      "refs": {
+        "ManagedAccounts$member": null
+      }
+    },
+    "ManagedAccounts": {
+      "base": null,
+      "refs": {
+        "ListManagedAccountsResponse$items": "<p>List managed accounts response items.</p>"
+      }
+    },
     "MarkAsArchivedRequest": {
       "base": null,
       "refs": {
@@ -1113,6 +1456,11 @@
         "DescribeSourceServersRequest$maxResults": "<p>Request to filter Source Servers list by maximum results.</p>",
         "DescribeVcenterClientsRequest$maxResults": "<p>Maximum results to be returned in DescribeVcenterClients.</p>",
         "ListApplicationsRequest$maxResults": "<p>Maximum results to return when listing applications.</p>",
+        "ListExportErrorsRequest$maxResults": "<p>List export errors request max results.</p>",
+        "ListExportsRequest$maxResults": "<p>List export request max results.</p>",
+        "ListImportErrorsRequest$maxResults": "<p>List import errors request max results.</p>",
+        "ListImportsRequest$maxResults": "<p>List imports request max results.</p>",
+        "ListManagedAccountsRequest$maxResults": "<p>List managed accounts request max results.</p>",
         "ListSourceServerActionsRequest$maxResults": "<p>Maximum amount of items to return when listing source server post migration custom actions.</p>",
         "ListTemplateActionsRequest$maxResults": "<p>Maximum amount of items to return when listing template post migration custom actions.</p>",
         "ListWavesRequest$maxResults": "<p>Maximum results to return when listing waves.</p>"
@@ -1169,6 +1517,16 @@
         "DescribeVcenterClientsResponse$nextToken": "<p>Next pagination token returned from DescribeVcenterClients.</p>",
         "ListApplicationsRequest$nextToken": "<p>Request next token.</p>",
         "ListApplicationsResponse$nextToken": "<p>Response next token.</p>",
+        "ListExportErrorsRequest$nextToken": "<p>List export errors request next token.</p>",
+        "ListExportErrorsResponse$nextToken": "<p>List export errors response next token.</p>",
+        "ListExportsRequest$nextToken": "<p>List export request next token.</p>",
+        "ListExportsResponse$nextToken": "<p>List export response next token.</p>",
+        "ListImportErrorsRequest$nextToken": "<p>List import errors request next token.</p>",
+        "ListImportErrorsResponse$nextToken": "<p>List imports errors response next token.</p>",
+        "ListImportsRequest$nextToken": "<p>List imports request next token.</p>",
+        "ListImportsResponse$nextToken": "<p>List import response next token.</p>",
+        "ListManagedAccountsRequest$nextToken": "<p>List managed accounts request next token.</p>",
+        "ListManagedAccountsResponse$nextToken": "<p>List managed accounts response next token.</p>",
         "ListSourceServerActionsRequest$nextToken": "<p>Next token to use when listing source server post migration custom actions.</p>",
         "ListSourceServerActionsResponse$nextToken": "<p>Next token returned when listing source server post migration custom actions.</p>",
         "ListTemplateActionsRequest$nextToken": "<p>Next token to use when listing template post migration custom actions.</p>",
@@ -1189,30 +1547,38 @@
         "Job$participatingServers": "<p>Servers participating in a specific Job.</p>"
       }
     },
+    "PauseReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "PositiveInteger": {
       "base": null,
       "refs": {
         "ApplicationAggregatedStatus$totalSourceServers": "<p>Application aggregated status total source servers amount.</p>",
         "CPU$cores": "<p>The number of CPU cores on the source server.</p>",
         "CreateLaunchConfigurationTemplateRequest$smallVolumeMaxSize": "<p>Small volume maximum size.</p>",
-        "CreateReplicationConfigurationTemplateRequest$bandwidthThrottling": "<p>Request to configure bandwidth throttling during Replication Settings template creation.</p>",
         "DataReplicationInfoReplicatedDisk$backloggedStorageBytes": "<p>Request to query data replication backlog size in bytes.</p>",
         "DataReplicationInfoReplicatedDisk$replicatedStorageBytes": "<p>Request to query amount of data replicated in bytes.</p>",
         "DataReplicationInfoReplicatedDisk$rescannedStorageBytes": "<p>Request to query amount of data rescanned in bytes.</p>",
         "DataReplicationInfoReplicatedDisk$totalStorageBytes": "<p>Request to query total amount of data replicated in bytes.</p>",
         "Disk$bytes": "<p>The amount of storage on the disk in bytes.</p>",
+        "ExportTaskSummary$applicationsCount": "<p>Export task summary applications count.</p>",
+        "ExportTaskSummary$serversCount": "<p>Export task summary servers count.</p>",
+        "ExportTaskSummary$wavesCount": "<p>Export task summary waves count.</p>",
+        "ImportErrorData$rowNumber": "<p>Import error data row number.</p>",
+        "ImportTaskSummaryApplications$createdCount": "<p>Import task summary applications created count.</p>",
+        "ImportTaskSummaryApplications$modifiedCount": "<p>Import task summary applications modified count.</p>",
+        "ImportTaskSummaryServers$createdCount": "<p>Import task summary servers created count.</p>",
+        "ImportTaskSummaryServers$modifiedCount": "<p>Import task summary servers modified count.</p>",
+        "ImportTaskSummaryWaves$createdCount": "<p>Import task summery waves created count.</p>",
+        "ImportTaskSummaryWaves$modifiedCount": "<p>Import task summery waves modified count.</p>",
         "InternalServerException$retryAfterSeconds": "<p>The server encountered an unexpected condition that prevented it from fulfilling the request. The request will be retried again after x seconds.</p>",
         "LaunchConfigurationTemplate$smallVolumeMaxSize": "<p>Small volume maximum size.</p>",
-        "LaunchTemplateDiskConf$iops": "<p>Launch template disk iops configuration.</p>",
-        "LaunchTemplateDiskConf$throughput": "<p>Launch template disk throughput configuration.</p>",
-        "ReplicationConfiguration$bandwidthThrottling": "<p>Replication Configuration set bandwidth throttling.</p>",
         "ReplicationConfigurationReplicatedDisk$iops": "<p>Replication Configuration replicated disk IOPs.</p>",
         "ReplicationConfigurationReplicatedDisk$throughput": "<p>Replication Configuration replicated disk throughput.</p>",
-        "ReplicationConfigurationTemplate$bandwidthThrottling": "<p>Replication Configuration template bandwidth throttling.</p>",
         "SourceProperties$ramBytes": "<p>Source server RAM in bytes.</p>",
         "UpdateLaunchConfigurationTemplateRequest$smallVolumeMaxSize": "<p>Small volume maximum size.</p>",
-        "UpdateReplicationConfigurationRequest$bandwidthThrottling": "<p>Update replication configuration bandwidth throttling request.</p>",
-        "UpdateReplicationConfigurationTemplateRequest$bandwidthThrottling": "<p>Update replication configuration template bandwidth throttling request.</p>",
         "WaveAggregatedStatus$totalApplications": "<p>Wave aggregated status total applications amount.</p>"
       }
     },
@@ -1390,9 +1756,37 @@
       "refs": {
       }
     },
+    "ResumeReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "RetryDataReplicationRequest": {
       "base": null,
       "refs": {
+      }
+    },
+    "S3BucketName": {
+      "base": null,
+      "refs": {
+        "ExportTask$s3Bucket": "<p>Export task s3 bucket.</p>",
+        "S3BucketSource$s3Bucket": "<p>S3 bucket source s3 bucket.</p>",
+        "StartExportRequest$s3Bucket": "<p>Start export request s3 bucket.</p>"
+      }
+    },
+    "S3BucketSource": {
+      "base": "<p>S3 bucket source.</p>",
+      "refs": {
+        "ImportTask$s3BucketSource": "<p>Import task s3 bucket source.</p>",
+        "StartImportRequest$s3BucketSource": "<p>Start import request s3 bucket source.</p>"
+      }
+    },
+    "S3Key": {
+      "base": null,
+      "refs": {
+        "ExportTask$s3Key": "<p>Export task s3 key.</p>",
+        "S3BucketSource$s3Key": "<p>S3 bucket source s3 key.</p>",
+        "StartExportRequest$s3Key": "<p>Start export request s3key.</p>"
       }
     },
     "S3LogBucketName": {
@@ -1463,19 +1857,23 @@
         "FinalizeCutoverRequest$sourceServerID": "<p>Request to finalize Cutover by Source Server ID.</p>",
         "GetLaunchConfigurationRequest$sourceServerID": "<p>Request to get Launch Configuration information by Source Server ID.</p>",
         "GetReplicationConfigurationRequest$sourceServerID": "<p>Request to get Replication Configuration by Source Server ID.</p>",
+        "ImportErrorData$sourceServerID": "<p>Import error data source server ID.</p>",
         "JobLogEventData$sourceServerID": "<p>Job Event Source Server ID.</p>",
         "LaunchConfiguration$sourceServerID": "<p>Launch configuration Source Server ID.</p>",
         "ListSourceServerActionsRequest$sourceServerID": "<p>Source server ID.</p>",
         "MarkAsArchivedRequest$sourceServerID": "<p>Mark as archived by Source Server ID.</p>",
         "ParticipatingServer$sourceServerID": "<p>Participating server Source Server ID.</p>",
+        "PauseReplicationRequest$sourceServerID": "<p>Pause Replication Request source server ID.</p>",
         "PutSourceServerActionRequest$sourceServerID": "<p>Source server ID.</p>",
         "RemoveSourceServerActionRequest$sourceServerID": "<p>Source server ID of the post migration custom action to remove.</p>",
         "ReplicationConfiguration$sourceServerID": "<p>Replication Configuration Source Server ID.</p>",
+        "ResumeReplicationRequest$sourceServerID": "<p>Resume Replication Request source server ID.</p>",
         "RetryDataReplicationRequest$sourceServerID": "<p>Retry data replication for Source Server ID.</p>",
         "SourceServer$sourceServerID": "<p>Source server ID.</p>",
         "StartCutoverRequestSourceServerIDs$member": null,
         "StartReplicationRequest$sourceServerID": "<p>ID of source server on which to start replication.</p>",
         "StartTestRequestSourceServerIDs$member": null,
+        "StopReplicationRequest$sourceServerID": "<p>Stop Replication Request source server ID.</p>",
         "TerminateTargetInstancesRequestSourceServerIDs$member": null,
         "UpdateLaunchConfigurationRequest$sourceServerID": "<p>Update Launch configuration by Source Server ID request.</p>",
         "UpdateReplicationConfigurationRequest$sourceServerID": "<p>Update replication configuration Source Server ID request.</p>",
@@ -1495,6 +1893,16 @@
         "SsmDocuments$member": null
       }
     },
+    "SsmDocumentExternalParameters": {
+      "base": null,
+      "refs": {
+        "PutSourceServerActionRequest$externalParameters": "<p>Source server post migration custom action external parameters.</p>",
+        "PutTemplateActionRequest$externalParameters": "<p>Template post migration custom action external parameters.</p>",
+        "SourceServerActionDocument$externalParameters": "<p>Source server post migration custom action external parameters.</p>",
+        "SsmDocument$externalParameters": "<p>AWS Systems Manager Document external parameters.</p>",
+        "TemplateActionDocument$externalParameters": "<p>Template post migration custom action external parameters.</p>"
+      }
+    },
     "SsmDocumentName": {
       "base": null,
       "refs": {
@@ -1504,6 +1912,7 @@
     "SsmDocumentParameterName": {
       "base": null,
       "refs": {
+        "SsmDocumentExternalParameters$key": null,
         "SsmDocumentParameters$key": null
       }
     },
@@ -1527,6 +1936,12 @@
       "base": null,
       "refs": {
         "PostLaunchActions$ssmDocuments": "<p>AWS Systems Manager Documents.</p>"
+      }
+    },
+    "SsmExternalParameter": {
+      "base": "<p>AWS Systems Manager Document external parameter.</p>",
+      "refs": {
+        "SsmDocumentExternalParameters$value": null
       }
     },
     "SsmParameterStoreParameter": {
@@ -1569,6 +1984,26 @@
       "refs": {
       }
     },
+    "StartExportRequest": {
+      "base": "<p>Start export request.</p>",
+      "refs": {
+      }
+    },
+    "StartExportResponse": {
+      "base": "<p>Start export response.</p>",
+      "refs": {
+      }
+    },
+    "StartImportRequest": {
+      "base": "<p>Start import request.</p>",
+      "refs": {
+      }
+    },
+    "StartImportResponse": {
+      "base": "<p>Start import response.</p>",
+      "refs": {
+      }
+    },
     "StartReplicationRequest": {
       "base": null,
       "refs": {
@@ -1586,6 +2021,11 @@
       }
     },
     "StartTestResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopReplicationRequest": {
       "base": null,
       "refs": {
       }
@@ -1714,6 +2154,12 @@
     "ThrottlingException": {
       "base": "<p>Reached throttling quota exception.</p>",
       "refs": {
+      }
+    },
+    "Throughput": {
+      "base": null,
+      "refs": {
+        "LaunchTemplateDiskConf$throughput": "<p>Launch template disk throughput configuration.</p>"
       }
     },
     "UnarchiveApplicationRequest": {
@@ -1854,6 +2300,7 @@
         "AssociateApplicationsRequest$waveID": "<p>Wave ID.</p>",
         "DeleteWaveRequest$waveID": "<p>Wave ID.</p>",
         "DisassociateApplicationsRequest$waveID": "<p>Wave ID.</p>",
+        "ImportErrorData$waveID": "<p>Import error data wave id.</p>",
         "UnarchiveWaveRequest$waveID": "<p>Wave ID.</p>",
         "UpdateWaveRequest$waveID": "<p>Wave ID.</p>",
         "Wave$waveID": "<p>Wave ID.</p>",

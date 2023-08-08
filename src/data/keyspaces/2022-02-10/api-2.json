@@ -266,6 +266,17 @@
       "box":true,
       "min":1
     },
+    "ClientSideTimestamps":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"ClientSideTimestampsStatus"}
+      }
+    },
+    "ClientSideTimestampsStatus":{
+      "type":"string",
+      "enum":["ENABLED"]
+    },
     "ClusteringKey":{
       "type":"structure",
       "required":[
@@ -316,7 +327,8 @@
       "required":["keyspaceName"],
       "members":{
         "keyspaceName":{"shape":"KeyspaceName"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "replicationSpecification":{"shape":"ReplicationSpecification"}
       }
     },
     "CreateKeyspaceResponse":{
@@ -343,7 +355,8 @@
         "pointInTimeRecovery":{"shape":"PointInTimeRecovery"},
         "ttl":{"shape":"TimeToLive"},
         "defaultTimeToLive":{"shape":"DefaultTimeToLive"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "clientSideTimestamps":{"shape":"ClientSideTimestamps"}
       }
     },
     "CreateTableResponse":{
@@ -414,11 +427,14 @@
       "type":"structure",
       "required":[
         "keyspaceName",
-        "resourceArn"
+        "resourceArn",
+        "replicationStrategy"
       ],
       "members":{
         "keyspaceName":{"shape":"KeyspaceName"},
-        "resourceArn":{"shape":"ARN"}
+        "resourceArn":{"shape":"ARN"},
+        "replicationStrategy":{"shape":"rs"},
+        "replicationRegions":{"shape":"RegionList"}
       }
     },
     "GetTableRequest":{
@@ -451,7 +467,8 @@
         "pointInTimeRecovery":{"shape":"PointInTimeRecoverySummary"},
         "ttl":{"shape":"TimeToLive"},
         "defaultTimeToLive":{"shape":"DefaultTimeToLive"},
-        "comment":{"shape":"Comment"}
+        "comment":{"shape":"Comment"},
+        "clientSideTimestamps":{"shape":"ClientSideTimestamps"}
       }
     },
     "InternalServerException":{
@@ -466,17 +483,20 @@
       "type":"string",
       "max":48,
       "min":1,
-      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_]{1,47}"
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_]{0,47}"
     },
     "KeyspaceSummary":{
       "type":"structure",
       "required":[
         "keyspaceName",
-        "resourceArn"
+        "resourceArn",
+        "replicationStrategy"
       ],
       "members":{
         "keyspaceName":{"shape":"KeyspaceName"},
-        "resourceArn":{"shape":"ARN"}
+        "resourceArn":{"shape":"ARN"},
+        "replicationStrategy":{"shape":"rs"},
+        "replicationRegions":{"shape":"RegionList"}
       }
     },
     "KeyspaceSummaryList":{
@@ -575,6 +595,20 @@
         "earliestRestorableTimestamp":{"shape":"Timestamp"}
       }
     },
+    "RegionList":{
+      "type":"list",
+      "member":{"shape":"region"},
+      "max":6,
+      "min":2
+    },
+    "ReplicationSpecification":{
+      "type":"structure",
+      "required":["replicationStrategy"],
+      "members":{
+        "replicationStrategy":{"shape":"rs"},
+        "regionList":{"shape":"RegionList"}
+      }
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -653,7 +687,7 @@
       "type":"string",
       "max":48,
       "min":1,
-      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_]{1,47}"
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_]{0,47}"
     },
     "TableStatus":{
       "type":"string",
@@ -776,7 +810,8 @@
         "encryptionSpecification":{"shape":"EncryptionSpecification"},
         "pointInTimeRecovery":{"shape":"PointInTimeRecovery"},
         "ttl":{"shape":"TimeToLive"},
-        "defaultTimeToLive":{"shape":"DefaultTimeToLive"}
+        "defaultTimeToLive":{"shape":"DefaultTimeToLive"},
+        "clientSideTimestamps":{"shape":"ClientSideTimestamps"}
       }
     },
     "UpdateTableResponse":{
@@ -796,6 +831,20 @@
     "kmsKeyARN":{
       "type":"string",
       "max":5096,
+      "min":1
+    },
+    "region":{
+      "type":"string",
+      "max":25,
+      "min":2
+    },
+    "rs":{
+      "type":"string",
+      "enum":[
+        "SINGLE_REGION",
+        "MULTI_REGION"
+      ],
+      "max":20,
       "min":1
     }
   }

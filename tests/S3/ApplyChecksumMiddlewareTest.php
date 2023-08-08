@@ -75,6 +75,12 @@ class ApplyChecksumMiddlewareTest extends TestCase
      */
     public function testAddsFlexibleChecksumAsAppropriate($operation, $args, $headerAdded, $headerValue)
     {
+        if (isset($args['ChecksumAlgorithm'])
+            && $args['ChecksumAlgorithm'] === 'crc32c'
+            && !extension_loaded('awscrt')
+        ) {
+            $this->markTestSkipped("Cannot test crc32c without the CRT");
+        }
         $s3 = $this->getTestClient(
             's3',
             ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
@@ -115,6 +121,17 @@ class ApplyChecksumMiddlewareTest extends TestCase
                 ],
                 true,
                 'EZo2zw=='
+            ],
+            [
+                'PutObject',
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ChecksumAlgorithm' => 'crc32c',
+                    'Body' => 'abc'
+                ],
+                true,
+                'oD04yw=='
             ],
             [
                 'PutObject',

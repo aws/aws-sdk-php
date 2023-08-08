@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>This is the Amazon Fraud Detector API Reference. This guide is for developers who need detailed information about Amazon Fraud Detector API actions, data types, and errors. For more information about Amazon Fraud Detector features, see the <a href=\"https://docs.aws.amazon.com/frauddetector/latest/ug/\">Amazon Fraud Detector User Guide</a>.</p> <p>We provide the Query API as well as AWS software development kits (SDK) for Amazon Fraud Detector in Java and Python programming languages.</p> <p>The Amazon Fraud Detector Query API provides HTTPS requests that use the HTTP verb GET or POST and a Query parameter <code>Action</code>. AWS SDK provides libraries, sample code, tutorials, and other resources for software developers who prefer to build applications using language-specific APIs instead of submitting a request over HTTP or HTTPS. These libraries provide basic functions that automatically take care of tasks such as cryptographically signing your requests, retrying requests, and handling error responses, so that it is easier for you to get started. For more information about the AWS SDKs, see <a href=\"https://docs.aws.amazon.com/https:/aws.amazon.com/tools/\">Tools to build on AWS</a>. </p>",
+  "service": "<p>This is the Amazon Fraud Detector API Reference. This guide is for developers who need detailed information about Amazon Fraud Detector API actions, data types, and errors. For more information about Amazon Fraud Detector features, see the <a href=\"https://docs.aws.amazon.com/frauddetector/latest/ug/\">Amazon Fraud Detector User Guide</a>.</p> <p>We provide the Query API as well as AWS software development kits (SDK) for Amazon Fraud Detector in Java and Python programming languages.</p> <p>The Amazon Fraud Detector Query API provides HTTPS requests that use the HTTP verb GET or POST and a Query parameter <code>Action</code>. AWS SDK provides libraries, sample code, tutorials, and other resources for software developers who prefer to build applications using language-specific APIs instead of submitting a request over HTTP or HTTPS. These libraries provide basic functions that automatically take care of tasks such as cryptographically signing your requests, retrying requests, and handling error responses, so that it is easier for you to get started. For more information about the AWS SDKs, go to <a href=\"https://aws.amazon.com/developer/tools/\">Tools to build on AWS</a> page, scroll down to the <b>SDK</b> section, and choose plus (+) sign to expand the section. </p>",
   "operations": {
     "BatchCreateVariable": "<p>Creates a batch of variables.</p>",
     "BatchGetVariable": "<p>Gets a batch of variables.</p>",
@@ -9,6 +9,7 @@
     "CreateBatchImportJob": "<p>Creates a batch import job. </p>",
     "CreateBatchPredictionJob": "<p>Creates a batch prediction job.</p>",
     "CreateDetectorVersion": "<p>Creates a detector version. The detector version starts in a <code>DRAFT</code> status.</p>",
+    "CreateList": "<p> Creates a list. </p> <p>List is a set of input data for a variable in your event dataset. You use the input data in a rule that's associated with your detector. For more information, see <a href=\"https://docs.aws.amazon.com/frauddetector/latest/ug/lists.html\">Lists</a>.</p>",
     "CreateModel": "<p>Creates a model using the specified model type.</p>",
     "CreateModelVersion": "<p>Creates a version of the model using the specified model type and model id. </p>",
     "CreateRule": "<p>Creates a rule for use with the specified detector. </p>",
@@ -18,11 +19,12 @@
     "DeleteDetector": "<p>Deletes the detector. Before deleting a detector, you must first delete all detector versions and rule versions associated with the detector.</p> <p>When you delete a detector, Amazon Fraud Detector permanently deletes the detector and the data is no longer stored in Amazon Fraud Detector.</p>",
     "DeleteDetectorVersion": "<p>Deletes the detector version. You cannot delete detector versions that are in <code>ACTIVE</code> status.</p> <p>When you delete a detector version, Amazon Fraud Detector permanently deletes the detector and the data is no longer stored in Amazon Fraud Detector.</p>",
     "DeleteEntityType": "<p>Deletes an entity type.</p> <p>You cannot delete an entity type that is included in an event type.</p> <p>When you delete an entity type, Amazon Fraud Detector permanently deletes that entity type and the data is no longer stored in Amazon Fraud Detector.</p>",
-    "DeleteEvent": "<p>Deletes the specified event.</p> <p>When you delete an event, Amazon Fraud Detector permanently deletes that event and the event data is no longer stored in Amazon Fraud Detector.</p>",
+    "DeleteEvent": "<p>Deletes the specified event.</p> <p>When you delete an event, Amazon Fraud Detector permanently deletes that event and the event data is no longer stored in Amazon Fraud Detector. If <code>deleteAuditHistory</code> is <code>True</code>, event data is available through search for up to 30 seconds after the delete operation is completed.</p>",
     "DeleteEventType": "<p>Deletes an event type.</p> <p>You cannot delete an event type that is used in a detector or a model.</p> <p>When you delete an event type, Amazon Fraud Detector permanently deletes that event type and the data is no longer stored in Amazon Fraud Detector.</p>",
     "DeleteEventsByEventType": "<p>Deletes all events of a particular event type.</p>",
     "DeleteExternalModel": "<p>Removes a SageMaker model from Amazon Fraud Detector.</p> <p>You can remove an Amazon SageMaker model if it is not associated with a detector version. Removing a SageMaker model disconnects it from Amazon Fraud Detector, but the model remains available in SageMaker.</p>",
     "DeleteLabel": "<p>Deletes a label.</p> <p>You cannot delete labels that are included in an event type in Amazon Fraud Detector.</p> <p>You cannot delete a label assigned to an event ID. You must first delete the relevant event ID.</p> <p>When you delete a label, Amazon Fraud Detector permanently deletes that label and the data is no longer stored in Amazon Fraud Detector.</p>",
+    "DeleteList": "<p> Deletes the list, provided it is not used in a rule. </p> <p> When you delete a list, Amazon Fraud Detector permanently deletes that list and the elements in the list.</p>",
     "DeleteModel": "<p>Deletes a model.</p> <p>You can delete models and model versions in Amazon Fraud Detector, provided that they are not associated with a detector version.</p> <p> When you delete a model, Amazon Fraud Detector permanently deletes that model and the data is no longer stored in Amazon Fraud Detector.</p>",
     "DeleteModelVersion": "<p>Deletes a model version.</p> <p>You can delete models and model versions in Amazon Fraud Detector, provided that they are not associated with a detector version.</p> <p> When you delete a model version, Amazon Fraud Detector permanently deletes that model version and the data is no longer stored in Amazon Fraud Detector.</p>",
     "DeleteOutcome": "<p>Deletes an outcome.</p> <p>You cannot delete an outcome that is used in a rule version.</p> <p>When you delete an outcome, Amazon Fraud Detector permanently deletes that outcome and the data is no longer stored in Amazon Fraud Detector.</p>",
@@ -43,6 +45,8 @@
     "GetExternalModels": "<p>Gets the details for one or more Amazon SageMaker models that have been imported into the service. This is a paginated API. If you provide a null <code>maxResults</code>, this actions retrieves a maximum of 10 records per page. If you provide a <code>maxResults</code>, the value must be between 5 and 10. To get the next page results, provide the pagination token from the <code>GetExternalModelsResult</code> as part of your request. A null pagination token fetches the records from the beginning. </p>",
     "GetKMSEncryptionKey": "<p>Gets the encryption key if a KMS key has been specified to be used to encrypt content in Amazon Fraud Detector.</p>",
     "GetLabels": "<p>Gets all labels or a specific label if name is provided. This is a paginated API. If you provide a null <code>maxResults</code>, this action retrieves a maximum of 50 records per page. If you provide a <code>maxResults</code>, the value must be between 10 and 50. To get the next page results, provide the pagination token from the <code>GetGetLabelsResponse</code> as part of your request. A null pagination token fetches the records from the beginning. </p>",
+    "GetListElements": "<p> Gets all the elements in the specified list. </p>",
+    "GetListsMetadata": "<p> Gets the metadata of either all the lists under the account or the specified list. </p>",
     "GetModelVersion": "<p>Gets the details of the specified model version.</p>",
     "GetModels": "<p>Gets one or more models. Gets all models for the Amazon Web Services account if no model type and no model id provided. Gets all models for the Amazon Web Services account and model type, if the model type is specified but model id is not provided. Gets a specific model if (model type, model id) tuple is specified. </p> <p>This is a paginated API. If you provide a null <code>maxResults</code>, this action retrieves a maximum of 10 records per page. If you provide a <code>maxResults</code>, the value must be between 1 and 10. To get the next page results, provide the pagination token from the response as part of your request. A null pagination token fetches the records from the beginning.</p>",
     "GetOutcomes": "<p>Gets one or more outcomes. This is a paginated API. If you provide a null <code>maxResults</code>, this actions retrieves a maximum of 100 records per page. If you provide a <code>maxResults</code>, the value must be between 50 and 100. To get the next page results, provide the pagination token from the <code>GetOutcomesResult</code> as part of your request. A null pagination token fetches the records from the beginning. </p>",
@@ -64,6 +68,7 @@
     "UpdateDetectorVersionMetadata": "<p>Updates the detector version's description. You can update the metadata for any detector version (<code>DRAFT, ACTIVE,</code> or <code>INACTIVE</code>). </p>",
     "UpdateDetectorVersionStatus": "<p>Updates the detector version’s status. You can perform the following promotions or demotions using <code>UpdateDetectorVersionStatus</code>: <code>DRAFT</code> to <code>ACTIVE</code>, <code>ACTIVE</code> to <code>INACTIVE</code>, and <code>INACTIVE</code> to <code>ACTIVE</code>.</p>",
     "UpdateEventLabel": "<p>Updates the specified event with a new label.</p>",
+    "UpdateList": "<p> Updates a list. </p>",
     "UpdateModel": "<p>Updates model description.</p>",
     "UpdateModelVersion": "<p>Updates a model version. Updating a model version retrains an existing model version using updated training data and produces a new minor version of the model. You can update the training data set location and data access role attributes using this action. This action creates and trains a new minor version of the model, for example version 1.01, 1.02, 1.03.</p>",
     "UpdateModelVersionStatus": "<p>Updates the status of a model version.</p> <p>You can perform the following status updates:</p> <ol> <li> <p>Change the <code>TRAINING_IN_PROGRESS</code> status to <code>TRAINING_CANCELLED</code>.</p> </li> <li> <p>Change the <code>TRAINING_COMPLETE</code> status to <code>ACTIVE</code>.</p> </li> <li> <p>Change <code>ACTIVE</code> to <code>INACTIVE</code>.</p> </li> </ol>",
@@ -117,6 +122,18 @@
       "base": "<p>The details of the relative importance of the aggregated variables.</p> <p>Account Takeover Insights (ATI) model uses event variables from the login data you provide to continuously calculate a set of variables (aggregated variables) based on historical events. For example, your ATI model might calculate the number of times an user has logged in using the same IP address. In this case, event variables used to derive the aggregated variables are <code>IP address</code> and <code>user</code>.</p>",
       "refs": {
         "TrainingResultV2$aggregatedVariablesImportanceMetrics": "<p> The variable importance metrics of the aggregated variables. </p> <p>Account Takeover Insights (ATI) model uses event variables from the login data you provide to continuously calculate a set of variables (aggregated variables) based on historical events. For example, your ATI model might calculate the number of times an user has logged in using the same IP address. In this case, event variables used to derive the aggregated variables are <code>IP address</code> and <code>user</code>.</p>"
+      }
+    },
+    "AllowDenyList": {
+      "base": "<p> The metadata of a list. </p>",
+      "refs": {
+        "AllowDenyLists$member": null
+      }
+    },
+    "AllowDenyLists": {
+      "base": null,
+      "refs": {
+        "GetListsMetadataResult$lists": "<p> The metadata of the specified list or all lists under the account. </p>"
       }
     },
     "AsyncJobStatus": {
@@ -200,7 +217,8 @@
       "refs": {
         "EvaluatedExternalModel$useEventVariables": "<p> Indicates whether event variables were used to generate predictions. </p>",
         "EvaluatedRule$evaluated": "<p> Indicates whether the rule was evaluated. </p>",
-        "EvaluatedRule$matched": "<p> Indicates whether the rule matched. </p>"
+        "EvaluatedRule$matched": "<p> Indicates whether the rule matched. </p>",
+        "EventOrchestration$eventBridgeEnabled": "<p>Specifies if event orchestration is enabled through Amazon EventBridge.</p>"
       }
     },
     "CancelBatchImportJobRequest": {
@@ -254,6 +272,16 @@
       }
     },
     "CreateDetectorVersionResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateListRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateListResult": {
       "base": null,
       "refs": {
       }
@@ -314,7 +342,7 @@
     "DataType": {
       "base": null,
       "refs": {
-        "CreateVariableRequest$dataType": "<p>The data type.</p>",
+        "CreateVariableRequest$dataType": "<p>The data type of the variable.</p>",
         "Variable$dataType": "<p>The data type of the variable. For more information see <a href=\"https://docs.aws.amazon.com/frauddetector/latest/ug/create-a-variable.html#variable-types\">Variable types</a>.</p>"
       }
     },
@@ -328,7 +356,7 @@
     "DeleteAuditHistory": {
       "base": null,
       "refs": {
-        "DeleteEventRequest$deleteAuditHistory": "<p>Specifies whether or not to delete any predictions associated with the event.</p>"
+        "DeleteEventRequest$deleteAuditHistory": "<p>Specifies whether or not to delete any predictions associated with the event. If set to <code>True</code>, </p>"
       }
     },
     "DeleteBatchImportJobRequest": {
@@ -427,6 +455,16 @@
       }
     },
     "DeleteLabelResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteListRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteListResult": {
       "base": null,
       "refs": {
       }
@@ -546,6 +584,20 @@
         "GetDetectorsRequest$maxResults": "<p>The maximum number of objects to return for the request.</p>"
       }
     },
+    "Elements": {
+      "base": null,
+      "refs": {
+        "ElementsList$member": null
+      }
+    },
+    "ElementsList": {
+      "base": null,
+      "refs": {
+        "CreateListRequest$elements": "<p> The names of the elements, if providing. You can also create an empty list and add elements later using the <a href=\"https://docs.aws.amazon.com/frauddetector/latest/api/API_Updatelist.html\">UpdateList</a> API. </p>",
+        "GetListElementsResult$elements": "<p> The list elements. </p>",
+        "UpdateListRequest$elements": "<p> One or more list elements to add or replace. If you are providing the elements, make sure to specify the <code>updateMode</code> to use. </p> <p>If you are deleting all elements from the list, use <code>REPLACE</code> for the <code>updateMode</code> and provide an empty list (0 elements).</p>"
+      }
+    },
     "Entity": {
       "base": "<p>The entity details. </p>",
       "refs": {
@@ -598,7 +650,14 @@
       "base": null,
       "refs": {
         "EventType$eventIngestion": "<p>If <code>Enabled</code>, Amazon Fraud Detector stores event data when you generate a prediction and uses that data to update calculated variables in near real-time. Amazon Fraud Detector uses this data, known as <code>INGESTED_EVENTS</code>, to train your model and improve fraud predictions.</p>",
-        "PutEventTypeRequest$eventIngestion": "<p>Specifies if ingenstion is enabled or disabled.</p>"
+        "PutEventTypeRequest$eventIngestion": "<p>Specifies if ingestion is enabled or disabled.</p>"
+      }
+    },
+    "EventOrchestration": {
+      "base": "<p> The event orchestration status. </p>",
+      "refs": {
+        "EventType$eventOrchestration": "<p>The event orchestration status. </p>",
+        "PutEventTypeRequest$eventOrchestration": "<p>Enables or disables event orchestration. If enabled, you can send event predictions to select AWS services for downstream processing of the events.</p>"
       }
     },
     "EventPredictionSummary": {
@@ -825,6 +884,26 @@
       }
     },
     "GetLabelsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetListElementsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetListElementsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetListsMetadataRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetListsMetadataResult": {
       "base": null,
       "refs": {
       }
@@ -1064,6 +1143,24 @@
     "ListTagsForResourceResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "ListUpdateMode": {
+      "base": null,
+      "refs": {
+        "UpdateListRequest$updateMode": "<p> The update mode (type). </p> <ul> <li> <p>Use <code>APPEND</code> if you are adding elements to the list.</p> </li> <li> <p>Use <code>REPLACE</code> if you replacing existing elements in the list.</p> </li> <li> <p>Use <code>REMOVE</code> if you are removing elements from the list.</p> </li> </ul>"
+      }
+    },
+    "ListsElementsMaxResults": {
+      "base": null,
+      "refs": {
+        "GetListElementsRequest$maxResults": "<p> The maximum number of objects to return for the request. </p>"
+      }
+    },
+    "ListsMetadataMaxResults": {
+      "base": null,
+      "refs": {
+        "GetListsMetadataRequest$maxResults": "<p> The maximum number of objects to return for the request. </p>"
       }
     },
     "LogOddsMetric": {
@@ -1507,10 +1604,17 @@
         "ModelVersionDetail$trainingResultV2": "<p> The training result details. The details include the relative importance of the variables. </p>"
       }
     },
+    "UncertaintyRange": {
+      "base": "<p> Range of area under curve (auc) expected from the model. A range greater than 0.1 indicates higher model uncertainity. A range is the difference between upper and lower bound of auc. </p>",
+      "refs": {
+        "OFIModelPerformance$uncertaintyRange": "<p> Indicates the range of area under curve (auc) expected from the OFI model. A range greater than 0.1 indicates higher model uncertainity. </p>",
+        "TFIModelPerformance$uncertaintyRange": "<p> Indicates the range of area under curve (auc) expected from the TFI model. A range greater than 0.1 indicates higher model uncertainity. </p>"
+      }
+    },
     "UnlabeledEventsTreatment": {
       "base": null,
       "refs": {
-        "LabelSchema$unlabeledEventsTreatment": "<p>The action to take for unlabeled events.</p>"
+        "LabelSchema$unlabeledEventsTreatment": "<p>The action to take for unlabeled events.</p> <ul> <li> <p>Use <code>IGNORE</code> if you want the unlabeled events to be ignored. This is recommended when the majority of the events in the dataset are labeled.</p> </li> <li> <p>Use <code>FRAUD</code> if you want to categorize all unlabeled events as “Fraud”. This is recommended when most of the events in your dataset are fraudulent.</p> </li> <li> <p>Use <code>LEGIT</code> if you want to categorize all unlabeled events as “Legit”. This is recommended when most of the events in your dataset are legitimate.</p> </li> <li> <p>Use <code>AUTO</code> if you want Amazon Fraud Detector to decide how to use the unlabeled data. This is recommended when there is significant unlabeled events in the dataset.</p> </li> </ul> <p>By default, Amazon Fraud Detector ignores the unlabeled data.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -1559,6 +1663,16 @@
       }
     },
     "UpdateEventLabelResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateListRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateListResult": {
       "base": null,
       "refs": {
       }
@@ -1717,7 +1831,9 @@
     "description": {
       "base": null,
       "refs": {
+        "AllowDenyList$description": "<p> The description of the list. </p>",
         "CreateDetectorVersionRequest$description": "<p>The description of the detector version.</p>",
+        "CreateListRequest$description": "<p> The description of the list. </p>",
         "CreateModelRequest$description": "<p>The model description. </p>",
         "CreateRuleRequest$description": "<p>The rule description.</p>",
         "Detector$description": "<p>The detector description.</p>",
@@ -1736,6 +1852,7 @@
         "RuleDetail$description": "<p>The rule description.</p>",
         "UpdateDetectorVersionMetadataRequest$description": "<p>The description.</p>",
         "UpdateDetectorVersionRequest$description": "<p>The detector version description. </p>",
+        "UpdateListRequest$description": "<p> The new description. </p>",
         "UpdateModelRequest$description": "<p>The new model description.</p>",
         "UpdateRuleMetadataRequest$description": "<p>The rule description.</p>",
         "UpdateRuleVersionRequest$description": "<p>The description.</p>"
@@ -1816,6 +1933,8 @@
         "TFIMetricDataPoint$threshold": "<p> The model threshold that specifies an acceptable fraud capture rate. For example, a threshold of 500 means any model score 500 or above is labeled as fraud. </p>",
         "TFIModelPerformance$auc": "<p> The area under the curve (auc). This summarizes the total positive rate (tpr) and false positive rate (FPR) across all possible model score thresholds. </p>",
         "TrainingMetrics$auc": "<p>The area under the curve. This summarizes true positive rate (TPR) and false positive rate (FPR) across all possible model score thresholds. A model with no predictive power has an AUC of 0.5, whereas a perfect model has a score of 1.0.</p>",
+        "UncertaintyRange$lowerBoundValue": "<p> The lower bound value of the area under curve (auc). </p>",
+        "UncertaintyRange$upperBoundValue": "<p> The upper bound value of the area under curve (auc). </p>",
         "VariableImpactExplanation$logOddsImpact": "<p> The raw, uninterpreted value represented as log-odds of the fraud. These values are usually between -10 to +10, but range from - infinity to + infinity.</p> <ul> <li> <p>A positive value indicates that the variable drove the risk score up.</p> </li> <li> <p>A negative value indicates that the variable drove the risk score down.</p> </li> </ul>"
       }
     },
@@ -1837,6 +1956,7 @@
     "fraudDetectorArn": {
       "base": null,
       "refs": {
+        "AllowDenyList$arn": "<p> The ARN of the list. </p>",
         "BatchImport$arn": "<p>The ARN of the batch import job.</p>",
         "BatchPrediction$arn": "<p>The ARN of batch prediction job.</p>",
         "DescribeDetectorResult$arn": "<p>The detector ARN.</p>",
@@ -2041,6 +2161,26 @@
         "GetModelsRequest$maxResults": "<p>The maximum number of objects to return for the request. </p>"
       }
     },
+    "nextToken": {
+      "base": null,
+      "refs": {
+        "GetListElementsRequest$nextToken": "<p> The next token for the subsequent request. </p>",
+        "GetListElementsResult$nextToken": "<p> The next page token. </p>",
+        "GetListsMetadataRequest$nextToken": "<p> The next token for the subsequent request. </p>",
+        "GetListsMetadataResult$nextToken": "<p> The next page token. </p>"
+      }
+    },
+    "noDashIdentifier": {
+      "base": null,
+      "refs": {
+        "AllowDenyList$name": "<p> The name of the list. </p>",
+        "CreateListRequest$name": "<p> The name of the list. </p>",
+        "DeleteListRequest$name": "<p> The name of the list to delete. </p>",
+        "GetListElementsRequest$name": "<p> The name of the list. </p>",
+        "GetListsMetadataRequest$name": "<p> The name of the list. </p>",
+        "UpdateListRequest$name": "<p> The name of the list to update. </p>"
+      }
+    },
     "ruleExpression": {
       "base": null,
       "refs": {
@@ -2231,6 +2371,7 @@
         "CreateBatchImportJobRequest$tags": "<p>A collection of key-value pairs associated with this request. </p>",
         "CreateBatchPredictionJobRequest$tags": "<p>A collection of key and value pairs.</p>",
         "CreateDetectorVersionRequest$tags": "<p>A collection of key and value pairs.</p>",
+        "CreateListRequest$tags": "<p> A collection of the key and value pairs. </p>",
         "CreateModelRequest$tags": "<p>A collection of key and value pairs.</p>",
         "CreateModelVersionRequest$tags": "<p>A collection of key and value pairs.</p>",
         "CreateRuleRequest$tags": "<p>A collection of key and value pairs.</p>",
@@ -2240,7 +2381,7 @@
         "PutEntityTypeRequest$tags": "<p>A collection of key and value pairs.</p>",
         "PutEventTypeRequest$tags": "<p>A collection of key and value pairs.</p>",
         "PutExternalModelRequest$tags": "<p>A collection of key and value pairs.</p>",
-        "PutLabelRequest$tags": "<p/>",
+        "PutLabelRequest$tags": "<p>A collection of key and value pairs.</p>",
         "PutOutcomeRequest$tags": "<p>A collection of key and value pairs.</p>",
         "TagResourceRequest$tags": "<p>The tags to assign to the resource.</p>",
         "UpdateModelVersionRequest$tags": "<p>A collection of key and value pairs.</p>",
@@ -2256,6 +2397,8 @@
     "time": {
       "base": null,
       "refs": {
+        "AllowDenyList$createdTime": "<p> The time the list was created. </p>",
+        "AllowDenyList$updatedTime": "<p> The time the list was last updated. </p>",
         "BatchImport$startTime": "<p>Timestamp of when the batch import job started.</p>",
         "BatchImport$completionTime": "<p>Timestamp of when batch import job completed.</p>",
         "BatchPrediction$startTime": "<p>Timestamp of when the batch prediction job started.</p>",
@@ -2311,6 +2454,14 @@
       "base": null,
       "refs": {
         "EventVariableMap$key": null
+      }
+    },
+    "variableType": {
+      "base": null,
+      "refs": {
+        "AllowDenyList$variableType": "<p> The variable type of the list. </p>",
+        "CreateListRequest$variableType": "<p> The variable type of the list. You can only assign the variable type with String data type. For more information, see <a href=\"https://docs.aws.amazon.com/frauddetector/latest/ug/create-a-variable.html#variable-types\">Variable types</a>. </p>",
+        "UpdateListRequest$variableType": "<p> The variable type you want to assign to the list. </p> <note> <p>You cannot update a variable type of a list that already has a variable type assigned to it. You can assign a variable type to a list only if the list does not already have a variable type.</p> </note>"
       }
     },
     "variableValue": {

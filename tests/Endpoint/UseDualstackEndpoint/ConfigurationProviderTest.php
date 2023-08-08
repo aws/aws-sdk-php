@@ -2,6 +2,7 @@
 namespace Aws\Test\Endpoint\UseDualstackEndpoint;
 
 
+use Aws\CacheInterface;
 use Aws\LruArrayCache;
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider;
 use Aws\Endpoint\UseDualstackEndpoint\Configuration;
@@ -11,7 +12,7 @@ use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers \Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider
+ * @covers Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
@@ -247,7 +248,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\My\\Home');
-        $ref = new \ReflectionClass('Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider');
+        $ref = new \ReflectionClass(ConfigurationProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\My\\Home', $meth->invoke(null));
@@ -339,7 +340,7 @@ EOT;
     public function testCreatesFromCache()
     {
         $expected = new Configuration(true, "us-east-1");
-        $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
+        $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())

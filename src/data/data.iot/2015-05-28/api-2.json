@@ -190,7 +190,8 @@
         "topic":{"shape":"Topic"},
         "payload":{"shape":"Payload"},
         "qos":{"shape":"Qos"},
-        "lastModifiedTime":{"shape":"Timestamp"}
+        "lastModifiedTime":{"shape":"Timestamp"},
+        "userProperties":{"shape":"UserPropertiesBlob"}
       }
     },
     "GetThingShadowRequest":{
@@ -421,7 +422,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[a-zA-Z0-9:_-]+"
+      "pattern":"[$a-zA-Z0-9:_-]+"
     },
     "ThingName":{
       "type":"string",
@@ -484,6 +485,7 @@
       "payload":"payload"
     },
     "UserProperties":{"type":"string"},
+    "UserPropertiesBlob":{"type":"blob"},
     "errorMessage":{"type":"string"}
   }
 }

@@ -16,13 +16,14 @@
     "GetNetworkResource": "<p>Gets the specified network resource.</p>",
     "GetNetworkSite": "<p>Gets the specified network site.</p>",
     "GetOrder": "<p>Gets the specified order.</p>",
-    "ListDeviceIdentifiers": "<p>Lists device identifiers. Add filters to your request to return a more specific list of results. Use filters to match the Amazon Resource Name (ARN) of an order, the status of device identifiers, or the ARN of the traffic group.</p> <pre><code> &lt;p&gt;If you specify multiple filters, filters are joined with an OR, and the request </code></pre> <p>returns results that match all of the specified filters.</p></p>",
+    "ListDeviceIdentifiers": "<p>Lists device identifiers. Add filters to your request to return a more specific list of results. Use filters to match the Amazon Resource Name (ARN) of an order, the status of device identifiers, or the ARN of the traffic group.</p> <p>If you specify multiple filters, filters are joined with an OR, and the request returns results that match all of the specified filters.</p>",
     "ListNetworkResources": "<p>Lists network resources. Add filters to your request to return a more specific list of results. Use filters to match the Amazon Resource Name (ARN) of an order or the status of network resources.</p> <p>If you specify multiple filters, filters are joined with an OR, and the request returns results that match all of the specified filters.</p>",
     "ListNetworkSites": "<p>Lists network sites. Add filters to your request to return a more specific list of results. Use filters to match the status of the network site.</p>",
     "ListNetworks": "<p>Lists networks. Add filters to your request to return a more specific list of results. Use filters to match the status of the network.</p>",
     "ListOrders": "<p>Lists orders. Add filters to your request to return a more specific list of results. Use filters to match the Amazon Resource Name (ARN) of the network site or the status of the order.</p> <p>If you specify multiple filters, filters are joined with an OR, and the request returns results that match all of the specified filters.</p>",
     "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
     "Ping": "<p>Checks the health of the service.</p>",
+    "StartNetworkResourceUpdate": "<p>Use this action to do the following tasks:</p> <ul> <li> <p>Update the duration and renewal status of the commitment period for a radio unit. The update goes into effect immediately.</p> </li> <li> <p>Request a replacement for a network resource.</p> </li> <li> <p>Request that you return a network resource.</p> </li> </ul> <p>After you submit a request to replace or return a network resource, the status of the network resource changes to <code>CREATING_SHIPPING_LABEL</code>. The shipping label is available when the status of the network resource is <code>PENDING_RETURN</code>. After the network resource is successfully returned, its status changes to <code>DELETED</code>. For more information, see <a href=\"https://docs.aws.amazon.com/private-networks/latest/userguide/radio-units.html#return-radio-unit\">Return a radio unit</a>.</p>",
     "TagResource": "<p> Adds tags to the specified resource. </p>",
     "UntagResource": "<p>Removes tags from the specified resource.</p>",
     "UpdateNetworkSite": "<p>Updates the specified network site.</p>",
@@ -74,7 +75,9 @@
       "base": "<p>Information about an address.</p>",
       "refs": {
         "ActivateNetworkSiteRequest$shippingAddress": "<p>The shipping address of the network site.</p>",
-        "Order$shippingAddress": "<p>The shipping address of the order.</p>"
+        "Order$shippingAddress": "<p>The shipping address of the order.</p>",
+        "ReturnInformation$shippingAddress": "<p>The shipping address.</p>",
+        "StartNetworkResourceUpdateRequest$shippingAddress": "<p>The shipping address. If you don't provide a shipping address when replacing or returning a network resource, we use the address from the original order for the network resource.</p>"
       }
     },
     "AddressContent": {
@@ -83,8 +86,9 @@
         "Address$city": "<p>The city for this address.</p>",
         "Address$company": "<p>The company name for this address.</p>",
         "Address$country": "<p>The country for this address.</p>",
+        "Address$emailAddress": "<p>The recipient's email address.</p>",
         "Address$name": "<p>The recipient's name for this address.</p>",
-        "Address$phoneNumber": "<p>The phone number for this address.</p>",
+        "Address$phoneNumber": "<p>The recipient's phone number.</p>",
         "Address$postalCode": "<p>The postal code for this address.</p>",
         "Address$stateOrProvince": "<p>The state or province for this address.</p>",
         "Address$street1": "<p>The first line of the street address.</p>",
@@ -126,10 +130,18 @@
         "Order$networkArn": "<p>The Amazon Resource Name (ARN) of the network associated with this order.</p>",
         "Order$networkSiteArn": "<p>The Amazon Resource Name (ARN) of the network site associated with this order.</p>",
         "Order$orderArn": "<p>The Amazon Resource Name (ARN) of the order.</p>",
+        "ReturnInformation$replacementOrderArn": "<p>The Amazon Resource Name (ARN) of the replacement order.</p>",
+        "StartNetworkResourceUpdateRequest$networkResourceArn": "<p>The Amazon Resource Name (ARN) of the network resource.</p>",
         "TagResourceRequest$resourceArn": "<p> The Amazon Resource Name (ARN) of the resource. </p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UpdateNetworkSitePlanRequest$networkSiteArn": "<p>The Amazon Resource Name (ARN) of the network site.</p>",
         "UpdateNetworkSiteRequest$networkSiteArn": "<p>The Amazon Resource Name (ARN) of the network site.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "CommitmentConfiguration$automaticRenewal": "<p>Determines whether the commitment period for a radio unit is set to automatically renew for an additional 1 year after your current commitment period expires.</p> <p>Set to <code>True</code>, if you want your commitment period to automatically renew. Set to <code>False</code> if you do not want your commitment to automatically renew.</p> <p>You can do the following:</p> <ul> <li> <p>Set a 1-year commitment to automatically renew for an additional 1 year. The hourly rate for the additional year will continue to be the same as your existing 1-year rate.</p> </li> <li> <p>Set a 3-year commitment to automatically renew for an additional 1 year. The hourly rate for the additional year will continue to be the same as your existing 3-year rate.</p> </li> <li> <p>Turn off a previously-enabled automatic renewal on a 1-year or 3-year commitment.</p> </li> </ul> <p>You cannot use the automatic-renewal option for a 60-day commitment.</p>"
       }
     },
     "ClientToken": {
@@ -144,6 +156,27 @@
         "DeleteNetworkSiteRequest$clientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\">How to ensure idempotency</a>.</p>",
         "UpdateNetworkSitePlanRequest$clientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\">How to ensure idempotency</a>.</p>",
         "UpdateNetworkSiteRequest$clientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\">How to ensure idempotency</a>.</p>"
+      }
+    },
+    "CommitmentConfiguration": {
+      "base": "<p>Determines the duration and renewal status of the commitment period for a radio unit.</p> <p>For pricing, see <a href=\"http://aws.amazon.com/private5g/pricing\">Amazon Web Services Private 5G Pricing</a>.</p>",
+      "refs": {
+        "ActivateNetworkSiteRequest$commitmentConfiguration": "<p>Determines the duration and renewal status of the commitment period for all pending radio units.</p> <p>If you include <code>commitmentConfiguration</code> in the <code>ActivateNetworkSiteRequest</code> action, you must specify the following:</p> <ul> <li> <p>The commitment period for the radio unit. You can choose a 60-day, 1-year, or 3-year period.</p> </li> <li> <p>Whether you want your commitment period to automatically renew for one more year after your current commitment period expires.</p> </li> </ul> <p>For pricing, see <a href=\"http://aws.amazon.com/private5g/pricing\">Amazon Web Services Private 5G Pricing</a>.</p> <p>If you do not include <code>commitmentConfiguration</code> in the <code>ActivateNetworkSiteRequest</code> action, the commitment period is set to 60-days.</p>",
+        "CommitmentInformation$commitmentConfiguration": "<p>The duration and renewal status of the commitment period for the radio unit.</p>",
+        "OrderedResourceDefinition$commitmentConfiguration": "<p>The duration and renewal status of the commitment period for each radio unit in the order. Does not show details if the resource type is DEVICE_IDENTIFIER.</p>",
+        "StartNetworkResourceUpdateRequest$commitmentConfiguration": "<p>Use this action to extend and automatically renew the commitment period for the radio unit. You can do the following:</p> <ul> <li> <p>Change a 60-day commitment to a 1-year or 3-year commitment. The change is immediate and the hourly rate decreases to the rate for the new commitment period.</p> </li> <li> <p>Change a 1-year commitment to a 3-year commitment. The change is immediate and the hourly rate decreases to the rate for the 3-year commitment period.</p> </li> <li> <p>Set a 1-year commitment to automatically renew for an additional 1 year. The hourly rate for the additional year will continue to be the same as your existing 1-year rate.</p> </li> <li> <p>Set a 3-year commitment to automatically renew for an additional 1 year. The hourly rate for the additional year will continue to be the same as your existing 3-year rate.</p> </li> <li> <p>Turn off a previously-enabled automatic renewal on a 1-year or 3-year commitment. You cannot use the automatic-renewal option for a 60-day commitment.</p> </li> </ul> <p>For pricing, see <a href=\"http://aws.amazon.com/private5g/pricing\">Amazon Web Services Private 5G Pricing</a>.</p>"
+      }
+    },
+    "CommitmentInformation": {
+      "base": "<p>Shows the duration, the date and time that the contract started and ends, and the renewal status of the commitment period for the radio unit.</p>",
+      "refs": {
+        "NetworkResource$commitmentInformation": "<p>Information about the commitment period for the radio unit. Shows the duration, the date and time that the contract started and ends, and the renewal status of the commitment period.</p>"
+      }
+    },
+    "CommitmentLength": {
+      "base": null,
+      "refs": {
+        "CommitmentConfiguration$commitmentLength": "<p>The duration of the commitment period for the radio unit. You can choose a 60-day, 1-year, or 3-year period.</p>"
       }
     },
     "ConfigureAccessPointRequest": {
@@ -528,7 +561,8 @@
       "refs": {
         "ConfigureAccessPointResponse$accessPoint": "<p>Information about the network resource.</p>",
         "GetNetworkResourceResponse$networkResource": "<p>Information about the network resource.</p>",
-        "NetworkResourceList$member": null
+        "NetworkResourceList$member": null,
+        "StartNetworkResourceUpdateResponse$networkResource": "<p>The network resource.</p>"
       }
     },
     "NetworkResourceDefinition": {
@@ -546,7 +580,8 @@
     "NetworkResourceDefinitionType": {
       "base": null,
       "refs": {
-        "NetworkResourceDefinition$type": "<p>The type in the network resource definition.</p>"
+        "NetworkResourceDefinition$type": "<p>The type in the network resource definition.</p>",
+        "OrderedResourceDefinition$type": "<p>The type of network resource in the order.</p>"
       }
     },
     "NetworkResourceDefinitions": {
@@ -677,6 +712,24 @@
         "ListOrdersResponse$orders": "<p>Information about the orders.</p>"
       }
     },
+    "OrderedResourceDefinition": {
+      "base": "<p>Details of the network resources in the order.</p>",
+      "refs": {
+        "OrderedResourceDefinitions$member": null
+      }
+    },
+    "OrderedResourceDefinitionCountInteger": {
+      "base": null,
+      "refs": {
+        "OrderedResourceDefinition$count": "<p>The number of network resources in the order.</p>"
+      }
+    },
+    "OrderedResourceDefinitions": {
+      "base": null,
+      "refs": {
+        "Order$orderedResources": "<p>A list of the network resources placed in the order.</p>"
+      }
+    },
     "PaginationToken": {
       "base": null,
       "refs": {
@@ -709,6 +762,12 @@
       "refs": {
       }
     },
+    "ReturnInformation": {
+      "base": "<p>Information about a request to return a network resource.</p>",
+      "refs": {
+        "NetworkResource$returnInformation": "<p>Information about a request to return the network resource.</p>"
+      }
+    },
     "SitePlan": {
       "base": "<p>Information about a site plan.</p>",
       "refs": {
@@ -716,6 +775,22 @@
         "NetworkSite$currentPlan": "<p>The current plan of the network site.</p>",
         "NetworkSite$pendingPlan": "<p>The pending plan of the network site.</p>",
         "UpdateNetworkSitePlanRequest$pendingPlan": "<p>The pending plan.</p>"
+      }
+    },
+    "StartNetworkResourceUpdateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartNetworkResourceUpdateRequestReturnReasonString": {
+      "base": null,
+      "refs": {
+        "StartNetworkResourceUpdateRequest$returnReason": "<p>The reason for the return. Providing a reason for a return is optional.</p>"
+      }
+    },
+    "StartNetworkResourceUpdateResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "String": {
@@ -748,6 +823,8 @@
         "ResourceNotFoundException$message": "<p>Description of the error.</p>",
         "ResourceNotFoundException$resourceId": "<p>Identifier of the affected resource.</p>",
         "ResourceNotFoundException$resourceType": "<p>Type of the affected resource.</p>",
+        "ReturnInformation$returnReason": "<p>The reason for the return. If the return request did not include a reason for the return, this value is null.</p>",
+        "ReturnInformation$shippingLabel": "<p>The URL of the shipping label. The shipping label is available for download only if the status of the network resource is <code>PENDING_RETURN</code>. For more information, see <a href=\"https://docs.aws.amazon.com/private-networks/latest/userguide/radio-units.html#return-radio-unit\">Return a radio unit</a>.</p>",
         "ThrottlingException$message": null,
         "TrackingInformation$trackingNumber": "<p>The tracking number of the shipment.</p>",
         "ValidationException$message": "<p>Description of the error.</p>",
@@ -810,6 +887,8 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "CommitmentInformation$expiresOn": "<p>The date and time that the commitment period ends. If you do not cancel or renew the commitment before the expiration date, you will be billed at the 60-day-commitment rate.</p>",
+        "CommitmentInformation$startAt": "<p>The date and time that the commitment period started.</p>",
         "DeviceIdentifier$createdAt": "<p>The creation time of this device identifier.</p>",
         "Network$createdAt": "<p>The creation time of the network.</p>",
         "NetworkResource$createdAt": "<p>The creation time of the network resource.</p>",
@@ -852,6 +931,12 @@
     "UpdateNetworkSiteResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "UpdateType": {
+      "base": null,
+      "refs": {
+        "StartNetworkResourceUpdateRequest$updateType": "<p>The update type.</p> <ul> <li> <p> <code>REPLACE</code> - Submits a request to replace a defective radio unit. We provide a shipping label that you can use for the return process and we ship a replacement radio unit to you.</p> </li> <li> <p> <code>RETURN</code> - Submits a request to return a radio unit that you no longer need. We provide a shipping label that you can use for the return process.</p> </li> <li> <p> <code>COMMITMENT</code> - Submits a request to change or renew the commitment period. If you choose this value, then you must set <a href=\"https://docs.aws.amazon.com/private-networks/latest/APIReference/API_StartNetworkResourceUpdate.html#privatenetworks-StartNetworkResourceUpdate-request-commitmentConfiguration\"> <code>commitmentConfiguration</code> </a>.</p> </li> </ul>"
       }
     },
     "ValidationException": {

@@ -29,6 +29,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "AssociateProfiles":{
+      "name":"AssociateProfiles",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/workloads/{WorkloadId}/associateProfiles"
+      },
+      "input":{"shape":"AssociateProfilesInput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateLensShare":{
       "name":"CreateLensShare",
       "http":{
@@ -83,6 +99,41 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "CreateProfile":{
+      "name":"CreateProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/profiles"
+      },
+      "input":{"shape":"CreateProfileInput"},
+      "output":{"shape":"CreateProfileOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "CreateProfileShare":{
+      "name":"CreateProfileShare",
+      "http":{
+        "method":"POST",
+        "requestUri":"/profiles/{ProfileArn}/shares"
+      },
+      "input":{"shape":"CreateProfileShareInput"},
+      "output":{"shape":"CreateProfileShareOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateWorkload":{
       "name":"CreateWorkload",
       "http":{
@@ -97,6 +148,7 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -141,6 +193,38 @@
         "requestUri":"/lenses/{LensAlias}/shares/{ShareId}"
       },
       "input":{"shape":"DeleteLensShareInput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteProfile":{
+      "name":"DeleteProfile",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/profiles/{ProfileArn}"
+      },
+      "input":{"shape":"DeleteProfileInput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteProfileShare":{
+      "name":"DeleteProfileShare",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/profiles/{ProfileArn}/shares/{ShareId}"
+      },
+      "input":{"shape":"DeleteProfileShareInput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -198,6 +282,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DisassociateProfiles":{
+      "name":"DisassociateProfiles",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/workloads/{WorkloadId}/disassociateProfiles"
+      },
+      "input":{"shape":"DisassociateProfilesInput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ExportLens":{
       "name":"ExportLens",
       "http":{
@@ -228,6 +328,22 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetConsolidatedReport":{
+      "name":"GetConsolidatedReport",
+      "http":{
+        "method":"GET",
+        "requestUri":"/consolidatedReport"
+      },
+      "input":{"shape":"GetConsolidatedReportInput"},
+      "output":{"shape":"GetConsolidatedReportOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"}
       ]
     },
     "GetLens":{
@@ -302,6 +418,38 @@
       },
       "input":{"shape":"GetMilestoneInput"},
       "output":{"shape":"GetMilestoneOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetProfile":{
+      "name":"GetProfile",
+      "http":{
+        "method":"GET",
+        "requestUri":"/profiles/{ProfileArn}"
+      },
+      "input":{"shape":"GetProfileInput"},
+      "output":{"shape":"GetProfileOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetProfileTemplate":{
+      "name":"GetProfileTemplate",
+      "http":{
+        "method":"GET",
+        "requestUri":"/profileTemplate"
+      },
+      "input":{"shape":"GetProfileTemplateInput"},
+      "output":{"shape":"GetProfileTemplateOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
@@ -486,6 +634,52 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListProfileNotifications":{
+      "name":"ListProfileNotifications",
+      "http":{
+        "method":"GET",
+        "requestUri":"/profileNotifications/"
+      },
+      "input":{"shape":"ListProfileNotificationsInput"},
+      "output":{"shape":"ListProfileNotificationsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListProfileShares":{
+      "name":"ListProfileShares",
+      "http":{
+        "method":"GET",
+        "requestUri":"/profiles/{ProfileArn}/shares"
+      },
+      "input":{"shape":"ListProfileSharesInput"},
+      "output":{"shape":"ListProfileSharesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListProfiles":{
+      "name":"ListProfiles",
+      "http":{
+        "method":"GET",
+        "requestUri":"/profileSummaries"
+      },
+      "input":{"shape":"ListProfilesInput"},
+      "output":{"shape":"ListProfilesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListShareInvitations":{
       "name":"ListShareInvitations",
       "http":{
@@ -620,6 +814,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "UpdateProfile":{
+      "name":"UpdateProfile",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/profiles/{ProfileArn}"
+      },
+      "input":{"shape":"UpdateProfileInput"},
+      "output":{"shape":"UpdateProfileOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "UpdateShareInvitation":{
       "name":"UpdateShareInvitation",
       "http":{
@@ -678,6 +889,22 @@
         "requestUri":"/workloads/{WorkloadId}/lensReviews/{LensAlias}/upgrade"
       },
       "input":{"shape":"UpgradeLensReviewInput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UpgradeProfileVersion":{
+      "name":"UpgradeProfileVersion",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/workloads/{WorkloadId}/profiles/{ProfileArn}/upgrade"
+      },
+      "input":{"shape":"UpgradeProfileVersionInput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
@@ -765,7 +992,8 @@
         "ChoiceAnswerSummaries":{"shape":"ChoiceAnswerSummaries"},
         "IsApplicable":{"shape":"IsApplicable"},
         "Risk":{"shape":"Risk"},
-        "Reason":{"shape":"AnswerReason"}
+        "Reason":{"shape":"AnswerReason"},
+        "QuestionType":{"shape":"QuestionType"}
       }
     },
     "ApplicationArn":{
@@ -788,8 +1016,25 @@
         "LensAliases":{"shape":"LensAliases"}
       }
     },
+    "AssociateProfilesInput":{
+      "type":"structure",
+      "required":[
+        "WorkloadId",
+        "ProfileArns"
+      ],
+      "members":{
+        "WorkloadId":{
+          "shape":"WorkloadId",
+          "location":"uri",
+          "locationName":"WorkloadId"
+        },
+        "ProfileArns":{"shape":"ProfileArns"}
+      }
+    },
     "AwsAccountId":{
       "type":"string",
+      "max":12,
+      "min":12,
       "pattern":"[0-9]{12}"
     },
     "AwsRegion":{
@@ -797,6 +1042,17 @@
       "max":100
     },
     "Base64String":{"type":"string"},
+    "BestPractice":{
+      "type":"structure",
+      "members":{
+        "ChoiceId":{"shape":"ChoiceId"},
+        "ChoiceTitle":{"shape":"ChoiceTitle"}
+      }
+    },
+    "BestPractices":{
+      "type":"list",
+      "member":{"shape":"BestPractice"}
+    },
     "CheckDescription":{"type":"string"},
     "CheckDetail":{
       "type":"structure",
@@ -990,7 +1246,11 @@
       "type":"list",
       "member":{"shape":"Choice"}
     },
-    "ClientRequestToken":{"type":"string"},
+    "ClientRequestToken":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "ConflictException":{
       "type":"structure",
       "required":[
@@ -1005,6 +1265,23 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "ConsolidatedReportMetric":{
+      "type":"structure",
+      "members":{
+        "MetricType":{"shape":"MetricType"},
+        "RiskCounts":{"shape":"RiskCounts"},
+        "WorkloadId":{"shape":"WorkloadId"},
+        "WorkloadName":{"shape":"WorkloadName"},
+        "WorkloadArn":{"shape":"WorkloadArn"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "Lenses":{"shape":"LensMetrics"},
+        "LensesAppliedCount":{"shape":"LensesAppliedCount"}
+      }
+    },
+    "ConsolidatedReportMetrics":{
+      "type":"list",
+      "member":{"shape":"ConsolidatedReportMetric"}
     },
     "Count":{
       "type":"integer",
@@ -1091,6 +1368,59 @@
         "MilestoneNumber":{"shape":"MilestoneNumber"}
       }
     },
+    "CreateProfileInput":{
+      "type":"structure",
+      "required":[
+        "ProfileName",
+        "ProfileDescription",
+        "ProfileQuestions",
+        "ClientRequestToken"
+      ],
+      "members":{
+        "ProfileName":{"shape":"ProfileName"},
+        "ProfileDescription":{"shape":"ProfileDescription"},
+        "ProfileQuestions":{"shape":"ProfileQuestionUpdates"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateProfileOutput":{
+      "type":"structure",
+      "members":{
+        "ProfileArn":{"shape":"ProfileArn"},
+        "ProfileVersion":{"shape":"ProfileVersion"}
+      }
+    },
+    "CreateProfileShareInput":{
+      "type":"structure",
+      "required":[
+        "ProfileArn",
+        "SharedWith",
+        "ClientRequestToken"
+      ],
+      "members":{
+        "ProfileArn":{
+          "shape":"ProfileArn",
+          "location":"uri",
+          "locationName":"ProfileArn"
+        },
+        "SharedWith":{"shape":"SharedWith"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateProfileShareOutput":{
+      "type":"structure",
+      "members":{
+        "ShareId":{"shape":"ShareId"},
+        "ProfileArn":{"shape":"ProfileArn"}
+      }
+    },
     "CreateWorkloadInput":{
       "type":"structure",
       "required":[
@@ -1120,7 +1450,8 @@
         },
         "Tags":{"shape":"TagMap"},
         "DiscoveryConfig":{"shape":"WorkloadDiscoveryConfig"},
-        "Applications":{"shape":"WorkloadApplications"}
+        "Applications":{"shape":"WorkloadApplications"},
+        "ProfileArns":{"shape":"WorkloadProfileArns"}
       }
     },
     "CreateWorkloadOutput":{
@@ -1158,6 +1489,13 @@
         "WorkloadId":{"shape":"WorkloadId"},
         "ShareId":{"shape":"ShareId"}
       }
+    },
+    "DefinitionType":{
+      "type":"string",
+      "enum":[
+        "WORKLOAD_METADATA",
+        "APP_REGISTRY"
+      ]
     },
     "DeleteLensInput":{
       "type":"structure",
@@ -1202,6 +1540,52 @@
           "shape":"LensAlias",
           "location":"uri",
           "locationName":"LensAlias"
+        },
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"ClientRequestToken"
+        }
+      }
+    },
+    "DeleteProfileInput":{
+      "type":"structure",
+      "required":[
+        "ProfileArn",
+        "ClientRequestToken"
+      ],
+      "members":{
+        "ProfileArn":{
+          "shape":"ProfileArn",
+          "location":"uri",
+          "locationName":"ProfileArn"
+        },
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"ClientRequestToken"
+        }
+      }
+    },
+    "DeleteProfileShareInput":{
+      "type":"structure",
+      "required":[
+        "ShareId",
+        "ProfileArn",
+        "ClientRequestToken"
+      ],
+      "members":{
+        "ShareId":{
+          "shape":"ShareId",
+          "location":"uri",
+          "locationName":"ShareId"
+        },
+        "ProfileArn":{
+          "shape":"ProfileArn",
+          "location":"uri",
+          "locationName":"ProfileArn"
         },
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
@@ -1280,6 +1664,28 @@
         "LensAliases":{"shape":"LensAliases"}
       }
     },
+    "DisassociateProfilesInput":{
+      "type":"structure",
+      "required":[
+        "WorkloadId",
+        "ProfileArns"
+      ],
+      "members":{
+        "WorkloadId":{
+          "shape":"WorkloadId",
+          "location":"uri",
+          "locationName":"WorkloadId"
+        },
+        "ProfileArns":{"shape":"ProfileArns"}
+      }
+    },
+    "DiscoveryIntegrationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "DisplayText":{
       "type":"string",
       "max":64,
@@ -1353,6 +1759,45 @@
         "LensAlias":{"shape":"LensAlias"},
         "LensArn":{"shape":"LensArn"},
         "Answer":{"shape":"Answer"}
+      }
+    },
+    "GetConsolidatedReportInput":{
+      "type":"structure",
+      "required":["Format"],
+      "members":{
+        "Format":{
+          "shape":"ReportFormat",
+          "location":"querystring",
+          "locationName":"Format"
+        },
+        "IncludeSharedResources":{
+          "shape":"IncludeSharedResources",
+          "location":"querystring",
+          "locationName":"IncludeSharedResources"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"GetConsolidatedReportMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "GetConsolidatedReportMaxResults":{
+      "type":"integer",
+      "max":15,
+      "min":1
+    },
+    "GetConsolidatedReportOutput":{
+      "type":"structure",
+      "members":{
+        "Metrics":{"shape":"ConsolidatedReportMetrics"},
+        "NextToken":{"shape":"NextToken"},
+        "Base64String":{"shape":"Base64String"}
       }
     },
     "GetLensInput":{
@@ -1499,6 +1944,39 @@
         "Milestone":{"shape":"Milestone"}
       }
     },
+    "GetProfileInput":{
+      "type":"structure",
+      "required":["ProfileArn"],
+      "members":{
+        "ProfileArn":{
+          "shape":"ProfileArn",
+          "location":"uri",
+          "locationName":"ProfileArn"
+        },
+        "ProfileVersion":{
+          "shape":"ProfileVersion",
+          "location":"querystring",
+          "locationName":"ProfileVersion"
+        }
+      }
+    },
+    "GetProfileOutput":{
+      "type":"structure",
+      "members":{
+        "Profile":{"shape":"Profile"}
+      }
+    },
+    "GetProfileTemplateInput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetProfileTemplateOutput":{
+      "type":"structure",
+      "members":{
+        "ProfileTemplate":{"shape":"ProfileTemplate"}
+      }
+    },
     "GetWorkloadInput":{
       "type":"structure",
       "required":["WorkloadId"],
@@ -1572,6 +2050,7 @@
         "ImprovementPlans":{"shape":"ChoiceImprovementPlans"}
       }
     },
+    "IncludeSharedResources":{"type":"boolean"},
     "InternalServerException":{
       "type":"structure",
       "required":["Message"],
@@ -1618,6 +2097,18 @@
       "max":500000,
       "min":2
     },
+    "LensMetric":{
+      "type":"structure",
+      "members":{
+        "LensArn":{"shape":"LensArn"},
+        "Pillars":{"shape":"PillarMetrics"},
+        "RiskCounts":{"shape":"RiskCounts"}
+      }
+    },
+    "LensMetrics":{
+      "type":"list",
+      "member":{"shape":"LensMetric"}
+    },
     "LensName":{
       "type":"string",
       "max":128,
@@ -1640,7 +2131,9 @@
         "UpdatedAt":{"shape":"Timestamp"},
         "Notes":{"shape":"Notes"},
         "RiskCounts":{"shape":"RiskCounts"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "Profiles":{"shape":"WorkloadProfiles"},
+        "PrioritizedRiskCounts":{"shape":"RiskCounts"}
       }
     },
     "LensReviewReport":{
@@ -1664,7 +2157,9 @@
         "LensName":{"shape":"LensName"},
         "LensStatus":{"shape":"LensStatus"},
         "UpdatedAt":{"shape":"Timestamp"},
-        "RiskCounts":{"shape":"RiskCounts"}
+        "RiskCounts":{"shape":"RiskCounts"},
+        "Profiles":{"shape":"WorkloadProfiles"},
+        "PrioritizedRiskCounts":{"shape":"RiskCounts"}
       }
     },
     "LensShareSummaries":{
@@ -1741,6 +2236,10 @@
       "max":32,
       "min":1
     },
+    "LensesAppliedCount":{
+      "type":"integer",
+      "min":0
+    },
     "ListAnswersInput":{
       "type":"structure",
       "required":[
@@ -1777,6 +2276,11 @@
           "shape":"ListAnswersMaxResults",
           "location":"querystring",
           "locationName":"MaxResults"
+        },
+        "QuestionPriority":{
+          "shape":"QuestionPriority",
+          "location":"querystring",
+          "locationName":"QuestionPriority"
         }
       }
     },
@@ -1892,6 +2396,11 @@
           "shape":"ListLensReviewImprovementsMaxResults",
           "location":"querystring",
           "locationName":"MaxResults"
+        },
+        "QuestionPriority":{
+          "shape":"QuestionPriority",
+          "location":"querystring",
+          "locationName":"QuestionPriority"
         }
       }
     },
@@ -2062,6 +2571,108 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListProfileNotificationsInput":{
+      "type":"structure",
+      "members":{
+        "WorkloadId":{
+          "shape":"WorkloadId",
+          "location":"querystring",
+          "locationName":"WorkloadId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "ListProfileNotificationsOutput":{
+      "type":"structure",
+      "members":{
+        "NotificationSummaries":{"shape":"ProfileNotificationSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListProfileSharesInput":{
+      "type":"structure",
+      "required":["ProfileArn"],
+      "members":{
+        "ProfileArn":{
+          "shape":"ProfileArn",
+          "location":"uri",
+          "locationName":"ProfileArn"
+        },
+        "SharedWithPrefix":{
+          "shape":"SharedWithPrefix",
+          "location":"querystring",
+          "locationName":"SharedWithPrefix"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"ListProfileSharesMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "Status":{
+          "shape":"ShareStatus",
+          "location":"querystring",
+          "locationName":"Status"
+        }
+      }
+    },
+    "ListProfileSharesMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
+    "ListProfileSharesOutput":{
+      "type":"structure",
+      "members":{
+        "ProfileShareSummaries":{"shape":"ProfileShareSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListProfilesInput":{
+      "type":"structure",
+      "members":{
+        "ProfileNamePrefix":{
+          "shape":"ProfileNamePrefix",
+          "location":"querystring",
+          "locationName":"ProfileNamePrefix"
+        },
+        "ProfileOwnerType":{
+          "shape":"ProfileOwnerType",
+          "location":"querystring",
+          "locationName":"ProfileOwnerType"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "ListProfilesOutput":{
+      "type":"structure",
+      "members":{
+        "ProfileSummaries":{"shape":"ProfileSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListShareInvitationsInput":{
       "type":"structure",
       "members":{
@@ -2089,6 +2700,11 @@
           "shape":"ListShareInvitationsMaxResults",
           "location":"querystring",
           "locationName":"MaxResults"
+        },
+        "ProfileNamePrefix":{
+          "shape":"ProfileNamePrefix",
+          "location":"querystring",
+          "locationName":"ProfileNamePrefix"
         }
       }
     },
@@ -2190,6 +2806,14 @@
       "max":50,
       "min":1
     },
+    "MaxSelectedProfileChoices":{
+      "type":"integer",
+      "min":0
+    },
+    "MetricType":{
+      "type":"string",
+      "enum":["WORKLOAD"]
+    },
     "Milestone":{
       "type":"structure",
       "members":{
@@ -2221,6 +2845,10 @@
         "RecordedAt":{"shape":"Timestamp"},
         "WorkloadSummary":{"shape":"WorkloadSummary"}
       }
+    },
+    "MinSelectedProfileChoices":{
+      "type":"integer",
+      "min":0
     },
     "NextToken":{"type":"string"},
     "Notes":{
@@ -2277,6 +2905,18 @@
       "max":64,
       "min":1
     },
+    "PillarMetric":{
+      "type":"structure",
+      "members":{
+        "PillarId":{"shape":"PillarId"},
+        "RiskCounts":{"shape":"RiskCounts"},
+        "Questions":{"shape":"QuestionMetrics"}
+      }
+    },
+    "PillarMetrics":{
+      "type":"list",
+      "member":{"shape":"PillarMetric"}
+    },
     "PillarName":{
       "type":"string",
       "max":128,
@@ -2297,8 +2937,187 @@
         "PillarId":{"shape":"PillarId"},
         "PillarName":{"shape":"PillarName"},
         "Notes":{"shape":"Notes"},
-        "RiskCounts":{"shape":"RiskCounts"}
+        "RiskCounts":{"shape":"RiskCounts"},
+        "PrioritizedRiskCounts":{"shape":"RiskCounts"}
       }
+    },
+    "Profile":{
+      "type":"structure",
+      "members":{
+        "ProfileArn":{"shape":"ProfileArn"},
+        "ProfileVersion":{"shape":"ProfileVersion"},
+        "ProfileName":{"shape":"ProfileName"},
+        "ProfileDescription":{"shape":"ProfileDescription"},
+        "ProfileQuestions":{"shape":"ProfileQuestions"},
+        "Owner":{"shape":"AwsAccountId"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "ShareInvitationId":{"shape":"ShareInvitationId"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "ProfileArn":{
+      "type":"string",
+      "max":2084,
+      "pattern":"arn:aws[-a-z]*:wellarchitected:[a-z]{2}(-gov)?-[a-z]+-\\d:\\d{12}:profile/[a-z0-9]+"
+    },
+    "ProfileArns":{
+      "type":"list",
+      "member":{"shape":"ProfileArn"},
+      "min":1
+    },
+    "ProfileChoice":{
+      "type":"structure",
+      "members":{
+        "ChoiceId":{"shape":"ChoiceId"},
+        "ChoiceTitle":{"shape":"ChoiceTitle"},
+        "ChoiceDescription":{"shape":"ChoiceDescription"}
+      }
+    },
+    "ProfileDescription":{
+      "type":"string",
+      "max":100,
+      "min":3,
+      "pattern":"^[A-Za-z0-9-_.,:/()@!&?#+'’\\s]+$"
+    },
+    "ProfileName":{
+      "type":"string",
+      "max":100,
+      "min":3,
+      "pattern":"^[A-Za-z0-9-_.,:/()@!&?#+'’\\s]+$"
+    },
+    "ProfileNamePrefix":{
+      "type":"string",
+      "max":100,
+      "pattern":"^[A-Za-z0-9-_.,:/()@!&?#+'’\\s]+$"
+    },
+    "ProfileNotificationSummaries":{
+      "type":"list",
+      "member":{"shape":"ProfileNotificationSummary"}
+    },
+    "ProfileNotificationSummary":{
+      "type":"structure",
+      "members":{
+        "CurrentProfileVersion":{"shape":"ProfileVersion"},
+        "LatestProfileVersion":{"shape":"ProfileVersion"},
+        "Type":{"shape":"ProfileNotificationType"},
+        "ProfileArn":{"shape":"ProfileArn"},
+        "ProfileName":{"shape":"ProfileName"},
+        "WorkloadId":{"shape":"WorkloadId"},
+        "WorkloadName":{"shape":"WorkloadName"}
+      }
+    },
+    "ProfileNotificationType":{
+      "type":"string",
+      "enum":[
+        "PROFILE_ANSWERS_UPDATED",
+        "PROFILE_DELETED"
+      ]
+    },
+    "ProfileOwnerType":{
+      "type":"string",
+      "enum":[
+        "SELF",
+        "SHARED"
+      ]
+    },
+    "ProfileQuestion":{
+      "type":"structure",
+      "members":{
+        "QuestionId":{"shape":"QuestionId"},
+        "QuestionTitle":{"shape":"QuestionTitle"},
+        "QuestionDescription":{"shape":"QuestionDescription"},
+        "QuestionChoices":{"shape":"ProfileQuestionChoices"},
+        "SelectedChoiceIds":{"shape":"SelectedChoiceIds"},
+        "MinSelectedChoices":{"shape":"MinSelectedProfileChoices"},
+        "MaxSelectedChoices":{"shape":"MaxSelectedProfileChoices"}
+      }
+    },
+    "ProfileQuestionChoices":{
+      "type":"list",
+      "member":{"shape":"ProfileChoice"}
+    },
+    "ProfileQuestionUpdate":{
+      "type":"structure",
+      "members":{
+        "QuestionId":{"shape":"QuestionId"},
+        "SelectedChoiceIds":{"shape":"SelectedProfileChoiceIds"}
+      }
+    },
+    "ProfileQuestionUpdates":{
+      "type":"list",
+      "member":{"shape":"ProfileQuestionUpdate"}
+    },
+    "ProfileQuestions":{
+      "type":"list",
+      "member":{"shape":"ProfileQuestion"}
+    },
+    "ProfileShareSummaries":{
+      "type":"list",
+      "member":{"shape":"ProfileShareSummary"}
+    },
+    "ProfileShareSummary":{
+      "type":"structure",
+      "members":{
+        "ShareId":{"shape":"ShareId"},
+        "SharedWith":{"shape":"SharedWith"},
+        "Status":{"shape":"ShareStatus"},
+        "StatusMessage":{"shape":"StatusMessage"}
+      }
+    },
+    "ProfileSummaries":{
+      "type":"list",
+      "member":{"shape":"ProfileSummary"}
+    },
+    "ProfileSummary":{
+      "type":"structure",
+      "members":{
+        "ProfileArn":{"shape":"ProfileArn"},
+        "ProfileVersion":{"shape":"ProfileVersion"},
+        "ProfileName":{"shape":"ProfileName"},
+        "ProfileDescription":{"shape":"ProfileDescription"},
+        "Owner":{"shape":"AwsAccountId"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "ProfileTemplate":{
+      "type":"structure",
+      "members":{
+        "TemplateName":{"shape":"ProfileName"},
+        "TemplateQuestions":{"shape":"TemplateQuestions"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "ProfileTemplateChoice":{
+      "type":"structure",
+      "members":{
+        "ChoiceId":{"shape":"ChoiceId"},
+        "ChoiceTitle":{"shape":"ChoiceTitle"},
+        "ChoiceDescription":{"shape":"ChoiceDescription"}
+      }
+    },
+    "ProfileTemplateQuestion":{
+      "type":"structure",
+      "members":{
+        "QuestionId":{"shape":"QuestionId"},
+        "QuestionTitle":{"shape":"QuestionTitle"},
+        "QuestionDescription":{"shape":"QuestionDescription"},
+        "QuestionChoices":{"shape":"ProfileTemplateQuestionChoices"},
+        "MinSelectedChoices":{"shape":"MinSelectedProfileChoices"},
+        "MaxSelectedChoices":{"shape":"MaxSelectedProfileChoices"}
+      }
+    },
+    "ProfileTemplateQuestionChoices":{
+      "type":"list",
+      "member":{"shape":"ProfileTemplateChoice"}
+    },
+    "ProfileVersion":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"^[A-Za-z0-9-]+$"
     },
     "QuestionDescription":{
       "type":"string",
@@ -2322,12 +3141,45 @@
       "max":128,
       "min":1
     },
+    "QuestionMetric":{
+      "type":"structure",
+      "members":{
+        "QuestionId":{"shape":"QuestionId"},
+        "Risk":{"shape":"Risk"},
+        "BestPractices":{"shape":"BestPractices"}
+      }
+    },
+    "QuestionMetrics":{
+      "type":"list",
+      "member":{"shape":"QuestionMetric"}
+    },
+    "QuestionPriority":{
+      "type":"string",
+      "enum":[
+        "PRIORITIZED",
+        "NONE"
+      ]
+    },
     "QuestionTitle":{
       "type":"string",
       "max":512,
       "min":1
     },
+    "QuestionType":{
+      "type":"string",
+      "enum":[
+        "PRIORITIZED",
+        "NON_PRIORITIZED"
+      ]
+    },
     "QuotaCode":{"type":"string"},
+    "ReportFormat":{
+      "type":"string",
+      "enum":[
+        "PDF",
+        "JSON"
+      ]
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "required":[
@@ -2358,7 +3210,15 @@
       "key":{"shape":"Risk"},
       "value":{"shape":"Count"}
     },
+    "SelectedChoiceIds":{
+      "type":"list",
+      "member":{"shape":"ChoiceId"}
+    },
     "SelectedChoices":{
+      "type":"list",
+      "member":{"shape":"ChoiceId"}
+    },
+    "SelectedProfileChoiceIds":{
       "type":"list",
       "member":{"shape":"ChoiceId"}
     },
@@ -2391,7 +3251,8 @@
         "ShareResourceType":{"shape":"ShareResourceType"},
         "WorkloadId":{"shape":"WorkloadId"},
         "LensAlias":{"shape":"LensAlias"},
-        "LensArn":{"shape":"LensArn"}
+        "LensArn":{"shape":"LensArn"},
+        "ProfileArn":{"shape":"ProfileArn"}
       }
     },
     "ShareInvitationAction":{
@@ -2420,14 +3281,17 @@
         "WorkloadName":{"shape":"WorkloadName"},
         "WorkloadId":{"shape":"WorkloadId"},
         "LensName":{"shape":"LensName"},
-        "LensArn":{"shape":"LensArn"}
+        "LensArn":{"shape":"LensArn"},
+        "ProfileName":{"shape":"ProfileName"},
+        "ProfileArn":{"shape":"ProfileArn"}
       }
     },
     "ShareResourceType":{
       "type":"string",
       "enum":[
         "WORKLOAD",
-        "LENS"
+        "LENS",
+        "PROFILE"
       ]
     },
     "ShareStatus":{
@@ -2499,6 +3363,10 @@
       "type":"string",
       "max":256,
       "min":0
+    },
+    "TemplateQuestions":{
+      "type":"list",
+      "member":{"shape":"ProfileTemplateQuestion"}
     },
     "ThrottlingException":{
       "type":"structure",
@@ -2585,7 +3453,8 @@
     "UpdateGlobalSettingsInput":{
       "type":"structure",
       "members":{
-        "OrganizationSharingStatus":{"shape":"OrganizationSharingStatus"}
+        "OrganizationSharingStatus":{"shape":"OrganizationSharingStatus"},
+        "DiscoveryIntegrationStatus":{"shape":"DiscoveryIntegrationStatus"}
       }
     },
     "UpdateLensReviewInput":{
@@ -2614,6 +3483,25 @@
       "members":{
         "WorkloadId":{"shape":"WorkloadId"},
         "LensReview":{"shape":"LensReview"}
+      }
+    },
+    "UpdateProfileInput":{
+      "type":"structure",
+      "required":["ProfileArn"],
+      "members":{
+        "ProfileArn":{
+          "shape":"ProfileArn",
+          "location":"uri",
+          "locationName":"ProfileArn"
+        },
+        "ProfileDescription":{"shape":"ProfileDescription"},
+        "ProfileQuestions":{"shape":"ProfileQuestionUpdates"}
+      }
+    },
+    "UpdateProfileOutput":{
+      "type":"structure",
+      "members":{
+        "Profile":{"shape":"Profile"}
       }
     },
     "UpdateShareInvitationInput":{
@@ -2720,6 +3608,30 @@
         "ClientRequestToken":{"shape":"ClientRequestToken"}
       }
     },
+    "UpgradeProfileVersionInput":{
+      "type":"structure",
+      "required":[
+        "WorkloadId",
+        "ProfileArn"
+      ],
+      "members":{
+        "WorkloadId":{
+          "shape":"WorkloadId",
+          "location":"uri",
+          "locationName":"WorkloadId"
+        },
+        "ProfileArn":{
+          "shape":"ProfileArn",
+          "location":"uri",
+          "locationName":"ProfileArn"
+        },
+        "MilestoneName":{"shape":"MilestoneName"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        }
+      }
+    },
     "Urls":{
       "type":"list",
       "member":{"shape":"ChoiceContent"}
@@ -2793,7 +3705,9 @@
         "ShareInvitationId":{"shape":"ShareInvitationId"},
         "Tags":{"shape":"TagMap"},
         "DiscoveryConfig":{"shape":"WorkloadDiscoveryConfig"},
-        "Applications":{"shape":"WorkloadApplications"}
+        "Applications":{"shape":"WorkloadApplications"},
+        "Profiles":{"shape":"WorkloadProfiles"},
+        "PrioritizedRiskCounts":{"shape":"RiskCounts"}
       }
     },
     "WorkloadAccountIds":{
@@ -2825,7 +3739,8 @@
     "WorkloadDiscoveryConfig":{
       "type":"structure",
       "members":{
-        "TrustedAdvisorIntegrationStatus":{"shape":"TrustedAdvisorIntegrationStatus"}
+        "TrustedAdvisorIntegrationStatus":{"shape":"TrustedAdvisorIntegrationStatus"},
+        "WorkloadResourceDefinition":{"shape":"WorkloadResourceDefinition"}
       }
     },
     "WorkloadEnvironment":{
@@ -2837,6 +3752,8 @@
     },
     "WorkloadId":{
       "type":"string",
+      "max":32,
+      "min":32,
       "pattern":"[0-9a-f]{32}"
     },
     "WorkloadImprovementStatus":{
@@ -2884,6 +3801,27 @@
       "type":"list",
       "member":{"shape":"PillarId"}
     },
+    "WorkloadProfile":{
+      "type":"structure",
+      "members":{
+        "ProfileArn":{"shape":"ProfileArn"},
+        "ProfileVersion":{"shape":"ProfileVersion"}
+      }
+    },
+    "WorkloadProfileArns":{
+      "type":"list",
+      "member":{"shape":"ProfileArn"},
+      "max":1
+    },
+    "WorkloadProfiles":{
+      "type":"list",
+      "member":{"shape":"WorkloadProfile"},
+      "max":1
+    },
+    "WorkloadResourceDefinition":{
+      "type":"list",
+      "member":{"shape":"DefinitionType"}
+    },
     "WorkloadReviewOwner":{
       "type":"string",
       "max":255,
@@ -2929,7 +3867,9 @@
         "UpdatedAt":{"shape":"Timestamp"},
         "Lenses":{"shape":"WorkloadLenses"},
         "RiskCounts":{"shape":"RiskCounts"},
-        "ImprovementStatus":{"shape":"WorkloadImprovementStatus"}
+        "ImprovementStatus":{"shape":"WorkloadImprovementStatus"},
+        "Profiles":{"shape":"WorkloadProfiles"},
+        "PrioritizedRiskCounts":{"shape":"RiskCounts"}
       }
     }
   }

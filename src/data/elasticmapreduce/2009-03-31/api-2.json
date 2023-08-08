@@ -442,6 +442,19 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "ListSupportedInstanceTypes":{
+      "name":"ListSupportedInstanceTypes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSupportedInstanceTypesInput"},
+      "output":{"shape":"ListSupportedInstanceTypesOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRequestException"}
+      ]
+    },
     "ModifyCluster":{
       "name":"ModifyCluster",
       "http":{
@@ -1007,7 +1020,8 @@
       "members":{
         "State":{"shape":"ClusterState"},
         "StateChangeReason":{"shape":"ClusterStateChangeReason"},
-        "Timeline":{"shape":"ClusterTimeline"}
+        "Timeline":{"shape":"ClusterTimeline"},
+        "ErrorDetails":{"shape":"ErrorDetailList"}
       }
     },
     "ClusterSummary":{
@@ -1369,10 +1383,31 @@
         "AdditionalSlaveSecurityGroups":{"shape":"StringList"}
       }
     },
+    "EnvironmentVariablesMap":{
+      "type":"map",
+      "key":{"shape":"XmlStringMaxLen256"},
+      "value":{"shape":"XmlString"}
+    },
     "ErrorCode":{
       "type":"string",
       "max":256,
       "min":1
+    },
+    "ErrorData":{
+      "type":"list",
+      "member":{"shape":"StringMap"}
+    },
+    "ErrorDetail":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"String"},
+        "ErrorData":{"shape":"ErrorData"},
+        "ErrorMessage":{"shape":"String"}
+      }
+    },
+    "ErrorDetailList":{
+      "type":"list",
+      "member":{"shape":"ErrorDetail"}
     },
     "ErrorMessage":{"type":"string"},
     "ExecutionEngineConfig":{
@@ -1381,7 +1416,8 @@
       "members":{
         "Id":{"shape":"XmlStringMaxLen256"},
         "Type":{"shape":"ExecutionEngineType"},
-        "MasterInstanceSecurityGroupId":{"shape":"XmlStringMaxLen256"}
+        "MasterInstanceSecurityGroupId":{"shape":"XmlStringMaxLen256"},
+        "ExecutionRoleArn":{"shape":"IAMRoleArn"}
       }
     },
     "ExecutionEngineType":{
@@ -1396,6 +1432,7 @@
         "LogFile":{"shape":"String"}
       }
     },
+    "Float":{"type":"float"},
     "GetAutoTerminationPolicyInput":{
       "type":"structure",
       "required":["ClusterId"],
@@ -1494,6 +1531,12 @@
         "Args":{"shape":"StringList"}
       }
     },
+    "IAMRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:(aws[a-zA-Z0-9-]*):iam::(\\d{12})?:(role((\\u002F)|(\\u002F[\\u0021-\\u007F]+\\u002F))[\\w+=,.@-]+)$"
+    },
     "IdentityType":{
       "type":"string",
       "enum":[
@@ -1537,7 +1580,8 @@
         "ProvisionedOnDemandCapacity":{"shape":"WholeNumber"},
         "ProvisionedSpotCapacity":{"shape":"WholeNumber"},
         "InstanceTypeSpecifications":{"shape":"InstanceTypeSpecificationList"},
-        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"}
+        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"},
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
       }
     },
     "InstanceFleetConfig":{
@@ -1549,7 +1593,8 @@
         "TargetOnDemandCapacity":{"shape":"WholeNumber"},
         "TargetSpotCapacity":{"shape":"WholeNumber"},
         "InstanceTypeConfigs":{"shape":"InstanceTypeConfigList"},
-        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"}
+        "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"},
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
       }
     },
     "InstanceFleetConfigList":{
@@ -1567,7 +1612,8 @@
       "members":{
         "InstanceFleetId":{"shape":"InstanceFleetId"},
         "TargetOnDemandCapacity":{"shape":"WholeNumber"},
-        "TargetSpotCapacity":{"shape":"WholeNumber"}
+        "TargetSpotCapacity":{"shape":"WholeNumber"},
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
       }
     },
     "InstanceFleetProvisioningSpecifications":{
@@ -1575,6 +1621,13 @@
       "members":{
         "SpotSpecification":{"shape":"SpotProvisioningSpecification"},
         "OnDemandSpecification":{"shape":"OnDemandProvisioningSpecification"}
+      }
+    },
+    "InstanceFleetResizingSpecifications":{
+      "type":"structure",
+      "members":{
+        "SpotResizeSpecification":{"shape":"SpotResizingSpecification"},
+        "OnDemandResizeSpecification":{"shape":"OnDemandResizingSpecification"}
       }
     },
     "InstanceFleetState":{
@@ -2145,7 +2198,8 @@
         "Status":{"shape":"NotebookExecutionStatus"},
         "From":{"shape":"Date"},
         "To":{"shape":"Date"},
-        "Marker":{"shape":"Marker"}
+        "Marker":{"shape":"Marker"},
+        "ExecutionEngineId":{"shape":"XmlString"}
       }
     },
     "ListNotebookExecutionsOutput":{
@@ -2226,6 +2280,21 @@
       "members":{
         "Studios":{"shape":"StudioSummaryList"},
         "Marker":{"shape":"Marker"}
+      }
+    },
+    "ListSupportedInstanceTypesInput":{
+      "type":"structure",
+      "required":["ReleaseLabel"],
+      "members":{
+        "ReleaseLabel":{"shape":"String"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "ListSupportedInstanceTypesOutput":{
+      "type":"structure",
+      "members":{
+        "SupportedInstanceTypes":{"shape":"SupportedInstanceTypesList"},
+        "Marker":{"shape":"String"}
       }
     },
     "Long":{"type":"long"},
@@ -2314,7 +2383,11 @@
         "OutputNotebookURI":{"shape":"XmlString"},
         "LastStateChangeReason":{"shape":"XmlString"},
         "NotebookInstanceSecurityGroupId":{"shape":"XmlStringMaxLen256"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "NotebookS3Location":{"shape":"NotebookS3LocationForOutput"},
+        "OutputNotebookS3Location":{"shape":"OutputNotebookS3LocationForOutput"},
+        "OutputNotebookFormat":{"shape":"OutputNotebookFormat"},
+        "EnvironmentVariables":{"shape":"EnvironmentVariablesMap"}
       }
     },
     "NotebookExecutionStatus":{
@@ -2340,12 +2413,28 @@
         "NotebookExecutionName":{"shape":"XmlStringMaxLen256"},
         "Status":{"shape":"NotebookExecutionStatus"},
         "StartTime":{"shape":"Date"},
-        "EndTime":{"shape":"Date"}
+        "EndTime":{"shape":"Date"},
+        "NotebookS3Location":{"shape":"NotebookS3LocationForOutput"},
+        "ExecutionEngineId":{"shape":"XmlString"}
       }
     },
     "NotebookExecutionSummaryList":{
       "type":"list",
       "member":{"shape":"NotebookExecutionSummary"}
+    },
+    "NotebookS3LocationForOutput":{
+      "type":"structure",
+      "members":{
+        "Bucket":{"shape":"XmlStringMaxLen256"},
+        "Key":{"shape":"UriString"}
+      }
+    },
+    "NotebookS3LocationFromInput":{
+      "type":"structure",
+      "members":{
+        "Bucket":{"shape":"XmlStringMaxLen256"},
+        "Key":{"shape":"UriString"}
+      }
     },
     "OSRelease":{
       "type":"structure",
@@ -2388,10 +2477,35 @@
         "CapacityReservationOptions":{"shape":"OnDemandCapacityReservationOptions"}
       }
     },
+    "OnDemandResizingSpecification":{
+      "type":"structure",
+      "required":["TimeoutDurationMinutes"],
+      "members":{
+        "TimeoutDurationMinutes":{"shape":"WholeNumber"}
+      }
+    },
     "OptionalArnType":{
       "type":"string",
       "max":2048,
       "min":0
+    },
+    "OutputNotebookFormat":{
+      "type":"string",
+      "enum":["HTML"]
+    },
+    "OutputNotebookS3LocationForOutput":{
+      "type":"structure",
+      "members":{
+        "Bucket":{"shape":"XmlStringMaxLen256"},
+        "Key":{"shape":"UriString"}
+      }
+    },
+    "OutputNotebookS3LocationFromInput":{
+      "type":"structure",
+      "members":{
+        "Bucket":{"shape":"XmlStringMaxLen256"},
+        "Key":{"shape":"UriString"}
+      }
     },
     "PlacementGroupConfig":{
       "type":"structure",
@@ -2776,7 +2890,12 @@
     },
     "SpotProvisioningAllocationStrategy":{
       "type":"string",
-      "enum":["capacity-optimized"]
+      "enum":[
+        "capacity-optimized",
+        "price-capacity-optimized",
+        "lowest-price",
+        "diversified"
+      ]
     },
     "SpotProvisioningSpecification":{
       "type":"structure",
@@ -2798,11 +2917,16 @@
         "TERMINATE_CLUSTER"
       ]
     },
+    "SpotResizingSpecification":{
+      "type":"structure",
+      "required":["TimeoutDurationMinutes"],
+      "members":{
+        "TimeoutDurationMinutes":{"shape":"WholeNumber"}
+      }
+    },
     "StartNotebookExecutionInput":{
       "type":"structure",
       "required":[
-        "EditorId",
-        "RelativePath",
         "ExecutionEngine",
         "ServiceRole"
       ],
@@ -2814,7 +2938,11 @@
         "ExecutionEngine":{"shape":"ExecutionEngineConfig"},
         "ServiceRole":{"shape":"XmlString"},
         "NotebookInstanceSecurityGroupId":{"shape":"XmlStringMaxLen256"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "NotebookS3Location":{"shape":"NotebookS3LocationFromInput"},
+        "OutputNotebookS3Location":{"shape":"OutputNotebookS3LocationFromInput"},
+        "OutputNotebookFormat":{"shape":"OutputNotebookFormat"},
+        "EnvironmentVariables":{"shape":"EnvironmentVariablesMap"}
       }
     },
     "StartNotebookExecutionOutput":{
@@ -3030,6 +3158,26 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "SupportedInstanceType":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "MemoryGB":{"shape":"Float"},
+        "StorageGB":{"shape":"Integer"},
+        "VCPU":{"shape":"Integer"},
+        "Is64BitsOnly":{"shape":"Boolean"},
+        "InstanceFamilyId":{"shape":"String"},
+        "EbsOptimizedAvailable":{"shape":"Boolean"},
+        "EbsOptimizedByDefault":{"shape":"Boolean"},
+        "NumberOfDisks":{"shape":"Integer"},
+        "EbsStorageOnly":{"shape":"Boolean"},
+        "Architecture":{"shape":"String"}
+      }
+    },
+    "SupportedInstanceTypesList":{
+      "type":"list",
+      "member":{"shape":"SupportedInstanceType"}
+    },
     "SupportedProductConfig":{
       "type":"structure",
       "members":{
@@ -3120,6 +3268,12 @@
         "IdentityType":{"shape":"IdentityType"},
         "SessionPolicyArn":{"shape":"XmlStringMaxLen256"}
       }
+    },
+    "UriString":{
+      "type":"string",
+      "max":10280,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\r\\n\\t]*"
     },
     "UsernamePassword":{
       "type":"structure",

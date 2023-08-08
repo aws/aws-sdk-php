@@ -1214,6 +1214,80 @@
         }
       ]
     },
+    "DescribeAccountConfiguration": {
+      "name": "DescribeAccountConfiguration",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/accountConfiguration",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeAccountConfigurationRequest"
+      },
+      "output": {
+        "shape": "DescribeAccountConfigurationResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "DescribeThumbnails": {
+      "name": "DescribeThumbnails",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/channels/{channelId}/thumbnails",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeThumbnailsRequest"
+      },
+      "output": {
+        "shape": "DescribeThumbnailsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
     "ListChannels": {
       "name": "ListChannels",
       "http": {
@@ -1674,6 +1748,43 @@
         },
         {
           "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateAccountConfiguration": {
+      "name": "UpdateAccountConfiguration",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/prod/accountConfiguration",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateAccountConfigurationRequest"
+      },
+      "output": {
+        "shape": "UpdateAccountConfigurationResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
         }
       ]
     },
@@ -2441,6 +2552,15 @@
         "DOES_NOT_IMPLEMENT_ACCESSIBILITY_FEATURES",
         "IMPLEMENTS_ACCESSIBILITY_FEATURES"
       ]
+    },
+    "AccountConfiguration": {
+      "type": "structure",
+      "members": {
+        "kmsKeyId": {
+          "shape": "__string",
+          "locationName": "kmsKeyId"
+        }
+      }
     },
     "AfdSignaling": {
       "type": "string",
@@ -4946,6 +5066,14 @@
         "UhdDeviceSettings": {
           "shape": "InputDeviceUhdSettings",
           "locationName": "uhdDeviceSettings"
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
         }
       }
     },
@@ -6057,6 +6185,10 @@
         "VideoDescriptions": {
           "shape": "__listOfVideoDescription",
           "locationName": "videoDescriptions"
+        },
+        "ThumbnailConfiguration": {
+          "shape": "ThumbnailConfiguration",
+          "locationName": "thumbnailConfiguration"
         }
       },
       "required": [
@@ -6351,6 +6483,72 @@
       "exception": true,
       "error": {
         "httpStatusCode": 504
+      }
+    },
+    "DescribeAccountConfigurationRequest": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "DescribeAccountConfigurationResponse": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "DescribeAccountConfigurationResultModel": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "DescribeThumbnailsRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelId"
+        },
+        "PipelineId": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "pipelineId"
+        },
+        "ThumbnailType": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "thumbnailType"
+        }
+      },
+      "required": [
+        "ThumbnailType",
+        "PipelineId",
+        "ChannelId"
+      ]
+    },
+    "DescribeThumbnailsResponse": {
+      "type": "structure",
+      "members": {
+        "ThumbnailDetails": {
+          "shape": "__listOfThumbnailDetail",
+          "locationName": "thumbnailDetails"
+        }
+      }
+    },
+    "DescribeThumbnailsResultModel": {
+      "type": "structure",
+      "members": {
+        "ThumbnailDetails": {
+          "shape": "__listOfThumbnailDetail",
+          "locationName": "thumbnailDetails"
+        }
       }
     },
     "GlobalConfiguration": {
@@ -7399,11 +7597,12 @@
         "Tag": {
           "shape": "__string",
           "locationName": "tag"
+        },
+        "Id3": {
+          "shape": "__string",
+          "locationName": "id3"
         }
-      },
-      "required": [
-        "Tag"
-      ]
+      }
     },
     "HlsId3SegmentTaggingState": {
       "type": "string",
@@ -7946,6 +8145,14 @@
         "UhdDeviceSettings": {
           "shape": "InputDeviceUhdSettings",
           "locationName": "uhdDeviceSettings"
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
         }
       }
     },
@@ -8156,6 +8363,14 @@
         "UhdDeviceSettings": {
           "shape": "InputDeviceUhdSettings",
           "locationName": "uhdDeviceSettings"
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
         }
       }
     },
@@ -9459,6 +9674,10 @@
           "shape": "__string",
           "locationName": "scte35Pid"
         },
+        "Scte35PrerollPullupMilliseconds": {
+          "shape": "__doubleMin0Max5000",
+          "locationName": "scte35PrerollPullupMilliseconds"
+        },
         "SegmentationMarkers": {
           "shape": "M2tsSegmentationMarkers",
           "locationName": "segmentationMarkers"
@@ -10479,6 +10698,10 @@
         "Sid": {
           "shape": "__doubleMin1Max65535",
           "locationName": "sid"
+        },
+        "Timezone": {
+          "shape": "NielsenWatermarkTimezones",
+          "locationName": "timezone"
         }
       },
       "required": [
@@ -10491,6 +10714,21 @@
       "enum": [
         "DISABLED",
         "ENABLED"
+      ]
+    },
+    "NielsenWatermarkTimezones": {
+      "type": "string",
+      "enum": [
+        "AMERICA_PUERTO_RICO",
+        "US_ALASKA",
+        "US_ARIZONA",
+        "US_CENTRAL",
+        "US_EASTERN",
+        "US_HAWAII",
+        "US_MOUNTAIN",
+        "US_PACIFIC",
+        "US_SAMOA",
+        "UTC"
       ]
     },
     "NielsenWatermarksCbetStepaside": {
@@ -11781,6 +12019,42 @@
         "WEB_DELIVERY_ALLOWED"
       ]
     },
+    "UpdateAccountConfigurationRequest": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "UpdateAccountConfigurationRequestModel": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "UpdateAccountConfigurationResponse": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "UpdateAccountConfigurationResultModel": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
     "SmoothGroupAudioOnlyTimecodeControl": {
       "type": "string",
       "enum": [
@@ -12359,6 +12633,39 @@
         "STRENGTH_16"
       ]
     },
+    "Thumbnail": {
+      "type": "structure",
+      "members": {
+        "Body": {
+          "shape": "__string",
+          "locationName": "body"
+        },
+        "ContentType": {
+          "shape": "__string",
+          "locationName": "contentType"
+        },
+        "ThumbnailType": {
+          "shape": "ThumbnailType",
+          "locationName": "thumbnailType"
+        },
+        "TimeStamp": {
+          "shape": "__timestampIso8601",
+          "locationName": "timeStamp"
+        }
+      }
+    },
+    "ThumbnailConfiguration": {
+      "type": "structure",
+      "members": {
+        "State": {
+          "shape": "ThumbnailState",
+          "locationName": "state"
+        }
+      },
+      "required": [
+        "State"
+      ]
+    },
     "ThumbnailData": {
       "type": "structure",
       "members": {
@@ -12367,6 +12674,38 @@
           "locationName": "body"
         }
       }
+    },
+    "ThumbnailDetail": {
+      "type": "structure",
+      "members": {
+        "PipelineId": {
+          "shape": "__string",
+          "locationName": "pipelineId"
+        },
+        "Thumbnails": {
+          "shape": "__listOfThumbnail",
+          "locationName": "thumbnails"
+        }
+      }
+    },
+    "ThumbnailNoData": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "ThumbnailState": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "DISABLED"
+      ]
+    },
+    "ThumbnailType": {
+      "type": "string",
+      "enum": [
+        "UNSPECIFIED",
+        "CURRENT_ACTIVE"
+      ]
     },
     "TimecodeBurninFontSize": {
       "type": "string",
@@ -12811,6 +13150,10 @@
         "UhdDeviceSettings": {
           "shape": "InputDeviceConfigurableSettings",
           "locationName": "uhdDeviceSettings"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
         }
       }
     },
@@ -12833,6 +13176,10 @@
         "UhdDeviceSettings": {
           "shape": "InputDeviceConfigurableSettings",
           "locationName": "uhdDeviceSettings"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
         }
       },
       "required": [
@@ -12889,6 +13236,14 @@
         "UhdDeviceSettings": {
           "shape": "InputDeviceUhdSettings",
           "locationName": "uhdDeviceSettings"
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
         }
       }
     },
@@ -13418,6 +13773,9 @@
     "__doubleMin0Max100": {
       "type": "double"
     },
+    "__doubleMin0Max5000": {
+      "type": "double"
+    },
     "__doubleMin1": {
       "type": "double"
     },
@@ -13941,6 +14299,18 @@
       "type": "list",
       "member": {
         "shape": "Scte35Descriptor"
+      }
+    },
+    "__listOfThumbnail": {
+      "type": "list",
+      "member": {
+        "shape": "Thumbnail"
+      }
+    },
+    "__listOfThumbnailDetail": {
+      "type": "list",
+      "member": {
+        "shape": "ThumbnailDetail"
       }
     },
     "__listOfTransferringInputDeviceSummary": {

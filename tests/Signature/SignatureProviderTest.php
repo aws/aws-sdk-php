@@ -1,7 +1,11 @@
 <?php
 namespace Aws\Test\Signature;
 
+use Aws\Signature\AnonymousSignature;
+use Aws\Signature\S3SignatureV4;
+use Aws\Signature\SignatureInterface;
 use Aws\Signature\SignatureProvider;
+use Aws\Signature\SignatureV4;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -12,12 +16,18 @@ class SignatureProviderTest extends TestCase
     public function versionProvider()
     {
         return [
-            ['v4', 'Aws\Signature\SignatureV4', 'foo'],
-            ['v4', 'Aws\Signature\S3SignatureV4', 's3'],
-            ['v4', 'Aws\Signature\S3SignatureV4', 's3control'],
-            ['v4', 'Aws\Signature\S3SignatureV4', 's3-object-lambda'],
-            ['v4-unsigned-body', 'Aws\Signature\SignatureV4', 'foo'],
-            ['anonymous', 'Aws\Signature\AnonymousSignature', 's3'],
+            ['v4', SignatureV4::class, 'foo'],
+            ['v4', S3SignatureV4::class, 's3'],
+            ['v4', S3SignatureV4::class, 's3control'],
+            ['v4', S3SignatureV4::class, 's3-object-lambda'],
+            ['v4a', S3SignatureV4::class, 's3'],
+            ['v4a', S3SignatureV4::class, 's3control'],
+            ['v4a', S3SignatureV4::class, 's3-object-lambda'],
+            ['v4a', SignatureV4::class, 'eventbridge'],
+            ['v4a', SignatureV4::class, 'eventbridge'],
+            ['v4a', SignatureV4::class, 'eventbridge'],
+            ['v4-unsigned-body', SignatureV4::class, 'foo'],
+            ['anonymous', AnonymousSignature::class, 's3']
         ];
     }
 
@@ -43,7 +53,7 @@ class SignatureProviderTest extends TestCase
     public function testResolvesSignaturesSuccessfully()
     {
         $this->assertInstanceOf(
-            'Aws\Signature\SignatureInterface',
+            SignatureInterface::class,
             SignatureProvider::resolve(
                 SignatureProvider::version(),
                 'v4',

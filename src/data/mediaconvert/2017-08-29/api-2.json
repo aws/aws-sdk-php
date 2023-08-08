@@ -1201,6 +1201,41 @@
         "NOT_ACCELERATED"
       ]
     },
+    "AdvancedInputFilter": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "AdvancedInputFilterAddTexture": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "AdvancedInputFilterSettings": {
+      "type": "structure",
+      "members": {
+        "AddTexture": {
+          "shape": "AdvancedInputFilterAddTexture",
+          "locationName": "addTexture"
+        },
+        "Sharpening": {
+          "shape": "AdvancedInputFilterSharpen",
+          "locationName": "sharpening"
+        }
+      }
+    },
+    "AdvancedInputFilterSharpen": {
+      "type": "string",
+      "enum": [
+        "OFF",
+        "LOW",
+        "HIGH"
+      ]
+    },
     "AfdSignaling": {
       "type": "string",
       "enum": [
@@ -1527,6 +1562,10 @@
         "TargetLkfs": {
           "shape": "__doubleMinNegative59Max0",
           "locationName": "targetLkfs"
+        },
+        "TruePeakLimiterThreshold": {
+          "shape": "__doubleMinNegative8Max0",
+          "locationName": "truePeakLimiterThreshold"
         }
       }
     },
@@ -1546,7 +1585,7 @@
           "locationName": "defaultSelection"
         },
         "ExternalAudioFileInput": {
-          "shape": "__stringPatternS3MM2PPWWEEBBMMMM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMKKAAMMOOVVMMTTSSMM2TTWWMMVVaAAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8LLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMAAAACCAAIIFFFFMMPP2AACC3EECC3DDTTSSEEAATTMMOOSSOOGGGGaAHttpsMM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMKKAAMMOOVVMMTTSSMM2TTWWMMVVaAAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8LLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMAAAACCAAIIFFFFMMPP2AACC3EECC3DDTTSSEEAATTMMOOSSOOGGGGaA",
+          "shape": "__stringPatternS3Https",
           "locationName": "externalAudioFileInput"
         },
         "HlsRenditionGroupSettings": {
@@ -1917,6 +1956,38 @@
         "httpStatusCode": 400
       }
     },
+    "BandwidthReductionFilter": {
+      "type": "structure",
+      "members": {
+        "Sharpening": {
+          "shape": "BandwidthReductionFilterSharpening",
+          "locationName": "sharpening"
+        },
+        "Strength": {
+          "shape": "BandwidthReductionFilterStrength",
+          "locationName": "strength"
+        }
+      }
+    },
+    "BandwidthReductionFilterSharpening": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "OFF"
+      ]
+    },
+    "BandwidthReductionFilterStrength": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "AUTO",
+        "OFF"
+      ]
+    },
     "BillingTagsSource": {
       "type": "string",
       "enum": [
@@ -2241,6 +2312,13 @@
         }
       }
     },
+    "CaptionSourceConvertPaintOnToPopOn": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "CaptionSourceFramerate": {
       "type": "structure",
       "members": {
@@ -2316,6 +2394,27 @@
         "OutputChannels": {
           "shape": "__listOfOutputChannelMapping",
           "locationName": "outputChannels"
+        }
+      }
+    },
+    "ClipLimits": {
+      "type": "structure",
+      "members": {
+        "MaximumRGBTolerance": {
+          "shape": "__integerMin90Max105",
+          "locationName": "maximumRGBTolerance"
+        },
+        "MaximumYUV": {
+          "shape": "__integerMin920Max1023",
+          "locationName": "maximumYUV"
+        },
+        "MinimumRGBTolerance": {
+          "shape": "__integerMinNegative5Max10",
+          "locationName": "minimumRGBTolerance"
+        },
+        "MinimumYUV": {
+          "shape": "__integerMin0Max128",
+          "locationName": "minimumYUV"
         }
       }
     },
@@ -2400,6 +2499,10 @@
         "CodecSpecification": {
           "shape": "CmafCodecSpecification",
           "locationName": "codecSpecification"
+        },
+        "DashManifestStyle": {
+          "shape": "DashManifestStyle",
+          "locationName": "dashManifestStyle"
         },
         "Destination": {
           "shape": "__stringPatternS3",
@@ -2780,6 +2883,10 @@
           "shape": "__integerMin1Max100",
           "locationName": "brightness"
         },
+        "ClipLimits": {
+          "shape": "ClipLimits",
+          "locationName": "clipLimits"
+        },
         "ColorSpaceConversion": {
           "shape": "ColorSpaceConversion",
           "locationName": "colorSpaceConversion"
@@ -2791,6 +2898,10 @@
         "Hdr10Metadata": {
           "shape": "Hdr10Metadata",
           "locationName": "hdr10Metadata"
+        },
+        "HdrToSdrToneMapper": {
+          "shape": "HDRToSDRToneMapper",
+          "locationName": "hdrToSdrToneMapper"
         },
         "Hue": {
           "shape": "__integerMinNegative180Max180",
@@ -2826,7 +2937,8 @@
         "HDR10",
         "HLG_2020",
         "P3DCI",
-        "P3D65_SDR"
+        "P3D65_SDR",
+        "P3D65_HDR"
       ]
     },
     "ColorSpaceConversion": {
@@ -2838,7 +2950,8 @@
         "FORCE_HDR10",
         "FORCE_HLG_2020",
         "FORCE_P3DCI",
-        "FORCE_P3D65_SDR"
+        "FORCE_P3D65_SDR",
+        "FORCE_P3D65_HDR"
       ]
     },
     "ColorSpaceUsage": {
@@ -3187,6 +3300,10 @@
           "shape": "__string",
           "locationName": "baseUrl"
         },
+        "DashManifestStyle": {
+          "shape": "DashManifestStyle",
+          "locationName": "dashManifestStyle"
+        },
         "Destination": {
           "shape": "__stringPatternS3",
           "locationName": "destination"
@@ -3365,6 +3482,14 @@
         "DISABLED"
       ]
     },
+    "DashManifestStyle": {
+      "type": "string",
+      "enum": [
+        "BASIC",
+        "COMPACT",
+        "DISTINCT"
+      ]
+    },
     "DecryptionMode": {
       "type": "string",
       "enum": [
@@ -3379,7 +3504,8 @@
         "INTERPOLATE",
         "INTERPOLATE_TICKER",
         "BLEND",
-        "BLEND_TICKER"
+        "BLEND_TICKER",
+        "LINEAR_INTERPOLATION"
       ]
     },
     "Deinterlacer": {
@@ -4397,6 +4523,10 @@
           "shape": "FileSourceConvert608To708",
           "locationName": "convert608To708"
         },
+        "ConvertPaintToPop": {
+          "shape": "CaptionSourceConvertPaintOnToPopOn",
+          "locationName": "convertPaintToPop"
+        },
         "Framerate": {
           "shape": "CaptionSourceFramerate",
           "locationName": "framerate"
@@ -4761,6 +4891,10 @@
         "AdaptiveQuantization": {
           "shape": "H264AdaptiveQuantization",
           "locationName": "adaptiveQuantization"
+        },
+        "BandwidthReductionFilter": {
+          "shape": "BandwidthReductionFilter",
+          "locationName": "bandwidthReductionFilter"
         },
         "Bitrate": {
           "shape": "__integerMin1000Max1152000000",
@@ -5146,6 +5280,10 @@
           "shape": "H265AlternateTransferFunctionSei",
           "locationName": "alternateTransferFunctionSei"
         },
+        "BandwidthReductionFilter": {
+          "shape": "BandwidthReductionFilter",
+          "locationName": "bandwidthReductionFilter"
+        },
         "Bitrate": {
           "shape": "__integerMin1000Max1466400000",
           "locationName": "bitrate"
@@ -5359,6 +5497,13 @@
       "enum": [
         "HVC1",
         "HEV1"
+      ]
+    },
+    "HDRToSDRToneMapper": {
+      "type": "string",
+      "enum": [
+        "PRESERVE_DETAILS",
+        "VIBRANT"
       ]
     },
     "Hdr10Metadata": {
@@ -5665,6 +5810,10 @@
           "shape": "__integerMin0Max3600",
           "locationName": "programDateTimePeriod"
         },
+        "ProgressiveWriteHlsManifest": {
+          "shape": "HlsProgressiveWriteHlsManifest",
+          "locationName": "progressiveWriteHlsManifest"
+        },
         "SegmentControl": {
           "shape": "HlsSegmentControl",
           "locationName": "segmentControl"
@@ -5802,6 +5951,13 @@
       "enum": [
         "INCLUDE",
         "EXCLUDE"
+      ]
+    },
+    "HlsProgressiveWriteHlsManifest": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
       ]
     },
     "HlsRenditionGroupSettings": {
@@ -5963,6 +6119,14 @@
     "Input": {
       "type": "structure",
       "members": {
+        "AdvancedInputFilter": {
+          "shape": "AdvancedInputFilter",
+          "locationName": "advancedInputFilter"
+        },
+        "AdvancedInputFilterSettings": {
+          "shape": "AdvancedInputFilterSettings",
+          "locationName": "advancedInputFilterSettings"
+        },
         "AudioSelectorGroups": {
           "shape": "__mapOfAudioSelectorGroup",
           "locationName": "audioSelectorGroups"
@@ -5996,7 +6160,7 @@
           "locationName": "dolbyVisionMetadataXml"
         },
         "FileInput": {
-          "shape": "__stringPatternS3MM2PPMM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMKKAAMMOOVVMMTTSSMM2TTWWMMVVaAAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8WWEEBBMMLLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMXXMMLLOOGGGGaAAATTMMOOSSHttpsMM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMKKAAMMOOVVMMTTSSMM2TTWWMMVVaAAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8WWEEBBMMLLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMXXMMLLOOGGGGaAAATTMMOOSS",
+          "shape": "__stringPatternS3Https",
           "locationName": "fileInput"
         },
         "FilterEnable": {
@@ -6004,7 +6168,7 @@
           "locationName": "filterEnable"
         },
         "FilterStrength": {
-          "shape": "__integerMinNegative5Max5",
+          "shape": "__integerMin0Max5",
           "locationName": "filterStrength"
         },
         "ImageInserter": {
@@ -6151,6 +6315,14 @@
     "InputTemplate": {
       "type": "structure",
       "members": {
+        "AdvancedInputFilter": {
+          "shape": "AdvancedInputFilter",
+          "locationName": "advancedInputFilter"
+        },
+        "AdvancedInputFilterSettings": {
+          "shape": "AdvancedInputFilterSettings",
+          "locationName": "advancedInputFilterSettings"
+        },
         "AudioSelectorGroups": {
           "shape": "__mapOfAudioSelectorGroup",
           "locationName": "audioSelectorGroups"
@@ -6184,7 +6356,7 @@
           "locationName": "filterEnable"
         },
         "FilterStrength": {
-          "shape": "__integerMinNegative5Max5",
+          "shape": "__integerMin0Max5",
           "locationName": "filterStrength"
         },
         "ImageInserter": {
@@ -6323,6 +6495,10 @@
           "shape": "BillingTagsSource",
           "locationName": "billingTagsSource"
         },
+        "ClientRequestToken": {
+          "shape": "__string",
+          "locationName": "clientRequestToken"
+        },
         "CreatedAt": {
           "shape": "__timestampUnix",
           "locationName": "createdAt"
@@ -6406,11 +6582,15 @@
         "UserMetadata": {
           "shape": "__mapOf__string",
           "locationName": "userMetadata"
+        },
+        "Warnings": {
+          "shape": "__listOfWarningGroup",
+          "locationName": "warnings"
         }
       },
       "required": [
-        "Role",
-        "Settings"
+        "Settings",
+        "Role"
       ]
     },
     "JobMessages": {
@@ -6643,7 +6823,7 @@
           "locationName": "kantarLicenseId"
         },
         "KantarServerUrl": {
-          "shape": "__stringPatternHttpsKantarmediaCom",
+          "shape": "__stringPatternHttpsKantarmedia",
           "locationName": "kantarServerUrl"
         },
         "LogDestination": {
@@ -8199,7 +8379,8 @@
         "D_10",
         "XDCAM",
         "OP1A",
-        "XAVC"
+        "XAVC",
+        "XDCAM_RDD9"
       ]
     },
     "MxfSettings": {
@@ -9177,7 +9358,8 @@
       "type": "string",
       "enum": [
         "LIMITED_RANGE_SQUEEZE",
-        "NONE"
+        "NONE",
+        "LIMITED_RANGE_CLIP"
       ]
     },
     "ScalingBehavior": {
@@ -9760,6 +9942,7 @@
         "H_264",
         "H_265",
         "MPEG2",
+        "PASSTHROUGH",
         "PRORES",
         "VC3",
         "VP8",
@@ -10187,6 +10370,23 @@
           "locationName": "rateControlMode"
         }
       }
+    },
+    "WarningGroup": {
+      "type": "structure",
+      "members": {
+        "Code": {
+          "shape": "__integer",
+          "locationName": "code"
+        },
+        "Count": {
+          "shape": "__integer",
+          "locationName": "count"
+        }
+      },
+      "required": [
+        "Count",
+        "Code"
+      ]
     },
     "WatermarkingStrength": {
       "type": "string",
@@ -10635,6 +10835,9 @@
     "__doubleMinNegative6Max3": {
       "type": "double"
     },
+    "__doubleMinNegative8Max0": {
+      "type": "double"
+    },
     "__integer": {
       "type": "integer"
     },
@@ -10742,6 +10945,11 @@
       "type": "integer",
       "min": 0,
       "max": 47185920
+    },
+    "__integerMin0Max5": {
+      "type": "integer",
+      "min": 0,
+      "max": 5
     },
     "__integerMin0Max500": {
       "type": "integer",
@@ -11058,6 +11266,16 @@
       "min": 8,
       "max": 4096
     },
+    "__integerMin90Max105": {
+      "type": "integer",
+      "min": 90,
+      "max": 105
+    },
+    "__integerMin920Max1023": {
+      "type": "integer",
+      "min": 920,
+      "max": 1023
+    },
     "__integerMin96Max600": {
       "type": "integer",
       "min": 96,
@@ -11098,10 +11316,10 @@
       "min": -50,
       "max": 50
     },
-    "__integerMinNegative5Max5": {
+    "__integerMinNegative5Max10": {
       "type": "integer",
       "min": -5,
-      "max": 5
+      "max": 10
     },
     "__integerMinNegative60Max6": {
       "type": "integer",
@@ -11291,6 +11509,12 @@
       "type": "list",
       "member": {
         "shape": "TeletextPageType"
+      }
+    },
+    "__listOfWarningGroup": {
+      "type": "list",
+      "member": {
+        "shape": "WarningGroup"
       }
     },
     "__listOf__doubleMinNegative60Max6": {
@@ -11561,9 +11785,9 @@
       "type": "string",
       "pattern": "^https:\\/\\/"
     },
-    "__stringPatternHttpsKantarmediaCom": {
+    "__stringPatternHttpsKantarmedia": {
       "type": "string",
-      "pattern": "^https:\\/\\/.*.kantarmedia.com$"
+      "pattern": "^https:\\/\\/.*.kantarmedia.*$"
     },
     "__stringPatternIdentityAZaZ26AZaZ09163": {
       "type": "string",
@@ -11577,13 +11801,9 @@
       "type": "string",
       "pattern": "^s3:\\/\\/.*\\/(ASSETMAP.xml)?$"
     },
-    "__stringPatternS3MM2PPMM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMKKAAMMOOVVMMTTSSMM2TTWWMMVVaAAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8WWEEBBMMLLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMXXMMLLOOGGGGaAAATTMMOOSSHttpsMM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMKKAAMMOOVVMMTTSSMM2TTWWMMVVaAAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8WWEEBBMMLLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMXXMMLLOOGGGGaAAATTMMOOSS": {
+    "__stringPatternS3Https": {
       "type": "string",
-      "pattern": "^((s3://([^\\/]+\\/+)+([^\\/\\.]+|(([^\\/]*)\\.([mM]2[pP]|[mM]2[vV]|[mM][pP][eE][gG]|[mM][pP]3|[aA][vV][iI]|[mM][pP]4|[fF][lL][vV]|[mM][pP][tT]|[mM][pP][gG]|[mM]4[vV]|[tT][rR][pP]|[fF]4[vV]|[mM]2[tT][sS]|[tT][sS]|264|[hH]264|[mM][kK][vV]|[mM][kK][aA]|[mM][oO][vV]|[mM][tT][sS]|[mM]2[tT]|[wW][mM][vVaA]|[aA][sS][fF]|[vV][oO][bB]|3[gG][pP]|3[gG][pP][pP]|[mM][xX][fF]|[dD][iI][vV][xX]|[xX][vV][iI][dD]|[rR][aA][wW]|[dD][vV]|[gG][xX][fF]|[mM]1[vV]|3[gG]2|[vV][mM][fF]|[mM]3[uU]8|[wW][eE][bB][mM]|[lL][cC][hH]|[gG][xX][fF]_[mM][pP][eE][gG]2|[mM][xX][fF]_[mM][pP][eE][gG]2|[mM][xX][fF][hH][dD]|[wW][aA][vV]|[yY]4[mM]|[xX][mM][lL]|[oO][gG][gGaA]|[aA][tT][mM][oO][sS]))))|(https?://([^\\/]+\\/+)+([^\\/\\.]+|(([^\\/]*)\\.([mM]2[vV]|[mM][pP][eE][gG]|[mM][pP]3|[aA][vV][iI]|[mM][pP]4|[fF][lL][vV]|[mM][pP][tT]|[mM][pP][gG]|[mM]4[vV]|[tT][rR][pP]|[fF]4[vV]|[mM]2[tT][sS]|[tT][sS]|264|[hH]264|[mM][kK][vV]|[mM][kK][aA]|[mM][oO][vV]|[mM][tT][sS]|[mM]2[tT]|[wW][mM][vVaA]|[aA][sS][fF]|[vV][oO][bB]|3[gG][pP]|3[gG][pP][pP]|[mM][xX][fF]|[dD][iI][vV][xX]|[xX][vV][iI][dD]|[rR][aA][wW]|[dD][vV]|[gG][xX][fF]|[mM]1[vV]|3[gG]2|[vV][mM][fF]|[mM]3[uU]8|[wW][eE][bB][mM]|[lL][cC][hH]|[gG][xX][fF]_[mM][pP][eE][gG]2|[mM][xX][fF]_[mM][pP][eE][gG]2|[mM][xX][fF][hH][dD]|[wW][aA][vV]|[yY]4[mM]|[xX][mM][lL]|[oO][gG][gGaA]|[aA][tT][mM][oO][sS])))(\\?([^&=]+=[^&]+&)*[^&=]+=[^&]+)?))$"
-    },
-    "__stringPatternS3MM2PPWWEEBBMMMM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMKKAAMMOOVVMMTTSSMM2TTWWMMVVaAAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8LLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMAAAACCAAIIFFFFMMPP2AACC3EECC3DDTTSSEEAATTMMOOSSOOGGGGaAHttpsMM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMKKAAMMOOVVMMTTSSMM2TTWWMMVVaAAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8LLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMAAAACCAAIIFFFFMMPP2AACC3EECC3DDTTSSEEAATTMMOOSSOOGGGGaA": {
-      "type": "string",
-      "pattern": "^((s3://([^\\/]+\\/+)+([^\\/\\.]+|(([^\\/]*)\\.([mM]2[pP]|[wW][eE][bB][mM]|[mM]2[vV]|[mM][pP][eE][gG]|[mM][pP]3|[aA][vV][iI]|[mM][pP]4|[fF][lL][vV]|[mM][pP][tT]|[mM][pP][gG]|[mM]4[vV]|[tT][rR][pP]|[fF]4[vV]|[mM]2[tT][sS]|[tT][sS]|264|[hH]264|[mM][kK][vV]|[mM][kK][aA]|[mM][oO][vV]|[mM][tT][sS]|[mM]2[tT]|[wW][mM][vVaA]|[aA][sS][fF]|[vV][oO][bB]|3[gG][pP]|3[gG][pP][pP]|[mM][xX][fF]|[dD][iI][vV][xX]|[xX][vV][iI][dD]|[rR][aA][wW]|[dD][vV]|[gG][xX][fF]|[mM]1[vV]|3[gG]2|[vV][mM][fF]|[mM]3[uU]8|[lL][cC][hH]|[gG][xX][fF]_[mM][pP][eE][gG]2|[mM][xX][fF]_[mM][pP][eE][gG]2|[mM][xX][fF][hH][dD]|[wW][aA][vV]|[yY]4[mM]|[aA][aA][cC]|[aA][iI][fF][fF]|[mM][pP]2|[aA][cC]3|[eE][cC]3|[dD][tT][sS][eE]|[aA][tT][mM][oO][sS]|[oO][gG][gGaA]))))|(https?://([^\\/]+\\/+)+([^\\/\\.]+|(([^\\/]*)\\.([mM]2[vV]|[mM][pP][eE][gG]|[mM][pP]3|[aA][vV][iI]|[mM][pP]4|[fF][lL][vV]|[mM][pP][tT]|[mM][pP][gG]|[mM]4[vV]|[tT][rR][pP]|[fF]4[vV]|[mM]2[tT][sS]|[tT][sS]|264|[hH]264|[mM][kK][vV]|[mM][kK][aA]|[mM][oO][vV]|[mM][tT][sS]|[mM]2[tT]|[wW][mM][vVaA]|[aA][sS][fF]|[vV][oO][bB]|3[gG][pP]|3[gG][pP][pP]|[mM][xX][fF]|[dD][iI][vV][xX]|[xX][vV][iI][dD]|[rR][aA][wW]|[dD][vV]|[gG][xX][fF]|[mM]1[vV]|3[gG]2|[vV][mM][fF]|[mM]3[uU]8|[lL][cC][hH]|[gG][xX][fF]_[mM][pP][eE][gG]2|[mM][xX][fF]_[mM][pP][eE][gG]2|[mM][xX][fF][hH][dD]|[wW][aA][vV]|[yY]4[mM]|[aA][aA][cC]|[aA][iI][fF][fF]|[mM][pP]2|[aA][cC]3|[eE][cC]3|[dD][tT][sS][eE]|[aA][tT][mM][oO][sS]|[oO][gG][gGaA])))(\\?([^&=]+=[^&]+&)*[^&=]+=[^&]+)?))$"
+      "pattern": "^s3://([^\\/]+\\/+)+((([^\\/]*)))|^https?://[^\\/].*[^&]$"
     },
     "__stringPatternSNManifestConfirmConditionNotificationNS": {
       "type": "string",

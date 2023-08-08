@@ -111,7 +111,8 @@
         {"shape":"NotFoundException"},
         {"shape":"InvalidFleetStatusException"},
         {"shape":"UnsupportedRegionException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "CreateGameServerGroup":{
@@ -1792,13 +1793,20 @@
         "GENERATED"
       ]
     },
+    "ClaimFilterOption":{
+      "type":"structure",
+      "members":{
+        "InstanceStatuses":{"shape":"FilterInstanceStatuses"}
+      }
+    },
     "ClaimGameServerInput":{
       "type":"structure",
       "required":["GameServerGroupName"],
       "members":{
         "GameServerGroupName":{"shape":"GameServerGroupNameOrArn"},
         "GameServerId":{"shape":"GameServerId"},
-        "GameServerData":{"shape":"GameServerData"}
+        "GameServerData":{"shape":"GameServerData"},
+        "FilterOption":{"shape":"ClaimFilterOption"}
       }
     },
     "ClaimGameServerOutput":{
@@ -3068,6 +3076,17 @@
       "members":{
         "AllowedLocations":{"shape":"LocationList"}
       }
+    },
+    "FilterInstanceStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DRAINING"
+      ]
+    },
+    "FilterInstanceStatuses":{
+      "type":"list",
+      "member":{"shape":"FilterInstanceStatus"}
     },
     "FleetAction":{
       "type":"string",
@@ -4366,7 +4385,9 @@
       "enum":[
         "WINDOWS_2012",
         "AMAZON_LINUX",
-        "AMAZON_LINUX_2"
+        "AMAZON_LINUX_2",
+        "WINDOWS_2016",
+        "AMAZON_LINUX_2023"
       ]
     },
     "OutOfCapacityException":{

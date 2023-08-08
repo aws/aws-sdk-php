@@ -84,6 +84,14 @@ foreach (glob(__DIR__ . '/../src/data/**/**/api-2.json') as $file) {
 
     $manifest[$identifier]['versions'][$metadata['apiVersion']]
         = $metadata['apiVersion'];
+
+    $serviceIdentifier = isset($metadata['serviceId'])
+        ? str_replace(' ', '_', strtolower($metadata['serviceId']))
+        : '';
+
+    if (!empty($serviceIdentifier)) {
+        $manifest[$identifier]['serviceIdentifier'] = $serviceIdentifier;
+    }
 }
 
 foreach ($manifest as $identifier => &$metadata) {

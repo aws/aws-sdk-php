@@ -3,6 +3,7 @@
 namespace Aws\Test\EndpointDiscovery;
 
 use Aws\Api\ApiProvider;
+use Aws\CacheInterface;
 use Aws\EndpointDiscovery\Configuration;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
@@ -12,7 +13,7 @@ use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers \Aws\EndpointDiscovery\ConfigurationProvider
+ * @covers Aws\EndpointDiscovery\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
@@ -280,7 +281,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\Michael\\Home');
-        $ref = new \ReflectionClass('Aws\EndpointDiscovery\ConfigurationProvider');
+        $ref = new \ReflectionClass(ConfigurationProvider::class);
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\Michael\\Home', $meth->invoke(null));
@@ -388,7 +389,7 @@ EOT;
     public function testCreatesFromCache()
     {
         $expected = new Configuration(true, 3500);
-        $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
+        $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())

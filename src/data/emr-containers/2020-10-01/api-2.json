@@ -162,6 +162,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetManagedEndpointSessionCredentials":{
+      "name":"GetManagedEndpointSessionCredentials",
+      "http":{
+        "method":"POST",
+        "requestUri":"/virtualclusters/{virtualClusterId}/endpoints/{endpointId}/credentials"
+      },
+      "input":{"shape":"GetManagedEndpointSessionCredentialsRequest"},
+      "output":{"shape":"GetManagedEndpointSessionCredentialsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"RequestThrottledException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListJobRuns":{
       "name":"ListJobRuns",
       "http":{
@@ -364,6 +379,17 @@
       },
       "union":true
     },
+    "ContainerLogRotationConfiguration":{
+      "type":"structure",
+      "required":[
+        "rotationSize",
+        "maxFilesToKeep"
+      ],
+      "members":{
+        "rotationSize":{"shape":"RotationSize"},
+        "maxFilesToKeep":{"shape":"MaxFilesToKeep"}
+      }
+    },
     "ContainerProvider":{
       "type":"structure",
       "required":[
@@ -473,6 +499,19 @@
         "name":{"shape":"ResourceNameString"},
         "arn":{"shape":"VirtualClusterArn"}
       }
+    },
+    "CredentialType":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^.*\\S.*$"
+    },
+    "Credentials":{
+      "type":"structure",
+      "members":{
+        "token":{"shape":"Token"}
+      },
+      "union":true
     },
     "Date":{
       "type":"timestamp",
@@ -718,6 +757,43 @@
         "CLUSTER_UNAVAILABLE"
       ]
     },
+    "GetManagedEndpointSessionCredentialsRequest":{
+      "type":"structure",
+      "required":[
+        "executionRoleArn",
+        "credentialType",
+        "endpointIdentifier",
+        "virtualClusterIdentifier"
+      ],
+      "members":{
+        "endpointIdentifier":{
+          "shape":"String2048",
+          "location":"uri",
+          "locationName":"endpointId"
+        },
+        "virtualClusterIdentifier":{
+          "shape":"String2048",
+          "location":"uri",
+          "locationName":"virtualClusterId"
+        },
+        "executionRoleArn":{"shape":"IAMRoleArn"},
+        "credentialType":{"shape":"CredentialType"},
+        "durationInSeconds":{"shape":"JavaInteger"},
+        "logContext":{"shape":"LogContext"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "GetManagedEndpointSessionCredentialsResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"ResourceIdString"},
+        "credentials":{"shape":"Credentials"},
+        "expiresAt":{"shape":"Date"}
+      }
+    },
     "IAMRoleArn":{
       "type":"string",
       "max":2048,
@@ -764,7 +840,9 @@
         "finishedAt":{"shape":"Date"},
         "stateDetails":{"shape":"String256"},
         "failureReason":{"shape":"FailureReason"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "retryPolicyConfiguration":{"shape":"RetryPolicyConfiguration"},
+        "retryPolicyExecution":{"shape":"RetryPolicyExecution"}
       }
     },
     "JobRunState":{
@@ -833,7 +911,7 @@
       "type":"string",
       "max":2048,
       "min":3,
-      "pattern":"^(arn:(aws[a-zA-Z0-9-]*):kms:([a-zA-Z0-9]+-?)+:(\\d{12})?:key\\/[(0-9a-zA-Z)-?]+|\\$\\{[a-zA-Z]\\w*\\})$"
+      "pattern":"^(arn:(aws[a-zA-Z0-9-]*):kms:.+:(\\d{12})?:key\\/[(0-9a-zA-Z)-?]+|\\$\\{[a-zA-Z]\\w*\\})$"
     },
     "KubernetesNamespace":{
       "type":"string",
@@ -1033,18 +1111,30 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "LogContext":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"^((?!.*-s3alias)(?!xn--.*)[a-z0-9][-a-z0-9.]*)?[a-z0-9]$"
+    },
     "LogGroupName":{
       "type":"string",
       "max":512,
       "min":1,
       "pattern":"[\\.\\-_/#A-Za-z0-9]+"
     },
+    "MaxFilesToKeep":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
     "MonitoringConfiguration":{
       "type":"structure",
       "members":{
         "persistentAppUI":{"shape":"PersistentAppUI"},
         "cloudWatchMonitoringConfiguration":{"shape":"CloudWatchMonitoringConfiguration"},
-        "s3MonitoringConfiguration":{"shape":"S3MonitoringConfiguration"}
+        "s3MonitoringConfiguration":{"shape":"S3MonitoringConfiguration"},
+        "containerLogRotationConfiguration":{"shape":"ContainerLogRotationConfiguration"}
       }
     },
     "NextToken":{
@@ -1112,6 +1202,14 @@
       "min":20,
       "pattern":"^arn:(aws[a-zA-Z0-9-]*):(iam|sts)::(\\d{12})?:[\\w/+=,.@-]+$"
     },
+    "RequestThrottledException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String1024"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "ResourceIdString":{
       "type":"string",
       "max":64,
@@ -1131,6 +1229,26 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "RetryPolicyConfiguration":{
+      "type":"structure",
+      "required":["maxAttempts"],
+      "members":{
+        "maxAttempts":{"shape":"JavaInteger"}
+      }
+    },
+    "RetryPolicyExecution":{
+      "type":"structure",
+      "required":["currentAttemptCount"],
+      "members":{
+        "currentAttemptCount":{"shape":"JavaInteger"}
+      }
+    },
+    "RotationSize":{
+      "type":"string",
+      "max":12,
+      "min":3,
+      "pattern":"^\\d+(\\.\\d+)?[KMG][Bb]?$"
     },
     "RsiArn":{
       "type":"string",
@@ -1205,7 +1323,8 @@
         "configurationOverrides":{"shape":"ConfigurationOverrides"},
         "tags":{"shape":"TagMap"},
         "jobTemplateId":{"shape":"ResourceIdString"},
-        "jobTemplateParameters":{"shape":"TemplateParameterInputMap"}
+        "jobTemplateParameters":{"shape":"TemplateParameterInputMap"},
+        "retryPolicyConfiguration":{"shape":"RetryPolicyConfiguration"}
       }
     },
     "StartJobRunResponse":{
@@ -1321,6 +1440,12 @@
       "max":512,
       "min":1,
       "pattern":"[\\.\\-_\\#A-Za-z0-9]+"
+    },
+    "Token":{
+      "type":"string",
+      "min":1,
+      "pattern":"^.*\\S.*$",
+      "sensitive":true
     },
     "UntagResourceRequest":{
       "type":"structure",

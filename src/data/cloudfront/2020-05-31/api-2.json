@@ -96,6 +96,7 @@
         {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
         {"shape":"NoSuchCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"TooManyDistributionsAssociatedToOriginAccessControl"},
         {"shape":"NoSuchResponseHeadersPolicy"},
         {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
         {"shape":"NoSuchOriginRequestPolicy"},
@@ -254,6 +255,7 @@
         {"shape":"InvalidOrigin"},
         {"shape":"InvalidOriginAccessIdentity"},
         {"shape":"InvalidOriginAccessControl"},
+        {"shape":"IllegalOriginAccessConfiguration"},
         {"shape":"AccessDenied"},
         {"shape":"TooManyTrustedSigners"},
         {"shape":"TrustedSignerDoesNotExist"},
@@ -301,6 +303,7 @@
         {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
         {"shape":"NoSuchCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"TooManyDistributionsAssociatedToOriginAccessControl"},
         {"shape":"NoSuchResponseHeadersPolicy"},
         {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
         {"shape":"NoSuchOriginRequestPolicy"},
@@ -1686,6 +1689,7 @@
         {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
         {"shape":"NoSuchCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"TooManyDistributionsAssociatedToOriginAccessControl"},
         {"shape":"NoSuchResponseHeadersPolicy"},
         {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
         {"shape":"NoSuchOriginRequestPolicy"},
@@ -1762,6 +1766,7 @@
         {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
         {"shape":"NoSuchCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"TooManyDistributionsAssociatedToOriginAccessControl"},
         {"shape":"NoSuchResponseHeadersPolicy"},
         {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
         {"shape":"NoSuchOriginRequestPolicy"},
@@ -2616,7 +2621,8 @@
           "location":"header",
           "locationName":"If-Match"
         },
-        "CallerReference":{"shape":"string"}
+        "CallerReference":{"shape":"string"},
+        "Enabled":{"shape":"boolean"}
       }
     },
     "CopyDistributionResult":{
@@ -4042,7 +4048,10 @@
     },
     "FunctionRuntime":{
       "type":"string",
-      "enum":["cloudfront-js-1.0"]
+      "enum":[
+        "cloudfront-js-1.0",
+        "cloudfront-js-2.0"
+      ]
     },
     "FunctionSizeLimitExceeded":{
       "type":"structure",
@@ -6077,7 +6086,10 @@
     },
     "OriginAccessControlOriginTypes":{
       "type":"string",
-      "enum":["s3"]
+      "enum":[
+        "s3",
+        "mediastore"
+      ]
     },
     "OriginAccessControlSigningBehaviors":{
       "type":"string",
@@ -6255,7 +6267,8 @@
       "enum":[
         "none",
         "whitelist",
-        "all"
+        "all",
+        "allExcept"
       ]
     },
     "OriginRequestPolicyCookiesConfig":{
@@ -6272,7 +6285,8 @@
         "none",
         "whitelist",
         "allViewer",
-        "allViewerAndWhitelistCloudFront"
+        "allViewerAndWhitelistCloudFront",
+        "allExcept"
       ]
     },
     "OriginRequestPolicyHeadersConfig":{
@@ -6309,7 +6323,8 @@
       "enum":[
         "none",
         "whitelist",
-        "all"
+        "all",
+        "allExcept"
       ]
     },
     "OriginRequestPolicyQueryStringsConfig":{

@@ -4,6 +4,7 @@ namespace Aws\Test\DynamoDb;
 use Aws\Command;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\DynamoDb\LockingSessionConnection;
 use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
@@ -25,7 +26,7 @@ class DynamoDbClientTest extends TestCase
         $client = $this->getTestSdk()->createDynamoDb();
         @$sh = $client->registerSessionHandler(['locking' => true]);
         $this->assertInstanceOf(
-            'Aws\DynamoDb\LockingSessionConnection',
+            LockingSessionConnection::class,
             $this->getPropertyValue($sh, 'connection')
         );
     }

@@ -255,6 +255,22 @@
         {"shape":"TransactionCommitInProgressException"}
       ]
     },
+    "GetDataCellsFilter":{
+      "name":"GetDataCellsFilter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetDataCellsFilter"
+      },
+      "input":{"shape":"GetDataCellsFilterRequest"},
+      "output":{"shape":"GetDataCellsFilterResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetDataLakeSettings":{
       "name":"GetDataLakeSettings",
       "http":{
@@ -669,6 +685,23 @@
         {"shape":"OperationTimeoutException"}
       ]
     },
+    "UpdateDataCellsFilter":{
+      "name":"UpdateDataCellsFilter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateDataCellsFilter"
+      },
+      "input":{"shape":"UpdateDataCellsFilterRequest"},
+      "output":{"shape":"UpdateDataCellsFilterResponse"},
+      "errors":[
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateLFTag":{
       "name":"UpdateLFTag",
       "http":{
@@ -1018,7 +1051,8 @@
         "Name":{"shape":"NameString"},
         "RowFilter":{"shape":"RowFilter"},
         "ColumnNames":{"shape":"ColumnNames"},
-        "ColumnWildcard":{"shape":"ColumnWildcard"}
+        "ColumnWildcard":{"shape":"ColumnWildcard"},
+        "VersionId":{"shape":"VersionString"}
       }
     },
     "DataCellsFilterList":{
@@ -1068,11 +1102,13 @@
       "type":"structure",
       "members":{
         "DataLakeAdmins":{"shape":"DataLakePrincipalList"},
+        "ReadOnlyAdmins":{"shape":"DataLakePrincipalList"},
         "CreateDatabaseDefaultPermissions":{"shape":"PrincipalPermissionsList"},
         "CreateTableDefaultPermissions":{"shape":"PrincipalPermissionsList"},
         "Parameters":{"shape":"ParametersMap"},
         "TrustedResourceOwners":{"shape":"TrustedResourceOwners"},
         "AllowExternalDataFiltering":{"shape":"NullableBoolean"},
+        "AllowFullTableExternalDataAccess":{"shape":"NullableBoolean"},
         "ExternalDataFilteringAllowList":{"shape":"DataLakePrincipalList"},
         "AuthorizedSessionTagValueList":{"shape":"AuthorizedSessionTagValueList"}
       }
@@ -1251,9 +1287,7 @@
     },
     "Expression":{
       "type":"list",
-      "member":{"shape":"LFTag"},
-      "max":5,
-      "min":1
+      "member":{"shape":"LFTag"}
     },
     "ExtendTransactionRequest":{
       "type":"structure",
@@ -1287,6 +1321,27 @@
       "member":{"shape":"FilterCondition"},
       "max":20,
       "min":1
+    },
+    "GetDataCellsFilterRequest":{
+      "type":"structure",
+      "required":[
+        "TableCatalogId",
+        "DatabaseName",
+        "TableName",
+        "Name"
+      ],
+      "members":{
+        "TableCatalogId":{"shape":"CatalogIdString"},
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"},
+        "Name":{"shape":"NameString"}
+      }
+    },
+    "GetDataCellsFilterResponse":{
+      "type":"structure",
+      "members":{
+        "DataCellsFilter":{"shape":"DataCellsFilter"}
+      }
     },
     "GetDataLakeSettingsRequest":{
       "type":"structure",
@@ -1418,8 +1473,7 @@
       "type":"structure",
       "required":[
         "TableArn",
-        "Partition",
-        "SupportedPermissionTypes"
+        "Partition"
       ],
       "members":{
         "TableArn":{"shape":"ResourceArnString"},
@@ -1441,10 +1495,7 @@
     },
     "GetTemporaryGlueTableCredentialsRequest":{
       "type":"structure",
-      "required":[
-        "TableArn",
-        "SupportedPermissionTypes"
-      ],
+      "required":["TableArn"],
       "members":{
         "TableArn":{"shape":"ResourceArnString"},
         "Permissions":{"shape":"PermissionList"},
@@ -1853,8 +1904,9 @@
         "CREATE_DATABASE",
         "CREATE_TABLE",
         "DATA_LOCATION_ACCESS",
-        "CREATE_TAG",
-        "ASSOCIATE"
+        "CREATE_LF_TAG",
+        "ASSOCIATE",
+        "GRANT_WITH_LF_TAG_EXPRESSION"
       ]
     },
     "PermissionList":{
@@ -1865,7 +1917,9 @@
       "type":"string",
       "enum":[
         "COLUMN_PERMISSION",
-        "CELL_FILTER_PERMISSION"
+        "CELL_FILTER_PERMISSION",
+        "NESTED_PERMISSION",
+        "NESTED_CELL_PERMISSION"
       ]
     },
     "PermissionTypeList":{
@@ -1973,7 +2027,8 @@
       "members":{
         "ResourceArn":{"shape":"ResourceArnString"},
         "UseServiceLinkedRole":{"shape":"NullableBoolean"},
-        "RoleArn":{"shape":"IAMRoleArn"}
+        "RoleArn":{"shape":"IAMRoleArn"},
+        "WithFederation":{"shape":"NullableBoolean"}
       }
     },
     "RegisterResourceResponse":{
@@ -2018,7 +2073,8 @@
       "members":{
         "ResourceArn":{"shape":"ResourceArnString"},
         "RoleArn":{"shape":"IAMRoleArn"},
-        "LastModified":{"shape":"LastModifiedTimestamp"}
+        "LastModified":{"shape":"LastModifiedTimestamp"},
+        "WithFederation":{"shape":"NullableBoolean"}
       }
     },
     "ResourceInfoList":{
@@ -2390,6 +2446,18 @@
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
+    "UpdateDataCellsFilterRequest":{
+      "type":"structure",
+      "required":["TableData"],
+      "members":{
+        "TableData":{"shape":"DataCellsFilter"}
+      }
+    },
+    "UpdateDataCellsFilterResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UpdateLFTagRequest":{
       "type":"structure",
       "required":["TagKey"],
@@ -2413,7 +2481,8 @@
       ],
       "members":{
         "RoleArn":{"shape":"IAMRoleArn"},
-        "ResourceArn":{"shape":"ResourceArnString"}
+        "ResourceArn":{"shape":"ResourceArnString"},
+        "WithFederation":{"shape":"NullableBoolean"}
       }
     },
     "UpdateResourceResponse":{
@@ -2466,6 +2535,12 @@
       "type":"list",
       "member":{"shape":"ValueString"},
       "min":1
+    },
+    "VersionString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
     "VirtualObject":{
       "type":"structure",

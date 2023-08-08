@@ -409,6 +409,17 @@
       "min":1,
       "pattern":"[A-Za-z0-9._-]+"
     },
+    "CloudWatchLoggingConfiguration":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "logGroupName":{"shape":"LogGroupName"},
+        "logStreamNamePrefix":{"shape":"LogStreamNamePrefix"},
+        "encryptionKeyArn":{"shape":"EncryptionKeyArn"},
+        "logTypes":{"shape":"LogTypeMap"}
+      }
+    },
     "Configuration":{
       "type":"structure",
       "required":["classification"],
@@ -745,7 +756,12 @@
         "tags":{"shape":"TagMap"},
         "totalResourceUtilization":{"shape":"TotalResourceUtilization"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
-        "totalExecutionDurationSeconds":{"shape":"Integer"}
+        "totalExecutionDurationSeconds":{"shape":"Integer"},
+        "executionTimeoutMinutes":{
+          "shape":"Duration",
+          "box":true
+        },
+        "billedResourceUtilization":{"shape":"ResourceUtilization"}
       }
     },
     "JobRunId":{
@@ -908,6 +924,37 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "LogGroupName":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
+    "LogStreamNamePrefix":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[^:*]*"
+    },
+    "LogTypeList":{
+      "type":"list",
+      "member":{"shape":"LogTypeString"},
+      "max":5,
+      "min":1
+    },
+    "LogTypeMap":{
+      "type":"map",
+      "key":{"shape":"WorkerTypeString"},
+      "value":{"shape":"LogTypeList"},
+      "max":4,
+      "min":1
+    },
+    "LogTypeString":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"[a-zA-Z]+[-_]*[a-zA-Z]+"
+    },
     "ManagedPersistenceMonitoringConfiguration":{
       "type":"structure",
       "members":{
@@ -937,7 +984,8 @@
       "type":"structure",
       "members":{
         "s3MonitoringConfiguration":{"shape":"S3MonitoringConfiguration"},
-        "managedPersistenceMonitoringConfiguration":{"shape":"ManagedPersistenceMonitoringConfiguration"}
+        "managedPersistenceMonitoringConfiguration":{"shape":"ManagedPersistenceMonitoringConfiguration"},
+        "cloudWatchLoggingConfiguration":{"shape":"CloudWatchLoggingConfiguration"}
       }
     },
     "NetworkConfiguration":{
@@ -989,6 +1037,14 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ResourceUtilization":{
+      "type":"structure",
+      "members":{
+        "vCPUHour":{"shape":"Double"},
+        "memoryGBHour":{"shape":"Double"},
+        "storageGBHour":{"shape":"Double"}
+      }
     },
     "S3MonitoringConfiguration":{
       "type":"structure",
@@ -1242,7 +1298,8 @@
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "architecture":{"shape":"Architecture"},
         "imageConfiguration":{"shape":"ImageConfigurationInput"},
-        "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationInputMap"}
+        "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationInputMap"},
+        "releaseLabel":{"shape":"ReleaseLabel"}
       }
     },
     "UpdateApplicationResponse":{

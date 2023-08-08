@@ -1328,7 +1328,9 @@
         "us-gov-east-1",
         "us-gov-west-1",
         "us-west-1",
-        "us-west-2"
+        "us-west-2",
+        "ap-south-2",
+        "eu-south-2"
       ]
     },
     "BucketLoggingStatus":{
@@ -2950,7 +2952,12 @@
     "GetBucketAccelerateConfigurationOutput":{
       "type":"structure",
       "members":{
-        "Status":{"shape":"BucketAccelerateStatus"}
+        "Status":{"shape":"BucketAccelerateStatus"},
+        "RequestCharged":{
+          "shape":"RequestCharged",
+          "location":"header",
+          "locationName":"x-amz-request-charged"
+        }
       }
     },
     "GetBucketAccelerateConfigurationRequest":{
@@ -2967,6 +2974,11 @@
           "shape":"AccountId",
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
+        },
+        "RequestPayer":{
+          "shape":"RequestPayer",
+          "location":"header",
+          "locationName":"x-amz-request-payer"
         }
       }
     },
@@ -4677,7 +4689,9 @@
         "ObjectLockLegalHoldStatus",
         "IntelligentTieringAccessTier",
         "BucketKeyStatus",
-        "ChecksumAlgorithm"
+        "ChecksumAlgorithm",
+        "ObjectAccessControlList",
+        "ObjectOwner"
       ]
     },
     "InventoryOptionalFields":{
@@ -4711,6 +4725,7 @@
     "IsEnabled":{"type":"boolean"},
     "IsLatest":{"type":"boolean"},
     "IsPublic":{"type":"boolean"},
+    "IsRestoreInProgress":{"type":"boolean"},
     "IsTruncated":{"type":"boolean"},
     "JSONInput":{
       "type":"structure",
@@ -4986,7 +5001,12 @@
           "locationName":"Upload"
         },
         "CommonPrefixes":{"shape":"CommonPrefixList"},
-        "EncodingType":{"shape":"EncodingType"}
+        "EncodingType":{"shape":"EncodingType"},
+        "RequestCharged":{
+          "shape":"RequestCharged",
+          "location":"header",
+          "locationName":"x-amz-request-charged"
+        }
       }
     },
     "ListMultipartUploadsRequest":{
@@ -5033,6 +5053,11 @@
           "shape":"AccountId",
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
+        },
+        "RequestPayer":{
+          "shape":"RequestPayer",
+          "location":"header",
+          "locationName":"x-amz-request-payer"
         }
       }
     },
@@ -5057,7 +5082,12 @@
         "Delimiter":{"shape":"Delimiter"},
         "MaxKeys":{"shape":"MaxKeys"},
         "CommonPrefixes":{"shape":"CommonPrefixList"},
-        "EncodingType":{"shape":"EncodingType"}
+        "EncodingType":{"shape":"EncodingType"},
+        "RequestCharged":{
+          "shape":"RequestCharged",
+          "location":"header",
+          "locationName":"x-amz-request-charged"
+        }
       }
     },
     "ListObjectVersionsRequest":{
@@ -5104,6 +5134,16 @@
           "shape":"AccountId",
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
+        },
+        "RequestPayer":{
+          "shape":"RequestPayer",
+          "location":"header",
+          "locationName":"x-amz-request-payer"
+        },
+        "OptionalObjectAttributes":{
+          "shape":"OptionalObjectAttributesList",
+          "location":"header",
+          "locationName":"x-amz-optional-object-attributes"
         }
       }
     },
@@ -5119,7 +5159,12 @@
         "Delimiter":{"shape":"Delimiter"},
         "MaxKeys":{"shape":"MaxKeys"},
         "CommonPrefixes":{"shape":"CommonPrefixList"},
-        "EncodingType":{"shape":"EncodingType"}
+        "EncodingType":{"shape":"EncodingType"},
+        "RequestCharged":{
+          "shape":"RequestCharged",
+          "location":"header",
+          "locationName":"x-amz-request-charged"
+        }
       }
     },
     "ListObjectsRequest":{
@@ -5166,6 +5211,11 @@
           "shape":"AccountId",
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
+        },
+        "OptionalObjectAttributes":{
+          "shape":"OptionalObjectAttributesList",
+          "location":"header",
+          "locationName":"x-amz-optional-object-attributes"
         }
       }
     },
@@ -5183,7 +5233,12 @@
         "KeyCount":{"shape":"KeyCount"},
         "ContinuationToken":{"shape":"Token"},
         "NextContinuationToken":{"shape":"NextToken"},
-        "StartAfter":{"shape":"StartAfter"}
+        "StartAfter":{"shape":"StartAfter"},
+        "RequestCharged":{
+          "shape":"RequestCharged",
+          "location":"header",
+          "locationName":"x-amz-request-charged"
+        }
       }
     },
     "ListObjectsV2Request":{
@@ -5240,6 +5295,11 @@
           "shape":"AccountId",
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
+        },
+        "OptionalObjectAttributes":{
+          "shape":"OptionalObjectAttributesList",
+          "location":"header",
+          "locationName":"x-amz-optional-object-attributes"
         }
       }
     },
@@ -5554,7 +5614,8 @@
         "ChecksumAlgorithm":{"shape":"ChecksumAlgorithmList"},
         "Size":{"shape":"Size"},
         "StorageClass":{"shape":"ObjectStorageClass"},
-        "Owner":{"shape":"Owner"}
+        "Owner":{"shape":"Owner"},
+        "RestoreStatus":{"shape":"RestoreStatus"}
       }
     },
     "ObjectAlreadyInActiveTierError":{
@@ -5707,7 +5768,8 @@
         "INTELLIGENT_TIERING",
         "DEEP_ARCHIVE",
         "OUTPOSTS",
-        "GLACIER_IR"
+        "GLACIER_IR",
+        "SNOW"
       ]
     },
     "ObjectVersion":{
@@ -5721,7 +5783,8 @@
         "VersionId":{"shape":"ObjectVersionId"},
         "IsLatest":{"shape":"IsLatest"},
         "LastModified":{"shape":"LastModified"},
-        "Owner":{"shape":"Owner"}
+        "Owner":{"shape":"Owner"},
+        "RestoreStatus":{"shape":"RestoreStatus"}
       }
     },
     "ObjectVersionId":{"type":"string"},
@@ -5733,6 +5796,14 @@
     "ObjectVersionStorageClass":{
       "type":"string",
       "enum":["STANDARD"]
+    },
+    "OptionalObjectAttributes":{
+      "type":"string",
+      "enum":["RestoreStatus"]
+    },
+    "OptionalObjectAttributesList":{
+      "type":"list",
+      "member":{"shape":"OptionalObjectAttributes"}
     },
     "OutputLocation":{
       "type":"structure",
@@ -7465,6 +7536,7 @@
       "timestampFormat":"rfc822"
     },
     "Restore":{"type":"string"},
+    "RestoreExpiryDate":{"type":"timestamp"},
     "RestoreObjectOutput":{
       "type":"structure",
       "members":{
@@ -7542,6 +7614,13 @@
     "RestoreRequestType":{
       "type":"string",
       "enum":["SELECT"]
+    },
+    "RestoreStatus":{
+      "type":"structure",
+      "members":{
+        "IsRestoreInProgress":{"shape":"IsRestoreInProgress"},
+        "RestoreExpiryDate":{"shape":"RestoreExpiryDate"}
+      }
     },
     "Role":{"type":"string"},
     "RoutingRule":{
@@ -7729,7 +7808,8 @@
       "type":"string",
       "enum":[
         "AES256",
-        "aws:kms"
+        "aws:kms",
+        "aws:kms:dsse"
       ]
     },
     "ServerSideEncryptionByDefault":{
@@ -7817,7 +7897,8 @@
         "GLACIER",
         "DEEP_ARCHIVE",
         "OUTPOSTS",
-        "GLACIER_IR"
+        "GLACIER_IR",
+        "SNOW"
       ]
     },
     "StorageClassAnalysis":{

@@ -2460,6 +2460,117 @@
         }
       ]
     },
+    "GetJourneyRunExecutionActivityMetrics": {
+      "name": "GetJourneyRunExecutionActivityMetrics",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/apps/{application-id}/journeys/{journey-id}/runs/{run-id}/activities/{journey-activity-id}/execution-metrics",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetJourneyRunExecutionActivityMetricsRequest"
+      },
+      "output": {
+        "shape": "GetJourneyRunExecutionActivityMetricsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "PayloadTooLargeException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "MethodNotAllowedException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "GetJourneyRunExecutionMetrics": {
+      "name": "GetJourneyRunExecutionMetrics",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/apps/{application-id}/journeys/{journey-id}/runs/{run-id}/execution-metrics",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetJourneyRunExecutionMetricsRequest"
+      },
+      "output": {
+        "shape": "GetJourneyRunExecutionMetricsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "PayloadTooLargeException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "MethodNotAllowedException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "GetJourneyRuns": {
+      "name": "GetJourneyRuns",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/apps/{application-id}/journeys/{journey-id}/runs",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetJourneyRunsRequest"
+      },
+      "output": {
+        "shape": "GetJourneyRunsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "PayloadTooLargeException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "MethodNotAllowedException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
     "GetPushTemplate": {
       "name": "GetPushTemplate",
       "http": {
@@ -4853,7 +4964,7 @@
           "shape": "WaitActivity"
         },
         "ContactCenter": {
-            "shape": "ContactCenterActivity"
+          "shape": "ContactCenterActivity"
         }
       }
     },
@@ -4898,6 +5009,9 @@
         },
         "TreatmentId": {
           "shape": "__string"
+        },
+        "ExecutionMetrics": {
+          "shape": "MapOf__string"
         }
       },
       "required": [
@@ -5025,6 +5139,20 @@
         "Name"
       ]
     },
+    "ApplicationSettingsJourneyLimits": {
+      "type": "structure",
+      "members": {
+        "DailyCap": {
+          "shape": "__integer"
+        },
+        "TimeframeCap": {
+          "shape": "JourneyTimeframeCap"
+        },
+        "TotalCap": {
+          "shape": "__integer"
+        }
+      }
+    },
     "ApplicationSettingsResource": {
       "type": "structure",
       "members": {
@@ -5042,6 +5170,9 @@
         },
         "QuietTime": {
           "shape": "QuietTime"
+        },
+        "JourneyLimits": {
+          "shape": "ApplicationSettingsJourneyLimits"
         }
       },
       "required": [
@@ -5606,12 +5737,12 @@
       }
     },
     "ContactCenterActivity": {
-        "type": "structure",
-        "members": {
-          "NextActivity": {
-              "shape": "__string"
-          }
+      "type": "structure",
+      "members": {
+        "NextActivity": {
+          "shape": "__string"
         }
+      }
     },
     "ConflictException": {
       "type": "structure",
@@ -7640,13 +7771,16 @@
         "ApiKey": {
           "shape": "__string"
         },
+        "DefaultAuthenticationMethod": {
+          "shape": "__string"
+        },
         "Enabled": {
           "shape": "__boolean"
+        },
+        "ServiceJson": {
+          "shape": "__string"
         }
-      },
-      "required": [
-        "ApiKey"
-      ]
+      }
     },
     "GCMChannelResponse": {
       "type": "structure",
@@ -7660,10 +7794,16 @@
         "Credential": {
           "shape": "__string"
         },
+        "DefaultAuthenticationMethod": {
+          "shape": "__string"
+        },
         "Enabled": {
           "shape": "__boolean"
         },
         "HasCredential": {
+          "shape": "__boolean"
+        },
+        "HasFcmServiceCredentials": {
           "shape": "__boolean"
         },
         "Id": {
@@ -7686,7 +7826,6 @@
         }
       },
       "required": [
-        "Credential",
         "Platform"
       ]
     },
@@ -7712,6 +7851,9 @@
           "shape": "__string"
         },
         "ImageUrl": {
+          "shape": "__string"
+        },
+        "PreferredAuthenticationMethod": {
           "shape": "__string"
         },
         "Priority": {
@@ -8825,6 +8967,147 @@
       ],
       "payload": "JourneyResponse"
     },
+    "GetJourneyRunExecutionActivityMetricsRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "application-id"
+        },
+        "JourneyActivityId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "journey-activity-id"
+        },
+        "JourneyId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "journey-id"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "next-token"
+        },
+        "PageSize": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "page-size"
+        },
+        "RunId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "run-id"
+        }
+      },
+      "required": [
+        "RunId",
+        "JourneyActivityId",
+        "JourneyId",
+        "ApplicationId"
+      ]
+    },
+    "GetJourneyRunExecutionActivityMetricsResponse": {
+      "type": "structure",
+      "members": {
+        "JourneyRunExecutionActivityMetricsResponse": {
+          "shape": "JourneyRunExecutionActivityMetricsResponse"
+        }
+      },
+      "required": [
+        "JourneyRunExecutionActivityMetricsResponse"
+      ],
+      "payload": "JourneyRunExecutionActivityMetricsResponse"
+    },
+    "GetJourneyRunExecutionMetricsRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "application-id"
+        },
+        "JourneyId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "journey-id"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "next-token"
+        },
+        "PageSize": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "page-size"
+        },
+        "RunId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "run-id"
+        }
+      },
+      "required": [
+        "RunId",
+        "ApplicationId",
+        "JourneyId"
+      ]
+    },
+    "GetJourneyRunExecutionMetricsResponse": {
+      "type": "structure",
+      "members": {
+        "JourneyRunExecutionMetricsResponse": {
+          "shape": "JourneyRunExecutionMetricsResponse"
+        }
+      },
+      "required": [
+        "JourneyRunExecutionMetricsResponse"
+      ],
+      "payload": "JourneyRunExecutionMetricsResponse"
+    },
+    "GetJourneyRunsRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "application-id"
+        },
+        "JourneyId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "journey-id"
+        },
+        "PageSize": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "page-size"
+        },
+        "Token": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "token"
+        }
+      },
+      "required": [
+        "ApplicationId",
+        "JourneyId"
+      ]
+    },
+    "GetJourneyRunsResponse": {
+      "type": "structure",
+      "members": {
+        "JourneyRunsResponse": {
+          "shape": "JourneyRunsResponse"
+        }
+      },
+      "required": [
+        "JourneyRunsResponse"
+      ],
+      "payload": "JourneyRunsResponse"
+    },
     "GetPushTemplateRequest": {
       "type": "structure",
       "members": {
@@ -9796,7 +10079,13 @@
           "shape": "__integer"
         },
         "EndpointReentryInterval": {
-            "shape": "__string"
+          "shape": "__string"
+        },
+        "TimeframeCap": {
+          "shape": "JourneyTimeframeCap"
+        },
+        "TotalCap": {
+          "shape": "__integer"
         }
       }
     },
@@ -9809,15 +10098,15 @@
       }
     },
     "JourneyChannelSettings": {
-        "type": "structure",
-        "members": {
-          "ConnectCampaignArn": {
-            "shape": "__string"
-          },
-          "ConnectCampaignExecutionRoleArn": {
-            "shape": "__string"
-          }
+      "type": "structure",
+      "members": {
+        "ConnectCampaignArn": {
+          "shape": "__string"
+        },
+        "ConnectCampaignExecutionRoleArn": {
+          "shape": "__string"
         }
+      }
     },
     "JourneyResponse": {
       "type": "structure",
@@ -9869,28 +10158,139 @@
           "locationName": "tags"
         },
         "WaitForQuietTime": {
-            "shape": "__boolean"
+          "shape": "__boolean"
         },
         "RefreshOnSegmentUpdate": {
-            "shape": "__boolean"
+          "shape": "__boolean"
         },
         "JourneyChannelSettings": {
-            "shape": "JourneyChannelSettings"
+          "shape": "JourneyChannelSettings"
         },
         "SendingSchedule": {
-            "shape": "__boolean"
+          "shape": "__boolean"
         },
         "OpenHours": {
-            "shape": "OpenHours"
+          "shape": "OpenHours"
         },
         "ClosedDays": {
-            "shape": "ClosedDays"
+          "shape": "ClosedDays"
+        },
+        "TimezoneEstimationMethods": {
+          "shape": "ListOf__TimezoneEstimationMethodsElement"
         }
       },
       "required": [
         "Name",
         "Id",
         "ApplicationId"
+      ]
+    },
+    "JourneyRunExecutionActivityMetricsResponse": {
+      "type": "structure",
+      "members": {
+        "ActivityType": {
+          "shape": "__string"
+        },
+        "ApplicationId": {
+          "shape": "__string"
+        },
+        "JourneyActivityId": {
+          "shape": "__string"
+        },
+        "JourneyId": {
+          "shape": "__string"
+        },
+        "LastEvaluatedTime": {
+          "shape": "__string"
+        },
+        "Metrics": {
+          "shape": "MapOf__string"
+        },
+        "RunId": {
+          "shape": "__string"
+        }
+      },
+      "required": [
+        "Metrics",
+        "JourneyId",
+        "LastEvaluatedTime",
+        "JourneyActivityId",
+        "ActivityType",
+        "RunId",
+        "ApplicationId"
+      ]
+    },
+    "JourneyRunExecutionMetricsResponse": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string"
+        },
+        "JourneyId": {
+          "shape": "__string"
+        },
+        "LastEvaluatedTime": {
+          "shape": "__string"
+        },
+        "Metrics": {
+          "shape": "MapOf__string"
+        },
+        "RunId": {
+          "shape": "__string"
+        }
+      },
+      "required": [
+        "Metrics",
+        "JourneyId",
+        "LastEvaluatedTime",
+        "RunId",
+        "ApplicationId"
+      ]
+    },
+    "JourneyRunResponse": {
+      "type": "structure",
+      "members": {
+        "CreationTime": {
+          "shape": "__string"
+        },
+        "LastUpdateTime": {
+          "shape": "__string"
+        },
+        "RunId": {
+          "shape": "__string"
+        },
+        "Status": {
+          "shape": "JourneyRunStatus"
+        }
+      },
+      "required": [
+        "Status",
+        "LastUpdateTime",
+        "CreationTime",
+        "RunId"
+      ]
+    },
+    "JourneyRunsResponse": {
+      "type": "structure",
+      "members": {
+        "Item": {
+          "shape": "ListOfJourneyRunResponse"
+        },
+        "NextToken": {
+          "shape": "__string"
+        }
+      },
+      "required": [
+        "Item"
+      ]
+    },
+    "JourneyRunStatus": {
+      "type": "string",
+      "enum": [
+        "SCHEDULED",
+        "RUNNING",
+        "COMPLETED",
+        "CANCELLED"
       ]
     },
     "JourneySMSMessage": {
@@ -9932,6 +10332,17 @@
       "members": {
         "State": {
           "shape": "State"
+        }
+      }
+    },
+    "JourneyTimeframeCap": {
+      "type": "structure",
+      "members": {
+        "Cap": {
+          "shape": "__integer"
+        },
+        "Days": {
+          "shape": "__integer"
         }
       }
     },
@@ -11627,6 +12038,9 @@
         },
         "VoiceTemplate": {
           "shape": "Template"
+        },
+        "InAppTemplate": {
+          "shape": "Template"
         }
       }
     },
@@ -12918,6 +13332,9 @@
         },
         "QuietTime": {
           "shape": "QuietTime"
+        },
+        "JourneyLimits": {
+          "shape": "ApplicationSettingsJourneyLimits"
         }
       }
     },
@@ -13033,22 +13450,25 @@
           "shape": "State"
         },
         "WaitForQuietTime": {
-            "shape": "__boolean"
+          "shape": "__boolean"
         },
         "RefreshOnSegmentUpdate": {
-            "shape": "__boolean"
+          "shape": "__boolean"
         },
         "JourneyChannelSettings": {
-            "shape": "JourneyChannelSettings"
+          "shape": "JourneyChannelSettings"
         },
         "SendingSchedule": {
-            "shape": "__boolean"
+          "shape": "__boolean"
         },
         "OpenHours": {
-            "shape": "OpenHours"
+          "shape": "OpenHours"
         },
         "ClosedDays": {
-            "shape": "ClosedDays"
+          "shape": "ClosedDays"
+        },
+        "TimezoneEstimationMethods": {
+          "shape": "ListOf__TimezoneEstimationMethodsElement"
         }
       },
       "required": [
@@ -13120,6 +13540,13 @@
         "IN_APP"
       ]
     },
+    "__TimezoneEstimationMethodsElement": {
+      "type": "string",
+      "enum": [
+        "PHONE_NUMBER",
+        "POSTAL_CODE"
+      ]
+    },
     "__boolean": {
       "type": "boolean"
     },
@@ -13187,6 +13614,12 @@
       "type": "list",
       "member": {
         "shape": "JourneyResponse"
+      }
+    },
+    "ListOfJourneyRunResponse": {
+      "type": "list",
+      "member": {
+        "shape": "JourneyRunResponse"
       }
     },
     "ListOfMultiConditionalBranch": {
@@ -13277,6 +13710,12 @@
       "type": "list",
       "member": {
         "shape": "__EndpointTypesElement"
+      }
+    },
+    "ListOf__TimezoneEstimationMethodsElement": {
+      "type": "list",
+      "member": {
+        "shape": "__TimezoneEstimationMethodsElement"
       }
     },
     "ListOf__string": {
@@ -13453,102 +13892,102 @@
       "timestampFormat": "unixTimestamp"
     },
     "DayOfWeek": {
-        "type": "string",
-        "enum": [
-          "MONDAY",
-          "TUESDAY",
-          "WEDNESDAY",
-          "THURSDAY",
-          "FRIDAY",
-          "SATURDAY",
-          "SUNDAY"
-        ]
+      "type": "string",
+      "enum": [
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY",
+        "SUNDAY"
+      ]
     },
     "ListOfOpenHoursRules": {
-        "type": "list",
-        "member": {
-            "shape": "OpenHoursRule"
-          }
+      "type": "list",
+      "member": {
+        "shape": "OpenHoursRule"
+      }
     },
     "OpenHoursRule": {
-        "type": "structure",
-        "members": {
-            "StartTime": {
-                "shape": "__string"
-            },
-            "EndTime": {
-                "shape": "__string"
-            }
+      "type": "structure",
+      "members": {
+        "StartTime": {
+          "shape": "__string"
+        },
+        "EndTime": {
+          "shape": "__string"
         }
+      }
     },
     "MapOfListOfOpenHoursRules": {
-        "type": "map",
-        "key": {
-          "shape": "DayOfWeek"
-        },
-        "value": {
-          "shape": "ListOfOpenHoursRules"
-        }
+      "type": "map",
+      "key": {
+        "shape": "DayOfWeek"
+      },
+      "value": {
+        "shape": "ListOfOpenHoursRules"
+      }
     },
     "OpenHours": {
-        "type": "structure",
-        "members": {
-            "EMAIL": {
-                "shape": "MapOfListOfOpenHoursRules"
-            },
-            "SMS": {
-                "shape": "MapOfListOfOpenHoursRules"
-            },
-            "PUSH": {
-                "shape": "MapOfListOfOpenHoursRules"
-            },
-            "VOICE": {
-                "shape": "MapOfListOfOpenHoursRules"
-            },
-            "CUSTOM": {
-                "shape": "MapOfListOfOpenHoursRules"
-            }
+      "type": "structure",
+      "members": {
+        "EMAIL": {
+          "shape": "MapOfListOfOpenHoursRules"
+        },
+        "SMS": {
+          "shape": "MapOfListOfOpenHoursRules"
+        },
+        "PUSH": {
+          "shape": "MapOfListOfOpenHoursRules"
+        },
+        "VOICE": {
+          "shape": "MapOfListOfOpenHoursRules"
+        },
+        "CUSTOM": {
+          "shape": "MapOfListOfOpenHoursRules"
         }
+      }
     },
     "ClosedDaysRule": {
-        "type": "structure",
-        "members": {
-            "Name": {
-                "shape": "__string"
-            },
-            "StartDateTime": {
-                "shape": "__string"
-            },
-            "EndDateTime": {
-                "shape": "__string"
-            }
+      "type": "structure",
+      "members": {
+        "Name": {
+          "shape": "__string"
+        },
+        "StartDateTime": {
+          "shape": "__string"
+        },
+        "EndDateTime": {
+          "shape": "__string"
         }
-    },  
+      }
+    },
     "ListOfClosedDaysRules": {
-        "type": "list",
-        "member": {
-            "shape": "ClosedDaysRule"
-          }
+      "type": "list",
+      "member": {
+        "shape": "ClosedDaysRule"
+      }
     },
     "ClosedDays": {
-        "type": "structure",
-        "members": {
-            "EMAIL": {
-                "shape": "ListOfClosedDaysRules"
-            },
-            "SMS": {
-                "shape": "ListOfClosedDaysRules"
-            },
-            "PUSH": {
-                "shape": "ListOfClosedDaysRules"
-            },
-            "VOICE": {
-                "shape": "ListOfClosedDaysRules"
-            },
-            "CUSTOM": {
-                "shape": "ListOfClosedDaysRules"
-            }
+      "type": "structure",
+      "members": {
+        "EMAIL": {
+          "shape": "ListOfClosedDaysRules"
+        },
+        "SMS": {
+          "shape": "ListOfClosedDaysRules"
+        },
+        "PUSH": {
+          "shape": "ListOfClosedDaysRules"
+        },
+        "VOICE": {
+          "shape": "ListOfClosedDaysRules"
+        },
+        "CUSTOM": {
+          "shape": "ListOfClosedDaysRules"
         }
+      }
     }
   }
 }

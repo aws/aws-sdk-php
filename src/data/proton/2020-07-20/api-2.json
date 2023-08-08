@@ -229,6 +229,42 @@
       ],
       "idempotent":true
     },
+    "CreateServiceInstance":{
+      "name":"CreateServiceInstance",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateServiceInstanceInput"},
+      "output":{"shape":"CreateServiceInstanceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreateServiceSyncConfig":{
+      "name":"CreateServiceSyncConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateServiceSyncConfigInput"},
+      "output":{"shape":"CreateServiceSyncConfigOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "CreateServiceTemplate":{
       "name":"CreateServiceTemplate",
       "http":{
@@ -297,6 +333,23 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteDeployment":{
+      "name":"DeleteDeployment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteDeploymentInput"},
+      "output":{"shape":"DeleteDeploymentOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
@@ -410,6 +463,24 @@
       ],
       "idempotent":true
     },
+    "DeleteServiceSyncConfig":{
+      "name":"DeleteServiceSyncConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteServiceSyncConfigInput"},
+      "output":{"shape":"DeleteServiceSyncConfigOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeleteServiceTemplate":{
       "name":"DeleteServiceTemplate",
       "http":{
@@ -488,6 +559,22 @@
       },
       "input":{"shape":"GetComponentInput"},
       "output":{"shape":"GetComponentOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetDeployment":{
+      "name":"GetDeployment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDeploymentInput"},
+      "output":{"shape":"GetDeploymentOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -592,6 +679,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetResourcesSummary":{
+      "name":"GetResourcesSummary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourcesSummaryInput"},
+      "output":{"shape":"GetResourcesSummaryOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetService":{
       "name":"GetService",
       "http":{
@@ -616,6 +718,54 @@
       },
       "input":{"shape":"GetServiceInstanceInput"},
       "output":{"shape":"GetServiceInstanceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetServiceInstanceSyncStatus":{
+      "name":"GetServiceInstanceSyncStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetServiceInstanceSyncStatusInput"},
+      "output":{"shape":"GetServiceInstanceSyncStatusOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetServiceSyncBlockerSummary":{
+      "name":"GetServiceSyncBlockerSummary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetServiceSyncBlockerSummaryInput"},
+      "output":{"shape":"GetServiceSyncBlockerSummaryOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetServiceSyncConfig":{
+      "name":"GetServiceSyncConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetServiceSyncConfigInput"},
+      "output":{"shape":"GetServiceSyncConfigOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -732,6 +882,22 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListDeployments":{
+      "name":"ListDeployments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDeploymentsInput"},
+      "output":{"shape":"ListDeploymentsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -1229,6 +1395,40 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateServiceSyncBlocker":{
+      "name":"UpdateServiceSyncBlocker",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateServiceSyncBlockerInput"},
+      "output":{"shape":"UpdateServiceSyncBlockerOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateServiceSyncConfig":{
+      "name":"UpdateServiceSyncConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateServiceSyncConfigInput"},
+      "output":{"shape":"UpdateServiceSyncConfigOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateServiceTemplate":{
       "name":"UpdateServiceTemplate",
       "http":{
@@ -1321,6 +1521,17 @@
     "AwsAccountId":{
       "type":"string",
       "pattern":"^\\d{12}$"
+    },
+    "BlockerStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "RESOLVED"
+      ]
+    },
+    "BlockerType":{
+      "type":"string",
+      "enum":["AUTOMATED"]
     },
     "Boolean":{
       "type":"boolean",
@@ -1441,9 +1652,12 @@
         "deploymentStatusMessage":{"shape":"StatusMessage"},
         "description":{"shape":"Description"},
         "environmentName":{"shape":"ResourceName"},
+        "lastAttemptedDeploymentId":{"shape":"DeploymentId"},
+        "lastClientRequestToken":{"shape":"String"},
         "lastDeploymentAttemptedAt":{"shape":"Timestamp"},
         "lastDeploymentSucceededAt":{"shape":"Timestamp"},
         "lastModifiedAt":{"shape":"Timestamp"},
+        "lastSucceededDeploymentId":{"shape":"DeploymentId"},
         "name":{"shape":"ResourceName"},
         "serviceInstanceName":{"shape":"ResourceName"},
         "serviceName":{"shape":"ResourceName"},
@@ -1451,12 +1665,27 @@
       }
     },
     "ComponentArn":{"type":"string"},
+    "ComponentDeploymentIdList":{
+      "type":"list",
+      "member":{"shape":"DeploymentId"},
+      "max":1,
+      "min":0
+    },
     "ComponentDeploymentUpdateType":{
       "type":"string",
       "enum":[
         "NONE",
         "CURRENT_VERSION"
       ]
+    },
+    "ComponentState":{
+      "type":"structure",
+      "members":{
+        "serviceInstanceName":{"shape":"ResourceNameOrEmpty"},
+        "serviceName":{"shape":"ResourceNameOrEmpty"},
+        "serviceSpec":{"shape":"SpecContents"},
+        "templateFile":{"shape":"TemplateFileContents"}
+      }
     },
     "ComponentSummary":{
       "type":"structure",
@@ -1474,9 +1703,11 @@
         "deploymentStatus":{"shape":"DeploymentStatus"},
         "deploymentStatusMessage":{"shape":"StatusMessage"},
         "environmentName":{"shape":"ResourceName"},
+        "lastAttemptedDeploymentId":{"shape":"DeploymentId"},
         "lastDeploymentAttemptedAt":{"shape":"Timestamp"},
         "lastDeploymentSucceededAt":{"shape":"Timestamp"},
         "lastModifiedAt":{"shape":"Timestamp"},
+        "lastSucceededDeploymentId":{"shape":"DeploymentId"},
         "name":{"shape":"ResourceName"},
         "serviceInstanceName":{"shape":"ResourceName"},
         "serviceName":{"shape":"ResourceName"}
@@ -1494,6 +1725,18 @@
       },
       "exception":true
     },
+    "CountsSummary":{
+      "type":"structure",
+      "members":{
+        "components":{"shape":"ResourceCountsSummary"},
+        "environmentTemplates":{"shape":"ResourceCountsSummary"},
+        "environments":{"shape":"ResourceCountsSummary"},
+        "pipelines":{"shape":"ResourceCountsSummary"},
+        "serviceInstances":{"shape":"ResourceCountsSummary"},
+        "serviceTemplates":{"shape":"ResourceCountsSummary"},
+        "services":{"shape":"ResourceCountsSummary"}
+      }
+    },
     "CreateComponentInput":{
       "type":"structure",
       "required":[
@@ -1502,6 +1745,10 @@
         "templateFile"
       ],
       "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
         "description":{"shape":"Description"},
         "environmentName":{"shape":"ResourceName"},
         "manifest":{"shape":"TemplateManifestContents"},
@@ -1663,11 +1910,61 @@
         "templateName":{"shape":"ResourceName"}
       }
     },
+    "CreateServiceInstanceInput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "serviceName",
+        "spec"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "name":{"shape":"ResourceName"},
+        "serviceName":{"shape":"ResourceName"},
+        "spec":{"shape":"SpecContents"},
+        "tags":{"shape":"TagList"},
+        "templateMajorVersion":{"shape":"TemplateVersionPart"},
+        "templateMinorVersion":{"shape":"TemplateVersionPart"}
+      }
+    },
+    "CreateServiceInstanceOutput":{
+      "type":"structure",
+      "required":["serviceInstance"],
+      "members":{
+        "serviceInstance":{"shape":"ServiceInstance"}
+      }
+    },
     "CreateServiceOutput":{
       "type":"structure",
       "required":["service"],
       "members":{
         "service":{"shape":"Service"}
+      }
+    },
+    "CreateServiceSyncConfigInput":{
+      "type":"structure",
+      "required":[
+        "branch",
+        "filePath",
+        "repositoryName",
+        "repositoryProvider",
+        "serviceName"
+      ],
+      "members":{
+        "branch":{"shape":"GitBranchName"},
+        "filePath":{"shape":"OpsFilePath"},
+        "repositoryName":{"shape":"RepositoryName"},
+        "repositoryProvider":{"shape":"RepositoryProvider"},
+        "serviceName":{"shape":"ResourceName"}
+      }
+    },
+    "CreateServiceSyncConfigOutput":{
+      "type":"structure",
+      "members":{
+        "serviceSyncConfig":{"shape":"ServiceSyncConfig"}
       }
     },
     "CreateServiceTemplateInput":{
@@ -1752,6 +2049,19 @@
       "type":"structure",
       "members":{
         "component":{"shape":"Component"}
+      }
+    },
+    "DeleteDeploymentInput":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"DeploymentId"}
+      }
+    },
+    "DeleteDeploymentOutput":{
+      "type":"structure",
+      "members":{
+        "deployment":{"shape":"Deployment"}
       }
     },
     "DeleteEnvironmentAccountConnectionInput":{
@@ -1842,6 +2152,19 @@
         "service":{"shape":"Service"}
       }
     },
+    "DeleteServiceSyncConfigInput":{
+      "type":"structure",
+      "required":["serviceName"],
+      "members":{
+        "serviceName":{"shape":"ResourceName"}
+      }
+    },
+    "DeleteServiceSyncConfigOutput":{
+      "type":"structure",
+      "members":{
+        "serviceSyncConfig":{"shape":"ServiceSyncConfig"}
+      }
+    },
     "DeleteServiceTemplateInput":{
       "type":"structure",
       "required":["name"],
@@ -1891,9 +2214,54 @@
         "templateSyncConfig":{"shape":"TemplateSyncConfig"}
       }
     },
+    "Deployment":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "createdAt",
+        "deploymentStatus",
+        "environmentName",
+        "id",
+        "lastModifiedAt",
+        "targetArn",
+        "targetResourceCreatedAt",
+        "targetResourceType"
+      ],
+      "members":{
+        "arn":{"shape":"DeploymentArn"},
+        "completedAt":{"shape":"Timestamp"},
+        "componentName":{"shape":"ResourceName"},
+        "createdAt":{"shape":"Timestamp"},
+        "deploymentStatus":{"shape":"DeploymentStatus"},
+        "deploymentStatusMessage":{"shape":"StatusMessage"},
+        "environmentName":{"shape":"ResourceName"},
+        "id":{"shape":"DeploymentId"},
+        "initialState":{"shape":"DeploymentState"},
+        "lastAttemptedDeploymentId":{"shape":"DeploymentId"},
+        "lastModifiedAt":{"shape":"Timestamp"},
+        "lastSucceededDeploymentId":{"shape":"DeploymentId"},
+        "serviceInstanceName":{"shape":"ResourceName"},
+        "serviceName":{"shape":"ResourceName"},
+        "targetArn":{"shape":"Arn"},
+        "targetResourceCreatedAt":{"shape":"Timestamp"},
+        "targetResourceType":{"shape":"DeploymentTargetResourceType"},
+        "targetState":{"shape":"DeploymentState"}
+      }
+    },
+    "DeploymentArn":{"type":"string"},
     "DeploymentId":{
       "type":"string",
       "pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "DeploymentState":{
+      "type":"structure",
+      "members":{
+        "component":{"shape":"ComponentState"},
+        "environment":{"shape":"EnvironmentState"},
+        "serviceInstance":{"shape":"ServiceInstanceState"},
+        "servicePipeline":{"shape":"ServicePipelineState"}
+      },
+      "union":true
     },
     "DeploymentStatus":{
       "type":"string",
@@ -1906,6 +2274,50 @@
         "DELETE_COMPLETE",
         "CANCELLING",
         "CANCELLED"
+      ]
+    },
+    "DeploymentSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "createdAt",
+        "deploymentStatus",
+        "environmentName",
+        "id",
+        "lastModifiedAt",
+        "targetArn",
+        "targetResourceCreatedAt",
+        "targetResourceType"
+      ],
+      "members":{
+        "arn":{"shape":"DeploymentArn"},
+        "completedAt":{"shape":"Timestamp"},
+        "componentName":{"shape":"ResourceName"},
+        "createdAt":{"shape":"Timestamp"},
+        "deploymentStatus":{"shape":"DeploymentStatus"},
+        "environmentName":{"shape":"ResourceName"},
+        "id":{"shape":"DeploymentId"},
+        "lastAttemptedDeploymentId":{"shape":"DeploymentId"},
+        "lastModifiedAt":{"shape":"Timestamp"},
+        "lastSucceededDeploymentId":{"shape":"DeploymentId"},
+        "serviceInstanceName":{"shape":"ResourceName"},
+        "serviceName":{"shape":"ResourceName"},
+        "targetArn":{"shape":"Arn"},
+        "targetResourceCreatedAt":{"shape":"Timestamp"},
+        "targetResourceType":{"shape":"DeploymentTargetResourceType"}
+      }
+    },
+    "DeploymentSummaryList":{
+      "type":"list",
+      "member":{"shape":"DeploymentSummary"}
+    },
+    "DeploymentTargetResourceType":{
+      "type":"string",
+      "enum":[
+        "ENVIRONMENT",
+        "SERVICE_PIPELINE",
+        "SERVICE_INSTANCE",
+        "COMPONENT"
       ]
     },
     "DeploymentUpdateType":{
@@ -1957,8 +2369,10 @@
         "description":{"shape":"Description"},
         "environmentAccountConnectionId":{"shape":"EnvironmentAccountConnectionId"},
         "environmentAccountId":{"shape":"AwsAccountId"},
+        "lastAttemptedDeploymentId":{"shape":"DeploymentId"},
         "lastDeploymentAttemptedAt":{"shape":"Timestamp"},
         "lastDeploymentSucceededAt":{"shape":"Timestamp"},
+        "lastSucceededDeploymentId":{"shape":"DeploymentId"},
         "name":{"shape":"ResourceName"},
         "protonServiceRoleArn":{"shape":"Arn"},
         "provisioning":{"shape":"Provisioning"},
@@ -2051,6 +2465,20 @@
       "member":{"shape":"EnvironmentAccountConnectionSummary"}
     },
     "EnvironmentArn":{"type":"string"},
+    "EnvironmentState":{
+      "type":"structure",
+      "required":[
+        "templateMajorVersion",
+        "templateMinorVersion",
+        "templateName"
+      ],
+      "members":{
+        "spec":{"shape":"SpecContents"},
+        "templateMajorVersion":{"shape":"TemplateVersionPart"},
+        "templateMinorVersion":{"shape":"TemplateVersionPart"},
+        "templateName":{"shape":"ResourceName"}
+      }
+    },
     "EnvironmentSummary":{
       "type":"structure",
       "required":[
@@ -2073,8 +2501,10 @@
         "description":{"shape":"Description"},
         "environmentAccountConnectionId":{"shape":"EnvironmentAccountConnectionId"},
         "environmentAccountId":{"shape":"AwsAccountId"},
+        "lastAttemptedDeploymentId":{"shape":"DeploymentId"},
         "lastDeploymentAttemptedAt":{"shape":"Timestamp"},
         "lastDeploymentSucceededAt":{"shape":"Timestamp"},
+        "lastSucceededDeploymentId":{"shape":"DeploymentId"},
         "name":{"shape":"ResourceName"},
         "protonServiceRoleArn":{"shape":"Arn"},
         "provisioning":{"shape":"Provisioning"},
@@ -2234,6 +2664,23 @@
         "component":{"shape":"Component"}
       }
     },
+    "GetDeploymentInput":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "componentName":{"shape":"ResourceName"},
+        "environmentName":{"shape":"ResourceName"},
+        "id":{"shape":"DeploymentId"},
+        "serviceInstanceName":{"shape":"ResourceName"},
+        "serviceName":{"shape":"ResourceName"}
+      }
+    },
+    "GetDeploymentOutput":{
+      "type":"structure",
+      "members":{
+        "deployment":{"shape":"Deployment"}
+      }
+    },
     "GetEnvironmentAccountConnectionInput":{
       "type":"structure",
       "required":["id"],
@@ -2335,6 +2782,18 @@
         "latestSync":{"shape":"RepositorySyncAttempt"}
       }
     },
+    "GetResourcesSummaryInput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetResourcesSummaryOutput":{
+      "type":"structure",
+      "required":["counts"],
+      "members":{
+        "counts":{"shape":"CountsSummary"}
+      }
+    },
     "GetServiceInput":{
       "type":"structure",
       "required":["name"],
@@ -2360,10 +2819,56 @@
         "serviceInstance":{"shape":"ServiceInstance"}
       }
     },
+    "GetServiceInstanceSyncStatusInput":{
+      "type":"structure",
+      "required":[
+        "serviceInstanceName",
+        "serviceName"
+      ],
+      "members":{
+        "serviceInstanceName":{"shape":"ResourceName"},
+        "serviceName":{"shape":"ResourceName"}
+      }
+    },
+    "GetServiceInstanceSyncStatusOutput":{
+      "type":"structure",
+      "members":{
+        "desiredState":{"shape":"Revision"},
+        "latestSuccessfulSync":{"shape":"ResourceSyncAttempt"},
+        "latestSync":{"shape":"ResourceSyncAttempt"}
+      }
+    },
     "GetServiceOutput":{
       "type":"structure",
       "members":{
         "service":{"shape":"Service"}
+      }
+    },
+    "GetServiceSyncBlockerSummaryInput":{
+      "type":"structure",
+      "required":["serviceName"],
+      "members":{
+        "serviceInstanceName":{"shape":"ResourceName"},
+        "serviceName":{"shape":"ResourceName"}
+      }
+    },
+    "GetServiceSyncBlockerSummaryOutput":{
+      "type":"structure",
+      "members":{
+        "serviceSyncBlockerSummary":{"shape":"ServiceSyncBlockerSummary"}
+      }
+    },
+    "GetServiceSyncConfigInput":{
+      "type":"structure",
+      "required":["serviceName"],
+      "members":{
+        "serviceName":{"shape":"ResourceName"}
+      }
+    },
+    "GetServiceSyncConfigOutput":{
+      "type":"structure",
+      "members":{
+        "serviceSyncConfig":{"shape":"ServiceSyncConfig"}
       }
     },
     "GetServiceTemplateInput":{
@@ -2443,6 +2948,10 @@
       "max":200,
       "min":1
     },
+    "Integer":{
+      "type":"integer",
+      "box":true
+    },
     "InternalServerException":{
       "type":"structure",
       "required":["message"],
@@ -2453,11 +2962,16 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "LatestSyncBlockers":{
+      "type":"list",
+      "member":{"shape":"SyncBlocker"}
+    },
     "ListComponentOutputsInput":{
       "type":"structure",
       "required":["componentName"],
       "members":{
         "componentName":{"shape":"ResourceName"},
+        "deploymentId":{"shape":"DeploymentId"},
         "nextToken":{"shape":"EmptyNextToken"}
       }
     },
@@ -2503,6 +3017,25 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListDeploymentsInput":{
+      "type":"structure",
+      "members":{
+        "componentName":{"shape":"ResourceName"},
+        "environmentName":{"shape":"ResourceName"},
+        "maxResults":{"shape":"MaxPageResults"},
+        "nextToken":{"shape":"NextToken"},
+        "serviceInstanceName":{"shape":"ResourceName"},
+        "serviceName":{"shape":"ResourceName"}
+      }
+    },
+    "ListDeploymentsOutput":{
+      "type":"structure",
+      "required":["deployments"],
+      "members":{
+        "deployments":{"shape":"DeploymentSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListEnvironmentAccountConnectionsInput":{
       "type":"structure",
       "required":["requestedBy"],
@@ -2526,6 +3059,7 @@
       "type":"structure",
       "required":["environmentName"],
       "members":{
+        "deploymentId":{"shape":"DeploymentId"},
         "environmentName":{"shape":"ResourceName"},
         "nextToken":{"shape":"EmptyNextToken"}
       }
@@ -2647,6 +3181,7 @@
         "serviceName"
       ],
       "members":{
+        "deploymentId":{"shape":"DeploymentId"},
         "nextToken":{"shape":"EmptyNextToken"},
         "serviceInstanceName":{"shape":"ResourceName"},
         "serviceName":{"shape":"ResourceName"}
@@ -2742,6 +3277,7 @@
       "type":"structure",
       "required":["serviceName"],
       "members":{
+        "deploymentId":{"shape":"DeploymentId"},
         "nextToken":{"shape":"EmptyNextToken"},
         "serviceName":{"shape":"ResourceName"}
       }
@@ -2872,6 +3408,11 @@
       "type":"structure",
       "members":{
       }
+    },
+    "OpsFilePath":{
+      "type":"string",
+      "max":4096,
+      "min":1
     },
     "Output":{
       "type":"structure",
@@ -3010,11 +3551,13 @@
       "type":"structure",
       "required":[
         "arn",
+        "connectionArn",
         "name",
         "provider"
       ],
       "members":{
         "arn":{"shape":"RepositoryArn"},
+        "connectionArn":{"shape":"Arn"},
         "name":{"shape":"RepositoryName"},
         "provider":{"shape":"RepositoryProvider"}
       }
@@ -3082,6 +3625,17 @@
         "FAILED",
         "QUEUED"
       ]
+    },
+    "ResourceCountsSummary":{
+      "type":"structure",
+      "required":["total"],
+      "members":{
+        "behindMajor":{"shape":"Integer"},
+        "behindMinor":{"shape":"Integer"},
+        "failed":{"shape":"Integer"},
+        "total":{"shape":"Integer"},
+        "upToDate":{"shape":"Integer"}
+      }
     },
     "ResourceDeploymentStatus":{
       "type":"string",
@@ -3262,8 +3816,11 @@
         "deploymentStatus":{"shape":"DeploymentStatus"},
         "deploymentStatusMessage":{"shape":"StatusMessage"},
         "environmentName":{"shape":"ResourceName"},
+        "lastAttemptedDeploymentId":{"shape":"DeploymentId"},
+        "lastClientRequestToken":{"shape":"String"},
         "lastDeploymentAttemptedAt":{"shape":"Timestamp"},
         "lastDeploymentSucceededAt":{"shape":"Timestamp"},
+        "lastSucceededDeploymentId":{"shape":"DeploymentId"},
         "name":{"shape":"ResourceName"},
         "serviceName":{"shape":"ResourceName"},
         "spec":{"shape":"SpecContents"},
@@ -3273,6 +3830,24 @@
       }
     },
     "ServiceInstanceArn":{"type":"string"},
+    "ServiceInstanceState":{
+      "type":"structure",
+      "required":[
+        "spec",
+        "templateMajorVersion",
+        "templateMinorVersion",
+        "templateName"
+      ],
+      "members":{
+        "lastSuccessfulComponentDeploymentIds":{"shape":"ComponentDeploymentIdList"},
+        "lastSuccessfulEnvironmentDeploymentId":{"shape":"DeploymentId"},
+        "lastSuccessfulServicePipelineDeploymentId":{"shape":"DeploymentId"},
+        "spec":{"shape":"SpecContents"},
+        "templateMajorVersion":{"shape":"TemplateVersionPart"},
+        "templateMinorVersion":{"shape":"TemplateVersionPart"},
+        "templateName":{"shape":"ResourceName"}
+      }
+    },
     "ServiceInstanceSummary":{
       "type":"structure",
       "required":[
@@ -3294,8 +3869,10 @@
         "deploymentStatus":{"shape":"DeploymentStatus"},
         "deploymentStatusMessage":{"shape":"StatusMessage"},
         "environmentName":{"shape":"ResourceName"},
+        "lastAttemptedDeploymentId":{"shape":"DeploymentId"},
         "lastDeploymentAttemptedAt":{"shape":"Timestamp"},
         "lastDeploymentSucceededAt":{"shape":"Timestamp"},
+        "lastSucceededDeploymentId":{"shape":"DeploymentId"},
         "name":{"shape":"ResourceName"},
         "serviceName":{"shape":"ResourceName"},
         "templateMajorVersion":{"shape":"TemplateVersionPart"},
@@ -3324,8 +3901,24 @@
         "createdAt":{"shape":"Timestamp"},
         "deploymentStatus":{"shape":"DeploymentStatus"},
         "deploymentStatusMessage":{"shape":"StatusMessage"},
+        "lastAttemptedDeploymentId":{"shape":"DeploymentId"},
         "lastDeploymentAttemptedAt":{"shape":"Timestamp"},
         "lastDeploymentSucceededAt":{"shape":"Timestamp"},
+        "lastSucceededDeploymentId":{"shape":"DeploymentId"},
+        "spec":{"shape":"SpecContents"},
+        "templateMajorVersion":{"shape":"TemplateVersionPart"},
+        "templateMinorVersion":{"shape":"TemplateVersionPart"},
+        "templateName":{"shape":"ResourceName"}
+      }
+    },
+    "ServicePipelineState":{
+      "type":"structure",
+      "required":[
+        "templateMajorVersion",
+        "templateMinorVersion",
+        "templateName"
+      ],
+      "members":{
         "spec":{"shape":"SpecContents"},
         "templateMajorVersion":{"shape":"TemplateVersionPart"},
         "templateMinorVersion":{"shape":"TemplateVersionPart"},
@@ -3383,6 +3976,32 @@
     "ServiceSummaryList":{
       "type":"list",
       "member":{"shape":"ServiceSummary"}
+    },
+    "ServiceSyncBlockerSummary":{
+      "type":"structure",
+      "required":["serviceName"],
+      "members":{
+        "latestBlockers":{"shape":"LatestSyncBlockers"},
+        "serviceInstanceName":{"shape":"String"},
+        "serviceName":{"shape":"String"}
+      }
+    },
+    "ServiceSyncConfig":{
+      "type":"structure",
+      "required":[
+        "branch",
+        "filePath",
+        "repositoryName",
+        "repositoryProvider",
+        "serviceName"
+      ],
+      "members":{
+        "branch":{"shape":"GitBranchName"},
+        "filePath":{"shape":"OpsFilePath"},
+        "repositoryName":{"shape":"RepositoryName"},
+        "repositoryProvider":{"shape":"RepositoryProvider"},
+        "serviceName":{"shape":"ResourceName"}
+      }
     },
     "ServiceTemplate":{
       "type":"structure",
@@ -3516,9 +4135,47 @@
       "max":4096,
       "min":1
     },
+    "SyncBlocker":{
+      "type":"structure",
+      "required":[
+        "createdAt",
+        "createdReason",
+        "id",
+        "status",
+        "type"
+      ],
+      "members":{
+        "contexts":{"shape":"SyncBlockerContexts"},
+        "createdAt":{"shape":"Timestamp"},
+        "createdReason":{"shape":"String"},
+        "id":{"shape":"String"},
+        "resolvedAt":{"shape":"Timestamp"},
+        "resolvedReason":{"shape":"String"},
+        "status":{"shape":"BlockerStatus"},
+        "type":{"shape":"BlockerType"}
+      }
+    },
+    "SyncBlockerContext":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
+    },
+    "SyncBlockerContexts":{
+      "type":"list",
+      "member":{"shape":"SyncBlockerContext"}
+    },
     "SyncType":{
       "type":"string",
-      "enum":["TEMPLATE_SYNC"]
+      "enum":[
+        "TEMPLATE_SYNC",
+        "SERVICE_SYNC"
+      ]
     },
     "Tag":{
       "type":"structure",
@@ -3683,6 +4340,10 @@
         "name"
       ],
       "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
         "deploymentType":{"shape":"ComponentDeploymentUpdateType"},
         "description":{"shape":"Description"},
         "name":{"shape":"ResourceName"},
@@ -3798,6 +4459,10 @@
         "serviceName"
       ],
       "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
         "deploymentType":{"shape":"DeploymentUpdateType"},
         "name":{"shape":"ResourceName"},
         "serviceName":{"shape":"ResourceName"},
@@ -3840,6 +4505,52 @@
       "required":["pipeline"],
       "members":{
         "pipeline":{"shape":"ServicePipeline"}
+      }
+    },
+    "UpdateServiceSyncBlockerInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "resolvedReason"
+      ],
+      "members":{
+        "id":{"shape":"String"},
+        "resolvedReason":{"shape":"String"}
+      }
+    },
+    "UpdateServiceSyncBlockerOutput":{
+      "type":"structure",
+      "required":[
+        "serviceName",
+        "serviceSyncBlocker"
+      ],
+      "members":{
+        "serviceInstanceName":{"shape":"ResourceName"},
+        "serviceName":{"shape":"ResourceName"},
+        "serviceSyncBlocker":{"shape":"SyncBlocker"}
+      }
+    },
+    "UpdateServiceSyncConfigInput":{
+      "type":"structure",
+      "required":[
+        "branch",
+        "filePath",
+        "repositoryName",
+        "repositoryProvider",
+        "serviceName"
+      ],
+      "members":{
+        "branch":{"shape":"GitBranchName"},
+        "filePath":{"shape":"OpsFilePath"},
+        "repositoryName":{"shape":"RepositoryName"},
+        "repositoryProvider":{"shape":"RepositoryProvider"},
+        "serviceName":{"shape":"ResourceName"}
+      }
+    },
+    "UpdateServiceSyncConfigOutput":{
+      "type":"structure",
+      "members":{
+        "serviceSyncConfig":{"shape":"ServiceSyncConfig"}
       }
     },
     "UpdateServiceTemplateInput":{
