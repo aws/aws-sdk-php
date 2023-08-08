@@ -299,8 +299,12 @@ EOT;
             'endpoint_url_s3',
             '',
             'string',
-            [],
-            ['service' => 's3', 'key' => 'endpoint_url']
+            [
+                'config_resolver_options' => [
+                    'service' => 's3',
+                    'key' => 'endpoint_url'
+                ]
+            ]
         );
         $this->assertSame('https://test.com', $result);
         putenv(
@@ -325,8 +329,12 @@ EOT;
             'endpoint_url_s3',
             '',
             'string',
-            [],
-            ['service' => 's3', 'key' => 'endpoint_url']
+            [
+                'config_resolver_options' => [
+                    'service' => 's3',
+                    'key' => 'endpoint_url'
+                ]
+            ]
         );
         $this->assertSame('https://exmaple.com', $result);
         putenv(
