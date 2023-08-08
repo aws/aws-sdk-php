@@ -21,8 +21,8 @@ class ConfigurationResolver
      *                         to retrieve value from the environment or ini file.
      * @param mixed $defaultValue
      * @param string $expectedType  The expected type of the retrieved value.
-     * @param array $config
-     * @param array $additionalArgs
+     * @param array $config client configuration options.
+     * @param array $options additional arguments for resolving configuration.
      *
      * @return mixed
      */

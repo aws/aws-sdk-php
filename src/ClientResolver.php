@@ -290,14 +290,14 @@ class ClientResolver
         'ignore_configured_endpoint_urls' => [
             'type'      => 'value',
             'valid'     => ['bool'],
-            'doc'       => 'Set to true to disable configured endpoint urls.',
+            'doc'       => 'Set to true to disable endpoint urls configured using the `endpoint_url` configuration option.',
             'fn'        => [__CLASS__, '_apply_ignore_configured_endpoint_urls'],
             'default'   => [__CLASS__, '_default_ignore_configured_endpoint_urls'],
         ],
         'endpoint_url' => [
             'type'      => 'value',
             'valid'     => ['string'],
-            'doc'       => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3). This will take precedence over the `endpoint` configuration option.',
+            'doc'       => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3). This functions in an identical manner to and will take precedence over the `endpoint` configuration option and can also be resolved from environment variables and the shared config file.',
             'fn'        => [__CLASS__, '_apply_endpoint_url'],
             'default'   => [__CLASS__, '_resolve_endpoint_url'],
         ]
@@ -1188,7 +1188,7 @@ class ClientResolver
             'endpoint_url_' . $serviceIdentifier,
             '',
             'string',
-            $args,
+            $args + ,
             ['service' => $serviceIdentifier, 'key' => 'endpoint_url']
         );
 
