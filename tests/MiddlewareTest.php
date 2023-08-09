@@ -15,6 +15,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\ResultInterface;
 use Aws\Signature\SignatureV4;
+use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
@@ -28,7 +29,7 @@ class MiddlewareTest extends TestCase
 {
     public function set_up()
     {
-        Promise\Utils::queue()->run();
+        Utils::queue()->run();
     }
 
     public function testCanTapIntoHandlerList()
@@ -40,7 +41,7 @@ class MiddlewareTest extends TestCase
         }));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
-        \GuzzleHttp\Promise\Utils::queue()->run();
+        Utils::queue()->run();
         $this->assertCount(2, $called);
         $this->assertInstanceOf(CommandInterface::class, $called[0]);
         $this->assertInstanceOf(RequestInterface::class, $called[1]);
@@ -54,8 +55,8 @@ class MiddlewareTest extends TestCase
             $called = true;
         }));
         $handler = $list->resolve();
-        $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
-        \GuzzleHttp\Promise\Utils::queue()->run();
+        $handler(new Command('foo'), new Request('GET', 'http://example.com'));
+        Utils::queue()->run();
         $this->assertTrue($called);
     }
 
@@ -104,7 +105,7 @@ class MiddlewareTest extends TestCase
         $list->appendSign(Middleware::signer($creds, Aws\constantly($signature)));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
-        Promise\Utils::queue()->run();
+        Utils::queue()->run();
         $this->assertTrue($req->hasHeader('Authorization'));
     }
 
@@ -247,7 +248,7 @@ class MiddlewareTest extends TestCase
             'Key'        => 'key',
             'SourceFile' => __FILE__
         ]), new Request('PUT', 'http://foo.com'));
-        Promise\Utils::queue()->run();
+        Utils::queue()->run();
         $this->assertTrue($called);
     }
 
@@ -261,7 +262,7 @@ class MiddlewareTest extends TestCase
         $req = new Request('GET', 'http://www.foo.com');
         $cmd = new Command('foo');
         $handler($cmd, $req);
-        \GuzzleHttp\Promise\Utils::queue()->run();
+        Utils::queue()->run();
         $this->assertCount(1, $h);
     }
 
