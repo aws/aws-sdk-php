@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## 3.277.11 - 2023-08-08
+
+* `Aws\Backup` - This release introduces a new logically air-gapped vault (Preview) in AWS Backup that stores immutable backup copies, which are locked by default and isolated with encryption using AWS owned keys. Logically air-gapped vault (Preview) allows secure recovery of application data across accounts.
+* `Aws\ServiceCatalog` - Introduce support for HashiCorp Terraform Cloud in Service Catalog by addying TERRAFORM_CLOUD product type in CreateProduct and CreateProvisioningArtifact API.
+* `Aws\ElastiCache` - Added support for cluster mode in online migration and test migration API
+
+## 3.277.10 - 2023-08-07
+
+* `Aws\` - Removes validation of supplying the `version` configuration option to client constructors, defaulting to 'latest'`
+* `Aws\Rekognition` - This release adds code snippets for Amazon Rekognition Custom Labels.
+* `Aws\Detective` - Updated the email validation regex to be in line with the TLD name specifications.
+* `Aws\KinesisVideo` - This release enables minimum of Images SamplingInterval to be as low as 200 milliseconds in Kinesis Video Stream Image feature.
+* `Aws\IVSRealTime` - Add QUOTA_EXCEEDED and PUBLISHER_NOT_FOUND to EventErrorCode for stage health events.
+* `Aws\KinesisVideoArchivedMedia` - This release enables minimum of Images SamplingInterval to be as low as 200 milliseconds in Kinesis Video Stream Image feature.
+
+## 3.277.9 - 2023-08-04
+
+* `Aws\ACMPCA` - Documentation correction for AWS Private CA
+* `Aws\Connect` - Added a new API UpdateRoutingProfileAgentAvailabilityTimer to update agent availability timer of a routing profile.
+* `Aws\DataSync` - Display cloud storage used capacity at a cluster level.
+* `Aws\ECS` - This is a documentation update to address various tickets.
+* `Aws\SageMaker` - Including DataCaptureConfig key in the Amazon Sagemaker Search's transform job object
+
 ## 3.277.8 - 2023-08-03
 
 * `Aws\AutoScaling` - Documentation changes related to Amazon EC2 Auto Scaling APIs.
