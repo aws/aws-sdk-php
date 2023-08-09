@@ -73,7 +73,7 @@ jobs:
     - if:  ${{ matrix.composer-options == '' }}
       name: Package generation
       run: |
-        composer require guzzlehttp/psr7 "^1.9.1"
+        composer require guzzlehttp/psr7 "^1.9.1" -W
         composer update
         make package
 
