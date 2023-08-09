@@ -68,6 +68,25 @@
       ],
       "idempotent":true
     },
+    "CreateSourceRepository":{
+      "name":"CreateSourceRepository",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/sourceRepositories/{name}",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateSourceRepositoryRequest"},
+      "output":{"shape":"CreateSourceRepositoryResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "CreateSourceRepositoryBranch":{
       "name":"CreateSourceRepositoryBranch",
       "http":{
@@ -125,6 +144,63 @@
       ],
       "idempotent":true
     },
+    "DeleteProject":{
+      "name":"DeleteProject",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteProjectRequest"},
+      "output":{"shape":"DeleteProjectResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteSourceRepository":{
+      "name":"DeleteSourceRepository",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/sourceRepositories/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteSourceRepositoryRequest"},
+      "output":{"shape":"DeleteSourceRepositoryResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteSpace":{
+      "name":"DeleteSpace",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/spaces/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteSpaceRequest"},
+      "output":{"shape":"DeleteSpaceResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "GetDevEnvironment":{
       "name":"GetDevEnvironment",
       "http":{
@@ -152,6 +228,24 @@
       },
       "input":{"shape":"GetProjectRequest"},
       "output":{"shape":"GetProjectResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetSourceRepository":{
+      "name":"GetSourceRepository",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/sourceRepositories/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSourceRepositoryRequest"},
+      "output":{"shape":"GetSourceRepositoryResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
@@ -471,6 +565,44 @@
       ],
       "idempotent":true
     },
+    "UpdateProject":{
+      "name":"UpdateProject",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateProjectRequest"},
+      "output":{"shape":"UpdateProjectResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateSpace":{
+      "name":"UpdateSpace",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v1/spaces/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateSpaceRequest"},
+      "output":{"shape":"UpdateSpaceResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "VerifySession":{
       "name":"VerifySession",
       "http":{
@@ -702,6 +834,46 @@
         "headCommitId":{"shape":"String"}
       }
     },
+    "CreateSourceRepositoryRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "projectName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"projectName"
+        },
+        "name":{
+          "shape":"SourceRepositoryNameString",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "description":{"shape":"SourceRepositoryDescriptionString"}
+      }
+    },
+    "CreateSourceRepositoryResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "projectName":{"shape":"NameString"},
+        "name":{"shape":"SourceRepositoryNameString"},
+        "description":{"shape":"SourceRepositoryDescriptionString"}
+      }
+    },
     "DeleteAccessTokenRequest":{
       "type":"structure",
       "required":["id"],
@@ -754,6 +926,94 @@
         "spaceName":{"shape":"NameString"},
         "projectName":{"shape":"NameString"},
         "id":{"shape":"Uuid"}
+      }
+    },
+    "DeleteProjectRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "name":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeleteProjectResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "name":{"shape":"NameString"},
+        "displayName":{"shape":"String"}
+      }
+    },
+    "DeleteSourceRepositoryRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "projectName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"projectName"
+        },
+        "name":{
+          "shape":"SourceRepositoryNameString",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeleteSourceRepositoryResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "projectName":{"shape":"NameString"},
+        "name":{"shape":"SourceRepositoryNameString"}
+      }
+    },
+    "DeleteSpaceRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeleteSpaceResponse":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"NameString"},
+        "displayName":{"shape":"String"}
       }
     },
     "DevEnvironmentAccessDetails":{
@@ -1090,6 +1350,49 @@
       "required":["https"],
       "members":{
         "https":{"shape":"String"}
+      }
+    },
+    "GetSourceRepositoryRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "projectName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"projectName"
+        },
+        "name":{
+          "shape":"SourceRepositoryNameString",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "GetSourceRepositoryResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name",
+        "lastUpdatedTime",
+        "createdTime"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "projectName":{"shape":"NameString"},
+        "name":{"shape":"SourceRepositoryNameString"},
+        "description":{"shape":"SourceRepositoryDescriptionString"},
+        "lastUpdatedTime":{"shape":"Timestamp"},
+        "createdTime":{"shape":"Timestamp"}
       }
     },
     "GetSpaceRequest":{
@@ -1707,6 +2010,12 @@
       "min":1,
       "pattern":"(?!.*[.]git$)[\\w\\-.]*"
     },
+    "SpaceDescription":{
+      "type":"string",
+      "max":200,
+      "min":0,
+      "pattern":"[a-zA-Z0-9]+(?:[-_a-zA-Z0-9.,;:/\\+=?&$%    ])*"
+    },
     "SpaceSummaries":{
       "type":"list",
       "member":{"shape":"SpaceSummary"}
@@ -2001,6 +2310,55 @@
       "max":128,
       "min":1,
       "pattern":"[a-zA-Z0-9]+(?:[-_\\.][a-zA-Z0-9]+)*"
+    },
+    "UpdateProjectRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "name":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "description":{"shape":"ProjectDescription"}
+      }
+    },
+    "UpdateProjectResponse":{
+      "type":"structure",
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "name":{"shape":"NameString"},
+        "displayName":{"shape":"String"},
+        "description":{"shape":"String"}
+      }
+    },
+    "UpdateSpaceRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "description":{"shape":"SpaceDescription"}
+      }
+    },
+    "UpdateSpaceResponse":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"NameString"},
+        "displayName":{"shape":"String"},
+        "description":{"shape":"String"}
+      }
     },
     "UserIdentity":{
       "type":"structure",

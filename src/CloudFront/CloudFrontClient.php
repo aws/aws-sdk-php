@@ -237,7 +237,7 @@ class CloudFrontClient extends AwsClient
      *   policy. Not required when passing a custom 'policy' option.
      * - key_pair_id: (string) The ID of the key pair used to sign CloudFront
      *   URLs for private distributions.
-     * - private_key: (string) The filepath ot the private key used to sign
+     * - private_key: (string) The filepath to the private key used to sign
      *   CloudFront URLs for private distributions.
      *
      * @param array $options Array of configuration options used when signing

@@ -32,6 +32,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAppConfig(array $args = [])
  * @method \Aws\AppConfigData\AppConfigDataClient createAppConfigData(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppConfigData(array $args = [])
+ * @method \Aws\AppFabric\AppFabricClient createAppFabric(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAppFabric(array $args = [])
  * @method \Aws\AppIntegrationsService\AppIntegrationsServiceClient createAppIntegrationsService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppIntegrationsService(array $args = [])
  * @method \Aws\AppMesh\AppMeshClient createAppMesh(array $args = [])
@@ -138,6 +140,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCodeGuruProfiler(array $args = [])
  * @method \Aws\CodeGuruReviewer\CodeGuruReviewerClient createCodeGuruReviewer(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCodeGuruReviewer(array $args = [])
+ * @method \Aws\CodeGuruSecurity\CodeGuruSecurityClient createCodeGuruSecurity(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCodeGuruSecurity(array $args = [])
  * @method \Aws\CodePipeline\CodePipelineClient createCodePipeline(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCodePipeline(array $args = [])
  * @method \Aws\CodeStar\CodeStarClient createCodeStar(array $args = [])
@@ -246,6 +250,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionElasticsearchService(array $args = [])
  * @method \Aws\Emr\EmrClient createEmr(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEmr(array $args = [])
+ * @method \Aws\EntityResolution\EntityResolutionClient createEntityResolution(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionEntityResolution(array $args = [])
  * @method \Aws\EventBridge\EventBridgeClient createEventBridge(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEventBridge(array $args = [])
  * @method \Aws\FIS\FISClient createFIS(array $args = [])
@@ -410,6 +416,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMainframeModernization(array $args = [])
  * @method \Aws\ManagedBlockchain\ManagedBlockchainClient createManagedBlockchain(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionManagedBlockchain(array $args = [])
+ * @method \Aws\ManagedBlockchainQuery\ManagedBlockchainQueryClient createManagedBlockchainQuery(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionManagedBlockchainQuery(array $args = [])
  * @method \Aws\ManagedGrafana\ManagedGrafanaClient createManagedGrafana(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionManagedGrafana(array $args = [])
  * @method \Aws\MarketplaceCatalog\MarketplaceCatalogClient createMarketplaceCatalog(array $args = [])
@@ -438,6 +446,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMediaStoreData(array $args = [])
  * @method \Aws\MediaTailor\MediaTailorClient createMediaTailor(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMediaTailor(array $args = [])
+ * @method \Aws\MedicalImaging\MedicalImagingClient createMedicalImaging(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMedicalImaging(array $args = [])
  * @method \Aws\MemoryDB\MemoryDBClient createMemoryDB(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMemoryDB(array $args = [])
  * @method \Aws\MigrationHub\MigrationHubClient createMigrationHub(array $args = [])
@@ -658,6 +668,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionTranslate(array $args = [])
  * @method \Aws\VPCLattice\VPCLatticeClient createVPCLattice(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionVPCLattice(array $args = [])
+ * @method \Aws\VerifiedPermissions\VerifiedPermissionsClient createVerifiedPermissions(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionVerifiedPermissions(array $args = [])
  * @method \Aws\VoiceID\VoiceIDClient createVoiceID(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionVoiceID(array $args = [])
  * @method \Aws\WAFV2\WAFV2Client createWAFV2(array $args = [])
@@ -699,7 +711,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.272.0';
+    const VERSION = '3.277.11';
 
     /** @var array Arguments for creating clients */
     private $args;

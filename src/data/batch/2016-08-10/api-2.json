@@ -421,7 +421,8 @@
       "enum":[
         "BEST_FIT",
         "BEST_FIT_PROGRESSIVE",
-        "SPOT_CAPACITY_OPTIMIZED"
+        "SPOT_CAPACITY_OPTIMIZED",
+        "SPOT_PRICE_CAPACITY_OPTIMIZED"
       ]
     },
     "CRType":{
@@ -437,7 +438,8 @@
       "type":"string",
       "enum":[
         "BEST_FIT_PROGRESSIVE",
-        "SPOT_CAPACITY_OPTIMIZED"
+        "SPOT_CAPACITY_OPTIMIZED",
+        "SPOT_PRICE_CAPACITY_OPTIMIZED"
       ]
     },
     "CancelJobRequest":{
@@ -589,7 +591,8 @@
         "secrets":{"shape":"SecretList"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "fargatePlatformConfiguration":{"shape":"FargatePlatformConfiguration"},
-        "ephemeralStorage":{"shape":"EphemeralStorage"}
+        "ephemeralStorage":{"shape":"EphemeralStorage"},
+        "runtimePlatform":{"shape":"RuntimePlatform"}
       }
     },
     "ContainerOverrides":{
@@ -642,7 +645,8 @@
         "secrets":{"shape":"SecretList"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "fargatePlatformConfiguration":{"shape":"FargatePlatformConfiguration"},
-        "ephemeralStorage":{"shape":"EphemeralStorage"}
+        "ephemeralStorage":{"shape":"EphemeralStorage"},
+        "runtimePlatform":{"shape":"RuntimePlatform"}
       }
     },
     "ContainerSummary":{
@@ -1698,6 +1702,13 @@
       "members":{
         "attempts":{"shape":"Integer"},
         "evaluateOnExit":{"shape":"EvaluateOnExitList"}
+      }
+    },
+    "RuntimePlatform":{
+      "type":"structure",
+      "members":{
+        "operatingSystemFamily":{"shape":"String"},
+        "cpuArchitecture":{"shape":"String"}
       }
     },
     "SchedulingPolicyDetail":{

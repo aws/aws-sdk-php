@@ -8,6 +8,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -90,7 +91,7 @@ class MockHandlerTest extends TestCase
         $cmd = new Command('foo');
         $h($cmd, $request);
         $h($cmd, $request);
-        \GuzzleHttp\Promise\Utils::queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertEquals([$r1, $e], $thens);
     }
 

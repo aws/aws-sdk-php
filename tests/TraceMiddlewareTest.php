@@ -47,7 +47,7 @@ class TraceMiddlewareTest extends TestCase
         $command = new Command('foo', ['a' => '1', 'b' => '2']);
         $request = new Request('GET', 'http://foo.com');
         $handler($command, $request);
-        \GuzzleHttp\Promise\Utils::queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertStringContainsString("-> Entering step init, name ''", $str);
         $this->assertStringContainsString('command was set to array', $str);
         $this->assertStringContainsString('request was set to array', $str);
@@ -83,7 +83,7 @@ class TraceMiddlewareTest extends TestCase
         $command = new Command('foo');
         $request = new Request('GET', 'http://foo.com');
         $handler($command, $request);
-        \GuzzleHttp\Promise\Utils::queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertStringContainsString('error was set to array', $str);
         $this->assertStringContainsString('trace', $str);
         $this->assertStringContainsString('class', $str);
@@ -118,7 +118,7 @@ class TraceMiddlewareTest extends TestCase
         $command = new Command('foo');
         $request = new Request('GET', 'http://foo.com');
         $handler($command, $request);
-        \GuzzleHttp\Promise\Utils::queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertStringContainsString('error was set to array', $str);
         $this->assertStringContainsString('trace', $str);
         $this->assertStringContainsString('class', $str);

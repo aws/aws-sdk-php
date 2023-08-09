@@ -28,7 +28,7 @@ class MiddlewareTest extends TestCase
 {
     public function set_up()
     {
-        \GuzzleHttp\Promise\Utils::queue()->run();
+        Promise\Utils::queue()->run();
     }
 
     public function testCanTapIntoHandlerList()
@@ -104,7 +104,7 @@ class MiddlewareTest extends TestCase
         $list->appendSign(Middleware::signer($creds, Aws\constantly($signature)));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
-        \GuzzleHttp\Promise\Utils::queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertTrue($req->hasHeader('Authorization'));
     }
 
@@ -247,7 +247,7 @@ class MiddlewareTest extends TestCase
             'Key'        => 'key',
             'SourceFile' => __FILE__
         ]), new Request('PUT', 'http://foo.com'));
-        \GuzzleHttp\Promise\Utils::queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertTrue($called);
     }
 

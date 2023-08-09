@@ -236,6 +236,7 @@ class AwsClient implements AwsClientInterface
         $this->addInvocationId();
         $this->addEndpointParameterMiddleware($args);
         $this->addEndpointDiscoveryMiddleware($config, $args);
+        $this->addRequestCompressionMiddleware($config);
         $this->loadAliases();
         $this->addStreamRequestPayload();
         $this->addRecursionDetection();
@@ -443,6 +444,17 @@ class AwsClient implements AwsClientInterface
             Middleware::signer($this->credentialProvider, $resolver, $this->tokenProvider),
             'signer'
         );
+    }
+
+    private function addRequestCompressionMiddleware($config)
+    {
+        if (empty($config['disable_request_compression'])) {
+            $list = $this->getHandlerList();
+            $list->appendBuild(
+                RequestCompressionMiddleware::wrap($config),
+                'request-compression'
+            );
+        }
     }
 
     private function addInvocationId()

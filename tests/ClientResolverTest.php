@@ -752,27 +752,25 @@ EOT;
         $r->resolve([], new HandlerList());
     }
 
-    public function testHasSpecificMessageForMissingVersion()
+    public function testAppliesLatestAsDefaultVersionWithoutSuppliedVersion()
     {
-        $this->expectExceptionMessage("A \"version\" configuration value is required");
-        $this->expectException(\InvalidArgumentException::class);
-        $args = ClientResolver::getDefaultArguments()['version'];
-        $r = new ClientResolver(['version' => $args]);
-        $r->resolve(['service' => 'foo'], new HandlerList());
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'ec2',
+            'region' => 'us-west-2',
+        ], new HandlerList());
+        self::assertSame('latest', $conf['version']);
     }
 
-    public function testHasSpecificMessageForNullRequiredVersion()
+    public function testAppliesVersion()
     {
-        $this->expectExceptionMessage("A \"version\" configuration value is required");
-        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
-        $list = new HandlerList();
-        $r->resolve([
-            'service' => 'foo',
-            'region' => 'x',
-            'credentials' => ['key' => 'a', 'secret' => 'b'],
-            'version' => null,
-        ], $list);
+        $conf = $r->resolve([
+            'service' => 'ec2',
+            'region' => 'us-west-2',
+            'version' => '2015-10-01'
+        ], new HandlerList());
+        self::assertSame('2015-10-01', $conf['version']);
     }
 
     public function testHasSpecificMessageForMissingRegion()
@@ -1332,5 +1330,91 @@ EOT;
                 new InvalidRegionException('Region must be a valid RFC host label.'),
             ],
         ];
+    }
+
+    public function invalidDisableRequestCompressionValues()
+    {
+        return [
+            ['foo'],
+            [ 1 ],
+            [function () {return 'nothing';}]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidDisableRequestCompressionValues
+     */
+    public function testInvalidDisableRequestCompressionTypeThrowsException($invalidType)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/Invalid configuration value provided/');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+            'disable_request_compression' => $invalidType
+        ], $list);
+        $this->assertArrayHasKey('disable_request_compression', $conf);
+        $this->assertFalse($conf['disable_request_compression']);
+    }
+
+    public function testDisableRequestCompressionDefault()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+        ], $list);
+        $this->assertArrayHasKey('disable_request_compression', $conf);
+        $this->assertFalse($conf['disable_request_compression']);
+    }
+
+    public function invalidMinCompressionSizeValues()
+    {
+        return [
+            [ true ],
+            [ 'foo' ],
+            [function () {return 'nothing';}],
+            [ 99999999 ],
+            [ -1 ]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidMinCompressionSizeValues
+     */
+    public function testInvalidMinCompressionSizeValues($invalidType)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/Invalid configuration value provided/');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+            'request_min_compression_size_bytes' => $invalidType
+        ], $list);
+    }
+
+    public function testMinCompressionSizeDefault()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+        ], $list);
+        $this->assertArrayHasKey('request_min_compression_size_bytes', $conf);
+        $this->assertEquals(10240, $conf['request_min_compression_size_bytes']);
     }
 }
