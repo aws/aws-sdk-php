@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.277.12 - 2023-08-09
 
 * `Aws\` - Updates size determination logic for request compression
 * `Aws\ChimeSDKVoice` - Updating CreatePhoneNumberOrder, UpdatePhoneNumber and BatchUpdatePhoneNumbers APIs, adding phone number name
