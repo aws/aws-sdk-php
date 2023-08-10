@@ -206,6 +206,17 @@ class ConfigurationResolver
         return $value;
     }
 
+    /**
+     * Normalizes string values pulled out of ini files and
+     * environment variables.
+     *
+     * @param array $data The data retrieved the ini file
+     * @param string $profile The specified ini profile
+     * @param string $filename The full path to the ini file
+     * @param array $options Additional arguments passed to the configuration resolver
+     *
+     * @return mixed
+     */
     private static function retrieveValueFromIniSubsection(
         $data,
         $profile,
