@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## 3.278.0 - 2023-08-10
+
+* `Aws\Multipart` - Include ChecksumAlgorithm member in Multipart Upload and Copy for flexible checksums
+* `Aws\CloudTrail` - Documentation updates for CloudTrail.
+* `Aws\Transfer` - Documentation updates for AW Transfer Family
+* `Aws\Omics` - This release adds instanceType to GetRunTask & ListRunTasks responses.
+* `Aws\SecretsManager` - Add additional InvalidRequestException to list of possible exceptions for ListSecret.
+* `Aws\Connect` - This release adds APIs to provision agents that are global / available in multiple AWS regions and distribute them across these regions by percentage.
+* `Aws\ElasticLoadBalancingv2` - This release enables configuring security groups for Network Load Balancers
+
+## 3.277.12 - 2023-08-09
+
+* `Aws\` - Updates size determination logic for request compression
+* `Aws\ChimeSDKVoice` - Updating CreatePhoneNumberOrder, UpdatePhoneNumber and BatchUpdatePhoneNumbers APIs, adding phone number name
+* `Aws\GlobalAccelerator` - Documentation update for dualstack EC2 endpoint support
+* `Aws\GuardDuty` - Added autoEnable ALL to UpdateOrganizationConfiguration and DescribeOrganizationConfiguration APIs.
+* `Aws\FSx` - For FSx for Lustre, add new data repository task type, RELEASE_DATA_FROM_FILESYSTEM, to release files that have been archived to S3. For FSx for Windows, enable support for configuring and updating SSD IOPS, and for updating storage type. For FSx for OpenZFS, add new deployment type, MULTI_AZ_1.
+* `Aws\SageMaker` - This release adds support for cross account access for SageMaker Model Cards through AWS RAM.
+
 ## 3.277.11 - 2023-08-08
 
 * `Aws\Backup` - This release introduces a new logically air-gapped vault (Preview) in AWS Backup that stores immutable backup copies, which are locked by default and isolated with encryption using AWS owned keys. Logically air-gapped vault (Preview) allows secure recovery of application data across accounts.
