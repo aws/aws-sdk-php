@@ -473,7 +473,7 @@ EOT
     }
 
     /**
-     * @covers Aws\parse_ini_services_section()
+     * @covers Aws\parse_ini_section_with_subsections()
      * @dataProvider getIniFileServiceTestCases
      */
     public function testParsesIniSectionsWithSubsections($ini, $expected)
