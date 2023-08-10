@@ -3004,7 +3004,8 @@
         "stopTime":{"shape":"TaskTimestamp"},
         "statusMessage":{"shape":"TaskStatusMessage"},
         "logStream":{"shape":"TaskLogStream"},
-        "gpus":{"shape":"GetRunTaskResponseGpusInteger"}
+        "gpus":{"shape":"GetRunTaskResponseGpusInteger"},
+        "instanceType":{"shape":"TaskInstanceType"}
       }
     },
     "GetRunTaskResponseCpusInteger":{
@@ -5348,6 +5349,10 @@
       "min":1,
       "pattern":"[0-9]+"
     },
+    "TaskInstanceType":{
+      "type":"string",
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
     "TaskList":{
       "type":"list",
       "member":{"shape":"TaskListItem"}
@@ -5363,7 +5368,8 @@
         "creationTime":{"shape":"TaskTimestamp"},
         "startTime":{"shape":"TaskTimestamp"},
         "stopTime":{"shape":"TaskTimestamp"},
-        "gpus":{"shape":"TaskListItemGpusInteger"}
+        "gpus":{"shape":"TaskListItemGpusInteger"},
+        "instanceType":{"shape":"TaskInstanceType"}
       }
     },
     "TaskListItemCpusInteger":{
