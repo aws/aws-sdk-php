@@ -115,8 +115,11 @@ class ConfigurationResolver
         //TODO change after deprecation
         $data = @\Aws\parse_ini_file($filename, true, INI_SCANNER_NORMAL);
 
-        if (isset($options['service']) && isset($options['key'])) {
-            return self::retrieveValueFromIniServices(
+        if (isset($options['section'])
+            && isset($options['subsection'])
+            && isset($options['key']))
+        {
+            return self::retrieveValueFromIniSubsection(
                 $data,
                 $profile,
                 $filename,
@@ -203,32 +206,33 @@ class ConfigurationResolver
         return $value;
     }
 
-    private static function retrieveValueFromIniServices(
+    private static function retrieveValueFromIniSubsection(
         $data,
         $profile,
         $filename,
         $expectedType,
         $options
     ){
+        $section = $options['section'];
         if ($data === false
-            || !isset($data[$profile]['services'])
-            || !isset($data['services ' . $data[$profile]['services']])
+            || !isset($data[$profile][$section])
+            || !isset($data["{$section} {$data[$profile][$section]}"])
         ) {
             return null;
         }
 
-        $services_section = \Aws\parse_ini_services_section(
+        $services_section = \Aws\parse_ini_section_with_subsections(
             $filename,
             "services {$data[$profile]['services']}"
         );
 
-        if (!isset($services_section[$options['service']][$options['key']])
+        if (!isset($services_section[$options['subsection']][$options['key']])
         ) {
             return null;
         }
 
         return self::convertType(
-            $services_section[$options['service']][$options['key']],
+            $services_section[$options['subsection']][$options['key']],
             $expectedType
         );
     }

@@ -503,13 +503,20 @@ function boolean_value($input)
     return null;
 }
 
-function parse_ini_services_section($filename, $section_name) {
+/**
+ * Checks if an input is a valid epoch time
+ *
+ * @param $filename
+ * @param $filename
+ * @return array
+ */
+function parse_ini_section_with_subsections($filename, $section_name) {
     $config = [];
     $ini_content = file_get_contents($filename);
     $lines = explode("\n", $ini_content);
 
     $section_start = false;
-    $current_service = '';
+    $current_subsection = '';
 
     foreach ($lines as $line) {
         $line = trim($line);
@@ -519,25 +526,27 @@ function parse_ini_services_section($filename, $section_name) {
         }
 
         if (strpos($line, '[') === 0) {
-            $current_service = '';
+            if ($section_start) {
+                break;
+            }
+            $current_subsection = '';
             $section_start = (trim($line, '[]') === $section_name);
         } elseif ($section_start) {
             if (strpos($line, ' = ') !== false) {
                 list($key, $value) = explode(' = ', $line, 2);
-                if (empty($current_service)) {
+                if (empty($current_subsection)) {
                     $config[$key] = $value;
                 } else {
-                    $config[$current_service][$key] = $value;
+                    $config[$current_subsection][$key] = $value;
                 }
-            } elseif (!empty($line)) {
-                $current_service = trim(str_replace('=', '', $line));
-                $config[$current_service] = [];
+            } else {
+                $current_subsection = trim(str_replace('=', '', $line));
+                $config[$current_subsection] = [];
             }
         }
     }
     return $config;
 }
-
 
 /**
  * Checks if an input is a valid epoch time

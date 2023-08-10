@@ -299,7 +299,7 @@ class ClientResolver
             'valid'     => ['string'],
             'doc'       => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3). This functions in an identical manner to and will take precedence over the `endpoint` configuration option and can also be resolved from environment variables and the shared config file.',
             'fn'        => [__CLASS__, '_apply_endpoint_url'],
-            'default'   => [__CLASS__, '_resolve_endpoint_url'],
+            'default'   => [__CLASS__, '_default_endpoint_url'],
         ]
     ];
 
@@ -1175,7 +1175,7 @@ class ClientResolver
         $args['config']['endpoint_url'] = $value;
     }
 
-    public static function _resolve_endpoint_url(array &$args)
+    public static function _default_endpoint_url(array &$args)
     {
         if ($args['config']['ignore_configured_endpoint_urls']
             || !self::isValidService($args['service'])
@@ -1190,7 +1190,8 @@ class ClientResolver
             'string',
             $args + [
                 'config_resolver_options' => [
-                    'service' => $serviceIdentifier,
+                    'section' => 'services',
+                    'subsection' => $serviceIdentifier,
                     'key' => 'endpoint_url'
                 ]
             ]
