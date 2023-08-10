@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.278.0 - 2023-08-10
 
 * `Aws\Multipart` - Include ChecksumAlgorithm member in Multipart Upload and Copy for flexible checksums
 * `Aws\CloudTrail` - Documentation updates for CloudTrail.
