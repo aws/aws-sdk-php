@@ -331,7 +331,8 @@ EOT;
             'string',
             [
                 'config_resolver_options' => [
-                    'service' => 's3',
+                    'section' => 'services',
+                    'subsection' => 's3',
                     'key' => 'endpoint_url'
                 ]
             ]
