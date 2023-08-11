@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.278.1 - 2023-08-11
 
 * `Aws\QuickSight` - New Authentication method for Account subscription - IAM Identity Center. Hierarchy layout support, default column width support and related style properties for pivot table visuals. Non-additive topic field aggregations for Topic API
 * `Aws\AmplifyBackend` - Adds sensitive trait to required input shapes.
