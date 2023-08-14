@@ -316,4 +316,51 @@ class MultipartUploaderTest extends TestCase
         );
         $uploader->upload();
     }
+
+    /**
+     * @dataProvider testMultipartSuccessStreams
+     */
+    public function testUploaderAddsFlexibleChecksums($stream, $size)
+    {
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('s3');
+        $uploadOptions = [
+            'bucket'          => 'foo',
+            'key'             => 'bar',
+            'add_content_md5' => true,
+            'params'          => [
+                'RequestPayer'  => 'test',
+                'ChecksumAlgorithm' => 'Sha256'
+            ],
+            'before_initiate' => function($command) {
+                $this->assertSame('test', $command['RequestPayer']);
+                $this->assertSame('Sha256', $command['ChecksumAlgorithm']);
+            },
+            'before_upload'   => function($command) use ($size) {
+                $this->assertLessThan($size, $command['ContentLength']);
+                $this->assertSame('test', $command['RequestPayer']);
+                $this->assertSame('Sha256', $command['ChecksumAlgorithm']);
+            },
+            'before_complete' => function($command) {
+                $this->assertSame('test', $command['RequestPayer']);
+                $this->assertSame('Sha256', $command['ChecksumAlgorithm']);
+            }
+        ];
+        $url = 'http://foo.s3.amazonaws.com/bar';
+
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'baz', 'ChecksumSHA256' => 'xyz']),
+            new Result(['ETag' => 'A', 'ChecksumSHA256' => 'xyz']),
+            new Result(['ETag' => 'B', 'ChecksumSHA256' => 'xyz']),
+            new Result(['ETag' => 'C', 'ChecksumSHA256' => 'xyz']),
+            new Result(['Location' => $url, 'ChecksumSHA256' => 'xyz'])
+        ]);
+
+        $uploader = new MultipartUploader($client, $stream, $uploadOptions);
+        $result = $uploader->upload();
+
+        $this->assertTrue($uploader->getState()->isCompleted());
+        $this->assertSame('xyz', $result['ChecksumSHA256']);
+        $this->assertSame($url, $result['ObjectURL']);
+    }
 }

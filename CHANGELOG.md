@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## 3.278.2 - 2023-08-14
+
+* `Aws\Omics` - This release provides support for annotation store versioning and cross account sharing for Omics Analytics
+* `Aws\MediaPackage` - Fix SDK logging of certain fields.
+* `Aws\Transfer` - Documentation updates for AWS Transfer Family
+
+## 3.278.1 - 2023-08-11
+
+* `Aws\QuickSight` - New Authentication method for Account subscription - IAM Identity Center. Hierarchy layout support, default column width support and related style properties for pivot table visuals. Non-additive topic field aggregations for Topic API
+* `Aws\AmplifyBackend` - Adds sensitive trait to required input shapes.
+* `Aws\EC2` - Amazon EC2 P5 instances, powered by the latest NVIDIA H100 Tensor Core GPUs, deliver the highest performance in EC2 for deep learning (DL) and HPC applications. M7i-flex and M7i instances are next-generation general purpose instances powered by custom 4th Generation Intel Xeon Scalable processors.
+* `Aws\ConfigService` - Updated ResourceType enum with new resource types onboarded by AWS Config in July 2023.
+* `Aws\SWF` - This release adds new API parameters to override workflow task list for workflow executions.
+* `Aws\SES` - Doc only updates to include: 1) Clarified which part of an email address where it's okay to have Punycode when it contains non-ASCII characters for the SendRawEmail action and other actions where this is applicable. 2) Updated S3Action description with new MB max bucket size from 30 to 40.
+
+## 3.278.0 - 2023-08-10
+
+* `Aws\Multipart` - Include ChecksumAlgorithm member in Multipart Upload and Copy for flexible checksums
+* `Aws\CloudTrail` - Documentation updates for CloudTrail.
+* `Aws\Transfer` - Documentation updates for AW Transfer Family
+* `Aws\Omics` - This release adds instanceType to GetRunTask & ListRunTasks responses.
+* `Aws\SecretsManager` - Add additional InvalidRequestException to list of possible exceptions for ListSecret.
+* `Aws\Connect` - This release adds APIs to provision agents that are global / available in multiple AWS regions and distribute them across these regions by percentage.
+* `Aws\ElasticLoadBalancingv2` - This release enables configuring security groups for Network Load Balancers
+
+## 3.277.12 - 2023-08-09
+
+* `Aws\` - Updates size determination logic for request compression
+* `Aws\ChimeSDKVoice` - Updating CreatePhoneNumberOrder, UpdatePhoneNumber and BatchUpdatePhoneNumbers APIs, adding phone number name
+* `Aws\GlobalAccelerator` - Documentation update for dualstack EC2 endpoint support
+* `Aws\GuardDuty` - Added autoEnable ALL to UpdateOrganizationConfiguration and DescribeOrganizationConfiguration APIs.
+* `Aws\FSx` - For FSx for Lustre, add new data repository task type, RELEASE_DATA_FROM_FILESYSTEM, to release files that have been archived to S3. For FSx for Windows, enable support for configuring and updating SSD IOPS, and for updating storage type. For FSx for OpenZFS, add new deployment type, MULTI_AZ_1.
+* `Aws\SageMaker` - This release adds support for cross account access for SageMaker Model Cards through AWS RAM.
+
 ## 3.277.11 - 2023-08-08
 
 * `Aws\Backup` - This release introduces a new logically air-gapped vault (Preview) in AWS Backup that stores immutable backup copies, which are locked by default and isolated with encryption using AWS owned keys. Logically air-gapped vault (Preview) allows secure recovery of application data across accounts.
