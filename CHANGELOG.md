@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.278.2 - 2023-08-14
 
 * `Aws\Omics` - This release provides support for annotation store versioning and cross account sharing for Omics Analytics
 * `Aws\MediaPackage` - Fix SDK logging of certain fields.
