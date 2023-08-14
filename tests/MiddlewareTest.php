@@ -54,7 +54,7 @@ class MiddlewareTest extends TestCase
             $called = true;
         }));
         $handler = $list->resolve();
-        $handler(new Command('foo'), new Request('GET', 'http://example.com'));
+        $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
         Promise\Utils::queue()->run();
         $this->assertTrue($called);
     }
