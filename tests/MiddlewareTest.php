@@ -39,7 +39,7 @@ class MiddlewareTest extends TestCase
             $called = func_get_args();
         }));
         $handler = $list->resolve();
-        $handler(new Command('foo'), new Request('GET', 'http://example.com'));
+        $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
         Promise\Utils::queue()->run();
         $this->assertCount(2, $called);
         $this->assertInstanceOf(CommandInterface::class, $called[0]);

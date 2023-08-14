@@ -16,7 +16,7 @@ jobs:
     strategy:
       #for each of the following versions of PHP, with and without --prefer-lowest
       matrix:
-        php-versions: ['5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
+        php-versions: ['7.2.5', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
         composer-options: ['', '--prefer-lowest']
     #set the name for each job
     name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
@@ -43,12 +43,6 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    #remove incompatible xdebug file if it exists
-    - if: ${{ matrix.php-versions == '5.5' }}
-      name: PHP 5.5
-      run: |
-        sudo rm -f /etc/php5/cli/conf.d/20-xdebug.ini
-
     #get dependencies
     - name: Install dependencies
       run: composer update ${{ matrix.composer-options }} --no-interaction --prefer-source
@@ -68,7 +62,7 @@ jobs:
       run: make test
 
     #static analysis
-    - if: ${{ matrix.php-versions >= '7.1' && matrix.php-versions < '8.0' && matrix.composer-options == '' }}
+    - if: ${{ matrix.php-versions < '8.0' && matrix.composer-options == '' }}
       name: Static analysis
       run: |
         composer require --dev nette/neon "^3.0"
@@ -79,11 +73,11 @@ jobs:
     - if:  ${{ matrix.composer-options == '' }}
       name: Package generation
       run: |
-        composer require guzzlehttp/psr7 "^1.9.1"
+        composer require guzzlehttp/psr7 "^1.9.1" -W
         composer update
         make package
 
     #generate code coverage
-    - if: ${{ (matrix.php-versions == '7.1' || matrix.php-versions == '8.0') && matrix.composer-options == '' }}
+    - if: ${{ (matrix.php-versions == '7.2.5' || matrix.php-versions == '8.0') && matrix.composer-options == '' }}
       name: Code coverage
       run: bash <(curl -s https://codecov.io/bash)

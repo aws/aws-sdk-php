@@ -32,8 +32,8 @@ $burgomaster->recursiveCopy('vendor/psr/http-message/src', 'Psr/Http/Message');
 $autoloaderContents = [
     'Aws/functions.php',
     'GuzzleHttp/functions_include.php',
-    'GuzzleHttp/Psr7/functions_include.php',
-    'GuzzleHttp/Promise/functions_include.php',
+    'GuzzleHttp/Psr7/Utils.php',
+    'GuzzleHttp/Promise/Utils.php',
     'JmesPath/JmesPath.php',
 ];
 
