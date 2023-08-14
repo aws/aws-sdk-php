@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Omics` - This release provides support for annotation store versioning and cross account sharing for Omics Analytics
+* `Aws\MediaPackage` - Fix SDK logging of certain fields.
+* `Aws\Transfer` - Documentation updates for AWS Transfer Family
+
 ## 3.278.1 - 2023-08-11
 
 * `Aws\QuickSight` - New Authentication method for Account subscription - IAM Identity Center. Hierarchy layout support, default column width support and related style properties for pivot table visuals. Non-additive topic field aggregations for Topic API
