@@ -188,7 +188,7 @@ class BucketEndpointArnMiddleware
         }
 
         $host = "{$accesspointName}-" . $arn->getAccountId();
-        
+
         $useFips = $this->config['use_fips_endpoint']->isUseFipsEndpoint();
         $fipsString = $useFips ? "-fips" : "";
 

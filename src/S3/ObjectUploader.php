@@ -68,7 +68,7 @@ class ObjectUploader implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    public function promise(): PromiseInterface
+    public function promise()
     {
         /** @var int $mup_threshold */
         $mup_threshold = $this->options['mup_threshold'];
