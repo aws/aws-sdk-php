@@ -257,10 +257,10 @@ class TokenProvider
      * @param string $filename the location of the ini file
      * @param array $config configuration options
      *
-     * @return SsoTokenProvider
-     * @see Aws\Token\SsoTokenProvider for $config details.
+     * @return SsoToken
+     * @see Aws\Token\SsoToken for $config details.
      */
-    public static function sso($profileName, $filename, $config = []) : SsoTokenProvider
+    public static function sso($profileName, $filename, $config = [])
     {
         return new SsoTokenProvider($profileName, $filename, $config);
     }

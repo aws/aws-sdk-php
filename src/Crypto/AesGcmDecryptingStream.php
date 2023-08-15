@@ -100,7 +100,7 @@ class AesGcmDecryptingStream implements AesStreamInterface
         }
     }
 
-    public function isWritable(): bool
+    public function isWritable()
     {
         return false;
     }

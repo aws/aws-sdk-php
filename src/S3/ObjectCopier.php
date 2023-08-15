@@ -7,7 +7,6 @@ use Aws\Exception\MultipartUploadException;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Promise\Coroutine;
-use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\PromisorInterface;
 use InvalidArgumentException;
 
@@ -80,7 +79,7 @@ class ObjectCopier implements PromisorInterface
      *
      * @return Coroutine
      */
-    public function promise(): PromiseInterface
+    public function promise()
     {
         return Coroutine::of(function () {
             $headObjectCommand = $this->client->getCommand(
