@@ -88,7 +88,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
      *
      * @return PromiseInterface
      */
-    public function promise(): PromiseInterface
+    public function promise()
     {
         if ($this->promise) {
             return $this->promise;
@@ -218,8 +218,10 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
     /**
      * Based on the config and service-specific workflow info, creates a
      * `Promise` for an `UploadState` object.
+     *
+     * @return PromiseInterface A `Promise` that resolves to an `UploadState`.
      */
-    private function determineState(): UploadState
+    private function determineState()
     {
         // If the state was provided via config, then just use it.
         if ($this->config['state'] instanceof UploadState) {

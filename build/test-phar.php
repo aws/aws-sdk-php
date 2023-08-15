@@ -20,6 +20,8 @@ Aws\DynamoDb\DynamoDbClient::factory($conf);
 
 // React autoloader
 $checks = [
+    'GuzzleHttp\\Psr7\\stream_for',
+    'GuzzleHttp\\Promise\\inspect',
     'JmesPath\\search',
     'Aws\\dir_iterator',
 ];
@@ -27,19 +29,6 @@ $checks = [
 foreach ($checks as $check) {
     if (!function_exists($check)) {
         echo $check . ' not found';
-        exit(1);
-    }
-}
-
-$classMethodChecks = [
-    'GuzzleHttp\\Promise\\Utils' => 'inspect',
-    'GuzzleHttp\\Psr7\\Utils' => 'streamFor',
-];
-
-foreach ($classMethodChecks as $class => $method) {
-    if (!method_exists($class, $method)
-    ) {
-        echo $class . '::' . $method . ' not found';
         exit(1);
     }
 }

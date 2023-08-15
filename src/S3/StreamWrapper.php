@@ -569,10 +569,9 @@ class StreamWrapper
             );
             // Delete the original object
             $this->getClient()->deleteObject([
-                    'Bucket' => $partsFrom['Bucket'],
-                    'Key' => $partsFrom['Key'],
+                'Bucket' => $partsFrom['Bucket'],
+                'Key'    => $partsFrom['Key']
             ] + $options);
-
             return true;
         });
     }
