@@ -189,6 +189,9 @@ class BucketEndpointArnMiddleware
 
         $host = "{$accesspointName}-" . $arn->getAccountId();
 
+        $useFips = $this->config['use_fips_endpoint']->isUseFipsEndpoint();
+        $fipsString = $useFips ? "-fips" : "";
+
         if ($arn instanceof OutpostsAccessPointArn) {
             $host .= '.' . $arn->getOutpostId() . '.s3-outposts';
         } else if ($arn instanceof ObjectLambdaAccessPointArn) {
