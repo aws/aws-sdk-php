@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## 3.278.3 - 2023-08-15
+
+* `Aws\PI` - AWS Performance Insights for Amazon RDS is launching Performance Analysis On Demand, a new feature that allows you to analyze database performance metrics and find out the performance issues. You can now use SDK to create, list, get, delete, and manage tags of performance analysis reports.
+* `Aws\SageMaker` - SageMaker Inference Recommender now provides SupportedResponseMIMETypes from DescribeInferenceRecommendationsJob response
+* `Aws\EC2` - Documentation updates for Elastic Compute Cloud (EC2).
+* `Aws\ChimeSDKMeetings` - Updated API documentation to include additional exceptions.
+* `Aws\Glue` - AWS Glue Crawlers can now accept SerDe overrides from a custom csv classifier. The two SerDe options are LazySimpleSerDe and OpenCSVSerDe. In case, the user wants crawler to do the selection, "None" can be selected for this purpose.
+* `Aws\Route53Domains` - Provide explanation if CheckDomainTransferability return false. Provide requestId if a request is already submitted. Add sensitive protection for customer information
+
+## 3.278.2 - 2023-08-14
+
+* `Aws\Omics` - This release provides support for annotation store versioning and cross account sharing for Omics Analytics
+* `Aws\MediaPackage` - Fix SDK logging of certain fields.
+* `Aws\Transfer` - Documentation updates for AWS Transfer Family
+
+## 3.278.1 - 2023-08-11
+
+* `Aws\QuickSight` - New Authentication method for Account subscription - IAM Identity Center. Hierarchy layout support, default column width support and related style properties for pivot table visuals. Non-additive topic field aggregations for Topic API
+* `Aws\AmplifyBackend` - Adds sensitive trait to required input shapes.
+* `Aws\EC2` - Amazon EC2 P5 instances, powered by the latest NVIDIA H100 Tensor Core GPUs, deliver the highest performance in EC2 for deep learning (DL) and HPC applications. M7i-flex and M7i instances are next-generation general purpose instances powered by custom 4th Generation Intel Xeon Scalable processors.
+* `Aws\ConfigService` - Updated ResourceType enum with new resource types onboarded by AWS Config in July 2023.
+* `Aws\SWF` - This release adds new API parameters to override workflow task list for workflow executions.
+* `Aws\SES` - Doc only updates to include: 1) Clarified which part of an email address where it's okay to have Punycode when it contains non-ASCII characters for the SendRawEmail action and other actions where this is applicable. 2) Updated S3Action description with new MB max bucket size from 30 to 40.
+
 ## 3.278.0 - 2023-08-10
 
 * `Aws\Multipart` - Include ChecksumAlgorithm member in Multipart Upload and Copy for flexible checksums
