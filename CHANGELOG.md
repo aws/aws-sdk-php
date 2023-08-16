@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.279.0 - 2023-08-16
 
 * `Aws\` - This version ends support for PHP versions below 7.2.5
 * `Aws\CloudWatch` - Doc-only update to incorporate several doc bug fixes
