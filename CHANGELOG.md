@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - This version ends support for PHP versions below 7.2.5
+* `Aws\CloudWatch` - Doc-only update to incorporate several doc bug fixes
+* `Aws\LexModelsV2` - This release updates the Custom Vocabulary Weight field to support a value of 0.
+
 ## 3.278.3 - 2023-08-15
 
 * `Aws\PI` - AWS Performance Insights for Amazon RDS is launching Performance Analysis On Demand, a new feature that allows you to analyze database performance metrics and find out the performance issues. You can now use SDK to create, list, get, delete, and manage tags of performance analysis reports.
