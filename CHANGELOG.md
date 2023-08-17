@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.279.1 - 2023-08-17
 
 * `Aws\EC2` - Adds support for SubnetConfigurations to allow users to select their own IPv4 and IPv6 addresses for Interface VPC endpoints
 * `Aws\GameLift` - Amazon GameLift updates its instance types support.
