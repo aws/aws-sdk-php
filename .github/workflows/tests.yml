@@ -64,7 +64,7 @@ jobs:
     #check for changes in service artifacts
     - name: Check for changes in src/data
       run: |
-        CHANGED_FILES=$(git diff --name-only origin/master...HEAD -- src/data/)
+        CHANGED_FILES=$(git diff --name-only master...HEAD -- src/data/)
         if [ ! -z "$CHANGED_FILES" ]; then
           for FILE in $CHANGED_FILES; do
             LAST_COMMITTER=$(git log -1 --pretty=format:'%an' -- $FILE)
