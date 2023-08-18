@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.279.2 - 2023-08-18
 
 * `Aws\SecurityHub` - Added Inspector Lambda code Vulnerability section to ASFF, including GeneratorDetails, EpssScore, ExploitAvailable, and CodeVulnerabilities.
 * `Aws\CodeCommit` - Add new ListFileCommitHistory operation to retrieve commits which introduced changes to a specific file.
