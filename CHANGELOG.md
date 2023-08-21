@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.279.3 - 2023-08-21
 
 * `Aws\EC2` - The DeleteKeyPair API has been updated to return the keyPairId when an existing key pair is deleted.
 * `Aws\finspace` - Allow customers to manage outbound traffic from their Kx Environment when attaching a transit gateway by providing network acl entries. Allow the customer to choose how they want to update the databases on a cluster allowing updates to possibly be faster than usual.
