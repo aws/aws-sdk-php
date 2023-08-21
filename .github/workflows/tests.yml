@@ -63,16 +63,13 @@ jobs:
 
     #check for changes in service artifacts
     - name: Check for changes in src/data
+      if: github.event_name == 'pull_request'
       run: |
+        git fetch origin master:master
         CHANGED_FILES=$(git diff --name-only master...HEAD -- src/data/)
         if [ ! -z "$CHANGED_FILES" ]; then
-          for FILE in $CHANGED_FILES; do
-            LAST_COMMITTER=$(git log -1 --pretty=format:'%an' -- $FILE)
-            if [ "$LAST_COMMITTER" != "AwsSdkPhpAutomation" ]; then
-              echo "Changes detected in $FILE by unauthorized user: $LAST_COMMITTER!"
-              exit 1
-            fi
-          done
+          echo "Changes detected in src/data"
+            exit 1
         fi
 
     #static analysis
