@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - The DeleteKeyPair API has been updated to return the keyPairId when an existing key pair is deleted.
+* `Aws\finspace` - Allow customers to manage outbound traffic from their Kx Environment when attaching a transit gateway by providing network acl entries. Allow the customer to choose how they want to update the databases on a cluster allowing updates to possibly be faster than usual.
+* `Aws\Route53Domains` - Fixed typos in description fields
+* `Aws\RDS` - Adding support for RDS Aurora Global Database Unplanned Failover
+* `Aws\Cloud9` - Doc only update to add Ubuntu 22.04 as an Image ID option for Cloud9
+
 ## 3.279.2 - 2023-08-18
 
 * `Aws\SecurityHub` - Added Inspector Lambda code Vulnerability section to ASFF, including GeneratorDetails, EpssScore, ExploitAvailable, and CodeVulnerabilities.
