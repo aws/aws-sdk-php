@@ -1415,4 +1415,71 @@ EOT;
         $this->assertArrayHasKey('request_min_compression_size_bytes', $conf);
         $this->assertEquals(10240, $conf['request_min_compression_size_bytes']);
     }
+
+    /**
+     * @dataProvider configResolutionProvider
+     *
+     * @param $ini
+     * @param $env
+     * @param $expected
+     */
+    public function testConfigResolutionOrder($ini, $env, $expected, $configKey, $configType)
+    {
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        if ($env) {
+            putenv($env['key'] . '=' . $env['value']);
+        }
+
+        file_put_contents($dir . '/config', $ini);
+        $home = getenv('HOME');
+        putenv('HOME=' . dirname($dir));
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 's3',
+            'version' => 'latest'
+        ], new HandlerList());
+
+        if ($configType === 'args') {
+            $this->assertEquals($conf[$configKey], $expected);
+        } else {
+            $this->assertEquals($conf['config'][$configKey], $expected);
+        }
+        unlink($dir . '/config');
+        putenv("HOME=$home");
+        if ($env) {
+            putenv($env['key'] . '=');
+        }
+    }
+
+    public function configResolutionProvider()
+    {
+        return [
+            [
+                <<<EOT
+[default]
+region = foo-region
+EOT
+                ,
+                ['key' => 'AWS_REGION', 'value' => 'bar-region'],
+                'bar-region',
+                'region',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+region = 'foo-region'
+EOT
+                    ,
+                    null,
+                    'foo-region',
+                    'region',
+                    'args'
+                ]
+        ];
+    }
 }
