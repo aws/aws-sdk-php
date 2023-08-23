@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.279.5 - 2023-08-23
 
 * `Aws\APIGateway` - This release adds RootResourceId to GetRestApi response.
 * `Aws\Polly` - Amazon Polly adds 1 new voice - Zayd (ar-AE)
