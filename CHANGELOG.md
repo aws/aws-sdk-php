@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - This release adds RootResourceId to GetRestApi response.
+* `Aws\Polly` - Amazon Polly adds 1 new voice - Zayd (ar-AE)
+* `Aws\EC2` - Marking fields as sensitive on BundleTask and GetPasswordData
+
 ## 3.279.4 - 2023-08-22
 
 * `Aws\VerifiedPermissions` - Documentation updates for Amazon Verified Permissions. Increases max results per page for ListPolicyStores, ListPolicies, and ListPolicyTemplates APIs from 20 to 50.
