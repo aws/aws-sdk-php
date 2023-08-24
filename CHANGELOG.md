@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.279.6 - 2023-08-24
 
 * `Aws\RDS` - This release updates the supported versions for Percona XtraBackup in Aurora MySQL.
 * `Aws\MediaTailor` - Adds new source location AUTODETECT_SIGV4 access type.
