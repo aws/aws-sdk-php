@@ -87,6 +87,7 @@ class CredentialProvider
         $profileName = getenv(self::ENV_PROFILE) ?: 'default';
 
         $defaultChain = [
+            'config' => self::config($config),
             'env' => self::env(),
             'web_identity' => self::assumeRoleWithWebIdentityCredentialProvider($config),
         ];
@@ -99,6 +100,7 @@ class CredentialProvider
                 self::getHomeDir() . '/.aws/config',
                 $config
             );
+
             $defaultChain['process_credentials'] = self::process();
             $defaultChain['ini'] = self::ini();
             $defaultChain['process_config'] = self::process(
@@ -276,6 +278,23 @@ class CredentialProvider
 
                     return $creds;
                 });
+        };
+    }
+
+    public static function config(array $config) {
+        return function () use ($config) {
+            // Use credentials from config array, if available
+            $key = $config[strtolower(self::ENV_KEY)];
+            $secret = $config[strtolower(self::ENV_SECRET)];
+            if ($key && $secret) {
+                return Promise\Create::promiseFor(
+                    new Credentials($key, $secret, $config[strtolower(self::ENV_SESSION)] ?: NULL)
+                );
+            }
+
+            return self::reject('Could not find config '
+                . 'credentials in ' . strtolower(self::ENV_KEY)
+                . '/' . strtolower(self::ENV_SECRET));
         };
     }
 
@@ -872,11 +891,11 @@ class CredentialProvider
             $ssoSession = $profiles['sso-session ' . $ssoProfile['sso_session']];
             $ssoOidcClient = new Aws\SSOOIDC\SSOOIDCClient([
                 'region' => $ssoSession['sso_region'],
-                'version' => '2019-06-10',
+                'version' => 'latest',
                 'credentials' => false
             ]);
         } else {
-            $ssoOidcClient = $config['ssoClient'];
+            $ssoOidcClient = $config['ssoOidcClient'];
         }
 
         $tokenPromise = new Aws\Token\SsoTokenProvider(
@@ -890,7 +909,7 @@ class CredentialProvider
             $ssoSession['sso_region'],
             $token->getToken(),
             $config
-        );
+        );        
         $expiration = $ssoCredentials['expiration'];
         return Promise\Create::promiseFor(
             new Credentials(
