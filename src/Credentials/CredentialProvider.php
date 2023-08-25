@@ -293,7 +293,7 @@ class CredentialProvider
             $secret = getenv(self::ENV_SECRET) ?: $_SERVER[self::ENV_SECRET];
             if ($key && $secret) {
                 return Promise\Create::promiseFor(
-                    new Credentials($key, $secret, getenv(self::ENV_SESSION) ?: $_SERVER[self::ENV_SESSION] ?: NULL)
+                    new Credentials($key, $secret, getenv(self::ENV_SESSION) ?: NULL)
                 );
             }
 
