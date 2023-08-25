@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.279.7 - 2023-08-25
 
 * `Aws\CloudWatch` - Doc-only update to get doc bug fixes into the SDK docs
 * `Aws\CloudTrail` - Add ThrottlingException with error code 429 to handle CloudTrail Delegated Admin request rate exceeded on organization resources.
