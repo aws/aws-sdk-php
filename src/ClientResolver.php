@@ -94,13 +94,13 @@ class ClientResolver
             'valid'    => ['string'],
             'doc'      => 'Region to connect to. See http://docs.aws.amazon.com/general/latest/gr/rande.html for a list of available regions.',
             'fn'       => [__CLASS__, '_apply_region'],
-            'default'  => [__CLASS__, '_resolve_region']
+            'default'  => [__CLASS__, '_default_region']
         ],
         'version' => [
             'type'     => 'value',
             'valid'    => ['string'],
             'doc'      => 'The version of the webservice to utilize (e.g., 2006-03-01).',
-            'default' => 'latest'
+            'default' => 'latest',
         ],
         'signature_provider' => [
             'type'    => 'value',
@@ -280,13 +280,6 @@ class ClientResolver
             'valid'     => ['bool'],
             'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.  This will be ignored if you set the \'profile\' setting.',
             'default'   => true,
-        ],
-        'suppress_php_deprecation_warning' => [
-            'type'      => 'value',
-            'valid'     => ['bool'],
-            'doc'       => 'Set to false to disable the deprecation warning of PHP versions 7.2.4 and below',
-            'default'   => false,
-            'fn'        => [__CLASS__, '_apply_suppress_php_deprecation_warning']
         ],
     ];
 
@@ -1027,21 +1020,6 @@ class ClientResolver
         }
     }
 
-    public static function _apply_suppress_php_deprecation_warning($suppressWarning, array &$args) {
-        if ($suppressWarning) {
-            $args['suppress_php_deprecation_warning'] = true;
-        } elseif (!empty($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
-            $args['suppress_php_deprecation_warning'] =
-                $_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
-        } elseif (!empty($_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
-            $args['suppress_php_deprecation_warning'] =
-                $_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
-        } elseif (!empty(getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING"))) {
-            $args['suppress_php_deprecation_warning']
-                = getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING");
-        }
-    }
-
     public static function _default_endpoint_provider(array $args)
     {
         $service =  isset($args['api']) ? $args['api'] : null;
@@ -1146,7 +1124,7 @@ class ClientResolver
         $args['region'] = $value;
     }
 
-    public static function _resolve_region(&$args)
+    public static function _default_region(&$args)
     {
         return ConfigurationResolver::resolve('region', '', 'string');
     }

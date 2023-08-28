@@ -101,6 +101,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopServerAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result testConnection(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise testConnectionAsync(array $args = [])
  * @method \Aws\Result testIdentityProvider(array $args = [])
  * @method \GuzzleHttp\Promise\Promise testIdentityProviderAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

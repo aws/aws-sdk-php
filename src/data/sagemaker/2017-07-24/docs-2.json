@@ -22,7 +22,7 @@
     "CreateEdgeDeploymentPlan": "<p>Creates an edge deployment plan, consisting of multiple stages. Each stage may have a different deployment configuration and devices.</p>",
     "CreateEdgeDeploymentStage": "<p>Creates a new stage in an existing edge deployment plan.</p>",
     "CreateEdgePackagingJob": "<p>Starts a SageMaker Edge Manager model packaging job. Edge Manager will use the model artifacts from the Amazon Simple Storage Service bucket that you specify. After the model has been packaged, Amazon SageMaker saves the resulting artifacts to an S3 bucket that you specify.</p>",
-    "CreateEndpoint": "<p>Creates an endpoint using the endpoint configuration specified in the request. SageMaker uses the endpoint to provision resources and deploy models. You create the endpoint configuration with the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpointConfig.html\">CreateEndpointConfig</a> API. </p> <p> Use this API to deploy models using SageMaker hosting services. </p> <p>For an example that calls this method when deploying a model to SageMaker hosting services, see the <a href=\"https://github.com/aws/amazon-sagemaker-examples/blob/master/sagemaker-fundamentals/create-endpoint/create_endpoint.ipynb\">Create Endpoint example notebook.</a> </p> <note> <p> You must not delete an <code>EndpointConfig</code> that is in use by an endpoint that is live or while the <code>UpdateEndpoint</code> or <code>CreateEndpoint</code> operations are being performed on the endpoint. To update an endpoint, you must create a new <code>EndpointConfig</code>.</p> </note> <p>The endpoint name must be unique within an Amazon Web Services Region in your Amazon Web Services account. </p> <p>When it receives the request, SageMaker creates the endpoint, launches the resources (ML compute instances), and deploys the model(s) on them. </p> <note> <p>When you call <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a>, a load call is made to DynamoDB to verify that your endpoint configuration exists. When you read data from a DynamoDB table supporting <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html\"> <code>Eventually Consistent Reads</code> </a>, the response might not reflect the results of a recently completed write operation. The response might include some stale data. If the dependent entities are not yet in DynamoDB, this causes a validation error. If you repeat your read request after a short time, the response should return the latest data. So retry logic is recommended to handle these possible issues. We also recommend that customers call <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeEndpointConfig.html\">DescribeEndpointConfig</a> before calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> to minimize the potential impact of a DynamoDB eventually consistent read.</p> </note> <p>When SageMaker receives the request, it sets the endpoint status to <code>Creating</code>. After it creates the endpoint, it sets the status to <code>InService</code>. SageMaker can then process incoming requests for inferences. To check the status of an endpoint, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeEndpoint.html\">DescribeEndpoint</a> API.</p> <p>If any of the models hosted at this endpoint get model data from an Amazon S3 location, SageMaker uses Amazon Web Services Security Token Service to download model artifacts from the S3 path you provided. Amazon Web Services STS is activated in your Amazon Web Services account by default. If you previously deactivated Amazon Web Services STS for a region, you need to reactivate Amazon Web Services STS for that region. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html\">Activating and Deactivating Amazon Web Services STS in an Amazon Web Services Region</a> in the <i>Amazon Web Services Identity and Access Management User Guide</i>.</p> <note> <p> To add the IAM role policies for using this API operation, go to the <a href=\"https://console.aws.amazon.com/iam/\">IAM console</a>, and choose Roles in the left navigation pane. Search the IAM role that you want to grant access to use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpointConfig.html\">CreateEndpointConfig</a> API operations, add the following policies to the role. </p> <ul> <li> <p>Option 1: For a full SageMaker access, search and attach the <code>AmazonSageMakerFullAccess</code> policy.</p> </li> <li> <p>Option 2: For granting a limited access to an IAM role, paste the following Action elements manually into the JSON file of the IAM role: </p> <p> <code>\"Action\": [\"sagemaker:CreateEndpoint\", \"sagemaker:CreateEndpointConfig\"]</code> </p> <p> <code>\"Resource\": [</code> </p> <p> <code>\"arn:aws:sagemaker:region:account-id:endpoint/endpointName\"</code> </p> <p> <code>\"arn:aws:sagemaker:region:account-id:endpoint-config/endpointConfigName\"</code> </p> <p> <code>]</code> </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/api-permissions-reference.html\">SageMaker API Permissions: Actions, Permissions, and Resources Reference</a>.</p> </li> </ul> </note>",
+    "CreateEndpoint": "<p>Creates an endpoint using the endpoint configuration specified in the request. SageMaker uses the endpoint to provision resources and deploy models. You create the endpoint configuration with the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpointConfig.html\">CreateEndpointConfig</a> API. </p> <p> Use this API to deploy models using SageMaker hosting services. </p> <note> <p> You must not delete an <code>EndpointConfig</code> that is in use by an endpoint that is live or while the <code>UpdateEndpoint</code> or <code>CreateEndpoint</code> operations are being performed on the endpoint. To update an endpoint, you must create a new <code>EndpointConfig</code>.</p> </note> <p>The endpoint name must be unique within an Amazon Web Services Region in your Amazon Web Services account. </p> <p>When it receives the request, SageMaker creates the endpoint, launches the resources (ML compute instances), and deploys the model(s) on them. </p> <note> <p>When you call <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a>, a load call is made to DynamoDB to verify that your endpoint configuration exists. When you read data from a DynamoDB table supporting <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html\"> <code>Eventually Consistent Reads</code> </a>, the response might not reflect the results of a recently completed write operation. The response might include some stale data. If the dependent entities are not yet in DynamoDB, this causes a validation error. If you repeat your read request after a short time, the response should return the latest data. So retry logic is recommended to handle these possible issues. We also recommend that customers call <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeEndpointConfig.html\">DescribeEndpointConfig</a> before calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> to minimize the potential impact of a DynamoDB eventually consistent read.</p> </note> <p>When SageMaker receives the request, it sets the endpoint status to <code>Creating</code>. After it creates the endpoint, it sets the status to <code>InService</code>. SageMaker can then process incoming requests for inferences. To check the status of an endpoint, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeEndpoint.html\">DescribeEndpoint</a> API.</p> <p>If any of the models hosted at this endpoint get model data from an Amazon S3 location, SageMaker uses Amazon Web Services Security Token Service to download model artifacts from the S3 path you provided. Amazon Web Services STS is activated in your Amazon Web Services account by default. If you previously deactivated Amazon Web Services STS for a region, you need to reactivate Amazon Web Services STS for that region. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html\">Activating and Deactivating Amazon Web Services STS in an Amazon Web Services Region</a> in the <i>Amazon Web Services Identity and Access Management User Guide</i>.</p> <note> <p> To add the IAM role policies for using this API operation, go to the <a href=\"https://console.aws.amazon.com/iam/\">IAM console</a>, and choose Roles in the left navigation pane. Search the IAM role that you want to grant access to use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpointConfig.html\">CreateEndpointConfig</a> API operations, add the following policies to the role. </p> <ul> <li> <p>Option 1: For a full SageMaker access, search and attach the <code>AmazonSageMakerFullAccess</code> policy.</p> </li> <li> <p>Option 2: For granting a limited access to an IAM role, paste the following Action elements manually into the JSON file of the IAM role: </p> <p> <code>\"Action\": [\"sagemaker:CreateEndpoint\", \"sagemaker:CreateEndpointConfig\"]</code> </p> <p> <code>\"Resource\": [</code> </p> <p> <code>\"arn:aws:sagemaker:region:account-id:endpoint/endpointName\"</code> </p> <p> <code>\"arn:aws:sagemaker:region:account-id:endpoint-config/endpointConfigName\"</code> </p> <p> <code>]</code> </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/api-permissions-reference.html\">SageMaker API Permissions: Actions, Permissions, and Resources Reference</a>.</p> </li> </ul> </note>",
     "CreateEndpointConfig": "<p>Creates an endpoint configuration that SageMaker hosting services uses to deploy models. In the configuration, you identify one or more models, created using the <code>CreateModel</code> API, to deploy and the resources that you want SageMaker to provision. Then you call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> API.</p> <note> <p> Use this API if you want to use SageMaker hosting services to deploy models into production. </p> </note> <p>In the request, you define a <code>ProductionVariant</code>, for each model that you want to deploy. Each <code>ProductionVariant</code> parameter also describes the resources that you want SageMaker to provision. This includes the number and type of ML compute instances to deploy. </p> <p>If you are hosting multiple models, you also assign a <code>VariantWeight</code> to specify how much traffic you want to allocate to each model. For example, suppose that you want to host two models, A and B, and you assign traffic weight 2 for model A and 1 for model B. SageMaker distributes two-thirds of the traffic to Model A, and one-third to model B. </p> <note> <p>When you call <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a>, a load call is made to DynamoDB to verify that your endpoint configuration exists. When you read data from a DynamoDB table supporting <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html\"> <code>Eventually Consistent Reads</code> </a>, the response might not reflect the results of a recently completed write operation. The response might include some stale data. If the dependent entities are not yet in DynamoDB, this causes a validation error. If you repeat your read request after a short time, the response should return the latest data. So retry logic is recommended to handle these possible issues. We also recommend that customers call <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeEndpointConfig.html\">DescribeEndpointConfig</a> before calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> to minimize the potential impact of a DynamoDB eventually consistent read.</p> </note>",
     "CreateExperiment": "<p>Creates a SageMaker <i>experiment</i>. An experiment is a collection of <i>trials</i> that are observed, compared and evaluated as a group. A trial is a set of steps, called <i>trial components</i>, that produce a machine learning model.</p> <note> <p>In the Studio UI, trials are referred to as <i>run groups</i> and trial components are referred to as <i>runs</i>.</p> </note> <p>The goal of an experiment is to determine the components that produce the best model. Multiple trials are performed, each one isolating and measuring the impact of a change to one or more inputs, while keeping the remaining inputs constant.</p> <p>When you use SageMaker Studio or the SageMaker Python SDK, all experiments, trials, and trial components are automatically tracked, logged, and indexed. When you use the Amazon Web Services SDK for Python (Boto), you must use the logging APIs provided by the SDK.</p> <p>You can add tags to experiments, trials, trial components and then use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search for the tags.</p> <p>To add a description to an experiment, specify the optional <code>Description</code> parameter. To add a description later, or to change the description, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateExperiment.html\">UpdateExperiment</a> API.</p> <p>To get a list of all your experiments, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListExperiments.html\">ListExperiments</a> API. To view an experiment's properties, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeExperiment.html\">DescribeExperiment</a> API. To get a list of all the trials associated with an experiment, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListTrials.html\">ListTrials</a> API. To create a trial call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrial.html\">CreateTrial</a> API.</p>",
     "CreateFeatureGroup": "<p>Create a new <code>FeatureGroup</code>. A <code>FeatureGroup</code> is a group of <code>Features</code> defined in the <code>FeatureStore</code> to describe a <code>Record</code>. </p> <p>The <code>FeatureGroup</code> defines the schema and features contained in the FeatureGroup. A <code>FeatureGroup</code> definition is composed of a list of <code>Features</code>, a <code>RecordIdentifierFeatureName</code>, an <code>EventTimeFeatureName</code> and configurations for its <code>OnlineStore</code> and <code>OfflineStore</code>. Check <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html\">Amazon Web Services service quotas</a> to see the <code>FeatureGroup</code>s quota for your Amazon Web Services account.</p> <important> <p>You must include at least one of <code>OnlineStoreConfig</code> and <code>OfflineStoreConfig</code> to create a <code>FeatureGroup</code>.</p> </important>",
@@ -171,6 +171,7 @@
     "GetLineageGroupPolicy": "<p>The resource policy for the lineage group.</p>",
     "GetModelPackageGroupPolicy": "<p>Gets a resource policy that manages access for a model group. For information about resource policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html\">Identity-based policies and resource-based policies</a> in the <i>Amazon Web Services Identity and Access Management User Guide.</i>.</p>",
     "GetSagemakerServicecatalogPortfolioStatus": "<p>Gets the status of Service Catalog in SageMaker. Service Catalog is used to create SageMaker projects.</p>",
+    "GetScalingConfigurationRecommendation": "<p>Starts an Amazon SageMaker Inference Recommender autoscaling recommendation job. Returns recommendations for autoscaling policies that you can apply to your SageMaker endpoint.</p>",
     "GetSearchSuggestions": "<p>An auto-complete API for the search functionality in the SageMaker console. It returns suggestions of possible matches for the property name to use in <code>Search</code> queries. Provides suggestions for <code>HyperParameters</code>, <code>Tags</code>, and <code>Metrics</code>.</p>",
     "ImportHubContent": "<p>Import hub content.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>",
     "ListActions": "<p>Lists the actions in your account and their properties.</p>",
@@ -231,6 +232,7 @@
     "ListPipelines": "<p>Gets a list of pipelines.</p>",
     "ListProcessingJobs": "<p>Lists processing jobs that satisfy various filters.</p>",
     "ListProjects": "<p>Gets a list of the projects in an Amazon Web Services account.</p>",
+    "ListResourceCatalogs": "<p> Lists Amazon SageMaker Catalogs based on given filters and orders. The maximum number of <code>ResourceCatalog</code>s viewable is 1000. </p>",
     "ListSpaces": "<p>Lists spaces.</p>",
     "ListStageDevices": "<p>Lists devices allocated to the stage, containing detailed device information and deployment status.</p>",
     "ListStudioLifecycleConfigs": "<p>Lists the Studio Lifecycle Configurations in your Amazon Web Services Account.</p>",
@@ -282,7 +284,7 @@
     "UpdateEndpoint": "<p>Deploys the new <code>EndpointConfig</code> specified in the request, switches to using newly created endpoint, and then deletes resources provisioned for the endpoint using the previous <code>EndpointConfig</code> (there is no availability loss). </p> <p>When SageMaker receives the request, it sets the endpoint status to <code>Updating</code>. After updating the endpoint, it sets the status to <code>InService</code>. To check the status of an endpoint, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeEndpoint.html\">DescribeEndpoint</a> API. </p> <note> <p>You must not delete an <code>EndpointConfig</code> in use by an endpoint that is live or while the <code>UpdateEndpoint</code> or <code>CreateEndpoint</code> operations are being performed on the endpoint. To update an endpoint, you must create a new <code>EndpointConfig</code>.</p> <p>If you delete the <code>EndpointConfig</code> of an endpoint that is active or being created or updated you may lose visibility into the instance type the endpoint is using. The endpoint must be deleted in order to stop incurring charges.</p> </note>",
     "UpdateEndpointWeightsAndCapacities": "<p>Updates variant weight of one or more variants associated with an existing endpoint, or capacity of one variant associated with an existing endpoint. When it receives the request, SageMaker sets the endpoint status to <code>Updating</code>. After updating the endpoint, it sets the status to <code>InService</code>. To check the status of an endpoint, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeEndpoint.html\">DescribeEndpoint</a> API. </p>",
     "UpdateExperiment": "<p>Adds, updates, or removes the description of an experiment. Updates the display name of an experiment.</p>",
-    "UpdateFeatureGroup": "<p>Updates the feature group.</p>",
+    "UpdateFeatureGroup": "<p>Updates the feature group by either adding features or updating the online store configuration. Use one of the following request parameters at a time while using the <code>UpdateFeatureGroup</code> API.</p> <p>You can add features for your feature group using the <code>FeatureAdditions</code> request parameter. Features cannot be removed from a feature group.</p> <p>You can update the online store configuration by using the <code>OnlineStoreConfig</code> request parameter. If a <code>TtlDuration</code> is specified, the default <code>TtlDuration</code> applies for all records added to the feature group <i>after the feature group is updated</i>. If a record level <code>TtlDuration</code> exists from using the <code>PutRecord</code> API, the record level <code>TtlDuration</code> applies to that record instead of the default <code>TtlDuration</code>.</p>",
     "UpdateFeatureMetadata": "<p>Updates the description and parameters of the feature group.</p>",
     "UpdateHub": "<p>Update a hub.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>",
     "UpdateImage": "<p>Updates the properties of a SageMaker image. To change the image's tags, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AddTags.html\">AddTags</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteTags.html\">DeleteTags</a> APIs.</p>",
@@ -1313,7 +1315,8 @@
       "base": "<p>Configuration to control how SageMaker captures inference data for batch transform jobs.</p>",
       "refs": {
         "CreateTransformJobRequest$DataCaptureConfig": "<p>Configuration to control how SageMaker captures inference data.</p>",
-        "DescribeTransformJobResponse$DataCaptureConfig": "<p>Configuration to control how SageMaker captures inference data.</p>"
+        "DescribeTransformJobResponse$DataCaptureConfig": "<p>Configuration to control how SageMaker captures inference data.</p>",
+        "TransformJob$DataCaptureConfig": null
       }
     },
     "BatchDescribeModelPackageError": {
@@ -1553,8 +1556,8 @@
     "CapacitySize": {
       "base": "<p>Specifies the type and size of the endpoint capacity to activate for a blue/green deployment, a rolling deployment, or a rollback strategy. You can specify your batches as either instance count or the overall percentage or your fleet.</p> <p>For a rollback strategy, if you don't specify the fields in this object, or if you set the <code>Value</code> to 100%, then SageMaker uses a blue/green rollback strategy and rolls all traffic back to the blue fleet.</p>",
       "refs": {
-        "RollingUpdatePolicy$MaximumBatchSize": null,
-        "RollingUpdatePolicy$RollbackMaximumBatchSize": null,
+        "RollingUpdatePolicy$MaximumBatchSize": "<p>Batch size for each rolling step to provision capacity and turn on traffic on the new endpoint fleet, and terminate capacity on the old endpoint fleet. Value must be between 5% to 50% of the variant's total instance count.</p>",
+        "RollingUpdatePolicy$RollbackMaximumBatchSize": "<p>Batch size for rollback to the old endpoint fleet. Each rolling step to provision capacity and turn on traffic on the old endpoint fleet, and terminate capacity on the new endpoint fleet. If this field is absent, the default value will be set to 100% of total capacity which means to bring up the whole capacity of the old fleet at once during rollback.</p>",
         "TrafficRoutingConfig$CanarySize": "<p>Batch size for the first step to turn on traffic on the new endpoint fleet. <code>Value</code> must be less than or equal to 50% of the variant's total instance count.</p>",
         "TrafficRoutingConfig$LinearStepSize": "<p>Batch size for each step to turn on traffic on the new endpoint fleet. <code>Value</code> must be 10-50% of the variant's total instance count.</p>"
       }
@@ -2040,7 +2043,7 @@
     "CompilerOptions": {
       "base": null,
       "refs": {
-        "OutputConfig$CompilerOptions": "<p>Specifies additional parameters for compiler options in JSON format. The compiler options are <code>TargetPlatform</code> specific. It is required for NVIDIA accelerators and highly recommended for CPU compilations. For any other cases, it is optional to specify <code>CompilerOptions.</code> </p> <ul> <li> <p> <code>DTYPE</code>: Specifies the data type for the input. When compiling for <code>ml_*</code> (except for <code>ml_inf</code>) instances using PyTorch framework, provide the data type (dtype) of the model's input. <code>\"float32\"</code> is used if <code>\"DTYPE\"</code> is not specified. Options for data type are:</p> <ul> <li> <p>float32: Use either <code>\"float\"</code> or <code>\"float32\"</code>.</p> </li> <li> <p>int64: Use either <code>\"int64\"</code> or <code>\"long\"</code>.</p> </li> </ul> <p> For example, <code>{\"dtype\" : \"float32\"}</code>.</p> </li> <li> <p> <code>CPU</code>: Compilation for CPU supports the following compiler options.</p> <ul> <li> <p> <code>mcpu</code>: CPU micro-architecture. For example, <code>{'mcpu': 'skylake-avx512'}</code> </p> </li> <li> <p> <code>mattr</code>: CPU flags. For example, <code>{'mattr': ['+neon', '+vfpv4']}</code> </p> </li> </ul> </li> <li> <p> <code>ARM</code>: Details of ARM CPU compilations.</p> <ul> <li> <p> <code>NEON</code>: NEON is an implementation of the Advanced SIMD extension used in ARMv7 processors.</p> <p>For example, add <code>{'mattr': ['+neon']}</code> to the compiler options if compiling for ARM 32-bit platform with the NEON support.</p> </li> </ul> </li> <li> <p> <code>NVIDIA</code>: Compilation for NVIDIA GPU supports the following compiler options.</p> <ul> <li> <p> <code>gpu_code</code>: Specifies the targeted architecture.</p> </li> <li> <p> <code>trt-ver</code>: Specifies the TensorRT versions in x.y.z. format.</p> </li> <li> <p> <code>cuda-ver</code>: Specifies the CUDA version in x.y format.</p> </li> </ul> <p>For example, <code>{'gpu-code': 'sm_72', 'trt-ver': '6.0.1', 'cuda-ver': '10.1'}</code> </p> </li> <li> <p> <code>ANDROID</code>: Compilation for the Android OS supports the following compiler options:</p> <ul> <li> <p> <code>ANDROID_PLATFORM</code>: Specifies the Android API levels. Available levels range from 21 to 29. For example, <code>{'ANDROID_PLATFORM': 28}</code>.</p> </li> <li> <p> <code>mattr</code>: Add <code>{'mattr': ['+neon']}</code> to compiler options if compiling for ARM 32-bit platform with NEON support.</p> </li> </ul> </li> <li> <p> <code>INFERENTIA</code>: Compilation for target ml_inf1 uses compiler options passed in as a JSON string. For example, <code>\"CompilerOptions\": \"\\\"--verbose 1 --num-neuroncores 2 -O2\\\"\"</code>. </p> <p>For information about supported compiler options, see <a href=\"https://github.com/aws/aws-neuron-sdk/blob/master/docs/neuron-cc/command-line-reference.md\"> Neuron Compiler CLI</a>. </p> </li> <li> <p> <code>CoreML</code>: Compilation for the CoreML <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_OutputConfig.html\">OutputConfig</a> <code>TargetDevice</code> supports the following compiler options:</p> <ul> <li> <p> <code>class_labels</code>: Specifies the classification labels file name inside input tar.gz file. For example, <code>{\"class_labels\": \"imagenet_labels_1000.txt\"}</code>. Labels inside the txt file should be separated by newlines.</p> </li> </ul> </li> <li> <p> <code>EIA</code>: Compilation for the Elastic Inference Accelerator supports the following compiler options:</p> <ul> <li> <p> <code>precision_mode</code>: Specifies the precision of compiled artifacts. Supported values are <code>\"FP16\"</code> and <code>\"FP32\"</code>. Default is <code>\"FP32\"</code>.</p> </li> <li> <p> <code>signature_def_key</code>: Specifies the signature to use for models in SavedModel format. Defaults is TensorFlow's default signature def key.</p> </li> <li> <p> <code>output_names</code>: Specifies a list of output tensor names for models in FrozenGraph format. Set at most one API field, either: <code>signature_def_key</code> or <code>output_names</code>.</p> </li> </ul> <p>For example: <code>{\"precision_mode\": \"FP32\", \"output_names\": [\"output:0\"]}</code> </p> </li> </ul>"
+        "OutputConfig$CompilerOptions": "<p>Specifies additional parameters for compiler options in JSON format. The compiler options are <code>TargetPlatform</code> specific. It is required for NVIDIA accelerators and highly recommended for CPU compilations. For any other cases, it is optional to specify <code>CompilerOptions.</code> </p> <ul> <li> <p> <code>DTYPE</code>: Specifies the data type for the input. When compiling for <code>ml_*</code> (except for <code>ml_inf</code>) instances using PyTorch framework, provide the data type (dtype) of the model's input. <code>\"float32\"</code> is used if <code>\"DTYPE\"</code> is not specified. Options for data type are:</p> <ul> <li> <p>float32: Use either <code>\"float\"</code> or <code>\"float32\"</code>.</p> </li> <li> <p>int64: Use either <code>\"int64\"</code> or <code>\"long\"</code>.</p> </li> </ul> <p> For example, <code>{\"dtype\" : \"float32\"}</code>.</p> </li> <li> <p> <code>CPU</code>: Compilation for CPU supports the following compiler options.</p> <ul> <li> <p> <code>mcpu</code>: CPU micro-architecture. For example, <code>{'mcpu': 'skylake-avx512'}</code> </p> </li> <li> <p> <code>mattr</code>: CPU flags. For example, <code>{'mattr': ['+neon', '+vfpv4']}</code> </p> </li> </ul> </li> <li> <p> <code>ARM</code>: Details of ARM CPU compilations.</p> <ul> <li> <p> <code>NEON</code>: NEON is an implementation of the Advanced SIMD extension used in ARMv7 processors.</p> <p>For example, add <code>{'mattr': ['+neon']}</code> to the compiler options if compiling for ARM 32-bit platform with the NEON support.</p> </li> </ul> </li> <li> <p> <code>NVIDIA</code>: Compilation for NVIDIA GPU supports the following compiler options.</p> <ul> <li> <p> <code>gpu_code</code>: Specifies the targeted architecture.</p> </li> <li> <p> <code>trt-ver</code>: Specifies the TensorRT versions in x.y.z. format.</p> </li> <li> <p> <code>cuda-ver</code>: Specifies the CUDA version in x.y format.</p> </li> </ul> <p>For example, <code>{'gpu-code': 'sm_72', 'trt-ver': '6.0.1', 'cuda-ver': '10.1'}</code> </p> </li> <li> <p> <code>ANDROID</code>: Compilation for the Android OS supports the following compiler options:</p> <ul> <li> <p> <code>ANDROID_PLATFORM</code>: Specifies the Android API levels. Available levels range from 21 to 29. For example, <code>{'ANDROID_PLATFORM': 28}</code>.</p> </li> <li> <p> <code>mattr</code>: Add <code>{'mattr': ['+neon']}</code> to compiler options if compiling for ARM 32-bit platform with NEON support.</p> </li> </ul> </li> <li> <p> <code>INFERENTIA</code>: Compilation for target ml_inf1 uses compiler options passed in as a JSON string. For example, <code>\"CompilerOptions\": \"\\\"--verbose 1 --num-neuroncores 2 -O2\\\"\"</code>. </p> <p>For information about supported compiler options, see <a href=\"https://awsdocs-neuron.readthedocs-hosted.com/en/latest/compiler/neuronx-cc/api-reference-guide/neuron-compiler-cli-reference-guide.html\"> Neuron Compiler CLI Reference Guide</a>. </p> </li> <li> <p> <code>CoreML</code>: Compilation for the CoreML <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_OutputConfig.html\">OutputConfig</a> <code>TargetDevice</code> supports the following compiler options:</p> <ul> <li> <p> <code>class_labels</code>: Specifies the classification labels file name inside input tar.gz file. For example, <code>{\"class_labels\": \"imagenet_labels_1000.txt\"}</code>. Labels inside the txt file should be separated by newlines.</p> </li> </ul> </li> <li> <p> <code>EIA</code>: Compilation for the Elastic Inference Accelerator supports the following compiler options:</p> <ul> <li> <p> <code>precision_mode</code>: Specifies the precision of compiled artifacts. Supported values are <code>\"FP16\"</code> and <code>\"FP32\"</code>. Default is <code>\"FP32\"</code>.</p> </li> <li> <p> <code>signature_def_key</code>: Specifies the signature to use for models in SavedModel format. Defaults is TensorFlow's default signature def key.</p> </li> <li> <p> <code>output_names</code>: Specifies a list of output tensor names for models in FrozenGraph format. Set at most one API field, either: <code>signature_def_key</code> or <code>output_names</code>.</p> </li> </ul> <p>For example: <code>{\"precision_mode\": \"FP32\", \"output_names\": [\"output:0\"]}</code> </p> </li> </ul>"
       }
     },
     "CompleteOnConvergence": {
@@ -2184,7 +2187,7 @@
     "ContentColumn": {
       "base": null,
       "refs": {
-        "TextClassificationJobConfig$ContentColumn": "<p>The name of the column used to provide the sentences to be classified. It should not be the same as the target column (Required).</p>"
+        "TextClassificationJobConfig$ContentColumn": "<p>The name of the column used to provide the sentences to be classified. It should not be the same as the target column.</p>"
       }
     },
     "ContentDigest": {
@@ -2847,6 +2850,12 @@
         "UserProfileDetails$CreationTime": "<p>The creation time.</p>"
       }
     },
+    "CrossAccountFilterOption": {
+      "base": null,
+      "refs": {
+        "SearchRequest$CrossAccountFilterOption": "<p> A cross account filter option. When the value is <code>\"CrossAccount\"</code> the search results will only include resources made discoverable to you from other accounts. When the value is <code>\"SameAccount\"</code> or <code>null</code> the search results will only include resources from your account. Default is <code>null</code>. For more information on searching for resources made discoverable to your account, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/feature-store-cross-account-discoverability-use.html\"> Search discoverable resources</a> in the SageMaker Developer Guide. The maximum number of <code>ResourceCatalog</code>s viewable is 1000. </p>"
+      }
+    },
     "CsvContentType": {
       "base": null,
       "refs": {
@@ -2898,6 +2907,12 @@
       "base": null,
       "refs": {
         "CustomerMetadataMap$value": null
+      }
+    },
+    "CustomizedMetricSpecification": {
+      "base": "<p>A customized metric.</p>",
+      "refs": {
+        "MetricSpecification$Customized": "<p>Information about a customized metric.</p>"
       }
     },
     "DataCaptureConfig": {
@@ -4348,6 +4363,12 @@
         "DomainDetails$Status": "<p>The status.</p>"
       }
     },
+    "Double": {
+      "base": null,
+      "refs": {
+        "TargetTrackingScalingPolicyConfiguration$TargetValue": "<p>The recommended target value to specify for the metric when creating a scaling policy.</p>"
+      }
+    },
     "DoubleParameterValue": {
       "base": null,
       "refs": {
@@ -4384,6 +4405,12 @@
       "base": "<p>Represents the drift check model quality baselines that can be used when the model monitor is set using the model package. </p>",
       "refs": {
         "DriftCheckBaselines$ModelQuality": "<p>Represents the drift check model quality baselines that can be used when the model monitor is set using the model package.</p>"
+      }
+    },
+    "DynamicScalingConfiguration": {
+      "base": "<p>An object with the recommended values for you to specify when creating an autoscaling policy.</p>",
+      "refs": {
+        "GetScalingConfigurationRecommendationResponse$DynamicScalingConfiguration": "<p>An object with the recommended values for you to specify when creating an autoscaling policy.</p>"
       }
     },
     "EMRStepMetadata": {
@@ -4710,6 +4737,8 @@
         "EndpointInput$EndpointName": "<p>An endpoint in customer's account which has enabled <code>DataCaptureConfig</code> enabled.</p>",
         "EndpointMetadata$EndpointName": "<p>The name of the endpoint.</p>",
         "EndpointSummary$EndpointName": "<p>The name of the endpoint.</p>",
+        "GetScalingConfigurationRecommendationRequest$EndpointName": "<p>The name of an endpoint benchmarked during a previously completed inference recommendation job. This name should come from one of the recommendations returned by the job specified in the <code>InferenceRecommendationsJobName</code> field.</p> <p>Specify either this field or the <code>RecommendationId</code> field.</p>",
+        "GetScalingConfigurationRecommendationResponse$EndpointName": "<p>The name of an endpoint benchmarked during a previously completed Inference Recommender job.</p>",
         "ListDataQualityJobDefinitionsRequest$EndpointName": "<p>A filter that lists the data quality job definitions associated with the specified endpoint.</p>",
         "ListModelBiasJobDefinitionsRequest$EndpointName": "<p>Name of the endpoint to monitor for model bias.</p>",
         "ListModelExplainabilityJobDefinitionsRequest$EndpointName": "<p>Name of the endpoint to monitor for model explainability.</p>",
@@ -4762,7 +4791,7 @@
     "EndpointStatus": {
       "base": null,
       "refs": {
-        "DescribeEndpointOutput$EndpointStatus": "<p>The status of the endpoint.</p> <ul> <li> <p> <code>OutOfService</code>: Endpoint is not available to take incoming requests.</p> </li> <li> <p> <code>Creating</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> is executing.</p> </li> <li> <p> <code>Updating</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpoint.html\">UpdateEndpoint</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> is executing.</p> </li> <li> <p> <code>SystemUpdating</code>: Endpoint is undergoing maintenance and cannot be updated or deleted or re-scaled until it has completed. This maintenance operation does not change any customer-specified values such as VPC config, KMS encryption, model, instance type, or instance count.</p> </li> <li> <p> <code>RollingBack</code>: Endpoint fails to scale up or down or change its variant weight and is in the process of rolling back to its previous configuration. Once the rollback completes, endpoint returns to an <code>InService</code> status. This transitional status only applies to an endpoint that has autoscaling enabled and is undergoing variant weight or capacity changes as part of an <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> call or when the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> operation is called explicitly.</p> </li> <li> <p> <code>InService</code>: Endpoint is available to process incoming requests.</p> </li> <li> <p> <code>Deleting</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html\">DeleteEndpoint</a> is executing.</p> </li> <li> <p> <code>Failed</code>: Endpoint could not be created, updated, or re-scaled. Use the <code>FailureReason</code> value returned by <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeEndpoint.html\">DescribeEndpoint</a> for information about the failure. <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html\">DeleteEndpoint</a> is the only operation that can be performed on a failed endpoint.</p> </li> </ul>",
+        "DescribeEndpointOutput$EndpointStatus": "<p>The status of the endpoint.</p> <ul> <li> <p> <code>OutOfService</code>: Endpoint is not available to take incoming requests.</p> </li> <li> <p> <code>Creating</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> is executing.</p> </li> <li> <p> <code>Updating</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpoint.html\">UpdateEndpoint</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> is executing.</p> </li> <li> <p> <code>SystemUpdating</code>: Endpoint is undergoing maintenance and cannot be updated or deleted or re-scaled until it has completed. This maintenance operation does not change any customer-specified values such as VPC config, KMS encryption, model, instance type, or instance count.</p> </li> <li> <p> <code>RollingBack</code>: Endpoint fails to scale up or down or change its variant weight and is in the process of rolling back to its previous configuration. Once the rollback completes, endpoint returns to an <code>InService</code> status. This transitional status only applies to an endpoint that has autoscaling enabled and is undergoing variant weight or capacity changes as part of an <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> call or when the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> operation is called explicitly.</p> </li> <li> <p> <code>InService</code>: Endpoint is available to process incoming requests.</p> </li> <li> <p> <code>Deleting</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html\">DeleteEndpoint</a> is executing.</p> </li> <li> <p> <code>Failed</code>: Endpoint could not be created, updated, or re-scaled. Use the <code>FailureReason</code> value returned by <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeEndpoint.html\">DescribeEndpoint</a> for information about the failure. <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html\">DeleteEndpoint</a> is the only operation that can be performed on a failed endpoint.</p> </li> <li> <p> <code>UpdateRollbackFailed</code>: Both the rolling deployment and auto-rollback failed. Your endpoint is in service with a mix of the old and new endpoint configurations. For information about how to remedy this issue and restore the endpoint's status to <code>InService</code>, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/deployment-guardrails-rolling.html\">Rolling Deployments</a>.</p> </li> </ul>",
         "Endpoint$EndpointStatus": "<p>The status of the endpoint.</p>",
         "EndpointMetadata$EndpointStatus": "<p> The status of the endpoint. For possible values of the status of an endpoint, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_EndpointSummary.html\">EndpointSummary</a>. </p>",
         "EndpointSummary$EndpointStatus": "<p>The status of the endpoint.</p> <ul> <li> <p> <code>OutOfService</code>: Endpoint is not available to take incoming requests.</p> </li> <li> <p> <code>Creating</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> is executing.</p> </li> <li> <p> <code>Updating</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpoint.html\">UpdateEndpoint</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> is executing.</p> </li> <li> <p> <code>SystemUpdating</code>: Endpoint is undergoing maintenance and cannot be updated or deleted or re-scaled until it has completed. This maintenance operation does not change any customer-specified values such as VPC config, KMS encryption, model, instance type, or instance count.</p> </li> <li> <p> <code>RollingBack</code>: Endpoint fails to scale up or down or change its variant weight and is in the process of rolling back to its previous configuration. Once the rollback completes, endpoint returns to an <code>InService</code> status. This transitional status only applies to an endpoint that has autoscaling enabled and is undergoing variant weight or capacity changes as part of an <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> call or when the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> operation is called explicitly.</p> </li> <li> <p> <code>InService</code>: Endpoint is available to process incoming requests.</p> </li> <li> <p> <code>Deleting</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html\">DeleteEndpoint</a> is executing.</p> </li> <li> <p> <code>Failed</code>: Endpoint could not be created, updated, or re-scaled. Use <code>DescribeEndpointOutput$FailureReason</code> for information about the failure. <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html\">DeleteEndpoint</a> is the only operation that can be performed on a failed endpoint.</p> </li> </ul> <p>To get a list of endpoints with a specified status, use the <code>StatusEquals</code> filter with a call to <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListEndpoints.html\">ListEndpoints</a>.</p>",
@@ -4833,7 +4862,6 @@
         "CreateEdgePackagingJobRequest$EdgePackagingJobName": "<p>The name of the edge packaging job.</p>",
         "CreateEdgePackagingJobRequest$CompilationJobName": "<p>The name of the SageMaker Neo compilation job that will be used to locate model artifacts for packaging.</p>",
         "CreateEdgePackagingJobRequest$ModelName": "<p>The name of the model.</p>",
-        "CreateModelCardExportJobRequest$ModelCardName": "<p>The name of the model card to export.</p>",
         "CreateModelCardExportJobRequest$ModelCardExportJobName": "<p>The name of the model card export job.</p>",
         "CreateModelCardRequest$ModelCardName": "<p>The unique name of the model card.</p>",
         "CreateModelPackageGroupInput$ModelPackageGroupName": "<p>The name of the model group.</p>",
@@ -4868,8 +4896,7 @@
         "DescribeEdgePackagingJobResponse$CompilationJobName": "<p>The name of the SageMaker Neo compilation job that is used to locate model artifacts that are being packaged.</p>",
         "DescribeEdgePackagingJobResponse$ModelName": "<p>The name of the model.</p>",
         "DescribeModelCardExportJobResponse$ModelCardExportJobName": "<p>The name of the model card export job to describe.</p>",
-        "DescribeModelCardExportJobResponse$ModelCardName": "<p>The name of the model card that the model export job exports.</p>",
-        "DescribeModelCardRequest$ModelCardName": "<p>The name of the model card to describe.</p>",
+        "DescribeModelCardExportJobResponse$ModelCardName": "<p>The name or Amazon Resource Name (ARN) of the model card that the model export job exports.</p>",
         "DescribeModelCardResponse$ModelCardName": "<p>The name of the model card.</p>",
         "DescribeModelPackageGroupOutput$ModelPackageGroupName": "<p>The name of the model group.</p>",
         "DescribeModelPackageOutput$ModelPackageName": "<p>The name of the model package being described.</p>",
@@ -4898,7 +4925,6 @@
         "ListDevicesRequest$DeviceFleetName": "<p>Filter for fleets containing this name in their device fleet name.</p>",
         "ListModelCardExportJobsRequest$ModelCardName": "<p>List export jobs for the model card with the specified name.</p>",
         "ListModelCardExportJobsRequest$ModelCardExportJobNameContains": "<p>Only list model card export jobs with names that contain the specified string.</p>",
-        "ListModelCardVersionsRequest$ModelCardName": "<p>List model card versions for the model card with the specified name.</p>",
         "ListModelCardsRequest$NameContains": "<p>Only list model cards with names that contain the specified string.</p>",
         "ListStageDevicesRequest$EdgeDeploymentPlanName": "<p>The name of the edge deployment plan.</p>",
         "ListStageDevicesRequest$StageName": "<p>The name of the stage in the deployment.</p>",
@@ -4926,8 +4952,7 @@
         "StopEdgePackagingJobRequest$EdgePackagingJobName": "<p>The name of the edge packaging job.</p>",
         "UpdateCodeRepositoryInput$CodeRepositoryName": "<p>The name of the Git repository to update.</p>",
         "UpdateDeviceFleetRequest$DeviceFleetName": "<p>The name of the fleet.</p>",
-        "UpdateDevicesRequest$DeviceFleetName": "<p>The name of the fleet the devices belong to.</p>",
-        "UpdateModelCardRequest$ModelCardName": "<p>The name of the model card to update.</p>"
+        "UpdateDevicesRequest$DeviceFleetName": "<p>The name of the fleet the devices belong to.</p>"
       }
     },
     "EnvironmentKey": {
@@ -5300,22 +5325,27 @@
       "refs": {
         "CreateFeatureGroupRequest$FeatureGroupName": "<p>The name of the <code>FeatureGroup</code>. The name must be unique within an Amazon Web Services Region in an Amazon Web Services account. The name:</p> <ul> <li> <p>Must start and end with an alphanumeric character.</p> </li> <li> <p>Can only contain alphanumeric character and hyphens. Spaces are not allowed. </p> </li> </ul>",
         "DeleteFeatureGroupRequest$FeatureGroupName": "<p>The name of the <code>FeatureGroup</code> you want to delete. The name must be unique within an Amazon Web Services Region in an Amazon Web Services account. </p>",
-        "DescribeFeatureGroupRequest$FeatureGroupName": "<p>The name of the <code>FeatureGroup</code> you want described. </p>",
         "DescribeFeatureGroupResponse$FeatureGroupName": "<p>he name of the <code>FeatureGroup</code>.</p>",
-        "DescribeFeatureMetadataRequest$FeatureGroupName": "<p>The name of the feature group containing the feature.</p>",
         "DescribeFeatureMetadataResponse$FeatureGroupName": "<p>The name of the feature group that you've specified.</p>",
         "FeatureGroup$FeatureGroupName": "<p>The name of the <code>FeatureGroup</code>.</p>",
         "FeatureGroupSummary$FeatureGroupName": "<p>The name of <code>FeatureGroup</code>.</p>",
         "FeatureMetadata$FeatureGroupName": "<p>The name of the feature group containing the feature.</p>",
-        "ProcessingFeatureStoreOutput$FeatureGroupName": "<p>The name of the Amazon SageMaker FeatureGroup to use as the destination for processing job output. Note that your processing script is responsible for putting records into your Feature Store.</p>",
-        "UpdateFeatureGroupRequest$FeatureGroupName": "<p>The name of the feature group that you're updating.</p>",
-        "UpdateFeatureMetadataRequest$FeatureGroupName": "<p>The name of the feature group containing the feature that you're updating.</p>"
+        "ProcessingFeatureStoreOutput$FeatureGroupName": "<p>The name of the Amazon SageMaker FeatureGroup to use as the destination for processing job output. Note that your processing script is responsible for putting records into your Feature Store.</p>"
       }
     },
     "FeatureGroupNameContains": {
       "base": null,
       "refs": {
         "ListFeatureGroupsRequest$NameContains": "<p>A string that partially matches one or more <code>FeatureGroup</code>s names. Filters <code>FeatureGroup</code>s by name. </p>"
+      }
+    },
+    "FeatureGroupNameOrArn": {
+      "base": null,
+      "refs": {
+        "DescribeFeatureGroupRequest$FeatureGroupName": "<p>The name or Amazon Resource Name (ARN) of the <code>FeatureGroup</code> you want described. </p>",
+        "DescribeFeatureMetadataRequest$FeatureGroupName": "<p>The name or Amazon Resource Name (ARN) of the feature group containing the feature.</p>",
+        "UpdateFeatureGroupRequest$FeatureGroupName": "<p>The name or Amazon Resource Name (ARN) of the feature group that you're updating.</p>",
+        "UpdateFeatureMetadataRequest$FeatureGroupName": "<p>The name or Amazon Resource Name (ARN) of the feature group containing the feature that you're updating.</p>"
       }
     },
     "FeatureGroupSortBy": {
@@ -5346,7 +5376,7 @@
       }
     },
     "FeatureGroupSummary": {
-      "base": "<p>The name, Arn, <code>CreationTime</code>, <code>FeatureGroup</code> values, <code>LastUpdatedTime</code> and <code>EnableOnlineStorage</code> status of a <code>FeatureGroup</code>.</p>",
+      "base": "<p>The name, ARN, <code>CreationTime</code>, <code>FeatureGroup</code> values, <code>LastUpdatedTime</code> and <code>EnableOnlineStorage</code> status of a <code>FeatureGroup</code>.</p>",
       "refs": {
         "FeatureGroupSummaries$member": null
       }
@@ -5526,6 +5556,12 @@
         "TrainingJob$FinalMetricDataList": "<p>A list of final metric values that are set when the training job completes. Used only if the training job was configured to use metrics.</p>"
       }
     },
+    "FlatInvocations": {
+      "base": null,
+      "refs": {
+        "RecommendationJobStoppingConditions$FlatInvocations": "<p>Stops a load test when the number of invocations (TPS) peaks and flattens, which means that the instance has reached capacity. The default value is <code>Stop</code>. If you want the load test to continue after invocations have flattened, set the value to <code>Continue</code>.</p>"
+      }
+    },
     "Float": {
       "base": null,
       "refs": {
@@ -5701,6 +5737,16 @@
       }
     },
     "GetSagemakerServicecatalogPortfolioStatusOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetScalingConfigurationRecommendationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetScalingConfigurationRecommendationResponse": {
       "base": null,
       "refs": {
       }
@@ -6754,7 +6800,7 @@
     "InitialNumberOfUsers": {
       "base": null,
       "refs": {
-        "Phase$InitialNumberOfUsers": "<p>Specifies how many concurrent users to start with.</p>"
+        "Phase$InitialNumberOfUsers": "<p>Specifies how many concurrent users to start with. The value should be between 1 and 3.</p>"
       }
     },
     "InitialTaskCount": {
@@ -6846,6 +6892,10 @@
         "DescribeModelCardExportJobResponse$ModelCardVersion": "<p>The version of the model card that the model export job exports.</p>",
         "DescribeModelCardRequest$ModelCardVersion": "<p>The version of the model card to describe. If a version is not provided, then the latest version of the model card is described.</p>",
         "DescribeModelCardResponse$ModelCardVersion": "<p>The version of the model card.</p>",
+        "DynamicScalingConfiguration$MinCapacity": "<p>The recommended minimum capacity to specify for your autoscaling policy.</p>",
+        "DynamicScalingConfiguration$MaxCapacity": "<p>The recommended maximum capacity to specify for your autoscaling policy.</p>",
+        "DynamicScalingConfiguration$ScaleInCooldown": "<p>The recommended scale in cooldown time for your autoscaling policy.</p>",
+        "DynamicScalingConfiguration$ScaleOutCooldown": "<p>The recommended scale out cooldown time for your autoscaling policy.</p>",
         "EdgeDeploymentPlanSummary$EdgeDeploymentSuccess": "<p>The number of edge devices with the successful deployment.</p>",
         "EdgeDeploymentPlanSummary$EdgeDeploymentPending": "<p>The number of edge devices yet to pick up the deployment, or in progress.</p>",
         "EdgeDeploymentPlanSummary$EdgeDeploymentFailed": "<p>The number of edge devices that failed the deployment.</p>",
@@ -6864,7 +6914,11 @@
         "ModelLatencyThreshold$ValueInMilliseconds": "<p>The model latency percentile value in milliseconds.</p>",
         "RecommendationJobStoppingConditions$MaxInvocations": "<p>The maximum number of requests per minute expected for the endpoint.</p>",
         "RecommendationMetrics$MaxInvocations": "<p>The expected maximum number of requests per minute for the instance.</p>",
-        "RecommendationMetrics$ModelLatency": "<p>The expected model latency at maximum invocation per minute for the instance.</p>"
+        "RecommendationMetrics$ModelLatency": "<p>The expected model latency at maximum invocation per minute for the instance.</p>",
+        "ScalingPolicyMetric$InvocationsPerInstance": "<p>The number of invocations sent to a model, normalized by <code>InstanceCount</code> in each ProductionVariant. <code>1/numberOfInstances</code> is sent as the value on each request, where <code>numberOfInstances</code> is the number of active instances for the ProductionVariant behind the endpoint at the time of the request.</p>",
+        "ScalingPolicyMetric$ModelLatency": "<p>The interval of time taken by a model to respond as viewed from SageMaker. This interval includes the local communication times taken to send the request and to fetch the response from the container of a model and the time taken to complete the inference in the container.</p>",
+        "ScalingPolicyObjective$MinInvocationsPerMinute": "<p>The minimum number of expected requests to your endpoint per minute.</p>",
+        "ScalingPolicyObjective$MaxInvocationsPerMinute": "<p>The maximum number of expected requests to your endpoint per minute.</p>"
       }
     },
     "IntegerParameterRange": {
@@ -6932,7 +6986,7 @@
     "JobDurationInSeconds": {
       "base": null,
       "refs": {
-        "RecommendationJobInputConfig$JobDurationInSeconds": "<p>Specifies the maximum duration of the job, in seconds.&gt;</p>"
+        "RecommendationJobInputConfig$JobDurationInSeconds": "<p>Specifies the maximum duration of the job, in seconds. The maximum value is 7200.</p>"
       }
     },
     "JobReferenceCode": {
@@ -7087,7 +7141,8 @@
         "S3StorageConfig$KmsKeyId": "<p>The Amazon Web Services Key Management Service (KMS) key ARN of the key used to encrypt any objects written into the <code>OfflineStore</code> S3 location.</p> <p>The IAM <code>roleARN</code> that is passed as a parameter to <code>CreateFeatureGroup</code> must have below permissions to the <code>KmsKeyId</code>:</p> <ul> <li> <p> <code>\"kms:GenerateDataKey\"</code> </p> </li> </ul>",
         "SharingSettings$S3KmsKeyId": "<p>When <code>NotebookOutputOption</code> is <code>Allowed</code>, the Amazon Web Services Key Management Service (KMS) encryption key ID used to encrypt the notebook cell output in the Amazon S3 bucket.</p>",
         "TransformOutput$KmsKeyId": "<p>The Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Amazon SageMaker uses to encrypt the model artifacts at rest using Amazon S3 server-side encryption. The <code>KmsKeyId</code> can be any of the following formats: </p> <ul> <li> <p>Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN: <code>arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Alias name: <code>alias/ExampleAlias</code> </p> </li> <li> <p>Alias name ARN: <code>arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias</code> </p> </li> </ul> <p>If you don't provide a KMS key ID, Amazon SageMaker uses the default KMS key for Amazon S3 for your role's account. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingKMSEncryption.html\">KMS-Managed Encryption Keys</a> in the <i>Amazon Simple Storage Service Developer Guide.</i> </p> <p>The KMS key policy must grant permission to the IAM role that you specify in your <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateModel.html\">CreateModel</a> request. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html\">Using Key Policies in Amazon Web Services KMS</a> in the <i>Amazon Web Services Key Management Service Developer Guide</i>.</p>",
-        "TransformResources$VolumeKmsKeyId": "<p>The Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Amazon SageMaker uses to encrypt model data on the storage volume attached to the ML compute instance(s) that run the batch transform job.</p> <note> <p>Certain Nitro-based instances include local storage, dependent on the instance type. Local storage volumes are encrypted using a hardware module on the instance. You can't request a <code>VolumeKmsKeyId</code> when using an instance type with local storage.</p> <p>For a list of instance types that support local instance storage, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes\">Instance Store Volumes</a>.</p> <p>For more information about local instance storage encryption, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html\">SSD Instance Store Volumes</a>.</p> </note> <p> The <code>VolumeKmsKeyId</code> can be any of the following formats:</p> <ul> <li> <p>Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN: <code>arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Alias name: <code>alias/ExampleAlias</code> </p> </li> <li> <p>Alias name ARN: <code>arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias</code> </p> </li> </ul>"
+        "TransformResources$VolumeKmsKeyId": "<p>The Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Amazon SageMaker uses to encrypt model data on the storage volume attached to the ML compute instance(s) that run the batch transform job.</p> <note> <p>Certain Nitro-based instances include local storage, dependent on the instance type. Local storage volumes are encrypted using a hardware module on the instance. You can't request a <code>VolumeKmsKeyId</code> when using an instance type with local storage.</p> <p>For a list of instance types that support local instance storage, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes\">Instance Store Volumes</a>.</p> <p>For more information about local instance storage encryption, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html\">SSD Instance Store Volumes</a>.</p> </note> <p> The <code>VolumeKmsKeyId</code> can be any of the following formats:</p> <ul> <li> <p>Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN: <code>arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Alias name: <code>alias/ExampleAlias</code> </p> </li> <li> <p>Alias name ARN: <code>arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias</code> </p> </li> </ul>",
+        "WorkspaceSettings$S3KmsKeyId": "<p>The Amazon Web Services Key Management Service (KMS) encryption key ID that is used to encrypt artifacts generated by Canvas in the Amazon S3 bucket.</p>"
       }
     },
     "LabelAttributeName": {
@@ -8004,6 +8059,16 @@
       "refs": {
       }
     },
+    "ListResourceCatalogsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourceCatalogsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListSpacesRequest": {
       "base": null,
       "refs": {
@@ -8324,6 +8389,7 @@
         "ListPipelinesRequest$MaxResults": "<p>The maximum number of pipelines to return in the response.</p>",
         "ListProcessingJobsRequest$MaxResults": "<p>The maximum number of processing jobs to return in the response.</p>",
         "ListProjectsInput$MaxResults": "<p>The maximum number of projects to return in the response.</p>",
+        "ListResourceCatalogsRequest$MaxResults": "<p> The maximum number of results returned by <code>ListResourceCatalogs</code>. </p>",
         "ListSpacesRequest$MaxResults": "<p>The total number of items to return in the response. If the total number of items available is more than the value specified, a <code>NextToken</code> is provided in the response. To resume pagination, provide the <code>NextToken</code> value in the as part of a subsequent call. The default value is 10.</p>",
         "ListStudioLifecycleConfigsRequest$MaxResults": "<p>The total number of items to return in the response. If the total number of items available is more than the value specified, a <code>NextToken</code> is provided in the response. To resume pagination, provide the <code>NextToken</code> value in the as part of a subsequent call. The default value is 10.</p>",
         "ListSubscribedWorkteamsRequest$MaxResults": "<p>The maximum number of work teams to return in each page of the response.</p>",
@@ -8468,6 +8534,12 @@
       "base": null,
       "refs": {
         "MetricDatum$Set": "<p>The dataset split from which the AutoML job produced the metric.</p>"
+      }
+    },
+    "MetricSpecification": {
+      "base": "<p>An object containing information about a metric.</p>",
+      "refs": {
+        "TargetTrackingScalingPolicyConfiguration$MetricSpecification": "<p>An object containing information about a metric.</p>"
       }
     },
     "MetricValue": {
@@ -8646,6 +8718,15 @@
       "refs": {
         "CreateModelCardExportJobRequest$OutputConfig": "<p>The model card output configuration that specifies the Amazon S3 path for exporting.</p>",
         "DescribeModelCardExportJobResponse$OutputConfig": "<p>The export output details for the model card.</p>"
+      }
+    },
+    "ModelCardNameOrArn": {
+      "base": null,
+      "refs": {
+        "CreateModelCardExportJobRequest$ModelCardName": "<p>The name or Amazon Resource Name (ARN) of the model card to export.</p>",
+        "DescribeModelCardRequest$ModelCardName": "<p>The name or Amazon Resource Name (ARN) of the model card to describe.</p>",
+        "ListModelCardVersionsRequest$ModelCardName": "<p>List model card versions for the model card with the specified name or Amazon Resource Name (ARN).</p>",
+        "UpdateModelCardRequest$ModelCardName": "<p>The name or Amazon Resource Name (ARN) of the model card to update.</p>"
       }
     },
     "ModelCardProcessingStatus": {
@@ -9671,7 +9752,7 @@
       "base": null,
       "refs": {
         "BatchTransformInput$StartTimeOffset": "<p>If specified, monitoring jobs substract this time from the start time. For information about using offsets for scheduling monitoring jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor-model-quality-schedule.html\">Schedule Model Quality Monitoring Jobs</a>.</p>",
-        "BatchTransformInput$EndTimeOffset": "<p>If specified, monitoring jobs substract this time from the end time. For information about using offsets for scheduling monitoring jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor-model-quality-schedule.html\">Schedule Model Quality Monitoring Jobs</a>.</p>",
+        "BatchTransformInput$EndTimeOffset": "<p>If specified, monitoring jobs subtract this time from the end time. For information about using offsets for scheduling monitoring jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor-model-quality-schedule.html\">Schedule Model Quality Monitoring Jobs</a>.</p>",
         "EndpointInput$StartTimeOffset": "<p>If specified, monitoring jobs substract this time from the start time. For information about using offsets for scheduling monitoring jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor-model-quality-schedule.html\">Schedule Model Quality Monitoring Jobs</a>.</p>",
         "EndpointInput$EndTimeOffset": "<p>If specified, monitoring jobs substract this time from the end time. For information about using offsets for scheduling monitoring jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor-model-quality-schedule.html\">Schedule Model Quality Monitoring Jobs</a>.</p>"
       }
@@ -9905,6 +9986,8 @@
         "ListProcessingJobsResponse$NextToken": "<p>If the response is truncated, Amazon SageMaker returns this token. To retrieve the next set of processing jobs, use it in the subsequent request.</p>",
         "ListProjectsInput$NextToken": "<p>If the result of the previous <code>ListProjects</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of projects, use the token in the next request.</p>",
         "ListProjectsOutput$NextToken": "<p>If the result of the previous <code>ListCompilationJobs</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of model compilation jobs, use the token in the next request.</p>",
+        "ListResourceCatalogsRequest$NextToken": "<p> A token to resume pagination of <code>ListResourceCatalogs</code> results. </p>",
+        "ListResourceCatalogsResponse$NextToken": "<p> A token to resume pagination of <code>ListResourceCatalogs</code> results. </p>",
         "ListSpacesRequest$NextToken": "<p>If the previous response was truncated, you will receive this token. Use it in your next request to receive the next set of results.</p>",
         "ListSpacesResponse$NextToken": "<p>If the previous response was truncated, you will receive this token. Use it in your next request to receive the next set of results.</p>",
         "ListStageDevicesRequest$NextToken": "<p>The response from the last list when returning a list large enough to neeed tokening.</p>",
@@ -10127,6 +10210,12 @@
       "refs": {
         "HumanTaskConfig$NumberOfHumanWorkersPerDataObject": "<p>The number of human workers that will label an object. </p>",
         "LabelingJobForWorkteamSummary$NumberOfHumanWorkersPerDataObject": "<p>The configured number of workers per data object.</p>"
+      }
+    },
+    "NumberOfSteps": {
+      "base": null,
+      "refs": {
+        "Stairs$NumberOfSteps": "<p>Specifies how many steps to perform during traffic.</p>"
       }
     },
     "ObjectiveStatus": {
@@ -10680,6 +10769,12 @@
         "PutModelPackageGroupPolicyInput$ResourcePolicy": "<p>The resource policy for the model group.</p>"
       }
     },
+    "PredefinedMetricSpecification": {
+      "base": "<p>A specification for a predefined metric.</p>",
+      "refs": {
+        "MetricSpecification$Predefined": "<p>Information about a predefined metric.</p>"
+      }
+    },
     "PresignedDomainUrl": {
       "base": null,
       "refs": {
@@ -11070,7 +11165,8 @@
       "base": "<p>Configuration information for Amazon SageMaker Debugger system monitoring, framework profiling, and storage paths.</p>",
       "refs": {
         "CreateTrainingJobRequest$ProfilerConfig": null,
-        "DescribeTrainingJobResponse$ProfilerConfig": null
+        "DescribeTrainingJobResponse$ProfilerConfig": null,
+        "TrainingJob$ProfilerConfig": null
       }
     },
     "ProfilerConfigForUpdate": {
@@ -11465,6 +11561,8 @@
         "CreateInferenceRecommendationsJobRequest$JobName": "<p>A name for the recommendation job. The name must be unique within the Amazon Web Services Region and within your Amazon Web Services account. The job name is passed down to the resources created by the recommendation job. The names of resources (such as the model, endpoint configuration, endpoint, and compilation) that are prefixed with the job name are truncated at 40 characters.</p>",
         "DescribeInferenceRecommendationsJobRequest$JobName": "<p>The name of the job. The name must be unique within an Amazon Web Services Region in the Amazon Web Services account.</p>",
         "DescribeInferenceRecommendationsJobResponse$JobName": "<p>The name of the job. The name must be unique within an Amazon Web Services Region in the Amazon Web Services account.</p>",
+        "GetScalingConfigurationRecommendationRequest$InferenceRecommendationsJobName": "<p>The name of a previously completed Inference Recommender job.</p>",
+        "GetScalingConfigurationRecommendationResponse$InferenceRecommendationsJobName": "<p>The name of a previously completed Inference Recommender job.</p>",
         "InferenceRecommendationsJob$JobName": "<p>The name of the job.</p>",
         "InferenceRecommendationsJobStep$JobName": "<p>The name of the Inference Recommender job.</p>",
         "ListInferenceRecommendationsJobStepsRequest$JobName": "<p>The name for the Inference Recommender job.</p>",
@@ -11522,6 +11620,18 @@
       "base": null,
       "refs": {
         "RecommendationJobContainerConfig$SupportedInstanceTypes": "<p>A list of the instance types that are used to generate inferences in real-time.</p>"
+      }
+    },
+    "RecommendationJobSupportedResponseMIMEType": {
+      "base": null,
+      "refs": {
+        "RecommendationJobSupportedResponseMIMETypes$member": null
+      }
+    },
+    "RecommendationJobSupportedResponseMIMETypes": {
+      "base": null,
+      "refs": {
+        "RecommendationJobContainerConfig$SupportedResponseMIMETypes": "<p>The supported MIME types for the output data.</p>"
       }
     },
     "RecommendationJobType": {
@@ -11713,6 +11823,49 @@
         "AddTagsInput$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to tag.</p>",
         "DeleteTagsInput$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource whose tags you want to delete.</p>",
         "ListTagsInput$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource whose tags you want to retrieve.</p>"
+      }
+    },
+    "ResourceCatalog": {
+      "base": "<p> A resource catalog containing all of the resources of a specific resource type within a resource owner account. For an example on sharing the Amazon SageMaker Feature Store <code>DefaultFeatureGroupCatalog</code>, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/feature-store-cross-account-discoverability-share-sagemaker-catalog.html\">Share Amazon SageMaker Catalog resource type</a> in the Amazon SageMaker Developer Guide. </p>",
+      "refs": {
+        "ResourceCatalogList$member": null
+      }
+    },
+    "ResourceCatalogArn": {
+      "base": null,
+      "refs": {
+        "ResourceCatalog$ResourceCatalogArn": "<p> The Amazon Resource Name (ARN) of the <code>ResourceCatalog</code>. </p>"
+      }
+    },
+    "ResourceCatalogDescription": {
+      "base": null,
+      "refs": {
+        "ResourceCatalog$Description": "<p> A free form description of the <code>ResourceCatalog</code>. </p>"
+      }
+    },
+    "ResourceCatalogList": {
+      "base": null,
+      "refs": {
+        "ListResourceCatalogsResponse$ResourceCatalogs": "<p> A list of the requested <code>ResourceCatalog</code>s. </p>"
+      }
+    },
+    "ResourceCatalogName": {
+      "base": null,
+      "refs": {
+        "ListResourceCatalogsRequest$NameContains": "<p> A string that partially matches one or more <code>ResourceCatalog</code>s names. Filters <code>ResourceCatalog</code> by name. </p>",
+        "ResourceCatalog$ResourceCatalogName": "<p> The name of the <code>ResourceCatalog</code>. </p>"
+      }
+    },
+    "ResourceCatalogSortBy": {
+      "base": null,
+      "refs": {
+        "ListResourceCatalogsRequest$SortBy": "<p> The value on which the resource catalog list is sorted. </p>"
+      }
+    },
+    "ResourceCatalogSortOrder": {
+      "base": null,
+      "refs": {
+        "ListResourceCatalogsRequest$SortOrder": "<p> The order in which the resource catalogs are listed. </p>"
       }
     },
     "ResourceConfig": {
@@ -12051,10 +12204,11 @@
         "SharingSettings$S3OutputPath": "<p>When <code>NotebookOutputOption</code> is <code>Allowed</code>, the Amazon S3 bucket used to store the shared notebook snapshots.</p>",
         "TabularJobConfig$FeatureSpecificationS3Uri": "<p>A URL to the Amazon S3 data source containing selected features from the input data source to run an Autopilot job V2. You can input <code>FeatureAttributeNames</code> (optional) in JSON format as shown below: </p> <p> <code>{ \"FeatureAttributeNames\":[\"col1\", \"col2\", ...] }</code>.</p> <p>You can also specify the data type of the feature (optional) in the format shown below:</p> <p> <code>{ \"FeatureDataTypes\":{\"col1\":\"numeric\", \"col2\":\"categorical\" ... } }</code> </p> <note> <p>These column keys may not include the target column.</p> </note> <p>In ensembling mode, Autopilot only supports the following data types: <code>numeric</code>, <code>categorical</code>, <code>text</code>, and <code>datetime</code>. In HPO mode, Autopilot can support <code>numeric</code>, <code>categorical</code>, <code>text</code>, <code>datetime</code>, and <code>sequence</code>.</p> <p>If only <code>FeatureDataTypes</code> is provided, the column keys (<code>col1</code>, <code>col2</code>,..) should be a subset of the column names in the input data. </p> <p>If both <code>FeatureDataTypes</code> and <code>FeatureAttributeNames</code> are provided, then the column keys should be a subset of the column names provided in <code>FeatureAttributeNames</code>. </p> <p>The key name <code>FeatureAttributeNames</code> is fixed. The values listed in <code>[\"col1\", \"col2\", ...]</code> are case sensitive and should be a list of strings containing unique values that are a subset of the column names in the input data. The list of columns provided must not include the target column.</p>",
         "TensorBoardOutputConfig$S3OutputPath": "<p>Path to Amazon S3 storage location for TensorBoard output.</p>",
-        "TimeSeriesForecastingJobConfig$FeatureSpecificationS3Uri": "<p>A URL to the Amazon S3 data source containing additional selected features that complement the target, itemID, timestamp, and grouped columns set in <code>TimeSeriesConfig</code>. When not provided, the AutoML job V2 includes all the columns from the original dataset that are not already declared in <code>TimeSeriesConfig</code>. If provided, the AutoML job V2 only considers these additional columns as a complement to the ones declared in <code>TimeSeriesConfig</code>.</p> <p> You can input <code>FeatureAttributeNames</code> (optional) in JSON format as shown below: </p> <p> <code>{ \"FeatureAttributeNames\":[\"col1\", \"col2\", ...] }</code>.</p> <p>You can also specify the data type of the feature (optional) in the format shown below:</p> <p> <code>{ \"FeatureDataTypes\":{\"col1\":\"numeric\", \"col2\":\"categorical\" ... } }</code> </p> <p>Autopilot supports the following data types: <code>numeric</code>, <code>categorical</code>, <code>text</code>, and <code>datetime</code>.</p> <note> <p>These column keys must not include any column set in <code>TimeSeriesConfig</code>.</p> </note> <p>When not provided, the AutoML job V2 includes all the columns from the original dataset that are not already declared in <code>TimeSeriesConfig</code>. If provided, the AutoML job V2 only considers these additional columns as a complement to the ones declared in <code>TimeSeriesConfig</code>.</p> <p>Autopilot supports the following data types: <code>numeric</code>, <code>categorical</code>, <code>text</code>, and <code>datetime</code>.</p>",
+        "TimeSeriesForecastingJobConfig$FeatureSpecificationS3Uri": "<p>A URL to the Amazon S3 data source containing additional selected features that complement the target, itemID, timestamp, and grouped columns set in <code>TimeSeriesConfig</code>. When not provided, the AutoML job V2 includes all the columns from the original dataset that are not already declared in <code>TimeSeriesConfig</code>. If provided, the AutoML job V2 only considers these additional columns as a complement to the ones declared in <code>TimeSeriesConfig</code>.</p> <p>You can input <code>FeatureAttributeNames</code> (optional) in JSON format as shown below: </p> <p> <code>{ \"FeatureAttributeNames\":[\"col1\", \"col2\", ...] }</code>.</p> <p>You can also specify the data type of the feature (optional) in the format shown below:</p> <p> <code>{ \"FeatureDataTypes\":{\"col1\":\"numeric\", \"col2\":\"categorical\" ... } }</code> </p> <p>Autopilot supports the following data types: <code>numeric</code>, <code>categorical</code>, <code>text</code>, and <code>datetime</code>.</p> <note> <p>These column keys must not include any column set in <code>TimeSeriesConfig</code>.</p> </note>",
         "TransformOutput$S3OutputPath": "<p>The Amazon S3 path where you want Amazon SageMaker to store the results of the transform job. For example, <code>s3://bucket-name/key-name-prefix</code>.</p> <p>For every S3 object used as input for the transform job, batch transform stores the transformed data with an .<code>out</code> suffix in a corresponding subfolder in the location in the output prefix. For example, for the input data stored at <code>s3://bucket-name/input-name-prefix/dataset01/data.csv</code>, batch transform stores the transformed data at <code>s3://bucket-name/output-name-prefix/input-name-prefix/data.csv.out</code>. Batch transform doesn't upload partially processed objects. For an input S3 object that contains multiple records, it creates an .<code>out</code> file only if the transform job succeeds on the entire file. When the input contains multiple S3 objects, the batch transform job processes the listed S3 objects and uploads only the output for successfully processed objects. If any object fails in the transform job batch transform marks the job as failed to prompt investigation.</p>",
         "TransformS3DataSource$S3Uri": "<p>Depending on the value specified for the <code>S3DataType</code>, identifies either a key name prefix or a manifest. For example:</p> <ul> <li> <p> A key name prefix might look like this: <code>s3://bucketname/exampleprefix</code>. </p> </li> <li> <p> A manifest might look like this: <code>s3://bucketname/example.manifest</code> </p> <p> The manifest is an S3 object which is a JSON file with the following format: </p> <p> <code>[ {\"prefix\": \"s3://customer_bucket/some/prefix/\"},</code> </p> <p> <code>\"relative/path/to/custdata-1\",</code> </p> <p> <code>\"relative/path/custdata-2\",</code> </p> <p> <code>...</code> </p> <p> <code>\"relative/path/custdata-N\"</code> </p> <p> <code>]</code> </p> <p> The preceding JSON matches the following <code>S3Uris</code>: </p> <p> <code>s3://customer_bucket/some/prefix/relative/path/to/custdata-1</code> </p> <p> <code>s3://customer_bucket/some/prefix/relative/path/custdata-2</code> </p> <p> <code>...</code> </p> <p> <code>s3://customer_bucket/some/prefix/relative/path/custdata-N</code> </p> <p> The complete set of <code>S3Uris</code> in this manifest constitutes the input data for the channel for this datasource. The object that each <code>S3Uris</code> points to must be readable by the IAM role that Amazon SageMaker uses to perform tasks on your behalf.</p> </li> </ul>",
-        "UiConfig$UiTemplateS3Uri": "<p>The Amazon S3 bucket location of the UI template, or worker task template. This is the template used to render the worker UI and tools for labeling job tasks. For more information about the contents of a UI template, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-custom-templates-step2.html\"> Creating Your Custom Labeling Task Template</a>.</p>"
+        "UiConfig$UiTemplateS3Uri": "<p>The Amazon S3 bucket location of the UI template, or worker task template. This is the template used to render the worker UI and tools for labeling job tasks. For more information about the contents of a UI template, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-custom-templates-step2.html\"> Creating Your Custom Labeling Task Template</a>.</p>",
+        "WorkspaceSettings$S3ArtifactPath": "<p>The Amazon S3 bucket used to store artifacts generated by Canvas. Updating the Amazon S3 location impacts existing configuration settings, and Canvas users no longer have access to their artifacts. Canvas users must log out and log back in to apply the new location.</p>"
       }
     },
     "SageMakerImageVersionAlias": {
@@ -12094,6 +12248,31 @@
       "refs": {
         "DataCaptureConfig$InitialSamplingPercentage": "<p>The percentage of requests SageMaker will capture. A lower value is recommended for Endpoints with high traffic.</p>",
         "DataCaptureConfigSummary$CurrentSamplingPercentage": "<p>The percentage of requests being captured by your Endpoint.</p>"
+      }
+    },
+    "ScalingPolicies": {
+      "base": null,
+      "refs": {
+        "DynamicScalingConfiguration$ScalingPolicies": "<p>An object of the scaling policies for each metric.</p>"
+      }
+    },
+    "ScalingPolicy": {
+      "base": "<p>An object containing a recommended scaling policy.</p>",
+      "refs": {
+        "ScalingPolicies$member": null
+      }
+    },
+    "ScalingPolicyMetric": {
+      "base": "<p>The metric for a scaling policy.</p>",
+      "refs": {
+        "GetScalingConfigurationRecommendationResponse$Metric": "<p>An object with a list of metrics that were benchmarked during the previously completed Inference Recommender job.</p>"
+      }
+    },
+    "ScalingPolicyObjective": {
+      "base": "<p>An object where you specify the anticipated traffic pattern for an endpoint.</p>",
+      "refs": {
+        "GetScalingConfigurationRecommendationRequest$ScalingPolicyObjective": "<p>An object where you specify the anticipated traffic pattern for an endpoint.</p>",
+        "GetScalingConfigurationRecommendationResponse$ScalingPolicyObjective": "<p>An object representing the anticipated traffic pattern for an endpoint that you specified in the request.</p>"
       }
     },
     "ScheduleConfig": {
@@ -12611,6 +12790,12 @@
         "EdgeDeploymentStatus$StageStatus": "<p>The general status of the current stage.</p>"
       }
     },
+    "Stairs": {
+      "base": "<p>Defines the stairs traffic pattern for an Inference Recommender load test. This pattern type consists of multiple steps where the number of users increases at each step.</p> <p>Specify either the stairs or phases traffic pattern.</p>",
+      "refs": {
+        "TrafficPattern$Stairs": "<p>Defines the stairs traffic pattern.</p>"
+      }
+    },
     "StartEdgeDeploymentStageRequest": {
       "base": null,
       "refs": {
@@ -12644,6 +12829,12 @@
     "StartPipelineExecutionResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "Statistic": {
+      "base": null,
+      "refs": {
+        "CustomizedMetricSpecification$Statistic": "<p>The statistic of the customized metric.</p>"
       }
     },
     "StatusDetails": {
@@ -12786,6 +12977,8 @@
         "BatchTransformInput$ProbabilityAttribute": "<p>In a classification problem, the attribute that represents the class probability.</p>",
         "CreateModelPackageInput$Domain": "<p>The machine learning domain of your model package and its components. Common machine learning domains include computer vision and natural language processing.</p>",
         "CreateModelPackageInput$Task": "<p>The machine learning task your model package accomplishes. Common machine learning tasks include object detection and image classification. The following tasks are supported by Inference Recommender: <code>\"IMAGE_CLASSIFICATION\"</code> | <code>\"OBJECT_DETECTION\"</code> | <code>\"TEXT_GENERATION\"</code> |<code>\"IMAGE_SEGMENTATION\"</code> | <code>\"FILL_MASK\"</code> | <code>\"CLASSIFICATION\"</code> | <code>\"REGRESSION\"</code> | <code>\"OTHER\"</code>.</p> <p>Specify \"OTHER\" if none of the tasks listed fit your use case.</p>",
+        "CustomizedMetricSpecification$MetricName": "<p>The name of the customized metric.</p>",
+        "CustomizedMetricSpecification$Namespace": "<p>The namespace of the customized metric.</p>",
         "DescribeEdgePackagingJobResponse$EdgePackagingJobStatusMessage": "<p>Returns a message describing the job status and error messages.</p>",
         "DescribeEdgePackagingJobResponse$ModelSignature": "<p>The signature document of files in the model artifact.</p>",
         "DescribeModelPackageOutput$Domain": "<p>The machine learning domain of the model package you specified. Common machine learning domains include computer vision and natural language processing.</p>",
@@ -12803,6 +12996,8 @@
         "EnvironmentParameter$Key": "<p>The environment key suggested by the Amazon SageMaker Inference Recommender.</p>",
         "EnvironmentParameter$ValueType": "<p>The value type suggested by the Amazon SageMaker Inference Recommender.</p>",
         "EnvironmentParameter$Value": "<p>The value suggested by the Amazon SageMaker Inference Recommender.</p>",
+        "GetScalingConfigurationRecommendationRequest$RecommendationId": "<p>The recommendation ID of a previously completed inference recommendation. This ID should come from one of the recommendations returned by the job specified in the <code>InferenceRecommendationsJobName</code> field.</p> <p>Specify either this field or the <code>EndpointName</code> field.</p>",
+        "GetScalingConfigurationRecommendationResponse$RecommendationId": "<p>The recommendation ID of a previously completed inference recommendation.</p>",
         "IamIdentity$Arn": "<p>The Amazon Resource Name (ARN) of the IAM identity.</p>",
         "IamIdentity$PrincipalId": "<p>The ID of the principal that assumes the IAM identity.</p>",
         "IamIdentity$SourceIdentity": "<p>The person or application which assumes the IAM identity.</p>",
@@ -12824,6 +13019,7 @@
         "ModelPackageContainerDefinition$Framework": "<p>The machine learning framework of the model package container image.</p>",
         "ModelPackageContainerDefinition$NearestModelName": "<p>The name of a pre-trained machine learning benchmarked by Amazon SageMaker Inference Recommender model that matches your model. You can find a list of benchmarked models by calling <code>ListModelMetadata</code>.</p>",
         "ModelPackageStatusItem$FailureReason": "<p>if the overall status is <code>Failed</code>, the reason for the failure.</p>",
+        "PredefinedMetricSpecification$PredefinedMetricType": "<p>The metric type. You can only apply SageMaker metric types to SageMaker endpoints.</p>",
         "ProcessingInput$InputName": "<p>The name for the processing job input.</p>",
         "ProcessingOutput$OutputName": "<p>The name for the processing job output.</p>",
         "ProductListings$member": null,
@@ -12962,7 +13158,7 @@
       "refs": {
         "ActionSummary$ActionType": "<p>The type of the action.</p>",
         "CategoricalParameter$Name": "<p>The Name of the environment variable.</p>",
-        "ModelLatencyThreshold$Percentile": "<p>The model latency percentile threshold.</p>"
+        "ModelLatencyThreshold$Percentile": "<p>The model latency percentile threshold. For custom load tests, specify the value as <code>P95</code>.</p>"
       }
     },
     "String8192": {
@@ -13157,7 +13353,7 @@
         "CreateModelExplainabilityJobDefinitionRequest$Tags": "<p>(Optional) An array of key-value pairs. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html#allocation-whatURL\">Using Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost Management User Guide</i>.</p>",
         "CreateModelInput$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
         "CreateModelPackageGroupInput$Tags": "<p>A list of key value pairs associated with the model group. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> in the <i>Amazon Web Services General Reference Guide</i>.</p>",
-        "CreateModelPackageInput$Tags": "<p>A list of key value pairs associated with the model. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> in the <i>Amazon Web Services General Reference Guide</i>.</p>",
+        "CreateModelPackageInput$Tags": "<p>A list of key value pairs associated with the model. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> in the <i>Amazon Web Services General Reference Guide</i>.</p> <p>If you supply <code>ModelPackageGroupName</code>, your model package belongs to the model group you specify and uses the tags associated with the model group. In this case, you cannot supply a <code>tag</code> argument. </p>",
         "CreateModelQualityJobDefinitionRequest$Tags": "<p>(Optional) An array of key-value pairs. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html#allocation-whatURL\">Using Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost Management User Guide</i>.</p>",
         "CreateMonitoringScheduleRequest$Tags": "<p>(Optional) An array of key-value pairs. For more information, see <a href=\" https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html#allocation-whatURL\">Using Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost Management User Guide</i>.</p>",
         "CreateNotebookInstanceInput$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
@@ -13221,7 +13417,7 @@
     "TargetLabelColumn": {
       "base": null,
       "refs": {
-        "TextClassificationJobConfig$TargetLabelColumn": "<p>The name of the column used to provide the class labels. It should not be same as the content column (Required).</p>"
+        "TextClassificationJobConfig$TargetLabelColumn": "<p>The name of the column used to provide the class labels. It should not be same as the content column.</p>"
       }
     },
     "TargetObjectiveMetricValue": {
@@ -13255,6 +13451,12 @@
       "refs": {
         "CompilationJobSummary$CompilationTargetPlatformOs": "<p>The type of OS that the model will run on after the compilation job has completed.</p>",
         "TargetPlatform$Os": "<p>Specifies a target platform OS.</p> <ul> <li> <p> <code>LINUX</code>: Linux-based operating systems.</p> </li> <li> <p> <code>ANDROID</code>: Android operating systems. Android API level can be specified using the <code>ANDROID_PLATFORM</code> compiler option. For example, <code>\"CompilerOptions\": {'ANDROID_PLATFORM': 28}</code> </p> </li> </ul>"
+      }
+    },
+    "TargetTrackingScalingPolicyConfiguration": {
+      "base": "<p>A target tracking scaling policy. Includes support for predefined or customized metrics.</p> <p>When using the <a href=\"https://docs.aws.amazon.com/autoscaling/application/APIReference/API_PutScalingPolicy.html\">PutScalingPolicy</a> API, this parameter is required when you are creating a policy with the policy type <code>TargetTrackingScaling</code>.</p>",
+      "refs": {
+        "ScalingPolicy$TargetTracking": "<p>A target tracking scaling policy. Includes support for predefined or customized metrics.</p>"
       }
     },
     "TaskAvailabilityLifetimeInSeconds": {
@@ -13672,6 +13874,8 @@
         "ListProcessingJobsRequest$LastModifiedTimeBefore": "<p>A filter that returns only processing jobs modified before the specified time.</p>",
         "ListProjectsInput$CreationTimeAfter": "<p>A filter that returns the projects that were created after a specified time.</p>",
         "ListProjectsInput$CreationTimeBefore": "<p>A filter that returns the projects that were created before a specified time.</p>",
+        "ListResourceCatalogsRequest$CreationTimeAfter": "<p> Use this parameter to search for <code>ResourceCatalog</code>s created after a specific date and time. </p>",
+        "ListResourceCatalogsRequest$CreationTimeBefore": "<p> Use this parameter to search for <code>ResourceCatalog</code>s created before a specific date and time. </p>",
         "ListStudioLifecycleConfigsRequest$CreationTimeBefore": "<p>A filter that returns only Lifecycle Configurations created on or before the specified time.</p>",
         "ListStudioLifecycleConfigsRequest$CreationTimeAfter": "<p>A filter that returns only Lifecycle Configurations created on or after the specified time.</p>",
         "ListStudioLifecycleConfigsRequest$ModifiedTimeBefore": "<p>A filter that returns only Lifecycle Configurations modified before the specified time.</p>",
@@ -13745,6 +13949,7 @@
         "QueryFilters$CreatedAfter": "<p>Filter the lineage entities connected to the <code>StartArn</code>(s) after the create date.</p>",
         "QueryFilters$ModifiedBefore": "<p>Filter the lineage entities connected to the <code>StartArn</code>(s) before the last modified date.</p>",
         "QueryFilters$ModifiedAfter": "<p>Filter the lineage entities connected to the <code>StartArn</code>(s) after the last modified date.</p>",
+        "ResourceCatalog$CreationTime": "<p> The time the <code>ResourceCatalog</code> was created. </p>",
         "SecondaryStatusTransition$StartTime": "<p>A timestamp that shows when the training job transitioned to the current secondary status state.</p>",
         "SecondaryStatusTransition$EndTime": "<p>A timestamp that shows when the training job transitioned out of this secondary status state into another secondary status state or when the training job has ended.</p>",
         "StudioLifecycleConfigDetails$CreationTime": "<p>The creation time of the Studio Lifecycle Configuration.</p>",
@@ -13793,7 +13998,8 @@
     "TrafficDurationInSeconds": {
       "base": null,
       "refs": {
-        "Phase$DurationInSeconds": "<p>Specifies how long traffic phase should be.</p>"
+        "Phase$DurationInSeconds": "<p>Specifies how long a traffic phase should be. For custom load tests, the value should be between 120 and 3600. This value should not exceed <code>JobDurationInSeconds</code>.</p>",
+        "Stairs$DurationInSeconds": "<p>Defines how long each traffic step should be.</p>"
       }
     },
     "TrafficPattern": {
@@ -13817,7 +14023,7 @@
     "TrafficType": {
       "base": null,
       "refs": {
-        "TrafficPattern$TrafficType": "<p>Defines the traffic patterns.</p>"
+        "TrafficPattern$TrafficType": "<p>Defines the traffic patterns. Choose either <code>PHASES</code> or <code>STAIRS</code>.</p>"
       }
     },
     "TrainingContainerArgument": {
@@ -14890,11 +15096,24 @@
         "UpdateUserProfileRequest$UserSettings": "<p>A collection of settings.</p>"
       }
     },
+    "UsersPerStep": {
+      "base": null,
+      "refs": {
+        "Stairs$UsersPerStep": "<p>Specifies how many new users to spawn in each step.</p>"
+      }
+    },
     "UtilizationMetric": {
       "base": null,
       "refs": {
         "RecommendationMetrics$CpuUtilization": "<p>The expected CPU utilization at maximum invocations per minute for the instance.</p> <p> <code>NaN</code> indicates that the value is not available.</p>",
         "RecommendationMetrics$MemoryUtilization": "<p>The expected memory utilization at maximum invocations per minute for the instance.</p> <p> <code>NaN</code> indicates that the value is not available.</p>"
+      }
+    },
+    "UtilizationPercentagePerCore": {
+      "base": null,
+      "refs": {
+        "GetScalingConfigurationRecommendationRequest$TargetCpuUtilizationPerCore": "<p>The percentage of how much utilization you want an instance to use before autoscaling. The default value is 50%.</p>",
+        "GetScalingConfigurationRecommendationResponse$TargetCpuUtilizationPerCore": "<p>The percentage of how much utilization you want an instance to use before autoscaling, which you specified in the request. The default value is 50%.</p>"
       }
     },
     "ValidationFraction": {
@@ -15140,6 +15359,12 @@
       "base": null,
       "refs": {
         "ListWorkforcesResponse$Workforces": "<p>A list containing information about your workforce.</p>"
+      }
+    },
+    "WorkspaceSettings": {
+      "base": "<p>The workspace settings for the SageMaker Canvas application.</p>",
+      "refs": {
+        "CanvasAppSettings$WorkspaceSettings": "<p>The workspace settings for the SageMaker Canvas application.</p>"
       }
     },
     "Workteam": {

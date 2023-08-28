@@ -194,6 +194,24 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "AssociateTrafficDistributionGroupUser":{
+      "name":"AssociateTrafficDistributionGroupUser",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/traffic-distribution-group/{TrafficDistributionGroupId}/user"
+      },
+      "input":{"shape":"AssociateTrafficDistributionGroupUserRequest"},
+      "output":{"shape":"AssociateTrafficDistributionGroupUserResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"InternalServiceException"}
+      ],
+      "idempotent":true
+    },
     "ClaimPhoneNumber":{
       "name":"ClaimPhoneNumber",
       "http":{
@@ -705,6 +723,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DeleteQueue":{
+      "name":"DeleteQueue",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/queues/{InstanceId}/{QueueId}"
+      },
+      "input":{"shape":"DeleteQueueRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "DeleteQuickConnect":{
       "name":"DeleteQuickConnect",
       "http":{
@@ -716,6 +750,22 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "DeleteRoutingProfile":{
+      "name":"DeleteRoutingProfile",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/routing-profiles/{InstanceId}/{RoutingProfileId}"
+      },
+      "input":{"shape":"DeleteRoutingProfileRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
       ]
@@ -1329,6 +1379,24 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "DisassociateTrafficDistributionGroupUser":{
+      "name":"DisassociateTrafficDistributionGroupUser",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/traffic-distribution-group/{TrafficDistributionGroupId}/user"
+      },
+      "input":{"shape":"DisassociateTrafficDistributionGroupUserRequest"},
+      "output":{"shape":"DisassociateTrafficDistributionGroupUserResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"InternalServiceException"}
+      ],
+      "idempotent":true
     },
     "DismissUserContact":{
       "name":"DismissUserContact",
@@ -1974,6 +2042,22 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListTrafficDistributionGroupUsers":{
+      "name":"ListTrafficDistributionGroupUsers",
+      "http":{
+        "method":"GET",
+        "requestUri":"/traffic-distribution-group/{TrafficDistributionGroupId}/user"
+      },
+      "input":{"shape":"ListTrafficDistributionGroupUsersRequest"},
+      "output":{"shape":"ListTrafficDistributionGroupUsersResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
       ]
@@ -2895,6 +2979,21 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateRoutingProfileAgentAvailabilityTimer":{
+      "name":"UpdateRoutingProfileAgentAvailabilityTimer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/routing-profiles/{InstanceId}/{RoutingProfileId}/agent-availability-timer"
+      },
+      "input":{"shape":"UpdateRoutingProfileAgentAvailabilityTimerRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "UpdateRoutingProfileConcurrency":{
       "name":"UpdateRoutingProfileConcurrency",
       "http":{
@@ -3196,6 +3295,20 @@
     "AfterContactWorkTimeLimit":{
       "type":"integer",
       "min":0
+    },
+    "AgentAvailabilityTimer":{
+      "type":"string",
+      "enum":[
+        "TIME_SINCE_LAST_ACTIVITY",
+        "TIME_SINCE_LAST_INBOUND"
+      ]
+    },
+    "AgentConfig":{
+      "type":"structure",
+      "required":["Distributions"],
+      "members":{
+        "Distributions":{"shape":"DistributionList"}
+      }
     },
     "AgentContactReference":{
       "type":"structure",
@@ -3529,6 +3642,28 @@
       "type":"structure",
       "members":{
         "AssociationId":{"shape":"AssociationId"}
+      }
+    },
+    "AssociateTrafficDistributionGroupUserRequest":{
+      "type":"structure",
+      "required":[
+        "TrafficDistributionGroupId",
+        "UserId",
+        "InstanceId"
+      ],
+      "members":{
+        "TrafficDistributionGroupId":{
+          "shape":"TrafficDistributionGroupIdOrArn",
+          "location":"uri",
+          "locationName":"TrafficDistributionGroupId"
+        },
+        "UserId":{"shape":"UserId"},
+        "InstanceId":{"shape":"InstanceId"}
+      }
+    },
+    "AssociateTrafficDistributionGroupUserResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "AssociationId":{
@@ -4287,7 +4422,8 @@
         "DefaultOutboundQueueId":{"shape":"QueueId"},
         "QueueConfigs":{"shape":"RoutingProfileQueueConfigList"},
         "MediaConcurrencies":{"shape":"MediaConcurrencies"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "AgentAvailabilityTimer":{"shape":"AgentAvailabilityTimer"}
       }
     },
     "CreateRoutingProfileResponse":{
@@ -4859,6 +4995,25 @@
         }
       }
     },
+    "DeleteQueueRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "QueueId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "QueueId":{
+          "shape":"QueueId",
+          "location":"uri",
+          "locationName":"QueueId"
+        }
+      }
+    },
     "DeleteQuickConnectRequest":{
       "type":"structure",
       "required":[
@@ -4875,6 +5030,25 @@
           "shape":"QuickConnectId",
           "location":"uri",
           "locationName":"QuickConnectId"
+        }
+      }
+    },
+    "DeleteRoutingProfileRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "RoutingProfileId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "RoutingProfileId":{
+          "shape":"RoutingProfileId",
+          "location":"uri",
+          "locationName":"RoutingProfileId"
         }
       }
     },
@@ -5825,6 +5999,36 @@
         }
       }
     },
+    "DisassociateTrafficDistributionGroupUserRequest":{
+      "type":"structure",
+      "required":[
+        "TrafficDistributionGroupId",
+        "UserId",
+        "InstanceId"
+      ],
+      "members":{
+        "TrafficDistributionGroupId":{
+          "shape":"TrafficDistributionGroupIdOrArn",
+          "location":"uri",
+          "locationName":"TrafficDistributionGroupId"
+        },
+        "UserId":{
+          "shape":"UserId",
+          "location":"querystring",
+          "locationName":"UserId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"querystring",
+          "locationName":"InstanceId"
+        }
+      }
+    },
+    "DisassociateTrafficDistributionGroupUserResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DismissUserContactRequest":{
       "type":"structure",
       "required":[
@@ -6709,7 +6913,9 @@
       "members":{
         "TelephonyConfig":{"shape":"TelephonyConfig"},
         "Id":{"shape":"TrafficDistributionGroupId"},
-        "Arn":{"shape":"TrafficDistributionGroupArn"}
+        "Arn":{"shape":"TrafficDistributionGroupArn"},
+        "SignInConfig":{"shape":"SignInConfig"},
+        "AgentConfig":{"shape":"AgentConfig"}
       }
     },
     "Grouping":{
@@ -8316,6 +8522,35 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListTrafficDistributionGroupUsersRequest":{
+      "type":"structure",
+      "required":["TrafficDistributionGroupId"],
+      "members":{
+        "TrafficDistributionGroupId":{
+          "shape":"TrafficDistributionGroupIdOrArn",
+          "location":"uri",
+          "locationName":"TrafficDistributionGroupId"
+        },
+        "MaxResults":{
+          "shape":"MaxResult10",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListTrafficDistributionGroupUsersResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "TrafficDistributionGroupUserSummaryList":{"shape":"TrafficDistributionGroupUserSummaryList"}
+      }
+    },
     "ListTrafficDistributionGroupsRequest":{
       "type":"structure",
       "members":{
@@ -9084,13 +9319,17 @@
       "type":"string",
       "enum":[
         "TOLL_FREE",
-        "DID"
+        "DID",
+        "UIFN",
+        "SHARED",
+        "THIRD_PARTY_TF",
+        "THIRD_PARTY_DID"
       ]
     },
     "PhoneNumberTypes":{
       "type":"list",
       "member":{"shape":"PhoneNumberType"},
-      "max":2
+      "max":6
     },
     "PhoneNumberWorkflowMessage":{
       "type":"string",
@@ -9705,7 +9944,8 @@
         "DefaultOutboundQueueId":{"shape":"QueueId"},
         "Tags":{"shape":"TagMap"},
         "NumberOfAssociatedQueues":{"shape":"Long"},
-        "NumberOfAssociatedUsers":{"shape":"Long"}
+        "NumberOfAssociatedUsers":{"shape":"Long"},
+        "AgentAvailabilityTimer":{"shape":"AgentAvailabilityTimer"}
       }
     },
     "RoutingProfileDescription":{
@@ -10294,6 +10534,28 @@
       },
       "error":{"httpStatusCode":402},
       "exception":true
+    },
+    "SignInConfig":{
+      "type":"structure",
+      "required":["Distributions"],
+      "members":{
+        "Distributions":{"shape":"SignInDistributionList"}
+      }
+    },
+    "SignInDistribution":{
+      "type":"structure",
+      "required":[
+        "Region",
+        "Enabled"
+      ],
+      "members":{
+        "Region":{"shape":"AwsRegion"},
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
+    "SignInDistributionList":{
+      "type":"list",
+      "member":{"shape":"SignInDistribution"}
     },
     "SingleSelectOptions":{
       "type":"list",
@@ -10973,7 +11235,8 @@
         "Description":{"shape":"Description250"},
         "InstanceArn":{"shape":"InstanceArn"},
         "Status":{"shape":"TrafficDistributionGroupStatus"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "IsDefault":{"shape":"Boolean"}
       }
     },
     "TrafficDistributionGroupArn":{
@@ -11006,12 +11269,25 @@
         "Arn":{"shape":"TrafficDistributionGroupArn"},
         "Name":{"shape":"Name128"},
         "InstanceArn":{"shape":"InstanceArn"},
-        "Status":{"shape":"TrafficDistributionGroupStatus"}
+        "Status":{"shape":"TrafficDistributionGroupStatus"},
+        "IsDefault":{"shape":"Boolean"}
       }
     },
     "TrafficDistributionGroupSummaryList":{
       "type":"list",
       "member":{"shape":"TrafficDistributionGroupSummary"},
+      "max":10,
+      "min":0
+    },
+    "TrafficDistributionGroupUserSummary":{
+      "type":"structure",
+      "members":{
+        "UserId":{"shape":"UserId"}
+      }
+    },
+    "TrafficDistributionGroupUserSummaryList":{
+      "type":"list",
+      "member":{"shape":"TrafficDistributionGroupUserSummary"},
       "max":10,
       "min":0
     },
@@ -11702,6 +11978,27 @@
         "Description":{"shape":"UpdateQuickConnectDescription"}
       }
     },
+    "UpdateRoutingProfileAgentAvailabilityTimerRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "RoutingProfileId",
+        "AgentAvailabilityTimer"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "RoutingProfileId":{
+          "shape":"RoutingProfileId",
+          "location":"uri",
+          "locationName":"RoutingProfileId"
+        },
+        "AgentAvailabilityTimer":{"shape":"AgentAvailabilityTimer"}
+      }
+    },
     "UpdateRoutingProfileConcurrencyRequest":{
       "type":"structure",
       "required":[
@@ -11888,7 +12185,9 @@
           "location":"uri",
           "locationName":"Id"
         },
-        "TelephonyConfig":{"shape":"TelephonyConfig"}
+        "TelephonyConfig":{"shape":"TelephonyConfig"},
+        "SignInConfig":{"shape":"SignInConfig"},
+        "AgentConfig":{"shape":"AgentConfig"}
       }
     },
     "UpdateTrafficDistributionResponse":{

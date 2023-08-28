@@ -123,24 +123,34 @@ class CrtContext implements Context, SnippetAcceptingContext
             'region' => 'us-east-1',
             'version' => 'latest'
         ]);
-
-        $result = $eventBridgeClient->createEndpoint([
-            'Name' => 'test-endpoint',
-            'EventBuses' => self::$eventBuses,
-            'ReplicationConfig' => [
-                'State' => 'DISABLED'
-            ],
-            'RoutingConfig' => [
-                'FailoverConfig' => [
-                    'Primary' => [
-                        'HealthCheck' => self::$healthCheckArn
-                    ],
-                    'Secondary' => [
-                        'Route' => 'us-west-2'
+        $currentEndpoints = $eventBridgeClient->listEndpoints();
+        $testEndpointExists = false;
+        foreach ($currentEndpoints['Endpoints'] as $endpoint) {
+            if ($endpoint['Name'] == 'test-endpoint') {
+                $testEndpointExists = true;
+                break;
+            }
+        }
+        if (!$testEndpointExists) {
+            $eventBridgeClient->createEndpoint([
+                'Name' => 'test-endpoint',
+                'EventBuses' => self::$eventBuses,
+                'ReplicationConfig' => [
+                    'State' => 'DISABLED'
+                ],
+                'RoutingConfig' => [
+                    'FailoverConfig' => [
+                        'Primary' => [
+                            'HealthCheck' => self::$healthCheckArn
+                        ],
+                        'Secondary' => [
+                            'Route' => 'us-west-2'
+                        ]
                     ]
                 ]
-            ]
-        ]);
+            ]);
+        }
+
         $attempts = 0;
         $active = false;
         $result = null;

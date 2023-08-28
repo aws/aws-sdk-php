@@ -1669,6 +1669,34 @@
         "UserPoolId":{"shape":"NonEmptyString"}
       }
     },
+    "AwsAthenaWorkGroupConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "ResultConfiguration":{"shape":"AwsAthenaWorkGroupConfigurationResultConfigurationDetails"}
+      }
+    },
+    "AwsAthenaWorkGroupConfigurationResultConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "EncryptionConfiguration":{"shape":"AwsAthenaWorkGroupConfigurationResultConfigurationEncryptionConfigurationDetails"}
+      }
+    },
+    "AwsAthenaWorkGroupConfigurationResultConfigurationEncryptionConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "EncryptionOption":{"shape":"NonEmptyString"},
+        "KmsKey":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsAthenaWorkGroupDetails":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "State":{"shape":"NonEmptyString"},
+        "Configuration":{"shape":"AwsAthenaWorkGroupConfigurationDetails"}
+      }
+    },
     "AwsAutoScalingAutoScalingGroupAvailabilityZonesList":{
       "type":"list",
       "member":{"shape":"AwsAutoScalingAutoScalingGroupAvailabilityZonesListDetails"}
@@ -5021,6 +5049,17 @@
       "type":"list",
       "member":{"shape":"AwsRdsDbClusterOptionGroupMembership"}
     },
+    "AwsRdsDbClusterSnapshotDbClusterSnapshotAttribute":{
+      "type":"structure",
+      "members":{
+        "AttributeName":{"shape":"NonEmptyString"},
+        "AttributeValues":{"shape":"NonEmptyStringList"}
+      }
+    },
+    "AwsRdsDbClusterSnapshotDbClusterSnapshotAttributes":{
+      "type":"list",
+      "member":{"shape":"AwsRdsDbClusterSnapshotDbClusterSnapshotAttribute"}
+    },
     "AwsRdsDbClusterSnapshotDetails":{
       "type":"structure",
       "members":{
@@ -5041,7 +5080,8 @@
         "KmsKeyId":{"shape":"NonEmptyString"},
         "DbClusterIdentifier":{"shape":"NonEmptyString"},
         "DbClusterSnapshotIdentifier":{"shape":"NonEmptyString"},
-        "IamDatabaseAuthenticationEnabled":{"shape":"Boolean"}
+        "IamDatabaseAuthenticationEnabled":{"shape":"Boolean"},
+        "DbClusterSnapshotAttributes":{"shape":"AwsRdsDbClusterSnapshotDbClusterSnapshotAttributes"}
       }
     },
     "AwsRdsDbDomainMembership":{
@@ -5935,7 +5975,8 @@
         "PatchSummary":{"shape":"PatchSummary"},
         "Action":{"shape":"Action"},
         "FindingProviderFields":{"shape":"FindingProviderFields"},
-        "Sample":{"shape":"Boolean"}
+        "Sample":{"shape":"Boolean"},
+        "GeneratorDetails":{"shape":"GeneratorDetails"}
       }
     },
     "AwsSecurityFindingFilters":{
@@ -6772,6 +6813,15 @@
         "Reason":{"shape":"NonEmptyString"}
       }
     },
+    "CodeVulnerabilitiesFilePath":{
+      "type":"structure",
+      "members":{
+        "EndLine":{"shape":"Integer"},
+        "FileName":{"shape":"NonEmptyString"},
+        "FilePath":{"shape":"NonEmptyString"},
+        "StartLine":{"shape":"Integer"}
+      }
+    },
     "Compliance":{
       "type":"structure",
       "members":{
@@ -7451,6 +7501,14 @@
       "type":"list",
       "member":{"shape":"FirewallPolicyStatelessRuleGroupReferencesDetails"}
     },
+    "GeneratorDetails":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NonEmptyString"},
+        "Description":{"shape":"NonEmptyString"},
+        "Labels":{"shape":"TypeList"}
+      }
+    },
     "GeoLocation":{
       "type":"structure",
       "members":{
@@ -8073,7 +8131,9 @@
       "type":"string",
       "enum":[
         "EQUALS",
-        "NOT_EQUALS"
+        "NOT_EQUALS",
+        "CONTAINS",
+        "NOT_CONTAINS"
       ]
     },
     "MapFilterList":{
@@ -8536,7 +8596,8 @@
         "AwsAppSyncGraphQlApi":{"shape":"AwsAppSyncGraphQlApiDetails"},
         "AwsEventSchemasRegistry":{"shape":"AwsEventSchemasRegistryDetails"},
         "AwsGuardDutyDetector":{"shape":"AwsGuardDutyDetectorDetails"},
-        "AwsStepFunctionStateMachine":{"shape":"AwsStepFunctionStateMachineDetails"}
+        "AwsStepFunctionStateMachine":{"shape":"AwsStepFunctionStateMachineDetails"},
+        "AwsAthenaWorkGroup":{"shape":"AwsAthenaWorkGroupDetails"}
       }
     },
     "ResourceList":{
@@ -9178,7 +9239,9 @@
         "EQUALS",
         "PREFIX",
         "NOT_EQUALS",
-        "PREFIX_NOT_EQUALS"
+        "PREFIX_NOT_EQUALS",
+        "CONTAINS",
+        "NOT_CONTAINS"
       ]
     },
     "StringFilterList":{
@@ -9581,8 +9644,30 @@
         "RelatedVulnerabilities":{"shape":"StringList"},
         "Vendor":{"shape":"VulnerabilityVendor"},
         "ReferenceUrls":{"shape":"StringList"},
-        "FixAvailable":{"shape":"VulnerabilityFixAvailable"}
+        "FixAvailable":{"shape":"VulnerabilityFixAvailable"},
+        "EpssScore":{"shape":"Double"},
+        "ExploitAvailable":{"shape":"VulnerabilityExploitAvailable"},
+        "CodeVulnerabilities":{"shape":"VulnerabilityCodeVulnerabilitiesList"}
       }
+    },
+    "VulnerabilityCodeVulnerabilities":{
+      "type":"structure",
+      "members":{
+        "Cwes":{"shape":"TypeList"},
+        "FilePath":{"shape":"CodeVulnerabilitiesFilePath"},
+        "SourceArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "VulnerabilityCodeVulnerabilitiesList":{
+      "type":"list",
+      "member":{"shape":"VulnerabilityCodeVulnerabilities"}
+    },
+    "VulnerabilityExploitAvailable":{
+      "type":"string",
+      "enum":[
+        "YES",
+        "NO"
+      ]
     },
     "VulnerabilityFixAvailable":{
       "type":"string",

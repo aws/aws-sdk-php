@@ -780,7 +780,10 @@
         "VOLUME_UPDATE",
         "SNAPSHOT_UPDATE",
         "RELEASE_NFS_V3_LOCKS",
-        "VOLUME_RESTORE"
+        "VOLUME_RESTORE",
+        "THROUGHPUT_OPTIMIZATION",
+        "IOPS_OPTIMIZATION",
+        "STORAGE_TYPE_OPTIMIZATION"
       ]
     },
     "AdministrativeActions":{
@@ -868,6 +871,30 @@
         "NEW_CHANGED",
         "NEW_CHANGED_DELETED"
       ]
+    },
+    "AutocommitPeriod":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"AutocommitPeriodType"},
+        "Value":{"shape":"AutocommitPeriodValue"}
+      }
+    },
+    "AutocommitPeriodType":{
+      "type":"string",
+      "enum":[
+        "MINUTES",
+        "HOURS",
+        "DAYS",
+        "MONTHS",
+        "YEARS",
+        "NONE"
+      ]
+    },
+    "AutocommitPeriodValue":{
+      "type":"integer",
+      "max":65535,
+      "min":1
     },
     "AutomaticBackupRetentionDays":{
       "type":"integer",
@@ -1105,7 +1132,8 @@
           "idempotencyToken":true
         },
         "Tags":{"shape":"Tags"},
-        "CapacityToRelease":{"shape":"CapacityToRelease"}
+        "CapacityToRelease":{"shape":"CapacityToRelease"},
+        "ReleaseConfiguration":{"shape":"ReleaseConfiguration"}
       }
     },
     "CreateDataRepositoryTaskResponse":{
@@ -1247,7 +1275,10 @@
         "ThroughputCapacity":{"shape":"MegabytesPerSecond"},
         "WeeklyMaintenanceStartTime":{"shape":"WeeklyTime"},
         "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"},
-        "RootVolumeConfiguration":{"shape":"OpenZFSCreateRootVolumeConfiguration"}
+        "RootVolumeConfiguration":{"shape":"OpenZFSCreateRootVolumeConfiguration"},
+        "PreferredSubnetId":{"shape":"SubnetId"},
+        "EndpointIpAddressRange":{"shape":"IpAddressRange"},
+        "RouteTableIds":{"shape":"RouteTableIds"}
       }
     },
     "CreateFileSystemRequest":{
@@ -1296,7 +1327,8 @@
         "AutomaticBackupRetentionDays":{"shape":"AutomaticBackupRetentionDays"},
         "CopyTagsToBackups":{"shape":"Flag"},
         "Aliases":{"shape":"AlternateDNSNames"},
-        "AuditLogConfiguration":{"shape":"WindowsAuditLogCreateConfiguration"}
+        "AuditLogConfiguration":{"shape":"WindowsAuditLogCreateConfiguration"},
+        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"}
       }
     },
     "CreateOntapVolumeConfiguration":{
@@ -1314,7 +1346,8 @@
         "TieringPolicy":{"shape":"TieringPolicy"},
         "OntapVolumeType":{"shape":"InputOntapVolumeType"},
         "SnapshotPolicy":{"shape":"SnapshotPolicy"},
-        "CopyTagsToBackups":{"shape":"Flag"}
+        "CopyTagsToBackups":{"shape":"Flag"},
+        "SnaplockConfiguration":{"shape":"CreateSnaplockConfiguration"}
       }
     },
     "CreateOpenZFSOriginSnapshotConfiguration":{
@@ -1342,6 +1375,18 @@
         "ReadOnly":{"shape":"ReadOnly"},
         "NfsExports":{"shape":"OpenZFSNfsExports"},
         "UserAndGroupQuotas":{"shape":"OpenZFSUserAndGroupQuotas"}
+      }
+    },
+    "CreateSnaplockConfiguration":{
+      "type":"structure",
+      "required":["SnaplockType"],
+      "members":{
+        "AuditLogVolume":{"shape":"Flag"},
+        "AutocommitPeriod":{"shape":"AutocommitPeriod"},
+        "PrivilegedDelete":{"shape":"PrivilegedDelete"},
+        "RetentionPeriod":{"shape":"SnaplockRetentionPeriod"},
+        "SnaplockType":{"shape":"SnaplockType"},
+        "VolumeAppendModeEnabled":{"shape":"Flag"}
       }
     },
     "CreateSnapshotRequest":{
@@ -1561,7 +1606,8 @@
         "Status":{"shape":"DataRepositoryTaskStatus"},
         "Report":{"shape":"CompletionReport"},
         "CapacityToRelease":{"shape":"CapacityToRelease"},
-        "FileCacheId":{"shape":"FileCacheId"}
+        "FileCacheId":{"shape":"FileCacheId"},
+        "ReleaseConfiguration":{"shape":"ReleaseConfiguration"}
       }
     },
     "DataRepositoryTaskEnded":{
@@ -1851,7 +1897,8 @@
       "type":"structure",
       "members":{
         "SkipFinalBackup":{"shape":"Flag"},
-        "FinalBackupTags":{"shape":"Tags"}
+        "FinalBackupTags":{"shape":"Tags"},
+        "BypassSnaplockEnterpriseRetention":{"shape":"Flag"}
       }
     },
     "DeleteVolumeOntapResponse":{
@@ -2100,6 +2147,13 @@
         "NONE",
         "READ"
       ]
+    },
+    "DurationSinceLastAccess":{
+      "type":"structure",
+      "members":{
+        "Unit":{"shape":"Unit"},
+        "Value":{"shape":"Value"}
+      }
     },
     "EndTime":{"type":"timestamp"},
     "ErrorMessage":{
@@ -2793,7 +2847,8 @@
         "UUID":{"shape":"UUID"},
         "OntapVolumeType":{"shape":"OntapVolumeType"},
         "SnapshotPolicy":{"shape":"SnapshotPolicy"},
-        "CopyTagsToBackups":{"shape":"Flag"}
+        "CopyTagsToBackups":{"shape":"Flag"},
+        "SnaplockConfiguration":{"shape":"SnaplockConfiguration"}
       }
     },
     "OntapVolumeType":{
@@ -2856,7 +2911,8 @@
       "type":"string",
       "enum":[
         "SINGLE_AZ_1",
-        "SINGLE_AZ_2"
+        "SINGLE_AZ_2",
+        "MULTI_AZ_1"
       ]
     },
     "OpenZFSFileSystemConfiguration":{
@@ -2870,7 +2926,11 @@
         "ThroughputCapacity":{"shape":"MegabytesPerSecond"},
         "WeeklyMaintenanceStartTime":{"shape":"WeeklyTime"},
         "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"},
-        "RootVolumeId":{"shape":"VolumeId"}
+        "RootVolumeId":{"shape":"VolumeId"},
+        "PreferredSubnetId":{"shape":"SubnetId"},
+        "EndpointIpAddressRange":{"shape":"IpAddressRange"},
+        "RouteTableIds":{"shape":"RouteTableIds"},
+        "EndpointIpAddress":{"shape":"IpAddress"}
       }
     },
     "OpenZFSNfsExport":{
@@ -2963,6 +3023,14 @@
       "max":1000,
       "min":12
     },
+    "PrivilegedDelete":{
+      "type":"string",
+      "enum":[
+        "DISABLED",
+        "ENABLED",
+        "PERMANENTLY_DISABLED"
+      ]
+    },
     "ProgressPercent":{
       "type":"integer",
       "max":100,
@@ -2974,6 +3042,12 @@
       "max":20,
       "min":1,
       "pattern":"^[a-z0-9-]{1,20}$"
+    },
+    "ReleaseConfiguration":{
+      "type":"structure",
+      "members":{
+        "DurationSinceLastAccess":{"shape":"DurationSinceLastAccess"}
+      }
     },
     "ReleaseFileSystemNfsV3LocksRequest":{
       "type":"structure",
@@ -3074,6 +3148,32 @@
         "AdministrativeActions":{"shape":"AdministrativeActions"}
       }
     },
+    "RetentionPeriod":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"RetentionPeriodType"},
+        "Value":{"shape":"RetentionPeriodValue"}
+      }
+    },
+    "RetentionPeriodType":{
+      "type":"string",
+      "enum":[
+        "SECONDS",
+        "MINUTES",
+        "HOURS",
+        "DAYS",
+        "MONTHS",
+        "YEARS",
+        "INFINITE",
+        "UNSPECIFIED"
+      ]
+    },
+    "RetentionPeriodValue":{
+      "type":"integer",
+      "max":65535,
+      "min":0
+    },
     "RouteTableId":{
       "type":"string",
       "max":21,
@@ -3172,6 +3272,37 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "SnaplockConfiguration":{
+      "type":"structure",
+      "members":{
+        "AuditLogVolume":{"shape":"Flag"},
+        "AutocommitPeriod":{"shape":"AutocommitPeriod"},
+        "PrivilegedDelete":{"shape":"PrivilegedDelete"},
+        "RetentionPeriod":{"shape":"SnaplockRetentionPeriod"},
+        "SnaplockType":{"shape":"SnaplockType"},
+        "VolumeAppendModeEnabled":{"shape":"Flag"}
+      }
+    },
+    "SnaplockRetentionPeriod":{
+      "type":"structure",
+      "required":[
+        "DefaultRetention",
+        "MinimumRetention",
+        "MaximumRetention"
+      ],
+      "members":{
+        "DefaultRetention":{"shape":"RetentionPeriod"},
+        "MinimumRetention":{"shape":"RetentionPeriod"},
+        "MaximumRetention":{"shape":"RetentionPeriod"}
+      }
+    },
+    "SnaplockType":{
+      "type":"string",
+      "enum":[
+        "COMPLIANCE",
+        "ENTERPRISE"
+      ]
     },
     "Snapshot":{
       "type":"structure",
@@ -3523,6 +3654,10 @@
       "max":36,
       "pattern":"^[^\\u0000\\u0085\\u2028\\u2029\\r\\n]{1,36}$"
     },
+    "Unit":{
+      "type":"string",
+      "enum":["DAYS"]
+    },
     "UnsupportedOperation":{
       "type":"structure",
       "members":{
@@ -3623,7 +3758,9 @@
         "DailyAutomaticBackupStartTime":{"shape":"DailyTime"},
         "ThroughputCapacity":{"shape":"MegabytesPerSecond"},
         "WeeklyMaintenanceStartTime":{"shape":"WeeklyTime"},
-        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"}
+        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"},
+        "AddRouteTableIds":{"shape":"RouteTableIds"},
+        "RemoveRouteTableIds":{"shape":"RouteTableIds"}
       }
     },
     "UpdateFileSystemRequest":{
@@ -3639,7 +3776,8 @@
         "WindowsConfiguration":{"shape":"UpdateFileSystemWindowsConfiguration"},
         "LustreConfiguration":{"shape":"UpdateFileSystemLustreConfiguration"},
         "OntapConfiguration":{"shape":"UpdateFileSystemOntapConfiguration"},
-        "OpenZFSConfiguration":{"shape":"UpdateFileSystemOpenZFSConfiguration"}
+        "OpenZFSConfiguration":{"shape":"UpdateFileSystemOpenZFSConfiguration"},
+        "StorageType":{"shape":"StorageType"}
       }
     },
     "UpdateFileSystemResponse":{
@@ -3656,7 +3794,8 @@
         "AutomaticBackupRetentionDays":{"shape":"AutomaticBackupRetentionDays"},
         "ThroughputCapacity":{"shape":"MegabytesPerSecond"},
         "SelfManagedActiveDirectoryConfiguration":{"shape":"SelfManagedActiveDirectoryConfigurationUpdates"},
-        "AuditLogConfiguration":{"shape":"WindowsAuditLogCreateConfiguration"}
+        "AuditLogConfiguration":{"shape":"WindowsAuditLogCreateConfiguration"},
+        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"}
       }
     },
     "UpdateOntapVolumeConfiguration":{
@@ -3668,7 +3807,8 @@
         "StorageEfficiencyEnabled":{"shape":"Flag"},
         "TieringPolicy":{"shape":"TieringPolicy"},
         "SnapshotPolicy":{"shape":"SnapshotPolicy"},
-        "CopyTagsToBackups":{"shape":"Flag"}
+        "CopyTagsToBackups":{"shape":"Flag"},
+        "SnaplockConfiguration":{"shape":"UpdateSnaplockConfiguration"}
       }
     },
     "UpdateOpenZFSVolumeConfiguration":{
@@ -3681,6 +3821,16 @@
         "NfsExports":{"shape":"OpenZFSNfsExports"},
         "UserAndGroupQuotas":{"shape":"OpenZFSUserAndGroupQuotas"},
         "ReadOnly":{"shape":"ReadOnly"}
+      }
+    },
+    "UpdateSnaplockConfiguration":{
+      "type":"structure",
+      "members":{
+        "AuditLogVolume":{"shape":"Flag"},
+        "AutocommitPeriod":{"shape":"AutocommitPeriod"},
+        "PrivilegedDelete":{"shape":"PrivilegedDelete"},
+        "RetentionPeriod":{"shape":"SnaplockRetentionPeriod"},
+        "VolumeAppendModeEnabled":{"shape":"Flag"}
       }
     },
     "UpdateSnapshotRequest":{
@@ -3750,6 +3900,10 @@
         "Volume":{"shape":"Volume"}
       }
     },
+    "Value":{
+      "type":"long",
+      "min":0
+    },
     "Volume":{
       "type":"structure",
       "members":{
@@ -3769,7 +3923,7 @@
     },
     "VolumeCapacity":{
       "type":"integer",
-      "max":2147483647,
+      "max":314572800,
       "min":0
     },
     "VolumeFilter":{
@@ -3925,7 +4079,8 @@
         "AutomaticBackupRetentionDays":{"shape":"AutomaticBackupRetentionDays"},
         "CopyTagsToBackups":{"shape":"Flag"},
         "Aliases":{"shape":"Aliases"},
-        "AuditLogConfiguration":{"shape":"WindowsAuditLogConfiguration"}
+        "AuditLogConfiguration":{"shape":"WindowsAuditLogConfiguration"},
+        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"}
       }
     }
   }

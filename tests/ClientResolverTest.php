@@ -752,27 +752,25 @@ EOT;
         $r->resolve([], new HandlerList());
     }
 
-    public function testHasSpecificMessageForMissingVersion()
+    public function testAppliesLatestAsDefaultVersionWithoutSuppliedVersion()
     {
-        $this->expectExceptionMessage("A \"version\" configuration value is required");
-        $this->expectException(\InvalidArgumentException::class);
-        $args = ClientResolver::getDefaultArguments()['version'];
-        $r = new ClientResolver(['version' => $args]);
-        $r->resolve(['service' => 'foo'], new HandlerList());
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'ec2',
+            'region' => 'us-west-2',
+        ], new HandlerList());
+        self::assertSame('latest', $conf['version']);
     }
 
-    public function testHasSpecificMessageForNullRequiredVersion()
+    public function testAppliesVersion()
     {
-        $this->expectExceptionMessage("A \"version\" configuration value is required");
-        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
-        $list = new HandlerList();
-        $r->resolve([
-            'service' => 'foo',
-            'region' => 'x',
-            'credentials' => ['key' => 'a', 'secret' => 'b'],
-            'version' => null,
-        ], $list);
+        $conf = $r->resolve([
+            'service' => 'ec2',
+            'region' => 'us-west-2',
+            'version' => '2015-10-01'
+        ], new HandlerList());
+        self::assertSame('2015-10-01', $conf['version']);
     }
 
     public function testHasSpecificMessageForMissingRegion()

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Security Hub provides you with a comprehensive view of the security state of your Amazon Web Services environment and resources. It also provides you with the readiness status of your environment based on controls from supported security standards. Security Hub collects security data from Amazon Web Services accounts, services, and integrated third-party products and helps you analyze security trends in your environment to identify the highest priority security issues. For more information about Security Hub, see the <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html\">Security HubUser Guide</a>.</p> <p>When you use operations in the Security Hub API, the requests are executed only in the Amazon Web Services Region that is currently active or in the specific Amazon Web Services Region that you specify in your request. Any configuration or settings change that results from the operation is applied only to that Region. To make the same change in other Regions, run the same command for each Region in which you want to apply the change.</p> <p>For example, if your Region is set to <code>us-west-2</code>, when you use <code>CreateMembers</code> to add a member account to Security Hub, the association of the member account with the administrator account is created only in the <code>us-west-2</code> Region. Security Hub must be enabled for the member account in the same Region that the invitation was sent from.</p> <p>The following throttling limits apply to using Security Hub API operations.</p> <ul> <li> <p> <code>BatchEnableStandards</code> - <code>RateLimit</code> of 1 request per second. <code>BurstLimit</code> of 1 request per second.</p> </li> <li> <p> <code>GetFindings</code> - <code>RateLimit</code> of 3 requests per second. <code>BurstLimit</code> of 6 requests per second.</p> </li> <li> <p> <code>BatchImportFindings</code> - <code>RateLimit</code> of 10 requests per second. <code>BurstLimit</code> of 30 requests per second.</p> </li> <li> <p> <code>BatchUpdateFindings</code> - <code>RateLimit</code> of 10 requests per second. <code>BurstLimit</code> of 30 requests per second.</p> </li> <li> <p> <code>UpdateStandardsControl</code> - <code>RateLimit</code> of 1 request per second. <code>BurstLimit</code> of 5 requests per second.</p> </li> <li> <p>All other operations - <code>RateLimit</code> of 10 requests per second. <code>BurstLimit</code> of 30 requests per second.</p> </li> </ul>",
+  "service": "<p>Security Hub provides you with a comprehensive view of the security state of your Amazon Web Services environment and resources. It also provides you with the readiness status of your environment based on controls from supported security standards. Security Hub collects security data from Amazon Web Services accounts, services, and integrated third-party products and helps you analyze security trends in your environment to identify the highest priority security issues. For more information about Security Hub, see the <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html\"> <i>Security Hub User Guide</i> </a>.</p> <p>When you use operations in the Security Hub API, the requests are executed only in the Amazon Web Services Region that is currently active or in the specific Amazon Web Services Region that you specify in your request. Any configuration or settings change that results from the operation is applied only to that Region. To make the same change in other Regions, run the same command for each Region in which you want to apply the change.</p> <p>For example, if your Region is set to <code>us-west-2</code>, when you use <code>CreateMembers</code> to add a member account to Security Hub, the association of the member account with the administrator account is created only in the <code>us-west-2</code> Region. Security Hub must be enabled for the member account in the same Region that the invitation was sent from.</p> <p>The following throttling limits apply to using Security Hub API operations.</p> <ul> <li> <p> <code>BatchEnableStandards</code> - <code>RateLimit</code> of 1 request per second. <code>BurstLimit</code> of 1 request per second.</p> </li> <li> <p> <code>GetFindings</code> - <code>RateLimit</code> of 3 requests per second. <code>BurstLimit</code> of 6 requests per second.</p> </li> <li> <p> <code>BatchImportFindings</code> - <code>RateLimit</code> of 10 requests per second. <code>BurstLimit</code> of 30 requests per second.</p> </li> <li> <p> <code>BatchUpdateFindings</code> - <code>RateLimit</code> of 10 requests per second. <code>BurstLimit</code> of 30 requests per second.</p> </li> <li> <p> <code>UpdateStandardsControl</code> - <code>RateLimit</code> of 1 request per second. <code>BurstLimit</code> of 5 requests per second.</p> </li> <li> <p>All other operations - <code>RateLimit</code> of 10 requests per second. <code>BurstLimit</code> of 30 requests per second.</p> </li> </ul>",
   "operations": {
     "AcceptAdministratorInvitation": "<p>Accepts the invitation to be a member account and be monitored by the Security Hub administrator account that the invitation was sent from.</p> <p>This operation is only used by member accounts that are not added through Organizations.</p> <p>When the member account accepts the invitation, permission is granted to the administrator account to view findings generated in the member account.</p>",
     "AcceptInvitation": "<p>This method is deprecated. Instead, use <code>AcceptAdministratorInvitation</code>.</p> <p>The Security Hub console continues to use <code>AcceptInvitation</code>. It will eventually change to use <code>AcceptAdministratorInvitation</code>. Any IAM policies that specifically control access to this function must continue to use <code>AcceptInvitation</code>. You should also add <code>AcceptAdministratorInvitation</code> to your policies to ensure that the correct permissions are in place after the console begins to use <code>AcceptAdministratorInvitation</code>.</p> <p>Accepts the invitation to be a member account and be monitored by the Security Hub administrator account that the invitation was sent from.</p> <p>This operation is only used by member accounts that are not added through Organizations.</p> <p>When the member account accepts the invitation, permission is granted to the administrator account to view findings generated in the member account.</p>",
@@ -24,7 +24,7 @@
     "DeleteFindingAggregator": "<p>Deletes a finding aggregator. When you delete the finding aggregator, you stop finding aggregation.</p> <p>When you stop finding aggregation, findings that were already aggregated to the aggregation Region are still visible from the aggregation Region. New findings and finding updates are not aggregated. </p>",
     "DeleteInsight": "<p>Deletes the insight specified by the <code>InsightArn</code>.</p>",
     "DeleteInvitations": "<p>Deletes invitations received by the Amazon Web Services account to become a member account.</p> <p>A Security Hub administrator account can use this operation to delete invitations sent to one or more member accounts.</p> <p>This operation is only used to delete invitations that are sent to member accounts that aren't part of an organization. Organization accounts don't receive invitations.</p>",
-    "DeleteMembers": "<p>Deletes the specified member accounts from Security Hub.</p> <p>Can be used to delete member accounts that belong to an organization as well as member accounts that were invited manually.</p>",
+    "DeleteMembers": "<p>Deletes the specified member accounts from Security Hub.</p> <p>You can invoke this API only to delete accounts that became members through invitation. You can't invoke this API to delete accounts that belong to an Organizations organization.</p>",
     "DescribeActionTargets": "<p>Returns a list of the custom action targets in Security Hub in your account.</p>",
     "DescribeHub": "<p>Returns details about the Hub resource in your account, including the <code>HubArn</code> and the time when you enabled Security Hub.</p>",
     "DescribeOrganizationConfiguration": "<p>Returns information about the Organizations configuration for Security Hub. Can only be called from a Security Hub administrator account.</p>",
@@ -33,7 +33,7 @@
     "DescribeStandardsControls": "<p>Returns a list of security standards controls.</p> <p>For each control, the results include information about whether it is currently enabled, the severity, and a link to remediation information.</p>",
     "DisableImportFindingsForProduct": "<p>Disables the integration of the specified product with Security Hub. After the integration is disabled, findings from that product are no longer sent to Security Hub.</p>",
     "DisableOrganizationAdminAccount": "<p>Disables a Security Hub administrator account. Can only be called by the organization management account.</p>",
-    "DisableSecurityHub": "<p>Disables Security Hub in your account only in the current Region. To disable Security Hub in all Regions, you must submit one request per Region where you have enabled Security Hub.</p> <p>When you disable Security Hub for an administrator account, it doesn't disable Security Hub for any associated member accounts.</p> <p>When you disable Security Hub, your existing findings and insights and any Security Hub configuration settings are deleted after 90 days and cannot be recovered. Any standards that were enabled are disabled, and your administrator and member account associations are removed.</p> <p>If you want to save your existing findings, you must export them before you disable Security Hub.</p>",
+    "DisableSecurityHub": "<p>Disables Security Hub in your account only in the current Amazon Web Services Region. To disable Security Hub in all Regions, you must submit one request per Region where you have enabled Security Hub.</p> <p>You can't disable Security Hub in an account that is currently the Security Hub administrator.</p> <p>When you disable Security Hub, your existing findings and insights and any Security Hub configuration settings are deleted after 90 days and cannot be recovered. Any standards that were enabled are disabled, and your administrator and member account associations are removed.</p> <p>If you want to save your existing findings, you must export them before you disable Security Hub.</p>",
     "DisassociateFromAdministratorAccount": "<p>Disassociates the current Security Hub member account from the associated administrator account.</p> <p>This operation is only used by accounts that are not part of an organization. For organization accounts, only the administrator account can disassociate a member account.</p>",
     "DisassociateFromMasterAccount": "<p>This method is deprecated. Instead, use <code>DisassociateFromAdministratorAccount</code>.</p> <p>The Security Hub console continues to use <code>DisassociateFromMasterAccount</code>. It will eventually change to use <code>DisassociateFromAdministratorAccount</code>. Any IAM policies that specifically control access to this function must continue to use <code>DisassociateFromMasterAccount</code>. You should also add <code>DisassociateFromAdministratorAccount</code> to your policies to ensure that the correct permissions are in place after the console begins to use <code>DisassociateFromAdministratorAccount</code>.</p> <p>Disassociates the current Security Hub member account from the associated administrator account.</p> <p>This operation is only used by accounts that are not part of an organization. For organization accounts, only the administrator account can disassociate a member account.</p>",
     "DisassociateMembers": "<p>Disassociates the specified member accounts from the associated administrator account.</p> <p>Can be used to disassociate both accounts that are managed using Organizations and accounts that were invited manually.</p>",
@@ -505,6 +505,30 @@
       "refs": {
         "AwsAppSyncGraphQlApiAdditionalAuthenticationProvidersDetails$UserPoolConfig": "<p> The Amazon Cognito user pools configuration. </p>",
         "AwsAppSyncGraphQlApiDetails$UserPoolConfig": "<p> The Amazon Cognito user pools configuration. </p>"
+      }
+    },
+    "AwsAthenaWorkGroupConfigurationDetails": {
+      "base": "<p> The configuration of the workgroup, which includes the location in Amazon Simple Storage Service (Amazon S3) where query results are stored, the encryption option, if any, used for query results, whether Amazon CloudWatch metrics are enabled for the workgroup, and the limit for the amount of bytes scanned (cutoff) per query, if it is specified. </p>",
+      "refs": {
+        "AwsAthenaWorkGroupDetails$Configuration": "<p> The configuration of the workgroup, which includes the location in Amazon Simple Storage Service (Amazon S3) where query results are stored, the encryption option, if any, used for query results, whether Amazon CloudWatch metrics are enabled for the workgroup, and the limit for the amount of bytes scanned (cutoff) per query, if it is specified. </p>"
+      }
+    },
+    "AwsAthenaWorkGroupConfigurationResultConfigurationDetails": {
+      "base": "<p> The location in Amazon Simple Storage Service (Amazon S3) where query and calculation results are stored and the encryption option, if any, used for query and calculation results. These are known as client-side settings. If workgroup settings override client-side settings, then the query uses the workgroup settings. </p>",
+      "refs": {
+        "AwsAthenaWorkGroupConfigurationDetails$ResultConfiguration": "<p> The location in Amazon S3 where query and calculation results are stored and the encryption option, if any, used for query and calculation results. These are known as client-side settings. If workgroup settings override client-side settings, then the query uses the workgroup settings.</p>"
+      }
+    },
+    "AwsAthenaWorkGroupConfigurationResultConfigurationEncryptionConfigurationDetails": {
+      "base": "<p> Specifies the method used to encrypt the user’s data stores in the Athena workgroup. </p>",
+      "refs": {
+        "AwsAthenaWorkGroupConfigurationResultConfigurationDetails$EncryptionConfiguration": "<p> Specifies the method used to encrypt the user’s data stores in the Athena workgroup. </p>"
+      }
+    },
+    "AwsAthenaWorkGroupDetails": {
+      "base": "<p> Provides information about an Amazon Athena workgroup. </p>",
+      "refs": {
+        "ResourceDetails$AwsAthenaWorkGroup": "<p> Provides information about an Amazon Athena workgroup. A workgroup helps you separate users, teams, applications, or workloads. It also helps you set limits on data processing and track costs. </p>"
       }
     },
     "AwsAutoScalingAutoScalingGroupAvailabilityZonesList": {
@@ -2980,6 +3004,18 @@
         "AwsRdsDbClusterDetails$DbClusterOptionGroupMemberships": "<p>The list of option group memberships for this DB cluster.</p>"
       }
     },
+    "AwsRdsDbClusterSnapshotDbClusterSnapshotAttribute": {
+      "base": "<p> Contains the name and values of a manual Amazon Relational Database Service (RDS) DB cluster snapshot attribute. </p>",
+      "refs": {
+        "AwsRdsDbClusterSnapshotDbClusterSnapshotAttributes$member": null
+      }
+    },
+    "AwsRdsDbClusterSnapshotDbClusterSnapshotAttributes": {
+      "base": null,
+      "refs": {
+        "AwsRdsDbClusterSnapshotDetails$DbClusterSnapshotAttributes": "<p> Contains the name and values of a manual DB cluster snapshot attribute. </p>"
+      }
+    },
     "AwsRdsDbClusterSnapshotDetails": {
       "base": "<p>Information about an Amazon RDS DB cluster snapshot.</p>",
       "refs": {
@@ -4097,8 +4133,8 @@
       "base": null,
       "refs": {
         "AssociationSetDetails$Main": "<p> Indicates whether this is the main route table. </p>",
-        "AutomationRulesConfig$IsTerminal": "<p>Specifies whether a rule is the last to be applied with respect to a finding that matches the rule criteria. This is useful when a finding matches the criteria for multiple rules, and each rule has different actions. If the value of this field is set to <code>true</code> for a rule, Security Hub applies the rule action to a finding that matches the rule criteria and doesn't evaluate other rules for the finding.&#x2028; The default value of this field is <code>false</code>. </p>",
-        "AutomationRulesMetadata$IsTerminal": "<p> Specifies whether a rule is the last to be applied with respect to a finding that matches the rule criteria. This is useful when a finding matches the criteria for multiple rules, and each rule has different actions. If the value of this field is set to <code>true</code> for a rule, Security Hub applies the rule action to a finding that matches the rule criteria and doesn't evaluate other rules for the finding.&#x2028; The default value of this field is <code>false</code>. </p>",
+        "AutomationRulesConfig$IsTerminal": "<p>Specifies whether a rule is the last to be applied with respect to a finding that matches the rule criteria. This is useful when a finding matches the criteria for multiple rules, and each rule has different actions. If a rule is terminal, Security Hub applies the rule action to a finding that matches the rule criteria and doesn't evaluate other rules for the finding. By default, a rule isn't terminal. </p>",
+        "AutomationRulesMetadata$IsTerminal": "<p>Specifies whether a rule is the last to be applied with respect to a finding that matches the rule criteria. This is useful when a finding matches the criteria for multiple rules, and each rule has different actions. If a rule is terminal, Security Hub applies the rule action to a finding that matches the rule criteria and doesn't evaluate other rules for the finding. By default, a rule isn't terminal. </p>",
         "AwsAmazonMqBrokerDetails$AutoMinorVersionUpgrade": "<p> Whether automatically upgrade new minor versions for brokers, as new versions are released and supported by Amazon MQ. Automatic upgrades occur during the scheduled maintenance window of the broker or after a manual broker reboot. </p>",
         "AwsAmazonMqBrokerDetails$PubliclyAccessible": "<p> Permits connections from applications outside of the VPC that hosts the broker's subnets. </p>",
         "AwsAmazonMqBrokerEncryptionOptionsDetails$UseAwsOwnedKey": "<p> Specifies that an KMS key should be used for at-rest encryption. Set to <code>true</code> by default if no value is provided (for example, for RabbitMQ brokers). </p>",
@@ -4282,7 +4318,7 @@
         "BooleanFilter$Value": "<p>The value of the boolean.</p>",
         "ClassificationResult$AdditionalOccurrences": "<p>Indicates whether there are additional occurrences of sensitive data that are not included in the finding. This occurs when the number of occurrences exceeds the maximum that can be included.</p>",
         "ContainerDetails$Privileged": "<p>When this parameter is <code>true</code>, the container is given elevated privileges on the host container instance (similar to the root user). </p>",
-        "CreateAutomationRuleRequest$IsTerminal": "<p>Specifies whether a rule is the last to be applied with respect to a finding that matches the rule criteria. This is useful when a finding matches the criteria for multiple rules, and each rule has different actions. If the value of this field is set to <code>true</code> for a rule, Security Hub applies the rule action to a finding that matches the rule criteria and doesn't evaluate other rules for the finding. The default value of this field is <code>false</code>. </p>",
+        "CreateAutomationRuleRequest$IsTerminal": "<p>Specifies whether a rule is the last to be applied with respect to a finding that matches the rule criteria. This is useful when a finding matches the criteria for multiple rules, and each rule has different actions. If a rule is terminal, Security Hub applies the rule action to a finding that matches the rule criteria and doesn't evaluate other rules for the finding. By default, a rule isn't terminal. </p>",
         "DescribeHubResponse$AutoEnableControls": "<p>Whether to automatically enable new controls when they are added to standards that are enabled.</p> <p>If set to <code>true</code>, then new controls for enabled standards are enabled automatically. If set to <code>false</code>, then new controls are not enabled.</p>",
         "DescribeOrganizationConfigurationResponse$AutoEnable": "<p>Whether to automatically enable Security Hub for new accounts in the organization.</p> <p>If set to <code>true</code>, then Security Hub is enabled for new accounts. If set to false, then new accounts are not added automatically.</p>",
         "DescribeOrganizationConfigurationResponse$MemberAccountLimitReached": "<p>Whether the maximum number of allowed member accounts are already associated with the Security Hub administrator account.</p>",
@@ -4293,7 +4329,7 @@
         "NetworkConnectionAction$Blocked": "<p>Indicates whether the network connection attempt was blocked.</p>",
         "PortProbeAction$Blocked": "<p>Indicates whether the port probe was blocked.</p>",
         "Standard$EnabledByDefault": "<p>Whether the standard is enabled by default. When Security Hub is enabled from the console, if a standard is enabled by default, the check box for that standard is selected by default.</p> <p>When Security Hub is enabled using the <code>EnableSecurityHub</code> API operation, the standard is enabled by default unless <code>EnableDefaultStandards</code> is set to <code>false</code>.</p>",
-        "UpdateAutomationRulesRequestItem$IsTerminal": "<p>Specifies whether a rule is the last to be applied with respect to a finding that matches the rule criteria. This is useful when a finding matches the criteria for multiple rules, and each rule has different actions. If the value of this field is set to <code>true</code> for a rule, Security Hub applies the rule action to a finding that matches the rule criteria and doesn't evaluate other rules for the finding.&#x2028; The default value of this field is <code>false</code>. </p>",
+        "UpdateAutomationRulesRequestItem$IsTerminal": "<p>Specifies whether a rule is the last to be applied with respect to a finding that matches the rule criteria. This is useful when a finding matches the criteria for multiple rules, and each rule has different actions. If a rule is terminal, Security Hub applies the rule action to a finding that matches the rule criteria and doesn't evaluate other rules for the finding. By default, a rule isn't terminal. </p>",
         "UpdateOrganizationConfigurationRequest$AutoEnable": "<p>Whether to automatically enable Security Hub for new accounts in the organization.</p> <p>By default, this is <code>false</code>, and new accounts are not added automatically.</p> <p>To automatically enable Security Hub for new accounts, set this to <code>true</code>.</p>",
         "UpdateSecurityHubConfigurationRequest$AutoEnableControls": "<p>Whether to automatically enable new controls when they are added to standards that are enabled.</p> <p>By default, this is set to <code>true</code>, and new controls are enabled automatically. To not automatically enable new controls, set this to <code>false</code>. </p>",
         "VpcInfoPeeringOptionsDetails$AllowDnsResolutionFromRemoteVpc": "<p>Indicates whether a local VPC can resolve public DNS hostnames to private IP addresses when queried from instances in a peer VPC. </p>",
@@ -4359,6 +4395,12 @@
       "base": "<p>Provides details about the current status of the sensitive data detection.</p>",
       "refs": {
         "ClassificationResult$Status": "<p>The current status of the sensitive data detection.</p>"
+      }
+    },
+    "CodeVulnerabilitiesFilePath": {
+      "base": "<p> Provides details about where a code vulnerability is located in your Lambda function. </p>",
+      "refs": {
+        "VulnerabilityCodeVulnerabilities$FilePath": "<p> Provides details about where a code vulnerability is located in your Lambda function. </p>"
       }
     },
     "Compliance": {
@@ -4739,7 +4781,8 @@
         "NumberFilter$Lte": "<p>The less-than-equal condition to be applied to a single field when querying for findings. </p>",
         "NumberFilter$Eq": "<p>The equal-to condition to be applied to a single field when querying for findings.</p>",
         "Severity$Product": "<p>Deprecated. This attribute is being deprecated. Instead of providing <code>Product</code>, provide <code>Original</code>.</p> <p>The native severity as defined by the Amazon Web Services service or integrated partner product that generated the finding.</p>",
-        "SeverityUpdate$Product": "<p>The native severity as defined by the Amazon Web Services service or integrated partner product that generated the finding.</p>"
+        "SeverityUpdate$Product": "<p>The native severity as defined by the Amazon Web Services service or integrated partner product that generated the finding.</p>",
+        "Vulnerability$EpssScore": "<p>The Exploit Prediction Scoring System (EPSS) score for a finding. </p>"
       }
     },
     "EnableImportFindingsForProductRequest": {
@@ -4908,6 +4951,12 @@
       "base": null,
       "refs": {
         "FirewallPolicyDetails$StatelessRuleGroupReferences": "<p>The stateless rule groups that are used in the firewall policy.</p>"
+      }
+    },
+    "GeneratorDetails": {
+      "base": "<p> Provides metadata for the Amazon CodeGuru detector associated with a finding. This field pertains to findings that relate to Lambda functions. Amazon Inspector identifies policy violations and vulnerabilities in Lambda function code based on internal detectors developed in collaboration with Amazon CodeGuru. Security Hub receives those findings. </p>",
+      "refs": {
+        "AwsSecurityFinding$GeneratorDetails": "<p>Provides metadata for the Amazon CodeGuru detector associated with a finding. This field pertains to findings that relate to Lambda functions. Amazon Inspector identifies policy violations and vulnerabilities in Lambda function code based on internal detectors developed in collaboration with Amazon CodeGuru. Security Hub receives those findings. </p>"
       }
     },
     "GeoLocation": {
@@ -5266,6 +5315,8 @@
         "AwsWafv2RulesDetails$Priority": "<p> If you define more than one Rule in a WebACL, WAF evaluates each request against the Rules in order based on the value of <code>Priority</code>. WAF processes rules with lower priority first. The priorities don't need to be consecutive, but they must all be different. </p>",
         "BatchImportFindingsResponse$FailedCount": "<p>The number of findings that failed to import.</p>",
         "BatchImportFindingsResponse$SuccessCount": "<p>The number of findings that were successfully imported.</p>",
+        "CodeVulnerabilitiesFilePath$EndLine": "<p> The line number of the last line of code in which the vulnerability is located. </p>",
+        "CodeVulnerabilitiesFilePath$StartLine": "<p> The line number of the first line of code in which the vulnerability is located. </p>",
         "DateRange$Value": "<p>A date range value for the date filter.</p>",
         "FirewallPolicyStatelessRuleGroupReferencesDetails$Priority": "<p>The order in which to run the stateless rule group.</p>",
         "GetInvitationsCountResponse$InvitationsCount": "<p>The number of all membership invitations sent to this Security Hub member account, not including the currently accepted invitation.</p>",
@@ -5569,7 +5620,7 @@
       }
     },
     "MapFilter": {
-      "base": "<p>A map filter for querying findings. Each map filter provides the field to check, the value to look for, and the comparison operator.</p>",
+      "base": "<p>A map filter for filtering Security Hub findings. Each map filter provides the field to check for, the value to check for, and the comparison operator.</p>",
       "refs": {
         "MapFilterList$member": null
       }
@@ -5577,7 +5628,7 @@
     "MapFilterComparison": {
       "base": null,
       "refs": {
-        "MapFilter$Comparison": "<p>The condition to apply to the key value when querying for findings with a map filter.</p> <p>To search for values that exactly match the filter value, use <code>EQUALS</code>. For example, for the <code>ResourceTags</code> field, the filter <code>Department EQUALS Security</code> matches findings that have the value <code>Security</code> for the tag <code>Department</code>.</p> <p>To search for values other than the filter value, use <code>NOT_EQUALS</code>. For example, for the <code>ResourceTags</code> field, the filter <code>Department NOT_EQUALS Finance</code> matches findings that do not have the value <code>Finance</code> for the tag <code>Department</code>.</p> <p> <code>EQUALS</code> filters on the same field are joined by <code>OR</code>. A finding matches if it matches any one of those filters.</p> <p> <code>NOT_EQUALS</code> filters on the same field are joined by <code>AND</code>. A finding matches only if it matches all of those filters.</p> <p>You cannot have both an <code>EQUALS</code> filter and a <code>NOT_EQUALS</code> filter on the same field.</p>"
+        "MapFilter$Comparison": "<p>The condition to apply to the key value when filtering Security Hub findings with a map filter.</p> <p>To search for values that have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that include the filter value, use <code>CONTAINS</code>. For example, for the <code>ResourceTags</code> field, the filter <code>Department CONTAINS Security</code> matches findings that include the value <code>Security</code> for the <code>Department</code> tag. In the same example, a finding with a value of <code>Security team</code> for the <code>Department</code> tag is a match.</p> </li> <li> <p>To search for values that exactly match the filter value, use <code>EQUALS</code>. For example, for the <code>ResourceTags</code> field, the filter <code>Department EQUALS Security</code> matches findings that have the value <code>Security</code> for the <code>Department</code> tag.</p> </li> </ul> <p> <code>CONTAINS</code> and <code>EQUALS</code> filters on the same field are joined by <code>OR</code>. A finding matches if it matches any one of those filters. For example, the filters <code>Department CONTAINS Security OR Department CONTAINS Finance</code> match a finding that includes either <code>Security</code>, <code>Finance</code>, or both values.</p> <p>To search for values that don't have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that exclude the filter value, use <code>NOT_CONTAINS</code>. For example, for the <code>ResourceTags</code> field, the filter <code>Department NOT_CONTAINS Finance</code> matches findings that exclude the value <code>Finance</code> for the <code>Department</code> tag.</p> </li> <li> <p>To search for values other than the filter value, use <code>NOT_EQUALS</code>. For example, for the <code>ResourceTags</code> field, the filter <code>Department NOT_EQUALS Finance</code> matches findings that don’t have the value <code>Finance</code> for the <code>Department</code> tag.</p> </li> </ul> <p> <code>NOT_CONTAINS</code> and <code>NOT_EQUALS</code> filters on the same field are joined by <code>AND</code>. A finding matches only if it matches all of those filters. For example, the filters <code>Department NOT_CONTAINS Security AND Department NOT_CONTAINS Finance</code> match a finding that excludes both the <code>Security</code> and <code>Finance</code> values.</p> <p> <code>CONTAINS</code> filters can only be used with other <code>CONTAINS</code> filters. <code>NOT_CONTAINS</code> filters can only be used with other <code>NOT_CONTAINS</code> filters.</p> <p>You can’t have both a <code>CONTAINS</code> filter and a <code>NOT_CONTAINS</code> filter on the same field. Similarly, you can’t have both an <code>EQUALS</code> filter and a <code>NOT_EQUALS</code> filter on the same field. Combining filters in this way returns an error. </p> <p> <code>CONTAINS</code> and <code>NOT_CONTAINS</code> operators can be used only with automation rules. For more information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/automation-rules.html\">Automation rules</a> in the <i>Security Hub User Guide</i>.</p>"
       }
     },
     "MapFilterList": {
@@ -5831,6 +5882,11 @@
         "AwsAppSyncGraphQlApiUserPoolConfigDetails$AwsRegion": "<p> The Amazon Web Services Region in which the user pool was created. </p>",
         "AwsAppSyncGraphQlApiUserPoolConfigDetails$DefaultAction": "<p> The action that you want your GraphQL API to take when a request that uses Amazon Cognito user pools authentication doesn't match the Amazon Cognito user pools configuration. </p>",
         "AwsAppSyncGraphQlApiUserPoolConfigDetails$UserPoolId": "<p> The user pool ID. </p>",
+        "AwsAthenaWorkGroupConfigurationResultConfigurationEncryptionConfigurationDetails$EncryptionOption": "<p> Indicates whether Amazon Simple Storage Service (Amazon S3) server-side encryption with Amazon S3 managed keys (SSE_S3), server-side encryption with KMS keys (SSE_KMS), or client-side encryption with KMS customer managed keys (CSE_KMS) is used. </p>",
+        "AwsAthenaWorkGroupConfigurationResultConfigurationEncryptionConfigurationDetails$KmsKey": "<p> For <code>SSE_KMS</code> and <code>CSE_KMS</code>, this is the KMS key Amazon Resource Name (ARN) or ID. </p>",
+        "AwsAthenaWorkGroupDetails$Name": "<p> The workgroup name. </p>",
+        "AwsAthenaWorkGroupDetails$Description": "<p> The workgroup description. </p>",
+        "AwsAthenaWorkGroupDetails$State": "<p> Whether the workgroup is enabled or disabled. </p>",
         "AwsAutoScalingAutoScalingGroupAvailabilityZonesListDetails$Value": "<p>The name of the Availability Zone.</p>",
         "AwsAutoScalingAutoScalingGroupDetails$LaunchConfigurationName": "<p>The name of the launch configuration.</p>",
         "AwsAutoScalingAutoScalingGroupDetails$HealthCheckType": "<p>The service to use for the health checks. Valid values are <code>EC2</code> or <code>ELB</code>.</p>",
@@ -6587,6 +6643,7 @@
         "AwsRdsDbClusterMember$DbClusterParameterGroupStatus": "<p>The status of the DB cluster parameter group for this member of the DB cluster.</p>",
         "AwsRdsDbClusterOptionGroupMembership$DbClusterOptionGroupName": "<p>The name of the DB cluster option group.</p>",
         "AwsRdsDbClusterOptionGroupMembership$Status": "<p>The status of the DB cluster option group.</p>",
+        "AwsRdsDbClusterSnapshotDbClusterSnapshotAttribute$AttributeName": "<p> The name of the manual DB cluster snapshot attribute. The attribute named <code>restore</code> refers to the list of Amazon Web Services accounts that have permission to copy or restore the manual DB cluster snapshot. </p>",
         "AwsRdsDbClusterSnapshotDetails$SnapshotCreateTime": "<p>Indicates when the snapshot was taken.</p> <p>Uses the <code>date-time</code> format specified in <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339 section 5.6, Internet Date/Time Format</a>. The value cannot contain spaces, and date and time should be separated by <code>T</code>. For example, <code>2020-03-22T13:22:13.933Z</code>.</p>",
         "AwsRdsDbClusterSnapshotDetails$Engine": "<p>The name of the database engine that you want to use for this DB instance.</p>",
         "AwsRdsDbClusterSnapshotDetails$Status": "<p>The status of this DB cluster snapshot.</p>",
@@ -6951,6 +7008,8 @@
         "ClassificationResult$MimeType": "<p>The type of content that the finding applies to.</p>",
         "ClassificationStatus$Code": "<p>The code that represents the status of the sensitive data detection.</p>",
         "ClassificationStatus$Reason": "<p>A longer description of the current status of the sensitive data detection.</p>",
+        "CodeVulnerabilitiesFilePath$FileName": "<p> The name of the file in which the code vulnerability is located. </p>",
+        "CodeVulnerabilitiesFilePath$FilePath": "<p> The file path to the code in which the vulnerability is located. </p>",
         "Compliance$SecurityControlId": "<p> The unique identifier of a control across standards. Values for this field typically consist of an Amazon Web Service and a number, such as APIGateway.5. </p>",
         "ContainerDetails$ContainerRuntime": "<p>The runtime of the container. </p>",
         "ContainerDetails$Name": "<p>The name of the container related to a finding.</p>",
@@ -7013,6 +7072,8 @@
         "FirewallPolicyStatefulRuleGroupReferencesDetails$ResourceArn": "<p>The ARN of the stateful rule group.</p>",
         "FirewallPolicyStatelessCustomActionsDetails$ActionName": "<p>The name of the custom action.</p>",
         "FirewallPolicyStatelessRuleGroupReferencesDetails$ResourceArn": "<p>The ARN of the stateless rule group.</p>",
+        "GeneratorDetails$Name": "<p> The name of the detector used to identify the code vulnerability. </p>",
+        "GeneratorDetails$Description": "<p> The description of the detector used to identify the code vulnerability. </p>",
         "GetFindingAggregatorRequest$FindingAggregatorArn": "<p>The ARN of the finding aggregator to return details for. To obtain the ARN, use <code>ListFindingAggregators</code>.</p>",
         "GetFindingAggregatorResponse$FindingAggregatorArn": "<p>The ARN of the finding aggregator.</p>",
         "GetFindingAggregatorResponse$FindingAggregationRegion": "<p>The aggregation Region.</p>",
@@ -7054,7 +7115,7 @@
         "Malware$Name": "<p>The name of the malware that was observed.</p>",
         "Malware$Path": "<p>The file system path of the malware that was observed.</p>",
         "MapFilter$Key": "<p>The key of the map filter. For example, for <code>ResourceTags</code>, <code>Key</code> identifies the name of the tag. For <code>UserDefinedFields</code>, <code>Key</code> is the name of the field.</p>",
-        "MapFilter$Value": "<p>The value for the key in the map filter. Filter values are case sensitive. For example, one of the values for a tag called <code>Department</code> might be <code>Security</code>. If you provide <code>security</code> as the filter value, then there is no match.</p>",
+        "MapFilter$Value": "<p>The value for the key in the map filter. Filter values are case sensitive. For example, one of the values for a tag called <code>Department</code> might be <code>Security</code>. If you provide <code>security</code> as the filter value, then there's no match.</p>",
         "Member$Email": "<p>The email address of the member account.</p>",
         "Member$MasterId": "<p>This is replaced by <code>AdministratorID</code>.</p> <p>The Amazon Web Services account ID of the Security Hub administrator account associated with this member account.</p>",
         "Member$AdministratorId": "<p>The Amazon Web Services account ID of the Security Hub administrator account associated with this member account.</p>",
@@ -7204,7 +7265,7 @@
         "StatelessCustomPublishMetricActionDimension$Value": "<p>The value to use for the custom metric dimension.</p>",
         "StatusReason$ReasonCode": "<p>A code that represents a reason for the control status. For the list of status reason codes and their meanings, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-results.html#securityhub-standards-results-asff\">Standards-related information in the ASFF</a> in the <i>Security Hub User Guide</i>. </p>",
         "StatusReason$Description": "<p>The corresponding description for the status reason code.</p>",
-        "StringFilter$Value": "<p>The string filter value. Filter values are case sensitive. For example, the product name for control-based findings is <code>Security Hub</code>. If you provide <code>security hub</code> as the filter text, then there is no match.</p>",
+        "StringFilter$Value": "<p>The string filter value. Filter values are case sensitive. For example, the product name for control-based findings is <code>Security Hub</code>. If you provide <code>security hub</code> as the filter value, there's no match.</p>",
         "StringList$member": null,
         "Threat$Name": "<p>The name of the threat. </p>",
         "Threat$Severity": "<p>The severity of the threat. </p>",
@@ -7240,6 +7301,7 @@
         "VpcInfoCidrBlockSetDetails$CidrBlock": "<p>The IPv4 CIDR block for the VPC. </p>",
         "VpcInfoIpv6CidrBlockSetDetails$Ipv6CidrBlock": "<p>The IPv6 CIDR block for the VPC. </p>",
         "Vulnerability$Id": "<p>The identifier of the vulnerability.</p>",
+        "VulnerabilityCodeVulnerabilities$SourceArn": "<p> The Amazon Resource Name (ARN) of the Lambda layer in which the code vulnerability is located. </p>",
         "VulnerabilityVendor$Name": "<p>The name of the vendor.</p>",
         "VulnerabilityVendor$Url": "<p>The URL of the vulnerability advisory.</p>",
         "VulnerabilityVendor$VendorSeverity": "<p>The severity that the vendor assigned to the vulnerability.</p>",
@@ -7319,6 +7381,7 @@
         "AwsLambdaLayerVersionDetails$CompatibleRuntimes": "<p>The layer's compatible runtimes. Maximum number of five items.</p> <p>Valid values: <code>nodejs10.x</code> | <code>nodejs12.x</code> | <code>java8</code> | <code>java11</code> | <code>python2.7</code> | <code>python3.6</code> | <code>python3.7</code> | <code>python3.8</code> | <code>dotnetcore1.0</code> | <code>dotnetcore2.1</code> | <code>go1.x</code> | <code>ruby2.5</code> | <code>provided</code> </p>",
         "AwsOpenSearchServiceDomainVpcOptionsDetails$SecurityGroupIds": "<p>The list of security group IDs that are associated with the VPC endpoints for the domain.</p>",
         "AwsOpenSearchServiceDomainVpcOptionsDetails$SubnetIds": "<p>A list of subnet IDs that are associated with the VPC endpoints for the domain.</p>",
+        "AwsRdsDbClusterSnapshotDbClusterSnapshotAttribute$AttributeValues": "<p> The value(s) for the manual DB cluster snapshot attribute. If the <code>AttributeName</code> field is set to <code>restore</code>, then this element returns a list of IDs of the Amazon Web Services accounts that are authorized to copy or restore the manual DB cluster snapshot. If a value of <code>all</code> is in the list, then the manual DB cluster snapshot is public and available for any Amazon Web Services account to copy or restore. </p>",
         "AwsRdsEventSubscriptionDetails$EventCategoriesList": "<p>The list of event categories for the event notification subscription.</p>",
         "AwsRdsEventSubscriptionDetails$SourceIdsList": "<p>A list of source identifiers for the event notification subscription.</p>",
         "AwsSageMakerNotebookInstanceDetails$AcceleratorTypes": "<p> A list of Amazon Elastic Inference instance types to associate with the notebook instance. Currently, only one instance type can be associated with a notebook instance. </p>",
@@ -8129,7 +8192,7 @@
       }
     },
     "StringFilter": {
-      "base": "<p>A string filter for querying findings.</p>",
+      "base": "<p>A string filter for filtering Security Hub findings.</p>",
       "refs": {
         "StringFilterList$member": null
       }
@@ -8137,7 +8200,7 @@
     "StringFilterComparison": {
       "base": null,
       "refs": {
-        "StringFilter$Comparison": "<p>The condition to apply to a string value when querying for findings. To search for values that contain the filter criteria value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that exactly match the filter value, use <code>EQUALS</code>.</p> <p>For example, the filter <code>ResourceType EQUALS AwsEc2SecurityGroup</code> only matches findings that have a resource type of <code>AwsEc2SecurityGroup</code>.</p> </li> <li> <p>To search for values that start with the filter value, use <code>PREFIX</code>.</p> <p>For example, the filter <code>ResourceType PREFIX AwsIam</code> matches findings that have a resource type that starts with <code>AwsIam</code>. Findings with a resource type of <code>AwsIamPolicy</code>, <code>AwsIamRole</code>, or <code>AwsIamUser</code> would all match.</p> </li> </ul> <p> <code>EQUALS</code> and <code>PREFIX</code> filters on the same field are joined by <code>OR</code>. A finding matches if it matches any one of those filters.</p> <p>To search for values that do not contain the filter criteria value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that do not exactly match the filter value, use <code>NOT_EQUALS</code>.</p> <p>For example, the filter <code>ResourceType NOT_EQUALS AwsIamPolicy</code> matches findings that have a resource type other than <code>AwsIamPolicy</code>.</p> </li> <li> <p>To search for values that do not start with the filter value, use <code>PREFIX_NOT_EQUALS</code>.</p> <p>For example, the filter <code>ResourceType PREFIX_NOT_EQUALS AwsIam</code> matches findings that have a resource type that does not start with <code>AwsIam</code>. Findings with a resource type of <code>AwsIamPolicy</code>, <code>AwsIamRole</code>, or <code>AwsIamUser</code> would all be excluded from the results.</p> </li> </ul> <p> <code>NOT_EQUALS</code> and <code>PREFIX_NOT_EQUALS</code> filters on the same field are joined by <code>AND</code>. A finding matches only if it matches all of those filters.</p> <p>For filters on the same field, you cannot provide both an <code>EQUALS</code> filter and a <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filter. Combining filters in this way always returns an error, even if the provided filter values would return valid results.</p> <p>You can combine <code>PREFIX</code> filters with <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters for the same field. Security Hub first processes the <code>PREFIX</code> filters, then the <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters.</p> <p> For example, for the following filter, Security Hub first identifies findings that have resource types that start with either <code>AwsIAM</code> or <code>AwsEc2</code>. It then excludes findings that have a resource type of <code>AwsIamPolicy</code> and findings that have a resource type of <code>AwsEc2NetworkInterface</code>.</p> <ul> <li> <p> <code>ResourceType PREFIX AwsIam</code> </p> </li> <li> <p> <code>ResourceType PREFIX AwsEc2</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsIamPolicy</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsEc2NetworkInterface</code> </p> </li> </ul>"
+        "StringFilter$Comparison": "<p>The condition to apply to a string value when filtering Security Hub findings.</p> <p>To search for values that have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that include the filter value, use <code>CONTAINS</code>. For example, the filter <code>Title CONTAINS CloudFront</code> matches findings that have a <code>Title</code> that includes the string CloudFront.</p> </li> <li> <p>To search for values that exactly match the filter value, use <code>EQUALS</code>. For example, the filter <code>AwsAccountId EQUALS 123456789012</code> only matches findings that have an account ID of <code>123456789012</code>.</p> </li> <li> <p>To search for values that start with the filter value, use <code>PREFIX</code>. For example, the filter <code>ResourceRegion PREFIX us</code> matches findings that have a <code>ResourceRegion</code> that starts with <code>us</code>. A <code>ResourceRegion</code> that starts with a different value, such as <code>af</code>, <code>ap</code>, or <code>ca</code>, doesn't match.</p> </li> </ul> <p> <code>CONTAINS</code>, <code>EQUALS</code>, and <code>PREFIX</code> filters on the same field are joined by <code>OR</code>. A finding matches if it matches any one of those filters. For example, the filters <code>Title CONTAINS CloudFront OR Title CONTAINS CloudWatch</code> match a finding that includes either <code>CloudFront</code>, <code>CloudWatch</code>, or both strings in the title.</p> <p>To search for values that don’t have the filter value, use one of the following comparison operators:</p> <ul> <li> <p>To search for values that exclude the filter value, use <code>NOT_CONTAINS</code>. For example, the filter <code>Title NOT_CONTAINS CloudFront</code> matches findings that have a <code>Title</code> that excludes the string CloudFront.</p> </li> <li> <p>To search for values other than the filter value, use <code>NOT_EQUALS</code>. For example, the filter <code>AwsAccountId NOT_EQUALS 123456789012</code> only matches findings that have an account ID other than <code>123456789012</code>.</p> </li> <li> <p>To search for values that don't start with the filter value, use <code>PREFIX_NOT_EQUALS</code>. For example, the filter <code>ResourceRegion PREFIX_NOT_EQUALS us</code> matches findings with a <code>ResourceRegion</code> that starts with a value other than <code>us</code>.</p> </li> </ul> <p> <code>NOT_CONTAINS</code>, <code>NOT_EQUALS</code>, and <code>PREFIX_NOT_EQUALS</code> filters on the same field are joined by <code>AND</code>. A finding matches only if it matches all of those filters. For example, the filters <code>Title NOT_CONTAINS CloudFront AND Title NOT_CONTAINS CloudWatch</code> match a finding that excludes both <code>CloudFront</code> and <code>CloudWatch</code> in the title.</p> <p>You can’t have both a <code>CONTAINS</code> filter and a <code>NOT_CONTAINS</code> filter on the same field. Similarly, you can't provide both an <code>EQUALS</code> filter and a <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filter on the same field. Combining filters in this way returns an error. <code>CONTAINS</code> filters can only be used with other <code>CONTAINS</code> filters. <code>NOT_CONTAINS</code> filters can only be used with other <code>NOT_CONTAINS</code> filters. </p> <p>You can combine <code>PREFIX</code> filters with <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters for the same field. Security Hub first processes the <code>PREFIX</code> filters, and then the <code>NOT_EQUALS</code> or <code>PREFIX_NOT_EQUALS</code> filters.</p> <p>For example, for the following filters, Security Hub first identifies findings that have resource types that start with either <code>AwsIam</code> or <code>AwsEc2</code>. It then excludes findings that have a resource type of <code>AwsIamPolicy</code> and findings that have a resource type of <code>AwsEc2NetworkInterface</code>.</p> <ul> <li> <p> <code>ResourceType PREFIX AwsIam</code> </p> </li> <li> <p> <code>ResourceType PREFIX AwsEc2</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsIamPolicy</code> </p> </li> <li> <p> <code>ResourceType NOT_EQUALS AwsEc2NetworkInterface</code> </p> </li> </ul> <p> <code>CONTAINS</code> and <code>NOT_CONTAINS</code> operators can be used only with automation rules. For more information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/automation-rules.html\">Automation rules</a> in the <i>Security Hub User Guide</i>.</p>"
       }
     },
     "StringFilterList": {
@@ -8375,7 +8438,9 @@
         "AutomationRulesFindingFieldsUpdate$Types": "<p> The rule action updates the <code>Types</code> field of a finding. </p>",
         "AwsSecurityFinding$Types": "<p>One or more finding types in the format of <code>namespace/category/classifier</code> that classify a finding.</p> <p>Valid namespace values are: Software and Configuration Checks | TTPs | Effects | Unusual Behaviors | Sensitive Data Identifications</p>",
         "BatchUpdateFindingsRequest$Types": "<p>One or more finding types in the format of namespace/category/classifier that classify a finding.</p> <p>Valid namespace values are as follows.</p> <ul> <li> <p>Software and Configuration Checks</p> </li> <li> <p>TTPs</p> </li> <li> <p>Effects</p> </li> <li> <p>Unusual Behaviors</p> </li> <li> <p>Sensitive Data Identifications </p> </li> </ul>",
-        "FindingProviderFields$Types": "<p>One or more finding types in the format of <code>namespace/category/classifier</code> that classify a finding.</p> <p>Valid namespace values are: Software and Configuration Checks | TTPs | Effects | Unusual Behaviors | Sensitive Data Identifications</p>"
+        "FindingProviderFields$Types": "<p>One or more finding types in the format of <code>namespace/category/classifier</code> that classify a finding.</p> <p>Valid namespace values are: Software and Configuration Checks | TTPs | Effects | Unusual Behaviors | Sensitive Data Identifications</p>",
+        "GeneratorDetails$Labels": "<p> An array of tags used to identify the detector associated with the finding. </p>",
+        "VulnerabilityCodeVulnerabilities$Cwes": "<p> The Common Weakness Enumeration (CWE) item associated with the detected code vulnerability. </p>"
       }
     },
     "UnprocessedAutomationRule": {
@@ -8584,6 +8649,24 @@
         "VulnerabilityList$member": null
       }
     },
+    "VulnerabilityCodeVulnerabilities": {
+      "base": "<p>Provides details about the vulnerabilities found in your Lambda function code. This field pertains to findings that Security Hub receives from Amazon Inspector. </p>",
+      "refs": {
+        "VulnerabilityCodeVulnerabilitiesList$member": null
+      }
+    },
+    "VulnerabilityCodeVulnerabilitiesList": {
+      "base": null,
+      "refs": {
+        "Vulnerability$CodeVulnerabilities": "<p>The vulnerabilities found in your Lambda function code. This field pertains to findings that Security Hub receives from Amazon Inspector. </p>"
+      }
+    },
+    "VulnerabilityExploitAvailable": {
+      "base": null,
+      "refs": {
+        "Vulnerability$ExploitAvailable": "<p>Whether an exploit is available for a finding. </p>"
+      }
+    },
     "VulnerabilityFixAvailable": {
       "base": null,
       "refs": {
@@ -8627,7 +8710,7 @@
       }
     },
     "Workflow": {
-      "base": "<p>Provides information about the status of the investigation into a finding.</p>",
+      "base": "<p>Provides details about the status of the investigation into a finding.</p>",
       "refs": {
         "AwsSecurityFinding$Workflow": "<p>Provides information about the status of the investigation into a finding.</p>"
       }

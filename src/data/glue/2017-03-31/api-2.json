@@ -4268,7 +4268,10 @@
         "S3DeltaDirectTarget":{"shape":"S3DeltaDirectTarget"},
         "AmazonRedshiftSource":{"shape":"AmazonRedshiftSource"},
         "AmazonRedshiftTarget":{"shape":"AmazonRedshiftTarget"},
-        "EvaluateDataQualityMultiFrame":{"shape":"EvaluateDataQualityMultiFrame"}
+        "EvaluateDataQualityMultiFrame":{"shape":"EvaluateDataQualityMultiFrame"},
+        "Recipe":{"shape":"Recipe"},
+        "SnowflakeSource":{"shape":"SnowflakeSource"},
+        "SnowflakeTarget":{"shape":"SnowflakeTarget"}
       }
     },
     "CodeGenConfigurationNodes":{
@@ -4625,7 +4628,16 @@
         "SECRET_ID",
         "CONNECTOR_URL",
         "CONNECTOR_TYPE",
-        "CONNECTOR_CLASS_NAME"
+        "CONNECTOR_CLASS_NAME",
+        "KAFKA_SASL_MECHANISM",
+        "KAFKA_SASL_SCRAM_USERNAME",
+        "KAFKA_SASL_SCRAM_PASSWORD",
+        "KAFKA_SASL_SCRAM_SECRETS_ARN",
+        "ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD",
+        "KAFKA_SASL_GSSAPI_KEYTAB",
+        "KAFKA_SASL_GSSAPI_KRB5_CONF",
+        "KAFKA_SASL_GSSAPI_SERVICE",
+        "KAFKA_SASL_GSSAPI_PRINCIPAL"
       ]
     },
     "ConnectionType":{
@@ -4816,7 +4828,8 @@
         "DynamoDBTargets":{"shape":"DynamoDBTargetList"},
         "CatalogTargets":{"shape":"CatalogTargetList"},
         "DeltaTargets":{"shape":"DeltaTargetList"},
-        "IcebergTargets":{"shape":"IcebergTargetList"}
+        "IcebergTargets":{"shape":"IcebergTargetList"},
+        "HudiTargets":{"shape":"HudiTargetList"}
       }
     },
     "CrawlsFilter":{
@@ -4920,7 +4933,8 @@
         "DisableValueTrimming":{"shape":"NullableBoolean"},
         "AllowSingleColumn":{"shape":"NullableBoolean"},
         "CustomDatatypeConfigured":{"shape":"NullableBoolean"},
-        "CustomDatatypes":{"shape":"CustomDatatypes"}
+        "CustomDatatypes":{"shape":"CustomDatatypes"},
+        "Serde":{"shape":"CsvSerdeOption"}
       }
     },
     "CreateCustomEntityTypeRequest":{
@@ -5386,7 +5400,8 @@
         "DisableValueTrimming":{"shape":"NullableBoolean"},
         "AllowSingleColumn":{"shape":"NullableBoolean"},
         "CustomDatatypeConfigured":{"shape":"NullableBoolean"},
-        "CustomDatatypes":{"shape":"CustomDatatypes"}
+        "CustomDatatypes":{"shape":"CustomDatatypes"},
+        "Serde":{"shape":"CsvSerdeOption"}
       }
     },
     "CsvColumnDelimiter":{
@@ -5412,6 +5427,14 @@
       "max":1,
       "min":1,
       "pattern":"[^\\r\\n]"
+    },
+    "CsvSerdeOption":{
+      "type":"string",
+      "enum":[
+        "OpenCSVSerDe",
+        "LazySimpleSerDe",
+        "None"
+      ]
     },
     "CustomCode":{
       "type":"structure",
@@ -8182,6 +8205,15 @@
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
+    "HudiTarget":{
+      "type":"structure",
+      "members":{
+        "Paths":{"shape":"PathList"},
+        "ConnectionName":{"shape":"ConnectionName"},
+        "Exclusions":{"shape":"PathList"},
+        "MaximumTraversalDepth":{"shape":"NullableInteger"}
+      }
+    },
     "HudiTargetCompressionType":{
       "type":"string",
       "enum":[
@@ -8190,6 +8222,10 @@
         "uncompressed",
         "snappy"
       ]
+    },
+    "HudiTargetList":{
+      "type":"list",
+      "member":{"shape":"HudiTarget"}
     },
     "IcebergInput":{
       "type":"structure",
@@ -8224,6 +8260,10 @@
         "Message":{"shape":"MessageString"}
       },
       "exception":true
+    },
+    "IdleTimeout":{
+      "type":"integer",
+      "box":true
     },
     "IllegalBlueprintStateException":{
       "type":"structure",
@@ -9806,7 +9846,9 @@
       "type":"string",
       "enum":[
         "COLUMN_PERMISSION",
-        "CELL_FILTER_PERMISSION"
+        "CELL_FILTER_PERMISSION",
+        "NESTED_PERMISSION",
+        "NESTED_CELL_PERMISSION"
       ]
     },
     "PermissionTypeList":{
@@ -10051,6 +10093,35 @@
         "single_quote",
         "disabled"
       ]
+    },
+    "Recipe":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "RecipeReference"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "RecipeReference":{"shape":"RecipeReference"}
+      }
+    },
+    "RecipeReference":{
+      "type":"structure",
+      "required":[
+        "RecipeArn",
+        "RecipeVersion"
+      ],
+      "members":{
+        "RecipeArn":{"shape":"EnclosedInStringProperty"},
+        "RecipeVersion":{"shape":"RecipeVersion"}
+      }
+    },
+    "RecipeVersion":{
+      "type":"string",
+      "max":16,
+      "min":1
     },
     "RecordsCount":{
       "type":"long",
@@ -10931,7 +11002,13 @@
         "Progress":{"shape":"DoubleValue"},
         "MaxCapacity":{"shape":"NullableDouble"},
         "SecurityConfiguration":{"shape":"NameString"},
-        "GlueVersion":{"shape":"GlueVersionString"}
+        "GlueVersion":{"shape":"GlueVersionString"},
+        "NumberOfWorkers":{"shape":"NullableInteger"},
+        "WorkerType":{"shape":"WorkerType"},
+        "CompletedOn":{"shape":"TimestampValue"},
+        "ExecutionTime":{"shape":"NullableDouble"},
+        "DPUSeconds":{"shape":"NullableDouble"},
+        "IdleTimeout":{"shape":"IdleTimeout"}
       }
     },
     "SessionCommand":{
@@ -10966,6 +11043,56 @@
         "SkewedColumnNames":{"shape":"NameStringList"},
         "SkewedColumnValues":{"shape":"ColumnValueStringList"},
         "SkewedColumnValueLocationMaps":{"shape":"LocationMap"}
+      }
+    },
+    "SnowflakeNodeData":{
+      "type":"structure",
+      "members":{
+        "SourceType":{"shape":"GenericLimitedString"},
+        "Connection":{"shape":"Option"},
+        "Schema":{"shape":"GenericString"},
+        "Table":{"shape":"GenericString"},
+        "Database":{"shape":"GenericString"},
+        "TempDir":{"shape":"EnclosedInStringProperty"},
+        "IamRole":{"shape":"Option"},
+        "AdditionalOptions":{"shape":"AdditionalOptions"},
+        "SampleQuery":{"shape":"GenericString"},
+        "PreAction":{"shape":"GenericString"},
+        "PostAction":{"shape":"GenericString"},
+        "Action":{"shape":"GenericString"},
+        "Upsert":{"shape":"BooleanValue"},
+        "MergeAction":{"shape":"GenericLimitedString"},
+        "MergeWhenMatched":{"shape":"GenericLimitedString"},
+        "MergeWhenNotMatched":{"shape":"GenericLimitedString"},
+        "MergeClause":{"shape":"GenericString"},
+        "StagingTable":{"shape":"GenericString"},
+        "SelectedColumns":{"shape":"OptionList"},
+        "AutoPushdown":{"shape":"BooleanValue"},
+        "TableSchema":{"shape":"OptionList"}
+      }
+    },
+    "SnowflakeSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Data"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Data":{"shape":"SnowflakeNodeData"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
+    "SnowflakeTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Data"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Data":{"shape":"SnowflakeNodeData"},
+        "Inputs":{"shape":"OneInput"}
       }
     },
     "Sort":{
@@ -12137,7 +12264,8 @@
         "DisableValueTrimming":{"shape":"NullableBoolean"},
         "AllowSingleColumn":{"shape":"NullableBoolean"},
         "CustomDatatypeConfigured":{"shape":"NullableBoolean"},
-        "CustomDatatypes":{"shape":"CustomDatatypes"}
+        "CustomDatatypes":{"shape":"CustomDatatypes"},
+        "Serde":{"shape":"CsvSerdeOption"}
       }
     },
     "UpdateDataQualityRulesetRequest":{
