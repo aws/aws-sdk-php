@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Organizations` - Documentation updates for permissions and links.
+* `Aws\Backup` - Add support for customizing time zone for backup window in backup plan rules.
+* `Aws\WorkSpacesWeb` - WorkSpaces Web now enables Admins to configure which cookies are synchronized from an end-user's local browser to the in-session browser. In conjunction with a browser extension, this feature enables enhanced Single-Sign On capability by reducing the number of times an end-user has to authenticate.
+* `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze and generate licensing optimization recommendations for sql server running on EC2 instances.
+* `Aws\SecurityLake` - Remove incorrect regex enforcement on pagination tokens.
+* `Aws\ServiceQuotas` - Service Quotas now supports viewing the applied quota value and requesting a quota increase for a specific resource in an AWS account.
+
 ## 3.279.7 - 2023-08-25
 
 * `Aws\CloudWatch` - Doc-only update to get doc bug fixes into the SDK docs
