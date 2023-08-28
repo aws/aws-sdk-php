@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.279.8 - 2023-08-28
 
 * `Aws\Organizations` - Documentation updates for permissions and links.
 * `Aws\Backup` - Add support for customizing time zone for backup window in backup plan rules.
