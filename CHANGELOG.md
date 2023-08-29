@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.279.9 - 2023-08-29
 
 * `Aws\FSx` - Documentation updates for project quotas.
 * `Aws\Omics` - Add RetentionMode support for Runs.
