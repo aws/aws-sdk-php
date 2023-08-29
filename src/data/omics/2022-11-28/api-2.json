@@ -3383,7 +3383,8 @@
         "stopTime":{"shape":"RunTimestamp"},
         "statusMessage":{"shape":"RunStatusMessage"},
         "tags":{"shape":"TagMap"},
-        "accelerators":{"shape":"Accelerators"}
+        "accelerators":{"shape":"Accelerators"},
+        "retentionMode":{"shape":"RunRetentionMode"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -5298,6 +5299,15 @@
       "key":{"shape":"RunResourceDigestKey"},
       "value":{"shape":"RunResourceDigest"}
     },
+    "RunRetentionMode":{
+      "type":"string",
+      "enum":[
+        "RETAIN",
+        "REMOVE"
+      ],
+      "max":64,
+      "min":1
+    },
     "RunRoleArn":{
       "type":"string",
       "max":128,
@@ -5753,7 +5763,8 @@
         "requestId":{
           "shape":"RunRequestId",
           "idempotencyToken":true
-        }
+        },
+        "retentionMode":{"shape":"RunRetentionMode"}
       }
     },
     "StartRunRequestPriorityInteger":{

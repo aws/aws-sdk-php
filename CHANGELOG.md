@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\FSx` - Documentation updates for project quotas.
+* `Aws\Omics` - Add RetentionMode support for Runs.
+* `Aws\SESv2` - Adds support for the new Export and Message Insights features: create, get, list and cancel export jobs; get message insights.
+* `Aws\CognitoIdentityProvider` - Added API example requests and responses for several operations. Fixed the validation regex for user pools Identity Provider name.
+
 ## 3.279.8 - 2023-08-28
 
 * `Aws\Organizations` - Documentation updates for permissions and links.
