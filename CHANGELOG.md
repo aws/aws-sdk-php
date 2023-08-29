@@ -1,5 +1,126 @@
 # CHANGELOG
 
+## 3.279.9 - 2023-08-29
+
+* `Aws\FSx` - Documentation updates for project quotas.
+* `Aws\Omics` - Add RetentionMode support for Runs.
+* `Aws\SESv2` - Adds support for the new Export and Message Insights features: create, get, list and cancel export jobs; get message insights.
+* `Aws\CognitoIdentityProvider` - Added API example requests and responses for several operations. Fixed the validation regex for user pools Identity Provider name.
+
+## 3.279.8 - 2023-08-28
+
+* `Aws\Organizations` - Documentation updates for permissions and links.
+* `Aws\Backup` - Add support for customizing time zone for backup window in backup plan rules.
+* `Aws\WorkSpacesWeb` - WorkSpaces Web now enables Admins to configure which cookies are synchronized from an end-user's local browser to the in-session browser. In conjunction with a browser extension, this feature enables enhanced Single-Sign On capability by reducing the number of times an end-user has to authenticate.
+* `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze and generate licensing optimization recommendations for sql server running on EC2 instances.
+* `Aws\SecurityLake` - Remove incorrect regex enforcement on pagination tokens.
+* `Aws\ServiceQuotas` - Service Quotas now supports viewing the applied quota value and requesting a quota increase for a specific resource in an AWS account.
+
+## 3.279.7 - 2023-08-25
+
+* `Aws\CloudWatch` - Doc-only update to get doc bug fixes into the SDK docs
+* `Aws\CloudTrail` - Add ThrottlingException with error code 429 to handle CloudTrail Delegated Admin request rate exceeded on organization resources.
+* `Aws\Detective` - Added protections to interacting with fields containing customer information.
+
+## 3.279.6 - 2023-08-24
+
+* `Aws\RDS` - This release updates the supported versions for Percona XtraBackup in Aurora MySQL.
+* `Aws\MediaTailor` - Adds new source location AUTODETECT_SIGV4 access type.
+* `Aws\S3` - Updates to endpoint ruleset tests to address Smithy validation issues.
+* `Aws\MediaConvert` - This release includes additional audio channel tags in Quicktime outputs, support for film grain synthesis for AV1 outputs, ability to create audio-only FLAC outputs, and ability to specify Amazon S3 destination storage class.
+* `Aws\Glue` - Added API attributes that help in the monitoring of sessions.
+* `Aws\EC2` - Amazon EC2 M7a instances, powered by 4th generation AMD EPYC processors, deliver up to 50% higher performance compared to M6a instances. Amazon EC2 Hpc7a instances, powered by 4th Gen AMD EPYC processors, deliver up to 2.5x better performance compared to Amazon EC2 Hpc6a instances.
+* `Aws\MediaLive` - MediaLive now supports passthrough of KLV data to a HLS output group with a TS container. MediaLive now supports setting an attenuation mode for AC3 audio when the coding mode is 3/2 LFE. MediaLive now supports specifying whether to include filler NAL units in RTMP output group settings.
+* `Aws\S3Control` - Updates to endpoint ruleset tests to address Smithy validation issues and standardize the capitalization of DualStack.
+* `Aws\QuickSight` - Excel support in Snapshot Export APIs. Removed Required trait for some insight Computations. Namespace-shared Folders support. Global Filters support. Table pin Column support.
+* `Aws\VerifiedPermissions` - Documentation updates for Amazon Verified Permissions.
+
+## 3.279.5 - 2023-08-23
+
+* `Aws\APIGateway` - This release adds RootResourceId to GetRestApi response.
+* `Aws\Polly` - Amazon Polly adds 1 new voice - Zayd (ar-AE)
+* `Aws\EC2` - Marking fields as sensitive on BundleTask and GetPasswordData
+
+## 3.279.4 - 2023-08-22
+
+* `Aws\VerifiedPermissions` - Documentation updates for Amazon Verified Permissions. Increases max results per page for ListPolicyStores, ListPolicies, and ListPolicyTemplates APIs from 20 to 50.
+* `Aws\RDS` - Adding parameters to CreateCustomDbEngineVersion reserved for future use.
+* `Aws\GlobalAccelerator` - Global Accelerator now supports Client Ip Preservation for Network Load Balancer endpoints.
+* `Aws\CostExplorer` - This release adds the LastUpdatedDate and LastUsedDate timestamps to help you manage your cost allocation tags.
+
+## 3.279.3 - 2023-08-21
+
+* `Aws\EC2` - The DeleteKeyPair API has been updated to return the keyPairId when an existing key pair is deleted.
+* `Aws\finspace` - Allow customers to manage outbound traffic from their Kx Environment when attaching a transit gateway by providing network acl entries. Allow the customer to choose how they want to update the databases on a cluster allowing updates to possibly be faster than usual.
+* `Aws\Route53Domains` - Fixed typos in description fields
+* `Aws\RDS` - Adding support for RDS Aurora Global Database Unplanned Failover
+* `Aws\Cloud9` - Doc only update to add Ubuntu 22.04 as an Image ID option for Cloud9
+
+## 3.279.2 - 2023-08-18
+
+* `Aws\SecurityHub` - Added Inspector Lambda code Vulnerability section to ASFF, including GeneratorDetails, EpssScore, ExploitAvailable, and CodeVulnerabilities.
+* `Aws\CodeCommit` - Add new ListFileCommitHistory operation to retrieve commits which introduced changes to a specific file.
+
+## 3.279.1 - 2023-08-17
+
+* `Aws\EC2` - Adds support for SubnetConfigurations to allow users to select their own IPv4 and IPv6 addresses for Interface VPC endpoints
+* `Aws\GameLift` - Amazon GameLift updates its instance types support.
+
+## 3.279.0 - 2023-08-16
+
+* `Aws\` - This version ends support for PHP versions below 7.2.5
+* `Aws\CloudWatch` - Doc-only update to incorporate several doc bug fixes
+* `Aws\LexModelsV2` - This release updates the Custom Vocabulary Weight field to support a value of 0.
+
+## 3.278.3 - 2023-08-15
+
+* `Aws\PI` - AWS Performance Insights for Amazon RDS is launching Performance Analysis On Demand, a new feature that allows you to analyze database performance metrics and find out the performance issues. You can now use SDK to create, list, get, delete, and manage tags of performance analysis reports.
+* `Aws\SageMaker` - SageMaker Inference Recommender now provides SupportedResponseMIMETypes from DescribeInferenceRecommendationsJob response
+* `Aws\EC2` - Documentation updates for Elastic Compute Cloud (EC2).
+* `Aws\ChimeSDKMeetings` - Updated API documentation to include additional exceptions.
+* `Aws\Glue` - AWS Glue Crawlers can now accept SerDe overrides from a custom csv classifier. The two SerDe options are LazySimpleSerDe and OpenCSVSerDe. In case, the user wants crawler to do the selection, "None" can be selected for this purpose.
+* `Aws\Route53Domains` - Provide explanation if CheckDomainTransferability return false. Provide requestId if a request is already submitted. Add sensitive protection for customer information
+
+## 3.278.2 - 2023-08-14
+
+* `Aws\Omics` - This release provides support for annotation store versioning and cross account sharing for Omics Analytics
+* `Aws\MediaPackage` - Fix SDK logging of certain fields.
+* `Aws\Transfer` - Documentation updates for AWS Transfer Family
+
+## 3.278.1 - 2023-08-11
+
+* `Aws\QuickSight` - New Authentication method for Account subscription - IAM Identity Center. Hierarchy layout support, default column width support and related style properties for pivot table visuals. Non-additive topic field aggregations for Topic API
+* `Aws\AmplifyBackend` - Adds sensitive trait to required input shapes.
+* `Aws\EC2` - Amazon EC2 P5 instances, powered by the latest NVIDIA H100 Tensor Core GPUs, deliver the highest performance in EC2 for deep learning (DL) and HPC applications. M7i-flex and M7i instances are next-generation general purpose instances powered by custom 4th Generation Intel Xeon Scalable processors.
+* `Aws\ConfigService` - Updated ResourceType enum with new resource types onboarded by AWS Config in July 2023.
+* `Aws\SWF` - This release adds new API parameters to override workflow task list for workflow executions.
+* `Aws\SES` - Doc only updates to include: 1) Clarified which part of an email address where it's okay to have Punycode when it contains non-ASCII characters for the SendRawEmail action and other actions where this is applicable. 2) Updated S3Action description with new MB max bucket size from 30 to 40.
+
+## 3.278.0 - 2023-08-10
+
+* `Aws\Multipart` - Include ChecksumAlgorithm member in Multipart Upload and Copy for flexible checksums
+* `Aws\CloudTrail` - Documentation updates for CloudTrail.
+* `Aws\Transfer` - Documentation updates for AW Transfer Family
+* `Aws\Omics` - This release adds instanceType to GetRunTask & ListRunTasks responses.
+* `Aws\SecretsManager` - Add additional InvalidRequestException to list of possible exceptions for ListSecret.
+* `Aws\Connect` - This release adds APIs to provision agents that are global / available in multiple AWS regions and distribute them across these regions by percentage.
+* `Aws\ElasticLoadBalancingv2` - This release enables configuring security groups for Network Load Balancers
+
+## 3.277.12 - 2023-08-09
+
+* `Aws\` - Updates size determination logic for request compression
+* `Aws\ChimeSDKVoice` - Updating CreatePhoneNumberOrder, UpdatePhoneNumber and BatchUpdatePhoneNumbers APIs, adding phone number name
+* `Aws\GlobalAccelerator` - Documentation update for dualstack EC2 endpoint support
+* `Aws\GuardDuty` - Added autoEnable ALL to UpdateOrganizationConfiguration and DescribeOrganizationConfiguration APIs.
+* `Aws\FSx` - For FSx for Lustre, add new data repository task type, RELEASE_DATA_FROM_FILESYSTEM, to release files that have been archived to S3. For FSx for Windows, enable support for configuring and updating SSD IOPS, and for updating storage type. For FSx for OpenZFS, add new deployment type, MULTI_AZ_1.
+* `Aws\SageMaker` - This release adds support for cross account access for SageMaker Model Cards through AWS RAM.
+
+## 3.277.11 - 2023-08-08
+
+* `Aws\Backup` - This release introduces a new logically air-gapped vault (Preview) in AWS Backup that stores immutable backup copies, which are locked by default and isolated with encryption using AWS owned keys. Logically air-gapped vault (Preview) allows secure recovery of application data across accounts.
+* `Aws\ServiceCatalog` - Introduce support for HashiCorp Terraform Cloud in Service Catalog by addying TERRAFORM_CLOUD product type in CreateProduct and CreateProvisioningArtifact API.
+* `Aws\ElastiCache` - Added support for cluster mode in online migration and test migration API
+
 ## 3.277.10 - 2023-08-07
 
 * `Aws\` - Removes validation of supplying the `version` configuration option to client constructors, defaulting to 'latest'`

@@ -1322,10 +1322,6 @@ EOT;
                 'x',
             ],
             [
-                '',
-                new InvalidRegionException('Region must be a valid RFC host label.'),
-            ],
-            [
                 'hosthijack.com/',
                 new InvalidRegionException('Region must be a valid RFC host label.'),
             ],
@@ -1419,13 +1415,14 @@ EOT;
     }
 
     /**
-     * @dataProvider endpointUrlResolutionProvider
+     * @dataProvider configResolutionProvider
      *
      * @param $ini
      * @param $env
      * @param $expected
      */
-    public function testEndpointUrlResolutionOrder($ini, $env, $expected)
+
+    public function testConfigResolutionOrder($ini, $env, $expected, $configKey, $configType)
     {
         $dir = sys_get_temp_dir() . '/.aws';
         if (!is_dir($dir)) {
@@ -1445,7 +1442,12 @@ EOT;
             'region' => 'x',
             'version' => 'latest'
         ], new HandlerList());
-        $this->assertEquals($conf['config']['endpoint_url'], $expected);
+   
+        if ($configType === 'args') {
+            $this->assertEquals($conf[$configKey], $expected);
+        } else {
+            $this->assertEquals($conf['config'][$configKey], $expected);
+        }
         unlink($dir . '/config');
         putenv("HOME=$home");
         if ($env) {
@@ -1453,57 +1455,31 @@ EOT;
         }
     }
 
-    public function endpointUrlResolutionProvider()
+    public function configResolutionProvider()
     {
         return [
             [
                 <<<EOT
 [default]
-endpoint_url = https://foo-bar.com
-services = my-services
-
-[services my-services]
-s3 =
-  endpoint_url = https://test-foo.com
+region = foo-region
 EOT
                 ,
-                ['key' => 'AWS_ENDPOINT_URL_S3', 'value' => 'https://test.com'],
-                'https://test.com'
+                ['key' => 'AWS_REGION', 'value' => 'bar-region'],
+                'bar-region',
+                'region',
+                'args'
             ],
             [
                 <<<EOT
 [default]
-endpoint_url = https://foo-bar.com
-services = my-services
-
-[services my-services]
-s3 =
-  endpoint_url = https://test-foo.com
+region = 'foo-region'
 EOT
-                ,
-                null,
-                'https://test-foo.com'
-            ],
-            [
-                <<<EOT
-[default]
-endpoint_url = https://foo-bar.com
-
-EOT
-                ,
-                ['key' => 'AWS_ENDPOINT_URL', 'value' => 'https://baz.com'],
-                'https://baz.com'
-            ],
-            [
-                <<<EOT
-[default]
-endpoint_url = https://foo-bar.com
-
-EOT
-                ,
-                null,
-                'https://foo-bar.com'
-            ]
+                    ,
+                    null,
+                    'foo-region',
+                    'region',
+                    'args'
+                ]
         ];
     }
 

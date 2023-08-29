@@ -294,6 +294,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise stopDBInstanceAutomatedBackupsReplicationAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result switchoverBlueGreenDeployment(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise switchoverBlueGreenDeploymentAsync(array $args = []) (supported in versions 2014-10-31)
+ * @method \Aws\Result switchoverGlobalCluster(array $args = []) (supported in versions 2014-10-31)
+ * @method \GuzzleHttp\Promise\Promise switchoverGlobalClusterAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result switchoverReadReplica(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise switchoverReadReplicaAsync(array $args = []) (supported in versions 2014-10-31)
  */

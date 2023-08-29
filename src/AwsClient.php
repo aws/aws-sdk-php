@@ -242,10 +242,6 @@ class AwsClient implements AwsClientInterface
         $this->addRecursionDetection();
         $this->addRequestBuilder();
 
-        if (!$config['suppress_php_deprecation_warning']) {
-            $this->emitDeprecationWarning();
-        }
-
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
         }
