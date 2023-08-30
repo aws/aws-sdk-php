@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.280.0 - 2023-08-30
 
 * `Aws\` - Adds default region resolution, which resolves the region from `AWS_REGION` and the shared config file, respectively.
 * `Aws\Appflow` - Add SAP source connector parallel and pagination feature
