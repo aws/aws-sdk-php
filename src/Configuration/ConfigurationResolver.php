@@ -32,8 +32,8 @@ class ConfigurationResolver
         $config = []
     )
     {
-        $options = isset($config['config_resolver_options'])
-            ? $config['config_resolver_options']
+        $iniOptions = isset($config['ini_resolver_options'])
+            ? $config['ini_resolver_options']
             : [];
 
         $envValue = self::env($key, $expectedType);
@@ -49,7 +49,7 @@ class ConfigurationResolver
                 $expectedType,
                 null,
                 null,
-                $options
+                $iniOptions
             );
             if(!is_null($iniValue)) {
                 return $iniValue;

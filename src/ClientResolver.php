@@ -1168,7 +1168,7 @@ class ClientResolver
             '',
             'string',
             $args + [
-                'config_resolver_options' => [
+                'ini_resolver_options' => [
                     'section' => 'services',
                     'subsection' => $serviceIdentifier,
                     'key' => 'endpoint_url'
