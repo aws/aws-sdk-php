@@ -330,7 +330,7 @@ EOT;
             '',
             'string',
             [
-                'config_resolver_options' => [
+                'ini_resolver_options' => [
                     'section' => 'services',
                     'subsection' => 's3',
                     'key' => 'endpoint_url'
