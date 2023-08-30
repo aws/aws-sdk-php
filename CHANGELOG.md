@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds default region resolution, which resolves the region from `AWS_REGION` and the shared config file, respectively.
+* `Aws\Appflow` - Add SAP source connector parallel and pagination feature
+* `Aws\AuditManager` - This release marks some assessment metadata as sensitive. We added a sensitive trait to the following attributes: assessmentName, emailAddress, scope, createdBy, lastUpdatedBy, and userName.
+* `Aws\NetworkFirewall` - Network Firewall increasing pagination token string length
+* `Aws\DataSync` - AWS DataSync introduces Task Reports, a new feature that provides detailed reports of data transfer operations for each task execution.
+* `Aws\AppRunner` - App Runner adds support for Bitbucket. You can now create App Runner connection that connects to your Bitbucket repositories and deploy App Runner service with the source code stored in a Bitbucket repository.
+* `Aws\PcaConnectorAd` - The Connector for AD allows you to use a fully-managed AWS Private CA as a drop-in replacement for your self-managed enterprise CAs without local agents or proxy servers. Enterprises that use AD to manage Windows environments can reduce their private certificate authority (CA) costs and complexity.
+* `Aws\SageMaker` - Amazon SageMaker Canvas adds IdentityProviderOAuthSettings support for CanvasAppSettings
+* `Aws\CleanRooms` - This release decouples member abilities in a collaboration. With this change, the member who can run queries no longer needs to be the same as the member who can receive results.
+* `Aws\Neptunedata` - Allows customers to execute data plane actions like bulk loading graphs, issuing graph queries using Gremlin and openCypher directly from the SDK.
+
 ## 3.279.9 - 2023-08-29
 
 * `Aws\FSx` - Documentation updates for project quotas.
