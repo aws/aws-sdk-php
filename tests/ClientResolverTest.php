@@ -1420,8 +1420,9 @@ EOT;
      * @param $ini
      * @param $env
      * @param $expected
+     * @param $configKey
+     * @param $configType
      */
-
     public function testConfigResolutionOrder($ini, $env, $expected, $configKey, $configType)
     {
         $dir = sys_get_temp_dir() . '/.aws';
@@ -1534,22 +1535,23 @@ EOT
         ];
     }
 
-    /**
-     * @dataProvider endpointUrlResolutionProvider
-     *
-     * @param $ini
-     * @param $env
-     */
-    public function testIgnoreConfiguredEndpointUrls($ini, $env)
+    public function testIgnoreConfiguredEndpointUrls()
     {
+        $ini = <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT;
         $dir = sys_get_temp_dir() . '/.aws';
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
 
-        if ($env) {
-            putenv($env['key'] . '=' . $env['value']);
-        }
+        putenv('AWS_ENDPOINT_URL' . '=' . 'https://test-foo.com');
+        putenv('AWS_ENDPOINT_URL_S3' . '=' . 'https://test-service-foo.com');
 
         file_put_contents($dir . '/config', $ini);
         $home = getenv('HOME');
@@ -1564,8 +1566,7 @@ EOT
         $this->assertFalse(isset($conf['config']['endpoint_url']));
         unlink($dir . '/config');
         putenv("HOME=$home");
-        if ($env) {
-            putenv($env['key'] . '=');
-        }
+        putenv('AWS_ENDPOINT_URL' . '=');
+        putenv('AWS_ENDPOINT_URL_S3' . '=');
     }
 }
