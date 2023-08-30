@@ -504,7 +504,7 @@ function boolean_value($input)
 }
 
 /**
- * Checks if an input is a valid epoch time
+ * Parses ini sections with subsections (i.e. the service section)
  *
  * @param $filename
  * @param $filename
@@ -512,13 +512,36 @@ function boolean_value($input)
  */
 function parse_ini_section_with_subsections($filename, $section_name) {
     $config = [];
-    $ini_content = file_get_contents($filename);
-    $lines = explode("\n", $ini_content);
+    $stream = fopen($filename, 'r');
+
+    if (!$stream) {
+        return $config;
+    }
 
     $section_start = false;
     $current_subsection = '';
 
-    foreach ($lines as $line) {
+    #find subsection
+    while (!feof($stream)) {
+        $line = fgets($stream);
+        $line = trim($line);
+
+        if (strpos($line, '[') === 0
+            && trim($line, '[]') === $section_name)
+        {
+            $section_start = true;
+            break;
+        }
+    }
+
+    if (!$section_start) {
+        fclose($stream);
+        return $config;
+    }
+
+    #parse found subsection
+    while (!feof($stream)) {
+        $line = fgets($stream);
         $line = trim($line);
 
         if (empty($line) || strpos($line, ';') === 0 || strpos($line, '#') === 0) {
@@ -526,25 +549,23 @@ function parse_ini_section_with_subsections($filename, $section_name) {
         }
 
         if (strpos($line, '[') === 0) {
-            if ($section_start) {
-                break;
-            }
-            $current_subsection = '';
-            $section_start = (trim($line, '[]') === $section_name);
-        } elseif ($section_start) {
-            if (strpos($line, ' = ') !== false) {
-                list($key, $value) = explode(' = ', $line, 2);
-                if (empty($current_subsection)) {
-                    $config[$key] = $value;
-                } else {
-                    $config[$current_subsection][$key] = $value;
-                }
+            break; // End of the section
+        }
+
+        if (strpos($line, ' = ') !== false) {
+            list($key, $value) = explode(' = ', $line, 2);
+            if (empty($current_subsection)) {
+                $config[$key] = $value;
             } else {
-                $current_subsection = trim(str_replace('=', '', $line));
-                $config[$current_subsection] = [];
+                $config[$current_subsection][$key] = $value;
             }
+        } else {
+            $current_subsection = trim(str_replace('=', '', $line));
+            $config[$current_subsection] = [];
         }
     }
+
+    fclose($stream);
     return $config;
 }
 
