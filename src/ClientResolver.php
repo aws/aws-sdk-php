@@ -1002,6 +1002,7 @@ class ClientResolver
     public static function _apply_endpoint($value, array &$args, HandlerList $list)
     {
         if (empty($value)) {
+            unset($args['endpoint']);
             return;
         }
 
