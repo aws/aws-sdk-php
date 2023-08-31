@@ -518,60 +518,44 @@ function parse_ini_section_with_subsections($filename, $section_name) {
         return $config;
     }
 
-    find_section:
     $current_subsection = '';
-    $section_start = false;
 
-    //locates target section
     while (!feof($stream)) {
-        $line = fgets($stream);
-        $line = trim($line);
+        $line = trim(fgets($stream));
 
-        if (empty($line) || strpos($line, ';') === 0 || strpos($line, '#') === 0) {
-            continue; // Ignore empty lines and comments
-        }
-
-        if (strpos($line, '[') === 0 && trim($line, '[]') === $section_name) {
-            $section_start = true;
-            break;
-        }
-    }
-
-    if (!$section_start) {
-        goto results;
-    }
-
-    // parses target section into subsections
-    while (!feof($stream)) {
-        $line = fgets($stream);
-        $line = trim($line);
-
-        if (empty($line) || strpos($line, ';') === 0 || strpos($line, '#') === 0) {
-            continue; // Ignore empty lines and comments
-        }
-
-        //if duplicate section is found, start over and continue parsing
-        //if not, attempt to locate target section again
-        if (trim($line, '[]') === $section_name) {
+        if (empty($line) || in_array($line[0], [';', '#'])) {
             continue;
-        } elseif (strpos($line, '[') === 0) {
-            goto find_section;
         }
 
-        if (strpos($line, ' = ') !== false) {
-            list($key, $value) = explode(' = ', $line, 2);
-            if (empty($current_subsection)) {
-                $config[$key] = $value;
-            } else {
-                $config[$current_subsection][$key] = $value;
+        if ($line[0] === '[' && trim($line, '[]') === $section_name) {
+            while (!feof($stream)) {
+                $line = trim(fgets($stream));
+
+                if (empty($line) || in_array($line[0], [';', '#'])) {
+                    continue;
+                }
+
+                if (trim($line, '[]') === $section_name) {
+                    continue;
+                } elseif (strpos($line, '[') === 0) {
+                    break;
+                }
+
+                if (strpos($line, ' = ') !== false) {
+                    list($key, $value) = explode(' = ', $line, 2);
+                    if (empty($current_subsection)) {
+                        $config[$key] = $value;
+                    } else {
+                        $config[$current_subsection][$key] = $value;
+                    }
+                } else {
+                    $current_subsection = trim(str_replace('=', '', $line));
+                    $config[$current_subsection] = [];
+                }
             }
-        } else {
-            $current_subsection = trim(str_replace('=', '', $line));
-            $config[$current_subsection] = [];
         }
     }
 
-    results:
     fclose($stream);
     return $config;
 }
