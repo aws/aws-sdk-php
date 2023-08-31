@@ -515,7 +515,7 @@ function parse_ini_section_with_subsections($filename, $section_name) {
     $stream = fopen($filename, 'r');
 
     if (!$stream) {
-        return $config; // Couldn't open the file
+        return $config;
     }
 
     find_section:
@@ -550,6 +550,8 @@ function parse_ini_section_with_subsections($filename, $section_name) {
             continue; // Ignore empty lines and comments
         }
 
+        //if duplicate section is found, start over and continue parsing
+        //if not, attempt to locate target section again
         if (trim($line, '[]') === $section_name) {
             continue;
         } elseif (strpos($line, '[') === 0) {
