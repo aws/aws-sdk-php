@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudHSM` - Deprecating CloudHSM Classic API Service.
+* `Aws\ConnectCampaignService` - Amazon Connect outbound campaigns has launched agentless dialing mode which enables customers to make automated outbound calls without agent engagement. This release updates three of the campaign management API's to support the new agentless dialing mode and the new dialing capacity field.
+* `Aws\SageMakerRuntime` - This release adds a new InvokeEndpointWithResponseStream API to support streaming of model responses.
+* `Aws\ManagedGrafana` - Marking SAML RoleValues attribute as sensitive and updating VpcConfiguration attributes to match documentation.
+* `Aws\ConnectParticipant` - Amazon Connect Participant Service adds the ability to get a view resource using a view token, which is provided in a participant message, with the release of the DescribeView API.
+* `Aws\CustomerProfiles` - Adds sensitive trait to various shapes in Customer Profiles API model.
+* `Aws\ECS` - This release adds support for an account-level setting that you can use to configure the number of days for AWS Fargate task retirement.
+* `Aws\KafkaConnect` - Minor model changes for Kafka Connect as well as endpoint updates.
+* `Aws\PaymentCryptographyData` - Make KeyCheckValue field optional when using asymmetric keys as Key Check Values typically only apply to symmetric keys
+* `Aws\IVS` - Updated "type" description for CreateChannel, UpdateChannel, Channel, and ChannelSummary.
+* `Aws\Health` - Adds new API DescribeEntityAggregatesForOrganization that retrieves entity aggregates across your organization. Also adds support for resource status filtering in DescribeAffectedEntitiesForOrganization, resource status aggregates in the DescribeEntityAggregates response, and new resource statuses.
+* `Aws\CloudWatchEvents` - Documentation updates for CloudWatch Events.
+* `Aws\ChimeSDKMediaPipelines` - This release adds support for feature Voice Enhancement for Call Recording as part of Amazon Chime SDK call analytics.
+
 ## 3.280.0 - 2023-08-30
 
 * `Aws\` - Adds default region resolution, which resolves the region from `AWS_REGION` and the shared config file, respectively.
