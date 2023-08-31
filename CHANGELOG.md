@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.280.1 - 2023-08-31
 
 * `Aws\CloudHSM` - Deprecating CloudHSM Classic API Service.
 * `Aws\ConnectCampaignService` - Amazon Connect outbound campaigns has launched agentless dialing mode which enables customers to make automated outbound calls without agent engagement. This release updates three of the campaign management API's to support the new agentless dialing mode and the new dialing capacity field.
