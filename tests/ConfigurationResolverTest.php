@@ -344,4 +344,85 @@ EOT;
             . '='
         );
     }
+
+    /**
+     * @dataProvider duplicateIniFileProvider
+     */
+    public function testResolvesServiceIniWithDuplicateSections($ini)
+    {
+        $dir = $this->clearEnv();
+        putenv(
+            ConfigurationResolver::$envPrefix
+            . 'ENDPOINT_URL'
+            . '='
+            . 'https://test.com'
+        );
+        file_put_contents($dir . '/config', $ini);
+        putenv('HOME=' . dirname($dir));
+        $result = ConfigurationResolver::resolve(
+            'endpoint_url_s3',
+            '',
+            'string',
+            [
+                'ini_resolver_options' => [
+                    'section' => 'services',
+                    'subsection' => 's3',
+                    'key' => 'endpoint_url'
+                ]
+            ]
+        );
+        $this->assertSame('https://exmaple.com', $result);
+        putenv(
+            ConfigurationResolver::$envPrefix
+            . 'ENDPOINT_URL'
+            . '='
+        );
+    }
+
+    public function duplicateIniFileProvider()
+    {
+        return [
+            [
+                <<<EOT
+[default]
+foo_configuration_option = standard
+services = my-services
+
+[services my-services]
+s3 = 
+  endpoint_url = https://foo.com
+foo = 
+  bar_option = baz   
+
+[services my-services]
+s3 = 
+  endpoint_url = https://exmaple.com
+foo = 
+  bar_option = foo  
+EOT
+            ],
+            [
+                <<<EOT
+[default]
+foo_configuration_option = standard
+services = my-services
+
+[services my-services]
+s3 = 
+  endpoint_url = https://foo.com
+foo = 
+  bar_option = baz   
+
+[profile foo]
+endpoint_url = https://bar.com
+
+[services my-services]
+s3 = 
+  endpoint_url = https://exmaple.com
+foo = 
+  bar_option = foo  
+EOT
+            ]
+        ];
+    }
 }

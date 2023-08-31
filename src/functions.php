@@ -515,31 +515,14 @@ function parse_ini_section_with_subsections($filename, $section_name) {
     $stream = fopen($filename, 'r');
 
     if (!$stream) {
-        return $config;
+        return $config; // Couldn't open the file
     }
 
-    $section_start = false;
+    find_section:
     $current_subsection = '';
+    $section_start = false;
 
-    #find subsection
-    while (!feof($stream)) {
-        $line = fgets($stream);
-        $line = trim($line);
-
-        if (strpos($line, '[') === 0
-            && trim($line, '[]') === $section_name)
-        {
-            $section_start = true;
-            break;
-        }
-    }
-
-    if (!$section_start) {
-        fclose($stream);
-        return $config;
-    }
-
-    #parse found subsection
+    //locates target section
     while (!feof($stream)) {
         $line = fgets($stream);
         $line = trim($line);
@@ -548,8 +531,29 @@ function parse_ini_section_with_subsections($filename, $section_name) {
             continue; // Ignore empty lines and comments
         }
 
-        if (strpos($line, '[') === 0) {
-            break; // End of the section
+        if (strpos($line, '[') === 0 && trim($line, '[]') === $section_name) {
+            $section_start = true;
+            break;
+        }
+    }
+
+    if (!$section_start) {
+        goto results;
+    }
+
+    // parses target section into subsections
+    while (!feof($stream)) {
+        $line = fgets($stream);
+        $line = trim($line);
+
+        if (empty($line) || strpos($line, ';') === 0 || strpos($line, '#') === 0) {
+            continue; // Ignore empty lines and comments
+        }
+
+        if (trim($line, '[]') === $section_name) {
+            continue;
+        } elseif (strpos($line, '[') === 0) {
+            goto find_section;
         }
 
         if (strpos($line, ' = ') !== false) {
@@ -565,6 +569,7 @@ function parse_ini_section_with_subsections($filename, $section_name) {
         }
     }
 
+    results:
     fclose($stream);
     return $config;
 }
