@@ -1492,7 +1492,7 @@ EOT
                 ,
                 ['key' => 'AWS_ENDPOINT_URL_S3', 'value' => 'https://test.com'],
                 'https://test.com',
-                'endpoint_url',
+                'endpoint',
                 'config'
             ],
             [
@@ -1507,7 +1507,7 @@ EOT
                 ,
                 null,
                 'https://test-foo.com',
-                'endpoint_url',
+                'endpoint',
                 'config'
             ],
             [
@@ -1518,7 +1518,7 @@ EOT
                 ,
                 ['key' => 'AWS_ENDPOINT_URL', 'value' => 'https://baz.com'],
                 'https://baz.com',
-                'endpoint_url',
+                'endpoint',
                 'config'
             ],
             [
@@ -1529,7 +1529,7 @@ EOT
                 ,
                 null,
                 'https://foo-bar.com',
-                'endpoint_url',
+                'endpoint',
                 'config'
             ]
         ];
@@ -1563,7 +1563,7 @@ EOT;
             'version' => 'latest',
             'ignore_configured_endpoint_urls' => true
         ], new HandlerList());
-        $this->assertFalse(isset($conf['config']['endpoint_url']));
+        $this->assertFalse(isset($conf['config']['endpoint']));
         unlink($dir . '/config');
         putenv("HOME=$home");
         putenv('AWS_ENDPOINT_URL' . '=');

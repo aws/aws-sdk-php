@@ -83,11 +83,19 @@ class ClientResolver
             'doc'       => 'Set to true to disable host prefix injection logic for services that use it. This disables the entire prefix injection, including the portions supplied by user-defined parameters. Setting this flag will have no effect on services that do not use host prefix injection.',
             'default'   => false,
         ],
+        'ignore_configured_endpoint_urls' => [
+            'type'      => 'value',
+            'valid'     => ['bool'],
+            'doc'       => 'Set to true to disable endpoint urls configured using the `endpoint_url` configuration option.',
+            'fn'        => [__CLASS__, '_apply_ignore_configured_endpoint_urls'],
+            'default'   => [__CLASS__, '_default_ignore_configured_endpoint_urls'],
+        ],
         'endpoint' => [
             'type'  => 'value',
             'valid' => ['string'],
             'doc'   => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3).',
             'fn'    => [__CLASS__, '_apply_endpoint'],
+            'default'   => [__CLASS__, '_default_endpoint']
         ],
         'region' => [
             'type'     => 'value',
@@ -281,20 +289,6 @@ class ClientResolver
             'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.  This will be ignored if you set the \'profile\' setting.',
             'default'   => true,
         ],
-        'ignore_configured_endpoint_urls' => [
-            'type'      => 'value',
-            'valid'     => ['bool'],
-            'doc'       => 'Set to true to disable endpoint urls configured using the `endpoint_url` configuration option.',
-            'fn'        => [__CLASS__, '_apply_ignore_configured_endpoint_urls'],
-            'default'   => [__CLASS__, '_default_ignore_configured_endpoint_urls'],
-        ],
-        'endpoint_url' => [
-            'type'      => 'value',
-            'valid'     => ['string'],
-            'doc'       => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3). This functions in an identical manner to and will take precedence over the `endpoint` configuration option and can also be resolved from environment variables and the shared config file.',
-            'fn'        => [__CLASS__, '_apply_endpoint_url'],
-            'default'   => [__CLASS__, '_default_endpoint_url'],
-        ]
     ];
 
     /**
@@ -1007,7 +1001,12 @@ class ClientResolver
 
     public static function _apply_endpoint($value, array &$args, HandlerList $list)
     {
+        if (empty($value)) {
+            return;
+        }
+
         $args['endpoint'] = $value;
+        $args['config']['endpoint'] = $value;
     }
 
     public static function _apply_idempotency_auto_fill(
@@ -1145,16 +1144,7 @@ class ClientResolver
         );
     }
 
-    public static function _apply_endpoint_url($value, array &$args)
-    {
-        if (empty($value)) {
-            return;
-        }
-
-        $args['config']['endpoint_url'] = $value;
-    }
-
-    public static function _default_endpoint_url(array &$args)
+    public static function _default_endpoint(array &$args)
     {
         if ($args['config']['ignore_configured_endpoint_urls']
             || !self::isValidService($args['service'])
