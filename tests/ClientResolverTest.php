@@ -1420,6 +1420,8 @@ EOT;
      * @param $ini
      * @param $env
      * @param $expected
+     * @param $configKey
+     * @param $configType
      */
     public function testConfigResolutionOrder($ini, $env, $expected, $configKey, $configType)
     {
@@ -1438,9 +1440,9 @@ EOT;
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
             'service' => 's3',
-            'version' => 'latest'
+            'region' => $configKey === 'region' ? null : 'x'
         ], new HandlerList());
-
+   
         if ($configType === 'args') {
             $this->assertEquals($conf[$configKey], $expected);
         } else {
@@ -1477,7 +1479,94 @@ EOT
                     'foo-region',
                     'region',
                     'args'
-                ]
+                ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT
+                ,
+                ['key' => 'AWS_ENDPOINT_URL_S3', 'value' => 'https://test.com'],
+                'https://test.com',
+                'endpoint',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT
+                ,
+                null,
+                'https://test-foo.com',
+                'endpoint',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+EOT
+                ,
+                ['key' => 'AWS_ENDPOINT_URL', 'value' => 'https://baz.com'],
+                'https://baz.com',
+                'endpoint',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+EOT
+                ,
+                null,
+                'https://foo-bar.com',
+                'endpoint',
+                'args'
+            ]
         ];
+    }
+
+    public function testIgnoreConfiguredEndpointUrls()
+    {
+        $ini = <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT;
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        putenv('AWS_ENDPOINT_URL' . '=' . 'https://test-foo.com');
+        putenv('AWS_ENDPOINT_URL_S3' . '=' . 'https://test-service-foo.com');
+
+        file_put_contents($dir . '/config', $ini);
+        $home = getenv('HOME');
+        putenv('HOME=' . dirname($dir));
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 's3',
+            'region' => 'x',
+            'version' => 'latest',
+            'ignore_configured_endpoint_urls' => true
+        ], new HandlerList());
+        $this->assertFalse(isset($conf['config']['endpoint']));
+        unlink($dir . '/config');
+        putenv("HOME=$home");
+        putenv('AWS_ENDPOINT_URL' . '=');
+        putenv('AWS_ENDPOINT_URL_S3' . '=');
     }
 }

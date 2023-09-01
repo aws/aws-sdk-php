@@ -83,11 +83,19 @@ class ClientResolver
             'doc'       => 'Set to true to disable host prefix injection logic for services that use it. This disables the entire prefix injection, including the portions supplied by user-defined parameters. Setting this flag will have no effect on services that do not use host prefix injection.',
             'default'   => false,
         ],
+        'ignore_configured_endpoint_urls' => [
+            'type'      => 'value',
+            'valid'     => ['bool'],
+            'doc'       => 'Set to true to disable endpoint urls configured using `AWS_ENDPOINT_URL` and `endpoint_url` shared config option.',
+            'fn'        => [__CLASS__, '_apply_ignore_configured_endpoint_urls'],
+            'default'   => [__CLASS__, '_default_ignore_configured_endpoint_urls'],
+        ],
         'endpoint' => [
             'type'  => 'value',
             'valid' => ['string'],
             'doc'   => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3).',
             'fn'    => [__CLASS__, '_apply_endpoint'],
+            'default'   => [__CLASS__, '_default_endpoint']
         ],
         'region' => [
             'type'     => 'value',
@@ -993,6 +1001,11 @@ class ClientResolver
 
     public static function _apply_endpoint($value, array &$args, HandlerList $list)
     {
+        if (empty($value)) {
+            unset($args['endpoint']);
+            return;
+        }
+
         $args['endpoint'] = $value;
     }
 
@@ -1116,6 +1129,55 @@ class ClientResolver
             : $args['region'];
     }
 
+    public static function _apply_ignore_configured_endpoint_urls($value, array &$args)
+    {
+        $args['config']['ignore_configured_endpoint_urls'] = $value;
+    }
+
+    public static function _default_ignore_configured_endpoint_urls(array &$args)
+    {
+        return ConfigurationResolver::resolve(
+            'ignore_configured_endpoint_urls',
+            false,
+            'bool',
+            $args
+        );
+    }
+
+    public static function _default_endpoint(array &$args)
+    {
+        if ($args['config']['ignore_configured_endpoint_urls']
+            || !self::isValidService($args['service'])
+        ) {
+            return '';
+        }
+
+        $serviceIdentifier = \Aws\manifest($args['service'])['serviceIdentifier'];
+        $value =  ConfigurationResolver::resolve(
+            'endpoint_url_' . $serviceIdentifier,
+            '',
+            'string',
+            $args + [
+                'ini_resolver_options' => [
+                    'section' => 'services',
+                    'subsection' => $serviceIdentifier,
+                    'key' => 'endpoint_url'
+                ]
+            ]
+        );
+
+        if (empty($value)) {
+            $value = ConfigurationResolver::resolve(
+                'endpoint_url',
+                '',
+                'string',
+                $args
+            );
+        }
+
+        return $value;
+    }
+  
     public static function _apply_region($value, array &$args)
     {
         if (empty($value)) {
