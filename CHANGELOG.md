@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.280.2 - 2023-09-01
 
 * `Aws\Connect` - Amazon Connect adds the ability to read, create, update, delete, and list view resources, and adds the ability to read, create, delete, and list view versions.
 * `Aws\IdentityStore` - New Identity Store content for China Region launch
