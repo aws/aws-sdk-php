@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Amazon Connect adds the ability to read, create, update, delete, and list view resources, and adds the ability to read, create, delete, and list view versions.
+* `Aws\IdentityStore` - New Identity Store content for China Region launch
+* `Aws\Neptunedata` - Removed the descriptive text in the introduction.
+* `Aws\ChimeSDKMediaPipelines` - This release adds support for the Voice Analytics feature for customer-owned KVS streams as part of the Amazon Chime SDK call analytics.
+
 ## 3.280.1 - 2023-08-31
 
 * `Aws\CloudHSM` - Deprecating CloudHSM Classic API Service.
