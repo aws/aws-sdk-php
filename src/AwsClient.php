@@ -550,11 +550,7 @@ class AwsClient implements AwsClientInterface
         $config = $this->getConfig();
         $service = $args['service'];
 
-        $builtIns['SDK::Endpoint'] = isset($config['endpoint_url'])
-            ? $config['endpoint_url']
-            : (isset($args['endpoint'])
-                ? $args['endpoint']
-                : null);
+        $builtIns['SDK::Endpoint'] = isset($config['endpoint_url']) ? $config['endpoint_url'];
         $builtIns['AWS::Region'] = $this->getRegion();
         $builtIns['AWS::UseFIPS'] = $config['use_fips_endpoint']->isUseFipsEndpoint();
         $builtIns['AWS::UseDualStack'] = $config['use_dual_stack_endpoint']->isUseDualstackEndpoint();
