@@ -86,7 +86,7 @@ class ClientResolver
         'ignore_configured_endpoint_urls' => [
             'type'      => 'value',
             'valid'     => ['bool'],
-            'doc'       => 'Set to true to disable endpoint urls configured using the `endpoint_url` configuration option.',
+            'doc'       => 'Set to true to disable endpoint urls configured using `AWS_ENDPOINT_URL` and `endpoint_url` shared config option.',
             'fn'        => [__CLASS__, '_apply_ignore_configured_endpoint_urls'],
             'default'   => [__CLASS__, '_default_ignore_configured_endpoint_urls'],
         ],
