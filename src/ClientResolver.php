@@ -1007,7 +1007,6 @@ class ClientResolver
         }
 
         $args['endpoint'] = $value;
-        $args['config']['endpoint'] = $value;
     }
 
     public static function _apply_idempotency_auto_fill(

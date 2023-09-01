@@ -535,7 +535,8 @@ function parse_ini_section_with_subsections($filename, $section_name) {
                     continue;
                 }
 
-                if (trim($line, '[]') === $section_name) {
+                if (preg_match('/^\[.*\]$/', $line) === 1
+                    && trim($line, '[]') === $section_name) {
                     continue;
                 } elseif (strpos($line, '[') === 0) {
                     break;

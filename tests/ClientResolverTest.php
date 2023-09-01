@@ -1493,7 +1493,7 @@ EOT
                 ['key' => 'AWS_ENDPOINT_URL_S3', 'value' => 'https://test.com'],
                 'https://test.com',
                 'endpoint',
-                'config'
+                'args'
             ],
             [
                 <<<EOT
@@ -1508,7 +1508,7 @@ EOT
                 null,
                 'https://test-foo.com',
                 'endpoint',
-                'config'
+                'args'
             ],
             [
                 <<<EOT
@@ -1519,7 +1519,7 @@ EOT
                 ['key' => 'AWS_ENDPOINT_URL', 'value' => 'https://baz.com'],
                 'https://baz.com',
                 'endpoint',
-                'config'
+                'args'
             ],
             [
                 <<<EOT
@@ -1530,7 +1530,7 @@ EOT
                 null,
                 'https://foo-bar.com',
                 'endpoint',
-                'config'
+                'args'
             ]
         ];
     }
