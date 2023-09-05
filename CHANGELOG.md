@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds support for service-specific endpoint url configuration.
+* `Aws\EC2` - Introducing Amazon EC2 C7gd, M7gd, and R7gd Instances with up to 3.8 TB of local NVMe-based SSD block-level storage. These instances are powered by AWS Graviton3 processors, delivering up to 25% better performance over Graviton2-based instances.
+* `Aws\ComputeOptimizer` - This release adds support to provide recommendations for G4dn and P3 instances that use NVIDIA GPUs.
+* `Aws\EventBridge` - Improve Endpoint Ruleset test coverage.
+* `Aws\VPCLattice` - This release adds Lambda event structure version config support for LAMBDA target groups. It also adds newline support for auth policies.
+* `Aws\Cloud9` - Added support for Ubuntu 22.04 that was not picked up in a previous Trebuchet request. Doc-only update.
+* `Aws\ECS` - Documentation only update for Amazon ECS.
+* `Aws\BillingConductor` - This release adds support for line item filtering in for the custom line item resource.
+* `Aws\SageMaker` - SageMaker Neo now supports data input shape derivation for Pytorch 2.0 and XGBoost compilation job for cloud instance targets. You can skip DataInputConfig field during compilation job creation. You can also access derived information from model in DescribeCompilationJob response.
+* `Aws\RDS` - Add support for feature integration with AWS Backup.
+
 ## 3.280.2 - 2023-09-01
 
 * `Aws\Connect` - Amazon Connect adds the ability to read, create, update, delete, and list view resources, and adds the ability to read, create, delete, and list view versions.

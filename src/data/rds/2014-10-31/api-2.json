@@ -2158,6 +2158,7 @@
         {"shape":"InvalidDBClusterSnapshotStateFault"},
         {"shape":"StorageQuotaExceededFault"},
         {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
         {"shape":"InvalidRestoreFault"},
         {"shape":"DBSubnetGroupNotFoundFault"},
         {"shape":"InvalidSubnet"},
@@ -3765,7 +3766,8 @@
         "DBSystemId":{"shape":"String"},
         "MasterUserSecret":{"shape":"MasterUserSecret"},
         "IOOptimizedNextAllowedModificationTime":{"shape":"TStamp"},
-        "LocalWriteForwardingStatus":{"shape":"LocalWriteForwardingStatus"}
+        "LocalWriteForwardingStatus":{"shape":"LocalWriteForwardingStatus"},
+        "AwsBackupRecoveryPointArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -3805,7 +3807,8 @@
         "Port":{"shape":"Integer"},
         "KmsKeyId":{"shape":"String"},
         "StorageType":{"shape":"String"},
-        "Iops":{"shape":"IntegerOptional"}
+        "Iops":{"shape":"IntegerOptional"},
+        "AwsBackupRecoveryPointArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -4391,7 +4394,8 @@
         "DBInstanceAutomatedBackupsArn":{"shape":"String"},
         "DBInstanceAutomatedBackupsReplications":{"shape":"DBInstanceAutomatedBackupsReplicationList"},
         "BackupTarget":{"shape":"String"},
-        "StorageThroughput":{"shape":"IntegerOptional"}
+        "StorageThroughput":{"shape":"IntegerOptional"},
+        "AwsBackupRecoveryPointArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -6903,7 +6907,8 @@
         "MasterUserSecretKmsKeyId":{"shape":"String"},
         "EngineMode":{"shape":"String"},
         "AllowEngineModeChange":{"shape":"Boolean"},
-        "EnableLocalWriteForwarding":{"shape":"BooleanOptional"}
+        "EnableLocalWriteForwarding":{"shape":"BooleanOptional"},
+        "AwsBackupRecoveryPointArn":{"shape":"AwsBackupRecoveryPointArn"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
