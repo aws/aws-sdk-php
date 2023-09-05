@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.0 - 2023-09-05
 
 * `Aws\` - Adds support for service-specific endpoint url configuration.
 * `Aws\EC2` - Introducing Amazon EC2 C7gd, M7gd, and R7gd Instances with up to 3.8 TB of local NVMe-based SSD block-level storage. These instances are powered by AWS Graviton3 processors, delivering up to 25% better performance over Graviton2-based instances.
