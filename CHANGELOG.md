@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.1 - 2023-09-06
 
 * `Aws\WAFV2` - The targeted protection level of the Bot Control managed rule group now provides optional, machine-learning analysis of traffic statistics to detect some bot-related activity. You can enable or disable the machine learning functionality through the API.
 * `Aws\ElasticLoadBalancingv2` - This release enables default UDP connection termination and disabling unhealthy target connection termination for Network Load Balancers.
