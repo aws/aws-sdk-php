@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WAFV2` - The targeted protection level of the Bot Control managed rule group now provides optional, machine-learning analysis of traffic statistics to detect some bot-related activity. You can enable or disable the machine learning functionality through the API.
+* `Aws\ElasticLoadBalancingv2` - This release enables default UDP connection termination and disabling unhealthy target connection termination for Network Load Balancers.
+* `Aws\MediaLive` - Adds advanced Output Locking options for Epoch Locking: Custom Epoch and Jam Sync Time
+* `Aws\EC2` - This release adds 'outpost' location type to the DescribeInstanceTypeOfferings API, allowing customers that have been allowlisted for outpost to query their offerings in the API.
+* `Aws\Appflow` - Adding OAuth2.0 support for servicenow connector.
+
 ## 3.281.0 - 2023-09-05
 
 * `Aws\` - Adds support for service-specific endpoint url configuration.
