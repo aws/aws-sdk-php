@@ -17,7 +17,7 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - run: |
@@ -55,7 +55,7 @@ jobs:
 
     #checkout the codebase from github
     - name: Checkout codebase
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     #validate composer files
     - name: Validate composer.json and composer.lock
