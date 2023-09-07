@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.2 - 2023-09-07
 
 * `Aws\SecurityHub` - Documentation updates for AWS Security Hub
 * `Aws\Neptunedata` - Minor changes to send unsigned requests to Neptune clusters
