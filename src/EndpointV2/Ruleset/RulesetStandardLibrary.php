@@ -159,7 +159,7 @@ class RulesetStandardLibrary
             return null;
         }
 
-        $parsed =  parse_url($url);
+        $parsed = parse_url($url);
 
         if ($parsed === false || !empty($parsed['query'])) {
             return null;
