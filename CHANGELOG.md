@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub
+* `Aws\Neptunedata` - Minor changes to send unsigned requests to Neptune clusters
+* `Aws\SimSpaceWeaver` - BucketName and ObjectKey are now required for the S3Location data type. BucketName is now required for the S3Destination data type.
+
 ## 3.281.1 - 2023-09-06
 
 * `Aws\WAFV2` - The targeted protection level of the Bot Control managed rule group now provides optional, machine-learning analysis of traffic statistics to detect some bot-related activity. You can enable or disable the machine learning functionality through the API.
