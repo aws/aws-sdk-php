@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.3 - 2023-09-08
 
 * `Aws\SageMaker` - Autopilot APIs will now support holiday featurization for Timeseries models. The models will now hold holiday metadata and should be able to accommodate holiday effect during inference.
 * `Aws\WorkSpaces` - A new field "ErrorDetails" will be added to the output of "DescribeWorkspaceImages" API call. This field provides in-depth details about the error occurred during image import process. These details include the possible causes of the errors and troubleshooting information.
