@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.5 - 2023-09-12
 
 * `Aws\EventBridge` - Adds sensitive trait to various shapes in Jetstream Connections API model.
 * `Aws\EC2` - This release adds support for restricting public sharing of AMIs through AMI Block Public Access
