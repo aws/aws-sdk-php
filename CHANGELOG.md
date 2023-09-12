@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EventBridge` - Adds sensitive trait to various shapes in Jetstream Connections API model.
+* `Aws\EC2` - This release adds support for restricting public sharing of AMIs through AMI Block Public Access
+* `Aws\kendra` - Amazon Kendra now supports confidence score buckets for retrieved passage results using the Retrieve API.
+
 ## 3.281.4 - 2023-09-11
 
 * `Aws\QuickSight` - This release launches new updates to QuickSight KPI visuals - support for sparklines, new templated layout and new targets for conditional formatting rules.
