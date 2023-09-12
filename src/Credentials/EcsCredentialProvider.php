@@ -2,8 +2,10 @@
 namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
+use http\Exception\InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -16,7 +18,10 @@ class EcsCredentialProvider
     const ENV_URI = "AWS_CONTAINER_CREDENTIALS_RELATIVE_URI";
     const ENV_FULL_URI = "AWS_CONTAINER_CREDENTIALS_FULL_URI";
     const ENV_AUTH_TOKEN = "AWS_CONTAINER_AUTHORIZATION_TOKEN";
+    const ENV_AUTH_TOKEN_FILE = "AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE";
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
+    const EKS_SERVER_HOST = '169.254.170.23';
+    const EKS_SERVER_HOST_IPV6 = 'fd00:ec2::23';
 
     /** @var callable */
     private $client;
@@ -36,54 +41,69 @@ class EcsCredentialProvider
         $timeout = getenv(self::ENV_TIMEOUT);
 
         if (!$timeout) {
-            $timeout = isset($_SERVER[self::ENV_TIMEOUT])
-                ? $_SERVER[self::ENV_TIMEOUT]
-                : (isset($config['timeout']) ? $config['timeout'] : 1.0);
+            $timeout = $_SERVER[self::ENV_TIMEOUT] ?? ($config['timeout'] ?? 1.0);
         }
 
         $this->timeout = (float) $timeout;
-        $this->client = isset($config['client'])
-            ? $config['client']
-            : \Aws\default_http_handler();
+        $this->client = $config['client'] ?? \Aws\default_http_handler();
     }
 
     /**
      * Load ECS credentials
      *
      * @return PromiseInterface
+     * @throws GuzzleException
      */
     public function __invoke()
     {
         $client = $this->client;
-        $request = new Request('GET', self::getEcsUri());
-        
-        $headers = $this->setHeaderForAuthToken();
-        return $client(
-            $request,
-            [
-                'timeout' => $this->timeout,
-                'proxy' => '',
-                'headers' => $headers
-            ]
-        )->then(function (ResponseInterface $response) {
-            $result = $this->decodeResult((string) $response->getBody());
-            return new Credentials(
-                $result['AccessKeyId'],
-                $result['SecretAccessKey'],
-                $result['Token'],
-                strtotime($result['Expiration'])
-            );
-        })->otherwise(function ($reason) {
-            $reason = is_array($reason) ? $reason['exception'] : $reason;
-            $msg = $reason->getMessage();
-            throw new CredentialsException(
-                "Error retrieving credential from ECS ($msg)"
-            );
-        });
+        $uri = self::getEcsUri();
+
+        if ($this->isValidUri($uri)) {
+            $request = new Request('GET', $uri);
+
+            $headers = $this->setHeaderForAuthToken();
+            return $client(
+                $request,
+                [
+                    'timeout' => $this->timeout,
+                    'proxy' => '',
+                    'headers' => $headers
+                ]
+            )->then(function (ResponseInterface $response) {
+                $result = $this->decodeResult((string) $response->getBody());
+                return new Credentials(
+                    $result['AccessKeyId'],
+                    $result['SecretAccessKey'],
+                    $result['Token'],
+                    strtotime($result['Expiration'])
+                );
+            })->otherwise(function ($reason) {
+                $reason = is_array($reason) ? $reason['exception'] : $reason;
+                $msg = $reason->getMessage();
+                throw new CredentialsException(
+                    "Error retrieving credential from ECS ($msg)"
+                );
+            });
+        }
+
+        throw new \InvalidArgumentException("Uri '{$uri}' contains an unsupported host.");
     }
     
     private function getEcsAuthToken()
     {
+        if (!empty($path = getenv(self::ENV_AUTH_TOKEN_FILE))) {
+            try {
+                $token = file_get_contents($path);
+            } catch (\Exception $e) {
+                throw new \InvalidArgumentException(
+                    "Failed to read authorization token from '{$path}': no such file or directory."
+                );
+            }
+
+            return $token;
+        }
+
         return getenv(self::ENV_AUTH_TOKEN);
     }
 
@@ -106,16 +126,16 @@ class EcsCredentialProvider
         $credsUri = getenv(self::ENV_URI);
 
         if ($credsUri === false) {
-            $credsUri = isset($_SERVER[self::ENV_URI]) ? $_SERVER[self::ENV_URI] : '';
+            $credsUri = $_SERVER[self::ENV_URI] ?? '';
         }
 
         if(empty($credsUri)){
             $credFullUri = getenv(self::ENV_FULL_URI);
-            if($credFullUri === false){
-                $credFullUri = isset($_SERVER[self::ENV_FULL_URI]) ? $_SERVER[self::ENV_FULL_URI] : '';
+            if ($credFullUri === false){
+                $credFullUri = $_SERVER[self::ENV_FULL_URI] ?? '';
             }
 
-            if(!empty($credFullUri))
+            if (!empty($credFullUri))
                 return $credFullUri;
         }
         
@@ -130,5 +150,46 @@ class EcsCredentialProvider
             throw new CredentialsException('Unexpected ECS credential value');
         }
         return $result;
+    }
+
+    private function isValidUri($uri)
+    {
+        $parsed = parse_url($uri);
+
+        if ($parsed['scheme'] !== 'https') {
+            $host = trim($parsed['host'], '[]');
+
+            if ($host !== '169.254.170.2'
+                && $host !== self::EKS_SERVER_HOST
+                && $host !== self::EKS_SERVER_HOST_IPV6
+                && !$this->isLoopbackAddress($host)
+            ) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private function isLoopbackAddress($ip)
+    {
+        if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+            return false;
+        }
+
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            if ($ip === '::1') {
+                return true;
+            }
+
+            return false;
+        }
+
+        $loopbackStart = ip2long('127.0.0.0');
+        $loopbackEnd = ip2long('127.255.255.255');
+
+        $ipLong = ip2long($ip);
+
+        return ($ipLong >= $loopbackStart && $ipLong <= $loopbackEnd);
     }
 }
