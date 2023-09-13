@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Cloud9` - Update to include information on Ubuntu 18 deprecation.
+* `Aws\IVSRealTime` - Doc only update that changes description for ParticipantToken.
+* `Aws\drs` - Updated existing APIs and added new ones to support using AWS Elastic Disaster Recovery post-launch actions. Added support for new regions.
+* `Aws\SimSpaceWeaver` - Edited the introductory text for the API reference.
+* `Aws\GuardDuty` - Add `managementType` field to ListCoverage API response.
+* `Aws\XRay` - Add StartTime field in GetTraceSummaries API response for each TraceSummary.
+* `Aws\InternetMonitor` - This release updates the Amazon CloudWatch Internet Monitor API domain name.
+* `Aws\Firehose` - DocumentIdOptions has been added for the Amazon OpenSearch destination.
+
 ## 3.281.5 - 2023-09-12
 
 * `Aws\EventBridge` - Adds sensitive trait to various shapes in Jetstream Connections API model.
