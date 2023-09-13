@@ -5,7 +5,6 @@ use Aws\Exception\CredentialsException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
-use http\Exception\InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -59,7 +58,7 @@ class EcsCredentialProvider
         $client = $this->client;
         $uri = self::getEcsUri();
 
-        if ($this->isValidUri($uri)) {
+        if ($this->isCompatibleUri($uri)) {
             $request = new Request('GET', $uri);
 
             $headers = $this->setHeaderForAuthToken();
@@ -152,7 +151,7 @@ class EcsCredentialProvider
         return $result;
     }
 
-    private function isValidUri($uri)
+    private function isCompatibleUri($uri)
     {
         $parsed = parse_url($uri);
 
@@ -171,14 +170,14 @@ class EcsCredentialProvider
         return true;
     }
 
-    private function isLoopbackAddress($ip)
+    private function isLoopbackAddress($host)
     {
-        if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+        if (!filter_var($host, FILTER_VALIDATE_IP)) {
             return false;
         }
 
-        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            if ($ip === '::1') {
+        if (filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            if ($host === '::1') {
                 return true;
             }
 
@@ -187,8 +186,7 @@ class EcsCredentialProvider
 
         $loopbackStart = ip2long('127.0.0.0');
         $loopbackEnd = ip2long('127.255.255.255');
-
-        $ipLong = ip2long($ip);
+        $ipLong = ip2long($host);
 
         return ($ipLong >= $loopbackStart && $ipLong <= $loopbackEnd);
     }
