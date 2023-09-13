@@ -2,7 +2,7 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\EcsCredentialProvider;
-use GuzzleHttp\ClientInterface;
+use Aws\Exception\CredentialsException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
@@ -143,7 +143,7 @@ class EcsCredentialProviderTest extends TestCase
         $expect = $case['expect'];
 
         if ($expect['type'] === 'error') {
-            $this->expectException(\InvalidArgumentException::class);
+            $this->expectException(CredentialsException::class);
             $this->expectExceptionMessage($expect['reason']);
         }
 

@@ -86,7 +86,7 @@ class EcsCredentialProvider
             });
         }
 
-        throw new \InvalidArgumentException("Uri '{$uri}' contains an unsupported host.");
+        throw new CredentialsException("Uri '{$uri}' contains an unsupported host.");
     }
     
     private function getEcsAuthToken()
@@ -94,8 +94,14 @@ class EcsCredentialProvider
         if (!empty($path = getenv(self::ENV_AUTH_TOKEN_FILE))) {
             try {
                 $token = file_get_contents($path);
+
+                if ($token === false) {
+                    throw new CredentialsException(
+                        "Failed to read authorization token from '{$path}': no such file or directory."
+                    );
+                }
             } catch (\Exception $e) {
-                throw new \InvalidArgumentException(
+                throw new CredentialsException(
                     "Failed to read authorization token from '{$path}': no such file or directory."
                 );
             }
