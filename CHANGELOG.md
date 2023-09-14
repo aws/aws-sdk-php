@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.7 - 2023-09-14
 
 * `Aws\AppStream` - This release introduces multi-session fleets, allowing customers to provision more than one user session on a single fleet instance.
 * `Aws\CloudFormation` - Documentation updates for AWS CloudFormation
