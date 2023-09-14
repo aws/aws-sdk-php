@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - This release introduces multi-session fleets, allowing customers to provision more than one user session on a single fleet instance.
+* `Aws\CloudFormation` - Documentation updates for AWS CloudFormation
+* `Aws\EntityResolution` - Changed "ResolutionTechniques" and "MappedInputFields" in workflow and schema mapping operations to be required fields.
+* `Aws\LookoutEquipment` - This release adds APIs for the new scheduled retraining feature.
+
 ## 3.281.6 - 2023-09-13
 
 * `Aws\Cloud9` - Update to include information on Ubuntu 18 deprecation.
