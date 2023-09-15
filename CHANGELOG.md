@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.8 - 2023-09-15
 
 * `Aws\SageMaker` - This release introduces Skip Model Validation for Model Packages
 * `Aws\Connect` - New rule type (OnMetricDataUpdate) has been added
