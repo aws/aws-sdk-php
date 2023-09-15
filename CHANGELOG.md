@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - This release introduces Skip Model Validation for Model Packages
+* `Aws\Connect` - New rule type (OnMetricDataUpdate) has been added
+* `Aws\AppStream` - This release introduces app block builder, allowing customers to provision a resource to package applications into an app block
+* `Aws\DataSync` - Documentation-only updates for AWS DataSync.
+
 ## 3.281.7 - 2023-09-14
 
 * `Aws\AppStream` - This release introduces multi-session fleets, allowing customers to provision more than one user session on a single fleet instance.
