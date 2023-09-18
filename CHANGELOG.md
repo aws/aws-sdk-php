@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkMail` - This release includes four new APIs UpdateUser, UpdateGroup, ListGroupsForEntity and DescribeEntity, along with RemoteUsers and some enhancements to existing APIs.
+* `Aws\ApplicationDiscoveryService` - Add sensitive protection for customer information
+* `Aws\Macie2` - This release changes the default managedDataIdentifierSelector setting for new classification jobs to RECOMMENDED. By default, new classification jobs now use the recommended set of managed data identifiers.
+
 ## 3.281.8 - 2023-09-15
 
 * `Aws\SageMaker` - This release introduces Skip Model Validation for Model Packages
