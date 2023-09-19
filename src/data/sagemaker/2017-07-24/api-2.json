@@ -4831,7 +4831,8 @@
       "members":{
         "TimeSeriesForecastingSettings":{"shape":"TimeSeriesForecastingSettings"},
         "ModelRegisterSettings":{"shape":"ModelRegisterSettings"},
-        "WorkspaceSettings":{"shape":"WorkspaceSettings"}
+        "WorkspaceSettings":{"shape":"WorkspaceSettings"},
+        "IdentityProviderOAuthSettings":{"shape":"IdentityProviderOAuthSettings"}
       }
     },
     "CapacitySize":{
@@ -5650,6 +5651,12 @@
       "members":{
         "CompleteOnConvergence":{"shape":"CompleteOnConvergence"}
       }
+    },
+    "CountryCode":{
+      "type":"string",
+      "max":2,
+      "min":2,
+      "pattern":"[A-Z]{2}"
     },
     "CreateActionRequest":{
       "type":"structure",
@@ -6494,7 +6501,8 @@
         "Domain":{"shape":"String"},
         "Task":{"shape":"String"},
         "SamplePayloadUrl":{"shape":"S3Uri"},
-        "AdditionalInferenceSpecifications":{"shape":"AdditionalInferenceSpecifications"}
+        "AdditionalInferenceSpecifications":{"shape":"AdditionalInferenceSpecifications"},
+        "SkipModelValidation":{"shape":"SkipModelValidation"}
       }
     },
     "CreateModelPackageOutput":{
@@ -7108,6 +7116,13 @@
         "S3DataSource":{"shape":"S3DataSource"},
         "FileSystemDataSource":{"shape":"FileSystemDataSource"}
       }
+    },
+    "DataSourceName":{
+      "type":"string",
+      "enum":[
+        "SalesforceGenie",
+        "Snowflake"
+      ]
     },
     "Database":{
       "type":"string",
@@ -7734,6 +7749,12 @@
         "DeviceNames":{"shape":"DeviceNames"}
       }
     },
+    "DerivedInformation":{
+      "type":"structure",
+      "members":{
+        "DerivedDataInputConfig":{"shape":"DataInputConfig"}
+      }
+    },
     "DescribeActionRequest":{
       "type":"structure",
       "required":["ActionName"],
@@ -8013,7 +8034,8 @@
         "RoleArn":{"shape":"RoleArn"},
         "InputConfig":{"shape":"InputConfig"},
         "OutputConfig":{"shape":"OutputConfig"},
-        "VpcConfig":{"shape":"NeoVpcConfig"}
+        "VpcConfig":{"shape":"NeoVpcConfig"},
+        "DerivedInformation":{"shape":"DerivedInformation"}
       }
     },
     "DescribeContextRequest":{
@@ -8966,7 +8988,8 @@
         "Domain":{"shape":"String"},
         "Task":{"shape":"String"},
         "SamplePayloadUrl":{"shape":"String"},
-        "AdditionalInferenceSpecifications":{"shape":"AdditionalInferenceSpecifications"}
+        "AdditionalInferenceSpecifications":{"shape":"AdditionalInferenceSpecifications"},
+        "SkipModelValidation":{"shape":"SkipModelValidation"}
       }
     },
     "DescribeModelQualityJobDefinitionRequest":{
@@ -11111,6 +11134,18 @@
       "max":10,
       "min":1
     },
+    "HolidayConfig":{
+      "type":"list",
+      "member":{"shape":"HolidayConfigAttributes"},
+      "max":1,
+      "min":1
+    },
+    "HolidayConfigAttributes":{
+      "type":"structure",
+      "members":{
+        "CountryCode":{"shape":"CountryCode"}
+      }
+    },
     "HookParameters":{
       "type":"map",
       "key":{"shape":"ConfigKey"},
@@ -11792,6 +11827,19 @@
       "max":128,
       "min":32
     },
+    "IdentityProviderOAuthSetting":{
+      "type":"structure",
+      "members":{
+        "DataSourceName":{"shape":"DataSourceName"},
+        "Status":{"shape":"FeatureStatus"},
+        "SecretArn":{"shape":"SecretArn"}
+      }
+    },
+    "IdentityProviderOAuthSettings":{
+      "type":"list",
+      "member":{"shape":"IdentityProviderOAuthSetting"},
+      "max":20
+    },
     "Image":{
       "type":"structure",
       "required":[
@@ -12234,7 +12282,6 @@
       "type":"structure",
       "required":[
         "S3Uri",
-        "DataInputConfig",
         "Framework"
       ],
       "members":{
@@ -15192,7 +15239,8 @@
         "AdditionalInferenceSpecifications":{"shape":"AdditionalInferenceSpecifications"},
         "Tags":{"shape":"TagList"},
         "CustomerMetadataProperties":{"shape":"CustomerMetadataMap"},
-        "DriftCheckBaselines":{"shape":"DriftCheckBaselines"}
+        "DriftCheckBaselines":{"shape":"DriftCheckBaselines"},
+        "SkipModelValidation":{"shape":"SkipModelValidation"}
       }
     },
     "ModelPackageArn":{
@@ -18847,6 +18895,13 @@
       "type":"string",
       "pattern":"UserName"
     },
+    "SkipModelValidation":{
+      "type":"string",
+      "enum":[
+        "All",
+        "None"
+      ]
+    },
     "SnsTopicArn":{
       "type":"string",
       "max":2048,
@@ -19721,7 +19776,8 @@
         "ForecastHorizon":{"shape":"ForecastHorizon"},
         "ForecastQuantiles":{"shape":"ForecastQuantiles"},
         "Transformations":{"shape":"TimeSeriesTransformations"},
-        "TimeSeriesConfig":{"shape":"TimeSeriesConfig"}
+        "TimeSeriesConfig":{"shape":"TimeSeriesConfig"},
+        "HolidayConfig":{"shape":"HolidayConfig"}
       }
     },
     "TimeSeriesForecastingSettings":{

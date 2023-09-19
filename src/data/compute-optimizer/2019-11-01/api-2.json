@@ -146,6 +146,25 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "ExportLicenseRecommendations":{
+      "name":"ExportLicenseRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ExportLicenseRecommendationsRequest"},
+      "output":{"shape":"ExportLicenseRecommendationsResponse"},
+      "errors":[
+        {"shape":"OptInRequiredException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingAuthenticationToken"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "GetAutoScalingGroupRecommendations":{
       "name":"GetAutoScalingGroupRecommendations",
       "http":{
@@ -332,6 +351,25 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "GetLicenseRecommendations":{
+      "name":"GetLicenseRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetLicenseRecommendationsRequest"},
+      "output":{"shape":"GetLicenseRecommendationsResponse"},
+      "errors":[
+        {"shape":"OptInRequiredException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"MissingAuthenticationToken"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetRecommendationPreferences":{
       "name":"GetRecommendationPreferences",
       "http":{
@@ -469,7 +507,8 @@
         "lastRefreshTimestamp":{"shape":"LastRefreshTimestamp"},
         "currentPerformanceRisk":{"shape":"CurrentPerformanceRisk"},
         "effectiveRecommendationPreferences":{"shape":"EffectiveRecommendationPreferences"},
-        "inferredWorkloadTypes":{"shape":"InferredWorkloadTypes"}
+        "inferredWorkloadTypes":{"shape":"InferredWorkloadTypes"},
+        "currentInstanceGpuInfo":{"shape":"GpuInfo"}
       }
     },
     "AutoScalingGroupRecommendationOption":{
@@ -480,7 +519,8 @@
         "performanceRisk":{"shape":"PerformanceRisk"},
         "rank":{"shape":"Rank"},
         "savingsOpportunity":{"shape":"SavingsOpportunity"},
-        "migrationEffort":{"shape":"MigrationEffort"}
+        "migrationEffort":{"shape":"MigrationEffort"},
+        "instanceGpuInfo":{"shape":"GpuInfo"}
       }
     },
     "AutoScalingGroupRecommendationOptions":{
@@ -923,6 +963,25 @@
         "s3Destination":{"shape":"S3Destination"}
       }
     },
+    "ExportLicenseRecommendationsRequest":{
+      "type":"structure",
+      "required":["s3DestinationConfig"],
+      "members":{
+        "accountIds":{"shape":"AccountIds"},
+        "filters":{"shape":"LicenseRecommendationFilters"},
+        "fieldsToExport":{"shape":"ExportableLicenseFields"},
+        "s3DestinationConfig":{"shape":"S3DestinationConfig"},
+        "fileFormat":{"shape":"FileFormat"},
+        "includeMemberAccounts":{"shape":"IncludeMemberAccounts"}
+      }
+    },
+    "ExportLicenseRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "jobId":{"shape":"JobId"},
+        "s3Destination":{"shape":"S3Destination"}
+      }
+    },
     "ExportableAutoScalingGroupField":{
       "type":"string",
       "enum":[
@@ -979,7 +1038,13 @@
         "EffectiveRecommendationPreferencesEnhancedInfrastructureMetrics",
         "EffectiveRecommendationPreferencesInferredWorkloadTypes",
         "InferredWorkloadTypes",
-        "RecommendationOptionsMigrationEffort"
+        "RecommendationOptionsMigrationEffort",
+        "CurrentInstanceGpuInfo",
+        "RecommendationOptionsInstanceGpuInfo",
+        "UtilizationMetricsGpuPercentageMaximum",
+        "UtilizationMetricsGpuMemoryPercentageMaximum",
+        "RecommendationOptionsProjectedUtilizationMetricsGpuPercentageMaximum",
+        "RecommendationOptionsProjectedUtilizationMetricsGpuMemoryPercentageMaximum"
       ]
     },
     "ExportableAutoScalingGroupFields":{
@@ -1078,7 +1143,14 @@
         "InstanceState",
         "Tags",
         "ExternalMetricStatusCode",
-        "ExternalMetricStatusReason"
+        "ExternalMetricStatusReason",
+        "CurrentInstanceGpuInfo",
+        "RecommendationOptionsInstanceGpuInfo",
+        "UtilizationMetricsGpuPercentageMaximum",
+        "UtilizationMetricsGpuMemoryPercentageMaximum",
+        "RecommendationOptionsProjectedUtilizationMetricsGpuPercentageMaximum",
+        "RecommendationOptionsProjectedUtilizationMetricsGpuMemoryPercentageMaximum",
+        "Idle"
       ]
     },
     "ExportableInstanceFields":{
@@ -1121,6 +1193,36 @@
       "type":"list",
       "member":{"shape":"ExportableLambdaFunctionField"}
     },
+    "ExportableLicenseField":{
+      "type":"string",
+      "enum":[
+        "AccountId",
+        "ResourceArn",
+        "LookbackPeriodInDays",
+        "LastRefreshTimestamp",
+        "Finding",
+        "FindingReasonCodes",
+        "CurrentLicenseConfigurationNumberOfCores",
+        "CurrentLicenseConfigurationInstanceType",
+        "CurrentLicenseConfigurationOperatingSystem",
+        "CurrentLicenseConfigurationLicenseName",
+        "CurrentLicenseConfigurationLicenseEdition",
+        "CurrentLicenseConfigurationLicenseModel",
+        "CurrentLicenseConfigurationLicenseVersion",
+        "CurrentLicenseConfigurationMetricsSource",
+        "RecommendationOptionsOperatingSystem",
+        "RecommendationOptionsLicenseEdition",
+        "RecommendationOptionsLicenseModel",
+        "RecommendationOptionsSavingsOpportunityPercentage",
+        "RecommendationOptionsEstimatedMonthlySavingsCurrency",
+        "RecommendationOptionsEstimatedMonthlySavingsValue",
+        "Tags"
+      ]
+    },
+    "ExportableLicenseFields":{
+      "type":"list",
+      "member":{"shape":"ExportableLicenseField"}
+    },
     "ExportableVolumeField":{
       "type":"string",
       "enum":[
@@ -1153,7 +1255,8 @@
         "RecommendationOptionsEstimatedMonthlySavingsCurrency",
         "RecommendationOptionsEstimatedMonthlySavingsValue",
         "RootVolume",
-        "Tags"
+        "Tags",
+        "CurrentConfigurationRootVolume"
       ]
     },
     "ExportableVolumeFields":{
@@ -1432,6 +1535,24 @@
         "lambdaFunctionRecommendations":{"shape":"LambdaFunctionRecommendations"}
       }
     },
+    "GetLicenseRecommendationsRequest":{
+      "type":"structure",
+      "members":{
+        "resourceArns":{"shape":"ResourceArns"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"},
+        "filters":{"shape":"LicenseRecommendationFilters"},
+        "accountIds":{"shape":"AccountIds"}
+      }
+    },
+    "GetLicenseRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "licenseRecommendations":{"shape":"LicenseRecommendations"},
+        "errors":{"shape":"GetRecommendationErrors"}
+      }
+    },
     "GetRecommendationError":{
       "type":"structure",
       "members":{
@@ -1475,6 +1596,25 @@
         "nextToken":{"shape":"NextToken"},
         "recommendationSummaries":{"shape":"RecommendationSummaries"}
       }
+    },
+    "Gpu":{
+      "type":"structure",
+      "members":{
+        "gpuCount":{"shape":"GpuCount"},
+        "gpuMemorySizeInMiB":{"shape":"GpuMemorySizeInMiB"}
+      }
+    },
+    "GpuCount":{"type":"integer"},
+    "GpuInfo":{
+      "type":"structure",
+      "members":{
+        "gpus":{"shape":"Gpus"}
+      }
+    },
+    "GpuMemorySizeInMiB":{"type":"integer"},
+    "Gpus":{
+      "type":"list",
+      "member":{"shape":"Gpu"}
     },
     "High":{"type":"long"},
     "Identifier":{"type":"string"},
@@ -1520,6 +1660,13 @@
       "type":"list",
       "member":{"shape":"InstanceArn"}
     },
+    "InstanceIdle":{
+      "type":"string",
+      "enum":[
+        "True",
+        "False"
+      ]
+    },
     "InstanceName":{"type":"string"},
     "InstanceRecommendation":{
       "type":"structure",
@@ -1540,7 +1687,9 @@
         "inferredWorkloadTypes":{"shape":"InferredWorkloadTypes"},
         "instanceState":{"shape":"InstanceState"},
         "tags":{"shape":"Tags"},
-        "externalMetricStatus":{"shape":"ExternalMetricStatus"}
+        "externalMetricStatus":{"shape":"ExternalMetricStatus"},
+        "currentInstanceGpuInfo":{"shape":"GpuInfo"},
+        "idle":{"shape":"InstanceIdle"}
       }
     },
     "InstanceRecommendationFindingReasonCode":{
@@ -1561,7 +1710,11 @@
         "DiskIOPSOverprovisioned",
         "DiskIOPSUnderprovisioned",
         "DiskThroughputOverprovisioned",
-        "DiskThroughputUnderprovisioned"
+        "DiskThroughputUnderprovisioned",
+        "GPUUnderprovisioned",
+        "GPUOverprovisioned",
+        "GPUMemoryUnderprovisioned",
+        "GPUMemoryOverprovisioned"
       ]
     },
     "InstanceRecommendationFindingReasonCodes":{
@@ -1577,7 +1730,8 @@
         "performanceRisk":{"shape":"PerformanceRisk"},
         "rank":{"shape":"Rank"},
         "savingsOpportunity":{"shape":"SavingsOpportunity"},
-        "migrationEffort":{"shape":"MigrationEffort"}
+        "migrationEffort":{"shape":"MigrationEffort"},
+        "instanceGpuInfo":{"shape":"GpuInfo"}
       }
     },
     "InstanceRecommendations":{
@@ -1770,6 +1924,112 @@
     },
     "LastRefreshTimestamp":{"type":"timestamp"},
     "LastUpdatedTimestamp":{"type":"timestamp"},
+    "LicenseConfiguration":{
+      "type":"structure",
+      "members":{
+        "numberOfCores":{"shape":"NumberOfCores"},
+        "instanceType":{"shape":"InstanceType"},
+        "operatingSystem":{"shape":"OperatingSystem"},
+        "licenseEdition":{"shape":"LicenseEdition"},
+        "licenseName":{"shape":"LicenseName"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "licenseVersion":{"shape":"LicenseVersion"},
+        "metricsSource":{"shape":"MetricsSource"}
+      }
+    },
+    "LicenseEdition":{
+      "type":"string",
+      "enum":[
+        "Enterprise",
+        "Standard",
+        "Free",
+        "NoLicenseEditionFound"
+      ]
+    },
+    "LicenseFinding":{
+      "type":"string",
+      "enum":[
+        "InsufficientMetrics",
+        "Optimized",
+        "NotOptimized"
+      ]
+    },
+    "LicenseFindingReasonCode":{
+      "type":"string",
+      "enum":[
+        "InvalidCloudWatchApplicationInsightsSetup",
+        "CloudWatchApplicationInsightsError",
+        "LicenseOverprovisioned",
+        "Optimized"
+      ]
+    },
+    "LicenseFindingReasonCodes":{
+      "type":"list",
+      "member":{"shape":"LicenseFindingReasonCode"}
+    },
+    "LicenseModel":{
+      "type":"string",
+      "enum":[
+        "LicenseIncluded",
+        "BringYourOwnLicense"
+      ]
+    },
+    "LicenseName":{
+      "type":"string",
+      "enum":["SQLServer"]
+    },
+    "LicenseRecommendation":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"ResourceArn"},
+        "accountId":{"shape":"AccountId"},
+        "currentLicenseConfiguration":{"shape":"LicenseConfiguration"},
+        "lookbackPeriodInDays":{"shape":"LookBackPeriodInDays"},
+        "lastRefreshTimestamp":{"shape":"LastRefreshTimestamp"},
+        "finding":{"shape":"LicenseFinding"},
+        "findingReasonCodes":{"shape":"LicenseFindingReasonCodes"},
+        "licenseRecommendationOptions":{"shape":"LicenseRecommendationOptions"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "LicenseRecommendationFilter":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"LicenseRecommendationFilterName"},
+        "values":{"shape":"FilterValues"}
+      }
+    },
+    "LicenseRecommendationFilterName":{
+      "type":"string",
+      "enum":[
+        "Finding",
+        "FindingReasonCode",
+        "LicenseName"
+      ]
+    },
+    "LicenseRecommendationFilters":{
+      "type":"list",
+      "member":{"shape":"LicenseRecommendationFilter"}
+    },
+    "LicenseRecommendationOption":{
+      "type":"structure",
+      "members":{
+        "rank":{"shape":"Rank"},
+        "operatingSystem":{"shape":"OperatingSystem"},
+        "licenseEdition":{"shape":"LicenseEdition"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "savingsOpportunity":{"shape":"SavingsOpportunity"}
+      }
+    },
+    "LicenseRecommendationOptions":{
+      "type":"list",
+      "member":{"shape":"LicenseRecommendationOption"}
+    },
+    "LicenseRecommendations":{
+      "type":"list",
+      "member":{"shape":"LicenseRecommendation"}
+    },
+    "LicenseVersion":{"type":"string"},
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -1816,8 +2076,22 @@
         "NETWORK_IN_BYTES_PER_SECOND",
         "NETWORK_OUT_BYTES_PER_SECOND",
         "NETWORK_PACKETS_IN_PER_SECOND",
-        "NETWORK_PACKETS_OUT_PER_SECOND"
+        "NETWORK_PACKETS_OUT_PER_SECOND",
+        "GPU_PERCENTAGE",
+        "GPU_MEMORY_PERCENTAGE"
       ]
+    },
+    "MetricProviderArn":{"type":"string"},
+    "MetricSource":{
+      "type":"structure",
+      "members":{
+        "provider":{"shape":"MetricSourceProvider"},
+        "providerArn":{"shape":"MetricProviderArn"}
+      }
+    },
+    "MetricSourceProvider":{
+      "type":"string",
+      "enum":["CloudWatchApplicationInsights"]
     },
     "MetricStatistic":{
       "type":"string",
@@ -1830,6 +2104,10 @@
     "MetricValues":{
       "type":"list",
       "member":{"shape":"MetricValue"}
+    },
+    "MetricsSource":{
+      "type":"list",
+      "member":{"shape":"MetricSource"}
     },
     "MigrationEffort":{
       "type":"string",
@@ -1853,8 +2131,10 @@
     "NullableCpu":{"type":"integer"},
     "NullableMemory":{"type":"integer"},
     "NullableMemoryReservation":{"type":"integer"},
+    "NumberOfCores":{"type":"integer"},
     "NumberOfInvocations":{"type":"long"},
     "NumberOfMemberAccountsOptedIn":{"type":"integer"},
+    "OperatingSystem":{"type":"string"},
     "OptInRequiredException":{
       "type":"structure",
       "members":{
@@ -1995,7 +2275,8 @@
         "AutoScalingGroup",
         "EbsVolume",
         "LambdaFunction",
-        "EcsService"
+        "EcsService",
+        "License"
       ]
     },
     "RecommendationSources":{
@@ -2031,6 +2312,10 @@
       "member":{"shape":"RecommendedOptionProjectedMetric"}
     },
     "ResourceArn":{"type":"string"},
+    "ResourceArns":{
+      "type":"list",
+      "member":{"shape":"ResourceArn"}
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -2047,7 +2332,8 @@
         "EbsVolume",
         "LambdaFunction",
         "NotApplicable",
-        "EcsService"
+        "EcsService",
+        "License"
       ]
     },
     "RootVolume":{"type":"boolean"},

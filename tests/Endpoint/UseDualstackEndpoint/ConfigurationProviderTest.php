@@ -141,7 +141,7 @@ EOT;
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
-        $result = call_user_func(ConfigurationProvider::ini(null, null))->wait();
+        $result = call_user_func(ConfigurationProvider::ini('foo-region', null))->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
     }
@@ -155,7 +155,7 @@ EOT;
         file_put_contents($dir . '/alt_config', $this->altIniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
-        $result = call_user_func(ConfigurationProvider::ini(null, null))->wait();
+        $result = call_user_func(ConfigurationProvider::ini('foo-region', null))->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
         unlink($dir . '/alt_config');

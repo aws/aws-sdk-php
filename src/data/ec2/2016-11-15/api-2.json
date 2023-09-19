@@ -1394,7 +1394,8 @@
         "method":"POST",
         "requestUri":"/"
       },
-      "input":{"shape":"DeleteKeyPairRequest"}
+      "input":{"shape":"DeleteKeyPairRequest"},
+      "output":{"shape":"DeleteKeyPairResult"}
     },
     "DeleteLaunchTemplate":{
       "name":"DeleteLaunchTemplate",
@@ -3338,6 +3339,15 @@
       "input":{"shape":"DisableFastSnapshotRestoresRequest"},
       "output":{"shape":"DisableFastSnapshotRestoresResult"}
     },
+    "DisableImageBlockPublicAccess":{
+      "name":"DisableImageBlockPublicAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableImageBlockPublicAccessRequest"},
+      "output":{"shape":"DisableImageBlockPublicAccessResult"}
+    },
     "DisableImageDeprecation":{
       "name":"DisableImageDeprecation",
       "http":{
@@ -3568,6 +3578,15 @@
       },
       "input":{"shape":"EnableFastSnapshotRestoresRequest"},
       "output":{"shape":"EnableFastSnapshotRestoresResult"}
+    },
+    "EnableImageBlockPublicAccess":{
+      "name":"EnableImageBlockPublicAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableImageBlockPublicAccessRequest"},
+      "output":{"shape":"EnableImageBlockPublicAccessResult"}
     },
     "EnableImageDeprecation":{
       "name":"EnableImageDeprecation",
@@ -3800,6 +3819,15 @@
       },
       "input":{"shape":"GetHostReservationPurchasePreviewRequest"},
       "output":{"shape":"GetHostReservationPurchasePreviewResult"}
+    },
+    "GetImageBlockPublicAccessState":{
+      "name":"GetImageBlockPublicAccessState",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetImageBlockPublicAccessStateRequest"},
+      "output":{"shape":"GetImageBlockPublicAccessStateResult"}
     },
     "GetInstanceTypesFromInstanceRequirements":{
       "name":"GetInstanceTypesFromInstanceRequirements",
@@ -12205,6 +12233,10 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
+        },
+        "SubnetConfigurations":{
+          "shape":"SubnetConfigurationsList",
+          "locationName":"SubnetConfiguration"
         }
       }
     },
@@ -12972,6 +13004,19 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
+        }
+      }
+    },
+    "DeleteKeyPairResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        },
+        "KeyPairId":{
+          "shape":"String",
+          "locationName":"keyPairId"
         }
       }
     },
@@ -19301,6 +19346,21 @@
         }
       }
     },
+    "DisableImageBlockPublicAccessRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DisableImageBlockPublicAccessResult":{
+      "type":"structure",
+      "members":{
+        "ImageBlockPublicAccessState":{
+          "shape":"ImageBlockPublicAccessDisabledState",
+          "locationName":"imageBlockPublicAccessState"
+        }
+      }
+    },
     "DisableImageDeprecationRequest":{
       "type":"structure",
       "required":["ImageId"],
@@ -20640,6 +20700,23 @@
         "Unsuccessful":{
           "shape":"EnableFastSnapshotRestoreErrorSet",
           "locationName":"unsuccessful"
+        }
+      }
+    },
+    "EnableImageBlockPublicAccessRequest":{
+      "type":"structure",
+      "required":["ImageBlockPublicAccessState"],
+      "members":{
+        "ImageBlockPublicAccessState":{"shape":"ImageBlockPublicAccessEnabledState"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "EnableImageBlockPublicAccessResult":{
+      "type":"structure",
+      "members":{
+        "ImageBlockPublicAccessState":{
+          "shape":"ImageBlockPublicAccessEnabledState",
+          "locationName":"imageBlockPublicAccessState"
         }
       }
     },
@@ -22727,6 +22804,21 @@
         }
       }
     },
+    "GetImageBlockPublicAccessStateRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetImageBlockPublicAccessStateResult":{
+      "type":"structure",
+      "members":{
+        "ImageBlockPublicAccessState":{
+          "shape":"String",
+          "locationName":"imageBlockPublicAccessState"
+        }
+      }
+    },
     "GetInstanceTypesFromInstanceRequirementsRequest":{
       "type":"structure",
       "required":[
@@ -23103,7 +23195,7 @@
           "locationName":"instanceId"
         },
         "PasswordData":{
-          "shape":"String",
+          "shape":"PasswordData",
           "locationName":"passwordData"
         },
         "Timestamp":{
@@ -24373,6 +24465,14 @@
         "lastLaunchedTime",
         "imdsSupport"
       ]
+    },
+    "ImageBlockPublicAccessDisabledState":{
+      "type":"string",
+      "enum":["unblocked"]
+    },
+    "ImageBlockPublicAccessEnabledState":{
+      "type":"string",
+      "enum":["block-new-sharing"]
     },
     "ImageDiskContainer":{
       "type":"structure",
@@ -27336,7 +27436,47 @@
         "m7i-flex.xlarge",
         "m7i-flex.2xlarge",
         "m7i-flex.4xlarge",
-        "m7i-flex.8xlarge"
+        "m7i-flex.8xlarge",
+        "m7a.medium",
+        "m7a.large",
+        "m7a.xlarge",
+        "m7a.2xlarge",
+        "m7a.4xlarge",
+        "m7a.8xlarge",
+        "m7a.12xlarge",
+        "m7a.16xlarge",
+        "m7a.24xlarge",
+        "m7a.32xlarge",
+        "m7a.48xlarge",
+        "m7a.metal-48xl",
+        "hpc7a.12xlarge",
+        "hpc7a.24xlarge",
+        "hpc7a.48xlarge",
+        "hpc7a.96xlarge",
+        "c7gd.medium",
+        "c7gd.large",
+        "c7gd.xlarge",
+        "c7gd.2xlarge",
+        "c7gd.4xlarge",
+        "c7gd.8xlarge",
+        "c7gd.12xlarge",
+        "c7gd.16xlarge",
+        "m7gd.medium",
+        "m7gd.large",
+        "m7gd.xlarge",
+        "m7gd.2xlarge",
+        "m7gd.4xlarge",
+        "m7gd.8xlarge",
+        "m7gd.12xlarge",
+        "m7gd.16xlarge",
+        "r7gd.medium",
+        "r7gd.large",
+        "r7gd.xlarge",
+        "r7gd.2xlarge",
+        "r7gd.4xlarge",
+        "r7gd.8xlarge",
+        "r7gd.12xlarge",
+        "r7gd.16xlarge"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -30495,7 +30635,8 @@
       "enum":[
         "region",
         "availability-zone",
-        "availability-zone-id"
+        "availability-zone-id",
+        "outpost"
       ]
     },
     "LogDestinationType":{
@@ -32130,7 +32271,11 @@
         },
         "IpAddressType":{"shape":"IpAddressType"},
         "DnsOptions":{"shape":"DnsOptionsSpecification"},
-        "PrivateDnsEnabled":{"shape":"Boolean"}
+        "PrivateDnsEnabled":{"shape":"Boolean"},
+        "SubnetConfigurations":{
+          "shape":"SubnetConfigurationsList",
+          "locationName":"SubnetConfiguration"
+        }
       }
     },
     "ModifyVpcEndpointResult":{
@@ -33851,6 +33996,10 @@
         "weekly",
         "monthly"
       ]
+    },
+    "PasswordData":{
+      "type":"string",
+      "sensitive":true
     },
     "PathComponent":{
       "type":"structure",
@@ -37980,10 +38129,18 @@
           "locationName":"uploadPolicy"
         },
         "UploadPolicySignature":{
-          "shape":"String",
+          "shape":"S3StorageUploadPolicySignature",
           "locationName":"uploadPolicySignature"
         }
       }
+    },
+    "S3StorageUploadPolicy":{
+      "type":"string",
+      "sensitive":true
+    },
+    "S3StorageUploadPolicySignature":{
+      "type":"string",
+      "sensitive":true
     },
     "SSEType":{
       "type":"string",
@@ -40372,6 +40529,21 @@
         "prefix",
         "explicit"
       ]
+    },
+    "SubnetConfiguration":{
+      "type":"structure",
+      "members":{
+        "SubnetId":{"shape":"SubnetId"},
+        "Ipv4":{"shape":"String"},
+        "Ipv6":{"shape":"String"}
+      }
+    },
+    "SubnetConfigurationsList":{
+      "type":"list",
+      "member":{
+        "shape":"SubnetConfiguration",
+        "locationName":"item"
+      }
     },
     "SubnetId":{"type":"string"},
     "SubnetIdStringList":{
