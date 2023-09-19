@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Outposts` - This release adds the InstanceFamilies field to the ListAssets response.
+* `Aws\EC2` - This release adds support for C7i, and R7a instance types.
+* `Aws\SageMaker` - This release adds support for one-time model monitoring schedules that are executed immediately without delay, explicit data analysis windows for model monitoring schedules and exclude features attributes to remove features from model monitor analysis.
+
 ## 3.281.9 - 2023-09-18
 
 * `Aws\WorkMail` - This release includes four new APIs UpdateUser, UpdateGroup, ListGroupsForEntity and DescribeEntity, along with RemoteUsers and some enhancements to existing APIs.
