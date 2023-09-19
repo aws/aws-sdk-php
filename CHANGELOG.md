@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.10 - 2023-09-19
 
 * `Aws\Outposts` - This release adds the InstanceFamilies field to the ListAssets response.
 * `Aws\EC2` - This release adds support for C7i, and R7a instance types.
