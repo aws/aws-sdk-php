@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.11 - 2023-09-20
 
 * `Aws\AppRunner` - This release adds improvements for managing App Runner auto scaling configuration resources. New APIs: UpdateDefaultAutoScalingConfiguration and ListServicesForAutoScalingConfiguration. Updated API: DeleteAutoScalingConfiguration.
 * `Aws\CodeArtifact` - Add support for the Swift package format.
