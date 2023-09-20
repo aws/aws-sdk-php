@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppRunner` - This release adds improvements for managing App Runner auto scaling configuration resources. New APIs: UpdateDefaultAutoScalingConfiguration and ListServicesForAutoScalingConfiguration. Updated API: DeleteAutoScalingConfiguration.
+* `Aws\CodeArtifact` - Add support for the Swift package format.
+* `Aws\CloudWatchLogs` - Add ClientToken to QueryDefinition CFN Handler in CWL
+* `Aws\KinesisVideo` - Updated DescribeMediaStorageConfiguration, StartEdgeConfigurationUpdate, ImageGenerationConfiguration$SamplingInterval, and UpdateMediaStorageConfiguration to match AWS Docs.
+* `Aws\S3` - Fix an issue where the SDK can fail to unmarshall response due to NumberFormatException
+* `Aws\ServiceDiscovery` - Adds a new DiscoverInstancesRevision API and also adds InstanceRevision field to the DiscoverInstances API response.
+* `Aws\SSOOIDC` - Update FIPS endpoints in aws-us-gov.
+* `Aws\AppConfig` - Enabling boto3 paginators for list APIs and adding documentation around ServiceQuotaExceededException errors
+
 ## 3.281.10 - 2023-09-19
 
 * `Aws\Outposts` - This release adds the InstanceFamilies field to the ListAssets response.
