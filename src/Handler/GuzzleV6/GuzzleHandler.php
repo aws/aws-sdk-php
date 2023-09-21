@@ -8,6 +8,7 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\TransferStats;
+use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface as Psr7Request;
 
 /**
@@ -37,7 +38,7 @@ class GuzzleHandler
         $request = $request->withHeader(
             'User-Agent',
             $request->getHeaderLine('User-Agent')
-                . ' ' . \GuzzleHttp\default_user_agent()
+                . ' ' . Utils::defaultUserAgent()
         );
 
         return $this->client->sendAsync($request, $this->parseOptions($options))

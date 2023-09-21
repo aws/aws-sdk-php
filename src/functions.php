@@ -1,7 +1,7 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -294,18 +294,7 @@ function default_http_handler()
  */
 function default_user_agent()
 {
-    $version = guzzle_major_version();
-    // If Guzzle 6 or 7 installed
-    if ($version === 6 || $version === 7) {
-        return \GuzzleHttp\default_user_agent();
-    }
-
-    // If Guzzle 5 installed
-    if ($version === 5) {
-        return \GuzzleHttp\Client::getDefaultUserAgent();
-    }
-
-    throw new \RuntimeException('Unknown Guzzle version: ' . $version);
+    return Utils::defaultUserAgent();
 }
 
 /**
