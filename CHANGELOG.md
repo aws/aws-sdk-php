@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Braket` - This release adds support to view the device queue depth (the number of queued quantum tasks and hybrid jobs on a device) and queue position for a quantum task and hybrid job.
+* `Aws\EFS` - Documentation updates for Elastic File System
+* `Aws\CloudWatchEvents` - Adds sensitive trait to various shapes in Jetstream Connections API model.
+* `Aws\GuardDuty` - Add `EKS_CLUSTER_NAME` to filter and sort key.
+* `Aws\MediaConvert` - This release supports the creation of of audio-only tracks in CMAF output groups.
+* `Aws\EC2` - EC2 M2 Pro Mac instances are powered by Apple M2 Pro Mac Mini computers featuring 12 core CPU, 19 core GPU, 32 GiB of memory, and 16 core Apple Neural Engine and uniquely enabled by the AWS Nitro System through high-speed Thunderbolt connections.
+* `Aws\DatabaseMigrationService` - new vendors for DMS CSF: MongoDB, MariaDB, DocumentDb and Redshift
+
 ## 3.281.11 - 2023-09-20
 
 * `Aws\AppRunner` - This release adds improvements for managing App Runner auto scaling configuration resources. New APIs: UpdateDefaultAutoScalingConfiguration and ListServicesForAutoScalingConfiguration. Updated API: DeleteAutoScalingConfiguration.
