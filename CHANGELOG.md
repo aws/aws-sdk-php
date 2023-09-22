@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.12 - 2023-09-22
 
 * `Aws\Braket` - This release adds support to view the device queue depth (the number of queued quantum tasks and hybrid jobs on a device) and queue position for a quantum task and hybrid job.
 * `Aws\EFS` - Documentation updates for Elastic File System
