@@ -590,6 +590,39 @@
         {"shape":"InvalidSecurityException"}
       ]
     },
+    "PublishBatch":{
+      "name":"PublishBatch",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PublishBatchInput"},
+      "output":{
+        "shape":"PublishBatchResponse",
+        "resultWrapper":"PublishBatchResult"
+      },
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"NotFoundException"},
+        {"shape":"EndpointDisabledException"},
+        {"shape":"PlatformApplicationDisabledException"},
+        {"shape":"AuthorizationErrorException"},
+        {"shape":"BatchEntryIdsNotDistinctException"},
+        {"shape":"BatchRequestTooLongException"},
+        {"shape":"EmptyBatchRequestException"},
+        {"shape":"InvalidBatchEntryIdException"},
+        {"shape":"TooManyEntriesInBatchRequestException"},
+        {"shape":"KMSDisabledException"},
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"KMSNotFoundException"},
+        {"shape":"KMSOptInRequired"},
+        {"shape":"KMSThrottlingException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"InvalidSecurityException"}
+      ]
+    },
     "RemovePermission":{
       "name":"RemovePermission",
       "http":{
