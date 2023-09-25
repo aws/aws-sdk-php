@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.13 - 2023-09-25
 
 * `Aws\AmplifyUIBuilder` - Support for generating code that is compatible with future versions of amplify project dependencies.
 * `Aws\WAFV2` - You can now perform an exact match against the web request's JA3 fingerprint.
