@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AmplifyUIBuilder` - Support for generating code that is compatible with future versions of amplify project dependencies.
+* `Aws\WAFV2` - You can now perform an exact match against the web request's JA3 fingerprint.
+* `Aws\EMRServerless` - This release adds support for application-wide default job configurations.
+* `Aws\ChimeSDKMediaPipelines` - Adds support for sending WebRTC audio to Amazon Kineses Video Streams.
+* `Aws\FinSpaceData` - Adding sensitive trait to attributes. Change max SessionDuration from 720 to 60. Correct "ApiAccess" attribute to "apiAccess" to maintain consistency between APIs.
+* `Aws\SSM` - This release updates the enum values for ResourceType in SSM DescribeInstanceInformation input and ConnectionStatus in GetConnectionStatus output.
+* `Aws\QuickSight` - Added ability to tag users upon creation.
+
 ## 3.281.12 - 2023-09-22
 
 * `Aws\Braket` - This release adds support to view the device queue depth (the number of queued quantum tasks and hybrid jobs on a device) and queue position for a quantum task and hybrid job.
