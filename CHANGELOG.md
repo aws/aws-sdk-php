@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.14 - 2023-09-26
 
 * `Aws\EC2` - The release includes AWS verified access to support FIPs compliance in North America regions
 * `Aws\AppIntegrationsService` - The Amazon AppIntegrations service adds a set of APIs (in preview) to manage third party applications to be used in Amazon Connect agent workspace.
