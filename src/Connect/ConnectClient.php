@@ -259,6 +259,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listRulesAsync(array $args = [])
  * @method \Aws\Result listSecurityKeys(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSecurityKeysAsync(array $args = [])
+ * @method \Aws\Result listSecurityProfileApplications(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listSecurityProfileApplicationsAsync(array $args = [])
  * @method \Aws\Result listSecurityProfilePermissions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSecurityProfilePermissionsAsync(array $args = [])
  * @method \Aws\Result listSecurityProfiles(array $args = [])
