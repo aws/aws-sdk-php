@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.281.15 - 2023-09-27
 
 * `Aws\Textract` - This release adds new feature - Layout to Analyze Document API which can automatically extract layout elements such as titles, paragraphs, headers, section headers, lists, page numbers, footers, table areas, key-value areas and figure areas and order the elements as a human would read.
 * `Aws\CognitoIdentityProvider` - The UserPoolType Status field is no longer used.
