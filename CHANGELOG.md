@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Textract` - This release adds new feature - Layout to Analyze Document API which can automatically extract layout elements such as titles, paragraphs, headers, section headers, lists, page numbers, footers, table areas, key-value areas and figure areas and order the elements as a human would read.
+* `Aws\CognitoIdentityProvider` - The UserPoolType Status field is no longer used.
+* `Aws\Firehose` - Features : Adding support for new data ingestion source to Kinesis Firehose - AWS Managed Services Kafka.
+* `Aws\IoT` - Added support for IoT Rules Engine Kafka Action Headers
+
 ## 3.281.14 - 2023-09-26
 
 * `Aws\EC2` - The release includes AWS verified access to support FIPs compliance in North America regions
