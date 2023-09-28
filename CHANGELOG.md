@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.282.0 - 2023-09-28
 
 * `Aws\SageMakerFeatureStoreRuntime` - Feature Store supports read/write of records with collection type features.
 * `Aws\WAFV2` - Correct and improve the documentation for the FieldToMatch option JA3 fingerprint.
