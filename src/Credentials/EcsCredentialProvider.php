@@ -19,7 +19,6 @@ class EcsCredentialProvider
     const ENV_AUTH_TOKEN = "AWS_CONTAINER_AUTHORIZATION_TOKEN";
     const ENV_AUTH_TOKEN_FILE = "AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE";
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
-    const EKS_SERVER_HOST = '169.254.170.23';
     const EKS_SERVER_HOST_IPV6 = 'fd00:ec2::23';
 
     /** @var callable */
@@ -61,7 +60,7 @@ class EcsCredentialProvider
         if ($this->isCompatibleUri($uri)) {
             $request = new Request('GET', $uri);
 
-            $headers = $this->setHeaderForAuthToken();
+            $headers = $this->getHeaderForAuthToken();
             return $client(
                 $request,
                 [
@@ -92,27 +91,19 @@ class EcsCredentialProvider
     private function getEcsAuthToken()
     {
         if (!empty($path = getenv(self::ENV_AUTH_TOKEN_FILE))) {
-            try {
-                $token = file_get_contents($path);
-
-                if ($token === false) {
-                    throw new CredentialsException(
-                        "Failed to read authorization token from '{$path}': no such file or directory."
-                    );
-                }
-            } catch (\Exception $e) {
-                throw new CredentialsException(
-                    "Failed to read authorization token from '{$path}': no such file or directory."
-                );
+            if (is_readable($path)) {
+                return file_get_contents($path);
             }
 
-            return $token;
+            throw new CredentialsException(
+                "Failed to read authorization token from '{$path}': no such file or directory."
+            );
         }
 
         return getenv(self::ENV_AUTH_TOKEN);
     }
 
-    public function setHeaderForAuthToken(){
+    public function getHeaderForAuthToken(){
         $authToken = self::getEcsAuthToken();
         $headers = [];
         if(!empty($authToken))
@@ -163,9 +154,11 @@ class EcsCredentialProvider
 
         if ($parsed['scheme'] !== 'https') {
             $host = trim($parsed['host'], '[]');
+            $ecsHost = parse_url(self::SERVER_URI)['host'];
+            $eksHost = $ecsHost . '3';
 
-            if ($host !== '169.254.170.2'
-                && $host !== self::EKS_SERVER_HOST
+            if ($host !== $ecsHost
+                && $host !== $eksHost
                 && $host !== self::EKS_SERVER_HOST_IPV6
                 && !$this->isLoopbackAddress($host)
             ) {

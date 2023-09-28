@@ -106,7 +106,7 @@ class EcsCredentialProviderTest extends TestCase
         putenv(EcsCredentialProvider::ENV_FULL_URI . '=https://localhost/test/metadata');
         putenv(EcsCredentialProvider::ENV_AUTH_TOKEN . '=' . $TOKEN_VALUE);
 
-        $header = $provider->setHeaderForAuthToken();
+        $header = $provider->getHeaderForAuthToken();
         $this->assertArrayHasKey($AUTH_KEYNAME, $header);
         $this->assertSame($TOKEN_VALUE, $header[$AUTH_KEYNAME]);
     }
@@ -166,7 +166,7 @@ class EcsCredentialProviderTest extends TestCase
 
             $this->assertEquals(
                 $expect['request']['headers']['Authorization'],
-                $provider->setHeaderForAuthToken()['Authorization']
+                $provider->getHeaderForAuthToken()['Authorization']
             );
         }
 
