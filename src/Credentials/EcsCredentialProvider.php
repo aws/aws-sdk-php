@@ -19,6 +19,7 @@ class EcsCredentialProvider
     const ENV_AUTH_TOKEN = "AWS_CONTAINER_AUTHORIZATION_TOKEN";
     const ENV_AUTH_TOKEN_FILE = "AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE";
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
+    const EKS_SERVER_HOST_IPV4 = '169.254.170.23';
     const EKS_SERVER_HOST_IPV6 = 'fd00:ec2::23';
 
     /** @var callable */
@@ -155,7 +156,7 @@ class EcsCredentialProvider
         if ($parsed['scheme'] !== 'https') {
             $host = trim($parsed['host'], '[]');
             $ecsHost = parse_url(self::SERVER_URI)['host'];
-            $eksHost = $ecsHost . '3';
+            $eksHost = self::EKS_SERVER_HOST_IPV4;
 
             if ($host !== $ecsHost
                 && $host !== $eksHost
