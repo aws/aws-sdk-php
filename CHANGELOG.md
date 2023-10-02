@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Repopulates endpoint ruleset file for api version 2015-07-27 which was removed in a models sync.
+* `Aws\SSO` - Fix FIPS Endpoints in aws-us-gov.
+* `Aws\STS` - STS API updates for assumeRole
+* `Aws\BedrockRuntime` - Add model timeout exception for InvokeModelWithResponseStream API and update validator for invoke model identifier.
+* `Aws\EC2` - Introducing Amazon EC2 R7iz instances with 3.9 GHz sustained all-core turbo frequency and deliver up to 20% better performance than previous generation z1d instances.
+* `Aws\ManagedBlockchain` - Remove Rinkeby as option from Ethereum APIs
+* `Aws\Bedrock` - Provisioned throughput feature with Amazon and third-party base models, and update validators for model identifier and taggable resource ARNs.
+* `Aws\RDS` - Adds DefaultCertificateForNewLaunches field in the DescribeCertificates API response.
+* `Aws\Transfer` - Documentation updates for AWS Transfer Family
+
 ## 3.282.0 - 2023-09-28
 
 * `Aws\SageMakerFeatureStoreRuntime` - Feature Store supports read/write of records with collection type features.
