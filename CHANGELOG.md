@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.282.1 - 2023-10-02
 
 * `Aws\CloudFront` - Repopulates endpoint ruleset file for api version 2015-07-27 which was removed in a models sync.
 * `Aws\SSO` - Fix FIPS Endpoints in aws-us-gov.
