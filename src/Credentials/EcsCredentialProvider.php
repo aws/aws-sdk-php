@@ -61,7 +61,7 @@ class EcsCredentialProvider
         if ($this->isCompatibleUri($uri)) {
             $request = new Request('GET', $uri);
 
-            $headers = $this->getHeaderForAuthToken();
+            $headers = $this->getHeadersForAuthToken();
             return $client(
                 $request,
                 [
@@ -104,7 +104,19 @@ class EcsCredentialProvider
         return getenv(self::ENV_AUTH_TOKEN);
     }
 
-    public function getHeaderForAuthToken(){
+    private function getHeadersForAuthToken()
+    {
+        $authToken = self::getEcsAuthToken();
+        $headers = [];
+        if(!empty($authToken))
+            $headers = ['Authorization' => $authToken];
+
+        return $headers;
+    }
+
+    /** @deprecated */
+    public function setHeaderForAuthToken()
+    {
         $authToken = self::getEcsAuthToken();
         $headers = [];
         if(!empty($authToken))

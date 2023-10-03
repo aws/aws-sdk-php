@@ -3,11 +3,14 @@ namespace Aws\Test\Credentials;
 
 use Aws\Credentials\EcsCredentialProvider;
 use Aws\Exception\CredentialsException;
+use Aws\Handler\GuzzleV6\GuzzleHandler;
 use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Ring\Future\CompletedFutureArray;
+use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -98,17 +101,16 @@ class EcsCredentialProviderTest extends TestCase
 
     public function testRequestHeaderWithAuthorisationKey()
     {
-        $this->clearEnv();
-        $provider = new EcsCredentialProvider();
-
         $TOKEN_VALUE = "GA%24102391AAA+BBBBB4==";
-        $AUTH_KEYNAME = 'Authorization';
+        $this->clearEnv();
+        $this->expectException(CredentialsException::class);
+
+        $client = $this->getClientWithHeaderMiddleware($TOKEN_VALUE);
+        $provider = new EcsCredentialProvider(['client' => $client]);
+
         putenv(EcsCredentialProvider::ENV_FULL_URI . '=https://localhost/test/metadata');
         putenv(EcsCredentialProvider::ENV_AUTH_TOKEN . '=' . $TOKEN_VALUE);
-
-        $header = $provider->getHeaderForAuthToken();
-        $this->assertArrayHasKey($AUTH_KEYNAME, $header);
-        $this->assertSame($TOKEN_VALUE, $header[$AUTH_KEYNAME]);
+        $provider()->wait();
     }
 
     public function testNoProxying()
@@ -158,16 +160,15 @@ class EcsCredentialProviderTest extends TestCase
         }
 
         if (!empty($expect['request']['headers'])) {
-            $provider = new EcsCredentialProvider();
-
             if (!empty($case['token_file']) && $case['token_file']['type'] === 'success') {
                 file_put_contents($dir . '/token', $case['token_file']['content']);
             }
 
-            $this->assertEquals(
-                $expect['request']['headers']['Authorization'],
-                $provider->getHeaderForAuthToken()['Authorization']
-            );
+            $this->expectException(CredentialsException::class);
+            $headerValue = $expect['request']['headers']['Authorization'];
+            $client = $this->getClientWithHeaderMiddleware($headerValue);
+            $provider = new EcsCredentialProvider(['client' => $client]);
+            $provider()->wait();
         }
 
         $t = time() + 1000;
@@ -293,5 +294,21 @@ class EcsCredentialProviderTest extends TestCase
         }
 
         throw new \RuntimeException('Unknown Guzzle version: ' . $version);
+    }
+
+    private function getClientWithHeaderMiddleware($expectedValue)
+    {
+        $stack = HandlerStack::create();
+        $middleware = function (callable $handler) use ($expectedValue) {
+            return function (RequestInterface $request, array $options) use ($handler, $expectedValue) {
+                $this->assertTrue($request->hasHeader('Authorization'));
+                $this->assertEquals($request->getHeader('Authorization'), $expectedValue);
+                return $handler($request, $options);
+            };
+        };
+        $stack->push($middleware);
+        $baseClient = new Client(['handler' => $stack]);
+
+        return new GuzzleHandler($baseClient);
     }
 }
