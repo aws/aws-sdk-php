@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.282.2 - 2023-10-03
 
 * `Aws\LocationService` - Amazon Location Service adds support for bounding polygon queries. Additionally, the GeofenceCount field has been added to the DescribeGeofenceCollection API response.
 * `Aws\OAM` - This release adds support for sharing AWS::ApplicationInsights::Application resources.
