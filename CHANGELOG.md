@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\LocationService` - Amazon Location Service adds support for bounding polygon queries. Additionally, the GeofenceCount field has been added to the DescribeGeofenceCollection API response.
+* `Aws\OAM` - This release adds support for sharing AWS::ApplicationInsights::Application resources.
+* `Aws\Connect` - GetMetricDataV2 API: Update to include new metrics CONTACTS_RESOLVED_IN_X , AVG_HOLD_TIME_ALL_CONTACTS , AVG_RESOLUTION_TIME , ABANDONMENT_RATE , AGENT_NON_RESPONSE_WITHOUT_CUSTOMER_ABANDONS with added features: Interval Period, TimeZone, Negate MetricFilters, Extended date time range.
+* `Aws\WellArchitected` - AWS Well-Architected now supports Review Templates that allows you to create templates with pre-filled answers for Well-Architected and Custom Lens best practices.
+* `Aws\MediaConvert` - This release adds the ability to replace video frames without modifying the audio essence.
+* `Aws\SageMaker` - This release allows users to run Selective Execution in SageMaker Pipelines without SourcePipelineExecutionArn if selected steps do not have any dependent steps.
+
 ## 3.282.1 - 2023-10-02
 
 * `Aws\CloudFront` - Repopulates endpoint ruleset file for api version 2015-07-27 which was removed in a models sync.
