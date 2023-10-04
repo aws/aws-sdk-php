@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.0 - 2023-10-04
 
 * `Aws\DataZone` - Initial release of Amazon DataZone
 * `Aws\mgn` - This release includes the following new APIs: ListConnectors, CreateConnector, UpdateConnector, DeleteConnector and UpdateSourceServer to support the source action framework feature.
