@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataZone` - Initial release of Amazon DataZone
+* `Aws\mgn` - This release includes the following new APIs: ListConnectors, CreateConnector, UpdateConnector, DeleteConnector and UpdateSourceServer to support the source action framework feature.
+* `Aws\AppConfig` - AWS AppConfig introduces KMS customer-managed key (CMK) encryption support for data saved to AppConfig's hosted configuration store.
+* `Aws\SageMaker` - Adding support for AdditionalS3DataSource, a data source used for training or inference that is in addition to the input dataset or model data.
+* `Aws\MediaTailor` - Updates DescribeVodSource to include a list of ad break opportunities in the response
+
 ## 3.282.2 - 2023-10-03
 
 * `Aws\LocationService` - Amazon Location Service adds support for bounding polygon queries. Additionally, the GeofenceCount field has been added to the DescribeGeofenceCollection API response.
