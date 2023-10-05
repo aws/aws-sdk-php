@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.1 - 2023-10-05
 
 * `Aws\WorkSpaces` - This release introduces Manage applications. This feature allows users to manage their WorkSpaces applications by associating or disassociating their WorkSpaces with applications. The DescribeWorkspaces API will now additionally return OperatingSystemName in its responses.
 * `Aws\Route53` - Add hostedzonetype filter to ListHostedZones API.
