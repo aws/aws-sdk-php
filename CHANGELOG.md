@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkSpaces` - This release introduces Manage applications. This feature allows users to manage their WorkSpaces applications by associating or disassociating their WorkSpaces with applications. The DescribeWorkspaces API will now additionally return OperatingSystemName in its responses.
+* `Aws\Route53` - Add hostedzonetype filter to ListHostedZones API.
+* `Aws\StorageGateway` - Add SoftwareVersion to response of DescribeGatewayInformation.
+* `Aws\RDS` - Updates Amazon RDS documentation for corrections and minor improvements.
+* `Aws\SecurityHub` - Added new resource detail objects to ASFF, including resources for AwsEventsEventbus, AwsEventsEndpoint, AwsDmsEndpoint, AwsDmsReplicationTask, AwsDmsReplicationInstance, AwsRoute53HostedZone, and AwsMskCluster
+* `Aws\Omics` - Add Etag Support for Omics Storage in ListReadSets and GetReadSetMetadata API
+
 ## 3.283.0 - 2023-10-04
 
 * `Aws\DataZone` - Initial release of Amazon DataZone
