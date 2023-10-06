@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.2 - 2023-10-06
 
 * `Aws\MarketplaceCatalog` - This release adds support for Document type as an alternative for stringified JSON for StartChangeSet, DescribeChangeSet and DescribeEntity APIs
 * `Aws\QuickSight` - NullOption in FilterListConfiguration; Dataset schema/table max length increased; Support total placement for pivot table visual; Lenient mode relaxes the validation to create resources with definition; Data sources can be added to folders; Redshift data sources support IAM Role-based authentication
