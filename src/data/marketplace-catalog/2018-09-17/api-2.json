@@ -261,14 +261,14 @@
       "type":"structure",
       "required":[
         "ChangeType",
-        "Entity",
-        "Details"
+        "Entity"
       ],
       "members":{
         "ChangeType":{"shape":"ChangeType"},
         "Entity":{"shape":"Entity"},
         "EntityTags":{"shape":"TagList"},
         "Details":{"shape":"Json"},
+        "DetailsDocument":{"shape":"JsonDocumentType"},
         "ChangeName":{"shape":"ChangeName"}
       }
     },
@@ -321,6 +321,7 @@
         "ChangeType":{"shape":"ChangeType"},
         "Entity":{"shape":"Entity"},
         "Details":{"shape":"Json"},
+        "DetailsDocument":{"shape":"JsonDocumentType"},
         "ErrorDetailList":{"shape":"ErrorDetailList"},
         "ChangeName":{"shape":"ChangeName"}
       }
@@ -418,7 +419,8 @@
         "EntityIdentifier":{"shape":"Identifier"},
         "EntityArn":{"shape":"ARN"},
         "LastModifiedDate":{"shape":"DateTimeISO8601"},
-        "Details":{"shape":"Json"}
+        "Details":{"shape":"Json"},
+        "DetailsDocument":{"shape":"JsonDocumentType"}
       }
     },
     "Entity":{
@@ -548,6 +550,12 @@
       "max":16384,
       "min":2,
       "pattern":"^[\\s]*\\{[\\s\\S]*\\}[\\s]*$"
+    },
+    "JsonDocumentType":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
     },
     "ListChangeSetsMaxResultInteger":{
       "type":"integer",

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MarketplaceCatalog` - This release adds support for Document type as an alternative for stringified JSON for StartChangeSet, DescribeChangeSet and DescribeEntity APIs
+* `Aws\QuickSight` - NullOption in FilterListConfiguration; Dataset schema/table max length increased; Support total placement for pivot table visual; Lenient mode relaxes the validation to create resources with definition; Data sources can be added to folders; Redshift data sources support IAM Role-based authentication
+* `Aws\Transfer` - This release updates the max character limit of PreAuthenticationLoginBanner and PostAuthenticationLoginBanner to 4096 characters
+* `Aws\EC2` - Documentation updates for Elastic Compute Cloud (EC2).
+* `Aws\FSx` - After performing steps to repair the Active Directory configuration of a file system, use this action to initiate the process of attempting to recover to the file system.
+
 ## 3.283.1 - 2023-10-05
 
 * `Aws\WorkSpaces` - This release introduces Manage applications. This feature allows users to manage their WorkSpaces applications by associating or disassociating their WorkSpaces with applications. The DescribeWorkspaces API will now additionally return OperatingSystemName in its responses.
