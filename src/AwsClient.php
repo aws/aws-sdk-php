@@ -502,26 +502,6 @@ class AwsClient implements AwsClientInterface
         );
     }
 
-    /**
-     * Adds the `builder` middleware such that a client's endpoint
-     * provider and endpoint resolution arguments can be passed.
-     */
-//    private function addRequestBuilder()
-//    {
-//        $handlerList = $this->getHandlerList();
-//        $endpointProvider = $this->endpointProvider;
-//        $endpointArgs = $this->getEndpointProviderArgs();
-//
-//        $handlerList->prependBuild(
-//            Middleware::requestBuilder(
-//                $serializer,
-//                $endpointProvider,
-//                $endpointArgs
-//            ),
-//            'builderV2'
-//        );
-//    }
-
     private function addEndpointV2Middleware()
     {
         $list = $this->getHandlerList();

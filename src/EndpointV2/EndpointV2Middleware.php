@@ -4,9 +4,9 @@ namespace Aws\EndpointV2;
 use Aws\Api\Service;
 
 /**
- * Used to update the host based on a modeled endpoint trait
+ * Handles endpoint rule evaluation and endpoint resolution.
  *
- * IMPORTANT: this middleware must be added after the "build" step.
+ * IMPORTANT: this middleware must be prepended to the "build" step.
  *
  * @internal
  */
