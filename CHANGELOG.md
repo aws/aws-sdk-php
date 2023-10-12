@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.3 - 2023-10-12
 
 * `Aws\EC2` - This release adds Ubuntu Pro as a supported platform for On-Demand Capacity Reservations and adds support for setting an Amazon Machine Image (AMI) to disabled state. Disabling the AMI makes it private if it was previously shared, and prevents new EC2 instance launches from it.
 * `Aws\TranscribeService` - This release is to enable m4a format to customers
