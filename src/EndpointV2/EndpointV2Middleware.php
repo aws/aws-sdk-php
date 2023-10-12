@@ -26,18 +26,28 @@ class EndpointV2Middleware
     /**
      * Create a middleware wrapper function
      *
-     * @param Service $service
+     * @param EndpointProviderV2 $endpointProvider
+     * @param Service $api
      * @param array $args
      * @return \Closure
      */
-    public static function wrap(EndpointProviderV2 $endpointProvider, Service $api, $args)
+    public static function wrap(
+        EndpointProviderV2 $endpointProvider,
+        Service $api,
+        array $args
+    )
     {
         return function (callable $handler) use ($endpointProvider, $api, $args) {
             return new self($handler, $endpointProvider, $api, $args);
         };
     }
 
-    public function __construct(callable $nextHandler, EndpointProviderV2 $endpointProvider, Service $api, $args)
+    public function __construct(
+        callable $nextHandler,
+        EndpointProviderV2 $endpointProvider,
+        Service $api,
+        array $args
+    )
     {
         $this->nextHandler = $nextHandler;
         $this->endpointProvider = $endpointProvider;
