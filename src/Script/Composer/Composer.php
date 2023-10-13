@@ -87,25 +87,27 @@ class Composer
                     $attempts = 3;
                     $delay = 2;
 
-                    remove_directory:
-                    try {
-                        $filesystem->remove([$clientDir, $modelDir]);
-                        $deleteCount++;
-                    } catch (IOException $e) {
-                        $attempts--;
-                        if (!$attempts) {
-                            throw new IOException(
-                                "Removal failed after several attempts. Last error: " . $e->getMessage()
-                            );
-                        } else {
-                            sleep($delay);
-                            $event->getIO()->write(
-                                "Error encountered: " . $e->getMessage() . ". Retrying..."
-                            );
-                            $delay += 2;
-                            goto remove_directory;
-                        }
+                    while ($attempts) {
+                        try {
+                            $filesystem->remove([$clientDir, $modelDir]);
+                            $deleteCount++;
+                            break;
+                        } catch (IOException $e) {
+                            $attempts--;
+
+                            if (!$attempts) {
+                                throw new IOException(
+                                    "Removal failed after several attempts. Last error: " . $e->getMessage()
+                                );
+                            } else {
+                                sleep($delay);
+                                $event->getIO()->write(
+                                    "Error encountered: " . $e->getMessage() . ". Retrying..."
+                                );
+                                $delay += 2;
+                            }
                     }
+                }
 
                 }
             }
