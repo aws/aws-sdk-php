@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Script` - Adds retry mechanism to removeunusedservices script.
+* `Aws\ManagedBlockchainQuery` - This release introduces two new APIs: GetAssetContract and ListAssetContracts. This release also adds support for Bitcoin Testnet.
+* `Aws\XRay` - This releases enhances GetTraceSummaries API to support new TimeRangeType Service to query trace summaries by segment end time.
+* `Aws\drs` - Updated exsiting API to allow AWS Elastic Disaster Recovery support of launching recovery into existing EC2 instances.
+* `Aws\CloudFormation` - SDK and documentation updates for UpdateReplacePolicy
+* `Aws\Transfer` - Documentation updates for AWS Transfer Family
+* `Aws\OpenSearchService` - This release allows customers to list and associate optional plugin packages with compatible Amazon OpenSearch Service clusters for enhanced functionality.
+* `Aws\RedshiftServerless` - Added support for managing credentials of serverless namespace admin using AWS Secrets Manager.
+* `Aws\SESv2` - This release provides enhanced visibility into your SES identity verification status. This will offer you more actionable insights, enabling you to promptly address any verification-related issues.
+* `Aws\Redshift` - Added support for managing credentials of provisioned cluster admin using AWS Secrets Manager.
+* `Aws\MediaPackageV2` - This release allows customers to manage MediaPackage v2 resource using CloudFormation.
+* `Aws\EntityResolution` - This launch expands our matching techniques to include provider-based matching to help customer match, link, and enhance records with minimal data movement. With data service providers, we have removed the need for customers to build bespoke integrations,.
+
 ## 3.283.3 - 2023-10-12
 
 * `Aws\EC2` - This release adds Ubuntu Pro as a supported platform for On-Demand Capacity Reservations and adds support for setting an Amazon Machine Image (AMI) to disabled state. Disabling the AMI makes it private if it was previously shared, and prevents new EC2 instance launches from it.
