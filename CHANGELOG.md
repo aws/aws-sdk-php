@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.4 - 2023-10-16
 
 * `Aws\Script` - Adds retry mechanism to removeunusedservices script.
 * `Aws\ManagedBlockchainQuery` - This release introduces two new APIs: GetAssetContract and ListAssetContracts. This release also adds support for Bitcoin Testnet.
