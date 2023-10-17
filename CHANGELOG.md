@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - Add retryMode ALL_ACTIONS to RetryStageExecution API that retries a failed stage starting from first action in the stage
+* `Aws\GuardDuty` - Add domainWithSuffix finding field to dnsRequestAction
+* `Aws\GlobalAccelerator` - Fixed error where ListCustomRoutingEndpointGroups did not have a paginator
+* `Aws\ECS` - Documentation only updates to address Amazon ECS tickets.
+* `Aws\Kafka` - AWS Managed Streaming for Kafka is launching MSK Replicator, a new feature that enables customers to reliably replicate data across Amazon MSK clusters in same or different AWS regions. You can now use SDK to create, list, describe, delete, update, and manage tags of MSK Replicators.
+* `Aws\ApplicationDiscoveryService` - This release introduces three new APIs: StartBatchDeleteConfigurationTask, DescribeBatchDeleteConfigurationTask, and BatchDeleteAgents.
+* `Aws\Route53RecoveryControlConfig` - Adds permissions for GetResourcePolicy to support returning details about AWS Resource Access Manager resource policies for shared resources.
+* `Aws\Route53RecoveryCluster` - Adds Owner field to ListRoutingControls API.
+
 ## 3.283.4 - 2023-10-16
 
 * `Aws\Script` - Adds retry mechanism to removeunusedservices script.
