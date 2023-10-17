@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.5 - 2023-10-17
 
 * `Aws\CodePipeline` - Add retryMode ALL_ACTIONS to RetryStageExecution API that retries a failed stage starting from first action in the stage
 * `Aws\GuardDuty` - Add domainWithSuffix finding field to dnsRequestAction
