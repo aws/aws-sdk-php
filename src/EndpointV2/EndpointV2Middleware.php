@@ -2,6 +2,7 @@
 namespace Aws\EndpointV2;
 
 use Aws\Api\Service;
+use Aws\CommandInterface;
 
 /**
  * Handles endpoint rule evaluation and endpoint resolution.
@@ -18,10 +19,11 @@ class EndpointV2Middleware
     /** @var EndpointProviderV2 */
     private $endpointProvider;
 
+    /** @var Service */
     private $api;
 
+    /** @var array */
     private $clientArgs;
-
 
     /**
      * Create a middleware wrapper function
@@ -55,7 +57,7 @@ class EndpointV2Middleware
         $this->clientArgs = $args;
     }
 
-    public function __invoke($command)
+    public function __invoke(CommandInterface $command)
     {
         $nextHandler = $this->nextHandler;
         $operation = $this->api->getOperation($command->getName());
