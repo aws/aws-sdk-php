@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.6 - 2023-10-18
 
 * `Aws\ConnectWisdomService` - This release adds an max limit of 25 recommendation ids for NotifyRecommendationsReceived API.
 * `Aws\DynamoDB` - Updating descriptions for several APIs.
