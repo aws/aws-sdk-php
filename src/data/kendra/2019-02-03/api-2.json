@@ -1540,6 +1540,25 @@
       "max":100,
       "min":1
     },
+    "CollapseConfiguration":{
+      "type":"structure",
+      "required":["DocumentAttributeKey"],
+      "members":{
+        "DocumentAttributeKey":{"shape":"DocumentAttributeKey"},
+        "SortingConfigurations":{"shape":"SortingConfigurationList"},
+        "MissingAttributeKeyStrategy":{"shape":"MissingAttributeKeyStrategy"},
+        "Expand":{"shape":"Boolean"},
+        "ExpandConfiguration":{"shape":"ExpandConfiguration"}
+      }
+    },
+    "CollapsedResultDetail":{
+      "type":"structure",
+      "required":["DocumentAttribute"],
+      "members":{
+        "DocumentAttribute":{"shape":"DocumentAttribute"},
+        "ExpandedResults":{"shape":"ExpandedResultList"}
+      }
+    },
     "ColumnConfiguration":{
       "type":"structure",
       "required":[
@@ -3053,6 +3072,28 @@
       "max":100,
       "min":0
     },
+    "ExpandConfiguration":{
+      "type":"structure",
+      "members":{
+        "MaxResultItemsToExpand":{"shape":"Integer"},
+        "MaxExpandedResultsPerItem":{"shape":"Integer"}
+      }
+    },
+    "ExpandedResultItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"ResultId"},
+        "DocumentId":{"shape":"DocumentId"},
+        "DocumentTitle":{"shape":"TextWithHighlights"},
+        "DocumentExcerpt":{"shape":"TextWithHighlights"},
+        "DocumentURI":{"shape":"Url"},
+        "DocumentAttributes":{"shape":"DocumentAttributeList"}
+      }
+    },
+    "ExpandedResultList":{
+      "type":"list",
+      "member":{"shape":"ExpandedResultItem"}
+    },
     "ExperienceConfiguration":{
       "type":"structure",
       "members":{
@@ -4179,6 +4220,14 @@
       "max":10000,
       "min":1
     },
+    "MissingAttributeKeyStrategy":{
+      "type":"string",
+      "enum":[
+        "IGNORE",
+        "COLLAPSE",
+        "EXPAND"
+      ]
+    },
     "Mode":{
       "type":"string",
       "enum":[
@@ -4409,9 +4458,11 @@
         "PageNumber":{"shape":"Integer"},
         "PageSize":{"shape":"Integer"},
         "SortingConfiguration":{"shape":"SortingConfiguration"},
+        "SortingConfigurations":{"shape":"SortingConfigurationList"},
         "UserContext":{"shape":"UserContext"},
         "VisitorId":{"shape":"VisitorId"},
-        "SpellCorrectionConfiguration":{"shape":"SpellCorrectionConfiguration"}
+        "SpellCorrectionConfiguration":{"shape":"SpellCorrectionConfiguration"},
+        "CollapseConfiguration":{"shape":"CollapseConfiguration"}
       }
     },
     "QueryResult":{
@@ -4447,7 +4498,8 @@
         "DocumentAttributes":{"shape":"DocumentAttributeList"},
         "ScoreAttributes":{"shape":"ScoreAttributes"},
         "FeedbackToken":{"shape":"FeedbackToken"},
-        "TableExcerpt":{"shape":"TableExcerpt"}
+        "TableExcerpt":{"shape":"TableExcerpt"},
+        "CollapsedResultDetail":{"shape":"CollapsedResultDetail"}
       }
     },
     "QueryResultItemList":{
@@ -5155,6 +5207,11 @@
         "DocumentAttributeKey":{"shape":"DocumentAttributeKey"},
         "SortOrder":{"shape":"SortOrder"}
       }
+    },
+    "SortingConfigurationList":{
+      "type":"list",
+      "member":{"shape":"SortingConfiguration"},
+      "min":1
     },
     "SourceDocument":{
       "type":"structure",

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConnectWisdomService` - This release adds an max limit of 25 recommendation ids for NotifyRecommendationsReceived API.
+* `Aws\DynamoDB` - Updating descriptions for several APIs.
+* `Aws\RDS` - This release adds support for upgrading the storage file system configuration on the DB instance using a blue/green deployment or a read replica.
+* `Aws\Cloud9` - Update to imageId parameter behavior and dates updated.
+* `Aws\kendra` - Changes for a new feature in Amazon Kendra's Query API to Collapse/Expand query results
+
 ## 3.283.5 - 2023-10-17
 
 * `Aws\CodePipeline` - Add retryMode ALL_ACTIONS to RetryStageExecution API that retries a failed stage starting from first action in the stage
