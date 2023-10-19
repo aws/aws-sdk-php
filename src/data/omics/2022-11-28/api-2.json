@@ -2583,6 +2583,10 @@
       "type":"string",
       "enum":["KMS"]
     },
+    "EngineLogStream":{
+      "type":"string",
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
     "EscapeChar":{
       "type":"string",
       "max":1,
@@ -3320,7 +3324,9 @@
         "statusMessage":{"shape":"RunStatusMessage"},
         "tags":{"shape":"TagMap"},
         "accelerators":{"shape":"Accelerators"},
-        "retentionMode":{"shape":"RunRetentionMode"}
+        "retentionMode":{"shape":"RunRetentionMode"},
+        "failureReason":{"shape":"RunFailureReason"},
+        "logLocation":{"shape":"RunLogLocation"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -3368,7 +3374,8 @@
         "statusMessage":{"shape":"TaskStatusMessage"},
         "logStream":{"shape":"TaskLogStream"},
         "gpus":{"shape":"GetRunTaskResponseGpusInteger"},
-        "instanceType":{"shape":"TaskInstanceType"}
+        "instanceType":{"shape":"TaskInstanceType"},
+        "failureReason":{"shape":"TaskFailureReason"}
       }
     },
     "GetRunTaskResponseCpusInteger":{
@@ -5065,6 +5072,12 @@
       "max":32,
       "min":0
     },
+    "RunFailureReason":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
     "RunGroupArn":{
       "type":"string",
       "max":128,
@@ -5195,6 +5208,17 @@
       "max":64,
       "min":1
     },
+    "RunLogLocation":{
+      "type":"structure",
+      "members":{
+        "engineLogStream":{"shape":"EngineLogStream"},
+        "runLogStream":{"shape":"RunLogStream"}
+      }
+    },
+    "RunLogStream":{
+      "type":"string",
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
     "RunName":{
       "type":"string",
       "max":128,
@@ -5203,7 +5227,7 @@
     },
     "RunOutputUri":{
       "type":"string",
-      "max":128,
+      "max":750,
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
@@ -5851,6 +5875,12 @@
       "type":"string",
       "max":256,
       "min":0
+    },
+    "TaskFailureReason":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "TaskId":{
       "type":"string",
