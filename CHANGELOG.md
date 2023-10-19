@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.8 - 2023-10-19
 
 * `Aws\` - Removes the GameSparks service, which is no longer active as of 10/19/2023.
 * `Aws\SecretsManager` - Documentation updates for Secrets Manager
