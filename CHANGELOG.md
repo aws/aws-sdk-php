@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppConfig` - Update KmsKeyIdentifier constraints to support AWS KMS multi-Region keys.
+* `Aws\ApplicationDiscoveryService` - This release introduces three new APIs: StartBatchDeleteConfigurationTask, DescribeBatchDeleteConfigurationTask, and BatchDeleteAgents.
+* `Aws\AppIntegrationsService` - Updated ScheduleConfig to be an optional input to CreateDataIntegration to support event driven downloading of files from sources such as Amazon s3 using Amazon Connect AppIntegrations.
+* `Aws\MedicalImaging` - Updates on documentation links
+* `Aws\Connect` - This release adds support for updating phone number metadata, such as phone number description.
+* `Aws\SSM` - This release introduces a new API: DeleteOpsItem. This allows deletion of an OpsItem.
+
 ## 3.283.8 - 2023-10-19
 
 * `Aws\` - Removes the GameSparks service, which is no longer active as of 10/19/2023.
