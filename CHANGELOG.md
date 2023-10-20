@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.9 - 2023-10-20
 
 * `Aws\AppConfig` - Update KmsKeyIdentifier constraints to support AWS KMS multi-Region keys.
 * `Aws\ApplicationDiscoveryService` - This release introduces three new APIs: StartBatchDeleteConfigurationTask, DescribeBatchDeleteConfigurationTask, and BatchDeleteAgents.
