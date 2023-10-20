@@ -13,7 +13,7 @@ use GuzzleHttp\Psr7\Uri;
  */
 trait EndpointV2SerializerTrait
 {
-    private function setEndpointV2RequestOptions($endpoint, $headers)
+    private function setEndpointV2RequestOptions($endpoint, &$headers)
     {
         $this->applyHeaders($endpoint, $headers);
         $resolvedUrl = $endpoint->getUrl();
