@@ -68,10 +68,7 @@ class QuerySerializer
         ];
 
         if ($endpoint instanceof RulesetEndpoint) {
-            $this->applyHeaders($endpoint, $headers);
-            $resolvedUrl = $endpoint->getUrl();
-            $this->applyScheme($resolvedUrl);
-            $this->endpoint = $resolvedUrl;
+            $this->setEndpointV2RequestOptions($endpoint, $headers);
         }
 
         return new Request(

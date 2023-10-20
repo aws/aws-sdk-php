@@ -59,10 +59,7 @@ abstract class RestSerializer
         $headers = $opts['headers'] ?? [];
 
         if ($endpoint instanceof RulesetEndpoint) {
-            $this->applyHeaders($endpoint, $headers);
-            $resolvedUrl = $endpoint->getUrl();
-            $this->applyScheme($resolvedUrl);
-            $this->endpoint = new Uri($resolvedUrl);
+            $this->setEndpointV2RequestOptions($endpoint, $headers);
         }
 
         $uri = $this->buildEndpoint($operation, $commandArgs, $opts);
