@@ -3,6 +3,7 @@
 namespace Aws\EndpointV2;
 
 use Aws\Api\Serializer\RestSerializer;
+use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use GuzzleHttp\Psr7\Uri;
 
 /**
@@ -13,7 +14,19 @@ use GuzzleHttp\Psr7\Uri;
  */
 trait EndpointV2SerializerTrait
 {
-    private function setEndpointV2RequestOptions($endpoint, &$headers)
+    /**
+     * Applies a resolved endpoint, headers and any custom HTTP schemes provided
+     * in client configuration to options which are applied to the serialized request.
+     *
+     * @param $endpoint
+     * @param $headers
+     *
+     * @return void
+     */
+    private function setEndpointV2RequestOptions(
+        RulesetEndpoint $endpoint,
+        array &$headers
+    ): void
     {
         $this->applyHeaders($endpoint, $headers);
         $resolvedUrl = $endpoint->getUrl();
@@ -23,7 +36,14 @@ trait EndpointV2SerializerTrait
             : $resolvedUrl;
     }
 
-    private function applyHeaders($endpoint, &$headers)
+    /**
+     * Combines modeled headers and headers resolved from an endpoint object.
+     *
+     * @param $endpoint
+     * @param $headers
+     * @return void
+     */
+    private function applyHeaders(RulesetEndpoint $endpoint, array &$headers): void
     {
         if (!is_null($endpoint->getHeaders())) {
            $headers = array_merge(
@@ -33,7 +53,13 @@ trait EndpointV2SerializerTrait
         }
     }
 
-    private function applyScheme(&$resolvedUrl)
+    /**
+     * Applies custom HTTP schemes provided in client configuration.
+     *
+     * @param $resolvedUrl
+     * @return void
+     */
+    private function applyScheme(string &$resolvedUrl): void
     {
         $resolvedEndpointScheme = parse_url($resolvedUrl, PHP_URL_SCHEME);
         $scheme = $this->endpoint instanceof Uri

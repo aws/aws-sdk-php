@@ -1,13 +1,18 @@
 <?php
 namespace Aws\EndpointV2;
 
+use Aws\Api\Operation;
 use Aws\Api\Service;
 use Aws\CommandInterface;
+use Closure;
+use GuzzleHttp\Promise\Promise;
 
 /**
  * Handles endpoint rule evaluation and endpoint resolution.
  *
- * IMPORTANT: this middleware must be prepended to the "build" step.
+ * IMPORTANT: this middleware must be added to the "build" step.
+ * Specifically, it must precede the 'builder' step.
+ *
  *
  * @internal
  */
@@ -31,19 +36,26 @@ class EndpointV2Middleware
      * @param EndpointProviderV2 $endpointProvider
      * @param Service $api
      * @param array $args
-     * @return \Closure
+     *
+     * @return Closure
      */
     public static function wrap(
         EndpointProviderV2 $endpointProvider,
         Service $api,
         array $args
-    )
+    ) : Closure
     {
         return function (callable $handler) use ($endpointProvider, $api, $args) {
             return new self($handler, $endpointProvider, $api, $args);
         };
     }
 
+    /**
+     * @param callable $nextHandler
+     * @param EndpointProviderV2 $endpointProvider
+     * @param Service $api
+     * @param array $args
+     */
     public function __construct(
         callable $nextHandler,
         EndpointProviderV2 $endpointProvider,
@@ -57,7 +69,12 @@ class EndpointV2Middleware
         $this->clientArgs = $args;
     }
 
-    public function __invoke(CommandInterface $command)
+    /**
+     * @param CommandInterface $command
+     *
+     * @return Promise
+     */
+    public function __invoke(CommandInterface $command) : Promise
     {
         $nextHandler = $this->nextHandler;
         $operation = $this->api->getOperation($command->getName());
@@ -76,7 +93,16 @@ class EndpointV2Middleware
         return $nextHandler($command, $endpoint);
     }
 
-    private function resolveArgs($commandArgs, $operation)
+    /**
+     * Resolves client, context params, static context params and endpoint provider
+     * arguments provided at the command level.
+     *
+     * @param array $commandArgs
+     * @param Operation $operation
+     *
+     * @return array
+     */
+    private function resolveArgs(array $commandArgs, Operation $operation) : array
     {
         $rulesetParams = $this->endpointProvider->getRuleset()->getParameters();
         $endpointCommandArgs = $this->filterEndpointCommandArgs(
@@ -98,10 +124,19 @@ class EndpointV2Middleware
         );
     }
 
+    /**
+     * Compares Ruleset parameters against Command arguments
+     * to create a mapping of arguments to pass into the
+     * endpoint provider for endpoint resolution.
+     *
+     * @param array $rulesetParams
+     * @param array $commandArgs
+     * @return array
+     */
     private function filterEndpointCommandArgs(
-        $rulesetParams,
-        $commandArgs
-    )
+        array $rulesetParams,
+        array $commandArgs
+    ) : array
     {
         $endpointMiddlewareOpts = [
             '@use_dual_stack_endpoint' => 'UseDualStack',
@@ -131,7 +166,14 @@ class EndpointV2Middleware
         return $filteredArgs;
     }
 
-    private function bindStaticContextParams($staticContextParams)
+    /**
+     * Binds static context params to their corresponding values.
+     *
+     * @param $staticContextParams
+     *
+     * @return array
+     */
+    private function bindStaticContextParams($staticContextParams) : array
     {
         $scopedParams = [];
 
@@ -141,7 +183,19 @@ class EndpointV2Middleware
         return $scopedParams;
     }
 
-    private function bindContextParams($commandArgs, $contextParams)
+    /**
+     * Binds context params to their corresponding values found in
+     * command arguments.
+     *
+     * @param array $commandArgs
+     * @param array $contextParams
+     *
+     * @return array
+     */
+    private function bindContextParams(
+        array $commandArgs,
+        array $contextParams
+    ) : array
     {
         $scopedParams = [];
 
@@ -153,13 +207,32 @@ class EndpointV2Middleware
         return $scopedParams;
     }
 
-    private function applyAuthScheme($authSchemes, $command)
+    /**
+     * Applies resolved auth schemes to the command object.
+     *
+     * @param $authSchemes
+     * @param $command
+     *
+     * @return void
+     */
+    private function applyAuthScheme(
+        array $authSchemes,
+        CommandInterface $command
+    ) : void
     {
         $authScheme = $this->resolveAuthScheme($authSchemes);
         $command->setAuthSchemes($authScheme);
     }
 
-    private function resolveAuthScheme($authSchemes)
+    /**
+     * Returns the first compatible auth scheme in an endpoint object's
+     * auth schemes.
+     *
+     * @param array $authSchemes
+     *
+     * @return array
+     */
+    private function resolveAuthScheme(array $authSchemes) : array
     {
         $validAuthSchemes = ['sigv4', 'sigv4a', 'none', 'bearer'];
         $invalidAuthSchemes = [];
@@ -180,7 +253,14 @@ class EndpointV2Middleware
         );
     }
 
-    private function normalizeAuthScheme($authScheme)
+    /**
+     * Normalizes an auth scheme's name, signing region or signing region set
+     * to the auth keys recognized by the SDK.
+     *
+     * @param array $authScheme
+     * @return array
+     */
+    private function normalizeAuthScheme(array $authScheme) : array
     {
         /*
             sigv4a will contain a regionSet property. which is guaranteed to be `*`

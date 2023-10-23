@@ -16,11 +16,11 @@ class EndpointV2MiddlewareTest extends TestCase
     /**
      * @dataProvider providedSuccessCases
      *
-     * @param $cmdName
-     * @param $cmdParams
-     * @param $options
-     * @param $expectedException
-     * @throws \Exception
+     * @param $service
+     * @param $clientArgs
+     * @param $commandName
+     * @param $commandArgs
+     * @param $expectedUri
      */
     public function testSuccessfullyResolvesEndpointAndAuthScheme(
         $service,
