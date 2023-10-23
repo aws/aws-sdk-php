@@ -74,7 +74,7 @@ class EndpointV2Middleware
      *
      * @return Promise
      */
-    public function __invoke(CommandInterface $command) : Promise
+    public function __invoke(CommandInterface $command)
     {
         $nextHandler = $this->nextHandler;
         $operation = $this->api->getOperation($command->getName());
