@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.10 - 2023-10-23
 
 * `Aws\NetworkManager` - This release adds API support for Tunnel-less Connect (NoEncap Protocol) for AWS Cloud WAN
 * `Aws\Rekognition` - Amazon Rekognition introduces StartMediaAnalysisJob, GetMediaAnalysisJob, and ListMediaAnalysisJobs operations to run a bulk analysis of images with a Detect Moderation model.
