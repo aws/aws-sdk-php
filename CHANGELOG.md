@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.11 - 2023-10-24
 
 * `Aws\` - Updates aws-crt-php dependency due to breaking changes introduced by the latest MacOS platform update
 * `Aws\MigrationHubStrategyRecommendations` - This release introduces multi-data-source feature in Migration Hub Strategy Recommendations. This feature now supports vCenter as a data source to fetch inventory in addition to ADS and Import from file workflow that is currently supported with MHSR collector.
