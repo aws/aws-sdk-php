@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Updates aws-crt-php dependency due to breaking changes introduced by the latest MacOS platform update
+* `Aws\MigrationHubStrategyRecommendations` - This release introduces multi-data-source feature in Migration Hub Strategy Recommendations. This feature now supports vCenter as a data source to fetch inventory in addition to ADS and Import from file workflow that is currently supported with MHSR collector.
+* `Aws\EKS` - Added support for Cluster Subnet and Security Group mutability.
+* `Aws\OpenSearchServerless` - This release includes the following new APIs: CreateLifecyclePolicy, UpdateLifecyclePolicy, BatchGetLifecyclePolicy, DeleteLifecyclePolicy, ListLifecyclePolicies and BatchGetEffectiveLifecyclePolicy to support the data lifecycle management feature.
+* `Aws\CodePipeline` - Add ability to trigger pipelines from git tags, define variables at pipeline level and new pipeline type V2.
+* `Aws\EC2` - This release updates the documentation for InstanceInterruptionBehavior and HibernationOptionsRequest to more accurately describe the behavior of these two parameters when using Spot hibernation.
+* `Aws\IAM` - Add the partitional endpoint for IAM in iso-f.
+* `Aws\MigrationHubConfig` - This release introduces DeleteHomeRegionControl API that customers can use to delete the Migration Hub Home Region configuration
+
 ## 3.283.10 - 2023-10-23
 
 * `Aws\NetworkManager` - This release adds API support for Tunnel-less Connect (NoEncap Protocol) for AWS Cloud WAN
