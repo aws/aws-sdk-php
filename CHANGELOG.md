@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConnectCases` - Increase maximum length of CommentBody to 3000, and increase maximum length of StringValue to 1500
+* `Aws\IAM` - Updates to GetAccessKeyLastUsed action to replace NoSuchEntity error with AccessDeniedException error.
+* `Aws\GroundStation` - This release will allow KMS alias names to be used when creating Mission Profiles
+
 ## 3.283.11 - 2023-10-24
 
 * `Aws\` - Updates aws-crt-php dependency due to breaking changes introduced by the latest MacOS platform update
