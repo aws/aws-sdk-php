@@ -2,6 +2,7 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\Credentials;
+use Aws\Identity\AwsCredentialIdentity;
 use PHPUnit\Framework\TestCase;
 
 /**

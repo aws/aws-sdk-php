@@ -7,7 +7,7 @@ use Aws\Token\TokenInterface;
  * Basic implementation of the AWS Token interface that allows callers to
  * pass in an AWS token in the constructor.
  */
-class Token implements TokenInterface, \Serializable
+class Token implements TokenInterface, \Serializable, BearerTokenIdentity
 {
     protected $token;
     protected $expires;
