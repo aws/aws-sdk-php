@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.12 - 2023-10-25
 
 * `Aws\ConnectCases` - Increase maximum length of CommentBody to 3000, and increase maximum length of StringValue to 1500
 * `Aws\IAM` - Updates to GetAccessKeyLastUsed action to replace NoSuchEntity error with AccessDeniedException error.
