@@ -1002,6 +1002,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise getNetworkInsightsAccessScopeAnalysisFindingsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getNetworkInsightsAccessScopeContent(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getNetworkInsightsAccessScopeContentAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result getSecurityGroupsForVpc(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise getSecurityGroupsForVpcAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getSerialConsoleAccessStatus(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getSerialConsoleAccessStatusAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getSpotPlacementScores(array $args = []) (supported in versions 2016-11-15)
