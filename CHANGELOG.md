@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.13 - 2023-10-26
 
 * `Aws\SsmSap` - AWS Systems Manager for SAP added support for registration and discovery of SAP ABAP applications
 * `Aws\SNS` - Message Archiving and Replay is now supported in Amazon SNS for FIFO topics.
