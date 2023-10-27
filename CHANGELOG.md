@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Pinpoint` - Updated documentation to describe the case insensitivity for EndpointIds.
+* `Aws\WAFV2` - Updates the descriptions for the calls that manage web ACL associations, to provide information for customer-managed IAM policies.
+* `Aws\Neptune` - Update TdeCredentialPassword type to SensitiveString
+* `Aws\EMR` - Updated CreateCluster API request and DescribeCluster API responses to include EbsRootVolumeIops, and EbsRootVolumeThroughput attributes that specify the user configured root volume IOPS and throughput for Amazon EBS root device volume. This feature will be available from Amazon EMR releases 6.15.0
+* `Aws\Redshift` - added support to create a dual stack cluster
+
 ## 3.283.13 - 2023-10-26
 
 * `Aws\SsmSap` - AWS Systems Manager for SAP added support for registration and discovery of SAP ABAP applications
