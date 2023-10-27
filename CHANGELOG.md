@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.14 - 2023-10-27
 
 * `Aws\Pinpoint` - Updated documentation to describe the case insensitivity for EndpointIds.
 * `Aws\WAFV2` - Updates the descriptions for the calls that manage web ACL associations, to provide information for customer-managed IAM policies.
