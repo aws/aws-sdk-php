@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.15 - 2023-10-30
 
 * `Aws\finspace` - Introducing new API UpdateKxClusterCodeConfiguration, introducing new cache types for clusters and introducing new deployment modes for updating clusters.
 * `Aws\DataExchange` - We added a new API action: SendDataSetNotification.
