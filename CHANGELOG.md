@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.16 - 2023-10-31
 
 * `Aws\EC2` - Capacity Blocks for ML are a new EC2 purchasing option for reserving GPU instances on a future date to support short duration machine learning (ML) workloads. Capacity Blocks automatically place instances close together inside Amazon EC2 UltraClusters for low-latency, high-throughput networking.
 * `Aws\Neptunedata` - Minor change to not retry CancelledByUserException
