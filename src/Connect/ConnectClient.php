@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise associateSecurityKeyAsync(array $args = [])
  * @method \Aws\Result associateTrafficDistributionGroupUser(array $args = [])
  * @method \GuzzleHttp\Promise\Promise associateTrafficDistributionGroupUserAsync(array $args = [])
+ * @method \Aws\Result batchGetFlowAssociation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetFlowAssociationAsync(array $args = [])
  * @method \Aws\Result claimPhoneNumber(array $args = [])
  * @method \GuzzleHttp\Promise\Promise claimPhoneNumberAsync(array $args = [])
  * @method \Aws\Result createAgentStatus(array $args = [])

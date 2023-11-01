@@ -3053,6 +3053,7 @@
         "EngineVersion":{"shape":"String"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
         "AllocatedStorage":{"shape":"IntegerOptional"},
+        "RdsCustomClusterConfiguration":{"shape":"RdsCustomClusterConfiguration"},
         "Iops":{"shape":"IntegerOptional"},
         "StorageType":{"shape":"String"}
       }
@@ -3288,6 +3289,7 @@
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
         "EngineMode":{"shape":"String"},
         "ScalingConfiguration":{"shape":"ScalingConfiguration"},
+        "RdsCustomClusterConfiguration":{"shape":"RdsCustomClusterConfiguration"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "GlobalClusterIdentifier":{"shape":"String"},
         "EnableHttpEndpoint":{"shape":"BooleanOptional"},
@@ -3820,6 +3822,7 @@
         "Capacity":{"shape":"IntegerOptional"},
         "EngineMode":{"shape":"String"},
         "ScalingConfigurationInfo":{"shape":"ScalingConfigurationInfo"},
+        "RdsCustomClusterConfiguration":{"shape":"RdsCustomClusterConfiguration"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "HttpEndpointEnabled":{"shape":"BooleanOptional"},
         "ActivityStreamMode":{"shape":"ActivityStreamMode"},
@@ -7916,6 +7919,13 @@
         "locationName":"Range"
       }
     },
+    "RdsCustomClusterConfiguration":{
+      "type":"structure",
+      "members":{
+        "InterconnectSubnetId":{"shape":"String"},
+        "TransitGatewayMulticastDomainId":{"shape":"String"}
+      }
+    },
     "ReadReplicaDBClusterIdentifierList":{
       "type":"list",
       "member":{
@@ -8310,7 +8320,8 @@
         "Iops":{"shape":"IntegerOptional"},
         "PubliclyAccessible":{"shape":"BooleanOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
-        "NetworkType":{"shape":"String"}
+        "NetworkType":{"shape":"String"},
+        "RdsCustomClusterConfiguration":{"shape":"RdsCustomClusterConfiguration"}
       }
     },
     "RestoreDBClusterFromSnapshotResult":{
@@ -8350,7 +8361,8 @@
         "Iops":{"shape":"IntegerOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "NetworkType":{"shape":"String"},
-        "SourceDbClusterResourceId":{"shape":"String"}
+        "SourceDbClusterResourceId":{"shape":"String"},
+        "RdsCustomClusterConfiguration":{"shape":"RdsCustomClusterConfiguration"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{
