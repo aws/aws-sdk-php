@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.17 - 2023-11-01
 
 * `Aws\Redshift` - Added support for Multi-AZ deployments for Provisioned RA3 clusters that provide 99.99% SLA availability.
 * `Aws\SageMaker` - Support for batch transform input in Model dashboard
