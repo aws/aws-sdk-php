@@ -8,7 +8,7 @@ use Aws\Api\Service;
 use Aws\Middleware;
 use Aws\QueryCompatibleInputMiddleware;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers \Aws\QueryCompatibleInputMiddleware

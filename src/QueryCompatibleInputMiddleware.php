@@ -65,8 +65,8 @@ class QueryCompatibleInputMiddleware
     }
 
     /**
-     * Recurses a command's input shape. if a given input does not match its
-     * modeled value, it is cast to the modeled type.
+     * Recurses a given input shape. if a given scalar input does not match its
+     * modeled type, it is cast to its modeled type.
      *
      * @param $input
      * @param $shape
