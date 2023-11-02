@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Credentials;
 
+use Aws\Configuration\ConfigurationResolver;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\InstanceProfileProvider;
@@ -1203,5 +1204,149 @@ class InstanceProfileProviderTest extends TestCase
         $provider()->wait();
         $provider()->wait();
         $this->assertLessThanOrEqual(3, $this->getPropertyValue($provider, 'attempts'));
+    }
+
+    /**
+     * This test checks for disabling IMDSv1 fallback by explicit client config passing.
+     *
+     * @return void
+     */
+    public function testIMDSv1DisabledByExplicitConfig() {
+        $config = [InstanceProfileProvider::CFG_EC2_METADATA_V1_DISABLED => true];
+        $wereCredentialsFetched = $this->fetchMockedCredentialsAndAlwaysExpectAToken($config);
+
+        $this->assertTrue($wereCredentialsFetched);
+    }
+
+    /**
+     * This test checks for disabling IMDSv1 fallback by setting AWS_EC2_METADATA_V1_DISABLED to true.
+     *
+     * @return void
+     */
+    public function testIMDSv1DisabledByEnvironment() {
+        $ec2MetadataV1Disabled = ConfigurationResolver::env(InstanceProfileProvider::CFG_EC2_METADATA_V1_DISABLED, 'string');
+        putenv('AWS_' . strtoupper(InstanceProfileProvider::CFG_EC2_METADATA_V1_DISABLED) . '=' . 'true');
+        try {
+            $wereCredentialsFetched = $this->fetchMockedCredentialsAndAlwaysExpectAToken();
+            $this->assertTrue($wereCredentialsFetched);
+        } finally {
+            putenv('AWS_' . strtoupper(InstanceProfileProvider::CFG_EC2_METADATA_V1_DISABLED) . '=' . $ec2MetadataV1Disabled);
+        }
+    }
+
+    /**
+     * This test checks for disabling IMDSv1 fallback by looking into the config file
+     * for the property aws_ec2_metadata_v1_disabled expected set to true.
+     *
+     * @return void
+     */
+    public function testIMDSv1DisabledByConfigFile() {
+        $currentConfigFile = getenv(ConfigurationResolver::ENV_CONFIG_FILE);
+        $mockConfigFile = "./mock-config";
+        try {
+            putenv(ConfigurationResolver::ENV_CONFIG_FILE . '=' . $mockConfigFile);
+            $configContent = "[default]" . "\n" . InstanceProfileProvider::CFG_EC2_METADATA_V1_DISABLED . "=" . "true";
+            file_put_contents($mockConfigFile, $configContent);
+            $wereCredentialsFetched = $this->fetchMockedCredentialsAndAlwaysExpectAToken();
+            $this->assertTrue($wereCredentialsFetched);
+        } finally {
+            unlink($mockConfigFile);
+            putenv(ConfigurationResolver::ENV_CONFIG_FILE . '=' . $currentConfigFile);
+        }
+    }
+
+    /**
+     * This test checks for having IMDSv1 fallback enabled by default.
+     * In this case credentials will not be fetched since it is expected to
+     * always use the secure mode, which means the assertion will be done against false.
+     *
+     * @return void
+     */
+    public function testIMDSv1EnabledByDefault() {
+        $wereCredentialsFetched = $this->fetchMockedCredentialsAndAlwaysExpectAToken();
+        $this->assertFalse($wereCredentialsFetched);
+    }
+
+    /**
+     * This function simulates the process for retrieving credential from the instance metadata
+     * service but always expecting a token, which means that the credentials should be retrieved
+     * in secure mode. It returns true if credentials were fetched with not exceptions;
+     * otherwise false will be returned.
+     * To accomplish this we pass a dummy http handler with the following steps:
+     * 1 - retrieve the token:
+     *   -- If $firstTokenTry is set to true then it will set $firstTokenTry to false, and
+     *      it will return a 401 error response to make this request to fail.
+     *   --- then, when catching the exception from this failed request, the provider
+     *       will check if it is allowed to switch to insecure mode (IMDSv1). And if so then,
+     *       it will jump to step 2, otherwise step 1:
+     *   -- If $firstTokenTry is set to false then a token will be returned.
+     * 2 - retrieve profile:
+     *   -- If a valid token was not provided, which in this case it needs to be equal
+     *      to $mockToken, then an exception will be thrown.
+     *   -- If a valid token is provided then, it will jump to step 3.
+     * 3 - retrieve credentials:
+     *   -- If a valid token was not provided, which in this case it needs to be equal
+     *      to $mockToken, then an exception will be thrown.
+     *   -- If a valid token is provided then, test credentials are returned.
+     *
+     * @param array $config the configuration to be passed to the provider.
+     *
+     * @return bool
+     */
+    private function fetchMockedCredentialsAndAlwaysExpectAToken($config=[]) {
+        $TOKEN_HEADER_KEY = 'x-aws-ec2-metadata-token';
+        $firstTokenTry = true;
+        $mockToken = 'MockToken';
+        $mockHandler = function (RequestInterface $request) use (&$firstTokenTry, $mockToken, $TOKEN_HEADER_KEY) {
+            $fnRejectionTokenNotProvided = function () use ($mockToken, $TOKEN_HEADER_KEY, $request) {
+                return Promise\Create::rejectionFor(
+                    ['exception' => new RequestException("Token with value $mockToken is expected as header $TOKEN_HEADER_KEY", $request, new Response(400))]
+                );
+            };
+            if ($request->getMethod() === 'PUT' && $request->getUri()->getPath() === '/latest/api/token') {
+                if ($firstTokenTry) {
+                    $firstTokenTry = false;
+
+                    return Promise\Create::rejectionFor(['exception' => new RequestException("Unexpected error!", $request, new Response(401))]);
+                } else {
+                    return Promise\Create::promiseFor(new Response(200, [], Psr7\Utils::streamFor($mockToken)));
+                }
+            } elseif ($request->getMethod() === 'GET') {
+                switch ($request->getUri()->getPath()) {
+                    case '/latest/meta-data/iam/security-credentials/':
+                        if ($mockToken !== ($request->getHeader($TOKEN_HEADER_KEY)[0] ?? '')) {
+                            return $fnRejectionTokenNotProvided();
+                        }
+
+                        return Promise\Create::promiseFor(new Response(200, [], Psr7\Utils::streamFor('MockProfile')));
+                    case '/latest/meta-data/iam/security-credentials/MockProfile':
+                        if ($mockToken !== ($request->getHeader($TOKEN_HEADER_KEY)[0] ?? '')) {
+                            return $fnRejectionTokenNotProvided();
+                        }
+
+                        $expiration = time() + 10000;
+
+                        return Promise\Create::promiseFor(
+                            new Response(
+                                200,
+                                [],
+                                Psr7\Utils::streamFor(
+                                    json_encode($this->getCredentialArray('foo', 'baz', null, "@$expiration"))
+                                )
+                            )
+                        );
+                }
+            }
+
+            return Promise\Create::rejectionFor(['exception' => new \Exception('Unexpected error!')]);
+        };
+        $provider = new InstanceProfileProvider(array_merge(($config ?? []), ['client' => $mockHandler]));
+        try {
+            $provider()->wait();
+
+            return true;
+        } catch (\Exception $ignored) {
+            return false;
+        }
     }
 }
