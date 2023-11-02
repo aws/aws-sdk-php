@@ -61,7 +61,7 @@ class EcsCredentialProviderTest extends TestCase
 
     public function testRejectsIfUriPathIsNotAvailable()
     {
-        $this->expectExceptionMessage("Error retrieving credential from ECS");
+        $this->expectExceptionMessage("Error retrieving credentials from container metadata");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $client = function () use (&$responses) {
             return Promise\Create::rejectionFor([
@@ -74,7 +74,7 @@ class EcsCredentialProviderTest extends TestCase
 
     public function testThrowsExceptionOnInvalidEcsCredential()
     {
-        $this->expectExceptionMessage("Unexpected ECS credential value");
+        $this->expectExceptionMessage("Unexpected container metadata credentials value");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $this->getTestCreds(
             $this->getCredentialArray(null, null, null, null, false)

@@ -8,8 +8,8 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Credential provider that fetches credentials with GET request.
- * ECS environment variable is used in constructing request URI.
+ * Credential provider that fetches container credentials with GET request.
+ * container environment variables are used in constructing request URI.
  */
 class EcsCredentialProvider
 {
@@ -48,7 +48,7 @@ class EcsCredentialProvider
     }
 
     /**
-     * Load ECS credentials
+     * Load container credentials
      *
      * @return PromiseInterface
      * @throws GuzzleException
@@ -81,7 +81,7 @@ class EcsCredentialProvider
                 $reason = is_array($reason) ? $reason['exception'] : $reason;
                 $msg = $reason->getMessage();
                 throw new CredentialsException(
-                    "Error retrieving credential from ECS ($msg)"
+                    "Error retrieving credentials from container metadata ($msg)"
                 );
             });
         }
@@ -126,9 +126,9 @@ class EcsCredentialProvider
     }
 
     /**
-     * Fetch credential URI from ECS environment variable
+     * Fetch container metadata URI from container environment variable
      *
-     * @return string Returns ECS URI
+     * @return string Returns container metadata URI
      */
     private function getEcsUri()
     {
@@ -156,7 +156,7 @@ class EcsCredentialProvider
         $result = json_decode($response, true);
 
         if (!isset($result['AccessKeyId'])) {
-            throw new CredentialsException('Unexpected ECS credential value');
+            throw new CredentialsException('Unexpected container metadata credentials value');
         }
         return $result;
     }
