@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.283.18 - 2023-11-02
 
 * `Aws\Glue` - This release introduces Google BigQuery Source and Target in AWS Glue CodeGenConfigurationNode.
 * `Aws\Connect` - GetMetricDataV2 API: Update to include new metrics PERCENT_NON_TALK_TIME, PERCENT_TALK_TIME, PERCENT_TALK_TIME_AGENT, PERCENT_TALK_TIME_CUSTOMER
