@@ -461,7 +461,7 @@ class AwsClient implements AwsClientInterface
         }
     }
 
-    private function addQueryCompatibleInputMiddleware($api)
+    private function addQueryCompatibleInputMiddleware(Service $api)
     {
             $list = $this->getHandlerList();
             $list->appendValidate(
