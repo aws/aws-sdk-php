@@ -49,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createIntegrationAssociationAsync(array $args = [])
  * @method \Aws\Result createParticipant(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createParticipantAsync(array $args = [])
+ * @method \Aws\Result createPersistentContactAssociation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createPersistentContactAssociationAsync(array $args = [])
  * @method \Aws\Result createPrompt(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createPromptAsync(array $args = [])
  * @method \Aws\Result createQueue(array $args = [])

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\LaunchWizard` - AWS Launch Wizard is a service that helps reduce the time it takes to deploy applications to the cloud while providing a guided deployment experience.
+* `Aws\Connect` - Amazon Connect Chat introduces Create Persistent Contact Association API, allowing customers to choose when to resume previous conversations from previous chats, eliminating the need to repeat themselves and allowing agents to provide personalized service with access to entire conversation history.
+* `Aws\ConfigService` - Updated ResourceType enum with new resource types onboarded by AWS Config in October 2023.
+* `Aws\IoTWireless` - Added LoRaWAN version 1.0.4 support
+
 ## 3.283.18 - 2023-11-02
 
 * `Aws\Glue` - This release introduces Google BigQuery Source and Target in AWS Glue CodeGenConfigurationNode.

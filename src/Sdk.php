@@ -380,6 +380,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionLakeFormation(array $args = [])
  * @method \Aws\Lambda\LambdaClient createLambda(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLambda(array $args = [])
+ * @method \Aws\LaunchWizard\LaunchWizardClient createLaunchWizard(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionLaunchWizard(array $args = [])
  * @method \Aws\LexModelBuildingService\LexModelBuildingServiceClient createLexModelBuildingService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLexModelBuildingService(array $args = [])
  * @method \Aws\LexModelsV2\LexModelsV2Client createLexModelsV2(array $args = [])
