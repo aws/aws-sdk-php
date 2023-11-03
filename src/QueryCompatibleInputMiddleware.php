@@ -180,6 +180,7 @@ class QueryCompatibleInputMiddleware
     private function changeValueAtPath(array $path, $newValue) : void
     {
         $commandRef = &$this->command;
+
         foreach ($path as $segment) {
             if (!isset($commandRef[$segment])) {
                 return;

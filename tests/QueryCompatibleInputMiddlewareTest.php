@@ -3,11 +3,10 @@ namespace Aws\Test;
 
 use Aws\AwsClient;
 use Aws\Command;
-use Aws\HandlerList;
 use Aws\Api\Service;
 use Aws\Middleware;
-use Aws\QueryCompatibleInputMiddleware;
-use GuzzleHttp\Psr7\Request;
+use Aws\MockHandler;
+use Aws\Result;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -37,15 +36,7 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
             'FooOperation',
             [$inputParam => $inputValue]
         );
-
-        $list = new HandlerList();
-        $list->setHandler(function ($command) {
-            return "success";
-        });
-        $list->appendValidate(QueryCompatibleInputMiddleware::wrap($service));
-
-        $handler = $list->resolve();
-        $handler($command, new Request('POST', 'https://foo.com'));
+        $client->execute($command);
     }
 
     /**
@@ -63,20 +54,13 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
             'FooOperation',
             [$inputParam => $inputValue]
         );
-
-        $list = new HandlerList();
-        $list->setHandler(function ($command) {
-            return "success";
-        });
-        $list->prependBuild(Middleware::tap(function (Command $command) use ($inputParam, $expected) {
-            $this->assertSame($expected, $command[$inputParam]);
-        }));
-        $list->appendValidate(QueryCompatibleInputMiddleware::wrap($service));
-
-        $handler = $list->resolve();
-
-        $result = @$handler($command, new Request('POST', 'https://foo.com'));
-        self::assertSame($result, "success");
+        $command->getHandlerList()->appendValidate(Middleware::tap(
+                function (Command $command) use ($inputParam, $expected) {
+                    $this->assertSame($expected, $command[$inputParam]);
+                }
+            )
+        );
+        $result = @$client->execute($command);
     }
 
     /**
@@ -106,7 +90,7 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
                 ]
             ],
             'StructureParam' => [
-                'NestedParam1' => true,
+                'NestedParam1' => 5.5,
                 'NestedParam2' => '98765'
             ],
             'ListParam' => [
@@ -124,11 +108,7 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
             $input
         );
 
-        $list = new HandlerList();
-        $list->setHandler(function ($command) {
-            return "success";
-        });
-        $list->prependBuild(Middleware::tap(function (Command $command) {
+        $command->getHandlerList()->prependBuild(Middleware::tap(function (Command $command) {
             $this->assertIsString($command['MapParam']['Key1']['DataType']);
             $this->assertEquals('123', $command['MapParam']['Key1']['DataType']);
 
@@ -136,7 +116,7 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
             $this->assertEquals('456', $command['MapParam']['Key1']['StringValue']);
 
             $this->assertIsString($command['StructureParam']['NestedParam1']);
-            $this->assertEquals('1', $command['StructureParam']['NestedParam1']);
+            $this->assertEquals('5.5', $command['StructureParam']['NestedParam1']);
 
             $this->assertIsInt($command['StructureParam']['NestedParam2']);
             $this->assertEquals(98765, $command['StructureParam']['NestedParam2']);
@@ -147,12 +127,22 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
             $this->assertIsString($command['ListParam'][0]['NestedParam2']);
             $this->assertEquals('20', $command['ListParam'][0]['NestedParam2']);
         }));
-        $list->appendValidate(QueryCompatibleInputMiddleware::wrap($service));
 
-        $handler = $list->resolve();
+        @$client->execute($command);
+    }
 
-        $result = @$handler($command, new Request('POST', 'https://foo.com'));
-        self::assertSame($result, "success");
+    public function testMiddlewareAppliedForQueryCompatClients()
+    {
+        $client = $this->generateTestClient($this->generateTestService());
+        $list = $client->getHandlerList();
+        $this->assertStringContainsString('query-compatible-input', $list->__toString());
+    }
+
+    public function testMiddlewareNotAppliedForNonQueryCompatClients()
+    {
+        $client = $this->generateTestClient($this->generateTestService(false));
+        $list = $client->getHandlerList();
+        $this->assertStringNotContainsString('query-compatible-input', $list->__toString());
     }
 
     private function generateTestClient(Service $service, $args = [])
@@ -166,13 +156,14 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
                     },
                     'region'       => 'us-east-1',
                     'version'      => 'latest',
+                    'handler' => new MockHandler([new Result([])])
                 ],
                 $args
             )
         );
     }
 
-    private function generateTestService()
+    private function generateTestService($queryCompatible = true)
     {
         return new Service(
             [
@@ -180,7 +171,7 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
                     "protocol" => "json",
                     "apiVersion" => "2014-01-01",
                     "jsonVersion" => "1.1",
-                    "awsQueryCompatible" => []
+                    "awsQueryCompatible" => $queryCompatible ? [] : null
                 ],
                 'operations' => [
                     'FooOperation' => [
