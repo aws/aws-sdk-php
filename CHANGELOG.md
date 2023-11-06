@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.284.1 - 2023-11-06
 
 * `Aws\` - Adds middleware which, for query compatible services, ensures input values are cast to their modeled type
 * `Aws\MWAA` - This release adds support for Apache Airflow version 2.7.2. This version release includes support for deferrable operators and triggers.
