@@ -200,7 +200,7 @@ class BatchingContext extends TestCase implements
         while (count($messages) < $messageCount) {
             $result = $this->client->receiveMessage([
                 'QueueUrl' => $queueUrl,
-                'MaxNumberOfMessages' => $messageCount,
+                'MaxNumberOfMessages' => (int) $messageCount,
             ]);
 
             foreach ($result['Messages'] as $message) {
