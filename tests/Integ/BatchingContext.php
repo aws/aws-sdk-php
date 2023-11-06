@@ -198,7 +198,7 @@ class BatchingContext extends TestCase implements
             ->getQueueUrl(['QueueName' => self::$resource])['QueueUrl'];
         $messages = [];
         while (count($messages) < $messageCount) {
-            $result = $this->client->receiveMessage([
+            $result = @$this->client->receiveMessage([
                 'QueueUrl' => $queueUrl,
                 'MaxNumberOfMessages' => $messageCount,
             ]);
