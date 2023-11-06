@@ -68,4 +68,3 @@ class CredentialsTest extends TestCase
         $this->assertInstanceOf(AwsCredentialIdentityInterface::class, $credentials);
     }
 }
-
