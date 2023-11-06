@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds middleware which, for query compatible services, ensures input values are cast to their modeled type
+* `Aws\MWAA` - This release adds support for Apache Airflow version 2.7.2. This version release includes support for deferrable operators and triggers.
+* `Aws\CodeBuild` - AWS CodeBuild now supports AWS Lambda compute.
+* `Aws\IAM` - Add partitional endpoint for iso-e.
+* `Aws\Connect` - Added new API that allows Amazon Connect Outbound Campaigns to create contacts in Amazon Connect when ingesting your dial requests.
+* `Aws\Route53` - Add partitional endpoints for iso-e and iso-f.
+* `Aws\CostExplorer` - This release extends the GetReservationPurchaseRecommendation API to support recommendations for Amazon MemoryDB reservations.
+* `Aws\DocDB` - Update the input of CreateDBInstance and ModifyDBInstance to support setting CA Certificates. Update the output of DescribeDBInstance and DescribeDBEngineVersions to show current and supported CA certificates.
+* `Aws\Polly` - Amazon Polly adds new US English voices - Danielle and Gregory. Danielle and Gregory are available as Neural voices only.
+
 ## 3.284.0 - 2023-11-03
 
 * `Aws\LaunchWizard` - AWS Launch Wizard is a service that helps reduce the time it takes to deploy applications to the cloud while providing a guided deployment experience.
