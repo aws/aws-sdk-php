@@ -5,7 +5,7 @@ use Aws\Identity\IdentityInterface;
 /**
  * Denotes the use of standard AWS credentials.
  */
-interface AwsCredentialIdentity implements IdentityInterface
+interface AwsCredentialIdentityInterface extends IdentityInterface
 {
     public function getAccessKeyId();
 

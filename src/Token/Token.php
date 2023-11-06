@@ -1,13 +1,14 @@
 <?php
 namespace Aws\Token;
 
+use Aws\Identity\BearerTokenIdentityInterface;
 use Aws\Token\TokenInterface;
 
 /**
  * Basic implementation of the AWS Token interface that allows callers to
  * pass in an AWS token in the constructor.
  */
-class Token implements TokenInterface, \Serializable, BearerTokenIdentity
+class Token implements TokenInterface, \Serializable, BearerTokenIdentityInterface
 {
     protected $token;
     protected $expires;
