@@ -48,7 +48,7 @@ class EcsCredentialProvider
     }
 
     /**
-     * Load container credentials
+     * Load container credentials.
      *
      * @return PromiseInterface
      * @throws GuzzleException
@@ -88,7 +88,12 @@ class EcsCredentialProvider
 
         throw new CredentialsException("Uri '{$uri}' contains an unsupported host.");
     }
-    
+
+    /**
+     * Retrieves authorization token.
+     *
+     * @return array|false|string
+     */
     private function getEcsAuthToken()
     {
         if (!empty($path = getenv(self::ENV_AUTH_TOKEN_FILE))) {
@@ -104,11 +109,17 @@ class EcsCredentialProvider
         return getenv(self::ENV_AUTH_TOKEN);
     }
 
+    /**
+     * Provides headers for credential metadata request.
+     *
+     * @return array|array[]|string[]
+     */
     private function getHeadersForAuthToken()
     {
         $authToken = self::getEcsAuthToken();
         $headers = [];
-        if(!empty($authToken))
+
+        if (!empty($authToken))
             $headers = ['Authorization' => $authToken];
 
         return $headers;
@@ -119,14 +130,14 @@ class EcsCredentialProvider
     {
         $authToken = self::getEcsAuthToken();
         $headers = [];
-        if(!empty($authToken))
+        if (!empty($authToken))
             $headers = ['Authorization' => $authToken];
 
         return $headers;
     }
 
     /**
-     * Fetch container metadata URI from container environment variable
+     * Fetch container metadata URI from container environment variable.
      *
      * @return string Returns container metadata URI
      */
@@ -138,7 +149,7 @@ class EcsCredentialProvider
             $credsUri = $_SERVER[self::ENV_URI] ?? '';
         }
 
-        if(empty($credsUri)){
+        if (empty($credsUri)){
             $credFullUri = getenv(self::ENV_FULL_URI);
             if ($credFullUri === false){
                 $credFullUri = $_SERVER[self::ENV_FULL_URI] ?? '';
@@ -161,6 +172,14 @@ class EcsCredentialProvider
         return $result;
     }
 
+    /**
+     * Determines whether or not a given request URI is a valid
+     * container credential request URI.
+     *
+     * @param $uri
+     *
+     * @return bool
+     */
     private function isCompatibleUri($uri)
     {
         $parsed = parse_url($uri);
@@ -182,6 +201,14 @@ class EcsCredentialProvider
         return true;
     }
 
+    /**
+     * Determines whether or not a given host
+     * is a loopback address.
+     *
+     * @param $host
+     *
+     * @return bool
+     */
     private function isLoopbackAddress($host)
     {
         if (!filter_var($host, FILTER_VALIDATE_IP)) {
