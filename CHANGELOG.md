@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - In the EcsCredentialProvider, adds support for additional token auth source as well as support/validation for local link addresses
+* `Aws\RDS` - This Amazon RDS release adds support for the multi-tenant configuration. In this configuration, an RDS DB instance can contain multiple tenant databases. In RDS for Oracle, a tenant database is a pluggable database (PDB).
+* `Aws\DataExchange` - Updated SendDataSetNotificationRequest Comment to be maximum length 4096.
+* `Aws\DLM` - Added support for pre and post scripts in Amazon Data Lifecycle Manager EBS snapshot lifecycle policies.
+
 ## 3.284.1 - 2023-11-06
 
 * `Aws\` - Adds middleware which, for query compatible services, ensures input values are cast to their modeled type
