@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.285.0 - 2023-11-07
 
 * `Aws\Credentials` - In the EcsCredentialProvider, adds support for additional token auth source as well as support/validation for local link addresses
 * `Aws\RDS` - This Amazon RDS release adds support for the multi-tenant configuration. In this configuration, an RDS DB instance can contain multiple tenant databases. In RDS for Oracle, a tenant database is a pluggable database (PDB).
