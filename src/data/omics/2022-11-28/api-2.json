@@ -3326,7 +3326,9 @@
         "accelerators":{"shape":"Accelerators"},
         "retentionMode":{"shape":"RunRetentionMode"},
         "failureReason":{"shape":"RunFailureReason"},
-        "logLocation":{"shape":"RunLogLocation"}
+        "logLocation":{"shape":"RunLogLocation"},
+        "uuid":{"shape":"RunUuid"},
+        "runOutputUri":{"shape":"RunOutputUri"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -5303,6 +5305,12 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "RunUuid":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
     "S3Destination":{
       "type":"string",
       "pattern":"s3://([a-z0-9][a-z0-9-.]{1,61}[a-z0-9])/?((.{1,1024})/)?"
@@ -5746,7 +5754,9 @@
         "arn":{"shape":"RunArn"},
         "id":{"shape":"RunId"},
         "status":{"shape":"RunStatus"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "uuid":{"shape":"RunUuid"},
+        "runOutputUri":{"shape":"RunOutputUri"}
       }
     },
     "StartVariantImportRequest":{

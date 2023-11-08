@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDS` - This Amazon RDS release adds support for patching the OS of an RDS Custom for Oracle DB instance. You can now upgrade the database or operating system using the modify-db-instance command.
+* `Aws\ResilienceHub` - AWS Resilience Hub enhances Resiliency Score, providing actionable recommendations to improve application resilience. Amazon Elastic Kubernetes Service (EKS) operational recommendations have been added to help improve the resilience posture of your applications.
+* `Aws\LexModelsV2` - AWS Lex now supports selective log capture in conversation logs. When you enable this option within the conversation log settings, only the utterances that trigger intents and slots specified in session attributes will be logged.
+* `Aws\SQS` - This release enables customers to call SQS using AWS JSON-1.0 protocol.
+* `Aws\ConnectCases` - This release adds the ability to add/view comment authors through CreateRelatedItem and SearchRelatedItems API. For more information see https://docs.aws.amazon.com/cases/latest/APIReference/Welcome.html
+* `Aws\GuardDuty` - Added API support for new GuardDuty EKS Audit Log finding types.
+* `Aws\Omics` - Adding Run UUID and Run Output URI: GetRun and StartRun API response has two new fields "uuid" and "runOutputUri".
+* `Aws\RedshiftServerless` - Added a new parameter in the workgroup that helps you control your cost for compute resources. This feature provides a ceiling for RPUs that Amazon Redshift Serverless can scale up to. When automatic compute scaling is required, having a higher value for MaxRPU can enhance query throughput.
+* `Aws\Lambda` - Add Node 20 (nodejs20.x) support to AWS Lambda.
+* `Aws\DataSync` - This change allows for 0 length access keys and secret keys for object storage locations. Users can now pass in empty string credentials.
+* `Aws\Connect` - This release clarifies in our public documentation that InstanceId is a requirement for SearchUsers API requests.
+
 ## 3.285.0 - 2023-11-07
 
 * `Aws\Credentials` - In the EcsCredentialProvider, adds support for additional token auth source as well as support/validation for local link addresses
