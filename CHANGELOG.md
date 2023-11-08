@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.285.1 - 2023-11-08
 
 * `Aws\RDS` - This Amazon RDS release adds support for patching the OS of an RDS Custom for Oracle DB instance. You can now upgrade the database or operating system using the modify-db-instance command.
 * `Aws\ResilienceHub` - AWS Resilience Hub enhances Resiliency Score, providing actionable recommendations to improve application resilience. Amazon Elastic Kubernetes Service (EKS) operational recommendations have been added to help improve the resilience posture of your applications.
