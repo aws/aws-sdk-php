@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.285.2 - 2023-11-09
 
 * `Aws\SQS` - This release enables customers to call SQS using AWS JSON-1.0 protocol and bug fix.
 
