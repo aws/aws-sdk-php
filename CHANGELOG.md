@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.285.3 - 2023-11-09
 
 * `Aws\Comprehend` - This release adds support for toxicity detection and prompt safety classification.
 * `Aws\CloudWatchLogs` - Update to support new APIs for delivery of logs from AWS services.
