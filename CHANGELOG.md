@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SQS` - This release enables customers to call SQS using AWS JSON-1.0 protocol and bug fix.
+
 ## 3.285.1 - 2023-11-08
 
 * `Aws\RDS` - This Amazon RDS release adds support for patching the OS of an RDS Custom for Oracle DB instance. You can now upgrade the database or operating system using the modify-db-instance command.
