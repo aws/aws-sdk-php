@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaConvert` - This release includes the ability to specify any input source as the primary input for corresponding follow modes, and allows users to specify fit and fill behaviors without resizing content.
+* `Aws\EC2` - EC2 adds API updates to enable ENA Express at instance launch time.
+* `Aws\CostandUsageReportService` - This release adds support for tagging and customers can now tag report definitions. Additionally, ReportStatus is now added to report definition to show when the last delivered time stamp and if it succeeded or not.
+* `Aws\FMS` - Adds optimizeUnassociatedWebACL flag to ManagedServiceData, updates third-party firewall examples, and other minor documentation updates.
+* `Aws\ControlTower` - AWS Control Tower supports tagging for enabled controls. This release introduces TagResource, UntagResource and ListTagsForResource APIs to manage tags in existing enabled controls. It updates EnabledControl API to tag resources at creation time.
+* `Aws\RDS` - Updates Amazon RDS documentation for zero-ETL integrations.
+* `Aws\MarketplaceEntitlementService` - Add paginators to GetEntitlements.
+
 ## 3.285.3 - 2023-11-09
 
 * `Aws\Comprehend` - This release adds support for toxicity detection and prompt safety classification.
