@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.285.4 - 2023-11-10
 
 * `Aws\MediaConvert` - This release includes the ability to specify any input source as the primary input for corresponding follow modes, and allows users to specify fit and fill behaviors without resizing content.
 * `Aws\EC2` - EC2 adds API updates to enable ENA Express at instance launch time.
