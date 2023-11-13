@@ -10,8 +10,6 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
-use function Aws\boolean_value;
-use function Aws\default_http_handler;
 
 /**
  * Credential provider that provides credentials from the EC2 metadata service.
@@ -66,7 +64,7 @@ class InstanceProfileProvider
         $this->timeout = (float) getenv(self::ENV_TIMEOUT) ?: ($config['timeout'] ?? self::DEFAULT_TIMEOUT);
         $this->profile = $config['profile'] ?? null;
         $this->retries = (int) getenv(self::ENV_RETRIES) ?: ($config['retries'] ?? self::DEFAULT_RETRIES);
-        $this->client = $config['client'] ?? default_http_handler();
+        $this->client = $config['client'] ?? \Aws\default_http_handler();
         $this->ec2MetadataV1Disabled = $config[self::CFG_EC2_METADATA_V1_DISABLED] ?? null;
     }
 
@@ -317,8 +315,8 @@ class InstanceProfileProvider
      * @return bool
      */
     private function shouldFallbackToIMDSv1(): bool {
-        $isImdsV1Disabled = boolean_value($this->ec2MetadataV1Disabled)
-            ?? boolean_value(
+        $isImdsV1Disabled = \Aws\boolean_value($this->ec2MetadataV1Disabled)
+            ?? \Aws\boolean_value(
                 ConfigurationResolver::resolve(
                     self::CFG_EC2_METADATA_V1_DISABLED,
                     self::DEFAULT_AWS_EC2_METADATA_V1_DISABLED,
