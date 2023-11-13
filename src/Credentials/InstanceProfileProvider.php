@@ -314,7 +314,8 @@ class InstanceProfileProvider
      *
      * @return bool
      */
-    private function shouldFallbackToIMDSv1(): bool {
+    private function shouldFallbackToIMDSv1(): bool 
+    {
         $isImdsV1Disabled = \Aws\boolean_value($this->ec2MetadataV1Disabled)
             ?? \Aws\boolean_value(
                 ConfigurationResolver::resolve(
