@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.286.0 - 2023-11-13
 
 * `Aws\Credentials` - This implementation allows disabling IMDSv1 fallback by using environment variables, config file, and explicit client configuration.
 * `Aws\AppRegistry` - When the customer associates a resource collection to their application with this new feature, then a new application tag will be applied to all supported resources that are part of that collection. This allows customers to more easily find the application that is associated with those resources.
