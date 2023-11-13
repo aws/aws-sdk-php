@@ -228,6 +228,9 @@ class EndpointProviderV2Test extends TestCase
         ) {
             $this->markTestSkipped();
         }
+        if ($service == 's3') {
+            $clientArgs['disable_express_session_auth'] = true;
+        }
 
         clientInstantiation:
 

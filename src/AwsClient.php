@@ -445,7 +445,11 @@ class AwsClient implements AwsClientInterface
             return SignatureProvider::resolve($provider, $version, $name, $region);
         };
         $this->handlerList->appendSign(
-            Middleware::signer($this->credentialProvider, $resolver, $this->tokenProvider),
+            Middleware::signer($this->credentialProvider,
+                $resolver,
+                $this->tokenProvider,
+                $this->getConfig()
+            ),
             'signer'
         );
     }
