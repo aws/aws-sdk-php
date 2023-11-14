@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.286.1 - 2023-11-14
 
 * `Aws\Pipes` - Added support (via new LogConfiguration field in CreatePipe and UpdatePipe APIs) for logging to Amazon CloudWatch Logs, Amazon Simple Storage Service (Amazon S3), and Amazon Kinesis Data Firehose
 * `Aws\SageMaker` - This release makes Model Registry Inference Specification fields as not required.
