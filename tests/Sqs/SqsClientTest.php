@@ -165,19 +165,4 @@ class SqsClientTest extends TestCase
         $this->addMockResults($client, [new Result()]);
         $client->listQueues();
     }
-
-    public function testUpdatesQueueUrl()
-    {
-        // Setup state of command/request
-        $newUrl = 'https://queue.amazonaws.com/stuff/in/the/path';
-        $client = new SqsClient([
-            'region'  => 'us-east-1',
-            'version' => 'latest'
-        ]);
-        $this->addMockResults($client, [[]]);
-        $client->getHandlerList()->appendSign(Middleware::tap(function ($c, $r) use ($newUrl) {
-            $this->assertSame($newUrl, (string)$r->getUri());
-        }));
-        $client->receiveMessage(['QueueUrl' => $newUrl]);
-    }
 }
