@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.286.2 - 2023-11-15
 
 * `Aws\Sqs` - Moves queue url middleware, which is no longer needed after the SQS migration from query to json protocol.
 * `Aws\RDS` - Updates Amazon RDS documentation for support for upgrading RDS for MySQL snapshots from version 5.7 to version 8.0.
