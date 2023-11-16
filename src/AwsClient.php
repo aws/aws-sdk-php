@@ -242,9 +242,9 @@ class AwsClient implements AwsClientInterface
         $this->addRecursionDetection();
         $this->addRequestBuilder();
 
-        if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
-            $this->addQueryCompatibleInputMiddleware($this->api);
-        }
+//        if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
+//            $this->addQueryCompatibleInputMiddleware($this->api);
+//        }
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
