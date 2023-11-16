@@ -414,8 +414,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMWAA(array $args = [])
  * @method \Aws\MachineLearning\MachineLearningClient createMachineLearning(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMachineLearning(array $args = [])
- * @method \Aws\Macie\MacieClient createMacie(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionMacie(array $args = [])
  * @method \Aws\Macie2\Macie2Client createMacie2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMacie2(array $args = [])
  * @method \Aws\MainframeModernization\MainframeModernizationClient createMainframeModernization(array $args = [])
