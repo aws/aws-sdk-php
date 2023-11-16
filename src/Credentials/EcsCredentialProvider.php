@@ -58,39 +58,35 @@ class EcsCredentialProvider
         $client = $this->client;
         $uri = self::getEcsUri();
 
-        if (!$this->isCompatibleUri($uri)) {
-            trigger_error(
-                "Uri {$uri} contains an unsupported host." .
-                "for non-https uris, it is recommended to use a local link address.",
-                E_USER_WARNING
-            );
+        if ($this->isCompatibleUri($uri)) {
+            $request = new Request('GET', $uri);
+
+            $headers = $this->getHeadersForAuthToken();
+            return $client(
+                $request,
+                [
+                    'timeout' => $this->timeout,
+                    'proxy' => '',
+                    'headers' => $headers
+                ]
+            )->then(function (ResponseInterface $response) {
+                $result = $this->decodeResult((string) $response->getBody());
+                return new Credentials(
+                    $result['AccessKeyId'],
+                    $result['SecretAccessKey'],
+                    $result['Token'],
+                    strtotime($result['Expiration'])
+                );
+            })->otherwise(function ($reason) {
+                $reason = is_array($reason) ? $reason['exception'] : $reason;
+                $msg = $reason->getMessage();
+                throw new CredentialsException(
+                    "Error retrieving credentials from container metadata ($msg)"
+                );
+            });
         }
 
-        $request = new Request('GET', $uri);
-
-        $headers = $this->getHeadersForAuthToken();
-        return $client(
-            $request,
-            [
-                'timeout' => $this->timeout,
-                'proxy' => '',
-                'headers' => $headers
-            ]
-        )->then(function (ResponseInterface $response) {
-            $result = $this->decodeResult((string) $response->getBody());
-            return new Credentials(
-                $result['AccessKeyId'],
-                $result['SecretAccessKey'],
-                $result['Token'],
-                strtotime($result['Expiration'])
-            );
-        })->otherwise(function ($reason) {
-            $reason = is_array($reason) ? $reason['exception'] : $reason;
-            $msg = $reason->getMessage();
-            throw new CredentialsException(
-                "Error retrieving credentials from container metadata ($msg)"
-            );
-        });
+        throw new CredentialsException("Uri '{$uri}' contains an unsupported host.");
     }
 
     /**
