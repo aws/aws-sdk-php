@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.286.3 - 2023-11-16
 
 * `Aws\SSOAdmin` - Instances bound to a single AWS account, API operations for managing instances and applications, and assignments to applications are now supported. Trusted identity propagation is also supported, with new API operations for managing trusted token issuers and application grants and scopes.
 * `Aws\SSM` - This release introduces the ability to filter automation execution steps which have parent steps. In addition, runbook variable information is returned by GetAutomationExecution and parent step information is returned by the DescribeAutomationStepExecutions API.
