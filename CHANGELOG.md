@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.287.0 - 2023-11-17
 
 * `Aws\` - Removes the original Macie service, which has been deprecated.
 * `Aws\Sqs` - Updates response md5 validation
