@@ -211,6 +211,8 @@ class EcsCredentialProvider
      */
     private function isLoopbackAddress($host)
     {
+        $host = gethostbyname($host);
+
         if (!filter_var($host, FILTER_VALIDATE_IP)) {
             return false;
         }
