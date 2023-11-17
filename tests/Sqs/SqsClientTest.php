@@ -165,4 +165,31 @@ class SqsClientTest extends TestCase
         $this->addMockResults($client, [new Result()]);
         $client->listQueues();
     }
+
+    public function testDoesNotValidateEmptyMessageAttributes()
+    {
+        $client = new SqsClient([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
+
+        $mock = new Result([
+            'Messages' => [
+                [
+                    'Body' => 'Test',
+                    'MessageAttributes' => []
+                ]
+            ]
+        ]);
+
+        $this->addMockResults($client, [$mock]);
+        $response = $client->receiveMessage([
+            'QueueUrl' => 'http://foo.com',
+            'MessageAttributeNames' => [
+                'All'
+            ],
+        ]);
+
+        $this->assertEmpty($response->get('MessageAttributes'));
+    }
 }
