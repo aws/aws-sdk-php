@@ -2228,7 +2228,9 @@
       "type":"structure",
       "members":{
         "AuthorizationCode":{"shape":"AuthorizationCodeGrant"},
-        "JwtBearer":{"shape":"JwtBearerGrant"}
+        "JwtBearer":{"shape":"JwtBearerGrant"},
+        "RefreshToken":{"shape":"RefreshTokenGrant"},
+        "TokenExchange":{"shape":"TokenExchangeGrant"}
       },
       "union":true
     },
@@ -3017,6 +3019,11 @@
       "max":10,
       "min":1
     },
+    "RefreshTokenGrant":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "RelayState":{
       "type":"string",
       "max":240,
@@ -3197,6 +3204,11 @@
       "max":2048,
       "min":0,
       "pattern":"^[-a-zA-Z0-9+=/_]*$"
+    },
+    "TokenExchangeGrant":{
+      "type":"structure",
+      "members":{
+      }
     },
     "TokenIssuerAudience":{
       "type":"string",
