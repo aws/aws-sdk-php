@@ -215,7 +215,7 @@ class SqsClient extends AwsClient
                                             ]
                                         );
                                     }
-                                } else if (isset($msg['MessageAttributes'])) {
+                                } else if (!empty($msg['MessageAttributes'])) {
                                     throw new SqsException(
                                         sprintf(
                                             'No Attribute MD5 found. Expected %s',
