@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.287.1 - 2023-11-20
 
 * `Aws\Credentials` - Adds hostname resolution for the EcsCredentialProvider.
 * `Aws\EC2` - This release adds support for Security group referencing over Transit gateways, enabling you to simplify Security group management and control of instance-to-instance traffic across VPCs that are connected by Transit gateway.
