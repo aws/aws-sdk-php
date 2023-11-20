@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Adds hostname resolution for the EcsCredentialProvider.
+* `Aws\EC2` - This release adds support for Security group referencing over Transit gateways, enabling you to simplify Security group management and control of instance-to-instance traffic across VPCs that are connected by Transit gateway.
+* `Aws\DocDB` - Amazon DocumentDB updates for new cluster storage configuration: Amazon DocumentDB I/O-Optimized.
+* `Aws\CodeStarconnections` - This release updates a few CodeStar Connections related APIs.
+
 ## 3.287.0 - 2023-11-17
 
 * `Aws\` - Removes the original Macie service, which has been deprecated.
