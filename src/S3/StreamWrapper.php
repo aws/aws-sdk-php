@@ -245,7 +245,6 @@ class StreamWrapper
         $stat = $this->getStatTemplate();
         $stat[7] = $stat['size'] = $this->getSize();
         $stat[2] = $stat['mode'] = $this->mode;
-        $stat['custom_attribute'] = 'custom_value';
 
         return $stat;
     }

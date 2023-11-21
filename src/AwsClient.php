@@ -6,7 +6,6 @@ use Aws\Api\DocModel;
 use Aws\Api\Service;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\EndpointV2\EndpointProviderV2;
-use Aws\EndpointV2\EndpointV2Middleware;
 use Aws\Exception\AwsException;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
@@ -241,9 +240,7 @@ class AwsClient implements AwsClientInterface
         $this->loadAliases();
         $this->addStreamRequestPayload();
         $this->addRecursionDetection();
-        if ($this->isUseEndpointV2()) {
-            $this->addEndpointV2Middleware();
-        }
+        $this->addRequestBuilder();
 
         if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
             $this->addQueryCompatibleInputMiddleware($this->api);
@@ -515,18 +512,24 @@ class AwsClient implements AwsClientInterface
         );
     }
 
-    private function addEndpointV2Middleware()
+    /**
+     * Adds the `builder` middleware such that a client's endpoint
+     * provider and endpoint resolution arguments can be passed.
+     */
+    private function addRequestBuilder()
     {
-        $list = $this->getHandlerList();
+        $handlerList = $this->getHandlerList();
+        $serializer = $this->serializer;
+        $endpointProvider = $this->endpointProvider;
         $endpointArgs = $this->getEndpointProviderArgs();
 
-        $list->prependBuild(
-            EndpointV2Middleware::wrap(
-                $this->endpointProvider,
-                $this->getApi(),
+        $handlerList->prependBuild(
+            Middleware::requestBuilder(
+                $serializer,
+                $endpointProvider,
                 $endpointArgs
             ),
-            'endpointV2_middleware'
+            'builderV2'
         );
     }
 
