@@ -100,11 +100,15 @@ final class Middleware
      * @param array $providerArgs
      * @return callable
      */
-    public static function requestBuilder($serializer)
+    public static function requestBuilder(
+        $serializer,
+        $endpointProvider = null,
+        array $providerArgs = null
+    )
     {
-        return function (callable $handler) use ($serializer) {
-            return function (CommandInterface $command, $endpoint = null) use ($serializer, $handler) {
-                return $handler($command, $serializer($command, $endpoint));
+        return function (callable $handler) use ($serializer, $endpointProvider, $providerArgs) {
+            return function (CommandInterface $command) use ($serializer, $handler, $endpointProvider, $providerArgs) {
+                return $handler($command, $serializer($command, $endpointProvider, $providerArgs));
             };
         };
     }

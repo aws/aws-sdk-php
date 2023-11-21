@@ -6,7 +6,6 @@ use Aws\Api\Service;
 use Aws\Command;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\EndpointV2\EndpointProviderV2;
-use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -80,8 +79,14 @@ class QuerySerializerTest extends TestCase
 
         $q = new QuerySerializer($service, 'http://foo.com');
         $cmd = new Command('foo', ['baz' => []]);
-        $endpoint = new RulesetEndpoint('https://foo.com');
-        $request = $q($cmd, $endpoint);
-        $this->assertSame('http://foo.com', (string) $request->getUri());
+        $endpointProvider = new EndpointProviderV2(
+            json_decode(
+                file_get_contents(__DIR__ . '/../../EndpointV2/valid-rules/aws-region.json'),
+                true
+            ),
+            EndpointDefinitionProvider::getPartitions()
+        );
+        $request = $q($cmd, $endpointProvider, ['Region' => 'us-east-1']);
+        $this->assertSame('http://us-east-1.amazonaws.com', (string) $request->getUri());
     }
 }

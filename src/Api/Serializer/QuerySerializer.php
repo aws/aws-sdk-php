@@ -5,7 +5,6 @@ use Aws\Api\Service;
 use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2SerializerTrait;
-use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
@@ -43,7 +42,8 @@ class QuerySerializer
      */
     public function __invoke(
         CommandInterface $command,
-        $endpoint = null
+        $endpointProvider = null,
+        $clientArgs = null
     )
     {
         $operation = $this->api->getOperation($command->getName());
@@ -67,8 +67,15 @@ class QuerySerializer
             'Content-Type'   => 'application/x-www-form-urlencoded'
         ];
 
-        if ($endpoint instanceof RulesetEndpoint) {
-            $this->setEndpointV2RequestOptions($endpoint, $headers);
+        if ($endpointProvider instanceof EndpointProviderV2) {
+            $this->setRequestOptions(
+                $endpointProvider,
+                $command,
+                $operation,
+                $commandArgs,
+                $clientArgs,
+                $headers
+            );
         }
 
         return new Request(
