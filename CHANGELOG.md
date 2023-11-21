@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.288.0 - 2023-11-21
 
 * `Aws\CloudFrontKeyValueStore` - This release adds support for CloudFront KeyValueStore, a globally managed key value datastore associated with CloudFront Functions.
 * `Aws\CloudFront` - This release adds support for CloudFront KeyValueStore, a globally managed key value datastore associated with CloudFront Functions.
