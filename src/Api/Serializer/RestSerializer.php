@@ -242,6 +242,12 @@ abstract class RestSerializer
                 $path = rtrim($path, '/');
             }
             $relative = $path . $relative;
+
+            if ($this->api->isModifiedModel()
+                && strpos($relative, '../') !== false
+            ){
+                return new Uri($this->endpoint . $relative);
+            }
         }
         // If endpoint has path, remove leading '/' to preserve URI resolution.
         if ($path && $relative[0] === '/') {
@@ -258,17 +264,15 @@ abstract class RestSerializer
 
         //Append path to endpoint when a parent directory '../'
         // reference is detected as uri cannot be properly resolved
-        if ($this->api->isModifiedModel()
-            && strpos($relative, '../') !== false
-        ){
-            if ($relative && $relative[0] !== '/') {
-                $relative = '/' . $relative;
-            }
-
-            return new Uri(
-                $this->endpoint . $relative
-            );
-        }
+//        if ($this->api->isModifiedModel()
+//            && strpos($relative, '../') !== false
+//        ){
+//            if ($relative && $relative[0] !== '/') {
+//                $relative = '/' . $relative;
+//            }
+//
+//            return new Uri($this->endpoint . $relative);
+//        }
 
         // Expand path place holders using Amazon's slightly different URI
         // template syntax.
