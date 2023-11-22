@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.288.1 - 2023-11-22
 
 * `Aws\s3` - Disables transformation of request URI paths with dot segments
 * `Aws\S3Control` - Amazon S3 Batch Operations now manages buckets or prefixes in a single step.
