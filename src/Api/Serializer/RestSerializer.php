@@ -244,6 +244,9 @@ abstract class RestSerializer
             $relative = $path . $relative;
 
             if (strpos($relative, '../') !== false) {
+                if ($relative && $relative[0] !== '/') {
+                    $relative = '/' . $relative;
+                }
                 return new Uri($this->endpoint . $relative);
             }
         }
