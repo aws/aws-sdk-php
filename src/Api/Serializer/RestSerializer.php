@@ -262,18 +262,6 @@ abstract class RestSerializer
             return new Uri($this->endpoint . $relative);
         }
 
-        //Append path to endpoint when a parent directory '../'
-        // reference is detected as uri cannot be properly resolved
-//        if ($this->api->isModifiedModel()
-//            && strpos($relative, '../') !== false
-//        ){
-//            if ($relative && $relative[0] !== '/') {
-//                $relative = '/' . $relative;
-//            }
-//
-//            return new Uri($this->endpoint . $relative);
-//        }
-
         // Expand path place holders using Amazon's slightly different URI
         // template syntax.
         return UriResolver::resolve($this->endpoint, new Uri($relative));
