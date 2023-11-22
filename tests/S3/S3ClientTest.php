@@ -2321,4 +2321,57 @@ EOXML;
         );
         $s3->execute($command);
     }
+
+    /**
+     * @dataProvider dotSegmentProvider
+     */
+    public function testHandlesDotSegmentsInKey($key, $expectedUri)
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('getObject', ['Bucket' => 'foo', 'Key' => $key]);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) use ($expectedUri) {
+                $this->assertSame($expectedUri, (string) $req->getUri());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function dotSegmentProvider()
+    {
+        return [
+            ['../foo' , 'https://foo.s3.amazonaws.com/../foo'],
+            ['bar/../../foo', 'https://foo.s3.amazonaws.com/bar/../../foo'],
+            ['/../foo', 'https://foo.s3.amazonaws.com//../foo'],
+            ['foo/bar/../baz', 'https://foo.s3.amazonaws.com/foo/bar/../baz']
+        ];
+    }
+
+    /**
+     * @dataProvider dotSegmentPathStyleProvider
+     */
+    public function testHandlesDotSegmentsInKeyWithPathStyle($key, $expectedUri)
+    {
+        $s3 = $this->getTestClient('s3', ['use_path_style_endpoint' => true]);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('getObject', ['Bucket' => 'foo', 'Key' => $key]);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) use ($expectedUri) {
+                $this->assertSame($expectedUri, (string) $req->getUri());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function dotSegmentPathStyleProvider()
+    {
+        return [
+            ['../foo' , 'https://s3.amazonaws.com/foo/foo/../foo'],
+            ['bar/../../foo', 'https://s3.amazonaws.com/foo/foo/bar/../../foo'],
+            ['/../foo', 'https://s3.amazonaws.com/foo/foo//../foo'],
+            ['foo/bar/../baz', 'https://s3.amazonaws.com/foo/foo/foo/bar/../baz'],
+        ];
+    }
+
 }
