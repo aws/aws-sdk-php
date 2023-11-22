@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\s3` - Disables transformation of request URI paths with dot segments
+* `Aws\S3Control` - Amazon S3 Batch Operations now manages buckets or prefixes in a single step.
+* `Aws\SageMaker` - This feature adds the end user license agreement status as a model access configuration parameter.
+* `Aws\Kinesis` - This release adds support for resource based policies on streams and consumers.
+
 ## 3.288.0 - 2023-11-21
 
 * `Aws\CloudFrontKeyValueStore` - This release adds support for CloudFront KeyValueStore, a globally managed key value datastore associated with CloudFront Functions.
