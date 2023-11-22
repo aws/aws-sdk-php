@@ -250,15 +250,15 @@ abstract class RestSerializer
 
         //Append path to endpoint when leading '//...'
         // present as uri cannot be properly resolved
-        if (($this->api->isModifiedModel()
-            && strpos($relative, '//') === 0)
+        if ($this->api->isModifiedModel()
+            && strpos($relative, '//') === 0
         ) {
             return new Uri($this->endpoint . $relative);
         }
 
         //Append path to endpoint when a parent directory '../'
         // reference is detected as uri cannot be properly resolved
-        if ($this->api->getServiceName() === 's3'
+        if ($this->api->isModifiedModel()
             && strpos($relative, '../') !== false
         ){
             return new Uri(
