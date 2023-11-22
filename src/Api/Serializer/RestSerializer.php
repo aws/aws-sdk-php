@@ -261,10 +261,12 @@ abstract class RestSerializer
         if ($this->api->isModifiedModel()
             && strpos($relative, '../') !== false
         ){
+            if ($relative && $relative[0] !== '/') {
+                $relative = '/' . $relative;
+            }
+
             return new Uri(
-                $this->endpoint
-                . (strpos($relative, '/') !== 0 ? '/' : '')
-                . $relative
+                $this->endpoint . $relative
             );
         }
 
