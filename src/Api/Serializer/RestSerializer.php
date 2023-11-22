@@ -248,12 +248,22 @@ abstract class RestSerializer
             $relative = substr($relative, 1);
         }
 
-        //Append path to endpoint when leading '//...' present
-        // as uri cannot be properly resolved
-        if ($this->api->isModifiedModel()
-            && strpos($relative, '//') === 0
+        //Append path to endpoint when leading '//...' or
+        // '../' present as uri cannot be properly resolved
+        if (($this->api->isModifiedModel()
+            && strpos($relative, '//') === 0)
         ) {
             return new Uri($this->endpoint . $relative);
+        }
+
+        if ($this->api->getServiceName() === 's3'
+            && strpos($relative, '../') !== false
+        ){
+            return new Uri(
+                $this->endpoint
+                . (strpos($relative, '/') !== 0 ? '/' : '')
+                . $relative
+            );
         }
 
         // Expand path place holders using Amazon's slightly different URI
