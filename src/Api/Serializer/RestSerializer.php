@@ -243,9 +243,7 @@ abstract class RestSerializer
             }
             $relative = $path . $relative;
 
-            if ($this->api->isModifiedModel()
-                && strpos($relative, '../') !== false
-            ){
+            if (strpos($relative, '../') !== false) {
                 return new Uri($this->endpoint . $relative);
             }
         }
