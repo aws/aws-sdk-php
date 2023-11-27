@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.290.0 - 2023-11-27
 
 * `Aws\Glue` - add observations support to DQ CodeGen config model + update document for connectiontypes supported by ConnectorData entities
 * `Aws\FIS` - AWS FIS adds support for multi-account experiments & empty target resolution. This release also introduces the CreateTargetAccountConfiguration API that allows experiments across multiple AWS accounts, and the ListExperimentResolvedTargets API to list target details.
