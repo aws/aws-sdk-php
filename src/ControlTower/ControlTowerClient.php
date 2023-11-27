@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateEnabledControl(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateEnabledControlAsync(array $args = [])
  * @method \Aws\Result updateLandingZone(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLandingZoneAsync(array $args = [])
  */

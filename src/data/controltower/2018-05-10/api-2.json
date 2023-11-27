@@ -250,6 +250,25 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "UpdateEnabledControl":{
+      "name":"UpdateEnabledControl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/update-enabled-control",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateEnabledControlInput"},
+      "output":{"shape":"UpdateEnabledControlOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "UpdateLandingZone":{
       "name":"UpdateLandingZone",
       "http":{
@@ -328,7 +347,8 @@
       "type":"string",
       "enum":[
         "ENABLE_CONTROL",
-        "DISABLE_CONTROL"
+        "DISABLE_CONTROL",
+        "UPDATE_ENABLED_CONTROL"
       ]
     },
     "CreateLandingZoneInput":{
@@ -386,6 +406,12 @@
         "operationIdentifier":{"shape":"OperationIdentifier"}
       }
     },
+    "Document":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
     "DriftStatus":{
       "type":"string",
       "enum":[
@@ -409,6 +435,7 @@
       ],
       "members":{
         "controlIdentifier":{"shape":"ControlIdentifier"},
+        "parameters":{"shape":"EnabledControlParameters"},
         "tags":{"shape":"TagMap"},
         "targetIdentifier":{"shape":"TargetIdentifier"}
       }
@@ -427,10 +454,41 @@
         "arn":{"shape":"Arn"},
         "controlIdentifier":{"shape":"ControlIdentifier"},
         "driftStatusSummary":{"shape":"DriftStatusSummary"},
+        "parameters":{"shape":"EnabledControlParameterSummaries"},
         "statusSummary":{"shape":"EnablementStatusSummary"},
         "targetIdentifier":{"shape":"TargetIdentifier"},
         "targetRegions":{"shape":"TargetRegions"}
       }
+    },
+    "EnabledControlParameter":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"String"},
+        "value":{"shape":"Document"}
+      }
+    },
+    "EnabledControlParameterSummaries":{
+      "type":"list",
+      "member":{"shape":"EnabledControlParameterSummary"}
+    },
+    "EnabledControlParameterSummary":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"String"},
+        "value":{"shape":"Document"}
+      }
+    },
+    "EnabledControlParameters":{
+      "type":"list",
+      "member":{"shape":"EnabledControlParameter"}
     },
     "EnabledControlSummary":{
       "type":"structure",
@@ -840,6 +898,24 @@
     "UntagResourceOutput":{
       "type":"structure",
       "members":{
+      }
+    },
+    "UpdateEnabledControlInput":{
+      "type":"structure",
+      "required":[
+        "enabledControlIdentifier",
+        "parameters"
+      ],
+      "members":{
+        "enabledControlIdentifier":{"shape":"Arn"},
+        "parameters":{"shape":"EnabledControlParameters"}
+      }
+    },
+    "UpdateEnabledControlOutput":{
+      "type":"structure",
+      "required":["operationIdentifier"],
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"}
       }
     },
     "UpdateLandingZoneInput":{

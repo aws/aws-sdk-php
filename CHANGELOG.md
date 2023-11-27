@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - add observations support to DQ CodeGen config model + update document for connectiontypes supported by ConnectorData entities
+* `Aws\FIS` - AWS FIS adds support for multi-account experiments & empty target resolution. This release also introduces the CreateTargetAccountConfiguration API that allows experiments across multiple AWS accounts, and the ListExperimentResolvedTargets API to list target details.
+* `Aws\EFS` - Adding support for EFS Replication to existing file system.
+* `Aws\Backup` - AWS Backup now supports restore testing, a new feature that allows customers to automate restore testing and validating their backups. Additionally, this release adds support for EBS Snapshots Archive tier.
+* `Aws\TranscribeService` - This release adds support for AWS HealthScribe APIs within Amazon Transcribe
+* `Aws\B2bi` - This is the initial SDK release for AWS B2B Data Interchange.
+* `Aws\SecurityHub` - Adds and updates APIs to support central configuration. This feature allows the Security Hub delegated administrator to configure Security Hub for their entire AWS Org across multiple regions from a home Region. With this release, findings also include account name and application metadata.
+* `Aws\AppSync` - This update enables introspection of Aurora cluster databases using the RDS Data API
+* `Aws\RDS` - Updates Amazon RDS documentation for support for RDS for Db2.
+* `Aws\ControlTower` - This release adds the following support: 1. The EnableControl API can configure controls that are configurable. 2. The GetEnabledControl API shows the configured parameters on an enabled control. 3. The new UpdateEnabledControl API can change parameters on an enabled control.
+
 ## 3.289.0 - 2023-11-27
 
 * `Aws\IoTFleetWise` - AWS IoT FleetWise introduces new APIs for vision system data, such as data collected from cameras, radars, and lidars. You can now model and decode complex data types.
