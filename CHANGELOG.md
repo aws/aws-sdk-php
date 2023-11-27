@@ -1,5 +1,46 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTFleetWise` - AWS IoT FleetWise introduces new APIs for vision system data, such as data collected from cameras, radars, and lidars. You can now model and decode complex data types.
+* `Aws\CostOptimizationHub` - This release launches Cost Optimization Hub, a new AWS Billing and Cost Management feature that helps you consolidate and prioritize cost optimization recommendations across your AWS Organizations member accounts and AWS Regions, so that you can get the most out of your AWS spend.
+* `Aws\ECS` - Adds a new 'type' property to the Setting structure. Adds a new AccountSetting - guardDutyActivate for ECS.
+* `Aws\TranscribeService` - This release adds support for transcriptions from audio sources in 64 new languages and introduces generative call summarization in Transcribe Call Analytics (Post call)
+* `Aws\CloudTrail` - CloudTrail Lake now supports federating event data stores. giving users the ability to run queries against their event data using Amazon Athena.
+* `Aws\Repostspace` - Initial release of AWS re:Post Private
+* `Aws\S3` - Adding new params - Key and Prefix, to S3 API operations for supporting S3 Access Grants. Note - These updates will not change any of the existing S3 API functionality.
+* `Aws\EKS` - This release adds support for EKS Pod Identity feature. EKS Pod Identity makes it easy for customers to obtain IAM permissions for the applications running in their EKS clusters.
+* `Aws\SecurityHub` - Adds and updates APIs to support customizable security controls. This feature allows Security Hub customers to provide custom parameters for security controls. With this release, findings for controls that support custom parameters will include the parameters used to generate the findings.
+* `Aws\S3Control` - Introduce Amazon S3 Access Grants, a new S3 access control feature that maps identities in directories such as Active Directory, or AWS Identity and Access Management (IAM) Principals, to datasets in S3.
+* `Aws\ManagedBlockchain` - Add optional NetworkType property to Accessor APIs
+* `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze and generate recommendations with customization and discounts preferences.
+* `Aws\BCMDataExports` - Users can create, read, update, delete Exports of billing and cost management data. Users can get details of Export Executions and details of Tables for exporting. Tagging support is provided for Exports
+* `Aws\WorkSpaces` - The release introduces Multi-Region Resilience one-way data replication that allows you to replicate data from your primary WorkSpace to a standby WorkSpace in another AWS Region. DescribeWorkspaces now returns the status of data replication.
+* `Aws\ConfigService` - Support Periodic Recording for Configuration Recorder
+* `Aws\GuardDuty` - Add support for Runtime Monitoring for ECS and ECS-EC2.
+* `Aws\LexModelsV2` - This release introduces new generative AI features in AWS Lex: Assisted Slot Resolution, Descriptive Bot Building, and Sample Utterance Generation. These features leverage large language models available through Amazon Bedrock to improve the bot builder and customer experiences.
+* `Aws\FreeTier` - This is the initial SDK release for the AWS Free Tier GetFreeTierUsage API
+* `Aws\PrometheusService` - This release adds support for the Amazon Managed Service for Prometheus collector, a fully managed, agentless Prometheus metrics scraping capability.
+* `Aws\SecretsManager` - AWS Secrets Manager has released the BatchGetSecretValue API, which allows customers to fetch up to 20 Secrets with a single request using a list of secret names or filters.
+* `Aws\Redshift` - This release adds support for multi-data warehouse writes through data sharing.
+* `Aws\QuickSight` - This release launches new APIs for trusted identity propagation setup and supports creating datasources using trusted identity propagation as authentication method for QuickSight accounts configured with IAM Identity Center.
+* `Aws\PersonalizeEvents` - This release enables PutActions and PutActionInteractions
+* `Aws\PersonalizeRuntime` - Enables metadata in recommendations and next best action recommendations
+* `Aws\CodeStarconnections` - This release adds support for the CloudFormation Git sync feature. Git sync enables updating a CloudFormation stack from a template stored in a Git repository.
+* `Aws\LexRuntimeV2` - This release introduces support for interpretationSource in the runtime service response.
+* `Aws\EKSAuth` - This release adds support for EKS Pod Identity feature. EKS Pod Identity makes it easy for customers to obtain IAM permissions for their applications running in the EKS clusters.
+* `Aws\Detective` - Added new APIs in Detective to support resource investigations
+* `Aws\FSx` - Added support for FSx for ONTAP scale-out file systems and FlexGroup volumes. Added the HAPairs field and ThroughputCapacityPerHAPair for filesystem. Added AggregateConfiguration (containing Aggregates and ConstituentsPerAggregate) and SizeInBytes for volume.
+* `Aws\ElasticLoadBalancingv2` - This release enables both mutual authentication (mTLS), and Automatic Target Weights (ATW) for Application Load Balancers.
+* `Aws\EFS` - Adding support for EFS Archive lifecycle configuration.
+* `Aws\WorkSpacesThinClient` - Initial release of Amazon WorkSpaces Thin Client
+* `Aws\Personalize` - Enables metadata in recommendations, recommendations with themes, and next best action recommendations
+* `Aws\LakeFormation` - This release adds four new APIs "DescribeLakeFormationIdentityCenterConfiguration", "CreateLakeFormationIdentityCenterConfiguration", "DescribeLakeFormationIdentityCenterConfiguration", and "DeleteLakeFormationIdentityCenterConfiguration", and also updates the corresponding documentation.
+* `Aws\AccessAnalyzer` - IAM Access Analyzer now continuously monitors IAM roles and users in your AWS account or organization to generate findings for unused access. Additionally, IAM Access Analyzer now provides custom policy checks to validate that IAM policies adhere to your security standards ahead of deployments.
+* `Aws\ControlTower` - Add APIs to create and manage a landing zone.
+* `Aws\CloudWatchLogs` - Added APIs to Create, Update, Get, List and Delete LogAnomalyDetectors and List and Update Anomalies in Detector. Added LogGroupClass attribute for LogGroups to classify loggroup as Standard loggroup with all capabilities or InfrequentAccess loggroup with limited capabilities.
+* `Aws\SFN` - Adds new TestState operation which accepts the definition of a single state and executes it. You can test a state without creating a state machine or updating an existing state machine.
+
 ## 3.288.1 - 2023-11-22
 
 * `Aws\s3` - Disables transformation of request URI paths with dot segments

@@ -12,6 +12,42 @@
     "uid":"controltower-2018-05-10"
   },
   "operations":{
+    "CreateLandingZone":{
+      "name":"CreateLandingZone",
+      "http":{
+        "method":"POST",
+        "requestUri":"/create-landingzone",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateLandingZoneInput"},
+      "output":{"shape":"CreateLandingZoneOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteLandingZone":{
+      "name":"DeleteLandingZone",
+      "http":{
+        "method":"POST",
+        "requestUri":"/delete-landingzone",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteLandingZoneInput"},
+      "output":{"shape":"DeleteLandingZoneOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "DisableControl":{
       "name":"DisableControl",
       "http":{
@@ -84,6 +120,40 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetLandingZone":{
+      "name":"GetLandingZone",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-landingzone",
+        "responseCode":200
+      },
+      "input":{"shape":"GetLandingZoneInput"},
+      "output":{"shape":"GetLandingZoneOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetLandingZoneOperation":{
+      "name":"GetLandingZoneOperation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-landingzone-operation",
+        "responseCode":200
+      },
+      "input":{"shape":"GetLandingZoneOperationInput"},
+      "output":{"shape":"GetLandingZoneOperationOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListEnabledControls":{
       "name":"ListEnabledControls",
       "http":{
@@ -101,6 +171,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListLandingZones":{
+      "name":"ListLandingZones",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-landingzones",
+        "responseCode":200
+      },
+      "input":{"shape":"ListLandingZonesInput"},
+      "output":{"shape":"ListLandingZonesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -113,6 +199,24 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ResetLandingZone":{
+      "name":"ResetLandingZone",
+      "http":{
+        "method":"POST",
+        "requestUri":"/reset-landingzone",
+        "responseCode":200
+      },
+      "input":{"shape":"ResetLandingZoneInput"},
+      "output":{"shape":"ResetLandingZoneOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -143,6 +247,24 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateLandingZone":{
+      "name":"UpdateLandingZone",
+      "http":{
+        "method":"POST",
+        "requestUri":"/update-landingzone",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateLandingZoneInput"},
+      "output":{"shape":"UpdateLandingZoneOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
       ]
     }
@@ -208,6 +330,43 @@
         "ENABLE_CONTROL",
         "DISABLE_CONTROL"
       ]
+    },
+    "CreateLandingZoneInput":{
+      "type":"structure",
+      "required":[
+        "manifest",
+        "version"
+      ],
+      "members":{
+        "manifest":{"shape":"Manifest"},
+        "tags":{"shape":"TagMap"},
+        "version":{"shape":"LandingZoneVersion"}
+      }
+    },
+    "CreateLandingZoneOutput":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "operationIdentifier"
+      ],
+      "members":{
+        "arn":{"shape":"Arn"},
+        "operationIdentifier":{"shape":"OperationIdentifier"}
+      }
+    },
+    "DeleteLandingZoneInput":{
+      "type":"structure",
+      "required":["landingZoneIdentifier"],
+      "members":{
+        "landingZoneIdentifier":{"shape":"String"}
+      }
+    },
+    "DeleteLandingZoneOutput":{
+      "type":"structure",
+      "required":["operationIdentifier"],
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"}
+      }
     },
     "DisableControlInput":{
       "type":"structure",
@@ -330,6 +489,34 @@
         "enabledControlDetails":{"shape":"EnabledControlDetails"}
       }
     },
+    "GetLandingZoneInput":{
+      "type":"structure",
+      "required":["landingZoneIdentifier"],
+      "members":{
+        "landingZoneIdentifier":{"shape":"String"}
+      }
+    },
+    "GetLandingZoneOperationInput":{
+      "type":"structure",
+      "required":["operationIdentifier"],
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"}
+      }
+    },
+    "GetLandingZoneOperationOutput":{
+      "type":"structure",
+      "required":["operationDetails"],
+      "members":{
+        "operationDetails":{"shape":"LandingZoneOperationDetail"}
+      }
+    },
+    "GetLandingZoneOutput":{
+      "type":"structure",
+      "required":["landingZone"],
+      "members":{
+        "landingZone":{"shape":"LandingZoneDetail"}
+      }
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -344,6 +531,81 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "LandingZoneDetail":{
+      "type":"structure",
+      "required":[
+        "manifest",
+        "version"
+      ],
+      "members":{
+        "arn":{"shape":"Arn"},
+        "driftStatus":{"shape":"LandingZoneDriftStatusSummary"},
+        "latestAvailableVersion":{"shape":"LandingZoneVersion"},
+        "manifest":{"shape":"Manifest"},
+        "status":{"shape":"LandingZoneStatus"},
+        "version":{"shape":"LandingZoneVersion"}
+      }
+    },
+    "LandingZoneDriftStatus":{
+      "type":"string",
+      "enum":[
+        "DRIFTED",
+        "IN_SYNC"
+      ]
+    },
+    "LandingZoneDriftStatusSummary":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"LandingZoneDriftStatus"}
+      }
+    },
+    "LandingZoneOperationDetail":{
+      "type":"structure",
+      "members":{
+        "endTime":{"shape":"Timestamp"},
+        "operationType":{"shape":"LandingZoneOperationType"},
+        "startTime":{"shape":"Timestamp"},
+        "status":{"shape":"LandingZoneOperationStatus"},
+        "statusMessage":{"shape":"String"}
+      }
+    },
+    "LandingZoneOperationStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "FAILED",
+        "IN_PROGRESS"
+      ]
+    },
+    "LandingZoneOperationType":{
+      "type":"string",
+      "enum":[
+        "DELETE",
+        "CREATE",
+        "UPDATE",
+        "RESET"
+      ]
+    },
+    "LandingZoneStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "PROCESSING",
+        "FAILED"
+      ]
+    },
+    "LandingZoneSummary":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"Arn"}
+      }
+    },
+    "LandingZoneVersion":{
+      "type":"string",
+      "max":10,
+      "min":3,
+      "pattern":"^\\d+.\\d+$"
     },
     "ListEnabledControlsInput":{
       "type":"structure",
@@ -362,6 +624,33 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListLandingZonesInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListLandingZonesMaxResults"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListLandingZonesMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":1,
+      "min":1
+    },
+    "ListLandingZonesOutput":{
+      "type":"structure",
+      "required":["landingZones"],
+      "members":{
+        "landingZones":{"shape":"ListLandingZonesOutputLandingZonesList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListLandingZonesOutputLandingZonesList":{
+      "type":"list",
+      "member":{"shape":"LandingZoneSummary"},
+      "max":1,
+      "min":0
+    },
     "ListTagsForResourceInput":{
       "type":"structure",
       "required":["resourceArn"],
@@ -379,6 +668,12 @@
       "members":{
         "tags":{"shape":"TagMap"}
       }
+    },
+    "Manifest":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
     },
     "MaxResults":{
       "type":"integer",
@@ -402,6 +697,20 @@
       "type":"string",
       "max":50,
       "min":1
+    },
+    "ResetLandingZoneInput":{
+      "type":"structure",
+      "required":["landingZoneIdentifier"],
+      "members":{
+        "landingZoneIdentifier":{"shape":"String"}
+      }
+    },
+    "ResetLandingZoneOutput":{
+      "type":"structure",
+      "required":["operationIdentifier"],
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"}
+      }
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -505,6 +814,10 @@
       "exception":true,
       "retryable":{"throttling":true}
     },
+    "Timestamp":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
     "UntagResourceInput":{
       "type":"structure",
       "required":[
@@ -527,6 +840,26 @@
     "UntagResourceOutput":{
       "type":"structure",
       "members":{
+      }
+    },
+    "UpdateLandingZoneInput":{
+      "type":"structure",
+      "required":[
+        "landingZoneIdentifier",
+        "manifest",
+        "version"
+      ],
+      "members":{
+        "landingZoneIdentifier":{"shape":"String"},
+        "manifest":{"shape":"Manifest"},
+        "version":{"shape":"LandingZoneVersion"}
+      }
+    },
+    "UpdateLandingZoneOutput":{
+      "type":"structure",
+      "required":["operationIdentifier"],
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"}
       }
     },
     "ValidationException":{
