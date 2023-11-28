@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.291.0 - 2023-11-28
 
 * `Aws\S3` - This release adds support for the S3express identity provider
 * `Aws\Bedrock` - This release adds support for customization types, model life cycle status and minor versions/aliases for model identifiers.
