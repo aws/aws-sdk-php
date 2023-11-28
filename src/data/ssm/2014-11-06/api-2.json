@@ -42,7 +42,8 @@
         {"shape":"OpsItemNotFoundException"},
         {"shape":"OpsItemLimitExceededException"},
         {"shape":"OpsItemInvalidParameterException"},
-        {"shape":"OpsItemRelatedItemAlreadyExistsException"}
+        {"shape":"OpsItemRelatedItemAlreadyExistsException"},
+        {"shape":"OpsItemConflictException"}
       ]
     },
     "CancelCommand":{
@@ -297,6 +298,19 @@
       "output":{"shape":"DeleteMaintenanceWindowResult"},
       "errors":[
         {"shape":"InternalServerError"}
+      ]
+    },
+    "DeleteOpsItem":{
+      "name":"DeleteOpsItem",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteOpsItemRequest"},
+      "output":{"shape":"DeleteOpsItemResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"OpsItemInvalidParameterException"}
       ]
     },
     "DeleteOpsMetadata":{
@@ -883,7 +897,8 @@
         {"shape":"InternalServerError"},
         {"shape":"OpsItemRelatedItemAssociationNotFoundException"},
         {"shape":"OpsItemNotFoundException"},
-        {"shape":"OpsItemInvalidParameterException"}
+        {"shape":"OpsItemInvalidParameterException"},
+        {"shape":"OpsItemConflictException"}
       ]
     },
     "GetAutomationExecution":{
@@ -1983,7 +1998,8 @@
         {"shape":"OpsItemAlreadyExistsException"},
         {"shape":"OpsItemLimitExceededException"},
         {"shape":"OpsItemInvalidParameterException"},
-        {"shape":"OpsItemAccessDeniedException"}
+        {"shape":"OpsItemAccessDeniedException"},
+        {"shape":"OpsItemConflictException"}
       ]
     },
     "UpdateOpsMetadata":{
@@ -2723,7 +2739,8 @@
         "Runbooks":{"shape":"Runbooks"},
         "OpsItemId":{"shape":"String"},
         "AssociationId":{"shape":"String"},
-        "ChangeRequestName":{"shape":"ChangeRequestName"}
+        "ChangeRequestName":{"shape":"ChangeRequestName"},
+        "Variables":{"shape":"AutomationParameterMap"}
       }
     },
     "AutomationExecutionFilter":{
@@ -2849,7 +2866,8 @@
         "ChangeCalendarOverrideApproved",
         "ChangeCalendarOverrideRejected",
         "CompletedWithSuccess",
-        "CompletedWithFailure"
+        "CompletedWithFailure",
+        "Exited"
       ]
     },
     "AutomationParameterKey":{
@@ -3736,6 +3754,18 @@
       "type":"structure",
       "members":{
         "WindowId":{"shape":"MaintenanceWindowId"}
+      }
+    },
+    "DeleteOpsItemRequest":{
+      "type":"structure",
+      "required":["OpsItemId"],
+      "members":{
+        "OpsItemId":{"shape":"OpsItemId"}
+      }
+    },
+    "DeleteOpsItemResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeleteOpsMetadataRequest":{
@@ -7724,6 +7754,13 @@
       "min":1,
       "pattern":"^(?!\\s*$).+"
     },
+    "OpsItemConflictException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "OpsItemDataKey":{
       "type":"string",
       "max":128,
@@ -8493,6 +8530,19 @@
       "member":{"shape":"ParametersFilterValue"},
       "max":50,
       "min":1
+    },
+    "ParentStepDetails":{
+      "type":"structure",
+      "members":{
+        "StepExecutionId":{"shape":"String"},
+        "StepName":{"shape":"String"},
+        "Action":{"shape":"AutomationActionName"},
+        "Iteration":{
+          "shape":"Integer",
+          "box":true
+        },
+        "IteratorValue":{"shape":"String"}
+      }
     },
     "Patch":{
       "type":"structure",
@@ -10100,7 +10150,8 @@
           "shape":"TargetLocation",
           "box":true
         },
-        "TriggeredAlarms":{"shape":"AlarmStateInformationList"}
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"},
+        "ParentStepDetails":{"shape":"ParentStepDetails"}
       }
     },
     "StepExecutionFilter":{
@@ -10122,7 +10173,10 @@
         "StepExecutionStatus",
         "StepExecutionId",
         "StepName",
-        "Action"
+        "Action",
+        "ParentStepExecutionId",
+        "ParentStepIteration",
+        "ParentStepIteratorValue"
       ]
     },
     "StepExecutionFilterList":{

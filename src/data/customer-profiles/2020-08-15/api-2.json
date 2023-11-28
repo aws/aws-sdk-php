@@ -254,6 +254,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DetectProfileObjectType":{
+      "name":"DetectProfileObjectType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/detect/object-types"
+      },
+      "input":{"shape":"DetectProfileObjectTypeRequest"},
+      "output":{"shape":"DetectProfileObjectTypeResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetAutoMergingPreview":{
       "name":"GetAutoMergingPreview",
       "http":{
@@ -1053,7 +1069,8 @@
     },
     "CalculatedAttributeDefinitionsList":{
       "type":"list",
-      "member":{"shape":"ListCalculatedAttributeDefinitionItem"}
+      "member":{"shape":"ListCalculatedAttributeDefinitionItem"},
+      "sensitive":true
     },
     "CalculatedAttributesForProfileList":{
       "type":"list",
@@ -1125,7 +1142,7 @@
           "locationName":"CalculatedAttributeName"
         },
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "AttributeDetails":{"shape":"AttributeDetails"},
         "Conditions":{"shape":"Conditions"},
         "Statistic":{"shape":"Statistic"},
@@ -1137,7 +1154,7 @@
       "members":{
         "CalculatedAttributeName":{"shape":"typeName"},
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "AttributeDetails":{"shape":"AttributeDetails"},
         "Conditions":{"shape":"Conditions"},
         "Statistic":{"shape":"Statistic"},
@@ -1529,6 +1546,39 @@
         "UnhealthySince":{"shape":"timestamp"}
       }
     },
+    "DetectProfileObjectTypeRequest":{
+      "type":"structure",
+      "required":[
+        "Objects",
+        "DomainName"
+      ],
+      "members":{
+        "Objects":{"shape":"Objects"},
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        }
+      }
+    },
+    "DetectProfileObjectTypeResponse":{
+      "type":"structure",
+      "members":{
+        "DetectedProfileObjectTypes":{"shape":"DetectedProfileObjectTypes"}
+      }
+    },
+    "DetectedProfileObjectType":{
+      "type":"structure",
+      "members":{
+        "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
+        "Fields":{"shape":"FieldMap"},
+        "Keys":{"shape":"KeyMap"}
+      }
+    },
+    "DetectedProfileObjectTypes":{
+      "type":"list",
+      "member":{"shape":"DetectedProfileObjectType"}
+    },
     "DomainList":{
       "type":"list",
       "member":{"shape":"ListDomainItem"}
@@ -1759,7 +1809,7 @@
       "members":{
         "CalculatedAttributeName":{"shape":"typeName"},
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Statistic":{"shape":"Statistic"},
@@ -2281,7 +2331,7 @@
       "members":{
         "CalculatedAttributeName":{"shape":"typeName"},
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
@@ -2895,6 +2945,13 @@
       "type":"map",
       "key":{"shape":"string1To255"},
       "value":{"shape":"typeName"}
+    },
+    "Objects":{
+      "type":"list",
+      "member":{"shape":"stringifiedJson"},
+      "max":5,
+      "min":1,
+      "sensitive":true
     },
     "Operator":{
       "type":"string",
@@ -3629,7 +3686,7 @@
           "locationName":"CalculatedAttributeName"
         },
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "Conditions":{"shape":"Conditions"}
       }
     },
@@ -3638,7 +3695,7 @@
       "members":{
         "CalculatedAttributeName":{"shape":"typeName"},
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Statistic":{"shape":"Statistic"},

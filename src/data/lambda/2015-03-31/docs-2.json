@@ -35,7 +35,7 @@
     "GetPolicy": "<p>Returns the <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html\">resource-based IAM policy</a> for a function, version, or alias.</p>",
     "GetProvisionedConcurrencyConfig": "<p>Retrieves the provisioned concurrency configuration for a function's alias or version.</p>",
     "GetRuntimeManagementConfig": "<p>Retrieves the runtime management configuration for a function's version. If the runtime update mode is <b>Manual</b>, this includes the ARN of the runtime version and the runtime update mode. If the runtime update mode is <b>Auto</b> or <b>Function update</b>, this includes the runtime update mode and <code>null</code> is returned for the ARN. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html\">Runtime updates</a>.</p>",
-    "Invoke": "<p>Invokes a Lambda function. You can invoke a function synchronously (and wait for the response), or asynchronously. To invoke a function asynchronously, set <code>InvocationType</code> to <code>Event</code>.</p> <p>For <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-sync.html\">synchronous invocation</a>, details about the function response, including errors, are included in the response body and headers. For either invocation type, you can find more information in the <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions.html\">execution log</a> and <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html\">trace</a>.</p> <p>When an error occurs, your function may be invoked multiple times. Retry behavior varies by error type, client, event source, and invocation type. For example, if you invoke a function asynchronously and it returns an error, Lambda executes the function up to two more times. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-retries.html\">Error handling and automatic retries in Lambda</a>.</p> <p>For <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html\">asynchronous invocation</a>, Lambda adds events to a queue before sending them to your function. If your function does not have enough capacity to keep up with the queue, events may be lost. Occasionally, your function may receive the same event multiple times, even if no error occurs. To retain events that were not processed, configure your function with a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-dlq\">dead-letter queue</a>.</p> <p>The status code in the API response doesn't reflect function errors. Error codes are reserved for errors that prevent your function from executing, such as permissions errors, <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">quota</a> errors, or issues with your function's code and configuration. For example, Lambda returns <code>TooManyRequestsException</code> if running the function would cause you to exceed a concurrency limit at either the account level (<code>ConcurrentInvocationLimitExceeded</code>) or function level (<code>ReservedFunctionConcurrentInvocationLimitExceeded</code>).</p> <p>For functions with a long timeout, your client might disconnect during synchronous invocation while it waits for a response. Configure your HTTP client, SDK, firewall, proxy, or operating system to allow for long connections with timeout or keep-alive settings.</p> <p>This operation requires permission for the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awslambda.html\">lambda:InvokeFunction</a> action. For details on how to set up permissions for cross-account invocations, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html#permissions-resource-xaccountinvoke\">Granting function access to other accounts</a>.</p>",
+    "Invoke": "<p>Invokes a Lambda function. You can invoke a function synchronously (and wait for the response), or asynchronously. By default, Lambda invokes your function synchronously (i.e. the<code>InvocationType</code> is <code>RequestResponse</code>). To invoke a function asynchronously, set <code>InvocationType</code> to <code>Event</code>. Lambda passes the <code>ClientContext</code> object to your function for synchronous invocations only.</p> <p>For <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-sync.html\">synchronous invocation</a>, details about the function response, including errors, are included in the response body and headers. For either invocation type, you can find more information in the <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions.html\">execution log</a> and <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html\">trace</a>.</p> <p>When an error occurs, your function may be invoked multiple times. Retry behavior varies by error type, client, event source, and invocation type. For example, if you invoke a function asynchronously and it returns an error, Lambda executes the function up to two more times. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-retries.html\">Error handling and automatic retries in Lambda</a>.</p> <p>For <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html\">asynchronous invocation</a>, Lambda adds events to a queue before sending them to your function. If your function does not have enough capacity to keep up with the queue, events may be lost. Occasionally, your function may receive the same event multiple times, even if no error occurs. To retain events that were not processed, configure your function with a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-dlq\">dead-letter queue</a>.</p> <p>The status code in the API response doesn't reflect function errors. Error codes are reserved for errors that prevent your function from executing, such as permissions errors, <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">quota</a> errors, or issues with your function's code and configuration. For example, Lambda returns <code>TooManyRequestsException</code> if running the function would cause you to exceed a concurrency limit at either the account level (<code>ConcurrentInvocationLimitExceeded</code>) or function level (<code>ReservedFunctionConcurrentInvocationLimitExceeded</code>).</p> <p>For functions with a long timeout, your client might disconnect during synchronous invocation while it waits for a response. Configure your HTTP client, SDK, firewall, proxy, or operating system to allow for long connections with timeout or keep-alive settings.</p> <p>This operation requires permission for the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awslambda.html\">lambda:InvokeFunction</a> action. For details on how to set up permissions for cross-account invocations, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html#permissions-resource-xaccountinvoke\">Granting function access to other accounts</a>.</p>",
     "InvokeAsync": "<important> <p>For asynchronous function invocation, use <a>Invoke</a>.</p> </important> <p>Invokes a function asynchronously.</p>",
     "InvokeWithResponseStream": "<p>Configure your Lambda functions to stream response payloads back to clients. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-response-streaming.html\">Configuring a Lambda function to stream responses</a>.</p> <p>This operation requires permission for the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awslambda.html\">lambda:InvokeFunction</a> action. For details on how to set up permissions for cross-account invocations, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html#permissions-resource-xaccountinvoke\">Granting function access to other accounts</a>.</p>",
     "ListAliases": "<p>Returns a list of <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html\">aliases</a> for a Lambda function.</p>",
@@ -181,6 +181,12 @@
       "refs": {
         "CreateEventSourceMappingRequest$AmazonManagedKafkaEventSourceConfig": "<p>Specific configuration settings for an Amazon Managed Streaming for Apache Kafka (Amazon MSK) event source.</p>",
         "EventSourceMappingConfiguration$AmazonManagedKafkaEventSourceConfig": "<p>Specific configuration settings for an Amazon Managed Streaming for Apache Kafka (Amazon MSK) event source.</p>"
+      }
+    },
+    "ApplicationLogLevel": {
+      "base": null,
+      "refs": {
+        "LoggingConfig$ApplicationLogLevel": "<p>Set this property to filter the application logs for your function that Lambda sends to CloudWatch. Lambda only sends application logs at the selected level and lower.</p>"
       }
     },
     "Architecture": {
@@ -1466,11 +1472,31 @@
         "FileSystemConfig$LocalMountPath": "<p>The path where the function can access the file system, starting with <code>/mnt/</code>.</p>"
       }
     },
+    "LogFormat": {
+      "base": null,
+      "refs": {
+        "LoggingConfig$LogFormat": "<p>The format in which Lambda sends your function's application and system logs to CloudWatch. Select between plain text and structured JSON.</p>"
+      }
+    },
+    "LogGroup": {
+      "base": null,
+      "refs": {
+        "LoggingConfig$LogGroup": "<p>The name of the Amazon CloudWatch log group the function sends logs to. By default, Lambda functions send logs to a default log group named <code>/aws/lambda/&lt;function name&gt;</code>. To use a different log group, enter an existing log group or enter a new log group name.</p>"
+      }
+    },
     "LogType": {
       "base": null,
       "refs": {
         "InvocationRequest$LogType": "<p>Set to <code>Tail</code> to include the execution log in the response. Applies to synchronously invoked functions only.</p>",
         "InvokeWithResponseStreamRequest$LogType": "<p>Set to <code>Tail</code> to include the execution log in the response. Applies to synchronously invoked functions only.</p>"
+      }
+    },
+    "LoggingConfig": {
+      "base": "<p>The function's Amazon CloudWatch Logs configuration settings.</p>",
+      "refs": {
+        "CreateFunctionRequest$LoggingConfig": "<p>The function's Amazon CloudWatch Logs configuration settings.</p>",
+        "FunctionConfiguration$LoggingConfig": "<p>The function's Amazon CloudWatch Logs configuration settings.</p>",
+        "UpdateFunctionConfigurationRequest$LoggingConfig": "<p>The function's Amazon CloudWatch Logs configuration settings.</p>"
       }
     },
     "Long": {
@@ -1630,6 +1656,13 @@
         "ProvisionedConcurrencyConfigListItem$AllocatedProvisionedConcurrentExecutions": "<p>The amount of provisioned concurrency allocated. When a weighted alias is used during linear and canary deployments, this value fluctuates depending on the amount of concurrency that is provisioned for the function versions.</p>",
         "PutProvisionedConcurrencyConfigResponse$AvailableProvisionedConcurrentExecutions": "<p>The amount of provisioned concurrency available.</p>",
         "PutProvisionedConcurrencyConfigResponse$AllocatedProvisionedConcurrentExecutions": "<p>The amount of provisioned concurrency allocated. When a weighted alias is used during linear and canary deployments, this value fluctuates depending on the amount of concurrency that is provisioned for the function versions.</p>"
+      }
+    },
+    "NullableBoolean": {
+      "base": null,
+      "refs": {
+        "VpcConfig$Ipv6AllowedForDualStack": "<p>Allows outbound IPv6 traffic on VPC functions that are connected to dual-stack subnets.</p>",
+        "VpcConfigResponse$Ipv6AllowedForDualStack": "<p>Allows outbound IPv6 traffic on VPC functions that are connected to dual-stack subnets.</p>"
       }
     },
     "OnFailure": {
@@ -2273,6 +2306,12 @@
       "refs": {
         "VpcConfig$SubnetIds": "<p>A list of VPC subnet IDs.</p>",
         "VpcConfigResponse$SubnetIds": "<p>A list of VPC subnet IDs.</p>"
+      }
+    },
+    "SystemLogLevel": {
+      "base": null,
+      "refs": {
+        "LoggingConfig$SystemLogLevel": "<p>Set this property to filter the system logs for your function that Lambda sends to CloudWatch. Lambda only sends system logs at the selected level and lower.</p>"
       }
     },
     "TagKey": {

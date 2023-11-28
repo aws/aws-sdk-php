@@ -78,6 +78,12 @@
       "output_token": "NextToken",
       "result_key": "EvaluationFormSummaryList"
     },
+    "ListFlowAssociations": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "FlowAssociationSummaryList"
+    },
     "ListHoursOfOperations": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
@@ -141,6 +147,10 @@
     "ListQueueQuickConnects": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "LastModifiedRegion",
+        "LastModifiedTime"
+      ],
       "output_token": "NextToken",
       "result_key": "QuickConnectSummaryList"
     },
@@ -156,9 +166,18 @@
       "output_token": "NextToken",
       "result_key": "QuickConnectSummaryList"
     },
+    "ListRealtimeContactAnalysisSegmentsV2": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken"
+    },
     "ListRoutingProfileQueues": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "LastModifiedRegion",
+        "LastModifiedTime"
+      ],
       "output_token": "NextToken",
       "result_key": "RoutingProfileQueueConfigSummaryList"
     },
@@ -183,12 +202,20 @@
     "ListSecurityProfileApplications": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "LastModifiedRegion",
+        "LastModifiedTime"
+      ],
       "output_token": "NextToken",
       "result_key": "Applications"
     },
     "ListSecurityProfilePermissions": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "LastModifiedRegion",
+        "LastModifiedTime"
+      ],
       "output_token": "NextToken",
       "result_key": "Permissions"
     },

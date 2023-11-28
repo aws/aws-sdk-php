@@ -59,7 +59,7 @@ trait EndpointV2SerializerTrait
      * @param $resolvedUrl
      * @return void
      */
-    private function applyScheme(string &$resolvedUrl): void
+    private function applyScheme(&$resolvedUrl): void
     {
         $resolvedEndpointScheme = parse_url($resolvedUrl, PHP_URL_SCHEME);
         $scheme = $this->endpoint instanceof Uri

@@ -234,7 +234,7 @@ class EndpointV2Middleware
      */
     private function resolveAuthScheme(array $authSchemes) : array
     {
-        $validAuthSchemes = ['sigv4', 'sigv4a', 'none', 'bearer'];
+        $validAuthSchemes = ['sigv4', 'sigv4a', 'none', 'bearer', 'sigv4-s3express'];
         $invalidAuthSchemes = [];
 
         foreach($authSchemes as $authScheme) {
@@ -272,6 +272,7 @@ class EndpointV2Middleware
         if (isset($authScheme['disableDoubleEncoding'])
             && $authScheme['disableDoubleEncoding'] === true
             && $authScheme['name'] !== 'sigv4a'
+            && $authScheme['name'] !== 'sigv4-s3express'
         ) {
             $normalizedAuthScheme['version'] = 's3v4';
         } elseif ($authScheme['name'] === 'none') {

@@ -1181,6 +1181,18 @@
         "RdsLoginAttemptAction":{
           "shape":"RdsLoginAttemptAction",
           "locationName":"rdsLoginAttemptAction"
+        },
+        "KubernetesPermissionCheckedDetails":{
+          "shape":"KubernetesPermissionCheckedDetails",
+          "locationName":"kubernetesPermissionCheckedDetails"
+        },
+        "KubernetesRoleBindingDetails":{
+          "shape":"KubernetesRoleBindingDetails",
+          "locationName":"kubernetesRoleBindingDetails"
+        },
+        "KubernetesRoleDetails":{
+          "shape":"KubernetesRoleDetails",
+          "locationName":"kubernetesRoleDetails"
         }
       }
     },
@@ -1250,6 +1262,73 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
+    },
+    "AgentDetails":{
+      "type":"structure",
+      "members":{
+        "Version":{
+          "shape":"String",
+          "locationName":"version"
+        }
+      }
+    },
+    "Anomaly":{
+      "type":"structure",
+      "members":{
+        "Profiles":{
+          "shape":"AnomalyProfiles",
+          "locationName":"profiles"
+        },
+        "Unusual":{
+          "shape":"AnomalyUnusual",
+          "locationName":"unusual"
+        }
+      }
+    },
+    "AnomalyObject":{
+      "type":"structure",
+      "members":{
+        "ProfileType":{
+          "shape":"ProfileType",
+          "locationName":"profileType"
+        },
+        "ProfileSubtype":{
+          "shape":"ProfileSubtype",
+          "locationName":"profileSubtype"
+        },
+        "Observations":{
+          "shape":"Observations",
+          "locationName":"observations"
+        }
+      }
+    },
+    "AnomalyProfileFeatureObjects":{
+      "type":"list",
+      "member":{"shape":"AnomalyObject"}
+    },
+    "AnomalyProfileFeatures":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"AnomalyProfileFeatureObjects"}
+    },
+    "AnomalyProfiles":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"AnomalyProfileFeatures"}
+    },
+    "AnomalyUnusual":{
+      "type":"structure",
+      "members":{
+        "Behavior":{
+          "shape":"Behavior",
+          "locationName":"behavior"
+        }
+      }
+    },
+    "AnomalyUnusualBehaviorFeature":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"AnomalyObject"}
     },
     "ArchiveFindingsRequest":{
       "type":"structure",
@@ -1337,6 +1416,11 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "Behavior":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"AnomalyUnusualBehaviorFeature"}
     },
     "BlockPublicAccess":{
       "type":"structure",
@@ -1521,6 +1605,19 @@
         }
       }
     },
+    "ContainerInstanceDetails":{
+      "type":"structure",
+      "members":{
+        "CoveredContainerInstances":{
+          "shape":"Long",
+          "locationName":"coveredContainerInstances"
+        },
+        "CompatibleContainerInstances":{
+          "shape":"Long",
+          "locationName":"compatibleContainerInstances"
+        }
+      }
+    },
     "Containers":{
       "type":"list",
       "member":{"shape":"Container"}
@@ -1550,6 +1647,48 @@
         "CountryName":{
           "shape":"String",
           "locationName":"countryName"
+        }
+      }
+    },
+    "CoverageEc2InstanceDetails":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"String",
+          "locationName":"instanceId"
+        },
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        },
+        "ClusterArn":{
+          "shape":"String",
+          "locationName":"clusterArn"
+        },
+        "AgentDetails":{
+          "shape":"AgentDetails",
+          "locationName":"agentDetails"
+        },
+        "ManagementType":{
+          "shape":"ManagementType",
+          "locationName":"managementType"
+        }
+      }
+    },
+    "CoverageEcsClusterDetails":{
+      "type":"structure",
+      "members":{
+        "ClusterName":{
+          "shape":"String",
+          "locationName":"clusterName"
+        },
+        "FargateDetails":{
+          "shape":"FargateDetails",
+          "locationName":"fargateDetails"
+        },
+        "ContainerInstanceDetails":{
+          "shape":"ContainerInstanceDetails",
+          "locationName":"containerInstanceDetails"
         }
       }
     },
@@ -1622,7 +1761,11 @@
         "COVERAGE_STATUS",
         "ADDON_VERSION",
         "MANAGEMENT_TYPE",
-        "EKS_CLUSTER_NAME"
+        "EKS_CLUSTER_NAME",
+        "ECS_CLUSTER_NAME",
+        "AGENT_VERSION",
+        "INSTANCE_ID",
+        "CLUSTER_ARN"
       ]
     },
     "CoverageFilterCriterionList":{
@@ -1674,6 +1817,14 @@
         "ResourceType":{
           "shape":"ResourceType",
           "locationName":"resourceType"
+        },
+        "EcsClusterDetails":{
+          "shape":"CoverageEcsClusterDetails",
+          "locationName":"ecsClusterDetails"
+        },
+        "Ec2InstanceDetails":{
+          "shape":"CoverageEc2InstanceDetails",
+          "locationName":"ec2InstanceDetails"
         }
       }
     },
@@ -1703,7 +1854,9 @@
         "ISSUE",
         "ADDON_VERSION",
         "UPDATED_AT",
-        "EKS_CLUSTER_NAME"
+        "EKS_CLUSTER_NAME",
+        "ECS_CLUSTER_NAME",
+        "INSTANCE_ID"
       ]
     },
     "CoverageStatistics":{
@@ -2553,6 +2706,15 @@
       "type":"list",
       "member":{"shape":"Destination"}
     },
+    "Detection":{
+      "type":"structure",
+      "members":{
+        "Anomaly":{
+          "shape":"Anomaly",
+          "locationName":"anomaly"
+        }
+      }
+    },
     "DetectorAdditionalConfiguration":{
       "type":"structure",
       "members":{
@@ -2599,7 +2761,8 @@
         "EBS_MALWARE_PROTECTION",
         "RDS_LOGIN_EVENTS",
         "EKS_RUNTIME_MONITORING",
-        "LAMBDA_NETWORK_LOGS"
+        "LAMBDA_NETWORK_LOGS",
+        "RUNTIME_MONITORING"
       ]
     },
     "DetectorFeatureConfiguration":{
@@ -2659,7 +2822,8 @@
         "EBS_MALWARE_PROTECTION",
         "RDS_LOGIN_EVENTS",
         "EKS_RUNTIME_MONITORING",
-        "LAMBDA_NETWORK_LOGS"
+        "LAMBDA_NETWORK_LOGS",
+        "RUNTIME_MONITORING"
       ]
     },
     "DetectorId":{
@@ -2775,6 +2939,10 @@
         "Blocked":{
           "shape":"Boolean",
           "locationName":"blocked"
+        },
+        "DomainWithSuffix":{
+          "shape":"String",
+          "locationName":"domainWithSuffix"
         }
       }
     },
@@ -3002,9 +3170,25 @@
         }
       }
     },
+    "FargateDetails":{
+      "type":"structure",
+      "members":{
+        "Issues":{
+          "shape":"Issues",
+          "locationName":"issues"
+        },
+        "ManagementType":{
+          "shape":"ManagementType",
+          "locationName":"managementType"
+        }
+      }
+    },
     "FeatureAdditionalConfiguration":{
       "type":"string",
-      "enum":["EKS_ADDON_MANAGEMENT"]
+      "enum":[
+        "EKS_ADDON_MANAGEMENT",
+        "ECS_FARGATE_AGENT_MANAGEMENT"
+      ]
     },
     "FeatureStatus":{
       "type":"string",
@@ -3282,7 +3466,9 @@
         "EBS_MALWARE_PROTECTION",
         "RDS_LOGIN_EVENTS",
         "EKS_RUNTIME_MONITORING",
-        "LAMBDA_NETWORK_LOGS"
+        "LAMBDA_NETWORK_LOGS",
+        "FARGATE_RUNTIME_MONITORING",
+        "EC2_RUNTIME_MONITORING"
       ]
     },
     "GeoLocation":{
@@ -3877,6 +4063,19 @@
         }
       }
     },
+    "ImpersonatedUser":{
+      "type":"structure",
+      "members":{
+        "Username":{
+          "shape":"String",
+          "locationName":"username"
+        },
+        "Groups":{
+          "shape":"Groups",
+          "locationName":"groups"
+        }
+      }
+    },
     "InstanceArn":{
       "type":"string",
       "pattern":"^arn:(aws|aws-cn|aws-us-gov):[a-z]+:[a-z]+(-[0-9]+|-[a-z]+)+:([0-9]{12}):[a-z\\-]+\\/[a-zA-Z0-9]*$"
@@ -4059,6 +4258,12 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "Issues":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":50,
+      "min":0
+    },
     "KubernetesApiCallAction":{
       "type":"structure",
       "members":{
@@ -4089,6 +4294,22 @@
         "Parameters":{
           "shape":"String",
           "locationName":"parameters"
+        },
+        "Resource":{
+          "shape":"String",
+          "locationName":"resource"
+        },
+        "Subresource":{
+          "shape":"String",
+          "locationName":"subresource"
+        },
+        "Namespace":{
+          "shape":"String",
+          "locationName":"namespace"
+        },
+        "ResourceName":{
+          "shape":"String",
+          "locationName":"resourceName"
         }
       }
     },
@@ -4154,6 +4375,69 @@
         }
       }
     },
+    "KubernetesPermissionCheckedDetails":{
+      "type":"structure",
+      "members":{
+        "Verb":{
+          "shape":"String",
+          "locationName":"verb"
+        },
+        "Resource":{
+          "shape":"String",
+          "locationName":"resource"
+        },
+        "Namespace":{
+          "shape":"String",
+          "locationName":"namespace"
+        },
+        "Allowed":{
+          "shape":"Boolean",
+          "locationName":"allowed"
+        }
+      }
+    },
+    "KubernetesRoleBindingDetails":{
+      "type":"structure",
+      "members":{
+        "Kind":{
+          "shape":"String",
+          "locationName":"kind"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Uid":{
+          "shape":"String",
+          "locationName":"uid"
+        },
+        "RoleRefName":{
+          "shape":"String",
+          "locationName":"roleRefName"
+        },
+        "RoleRefKind":{
+          "shape":"String",
+          "locationName":"roleRefKind"
+        }
+      }
+    },
+    "KubernetesRoleDetails":{
+      "type":"structure",
+      "members":{
+        "Kind":{
+          "shape":"String",
+          "locationName":"kind"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Uid":{
+          "shape":"String",
+          "locationName":"uid"
+        }
+      }
+    },
     "KubernetesUserDetails":{
       "type":"structure",
       "members":{
@@ -4172,6 +4456,10 @@
         "SessionName":{
           "shape":"SessionNameList",
           "locationName":"sessionName"
+        },
+        "ImpersonatedUser":{
+          "shape":"ImpersonatedUser",
+          "locationName":"impersonatedUser"
         }
       }
     },
@@ -4205,6 +4493,18 @@
         "Volumes":{
           "shape":"Volumes",
           "locationName":"volumes"
+        },
+        "ServiceAccountName":{
+          "shape":"String",
+          "locationName":"serviceAccountName"
+        },
+        "HostIPC":{
+          "shape":"Boolean",
+          "locationName":"hostIPC"
+        },
+        "HostPID":{
+          "shape":"Boolean",
+          "locationName":"hostPID"
         }
       }
     },
@@ -4749,7 +5049,8 @@
       "type":"string",
       "enum":[
         "AUTO_MANAGED",
-        "MANUAL"
+        "MANUAL",
+        "DISABLED"
       ]
     },
     "MapEquals":{
@@ -5046,6 +5347,19 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "ObservationTexts":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "Observations":{
+      "type":"structure",
+      "members":{
+        "Text":{
+          "shape":"ObservationTexts",
+          "locationName":"text"
+        }
+      }
+    },
     "OrderBy":{
       "type":"string",
       "enum":[
@@ -5061,12 +5375,16 @@
         "EBS_MALWARE_PROTECTION",
         "RDS_LOGIN_EVENTS",
         "EKS_RUNTIME_MONITORING",
-        "LAMBDA_NETWORK_LOGS"
+        "LAMBDA_NETWORK_LOGS",
+        "RUNTIME_MONITORING"
       ]
     },
     "OrgFeatureAdditionalConfiguration":{
       "type":"string",
-      "enum":["EKS_ADDON_MANAGEMENT"]
+      "enum":[
+        "EKS_ADDON_MANAGEMENT",
+        "ECS_FARGATE_AGENT_MANAGEMENT"
+      ]
     },
     "OrgFeatureStatus":{
       "type":"string",
@@ -5473,6 +5791,19 @@
       "type":"list",
       "member":{"shape":"ProductCode"}
     },
+    "ProfileSubtype":{
+      "type":"string",
+      "enum":[
+        "FREQUENT",
+        "INFREQUENT",
+        "UNSEEN",
+        "RARE"
+      ]
+    },
+    "ProfileType":{
+      "type":"string",
+      "enum":["FREQUENCY"]
+    },
     "PublicAccess":{
       "type":"structure",
       "members":{
@@ -5684,7 +6015,11 @@
     },
     "ResourceType":{
       "type":"string",
-      "enum":["EKS"]
+      "enum":[
+        "EKS",
+        "ECS",
+        "EC2"
+      ]
     },
     "RuntimeContext":{
       "type":"structure",
@@ -6100,6 +6435,10 @@
         "Privileged":{
           "shape":"Boolean",
           "locationName":"privileged"
+        },
+        "AllowPrivilegeEscalation":{
+          "shape":"Boolean",
+          "locationName":"allowPrivilegeEscalation"
         }
       }
     },
@@ -6178,6 +6517,10 @@
         "RuntimeDetails":{
           "shape":"RuntimeDetails",
           "locationName":"runtimeDetails"
+        },
+        "Detection":{
+          "shape":"Detection",
+          "locationName":"detection"
         }
       }
     },
@@ -6929,7 +7272,9 @@
         "EBS_MALWARE_PROTECTION",
         "RDS_LOGIN_EVENTS",
         "LAMBDA_NETWORK_LOGS",
-        "EKS_RUNTIME_MONITORING"
+        "EKS_RUNTIME_MONITORING",
+        "FARGATE_RUNTIME_MONITORING",
+        "EC2_RUNTIME_MONITORING"
       ]
     },
     "UsageFeatureList":{

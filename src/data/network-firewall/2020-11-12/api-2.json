@@ -616,6 +616,18 @@
       "type":"list",
       "member":{"shape":"Address"}
     },
+    "AnalysisResult":{
+      "type":"structure",
+      "members":{
+        "IdentifiedRuleIds":{"shape":"RuleIdList"},
+        "IdentifiedType":{"shape":"IdentifiedType"},
+        "AnalysisDetail":{"shape":"CollectionMember_String"}
+      }
+    },
+    "AnalysisResultList":{
+      "type":"list",
+      "member":{"shape":"AnalysisResult"}
+    },
     "AssociateFirewallPolicyRequest":{
       "type":"structure",
       "required":["FirewallPolicyArn"],
@@ -709,6 +721,13 @@
       "type":"list",
       "member":{"shape":"TlsCertificateData"}
     },
+    "CheckCertificateRevocationStatusActions":{
+      "type":"structure",
+      "members":{
+        "RevokedStatusAction":{"shape":"RevocationCheckAction"},
+        "UnknownStatusAction":{"shape":"RevocationCheckAction"}
+      }
+    },
     "CollectionMember_String":{"type":"string"},
     "ConfigurationSyncState":{
       "type":"string",
@@ -789,7 +808,8 @@
         "Tags":{"shape":"TagList"},
         "DryRun":{"shape":"Boolean"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
-        "SourceMetadata":{"shape":"SourceMetadata"}
+        "SourceMetadata":{"shape":"SourceMetadata"},
+        "AnalyzeRuleGroup":{"shape":"Boolean"}
       }
     },
     "CreateRuleGroupResponse":{
@@ -1002,7 +1022,8 @@
       "members":{
         "RuleGroupName":{"shape":"ResourceName"},
         "RuleGroupArn":{"shape":"ResourceArn"},
-        "Type":{"shape":"RuleGroupType"}
+        "Type":{"shape":"RuleGroupType"},
+        "AnalyzeRuleGroup":{"shape":"Boolean"}
       }
     },
     "DescribeRuleGroupResponse":{
@@ -1297,6 +1318,13 @@
       "type":"map",
       "key":{"shape":"RuleVariableName"},
       "value":{"shape":"IPSet"}
+    },
+    "IdentifiedType":{
+      "type":"string",
+      "enum":[
+        "STATELESS_RULE_FORWARDING_ASYMMETRICALLY",
+        "STATELESS_RULE_CONTAINS_TCP_FLAGS"
+      ]
     },
     "InsufficientCapacityException":{
       "type":"structure",
@@ -1676,7 +1704,16 @@
       "type":"string",
       "enum":[
         "ACTIVE",
-        "DELETING"
+        "DELETING",
+        "ERROR"
+      ]
+    },
+    "RevocationCheckAction":{
+      "type":"string",
+      "enum":[
+        "PASS",
+        "DROP",
+        "REJECT"
       ]
     },
     "RuleCapacity":{"type":"integer"},
@@ -1729,7 +1766,8 @@
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "SourceMetadata":{"shape":"SourceMetadata"},
         "SnsTopic":{"shape":"ResourceArn"},
-        "LastModifiedTime":{"shape":"LastUpdateTime"}
+        "LastModifiedTime":{"shape":"LastUpdateTime"},
+        "AnalysisResults":{"shape":"AnalysisResultList"}
       }
     },
     "RuleGroupType":{
@@ -1742,6 +1780,10 @@
     "RuleGroups":{
       "type":"list",
       "member":{"shape":"RuleGroupMetadata"}
+    },
+    "RuleIdList":{
+      "type":"list",
+      "member":{"shape":"CollectionMember_String"}
     },
     "RuleOption":{
       "type":"structure",
@@ -1816,7 +1858,9 @@
       "type":"structure",
       "members":{
         "ServerCertificates":{"shape":"ServerCertificates"},
-        "Scopes":{"shape":"ServerCertificateScopes"}
+        "Scopes":{"shape":"ServerCertificateScopes"},
+        "CertificateAuthorityArn":{"shape":"ResourceArn"},
+        "CheckCertificateRevocationStatus":{"shape":"CheckCertificateRevocationStatusActions"}
       }
     },
     "ServerCertificateConfigurations":{
@@ -2101,7 +2145,8 @@
         "LastModifiedTime":{"shape":"LastUpdateTime"},
         "NumberOfAssociations":{"shape":"NumberOfAssociations"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
-        "Certificates":{"shape":"Certificates"}
+        "Certificates":{"shape":"Certificates"},
+        "CertificateAuthority":{"shape":"TlsCertificateData"}
       }
     },
     "TLSInspectionConfigurations":{
@@ -2344,7 +2389,8 @@
         "Description":{"shape":"Description"},
         "DryRun":{"shape":"Boolean"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
-        "SourceMetadata":{"shape":"SourceMetadata"}
+        "SourceMetadata":{"shape":"SourceMetadata"},
+        "AnalyzeRuleGroup":{"shape":"Boolean"}
       }
     },
     "UpdateRuleGroupResponse":{

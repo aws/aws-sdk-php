@@ -635,6 +635,19 @@
         "VariantStoreItem$description": "<p>The store's description.</p>"
       }
     },
+    "ETag": {
+      "base": "<p> The entity tag (ETag) is a hash of the object representing its semantic content. </p>",
+      "refs": {
+        "GetReadSetMetadataResponse$etag": "<p> The entity tag (ETag) is a hash of the object meant to represent its semantic content. </p>",
+        "ReadSetListItem$etag": "<p> The entity tag (ETag) is a hash of the object representing its semantic content. </p>"
+      }
+    },
+    "ETagAlgorithm": {
+      "base": null,
+      "refs": {
+        "ETag$algorithm": "<p> The algorithm used to calculate the read set’s ETag(s). </p>"
+      }
+    },
     "Encoding": {
       "base": null,
       "refs": {
@@ -645,6 +658,12 @@
       "base": null,
       "refs": {
         "SseConfig$type": "<p>The encryption type.</p>"
+      }
+    },
+    "EngineLogStream": {
+      "base": null,
+      "refs": {
+        "RunLogLocation$engineLogStream": "<p> The log stream ARN for the engine log. </p>"
       }
     },
     "EscapeChar": {
@@ -1915,11 +1934,16 @@
         "GetReferenceMetadataResponse$arn": "<p>The reference's ARN.</p>",
         "ImportReadSetSourceItem$referenceArn": "<p>The source's genome reference ARN.</p>",
         "MultipartReadSetUploadListItem$referenceArn": "<p> The source's reference ARN. </p>",
-        "ReadSetFilter$referenceArn": "<p>A genome reference ARN to filter on.</p>",
         "ReadSetListItem$referenceArn": "<p>The read set's genome reference ARN.</p>",
         "ReferenceItem$referenceArn": "<p>The reference's ARN.</p>",
         "ReferenceListItem$arn": "<p>The reference's ARN.</p>",
         "StartReadSetImportJobSourceItem$referenceArn": "<p>The source's reference ARN.</p>"
+      }
+    },
+    "ReferenceArnFilter": {
+      "base": null,
+      "refs": {
+        "ReadSetFilter$referenceArn": "<p>A genome reference ARN to filter on.</p>"
       }
     },
     "ReferenceDescription": {
@@ -2179,6 +2203,12 @@
         "GetRunRequest$export": "<p>The run's export format.</p>"
       }
     },
+    "RunFailureReason": {
+      "base": null,
+      "refs": {
+        "GetRunResponse$failureReason": "<p> The reason a run has failed. </p>"
+      }
+    },
     "RunGroupArn": {
       "base": null,
       "refs": {
@@ -2275,7 +2305,7 @@
         "GetRunRequest$id": "<p>The run's ID.</p>",
         "GetRunResponse$id": "<p>The run's ID.</p>",
         "GetRunResponse$runId": "<p>The run's ID.</p>",
-        "GetRunTaskRequest$id": "<p>The task's ID.</p>",
+        "GetRunTaskRequest$id": "<p>The workflow run ID.</p>",
         "ListRunTasksRequest$id": "<p>The run's ID.</p>",
         "RunListItem$id": "<p>The run's ID.</p>",
         "StartRunRequest$runId": "<p>The ID of a run to duplicate.</p>",
@@ -2331,6 +2361,18 @@
         "StartRunRequest$logLevel": "<p>A log level for the run.</p>"
       }
     },
+    "RunLogLocation": {
+      "base": "<p> The URI for the run log. </p>",
+      "refs": {
+        "GetRunResponse$logLocation": "<p> The location of the run log. </p>"
+      }
+    },
+    "RunLogStream": {
+      "base": null,
+      "refs": {
+        "RunLogLocation$runLogStream": "<p> The log stream ARN for the run log. </p>"
+      }
+    },
     "RunName": {
       "base": null,
       "refs": {
@@ -2344,7 +2386,9 @@
       "base": null,
       "refs": {
         "GetRunResponse$outputUri": "<p>The run's output URI.</p>",
-        "StartRunRequest$outputUri": "<p>An output URI for the run.</p>"
+        "GetRunResponse$runOutputUri": "<p> The destination for workflow outputs. </p>",
+        "StartRunRequest$outputUri": "<p>An output URI for the run.</p>",
+        "StartRunResponse$runOutputUri": "<p> The destination for workflow outputs. </p>"
       }
     },
     "RunParameters": {
@@ -2422,6 +2466,13 @@
         "RunListItem$creationTime": "<p>When the run was created.</p>",
         "RunListItem$startTime": "<p>When the run started.</p>",
         "RunListItem$stopTime": "<p>When the run stopped.</p>"
+      }
+    },
+    "RunUuid": {
+      "base": null,
+      "refs": {
+        "GetRunResponse$uuid": "<p> The universally unique identifier for a run. </p>",
+        "StartRunResponse$uuid": "<p> The universally unique identifier for a run. </p>"
       }
     },
     "S3Destination": {
@@ -2864,6 +2915,8 @@
         "DeleteAnnotationStoreVersionsRequest$name": "<p> The name of the annotation store from which versions are being deleted. </p>",
         "DeleteShareRequest$shareId": "<p> The ID for the share request to be deleted. </p>",
         "DeleteVariantStoreRequest$name": "<p>The store's name.</p>",
+        "ETag$source1": "<p> The ETag hash calculated on Source1 of the read set. </p>",
+        "ETag$source2": "<p> The ETag hash calculated on Source2 of the read set. </p>",
         "GetAnnotationStoreRequest$name": "<p>The store's name.</p>",
         "GetAnnotationStoreResponse$name": "<p>The store's name.</p>",
         "GetAnnotationStoreVersionRequest$name": "<p> The name given to an annotation store version to distinguish it from others. </p>",
@@ -3055,6 +3108,12 @@
       "refs": {
         "TagMap$value": null,
         "TagResourceRequestTagsMap$value": null
+      }
+    },
+    "TaskFailureReason": {
+      "base": null,
+      "refs": {
+        "GetRunTaskResponse$failureReason": "<p> The reason a task has failed. </p>"
       }
     },
     "TaskId": {

@@ -297,6 +297,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateRoleMembership":{
+      "name":"CreateRoleMembership",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/members/{MemberName}"
+      },
+      "input":{"shape":"CreateRoleMembershipRequest"},
+      "output":{"shape":"CreateRoleMembershipResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
     "CreateTemplate":{
       "name":"CreateTemplate",
       "http":{
@@ -643,6 +661,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DeleteIdentityPropagationConfig":{
+      "name":"DeleteIdentityPropagationConfig",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/identity-propagation-config/{Service}"
+      },
+      "input":{"shape":"DeleteIdentityPropagationConfigRequest"},
+      "output":{"shape":"DeleteIdentityPropagationConfigResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DeleteNamespace":{
       "name":"DeleteNamespace",
       "http":{
@@ -676,6 +710,42 @@
         {"shape":"ThrottlingException"},
         {"shape":"LimitExceededException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "DeleteRoleCustomPermission":{
+      "name":"DeleteRoleCustomPermission",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/custom-permission"
+      },
+      "input":{"shape":"DeleteRoleCustomPermissionRequest"},
+      "output":{"shape":"DeleteRoleCustomPermissionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "DeleteRoleMembership":{
+      "name":"DeleteRoleMembership",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/members/{MemberName}"
+      },
+      "input":{"shape":"DeleteRoleMembershipRequest"},
+      "output":{"shape":"DeleteRoleMembershipResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
       ]
     },
     "DeleteTemplate":{
@@ -1309,6 +1379,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeRoleCustomPermission":{
+      "name":"DescribeRoleCustomPermission",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/custom-permission"
+      },
+      "input":{"shape":"DescribeRoleCustomPermissionRequest"},
+      "output":{"shape":"DescribeRoleCustomPermissionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
     "DescribeTemplate":{
       "name":"DescribeTemplate",
       "http":{
@@ -1835,6 +1923,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "ListIdentityPropagationConfigs":{
+      "name":"ListIdentityPropagationConfigs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/identity-propagation-config"
+      },
+      "input":{"shape":"ListIdentityPropagationConfigsRequest"},
+      "output":{"shape":"ListIdentityPropagationConfigsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "ListIngestions":{
       "name":"ListIngestions",
       "http":{
@@ -1887,6 +1991,26 @@
         {"shape":"ThrottlingException"},
         {"shape":"LimitExceededException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListRoleMemberships":{
+      "name":"ListRoleMemberships",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/members"
+      },
+      "input":{"shape":"ListRoleMembershipsRequest"},
+      "output":{"shape":"ListRoleMembershipsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
       ]
     },
     "ListTagsForResource":{
@@ -2616,6 +2740,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateIdentityPropagationConfig":{
+      "name":"UpdateIdentityPropagationConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/identity-propagation-config/{Service}"
+      },
+      "input":{"shape":"UpdateIdentityPropagationConfigRequest"},
+      "output":{"shape":"UpdateIdentityPropagationConfigResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateIpRestriction":{
       "name":"UpdateIpRestriction",
       "http":{
@@ -2666,6 +2806,24 @@
         {"shape":"LimitExceededException"},
         {"shape":"PreconditionNotMetException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateRoleCustomPermission":{
+      "name":"UpdateRoleCustomPermission",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/custom-permission"
+      },
+      "input":{"shape":"UpdateRoleCustomPermissionRequest"},
+      "output":{"shape":"UpdateRoleCustomPermissionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
       ]
     },
     "UpdateTemplate":{
@@ -3034,7 +3192,8 @@
         "ParameterDeclarations":{"shape":"ParameterDeclarationList"},
         "FilterGroups":{"shape":"FilterGroupList"},
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
-        "AnalysisDefaults":{"shape":"AnalysisDefaults"}
+        "AnalysisDefaults":{"shape":"AnalysisDefaults"},
+        "Options":{"shape":"AssetOptions"}
       }
     },
     "AnalysisError":{
@@ -3259,7 +3418,10 @@
     },
     "AssetBundleExportJobAnalysisOverrideProperties":{
       "type":"structure",
-      "required":["Properties"],
+      "required":[
+        "Arn",
+        "Properties"
+      ],
       "members":{
         "Arn":{"shape":"Arn"},
         "Properties":{"shape":"AssetBundleExportJobAnalysisPropertyToOverrideList"}
@@ -3283,7 +3445,10 @@
     },
     "AssetBundleExportJobDashboardOverrideProperties":{
       "type":"structure",
-      "required":["Properties"],
+      "required":[
+        "Arn",
+        "Properties"
+      ],
       "members":{
         "Arn":{"shape":"Arn"},
         "Properties":{"shape":"AssetBundleExportJobDashboardPropertyToOverrideList"}
@@ -3307,7 +3472,10 @@
     },
     "AssetBundleExportJobDataSetOverrideProperties":{
       "type":"structure",
-      "required":["Properties"],
+      "required":[
+        "Arn",
+        "Properties"
+      ],
       "members":{
         "Arn":{"shape":"Arn"},
         "Properties":{"shape":"AssetBundleExportJobDataSetPropertyToOverrideList"}
@@ -3331,7 +3499,10 @@
     },
     "AssetBundleExportJobDataSourceOverrideProperties":{
       "type":"structure",
-      "required":["Properties"],
+      "required":[
+        "Arn",
+        "Properties"
+      ],
       "members":{
         "Arn":{"shape":"Arn"},
         "Properties":{"shape":"AssetBundleExportJobDataSourcePropertyToOverrideList"}
@@ -3385,7 +3556,10 @@
     },
     "AssetBundleExportJobRefreshScheduleOverrideProperties":{
       "type":"structure",
-      "required":["Properties"],
+      "required":[
+        "Arn",
+        "Properties"
+      ],
       "members":{
         "Arn":{"shape":"Arn"},
         "Properties":{"shape":"AssetBundleExportJobRefreshSchedulePropertyToOverrideList"}
@@ -3430,7 +3604,9 @@
         "CreatedTime":{"shape":"Timestamp"},
         "AssetBundleExportJobId":{"shape":"ShortRestrictiveResourceId"},
         "IncludeAllDependencies":{"shape":"Boolean"},
-        "ExportFormat":{"shape":"AssetBundleExportFormat"}
+        "ExportFormat":{"shape":"AssetBundleExportFormat"},
+        "IncludePermissions":{"shape":"Boolean"},
+        "IncludeTags":{"shape":"Boolean"}
       }
     },
     "AssetBundleExportJobSummaryList":{
@@ -3439,7 +3615,10 @@
     },
     "AssetBundleExportJobThemeOverrideProperties":{
       "type":"structure",
-      "required":["Properties"],
+      "required":[
+        "Arn",
+        "Properties"
+      ],
       "members":{
         "Arn":{"shape":"Arn"},
         "Properties":{"shape":"AssetBundleExportJobThemePropertyToOverrideList"}
@@ -3463,7 +3642,10 @@
     },
     "AssetBundleExportJobVPCConnectionOverrideProperties":{
       "type":"structure",
-      "required":["Properties"],
+      "required":[
+        "Arn",
+        "Properties"
+      ],
       "members":{
         "Arn":{"shape":"Arn"},
         "Properties":{"shape":"AssetBundleExportJobVPCConnectionPropertyToOverrideList"}
@@ -3488,6 +3670,23 @@
       "member":{"shape":"AssetBundleExportJobVPCConnectionPropertyToOverride"},
       "max":10,
       "min":1
+    },
+    "AssetBundleExportJobValidationStrategy":{
+      "type":"structure",
+      "members":{
+        "StrictModeForAllResources":{"shape":"Boolean"}
+      }
+    },
+    "AssetBundleExportJobWarning":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "Message":{"shape":"NonEmptyString"}
+      }
+    },
+    "AssetBundleExportJobWarningList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleExportJobWarning"}
     },
     "AssetBundleImportBodyBlob":{
       "type":"blob",
@@ -3516,6 +3715,40 @@
       "max":50,
       "min":1
     },
+    "AssetBundleImportJobAnalysisOverridePermissions":{
+      "type":"structure",
+      "required":[
+        "AnalysisIds",
+        "Permissions"
+      ],
+      "members":{
+        "AnalysisIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Permissions":{"shape":"AssetBundleResourcePermissions"}
+      }
+    },
+    "AssetBundleImportJobAnalysisOverridePermissionsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobAnalysisOverridePermissions"},
+      "max":1,
+      "min":1
+    },
+    "AssetBundleImportJobAnalysisOverrideTags":{
+      "type":"structure",
+      "required":[
+        "AnalysisIds",
+        "Tags"
+      ],
+      "members":{
+        "AnalysisIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "AssetBundleImportJobAnalysisOverrideTagsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobAnalysisOverrideTags"},
+      "max":5,
+      "min":1
+    },
     "AssetBundleImportJobDashboardOverrideParameters":{
       "type":"structure",
       "required":["DashboardId"],
@@ -3530,6 +3763,38 @@
       "max":50,
       "min":1
     },
+    "AssetBundleImportJobDashboardOverridePermissions":{
+      "type":"structure",
+      "required":["DashboardIds"],
+      "members":{
+        "DashboardIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Permissions":{"shape":"AssetBundleResourcePermissions"},
+        "LinkSharingConfiguration":{"shape":"AssetBundleResourceLinkSharingConfiguration"}
+      }
+    },
+    "AssetBundleImportJobDashboardOverridePermissionsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobDashboardOverridePermissions"},
+      "max":2,
+      "min":1
+    },
+    "AssetBundleImportJobDashboardOverrideTags":{
+      "type":"structure",
+      "required":[
+        "DashboardIds",
+        "Tags"
+      ],
+      "members":{
+        "DashboardIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "AssetBundleImportJobDashboardOverrideTagsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobDashboardOverrideTags"},
+      "max":5,
+      "min":1
+    },
     "AssetBundleImportJobDataSetOverrideParameters":{
       "type":"structure",
       "required":["DataSetId"],
@@ -3542,6 +3807,40 @@
       "type":"list",
       "member":{"shape":"AssetBundleImportJobDataSetOverrideParameters"},
       "max":50,
+      "min":1
+    },
+    "AssetBundleImportJobDataSetOverridePermissions":{
+      "type":"structure",
+      "required":[
+        "DataSetIds",
+        "Permissions"
+      ],
+      "members":{
+        "DataSetIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Permissions":{"shape":"AssetBundleResourcePermissions"}
+      }
+    },
+    "AssetBundleImportJobDataSetOverridePermissionsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobDataSetOverridePermissions"},
+      "max":2,
+      "min":1
+    },
+    "AssetBundleImportJobDataSetOverrideTags":{
+      "type":"structure",
+      "required":[
+        "DataSetIds",
+        "Tags"
+      ],
+      "members":{
+        "DataSetIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "AssetBundleImportJobDataSetOverrideTagsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobDataSetOverrideTags"},
+      "max":5,
       "min":1
     },
     "AssetBundleImportJobDataSourceCredentialPair":{
@@ -3581,6 +3880,40 @@
       "max":50,
       "min":1
     },
+    "AssetBundleImportJobDataSourceOverridePermissions":{
+      "type":"structure",
+      "required":[
+        "DataSourceIds",
+        "Permissions"
+      ],
+      "members":{
+        "DataSourceIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Permissions":{"shape":"AssetBundleResourcePermissions"}
+      }
+    },
+    "AssetBundleImportJobDataSourceOverridePermissionsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobDataSourceOverridePermissions"},
+      "max":2,
+      "min":1
+    },
+    "AssetBundleImportJobDataSourceOverrideTags":{
+      "type":"structure",
+      "required":[
+        "DataSourceIds",
+        "Tags"
+      ],
+      "members":{
+        "DataSourceIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "AssetBundleImportJobDataSourceOverrideTagsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobDataSourceOverrideTags"},
+      "max":5,
+      "min":1
+    },
     "AssetBundleImportJobError":{
       "type":"structure",
       "members":{
@@ -3604,6 +3937,33 @@
         "Themes":{"shape":"AssetBundleImportJobThemeOverrideParametersList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverrideParametersList"},
         "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideParametersList"}
+      }
+    },
+    "AssetBundleImportJobOverridePermissions":{
+      "type":"structure",
+      "members":{
+        "DataSources":{"shape":"AssetBundleImportJobDataSourceOverridePermissionsList"},
+        "DataSets":{"shape":"AssetBundleImportJobDataSetOverridePermissionsList"},
+        "Themes":{"shape":"AssetBundleImportJobThemeOverridePermissionsList"},
+        "Analyses":{"shape":"AssetBundleImportJobAnalysisOverridePermissionsList"},
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverridePermissionsList"}
+      }
+    },
+    "AssetBundleImportJobOverrideTags":{
+      "type":"structure",
+      "members":{
+        "VPCConnections":{"shape":"AssetBundleImportJobVPCConnectionOverrideTagsList"},
+        "DataSources":{"shape":"AssetBundleImportJobDataSourceOverrideTagsList"},
+        "DataSets":{"shape":"AssetBundleImportJobDataSetOverrideTagsList"},
+        "Themes":{"shape":"AssetBundleImportJobThemeOverrideTagsList"},
+        "Analyses":{"shape":"AssetBundleImportJobAnalysisOverrideTagsList"},
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideTagsList"}
+      }
+    },
+    "AssetBundleImportJobOverrideValidationStrategy":{
+      "type":"structure",
+      "members":{
+        "StrictModeForAllResources":{"shape":"Boolean"}
       }
     },
     "AssetBundleImportJobRefreshScheduleOverrideParameters":{
@@ -3670,6 +4030,40 @@
       "max":50,
       "min":1
     },
+    "AssetBundleImportJobThemeOverridePermissions":{
+      "type":"structure",
+      "required":[
+        "ThemeIds",
+        "Permissions"
+      ],
+      "members":{
+        "ThemeIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Permissions":{"shape":"AssetBundleResourcePermissions"}
+      }
+    },
+    "AssetBundleImportJobThemeOverridePermissionsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobThemeOverridePermissions"},
+      "max":2,
+      "min":1
+    },
+    "AssetBundleImportJobThemeOverrideTags":{
+      "type":"structure",
+      "required":[
+        "ThemeIds",
+        "Tags"
+      ],
+      "members":{
+        "ThemeIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "AssetBundleImportJobThemeOverrideTagsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobThemeOverrideTags"},
+      "max":5,
+      "min":1
+    },
     "AssetBundleImportJobVPCConnectionOverrideParameters":{
       "type":"structure",
       "required":["VPCConnectionId"],
@@ -3688,6 +4082,23 @@
       "max":50,
       "min":1
     },
+    "AssetBundleImportJobVPCConnectionOverrideTags":{
+      "type":"structure",
+      "required":[
+        "VPCConnectionIds",
+        "Tags"
+      ],
+      "members":{
+        "VPCConnectionIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "AssetBundleImportJobVPCConnectionOverrideTagsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobVPCConnectionOverrideTags"},
+      "max":5,
+      "min":1
+    },
     "AssetBundleImportSource":{
       "type":"structure",
       "members":{
@@ -3698,15 +4109,55 @@
     "AssetBundleImportSourceDescription":{
       "type":"structure",
       "members":{
-        "Body":{"shape":"String"},
+        "Body":{"shape":"SensitiveS3Uri"},
         "S3Uri":{"shape":"S3Uri"}
       }
+    },
+    "AssetBundlePrincipalList":{
+      "type":"list",
+      "member":{"shape":"Principal"},
+      "max":64,
+      "min":1
     },
     "AssetBundleResourceArns":{
       "type":"list",
       "member":{"shape":"Arn"},
       "max":100,
       "min":1
+    },
+    "AssetBundleResourceLinkSharingConfiguration":{
+      "type":"structure",
+      "members":{
+        "Permissions":{"shape":"AssetBundleResourcePermissions"}
+      }
+    },
+    "AssetBundleResourcePermissions":{
+      "type":"structure",
+      "required":[
+        "Principals",
+        "Actions"
+      ],
+      "members":{
+        "Principals":{"shape":"AssetBundlePrincipalList"},
+        "Actions":{"shape":"ActionList"}
+      }
+    },
+    "AssetBundleRestrictiveResourceId":{
+      "type":"string",
+      "pattern":"\\*|[\\w\\-]{1,2048}"
+    },
+    "AssetBundleRestrictiveResourceIdList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleRestrictiveResourceId"},
+      "max":50,
+      "min":1
+    },
+    "AssetOptions":{
+      "type":"structure",
+      "members":{
+        "Timezone":{"shape":"String"},
+        "WeekStart":{"shape":"DayOfTheWeek"}
+      }
     },
     "AssignmentStatus":{
       "type":"string",
@@ -3785,6 +4236,21 @@
     "AuthorSpecifiedAggregations":{
       "type":"list",
       "member":{"shape":"AuthorSpecifiedAggregation"}
+    },
+    "AuthorizedTargetsByService":{
+      "type":"structure",
+      "members":{
+        "Service":{"shape":"ServiceType"},
+        "AuthorizedTargets":{"shape":"AuthorizedTargetsList"}
+      }
+    },
+    "AuthorizedTargetsByServices":{
+      "type":"list",
+      "member":{"shape":"AuthorizedTargetsByService"}
+    },
+    "AuthorizedTargetsList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "AwsAccountId":{
       "type":"string",
@@ -3998,6 +4464,14 @@
         "STREET",
         "IMAGERY"
       ]
+    },
+    "BigQueryParameters":{
+      "type":"structure",
+      "required":["ProjectId"],
+      "members":{
+        "ProjectId":{"shape":"ProjectId"},
+        "DataSetRegion":{"shape":"DataSetRegion"}
+      }
     },
     "BinCountLimit":{
       "type":"long",
@@ -4268,6 +4742,7 @@
       "members":{
         "ColumnName":{"shape":"ColumnName"},
         "NewColumnType":{"shape":"ColumnDataType"},
+        "SubType":{"shape":"ColumnDataSubType"},
         "Format":{"shape":"TypeCastFormat"}
       }
     },
@@ -4477,6 +4952,13 @@
       "enum":[
         "DIMENSION",
         "MEASURE"
+      ]
+    },
+    "ColumnDataSubType":{
+      "type":"string",
+      "enum":[
+        "FLOAT",
+        "FIXED"
       ]
     },
     "ColumnDataType":{
@@ -5018,7 +5500,9 @@
         "SourceEntity":{"shape":"AnalysisSourceEntity"},
         "ThemeArn":{"shape":"Arn"},
         "Tags":{"shape":"TagList"},
-        "Definition":{"shape":"AnalysisDefinition"}
+        "Definition":{"shape":"AnalysisDefinition"},
+        "ValidationStrategy":{"shape":"ValidationStrategy"},
+        "FolderArns":{"shape":"FolderArnList"}
       }
     },
     "CreateAnalysisResponse":{
@@ -5067,7 +5551,10 @@
         "VersionDescription":{"shape":"VersionDescription"},
         "DashboardPublishOptions":{"shape":"DashboardPublishOptions"},
         "ThemeArn":{"shape":"Arn"},
-        "Definition":{"shape":"DashboardVersionDefinition"}
+        "Definition":{"shape":"DashboardVersionDefinition"},
+        "ValidationStrategy":{"shape":"ValidationStrategy"},
+        "FolderArns":{"shape":"FolderArnList"},
+        "LinkSharingConfiguration":{"shape":"LinkSharingConfiguration"}
       }
     },
     "CreateDashboardResponse":{
@@ -5112,7 +5599,8 @@
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
         "Tags":{"shape":"TagList"},
         "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"},
-        "DatasetParameters":{"shape":"DatasetParameterList"}
+        "DatasetParameters":{"shape":"DatasetParameterList"},
+        "FolderArns":{"shape":"FolderArnList"}
       }
     },
     "CreateDataSetResponse":{
@@ -5151,7 +5639,8 @@
         "Permissions":{"shape":"ResourcePermissionList"},
         "VpcConnectionProperties":{"shape":"VpcConnectionProperties"},
         "SslProperties":{"shape":"SslProperties"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "FolderArns":{"shape":"FolderArnList"}
       }
     },
     "CreateDataSourceResponse":{
@@ -5463,6 +5952,47 @@
         "Arn":{"shape":"Arn"}
       }
     },
+    "CreateRoleMembershipRequest":{
+      "type":"structure",
+      "required":[
+        "MemberName",
+        "AwsAccountId",
+        "Namespace",
+        "Role"
+      ],
+      "members":{
+        "MemberName":{
+          "shape":"GroupName",
+          "location":"uri",
+          "locationName":"MemberName"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"Namespace"
+        },
+        "Role":{
+          "shape":"Role",
+          "location":"uri",
+          "locationName":"Role"
+        }
+      }
+    },
+    "CreateRoleMembershipResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "CreateTemplateAliasRequest":{
       "type":"structure",
       "required":[
@@ -5523,7 +6053,8 @@
         "SourceEntity":{"shape":"TemplateSourceEntity"},
         "Tags":{"shape":"TagList"},
         "VersionDescription":{"shape":"VersionDescription"},
-        "Definition":{"shape":"TemplateVersionDefinition"}
+        "Definition":{"shape":"TemplateVersionDefinition"},
+        "ValidationStrategy":{"shape":"ValidationStrategy"}
       }
     },
     "CreateTemplateResponse":{
@@ -6096,7 +6627,8 @@
         "ParameterDeclarations":{"shape":"ParameterDeclarationList"},
         "FilterGroups":{"shape":"FilterGroupList"},
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
-        "AnalysisDefaults":{"shape":"AnalysisDefaults"}
+        "AnalysisDefaults":{"shape":"AnalysisDefaults"},
+        "Options":{"shape":"AssetOptions"}
       }
     },
     "DashboardVersionSummary":{
@@ -6273,15 +6805,18 @@
         "SortPaths":{"shape":"DataPathValueList"}
       }
     },
+    "DataPathType":{
+      "type":"structure",
+      "members":{
+        "PivotTableDataPathType":{"shape":"PivotTableDataPathType"}
+      }
+    },
     "DataPathValue":{
       "type":"structure",
-      "required":[
-        "FieldId",
-        "FieldValue"
-      ],
       "members":{
         "FieldId":{"shape":"FieldId"},
-        "FieldValue":{"shape":"FieldValue"}
+        "FieldValue":{"shape":"FieldValue"},
+        "DataPathType":{"shape":"DataPathType"}
       }
     },
     "DataPathValueList":{
@@ -6414,6 +6949,11 @@
       "members":{
         "RefreshConfiguration":{"shape":"RefreshConfiguration"}
       }
+    },
+    "DataSetRegion":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "DataSetSchema":{
       "type":"structure",
@@ -6550,7 +7090,10 @@
         "TwitterParameters":{"shape":"TwitterParameters"},
         "AmazonOpenSearchParameters":{"shape":"AmazonOpenSearchParameters"},
         "ExasolParameters":{"shape":"ExasolParameters"},
-        "DatabricksParameters":{"shape":"DatabricksParameters"}
+        "DatabricksParameters":{"shape":"DatabricksParameters"},
+        "StarburstParameters":{"shape":"StarburstParameters"},
+        "TrinoParameters":{"shape":"TrinoParameters"},
+        "BigQueryParameters":{"shape":"BigQueryParameters"}
       }
     },
     "DataSourceParametersList":{
@@ -6621,12 +7164,31 @@
         "TIMESTREAM",
         "AMAZON_OPENSEARCH",
         "EXASOL",
-        "DATABRICKS"
+        "DATABRICKS",
+        "STARBURST",
+        "TRINO",
+        "BIGQUERY"
       ]
     },
     "Database":{
       "type":"string",
       "max":128,
+      "min":1
+    },
+    "DatabaseGroup":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "DatabaseGroupList":{
+      "type":"list",
+      "member":{"shape":"DatabaseGroup"},
+      "max":50,
+      "min":1
+    },
+    "DatabaseUser":{
+      "type":"string",
+      "max":64,
       "min":1
     },
     "DatabricksParameters":{
@@ -6845,6 +7407,18 @@
       "max":17,
       "min":1,
       "pattern":"^(?:LAST_DAY_OF_MONTH|1[0-9]|2[0-8]|[12]|[3-9])$"
+    },
+    "DayOfTheWeek":{
+      "type":"string",
+      "enum":[
+        "SUNDAY",
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY"
+      ]
     },
     "DayOfWeek":{
       "type":"string",
@@ -7416,6 +7990,35 @@
         }
       }
     },
+    "DeleteIdentityPropagationConfigRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Service"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Service":{
+          "shape":"ServiceType",
+          "location":"uri",
+          "locationName":"Service"
+        }
+      }
+    },
+    "DeleteIdentityPropagationConfigResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "DeleteNamespaceRequest":{
       "type":"structure",
       "required":[
@@ -7480,6 +8083,79 @@
         "RequestId":{"shape":"String"},
         "ScheduleId":{"shape":"String"},
         "Arn":{"shape":"Arn"}
+      }
+    },
+    "DeleteRoleCustomPermissionRequest":{
+      "type":"structure",
+      "required":[
+        "Role",
+        "AwsAccountId",
+        "Namespace"
+      ],
+      "members":{
+        "Role":{
+          "shape":"Role",
+          "location":"uri",
+          "locationName":"Role"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"Namespace"
+        }
+      }
+    },
+    "DeleteRoleCustomPermissionResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{"shape":"StatusCode"}
+      }
+    },
+    "DeleteRoleMembershipRequest":{
+      "type":"structure",
+      "required":[
+        "MemberName",
+        "Role",
+        "AwsAccountId",
+        "Namespace"
+      ],
+      "members":{
+        "MemberName":{
+          "shape":"GroupName",
+          "location":"uri",
+          "locationName":"MemberName"
+        },
+        "Role":{
+          "shape":"Role",
+          "location":"uri",
+          "locationName":"Role"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"Namespace"
+        }
+      }
+    },
+    "DeleteRoleMembershipResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
       }
     },
     "DeleteTemplateAliasRequest":{
@@ -8006,7 +8682,7 @@
       "type":"structure",
       "members":{
         "JobStatus":{"shape":"AssetBundleExportJobStatus"},
-        "DownloadUrl":{"shape":"String"},
+        "DownloadUrl":{"shape":"SensitiveS3Uri"},
         "Errors":{"shape":"AssetBundleExportJobErrorList"},
         "Arn":{"shape":"Arn"},
         "CreatedTime":{"shape":"Timestamp"},
@@ -8020,7 +8696,11 @@
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
-        }
+        },
+        "IncludePermissions":{"shape":"Boolean"},
+        "IncludeTags":{"shape":"Boolean"},
+        "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"},
+        "Warnings":{"shape":"AssetBundleExportJobWarningList"}
       }
     },
     "DescribeAssetBundleImportJobRequest":{
@@ -8059,7 +8739,10 @@
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
-        }
+        },
+        "OverridePermissions":{"shape":"AssetBundleImportJobOverridePermissions"},
+        "OverrideTags":{"shape":"AssetBundleImportJobOverrideTags"},
+        "OverrideValidationStrategy":{"shape":"AssetBundleImportJobOverrideValidationStrategy"}
       }
     },
     "DescribeDashboardDefinitionRequest":{
@@ -8784,6 +9467,39 @@
         },
         "RequestId":{"shape":"String"},
         "Arn":{"shape":"Arn"}
+      }
+    },
+    "DescribeRoleCustomPermissionRequest":{
+      "type":"structure",
+      "required":[
+        "Role",
+        "AwsAccountId",
+        "Namespace"
+      ],
+      "members":{
+        "Role":{
+          "shape":"Role",
+          "location":"uri",
+          "locationName":"Role"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"Namespace"
+        }
+      }
+    },
+    "DescribeRoleCustomPermissionResponse":{
+      "type":"structure",
+      "members":{
+        "CustomPermissionsName":{"shape":"RoleName"},
+        "RequestId":{"shape":"String"},
+        "Status":{"shape":"StatusCode"}
       }
     },
     "DescribeTemplateAliasRequest":{
@@ -9792,7 +10508,8 @@
       "members":{
         "MatchOperator":{"shape":"CategoryFilterMatchOperator"},
         "CategoryValues":{"shape":"CategoryValueList"},
-        "SelectAllOptions":{"shape":"CategoryFilterSelectAllOptions"}
+        "SelectAllOptions":{"shape":"CategoryFilterSelectAllOptions"},
+        "NullOption":{"shape":"FilterNullOption"}
       }
     },
     "FilterListControl":{
@@ -9950,6 +10667,11 @@
         "SharingModel":{"shape":"SharingModel"}
       }
     },
+    "FolderArnList":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":1
+    },
     "FolderColumnList":{
       "type":"list",
       "member":{"shape":"String"},
@@ -10016,7 +10738,10 @@
     },
     "FolderType":{
       "type":"string",
-      "enum":["SHARED"]
+      "enum":[
+        "SHARED",
+        "RESTRICTED"
+      ]
     },
     "Font":{
       "type":"structure",
@@ -11094,6 +11819,15 @@
         "X"
       ]
     },
+    "IdentityCenterConfiguration":{
+      "type":"structure",
+      "members":{
+        "EnableIdentityPropagation":{
+          "shape":"Boolean",
+          "box":true
+        }
+      }
+    },
     "IdentityMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -11270,7 +12004,8 @@
       ],
       "members":{
         "Name":{"shape":"ColumnName"},
-        "Type":{"shape":"InputColumnDataType"}
+        "Type":{"shape":"InputColumnDataType"},
+        "SubType":{"shape":"ColumnDataSubType"}
       }
     },
     "InputColumnDataType":{
@@ -12376,6 +13111,45 @@
         }
       }
     },
+    "ListIdentityPropagationConfigsRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "MaxResults":{
+          "shape":"ListIdentityPropagationMaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListIdentityPropagationConfigsResponse":{
+      "type":"structure",
+      "members":{
+        "Services":{"shape":"AuthorizedTargetsByServices"},
+        "NextToken":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "ListIdentityPropagationMaxResults":{
+      "type":"integer",
+      "max":10,
+      "min":1
+    },
     "ListIngestionsRequest":{
       "type":"structure",
       "required":[
@@ -12480,6 +13254,54 @@
           "location":"statusCode"
         },
         "RequestId":{"shape":"String"}
+      }
+    },
+    "ListRoleMembershipsRequest":{
+      "type":"structure",
+      "required":[
+        "Role",
+        "AwsAccountId",
+        "Namespace"
+      ],
+      "members":{
+        "Role":{
+          "shape":"Role",
+          "location":"uri",
+          "locationName":"Role"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"Namespace"
+        }
+      }
+    },
+    "ListRoleMembershipsResponse":{
+      "type":"structure",
+      "members":{
+        "MembersList":{"shape":"GroupsList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
       }
     },
     "ListTagsForResourceRequest":{
@@ -13146,6 +13968,7 @@
         "DASHBOARD",
         "ANALYSIS",
         "DATASET",
+        "DATASOURCE",
         "TOPIC"
       ]
     },
@@ -13606,7 +14429,8 @@
       "members":{
         "Name":{"shape":"ColumnName"},
         "Description":{"shape":"ColumnDescriptiveText"},
-        "Type":{"shape":"ColumnDataType"}
+        "Type":{"shape":"ColumnDataType"},
+        "SubType":{"shape":"ColumnDataSubType"}
       }
     },
     "OutputColumnList":{
@@ -14107,6 +14931,15 @@
       "member":{"shape":"PivotTableDataPathOption"},
       "max":100
     },
+    "PivotTableDataPathType":{
+      "type":"string",
+      "enum":[
+        "HIERARCHY_ROWS_LAYOUT_COLUMN",
+        "MULTIPLE_ROW_METRICS_COLUMN",
+        "EMPTY_COLUMN_HEADER",
+        "COUNT_METRIC_COLUMN"
+      ]
+    },
     "PivotTableDimensionList":{
       "type":"list",
       "member":{"shape":"DimensionField"},
@@ -14280,7 +15113,8 @@
         "CustomLabel":{"shape":"String"},
         "TotalCellStyle":{"shape":"TableCellStyle"},
         "ValueCellStyle":{"shape":"TableCellStyle"},
-        "MetricHeaderCellStyle":{"shape":"TableCellStyle"}
+        "MetricHeaderCellStyle":{"shape":"TableCellStyle"},
+        "TotalAggregationOptions":{"shape":"TotalAggregationOptionList"}
       }
     },
     "PixelLength":{"type":"string"},
@@ -14385,6 +15219,11 @@
       "members":{
         "Visibility":{"shape":"Visibility"}
       }
+    },
+    "ProjectId":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "ProjectOperation":{
       "type":"structure",
@@ -14601,6 +15440,19 @@
       "max":30,
       "min":7
     },
+    "RedshiftIAMParameters":{
+      "type":"structure",
+      "required":[
+        "RoleArn",
+        "DatabaseUser"
+      ],
+      "members":{
+        "RoleArn":{"shape":"RoleArn"},
+        "DatabaseUser":{"shape":"DatabaseUser"},
+        "DatabaseGroups":{"shape":"DatabaseGroupList"},
+        "AutoCreateDatabaseUser":{"shape":"Boolean"}
+      }
+    },
     "RedshiftParameters":{
       "type":"structure",
       "required":["Database"],
@@ -14608,7 +15460,9 @@
         "Host":{"shape":"Host"},
         "Port":{"shape":"OptionalPort"},
         "Database":{"shape":"Database"},
-        "ClusterId":{"shape":"ClusterId"}
+        "ClusterId":{"shape":"ClusterId"},
+        "IAMParameters":{"shape":"RedshiftIAMParameters"},
+        "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"}
       }
     },
     "ReferenceLine":{
@@ -14633,7 +15487,8 @@
       "members":{
         "StaticConfiguration":{"shape":"ReferenceLineStaticDataConfiguration"},
         "DynamicConfiguration":{"shape":"ReferenceLineDynamicDataConfiguration"},
-        "AxisBinding":{"shape":"AxisBinding"}
+        "AxisBinding":{"shape":"AxisBinding"},
+        "SeriesType":{"shape":"ReferenceLineSeriesType"}
       }
     },
     "ReferenceLineDynamicDataConfiguration":{
@@ -14685,6 +15540,13 @@
         "SOLID",
         "DASHED",
         "DOTTED"
+      ]
+    },
+    "ReferenceLineSeriesType":{
+      "type":"string",
+      "enum":[
+        "BAR",
+        "LINE"
       ]
     },
     "ReferenceLineStaticDataConfiguration":{
@@ -14878,12 +15740,12 @@
     },
     "RelationalTableName":{
       "type":"string",
-      "max":64,
+      "max":256,
       "min":1
     },
     "RelationalTableSchema":{
       "type":"string",
-      "max":64
+      "max":256
     },
     "RelativeDateTimeControlDisplayOptions":{
       "type":"structure",
@@ -15058,6 +15920,14 @@
       "max":2048,
       "min":1,
       "pattern":"[\\w\\-]+"
+    },
+    "Role":{
+      "type":"string",
+      "enum":[
+        "ADMIN",
+        "AUTHOR",
+        "READER"
+      ]
     },
     "RoleArn":{
       "type":"string",
@@ -15763,6 +16633,10 @@
         "SiteBaseUrl":{"shape":"SiteBaseUrl"}
       }
     },
+    "ServiceType":{
+      "type":"string",
+      "enum":["REDSHIFT"]
+    },
     "SessionLifetimeInMinutes":{
       "type":"long",
       "max":600,
@@ -16089,6 +16963,17 @@
         "MEDIAN"
       ]
     },
+    "SimpleTotalAggregationFunction":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "SUM",
+        "AVERAGE",
+        "MIN",
+        "MAX",
+        "NONE"
+      ]
+    },
     "SiteBaseUrl":{
       "type":"string",
       "max":1024,
@@ -16401,6 +17286,27 @@
         "DisableSsl":{"shape":"Boolean"}
       }
     },
+    "StarburstParameters":{
+      "type":"structure",
+      "required":[
+        "Host",
+        "Port",
+        "Catalog"
+      ],
+      "members":{
+        "Host":{"shape":"Host"},
+        "Port":{"shape":"Port"},
+        "Catalog":{"shape":"Catalog"},
+        "ProductType":{"shape":"StarburstProductType"}
+      }
+    },
+    "StarburstProductType":{
+      "type":"string",
+      "enum":[
+        "GALAXY",
+        "ENTERPRISE"
+      ]
+    },
     "StartAssetBundleExportJobRequest":{
       "type":"structure",
       "required":[
@@ -16419,7 +17325,10 @@
         "ResourceArns":{"shape":"AssetBundleResourceArns"},
         "IncludeAllDependencies":{"shape":"Boolean"},
         "ExportFormat":{"shape":"AssetBundleExportFormat"},
-        "CloudFormationOverridePropertyConfiguration":{"shape":"AssetBundleCloudFormationOverridePropertyConfiguration"}
+        "CloudFormationOverridePropertyConfiguration":{"shape":"AssetBundleCloudFormationOverridePropertyConfiguration"},
+        "IncludePermissions":{"shape":"Boolean"},
+        "IncludeTags":{"shape":"Boolean"},
+        "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"}
       }
     },
     "StartAssetBundleExportJobResponse":{
@@ -16450,7 +17359,10 @@
         "AssetBundleImportJobId":{"shape":"ShortRestrictiveResourceId"},
         "AssetBundleImportSource":{"shape":"AssetBundleImportSource"},
         "OverrideParameters":{"shape":"AssetBundleImportJobOverrideParameters"},
-        "FailureAction":{"shape":"AssetBundleImportFailureAction"}
+        "FailureAction":{"shape":"AssetBundleImportFailureAction"},
+        "OverridePermissions":{"shape":"AssetBundleImportJobOverridePermissions"},
+        "OverrideTags":{"shape":"AssetBundleImportJobOverrideTags"},
+        "OverrideValidationStrategy":{"shape":"AssetBundleImportJobOverrideValidationStrategy"}
       }
     },
     "StartAssetBundleImportJobResponse":{
@@ -16915,7 +17827,8 @@
       "type":"string",
       "enum":[
         "START",
-        "END"
+        "END",
+        "AUTO"
       ]
     },
     "TableTotalsScrollStatus":{
@@ -17138,7 +18051,8 @@
         "ParameterDeclarations":{"shape":"ParameterDeclarationList"},
         "FilterGroups":{"shape":"FilterGroupList"},
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
-        "AnalysisDefaults":{"shape":"AnalysisDefaults"}
+        "AnalysisDefaults":{"shape":"AnalysisDefaults"},
+        "Options":{"shape":"AssetOptions"}
       }
     },
     "TemplateVersionSummary":{
@@ -17394,7 +18308,8 @@
         "Column":{"shape":"ColumnIdentifier"},
         "Value":{"shape":"Timestamp"},
         "ParameterName":{"shape":"ParameterName"},
-        "TimeGranularity":{"shape":"TimeGranularity"}
+        "TimeGranularity":{"shape":"TimeGranularity"},
+        "RollingDate":{"shape":"RollingDateConfiguration"}
       }
     },
     "TimeGranularity":{
@@ -17841,6 +18756,28 @@
         "Value":{"shape":"MeasureField"}
       }
     },
+    "TotalAggregationFunction":{
+      "type":"structure",
+      "members":{
+        "SimpleTotalAggregationFunction":{"shape":"SimpleTotalAggregationFunction"}
+      }
+    },
+    "TotalAggregationOption":{
+      "type":"structure",
+      "required":[
+        "FieldId",
+        "TotalAggregationFunction"
+      ],
+      "members":{
+        "FieldId":{"shape":"FieldId"},
+        "TotalAggregationFunction":{"shape":"TotalAggregationFunction"}
+      }
+    },
+    "TotalAggregationOptionList":{
+      "type":"list",
+      "member":{"shape":"TotalAggregationOption"},
+      "max":200
+    },
     "TotalOptions":{
       "type":"structure",
       "members":{
@@ -17848,7 +18785,8 @@
         "Placement":{"shape":"TableTotalsPlacement"},
         "ScrollStatus":{"shape":"TableTotalsScrollStatus"},
         "CustomLabel":{"shape":"String"},
-        "TotalCellStyle":{"shape":"TableCellStyle"}
+        "TotalCellStyle":{"shape":"TableCellStyle"},
+        "TotalAggregationOptions":{"shape":"TotalAggregationOptionList"}
       }
     },
     "TransformOperation":{
@@ -17931,6 +18869,19 @@
       "type":"structure",
       "members":{
         "Visibility":{"shape":"Visibility"}
+      }
+    },
+    "TrinoParameters":{
+      "type":"structure",
+      "required":[
+        "Host",
+        "Port",
+        "Catalog"
+      ],
+      "members":{
+        "Host":{"shape":"Host"},
+        "Port":{"shape":"Port"},
+        "Catalog":{"shape":"Catalog"}
       }
     },
     "TwitterParameters":{
@@ -18206,7 +19157,8 @@
         "Parameters":{"shape":"Parameters"},
         "SourceEntity":{"shape":"AnalysisSourceEntity"},
         "ThemeArn":{"shape":"Arn"},
-        "Definition":{"shape":"AnalysisDefinition"}
+        "Definition":{"shape":"AnalysisDefinition"},
+        "ValidationStrategy":{"shape":"ValidationStrategy"}
       }
     },
     "UpdateAnalysisResponse":{
@@ -18320,7 +19272,8 @@
         "VersionDescription":{"shape":"VersionDescription"},
         "DashboardPublishOptions":{"shape":"DashboardPublishOptions"},
         "ThemeArn":{"shape":"Arn"},
-        "Definition":{"shape":"DashboardVersionDefinition"}
+        "Definition":{"shape":"DashboardVersionDefinition"},
+        "ValidationStrategy":{"shape":"ValidationStrategy"}
       }
     },
     "UpdateDashboardResponse":{
@@ -18629,6 +19582,36 @@
         }
       }
     },
+    "UpdateIdentityPropagationConfigRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Service"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Service":{
+          "shape":"ServiceType",
+          "location":"uri",
+          "locationName":"Service"
+        },
+        "AuthorizedTargets":{"shape":"AuthorizedTargetsList"}
+      }
+    },
+    "UpdateIdentityPropagationConfigResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "UpdateIpRestrictionRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -18656,7 +19639,7 @@
     "UpdateLinkPermissionList":{
       "type":"list",
       "member":{"shape":"ResourcePermission"},
-      "max":2
+      "max":100
     },
     "UpdatePublicSharingSettingsRequest":{
       "type":"structure",
@@ -18717,6 +19700,40 @@
       "type":"list",
       "member":{"shape":"ResourcePermission"},
       "max":100
+    },
+    "UpdateRoleCustomPermissionRequest":{
+      "type":"structure",
+      "required":[
+        "CustomPermissionsName",
+        "Role",
+        "AwsAccountId",
+        "Namespace"
+      ],
+      "members":{
+        "CustomPermissionsName":{"shape":"RoleName"},
+        "Role":{
+          "shape":"Role",
+          "location":"uri",
+          "locationName":"Role"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"Namespace"
+        }
+      }
+    },
+    "UpdateRoleCustomPermissionResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{"shape":"StatusCode"}
+      }
     },
     "UpdateTemplateAliasRequest":{
       "type":"structure",
@@ -18810,7 +19827,8 @@
         "SourceEntity":{"shape":"TemplateSourceEntity"},
         "VersionDescription":{"shape":"VersionDescription"},
         "Name":{"shape":"TemplateName"},
-        "Definition":{"shape":"TemplateVersionDefinition"}
+        "Definition":{"shape":"TemplateVersionDefinition"},
+        "ValidationStrategy":{"shape":"ValidationStrategy"}
       }
     },
     "UpdateTemplateResponse":{
@@ -19253,6 +20271,20 @@
     "VPCConnectionSummaryList":{
       "type":"list",
       "member":{"shape":"VPCConnectionSummary"}
+    },
+    "ValidationStrategy":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"ValidationStrategyMode"}
+      }
+    },
+    "ValidationStrategyMode":{
+      "type":"string",
+      "enum":[
+        "STRICT",
+        "LENIENT"
+      ]
     },
     "ValueWhenUnsetOption":{
       "type":"string",
