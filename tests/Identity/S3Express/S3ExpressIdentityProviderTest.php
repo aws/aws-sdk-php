@@ -22,7 +22,8 @@ class S3ExpressIdentityProviderTest extends TestCase
 
     const S3_TIMESTAMP_FORMAT = 'Y-m-d\TG:i:s\Z';
 
-    private function getCredentialResultFromTimestamp($timestamp) {
+    private function getCredentialResultFromTimestamp($timestamp)
+    {
         $expiration = date(self::S3_TIMESTAMP_FORMAT, $timestamp);
         return new Result([
             'Credentials' => [
@@ -33,6 +34,7 @@ class S3ExpressIdentityProviderTest extends TestCase
             ]
         ]);
     }
+    
     public function testProvidesIdentity()
     {
         $expiration = time() + 5000;
