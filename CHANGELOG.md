@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElastiCache` - Launching Amazon ElastiCache Serverless that enables you to create a cache in under a minute without any capacity management. ElastiCache Serverless monitors the cache's memory, CPU, and network usage and scales both vertically and horizontally to support your application's requirements.
+
 ## 3.290.0 - 2023-11-27
 
 * `Aws\Glue` - add observations support to DQ CodeGen config model + update document for connectiontypes supported by ConnectorData entities
