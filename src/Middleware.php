@@ -147,7 +147,7 @@ final class Middleware
                 }
 
                 if ($signer instanceof S3ExpressSignature) {
-                    $credentialPromise = $config['s3_express_identity_provider']($command)();
+                    $credentialPromise = $config['s3_express_identity_provider']($command);
                 } else {
                     $credentialPromise = $credProvider();
                 }

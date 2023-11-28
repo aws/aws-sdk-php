@@ -45,7 +45,7 @@ class S3ExpressIdentityProviderTest extends TestCase
             'region',
             ['client' => $client]
         );
-        $identity = $provider($cmd)()->wait();
+        $identity = $provider($cmd)->wait();
         self::assertSame('foo', $identity->getAccessKeyId());
         self::assertSame('bar', $identity->getSecretKey());
         self::assertSame('baz', $identity->getSecurityToken());
@@ -65,8 +65,8 @@ class S3ExpressIdentityProviderTest extends TestCase
             'region',
             ['client' => $client]
         );
-        $provider($cmd)()->wait();
-        $identity = $provider($cmd)()->wait();
+        $provider($cmd)->wait();
+        $identity = $provider($cmd)->wait();
         self::assertSame('foo', $identity->getAccessKeyId());
         self::assertSame('bar', $identity->getSecretKey());
         self::assertSame('baz', $identity->getSecurityToken());
@@ -88,8 +88,8 @@ class S3ExpressIdentityProviderTest extends TestCase
             'region',
             ['client' => $client]
         );
-        $provider($cmd)()->wait();
-        $identity = $provider($cmd)()->wait();
+        $provider($cmd)->wait();
+        $identity = $provider($cmd)->wait();
         self::assertSame($after, $identity->getExpiration());
     }
 }
