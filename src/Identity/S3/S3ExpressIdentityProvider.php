@@ -23,22 +23,20 @@ class S3ExpressIdentityProvider
 
     public function __invoke($command)
     {
-        return function () use ($command) {
-            $bucket = $command['Bucket'];
-            if ($identity = $this->cache->get($bucket)) {
-                if (!$identity->isExpired()) {
-                    return Promise\Create::promiseFor($identity);
-                }
+        $bucket = $command['Bucket'];
+        if ($identity = $this->cache->get($bucket)) {
+            if (!$identity->isExpired()) {
+                return Promise\Create::promiseFor($identity);
             }
-            $response = $this->s3Client->createSession(['Bucket' => $bucket]);
-            $identity = new Aws\Identity\S3\S3ExpressIdentity(
-                $response['Credentials']['AccessKeyId'],
-                $response['Credentials']['SecretAccessKey'],
-                $response['Credentials']['SessionToken'],
-                $response['Credentials']['Expiration']->getTimestamp()
-            );
-            $this->cache->set($bucket, $identity);
-            return Promise\Create::promiseFor($identity);
-        };
+        }
+        $response = $this->s3Client->createSession(['Bucket' => $bucket]);
+        $identity = new Aws\Identity\S3\S3ExpressIdentity(
+            $response['Credentials']['AccessKeyId'],
+            $response['Credentials']['SecretAccessKey'],
+            $response['Credentials']['SessionToken'],
+            $response['Credentials']['Expiration']->getTimestamp()
+        );
+        $this->cache->set($bucket, $identity);
+        return Promise\Create::promiseFor($identity);
     }
 }
