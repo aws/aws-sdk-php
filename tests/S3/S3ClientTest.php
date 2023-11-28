@@ -1229,15 +1229,13 @@ EOXML;
         $client = new S3Client([
             'region' => 'us-east-1',
             's3_express_identity_provider' => function ($command) {
-                return static function () {
-                    $identity = new S3ExpressIdentity(
-                        'foo',
-                        'bar',
-                        'baz',
-                         time() + 4000
-                    );
-                    return Promise\Create::promiseFor($identity);
-                };
+                $identity = new S3ExpressIdentity(
+                    'foo',
+                    'bar',
+                    'baz',
+                     time() + 4000
+                );
+                return Promise\Create::promiseFor($identity);
             },
             'http_handler' => function (RequestInterface $r) {
                 $this->assertSame('baz', $r->getHeaderLine('x-amz-s3session-token'));
@@ -1302,15 +1300,13 @@ EOXML;
             'version' => 'latest',
             'region' => 'us-east-1',
             's3_express_identity_provider' => function ($command) {
-                return static function () {
-                    $identity = new S3ExpressIdentity(
-                        'foo',
-                        'bar',
-                        'baz',
-                        time() + 4000
-                    );
-                    return Promise\Create::promiseFor($identity);
-                };
+                $identity = new S3ExpressIdentity(
+                    'foo',
+                    'bar',
+                    'baz',
+                    time() + 4000
+                );
+                return Promise\Create::promiseFor($identity);
             },
         ]);
         $client->getHandlerList()->appendBuild(
