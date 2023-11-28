@@ -10,7 +10,7 @@ class S3ExpressIdentityProvider
 
     private $cache;
     private $s3Client;
-    public function __construct(string $clientRegion, array $config = [])
+    public function __construct($clientRegion, array $config = [])
     {
         $this->cache = new LruArrayCache(100);
         $this->s3Client = isset($config['client'])
