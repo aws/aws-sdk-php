@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.292.0 - 2023-11-29
 
 * `Aws\STS` - Documentation updates for AWS Security Token Service.
 * `Aws\OpenSearchService` - Launching Amazon OpenSearch Service support for new zero-ETL integration with Amazon S3. Customers can now manage their direct query data sources to Amazon S3 programatically
