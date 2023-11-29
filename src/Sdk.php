@@ -106,6 +106,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionChimeSDKVoice(array $args = [])
  * @method \Aws\CleanRooms\CleanRoomsClient createCleanRooms(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCleanRooms(array $args = [])
+ * @method \Aws\CleanRoomsML\CleanRoomsMLClient createCleanRoomsML(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCleanRoomsML(array $args = [])
  * @method \Aws\Cloud9\Cloud9Client createCloud9(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloud9(array $args = [])
  * @method \Aws\CloudControlApi\CloudControlApiClient createCloudControlApi(array $args = [])
