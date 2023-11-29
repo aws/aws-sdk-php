@@ -1,5 +1,239 @@
 # CHANGELOG
 
+## 3.292.0 - 2023-11-29
+
+* `Aws\STS` - Documentation updates for AWS Security Token Service.
+* `Aws\OpenSearchService` - Launching Amazon OpenSearch Service support for new zero-ETL integration with Amazon S3. Customers can now manage their direct query data sources to Amazon S3 programatically
+* `Aws\CleanRoomsML` - Public Preview SDK release of AWS Clean Rooms ML APIs
+* `Aws\OpenSearchServerless` - Amazon OpenSearch Serverless collections support an additional attribute called standby-replicas. This allows to specify whether a collection should have redundancy enabled.
+* `Aws\ApplicationAutoScaling` - Amazon SageMaker customers can now use Application Auto Scaling to automatically scale the number of Inference Component copies across an endpoint to meet the varying demand of their workloads.
+* `Aws\CleanRooms` - AWS Clean Rooms now provides differential privacy to protect against user-identification attempts and machine learning modeling to allow two parties to identify similar users in their data.
+* `Aws\SageMaker` - This release adds following support 1/ Improved SDK tooling for model deployment. 2/ New Inference Component based features to lower inference costs and latency 3/ SageMaker HyperPod management. 4/ Additional parameters for FM Fine Tuning in Autopilot
+* `Aws\SageMakerRuntime` - This release adds InferenceComponentName to InvokeEndpoint and InvokeEndpointWithResponseStream APIs to get inferences from the deployed InferenceComponents.
+
+## 3.291.0 - 2023-11-28
+
+* `Aws\S3` - This release adds support for the S3express identity provider
+* `Aws\Bedrock` - This release adds support for customization types, model life cycle status and minor versions/aliases for model identifiers.
+* `Aws\BedrockAgentRuntime` - This release introduces Agents for Amazon Bedrock Runtime
+* `Aws\S3Control` - Adds support for S3 Express One Zone, and InvocationSchemaVersion 2.0 for S3 Batch Operations.
+* `Aws\QBusiness` - Amazon Q - a generative AI powered application that your employees can use to ask questions and get answers from knowledge spread across disparate content repositories, summarize reports, write articles, take actions, and much more - all within their company's connected content repositories.
+* `Aws\CustomerProfiles` - This release introduces DetectProfileObjectType API to auto generate object type mapping.
+* `Aws\Connect` - Added support for following capabilities: Amazon Connect's in-app, web, and video calling. Two-way SMS integrations. Contact Lens real-time chat analytics feature. Amazon Connect Analytics Datalake capability. Capability to configure real time chat rules.
+* `Aws\QConnect` - Amazon Q in Connect, an LLM-enhanced evolution of Amazon Connect Wisdom. This release adds generative AI support to Amazon Q Connect QueryAssistant and GetRecommendations APIs.
+* `Aws\AccessAnalyzer` - This release adds support for external access findings for S3 directory buckets to help you easily identify cross-account access. Updated service API, documentation, and paginators.
+* `Aws\BedrockRuntime` - This release adds support for minor versions/aliases for invoke model identifier.
+* `Aws\BedrockAgent` - This release introduces Agents for Amazon Bedrock
+* `Aws\S3` - Adds support for S3 Express One Zone.
+
+## 3.290.1 - 2023-11-28
+
+* `Aws\ElastiCache` - Launching Amazon ElastiCache Serverless that enables you to create a cache in under a minute without any capacity management. ElastiCache Serverless monitors the cache's memory, CPU, and network usage and scales both vertically and horizontally to support your application's requirements.
+
+## 3.290.0 - 2023-11-27
+
+* `Aws\Glue` - add observations support to DQ CodeGen config model + update document for connectiontypes supported by ConnectorData entities
+* `Aws\FIS` - AWS FIS adds support for multi-account experiments & empty target resolution. This release also introduces the CreateTargetAccountConfiguration API that allows experiments across multiple AWS accounts, and the ListExperimentResolvedTargets API to list target details.
+* `Aws\EFS` - Adding support for EFS Replication to existing file system.
+* `Aws\Backup` - AWS Backup now supports restore testing, a new feature that allows customers to automate restore testing and validating their backups. Additionally, this release adds support for EBS Snapshots Archive tier.
+* `Aws\TranscribeService` - This release adds support for AWS HealthScribe APIs within Amazon Transcribe
+* `Aws\B2bi` - This is the initial SDK release for AWS B2B Data Interchange.
+* `Aws\SecurityHub` - Adds and updates APIs to support central configuration. This feature allows the Security Hub delegated administrator to configure Security Hub for their entire AWS Org across multiple regions from a home Region. With this release, findings also include account name and application metadata.
+* `Aws\AppSync` - This update enables introspection of Aurora cluster databases using the RDS Data API
+* `Aws\RDS` - Updates Amazon RDS documentation for support for RDS for Db2.
+* `Aws\ControlTower` - This release adds the following support: 1. The EnableControl API can configure controls that are configurable. 2. The GetEnabledControl API shows the configured parameters on an enabled control. 3. The new UpdateEnabledControl API can change parameters on an enabled control.
+
+## 3.289.0 - 2023-11-27
+
+* `Aws\IoTFleetWise` - AWS IoT FleetWise introduces new APIs for vision system data, such as data collected from cameras, radars, and lidars. You can now model and decode complex data types.
+* `Aws\CostOptimizationHub` - This release launches Cost Optimization Hub, a new AWS Billing and Cost Management feature that helps you consolidate and prioritize cost optimization recommendations across your AWS Organizations member accounts and AWS Regions, so that you can get the most out of your AWS spend.
+* `Aws\ECS` - Adds a new 'type' property to the Setting structure. Adds a new AccountSetting - guardDutyActivate for ECS.
+* `Aws\TranscribeService` - This release adds support for transcriptions from audio sources in 64 new languages and introduces generative call summarization in Transcribe Call Analytics (Post call)
+* `Aws\CloudTrail` - CloudTrail Lake now supports federating event data stores. giving users the ability to run queries against their event data using Amazon Athena.
+* `Aws\Repostspace` - Initial release of AWS re:Post Private
+* `Aws\S3` - Adding new params - Key and Prefix, to S3 API operations for supporting S3 Access Grants. Note - These updates will not change any of the existing S3 API functionality.
+* `Aws\EKS` - This release adds support for EKS Pod Identity feature. EKS Pod Identity makes it easy for customers to obtain IAM permissions for the applications running in their EKS clusters.
+* `Aws\SecurityHub` - Adds and updates APIs to support customizable security controls. This feature allows Security Hub customers to provide custom parameters for security controls. With this release, findings for controls that support custom parameters will include the parameters used to generate the findings.
+* `Aws\S3Control` - Introduce Amazon S3 Access Grants, a new S3 access control feature that maps identities in directories such as Active Directory, or AWS Identity and Access Management (IAM) Principals, to datasets in S3.
+* `Aws\ManagedBlockchain` - Add optional NetworkType property to Accessor APIs
+* `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze and generate recommendations with customization and discounts preferences.
+* `Aws\BCMDataExports` - Users can create, read, update, delete Exports of billing and cost management data. Users can get details of Export Executions and details of Tables for exporting. Tagging support is provided for Exports
+* `Aws\WorkSpaces` - The release introduces Multi-Region Resilience one-way data replication that allows you to replicate data from your primary WorkSpace to a standby WorkSpace in another AWS Region. DescribeWorkspaces now returns the status of data replication.
+* `Aws\ConfigService` - Support Periodic Recording for Configuration Recorder
+* `Aws\GuardDuty` - Add support for Runtime Monitoring for ECS and ECS-EC2.
+* `Aws\LexModelsV2` - This release introduces new generative AI features in AWS Lex: Assisted Slot Resolution, Descriptive Bot Building, and Sample Utterance Generation. These features leverage large language models available through Amazon Bedrock to improve the bot builder and customer experiences.
+* `Aws\FreeTier` - This is the initial SDK release for the AWS Free Tier GetFreeTierUsage API
+* `Aws\PrometheusService` - This release adds support for the Amazon Managed Service for Prometheus collector, a fully managed, agentless Prometheus metrics scraping capability.
+* `Aws\SecretsManager` - AWS Secrets Manager has released the BatchGetSecretValue API, which allows customers to fetch up to 20 Secrets with a single request using a list of secret names or filters.
+* `Aws\Redshift` - This release adds support for multi-data warehouse writes through data sharing.
+* `Aws\QuickSight` - This release launches new APIs for trusted identity propagation setup and supports creating datasources using trusted identity propagation as authentication method for QuickSight accounts configured with IAM Identity Center.
+* `Aws\PersonalizeEvents` - This release enables PutActions and PutActionInteractions
+* `Aws\PersonalizeRuntime` - Enables metadata in recommendations and next best action recommendations
+* `Aws\CodeStarconnections` - This release adds support for the CloudFormation Git sync feature. Git sync enables updating a CloudFormation stack from a template stored in a Git repository.
+* `Aws\LexRuntimeV2` - This release introduces support for interpretationSource in the runtime service response.
+* `Aws\EKSAuth` - This release adds support for EKS Pod Identity feature. EKS Pod Identity makes it easy for customers to obtain IAM permissions for their applications running in the EKS clusters.
+* `Aws\Detective` - Added new APIs in Detective to support resource investigations
+* `Aws\FSx` - Added support for FSx for ONTAP scale-out file systems and FlexGroup volumes. Added the HAPairs field and ThroughputCapacityPerHAPair for filesystem. Added AggregateConfiguration (containing Aggregates and ConstituentsPerAggregate) and SizeInBytes for volume.
+* `Aws\ElasticLoadBalancingv2` - This release enables both mutual authentication (mTLS), and Automatic Target Weights (ATW) for Application Load Balancers.
+* `Aws\EFS` - Adding support for EFS Archive lifecycle configuration.
+* `Aws\WorkSpacesThinClient` - Initial release of Amazon WorkSpaces Thin Client
+* `Aws\Personalize` - Enables metadata in recommendations, recommendations with themes, and next best action recommendations
+* `Aws\LakeFormation` - This release adds four new APIs "DescribeLakeFormationIdentityCenterConfiguration", "CreateLakeFormationIdentityCenterConfiguration", "DescribeLakeFormationIdentityCenterConfiguration", and "DeleteLakeFormationIdentityCenterConfiguration", and also updates the corresponding documentation.
+* `Aws\AccessAnalyzer` - IAM Access Analyzer now continuously monitors IAM roles and users in your AWS account or organization to generate findings for unused access. Additionally, IAM Access Analyzer now provides custom policy checks to validate that IAM policies adhere to your security standards ahead of deployments.
+* `Aws\ControlTower` - Add APIs to create and manage a landing zone.
+* `Aws\CloudWatchLogs` - Added APIs to Create, Update, Get, List and Delete LogAnomalyDetectors and List and Update Anomalies in Detector. Added LogGroupClass attribute for LogGroups to classify loggroup as Standard loggroup with all capabilities or InfrequentAccess loggroup with limited capabilities.
+* `Aws\SFN` - Adds new TestState operation which accepts the definition of a single state and executes it. You can test a state without creating a state machine or updating an existing state machine.
+
+## 3.288.1 - 2023-11-22
+
+* `Aws\s3` - Disables transformation of request URI paths with dot segments
+* `Aws\S3Control` - Amazon S3 Batch Operations now manages buckets or prefixes in a single step.
+* `Aws\SageMaker` - This feature adds the end user license agreement status as a model access configuration parameter.
+* `Aws\Kinesis` - This release adds support for resource based policies on streams and consumers.
+
+## 3.288.0 - 2023-11-21
+
+* `Aws\CloudFrontKeyValueStore` - This release adds support for CloudFront KeyValueStore, a globally managed key value datastore associated with CloudFront Functions.
+* `Aws\CloudFront` - This release adds support for CloudFront KeyValueStore, a globally managed key value datastore associated with CloudFront Functions.
+* `Aws\S3` - Add support for automatic date based partitioning in S3 Server Access Logs.
+* `Aws\EC2` - Documentation updates for Amazon EC2.
+* `Aws\IoTSiteWise` - Adds 1/ user-defined unique identifier for asset and model metadata, 2/ asset model components, and 3/ query API for asset metadata and telemetry data. Supports 4/ multi variate anomaly detection using Amazon Lookout for Equipment, 5/ warm storage tier, and 6/ buffered ingestion of time series data.
+* `Aws\IoTTwinMaker` - This release adds following support. 1. New APIs for metadata bulk operations. 2. Modify the component type API to support composite component types - nesting component types within one another. 3. New list APIs for components and properties. 4. Support the larger scope digital twin modeling.
+* `Aws\InspectorScan` - This release adds support for the new Amazon Inspector Scan API. The new Inspector Scan API can synchronously scan SBOMs adhering to the CycloneDX v1.5 format.
+
+## 3.287.1 - 2023-11-20
+
+* `Aws\Credentials` - Adds hostname resolution for the EcsCredentialProvider.
+* `Aws\EC2` - This release adds support for Security group referencing over Transit gateways, enabling you to simplify Security group management and control of instance-to-instance traffic across VPCs that are connected by Transit gateway.
+* `Aws\DocDB` - Amazon DocumentDB updates for new cluster storage configuration: Amazon DocumentDB I/O-Optimized.
+* `Aws\CodeStarconnections` - This release updates a few CodeStar Connections related APIs.
+
+## 3.287.0 - 2023-11-17
+
+* `Aws\` - Removes the original Macie service, which has been deprecated.
+* `Aws\Sqs` - Updates response md5 validation
+* `Aws\ECR` - Documentation and operational updates for Amazon ECR, adding support for pull through cache rules for upstream registries that require authentication.
+* `Aws\CodePipeline` - CodePipeline now supports overriding source revisions to achieve manual re-deploy of a past revision
+* `Aws\MediaLive` - MediaLive has now added support for per-output static image overlay.
+* `Aws\Connect` - This release adds WISDOM_QUICK_RESPONSES as new IntegrationType of Connect IntegrationAssociation resource and bug fixes.
+* `Aws\InternetMonitor` - Adds new querying capabilities for running data queries on a monitor
+* `Aws\EC2` - This release adds new features for Amazon VPC IP Address Manager (IPAM) Allowing a choice between Free and Advanced Tiers, viewing public IP address insights across regions and in Amazon Cloudwatch, use IPAM to plan your subnet IPs within a VPC and bring your own autonomous system number to IPAM.
+* `Aws\EventBridge` - Introduces a new rule state ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS for matching with Get, List and Describe AWS API call events from CloudTrail.
+* `Aws\OSIS` - Add support for enabling a persistent buffer when creating or updating an OpenSearch Ingestion pipeline. Add tags to Pipeline and PipelineSummary response models.
+* `Aws\VerifiedPermissions` - Adding BatchIsAuthorized API which supports multiple authorization requests against a PolicyStore
+* `Aws\IVS` - type & defaulting refinement to various range properties
+* `Aws\SSOAdmin` - Improves support for configuring RefreshToken and TokenExchange grants on applications.
+* `Aws\Cloud9` - A minor doc only update related to changing the date of an API change.
+* `Aws\SSOOIDC` - Adding support for `sso-oauth:CreateTokenWithIAM`.
+* `Aws\S3` - Removes all default 0 values for numbers and false values for booleans
+* `Aws\RDS` - This release adds support for option groups and replica enhancements to Amazon RDS Custom.
+* `Aws\DLM` - Added support for SAP HANA in Amazon Data Lifecycle Manager EBS snapshot lifecycle policies with pre and post scripts.
+* `Aws\AppMesh` - Change the default value of these fields from 0 to null: MaxConnections, MaxPendingRequests, MaxRequests, HealthCheckThreshold, PortNumber, and HealthCheckPolicy -> port. Users are not expected to perceive the change, except that badRequestException is thrown when required fields missing configured.
+* `Aws\KinesisVideo` - Docs only build to bring up-to-date with public docs.
+* `Aws\STS` - API updates for the AWS Security Token Service
+* `Aws\ivschat` - type & defaulting refinement to various range properties
+* `Aws\RedshiftServerless` - Updated SDK for Amazon Redshift Serverless, which provides the ability to configure a connection with IAM Identity Center to manage user and group access to databases.
+* `Aws\TrustedAdvisor` - AWS Trusted Advisor introduces new APIs to enable you to programmatically access Trusted Advisor best practice checks, recommendations, and prioritized recommendations. Trusted Advisor APIs enable you to integrate Trusted Advisor with your operational tools to automate your workloads.
+* `Aws\CodeStarconnections` - This release adds support for the CloudFormation Git sync feature. Git sync enables updating a CloudFormation stack from a template stored in a Git repository.
+* `Aws\ConnectWisdomService` - This release adds QuickResponse as a new Wisdom resource and Wisdom APIs for import, create, read, search, update and delete QuickResponse resources.
+* `Aws\Redshift` - Updated SDK for Amazon Redshift, which you can use to configure a connection with IAM Identity Center to manage access to databases. With these, you can create a connection through a managed application. You can also change a managed application, delete it, or get information about an existing one.
+* `Aws\LocationService` - Remove default value and allow nullable for request parameters having minimum value larger than zero.
+* `Aws\Pipes` - TargetParameters now properly supports BatchJobParameters.ArrayProperties.Size and BatchJobParameters.RetryStrategy.Attempts being optional, and EcsTaskParameters.Overrides.EphemeralStorage.SizeInGiB now properly required when setting EphemeralStorage
+* `Aws\mgn` - Removed invalid and unnecessary default values.
+* `Aws\CloudFormation` - This release adds a new flag ImportExistingResources to CreateChangeSet. Specify this parameter on a CREATE- or UPDATE-type change set to import existing resources with custom names instead of recreating them.
+* `Aws\EMR` - Launch support for IAM Identity Center Trusted Identity Propagation and workspace storage encryption using AWS KMS in EMR Studio
+* `Aws\Athena` - Adding SerivicePreProcessing time metric
+
+## 3.286.3 - 2023-11-16
+
+* `Aws\SSOAdmin` - Instances bound to a single AWS account, API operations for managing instances and applications, and assignments to applications are now supported. Trusted identity propagation is also supported, with new API operations for managing trusted token issuers and application grants and scopes.
+* `Aws\SSM` - This release introduces the ability to filter automation execution steps which have parent steps. In addition, runbook variable information is returned by GetAutomationExecution and parent step information is returned by the DescribeAutomationStepExecutions API.
+* `Aws\FSx` - Enables customers to update their PerUnitStorageThroughput on their Lustre file systems.
+* `Aws\Kafka` - Added a new API response field which determines if there is an action required from the customer regarding their cluster.
+* `Aws\EC2` - Enable use of tenant-specific PublicSigningKeyUrl from device trust providers and onboard jumpcloud as a new device trust provider.
+* `Aws\Glue` - Introduces new column statistics APIs to support statistics generation for tables within the Glue Data Catalog.
+* `Aws\Transfer` - Introduced S3StorageOptions for servers to enable directory listing optimizations and added Type fields to logical directory mappings.
+* `Aws\IVSRealTime` - This release introduces server side composition and recording for stages.
+* `Aws\Lambda` - Adds support for logging configuration in Lambda Functions. Customers will have more control how their function logs are captured and to which cloud watch log group they are delivered also.
+* `Aws\QuickSight` - Custom permission support for QuickSight roles; Three new datasources STARBURST, TRINO, BIGQUERY; Lenient mode changes the default behavior to allow for exporting and importing with certain UI allowed errors, Support for permissions and tags export and import.
+* `Aws\PinpointSMSVoiceV2` - Amazon Pinpoint now offers additional operations as part of version 2 of the SMS and voice APIs. This release includes 26 new APIs to create and manage phone number registrations, add verified destination numbers, and request sender IDs.
+* `Aws\IoT` - GA release the ability to index and search devices based on their GeoLocation data. With GeoQueries you can narrow your search to retrieve devices located in the desired geographic boundary.
+* `Aws\SageMaker` - Amazon SageMaker Studio now supports Trainium instance types - trn1.2xlarge, trn1.32xlarge, trn1n.32xlarge.
+* `Aws\SSMIncidents` - Introduces new APIs ListIncidentFindings and BatchGetIncidentFindings to use findings related to an incident.
+* `Aws\MediaPackage` - DRM_TOP_LEVEL_COMPACT allows placing content protection elements at the MPD level and referenced at the AdaptationSet level
+* `Aws\Macie2` - This release adds support for configuring Macie to assume an IAM role when retrieving sample occurrences of sensitive data reported by findings.
+* `Aws\Polly` - Add new engine - long-form - dedicated for longer content, such as news articles, training materials, or marketing videos.
+* `Aws\CodeCatalyst` - This release includes updates to the Dev Environment APIs to include an optional vpcConnectionName parameter that supports using Dev Environments with Amazon VPC.
+* `Aws\imagebuilder` - This release adds the Image Lifecycle Management feature to automate the process of deprecating, disabling and deleting outdated images and their associated resources.
+* `Aws\DLM` - This release adds support for Amazon Data Lifecycle Manager default policies for EBS snapshots and EBS-backed AMIs.
+
+## 3.286.2 - 2023-11-15
+
+* `Aws\Sqs` - Moves queue url middleware, which is no longer needed after the SQS migration from query to json protocol.
+* `Aws\RDS` - Updates Amazon RDS documentation for support for upgrading RDS for MySQL snapshots from version 5.7 to version 8.0.
+* `Aws\finspace` - Adding deprecated trait on Dataset Browser Environment APIs
+* `Aws\MWAA` - This Amazon MWAA release adds support for customer-managed VPC endpoints. This lets you choose whether to create, and manage your environment's VPC endpoints, or to have Amazon MWAA create, and manage them for you.
+* `Aws\AutoScaling` - This release introduces Instance Maintenance Policy, a new EC2 Auto Scaling capability that allows customers to define whether instances are launched before or after existing instances are terminated during instance replacement operations.
+* `Aws\Lambda` - Add Java 21 (java21) support to AWS Lambda
+* `Aws\EC2` - AWS EBS now supports Snapshot Lock, giving users the ability to lock an EBS Snapshot to prohibit deletion of the snapshot. This release introduces the LockSnapshot, UnlockSnapshot & DescribeLockedSnapshots APIs to manage lock configuration for snapshots. The release also includes the dl2q_24xlarge.
+* `Aws\Redshift` - The custom domain name SDK for Amazon Redshift provisioned clusters is updated with additional required parameters for modify and delete operations. Additionally, users can provide domain names with longer top-level domains.
+* `Aws\CodeCatalyst` - This release adds functionality for retrieving information about workflows and workflow runs and starting workflow runs in Amazon CodeCatalyst.
+* `Aws\CloudTrail` - The Lake Repricing feature lets customers configure a BillingMode for an event data store. The BillingMode determines the cost for ingesting and storing events and the default and maximum retention period for the event data store.
+* `Aws\S3Control` - Add 5 APIs to create, update, get, list, delete S3 Storage Lens group(eg. CreateStorageLensGroup), 3 APIs for tagging(TagResource,UntagResource,ListTagsForResource), and update to StorageLensConfiguration to allow metrics to be aggregated on Storage Lens groups.
+* `Aws\FinSpaceData` - Adding deprecated trait to APIs in this name space.
+* `Aws\SsmSap` - Update the default value of MaxResult to 50.
+
+## 3.286.1 - 2023-11-14
+
+* `Aws\Pipes` - Added support (via new LogConfiguration field in CreatePipe and UpdatePipe APIs) for logging to Amazon CloudWatch Logs, Amazon Simple Storage Service (Amazon S3), and Amazon Kinesis Data Firehose
+* `Aws\SageMaker` - This release makes Model Registry Inference Specification fields as not required.
+* `Aws\Backup` - AWS Backup - Features: Provide Job Summary for your backup activity.
+* `Aws\SFN` - This release adds support to redrive executions in AWS Step Functions with a new RedriveExecution operation.
+* `Aws\ResourceExplorer2` - Resource Explorer supports multi-account search. You can now use Resource Explorer to search and discover resources across AWS accounts within your organization or organizational unit.
+* `Aws\Glue` - Introduces new storage optimization APIs to support automatic compaction of Apache Iceberg tables.
+* `Aws\IoT` - This release introduces new attributes in API CreateSecurityProfile, UpdateSecurityProfile and DescribeSecurityProfile to support management of Metrics Export for AWS IoT Device Defender Detect.
+* `Aws\signer` - Documentation updates for AWS Signer
+* `Aws\Connect` - Introducing SegmentAttributes parameter for StartChatContact API
+* `Aws\MediaTailor` - Removed unnecessary default values.
+* `Aws\Lambda` - Add Python 3.12 (python3.12) support to AWS Lambda
+* `Aws\CleanRooms` - This feature provides the ability for the collaboration creator to configure either the member who can run queries or a different member in the collaboration to be billed for query compute costs.
+
+## 3.286.0 - 2023-11-13
+
+* `Aws\Credentials` - This implementation allows disabling IMDSv1 fallback by using environment variables, config file, and explicit client configuration.
+* `Aws\AppRegistry` - When the customer associates a resource collection to their application with this new feature, then a new application tag will be applied to all supported resources that are part of that collection. This allows customers to more easily find the application that is associated with those resources.
+* `Aws\ECS` - Adds a Client Token parameter to the ECS RunTask API. The Client Token parameter allows for idempotent RunTask requests.
+* `Aws\DataExchange` - Removed Required trait for DataSet.OriginDetails.ProductId.
+* `Aws\DatabaseMigrationService` - Added new Db2 LUW Target endpoint with related endpoint settings. New executeTimeout endpoint setting for mysql endpoint. New ReplicationDeprovisionTime field for serverless describe-replications.
+* `Aws\EC2` - Adds the new EC2 DescribeInstanceTopology API, which you can use to retrieve the network topology of your running instances on select platform types to determine their relative proximity to each other.
+* `Aws\EMR` - Updated GetClusterSessionCredentials API to allow Amazon SageMaker Studio to connect to EMR on EC2 clusters to support IdentityCenter/PEZ integration.
+
+## 3.285.4 - 2023-11-10
+
+* `Aws\MediaConvert` - This release includes the ability to specify any input source as the primary input for corresponding follow modes, and allows users to specify fit and fill behaviors without resizing content.
+* `Aws\EC2` - EC2 adds API updates to enable ENA Express at instance launch time.
+* `Aws\CostandUsageReportService` - This release adds support for tagging and customers can now tag report definitions. Additionally, ReportStatus is now added to report definition to show when the last delivered time stamp and if it succeeded or not.
+* `Aws\FMS` - Adds optimizeUnassociatedWebACL flag to ManagedServiceData, updates third-party firewall examples, and other minor documentation updates.
+* `Aws\ControlTower` - AWS Control Tower supports tagging for enabled controls. This release introduces TagResource, UntagResource and ListTagsForResource APIs to manage tags in existing enabled controls. It updates EnabledControl API to tag resources at creation time.
+* `Aws\RDS` - Updates Amazon RDS documentation for zero-ETL integrations.
+* `Aws\MarketplaceEntitlementService` - Add paginators to GetEntitlements.
+
+## 3.285.3 - 2023-11-09
+
+* `Aws\Comprehend` - This release adds support for toxicity detection and prompt safety classification.
+* `Aws\CloudWatchLogs` - Update to support new APIs for delivery of logs from AWS services.
+* `Aws\EKS` - Adding EKS Anywhere subscription related operations.
+* `Aws\Omics` - Support UBAM filetype for Omics Storage and make referenceArn optional
+* `Aws\EC2` - AWS EBS now supports Block Public Access for EBS Snapshots. This release introduces the EnableSnapshotBlockPublicAccess, DisableSnapshotBlockPublicAccess and GetSnapshotBlockPublicAccessState APIs to manage account-level public access settings for EBS Snapshots in an AWS Region.
+* `Aws\Connect` - This release adds the ability to integrate customer lambda functions with Connect attachments for scanning and updates the ListIntegrationAssociations API to support filtering on IntegrationArn.
+* `Aws\CloudFormation` - Added new ConcurrencyMode feature for AWS CloudFormation StackSets for faster deployments to target accounts.
+* `Aws\Lambda` - Add Custom runtime on Amazon Linux 2023 (provided.al2023) support to AWS Lambda.
+* `Aws\CloudTrail` - The Insights in Lake feature lets customers enable CloudTrail Insights on a source CloudTrail Lake event data store and create a destination event data store to collect Insights events based on unusual management event activity in the source event data store.
+
+## 3.285.2 - 2023-11-09
+
+* `Aws\SQS` - This release enables customers to call SQS using AWS JSON-1.0 protocol and bug fix.
+
 ## 3.285.1 - 2023-11-08
 
 * `Aws\RDS` - This Amazon RDS release adds support for patching the OS of an RDS Custom for Oracle DB instance. You can now upgrade the database or operating system using the modify-db-instance command.

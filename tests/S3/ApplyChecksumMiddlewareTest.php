@@ -70,6 +70,26 @@ class ApplyChecksumMiddlewareTest extends TestCase
         ];
     }
 
+    public function testAddCrc32AsAppropriate()
+    {
+        $s3 = $this->getTestClient(
+            's3',
+            ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
+        );
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('putBucketPolicy', [
+            'Bucket' => 'mybucket--use1-az1--x-s3',
+            'Policy' => 'policy'
+        ]);
+        $command->getHandlerList()->appendBuild(
+            Middleware::tap(function ($cmd, RequestInterface $request) {
+                $this->assertFalse($request->hasHeader('Content-MD5'));
+                $this->assertSame('8H0FFg==', $request->getHeaderLine('x-amz-checksum-crc32'));
+            })
+        );
+        $s3->execute($command);
+    }
+
     /**
      * @dataProvider getFlexibleChecksumUseCases
      */

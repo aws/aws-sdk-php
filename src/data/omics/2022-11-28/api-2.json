@@ -2133,7 +2133,6 @@
         "sourceFileType",
         "subjectId",
         "sampleId",
-        "referenceArn",
         "name"
       ],
       "members":{
@@ -2683,7 +2682,8 @@
       "enum":[
         "FASTQ",
         "BAM",
-        "CRAM"
+        "CRAM",
+        "UBAM"
       ]
     },
     "Filter":{
@@ -4691,7 +4691,7 @@
       "members":{
         "name":{"shape":"ReadSetName"},
         "status":{"shape":"ReadSetStatus"},
-        "referenceArn":{"shape":"ReferenceArn"},
+        "referenceArn":{"shape":"ReferenceArnFilter"},
         "createdAfter":{"shape":"SyntheticTimestamp_date_time"},
         "createdBefore":{"shape":"SyntheticTimestamp_date_time"},
         "sampleId":{"shape":"SampleId"},
@@ -4850,6 +4850,12 @@
       "max":127,
       "min":1,
       "pattern":"arn:.+"
+    },
+    "ReferenceArnFilter":{
+      "type":"string",
+      "max":127,
+      "min":0,
+      "pattern":"$|^arn:.+"
     },
     "ReferenceDescription":{
       "type":"string",
@@ -5641,8 +5647,7 @@
         "sourceFiles",
         "sourceFileType",
         "subjectId",
-        "sampleId",
-        "referenceArn"
+        "sampleId"
       ],
       "members":{
         "sourceFiles":{"shape":"SourceFiles"},

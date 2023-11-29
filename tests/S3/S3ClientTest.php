@@ -5,6 +5,7 @@ use Aws\Arn\ArnParser;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
+use Aws\Identity\S3\S3ExpressIdentity;
 use Aws\LruArrayCache;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Middleware;
@@ -1223,6 +1224,105 @@ EOXML;
         ]);
     }
 
+    public function testS3ExpressAuth()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            's3_express_identity_provider' => function ($command) {
+                $identity = new S3ExpressIdentity(
+                    'foo',
+                    'bar',
+                    'baz',
+                     time() + 4000
+                );
+                return Promise\Create::promiseFor($identity);
+            },
+            'http_handler' => function (RequestInterface $r) {
+                $this->assertSame('baz', $r->getHeaderLine('x-amz-s3session-token'));
+                $this->assertEmpty($r->getHeaderLine('X-Amz-Security-Token'));
+                return Promise\Create::promiseFor(new Response);
+            }
+        ]);
+        $client->getHandlerList()->appendBuild(
+            Middleware::mapRequest(function (RequestInterface $request) {
+                return $request->withHeader('X-Amz-Security-Token', 'Bar');
+            }),
+            'add-security-token'
+        );
+        $client->getObject(['Bucket' => 'bucket--use1-az2--x-s3', 'Key' => 'key']);
+    }
+
+    public function testS3ExpressAuthCanBeDisabled()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'disable_express_session_auth' => true,
+            'http_handler' => function (RequestInterface $r, array $opts = []) {
+                $this->assertEmpty($r->getHeaderLine('x-amz-s3session-token'));
+                $this->assertSame('Bar', $r->getHeaderLine('X-Amz-Security-Token'));
+                return Promise\Create::promiseFor(new Response);
+            }
+        ]);
+        $client->getHandlerList()->appendBuild(
+            Middleware::mapRequest(function (RequestInterface $request) {
+                return $request->withHeader('X-Amz-Security-Token', 'Bar');
+            }),
+            'add-security-token'
+        );
+        $client->getObject(['Bucket' => 'bucket--use1-az2--x-s3', 'Key' => 'key']);
+    }
+
+    public function testS3ExpressDisabledPresignedUrl()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'disable_express_session_auth' => true,
+        ]);
+        $client->getHandlerList()->appendBuild(
+            Middleware::mapRequest(function (RequestInterface $request) {
+                return $request->withHeader('X-Amz-Security-Token', 'Bar');
+            }),
+            'add-security-token'
+        );
+        $command = $client->getCommand('GetObject', ['Bucket' => 'bucket--use1-az2--x-s3',
+            'Key' => 'key']);
+        $request = $client->createPresignedRequest($command, '+20 minutes');
+        $url = (string)$request->getUri();
+        $this->assertStringNotContainsString('x-amz-s3session-token=baz', $url);
+        $this->assertStringContainsString('X-Amz-Security-Token', $url);
+    }
+
+    public function testS3ExpressPresignedUrl()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            's3_express_identity_provider' => function ($command) {
+                $identity = new S3ExpressIdentity(
+                    'foo',
+                    'bar',
+                    'baz',
+                    time() + 4000
+                );
+                return Promise\Create::promiseFor($identity);
+            },
+        ]);
+        $client->getHandlerList()->appendBuild(
+            Middleware::mapRequest(function (RequestInterface $request) {
+                return $request->withHeader('X-Amz-Security-Token', 'Bar');
+            }),
+            'add-security-token'
+        );
+        $command = $client->getCommand('GetObject', ['Bucket' => 'bucket--use1-az2--x-s3',
+            'Key' => 'key']);
+        $request = $client->createPresignedRequest($command, '+20 minutes');
+        $url = (string)$request->getUri();
+        $this->assertStringContainsString('x-amz-s3session-token=baz', $url);
+        $this->assertStringNotContainsString('X-Amz-Security-Token', $url);
+    }
+
     public function testCanDetermineRegionOfBucket()
     {
         $client = new S3Client([
@@ -2321,4 +2421,57 @@ EOXML;
         );
         $s3->execute($command);
     }
+
+    /**
+     * @dataProvider dotSegmentProvider
+     */
+    public function testHandlesDotSegmentsInKey($key, $expectedUri)
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('getObject', ['Bucket' => 'foo', 'Key' => $key]);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) use ($expectedUri) {
+                $this->assertSame($expectedUri, (string) $req->getUri());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function dotSegmentProvider()
+    {
+        return [
+            ['../foo' , 'https://foo.s3.amazonaws.com/../foo'],
+            ['bar/../../foo', 'https://foo.s3.amazonaws.com/bar/../../foo'],
+            ['/../foo', 'https://foo.s3.amazonaws.com//../foo'],
+            ['foo/bar/../baz', 'https://foo.s3.amazonaws.com/foo/bar/../baz']
+        ];
+    }
+
+    /**
+     * @dataProvider dotSegmentPathStyleProvider
+     */
+    public function testHandlesDotSegmentsInKeyWithPathStyle($key, $expectedUri)
+    {
+        $s3 = $this->getTestClient('s3', ['use_path_style_endpoint' => true]);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('getObject', ['Bucket' => 'foo', 'Key' => $key]);
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) use ($expectedUri) {
+                $this->assertSame($expectedUri, (string) $req->getUri());
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function dotSegmentPathStyleProvider()
+    {
+        return [
+            ['../foo' , 'https://s3.amazonaws.com/foo/foo/../foo'],
+            ['bar/../../foo', 'https://s3.amazonaws.com/foo/foo/bar/../../foo'],
+            ['/../foo', 'https://s3.amazonaws.com/foo/foo//../foo'],
+            ['foo/bar/../baz', 'https://s3.amazonaws.com/foo/foo/foo/bar/../baz'],
+        ];
+    }
+
 }
