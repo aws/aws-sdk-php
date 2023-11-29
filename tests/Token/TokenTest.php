@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Token;
 
+use Aws\Identity\BearerTokenIdentity;
 use Aws\Identity\BearerTokenIdentityInterface;
 use Aws\Token\Token;
 use Aws\Identity\IdentityInterface;
@@ -55,7 +56,6 @@ class CredentialsTest extends TestCase
     public function testIsInstanceOfIdentity()
     {
         $token = new Token('token-value');
-        $this->assertInstanceOf(IdentityInterface::class, $token);
-        $this->assertInstanceOf(BearerTokenIdentityInterface::class, $token);
+        $this->assertInstanceOf(BearerTokenIdentity::class, $token);
     }
 }

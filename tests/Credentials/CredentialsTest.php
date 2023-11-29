@@ -64,7 +64,6 @@ class CredentialsTest extends TestCase
     public function testIsInstanceOfIdentity()
     {
         $credentials = new Credentials('key-value', 'secret-value');
-        $this->assertInstanceOf(IdentityInterface::class, $credentials);
-        $this->assertInstanceOf(AwsCredentialIdentityInterface::class, $credentials);
+        $this->assertInstanceOf(AwsCredentialIdentity::class, $credentials);
     }
 }
