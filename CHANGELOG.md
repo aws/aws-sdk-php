@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - Adds observation and analyzer support to the GetDataQualityResult and BatchGetDataQualityResult APIs.
+* `Aws\ARCZonalShift` - This release adds a new capability, zonal autoshift. You can configure zonal autoshift so that AWS shifts traffic for a resource away from an Availability Zone, on your behalf, when AWS determines that there is an issue that could potentially affect customers in the Availability Zone.
+* `Aws\SageMaker` - This release adds support for 1/ Code Editor, based on Code-OSS, Visual Studio Code Open Source, a new fully managed IDE option in SageMaker Studio 2/ JupyterLab, a new fully managed JupyterLab IDE experience in SageMaker Studio
+
 ## 3.293.0 - 2023-11-30
 
 * `Aws\MarketplaceDeployment` - AWS Marketplace Deployment is a new service that provides essential features that facilitate the deployment of software, data, and services procured through AWS Marketplace.
