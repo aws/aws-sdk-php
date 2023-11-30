@@ -691,6 +691,7 @@
         "kmsKeyArn":{"shape":"String"},
         "lastModifiedDate":{"shape":"Long"},
         "name":{"shape":"CollectionName"},
+        "standbyReplicas":{"shape":"StandbyReplicas"},
         "status":{"shape":"CollectionStatus"},
         "type":{"shape":"CollectionType"}
       }
@@ -825,6 +826,7 @@
         "kmsKeyArn":{"shape":"String"},
         "lastModifiedDate":{"shape":"Long"},
         "name":{"shape":"CollectionName"},
+        "standbyReplicas":{"shape":"StandbyReplicas"},
         "status":{"shape":"CollectionStatus"},
         "type":{"shape":"CollectionType"}
       }
@@ -839,6 +841,7 @@
         },
         "description":{"shape":"CreateCollectionRequestDescriptionString"},
         "name":{"shape":"CollectionName"},
+        "standbyReplicas":{"shape":"StandbyReplicas"},
         "tags":{"shape":"Tags"},
         "type":{"shape":"CollectionType"}
       }
@@ -1637,6 +1640,13 @@
         "serviceCode":{"shape":"String"}
       },
       "exception":true
+    },
+    "StandbyReplicas":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "String":{"type":"string"},
     "SubnetId":{

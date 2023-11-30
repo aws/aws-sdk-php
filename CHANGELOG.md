@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 3.292.0 - 2023-11-29
+
+* `Aws\STS` - Documentation updates for AWS Security Token Service.
+* `Aws\OpenSearchService` - Launching Amazon OpenSearch Service support for new zero-ETL integration with Amazon S3. Customers can now manage their direct query data sources to Amazon S3 programatically
+* `Aws\CleanRoomsML` - Public Preview SDK release of AWS Clean Rooms ML APIs
+* `Aws\OpenSearchServerless` - Amazon OpenSearch Serverless collections support an additional attribute called standby-replicas. This allows to specify whether a collection should have redundancy enabled.
+* `Aws\ApplicationAutoScaling` - Amazon SageMaker customers can now use Application Auto Scaling to automatically scale the number of Inference Component copies across an endpoint to meet the varying demand of their workloads.
+* `Aws\CleanRooms` - AWS Clean Rooms now provides differential privacy to protect against user-identification attempts and machine learning modeling to allow two parties to identify similar users in their data.
+* `Aws\SageMaker` - This release adds following support 1/ Improved SDK tooling for model deployment. 2/ New Inference Component based features to lower inference costs and latency 3/ SageMaker HyperPod management. 4/ Additional parameters for FM Fine Tuning in Autopilot
+* `Aws\SageMakerRuntime` - This release adds InferenceComponentName to InvokeEndpoint and InvokeEndpointWithResponseStream APIs to get inferences from the deployed InferenceComponents.
+
 ## 3.291.0 - 2023-11-28
 
 * `Aws\S3` - This release adds support for the S3express identity provider
