@@ -4893,7 +4893,8 @@
         "metric":{"shape":"BehaviorMetric"},
         "metricDimension":{"shape":"MetricDimension"},
         "criteria":{"shape":"BehaviorCriteria"},
-        "suppressAlerts":{"shape":"SuppressAlerts"}
+        "suppressAlerts":{"shape":"SuppressAlerts"},
+        "exportMetric":{"shape":"ExportMetric"}
       }
     },
     "BehaviorCriteria":{
@@ -6130,7 +6131,8 @@
           "deprecatedMessage":"Use additionalMetricsToRetainV2."
         },
         "additionalMetricsToRetainV2":{"shape":"AdditionalMetricsToRetainV2List"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "metricsExportConfig":{"shape":"MetricsExportConfig"}
       }
     },
     "CreateSecurityProfileResponse":{
@@ -6592,6 +6594,7 @@
         }
       }
     },
+    "DeleteMetricsExportConfig":{"type":"boolean"},
     "DeleteMitigationActionRequest":{
       "type":"structure",
       "required":["actionName"],
@@ -7562,7 +7565,8 @@
         "additionalMetricsToRetainV2":{"shape":"AdditionalMetricsToRetainV2List"},
         "version":{"shape":"Version"},
         "creationDate":{"shape":"Timestamp"},
-        "lastModifiedDate":{"shape":"Timestamp"}
+        "lastModifiedDate":{"shape":"Timestamp"},
+        "metricsExportConfig":{"shape":"MetricsExportConfig"}
       }
     },
     "DescribeStreamRequest":{
@@ -8185,6 +8189,7 @@
         "rateIncreaseCriteria":{"shape":"RateIncreaseCriteria"}
       }
     },
+    "ExportMetric":{"type":"boolean"},
     "FailedChecksCount":{"type":"integer"},
     "FailedFindingsCount":{"type":"long"},
     "FailedThings":{"type":"integer"},
@@ -8323,6 +8328,17 @@
     "FunctionArn":{"type":"string"},
     "GenerationId":{"type":"string"},
     "GenericLongValue":{"type":"long"},
+    "GeoLocationTarget":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"TargetFieldName"},
+        "order":{"shape":"TargetFieldOrder"}
+      }
+    },
+    "GeoLocationsFilter":{
+      "type":"list",
+      "member":{"shape":"GeoLocationTarget"}
+    },
     "GetBehaviorModelTrainingSummariesRequest":{
       "type":"structure",
       "members":{
@@ -8819,7 +8835,8 @@
     "IndexingFilter":{
       "type":"structure",
       "members":{
-        "namedShadowNames":{"shape":"NamedShadowNamesFilter"}
+        "namedShadowNames":{"shape":"NamedShadowNamesFilter"},
+        "geoLocations":{"shape":"GeoLocationsFilter"}
       }
     },
     "InlineDocument":{"type":"string"},
@@ -11321,7 +11338,8 @@
       "required":["metric"],
       "members":{
         "metric":{"shape":"BehaviorMetric"},
-        "metricDimension":{"shape":"MetricDimension"}
+        "metricDimension":{"shape":"MetricDimension"},
+        "exportMetric":{"shape":"ExportMetric"}
       }
     },
     "MetricValue":{
@@ -11333,6 +11351,17 @@
         "number":{"shape":"Number"},
         "numbers":{"shape":"NumberList"},
         "strings":{"shape":"StringList"}
+      }
+    },
+    "MetricsExportConfig":{
+      "type":"structure",
+      "required":[
+        "mqttTopic",
+        "roleArn"
+      ],
+      "members":{
+        "mqttTopic":{"shape":"MqttTopic"},
+        "roleArn":{"shape":"RoleArn"}
       }
     },
     "Minimum":{"type":"double"},
@@ -11447,6 +11476,11 @@
     "MqttPassword":{
       "type":"blob",
       "max":65535,
+      "min":1
+    },
+    "MqttTopic":{
+      "type":"string",
+      "max":512,
       "min":1
     },
     "MqttUsername":{
@@ -12714,7 +12748,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[a-zA-Z0-9:_-]+"
+      "pattern":"[$a-zA-Z0-9:_-]+"
     },
     "SigV4Authorization":{
       "type":"structure",
@@ -13117,6 +13151,14 @@
     "TargetAuditCheckNames":{
       "type":"list",
       "member":{"shape":"AuditCheckName"}
+    },
+    "TargetFieldName":{"type":"string"},
+    "TargetFieldOrder":{
+      "type":"string",
+      "enum":[
+        "LatLon",
+        "LonLat"
+      ]
     },
     "TargetSelection":{
       "type":"string",
@@ -14227,7 +14269,9 @@
           "shape":"OptionalVersion",
           "location":"querystring",
           "locationName":"expectedVersion"
-        }
+        },
+        "metricsExportConfig":{"shape":"MetricsExportConfig"},
+        "deleteMetricsExportConfig":{"shape":"DeleteMetricsExportConfig"}
       }
     },
     "UpdateSecurityProfileResponse":{
@@ -14246,7 +14290,8 @@
         "additionalMetricsToRetainV2":{"shape":"AdditionalMetricsToRetainV2List"},
         "version":{"shape":"Version"},
         "creationDate":{"shape":"Timestamp"},
-        "lastModifiedDate":{"shape":"Timestamp"}
+        "lastModifiedDate":{"shape":"Timestamp"},
+        "metricsExportConfig":{"shape":"MetricsExportConfig"}
       }
     },
     "UpdateStreamRequest":{

@@ -3405,6 +3405,7 @@
       "max":256,
       "pattern":".*"
     },
+    "AcceptEula":{"type":"boolean"},
     "AccountId":{
       "type":"string",
       "pattern":"^\\d+$"
@@ -3811,7 +3812,10 @@
         "ml.g5.48xlarge",
         "ml.geospatial.interactive",
         "ml.p4d.24xlarge",
-        "ml.p4de.24xlarge"
+        "ml.p4de.24xlarge",
+        "ml.trn1.2xlarge",
+        "ml.trn1.32xlarge",
+        "ml.trn1n.32xlarge"
       ]
     },
     "AppList":{
@@ -8219,6 +8223,7 @@
         "DomainName":{"shape":"DomainName"},
         "HomeEfsFileSystemId":{"shape":"ResourceId"},
         "SingleSignOnManagedApplicationInstanceId":{"shape":"String256"},
+        "SingleSignOnApplicationArn":{"shape":"SingleSignOnApplicationArn"},
         "Status":{"shape":"DomainStatus"},
         "CreationTime":{"shape":"CreationTime"},
         "LastModifiedTime":{"shape":"LastModifiedTime"},
@@ -9662,7 +9667,7 @@
       "type":"string",
       "max":40,
       "min":1,
-      "pattern":"[\\S\\s]+"
+      "pattern":"^[-a-zA-Z0-9_.,;:! ]*$"
     },
     "DeviceFleetArn":{
       "type":"string",
@@ -9672,7 +9677,7 @@
       "type":"string",
       "max":800,
       "min":1,
-      "pattern":"[\\S\\s]+"
+      "pattern":"^[-a-zA-Z0-9_.,;:! ]*$"
     },
     "DeviceFleetSummaries":{
       "type":"list",
@@ -12317,11 +12322,7 @@
     },
     "InferenceSpecification":{
       "type":"structure",
-      "required":[
-        "Containers",
-        "SupportedContentTypes",
-        "SupportedResponseMIMETypes"
-      ],
+      "required":["Containers"],
       "members":{
         "Containers":{"shape":"ModelPackageContainerDefinitionList"},
         "SupportedTransformInstanceTypes":{"shape":"TransformInstanceTypes"},
@@ -14609,6 +14610,11 @@
       "type":"integer",
       "min":0
     },
+    "MaxPendingTimeInSeconds":{
+      "type":"integer",
+      "max":2419200,
+      "min":7200
+    },
     "MaxPercentageOfInputDatasetLabeled":{
       "type":"integer",
       "max":100,
@@ -14773,6 +14779,13 @@
         "EnableNetworkIsolation":{"shape":"Boolean"},
         "Tags":{"shape":"TagList"},
         "DeploymentRecommendation":{"shape":"DeploymentRecommendation"}
+      }
+    },
+    "ModelAccessConfig":{
+      "type":"structure",
+      "required":["AcceptEula"],
+      "members":{
+        "AcceptEula":{"shape":"AcceptEula"}
       }
     },
     "ModelApprovalStatus":{
@@ -15466,7 +15479,6 @@
     "ModelPackageSummary":{
       "type":"structure",
       "required":[
-        "ModelPackageName",
         "ModelPackageArn",
         "CreationTime",
         "ModelPackageStatus"
@@ -15901,7 +15913,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*$"
+      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
     },
     "MonitoringJobDefinitionSortKey":{
       "type":"string",
@@ -16874,7 +16886,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,255}$"
+      "pattern":"^[A-Za-z0-9\\-_]*$"
     },
     "PipelineStatus":{
       "type":"string",
@@ -18580,7 +18592,8 @@
       "members":{
         "S3Uri":{"shape":"S3ModelUri"},
         "S3DataType":{"shape":"S3ModelDataType"},
-        "CompressionType":{"shape":"ModelCompressionType"}
+        "CompressionType":{"shape":"ModelCompressionType"},
+        "ModelAccessConfig":{"shape":"ModelAccessConfig"}
       }
     },
     "S3ModelDataType":{
@@ -18969,6 +18982,10 @@
       "members":{
         "Seed":{"shape":"Seed"}
       }
+    },
+    "SingleSignOnApplicationArn":{
+      "type":"string",
+      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::[0-9]+:application\\/[a-zA-Z0-9-_.]+\\/apl-[a-zA-Z0-9]+$"
     },
     "SingleSignOnUserIdentifier":{
       "type":"string",
@@ -19441,7 +19458,8 @@
       "type":"structure",
       "members":{
         "MaxRuntimeInSeconds":{"shape":"MaxRuntimeInSeconds"},
-        "MaxWaitTimeInSeconds":{"shape":"MaxWaitTimeInSeconds"}
+        "MaxWaitTimeInSeconds":{"shape":"MaxWaitTimeInSeconds"},
+        "MaxPendingTimeInSeconds":{"shape":"MaxPendingTimeInSeconds"}
       }
     },
     "StorageType":{

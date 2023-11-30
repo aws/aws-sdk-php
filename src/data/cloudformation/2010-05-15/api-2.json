@@ -1369,7 +1369,8 @@
         "Description":{"shape":"Description"},
         "IncludeNestedStacks":{"shape":"IncludeNestedStacks"},
         "ParentChangeSetId":{"shape":"ChangeSetId"},
-        "RootChangeSetId":{"shape":"ChangeSetId"}
+        "RootChangeSetId":{"shape":"ChangeSetId"},
+        "ImportExistingResources":{"shape":"ImportExistingResources"}
       }
     },
     "ChangeSetType":{
@@ -1408,6 +1409,13 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "ConcurrencyMode":{
+      "type":"string",
+      "enum":[
+        "STRICT_FAILURE_TOLERANCE",
+        "SOFT_FAILURE_TOLERANCE"
+      ]
     },
     "ConfigurationSchema":{
       "type":"string",
@@ -1460,7 +1468,8 @@
         "ChangeSetType":{"shape":"ChangeSetType"},
         "ResourcesToImport":{"shape":"ResourcesToImport"},
         "IncludeNestedStacks":{"shape":"IncludeNestedStacks"},
-        "OnStackFailure":{"shape":"OnStackFailure"}
+        "OnStackFailure":{"shape":"OnStackFailure"},
+        "ImportExistingResources":{"shape":"ImportExistingResources"}
       }
     },
     "CreateChangeSetOutput":{
@@ -1751,7 +1760,8 @@
         "IncludeNestedStacks":{"shape":"IncludeNestedStacks"},
         "ParentChangeSetId":{"shape":"ChangeSetId"},
         "RootChangeSetId":{"shape":"ChangeSetId"},
-        "OnStackFailure":{"shape":"OnStackFailure"}
+        "OnStackFailure":{"shape":"OnStackFailure"},
+        "ImportExistingResources":{"shape":"ImportExistingResources"}
       }
     },
     "DescribeOrganizationsAccessInput":{
@@ -2305,6 +2315,7 @@
         "Bitbucket"
       ]
     },
+    "ImportExistingResources":{"type":"boolean"},
     "ImportStacksToStackSetInput":{
       "type":"structure",
       "required":["StackSetName"],
@@ -3929,7 +3940,8 @@
         "FailureToleranceCount":{"shape":"FailureToleranceCount"},
         "FailureTolerancePercentage":{"shape":"FailureTolerancePercentage"},
         "MaxConcurrentCount":{"shape":"MaxConcurrentCount"},
-        "MaxConcurrentPercentage":{"shape":"MaxConcurrentPercentage"}
+        "MaxConcurrentPercentage":{"shape":"MaxConcurrentPercentage"},
+        "ConcurrencyMode":{"shape":"ConcurrencyMode"}
       }
     },
     "StackSetOperationResultStatus":{
