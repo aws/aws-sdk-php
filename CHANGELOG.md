@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.293.0 - 2023-11-30
 
 * `Aws\MarketplaceDeployment` - AWS Marketplace Deployment is a new service that provides essential features that facilitate the deployment of software, data, and services procured through AWS Marketplace.
 * `Aws\MarketplaceAgreement` - The AWS Marketplace Agreement Service provides an API interface that helps AWS Marketplace sellers manage their agreements, including listing, filtering, and viewing details about their agreements.
