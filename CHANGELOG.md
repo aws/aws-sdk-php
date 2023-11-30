@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.293.1 - 2023-11-30
 
 * `Aws\Glue` - Adds observation and analyzer support to the GetDataQualityResult and BatchGetDataQualityResult APIs.
 * `Aws\ARCZonalShift` - This release adds a new capability, zonal autoshift. You can configure zonal autoshift so that AWS shifts traffic for a resource away from an Availability Zone, on your behalf, when AWS determines that there is an issue that could potentially affect customers in the Availability Zone.
