@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RecycleBin` - Added resource identifier in the output and updated error handling.
+* `Aws\QConnect` - This release adds the PutFeedback API and allows providing feedback against the specified assistant for the specified target.
+* `Aws\VerifiedPermissions` - Adds description field to PolicyStore API's and namespaces field to GetSchema.
+
 ## 3.293.1 - 2023-11-30
 
 * `Aws\Glue` - Adds observation and analyzer support to the GetDataQualityResult and BatchGetDataQualityResult APIs.
