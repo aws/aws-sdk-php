@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.293.2 - 2023-12-01
 
 * `Aws\RecycleBin` - Added resource identifier in the output and updated error handling.
 * `Aws\QConnect` - This release adds the PutFeedback API and allows providing feedback against the specified assistant for the specified target.
