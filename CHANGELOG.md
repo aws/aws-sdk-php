@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaLive` - Adds support for custom color correction on channels using 3D LUT files.
+* `Aws\Braket` - This release enhances service support to create quantum tasks and hybrid jobs associated with Braket Direct Reservations.
+* `Aws\AppRegistry` - Documentation-only updates for Dawn
+* `Aws\BillingConductor` - This release adds the ability to specify a linked account of the billing group for the custom line item resource.
+* `Aws\Cloud9` - This release adds the requirement to include the imageId parameter in the CreateEnvironmentEC2 API call.
+* `Aws\CloudFormation` - Including UPDATE_* states as a success status for CreateStack waiter.
+* `Aws\finspace` - Release General Purpose type clusters
+
 ## 3.293.2 - 2023-12-01
 
 * `Aws\RecycleBin` - Added resource identifier in the output and updated error handling.
