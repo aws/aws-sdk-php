@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.293.3 - 2023-12-04
 
 * `Aws\MediaLive` - Adds support for custom color correction on channels using 3D LUT files.
 * `Aws\Braket` - This release enhances service support to create quantum tasks and hybrid jobs associated with Braket Direct Reservations.
