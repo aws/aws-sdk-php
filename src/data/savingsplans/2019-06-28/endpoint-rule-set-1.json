@@ -32,13 +32,12 @@
         {
             "conditions": [
                 {
-                    "fn": "aws.partition",
+                    "fn": "isSet",
                     "argv": [
                         {
-                            "ref": "Region"
+                            "ref": "Endpoint"
                         }
-                    ],
-                    "assign": "PartitionResult"
+                    ]
                 }
             ],
             "type": "tree",
@@ -46,21 +45,69 @@
                 {
                     "conditions": [
                         {
-                            "fn": "isSet",
+                            "fn": "booleanEquals",
                             "argv": [
                                 {
-                                    "ref": "Endpoint"
-                                }
+                                    "ref": "UseFIPS"
+                                },
+                                true
                             ]
-                        },
+                        }
+                    ],
+                    "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                    "type": "error"
+                },
+                {
+                    "conditions": [
                         {
-                            "fn": "parseURL",
+                            "fn": "booleanEquals",
                             "argv": [
                                 {
-                                    "ref": "Endpoint"
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        }
+                    ],
+                    "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                    "type": "error"
+                },
+                {
+                    "conditions": [],
+                    "endpoint": {
+                        "url": {
+                            "ref": "Endpoint"
+                        },
+                        "properties": {},
+                        "headers": {}
+                    },
+                    "type": "endpoint"
+                }
+            ]
+        },
+        {
+            "conditions": [
+                {
+                    "fn": "isSet",
+                    "argv": [
+                        {
+                            "ref": "Region"
+                        }
+                    ]
+                }
+            ],
+            "type": "tree",
+            "rules": [
+                {
+                    "conditions": [
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
                                 }
                             ],
-                            "assign": "url"
+                            "assign": "PartitionResult"
                         }
                     ],
                     "type": "tree",
@@ -68,72 +115,54 @@
                         {
                             "conditions": [
                                 {
+                                    "fn": "stringEquals",
+                                    "argv": [
+                                        {
+                                            "fn": "getAttr",
+                                            "argv": [
+                                                {
+                                                    "ref": "PartitionResult"
+                                                },
+                                                "name"
+                                            ]
+                                        },
+                                        "aws"
+                                    ]
+                                },
+                                {
                                     "fn": "booleanEquals",
                                     "argv": [
                                         {
                                             "ref": "UseFIPS"
                                         },
-                                        true
+                                        false
+                                    ]
+                                },
+                                {
+                                    "fn": "booleanEquals",
+                                    "argv": [
+                                        {
+                                            "ref": "UseDualStack"
+                                        },
+                                        false
                                     ]
                                 }
                             ],
-                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
-                            "type": "error"
-                        },
-                        {
-                            "conditions": [],
-                            "type": "tree",
-                            "rules": [
-                                {
-                                    "conditions": [
+                            "endpoint": {
+                                "url": "https://savingsplans.amazonaws.com",
+                                "properties": {
+                                    "authSchemes": [
                                         {
-                                            "fn": "booleanEquals",
-                                            "argv": [
-                                                {
-                                                    "ref": "UseDualStack"
-                                                },
-                                                true
-                                            ]
+                                            "name": "sigv4",
+                                            "signingName": "savingsplans",
+                                            "signingRegion": "us-east-1"
                                         }
-                                    ],
-                                    "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
-                                    "type": "error"
-                                },
-                                {
-                                    "conditions": [],
-                                    "endpoint": {
-                                        "url": {
-                                            "ref": "Endpoint"
-                                        },
-                                        "properties": {},
-                                        "headers": {}
-                                    },
-                                    "type": "endpoint"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "conditions": [
-                        {
-                            "fn": "stringEquals",
-                            "argv": [
-                                {
-                                    "fn": "getAttr",
-                                    "argv": [
-                                        {
-                                            "ref": "PartitionResult"
-                                        },
-                                        "name"
                                     ]
                                 },
-                                "aws"
-                            ]
-                        }
-                    ],
-                    "type": "tree",
-                    "rules": [
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
                         {
                             "conditions": [
                                 {
@@ -195,16 +224,8 @@
                                         {
                                             "conditions": [],
                                             "endpoint": {
-                                                "url": "https://savingsplans-fips.{Region}.api.aws",
-                                                "properties": {
-                                                    "authSchemes": [
-                                                        {
-                                                            "name": "sigv4",
-                                                            "signingName": "savingsplans",
-                                                            "signingRegion": "us-east-1"
-                                                        }
-                                                    ]
-                                                },
+                                                "url": "https://savingsplans-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                                "properties": {},
                                                 "headers": {}
                                             },
                                             "type": "endpoint"
@@ -255,16 +276,8 @@
                                         {
                                             "conditions": [],
                                             "endpoint": {
-                                                "url": "https://savingsplans-fips.{Region}.amazonaws.com",
-                                                "properties": {
-                                                    "authSchemes": [
-                                                        {
-                                                            "name": "sigv4",
-                                                            "signingName": "savingsplans",
-                                                            "signingRegion": "us-east-1"
-                                                        }
-                                                    ]
-                                                },
+                                                "url": "https://savingsplans-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                                "properties": {},
                                                 "headers": {}
                                             },
                                             "type": "endpoint"
@@ -315,16 +328,8 @@
                                         {
                                             "conditions": [],
                                             "endpoint": {
-                                                "url": "https://savingsplans.{Region}.api.aws",
-                                                "properties": {
-                                                    "authSchemes": [
-                                                        {
-                                                            "name": "sigv4",
-                                                            "signingName": "savingsplans",
-                                                            "signingRegion": "us-east-1"
-                                                        }
-                                                    ]
-                                                },
+                                                "url": "https://savingsplans.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                                "properties": {},
                                                 "headers": {}
                                             },
                                             "type": "endpoint"
@@ -341,242 +346,6 @@
                         {
                             "conditions": [],
                             "endpoint": {
-                                "url": "https://savingsplans.amazonaws.com",
-                                "properties": {
-                                    "authSchemes": [
-                                        {
-                                            "name": "sigv4",
-                                            "signingName": "savingsplans",
-                                            "signingRegion": "us-east-1"
-                                        }
-                                    ]
-                                },
-                                "headers": {}
-                            },
-                            "type": "endpoint"
-                        }
-                    ]
-                },
-                {
-                    "conditions": [
-                        {
-                            "fn": "booleanEquals",
-                            "argv": [
-                                {
-                                    "ref": "UseFIPS"
-                                },
-                                true
-                            ]
-                        },
-                        {
-                            "fn": "booleanEquals",
-                            "argv": [
-                                {
-                                    "ref": "UseDualStack"
-                                },
-                                true
-                            ]
-                        }
-                    ],
-                    "type": "tree",
-                    "rules": [
-                        {
-                            "conditions": [
-                                {
-                                    "fn": "booleanEquals",
-                                    "argv": [
-                                        true,
-                                        {
-                                            "fn": "getAttr",
-                                            "argv": [
-                                                {
-                                                    "ref": "PartitionResult"
-                                                },
-                                                "supportsFIPS"
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "fn": "booleanEquals",
-                                    "argv": [
-                                        true,
-                                        {
-                                            "fn": "getAttr",
-                                            "argv": [
-                                                {
-                                                    "ref": "PartitionResult"
-                                                },
-                                                "supportsDualStack"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ],
-                            "type": "tree",
-                            "rules": [
-                                {
-                                    "conditions": [],
-                                    "endpoint": {
-                                        "url": "https://savingsplans-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                                        "properties": {},
-                                        "headers": {}
-                                    },
-                                    "type": "endpoint"
-                                }
-                            ]
-                        },
-                        {
-                            "conditions": [],
-                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
-                            "type": "error"
-                        }
-                    ]
-                },
-                {
-                    "conditions": [
-                        {
-                            "fn": "booleanEquals",
-                            "argv": [
-                                {
-                                    "ref": "UseFIPS"
-                                },
-                                true
-                            ]
-                        }
-                    ],
-                    "type": "tree",
-                    "rules": [
-                        {
-                            "conditions": [
-                                {
-                                    "fn": "booleanEquals",
-                                    "argv": [
-                                        true,
-                                        {
-                                            "fn": "getAttr",
-                                            "argv": [
-                                                {
-                                                    "ref": "PartitionResult"
-                                                },
-                                                "supportsFIPS"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ],
-                            "type": "tree",
-                            "rules": [
-                                {
-                                    "conditions": [],
-                                    "type": "tree",
-                                    "rules": [
-                                        {
-                                            "conditions": [],
-                                            "endpoint": {
-                                                "url": "https://savingsplans-fips.{Region}.{PartitionResult#dnsSuffix}",
-                                                "properties": {},
-                                                "headers": {}
-                                            },
-                                            "type": "endpoint"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "conditions": [],
-                            "error": "FIPS is enabled but this partition does not support FIPS",
-                            "type": "error"
-                        }
-                    ]
-                },
-                {
-                    "conditions": [
-                        {
-                            "fn": "booleanEquals",
-                            "argv": [
-                                {
-                                    "ref": "UseDualStack"
-                                },
-                                true
-                            ]
-                        }
-                    ],
-                    "type": "tree",
-                    "rules": [
-                        {
-                            "conditions": [
-                                {
-                                    "fn": "booleanEquals",
-                                    "argv": [
-                                        true,
-                                        {
-                                            "fn": "getAttr",
-                                            "argv": [
-                                                {
-                                                    "ref": "PartitionResult"
-                                                },
-                                                "supportsDualStack"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ],
-                            "type": "tree",
-                            "rules": [
-                                {
-                                    "conditions": [],
-                                    "endpoint": {
-                                        "url": "https://savingsplans.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                                        "properties": {},
-                                        "headers": {}
-                                    },
-                                    "type": "endpoint"
-                                }
-                            ]
-                        },
-                        {
-                            "conditions": [],
-                            "error": "DualStack is enabled but this partition does not support DualStack",
-                            "type": "error"
-                        }
-                    ]
-                },
-                {
-                    "conditions": [],
-                    "type": "tree",
-                    "rules": [
-                        {
-                            "conditions": [
-                                {
-                                    "fn": "stringEquals",
-                                    "argv": [
-                                        {
-                                            "ref": "Region"
-                                        },
-                                        "aws-global"
-                                    ]
-                                }
-                            ],
-                            "endpoint": {
-                                "url": "https://savingsplans.amazonaws.com",
-                                "properties": {
-                                    "authSchemes": [
-                                        {
-                                            "name": "sigv4",
-                                            "signingName": "savingsplans",
-                                            "signingRegion": "us-east-1"
-                                        }
-                                    ]
-                                },
-                                "headers": {}
-                            },
-                            "type": "endpoint"
-                        },
-                        {
-                            "conditions": [],
-                            "endpoint": {
                                 "url": "https://savingsplans.{Region}.{PartitionResult#dnsSuffix}",
                                 "properties": {},
                                 "headers": {}
@@ -586,6 +355,11 @@
                     ]
                 }
             ]
+        },
+        {
+            "conditions": [],
+            "error": "Invalid Configuration: Missing Region",
+            "type": "error"
         }
     ]
 }

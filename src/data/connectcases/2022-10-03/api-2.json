@@ -728,7 +728,7 @@
     },
     "CommentBody":{
       "type":"string",
-      "max":1000,
+      "max":3000,
       "min":1
     },
     "CommentBodyTextType":{
@@ -945,6 +945,7 @@
           "location":"uri",
           "locationName":"domainId"
         },
+        "performedBy":{"shape":"UserUnion"},
         "type":{"shape":"RelatedItemType"}
       }
     },
@@ -1252,7 +1253,7 @@
     },
     "FieldValueUnionStringValueString":{
       "type":"string",
-      "max":500,
+      "max":1500,
       "min":0
     },
     "GetCaseEventConfigurationRequest":{
@@ -1986,6 +1987,7 @@
       "members":{
         "associationTime":{"shape":"AssociationTime"},
         "content":{"shape":"RelatedItemContent"},
+        "performedBy":{"shape":"UserUnion"},
         "relatedItemId":{"shape":"RelatedItemId"},
         "tags":{"shape":"Tags"},
         "type":{"shape":"RelatedItemType"}
@@ -2259,6 +2261,18 @@
       "type":"structure",
       "members":{
       }
+    },
+    "UserArn":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "UserUnion":{
+      "type":"structure",
+      "members":{
+        "userArn":{"shape":"UserArn"}
+      },
+      "union":true
     },
     "ValidationException":{
       "type":"structure",

@@ -511,19 +511,6 @@ class EndpointArnMiddlewareTest extends TestCase
                 ],
                 new UnresolvedEndpointException("Client was configured for partition `aws-us-gov` but ARN has `aws`")
             ],
-            // Outposts accesspoint ARN, dualstack
-            [
-                'GetAccessPoint',
-                [
-                    'AccountId' => '123456789012',
-                    'Name' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
-                ],
-                [
-                    'region' => 'us-west-2',
-                    'use_dual_stack_endpoint' => true,
-                ],
-                new UnresolvedEndpointException("Invalid configuration: Outpost Access Points do not support dual-stack"),
-            ],
             // Outposts accesspoint ARN, invalid ARN
             [
                 'GetAccessPoint',
@@ -564,21 +551,6 @@ class EndpointArnMiddlewareTest extends TestCase
                 new UnresolvedEndpointException(
                     'Invalid configuration: region from ARN `fips-us-gov-west-1` does not match client region `us-gov-east-1` and UseArnRegion is `false`'
                 )
-            ],
-            // Outposts bucket ARN, dualstack
-            [
-                'DeleteBucket',
-                [
-                    'AccountId' => '123456789012',
-                    'Bucket' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:bucket:mybucket'
-                ],
-                [
-                    'region' => 'us-west-2',
-                    'use_dual_stack_endpoint' => true,
-                ],
-                new UnresolvedEndpointException(
-                    "Invalid configuration: Outpost buckets do not support dual-stack"
-                ),
             ],
             // Outposts bucket ARN, invalid ARN
             [

@@ -6,6 +6,7 @@ use Aws\Api\Validator;
 use Aws\Credentials\CredentialsInterface;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Exception\AwsException;
+use Aws\Signature\S3ExpressSignature;
 use Aws\Token\TokenAuthorization;
 use Aws\Token\TokenInterface;
 use GuzzleHttp\Promise;
@@ -125,13 +126,13 @@ final class Middleware
      *
      * @return callable
      */
-    public static function signer(callable $credProvider, callable $signatureFunction, $tokenProvider = null)
+    public static function signer(callable $credProvider, callable $signatureFunction, $tokenProvider = null, $config = [])
     {
-        return function (callable $handler) use ($signatureFunction, $credProvider, $tokenProvider) {
+        return function (callable $handler) use ($signatureFunction, $credProvider, $tokenProvider, $config) {
             return function (
                 CommandInterface $command,
                 RequestInterface $request
-            ) use ($handler, $signatureFunction, $credProvider, $tokenProvider) {
+            ) use ($handler, $signatureFunction, $credProvider, $tokenProvider, $config) {
                 $signer = $signatureFunction($command);
                 if ($signer instanceof TokenAuthorization) {
                     return $tokenProvider()->then(
@@ -143,17 +144,23 @@ final class Middleware
                             );
                         }
                     );
-                } else {
-                    return $credProvider()->then(
-                        function (CredentialsInterface $creds)
-                        use ($handler, $command, $signer, $request) {
-                            return $handler(
-                                $command,
-                                $signer->signRequest($request, $creds)
-                            );
-                        }
-                    );
                 }
+
+                if ($signer instanceof S3ExpressSignature) {
+                    $credentialPromise = $config['s3_express_identity_provider']($command);
+                } else {
+                    $credentialPromise = $credProvider();
+                }
+
+                return $credentialPromise->then(
+                    function (CredentialsInterface $creds)
+                    use ($handler, $command, $signer, $request) {
+                        return $handler(
+                            $command,
+                            $signer->signRequest($request, $creds)
+                        );
+                    }
+                );
             };
         };
     }

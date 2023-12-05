@@ -173,7 +173,7 @@ trait EndpointV2SerializerTrait
 
     private function selectAuthScheme($authSchemes)
     {
-        $validAuthSchemes = ['sigv4', 'sigv4a', 'none', 'bearer'];
+        $validAuthSchemes = ['sigv4', 'sigv4a', 'none', 'bearer', 'sigv4-s3express'];
         $invalidAuthSchemes = [];
 
         foreach($authSchemes as $authScheme) {
@@ -204,6 +204,7 @@ trait EndpointV2SerializerTrait
         if (isset($authScheme['disableDoubleEncoding'])
             && $authScheme['disableDoubleEncoding'] === true
             && $authScheme['name'] !== 'sigv4a'
+            && $authScheme['name'] !== 'sigv4-s3express'
         ) {
             $normalizedAuthScheme['version'] = 's3v4';
         } elseif ($authScheme['name'] === 'none') {

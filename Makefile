@@ -24,7 +24,7 @@ clear-cache:
 	php build/aws-clear-cache.php
 
 test:
-	@AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_CSM_ENABLED=false \
+	@AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_CSM_ENABLED=false AWS_REGION= \
 	vendor/bin/phpunit --testsuite=unit $(TEST)
 
 test-phar: package

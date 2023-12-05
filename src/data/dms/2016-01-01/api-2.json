@@ -2073,10 +2073,14 @@
     "DataProviderSettings":{
       "type":"structure",
       "members":{
+        "RedshiftSettings":{"shape":"RedshiftDataProviderSettings"},
         "PostgreSqlSettings":{"shape":"PostgreSqlDataProviderSettings"},
         "MySqlSettings":{"shape":"MySqlDataProviderSettings"},
         "OracleSettings":{"shape":"OracleDataProviderSettings"},
-        "MicrosoftSqlServerSettings":{"shape":"MicrosoftSqlServerDataProviderSettings"}
+        "MicrosoftSqlServerSettings":{"shape":"MicrosoftSqlServerDataProviderSettings"},
+        "DocDbSettings":{"shape":"DocDbDataProviderSettings"},
+        "MariaDbSettings":{"shape":"MariaDbDataProviderSettings"},
+        "MongoDbSettings":{"shape":"MongoDbDataProviderSettings"}
       },
       "union":true
     },
@@ -3014,6 +3018,16 @@
         "BucketName":{"shape":"String"}
       }
     },
+    "DocDbDataProviderSettings":{
+      "type":"structure",
+      "members":{
+        "ServerName":{"shape":"String"},
+        "Port":{"shape":"IntegerOptional"},
+        "DatabaseName":{"shape":"String"},
+        "SslMode":{"shape":"DmsSslModeValue"},
+        "CertificateArn":{"shape":"String"}
+      }
+    },
     "DocDbSettings":{
       "type":"structure",
       "members":{
@@ -3334,7 +3348,11 @@
         "MaxKBytesPerRead":{"shape":"IntegerOptional"},
         "Username":{"shape":"String"},
         "SecretsManagerAccessRoleArn":{"shape":"String"},
-        "SecretsManagerSecretId":{"shape":"String"}
+        "SecretsManagerSecretId":{"shape":"String"},
+        "LoadTimeout":{"shape":"IntegerOptional"},
+        "WriteBufferSize":{"shape":"IntegerOptional"},
+        "MaxFileSize":{"shape":"IntegerOptional"},
+        "KeepCsvFiles":{"shape":"BooleanOptional"}
       }
     },
     "ImportCertificateMessage":{
@@ -3585,6 +3603,15 @@
         "clob",
         "nclob"
       ]
+    },
+    "MariaDbDataProviderSettings":{
+      "type":"structure",
+      "members":{
+        "ServerName":{"shape":"String"},
+        "Port":{"shape":"IntegerOptional"},
+        "SslMode":{"shape":"DmsSslModeValue"},
+        "CertificateArn":{"shape":"String"}
+      }
     },
     "MessageFormatValue":{
       "type":"string",
@@ -3875,6 +3902,19 @@
         "ReplicationTask":{"shape":"ReplicationTask"}
       }
     },
+    "MongoDbDataProviderSettings":{
+      "type":"structure",
+      "members":{
+        "ServerName":{"shape":"String"},
+        "Port":{"shape":"IntegerOptional"},
+        "DatabaseName":{"shape":"String"},
+        "SslMode":{"shape":"DmsSslModeValue"},
+        "CertificateArn":{"shape":"String"},
+        "AuthType":{"shape":"AuthTypeValue"},
+        "AuthSource":{"shape":"String"},
+        "AuthMechanism":{"shape":"AuthMechanismValue"}
+      }
+    },
     "MongoDbSettings":{
       "type":"structure",
       "members":{
@@ -3929,7 +3969,8 @@
         "ServerTimezone":{"shape":"String"},
         "Username":{"shape":"String"},
         "SecretsManagerAccessRoleArn":{"shape":"String"},
-        "SecretsManagerSecretId":{"shape":"String"}
+        "SecretsManagerSecretId":{"shape":"String"},
+        "ExecuteTimeout":{"shape":"IntegerOptional"}
       }
     },
     "MySqlDataProviderSettings":{
@@ -4241,6 +4282,14 @@
         "SslCaCertificateArn":{"shape":"String"}
       }
     },
+    "RedshiftDataProviderSettings":{
+      "type":"structure",
+      "members":{
+        "ServerName":{"shape":"String"},
+        "Port":{"shape":"IntegerOptional"},
+        "DatabaseName":{"shape":"String"}
+      }
+    },
     "RedshiftSettings":{
       "type":"structure",
       "members":{
@@ -4398,7 +4447,8 @@
         "RecoveryCheckpoint":{"shape":"String"},
         "ReplicationCreateTime":{"shape":"TStamp"},
         "ReplicationUpdateTime":{"shape":"TStamp"},
-        "ReplicationLastStopTime":{"shape":"TStamp"}
+        "ReplicationLastStopTime":{"shape":"TStamp"},
+        "ReplicationDeprovisionTime":{"shape":"TStamp"}
       }
     },
     "ReplicationConfig":{

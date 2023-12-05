@@ -1187,7 +1187,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ConflictException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "RegisterGameServer":{
@@ -1639,7 +1640,7 @@
       ],
       "members":{
         "TicketId":{"shape":"MatchmakingIdStringModel"},
-        "PlayerIds":{"shape":"StringList"},
+        "PlayerIds":{"shape":"PlayerIdsForAcceptMatch"},
         "AcceptanceType":{"shape":"AcceptanceType"}
       }
     },
@@ -1952,7 +1953,8 @@
         "Locations":{"shape":"LocationConfigurationList"},
         "Tags":{"shape":"TagList"},
         "ComputeType":{"shape":"ComputeType"},
-        "AnywhereConfiguration":{"shape":"AnywhereConfiguration"}
+        "AnywhereConfiguration":{"shape":"AnywhereConfiguration"},
+        "InstanceRoleCredentialsProvider":{"shape":"InstanceRoleCredentialsProvider"}
       }
     },
     "CreateFleetLocationsInput":{
@@ -2127,7 +2129,7 @@
       ],
       "members":{
         "GameSessionId":{"shape":"ArnStringModel"},
-        "PlayerId":{"shape":"NonZeroAndMaxString"},
+        "PlayerId":{"shape":"PlayerId"},
         "PlayerData":{"shape":"PlayerData"}
       }
     },
@@ -2772,7 +2774,7 @@
       "type":"structure",
       "members":{
         "GameSessionId":{"shape":"ArnStringModel"},
-        "PlayerId":{"shape":"NonZeroAndMaxString"},
+        "PlayerId":{"shape":"PlayerId"},
         "PlayerSessionId":{"shape":"PlayerSessionId"},
         "PlayerSessionStatusFilter":{"shape":"NonZeroAndMaxString"},
         "Limit":{"shape":"PositiveInteger"},
@@ -2856,7 +2858,7 @@
     "DesiredPlayerSession":{
       "type":"structure",
       "members":{
-        "PlayerId":{"shape":"NonZeroAndMaxString"},
+        "PlayerId":{"shape":"PlayerId"},
         "PlayerData":{"shape":"PlayerData"}
       }
     },
@@ -3014,7 +3016,68 @@
         "r5d.8xlarge",
         "r5d.12xlarge",
         "r5d.16xlarge",
-        "r5d.24xlarge"
+        "r5d.24xlarge",
+        "m6g.medium",
+        "m6g.large",
+        "m6g.xlarge",
+        "m6g.2xlarge",
+        "m6g.4xlarge",
+        "m6g.8xlarge",
+        "m6g.12xlarge",
+        "m6g.16xlarge",
+        "c6g.medium",
+        "c6g.large",
+        "c6g.xlarge",
+        "c6g.2xlarge",
+        "c6g.4xlarge",
+        "c6g.8xlarge",
+        "c6g.12xlarge",
+        "c6g.16xlarge",
+        "r6g.medium",
+        "r6g.large",
+        "r6g.xlarge",
+        "r6g.2xlarge",
+        "r6g.4xlarge",
+        "r6g.8xlarge",
+        "r6g.12xlarge",
+        "r6g.16xlarge",
+        "c6gn.medium",
+        "c6gn.large",
+        "c6gn.xlarge",
+        "c6gn.2xlarge",
+        "c6gn.4xlarge",
+        "c6gn.8xlarge",
+        "c6gn.12xlarge",
+        "c6gn.16xlarge",
+        "c7g.medium",
+        "c7g.large",
+        "c7g.xlarge",
+        "c7g.2xlarge",
+        "c7g.4xlarge",
+        "c7g.8xlarge",
+        "c7g.12xlarge",
+        "c7g.16xlarge",
+        "r7g.medium",
+        "r7g.large",
+        "r7g.xlarge",
+        "r7g.2xlarge",
+        "r7g.4xlarge",
+        "r7g.8xlarge",
+        "r7g.12xlarge",
+        "r7g.16xlarge",
+        "m7g.medium",
+        "m7g.large",
+        "m7g.xlarge",
+        "m7g.2xlarge",
+        "m7g.4xlarge",
+        "m7g.8xlarge",
+        "m7g.12xlarge",
+        "m7g.16xlarge",
+        "g5g.xlarge",
+        "g5g.2xlarge",
+        "g5g.4xlarge",
+        "g5g.8xlarge",
+        "g5g.16xlarge"
       ]
     },
     "Event":{
@@ -3129,7 +3192,8 @@
         "InstanceRoleArn":{"shape":"NonEmptyString"},
         "CertificateConfiguration":{"shape":"CertificateConfiguration"},
         "ComputeType":{"shape":"ComputeType"},
-        "AnywhereConfiguration":{"shape":"AnywhereConfiguration"}
+        "AnywhereConfiguration":{"shape":"AnywhereConfiguration"},
+        "InstanceRoleCredentialsProvider":{"shape":"InstanceRoleCredentialsProvider"}
       }
     },
     "FleetAttributesList":{
@@ -3824,6 +3888,10 @@
       "type":"list",
       "member":{"shape":"Instance"}
     },
+    "InstanceRoleCredentialsProvider":{
+      "type":"string",
+      "enum":["SHARED_CREDENTIAL_FILE"]
+    },
     "InstanceStatus":{
       "type":"string",
       "enum":[
@@ -3866,7 +3934,8 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[0-9A-Fa-f\\:\\.]+"
+      "pattern":"^[0-9A-Fa-f\\:\\.]+",
+      "sensitive":true
     },
     "IpPermission":{
       "type":"structure",
@@ -3879,7 +3948,7 @@
       "members":{
         "FromPort":{"shape":"PortNumber"},
         "ToPort":{"shape":"PortNumber"},
-        "IpRange":{"shape":"NonBlankString"},
+        "IpRange":{"shape":"IpRange"},
         "Protocol":{"shape":"IpProtocol"}
       }
     },
@@ -3894,6 +3963,11 @@
         "TCP",
         "UDP"
       ]
+    },
+    "IpRange":{
+      "type":"string",
+      "pattern":"[^\\s]+",
+      "sensitive":true
     },
     "LargeGameSessionData":{
       "type":"string",
@@ -4177,7 +4251,7 @@
     "MatchedPlayerSession":{
       "type":"structure",
       "members":{
-        "PlayerId":{"shape":"NonZeroAndMaxString"},
+        "PlayerId":{"shape":"PlayerId"},
         "PlayerSessionId":{"shape":"PlayerSessionId"}
       }
     },
@@ -4350,10 +4424,6 @@
       "min":1,
       "pattern":".*\\S.*"
     },
-    "NonBlankString":{
-      "type":"string",
-      "pattern":"[^\\s]+"
-    },
     "NonEmptyString":{
       "type":"string",
       "min":1
@@ -4400,7 +4470,7 @@
     "PlacedPlayerSession":{
       "type":"structure",
       "members":{
-        "PlayerId":{"shape":"NonZeroAndMaxString"},
+        "PlayerId":{"shape":"PlayerId"},
         "PlayerSessionId":{"shape":"PlayerSessionId"}
       }
     },
@@ -4411,7 +4481,7 @@
     "Player":{
       "type":"structure",
       "members":{
-        "PlayerId":{"shape":"NonZeroAndMaxString"},
+        "PlayerId":{"shape":"PlayerId"},
         "PlayerAttributes":{"shape":"PlayerAttributeMap"},
         "Team":{"shape":"NonZeroAndMaxString"},
         "LatencyInMs":{"shape":"LatencyMap"}
@@ -4446,16 +4516,28 @@
       "key":{"shape":"NonZeroAndMaxString"},
       "value":{"shape":"PlayerData"}
     },
+    "PlayerId":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
+    },
     "PlayerIdList":{
       "type":"list",
-      "member":{"shape":"NonZeroAndMaxString"},
+      "member":{"shape":"PlayerId"},
       "max":25,
-      "min":1
+      "min":1,
+      "sensitive":true
+    },
+    "PlayerIdsForAcceptMatch":{
+      "type":"list",
+      "member":{"shape":"PlayerId"},
+      "sensitive":true
     },
     "PlayerLatency":{
       "type":"structure",
       "members":{
-        "PlayerId":{"shape":"NonZeroAndMaxString"},
+        "PlayerId":{"shape":"PlayerId"},
         "RegionIdentifier":{"shape":"NonZeroAndMaxString"},
         "LatencyInMilliseconds":{"shape":"Float"}
       }
@@ -4483,7 +4565,7 @@
       "type":"structure",
       "members":{
         "PlayerSessionId":{"shape":"PlayerSessionId"},
-        "PlayerId":{"shape":"NonZeroAndMaxString"},
+        "PlayerId":{"shape":"PlayerId"},
         "GameSessionId":{"shape":"NonZeroAndMaxString"},
         "FleetId":{"shape":"FleetId"},
         "FleetArn":{"shape":"FleetArn"},
@@ -4530,7 +4612,8 @@
     "PortNumber":{
       "type":"integer",
       "max":60000,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "PositiveInteger":{
       "type":"integer",

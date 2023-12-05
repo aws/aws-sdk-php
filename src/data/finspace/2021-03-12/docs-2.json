@@ -31,6 +31,7 @@
     "TagResource": "<p>Adds metadata tags to a FinSpace resource.</p>",
     "UntagResource": "<p>Removes metadata tags from a FinSpace resource.</p>",
     "UpdateEnvironment": "<p>Update your FinSpace environment.</p>",
+    "UpdateKxClusterCodeConfiguration": "<p> Allows you to update code configuration on a running cluster. By using this API you can update the code, the initialization script path, and the command line arguments for a specific cluster. The configuration that you want to update will override any existing configurations on the cluster. </p>",
     "UpdateKxClusterDatabases": "<p>Updates the databases mounted on a kdb cluster, which includes the <code>changesetId</code> and all the dbPaths to be cached. This API does not allow you to change a database name or add a database if you created a cluster without one. </p> <p>Using this API you can point a cluster to a different changeset and modify a list of partitions being cached.</p>",
     "UpdateKxDatabase": "<p>Updates information for the given kdb database.</p>",
     "UpdateKxEnvironment": "<p>Updates information for the given kdb environment.</p>",
@@ -96,11 +97,11 @@
       }
     },
     "CapacityConfiguration": {
-      "base": "<p>A structure for the metadata of a cluster. It includes information like the CPUs needed, memory of instances, number of instances, and the port used while establishing a connection.</p>",
+      "base": "<p>A structure for the metadata of a cluster. It includes information like the CPUs needed, memory of instances, and number of instances.</p>",
       "refs": {
-        "CreateKxClusterRequest$capacityConfiguration": "<p>A structure for the metadata of a cluster. It includes information about like the CPUs needed, memory of instances, number of instances, and the port used while establishing a connection.</p>",
-        "CreateKxClusterResponse$capacityConfiguration": "<p>A structure for the metadata of a cluster. It includes information like the CPUs needed, memory of instances, number of instances, and the port used while establishing a connection.</p>",
-        "GetKxClusterResponse$capacityConfiguration": "<p>A structure for the metadata of a cluster. It includes information like the CPUs needed, memory of instances, number of instances, and the port used while establishing a connection.</p>"
+        "CreateKxClusterRequest$capacityConfiguration": "<p>A structure for the metadata of a cluster. It includes information like the CPUs needed, memory of instances, and number of instances.</p>",
+        "CreateKxClusterResponse$capacityConfiguration": "<p>A structure for the metadata of a cluster. It includes information like the CPUs needed, memory of instances, and number of instances.</p>",
+        "GetKxClusterResponse$capacityConfiguration": "<p>A structure for the metadata of a cluster. It includes information like the CPUs needed, memory of instances, and number of instances.</p>"
       }
     },
     "ChangeRequest": {
@@ -112,7 +113,7 @@
     "ChangeRequests": {
       "base": null,
       "refs": {
-        "CreateKxChangesetRequest$changeRequests": "<p>A list of change request objects that are run in order. A change request object consists of changeType , s3Path, and a dbPath. A changeType can has the following values: </p> <ul> <li> <p>PUT – Adds or updates files in a database.</p> </li> <li> <p>DELETE – Deletes files in a database.</p> </li> </ul> <p>All the change requests require a mandatory <i>dbPath</i> attribute that defines the path within the database directory. The <i>s3Path</i> attribute defines the s3 source file path and is required for a PUT change type.</p> <p>Here is an example of how you can use the change request object:</p> <p> <code>[ { \"changeType\": \"PUT\", \"s3Path\":\"s3://bucket/db/2020.01.02/\", \"dbPath\":\"/2020.01.02/\"}, { \"changeType\": \"PUT\", \"s3Path\":\"s3://bucket/db/sym\", \"dbPath\":\"/\"}, { \"changeType\": \"DELETE\", \"dbPath\": \"/2020.01.01/\"} ]</code> </p> <p>In this example, the first request with <i>PUT</i> change type allows you to add files in the given s3Path under the <i>2020.01.02</i> partition of the database. The second request with <i>PUT</i> change type allows you to add a single sym file at database root location. The last request with <i>DELETE</i> change type allows you to delete the files under the <i>2020.01.01</i> partition of the database. </p>",
+        "CreateKxChangesetRequest$changeRequests": "<p>A list of change request objects that are run in order. A change request object consists of <code>changeType</code> , <code>s3Path</code>, and <code>dbPath</code>. A changeType can has the following values: </p> <ul> <li> <p>PUT – Adds or updates files in a database.</p> </li> <li> <p>DELETE – Deletes files in a database.</p> </li> </ul> <p>All the change requests require a mandatory <code>dbPath</code> attribute that defines the path within the database directory. All database paths must start with a leading / and end with a trailing /. The <code>s3Path</code> attribute defines the s3 source file path and is required for a PUT change type. The <code>s3path</code> must end with a trailing / if it is a directory and must end without a trailing / if it is a file. </p> <p>Here are few examples of how you can use the change request object:</p> <ol> <li> <p>This request adds a single sym file at database root location. </p> <p> <code>{ \"changeType\": \"PUT\", \"s3Path\":\"s3://bucket/db/sym\", \"dbPath\":\"/\"}</code> </p> </li> <li> <p>This request adds files in the given <code>s3Path</code> under the 2020.01.02 partition of the database.</p> <p> <code>{ \"changeType\": \"PUT\", \"s3Path\":\"s3://bucket/db/2020.01.02/\", \"dbPath\":\"/2020.01.02/\"}</code> </p> </li> <li> <p>This request adds files in the given <code>s3Path</code> under the <i>taq</i> table partition of the database.</p> <p> <code>[ { \"changeType\": \"PUT\", \"s3Path\":\"s3://bucket/db/2020.01.02/taq/\", \"dbPath\":\"/2020.01.02/taq/\"}]</code> </p> </li> <li> <p>This request deletes the 2020.01.02 partition of the database.</p> <p> <code>[{ \"changeType\": \"DELETE\", \"dbPath\": \"/2020.01.02/\"} ]</code> </p> </li> <li> <p>The <i>DELETE</i> request allows you to delete the existing files under the 2020.01.02 partition of the database, and the <i>PUT</i> request adds a new taq table under it.</p> <p> <code>[ {\"changeType\": \"DELETE\", \"dbPath\":\"/2020.01.02/\"}, {\"changeType\": \"PUT\", \"s3Path\":\"s3://bucket/db/2020.01.02/taq/\", \"dbPath\":\"/2020.01.02/taq/\"}]</code> </p> </li> </ol>",
         "CreateKxChangesetResponse$changeRequests": "<p>A list of change requests.</p>",
         "GetKxChangesetResponse$changeRequests": "<p>A list of change request objects that are run in order.</p>"
       }
@@ -160,6 +161,7 @@
         "CreateKxDatabaseRequest$clientToken": "<p>A token that ensures idempotency. This token expires in 10 minutes.</p>",
         "DeleteKxClusterRequest$clientToken": "<p>A token that ensures idempotency. This token expires in 10 minutes.</p>",
         "DeleteKxDatabaseRequest$clientToken": "<p>A token that ensures idempotency. This token expires in 10 minutes.</p>",
+        "UpdateKxClusterCodeConfigurationRequest$clientToken": "<p>A token that ensures idempotency. This token expires in 10 minutes.</p>",
         "UpdateKxClusterDatabasesRequest$clientToken": "<p>A token that ensures idempotency. This token expires in 10 minutes.</p>",
         "UpdateKxDatabaseRequest$clientToken": "<p>A token that ensures idempotency. This token expires in 10 minutes.</p>"
       }
@@ -169,7 +171,8 @@
       "refs": {
         "CreateKxClusterRequest$code": "<p>The details of the custom code that you want to use inside a cluster when analyzing a data. It consists of the S3 source bucket, location, S3 object version, and the relative path from where the custom code is loaded into the cluster. </p>",
         "CreateKxClusterResponse$code": "<p>The details of the custom code that you want to use inside a cluster when analyzing a data. It consists of the S3 source bucket, location, S3 object version, and the relative path from where the custom code is loaded into the cluster. </p>",
-        "GetKxClusterResponse$code": "<p>The details of the custom code that you want to use inside a cluster when analyzing a data. It consists of the S3 source bucket, location, S3 object version, and the relative path from where the custom code is loaded into the cluster. </p>"
+        "GetKxClusterResponse$code": "<p>The details of the custom code that you want to use inside a cluster when analyzing a data. It consists of the S3 source bucket, location, S3 object version, and the relative path from where the custom code is loaded into the cluster. </p>",
+        "UpdateKxClusterCodeConfigurationRequest$code": null
       }
     },
     "ConflictException": {
@@ -605,6 +608,19 @@
         "VpcConfiguration$ipAddressType": "<p>The IP address type for cluster network configuration parameters. The following type is available:</p> <ul> <li> <p>IP_V4 – IP address version 4</p> </li> </ul>"
       }
     },
+    "IcmpTypeCode": {
+      "base": "<p> Defines the ICMP protocol that consists of the ICMP type and code. </p>",
+      "refs": {
+        "NetworkACLEntry$icmpTypeCode": "<p> Defines the ICMP protocol that consists of the ICMP type and code. </p>"
+      }
+    },
+    "IcmpTypeOrCode": {
+      "base": null,
+      "refs": {
+        "IcmpTypeCode$type": "<p>The ICMP type. A value of <i>-1</i> means all types. </p>",
+        "IcmpTypeCode$code": "<p> The ICMP code. A value of <i>-1</i> means all codes for the specified ICMP type. </p>"
+      }
+    },
     "IdType": {
       "base": null,
       "refs": {
@@ -650,7 +666,8 @@
         "CreateKxClusterRequest$initializationScript": "<p>Specifies a Q program that will be run at launch of a cluster. It is a relative path within <i>.zip</i> file that contains the custom code, which will be loaded on the cluster. It must include the file name itself. For example, <code>somedir/init.q</code>.</p>",
         "CreateKxClusterResponse$initializationScript": "<p>Specifies a Q program that will be run at launch of a cluster. It is a relative path within <i>.zip</i> file that contains the custom code, which will be loaded on the cluster. It must include the file name itself. For example, <code>somedir/init.q</code>.</p>",
         "GetKxClusterResponse$initializationScript": "<p>Specifies a Q program that will be run at launch of a cluster. It is a relative path within <i>.zip</i> file that contains the custom code, which will be loaded on the cluster. It must include the file name itself. For example, <code>somedir/init.q</code>.</p>",
-        "KxCluster$initializationScript": "<p>Specifies a Q program that will be run at launch of a cluster. It is a relative path within <i>.zip</i> file that contains the custom code, which will be loaded on the cluster. It must include the file name itself. For example, <code>somedir/init.q</code>.</p>"
+        "KxCluster$initializationScript": "<p>Specifies a Q program that will be run at launch of a cluster. It is a relative path within <i>.zip</i> file that contains the custom code, which will be loaded on the cluster. It must include the file name itself. For example, <code>somedir/init.q</code>.</p>",
+        "UpdateKxClusterCodeConfigurationRequest$initializationScript": "<p>Specifies a Q program that will be run at launch of a cluster. It is a relative path within <i>.zip</i> file that contains the custom code, which will be loaded on the cluster. It must include the file name itself. For example, <code>somedir/init.q</code>.</p> <p>You cannot update this parameter for a <code>NO_RESTART</code> deployment.</p>"
       }
     },
     "InternalServerException": {
@@ -687,7 +704,7 @@
         "CreateKxClusterRequest$azMode": "<p>The number of availability zones you want to assign per cluster. This can be one of the following </p> <ul> <li> <p> <code>SINGLE</code> – Assigns one availability zone per cluster.</p> </li> <li> <p> <code>MULTI</code> – Assigns all the availability zones per cluster.</p> </li> </ul>",
         "CreateKxClusterResponse$azMode": "<p>The number of availability zones you want to assign per cluster. This can be one of the following </p> <ul> <li> <p> <code>SINGLE</code> – Assigns one availability zone per cluster.</p> </li> <li> <p> <code>MULTI</code> – Assigns all the availability zones per cluster.</p> </li> </ul>",
         "GetKxClusterResponse$azMode": "<p>The number of availability zones you want to assign per cluster. This can be one of the following </p> <ul> <li> <p> <code>SINGLE</code> – Assigns one availability zone per cluster.</p> </li> <li> <p> <code>MULTI</code> – Assigns all the availability zones per cluster.</p> </li> </ul>",
-        "KxCluster$azMode": "<p>The number of availability zones assigned per cluster. This can be one of the following </p> <ul> <li> <p> <code>SINGLE</code> – Assigns one availability zone per cluster.</p> </li> <li> <p> <code>MULTI</code> – Assigns all the availability zones per cluster.</p> </li> </ul>"
+        "KxCluster$azMode": "<p>The number of availability zones assigned per cluster. This can be one of the following:</p> <ul> <li> <p> <code>SINGLE</code> – Assigns one availability zone per cluster.</p> </li> <li> <p> <code>MULTI</code> – Assigns all the availability zones per cluster.</p> </li> </ul>"
       }
     },
     "KxCacheStorageConfiguration": {
@@ -713,7 +730,7 @@
     "KxCacheStorageType": {
       "base": null,
       "refs": {
-        "KxCacheStorageConfiguration$type": "<p>The type of cache storage . The valid values are: </p> <ul> <li> <p>CACHE_1000 – This type provides at least 1000 MB/s disk access throughput. </p> </li> </ul>",
+        "KxCacheStorageConfiguration$type": "<p>The type of cache storage. The valid values are: </p> <ul> <li> <p>CACHE_1000 – This type provides at least 1000 MB/s disk access throughput. </p> </li> <li> <p>CACHE_250 – This type provides at least 250 MB/s disk access throughput. </p> </li> <li> <p>CACHE_12 – This type provides at least 12 MB/s disk access throughput. </p> </li> </ul> <p>For cache type <code>CACHE_1000</code> and <code>CACHE_250</code> you can select cache size as 1200 GB or increments of 2400 GB. For cache type <code>CACHE_12</code> you can select the cache size in increments of 6000 GB.</p>",
         "KxDatabaseCacheConfiguration$cacheType": "<p>The type of disk cache. This parameter is used to map the database path to cache storage. The valid values are:</p> <ul> <li> <p>CACHE_1000 – This type provides at least 1000 MB/s disk access throughput. </p> </li> </ul>"
       }
     },
@@ -733,6 +750,18 @@
       "base": "<p>The details of a kdb cluster.</p>",
       "refs": {
         "KxClusters$member": null
+      }
+    },
+    "KxClusterCodeDeploymentConfiguration": {
+      "base": "<p> The configuration that allows you to choose how you want to update code on a cluster. Depending on the option you choose, you can reduce the time it takes to update the cluster. </p>",
+      "refs": {
+        "UpdateKxClusterCodeConfigurationRequest$deploymentConfiguration": "<p> The configuration that allows you to choose how you want to update the code on a cluster. </p>"
+      }
+    },
+    "KxClusterCodeDeploymentStrategy": {
+      "base": null,
+      "refs": {
+        "KxClusterCodeDeploymentConfiguration$deploymentStrategy": "<p> The type of deployment that you want on a cluster. </p> <ul> <li> <p>ROLLING – This options updates the cluster by stopping the exiting q process and starting a new q process with updated configuration.</p> </li> <li> <p>NO_RESTART – This option updates the cluster without stopping the running q process. It is only available for <code>GP</code> type cluster. This option is quicker as it reduces the turn around time to update configuration on a cluster. </p> <p>With this deployment mode, you cannot update the <code>initializationScript</code> and <code>commandLineArguments</code> parameters.</p> </li> <li> <p>FORCE – This option updates the cluster by immediately stopping all the running processes before starting up new ones with the updated configuration. </p> </li> </ul>"
       }
     },
     "KxClusterDescription": {
@@ -755,6 +784,7 @@
         "GetKxConnectionStringRequest$clusterName": "<p>A name of the kdb cluster.</p>",
         "KxCluster$clusterName": "<p>A unique name for the cluster.</p>",
         "ListKxClusterNodesRequest$clusterName": "<p>A unique name for the cluster.</p>",
+        "UpdateKxClusterCodeConfigurationRequest$clusterName": "<p>The name of the cluster.</p>",
         "UpdateKxClusterDatabasesRequest$clusterName": "<p>A unique name for the cluster that you want to modify.</p>"
       }
     },
@@ -783,11 +813,11 @@
     "KxClusterType": {
       "base": null,
       "refs": {
-        "CreateKxClusterRequest$clusterType": "<p>Specifies the type of KDB database that is being created. The following types are available: </p> <ul> <li> <p>HDB – A Historical Database. The data is only accessible with read-only permissions from one of the FinSpace managed kdb databases mounted to the cluster.</p> </li> <li> <p>RDB – A Realtime Database. This type of database captures all the data from a ticker plant and stores it in memory until the end of day, after which it writes all of its data to a disk and reloads the HDB. This cluster type requires local storage for temporary storage of data during the savedown process. If you specify this field in your request, you must provide the <code>savedownStorageConfiguration</code> parameter.</p> </li> <li> <p>GATEWAY – A gateway cluster allows you to access data across processes in kdb systems. It allows you to create your own routing logic using the initialization scripts and custom code. This type of cluster does not require a writable local storage.</p> </li> </ul>",
-        "CreateKxClusterResponse$clusterType": "<p>Specifies the type of KDB database that is being created. The following types are available: </p> <ul> <li> <p>HDB – A Historical Database. The data is only accessible with read-only permissions from one of the FinSpace managed kdb databases mounted to the cluster.</p> </li> <li> <p>RDB – A Realtime Database. This type of database captures all the data from a ticker plant and stores it in memory until the end of day, after which it writes all of its data to a disk and reloads the HDB. This cluster type requires local storage for temporary storage of data during the savedown process. If you specify this field in your request, you must provide the <code>savedownStorageConfiguration</code> parameter.</p> </li> <li> <p>GATEWAY – A gateway cluster allows you to access data across processes in kdb systems. It allows you to create your own routing logic using the initialization scripts and custom code. This type of cluster does not require a writable local storage.</p> </li> </ul>",
-        "GetKxClusterResponse$clusterType": "<p>Specifies the type of KDB database that is being created. The following types are available: </p> <ul> <li> <p>HDB – A Historical Database. The data is only accessible with read-only permissions from one of the FinSpace managed kdb databases mounted to the cluster.</p> </li> <li> <p>RDB – A Realtime Database. This type of database captures all the data from a ticker plant and stores it in memory until the end of day, after which it writes all of its data to a disk and reloads the HDB. This cluster type requires local storage for temporary storage of data during the savedown process. If you specify this field in your request, you must provide the <code>savedownStorageConfiguration</code> parameter.</p> </li> <li> <p>GATEWAY – A gateway cluster allows you to access data across processes in kdb systems. It allows you to create your own routing logic using the initialization scripts and custom code. This type of cluster does not require a writable local storage.</p> </li> </ul>",
-        "KxCluster$clusterType": "<p>Specifies the type of KDB database that is being created. The following types are available: </p> <ul> <li> <p>HDB – A Historical Database. The data is only accessible with read-only permissions from one of the FinSpace managed kdb databases mounted to the cluster.</p> </li> <li> <p>RDB – A Realtime Database. This type of database captures all the data from a ticker plant and stores it in memory until the end of day, after which it writes all of its data to a disk and reloads the HDB. This cluster type requires local storage for temporary storage of data during the savedown process. If you specify this field in your request, you must provide the <code>savedownStorageConfiguration</code> parameter.</p> </li> <li> <p>GATEWAY – A gateway cluster allows you to access data across processes in kdb systems. It allows you to create your own routing logic using the initialization scripts and custom code. This type of cluster does not require a writable local storage.</p> </li> </ul>",
-        "ListKxClustersRequest$clusterType": "<p>Specifies the type of KDB database that is being created. The following types are available: </p> <ul> <li> <p>HDB – A Historical Database. The data is only accessible with read-only permissions from one of the FinSpace managed kdb databases mounted to the cluster.</p> </li> <li> <p>RDB – A Realtime Database. This type of database captures all the data from a ticker plant and stores it in memory until the end of day, after which it writes all of its data to a disk and reloads the HDB. This cluster type requires local storage for temporary storage of data during the savedown process. If you specify this field in your request, you must provide the <code>savedownStorageConfiguration</code> parameter.</p> </li> <li> <p>GATEWAY – A gateway cluster allows you to access data across processes in kdb systems. It allows you to create your own routing logic using the initialization scripts and custom code. This type of cluster does not require a writable local storage.</p> </li> </ul>"
+        "CreateKxClusterRequest$clusterType": "<p>Specifies the type of KDB database that is being created. The following types are available: </p> <ul> <li> <p>HDB – A Historical Database. The data is only accessible with read-only permissions from one of the FinSpace managed kdb databases mounted to the cluster.</p> </li> <li> <p>RDB – A Realtime Database. This type of database captures all the data from a ticker plant and stores it in memory until the end of day, after which it writes all of its data to a disk and reloads the HDB. This cluster type requires local storage for temporary storage of data during the savedown process. If you specify this field in your request, you must provide the <code>savedownStorageConfiguration</code> parameter.</p> </li> <li> <p>GATEWAY – A gateway cluster allows you to access data across processes in kdb systems. It allows you to create your own routing logic using the initialization scripts and custom code. This type of cluster does not require a writable local storage.</p> </li> <li> <p>GP – A general purpose cluster allows you to quickly iterate on code during development by granting greater access to system commands and enabling a fast reload of custom code. This cluster type can optionally mount databases including cache and savedown storage. For this cluster type, the node count is fixed at 1. It does not support autoscaling and supports only <code>SINGLE</code> AZ mode.</p> </li> </ul>",
+        "CreateKxClusterResponse$clusterType": "<p>Specifies the type of KDB database that is being created. The following types are available: </p> <ul> <li> <p>HDB – A Historical Database. The data is only accessible with read-only permissions from one of the FinSpace managed kdb databases mounted to the cluster.</p> </li> <li> <p>RDB – A Realtime Database. This type of database captures all the data from a ticker plant and stores it in memory until the end of day, after which it writes all of its data to a disk and reloads the HDB. This cluster type requires local storage for temporary storage of data during the savedown process. If you specify this field in your request, you must provide the <code>savedownStorageConfiguration</code> parameter.</p> </li> <li> <p>GATEWAY – A gateway cluster allows you to access data across processes in kdb systems. It allows you to create your own routing logic using the initialization scripts and custom code. This type of cluster does not require a writable local storage.</p> </li> <li> <p>GP – A general purpose cluster allows you to quickly iterate on code during development by granting greater access to system commands and enabling a fast reload of custom code. This cluster type can optionally mount databases including cache and savedown storage. For this cluster type, the node count is fixed at 1. It does not support autoscaling and supports only <code>SINGLE</code> AZ mode.</p> </li> </ul>",
+        "GetKxClusterResponse$clusterType": "<p>Specifies the type of KDB database that is being created. The following types are available: </p> <ul> <li> <p>HDB – A Historical Database. The data is only accessible with read-only permissions from one of the FinSpace managed kdb databases mounted to the cluster.</p> </li> <li> <p>RDB – A Realtime Database. This type of database captures all the data from a ticker plant and stores it in memory until the end of day, after which it writes all of its data to a disk and reloads the HDB. This cluster type requires local storage for temporary storage of data during the savedown process. If you specify this field in your request, you must provide the <code>savedownStorageConfiguration</code> parameter.</p> </li> <li> <p>GATEWAY – A gateway cluster allows you to access data across processes in kdb systems. It allows you to create your own routing logic using the initialization scripts and custom code. This type of cluster does not require a writable local storage.</p> </li> <li> <p>GP – A general purpose cluster allows you to quickly iterate on code during development by granting greater access to system commands and enabling a fast reload of custom code. This cluster type can optionally mount databases including cache and savedown storage. For this cluster type, the node count is fixed at 1. It does not support autoscaling and supports only <code>SINGLE</code> AZ mode.</p> </li> </ul>",
+        "KxCluster$clusterType": "<p>Specifies the type of KDB database that is being created. The following types are available: </p> <ul> <li> <p>HDB – A Historical Database. The data is only accessible with read-only permissions from one of the FinSpace managed kdb databases mounted to the cluster.</p> </li> <li> <p>RDB – A Realtime Database. This type of database captures all the data from a ticker plant and stores it in memory until the end of day, after which it writes all of its data to a disk and reloads the HDB. This cluster type requires local storage for temporary storage of data during the savedown process. If you specify this field in your request, you must provide the <code>savedownStorageConfiguration</code> parameter.</p> </li> <li> <p>GATEWAY – A gateway cluster allows you to access data across processes in kdb systems. It allows you to create your own routing logic using the initialization scripts and custom code. This type of cluster does not require a writable local storage.</p> </li> <li> <p>GP – A general purpose cluster allows you to quickly iterate on code during development by granting greater access to system commands and enabling a fast reload of custom code. This cluster type can optionally mount databases including cache and savedown storage. For this cluster type, the node count is fixed at 1. It does not support autoscaling and supports only <code>SINGLE</code> AZ mode.</p> </li> </ul>",
+        "ListKxClustersRequest$clusterType": "<p>Specifies the type of KDB database that is being created. The following types are available: </p> <ul> <li> <p>HDB – A Historical Database. The data is only accessible with read-only permissions from one of the FinSpace managed kdb databases mounted to the cluster.</p> </li> <li> <p>RDB – A Realtime Database. This type of database captures all the data from a ticker plant and stores it in memory until the end of day, after which it writes all of its data to a disk and reloads the HDB. This cluster type requires local storage for temporary storage of data during the savedown process. If you specify this field in your request, you must provide the <code>savedownStorageConfiguration</code> parameter.</p> </li> <li> <p>GATEWAY – A gateway cluster allows you to access data across processes in kdb systems. It allows you to create your own routing logic using the initialization scripts and custom code. This type of cluster does not require a writable local storage.</p> </li> <li> <p>GP – A general purpose cluster allows you to quickly iterate on code during development by granting greater access to system commands and enabling a fast reload of custom code. This cluster type can optionally mount databases including cache and savedown storage. For this cluster type, the node count is fixed at 1. It does not support autoscaling and supports only <code>SINGLE</code> AZ mode.</p> </li> </ul>"
       }
     },
     "KxClusters": {
@@ -819,7 +849,8 @@
       "refs": {
         "CreateKxClusterRequest$commandLineArguments": "<p>Defines the key-value pairs to make them available inside the cluster.</p>",
         "CreateKxClusterResponse$commandLineArguments": "<p>Defines the key-value pairs to make them available inside the cluster.</p>",
-        "GetKxClusterResponse$commandLineArguments": "<p>Defines key-value pairs to make them available inside the cluster.</p>"
+        "GetKxClusterResponse$commandLineArguments": "<p>Defines key-value pairs to make them available inside the cluster.</p>",
+        "UpdateKxClusterCodeConfigurationRequest$commandLineArguments": "<p>Specifies the key-value pairs to make them available inside the cluster.</p> <p>You cannot update this parameter for a <code>NO_RESTART</code> deployment.</p>"
       }
     },
     "KxDatabaseCacheConfiguration": {
@@ -861,6 +892,18 @@
         "ListKxDatabasesResponse$kxDatabases": "<p>A list of databases in the kdb environment.</p>"
       }
     },
+    "KxDeploymentConfiguration": {
+      "base": "<p> The configuration that allows you to choose how you want to update the databases on a cluster. Depending on the option you choose, you can reduce the time it takes to update the cluster. </p>",
+      "refs": {
+        "UpdateKxClusterDatabasesRequest$deploymentConfiguration": "<p> The configuration that allows you to choose how you want to update the databases on a cluster. </p>"
+      }
+    },
+    "KxDeploymentStrategy": {
+      "base": null,
+      "refs": {
+        "KxDeploymentConfiguration$deploymentStrategy": "<p> The type of deployment that you want on a cluster. </p> <ul> <li> <p>ROLLING – This options updates the cluster by stopping the exiting q process and starting a new q process with updated configuration.</p> </li> <li> <p>NO_RESTART – This option updates the cluster without stopping the running q process. It is only available for <code>HDB</code> type cluster. This option is quicker as it reduces the turn around time to update configuration on a cluster. </p> <p>With this deployment mode, you cannot update the <code>initializationScript</code> and <code>commandLineArguments</code> parameters.</p> </li> </ul>"
+      }
+    },
     "KxEnvironment": {
       "base": "<p>The details of a kdb environment.</p>",
       "refs": {
@@ -876,6 +919,7 @@
         "GetKxClusterRequest$environmentId": "<p>A unique identifier for the kdb environment.</p>",
         "ListKxClusterNodesRequest$environmentId": "<p>A unique identifier for the kdb environment.</p>",
         "ListKxClustersRequest$environmentId": "<p>A unique identifier for the kdb environment.</p>",
+        "UpdateKxClusterCodeConfigurationRequest$environmentId": "<p> A unique identifier of the kdb environment. </p>",
         "UpdateKxClusterDatabasesRequest$environmentId": "<p>The unique identifier of a kdb environment.</p>"
       }
     },
@@ -920,7 +964,7 @@
     "KxSavedownStorageSize": {
       "base": null,
       "refs": {
-        "KxSavedownStorageConfiguration$size": "<p>The size of temporary storage in bytes.</p>"
+        "KxSavedownStorageConfiguration$size": "<p>The size of temporary storage in gibibytes.</p>"
       }
     },
     "KxSavedownStorageType": {
@@ -938,11 +982,11 @@
     "KxUserArn": {
       "base": null,
       "refs": {
-        "CreateKxUserResponse$userArn": "<p> The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"IAM/latest/UserGuide/reference_identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>",
-        "GetKxConnectionStringRequest$userArn": "<p> The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"IAM/latest/UserGuide/reference_identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>",
-        "GetKxUserResponse$userArn": "<p> The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"IAM/latest/UserGuide/reference_identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>",
-        "KxUser$userArn": "<p> The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"IAM/latest/UserGuide/reference_identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>",
-        "UpdateKxUserResponse$userArn": "<p> The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"IAM/latest/UserGuide/reference_identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>"
+        "CreateKxUserResponse$userArn": "<p> The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>",
+        "GetKxConnectionStringRequest$userArn": "<p> The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>",
+        "GetKxUserResponse$userArn": "<p> The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>",
+        "KxUser$userArn": "<p> The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>",
+        "UpdateKxUserResponse$userArn": "<p> The Amazon Resource Name (ARN) that identifies the user. For more information about ARNs and how to use ARNs in policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>. </p>"
       }
     },
     "KxUserList": {
@@ -1063,6 +1107,18 @@
         "SuperuserParameters$lastName": "<p>The last name of the superuser.</p>"
       }
     },
+    "NetworkACLConfiguration": {
+      "base": null,
+      "refs": {
+        "TransitGatewayConfiguration$attachmentNetworkAclConfiguration": "<p> The rules that define how you manage the outbound traffic from kdb network to your internal network. </p>"
+      }
+    },
+    "NetworkACLEntry": {
+      "base": "<p> The network access control list (ACL) is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets. The entry is a set of numbered ingress and egress rules that determine whether a packet should be allowed in or out of a subnet associated with the ACL. We process the entries in the ACL according to the rule numbers, in ascending order. </p>",
+      "refs": {
+        "NetworkACLConfiguration$member": null
+      }
+    },
     "NodeCount": {
       "base": null,
       "refs": {
@@ -1094,6 +1150,25 @@
         "ListKxEnvironmentsResponse$nextToken": "<p>A token that indicates where a results page should begin.</p>",
         "ListKxUsersRequest$nextToken": "<p>A token that indicates where a results page should begin.</p>",
         "ListKxUsersResponse$nextToken": "<p>A token that indicates where a results page should begin.</p>"
+      }
+    },
+    "Port": {
+      "base": null,
+      "refs": {
+        "PortRange$from": "<p> The first port in the range. </p>",
+        "PortRange$to": "<p> The last port in the range. </p>"
+      }
+    },
+    "PortRange": {
+      "base": "<p> The range of ports the rule applies to. </p>",
+      "refs": {
+        "NetworkACLEntry$portRange": "<p> The range of ports the rule applies to. </p>"
+      }
+    },
+    "Protocol": {
+      "base": null,
+      "refs": {
+        "NetworkACLEntry$protocol": "<p> The protocol number. A value of <i>-1</i> means all the protocols. </p>"
       }
     },
     "ReleaseLabel": {
@@ -1132,6 +1207,18 @@
         "KxUser$iamRole": "<p>The IAM role ARN that is associated with the user.</p>",
         "UpdateKxUserRequest$iamRole": "<p>The IAM role ARN that is associated with the user.</p>",
         "UpdateKxUserResponse$iamRole": "<p>The IAM role ARN that is associated with the user.</p>"
+      }
+    },
+    "RuleAction": {
+      "base": null,
+      "refs": {
+        "NetworkACLEntry$ruleAction": "<p> Indicates whether to allow or deny the traffic that matches the rule. </p>"
+      }
+    },
+    "RuleNumber": {
+      "base": null,
+      "refs": {
+        "NetworkACLEntry$ruleNumber": "<p> The rule number for the entry. For example <i>100</i>. All the network ACL entries are processed in ascending order by rule number. </p>"
       }
     },
     "S3Bucket": {
@@ -1331,6 +1418,16 @@
       "refs": {
       }
     },
+    "UpdateKxClusterCodeConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateKxClusterCodeConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateKxClusterDatabasesRequest": {
       "base": null,
       "refs": {
@@ -1379,6 +1476,12 @@
     "UpdateKxUserResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "ValidCIDRBlock": {
+      "base": null,
+      "refs": {
+        "NetworkACLEntry$cidrBlock": "<p> The IPv4 network range to allow or deny, in CIDR notation. For example, <code>172.16.0.0/24</code>. We modify the specified CIDR block to its canonical form. For example, if you specify <code>100.68.0.18/18</code>, we modify it to <code>100.68.0.0/18</code>. </p>"
       }
     },
     "ValidCIDRSpace": {
@@ -1430,6 +1533,7 @@
     "errorMessage": {
       "base": null,
       "refs": {
+        "AccessDeniedException$message": null,
         "ConflictException$message": null,
         "ConflictException$reason": "<p>The reason for the conflict exception.</p>",
         "InternalServerException$message": null,
@@ -1438,6 +1542,7 @@
         "ResourceAlreadyExistsException$message": null,
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,
+        "ThrottlingException$message": null,
         "ValidationException$message": null
       }
     },

@@ -146,6 +146,25 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "ExportLicenseRecommendations":{
+      "name":"ExportLicenseRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ExportLicenseRecommendationsRequest"},
+      "output":{"shape":"ExportLicenseRecommendationsResponse"},
+      "errors":[
+        {"shape":"OptInRequiredException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingAuthenticationToken"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "GetAutoScalingGroupRecommendations":{
       "name":"GetAutoScalingGroupRecommendations",
       "http":{
@@ -332,6 +351,25 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "GetLicenseRecommendations":{
+      "name":"GetLicenseRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetLicenseRecommendationsRequest"},
+      "output":{"shape":"GetLicenseRecommendationsResponse"},
+      "errors":[
+        {"shape":"OptInRequiredException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"MissingAuthenticationToken"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetRecommendationPreferences":{
       "name":"GetRecommendationPreferences",
       "http":{
@@ -454,6 +492,13 @@
         "instanceType":{"shape":"InstanceType"}
       }
     },
+    "AutoScalingGroupEstimatedMonthlySavings":{
+      "type":"structure",
+      "members":{
+        "currency":{"shape":"Currency"},
+        "value":{"shape":"Value"}
+      }
+    },
     "AutoScalingGroupName":{"type":"string"},
     "AutoScalingGroupRecommendation":{
       "type":"structure",
@@ -469,7 +514,8 @@
         "lastRefreshTimestamp":{"shape":"LastRefreshTimestamp"},
         "currentPerformanceRisk":{"shape":"CurrentPerformanceRisk"},
         "effectiveRecommendationPreferences":{"shape":"EffectiveRecommendationPreferences"},
-        "inferredWorkloadTypes":{"shape":"InferredWorkloadTypes"}
+        "inferredWorkloadTypes":{"shape":"InferredWorkloadTypes"},
+        "currentInstanceGpuInfo":{"shape":"GpuInfo"}
       }
     },
     "AutoScalingGroupRecommendationOption":{
@@ -480,7 +526,9 @@
         "performanceRisk":{"shape":"PerformanceRisk"},
         "rank":{"shape":"Rank"},
         "savingsOpportunity":{"shape":"SavingsOpportunity"},
-        "migrationEffort":{"shape":"MigrationEffort"}
+        "migrationEffort":{"shape":"MigrationEffort"},
+        "instanceGpuInfo":{"shape":"GpuInfo"},
+        "savingsOpportunityAfterDiscounts":{"shape":"AutoScalingGroupSavingsOpportunityAfterDiscounts"}
       }
     },
     "AutoScalingGroupRecommendationOptions":{
@@ -490,6 +538,13 @@
     "AutoScalingGroupRecommendations":{
       "type":"list",
       "member":{"shape":"AutoScalingGroupRecommendation"}
+    },
+    "AutoScalingGroupSavingsOpportunityAfterDiscounts":{
+      "type":"structure",
+      "members":{
+        "savingsOpportunityPercentage":{"shape":"SavingsOpportunityPercentage"},
+        "estimatedMonthlySavings":{"shape":"AutoScalingGroupEstimatedMonthlySavings"}
+      }
     },
     "Code":{"type":"string"},
     "ContainerConfiguration":{
@@ -556,6 +611,33 @@
         "veryLow":{"shape":"VeryLow"}
       }
     },
+    "CustomizableMetricHeadroom":{
+      "type":"string",
+      "enum":[
+        "PERCENT_30",
+        "PERCENT_20",
+        "PERCENT_0"
+      ]
+    },
+    "CustomizableMetricName":{
+      "type":"string",
+      "enum":["CpuUtilization"]
+    },
+    "CustomizableMetricParameters":{
+      "type":"structure",
+      "members":{
+        "threshold":{"shape":"CustomizableMetricThreshold"},
+        "headroom":{"shape":"CustomizableMetricHeadroom"}
+      }
+    },
+    "CustomizableMetricThreshold":{
+      "type":"string",
+      "enum":[
+        "P90",
+        "P95",
+        "P99_5"
+      ]
+    },
     "DeleteRecommendationPreferencesRequest":{
       "type":"structure",
       "required":[
@@ -593,6 +675,19 @@
     "DestinationBucket":{"type":"string"},
     "DestinationKey":{"type":"string"},
     "DestinationKeyPrefix":{"type":"string"},
+    "EBSEffectiveRecommendationPreferences":{
+      "type":"structure",
+      "members":{
+        "savingsEstimationMode":{"shape":"EBSSavingsEstimationMode"}
+      }
+    },
+    "EBSEstimatedMonthlySavings":{
+      "type":"structure",
+      "members":{
+        "currency":{"shape":"Currency"},
+        "value":{"shape":"Value"}
+      }
+    },
     "EBSFilter":{
       "type":"structure",
       "members":{
@@ -624,6 +719,27 @@
         "VolumeWriteBytesPerSecond"
       ]
     },
+    "EBSSavingsEstimationMode":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"EBSSavingsEstimationModeSource"}
+      }
+    },
+    "EBSSavingsEstimationModeSource":{
+      "type":"string",
+      "enum":[
+        "PublicPricing",
+        "CostExplorerRightsizing",
+        "CostOptimizationHub"
+      ]
+    },
+    "EBSSavingsOpportunityAfterDiscounts":{
+      "type":"structure",
+      "members":{
+        "savingsOpportunityPercentage":{"shape":"SavingsOpportunityPercentage"},
+        "estimatedMonthlySavings":{"shape":"EBSEstimatedMonthlySavings"}
+      }
+    },
     "EBSUtilizationMetric":{
       "type":"structure",
       "members":{
@@ -635,6 +751,40 @@
     "EBSUtilizationMetrics":{
       "type":"list",
       "member":{"shape":"EBSUtilizationMetric"}
+    },
+    "ECSEffectiveRecommendationPreferences":{
+      "type":"structure",
+      "members":{
+        "savingsEstimationMode":{"shape":"ECSSavingsEstimationMode"}
+      }
+    },
+    "ECSEstimatedMonthlySavings":{
+      "type":"structure",
+      "members":{
+        "currency":{"shape":"Currency"},
+        "value":{"shape":"Value"}
+      }
+    },
+    "ECSSavingsEstimationMode":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"ECSSavingsEstimationModeSource"}
+      }
+    },
+    "ECSSavingsEstimationModeSource":{
+      "type":"string",
+      "enum":[
+        "PublicPricing",
+        "CostExplorerRightsizing",
+        "CostOptimizationHub"
+      ]
+    },
+    "ECSSavingsOpportunityAfterDiscounts":{
+      "type":"structure",
+      "members":{
+        "savingsOpportunityPercentage":{"shape":"SavingsOpportunityPercentage"},
+        "estimatedMonthlySavings":{"shape":"ECSEstimatedMonthlySavings"}
+      }
     },
     "ECSServiceLaunchType":{
       "type":"string",
@@ -697,7 +847,8 @@
         "findingReasonCodes":{"shape":"ECSServiceRecommendationFindingReasonCodes"},
         "serviceRecommendationOptions":{"shape":"ECSServiceRecommendationOptions"},
         "currentPerformanceRisk":{"shape":"CurrentPerformanceRisk"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "effectiveRecommendationPreferences":{"shape":"ECSEffectiveRecommendationPreferences"}
       }
     },
     "ECSServiceRecommendationFilter":{
@@ -746,7 +897,8 @@
         "cpu":{"shape":"NullableCpu"},
         "savingsOpportunity":{"shape":"SavingsOpportunity"},
         "projectedUtilizationMetrics":{"shape":"ECSServiceProjectedUtilizationMetrics"},
-        "containerRecommendations":{"shape":"ContainerRecommendations"}
+        "containerRecommendations":{"shape":"ContainerRecommendations"},
+        "savingsOpportunityAfterDiscounts":{"shape":"ECSSavingsOpportunityAfterDiscounts"}
       }
     },
     "ECSServiceRecommendationOptions":{
@@ -781,13 +933,30 @@
       "type":"list",
       "member":{"shape":"ECSServiceUtilizationMetric"}
     },
+    "EffectivePreferredResource":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"PreferredResourceName"},
+        "includeList":{"shape":"PreferredResourceValues"},
+        "effectiveIncludeList":{"shape":"PreferredResourceValues"},
+        "excludeList":{"shape":"PreferredResourceValues"}
+      }
+    },
+    "EffectivePreferredResources":{
+      "type":"list",
+      "member":{"shape":"EffectivePreferredResource"}
+    },
     "EffectiveRecommendationPreferences":{
       "type":"structure",
       "members":{
         "cpuVendorArchitectures":{"shape":"CpuVendorArchitectures"},
         "enhancedInfrastructureMetrics":{"shape":"EnhancedInfrastructureMetrics"},
         "inferredWorkloadTypes":{"shape":"InferredWorkloadTypesPreference"},
-        "externalMetricsPreference":{"shape":"ExternalMetricsPreference"}
+        "externalMetricsPreference":{"shape":"ExternalMetricsPreference"},
+        "lookBackPeriod":{"shape":"LookBackPeriodPreference"},
+        "utilizationPreferences":{"shape":"UtilizationPreferences"},
+        "preferredResources":{"shape":"EffectivePreferredResources"},
+        "savingsEstimationMode":{"shape":"InstanceSavingsEstimationMode"}
       }
     },
     "EnhancedInfrastructureMetrics":{
@@ -923,6 +1092,25 @@
         "s3Destination":{"shape":"S3Destination"}
       }
     },
+    "ExportLicenseRecommendationsRequest":{
+      "type":"structure",
+      "required":["s3DestinationConfig"],
+      "members":{
+        "accountIds":{"shape":"AccountIds"},
+        "filters":{"shape":"LicenseRecommendationFilters"},
+        "fieldsToExport":{"shape":"ExportableLicenseFields"},
+        "s3DestinationConfig":{"shape":"S3DestinationConfig"},
+        "fileFormat":{"shape":"FileFormat"},
+        "includeMemberAccounts":{"shape":"IncludeMemberAccounts"}
+      }
+    },
+    "ExportLicenseRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "jobId":{"shape":"JobId"},
+        "s3Destination":{"shape":"S3Destination"}
+      }
+    },
     "ExportableAutoScalingGroupField":{
       "type":"string",
       "enum":[
@@ -979,7 +1167,19 @@
         "EffectiveRecommendationPreferencesEnhancedInfrastructureMetrics",
         "EffectiveRecommendationPreferencesInferredWorkloadTypes",
         "InferredWorkloadTypes",
-        "RecommendationOptionsMigrationEffort"
+        "RecommendationOptionsMigrationEffort",
+        "CurrentInstanceGpuInfo",
+        "RecommendationOptionsInstanceGpuInfo",
+        "UtilizationMetricsGpuPercentageMaximum",
+        "UtilizationMetricsGpuMemoryPercentageMaximum",
+        "RecommendationOptionsProjectedUtilizationMetricsGpuPercentageMaximum",
+        "RecommendationOptionsProjectedUtilizationMetricsGpuMemoryPercentageMaximum",
+        "EffectiveRecommendationPreferencesSavingsEstimationMode",
+        "RecommendationOptionsSavingsOpportunityAfterDiscountsPercentage",
+        "RecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts",
+        "RecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts",
+        "EffectiveRecommendationPreferencesPreferredResources",
+        "EffectiveRecommendationPreferencesLookBackPeriod"
       ]
     },
     "ExportableAutoScalingGroupFields":{
@@ -1012,7 +1212,11 @@
         "RecommendationOptionsContainerRecommendations",
         "RecommendationOptionsProjectedUtilizationMetricsCpuMaximum",
         "RecommendationOptionsProjectedUtilizationMetricsMemoryMaximum",
-        "Tags"
+        "Tags",
+        "EffectiveRecommendationPreferencesSavingsEstimationMode",
+        "RecommendationOptionsSavingsOpportunityAfterDiscountsPercentage",
+        "RecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts",
+        "RecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts"
       ]
     },
     "ExportableECSServiceFields":{
@@ -1078,7 +1282,21 @@
         "InstanceState",
         "Tags",
         "ExternalMetricStatusCode",
-        "ExternalMetricStatusReason"
+        "ExternalMetricStatusReason",
+        "CurrentInstanceGpuInfo",
+        "RecommendationOptionsInstanceGpuInfo",
+        "UtilizationMetricsGpuPercentageMaximum",
+        "UtilizationMetricsGpuMemoryPercentageMaximum",
+        "RecommendationOptionsProjectedUtilizationMetricsGpuPercentageMaximum",
+        "RecommendationOptionsProjectedUtilizationMetricsGpuMemoryPercentageMaximum",
+        "Idle",
+        "EffectiveRecommendationPreferencesPreferredResources",
+        "EffectiveRecommendationPreferencesLookBackPeriod",
+        "EffectiveRecommendationPreferencesUtilizationPreferences",
+        "EffectiveRecommendationPreferencesSavingsEstimationMode",
+        "RecommendationOptionsSavingsOpportunityAfterDiscountsPercentage",
+        "RecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts",
+        "RecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts"
       ]
     },
     "ExportableInstanceFields":{
@@ -1114,12 +1332,46 @@
         "RecommendationOptionsSavingsOpportunityPercentage",
         "RecommendationOptionsEstimatedMonthlySavingsCurrency",
         "RecommendationOptionsEstimatedMonthlySavingsValue",
-        "Tags"
+        "Tags",
+        "EffectiveRecommendationPreferencesSavingsEstimationMode",
+        "RecommendationOptionsSavingsOpportunityAfterDiscountsPercentage",
+        "RecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts",
+        "RecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts"
       ]
     },
     "ExportableLambdaFunctionFields":{
       "type":"list",
       "member":{"shape":"ExportableLambdaFunctionField"}
+    },
+    "ExportableLicenseField":{
+      "type":"string",
+      "enum":[
+        "AccountId",
+        "ResourceArn",
+        "LookbackPeriodInDays",
+        "LastRefreshTimestamp",
+        "Finding",
+        "FindingReasonCodes",
+        "CurrentLicenseConfigurationNumberOfCores",
+        "CurrentLicenseConfigurationInstanceType",
+        "CurrentLicenseConfigurationOperatingSystem",
+        "CurrentLicenseConfigurationLicenseName",
+        "CurrentLicenseConfigurationLicenseEdition",
+        "CurrentLicenseConfigurationLicenseModel",
+        "CurrentLicenseConfigurationLicenseVersion",
+        "CurrentLicenseConfigurationMetricsSource",
+        "RecommendationOptionsOperatingSystem",
+        "RecommendationOptionsLicenseEdition",
+        "RecommendationOptionsLicenseModel",
+        "RecommendationOptionsSavingsOpportunityPercentage",
+        "RecommendationOptionsEstimatedMonthlySavingsCurrency",
+        "RecommendationOptionsEstimatedMonthlySavingsValue",
+        "Tags"
+      ]
+    },
+    "ExportableLicenseFields":{
+      "type":"list",
+      "member":{"shape":"ExportableLicenseField"}
     },
     "ExportableVolumeField":{
       "type":"string",
@@ -1153,7 +1405,12 @@
         "RecommendationOptionsEstimatedMonthlySavingsCurrency",
         "RecommendationOptionsEstimatedMonthlySavingsValue",
         "RootVolume",
-        "Tags"
+        "Tags",
+        "CurrentConfigurationRootVolume",
+        "EffectiveRecommendationPreferencesSavingsEstimationMode",
+        "RecommendationOptionsSavingsOpportunityAfterDiscountsPercentage",
+        "RecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts",
+        "RecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts"
       ]
     },
     "ExportableVolumeFields":{
@@ -1382,7 +1639,10 @@
       "type":"structure",
       "members":{
         "enhancedInfrastructureMetrics":{"shape":"EnhancedInfrastructureMetrics"},
-        "externalMetricsPreference":{"shape":"ExternalMetricsPreference"}
+        "externalMetricsPreference":{"shape":"ExternalMetricsPreference"},
+        "lookBackPeriod":{"shape":"LookBackPeriodPreference"},
+        "utilizationPreferences":{"shape":"UtilizationPreferences"},
+        "preferredResources":{"shape":"EffectivePreferredResources"}
       }
     },
     "GetEnrollmentStatusRequest":{
@@ -1432,6 +1692,24 @@
         "lambdaFunctionRecommendations":{"shape":"LambdaFunctionRecommendations"}
       }
     },
+    "GetLicenseRecommendationsRequest":{
+      "type":"structure",
+      "members":{
+        "resourceArns":{"shape":"ResourceArns"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"},
+        "filters":{"shape":"LicenseRecommendationFilters"},
+        "accountIds":{"shape":"AccountIds"}
+      }
+    },
+    "GetLicenseRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "licenseRecommendations":{"shape":"LicenseRecommendations"},
+        "errors":{"shape":"GetRecommendationErrors"}
+      }
+    },
     "GetRecommendationError":{
       "type":"structure",
       "members":{
@@ -1475,6 +1753,25 @@
         "nextToken":{"shape":"NextToken"},
         "recommendationSummaries":{"shape":"RecommendationSummaries"}
       }
+    },
+    "Gpu":{
+      "type":"structure",
+      "members":{
+        "gpuCount":{"shape":"GpuCount"},
+        "gpuMemorySizeInMiB":{"shape":"GpuMemorySizeInMiB"}
+      }
+    },
+    "GpuCount":{"type":"integer"},
+    "GpuInfo":{
+      "type":"structure",
+      "members":{
+        "gpus":{"shape":"Gpus"}
+      }
+    },
+    "GpuMemorySizeInMiB":{"type":"integer"},
+    "Gpus":{
+      "type":"list",
+      "member":{"shape":"Gpu"}
     },
     "High":{"type":"long"},
     "Identifier":{"type":"string"},
@@ -1520,6 +1817,20 @@
       "type":"list",
       "member":{"shape":"InstanceArn"}
     },
+    "InstanceEstimatedMonthlySavings":{
+      "type":"structure",
+      "members":{
+        "currency":{"shape":"Currency"},
+        "value":{"shape":"Value"}
+      }
+    },
+    "InstanceIdle":{
+      "type":"string",
+      "enum":[
+        "True",
+        "False"
+      ]
+    },
     "InstanceName":{"type":"string"},
     "InstanceRecommendation":{
       "type":"structure",
@@ -1540,7 +1851,9 @@
         "inferredWorkloadTypes":{"shape":"InferredWorkloadTypes"},
         "instanceState":{"shape":"InstanceState"},
         "tags":{"shape":"Tags"},
-        "externalMetricStatus":{"shape":"ExternalMetricStatus"}
+        "externalMetricStatus":{"shape":"ExternalMetricStatus"},
+        "currentInstanceGpuInfo":{"shape":"GpuInfo"},
+        "idle":{"shape":"InstanceIdle"}
       }
     },
     "InstanceRecommendationFindingReasonCode":{
@@ -1561,7 +1874,11 @@
         "DiskIOPSOverprovisioned",
         "DiskIOPSUnderprovisioned",
         "DiskThroughputOverprovisioned",
-        "DiskThroughputUnderprovisioned"
+        "DiskThroughputUnderprovisioned",
+        "GPUUnderprovisioned",
+        "GPUOverprovisioned",
+        "GPUMemoryUnderprovisioned",
+        "GPUMemoryOverprovisioned"
       ]
     },
     "InstanceRecommendationFindingReasonCodes":{
@@ -1577,12 +1894,35 @@
         "performanceRisk":{"shape":"PerformanceRisk"},
         "rank":{"shape":"Rank"},
         "savingsOpportunity":{"shape":"SavingsOpportunity"},
-        "migrationEffort":{"shape":"MigrationEffort"}
+        "migrationEffort":{"shape":"MigrationEffort"},
+        "instanceGpuInfo":{"shape":"GpuInfo"},
+        "savingsOpportunityAfterDiscounts":{"shape":"InstanceSavingsOpportunityAfterDiscounts"}
       }
     },
     "InstanceRecommendations":{
       "type":"list",
       "member":{"shape":"InstanceRecommendation"}
+    },
+    "InstanceSavingsEstimationMode":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"InstanceSavingsEstimationModeSource"}
+      }
+    },
+    "InstanceSavingsEstimationModeSource":{
+      "type":"string",
+      "enum":[
+        "PublicPricing",
+        "CostExplorerRightsizing",
+        "CostOptimizationHub"
+      ]
+    },
+    "InstanceSavingsOpportunityAfterDiscounts":{
+      "type":"structure",
+      "members":{
+        "savingsOpportunityPercentage":{"shape":"SavingsOpportunityPercentage"},
+        "estimatedMonthlySavings":{"shape":"InstanceEstimatedMonthlySavings"}
+      }
     },
     "InstanceState":{
       "type":"string",
@@ -1644,6 +1984,19 @@
         "Failed"
       ]
     },
+    "LambdaEffectiveRecommendationPreferences":{
+      "type":"structure",
+      "members":{
+        "savingsEstimationMode":{"shape":"LambdaSavingsEstimationMode"}
+      }
+    },
+    "LambdaEstimatedMonthlySavings":{
+      "type":"structure",
+      "members":{
+        "currency":{"shape":"Currency"},
+        "value":{"shape":"Value"}
+      }
+    },
     "LambdaFunctionMemoryMetricName":{
       "type":"string",
       "enum":["Duration"]
@@ -1674,7 +2027,8 @@
         "rank":{"shape":"Rank"},
         "memorySize":{"shape":"MemorySize"},
         "projectedUtilizationMetrics":{"shape":"LambdaFunctionMemoryProjectedMetrics"},
-        "savingsOpportunity":{"shape":"SavingsOpportunity"}
+        "savingsOpportunity":{"shape":"SavingsOpportunity"},
+        "savingsOpportunityAfterDiscounts":{"shape":"LambdaSavingsOpportunityAfterDiscounts"}
       }
     },
     "LambdaFunctionMemoryRecommendationOptions":{
@@ -1710,7 +2064,8 @@
         "findingReasonCodes":{"shape":"LambdaFunctionRecommendationFindingReasonCodes"},
         "memorySizeRecommendationOptions":{"shape":"LambdaFunctionMemoryRecommendationOptions"},
         "currentPerformanceRisk":{"shape":"CurrentPerformanceRisk"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "effectiveRecommendationPreferences":{"shape":"LambdaEffectiveRecommendationPreferences"}
       }
     },
     "LambdaFunctionRecommendationFilter":{
@@ -1768,8 +2123,135 @@
       "type":"list",
       "member":{"shape":"LambdaFunctionUtilizationMetric"}
     },
+    "LambdaSavingsEstimationMode":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"LambdaSavingsEstimationModeSource"}
+      }
+    },
+    "LambdaSavingsEstimationModeSource":{
+      "type":"string",
+      "enum":[
+        "PublicPricing",
+        "CostExplorerRightsizing",
+        "CostOptimizationHub"
+      ]
+    },
+    "LambdaSavingsOpportunityAfterDiscounts":{
+      "type":"structure",
+      "members":{
+        "savingsOpportunityPercentage":{"shape":"SavingsOpportunityPercentage"},
+        "estimatedMonthlySavings":{"shape":"LambdaEstimatedMonthlySavings"}
+      }
+    },
     "LastRefreshTimestamp":{"type":"timestamp"},
     "LastUpdatedTimestamp":{"type":"timestamp"},
+    "LicenseConfiguration":{
+      "type":"structure",
+      "members":{
+        "numberOfCores":{"shape":"NumberOfCores"},
+        "instanceType":{"shape":"InstanceType"},
+        "operatingSystem":{"shape":"OperatingSystem"},
+        "licenseEdition":{"shape":"LicenseEdition"},
+        "licenseName":{"shape":"LicenseName"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "licenseVersion":{"shape":"LicenseVersion"},
+        "metricsSource":{"shape":"MetricsSource"}
+      }
+    },
+    "LicenseEdition":{
+      "type":"string",
+      "enum":[
+        "Enterprise",
+        "Standard",
+        "Free",
+        "NoLicenseEditionFound"
+      ]
+    },
+    "LicenseFinding":{
+      "type":"string",
+      "enum":[
+        "InsufficientMetrics",
+        "Optimized",
+        "NotOptimized"
+      ]
+    },
+    "LicenseFindingReasonCode":{
+      "type":"string",
+      "enum":[
+        "InvalidCloudWatchApplicationInsightsSetup",
+        "CloudWatchApplicationInsightsError",
+        "LicenseOverprovisioned",
+        "Optimized"
+      ]
+    },
+    "LicenseFindingReasonCodes":{
+      "type":"list",
+      "member":{"shape":"LicenseFindingReasonCode"}
+    },
+    "LicenseModel":{
+      "type":"string",
+      "enum":[
+        "LicenseIncluded",
+        "BringYourOwnLicense"
+      ]
+    },
+    "LicenseName":{
+      "type":"string",
+      "enum":["SQLServer"]
+    },
+    "LicenseRecommendation":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"ResourceArn"},
+        "accountId":{"shape":"AccountId"},
+        "currentLicenseConfiguration":{"shape":"LicenseConfiguration"},
+        "lookbackPeriodInDays":{"shape":"LookBackPeriodInDays"},
+        "lastRefreshTimestamp":{"shape":"LastRefreshTimestamp"},
+        "finding":{"shape":"LicenseFinding"},
+        "findingReasonCodes":{"shape":"LicenseFindingReasonCodes"},
+        "licenseRecommendationOptions":{"shape":"LicenseRecommendationOptions"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "LicenseRecommendationFilter":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"LicenseRecommendationFilterName"},
+        "values":{"shape":"FilterValues"}
+      }
+    },
+    "LicenseRecommendationFilterName":{
+      "type":"string",
+      "enum":[
+        "Finding",
+        "FindingReasonCode",
+        "LicenseName"
+      ]
+    },
+    "LicenseRecommendationFilters":{
+      "type":"list",
+      "member":{"shape":"LicenseRecommendationFilter"}
+    },
+    "LicenseRecommendationOption":{
+      "type":"structure",
+      "members":{
+        "rank":{"shape":"Rank"},
+        "operatingSystem":{"shape":"OperatingSystem"},
+        "licenseEdition":{"shape":"LicenseEdition"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "savingsOpportunity":{"shape":"SavingsOpportunity"}
+      }
+    },
+    "LicenseRecommendationOptions":{
+      "type":"list",
+      "member":{"shape":"LicenseRecommendationOption"}
+    },
+    "LicenseRecommendations":{
+      "type":"list",
+      "member":{"shape":"LicenseRecommendation"}
+    },
+    "LicenseVersion":{"type":"string"},
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -1779,6 +2261,14 @@
       "synthetic":true
     },
     "LookBackPeriodInDays":{"type":"double"},
+    "LookBackPeriodPreference":{
+      "type":"string",
+      "enum":[
+        "DAYS_14",
+        "DAYS_32",
+        "DAYS_93"
+      ]
+    },
     "Low":{"type":"long"},
     "LowerBoundValue":{"type":"double"},
     "MaxResults":{
@@ -1816,8 +2306,22 @@
         "NETWORK_IN_BYTES_PER_SECOND",
         "NETWORK_OUT_BYTES_PER_SECOND",
         "NETWORK_PACKETS_IN_PER_SECOND",
-        "NETWORK_PACKETS_OUT_PER_SECOND"
+        "NETWORK_PACKETS_OUT_PER_SECOND",
+        "GPU_PERCENTAGE",
+        "GPU_MEMORY_PERCENTAGE"
       ]
+    },
+    "MetricProviderArn":{"type":"string"},
+    "MetricSource":{
+      "type":"structure",
+      "members":{
+        "provider":{"shape":"MetricSourceProvider"},
+        "providerArn":{"shape":"MetricProviderArn"}
+      }
+    },
+    "MetricSourceProvider":{
+      "type":"string",
+      "enum":["CloudWatchApplicationInsights"]
     },
     "MetricStatistic":{
       "type":"string",
@@ -1830,6 +2334,10 @@
     "MetricValues":{
       "type":"list",
       "member":{"shape":"MetricValue"}
+    },
+    "MetricsSource":{
+      "type":"list",
+      "member":{"shape":"MetricSource"}
     },
     "MigrationEffort":{
       "type":"string",
@@ -1853,8 +2361,10 @@
     "NullableCpu":{"type":"integer"},
     "NullableMemory":{"type":"integer"},
     "NullableMemoryReservation":{"type":"integer"},
+    "NumberOfCores":{"type":"integer"},
     "NumberOfInvocations":{"type":"long"},
     "NumberOfMemberAccountsOptedIn":{"type":"integer"},
+    "OperatingSystem":{"type":"string"},
     "OptInRequiredException":{
       "type":"structure",
       "members":{
@@ -1884,6 +2394,27 @@
       "type":"list",
       "member":{"shape":"PlatformDifference"}
     },
+    "PreferredResource":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"PreferredResourceName"},
+        "includeList":{"shape":"PreferredResourceValues"},
+        "excludeList":{"shape":"PreferredResourceValues"}
+      }
+    },
+    "PreferredResourceName":{
+      "type":"string",
+      "enum":["Ec2InstanceTypes"]
+    },
+    "PreferredResourceValue":{"type":"string"},
+    "PreferredResourceValues":{
+      "type":"list",
+      "member":{"shape":"PreferredResourceValue"}
+    },
+    "PreferredResources":{
+      "type":"list",
+      "member":{"shape":"PreferredResource"}
+    },
     "ProjectedMetric":{
       "type":"structure",
       "members":{
@@ -1908,7 +2439,11 @@
         "scope":{"shape":"Scope"},
         "enhancedInfrastructureMetrics":{"shape":"EnhancedInfrastructureMetrics"},
         "inferredWorkloadTypes":{"shape":"InferredWorkloadTypesPreference"},
-        "externalMetricsPreference":{"shape":"ExternalMetricsPreference"}
+        "externalMetricsPreference":{"shape":"ExternalMetricsPreference"},
+        "lookBackPeriod":{"shape":"LookBackPeriodPreference"},
+        "utilizationPreferences":{"shape":"UtilizationPreferences"},
+        "preferredResources":{"shape":"PreferredResources"},
+        "savingsEstimationMode":{"shape":"SavingsEstimationMode"}
       }
     },
     "PutRecommendationPreferencesResponse":{
@@ -1953,7 +2488,10 @@
       "enum":[
         "EnhancedInfrastructureMetrics",
         "InferredWorkloadTypes",
-        "ExternalMetricsPreference"
+        "ExternalMetricsPreference",
+        "LookBackPeriodPreference",
+        "PreferredResources",
+        "UtilizationPreferences"
       ]
     },
     "RecommendationPreferenceNames":{
@@ -1973,7 +2511,11 @@
         "resourceType":{"shape":"ResourceType"},
         "enhancedInfrastructureMetrics":{"shape":"EnhancedInfrastructureMetrics"},
         "inferredWorkloadTypes":{"shape":"InferredWorkloadTypesPreference"},
-        "externalMetricsPreference":{"shape":"ExternalMetricsPreference"}
+        "externalMetricsPreference":{"shape":"ExternalMetricsPreference"},
+        "lookBackPeriod":{"shape":"LookBackPeriodPreference"},
+        "utilizationPreferences":{"shape":"UtilizationPreferences"},
+        "preferredResources":{"shape":"EffectivePreferredResources"},
+        "savingsEstimationMode":{"shape":"SavingsEstimationMode"}
       }
     },
     "RecommendationPreferencesDetails":{
@@ -1995,7 +2537,8 @@
         "AutoScalingGroup",
         "EbsVolume",
         "LambdaFunction",
-        "EcsService"
+        "EcsService",
+        "License"
       ]
     },
     "RecommendationSources":{
@@ -2031,6 +2574,10 @@
       "member":{"shape":"RecommendedOptionProjectedMetric"}
     },
     "ResourceArn":{"type":"string"},
+    "ResourceArns":{
+      "type":"list",
+      "member":{"shape":"ResourceArn"}
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -2047,7 +2594,8 @@
         "EbsVolume",
         "LambdaFunction",
         "NotApplicable",
-        "EcsService"
+        "EcsService",
+        "License"
       ]
     },
     "RootVolume":{"type":"boolean"},
@@ -2065,6 +2613,13 @@
         "bucket":{"shape":"DestinationBucket"},
         "keyPrefix":{"shape":"DestinationKeyPrefix"}
       }
+    },
+    "SavingsEstimationMode":{
+      "type":"string",
+      "enum":[
+        "AfterDiscounts",
+        "BeforeDiscounts"
+      ]
     },
     "SavingsOpportunity":{
       "type":"structure",
@@ -2192,6 +2747,17 @@
       "type":"list",
       "member":{"shape":"UtilizationMetric"}
     },
+    "UtilizationPreference":{
+      "type":"structure",
+      "members":{
+        "metricName":{"shape":"CustomizableMetricName"},
+        "metricParameters":{"shape":"CustomizableMetricParameters"}
+      }
+    },
+    "UtilizationPreferences":{
+      "type":"list",
+      "member":{"shape":"UtilizationPreference"}
+    },
     "Value":{"type":"double"},
     "VeryLow":{"type":"long"},
     "VolumeArn":{"type":"string"},
@@ -2227,7 +2793,8 @@
         "volumeRecommendationOptions":{"shape":"VolumeRecommendationOptions"},
         "lastRefreshTimestamp":{"shape":"LastRefreshTimestamp"},
         "currentPerformanceRisk":{"shape":"CurrentPerformanceRisk"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "effectiveRecommendationPreferences":{"shape":"EBSEffectiveRecommendationPreferences"}
       }
     },
     "VolumeRecommendationOption":{
@@ -2236,7 +2803,8 @@
         "configuration":{"shape":"VolumeConfiguration"},
         "performanceRisk":{"shape":"PerformanceRisk"},
         "rank":{"shape":"Rank"},
-        "savingsOpportunity":{"shape":"SavingsOpportunity"}
+        "savingsOpportunity":{"shape":"SavingsOpportunity"},
+        "savingsOpportunityAfterDiscounts":{"shape":"EBSSavingsOpportunityAfterDiscounts"}
       }
     },
     "VolumeRecommendationOptions":{

@@ -510,7 +510,9 @@
         {"shape":"ThrottlingException"},
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"InvalidImageFormatException"},
-        {"shape":"HumanLoopQuotaExceededException"}
+        {"shape":"HumanLoopQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceNotReadyException"}
       ]
     },
     "DetectProtectiveEquipment":{
@@ -712,6 +714,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetMediaAnalysisJob":{
+      "name":"GetMediaAnalysisJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetMediaAnalysisJobRequest"},
+      "output":{"shape":"GetMediaAnalysisJobResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetPersonTracking":{
       "name":"GetPersonTracking",
       "http":{
@@ -861,6 +880,23 @@
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"InvalidPaginationTokenException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListMediaAnalysisJobs":{
+      "name":"ListMediaAnalysisJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListMediaAnalysisJobsRequest"},
+      "output":{"shape":"ListMediaAnalysisJobsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidPaginationTokenException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListProjectPolicies":{
@@ -1152,6 +1188,29 @@
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"LimitExceededException"},
         {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "StartMediaAnalysisJob":{
+      "name":"StartMediaAnalysisJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartMediaAnalysisJobRequest"},
+      "output":{"shape":"StartMediaAnalysisJobResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidManifestException"},
+        {"shape":"InvalidS3ObjectException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceNotReadyException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"IdempotentParameterMismatchException"}
       ],
       "idempotent":true
     },
@@ -1808,7 +1867,9 @@
       "type":"structure",
       "required":["ProjectName"],
       "members":{
-        "ProjectName":{"shape":"ProjectName"}
+        "ProjectName":{"shape":"ProjectName"},
+        "Feature":{"shape":"CustomizationFeature"},
+        "AutoUpdate":{"shape":"ProjectAutoUpdate"}
       }
     },
     "CreateProjectResponse":{
@@ -1831,7 +1892,9 @@
         "TrainingData":{"shape":"TrainingData"},
         "TestingData":{"shape":"TestingData"},
         "Tags":{"shape":"TagMap"},
-        "KmsKeyId":{"shape":"KmsKeyId"}
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "VersionDescription":{"shape":"VersionDescription"},
+        "FeatureConfig":{"shape":"CustomizationFeatureConfig"}
       }
     },
     "CreateProjectVersionResponse":{
@@ -1899,6 +1962,31 @@
     "CustomLabels":{
       "type":"list",
       "member":{"shape":"CustomLabel"}
+    },
+    "CustomizationFeature":{
+      "type":"string",
+      "enum":[
+        "CONTENT_MODERATION",
+        "CUSTOM_LABELS"
+      ]
+    },
+    "CustomizationFeatureConfig":{
+      "type":"structure",
+      "members":{
+        "ContentModeration":{"shape":"CustomizationFeatureContentModerationConfig"}
+      }
+    },
+    "CustomizationFeatureContentModerationConfig":{
+      "type":"structure",
+      "members":{
+        "ConfidenceThreshold":{"shape":"Percent"}
+      }
+    },
+    "CustomizationFeatures":{
+      "type":"list",
+      "member":{"shape":"CustomizationFeature"},
+      "max":2,
+      "min":1
     },
     "DatasetArn":{
       "type":"string",
@@ -2198,7 +2286,8 @@
       "members":{
         "NextToken":{"shape":"ExtendedPaginationToken"},
         "MaxResults":{"shape":"ProjectsPageSize"},
-        "ProjectNames":{"shape":"ProjectNames"}
+        "ProjectNames":{"shape":"ProjectNames"},
+        "Features":{"shape":"CustomizationFeatures"}
       }
     },
     "DescribeProjectsResponse":{
@@ -2356,7 +2445,8 @@
       "members":{
         "Image":{"shape":"Image"},
         "MinConfidence":{"shape":"Percent"},
-        "HumanLoopConfig":{"shape":"HumanLoopConfig"}
+        "HumanLoopConfig":{"shape":"HumanLoopConfig"},
+        "ProjectVersion":{"shape":"ProjectVersionId"}
       }
     },
     "DetectModerationLabelsResponse":{
@@ -2364,7 +2454,8 @@
       "members":{
         "ModerationLabels":{"shape":"ModerationLabels"},
         "ModerationModelVersion":{"shape":"String"},
-        "HumanLoopActivationOutput":{"shape":"HumanLoopActivationOutput"}
+        "HumanLoopActivationOutput":{"shape":"HumanLoopActivationOutput"},
+        "ProjectVersion":{"shape":"ProjectVersionId"}
       }
     },
     "DetectProtectiveEquipmentRequest":{
@@ -2902,6 +2993,38 @@
         "GetRequestMetadata":{"shape":"GetLabelDetectionRequestMetadata"}
       }
     },
+    "GetMediaAnalysisJobRequest":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{"shape":"MediaAnalysisJobId"}
+      }
+    },
+    "GetMediaAnalysisJobResponse":{
+      "type":"structure",
+      "required":[
+        "JobId",
+        "OperationsConfig",
+        "Status",
+        "CreationTimestamp",
+        "Input",
+        "OutputConfig"
+      ],
+      "members":{
+        "JobId":{"shape":"MediaAnalysisJobId"},
+        "JobName":{"shape":"MediaAnalysisJobName"},
+        "OperationsConfig":{"shape":"MediaAnalysisOperationsConfig"},
+        "Status":{"shape":"MediaAnalysisJobStatus"},
+        "FailureDetails":{"shape":"MediaAnalysisJobFailureDetails"},
+        "CreationTimestamp":{"shape":"DateTime"},
+        "CompletionTimestamp":{"shape":"DateTime"},
+        "Input":{"shape":"MediaAnalysisInput"},
+        "OutputConfig":{"shape":"MediaAnalysisOutputConfig"},
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "Results":{"shape":"MediaAnalysisResults"},
+        "ManifestSummary":{"shape":"MediaAnalysisManifestSummary"}
+      }
+    },
     "GetPersonTrackingRequest":{
       "type":"structure",
       "required":["JobId"],
@@ -3129,6 +3252,12 @@
       "fault":true
     },
     "InvalidImageFormatException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "InvalidManifestException":{
       "type":"structure",
       "members":{
       },
@@ -3437,6 +3566,26 @@
         "FaceModelVersion":{"shape":"String"}
       }
     },
+    "ListMediaAnalysisJobsPageSize":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "ListMediaAnalysisJobsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"ExtendedPaginationToken"},
+        "MaxResults":{"shape":"ListMediaAnalysisJobsPageSize"}
+      }
+    },
+    "ListMediaAnalysisJobsResponse":{
+      "type":"structure",
+      "required":["MediaAnalysisJobs"],
+      "members":{
+        "NextToken":{"shape":"ExtendedPaginationToken"},
+        "MediaAnalysisJobs":{"shape":"MediaAnalysisJobDescriptions"}
+      }
+    },
     "ListProjectPoliciesPageSize":{
       "type":"integer",
       "max":5,
@@ -3576,6 +3725,123 @@
       "type":"integer",
       "max":500,
       "min":1
+    },
+    "MediaAnalysisDetectModerationLabelsConfig":{
+      "type":"structure",
+      "members":{
+        "MinConfidence":{"shape":"Percent"},
+        "ProjectVersion":{"shape":"ProjectVersionId"}
+      }
+    },
+    "MediaAnalysisInput":{
+      "type":"structure",
+      "required":["S3Object"],
+      "members":{
+        "S3Object":{"shape":"S3Object"}
+      }
+    },
+    "MediaAnalysisJobDescription":{
+      "type":"structure",
+      "required":[
+        "JobId",
+        "OperationsConfig",
+        "Status",
+        "CreationTimestamp",
+        "Input",
+        "OutputConfig"
+      ],
+      "members":{
+        "JobId":{"shape":"MediaAnalysisJobId"},
+        "JobName":{"shape":"MediaAnalysisJobName"},
+        "OperationsConfig":{"shape":"MediaAnalysisOperationsConfig"},
+        "Status":{"shape":"MediaAnalysisJobStatus"},
+        "FailureDetails":{"shape":"MediaAnalysisJobFailureDetails"},
+        "CreationTimestamp":{"shape":"DateTime"},
+        "CompletionTimestamp":{"shape":"DateTime"},
+        "Input":{"shape":"MediaAnalysisInput"},
+        "OutputConfig":{"shape":"MediaAnalysisOutputConfig"},
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "Results":{"shape":"MediaAnalysisResults"},
+        "ManifestSummary":{"shape":"MediaAnalysisManifestSummary"}
+      }
+    },
+    "MediaAnalysisJobDescriptions":{
+      "type":"list",
+      "member":{"shape":"MediaAnalysisJobDescription"}
+    },
+    "MediaAnalysisJobFailureCode":{
+      "type":"string",
+      "enum":[
+        "INTERNAL_ERROR",
+        "INVALID_S3_OBJECT",
+        "INVALID_MANIFEST",
+        "INVALID_OUTPUT_CONFIG",
+        "INVALID_KMS_KEY",
+        "ACCESS_DENIED",
+        "RESOURCE_NOT_FOUND",
+        "RESOURCE_NOT_READY",
+        "THROTTLED"
+      ]
+    },
+    "MediaAnalysisJobFailureDetails":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"MediaAnalysisJobFailureCode"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "MediaAnalysisJobId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9-_]+$"
+    },
+    "MediaAnalysisJobName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.\\-]+"
+    },
+    "MediaAnalysisJobStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "QUEUED",
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "MediaAnalysisManifestSummary":{
+      "type":"structure",
+      "members":{
+        "S3Object":{"shape":"S3Object"}
+      }
+    },
+    "MediaAnalysisOperationsConfig":{
+      "type":"structure",
+      "members":{
+        "DetectModerationLabels":{"shape":"MediaAnalysisDetectModerationLabelsConfig"}
+      }
+    },
+    "MediaAnalysisOutputConfig":{
+      "type":"structure",
+      "required":["S3Bucket"],
+      "members":{
+        "S3Bucket":{"shape":"S3Bucket"},
+        "S3KeyPrefix":{"shape":"MediaAnalysisS3KeyPrefix"}
+      }
+    },
+    "MediaAnalysisResults":{
+      "type":"structure",
+      "members":{
+        "S3Object":{"shape":"S3Object"}
+      }
+    },
+    "MediaAnalysisS3KeyPrefix":{
+      "type":"string",
+      "max":800,
+      "pattern":"\\S*"
     },
     "MinCoveragePercentage":{
       "type":"float",
@@ -3723,13 +3989,22 @@
       "min":20,
       "pattern":"(^arn:[a-z\\d-]+:rekognition:[a-z\\d-]+:\\d{12}:project\\/[a-zA-Z0-9_.\\-]{1,255}\\/[0-9]+$)"
     },
+    "ProjectAutoUpdate":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "ProjectDescription":{
       "type":"structure",
       "members":{
         "ProjectArn":{"shape":"ProjectArn"},
         "CreationTimestamp":{"shape":"DateTime"},
         "Status":{"shape":"ProjectStatus"},
-        "Datasets":{"shape":"DatasetMetadataList"}
+        "Datasets":{"shape":"DatasetMetadataList"},
+        "Feature":{"shape":"CustomizationFeature"},
+        "AutoUpdate":{"shape":"ProjectAutoUpdate"}
       }
     },
     "ProjectDescriptions":{
@@ -3811,12 +4086,22 @@
         "ManifestSummary":{"shape":"GroundTruthManifest"},
         "KmsKeyId":{"shape":"KmsKeyId"},
         "MaxInferenceUnits":{"shape":"InferenceUnits"},
-        "SourceProjectVersionArn":{"shape":"ProjectVersionArn"}
+        "SourceProjectVersionArn":{"shape":"ProjectVersionArn"},
+        "VersionDescription":{"shape":"VersionDescription"},
+        "Feature":{"shape":"CustomizationFeature"},
+        "BaseModelVersion":{"shape":"String"},
+        "FeatureConfig":{"shape":"CustomizationFeatureConfig"}
       }
     },
     "ProjectVersionDescriptions":{
       "type":"list",
       "member":{"shape":"ProjectVersionDescription"}
+    },
+    "ProjectVersionId":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"(^arn:[a-z\\d-]+:rekognition:[a-z\\d-]+:\\d{12}:project\\/[a-zA-Z0-9_.\\-]{1,255}\\/version\\/[a-zA-Z0-9_.\\-]{1,255}\\/[0-9]+$)"
     },
     "ProjectVersionStatus":{
       "type":"string",
@@ -3832,7 +4117,9 @@
         "DELETING",
         "COPYING_IN_PROGRESS",
         "COPYING_COMPLETED",
-        "COPYING_FAILED"
+        "COPYING_FAILED",
+        "DEPRECATED",
+        "EXPIRED"
       ]
     },
     "ProjectVersionsPageSize":{
@@ -4331,6 +4618,32 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"}
+      }
+    },
+    "StartMediaAnalysisJobRequest":{
+      "type":"structure",
+      "required":[
+        "OperationsConfig",
+        "Input",
+        "OutputConfig"
+      ],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "JobName":{"shape":"MediaAnalysisJobName"},
+        "OperationsConfig":{"shape":"MediaAnalysisOperationsConfig"},
+        "Input":{"shape":"MediaAnalysisInput"},
+        "OutputConfig":{"shape":"MediaAnalysisOutputConfig"},
+        "KmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "StartMediaAnalysisJobResponse":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{"shape":"MediaAnalysisJobId"}
       }
     },
     "StartPersonTrackingRequest":{
@@ -4943,6 +5256,12 @@
       "members":{
         "Assets":{"shape":"Assets"}
       }
+    },
+    "VersionDescription":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-_. ()':,;?]+"
     },
     "VersionName":{
       "type":"string",

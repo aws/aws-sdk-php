@@ -328,7 +328,8 @@
         "S3Configuration":{"shape":"S3DestinationConfiguration"},
         "ProcessingConfiguration":{"shape":"ProcessingConfiguration"},
         "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"},
-        "VpcConfiguration":{"shape":"VpcConfiguration"}
+        "VpcConfiguration":{"shape":"VpcConfiguration"},
+        "DocumentIdOptions":{"shape":"DocumentIdOptions"}
       }
     },
     "AmazonopensearchserviceDestinationDescription":{
@@ -346,7 +347,8 @@
         "S3DestinationDescription":{"shape":"S3DestinationDescription"},
         "ProcessingConfiguration":{"shape":"ProcessingConfiguration"},
         "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"},
-        "VpcConfigurationDescription":{"shape":"VpcConfigurationDescription"}
+        "VpcConfigurationDescription":{"shape":"VpcConfigurationDescription"},
+        "DocumentIdOptions":{"shape":"DocumentIdOptions"}
       }
     },
     "AmazonopensearchserviceDestinationUpdate":{
@@ -362,7 +364,8 @@
         "RetryOptions":{"shape":"AmazonopensearchserviceRetryOptions"},
         "S3Update":{"shape":"S3DestinationUpdate"},
         "ProcessingConfiguration":{"shape":"ProcessingConfiguration"},
-        "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"}
+        "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"},
+        "DocumentIdOptions":{"shape":"DocumentIdOptions"}
       }
     },
     "AmazonopensearchserviceDomainARN":{
@@ -411,6 +414,17 @@
       "min":0,
       "pattern":".*"
     },
+    "AuthenticationConfiguration":{
+      "type":"structure",
+      "required":[
+        "RoleARN",
+        "Connectivity"
+      ],
+      "members":{
+        "RoleARN":{"shape":"RoleARN"},
+        "Connectivity":{"shape":"Connectivity"}
+      }
+    },
     "BlockSizeBytes":{
       "type":"integer",
       "min":67108864
@@ -441,7 +455,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"jdbc:(redshift|postgresql)://((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+redshift\\.([a-zA-Z0-9\\.]+):\\d{1,5}/[a-zA-Z0-9_$-]+"
+      "pattern":"jdbc:(redshift|postgresql)://((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+(redshift(-serverless)?)\\.([a-zA-Z0-9\\.]+):\\d{1,5}/[a-zA-Z0-9_$-]+"
     },
     "ColumnToJsonKeyMappings":{
       "type":"map",
@@ -464,6 +478,13 @@
         "message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "Connectivity":{
+      "type":"string",
+      "enum":[
+        "PUBLIC",
+        "PRIVATE"
+      ]
     },
     "ContentEncoding":{
       "type":"string",
@@ -506,7 +527,8 @@
         "SplunkDestinationConfiguration":{"shape":"SplunkDestinationConfiguration"},
         "HttpEndpointDestinationConfiguration":{"shape":"HttpEndpointDestinationConfiguration"},
         "Tags":{"shape":"TagDeliveryStreamInputTagList"},
-        "AmazonOpenSearchServerlessDestinationConfiguration":{"shape":"AmazonOpenSearchServerlessDestinationConfiguration"}
+        "AmazonOpenSearchServerlessDestinationConfiguration":{"shape":"AmazonOpenSearchServerlessDestinationConfiguration"},
+        "MSKSourceConfiguration":{"shape":"MSKSourceConfiguration"}
       }
     },
     "CreateDeliveryStreamOutput":{
@@ -540,6 +562,13 @@
       "max":512,
       "min":1,
       "pattern":".*"
+    },
+    "DefaultDocumentIdFormat":{
+      "type":"string",
+      "enum":[
+        "FIREHOSE_DEFAULT",
+        "NO_DOCUMENT_ID"
+      ]
     },
     "DeleteDeliveryStreamInput":{
       "type":"structure",
@@ -659,7 +688,8 @@
       "type":"string",
       "enum":[
         "DirectPut",
-        "KinesisStreamAsSource"
+        "KinesisStreamAsSource",
+        "MSKAsSource"
       ]
     },
     "DeliveryStreamVersionId":{
@@ -721,6 +751,13 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-]+"
     },
+    "DocumentIdOptions":{
+      "type":"structure",
+      "required":["DefaultDocumentIdFormat"],
+      "members":{
+        "DefaultDocumentIdFormat":{"shape":"DefaultDocumentIdFormat"}
+      }
+    },
     "DynamicPartitioningConfiguration":{
       "type":"structure",
       "members":{
@@ -771,7 +808,8 @@
         "S3Configuration":{"shape":"S3DestinationConfiguration"},
         "ProcessingConfiguration":{"shape":"ProcessingConfiguration"},
         "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"},
-        "VpcConfiguration":{"shape":"VpcConfiguration"}
+        "VpcConfiguration":{"shape":"VpcConfiguration"},
+        "DocumentIdOptions":{"shape":"DocumentIdOptions"}
       }
     },
     "ElasticsearchDestinationDescription":{
@@ -789,7 +827,8 @@
         "S3DestinationDescription":{"shape":"S3DestinationDescription"},
         "ProcessingConfiguration":{"shape":"ProcessingConfiguration"},
         "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"},
-        "VpcConfigurationDescription":{"shape":"VpcConfigurationDescription"}
+        "VpcConfigurationDescription":{"shape":"VpcConfigurationDescription"},
+        "DocumentIdOptions":{"shape":"DocumentIdOptions"}
       }
     },
     "ElasticsearchDestinationUpdate":{
@@ -805,7 +844,8 @@
         "RetryOptions":{"shape":"ElasticsearchRetryOptions"},
         "S3Update":{"shape":"S3DestinationUpdate"},
         "ProcessingConfiguration":{"shape":"ProcessingConfiguration"},
-        "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"}
+        "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"},
+        "DocumentIdOptions":{"shape":"DocumentIdOptions"}
       }
     },
     "ElasticsearchDomainARN":{
@@ -1277,6 +1317,34 @@
       "min":0,
       "pattern":"[^:*]*"
     },
+    "MSKClusterARN":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"arn:.*"
+    },
+    "MSKSourceConfiguration":{
+      "type":"structure",
+      "required":[
+        "MSKClusterARN",
+        "TopicName",
+        "AuthenticationConfiguration"
+      ],
+      "members":{
+        "MSKClusterARN":{"shape":"MSKClusterARN"},
+        "TopicName":{"shape":"TopicName"},
+        "AuthenticationConfiguration":{"shape":"AuthenticationConfiguration"}
+      }
+    },
+    "MSKSourceDescription":{
+      "type":"structure",
+      "members":{
+        "MSKClusterARN":{"shape":"MSKClusterARN"},
+        "TopicName":{"shape":"TopicName"},
+        "AuthenticationConfiguration":{"shape":"AuthenticationConfiguration"},
+        "DeliveryStartTimestamp":{"shape":"DeliveryStartTimestamp"}
+      }
+    },
     "NoEncryptionConfig":{
       "type":"string",
       "enum":["NoEncryption"]
@@ -1437,7 +1505,8 @@
         "BufferSizeInMBs",
         "BufferIntervalInSeconds",
         "SubRecordType",
-        "Delimiter"
+        "Delimiter",
+        "CompressionFormat"
       ]
     },
     "ProcessorParameterValue":{
@@ -1450,6 +1519,7 @@
       "type":"string",
       "enum":[
         "RecordDeAggregation",
+        "Decompression",
         "Lambda",
         "MetadataExtraction",
         "AppendDelimiterToRecord"
@@ -1741,7 +1811,8 @@
     "SourceDescription":{
       "type":"structure",
       "members":{
-        "KinesisStreamSourceDescription":{"shape":"KinesisStreamSourceDescription"}
+        "KinesisStreamSourceDescription":{"shape":"KinesisStreamSourceDescription"},
+        "MSKSourceDescription":{"shape":"MSKSourceDescription"}
       }
     },
     "SplunkDestinationConfiguration":{
@@ -1890,6 +1961,12 @@
       "pattern":"^[\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@%]*$"
     },
     "Timestamp":{"type":"timestamp"},
+    "TopicName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\\\._\\\\-]+"
+    },
     "UntagDeliveryStreamInput":{
       "type":"structure",
       "required":[

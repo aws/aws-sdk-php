@@ -242,8 +242,8 @@ class AwsClient implements AwsClientInterface
         $this->addRecursionDetection();
         $this->addRequestBuilder();
 
-        if (!$config['suppress_php_deprecation_warning']) {
-            $this->emitDeprecationWarning();
+        if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
+            $this->addQueryCompatibleInputMiddleware($this->api);
         }
 
         if (isset($args['with_resolved'])) {
@@ -445,7 +445,11 @@ class AwsClient implements AwsClientInterface
             return SignatureProvider::resolve($provider, $version, $name, $region);
         };
         $this->handlerList->appendSign(
-            Middleware::signer($this->credentialProvider, $resolver, $this->tokenProvider),
+            Middleware::signer($this->credentialProvider,
+                $resolver,
+                $this->tokenProvider,
+                $this->getConfig()
+            ),
             'signer'
         );
     }
@@ -459,6 +463,15 @@ class AwsClient implements AwsClientInterface
                 'request-compression'
             );
         }
+    }
+
+    private function addQueryCompatibleInputMiddleware(Service $api)
+    {
+            $list = $this->getHandlerList();
+            $list->appendValidate(
+                QueryCompatibleInputMiddleware::wrap($api),
+                'query-compatible-input'
+            );
     }
 
     private function addInvocationId()

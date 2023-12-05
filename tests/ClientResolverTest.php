@@ -1322,10 +1322,6 @@ EOT;
                 'x',
             ],
             [
-                '',
-                new InvalidRegionException('Region must be a valid RFC host label.'),
-            ],
-            [
                 'hosthijack.com/',
                 new InvalidRegionException('Region must be a valid RFC host label.'),
             ],
@@ -1416,5 +1412,161 @@ EOT;
         ], $list);
         $this->assertArrayHasKey('request_min_compression_size_bytes', $conf);
         $this->assertEquals(10240, $conf['request_min_compression_size_bytes']);
+    }
+
+    /**
+     * @dataProvider configResolutionProvider
+     *
+     * @param $ini
+     * @param $env
+     * @param $expected
+     * @param $configKey
+     * @param $configType
+     */
+    public function testConfigResolutionOrder($ini, $env, $expected, $configKey, $configType)
+    {
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        if ($env) {
+            putenv($env['key'] . '=' . $env['value']);
+        }
+
+        file_put_contents($dir . '/config', $ini);
+        $home = getenv('HOME');
+        putenv('HOME=' . dirname($dir));
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 's3',
+            'region' => $configKey === 'region' ? null : 'x'
+        ], new HandlerList());
+   
+        if ($configType === 'args') {
+            $this->assertEquals($conf[$configKey], $expected);
+        } else {
+            $this->assertEquals($conf['config'][$configKey], $expected);
+        }
+        unlink($dir . '/config');
+        putenv("HOME=$home");
+        if ($env) {
+            putenv($env['key'] . '=');
+        }
+    }
+
+    public function configResolutionProvider()
+    {
+        return [
+            [
+                <<<EOT
+[default]
+region = foo-region
+EOT
+                ,
+                ['key' => 'AWS_REGION', 'value' => 'bar-region'],
+                'bar-region',
+                'region',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+region = 'foo-region'
+EOT
+                    ,
+                    null,
+                    'foo-region',
+                    'region',
+                    'args'
+                ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT
+                ,
+                ['key' => 'AWS_ENDPOINT_URL_S3', 'value' => 'https://test.com'],
+                'https://test.com',
+                'endpoint',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT
+                ,
+                null,
+                'https://test-foo.com',
+                'endpoint',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+EOT
+                ,
+                ['key' => 'AWS_ENDPOINT_URL', 'value' => 'https://baz.com'],
+                'https://baz.com',
+                'endpoint',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+EOT
+                ,
+                null,
+                'https://foo-bar.com',
+                'endpoint',
+                'args'
+            ]
+        ];
+    }
+
+    public function testIgnoreConfiguredEndpointUrls()
+    {
+        $ini = <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT;
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        putenv('AWS_ENDPOINT_URL' . '=' . 'https://test-foo.com');
+        putenv('AWS_ENDPOINT_URL_S3' . '=' . 'https://test-service-foo.com');
+
+        file_put_contents($dir . '/config', $ini);
+        $home = getenv('HOME');
+        putenv('HOME=' . dirname($dir));
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 's3',
+            'region' => 'x',
+            'version' => 'latest',
+            'ignore_configured_endpoint_urls' => true
+        ], new HandlerList());
+        $this->assertFalse(isset($conf['config']['endpoint']));
+        unlink($dir . '/config');
+        putenv("HOME=$home");
+        putenv('AWS_ENDPOINT_URL' . '=');
+        putenv('AWS_ENDPOINT_URL_S3' . '=');
     }
 }

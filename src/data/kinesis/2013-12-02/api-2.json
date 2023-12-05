@@ -101,6 +101,38 @@
                 }
             }
         },
+        "DeleteResourcePolicy": {
+            "name": "DeleteResourcePolicy",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "DeleteResourcePolicyInput"
+            },
+            "errors": [
+                {
+                    "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "ResourceInUseException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
         "DeleteStream": {
             "name": "DeleteStream",
             "http": {
@@ -390,6 +422,38 @@
             "staticContextParams": {
                 "OperationType": {
                     "value": "data"
+                }
+            }
+        },
+        "GetResourcePolicy": {
+            "name": "GetResourcePolicy",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "GetResourcePolicyInput"
+            },
+            "output": {
+                "shape": "GetResourcePolicyOutput"
+            },
+            "errors": [
+                {
+                    "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
                 }
             }
         },
@@ -718,6 +782,38 @@
             "staticContextParams": {
                 "OperationType": {
                     "value": "data"
+                }
+            }
+        },
+        "PutResourcePolicy": {
+            "name": "PutResourcePolicy",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "PutResourcePolicyInput"
+            },
+            "errors": [
+                {
+                    "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "ResourceInUseException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
                 }
             }
         },
@@ -1151,6 +1247,20 @@
                 }
             }
         },
+        "DeleteResourcePolicyInput": {
+            "type": "structure",
+            "required": [
+                "ResourceARN"
+            ],
+            "members": {
+                "ResourceARN": {
+                    "shape": "ResourceARN",
+                    "contextParam": {
+                        "name": "ResourceARN"
+                    }
+                }
+            }
+        },
         "DeleteStreamInput": {
             "type": "structure",
             "members": {
@@ -1451,6 +1561,31 @@
                 },
                 "ChildShards": {
                     "shape": "ChildShardList"
+                }
+            }
+        },
+        "GetResourcePolicyInput": {
+            "type": "structure",
+            "required": [
+                "ResourceARN"
+            ],
+            "members": {
+                "ResourceARN": {
+                    "shape": "ResourceARN",
+                    "contextParam": {
+                        "name": "ResourceARN"
+                    }
+                }
+            }
+        },
+        "GetResourcePolicyOutput": {
+            "type": "structure",
+            "required": [
+                "Policy"
+            ],
+            "members": {
+                "Policy": {
+                    "shape": "Policy"
                 }
             }
         },
@@ -1851,6 +1986,9 @@
             "max": 256,
             "min": 1
         },
+        "Policy": {
+            "type": "string"
+        },
         "PositiveIntegerObject": {
             "type": "integer",
             "min": 1
@@ -2000,6 +2138,24 @@
             "max": 500,
             "min": 1
         },
+        "PutResourcePolicyInput": {
+            "type": "structure",
+            "required": [
+                "ResourceARN",
+                "Policy"
+            ],
+            "members": {
+                "ResourceARN": {
+                    "shape": "ResourceARN",
+                    "contextParam": {
+                        "name": "ResourceARN"
+                    }
+                },
+                "Policy": {
+                    "shape": "Policy"
+                }
+            }
+        },
         "Record": {
             "type": "structure",
             "required": [
@@ -2079,6 +2235,12 @@
                     }
                 }
             }
+        },
+        "ResourceARN": {
+            "type": "string",
+            "max": 2048,
+            "min": 1,
+            "pattern": "arn:aws.*:kinesis:.*:\\d{12}:.*stream\/\\S+"
         },
         "ResourceInUseException": {
             "type": "structure",

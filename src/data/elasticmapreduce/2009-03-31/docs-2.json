@@ -134,9 +134,11 @@
         "BlockPublicAccessConfigurationMetadata$CreatedByArn": "<p>The Amazon Resource Name that created or last modified the configuration.</p>",
         "Cluster$ClusterArn": "<p>The Amazon Resource Name of the cluster.</p>",
         "ClusterSummary$ClusterArn": "<p>The Amazon Resource Name of the cluster.</p>",
+        "CreateStudioInput$IdcInstanceArn": "<p> The ARN of the IAM Identity Center instance to create the Studio application. </p>",
         "GetClusterSessionCredentialsInput$ExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the runtime role for interactive workload submission on the cluster. The runtime role can be a cross-account IAM role. The runtime role ARN is a combination of account ID, role name, and role type using the following format: <code>arn:partition:service:region:account:resource</code>.</p>",
         "PutAutoScalingPolicyOutput$ClusterArn": "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
-        "RunJobFlowOutput$ClusterArn": "<p>The Amazon Resource Name (ARN) of the cluster.</p>"
+        "RunJobFlowOutput$ClusterArn": "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "Studio$IdcInstanceArn": "<p> The ARN of the IAM Identity Center instance the Studio application belongs to. </p>"
       }
     },
     "AuthMode": {
@@ -230,9 +232,11 @@
     "BooleanObject": {
       "base": null,
       "refs": {
+        "CreateStudioInput$TrustedIdentityPropagationEnabled": "<p> A Boolean indicating whether to enable Trusted identity propagation for the Studio. The default value is <code>false</code>. </p>",
         "EbsConfiguration$EbsOptimized": "<p>Indicates whether an Amazon EBS volume is EBS-optimized.</p>",
         "InstanceGroup$EbsOptimized": "<p>If the instance group is EBS-optimized. An Amazon EBS-optimized instance uses an optimized configuration stack and provides additional, dedicated capacity for Amazon EBS I/O.</p>",
-        "InstanceTypeSpecification$EbsOptimized": "<p>Evaluates to <code>TRUE</code> when the specified <code>InstanceType</code> is EBS-optimized.</p>"
+        "InstanceTypeSpecification$EbsOptimized": "<p>Evaluates to <code>TRUE</code> when the specified <code>InstanceType</code> is EBS-optimized.</p>",
+        "Studio$TrustedIdentityPropagationEnabled": "<p> Indicates whether the Studio has Trusted identity propagation enabled. The default value is <code>false</code>. </p>"
       }
     },
     "BootstrapActionConfig": {
@@ -792,6 +796,13 @@
         "ExecutionEngineConfig$ExecutionRoleArn": "<p>The execution role ARN required for the notebook execution.</p>"
       }
     },
+    "IdcUserAssignment": {
+      "base": null,
+      "refs": {
+        "CreateStudioInput$IdcUserAssignment": "<p> Specifies whether IAM Identity Center user assignment is <code>REQUIRED</code> or <code>OPTIONAL</code>. If the value is set to <code>REQUIRED</code>, users must be explicitly assigned to the Studio application to access the Studio. </p>",
+        "Studio$IdcUserAssignment": "<p> Indicates whether the Studio has <code>REQUIRED</code> or <code>OPTIONAL</code> IAM Identity Center user assignment. If the value is set to <code>REQUIRED</code>, users must be explicitly assigned to the Studio application to access the Studio. </p>"
+      }
+    },
     "IdentityType": {
       "base": null,
       "refs": {
@@ -1132,6 +1143,8 @@
         "Cluster$NormalizedInstanceHours": "<p>An approximation of the cost of the cluster, represented in m1.small/hours. This value is incremented one time for every hour an m1.small instance runs. Larger instances are weighted more, so an Amazon EC2 instance that is roughly four times more expensive would result in the normalized instance hours being incremented by four. This result is only an approximation and does not reflect the actual billing rate.</p>",
         "Cluster$EbsRootVolumeSize": "<p>The size, in GiB, of the Amazon EBS root device volume of the Linux AMI that is used for each Amazon EC2 instance. Available in Amazon EMR releases 4.x and later.</p>",
         "Cluster$StepConcurrencyLevel": "<p>Specifies the number of steps that can be executed concurrently.</p>",
+        "Cluster$EbsRootVolumeIops": "<p>The IOPS, of the Amazon EBS root device volume of the Linux AMI that is used for each Amazon EC2 instance. Available in Amazon EMR releases 6.15.0 and later.</p>",
+        "Cluster$EbsRootVolumeThroughput": "<p>The throughput, in MiB/s, of the Amazon EBS root device volume of the Linux AMI that is used for each Amazon EC2 instance. Available in Amazon EMR releases 6.15.0 and later.</p>",
         "ClusterSummary$NormalizedInstanceHours": "<p>An approximation of the cost of the cluster, represented in m1.small/hours. This value is incremented one time for every hour an m1.small instance runs. Larger instances are weighted more, so an Amazon EC2 instance that is roughly four times more expensive would result in the normalized instance hours being incremented by four. This result is only an approximation and does not reflect the actual billing rate.</p>",
         "ComputeLimits$MinimumCapacityUnits": "<p> The lower boundary of Amazon EC2 units. It is measured through vCPU cores or instances for instance groups and measured through units for instance fleets. Managed scaling activities are not allowed beyond this boundary. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration. </p>",
         "ComputeLimits$MaximumCapacityUnits": "<p> The upper boundary of Amazon EC2 units. It is measured through vCPU cores or instances for instance groups and measured through units for instance fleets. Managed scaling activities are not allowed beyond this boundary. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration. </p>",
@@ -1152,6 +1165,8 @@
         "ModifyClusterOutput$StepConcurrencyLevel": "<p>The number of steps that can be executed concurrently.</p>",
         "RunJobFlowInput$EbsRootVolumeSize": "<p>The size, in GiB, of the Amazon EBS root device volume of the Linux AMI that is used for each Amazon EC2 instance. Available in Amazon EMR releases 4.x and later.</p>",
         "RunJobFlowInput$StepConcurrencyLevel": "<p>Specifies the number of steps that can be executed concurrently. The default value is <code>1</code>. The maximum value is <code>256</code>.</p>",
+        "RunJobFlowInput$EbsRootVolumeIops": "<p>The IOPS, of the Amazon EBS root device volume of the Linux AMI that is used for each Amazon EC2 instance. Available in Amazon EMR releases 6.15.0 and later.</p>",
+        "RunJobFlowInput$EbsRootVolumeThroughput": "<p>The throughput, in MiB/s, of the Amazon EBS root device volume of the Linux AMI that is used for each Amazon EC2 instance. Available in Amazon EMR releases 6.15.0 and later.</p>",
         "ScalingConstraints$MinCapacity": "<p>The lower boundary of Amazon EC2 instances in an instance group below which scaling activities are not allowed to shrink. Scale-in activities will not terminate instances below this boundary.</p>",
         "ScalingConstraints$MaxCapacity": "<p>The upper boundary of Amazon EC2 instances in an instance group beyond which scaling activities are not allowed to grow. Scale-out activities will not add instances beyond this boundary.</p>",
         "ShrinkPolicy$DecommissionTimeout": "<p>The desired timeout for decommissioning an instance. Overrides the default YARN decommissioning timeout.</p>",
@@ -1861,7 +1876,7 @@
     "SpotProvisioningAllocationStrategy": {
       "base": null,
       "refs": {
-        "SpotProvisioningSpecification$AllocationStrategy": "<p> Specifies the strategy to use in launching Spot Instance fleets. Currently, the only option is capacity-optimized (the default), which launches instances from Spot Instance pools with optimal capacity for the number of instances that are launching. </p>"
+        "SpotProvisioningSpecification$AllocationStrategy": "<p>Specifies one of the following strategies to launch Spot Instance fleets: <code>price-capacity-optimized</code>, <code>capacity-optimized</code>, <code>lowest-price</code>, or <code>diversified</code>. For more information on the provisioning strategies, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-allocation-strategy.html\">Allocation strategies for Spot Instances</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.</p> <note> <p>When you launch a Spot Instance fleet with the old console, it automatically launches with the <code>capacity-optimized</code> strategy. You can't change the allocation strategy from the old console.</p> </note>"
       }
     },
     "SpotProvisioningSpecification": {
@@ -2133,7 +2148,7 @@
       }
     },
     "StudioSummary": {
-      "base": "<p>Details for an Amazon EMR Studio, including ID, Name, VPC, and Description. The details do not include subnets, IAM roles, security groups, or tags associated with the Studio.</p>",
+      "base": "<p>Details for an Amazon EMR Studio, including ID, Name, VPC, and Description. To fetch additional details such as subnets, IAM roles, security groups, and tags for the Studio, use the <a>DescribeStudio</a> API.</p>",
       "refs": {
         "StudioSummaryList$member": null
       }
@@ -2274,6 +2289,7 @@
         "CreateStudioInput$UserRole": "<p>The IAM user role that users and groups assume when logged in to an Amazon EMR Studio. Only specify a <code>UserRole</code> when you use IAM Identity Center authentication. The permissions attached to the <code>UserRole</code> can be scoped down for each user or group using session policies.</p>",
         "CreateStudioInput$DefaultS3Location": "<p>The Amazon S3 location to back up Amazon EMR Studio Workspaces and notebook files.</p>",
         "CreateStudioInput$IdpAuthUrl": "<p>The authentication endpoint of your identity provider (IdP). Specify this value when you use IAM authentication and want to let federated users log in to a Studio with the Studio URL and credentials from your IdP. Amazon EMR Studio redirects users to this endpoint to enter credentials.</p>",
+        "CreateStudioInput$EncryptionKeyArn": "<p>The KMS key identifier (ARN) used to encrypt Amazon EMR Studio workspace and notebook files when backed up to Amazon S3.</p>",
         "CreateStudioOutput$Url": "<p>The unique Studio access URL.</p>",
         "DeleteSecurityConfigurationInput$Name": "<p>The name of the security configuration.</p>",
         "DescribeSecurityConfigurationInput$Name": "<p>The name of the security configuration.</p>",
@@ -2316,7 +2332,9 @@
         "Studio$Url": "<p>The unique access URL of the Amazon EMR Studio.</p>",
         "Studio$DefaultS3Location": "<p>The Amazon S3 location to back up Amazon EMR Studio Workspaces and notebook files.</p>",
         "Studio$IdpAuthUrl": "<p>Your identity provider's authentication endpoint. Amazon EMR Studio redirects federated users to this endpoint for authentication when logging in to a Studio with the Studio URL.</p>",
+        "Studio$EncryptionKeyArn": "<p>The KMS key identifier (ARN) used to encrypt Amazon EMR Studio workspace and notebook files when backed up to Amazon S3.</p>",
         "UpdateStudioInput$DefaultS3Location": "<p>The Amazon S3 location to back up Workspaces and notebook files for the Amazon EMR Studio.</p>",
+        "UpdateStudioInput$EncryptionKeyArn": "<p>The KMS key identifier (ARN) used to encrypt Amazon EMR Studio workspace and notebook files when backed up to Amazon S3.</p>",
         "XmlStringList$member": null
       }
     },

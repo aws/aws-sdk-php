@@ -844,6 +844,40 @@
         }
       ]
     },
+    "DescribeAccountConfiguration": {
+      "name": "DescribeAccountConfiguration",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/accountConfiguration",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeAccountConfigurationRequest"
+      },
+      "output": {
+        "shape": "DescribeAccountConfigurationResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
     "DescribeChannel": {
       "name": "DescribeChannel",
       "http": {
@@ -1205,40 +1239,6 @@
         },
         {
           "shape": "NotFoundException"
-        },
-        {
-          "shape": "GatewayTimeoutException"
-        },
-        {
-          "shape": "TooManyRequestsException"
-        }
-      ]
-    },
-    "DescribeAccountConfiguration": {
-      "name": "DescribeAccountConfiguration",
-      "http": {
-        "method": "GET",
-        "requestUri": "/prod/accountConfiguration",
-        "responseCode": 200
-      },
-      "input": {
-        "shape": "DescribeAccountConfigurationRequest"
-      },
-      "output": {
-        "shape": "DescribeAccountConfigurationResponse"
-      },
-      "errors": [
-        {
-          "shape": "BadRequestException"
-        },
-        {
-          "shape": "InternalServerErrorException"
-        },
-        {
-          "shape": "ForbiddenException"
-        },
-        {
-          "shape": "BadGatewayException"
         },
         {
           "shape": "GatewayTimeoutException"
@@ -1751,43 +1751,6 @@
         }
       ]
     },
-    "UpdateAccountConfiguration": {
-      "name": "UpdateAccountConfiguration",
-      "http": {
-        "method": "PUT",
-        "requestUri": "/prod/accountConfiguration",
-        "responseCode": 200
-      },
-      "input": {
-        "shape": "UpdateAccountConfigurationRequest"
-      },
-      "output": {
-        "shape": "UpdateAccountConfigurationResponse"
-      },
-      "errors": [
-        {
-          "shape": "BadRequestException"
-        },
-        {
-          "shape": "UnprocessableEntityException"
-        },
-        {
-          "shape": "InternalServerErrorException"
-        },
-        {
-          "shape": "ForbiddenException"
-        },
-        {
-          "shape": "BadGatewayException"
-        },
-        {
-          "shape": "GatewayTimeoutException"
-        },
-        {
-          "shape": "TooManyRequestsException"
-        }
-      ]
-    },
     "StartChannel": {
       "name": "StartChannel",
       "http": {
@@ -1825,6 +1788,46 @@
         },
         {
           "shape": "ConflictException"
+        }
+      ]
+    },
+    "StartInputDevice": {
+      "name": "StartInputDevice",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/inputDevices/{inputDeviceId}/start",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "StartInputDeviceRequest"
+      },
+      "output": {
+        "shape": "StartInputDeviceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
         }
       ]
     },
@@ -1948,6 +1951,46 @@
         }
       ]
     },
+    "StopInputDevice": {
+      "name": "StopInputDevice",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/inputDevices/{inputDeviceId}/stop",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "StopInputDeviceRequest"
+      },
+      "output": {
+        "shape": "StopInputDeviceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
     "StopMultiplex": {
       "name": "StopMultiplex",
       "http": {
@@ -2028,6 +2071,43 @@
         },
         {
           "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateAccountConfiguration": {
+      "name": "UpdateAccountConfiguration",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/prod/accountConfiguration",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateAccountConfigurationRequest"
+      },
+      "output": {
+        "shape": "UpdateAccountConfigurationResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
         }
       ]
     },
@@ -2443,6 +2523,13 @@
         "MEDIUM_LOW"
       ]
     },
+    "Ac3AttenuationControl": {
+      "type": "string",
+      "enum": [
+        "ATTENUATE_3_DB",
+        "NONE"
+      ]
+    },
     "Ac3BitstreamMode": {
       "type": "string",
       "enum": [
@@ -2516,6 +2603,10 @@
         "MetadataControl": {
           "shape": "Ac3MetadataControl",
           "locationName": "metadataControl"
+        },
+        "AttenuationControl": {
+          "shape": "Ac3AttenuationControl",
+          "locationName": "attenuationControl"
         }
       }
     },
@@ -2556,7 +2647,7 @@
     "AccountConfiguration": {
       "type": "structure",
       "members": {
-        "kmsKeyId": {
+        "KmsKeyId": {
           "shape": "__string",
           "locationName": "kmsKeyId"
         }
@@ -4020,6 +4111,49 @@
       "members": {
       }
     },
+    "ColorCorrection": {
+      "type": "structure",
+      "members": {
+        "InputColorSpace": {
+          "shape": "ColorSpace",
+          "locationName": "inputColorSpace"
+        },
+        "OutputColorSpace": {
+          "shape": "ColorSpace",
+          "locationName": "outputColorSpace"
+        },
+        "Uri": {
+          "shape": "__string",
+          "locationName": "uri"
+        }
+      },
+      "required": [
+        "OutputColorSpace",
+        "InputColorSpace",
+        "Uri"
+      ]
+    },
+    "ColorCorrectionSettings": {
+      "type": "structure",
+      "members": {
+        "GlobalColorCorrections": {
+          "shape": "__listOfColorCorrection",
+          "locationName": "globalColorCorrections"
+        }
+      },
+      "required": [
+        "GlobalColorCorrections"
+      ]
+    },
+    "ColorSpace": {
+      "type": "string",
+      "enum": [
+        "HDR10",
+        "HLG_2020",
+        "REC_601",
+        "REC_709"
+      ]
+    },
     "ColorSpacePassthroughSettings": {
       "type": "structure",
       "members": {
@@ -4913,6 +5047,29 @@
         "ResourceArn"
       ]
     },
+    "DescribeAccountConfigurationRequest": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "DescribeAccountConfigurationResponse": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "DescribeAccountConfigurationResultModel": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
     "DescribeChannelRequest": {
       "type": "structure",
       "members": {
@@ -5074,6 +5231,14 @@
         "AvailabilityZone": {
           "shape": "__string",
           "locationName": "availabilityZone"
+        },
+        "MedialiveInputArns": {
+          "shape": "__listOf__string",
+          "locationName": "medialiveInputArns"
+        },
+        "OutputType": {
+          "shape": "InputDeviceOutputType",
+          "locationName": "outputType"
         }
       }
     },
@@ -5541,6 +5706,49 @@
         "ScheduleActions": {
           "shape": "__listOfScheduleAction",
           "locationName": "scheduleActions"
+        }
+      }
+    },
+    "DescribeThumbnailsRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelId"
+        },
+        "PipelineId": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "pipelineId"
+        },
+        "ThumbnailType": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "thumbnailType"
+        }
+      },
+      "required": [
+        "ThumbnailType",
+        "PipelineId",
+        "ChannelId"
+      ]
+    },
+    "DescribeThumbnailsResponse": {
+      "type": "structure",
+      "members": {
+        "ThumbnailDetails": {
+          "shape": "__listOfThumbnailDetail",
+          "locationName": "thumbnailDetails"
+        }
+      }
+    },
+    "DescribeThumbnailsResultModel": {
+      "type": "structure",
+      "members": {
+        "ThumbnailDetails": {
+          "shape": "__listOfThumbnailDetail",
+          "locationName": "thumbnailDetails"
         }
       }
     },
@@ -6189,6 +6397,10 @@
         "ThumbnailConfiguration": {
           "shape": "ThumbnailConfiguration",
           "locationName": "thumbnailConfiguration"
+        },
+        "ColorCorrectionSettings": {
+          "shape": "ColorCorrectionSettings",
+          "locationName": "colorCorrectionSettings"
         }
       },
       "required": [
@@ -6197,6 +6409,19 @@
         "OutputGroups",
         "TimecodeConfig"
       ]
+    },
+    "EpochLockingSettings": {
+      "type": "structure",
+      "members": {
+        "CustomEpoch": {
+          "shape": "__string",
+          "locationName": "customEpoch"
+        },
+        "JamSyncTime": {
+          "shape": "__string",
+          "locationName": "jamSyncTime"
+        }
+      }
     },
     "Esam": {
       "type": "structure",
@@ -6263,10 +6488,21 @@
         "InputPrepareScheduleActions": {
           "shape": "FeatureActivationsInputPrepareScheduleActions",
           "locationName": "inputPrepareScheduleActions"
+        },
+        "OutputStaticImageOverlayScheduleActions": {
+          "shape": "FeatureActivationsOutputStaticImageOverlayScheduleActions",
+          "locationName": "outputStaticImageOverlayScheduleActions"
         }
       }
     },
     "FeatureActivationsInputPrepareScheduleActions": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "FeatureActivationsOutputStaticImageOverlayScheduleActions": {
       "type": "string",
       "enum": [
         "DISABLED",
@@ -6485,72 +6721,6 @@
         "httpStatusCode": 504
       }
     },
-    "DescribeAccountConfigurationRequest": {
-      "type": "structure",
-      "members": {
-      }
-    },
-    "DescribeAccountConfigurationResponse": {
-      "type": "structure",
-      "members": {
-        "AccountConfiguration": {
-          "shape": "AccountConfiguration",
-          "locationName": "accountConfiguration"
-        }
-      }
-    },
-    "DescribeAccountConfigurationResultModel": {
-      "type": "structure",
-      "members": {
-        "AccountConfiguration": {
-          "shape": "AccountConfiguration",
-          "locationName": "accountConfiguration"
-        }
-      }
-    },
-    "DescribeThumbnailsRequest": {
-      "type": "structure",
-      "members": {
-        "ChannelId": {
-          "shape": "__string",
-          "location": "uri",
-          "locationName": "channelId"
-        },
-        "PipelineId": {
-          "shape": "__string",
-          "location": "querystring",
-          "locationName": "pipelineId"
-        },
-        "ThumbnailType": {
-          "shape": "__string",
-          "location": "querystring",
-          "locationName": "thumbnailType"
-        }
-      },
-      "required": [
-        "ThumbnailType",
-        "PipelineId",
-        "ChannelId"
-      ]
-    },
-    "DescribeThumbnailsResponse": {
-      "type": "structure",
-      "members": {
-        "ThumbnailDetails": {
-          "shape": "__listOfThumbnailDetail",
-          "locationName": "thumbnailDetails"
-        }
-      }
-    },
-    "DescribeThumbnailsResultModel": {
-      "type": "structure",
-      "members": {
-        "ThumbnailDetails": {
-          "shape": "__listOfThumbnailDetail",
-          "locationName": "thumbnailDetails"
-        }
-      }
-    },
     "GlobalConfiguration": {
       "type": "structure",
       "members": {
@@ -6577,6 +6747,10 @@
         "SupportLowFramerateInputs": {
           "shape": "GlobalConfigurationLowFramerateInputs",
           "locationName": "supportLowFramerateInputs"
+        },
+        "OutputLockingSettings": {
+          "shape": "OutputLockingSettings",
+          "locationName": "outputLockingSettings"
         }
       }
     },
@@ -7896,6 +8070,14 @@
       "members": {
       }
     },
+    "IncludeFillerNalUnits": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "DROP",
+        "INCLUDE"
+      ]
+    },
     "Input": {
       "type": "structure",
       "members": {
@@ -8153,6 +8335,14 @@
         "AvailabilityZone": {
           "shape": "__string",
           "locationName": "availabilityZone"
+        },
+        "MedialiveInputArns": {
+          "shape": "__listOf__string",
+          "locationName": "medialiveInputArns"
+        },
+        "OutputType": {
+          "shape": "InputDeviceOutputType",
+          "locationName": "outputType"
         }
       }
     },
@@ -8161,6 +8351,13 @@
       "enum": [
         "HDMI",
         "SDI"
+      ]
+    },
+    "InputDeviceCodec": {
+      "type": "string",
+      "enum": [
+        "HEVC",
+        "AVC"
       ]
     },
     "InputDeviceConfigurableSettings": {
@@ -8177,6 +8374,14 @@
         "LatencyMs": {
           "shape": "__integer",
           "locationName": "latencyMs"
+        },
+        "Codec": {
+          "shape": "InputDeviceCodec",
+          "locationName": "codec"
+        },
+        "MediaconnectSettings": {
+          "shape": "InputDeviceMediaConnectConfigurableSettings",
+          "locationName": "mediaconnectSettings"
         }
       }
     },
@@ -8256,6 +8461,48 @@
         "DHCP"
       ]
     },
+    "InputDeviceMediaConnectConfigurableSettings": {
+      "type": "structure",
+      "members": {
+        "FlowArn": {
+          "shape": "__string",
+          "locationName": "flowArn"
+        },
+        "RoleArn": {
+          "shape": "__string",
+          "locationName": "roleArn"
+        },
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        },
+        "SourceName": {
+          "shape": "__string",
+          "locationName": "sourceName"
+        }
+      }
+    },
+    "InputDeviceMediaConnectSettings": {
+      "type": "structure",
+      "members": {
+        "FlowArn": {
+          "shape": "__string",
+          "locationName": "flowArn"
+        },
+        "RoleArn": {
+          "shape": "__string",
+          "locationName": "roleArn"
+        },
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        },
+        "SourceName": {
+          "shape": "__string",
+          "locationName": "sourceName"
+        }
+      }
+    },
     "InputDeviceNetworkSettings": {
       "type": "structure",
       "members": {
@@ -8280,6 +8527,14 @@
           "locationName": "subnetMask"
         }
       }
+    },
+    "InputDeviceOutputType": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "MEDIALIVE_INPUT",
+        "MEDIACONNECT_FLOW"
+      ]
     },
     "InputDeviceRequest": {
       "type": "structure",
@@ -8371,6 +8626,14 @@
         "AvailabilityZone": {
           "shape": "__string",
           "locationName": "availabilityZone"
+        },
+        "MedialiveInputArns": {
+          "shape": "__listOf__string",
+          "locationName": "medialiveInputArns"
+        },
+        "OutputType": {
+          "shape": "InputDeviceOutputType",
+          "locationName": "outputType"
         }
       }
     },
@@ -8426,6 +8689,14 @@
         "LatencyMs": {
           "shape": "__integer",
           "locationName": "latencyMs"
+        },
+        "Codec": {
+          "shape": "InputDeviceCodec",
+          "locationName": "codec"
+        },
+        "MediaconnectSettings": {
+          "shape": "InputDeviceMediaConnectSettings",
+          "locationName": "mediaconnectSettings"
         }
       }
     },
@@ -9715,6 +9986,13 @@
         "PASSTHROUGH"
       ]
     },
+    "M3u8KlvBehavior": {
+      "type": "string",
+      "enum": [
+        "NO_PASSTHROUGH",
+        "PASSTHROUGH"
+      ]
+    },
     "M3u8NielsenId3Behavior": {
       "type": "string",
       "enum": [
@@ -9806,6 +10084,14 @@
         "VideoPid": {
           "shape": "__string",
           "locationName": "videoPid"
+        },
+        "KlvBehavior": {
+          "shape": "M3u8KlvBehavior",
+          "locationName": "klvBehavior"
+        },
+        "KlvDataPids": {
+          "shape": "__string",
+          "locationName": "klvDataPids"
         }
       }
     },
@@ -10973,6 +11259,19 @@
         }
       }
     },
+    "OutputLockingSettings": {
+      "type": "structure",
+      "members": {
+        "EpochLockingSettings": {
+          "shape": "EpochLockingSettings",
+          "locationName": "epochLockingSettings"
+        },
+        "PipelineLockingSettings": {
+          "shape": "PipelineLockingSettings",
+          "locationName": "pipelineLockingSettings"
+        }
+      }
+    },
     "OutputSettings": {
       "type": "structure",
       "members": {
@@ -11055,6 +11354,11 @@
         "PIPELINE_0",
         "PIPELINE_1"
       ]
+    },
+    "PipelineLockingSettings": {
+      "type": "structure",
+      "members": {
+      }
     },
     "PipelinePauseStateSettings": {
       "type": "structure",
@@ -11539,6 +11843,10 @@
         "RestartDelay": {
           "shape": "__integerMin0",
           "locationName": "restartDelay"
+        },
+        "IncludeFillerNalUnits": {
+          "shape": "IncludeFillerNalUnits",
+          "locationName": "includeFillerNalUnits"
         }
       }
     },
@@ -11658,6 +11966,14 @@
         "StaticImageDeactivateSettings": {
           "shape": "StaticImageDeactivateScheduleActionSettings",
           "locationName": "staticImageDeactivateSettings"
+        },
+        "StaticImageOutputActivateSettings": {
+          "shape": "StaticImageOutputActivateScheduleActionSettings",
+          "locationName": "staticImageOutputActivateSettings"
+        },
+        "StaticImageOutputDeactivateSettings": {
+          "shape": "StaticImageOutputDeactivateScheduleActionSettings",
+          "locationName": "staticImageOutputDeactivateSettings"
         }
       }
     },
@@ -12019,42 +12335,6 @@
         "WEB_DELIVERY_ALLOWED"
       ]
     },
-    "UpdateAccountConfigurationRequest": {
-      "type": "structure",
-      "members": {
-        "AccountConfiguration": {
-          "shape": "AccountConfiguration",
-          "locationName": "accountConfiguration"
-        }
-      }
-    },
-    "UpdateAccountConfigurationRequestModel": {
-      "type": "structure",
-      "members": {
-        "AccountConfiguration": {
-          "shape": "AccountConfiguration",
-          "locationName": "accountConfiguration"
-        }
-      }
-    },
-    "UpdateAccountConfigurationResponse": {
-      "type": "structure",
-      "members": {
-        "AccountConfiguration": {
-          "shape": "AccountConfiguration",
-          "locationName": "accountConfiguration"
-        }
-      }
-    },
-    "UpdateAccountConfigurationResultModel": {
-      "type": "structure",
-      "members": {
-        "AccountConfiguration": {
-          "shape": "AccountConfiguration",
-          "locationName": "accountConfiguration"
-        }
-      }
-    },
     "SmoothGroupAudioOnlyTimecodeControl": {
       "type": "string",
       "enum": [
@@ -12249,6 +12529,24 @@
       "members": {
       }
     },
+    "StartInputDeviceRequest": {
+      "type": "structure",
+      "members": {
+        "InputDeviceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "inputDeviceId"
+        }
+      },
+      "required": [
+        "InputDeviceId"
+      ]
+    },
+    "StartInputDeviceResponse": {
+      "type": "structure",
+      "members": {
+      }
+    },
     "StartMultiplexRequest": {
       "type": "structure",
       "members": {
@@ -12377,6 +12675,79 @@
         }
       }
     },
+    "StaticImageOutputActivateScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Duration": {
+          "shape": "__integerMin0",
+          "locationName": "duration"
+        },
+        "FadeIn": {
+          "shape": "__integerMin0",
+          "locationName": "fadeIn"
+        },
+        "FadeOut": {
+          "shape": "__integerMin0",
+          "locationName": "fadeOut"
+        },
+        "Height": {
+          "shape": "__integerMin1",
+          "locationName": "height"
+        },
+        "Image": {
+          "shape": "InputLocation",
+          "locationName": "image"
+        },
+        "ImageX": {
+          "shape": "__integerMin0",
+          "locationName": "imageX"
+        },
+        "ImageY": {
+          "shape": "__integerMin0",
+          "locationName": "imageY"
+        },
+        "Layer": {
+          "shape": "__integerMin0Max7",
+          "locationName": "layer"
+        },
+        "Opacity": {
+          "shape": "__integerMin0Max100",
+          "locationName": "opacity"
+        },
+        "OutputNames": {
+          "shape": "__listOf__string",
+          "locationName": "outputNames"
+        },
+        "Width": {
+          "shape": "__integerMin1",
+          "locationName": "width"
+        }
+      },
+      "required": [
+        "OutputNames",
+        "Image"
+      ]
+    },
+    "StaticImageOutputDeactivateScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "FadeOut": {
+          "shape": "__integerMin0",
+          "locationName": "fadeOut"
+        },
+        "Layer": {
+          "shape": "__integerMin0Max7",
+          "locationName": "layer"
+        },
+        "OutputNames": {
+          "shape": "__listOf__string",
+          "locationName": "outputNames"
+        }
+      },
+      "required": [
+        "OutputNames"
+      ]
+    },
     "StaticKeySettings": {
       "type": "structure",
       "members": {
@@ -12481,6 +12852,24 @@
           "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
+      }
+    },
+    "StopInputDeviceRequest": {
+      "type": "structure",
+      "members": {
+        "InputDeviceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "inputDeviceId"
+        }
+      },
+      "required": [
+        "InputDeviceId"
+      ]
+    },
+    "StopInputDeviceResponse": {
+      "type": "structure",
+      "members": {
       }
     },
     "StopMultiplexRequest": {
@@ -12948,6 +13337,42 @@
         "httpStatusCode": 422
       }
     },
+    "UpdateAccountConfigurationRequest": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "UpdateAccountConfigurationRequestModel": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "UpdateAccountConfigurationResponse": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "UpdateAccountConfigurationResultModel": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
     "UpdateChannel": {
       "type": "structure",
       "members": {
@@ -13244,6 +13669,14 @@
         "AvailabilityZone": {
           "shape": "__string",
           "locationName": "availabilityZone"
+        },
+        "MedialiveInputArns": {
+          "shape": "__listOf__string",
+          "locationName": "medialiveInputArns"
+        },
+        "OutputType": {
+          "shape": "InputDeviceOutputType",
+          "locationName": "outputType"
         }
       }
     },
@@ -13782,6 +14215,15 @@
     "__doubleMin1Max65535": {
       "type": "double"
     },
+    "__doubleMin250Max5000": {
+      "type": "double"
+    },
+    "__doubleMin32Max46": {
+      "type": "double"
+    },
+    "__doubleMinNegative1Max5": {
+      "type": "double"
+    },
     "__doubleMinNegative59Max0": {
       "type": "double"
     },
@@ -13831,6 +14273,11 @@
       "type": "integer",
       "min": 0,
       "max": 15
+    },
+    "__integerMin0Max2000": {
+      "type": "integer",
+      "min": 0,
+      "max": 2000
     },
     "__integerMin0Max255": {
       "type": "integer",
@@ -14101,6 +14548,12 @@
       "type": "list",
       "member": {
         "shape": "ChannelSummary"
+      }
+    },
+    "__listOfColorCorrection": {
+      "type": "list",
+      "member": {
+        "shape": "ColorCorrection"
       }
     },
     "__listOfFailoverCondition": {

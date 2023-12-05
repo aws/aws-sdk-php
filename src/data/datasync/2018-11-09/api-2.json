@@ -864,7 +864,8 @@
       "members":{
         "AgentArn":{"shape":"AgentArn"},
         "Name":{"shape":"TagValue"},
-        "Status":{"shape":"AgentStatus"}
+        "Status":{"shape":"AgentStatus"},
+        "Platform":{"shape":"Platform"}
       }
     },
     "AgentStatus":{
@@ -873,6 +874,12 @@
         "ONLINE",
         "OFFLINE"
       ]
+    },
+    "AgentVersion":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\s+=._:@/-]+$"
     },
     "Atime":{
       "type":"string",
@@ -1238,7 +1245,8 @@
         "Excludes":{"shape":"FilterList"},
         "Schedule":{"shape":"TaskSchedule"},
         "Tags":{"shape":"InputTagList"},
-        "Includes":{"shape":"FilterList"}
+        "Includes":{"shape":"FilterList"},
+        "TaskReportConfig":{"shape":"TaskReportConfig"}
       }
     },
     "CreateTaskResponse":{
@@ -1310,7 +1318,8 @@
         "LastConnectionTime":{"shape":"Time"},
         "CreationTime":{"shape":"Time"},
         "EndpointType":{"shape":"EndpointType"},
-        "PrivateLinkConfig":{"shape":"PrivateLinkConfig"}
+        "PrivateLinkConfig":{"shape":"PrivateLinkConfig"},
+        "Platform":{"shape":"Platform"}
       }
     },
     "DescribeDiscoveryJobRequest":{
@@ -1627,7 +1636,13 @@
         "BytesWritten":{"shape":"long"},
         "BytesTransferred":{"shape":"long"},
         "Result":{"shape":"TaskExecutionResultDetail"},
-        "BytesCompressed":{"shape":"long"}
+        "BytesCompressed":{"shape":"long"},
+        "TaskReportConfig":{"shape":"TaskReportConfig"},
+        "FilesDeleted":{"shape":"long"},
+        "FilesSkipped":{"shape":"long"},
+        "FilesVerified":{"shape":"long"},
+        "ReportResult":{"shape":"ReportResult"},
+        "EstimatedFilesToDelete":{"shape":"long"}
       }
     },
     "DescribeTaskRequest":{
@@ -1655,7 +1670,8 @@
         "ErrorCode":{"shape":"string"},
         "ErrorDetail":{"shape":"string"},
         "CreationTime":{"shape":"Time"},
-        "Includes":{"shape":"FilterList"}
+        "Includes":{"shape":"FilterList"},
+        "TaskReportConfig":{"shape":"TaskReportConfig"}
       }
     },
     "DestinationNetworkInterfaceArns":{
@@ -2388,8 +2404,8 @@
     "ObjectStorageAccessKey":{
       "type":"string",
       "max":200,
-      "min":1,
-      "pattern":"^.+$"
+      "min":0,
+      "pattern":"^.*$"
     },
     "ObjectStorageBucketName":{
       "type":"string",
@@ -2404,8 +2420,8 @@
     "ObjectStorageSecretKey":{
       "type":"string",
       "max":200,
-      "min":1,
-      "pattern":"^.+$",
+      "min":0,
+      "pattern":"^.*$",
       "sensitive":true
     },
     "ObjectStorageServerPort":{
@@ -2425,6 +2441,13 @@
       "type":"string",
       "enum":[
         "PRESERVE",
+        "NONE"
+      ]
+    },
+    "ObjectVersionIds":{
+      "type":"string",
+      "enum":[
+        "INCLUDE",
         "NONE"
       ]
     },
@@ -2510,6 +2533,12 @@
         "SUCCESS",
         "ERROR"
       ]
+    },
+    "Platform":{
+      "type":"structure",
+      "members":{
+        "Version":{"shape":"AgentVersion"}
+      }
     },
     "PosixPermissions":{
       "type":"string",
@@ -2606,6 +2635,61 @@
     "RemoveStorageSystemResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "ReportDestination":{
+      "type":"structure",
+      "members":{
+        "S3":{"shape":"ReportDestinationS3"}
+      }
+    },
+    "ReportDestinationS3":{
+      "type":"structure",
+      "required":[
+        "S3BucketArn",
+        "BucketAccessRoleArn"
+      ],
+      "members":{
+        "Subdirectory":{"shape":"S3Subdirectory"},
+        "S3BucketArn":{"shape":"S3BucketArn"},
+        "BucketAccessRoleArn":{"shape":"IamRoleArn"}
+      }
+    },
+    "ReportLevel":{
+      "type":"string",
+      "enum":[
+        "ERRORS_ONLY",
+        "SUCCESSES_AND_ERRORS"
+      ]
+    },
+    "ReportOutputType":{
+      "type":"string",
+      "enum":[
+        "SUMMARY_ONLY",
+        "STANDARD"
+      ]
+    },
+    "ReportOverride":{
+      "type":"structure",
+      "members":{
+        "ReportLevel":{"shape":"ReportLevel"}
+      }
+    },
+    "ReportOverrides":{
+      "type":"structure",
+      "members":{
+        "Transferred":{"shape":"ReportOverride"},
+        "Verified":{"shape":"ReportOverride"},
+        "Deleted":{"shape":"ReportOverride"},
+        "Skipped":{"shape":"ReportOverride"}
+      }
+    },
+    "ReportResult":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"PhaseStatus"},
+        "ErrorCode":{"shape":"string"},
+        "ErrorDetail":{"shape":"string"}
       }
     },
     "ResourceDetails":{
@@ -2766,7 +2850,8 @@
         "OverrideOptions":{"shape":"Options"},
         "Includes":{"shape":"FilterList"},
         "Excludes":{"shape":"FilterList"},
-        "Tags":{"shape":"InputTagList"}
+        "Tags":{"shape":"InputTagList"},
+        "TaskReportConfig":{"shape":"TaskReportConfig"}
       }
     },
     "StartTaskExecutionResponse":{
@@ -2952,6 +3037,16 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "TaskReportConfig":{
+      "type":"structure",
+      "members":{
+        "Destination":{"shape":"ReportDestination"},
+        "OutputType":{"shape":"ReportOutputType"},
+        "ReportLevel":{"shape":"ReportLevel"},
+        "ObjectVersionIds":{"shape":"ObjectVersionIds"},
+        "Overrides":{"shape":"ReportOverrides"}
+      }
     },
     "TaskSchedule":{
       "type":"structure",
@@ -3179,7 +3274,8 @@
         "Schedule":{"shape":"TaskSchedule"},
         "Name":{"shape":"TagValue"},
         "CloudWatchLogGroupArn":{"shape":"LogGroupArn"},
-        "Includes":{"shape":"FilterList"}
+        "Includes":{"shape":"FilterList"},
+        "TaskReportConfig":{"shape":"TaskReportConfig"}
       }
     },
     "UpdateTaskResponse":{
