@@ -22,6 +22,9 @@ class EcsCredentialProvider
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
     const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
 
+    const DEFAULT_ENV_TIMEOUT = 1.0;
+    const DEFAULT_ENV_RETRIES = 3;
+
     /** @var callable */
     private $client;
 
@@ -37,21 +40,20 @@ class EcsCredentialProvider
     /**
      *  The constructor accepts following options:
      *  - timeout: (optional) Connection timeout, in seconds, default 1.0
-     *  - retries: Optional number of retries to be attempted.
+     *  - retries: Optional number of retries to be attempted, default 3.
      *  - client: An EcsClient to make request from
      *
      * @param array $config Configuration options
      */
     public function __construct(array $config = [])
     {
-        $this->timeout = (float) getenv(self::ENV_TIMEOUT)
-            ?: (isset($config['timeout'])
-                ? $config['timeout']
-                : 1.0);
-        $this->retries = (int) getenv(self::ENV_RETRIES)
-            ?: (isset($config['retries'])
-                ? $config['retries']
-                : 3);
+        $this->timeout = (int) isset($config['timeout'])
+            ? $config['timeout']
+            : (getenv(self::ENV_TIMEOUT) ?: self::DEFAULT_ENV_TIMEOUT);
+        $this->retries = (int) isset($config['retries'])
+            ? $config['retries']
+            : (getenv(self::ENV_RETRIES) ?: self::DEFAULT_ENV_RETRIES);
+
         $this->attempts = 0;
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only

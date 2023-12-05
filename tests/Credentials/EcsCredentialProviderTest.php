@@ -12,7 +12,6 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Ring\Future\CompletedFutureArray;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
