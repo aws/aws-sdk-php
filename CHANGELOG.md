@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.293.4 - 2023-12-05
 
 * `Aws\CleanRoomsML` - Updated service title from cleanroomsml to CleanRoomsML.
 * `Aws\Athena` - Adding IdentityCenter enabled request for interactive query
