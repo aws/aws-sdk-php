@@ -1,10 +1,14 @@
 <?php
 namespace Aws\Test\Credentials;
 
+use Aws\Credentials\Credentials;
+use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\EcsCredentialProvider;
 use Aws\Exception\CredentialsException;
 use Aws\Handler\GuzzleV6\GuzzleHandler;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
@@ -14,7 +18,7 @@ use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers Aws\Credentials\EcsCredentialProvider
+ * @covers \Aws\Credentials\EcsCredentialProvider
  */
 class EcsCredentialProviderTest extends TestCase
 {
@@ -188,7 +192,7 @@ class EcsCredentialProviderTest extends TestCase
     public function uriAndTokenResolutionProvider()
     {
         $cases = json_decode(file_get_contents(
-                __DIR__ . '/fixtures/ecs/uri-token-resolution.json')
+            __DIR__ . '/fixtures/ecs/uri-token-resolution.json')
             , true
         );
 
@@ -401,7 +405,7 @@ class EcsCredentialProviderTest extends TestCase
     }
 
     /**
-     * @param PromiseInterface[] $responses
+     * @param Promise\PromiseInterface[] $responses
      * @param array $creds
      * @return \Closure
      */
@@ -489,7 +493,7 @@ class EcsCredentialProviderTest extends TestCase
                     ]
                 ),
                 new CredentialsException(
-                    'Error retrieving credential from ECS after attempt 0/1 (401 Unathorized)'
+                    'Error retrieving credentials from container metadata after attempt 0/1 (401 Unathorized)'
                 )
             ],
             'Retryable error' => [
@@ -500,7 +504,7 @@ class EcsCredentialProviderTest extends TestCase
                     ]
                 ),
                 new CredentialsException(
-                    'Error retrieving credential from ECS after attempt 1/1 (cURL error 28: Connection timed out after 1000 milliseconds)'
+                    'Error retrieving credentials from container metadata after attempt 1/1 (cURL error 28: Connection timed out after 1000 milliseconds)'
                 )
             ],
         ];

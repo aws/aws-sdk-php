@@ -5,6 +5,7 @@ use Aws\Exception\CredentialsException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -68,15 +69,14 @@ class EcsCredentialProvider
      */
     public function __invoke()
     {
-        $client = $this->client;
-        $uri = self::getEcsUri();
+        $uri = $this->getEcsUri();
 
         if ($this->isCompatibleUri($uri)) {
             return Promise\Coroutine::of(function () {
                 $client = $this->client;
                 $request = new Request('GET', $this->getEcsUri());
 
-                $headers = $this->setHeaderForAuthToken();
+                $headers = $this->getHeadersForAuthToken();
 
                 $credentials = null;
 
@@ -105,7 +105,7 @@ class EcsCredentialProvider
                         } else {
                             $msg = $reason->getMessage();
                             throw new CredentialsException(
-                                sprintf('Error retrieving credential from ECS after attempt %d/%d (%s)', $this->attempts, $this->retries, $msg)
+                                sprintf('Error retrieving credentials from container metadata after attempt %d/%d (%s)', $this->attempts, $this->retries, $msg)
                             );
                         }
                     }));
