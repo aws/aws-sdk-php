@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CleanRoomsML` - Updated service title from cleanroomsml to CleanRoomsML.
+* `Aws\Athena` - Adding IdentityCenter enabled request for interactive query
+* `Aws\CloudFormation` - Documentation update, December 2023
+* `Aws\EC2` - Adds A10G, T4G, and H100 as accelerator name options and Habana as an accelerator manufacturer option for attribute based selection
+
 ## 3.293.3 - 2023-12-04
 
 * `Aws\MediaLive` - Adds support for custom color correction on channels using 3D LUT files.
