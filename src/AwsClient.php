@@ -530,7 +530,7 @@ class AwsClient implements AwsClientInterface
                 $this->getApi(),
                 $endpointArgs
             ),
-            'endpointV2_middleware'
+            'endpoint-resolution'
         );
     }
 

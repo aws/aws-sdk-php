@@ -2,6 +2,7 @@
 namespace Aws\Test\EndpointV2;
 
 use Aws\Api\Service;
+use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2Middleware;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
@@ -202,5 +203,19 @@ class EndpointV2MiddlewareTest extends TestCase
 
         $middleware = new EndpointV2Middleware($nextHandler, $endpointProvider, $api, $args);
         $middleware('not_a_command');
+    }
+
+    public function testMiddlewareAppliedForEndpointV2Clients()
+    {
+        $client = $this->getTestClient('s3');
+        $list = $client->getHandlerList();
+        $this->assertStringContainsString('endpoint-resolution', $list->__toString());
+    }
+
+    public function testMiddlewareNotAppliedForNonEndpointV2Clients()
+    {
+        $client = $this->getTestClient('s3', ['endpoint_provider' => PartitionEndpointProvider::defaultProvider()]);
+        $list = $client->getHandlerList();
+        $this->assertStringNotContainsString('endpoint-resolution', $list->__toString());
     }
 }
