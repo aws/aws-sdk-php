@@ -34,7 +34,7 @@ class EndpointV2MiddlewareTest extends TestCase
             $this->assertInstanceOf(RulesetEndpoint::class, $endpoint);
             $this->assertEquals($expectedUri, $endpoint->getUrl());
 
-            if (isset($endpoint->getProperties()['authSchemes'])) {
+            if (!empty($endpoint->getProperty('authSchemes'))) {
                 self::assertNotEmpty($command->getAuthSchemes());
             }
         };

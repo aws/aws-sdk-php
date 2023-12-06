@@ -13,11 +13,18 @@ use GuzzleHttp\Promise\Promise;
  * IMPORTANT: this middleware must be added to the "build" step.
  * Specifically, it must precede the 'builder' step.
  *
- *
  * @internal
  */
 class EndpointV2Middleware
 {
+    private static $validAuthSchemes = [
+        'sigv4' => true,
+        'sigv4a' => true,
+        'none' => true,
+        'bearer' => true,
+        'sigv4-s3express' => true
+    ];
+
     /** @var callable */
     private $nextHandler;
 
@@ -83,9 +90,9 @@ class EndpointV2Middleware
         $providerArgs = $this->resolveArgs($commandArgs, $operation);
         $endpoint = $this->endpointProvider->resolveEndpoint($providerArgs);
 
-        if (!empty($endpoint->getProperties()['authSchemes'])) {
+        if (!empty($authSchemes = $endpoint->getProperty('authSchemes'))) {
             $this->applyAuthScheme(
-                $endpoint->getProperties()['authSchemes'],
+                $authSchemes,
                 $command
             );
         }
@@ -180,6 +187,7 @@ class EndpointV2Middleware
         forEach($staticContextParams as $paramName => $paramValue) {
             $scopedParams[$paramName] = $paramValue['value'];
         }
+
         return $scopedParams;
     }
 
@@ -204,6 +212,7 @@ class EndpointV2Middleware
                 $scopedParams[$name] = $commandArgs[$spec['shape']];
             }
         }
+
         return $scopedParams;
     }
 
@@ -234,11 +243,10 @@ class EndpointV2Middleware
      */
     private function resolveAuthScheme(array $authSchemes) : array
     {
-        $validAuthSchemes = ['sigv4', 'sigv4a', 'none', 'bearer', 'sigv4-s3express'];
         $invalidAuthSchemes = [];
 
         foreach($authSchemes as $authScheme) {
-            if (in_array($authScheme['name'], $validAuthSchemes)) {
+            if (isset(self::$validAuthSchemes[$authScheme['name']])) {
                 return $this->normalizeAuthScheme($authScheme);
             } else {
                 $invalidAuthSchemes[] = "`{$authScheme['name']}`";
@@ -246,7 +254,9 @@ class EndpointV2Middleware
         }
 
         $invalidAuthSchemesString = implode(', ', $invalidAuthSchemes);
-        $validAuthSchemesString = '`' . implode('`, `', $validAuthSchemes) . '`';
+        $validAuthSchemesString = '`'
+            . implode('`, `', array_keys(self::$validAuthSchemes))
+            . '`';
         throw new \InvalidArgumentException(
             "This operation requests {$invalidAuthSchemesString}"
             . " auth schemes, but the client only supports {$validAuthSchemesString}."
