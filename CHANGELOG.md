@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.293.5 - 2023-12-06
 
 * `Aws\Connect` - Releasing Tagging Support for Instance Management APIS
 * `Aws\PaymentCryptography` - AWS Payment Cryptography IPEK feature release
