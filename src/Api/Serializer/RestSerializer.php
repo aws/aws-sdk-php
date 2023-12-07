@@ -56,7 +56,7 @@ abstract class RestSerializer
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $opts = $this->serialize($operation, $commandArgs);
-        $headers = $opts['headers'] ?? [];
+        $headers = isset($opts['headers']) ? $opts['headers'] : [];
 
         if ($endpoint instanceof RulesetEndpoint) {
             $this->setEndpointV2RequestOptions($endpoint, $headers);
@@ -68,7 +68,7 @@ abstract class RestSerializer
             $operation['http']['method'],
             $uri,
             $headers,
-            $opts['body'] ?? null
+            isset($opts['body']) ? $opts['body'] : null
         );
     }
 
