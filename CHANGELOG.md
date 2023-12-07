@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.293.6 - 2023-12-07
 
 * `Aws\EndpointV2` - Adds endpoint resolution middleware and refactors endpoint resolution logic
 * `Aws\CodeDeploy` - This release adds support for two new CodeDeploy features: 1) zonal deployments for Amazon EC2 in-place deployments, 2) deployments triggered by Auto Scaling group termination lifecycle hook events.
