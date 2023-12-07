@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EndpointV2` - Adds endpoint resolution middleware and refactors endpoint resolution logic
+* `Aws\CodeDeploy` - This release adds support for two new CodeDeploy features: 1) zonal deployments for Amazon EC2 in-place deployments, 2) deployments triggered by Auto Scaling group termination lifecycle hook events.
+
 ## 3.293.5 - 2023-12-06
 
 * `Aws\Connect` - Releasing Tagging Support for Instance Management APIS
