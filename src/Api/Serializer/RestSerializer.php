@@ -10,6 +10,7 @@ use Aws\Api\TimestampShape;
 use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2SerializerTrait;
+use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
@@ -49,33 +50,25 @@ abstract class RestSerializer
      */
     public function __invoke(
         CommandInterface $command,
-        $endpointProvider = null,
-        $clientArgs = null
+        $endpoint = null
     )
     {
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $opts = $this->serialize($operation, $commandArgs);
-        $headers = isset($opts['headers']) ? $opts['headers'] : [];
+        $headers = $opts['headers'] ?? [];
 
-        if ($endpointProvider instanceof EndpointProviderV2) {
-            $this->setRequestOptions(
-                $endpointProvider,
-                $command,
-                $operation,
-                $commandArgs,
-                $clientArgs,
-                $headers
-            );
-            $this->endpoint = new Uri($this->endpoint);
+        if ($endpoint instanceof RulesetEndpoint) {
+            $this->setEndpointV2RequestOptions($endpoint, $headers);
         }
+
         $uri = $this->buildEndpoint($operation, $commandArgs, $opts);
 
         return new Request(
             $operation['http']['method'],
             $uri,
             $headers,
-            isset($opts['body']) ? $opts['body'] : null
+            $opts['body'] ?? null
         );
     }
 

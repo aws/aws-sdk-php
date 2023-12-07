@@ -448,7 +448,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         $stack->appendInit($this->getHeadObjectMiddleware(), 's3.head_object');
         if ($this->isUseEndpointV2()) {
             $this->processEndpointV2Model();
-            $stack->after('builderV2',
+            $stack->after('builder',
                 's3.check_empty_path_with_query',
                 $this->getEmptyPathWithQuery());
         }
