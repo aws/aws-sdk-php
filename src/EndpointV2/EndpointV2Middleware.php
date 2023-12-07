@@ -294,9 +294,12 @@ class EndpointV2Middleware
             );
         }
 
-        $normalizedAuthScheme['name'] = $authScheme['signingName'] ?? null;
-        $normalizedAuthScheme['region'] = $authScheme['signingRegion'] ?? null;
-        $normalizedAuthScheme['signingRegionSet'] = $authScheme['signingRegionSet'] ?? null;
+        $normalizedAuthScheme['name'] = isset($authScheme['signingName']) ?
+            $authScheme['signingName'] : null;
+        $normalizedAuthScheme['region'] = isset($authScheme['signingRegion']) ?
+            $authScheme['signingRegion'] : null;
+        $normalizedAuthScheme['signingRegionSet'] = isset($authScheme['signingRegionSet']) ?
+            $authScheme['signingRegionSet'] : null;
 
         return $normalizedAuthScheme;
     }
