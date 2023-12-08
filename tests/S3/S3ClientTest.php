@@ -2444,7 +2444,8 @@ EOXML;
             ['../foo' , 'https://foo.s3.amazonaws.com/../foo'],
             ['bar/../../foo', 'https://foo.s3.amazonaws.com/bar/../../foo'],
             ['/../foo', 'https://foo.s3.amazonaws.com//../foo'],
-            ['foo/bar/../baz', 'https://foo.s3.amazonaws.com/foo/bar/../baz']
+            ['foo/bar/../baz', 'https://foo.s3.amazonaws.com/foo/bar/../baz'],
+            ['foo/bar/baz/..', 'https://foo.s3.amazonaws.com/foo/bar/baz/..']
         ];
     }
 
@@ -2455,7 +2456,7 @@ EOXML;
     {
         $s3 = $this->getTestClient('s3', ['use_path_style_endpoint' => true]);
         $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand('getObject', ['Bucket' => 'foo', 'Key' => $key]);
+        $command = $s3->getCommand('getObject', ['Bucket' => 'bucket', 'Key' => $key]);
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) use ($expectedUri) {
                 $this->assertSame($expectedUri, (string) $req->getUri());
@@ -2467,10 +2468,11 @@ EOXML;
     public function dotSegmentPathStyleProvider()
     {
         return [
-            ['../foo' , 'https://s3.amazonaws.com/foo/foo/../foo'],
-            ['bar/../../foo', 'https://s3.amazonaws.com/foo/foo/bar/../../foo'],
-            ['/../foo', 'https://s3.amazonaws.com/foo/foo//../foo'],
-            ['foo/bar/../baz', 'https://s3.amazonaws.com/foo/foo/foo/bar/../baz'],
+            ['../foo' , 'https://s3.amazonaws.com/bucket/../foo'],
+            ['bar/../../foo', 'https://s3.amazonaws.com/bucket/bar/../../foo'],
+            ['/../foo', 'https://s3.amazonaws.com/bucket//../foo'],
+            ['foo/bar/../baz', 'https://s3.amazonaws.com/bucket/foo/bar/../baz'],
+            ['foo/bar/baz/..', 'https://s3.amazonaws.com/bucket/foo/bar/baz/..']
         ];
     }
 
