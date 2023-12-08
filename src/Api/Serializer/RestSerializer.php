@@ -236,15 +236,18 @@ abstract class RestSerializer
             }
             $relative = $path . $relative;
 
-            if (strpos($relative, '../') !== false) {
+            if (strpos($relative, '../') !== false
+                || substr($relative, -2) === '..'
+            ) {
                 if ($relative[0] !== '/') {
                     $relative = '/' . $relative;
                 }
-                return new Uri($this->endpoint . $relative);
+
+                return new Uri($this->endpoint->withPath('') . $relative);
             }
         }
         // If endpoint has path, remove leading '/' to preserve URI resolution.
-        if ($path && $relative[0] === '/') {
+        if ($path && $reS3lative[0] === '/') {
             $relative = substr($relative, 1);
         }
 
