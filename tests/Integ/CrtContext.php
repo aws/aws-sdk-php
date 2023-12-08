@@ -351,7 +351,6 @@ class CrtContext implements Context, SnippetAcceptingContext
                     'EndpointId' => self::$globalEndpoint,
                     'Entries' => $this->eventConfig
                 ]);
-                break;
             } catch (EventBridgeException $e) {
                 if (strpos($e->getMessage(), 'Could not resolve host') === false) {
                     throw $e;
@@ -359,7 +358,6 @@ class CrtContext implements Context, SnippetAcceptingContext
                 $attempts++;
                 sleep((int) pow(1.2, $attempts));
             }
-            echo 'foo';
         }
     }
 }
