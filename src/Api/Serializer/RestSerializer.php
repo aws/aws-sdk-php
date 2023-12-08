@@ -247,7 +247,7 @@ abstract class RestSerializer
             }
         }
         // If endpoint has path, remove leading '/' to preserve URI resolution.
-        if ($path && $reS3lative[0] === '/') {
+        if ($path && $relative[0] === '/') {
             $relative = substr($relative, 1);
         }
 
