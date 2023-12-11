@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.293.8 - 2023-12-11
 
 * `Aws\Neptune` - This release adds a new parameter configuration setting to the Neptune cluster related APIs that can be leveraged to switch between the underlying supported storage modes.
 * `Aws\Pinpoint` - This release includes Amazon Pinpoint API documentation updates pertaining to campaign message sending rate limits.
