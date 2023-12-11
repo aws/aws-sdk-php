@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Neptune` - This release adds a new parameter configuration setting to the Neptune cluster related APIs that can be leveraged to switch between the underlying supported storage modes.
+* `Aws\Pinpoint` - This release includes Amazon Pinpoint API documentation updates pertaining to campaign message sending rate limits.
+* `Aws\SecurityHub` - Added new resource detail objects to ASFF, including resources for AwsDynamoDbTable, AwsEc2ClientVpnEndpoint, AwsMskCluster, AwsS3AccessPoint, AwsS3Bucket
+
 ## 3.293.7 - 2023-12-08
 
 * `Aws\CloudWatch` - Adds support for the OpenTelemetry 1.0 output format in CloudWatch Metric Streams.
