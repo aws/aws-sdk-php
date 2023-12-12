@@ -19,6 +19,10 @@ class TraceMiddleware
     private $prevInput;
     private $config;
 
+    private static $skippedMiddleware = [
+        'endpoint-resolution' => true
+    ];
+
     /** @var Service */
     private $service;
 
@@ -80,12 +84,13 @@ class TraceMiddleware
 
     public function __invoke($step, $name)
     {
+        if (isset(self::$skippedMiddleware))
         $this->prevOutput = $this->prevInput = [];
 
         return function (callable $next) use ($step, $name) {
             return function (
                 CommandInterface $command,
-                RequestInterface $request = null
+                $request = null
             ) use ($next, $step, $name) {
                 $this->createHttpDebug($command);
                 $start = microtime(true);
@@ -164,17 +169,19 @@ class TraceMiddleware
         ];
     }
 
-    private function requestArray(RequestInterface $request = null)
+    private function requestArray($request = null)
     {
-        return !$request ? [] : array_filter([
-            'instance' => spl_object_hash($request),
-            'method'   => $request->getMethod(),
-            'headers'  => $this->redactHeaders($request->getHeaders()),
-            'body'     => $this->streamStr($request->getBody()),
-            'scheme'   => $request->getUri()->getScheme(),
-            'port'     => $request->getUri()->getPort(),
-            'path'     => $request->getUri()->getPath(),
-            'query'    => $request->getUri()->getQuery(),
+        return !$request instanceof RequestInterface
+            ? []
+            : array_filter([
+                'instance' => spl_object_hash($request),
+                'method'   => $request->getMethod(),
+                'headers'  => $this->redactHeaders($request->getHeaders()),
+                'body'     => $this->streamStr($request->getBody()),
+                'scheme'   => $request->getUri()->getScheme(),
+                'port'     => $request->getUri()->getPort(),
+                'path'     => $request->getUri()->getPath(),
+                'query'    => $request->getUri()->getQuery(),
         ]);
     }
 
