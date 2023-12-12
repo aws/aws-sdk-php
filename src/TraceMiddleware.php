@@ -18,11 +18,6 @@ class TraceMiddleware
     private $prevOutput;
     private $prevInput;
     private $config;
-
-    private static $skippedMiddleware = [
-        'endpoint-resolution' => true
-    ];
-
     /** @var Service */
     private $service;
 
@@ -84,7 +79,6 @@ class TraceMiddleware
 
     public function __invoke($step, $name)
     {
-        if (isset(self::$skippedMiddleware))
         $this->prevOutput = $this->prevInput = [];
 
         return function (callable $next) use ($step, $name) {
