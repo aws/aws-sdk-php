@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.293.9 - 2023-12-12
 
 * `Aws\Parser` - Fixes the event parser iterator so it handles the different scenarios stated by smithy docs.
 * `Aws\imagebuilder` - This release adds the Image Workflows feature to give more flexibility and control over the image building and testing process.
