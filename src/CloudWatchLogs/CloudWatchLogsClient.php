@@ -134,6 +134,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putRetentionPolicyAsync(array $args = [])
  * @method \Aws\Result putSubscriptionFilter(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putSubscriptionFilterAsync(array $args = [])
+ * @method \Aws\Result startLiveTail(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startLiveTailAsync(array $args = [])
  * @method \Aws\Result startQuery(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startQueryAsync(array $args = [])
  * @method \Aws\Result stopQuery(array $args = [])

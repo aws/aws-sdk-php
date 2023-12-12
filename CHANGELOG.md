@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Parser` - Fixes the event parser iterator so it handles the different scenarios stated by smithy docs.
+* `Aws\imagebuilder` - This release adds the Image Workflows feature to give more flexibility and control over the image building and testing process.
+* `Aws\LocationService` - This release 1) adds sub-municipality field in Places API for searching and getting places information, and 2) allows optimizing route calculation based on expected arrival time.
+* `Aws\CloudWatchLogs` - This release introduces the StartLiveTail API to tail ingested logs in near real time.
+
 ## 3.293.8 - 2023-12-11
 
 * `Aws\Neptune` - This release adds a new parameter configuration setting to the Neptune cluster related APIs that can be leveraged to switch between the underlying supported storage modes.
