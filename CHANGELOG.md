@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.293.10 - 2023-12-13
 
 * `Aws\` - Updates trace middleware such that it does not always expect a request.
 * `Aws\drs` - Adding AgentVersion to SourceServer and RecoveryInstance structures
