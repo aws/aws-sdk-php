@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Updates trace middleware such that it does not always expect a request.
+* `Aws\drs` - Adding AgentVersion to SourceServer and RecoveryInstance structures
+
 ## 3.293.9 - 2023-12-12
 
 * `Aws\Parser` - Fixes the event parser iterator so it handles the different scenarios stated by smithy docs.
