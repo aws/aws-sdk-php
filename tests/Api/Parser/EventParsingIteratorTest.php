@@ -125,7 +125,7 @@ class EventParsingIteratorTest extends TestCase
         $shapeProperty->setAccessible(true);
         $shape = $shapeProperty->getValue($iterator);
         foreach ($iterator as $event) {
-            $this->testParsedEventMatchExpectedType($shape, $event);
+            $this->parsedEventMatchesExpectedType($shape, $event);
         }
     }
 
@@ -138,7 +138,7 @@ class EventParsingIteratorTest extends TestCase
      *
      * @return void
      */
-    private function testParsedEventMatchExpectedType($shape, $event)
+    private function parsedEventMatchesExpectedType($shape, $event)
     {
         foreach ($event as $key => $value) {
             $this->assertTrue($shape->hasMember($key), "Shape has not member with name $key");
@@ -148,7 +148,7 @@ class EventParsingIteratorTest extends TestCase
                 'Shape type "'. $shapeMember->getType(). '" does not match parsed value type "' . gettype($value) . '"'
             );
             if (is_array($value)) {
-                $this->testParsedEventMatchExpectedType($shapeMember, $value);
+                $this->parsedEventMatchExpectedType($shapeMember, $value);
             }
         }
     }
