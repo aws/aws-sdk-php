@@ -492,6 +492,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMobile(array $args = [])
  * @method \Aws\Neptune\NeptuneClient createNeptune(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNeptune(array $args = [])
+ * @method \Aws\NeptuneGraph\NeptuneGraphClient createNeptuneGraph(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionNeptuneGraph(array $args = [])
  * @method \Aws\Neptunedata\NeptunedataClient createNeptunedata(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNeptunedata(array $args = [])
  * @method \Aws\NetworkFirewall\NetworkFirewallClient createNetworkFirewall(array $args = [])

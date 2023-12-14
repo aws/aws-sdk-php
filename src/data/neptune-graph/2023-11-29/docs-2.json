@@ -1,0 +1,820 @@
+{
+  "version": "2.0",
+  "service": "<p>Neptune Analytics is a serverless in-memory graph database service for analytics that delivers high-performance analytics and real-time queries for any graph type. It complements the Amazon Neptune Database, an industry-leading managed graph database.</p>",
+  "operations": {
+    "CancelImportTask": "<p>Deletes the specified import task</p>",
+    "CreateGraph": "<p>Creates a new Neptune Analytics graph.</p>",
+    "CreateGraphSnapshot": "<p>Creates a snapshot of the specific graph.</p>",
+    "CreateGraphUsingImportTask": "<p>Creates a new Neptune Analytics graph and imports data into it, either from Amazon Simple Storage Service (S3) or from a Neptune database or a Neptune database snapshot.</p> <p>The data can be loaded from files in S3 that in either the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
+    "CreatePrivateGraphEndpoint": "<p>Create a private graph endpoint to allow private access from to the graph from within a VPC. You can attach security groups to the private graph endpoint. VPC endpoint charges apply.</p>",
+    "DeleteGraph": "<p>Deletes the specified graph. Graphs cannot be deleted if delete-protection is enabled.</p>",
+    "DeleteGraphSnapshot": "<p>Deletes the specifed graph snapshot.</p>",
+    "DeletePrivateGraphEndpoint": "<p>Deletes a private graph endpoint.</p>",
+    "GetGraph": "<p>Gets information about a specified graph.</p>",
+    "GetGraphSnapshot": "<p>Retrieves a specified graph snapshot.</p>",
+    "GetImportTask": "<p>Retrieves a specified import task.</p>",
+    "GetPrivateGraphEndpoint": "<p>Retrieves information about a specified private endpoint.</p>",
+    "ListGraphSnapshots": "<p>Lists available snapshots of a specified Neptune Analytics graph.</p>",
+    "ListGraphs": "<p>Lists available Neptune Analytics graphs.</p>",
+    "ListImportTasks": "<p>Lists import tasks.</p>",
+    "ListPrivateGraphEndpoints": "<p>Lists private endpoints for a specified Neptune Analytics graph.</p>",
+    "ListTagsForResource": "<p>Lists tags associated with a specified resource.</p>",
+    "ResetGraph": "<p>Empties the data from a specified Neptune Analytics graph.</p>",
+    "RestoreGraphFromSnapshot": "<p>Restores a graph from a snapshot.</p>",
+    "TagResource": "<p>Adds tags to the specified resource.</p>",
+    "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
+    "UpdateGraph": "<p>Updates the configuration of a specified Neptune Analytics graph</p>"
+  },
+  "shapes": {
+    "Arn": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceInput$resourceArn": "<p>The ARN of the resource.</p>",
+        "TagResourceInput$resourceArn": "<p>ARN of the resource for which tags need to be added.</p>",
+        "UntagResourceInput$resourceArn": "<p>ARN of the resource whose tag needs to be removed.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "CreateGraphInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
+        "CreateGraphInput$deletionProtection": "<p>Indicates whether or not to enable deletion protection on the graph. The graph can’t be deleted when deletion protection is enabled. (<code>true</code> or <code>false</code>).</p>",
+        "CreateGraphOutput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated.</p>",
+        "CreateGraphOutput$deletionProtection": "<p>A value that indicates whether the graph has deletion protection enabled. The graph can't be deleted when deletion protection is enabled.</p>",
+        "CreateGraphUsingImportTaskInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
+        "CreateGraphUsingImportTaskInput$deletionProtection": "<p>Indicates whether or not to enable deletion protection on the graph. The graph can’t be deleted when deletion protection is enabled. (<code>true</code> or <code>false</code>).</p>",
+        "CreateGraphUsingImportTaskInput$failOnError": "<p>If set to <code>true</code>, the task halts when an import error is encountered. If set to <code>false</code>, the task skips the data that caused the error and continues if possible.</p>",
+        "DeleteGraphInput$skipSnapshot": "<p>Determines whether a final graph snapshot is created before the graph is deleted. If <code>true</code> is specified, no graph snapshot is created. If <code>false</code> is specified, a graph snapshot is created before the graph is deleted.</p>",
+        "DeleteGraphOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
+        "DeleteGraphOutput$deletionProtection": "<p>If <code>true</code>, deletion protection was enabled for the graph.</p>",
+        "GetGraphOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
+        "GetGraphOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
+        "GraphSummary$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
+        "GraphSummary$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
+        "NeptuneImportOptions$preserveDefaultVertexLabels": "<p>Neptune Analytics supports label-less vertices and no labels are assigned unless one is explicitly provided. Neptune assigns default labels when none is explicitly provided. When importing the data into Neptune Analytics, the default vertex labels can be omitted by setting <i>preserveDefaultVertexLabels</i> to false. Note that if the vertex only has default labels, and has no other properties or edges, then the vertex will effectively not get imported into Neptune Analytics when preserveDefaultVertexLabels is set to false.</p>",
+        "NeptuneImportOptions$preserveEdgeIds": "<p>Neptune Analytics currently does not support user defined edge ids. The edge ids are not imported by default. They are imported if <i>preserveEdgeIds</i> is set to true, and ids are stored as properties on the relationships with the property name neptuneEdgeId.</p>",
+        "ResetGraphInput$skipSnapshot": "<p>Determines whether a final graph snapshot is created before the graph data is deleted. If set to <code>true</code>, no graph snapshot is created. If set to <code>false</code>, a graph snapshot is created before the data is deleted.</p>",
+        "ResetGraphOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
+        "ResetGraphOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
+        "RestoreGraphFromSnapshotInput$deletionProtection": "<p>A value that indicates whether the graph has deletion protection enabled. The graph can't be deleted when deletion protection is enabled.</p>",
+        "RestoreGraphFromSnapshotInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable).</p>",
+        "RestoreGraphFromSnapshotOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
+        "RestoreGraphFromSnapshotOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
+        "UpdateGraphInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
+        "UpdateGraphInput$deletionProtection": "<p>A value that indicates whether the graph has deletion protection enabled. The graph can't be deleted when deletion protection is enabled.</p>",
+        "UpdateGraphOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
+        "UpdateGraphOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>"
+      }
+    },
+    "CancelImportTaskInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CancelImportTaskOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ConflictException": {
+      "base": "<p>Raised when a conflict is encountered.</p>",
+      "refs": {
+      }
+    },
+    "ConflictExceptionReason": {
+      "base": null,
+      "refs": {
+        "ConflictException$reason": "<p>The reason for the conflict exception.</p>"
+      }
+    },
+    "CreateGraphInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateGraphOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateGraphSnapshotInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateGraphSnapshotOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateGraphUsingImportTaskInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateGraphUsingImportTaskOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreatePrivateGraphEndpointInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreatePrivateGraphEndpointOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteGraphInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteGraphOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteGraphSnapshotInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteGraphSnapshotOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeletePrivateGraphEndpointInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeletePrivateGraphEndpointOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Format": {
+      "base": null,
+      "refs": {
+        "CancelImportTaskOutput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
+        "CreateGraphUsingImportTaskInput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
+        "CreateGraphUsingImportTaskOutput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
+        "GetImportTaskOutput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
+        "ImportTaskSummary$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>"
+      }
+    },
+    "GetGraphInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetGraphOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetGraphSnapshotInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetGraphSnapshotOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetImportTaskInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetImportTaskOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPrivateGraphEndpointInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPrivateGraphEndpointOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GraphId": {
+      "base": null,
+      "refs": {
+        "CancelImportTaskOutput$graphId": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "CreateGraphOutput$id": "<p>The ID of the graph.</p>",
+        "CreateGraphSnapshotOutput$sourceGraphId": "<p>The Id of the Neptune Analytics graph from which the snapshot is created.</p>",
+        "CreateGraphUsingImportTaskOutput$graphId": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "DeleteGraphOutput$id": "<p>The unique identifier of the graph.</p>",
+        "DeleteGraphSnapshotOutput$sourceGraphId": "<p>The graph identifier for the graph from which the snapshot was created.</p>",
+        "GetGraphOutput$id": "<p>The unique identifier of the graph.</p>",
+        "GetGraphSnapshotOutput$sourceGraphId": "<p>The graph identifier for the graph for which a snapshot is to be created.</p>",
+        "GetImportTaskOutput$graphId": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "GraphSnapshotSummary$sourceGraphId": "<p>The graph identifier for the graph for which a snapshot is to be created.</p>",
+        "GraphSummary$id": "<p>The unique identifier of the graph.</p>",
+        "ImportTaskSummary$graphId": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "ResetGraphOutput$id": "<p>The unique identifier of the graph.</p>",
+        "RestoreGraphFromSnapshotOutput$id": "<p>The unique identifier of the graph.</p>",
+        "UpdateGraphOutput$id": "<p>The unique identifier of the graph.</p>"
+      }
+    },
+    "GraphIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateGraphSnapshotInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "CreatePrivateGraphEndpointInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "DeleteGraphInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "DeletePrivateGraphEndpointInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "GetGraphInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "GetPrivateGraphEndpointInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "ListGraphSnapshotsInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "ListPrivateGraphEndpointsInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "ResetGraphInput$graphIdentifier": "<p>ID of the graph to reset.</p>",
+        "UpdateGraphInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>"
+      }
+    },
+    "GraphName": {
+      "base": null,
+      "refs": {
+        "CreateGraphInput$graphName": "<p>A name for the new Neptune Analytics graph to be created.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. </p>",
+        "CreateGraphOutput$name": "<p>The graph name. For example: <code>my-graph-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. </p>",
+        "CreateGraphUsingImportTaskInput$graphName": "<p>A name for the new Neptune Analytics graph to be created.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. </p>",
+        "DeleteGraphOutput$name": "<p>The name of the graph.</p>",
+        "GetGraphOutput$name": "<p>The name of the graph.</p>",
+        "GraphSummary$name": "<p>The name of the graph.</p>",
+        "ResetGraphOutput$name": "<p>The name of the graph.</p>",
+        "RestoreGraphFromSnapshotInput$graphName": "<p>A name for the new Neptune Analytics graph to be created from the snapshot.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. </p>",
+        "RestoreGraphFromSnapshotOutput$name": "<p>The name of the graph.</p>",
+        "UpdateGraphOutput$name": "<p>The name of the graph.</p>"
+      }
+    },
+    "GraphSnapshotSummary": {
+      "base": "<p>Details about a graph snapshot.</p>",
+      "refs": {
+        "GraphSnapshotSummaryList$member": null
+      }
+    },
+    "GraphSnapshotSummaryList": {
+      "base": null,
+      "refs": {
+        "ListGraphSnapshotsOutput$graphSnapshots": "<p>The requested list of snapshots.</p>"
+      }
+    },
+    "GraphStatus": {
+      "base": null,
+      "refs": {
+        "CreateGraphOutput$status": "<p>The current status of the graph.</p>",
+        "DeleteGraphOutput$status": "<p>The status of the graph.</p>",
+        "GetGraphOutput$status": "<p>The status of the graph.</p>",
+        "GraphSummary$status": "<p>The status of the graph.</p>",
+        "ResetGraphOutput$status": "<p>The status of the graph.</p>",
+        "RestoreGraphFromSnapshotOutput$status": "<p>The status of the graph.</p>",
+        "UpdateGraphOutput$status": "<p>The status of the graph.</p>"
+      }
+    },
+    "GraphSummary": {
+      "base": "<p>Summary details about a graph.</p>",
+      "refs": {
+        "GraphSummaryList$member": null
+      }
+    },
+    "GraphSummaryList": {
+      "base": null,
+      "refs": {
+        "ListGraphsOutput$graphs": "<p>A list of the graphs.</p>"
+      }
+    },
+    "ImportOptions": {
+      "base": "<p>Options for how to perform an import.</p>",
+      "refs": {
+        "CreateGraphUsingImportTaskInput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>",
+        "CreateGraphUsingImportTaskOutput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>",
+        "GetImportTaskOutput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>"
+      }
+    },
+    "ImportTaskDetails": {
+      "base": "<p>Contains details about an import task.</p>",
+      "refs": {
+        "GetImportTaskOutput$importTaskDetails": "<p>Contains details about the specified import task.</p>"
+      }
+    },
+    "ImportTaskStatus": {
+      "base": null,
+      "refs": {
+        "CancelImportTaskOutput$status": "<p>Current status of the task. Status is CANCELLING when the import task is cancelled.</p>",
+        "CreateGraphUsingImportTaskOutput$status": "<p>The status of the import task.</p>",
+        "GetImportTaskOutput$status": "<p>The status of the import task:</p> <ul> <li> <p> <b>INITIALIZING</b>   –   The necessary resources needed to create the graph are being prepared.</p> </li> <li> <p> <b>ANALYZING_DATA</b>   –   The data is being analyzed to determine the optimal infrastructure configuration for the new graph.</p> </li> <li> <p> <b>RE_PROVISIONING</b>   –   The data did not fit into the provisioned graph, so it is being re-provisioned with more capacity.</p> </li> <li> <p> <b>IMPORTING</b>   –   The data is being loaded.</p> </li> <li> <p> <b>ERROR_ENCOUNTERED</b>   –   An error has been encountered while trying to create the graph and import the data.</p> </li> <li> <p> <b>ERROR_ENCOUNTERED_ROLLING_BACK</b>   –   Because of the error that was encountered, the graph is being rolled back and all its resources released.</p> </li> <li> <p> <b>SUCCEEDED</b>   –   Graph creation and data loading succeeded.</p> </li> <li> <p> <b>FAILED</b>   –   Graph creation or data loading failed. When the status is <code>FAILED</code>, you can use <code>get-graphs</code> to get more information about the state of the graph.</p> </li> <li> <p> <b>CANCELLING</b>   –   Because you cancelled the import task, cancellation is in progress.</p> </li> <li> <p> <b>CANCELLED</b>   –   You have successfully cancelled the import task.</p> </li> </ul>",
+        "ImportTaskSummary$status": "<p>Status of the import task.</p>"
+      }
+    },
+    "ImportTaskSummary": {
+      "base": "<p>Details about an import task.</p>",
+      "refs": {
+        "ImportTaskSummaryList$member": null
+      }
+    },
+    "ImportTaskSummaryList": {
+      "base": null,
+      "refs": {
+        "ListImportTasksOutput$tasks": "<p>The requested list of import tasks.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "GetImportTaskOutput$attemptNumber": "<p>The number of the current attempt to execute the import task.</p>",
+        "ImportTaskDetails$progressPercentage": "<p>The percentage progress so far.</p>",
+        "ImportTaskDetails$errorCount": "<p>The number of errors encountered so far.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>A failure occurred on the server.</p>",
+      "refs": {
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "CreateGraphInput$kmsKeyIdentifier": "<p>Specifies a KMS key to use to encrypt data in the new graph.</p>",
+        "CreateGraphOutput$kmsKeyIdentifier": "<p>Specifies the KMS key used to encrypt data in the new graph.</p>",
+        "CreateGraphSnapshotOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>",
+        "CreateGraphUsingImportTaskInput$kmsKeyIdentifier": "<p>Specifies a KMS key to use to encrypt data imported into the new graph.</p>",
+        "DeleteGraphOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>",
+        "DeleteGraphSnapshotOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt the snapshot.</p>",
+        "GetGraphOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>",
+        "GetGraphSnapshotOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt the snapshot.</p>",
+        "GraphSnapshotSummary$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt the snapshot.</p>",
+        "ResetGraphOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>",
+        "RestoreGraphFromSnapshotOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>",
+        "UpdateGraphOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>"
+      }
+    },
+    "ListGraphSnapshotsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGraphSnapshotsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGraphsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGraphsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListImportTasksInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListImportTasksOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPrivateGraphEndpointsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPrivateGraphEndpointsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "ImportTaskDetails$timeElapsedSeconds": "<p>Seconds elapsed since the import task started.</p>",
+        "ImportTaskDetails$statementCount": "<p>The number of statements in the import task.</p>",
+        "ImportTaskDetails$dictionaryEntryCount": "<p>The number of dictionary entries in the import task.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListGraphSnapshotsInput$maxResults": "<p>The total number of records to return in the command's output.</p> <p>If the total number of records available is more than the value specified, <code>nextToken</code> is provided in the command's output. To resume pagination, provide the <code>nextToken</code> output value in the <code>nextToken</code> argument of a subsequent command. Do not use the <code>nextToken</code> response element directly outside of the Amazon CLI.</p>",
+        "ListGraphsInput$maxResults": "<p>The total number of records to return in the command's output.</p> <p>If the total number of records available is more than the value specified, <code>nextToken</code> is provided in the command's output. To resume pagination, provide the <code>nextToken</code> output value in the <code>nextToken</code> argument of a subsequent command. Do not use the <code>nextToken</code> response element directly outside of the Amazon CLI.</p>",
+        "ListImportTasksInput$maxResults": "<p>The total number of records to return in the command's output.</p> <p>If the total number of records available is more than the value specified, <code>nextToken</code> is provided in the command's output. To resume pagination, provide the <code>nextToken</code> output value in the <code>nextToken</code> argument of a subsequent command. Do not use the <code>nextToken</code> response element directly outside of the Amazon CLI.</p>",
+        "ListPrivateGraphEndpointsInput$maxResults": "<p>The total number of records to return in the command's output.</p> <p>If the total number of records available is more than the value specified, <code>nextToken</code> is provided in the command's output. To resume pagination, provide the <code>nextToken</code> output value in the <code>nextToken</code> argument of a subsequent command. Do not use the <code>nextToken</code> response element directly outside of the Amazon CLI.</p>"
+      }
+    },
+    "NeptuneImportOptions": {
+      "base": "<p>Options for how to import Neptune data.</p>",
+      "refs": {
+        "ImportOptions$neptune": "<p>Options for importing data from a Neptune database.</p>"
+      }
+    },
+    "NeptuneImportOptionsS3ExportKmsKeyIdString": {
+      "base": null,
+      "refs": {
+        "NeptuneImportOptions$s3ExportKmsKeyId": "<p>The KMS key to use to encrypt data in the S3 bucket where the graph data is exported</p>"
+      }
+    },
+    "NeptuneImportOptionsS3ExportPathString": {
+      "base": null,
+      "refs": {
+        "NeptuneImportOptions$s3ExportPath": "<p>The path to an S3 bucket from which to import data.</p>"
+      }
+    },
+    "PaginationToken": {
+      "base": null,
+      "refs": {
+        "ListGraphSnapshotsInput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>",
+        "ListGraphSnapshotsOutput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>",
+        "ListGraphsInput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>",
+        "ListGraphsOutput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>",
+        "ListImportTasksInput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>",
+        "ListImportTasksOutput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>",
+        "ListPrivateGraphEndpointsInput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>",
+        "ListPrivateGraphEndpointsOutput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>"
+      }
+    },
+    "PrivateGraphEndpointStatus": {
+      "base": null,
+      "refs": {
+        "CreatePrivateGraphEndpointOutput$status": "<p>Status of the private graph endpoint.</p>",
+        "DeletePrivateGraphEndpointOutput$status": "<p>The status of the delete operation.</p>",
+        "GetPrivateGraphEndpointOutput$status": "<p>The current status of the private endpoint.</p>",
+        "PrivateGraphEndpointSummary$status": "<p>The status of the private graph endpoint.</p>"
+      }
+    },
+    "PrivateGraphEndpointSummary": {
+      "base": "<p>Details about a private graph endpoint.</p>",
+      "refs": {
+        "PrivateGraphEndpointSummaryList$member": null
+      }
+    },
+    "PrivateGraphEndpointSummaryList": {
+      "base": null,
+      "refs": {
+        "ListPrivateGraphEndpointsOutput$privateGraphEndpoints": "<p>A list of private endpoints for the specified Neptune Analytics graph.</p>"
+      }
+    },
+    "ProvisionedMemory": {
+      "base": null,
+      "refs": {
+        "CreateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 128</p>",
+        "CreateGraphOutput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 128</p>",
+        "CreateGraphUsingImportTaskInput$maxProvisionedMemory": "<p>The maximum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 1024, or the approved upper limit for your account.</p> <p> If both the minimum and maximum values are specified, the max of the <code>min-provisioned-memory</code> and <code>max-provisioned memory</code> is used to create the graph. If neither value is specified 128 m-NCUs are used.</p>",
+        "CreateGraphUsingImportTaskInput$minProvisionedMemory": "<p>The minimum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 128</p>",
+        "DeleteGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
+        "GetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
+        "GraphSummary$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
+        "ResetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
+        "RestoreGraphFromSnapshotInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 128</p>",
+        "RestoreGraphFromSnapshotOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
+        "UpdateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 128</p>",
+        "UpdateGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>"
+      }
+    },
+    "ReplicaCount": {
+      "base": null,
+      "refs": {
+        "CreateGraphInput$replicaCount": "<p>The number of replicas in other AZs. Min =0, Max = 2, Default =1</p>",
+        "CreateGraphOutput$replicaCount": "<p>The number of replicas in other AZs.</p>",
+        "CreateGraphUsingImportTaskInput$replicaCount": "<p>The number of replicas in other AZs to provision on the new graph after import. Default = 0, Min = 0, Max = 2.</p>",
+        "DeleteGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
+        "GetGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
+        "GraphSummary$replicaCount": "<p>The number of replicas for the graph.</p>",
+        "ResetGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
+        "RestoreGraphFromSnapshotInput$replicaCount": "<p>The number of replicas in other AZs. Min =0, Max = 2, Default =1</p>",
+        "RestoreGraphFromSnapshotOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
+        "UpdateGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>"
+      }
+    },
+    "ResetGraphInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ResetGraphOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>A specified resource could not be located.</p>",
+      "refs": {
+      }
+    },
+    "RestoreGraphFromSnapshotInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RestoreGraphFromSnapshotOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "CancelImportTaskOutput$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>",
+        "CreateGraphUsingImportTaskInput$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>",
+        "CreateGraphUsingImportTaskOutput$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>",
+        "GetImportTaskOutput$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>",
+        "ImportTaskSummary$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>"
+      }
+    },
+    "SecurityGroupId": {
+      "base": null,
+      "refs": {
+        "SecurityGroupIds$member": null
+      }
+    },
+    "SecurityGroupIds": {
+      "base": null,
+      "refs": {
+        "CreatePrivateGraphEndpointInput$vpcSecurityGroupIds": "<p>Security groups to be attached to the private graph endpoint..</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>A service quota was exceeded.</p>",
+      "refs": {
+      }
+    },
+    "SnapshotId": {
+      "base": null,
+      "refs": {
+        "CreateGraphOutput$sourceSnapshotId": "<p>The ID of the source graph.</p>",
+        "CreateGraphSnapshotOutput$id": "<p>The ID of the snapshot created.</p>",
+        "DeleteGraphOutput$sourceSnapshotId": "<p>The ID of the snapshot from which the graph was created, if the graph was recovered from a snapshot.</p>",
+        "DeleteGraphSnapshotOutput$id": "<p>The unique identifier of the graph snapshot.</p>",
+        "GetGraphOutput$sourceSnapshotId": "<p>The ID of the snapshot from which the graph was created, if it was created from a snapshot.</p>",
+        "GetGraphSnapshotOutput$id": "<p>The unique identifier of the graph snapshot.</p>",
+        "GraphSnapshotSummary$id": "<p>The unique identifier of the graph snapshot.</p>",
+        "ResetGraphOutput$sourceSnapshotId": "<p>The ID of the snapshot from which the graph was created, if any.</p>",
+        "RestoreGraphFromSnapshotOutput$sourceSnapshotId": "<p>The ID of the snapshot from which the graph was created, if any.</p>",
+        "UpdateGraphOutput$sourceSnapshotId": "<p>The ID of the snapshot from which the graph was created, if any.</p>"
+      }
+    },
+    "SnapshotIdentifier": {
+      "base": null,
+      "refs": {
+        "DeleteGraphSnapshotInput$snapshotIdentifier": "<p>ID of the graph snapshot to be deleted.</p>",
+        "GetGraphSnapshotInput$snapshotIdentifier": "<p>The ID of the snapshot to retrieve.</p>",
+        "RestoreGraphFromSnapshotInput$snapshotIdentifier": "<p>The ID of the snapshot in question.</p>"
+      }
+    },
+    "SnapshotName": {
+      "base": null,
+      "refs": {
+        "CreateGraphSnapshotInput$snapshotName": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens.</p>",
+        "CreateGraphSnapshotOutput$name": "<p>The name of the snapshot created.</p>",
+        "DeleteGraphSnapshotOutput$name": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens.</p>",
+        "GetGraphSnapshotOutput$name": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens.</p>",
+        "GraphSnapshotSummary$name": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens.</p>"
+      }
+    },
+    "SnapshotStatus": {
+      "base": null,
+      "refs": {
+        "CreateGraphSnapshotOutput$status": "<p>The current state of the snapshot.</p>",
+        "DeleteGraphSnapshotOutput$status": "<p>The status of the graph snapshot.</p>",
+        "GetGraphSnapshotOutput$status": "<p>The status of the graph snapshot.</p>",
+        "GraphSnapshotSummary$status": "<p>The status of the graph snapshot.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "CancelImportTaskOutput$source": "<p>A URL identifying to the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot</p>",
+        "ConflictException$message": "<p>A message describing the problem.</p>",
+        "CreateGraphOutput$arn": "<p>The ARN of the graph.</p>",
+        "CreateGraphOutput$statusReason": "<p>The reason the status was given.</p>",
+        "CreateGraphOutput$endpoint": "<p>The graph endpoint.</p>",
+        "CreateGraphOutput$buildNumber": "<p>The build number of the graph software.</p>",
+        "CreateGraphSnapshotOutput$arn": "<p>The ARN of the snapshot created.</p>",
+        "CreateGraphUsingImportTaskInput$source": "<p>A URL identifying to the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot.</p>",
+        "CreateGraphUsingImportTaskOutput$source": "<p>A URL identifying to the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot.</p>",
+        "DeleteGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
+        "DeleteGraphOutput$statusReason": "<p>The reason for the status of the graph.</p>",
+        "DeleteGraphOutput$endpoint": "<p>The graph endpoint.</p>",
+        "DeleteGraphOutput$buildNumber": "<p>The build number associated with the graph.</p>",
+        "DeleteGraphSnapshotOutput$arn": "<p>The ARN of the graph snapshot.</p>",
+        "GetGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
+        "GetGraphOutput$statusReason": "<p>The reason that the graph has this status.</p>",
+        "GetGraphOutput$endpoint": "<p>The graph endpoint.</p>",
+        "GetGraphOutput$buildNumber": "<p>The build number of the graph.</p>",
+        "GetGraphSnapshotOutput$arn": "<p>The ARN of the graph snapshot.</p>",
+        "GetImportTaskOutput$source": "<p>A URL identifying to the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot</p>",
+        "GetImportTaskOutput$statusReason": "<p>The reason that the import task has this status value.</p>",
+        "GraphSnapshotSummary$arn": "<p>The ARN of the graph snapshot.</p>",
+        "GraphSummary$arn": "<p>The ARN associated with the graph.</p>",
+        "GraphSummary$endpoint": "<p>The graph endpoint.</p>",
+        "GraphSummary$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>",
+        "ImportTaskDetails$status": "<p>Status of the import task.</p>",
+        "ImportTaskDetails$errorDetails": "<p>Details about the errors that have been encountered.</p>",
+        "ImportTaskSummary$source": "<p>A URL identifying to the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot</p>",
+        "InternalServerException$message": "<p>A message describing the problem.</p>",
+        "ResetGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
+        "ResetGraphOutput$statusReason": "<p>The reason that the graph has this status.</p>",
+        "ResetGraphOutput$endpoint": "<p>The graph endpoint.</p>",
+        "ResetGraphOutput$buildNumber": "<p>The build number of the graph.</p>",
+        "ResourceNotFoundException$message": "<p>A message describing the problem.</p>",
+        "RestoreGraphFromSnapshotOutput$arn": "<p>The ARN associated with the graph.</p>",
+        "RestoreGraphFromSnapshotOutput$statusReason": "<p>The reason that the graph has this status.</p>",
+        "RestoreGraphFromSnapshotOutput$endpoint": "<p>The graph endpoint.</p>",
+        "RestoreGraphFromSnapshotOutput$buildNumber": "<p>The build number of the graph.</p>",
+        "ServiceQuotaExceededException$message": null,
+        "ServiceQuotaExceededException$resourceId": "<p>The identifier of the resource that exceeded quota.</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>The type of the resource that exceeded quota. Ex: Graph, Snapshot</p>",
+        "ServiceQuotaExceededException$serviceCode": "<p>The service code that exceeded quota.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>Service quota code of the resource for which quota was exceeded.</p>",
+        "ThrottlingException$message": "<p>A message describing the problem.</p>",
+        "UpdateGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
+        "UpdateGraphOutput$statusReason": "<p>The reason that the graph has this status.</p>",
+        "UpdateGraphOutput$endpoint": "<p>The graph endpoint.</p>",
+        "UpdateGraphOutput$buildNumber": "<p>The build number of the graph.</p>",
+        "ValidationException$message": "<p>A message describing the problem.</p>"
+      }
+    },
+    "SubnetId": {
+      "base": null,
+      "refs": {
+        "SubnetIds$member": null
+      }
+    },
+    "SubnetIds": {
+      "base": null,
+      "refs": {
+        "CreatePrivateGraphEndpointInput$subnetIds": "<p>Subnets in which private graph endpoint ENIs are created.</p>",
+        "CreatePrivateGraphEndpointOutput$subnetIds": "<p>Subnets in which the private graph endpoint ENIs are created. </p>",
+        "DeletePrivateGraphEndpointOutput$subnetIds": "<p>The subnet IDs involved.</p>",
+        "GetPrivateGraphEndpointOutput$subnetIds": "<p>The subnet IDs involved.</p>",
+        "PrivateGraphEndpointSummary$subnetIds": "<p>The subnet IDs associated with the private graph endpoint.</p>"
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceInput$tagKeys": "<p>Tag keys for the tags to be removed.</p>"
+      }
+    },
+    "TagMap": {
+      "base": null,
+      "refs": {
+        "CreateGraphInput$tags": "<p>Adds metadata tags to the new graph. These tags can also be used with cost allocation reporting, or used in a Condition statement in an IAM policy.</p>",
+        "CreateGraphSnapshotInput$tags": "<p>Adds metadata tags to the new graph. These tags can also be used with cost allocation reporting, or used in a Condition statement in an IAM policy.</p>",
+        "CreateGraphUsingImportTaskInput$tags": "<p>Adds metadata tags to the new graph. These tags can also be used with cost allocation reporting, or used in a Condition statement in an IAM policy.</p>",
+        "ListTagsForResourceOutput$tags": "<p>The list of metadata tags associated with the resource.</p>",
+        "RestoreGraphFromSnapshotInput$tags": "<p>Adds metadata tags to the snapshot. These tags can also be used with cost allocation reporting, or used in a Condition statement in an IAM policy.</p>",
+        "TagResourceInput$tags": "<p>The tags to be assigned to the Neptune Analytics resource.</p> <p>The tags are metadata that are specified as a list of key-value pairs:</p> <p> <b>Key</b> (string)   –   A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length. It can't be prefixed with <code>aws:</code> and can only contain the set of Unicode characters specified by this Java regular expression: <code>\"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$\")</code>.</p> <p> <b>Value</b> (string)   –   A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length. It can't be prefixed with <code>aws:</code> and can only contain the set of Unicode characters specified by this Java regular expression: <code>\"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$\")</code>.</p>"
+      }
+    },
+    "TagResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagMap$value": null
+      }
+    },
+    "TaskId": {
+      "base": null,
+      "refs": {
+        "CancelImportTaskInput$taskIdentifier": "<p>The unique identifier of the import task.</p>",
+        "CancelImportTaskOutput$taskId": "<p>The unique identifier of the import task.</p>",
+        "CreateGraphUsingImportTaskOutput$taskId": "<p>The unique identifier of the import task.</p>",
+        "GetImportTaskInput$taskIdentifier": "<p>The unique identifier of the import task.</p>",
+        "GetImportTaskOutput$taskId": "<p>The unique identifier of the import task.</p>",
+        "ImportTaskSummary$taskId": "<p>The unique identifier of the import task.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The exception was interrupted by throttling.</p>",
+      "refs": {
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "CreateGraphOutput$createTime": "<p>The time when the graph was created.</p>",
+        "CreateGraphSnapshotOutput$snapshotCreateTime": "<p>The snapshot creation time</p>",
+        "DeleteGraphOutput$createTime": "<p>The time at which the graph was created.</p>",
+        "DeleteGraphSnapshotOutput$snapshotCreateTime": "<p>The time when the snapshot was created.</p>",
+        "GetGraphOutput$createTime": "<p>The time at which the graph was created.</p>",
+        "GetGraphSnapshotOutput$snapshotCreateTime": "<p>The time when the snapshot was created.</p>",
+        "GraphSnapshotSummary$snapshotCreateTime": "<p>The time when the snapshot was created.</p>",
+        "ImportTaskDetails$startTime": "<p>Time at which the import task started.</p>",
+        "ResetGraphOutput$createTime": "<p>The time at which the graph was created.</p>",
+        "RestoreGraphFromSnapshotOutput$createTime": "<p>The time at which the graph was created.</p>",
+        "UpdateGraphOutput$createTime": "<p>The time at which the graph was created.</p>"
+      }
+    },
+    "UntagResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateGraphInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateGraphOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ValidationException": {
+      "base": "<p>A resource could not be validated</p>",
+      "refs": {
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The reason that the resource could not be validated.</p>"
+      }
+    },
+    "VectorSearchConfiguration": {
+      "base": "<p>Specifies the number of dimensions for vector embeddings loaded into the graph. Max = 65535</p>",
+      "refs": {
+        "CreateGraphInput$vectorSearchConfiguration": "<p>Specifies the number of dimensions for vector embeddings that will be loaded into the graph. The value is specified as <code>dimension=</code>value. Max = 65,535</p>",
+        "CreateGraphOutput$vectorSearchConfiguration": "<p>The vector-search configuration for the graph, which specifies the vector dimension to use in the vector index, if any.</p>",
+        "CreateGraphUsingImportTaskInput$vectorSearchConfiguration": "<p>Specifies the number of dimensions for vector embeddings that will be loaded into the graph. The value is specified as <code>dimension=</code>value. Max = 65,535 </p>",
+        "DeleteGraphOutput$vectorSearchConfiguration": null,
+        "GetGraphOutput$vectorSearchConfiguration": null,
+        "ResetGraphOutput$vectorSearchConfiguration": null,
+        "RestoreGraphFromSnapshotOutput$vectorSearchConfiguration": null,
+        "UpdateGraphOutput$vectorSearchConfiguration": null
+      }
+    },
+    "VectorSearchDimension": {
+      "base": null,
+      "refs": {
+        "VectorSearchConfiguration$dimension": "<p>The number of dimensions.</p>"
+      }
+    },
+    "VpcEndpointId": {
+      "base": null,
+      "refs": {
+        "CreatePrivateGraphEndpointOutput$vpcEndpointId": "<p>Endpoint ID of the prviate grpah endpoint.</p>",
+        "DeletePrivateGraphEndpointOutput$vpcEndpointId": "<p>The ID of the VPC endpoint that was deleted.</p>",
+        "GetPrivateGraphEndpointOutput$vpcEndpointId": "<p>The ID of the private endpoint.</p>",
+        "PrivateGraphEndpointSummary$vpcEndpointId": "<p>The ID of the VPC endpoint.</p>"
+      }
+    },
+    "VpcId": {
+      "base": null,
+      "refs": {
+        "CreatePrivateGraphEndpointInput$vpcId": "<p> The VPC in which the private graph endpoint needs to be created.</p>",
+        "CreatePrivateGraphEndpointOutput$vpcId": "<p>VPC in which the private graph endpoint is created.</p>",
+        "DeletePrivateGraphEndpointInput$vpcId": "<p>The ID of the VPC where the private endpoint is located.</p>",
+        "DeletePrivateGraphEndpointOutput$vpcId": "<p>The ID of the VPC where the private endpoint was deleted.</p>",
+        "GetPrivateGraphEndpointInput$vpcId": "<p>The ID of the VPC where the private endpoint is located.</p>",
+        "GetPrivateGraphEndpointOutput$vpcId": "<p>The ID of the VPC where the private endpoint is located.</p>",
+        "PrivateGraphEndpointSummary$vpcId": "<p>The ID of the VPC in which the private graph endpoint is located.</p>"
+      }
+    }
+  }
+}

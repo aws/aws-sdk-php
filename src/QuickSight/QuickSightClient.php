@@ -293,6 +293,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateAnalysisPermissionsAsync(array $args = [])
  * @method \Aws\Result updateDashboard(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDashboardAsync(array $args = [])
+ * @method \Aws\Result updateDashboardLinks(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateDashboardLinksAsync(array $args = [])
  * @method \Aws\Result updateDashboardPermissions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDashboardPermissionsAsync(array $args = [])
  * @method \Aws\Result updateDashboardPublishedVersion(array $args = [])
