@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.294.0 - 2023-12-14
 
 * `Aws\GameLift` - Amazon GameLift adds the ability to add and update the game properties of active game sessions.
 * `Aws\BillingConductor` - Billing Conductor is releasing a new API, GetBillingGroupCostReport, which provides the ability to retrieve/view the Billing Group Cost Report broken down by attributes for a specific billing group.
