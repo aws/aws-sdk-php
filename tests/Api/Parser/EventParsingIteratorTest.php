@@ -148,7 +148,7 @@ class EventParsingIteratorTest extends TestCase
                 'Shape type "'. $shapeMember->getType(). '" does not match parsed value type "' . gettype($value) . '"'
             );
             if (is_array($value)) {
-                $this->parsedEventMatchExpectedType($shapeMember, $value);
+                $this->parsedEventMatchesExpectedType($shapeMember, $value);
             }
         }
     }
