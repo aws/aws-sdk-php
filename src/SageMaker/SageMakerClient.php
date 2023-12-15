@@ -141,6 +141,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteClusterAsync(array $args = [])
  * @method \Aws\Result deleteCodeRepository(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteCodeRepositoryAsync(array $args = [])
+ * @method \Aws\Result deleteCompilationJob(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteCompilationJobAsync(array $args = [])
  * @method \Aws\Result deleteContext(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteContextAsync(array $args = [])
  * @method \Aws\Result deleteDataQualityJobDefinition(array $args = [])
