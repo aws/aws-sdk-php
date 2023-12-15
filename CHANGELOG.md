@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.294.1 - 2023-12-15
 
 * `Aws\Signature` - Fixes issues with CloudfrontKeyValueStore sigv4a operations.
 * `Aws\KMS` - Documentation updates for AWS Key Management Service
