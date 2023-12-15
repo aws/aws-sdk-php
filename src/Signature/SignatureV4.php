@@ -510,7 +510,7 @@ class SignatureV4 implements SignatureInterface
         SigningConfigAWS $signingConfig = null
     ){
         $this->verifyCRTLoaded();
-        $signingConfig = $signingConfig ?: new SigningConfigAWS([
+        $signingConfig = $signingConfig ?? new SigningConfigAWS([
             'algorithm' => SigningAlgorithm::SIGv4_ASYMMETRIC,
             'signature_type' => SignatureType::HTTP_REQUEST_HEADERS,
             'credentials_provider' => $this->createCRTStaticCredentialsProvider($credentials),
