@@ -1,9 +1,10 @@
 <?php
 namespace Aws\Test\Integ;
 
+use Aws\CloudFront\CloudFrontClient;
+use Aws\CloudFrontKeyValueStore\CloudFrontKeyValueStoreClient;
 use Aws\EventBridge\EventBridgeClient;
 use Aws\EventBridge\Exception\EventBridgeException;
-use Aws\Route53\Route53Client;
 use Aws\Sts\StsClient;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
@@ -21,9 +22,6 @@ class CrtContext implements Context, SnippetAcceptingContext
 
     private static $multiRegionAccessPoint;
     private static $tempFile;
-    private static $eventBuses = [];
-    private static $healthCheckArn;
-    private static $healthCheckId;
     private static $globalEndpoint;
 
     /** @var EventBridgeClient */
@@ -36,6 +34,8 @@ class CrtContext implements Context, SnippetAcceptingContext
     private $stream;
     /** @var RequestInterface */
     private $presignedRequest;
+    /** @var string */
+    private $keyvaluestore;
 
     /**
      * @BeforeFeature @mrap
@@ -79,116 +79,20 @@ class CrtContext implements Context, SnippetAcceptingContext
     /**
      * @BeforeFeature @eventbridge
      */
-    public static function setEventBuses()
-    {
-        $usEastClient = new EventBridgeClient([
-            'region' => 'us-east-1',
-            'version' => 'latest'
-        ]);
-        $eventBusEast = $usEastClient->describeEventBus(['Name' => 'default'])['Arn'];
-        $eventBusWest = str_replace('us-east-1', 'us-west-2', $eventBusEast);
-        array_push(
-            self::$eventBuses,
-            ['EventBusArn' => $eventBusEast],
-            ['EventBusArn' => $eventBusWest]
-        );
-    }
-
-    /**
-     * @BeforeFeature @eventbridge
-     */
-    public static function createHealthCheck()
-    {
-        $route53Client = new Route53Client([
-            'region' => 'us-east-1',
-            'version' => 'latest'
-        ]);
-        $response = $route53Client->createHealthCheck([
-            'CallerReference' => uniqid(),
-            'HealthCheckConfig' => [
-                'HealthThreshold' => 0,
-                'Type' => 'CALCULATED'
-            ]
-        ]);
-        self::$healthCheckId = $response['HealthCheck']['Id'];
-        self::$healthCheckArn = "arn:aws:route53:::healthcheck/{$response['HealthCheck']['Id']}";
-    }
-
-    /**
-     * @BeforeFeature @eventbridge
-     */
-    public static function createGlobalEndpoint()
+    public static function setGlobalEndpoint()
     {
         $eventBridgeClient = new EventBridgeClient([
             'region' => 'us-east-1',
             'version' => 'latest'
         ]);
-        $currentEndpoints = $eventBridgeClient->listEndpoints();
-        $testEndpointExists = false;
-        foreach ($currentEndpoints['Endpoints'] as $endpoint) {
-            if ($endpoint['Name'] == 'test-endpoint') {
-                $testEndpointExists = true;
-                break;
-            }
-        }
-        if (!$testEndpointExists) {
-            $eventBridgeClient->createEndpoint([
-                'Name' => 'test-endpoint',
-                'EventBuses' => self::$eventBuses,
-                'ReplicationConfig' => [
-                    'State' => 'DISABLED'
-                ],
-                'RoutingConfig' => [
-                    'FailoverConfig' => [
-                        'Primary' => [
-                            'HealthCheck' => self::$healthCheckArn
-                        ],
-                        'Secondary' => [
-                            'Route' => 'us-west-2'
-                        ]
-                    ]
-                ]
+
+
+
+        $result = $eventBridgeClient->describeEndpoint([
+                'Name' => 'test-endpoint'
             ]);
-        }
 
-        $attempts = 0;
-        $active = false;
-        $result = null;
-        while (!$active && $attempts <= 5) {
-            $result = $eventBridgeClient->describeEndpoint(['Name' => 'test-endpoint']);
-            $active = $result['State'] === 'ACTIVE';
-            sleep((int) pow(1.2, $attempts));
-            $attempts++;
-        }
         self::$globalEndpoint = $result['EndpointId'];
-    }
-
-    /**
-     * @AfterFeature @eventbridge
-     */
-    public static function deleteGlobalEndpoint()
-    {
-        $eventBridgeClient = new EventBridgeClient([
-            'region' => 'us-east-1',
-            'version' => 'latest'
-        ]);
-        $eventBridgeClient->deleteEndpoint([
-            'Name' => 'test-endpoint'
-        ]);
-    }
-
-    /**
-     * @AfterFeature @eventbridge
-     */
-    public static function deleteHealthCheck()
-    {
-        $route53Client = new Route53Client([
-            'region' => 'us-east-1',
-            'version' => 'latest'
-        ]);
-        $route53Client->deleteHealthCheck([
-            'HealthCheckId' => self::$healthCheckId
-        ]);
     }
 
     /**
@@ -239,9 +143,7 @@ class CrtContext implements Context, SnippetAcceptingContext
     public function iCanConfirmMyAccessPointHasAtLeastOneObject()
     {
         $result = $this->s3Client->listObjectsV2(['Bucket' => self::$multiRegionAccessPoint]);
-        Assert::assertTrue(
-            !empty($result['Contents'])
-        );
+        Assert::assertNotTrue(empty($result['Contents']));
     }
 
     /**
@@ -265,7 +167,7 @@ class CrtContext implements Context, SnippetAcceptingContext
         $result = $this->s3Client->getObject(['Bucket' => self::$multiRegionAccessPoint, 'Key' => 'mrap-test']);
         Assert::assertEquals(
             'test',
-            (string) $result['Body']
+            (string)$result['Body']
         );
     }
 
@@ -275,7 +177,8 @@ class CrtContext implements Context, SnippetAcceptingContext
     public function iCreateAPreSignedUrlForACommandWith(
         $commandName,
         TableNode $table
-    ) {
+    )
+    {
         $args = ['Bucket' => self::$multiRegionAccessPoint];
         foreach ($table as $row) {
             $args[$row['key']] = $row['value'];
@@ -344,20 +247,43 @@ class CrtContext implements Context, SnippetAcceptingContext
      */
     public function iCanUploadAnEventUsingMyGlobalEndpoint()
     {
-        $attempts = 0;
-        while ($attempts <= 5) {
-            try {
-                $this->eventBridgeClient->putEvents([
-                    'EndpointId' => self::$globalEndpoint,
-                    'Entries' => $this->eventConfig
-                ]);
-            } catch (EventBridgeException $e) {
-                if (strpos($e->getMessage(), 'Could not resolve host') === false) {
-                    throw $e;
-                }
-                $attempts++;
-                sleep((int) pow(1.2, $attempts));
-            }
-        }
+        $result = $this->eventBridgeClient->putEvents([
+            'EndpointId' => self::$globalEndpoint,
+            'Entries' => $this->eventConfig
+        ]);
+
+        Assert::assertEquals('200', $result['@metadata']['statusCode']);
+    }
+
+    /**
+     * @Given I have a cloudfront client and I have a key-value store
+     */
+    public function iHaveACloudfrontClientAndIHaveAKeyValueStore()
+    {
+        $cloudfrontClient = new CloudfrontClient([
+            'region' => 'us-east-1',
+            'version' => 'latest'
+        ]);
+
+        $result = $cloudfrontClient->listKeyValueStores();
+        $this->keyvaluestore = $result['KeyValueStoreList']['Items']['0']['ARN'];
+    }
+
+    /**
+     * @Then I can describe my key-value store using sigv4a
+     */
+    public function iCanDescribeMyKeyValueStoreUsingSigV4a()
+    {
+        $keyValueStoreClient = new CloudFrontKeyValueStoreClient([
+            'region' => 'us-east-1',
+            'version' => 'latest'
+        ]);
+
+        $result = $keyValueStoreClient->describeKeyValueStore([
+                'KvsARN' => $this->keyvaluestore
+            ]);
+
+        Assert::assertEquals('200', $result['@metadata']['statusCode']);
     }
 }
+
