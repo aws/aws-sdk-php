@@ -87,15 +87,12 @@ class CrtContext implements Context, SnippetAcceptingContext
         ]);
 
 
-        try {
-            $result = $eventBridgeClient->describeEndpoint([
+
+        $result = $eventBridgeClient->describeEndpoint([
                 'Name' => 'test-endpoint'
             ]);
 
-            self::$globalEndpoint = $result['EndpointId'];
-        } catch (EventBridgeException $e) {
-            throw new \Exception('failed to set global endpiont');
-        }
+        self::$globalEndpoint = $result['EndpointId'];
     }
 
     /**
@@ -250,15 +247,12 @@ class CrtContext implements Context, SnippetAcceptingContext
      */
     public function iCanUploadAnEventUsingMyGlobalEndpoint()
     {
-        try {
-            $result = $this->eventBridgeClient->putEvents([
-                'EndpointId' => self::$globalEndpoint,
-                'Entries' => $this->eventConfig
-            ]);
-            Assert::assertEquals('200', $result['@metadata']['statusCode']);
-        } catch (EventBridgeException $e) {
-            throw new \Exception('Failed to send events to global endpoint');
-        }
+        $result = $this->eventBridgeClient->putEvents([
+            'EndpointId' => self::$globalEndpoint,
+            'Entries' => $this->eventConfig
+        ]);
+
+        Assert::assertEquals('200', $result['@metadata']['statusCode']);
     }
 
     /**
@@ -285,15 +279,11 @@ class CrtContext implements Context, SnippetAcceptingContext
             'version' => 'latest'
         ]);
 
-        try {
-            $result = $keyValueStoreClient->describeKeyValueStore([
+        $result = $keyValueStoreClient->describeKeyValueStore([
                 'KvsARN' => $this->keyvaluestore
             ]);
 
-            Assert::assertEquals('200', $result['@metadata']['statusCode']);
-        } catch (EventBridgeException $e) {
-            throw new \Exception('failed to describe key-value store');
-        }
+        Assert::assertEquals('200', $result['@metadata']['statusCode']);
     }
 }
 
