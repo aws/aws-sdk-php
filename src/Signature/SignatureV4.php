@@ -501,6 +501,7 @@ class SignatureV4 implements SignatureInterface
      * @param CredentialsInterface $credentials
      * @param RequestInterface $request
      * @param $signingService
+     * @param SigningConfigAWS|null $signingConfig
      * @return RequestInterface
      */
     protected function signWithV4a(
@@ -515,7 +516,7 @@ class SignatureV4 implements SignatureInterface
             'signature_type' => SignatureType::HTTP_REQUEST_HEADERS,
             'credentials_provider' => $this->createCRTStaticCredentialsProvider($credentials),
             'signed_body_value' => $this->getPayload($request),
-            'should_normalize_uri_path' => true, //works for eventbridge,
+            'should_normalize_uri_path' => true,
             'use_double_uri_encode' => true,
             'region' => "*",
             'service' => $signingService,
