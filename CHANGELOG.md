@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.294.2 - 2023-12-18
 
 * `Aws\QuickSight` - A docs-only release to add missing entities to the API reference.
 * `Aws\Route53Resolver` - Add DOH protocols in resolver endpoints.
