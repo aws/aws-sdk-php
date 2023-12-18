@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QuickSight` - A docs-only release to add missing entities to the API reference.
+* `Aws\Route53Resolver` - Add DOH protocols in resolver endpoints.
+* `Aws\CognitoIdentityProvider` - Amazon Cognito now supports trigger versions that define the fields in the request sent to pre token generation Lambda triggers.
+* `Aws\EKS` - Add support for EKS Cluster Access Management.
+
 ## 3.294.1 - 2023-12-15
 
 * `Aws\Signature` - Fixes issues with CloudfrontKeyValueStore sigv4a operations.
