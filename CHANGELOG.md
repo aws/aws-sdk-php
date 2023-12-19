@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.294.3 - 2023-12-19
 
 * `Aws\ChimeSDKMeetings` - Add meeting features to specify a maximum camera resolution, a maximum content sharing resolution, and a maximum number of attendees for a given meeting.
 * `Aws\FSx` - Added support for FSx for OpenZFS on-demand data replication across AWS accounts and/or regions.Added the IncludeShared attribute for DescribeSnapshots.Added the CopyStrategy attribute for OpenZFSVolumeConfiguration.
