@@ -13,6 +13,21 @@
     "uid":"marketplace-catalog-2018-09-17"
   },
   "operations":{
+    "BatchDescribeEntities":{
+      "name":"BatchDescribeEntities",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchDescribeEntities"
+      },
+      "input":{"shape":"BatchDescribeEntitiesRequest"},
+      "output":{"shape":"BatchDescribeEntitiesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "CancelChangeSet":{
       "name":"CancelChangeSet",
       "http":{
@@ -327,6 +342,39 @@
         "Restricted",
         "Draft"
       ]
+    },
+    "BatchDescribeEntitiesRequest":{
+      "type":"structure",
+      "required":["EntityRequestList"],
+      "members":{
+        "EntityRequestList":{"shape":"EntityRequestList"}
+      }
+    },
+    "BatchDescribeEntitiesResponse":{
+      "type":"structure",
+      "members":{
+        "EntityDetails":{"shape":"EntityDetails"},
+        "Errors":{"shape":"Errors"}
+      }
+    },
+    "BatchDescribeErrorCodeString":{
+      "type":"string",
+      "max":72,
+      "min":1,
+      "pattern":"^[a-zA-Z_]+$"
+    },
+    "BatchDescribeErrorDetail":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"BatchDescribeErrorCodeString"},
+        "ErrorMessage":{"shape":"BatchDescribeErrorMessageContent"}
+      }
+    },
+    "BatchDescribeErrorMessageContent":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^(.)+$"
     },
     "CancelChangeSetRequest":{
       "type":"structure",
@@ -741,11 +789,49 @@
         "Identifier":{"shape":"Identifier"}
       }
     },
+    "EntityDetail":{
+      "type":"structure",
+      "members":{
+        "EntityType":{"shape":"EntityType"},
+        "EntityArn":{"shape":"ARN"},
+        "EntityIdentifier":{"shape":"Identifier"},
+        "LastModifiedDate":{"shape":"DateTimeISO8601"},
+        "DetailsDocument":{"shape":"JsonDocumentType"}
+      }
+    },
+    "EntityDetails":{
+      "type":"map",
+      "key":{"shape":"EntityId"},
+      "value":{"shape":"EntityDetail"}
+    },
+    "EntityId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9][.a-zA-Z0-9/-]+[a-zA-Z0-9]$"
+    },
     "EntityNameString":{
       "type":"string",
       "max":255,
       "min":1,
       "pattern":"^\\\\S+[\\\\S\\\\s]*"
+    },
+    "EntityRequest":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "EntityId"
+      ],
+      "members":{
+        "Catalog":{"shape":"Catalog"},
+        "EntityId":{"shape":"EntityId"}
+      }
+    },
+    "EntityRequestList":{
+      "type":"list",
+      "member":{"shape":"EntityRequest"},
+      "max":20,
+      "min":1
     },
     "EntitySummary":{
       "type":"structure",
@@ -814,6 +900,11 @@
     "ErrorDetailList":{
       "type":"list",
       "member":{"shape":"ErrorDetail"}
+    },
+    "Errors":{
+      "type":"map",
+      "key":{"shape":"EntityId"},
+      "value":{"shape":"BatchDescribeErrorDetail"}
     },
     "ExceptionMessageContent":{
       "type":"string",

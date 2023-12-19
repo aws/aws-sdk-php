@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKMeetings` - Add meeting features to specify a maximum camera resolution, a maximum content sharing resolution, and a maximum number of attendees for a given meeting.
+* `Aws\FSx` - Added support for FSx for OpenZFS on-demand data replication across AWS accounts and/or regions.Added the IncludeShared attribute for DescribeSnapshots.Added the CopyStrategy attribute for OpenZFSVolumeConfiguration.
+* `Aws\AppSync` - This release adds additional configurations on GraphQL APIs for limits on query depth, resolver count, and introspection
+* `Aws\RDS` - RDS - The release adds two new APIs: DescribeDBRecommendations and ModifyDBRecommendation
+* `Aws\EC2` - Provision BYOIPv4 address ranges and advertise them by specifying the network border groups option in Los Angeles, Phoenix and Dallas AWS Local Zones.
+* `Aws\MarketplaceCatalog` - AWS Marketplace now supports a new API, BatchDescribeEntities, which returns metadata and content for multiple entities.
+
 ## 3.294.2 - 2023-12-18
 
 * `Aws\QuickSight` - A docs-only release to add missing entities to the API reference.
