@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EKS` - Add support for cluster insights, new EKS capability that surfaces potentially upgrade impacting issues.
+* `Aws\AppStream` - This release introduces configurable clipboard, allowing admins to specify the maximum length of text that can be copied by the users from their device to the remote session and vice-versa.
+* `Aws\GuardDuty` - This release 1) introduces a new API: GetOrganizationStatistics , and 2) adds a new UsageStatisticType TOP_ACCOUNTS_BY_FEATURE for GetUsageStatistics API
+* `Aws\Route53` - Amazon Route 53 now supports the Canada West (Calgary) Region (ca-west-1) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+* `Aws\MediaTailor` - Adds the ability to configure time shifting on MediaTailor channels using the TimeShiftConfiguration field
+* `Aws\ManagedBlockchainQuery` - Adding Confirmation Status and Execution Status to GetTransaction Response.
+
 ## 3.294.3 - 2023-12-19
 
 * `Aws\ChimeSDKMeetings` - Add meeting features to specify a maximum camera resolution, a maximum content sharing resolution, and a maximum number of attendees for a given meeting.
