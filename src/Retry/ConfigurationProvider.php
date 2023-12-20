@@ -8,6 +8,8 @@ use Aws\Retry\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 
+use function Aws\getenv;
+
 /**
  * A configuration provider is a function that returns a promise that is
  * fulfilled with a {@see \Aws\Retry\ConfigurationInterface}

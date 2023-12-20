@@ -36,6 +36,8 @@ use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\RequestInterface;
 
+use function Aws\getenv;
+
 /**
  * @internal Resolves a hash of client arguments to construct a client.
  */

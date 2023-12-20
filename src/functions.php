@@ -603,3 +603,11 @@ function strip_fips_pseudo_regions($region)
     return str_replace(['fips-', '-fips'], ['', ''], $region);
 }
 
+/** @return string|false */
+function getenv(string $name)
+{
+    $out = \getenv($name);
+
+    return $out === false ? ($_ENV[$name] ?? false) : $out;
+}
+

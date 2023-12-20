@@ -8,6 +8,8 @@ use Aws\ConfigurationProviderInterface;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 
+use function Aws\getenv;
+
 /**
  * A configuration provider is a function that accepts no arguments and returns
  * a promise that is fulfilled with a {@see \Aws\ClientSideMonitoring\ConfigurationInterface}
