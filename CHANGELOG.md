@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.294.4 - 2023-12-20
 
 * `Aws\EKS` - Add support for cluster insights, new EKS capability that surfaces potentially upgrade impacting issues.
 * `Aws\AppStream` - This release introduces configurable clipboard, allowing admins to specify the maximum length of text that can be copied by the users from their device to the remote session and vice-versa.
