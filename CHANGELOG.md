@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.294.5 - 2023-12-21
 
 * `Aws\NeptuneGraph` - Adds Waiters for successful creation and deletion of Graph, Graph Snapshot, Import Task and Private Endpoints for Neptune Analytics
 * `Aws\PrometheusService` - This release updates Amazon Managed Service for Prometheus APIs to support customer managed KMS keys.
