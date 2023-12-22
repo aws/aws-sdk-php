@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.295.0 - 2023-12-22
 
 * `Aws\Omics` - Provides minor corrections and an updated description of APIs.
 * `Aws\SecretsManager` - Update endpoint rules and examples.
