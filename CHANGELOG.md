@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Omics` - Provides minor corrections and an updated description of APIs.
+* `Aws\SecretsManager` - Update endpoint rules and examples.
+* `Aws\LakeFormation` - This release adds additional configurations on GetTemporaryGlueTableCredentials for Query Session Context.
+* `Aws\S3` - Added additional examples for some operations.
+* `Aws\Glue` - This release adds additional configurations for Query Session Context on the following APIs: GetUnfilteredTableMetadata, GetUnfilteredPartitionMetadata, GetUnfilteredPartitionsMetadata.
+* `Aws\BedrockAgent` - Adding Claude 2.1 support to Bedrock Agents
+* `Aws\NetworkMonitor` - CloudWatch Network Monitor is a new service within CloudWatch that will help network administrators and operators continuously monitor network performance metrics such as round-trip-time and packet loss between their AWS-hosted applications and their on-premises locations.
+* `Aws\MediaConnect` - This release adds the DescribeSourceMetadata API. This API can be used to view the stream information of the flow's source.
+
 ## 3.294.5 - 2023-12-21
 
 * `Aws\NeptuneGraph` - Adds Waiters for successful creation and deletion of Graph, Graph Snapshot, Import Task and Private Endpoints for Neptune Analytics
