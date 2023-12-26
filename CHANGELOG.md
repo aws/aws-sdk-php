@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+
 ## 3.295.0 - 2023-12-22
 
 * `Aws\Omics` - Provides minor corrections and an updated description of APIs.
