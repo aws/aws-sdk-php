@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.295.1 - 2023-12-26
 
 * `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
 
