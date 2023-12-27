@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EMR` - Add support for customers to modify cluster attribute auto-terminate post cluster launch
+
 ## 3.295.1 - 2023-12-26
 
 * `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
