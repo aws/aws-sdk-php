@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.295.2 - 2023-12-27
 
 * `Aws\EMR` - Add support for customers to modify cluster attribute auto-terminate post cluster launch
 
