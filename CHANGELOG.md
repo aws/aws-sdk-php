@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.295.3 - 2023-12-28
 
 * `Aws\KinesisVideoArchivedMedia` - NoDataRetentionException thrown when GetImages requested for a Stream that does not retain data (that is, has a DataRetentionInHours of 0).
 * `Aws\SageMaker` - Amazon SageMaker Studio now supports Docker access from within app container
