@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\KinesisVideoArchivedMedia` - NoDataRetentionException thrown when GetImages requested for a Stream that does not retain data (that is, has a DataRetentionInHours of 0).
+* `Aws\SageMaker` - Amazon SageMaker Studio now supports Docker access from within app container
+* `Aws\CodeStarconnections` - New integration with the GitLab self-managed provider type.
+
 ## 3.295.2 - 2023-12-27
 
 * `Aws\EMR` - Add support for customers to modify cluster attribute auto-terminate post cluster launch
