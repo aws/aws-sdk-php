@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\LocationService` - This release introduces a new parameter to bypasses an API key's expiry conditions and delete the key.
+* `Aws\QuickSight` - Add LinkEntityArn support for different partitions; Add UnsupportedUserEditionException in UpdateDashboardLinks API; Add support for New Reader Experience Topics
+* `Aws\AppRunner` - AWS App Runner adds Python 3.11 and Node.js 18 runtimes.
+
 ## 3.295.3 - 2023-12-28
 
 * `Aws\KinesisVideoArchivedMedia` - NoDataRetentionException thrown when GetImages requested for a Stream that does not retain data (that is, has a DataRetentionInHours of 0).
