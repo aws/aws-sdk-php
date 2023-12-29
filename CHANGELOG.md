@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.295.4 - 2023-12-29
 
 * `Aws\LocationService` - This release introduces a new parameter to bypasses an API key's expiry conditions and delete the key.
 * `Aws\QuickSight` - Add LinkEntityArn support for different partitions; Add UnsupportedUserEditionException in UpdateDashboardLinks API; Add support for New Reader Experience Topics
