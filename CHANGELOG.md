@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Amazon Connect, Contact Lens Evaluation API increase evaluation notes max length to 3072.
+* `Aws\MediaConvert` - This release includes video engine updates including HEVC improvements, support for ingesting VP9 encoded video in MP4 containers, and support for user-specified 3D LUTs.
+
 ## 3.295.4 - 2023-12-29
 
 * `Aws\LocationService` - This release introduces a new parameter to bypasses an API key's expiry conditions and delete the key.
