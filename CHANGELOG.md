@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.295.6 - 2024-01-04
 
 * `Aws\DocDB` - Adding PerformanceInsightsEnabled and PerformanceInsightsKMSKeyId fields to DescribeDBInstances Response.
 * `Aws\SageMaker` - Adding support for provisioned throughput mode for SageMaker Feature Groups
