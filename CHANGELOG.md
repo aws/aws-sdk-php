@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Minor trait updates for User APIs
+* `Aws\RedshiftServerless` - use_fips_ssl and require_ssl parameter support for Workgroup, UpdateWorkgroup, and CreateWorkgroup
+* `Aws\QConnect` - Marked SearchQuickResponses API as readonly.
+* `Aws\KMS` - Documentation updates for AWS Key Management Service (KMS).
+
 ## 3.295.6 - 2024-01-04
 
 * `Aws\DocDB` - Adding PerformanceInsightsEnabled and PerformanceInsightsKMSKeyId fields to DescribeDBInstances Response.
