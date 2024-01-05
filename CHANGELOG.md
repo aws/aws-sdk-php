@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.295.7 - 2024-01-05
 
 * `Aws\Connect` - Minor trait updates for User APIs
 * `Aws\RedshiftServerless` - use_fips_ssl and require_ssl parameter support for Workgroup, UpdateWorkgroup, and CreateWorkgroup
