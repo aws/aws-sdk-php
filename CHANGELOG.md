@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Amazon EC2 R7iz bare metal instances are powered by custom 4th generation Intel Xeon Scalable processors.
+* `Aws\Route53Resolver` - This release adds support for query type configuration on firewall rules that enables customers for granular action (ALLOW, ALERT, BLOCK) by DNS query type.
+* `Aws\CodeBuild` - Aws CodeBuild now supports new compute type BUILD_GENERAL1_XLARGE
+
 ## 3.295.7 - 2024-01-05
 
 * `Aws\Connect` - Minor trait updates for User APIs
