@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.295.8 - 2024-01-08
 
 * `Aws\EC2` - Amazon EC2 R7iz bare metal instances are powered by custom 4th generation Intel Xeon Scalable processors.
 * `Aws\Route53Resolver` - This release adds support for query type configuration on firewall rules that enables customers for granular action (ALLOW, ALERT, BLOCK) by DNS query type.
