@@ -121,7 +121,12 @@ class Signer
                 $errorMessages[] = $newMessage;
             }
             
-            throw new \RuntimeException(implode("\n",$errorMessages));
+            $exceptionMessage = "An error has occurred when signing the policy";
+            if (count($errorMessages) > 0) {
+                $exceptionMessage = implode("\n", $errorMessages);
+            }
+
+            throw new \RuntimeException($exceptionMessage);
         }
 
         return $signature;
