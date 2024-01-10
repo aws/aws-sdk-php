@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.295.9 - 2024-01-10
 
 * `Aws\QConnect` - QueryAssistant and GetRecommendations will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 * `Aws\ConnectCampaignService` - Minor pattern updates for Campaign and Dial Request API fields.
