@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Throw exception when an empty signature for signed url is generated.
+* `Aws\SecretsManager` - Doc only update for Secrets Manager
+* `Aws\EC2` - This release adds support for adding an ElasticBlockStorage volume configurations in ECS RunTask/StartTask/CreateService/UpdateService APIs. The configuration allows for attaching EBS volumes to ECS Tasks.
+* `Aws\WorkSpaces` - Added AWS Workspaces RebootWorkspaces API - Extended Reboot documentation update
+* `Aws\ECS` - This release adds support for adding an ElasticBlockStorage volume configurations in ECS RunTask/StartTask/CreateService/UpdateService APIs. The configuration allows for attaching EBS volumes to ECS Tasks.
+* `Aws\EventBridge` - Adding AppSync as an EventBridge Target
+* `Aws\IoTFleetWise` - The following dataTypes have been removed: CUSTOMER_DECODED_INTERFACE in NetworkInterfaceType; CUSTOMER_DECODED_SIGNAL_INFO_IS_NULL in SignalDecoderFailureReason; CUSTOMER_DECODED_SIGNAL_NETWORK_INTERFACE_INFO_IS_NULL in NetworkInterfaceFailureReason; CUSTOMER_DECODED_SIGNAL in SignalDecoderType
+* `Aws\IoT` - Add ConflictException to Update APIs of AWS IoT Software Package Catalog
+
 ## 3.295.9 - 2024-01-10
 
 * `Aws\QConnect` - QueryAssistant and GetRecommendations will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
