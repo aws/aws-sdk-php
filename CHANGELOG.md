@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.295.10 - 2024-01-11
 
 * `Aws\CloudFront` - Throw exception when an empty signature for signed url is generated.
 * `Aws\SecretsManager` - Doc only update for Secrets Manager
