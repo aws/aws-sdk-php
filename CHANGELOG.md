@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.296.0 - 2024-01-12
 
 * `Aws\ConnectParticipant` - Introduce new Supervisor participant role
 * `Aws\S3Control` - S3 On Outposts team adds dualstack endpoints support for S3Control and S3Outposts API calls.
