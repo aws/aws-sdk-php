@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - This release will have ValidationException thrown if certain invalid app types are provided. The release will also throw ValidationException if more than 10 account ids are provided in VpcOnlyTrustedAccounts.
+
 ## 3.296.0 - 2024-01-12
 
 * `Aws\ConnectParticipant` - Introduce new Supervisor participant role
