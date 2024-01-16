@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Rekognition` - This release adds ContentType and TaxonomyLevel attributes to DetectModerationLabels and GetMediaAnalysisJob API responses.
+* `Aws\IoTFleetWise` - Updated APIs: SignalNodeType query parameter has been added to ListSignalCatalogNodesRequest and ListVehiclesResponse has been extended with attributes field.
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub
+* `Aws\PaymentCryptography` - Provide an additional option for key exchange using RSA wrap/unwrap in addition to tr-34/tr-31 in ImportKey and ExportKey operations. Added new key usage (type) TR31_M1_ISO_9797_1_MAC_KEY, for use with Generate/VerifyMac dataplane operations with ISO9797 Algorithm 1 MAC calculations.
+* `Aws\Macie2` - This release adds support for analyzing Amazon S3 objects that are encrypted using dual-layer server-side encryption with AWS KMS keys (DSSE-KMS). It also adds support for reporting DSSE-KMS details in statistics and metadata about encryption settings for S3 buckets and objects.
+* `Aws\IoT` - Revert release of LogTargetTypes
+* `Aws\PersonalizeRuntime` - Documentation updates for Amazon Personalize
+* `Aws\Personalize` - Documentation updates for Amazon Personalize.
+
 ## 3.296.1 - 2024-01-14
 
 * `Aws\SageMaker` - This release will have ValidationException thrown if certain invalid app types are provided. The release will also throw ValidationException if more than 10 account ids are provided in VpcOnlyTrustedAccounts.
