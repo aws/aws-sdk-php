@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.296.2 - 2024-01-16
 
 * `Aws\Rekognition` - This release adds ContentType and TaxonomyLevel attributes to DetectModerationLabels and GetMediaAnalysisJob API responses.
 * `Aws\IoTFleetWise` - Updated APIs: SignalNodeType query parameter has been added to ListSignalCatalogNodesRequest and ListVehiclesResponse has been extended with attributes field.
