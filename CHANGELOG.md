@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Updating note for enabling streams for UpdateTable.
+* `Aws\Keyspaces` - This release adds support for Multi-Region Replication with provisioned tables, and Keyspaces auto scaling APIs
+
 ## 3.296.2 - 2024-01-16
 
 * `Aws\Rekognition` - This release adds ContentType and TaxonomyLevel attributes to DetectModerationLabels and GetMediaAnalysisJob API responses.
