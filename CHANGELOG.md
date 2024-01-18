@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudTrail` - This release adds a new API ListInsightsMetricData to retrieve metric data from CloudTrail Insights.
+* `Aws\Connect` - GetMetricDataV2 now supports 3 groupings
+* `Aws\SageMakerFeatureStoreRuntime` - Increase BatchGetRecord limits from 10 items to 100 items
+* `Aws\drs` - Removed invalid and unnecessary default values.
+* `Aws\Firehose` - Allow support for Snowflake as a Kinesis Data Firehose delivery destination.
+* `Aws\B2bi` - Increasing TestMapping inputFileContent file size limit to 5MB and adding file size limit 250KB for TestParsing input file. This release also includes exposing InternalServerException for Tag APIs.
+
 ## 3.296.4 - 2024-01-17
 
 * `Aws\DynamoDB` - Updating note for enabling streams for UpdateTable.
