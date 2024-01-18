@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.296.5 - 2024-01-18
 
 * `Aws\CloudTrail` - This release adds a new API ListInsightsMetricData to retrieve metric data from CloudTrail Insights.
 * `Aws\Connect` - GetMetricDataV2 now supports 3 groupings
