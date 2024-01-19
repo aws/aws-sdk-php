@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Athena` - Introducing new NotebookS3LocationUri parameter to Athena ImportNotebook API. Payload is no longer required and either Payload or NotebookS3LocationUri needs to be provided (not both) for a successful ImportNotebook API call. If both are provided, an InvalidRequestException will be thrown.
+* `Aws\DynamoDB` - This release adds support for including ApproximateCreationDateTimePrecision configurations in EnableKinesisStreamingDestination API, adds the same as an optional field in the response of DescribeKinesisStreamingDestination, and adds support for a new UpdateKinesisStreamingDestination API.
+* `Aws\QConnect` - Increased Quick Response name max length to 100
+* `Aws\CodeBuild` - Release CodeBuild Reserved Capacity feature
+
 ## 3.296.5 - 2024-01-18
 
 * `Aws\CloudTrail` - This release adds a new API ListInsightsMetricData to retrieve metric data from CloudTrail Insights.
