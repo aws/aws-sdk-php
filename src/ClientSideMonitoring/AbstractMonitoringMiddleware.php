@@ -235,7 +235,7 @@ abstract class AbstractMonitoringMiddleware
         // Before version 8, sockets are resources
         // After version 8, sockets are instances of Socket
         if (PHP_MAJOR_VERSION >= 8) {
-            return !(self::$socket instanceof Socket);
+            return !(self::$socket instanceof \Socket);
         } else {
             return is_resource(self::$socket);
         }
