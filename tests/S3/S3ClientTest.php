@@ -29,6 +29,7 @@ use http\Exception\InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Aws\Exception\UnresolvedEndpointException;
+use function PHPUnit\Framework\assertEquals;
 
 /**
  * @covers Aws\S3\S3Client
@@ -2476,4 +2477,29 @@ EOXML;
         ];
     }
 
+    /**
+     * @dataProvider builtinRegionProvider
+     */
+    public function testCorrectlyResolvesGlobalEndpointWithoutRegionInConstructor($region, $expected)
+    {
+        putenv('AWS_REGION=' . $region);
+
+        $s3Client = new S3Client([]);
+        $builtIns = $s3Client->getClientBuiltIns();
+        $this->assertEquals($expected, isset($builtIns['AWS::S3::UseGlobalEndpoint']));
+
+        if ($expected) {
+            $this->assertEquals($expected, $builtIns['AWS::S3::UseGlobalEndpoint']);
+        }
+
+        putenv('AWS_REGION=');
+    }
+
+    public function builtinRegionProvider()
+    {
+        return [
+            ['us-east-1' , true],
+            ['us-west-2', false]
+        ];
+    }
 }
