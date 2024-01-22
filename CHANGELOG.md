@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.296.7 - 2024-01-22
 
 * `Aws\CloudFrontKeyValueStore` - This release improves upon the DescribeKeyValueStore API by returning two additional fields, Status of the KeyValueStore and the FailureReason in case of failures during creation of KeyValueStore.
 * `Aws\EC2` - Documentation updates for Amazon EC2.
