@@ -811,6 +811,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         ) {
             return false;
         }
+
         $key = 'AWS::S3::UseGlobalEndpoint';
         $result = $args['s3_us_east_1_regional_endpoint'] instanceof \Closure ?
             $args['s3_us_east_1_regional_endpoint']()->wait() : $args['s3_us_east_1_regional_endpoint'];
