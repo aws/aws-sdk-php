@@ -5,7 +5,7 @@ use Aws\Credentials\Credentials;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\Credentials\Credentials
+ * @covers \Aws\Credentials\Credentials
  */
 class CredentialsTest extends TestCase
 {
