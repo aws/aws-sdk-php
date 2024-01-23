@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.296.8 - 2024-01-23
 
 * `Aws\Inspector2` - This release adds support for CIS scans on EC2 instances.
 
