@@ -224,6 +224,23 @@ abstract class AbstractMonitoringMiddleware
         return $event;
     }
 
+    
+    /**
+     * Checks if the socket is created.
+     *
+     * @return bool Returns true if the socket is created, false otherwise.
+     */
+    private function isSocketCreated()
+    {
+        // Before version 8, sockets are resources
+        // After version 8, sockets are instances of Socket
+        if (PHP_MAJOR_VERSION >= 8) {
+            return (self::$socket instanceof \Socket);
+        } else {
+            return is_resource(self::$socket);
+        }
+    }
+
     /**
      * Creates a UDP socket resource and stores it with the class, or retrieves
      * it if already instantiated and connected. Handles error-checking and
@@ -235,7 +252,7 @@ abstract class AbstractMonitoringMiddleware
      */
     private function prepareSocket($forceNewConnection = false)
     {
-        if (!is_resource(self::$socket)
+        if (!$this->isSocketCreated() 
             || $forceNewConnection
             || socket_last_error(self::$socket)
         ) {
