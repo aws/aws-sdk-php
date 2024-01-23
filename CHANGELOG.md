@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Inspector2` - This release adds support for CIS scans on EC2 instances.
+
 ## 3.296.7 - 2024-01-22
 
 * `Aws\CloudFrontKeyValueStore` - This release improves upon the DescribeKeyValueStore API by returning two additional fields, Status of the KeyValueStore and the FailureReason in case of failures during creation of KeyValueStore.
