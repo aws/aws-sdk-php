@@ -30,6 +30,11 @@ class AesGcmDecryptingStream implements AesStreamInterface
     private $tagLength;
 
     /**
+     * @var StreamInterface
+     */
+    private $stream;
+
+    /**
      * @param StreamInterface $cipherText
      * @param string $key
      * @param string $initializationVector
