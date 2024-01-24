@@ -30,8 +30,8 @@ class InstanceProfileProvider
     const DEFAULT_AWS_EC2_METADATA_V1_DISABLED = false;
     const ENDPOINT_MODE_IPv4 = 'IPv4';
     const ENDPOINT_MODE_IPv6 = 'IPv6';
-    private const DEFAULT_METADATA_SERVICE_IPv4_ENDPOINT = 'http://169.254.169.254';
-    private const DEFAULT_METADATA_SERVICE_IPv6_ENDPOINT = 'http://[fd00:ec2::254]';
+    const DEFAULT_METADATA_SERVICE_IPv4_ENDPOINT = 'http://169.254.169.254';
+    const DEFAULT_METADATA_SERVICE_IPv6_ENDPOINT = 'http://[fd00:ec2::254]';
 
     /** @var string */
     private $profile;
@@ -430,12 +430,11 @@ class InstanceProfileProvider
     /**
      * This method checks for whether a provide URI is valid.
      * @param string $uri this parameter is the uri to do the validation against to.
-     * if the value for $uri is null.
      *
      * @return string|null
      */
     private function isValidEndpoint(
-        string $uri
+        $uri
     ): bool
     {
         // We make sure first the provided uri is a valid URL
