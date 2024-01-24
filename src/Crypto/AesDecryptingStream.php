@@ -48,10 +48,6 @@ class AesDecryptingStream implements AesStreamInterface
         $this->stream = $cipherText;
         $this->key = $key;
         $this->cipherMethod = clone $cipherMethod;
-
-        // unsetting the property forces the first access to go through
-        // __get().
-        unset($this->stream);
     }
 
     public function getOpenSslName()
