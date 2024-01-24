@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.297.0 - 2024-01-24
 
 * `Aws\Credentials` - Adds support for specifying custom IMDS endpoint when using the InstanceProfileProvider.
 * `Aws\EC2` - Introduced a new clientToken request parameter on CreateNetworkAcl and CreateRouteTable APIs. The clientToken parameter allows idempotent operations on the APIs.
