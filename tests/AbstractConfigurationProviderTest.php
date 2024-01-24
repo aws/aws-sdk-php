@@ -79,8 +79,8 @@ class AbstractConfigurationProviderTest extends TestCase
         // Set interfaceClass property that's normally set by child class
         $ref = new \ReflectionClass('\Aws\AbstractConfigurationProvider');
         $property = $ref->getProperty('interfaceClass');
-        $property->setAccessible(null, true);
-        $property->setValue('\Aws\ResultInterface');
+        $property->setAccessible(true);
+        $property->setValue(null,'\Aws\ResultInterface');
 
         $timesCalled = 0;
         $volatileProvider = function () use ($expected, &$timesCalled) {
