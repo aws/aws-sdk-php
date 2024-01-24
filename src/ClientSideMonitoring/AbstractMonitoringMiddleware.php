@@ -224,18 +224,21 @@ abstract class AbstractMonitoringMiddleware
         return $event;
     }
 
-    
+
     /**
-     * Checks if the socket is created.
+     * Checks if the socket is created. If PHP version is greater or equals to 8 then,
+     * it will check if the var is instance of \Socket otherwise it will check if is
+     * a resource.
      *
      * @return bool Returns true if the socket is created, false otherwise.
      */
-    private function isSocketCreated()
+    private function isSocketCreated(): bool
     {
         // Before version 8, sockets are resources
         // After version 8, sockets are instances of Socket
         if (PHP_MAJOR_VERSION >= 8) {
-            return (self::$socket instanceof \Socket);
+            $socketClass = '\Socket';
+            return self::$socket instanceof $socketClass;
         } else {
             return is_resource(self::$socket);
         }
@@ -252,7 +255,7 @@ abstract class AbstractMonitoringMiddleware
      */
     private function prepareSocket($forceNewConnection = false)
     {
-        if (!$this->isSocketCreated() 
+        if (!$this->isSocketCreated()
             || $forceNewConnection
             || socket_last_error(self::$socket)
         ) {
