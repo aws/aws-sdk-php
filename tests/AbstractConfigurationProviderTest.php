@@ -79,7 +79,7 @@ class AbstractConfigurationProviderTest extends TestCase
         // Set interfaceClass property that's normally set by child class
         $ref = new \ReflectionClass('\Aws\AbstractConfigurationProvider');
         $property = $ref->getProperty('interfaceClass');
-        $property->setAccessible(true);
+        $property->setAccessible(null, true);
         $property->setValue('\Aws\ResultInterface');
 
         $timesCalled = 0;
