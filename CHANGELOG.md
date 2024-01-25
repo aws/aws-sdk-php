@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Fixes warning in S3 client when region is not provided in constructor
+* `Aws\Lightsail` - This release adds support for IPv6-only instance plans.
+* `Aws\ACMPCA` - AWS Private CA now supports an option to omit the CDP extension from issued certificates, when CRL revocation is enabled.
+
 ## 3.297.0 - 2024-01-24
 
 * `Aws\Credentials` - Adds support for specifying custom IMDS endpoint when using the InstanceProfileProvider.
