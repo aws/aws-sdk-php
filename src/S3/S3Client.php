@@ -801,9 +801,18 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     private function addBuiltIns($args)
     {
-        if ($args['region'] !== 'us-east-1') {
+        if (isset($args['region'])
+            && $args['region'] !== 'us-east-1'
+        ) {
             return false;
         }
+
+        if (!isset($args['region'])
+            && ConfigurationResolver::resolve('region', '', 'string') !== 'us-east-1'
+        ) {
+            return false;
+        }
+
         $key = 'AWS::S3::UseGlobalEndpoint';
         $result = $args['s3_us_east_1_regional_endpoint'] instanceof \Closure ?
             $args['s3_us_east_1_regional_endpoint']()->wait() : $args['s3_us_east_1_regional_endpoint'];

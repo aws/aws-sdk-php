@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\Arn\ArnParser;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -15,7 +14,6 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\RegionalEndpoint\Configuration;
 use Aws\S3\S3Client;
 use Aws\S3\UseArnRegion\Configuration as UseArnRegionConfiguration;
-use Aws\Signature\SignatureV4;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
@@ -25,7 +23,6 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
-use http\Exception\InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Aws\Exception\UnresolvedEndpointException;
@@ -2476,4 +2473,35 @@ EOXML;
         ];
     }
 
+    /**
+     * @dataProvider builtinRegionProvider
+     */
+    public function testCorrectlyResolvesGlobalEndpointWithoutRegionInConstructor(
+        $region, $expected
+    ){
+        putenv('AWS_REGION=' . $region);
+
+        $s3Client = new S3Client([]);
+        $builtIns = $s3Client->getClientBuiltIns();
+        //The UseGlobalEndpoint builtin should be set by default if
+        //the region provided is us-east-1.
+        $this->assertEquals($expected, isset($builtIns['AWS::S3::UseGlobalEndpoint']));
+
+        //When the UseGlobalEndpoint builtin is set (i.e. us-east-1 is the region)
+        // the default value should be `true`, unless `s3_us_east_1_regional_endpoint`
+        // is set to `regional`.
+        if ($expected) {
+            $this->assertEquals($expected, $builtIns['AWS::S3::UseGlobalEndpoint']);
+        }
+
+        putenv('AWS_REGION=');
+    }
+
+    public function builtinRegionProvider()
+    {
+        return [
+            ['us-east-1' , true],
+            ['us-west-2', false]
+        ];
+    }
 }
