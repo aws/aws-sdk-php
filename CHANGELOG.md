@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.297.1 - 2024-01-25
 
 * `Aws\S3` - Fixes warning in S3 client when region is not provided in constructor
 * `Aws\Lightsail` - This release adds support for IPv6-only instance plans.
