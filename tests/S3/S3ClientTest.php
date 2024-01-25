@@ -2480,14 +2480,20 @@ EOXML;
     /**
      * @dataProvider builtinRegionProvider
      */
-    public function testCorrectlyResolvesGlobalEndpointWithoutRegionInConstructor($region, $expected)
-    {
+    public function testCorrectlyResolvesGlobalEndpointWithoutRegionInConstructor(
+        $region, $expected
+    ){
         putenv('AWS_REGION=' . $region);
 
         $s3Client = new S3Client([]);
         $builtIns = $s3Client->getClientBuiltIns();
+        //The UseGlobalEndpoint builtin should be set by default if
+        //the region provided is us-east-1.
         $this->assertEquals($expected, isset($builtIns['AWS::S3::UseGlobalEndpoint']));
 
+        //When the UseGlobalEndpoint builtin is set (i.e. us-east-1 is the region)
+        // the default value should be `true`, unless `s3_us_east_1_regional_endpoint`
+        // is set to `regional`.
         if ($expected) {
             $this->assertEquals($expected, $builtIns['AWS::S3::UseGlobalEndpoint']);
         }

@@ -802,7 +802,8 @@ class S3Client extends AwsClient implements S3ClientInterface
     private function addBuiltIns($args)
     {
         if (isset($args['region'])
-            && $args['region']  !== 'us-east-1') {
+            && $args['region'] !== 'us-east-1'
+        ) {
             return false;
         }
 
