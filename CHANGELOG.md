@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Inspector2` - This release adds ECR container image scanning based on their lastRecordedPullTime.
+* `Aws\Connect` - Update list and string length limits for predefined attributes.
+* `Aws\SageMaker` - Amazon SageMaker Automatic Model Tuning now provides an API to programmatically delete tuning jobs.
+
 ## 3.297.1 - 2024-01-25
 
 * `Aws\S3` - Fixes warning in S3 client when region is not provided in constructor

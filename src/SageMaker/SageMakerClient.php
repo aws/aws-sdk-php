@@ -171,6 +171,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteHubContentAsync(array $args = [])
  * @method \Aws\Result deleteHumanTaskUi(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteHumanTaskUiAsync(array $args = [])
+ * @method \Aws\Result deleteHyperParameterTuningJob(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteHyperParameterTuningJobAsync(array $args = [])
  * @method \Aws\Result deleteImage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteImageAsync(array $args = [])
  * @method \Aws\Result deleteImageVersion(array $args = [])
