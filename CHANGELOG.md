@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.297.2 - 2024-01-26
 
 * `Aws\Inspector2` - This release adds ECR container image scanning based on their lastRecordedPullTime.
 * `Aws\Connect` - Update list and string length limits for predefined attributes.
