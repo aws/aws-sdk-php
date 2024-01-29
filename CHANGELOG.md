@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.297.3 - 2024-01-29
 
 * `Aws\Snowball` - Modified description of createaddress to include direction to add path when providing a JSON file.
 * `Aws\MWAA` - This release adds MAINTENANCE environment status for Amazon MWAA environments.
