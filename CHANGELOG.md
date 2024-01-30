@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.297.4 - 2024-01-30
 
 * `Aws\DataZone` - Add new skipDeletionCheck to DeleteDomain. Add new skipDeletionCheck to DeleteProject which also automatically deletes dependent objects
 * `Aws\Route53` - Update the SDKs for text changes in the APIs.
