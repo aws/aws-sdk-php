@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataZone` - Add new skipDeletionCheck to DeleteDomain. Add new skipDeletionCheck to DeleteProject which also automatically deletes dependent objects
+* `Aws\Route53` - Update the SDKs for text changes in the APIs.
+
 ## 3.297.3 - 2024-01-29
 
 * `Aws\Snowball` - Modified description of createaddress to include direction to add path when providing a JSON file.
