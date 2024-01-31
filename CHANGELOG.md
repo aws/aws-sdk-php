@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.0 - 2024-01-31
 
 * `Aws\` - Adds support for the PHP 8.3 runtime
 * `Aws\SSM` - This release adds an optional Duration parameter to StateManager Associations. This allows customers to specify how long an apply-only-on-cron association execution should run. Once the specified Duration is out all the ongoing cancellable commands or automations are cancelled.
