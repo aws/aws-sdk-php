@@ -26,7 +26,7 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
     {
         $this->expectWarning();
         $this->expectWarningMessage(
-            "The provided type for `${inputParam}` value was `"
+            "The provided type for `{$inputParam}` value was `"
             . (gettype($inputValue) === 'double' ? 'float' : gettype($inputValue))
             . "`. The modeled type is `{$type}`."
         );
