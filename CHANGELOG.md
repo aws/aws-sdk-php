@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.1 - 2024-02-01
 
 * `Aws\IVS` - This release introduces a new resource Playback Restriction Policy which can be used to geo-restrict or domain-restrict channel stream playback when associated with a channel. New APIs to support this resource were introduced in the form of Create/Delete/Get/Update/List.
 * `Aws\ManagedBlockchainQuery` - This release adds support for transactions that have not reached finality. It also removes support for the status property from the response of the GetTransaction operation. You can use the confirmationStatus and executionStatus properties to determine the status of the transaction.
