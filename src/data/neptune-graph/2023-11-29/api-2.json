@@ -34,6 +34,29 @@
         "ApiType":{"value":"ControlPlane"}
       }
     },
+    "CancelQuery":{
+      "name":"CancelQuery",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/queries/{queryId}",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelQueryInput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "endpoint":{
+        "hostPrefix":"{graphIdentifier}."
+      },
+      "idempotent":true,
+      "staticContextParams":{
+        "ApiType":{"value":"DataPlane"}
+      }
+    },
     "CreateGraph":{
       "name":"CreateGraph",
       "http":{
@@ -176,6 +199,30 @@
         "ApiType":{"value":"ControlPlane"}
       }
     },
+    "ExecuteQuery":{
+      "name":"ExecuteQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/queries",
+        "responseCode":200
+      },
+      "input":{"shape":"ExecuteQueryInput"},
+      "output":{"shape":"ExecuteQueryOutput"},
+      "errors":[
+        {"shape":"UnprocessableException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{
+        "hostPrefix":"{graphIdentifier}."
+      },
+      "staticContextParams":{
+        "ApiType":{"value":"DataPlane"}
+      }
+    },
     "GetGraph":{
       "name":"GetGraph",
       "http":{
@@ -214,6 +261,29 @@
         "ApiType":{"value":"ControlPlane"}
       }
     },
+    "GetGraphSummary":{
+      "name":"GetGraphSummary",
+      "http":{
+        "method":"GET",
+        "requestUri":"/summary",
+        "responseCode":200
+      },
+      "input":{"shape":"GetGraphSummaryInput"},
+      "output":{"shape":"GetGraphSummaryOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "endpoint":{
+        "hostPrefix":"{graphIdentifier}."
+      },
+      "staticContextParams":{
+        "ApiType":{"value":"DataPlane"}
+      }
+    },
     "GetImportTask":{
       "name":"GetImportTask",
       "http":{
@@ -250,6 +320,29 @@
       ],
       "staticContextParams":{
         "ApiType":{"value":"ControlPlane"}
+      }
+    },
+    "GetQuery":{
+      "name":"GetQuery",
+      "http":{
+        "method":"GET",
+        "requestUri":"/queries/{queryId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetQueryInput"},
+      "output":{"shape":"GetQueryOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "endpoint":{
+        "hostPrefix":"{graphIdentifier}."
+      },
+      "staticContextParams":{
+        "ApiType":{"value":"DataPlane"}
       }
     },
     "ListGraphSnapshots":{
@@ -325,6 +418,28 @@
       ],
       "staticContextParams":{
         "ApiType":{"value":"ControlPlane"}
+      }
+    },
+    "ListQueries":{
+      "name":"ListQueries",
+      "http":{
+        "method":"GET",
+        "requestUri":"/queries",
+        "responseCode":200
+      },
+      "input":{"shape":"ListQueriesInput"},
+      "output":{"shape":"ListQueriesOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "endpoint":{
+        "hostPrefix":"{graphIdentifier}."
+      },
+      "staticContextParams":{
+        "ApiType":{"value":"DataPlane"}
       }
     },
     "ListTagsForResource":{
@@ -449,6 +564,18 @@
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "Arn":{
       "type":"string",
       "max":1011,
@@ -485,6 +612,26 @@
         "format":{"shape":"Format"},
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"ImportTaskStatus"}
+      }
+    },
+    "CancelQueryInput":{
+      "type":"structure",
+      "required":[
+        "graphIdentifier",
+        "queryId"
+      ],
+      "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "hostLabel":true,
+          "location":"header",
+          "locationName":"graphIdentifier"
+        },
+        "queryId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"queryId"
+        }
       }
     },
     "ConflictException":{
@@ -750,6 +897,67 @@
         "vpcEndpointId":{"shape":"VpcEndpointId"}
       }
     },
+    "EdgeLabels":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "EdgeProperties":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "EdgeStructure":{
+      "type":"structure",
+      "members":{
+        "count":{"shape":"Long"},
+        "edgeProperties":{"shape":"EdgeProperties"}
+      }
+    },
+    "EdgeStructures":{
+      "type":"list",
+      "member":{"shape":"EdgeStructure"}
+    },
+    "ExecuteQueryInput":{
+      "type":"structure",
+      "required":[
+        "graphIdentifier",
+        "queryString",
+        "language"
+      ],
+      "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "hostLabel":true,
+          "location":"header",
+          "locationName":"graphIdentifier"
+        },
+        "queryString":{
+          "shape":"String",
+          "locationName":"query"
+        },
+        "language":{"shape":"QueryLanguage"},
+        "planCache":{"shape":"PlanCacheType"},
+        "explainMode":{
+          "shape":"ExplainMode",
+          "locationName":"explain"
+        },
+        "queryTimeoutMilliseconds":{"shape":"Integer"}
+      }
+    },
+    "ExecuteQueryOutput":{
+      "type":"structure",
+      "required":["payload"],
+      "members":{
+        "payload":{"shape":"QueryResponseBlob"}
+      },
+      "payload":"payload"
+    },
+    "ExplainMode":{
+      "type":"string",
+      "enum":[
+        "STATIC",
+        "DETAILS"
+      ]
+    },
     "Format":{
       "type":"string",
       "enum":[
@@ -821,6 +1029,31 @@
         "kmsKeyIdentifier":{"shape":"KmsKeyArn"}
       }
     },
+    "GetGraphSummaryInput":{
+      "type":"structure",
+      "required":["graphIdentifier"],
+      "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "hostLabel":true,
+          "location":"header",
+          "locationName":"graphIdentifier"
+        },
+        "mode":{
+          "shape":"GraphSummaryMode",
+          "location":"querystring",
+          "locationName":"mode"
+        }
+      }
+    },
+    "GetGraphSummaryOutput":{
+      "type":"structure",
+      "members":{
+        "version":{"shape":"String"},
+        "lastStatisticsComputationTime":{"shape":"SyntheticTimestamp_date_time"},
+        "graphSummary":{"shape":"GraphDataSummary"}
+      }
+    },
     "GetImportTaskInput":{
       "type":"structure",
       "required":["taskIdentifier"],
@@ -884,6 +1117,55 @@
         "subnetIds":{"shape":"SubnetIds"},
         "status":{"shape":"PrivateGraphEndpointStatus"},
         "vpcEndpointId":{"shape":"VpcEndpointId"}
+      }
+    },
+    "GetQueryInput":{
+      "type":"structure",
+      "required":[
+        "graphIdentifier",
+        "queryId"
+      ],
+      "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "hostLabel":true,
+          "location":"header",
+          "locationName":"graphIdentifier"
+        },
+        "queryId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"queryId"
+        }
+      }
+    },
+    "GetQueryOutput":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"String"},
+        "queryString":{"shape":"String"},
+        "waited":{"shape":"Integer"},
+        "elapsed":{"shape":"Integer"},
+        "state":{"shape":"QueryState"}
+      }
+    },
+    "GraphDataSummary":{
+      "type":"structure",
+      "members":{
+        "numNodes":{"shape":"Long"},
+        "numEdges":{"shape":"Long"},
+        "numNodeLabels":{"shape":"Long"},
+        "numEdgeLabels":{"shape":"Long"},
+        "nodeLabels":{"shape":"NodeLabels"},
+        "edgeLabels":{"shape":"EdgeLabels"},
+        "numNodeProperties":{"shape":"Long"},
+        "numEdgeProperties":{"shape":"Long"},
+        "nodeProperties":{"shape":"LongValuedMapList"},
+        "edgeProperties":{"shape":"LongValuedMapList"},
+        "totalNodePropertyValues":{"shape":"Long"},
+        "totalEdgePropertyValues":{"shape":"Long"},
+        "nodeStructures":{"shape":"NodeStructures"},
+        "edgeStructures":{"shape":"EdgeStructures"}
       }
     },
     "GraphId":{
@@ -956,6 +1238,13 @@
     "GraphSummaryList":{
       "type":"list",
       "member":{"shape":"GraphSummary"}
+    },
+    "GraphSummaryMode":{
+      "type":"string",
+      "enum":[
+        "BASIC",
+        "DETAILED"
+      ]
     },
     "ImportOptions":{
       "type":"structure",
@@ -1146,6 +1435,38 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListQueriesInput":{
+      "type":"structure",
+      "required":[
+        "graphIdentifier",
+        "maxResults"
+      ],
+      "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "hostLabel":true,
+          "location":"header",
+          "locationName":"graphIdentifier"
+        },
+        "maxResults":{
+          "shape":"Integer",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "state":{
+          "shape":"QueryStateInput",
+          "location":"querystring",
+          "locationName":"state"
+        }
+      }
+    },
+    "ListQueriesOutput":{
+      "type":"structure",
+      "required":["queries"],
+      "members":{
+        "queries":{"shape":"QuerySummaryList"}
+      }
+    },
     "ListTagsForResourceInput":{
       "type":"structure",
       "required":["resourceArn"],
@@ -1166,6 +1487,15 @@
     "Long":{
       "type":"long",
       "box":true
+    },
+    "LongValuedMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"Long"}
+    },
+    "LongValuedMapList":{
+      "type":"list",
+      "member":{"shape":"LongValuedMap"}
     },
     "MaxResults":{
       "type":"integer",
@@ -1196,10 +1526,42 @@
       "max":1024,
       "min":1
     },
+    "NodeLabels":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "NodeProperties":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "NodeStructure":{
+      "type":"structure",
+      "members":{
+        "count":{"shape":"Long"},
+        "nodeProperties":{"shape":"NodeProperties"},
+        "distinctOutgoingEdgeLabels":{"shape":"OutgoingEdgeLabels"}
+      }
+    },
+    "NodeStructures":{
+      "type":"list",
+      "member":{"shape":"NodeStructure"}
+    },
+    "OutgoingEdgeLabels":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "PaginationToken":{
       "type":"string",
       "max":8192,
       "min":1
+    },
+    "PlanCacheType":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "AUTO"
+      ]
     },
     "PrivateGraphEndpointStatus":{
       "type":"string",
@@ -1233,6 +1595,45 @@
       "box":true,
       "max":24576,
       "min":128
+    },
+    "QueryLanguage":{
+      "type":"string",
+      "enum":["OPEN_CYPHER"]
+    },
+    "QueryResponseBlob":{
+      "type":"blob",
+      "streaming":true
+    },
+    "QueryState":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "WAITING",
+        "CANCELLING"
+      ]
+    },
+    "QueryStateInput":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "RUNNING",
+        "WAITING",
+        "CANCELLING"
+      ]
+    },
+    "QuerySummary":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"String"},
+        "queryString":{"shape":"String"},
+        "waited":{"shape":"Integer"},
+        "elapsed":{"shape":"Integer"},
+        "state":{"shape":"QueryState"}
+      }
+    },
+    "QuerySummaryList":{
+      "type":"list",
+      "member":{"shape":"QuerySummary"}
     },
     "ReplicaCount":{
       "type":"integer",
@@ -1401,6 +1802,10 @@
       "max":6,
       "min":1
     },
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -1463,6 +1868,32 @@
       "retryable":{"throttling":true}
     },
     "Timestamp":{"type":"timestamp"},
+    "UnprocessableException":{
+      "type":"structure",
+      "required":[
+        "message",
+        "reason"
+      ],
+      "members":{
+        "message":{"shape":"String"},
+        "reason":{"shape":"UnprocessableExceptionReason"}
+      },
+      "error":{
+        "httpStatusCode":422,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "UnprocessableExceptionReason":{
+      "type":"string",
+      "enum":[
+        "QUERY_TIMEOUT",
+        "INTERNAL_LIMIT_EXCEEDED",
+        "MEMORY_LIMIT_EXCEEDED",
+        "STORAGE_LIMIT_EXCEEDED",
+        "PARTITION_FULL"
+      ]
+    },
     "UntagResourceInput":{
       "type":"structure",
       "required":[

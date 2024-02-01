@@ -1,8 +1,9 @@
 {
   "version": "2.0",
-  "service": "<p>Neptune Analytics is a serverless in-memory graph database service for analytics that delivers high-performance analytics and real-time queries for any graph type. It complements the Amazon Neptune Database, an industry-leading managed graph database.</p>",
+  "service": "<p>Neptune Analytics is a new analytics database engine for Amazon Neptune that helps customers get to insights faster by quickly processing large amounts of graph data, invoking popular graph analytic algorithms in low-latency queries, and getting analytics results in seconds.</p>",
   "operations": {
-    "CancelImportTask": "<p>Deletes the specified import task</p>",
+    "CancelImportTask": "<p>Deletes the specified import task.</p>",
+    "CancelQuery": "<p>Cancels a specified query.</p>",
     "CreateGraph": "<p>Creates a new Neptune Analytics graph.</p>",
     "CreateGraphSnapshot": "<p>Creates a snapshot of the specific graph.</p>",
     "CreateGraphUsingImportTask": "<p>Creates a new Neptune Analytics graph and imports data into it, either from Amazon Simple Storage Service (S3) or from a Neptune database or a Neptune database snapshot.</p> <p>The data can be loaded from files in S3 that in either the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
@@ -10,14 +11,18 @@
     "DeleteGraph": "<p>Deletes the specified graph. Graphs cannot be deleted if delete-protection is enabled.</p>",
     "DeleteGraphSnapshot": "<p>Deletes the specifed graph snapshot.</p>",
     "DeletePrivateGraphEndpoint": "<p>Deletes a private graph endpoint.</p>",
+    "ExecuteQuery": "<p>Execute an openCypher query. Currently, the SDK does not support parameterized queries. If you want to make a parameterized query call, you can use an HTTP request. </p> <note> <p> Non-parametrized queries are not considered for plan caching. You can force plan caching with <code>planCache=enabled</code>. The plan cache will be reused only for the same exact query. Slight variations in the query will not be able to reuse the query plan cache. </p> </note>",
     "GetGraph": "<p>Gets information about a specified graph.</p>",
     "GetGraphSnapshot": "<p>Retrieves a specified graph snapshot.</p>",
+    "GetGraphSummary": "<p>Gets a graph summary for a property graph.</p>",
     "GetImportTask": "<p>Retrieves a specified import task.</p>",
     "GetPrivateGraphEndpoint": "<p>Retrieves information about a specified private endpoint.</p>",
+    "GetQuery": "<p>Retrieves the status of a specified query.</p>",
     "ListGraphSnapshots": "<p>Lists available snapshots of a specified Neptune Analytics graph.</p>",
     "ListGraphs": "<p>Lists available Neptune Analytics graphs.</p>",
     "ListImportTasks": "<p>Lists import tasks.</p>",
     "ListPrivateGraphEndpoints": "<p>Lists private endpoints for a specified Neptune Analytics graph.</p>",
+    "ListQueries": "<p>Lists active openCypher queries.</p>",
     "ListTagsForResource": "<p>Lists tags associated with a specified resource.</p>",
     "ResetGraph": "<p>Empties the data from a specified Neptune Analytics graph.</p>",
     "RestoreGraphFromSnapshot": "<p>Restores a graph from a snapshot.</p>",
@@ -26,6 +31,11 @@
     "UpdateGraph": "<p>Updates the configuration of a specified Neptune Analytics graph</p>"
   },
   "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>Raised in case of an authentication or authorization failure.</p>",
+      "refs": {
+      }
+    },
     "Arn": {
       "base": null,
       "refs": {
@@ -41,7 +51,7 @@
         "CreateGraphInput$deletionProtection": "<p>Indicates whether or not to enable deletion protection on the graph. The graph can’t be deleted when deletion protection is enabled. (<code>true</code> or <code>false</code>).</p>",
         "CreateGraphOutput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated.</p>",
         "CreateGraphOutput$deletionProtection": "<p>A value that indicates whether the graph has deletion protection enabled. The graph can't be deleted when deletion protection is enabled.</p>",
-        "CreateGraphUsingImportTaskInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
+        "CreateGraphUsingImportTaskInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable).</p>",
         "CreateGraphUsingImportTaskInput$deletionProtection": "<p>Indicates whether or not to enable deletion protection on the graph. The graph can’t be deleted when deletion protection is enabled. (<code>true</code> or <code>false</code>).</p>",
         "CreateGraphUsingImportTaskInput$failOnError": "<p>If set to <code>true</code>, the task halts when an import error is encountered. If set to <code>false</code>, the task skips the data that caused the error and continues if possible.</p>",
         "DeleteGraphInput$skipSnapshot": "<p>Determines whether a final graph snapshot is created before the graph is deleted. If <code>true</code> is specified, no graph snapshot is created. If <code>false</code> is specified, a graph snapshot is created before the graph is deleted.</p>",
@@ -52,7 +62,7 @@
         "GraphSummary$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
         "GraphSummary$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
         "NeptuneImportOptions$preserveDefaultVertexLabels": "<p>Neptune Analytics supports label-less vertices and no labels are assigned unless one is explicitly provided. Neptune assigns default labels when none is explicitly provided. When importing the data into Neptune Analytics, the default vertex labels can be omitted by setting <i>preserveDefaultVertexLabels</i> to false. Note that if the vertex only has default labels, and has no other properties or edges, then the vertex will effectively not get imported into Neptune Analytics when preserveDefaultVertexLabels is set to false.</p>",
-        "NeptuneImportOptions$preserveEdgeIds": "<p>Neptune Analytics currently does not support user defined edge ids. The edge ids are not imported by default. They are imported if <i>preserveEdgeIds</i> is set to true, and ids are stored as properties on the relationships with the property name neptuneEdgeId.</p>",
+        "NeptuneImportOptions$preserveEdgeIds": "<p>Neptune Analytics currently does not support user defined edge ids. The edge ids are not imported by default. They are imported if <i>preserveEdgeIds</i> is set to true, and ids are stored as properties on the relationships with the property name <i>neptuneEdgeId</i>.</p>",
         "ResetGraphInput$skipSnapshot": "<p>Determines whether a final graph snapshot is created before the graph data is deleted. If set to <code>true</code>, no graph snapshot is created. If set to <code>false</code>, a graph snapshot is created before the data is deleted.</p>",
         "ResetGraphOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
         "ResetGraphOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
@@ -72,6 +82,11 @@
       }
     },
     "CancelImportTaskOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CancelQueryInput": {
       "base": null,
       "refs": {
       }
@@ -157,6 +172,46 @@
       "refs": {
       }
     },
+    "EdgeLabels": {
+      "base": null,
+      "refs": {
+        "GraphDataSummary$edgeLabels": "<p>A list of the edge labels in the graph.</p>"
+      }
+    },
+    "EdgeProperties": {
+      "base": null,
+      "refs": {
+        "EdgeStructure$edgeProperties": "<p>A list of the properties associated with the edge.</p>"
+      }
+    },
+    "EdgeStructure": {
+      "base": "<p>Contains information about an edge in a Neptune Analytics graph.</p>",
+      "refs": {
+        "EdgeStructures$member": null
+      }
+    },
+    "EdgeStructures": {
+      "base": null,
+      "refs": {
+        "GraphDataSummary$edgeStructures": "<p>This field is only present when the requested mode is DETAILED. It contains a list of edge structures.</p>"
+      }
+    },
+    "ExecuteQueryInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ExecuteQueryOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ExplainMode": {
+      "base": null,
+      "refs": {
+        "ExecuteQueryInput$explainMode": "<p>The explain mode parameter returns a query explain instead of the actual query results. A query explain can be used to gather insights about the query execution such as planning decisions, time spent on each operator, solutions flowing etc.</p>"
+      }
+    },
     "Format": {
       "base": null,
       "refs": {
@@ -187,6 +242,16 @@
       "refs": {
       }
     },
+    "GetGraphSummaryInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetGraphSummaryOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetImportTaskInput": {
       "base": null,
       "refs": {
@@ -205,6 +270,22 @@
     "GetPrivateGraphEndpointOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "GetQueryInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetQueryOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GraphDataSummary": {
+      "base": "<p>Summary information about the graph.</p>",
+      "refs": {
+        "GetGraphSummaryOutput$graphSummary": "<p>The graph summary.</p>"
       }
     },
     "GraphId": {
@@ -230,14 +311,19 @@
     "GraphIdentifier": {
       "base": null,
       "refs": {
+        "CancelQueryInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "CreateGraphSnapshotInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "CreatePrivateGraphEndpointInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "DeleteGraphInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "DeletePrivateGraphEndpointInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "ExecuteQueryInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "GetGraphInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "GetGraphSummaryInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "GetPrivateGraphEndpointInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "GetQueryInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "ListGraphSnapshotsInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "ListPrivateGraphEndpointsInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "ListQueriesInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "ResetGraphInput$graphIdentifier": "<p>ID of the graph to reset.</p>",
         "UpdateGraphInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>"
       }
@@ -293,6 +379,12 @@
         "ListGraphsOutput$graphs": "<p>A list of the graphs.</p>"
       }
     },
+    "GraphSummaryMode": {
+      "base": null,
+      "refs": {
+        "GetGraphSummaryInput$mode": "<p>The summary mode can take one of two values: <code>basic</code> (the default), and <code>detailed</code>.</p>"
+      }
+    },
     "ImportOptions": {
       "base": "<p>Options for how to perform an import.</p>",
       "refs": {
@@ -331,9 +423,15 @@
     "Integer": {
       "base": null,
       "refs": {
+        "ExecuteQueryInput$queryTimeoutMilliseconds": "<p>Specifies the query timeout duration, in milliseconds. (optional)</p>",
         "GetImportTaskOutput$attemptNumber": "<p>The number of the current attempt to execute the import task.</p>",
+        "GetQueryOutput$waited": "<p>Indicates how long the query waited, in milliseconds.</p>",
+        "GetQueryOutput$elapsed": "<p>The number of milliseconds the query has been running.</p>",
         "ImportTaskDetails$progressPercentage": "<p>The percentage progress so far.</p>",
-        "ImportTaskDetails$errorCount": "<p>The number of errors encountered so far.</p>"
+        "ImportTaskDetails$errorCount": "<p>The number of errors encountered so far.</p>",
+        "ListQueriesInput$maxResults": "<p>The maximum number of results to be fetched by the API.</p>",
+        "QuerySummary$waited": "<p>The amount of time, in milliseconds, the query has waited in the queue before being picked up by a worker thread.</p>",
+        "QuerySummary$elapsed": "<p>The running time of the query, in milliseconds.</p>"
       }
     },
     "InternalServerException": {
@@ -398,6 +496,16 @@
       "refs": {
       }
     },
+    "ListQueriesInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListQueriesOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListTagsForResourceInput": {
       "base": null,
       "refs": {
@@ -411,9 +519,33 @@
     "Long": {
       "base": null,
       "refs": {
+        "EdgeStructure$count": "<p>The number of instances of the edge in the graph.</p>",
+        "GraphDataSummary$numNodes": "<p>The number of nodes in the graph.</p>",
+        "GraphDataSummary$numEdges": "<p>The number of edges in the graph.</p>",
+        "GraphDataSummary$numNodeLabels": "<p>The number of distinct node labels in the graph.</p>",
+        "GraphDataSummary$numEdgeLabels": "<p>The number of unique edge labels in the graph.</p>",
+        "GraphDataSummary$numNodeProperties": "<p>The number of distinct node properties in the graph.</p>",
+        "GraphDataSummary$numEdgeProperties": "<p>The number of edge properties in the graph.</p>",
+        "GraphDataSummary$totalNodePropertyValues": "<p>The total number of usages of all node properties.</p>",
+        "GraphDataSummary$totalEdgePropertyValues": "<p>The total number of usages of all edge properties.</p>",
         "ImportTaskDetails$timeElapsedSeconds": "<p>Seconds elapsed since the import task started.</p>",
         "ImportTaskDetails$statementCount": "<p>The number of statements in the import task.</p>",
-        "ImportTaskDetails$dictionaryEntryCount": "<p>The number of dictionary entries in the import task.</p>"
+        "ImportTaskDetails$dictionaryEntryCount": "<p>The number of dictionary entries in the import task.</p>",
+        "LongValuedMap$value": null,
+        "NodeStructure$count": "<p>The number of instances of this node.</p>"
+      }
+    },
+    "LongValuedMap": {
+      "base": null,
+      "refs": {
+        "LongValuedMapList$member": null
+      }
+    },
+    "LongValuedMapList": {
+      "base": null,
+      "refs": {
+        "GraphDataSummary$nodeProperties": "<p>A list of the distinct node properties in the graph, along with the count of nodes where each property is used.</p>",
+        "GraphDataSummary$edgeProperties": "<p>A list of the distinct edge properties in the graph, along with the count of edges where each property is used.</p>"
       }
     },
     "MaxResults": {
@@ -443,6 +575,36 @@
         "NeptuneImportOptions$s3ExportPath": "<p>The path to an S3 bucket from which to import data.</p>"
       }
     },
+    "NodeLabels": {
+      "base": null,
+      "refs": {
+        "GraphDataSummary$nodeLabels": "<p>A list of distinct node labels in the graph.</p>"
+      }
+    },
+    "NodeProperties": {
+      "base": null,
+      "refs": {
+        "NodeStructure$nodeProperties": "<p>Properties associated with this node.</p>"
+      }
+    },
+    "NodeStructure": {
+      "base": "<p>Information about a node.</p>",
+      "refs": {
+        "NodeStructures$member": null
+      }
+    },
+    "NodeStructures": {
+      "base": null,
+      "refs": {
+        "GraphDataSummary$nodeStructures": "<p>This field is only present when the requested mode is DETAILED. It contains a list of node structures.</p>"
+      }
+    },
+    "OutgoingEdgeLabels": {
+      "base": null,
+      "refs": {
+        "NodeStructure$distinctOutgoingEdgeLabels": "<p>The outgoing edge labels associated with this node.</p>"
+      }
+    },
     "PaginationToken": {
       "base": null,
       "refs": {
@@ -454,6 +616,12 @@
         "ListImportTasksOutput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>",
         "ListPrivateGraphEndpointsInput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>",
         "ListPrivateGraphEndpointsOutput$nextToken": "<p>Pagination token used to paginate output.</p> <p>When this value is provided as input, the service returns results from where the previous response left off. When this value is present in output, it indicates that there are more results to retrieve.</p>"
+      }
+    },
+    "PlanCacheType": {
+      "base": null,
+      "refs": {
+        "ExecuteQueryInput$planCache": "<p>Query plan cache is a feature that saves the query plan and reuses it on successive executions of the same query. This reduces query latency, and works for both <code>READ</code> and <code>UPDATE</code> queries. The plan cache is an LRU cache with a 5 minute TTL and a capacity of 1000.</p>"
       }
     },
     "PrivateGraphEndpointStatus": {
@@ -494,10 +662,47 @@
         "UpdateGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>"
       }
     },
+    "QueryLanguage": {
+      "base": null,
+      "refs": {
+        "ExecuteQueryInput$language": "<p>The query language the query is written in. Currently only openCypher is supported.</p>"
+      }
+    },
+    "QueryResponseBlob": {
+      "base": null,
+      "refs": {
+        "ExecuteQueryOutput$payload": "<p>The query results.</p>"
+      }
+    },
+    "QueryState": {
+      "base": null,
+      "refs": {
+        "GetQueryOutput$state": "<p>State of the query.</p>",
+        "QuerySummary$state": "<p>State of the query.</p>"
+      }
+    },
+    "QueryStateInput": {
+      "base": null,
+      "refs": {
+        "ListQueriesInput$state": "<p>Filtered list of queries based on state.</p>"
+      }
+    },
+    "QuerySummary": {
+      "base": "<p>Details of the query listed.</p>",
+      "refs": {
+        "QuerySummaryList$member": null
+      }
+    },
+    "QuerySummaryList": {
+      "base": null,
+      "refs": {
+        "ListQueriesOutput$queries": "<p>A list of current openCypher queries.</p>"
+      }
+    },
     "ReplicaCount": {
       "base": null,
       "refs": {
-        "CreateGraphInput$replicaCount": "<p>The number of replicas in other AZs. Min =0, Max = 2, Default =1</p>",
+        "CreateGraphInput$replicaCount": "<p>The number of replicas in other AZs. Min =0, Max = 2, Default = 1.</p>",
         "CreateGraphOutput$replicaCount": "<p>The number of replicas in other AZs.</p>",
         "CreateGraphUsingImportTaskInput$replicaCount": "<p>The number of replicas in other AZs to provision on the new graph after import. Default = 0, Min = 0, Max = 2.</p>",
         "DeleteGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
@@ -606,7 +811,9 @@
     "String": {
       "base": null,
       "refs": {
-        "CancelImportTaskOutput$source": "<p>A URL identifying to the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot</p>",
+        "AccessDeniedException$message": "<p>A message describing the problem.</p>",
+        "CancelImportTaskOutput$source": "<p>A URL identifying to the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot.</p>",
+        "CancelQueryInput$queryId": "<p>The unique identifier of the query to cancel.</p>",
         "ConflictException$message": "<p>A message describing the problem.</p>",
         "CreateGraphOutput$arn": "<p>The ARN of the graph.</p>",
         "CreateGraphOutput$statusReason": "<p>The reason the status was given.</p>",
@@ -620,13 +827,20 @@
         "DeleteGraphOutput$endpoint": "<p>The graph endpoint.</p>",
         "DeleteGraphOutput$buildNumber": "<p>The build number associated with the graph.</p>",
         "DeleteGraphSnapshotOutput$arn": "<p>The ARN of the graph snapshot.</p>",
+        "EdgeLabels$member": null,
+        "EdgeProperties$member": null,
+        "ExecuteQueryInput$queryString": "<p>The query string to be executed.</p>",
         "GetGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
         "GetGraphOutput$statusReason": "<p>The reason that the graph has this status.</p>",
         "GetGraphOutput$endpoint": "<p>The graph endpoint.</p>",
         "GetGraphOutput$buildNumber": "<p>The build number of the graph.</p>",
         "GetGraphSnapshotOutput$arn": "<p>The ARN of the graph snapshot.</p>",
+        "GetGraphSummaryOutput$version": "<p>Display the version of this tool.</p>",
         "GetImportTaskOutput$source": "<p>A URL identifying to the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot</p>",
         "GetImportTaskOutput$statusReason": "<p>The reason that the import task has this status value.</p>",
+        "GetQueryInput$queryId": "<p>The ID of the query in question.</p>",
+        "GetQueryOutput$id": "<p>The ID of the query in question.</p>",
+        "GetQueryOutput$queryString": "<p>The query in question.</p>",
         "GraphSnapshotSummary$arn": "<p>The ARN of the graph snapshot.</p>",
         "GraphSummary$arn": "<p>The ARN associated with the graph.</p>",
         "GraphSummary$endpoint": "<p>The graph endpoint.</p>",
@@ -635,6 +849,12 @@
         "ImportTaskDetails$errorDetails": "<p>Details about the errors that have been encountered.</p>",
         "ImportTaskSummary$source": "<p>A URL identifying to the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot</p>",
         "InternalServerException$message": "<p>A message describing the problem.</p>",
+        "LongValuedMap$key": null,
+        "NodeLabels$member": null,
+        "NodeProperties$member": null,
+        "OutgoingEdgeLabels$member": null,
+        "QuerySummary$id": "<p>A string representation of the id of the query.</p>",
+        "QuerySummary$queryString": "<p>The actual query text. The <code>queryString</code> may be truncated if the actual query string is too long.</p>",
         "ResetGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
         "ResetGraphOutput$statusReason": "<p>The reason that the graph has this status.</p>",
         "ResetGraphOutput$endpoint": "<p>The graph endpoint.</p>",
@@ -650,6 +870,7 @@
         "ServiceQuotaExceededException$serviceCode": "<p>The service code that exceeded quota.</p>",
         "ServiceQuotaExceededException$quotaCode": "<p>Service quota code of the resource for which quota was exceeded.</p>",
         "ThrottlingException$message": "<p>A message describing the problem.</p>",
+        "UnprocessableException$message": null,
         "UpdateGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
         "UpdateGraphOutput$statusReason": "<p>The reason that the graph has this status.</p>",
         "UpdateGraphOutput$endpoint": "<p>The graph endpoint.</p>",
@@ -671,6 +892,12 @@
         "DeletePrivateGraphEndpointOutput$subnetIds": "<p>The subnet IDs involved.</p>",
         "GetPrivateGraphEndpointOutput$subnetIds": "<p>The subnet IDs involved.</p>",
         "PrivateGraphEndpointSummary$subnetIds": "<p>The subnet IDs associated with the private graph endpoint.</p>"
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "GetGraphSummaryOutput$lastStatisticsComputationTime": "<p>The timestamp, in ISO 8601 format, of the time at which Neptune Analytics last computed statistics.</p>"
       }
     },
     "TagKey": {
@@ -745,6 +972,17 @@
         "UpdateGraphOutput$createTime": "<p>The time at which the graph was created.</p>"
       }
     },
+    "UnprocessableException": {
+      "base": "<p>Request cannot be processed due to known reasons. Eg. partition full.</p>",
+      "refs": {
+      }
+    },
+    "UnprocessableExceptionReason": {
+      "base": null,
+      "refs": {
+        "UnprocessableException$reason": "<p>The reason for the unprocessable exception.</p>"
+      }
+    },
     "UntagResourceInput": {
       "base": null,
       "refs": {
@@ -766,7 +1004,7 @@
       }
     },
     "ValidationException": {
-      "base": "<p>A resource could not be validated</p>",
+      "base": "<p>A resource could not be validated.</p>",
       "refs": {
       }
     },
