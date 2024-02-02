@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.2 - 2024-02-02
 
 * `Aws\DynamoDB` - Any number of users can execute up to 50 concurrent restores (any type of restore) in a given account.
 * `Aws\SageMaker` - Amazon SageMaker Canvas adds GenerativeAiSettings support for CanvasAppSettings.
