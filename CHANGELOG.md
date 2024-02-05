@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.3 - 2024-02-05
 
 * `Aws\WorkSpaces` - Added definitions of various WorkSpace states
 * `Aws\Glue` - Introduce Catalog Encryption Role within Glue Data Catalog Settings. Introduce SASL/PLAIN as an authentication method for Glue Kafka connections
