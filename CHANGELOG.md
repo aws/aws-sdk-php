@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkSpaces` - Added definitions of various WorkSpace states
+* `Aws\Glue` - Introduce Catalog Encryption Role within Glue Data Catalog Settings. Introduce SASL/PLAIN as an authentication method for Glue Kafka connections
+
 ## 3.298.2 - 2024-02-02
 
 * `Aws\DynamoDB` - Any number of users can execute up to 50 concurrent restores (any type of restore) in a given account.
