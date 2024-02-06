@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.4 - 2024-02-06
 
 * `Aws\WAFV2` - You can now delete an API key that you've created for use with your CAPTCHA JavaScript integration API.
 * `Aws\ECS` - This release is a documentation only update to address customer issues.
