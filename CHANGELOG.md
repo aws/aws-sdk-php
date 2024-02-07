@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.5 - 2024-02-07
 
 * `Aws\DataSync` - AWS DataSync now supports manifests for specifying files or objects to transfer.
 * `Aws\LexModelsV2` - This release introduces a new bot replication feature as part of Lex Global Resiliency offering. This feature leverages a new set of APIs that allow customers to create bot replicas and replicate changes to bots across regions.
