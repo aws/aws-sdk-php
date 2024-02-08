@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkSpaces` - This release introduces User-Decoupling feature. This feature allows Workspaces Core customers to provision workspaces without providing users. CreateWorkspaces and DescribeWorkspaces APIs will now take a new optional parameter "WorkspaceName".
+* `Aws\CodePipeline` - Add ability to execute pipelines with new parallel & queued execution modes and add support for triggers with filtering on branches and file paths.
+* `Aws\QuickSight` - General Interactions for Visuals; Waterfall Chart Color Configuration; Documentation Update
+
 ## 3.298.5 - 2024-02-07
 
 * `Aws\DataSync` - AWS DataSync now supports manifests for specifying files or objects to transfer.
