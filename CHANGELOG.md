@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.6 - 2024-02-08
 
 * `Aws\WorkSpaces` - This release introduces User-Decoupling feature. This feature allows Workspaces Core customers to provision workspaces without providing users. CreateWorkspaces and DescribeWorkspaces APIs will now take a new optional parameter "WorkspaceName".
 * `Aws\CodePipeline` - Add ability to execute pipelines with new parallel & queued execution modes and add support for triggers with filtering on branches and file paths.
