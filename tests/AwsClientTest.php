@@ -554,6 +554,122 @@ class AwsClientTest extends TestCase
         );
     }
 
+    /** @dataProvider configuredEndpointUrlProvider */
+    public function testAppliesConfiguredEndpointUrl($ini, $env, $expected)
+    {
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        file_put_contents($dir . '/config', $ini);
+        $home = getenv('HOME');
+        putenv('HOME=' . dirname($dir));
+
+        if ($env) {
+            putenv($env['key'] . '=' . $env['value']);
+        }
+
+       $client = new StsClient([
+           'region' => 'us-west-2'
+       ]);
+
+        $this->assertTrue($client->getConfig()['configured_endpoint_url']);
+        $this->assertEquals($expected, $client->getClientBuiltIns()['SDK::Endpoint']);
+        $this->assertEquals($expected, $client->getEndpointProviderArgs()['Endpoint']);
+
+        unlink($dir . '/config');
+        putenv("HOME=$home");
+
+        if ($env) {
+            putenv($env['key'] . '=');
+        }
+    }
+
+    /** @dataProvider configuredEndpointUrlProvider */
+    public function testDoesNotApplyConfiguredEndpointWhenConfiguredUrlsIgnored($ini, $env)
+    {
+        putenv('AWS_IGNORE_CONFIGURED_ENDPOINT_URLS=true');
+
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        file_put_contents($dir . '/config', $ini);
+        $home = getenv('HOME');
+        putenv('HOME=' . dirname($dir));
+
+        if ($env) {
+            putenv($env['key'] . '=' . $env['value']);
+        }
+
+        $client = new StsClient([
+            'region' => 'us-west-2'
+        ]);
+
+        $this->assertFalse(isset($client->getConfig()['configured_endpoint_url']));
+        $this->assertNull( $client->getClientBuiltIns()['SDK::Endpoint']);
+        $this->assertNull($client->getEndpointProviderArgs()['Endpoint']);
+
+        unlink($dir . '/config');
+        putenv("HOME=$home");
+
+        if ($env) {
+            putenv($env['key'] . '=');
+        }
+
+        putenv('AWS_IGNORE_CONFIGURED_ENDPOINT_URLS=');
+    }
+
+    public function configuredEndpointUrlProvider()
+    {
+        return [
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+sts =
+  endpoint_url = https://test-foo.com
+EOT
+                ,
+                ['key' => 'AWS_ENDPOINT_URL_STS', 'value' => 'https://test.com'],
+                'https://test.com',
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+sts =
+  endpoint_url = https://test-foo.com
+EOT
+                ,
+                null,
+                'https://test-foo.com',
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+EOT
+                ,
+                ['key' => 'AWS_ENDPOINT_URL', 'value' => 'https://baz.com'],
+                'https://baz.com',
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+EOT
+                ,
+                null,
+                'https://foo-bar.com',
+            ]
+        ];
+    }
+
     private function createHttpsEndpointClient(array $service = [], array $config = [])
     {
         $apiProvider = function () use ($service) {
@@ -605,98 +721,5 @@ class AwsClientTest extends TestCase
             'error_parser' => function () {},
             'version'      => 'latest'
         ]);
-    }
-
-    public function testThrowsDeprecationWarning() {
-        $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
-        $storeEnvArrayVariable = isset($_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']) ? $_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] : '';
-        $storeServerArrayVariable = isset($_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']) ? $_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] : '';
-        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
-        unset($_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']);
-        unset($_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING']);
-        $expectsDeprecation = PHP_VERSION_ID < 70205;
-        if ($expectsDeprecation) {
-            try {
-                set_error_handler(function ($e, $message) {
-                    $this->assertStringContainsString("This installation of the SDK is using PHP version", $message);
-                    $this->assertEquals($e, E_USER_DEPRECATED);
-                    throw new Exception("This test successfully triggered the deprecation");
-                });
-                $client = new StsClient([
-                    'region'  => 'us-west-2',
-                    'version' => 'latest'
-                ]);
-                $this->fail("This test should have thrown the deprecation");
-            } catch (Exception $exception) {
-            } finally {
-                putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
-                restore_error_handler();
-            }
-        } else {
-            $client = new StsClient([
-                'region'  => 'us-west-2',
-                'version' => 'latest'
-            ]);
-            $this->assertTrue(true);
-        }
-        putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
-        if (!empty($storeEnvArrayVariable)) {
-            $_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] = $storeEnvArrayVariable;
-        }
-        if (!empty($storeServerArrayVariable)) {
-            $_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] = $storeServerArrayVariable;
-        }
-    }
-
-    public function testCanDisableWarningWithClientConfig() {
-        $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
-        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
-        $expectsDeprecation = PHP_VERSION_ID < 70205;
-        if ($expectsDeprecation) {
-            try {
-                set_error_handler(function ($e, $message) {
-                    $this->assertStringNotContainsString("This installation of the SDK is using PHP version", $message);
-                });
-                $client = new StsClient([
-                    'region'  => 'us-west-2',
-                    'version' => 'latest',
-                    'suppress_php_deprecation_warning' => true
-                ]);
-                restore_error_handler();
-            } catch (Exception $exception) {
-                restore_error_handler();
-                $this->fail("This test should not have thrown the deprecation");
-            }
-        } else {
-            putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
-            $this->markTestSkipped();
-        }
-        putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
-    }
-
-    public function testCanDisableWarningWithEnvVar() {
-        $storeEnvVariable = getenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING');
-        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
-        $expectsDeprecation = PHP_VERSION_ID < 70205;
-        if ($expectsDeprecation) {
-            try {
-                set_error_handler(function ($e, $message) {
-                    echo "hi";
-                    $this->assertStringNotContainsString("This installation of the SDK is using PHP version", $message);
-                });
-                $client = new StsClient([
-                    'region'  => 'us-west-2',
-                    'version' => 'latest'
-                ]);
-                restore_error_handler();
-            } catch (Exception $exception) {
-                restore_error_handler();
-                $this->fail("This test should not have thrown the deprecation");
-            }
-        } else {
-            putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
-            $this->markTestSkipped();
-        }
-        putenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING={$storeEnvVariable}");
     }
 }
