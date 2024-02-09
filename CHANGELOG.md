@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.7 - 2024-02-09
 
 * `Aws\ECS` - Documentation only update for Amazon ECS.
 * `Aws\Pricing` - Add Throttling Exception to all APIs.
