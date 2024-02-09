@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - Documentation only update for Amazon ECS.
+* `Aws\Pricing` - Add Throttling Exception to all APIs.
+* `Aws\PrometheusService` - Overall documentation updates.
+* `Aws\IoT` - This release allows AWS IoT Core users to enable Online Certificate Status Protocol (OCSP) Stapling for TLS X.509 Server Certificates when creating and updating AWS IoT Domain Configurations with Custom Domain.
+* `Aws\Batch` - This feature allows Batch to support configuration of repository credentials for jobs running on ECS
+* `Aws\CostOptimizationHub` - Adding includeMemberAccounts field to the response of ListEnrollmentStatuses API.
+* `Aws\Braket` - Creating a job will result in DeviceOfflineException when using an offline device, and DeviceRetiredException when using a retired device.
+
 ## 3.298.6 - 2024-02-08
 
 * `Aws\WorkSpaces` - This release introduces User-Decoupling feature. This feature allows Workspaces Core customers to provision workspaces without providing users. CreateWorkspaces and DescribeWorkspaces APIs will now take a new optional parameter "WorkspaceName".
