@@ -1,0 +1,107 @@
+name: Build API documentation
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  build_docs:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        php-versions: ['5.6']
+    name: Build API documentation for PHP ${{ matrix.php-versions }}
+    steps:
+      - name: Setup PHP with Xdebug
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: xdebug
+          php-version: ${{ matrix.php-versions }}
+          ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
+
+      - name: Checkout CodeBase
+        uses: actions/checkout@v4
+
+      - name: Replace platform requirements
+        run: |
+          sed -i 's/"php": ">=7.2.5"/"php": ">=5.6.0"/g' composer.json
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer update ${{ matrix.composer-options }} --no-interaction --prefer-source
+
+      - name: Prepare OS environment
+        run: |
+          sudo sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list
+          sudo sed -i 's|security.debian.org|archive.debian.org/|g' /etc/apt/sources.list
+          sudo sed -i '/stretch-updates/d' /etc/apt/sources.list
+          
+          sudo apt-get -y update && \
+          sudo apt-get -y install git wget zip unzip libzip-dev libssl-dev libtidy-dev python3 cmake python3-distutils-extra python3-apt
+          
+          PHP_CONF_DIR=$(php -i | grep "Scan this dir for additional .ini files" | awk '{print $9}')
+          sudo touch "$PHP_CONF_DIR"/memory.ini \
+          && sudo chmod 666 "$PHP_CONF_DIR"/memory.ini \
+          && sudo echo "memory_limit = 5048M;" >> "$PHP_CONF_DIR"/memory.ini
+          
+          sudo touch "$PHP_CONF_DIR"/phar.ini \
+          && sudo chmod 666 "$PHP_CONF_DIR"/phar.ini \
+          && sudo echo "phar.readonly = Off;" >> "$PHP_CONF_DIR"/phar.ini
+          
+          sudo touch "$PHP_CONF_DIR"/timezone.ini \
+          && sudo chmod 666 "$PHP_CONF_DIR"/timezone.ini \
+          && sudo echo "date.timezone ='America/New_York'" >> "$PHP_CONF_DIR"/timezone.ini
+
+      - name: Prepare remove return types script
+        run: |
+          cat << EOF > remove-return-types.py
+          import os
+          import re
+          import sys
+          
+          class ReturnTypeRemover:
+            def walkThrough(self, path):
+              for root, dirs, files in os.walk(path):
+                for file in files:
+                  if file[-4:] == '.php':
+                    file_path = os.path.join(root, file)
+                    self.onPhpFileFn(file_path)
+                
+                for dir in dirs:
+                  dir_path = os.path.join(root, dir)
+                  self.walkThrough(dir_path)
+            
+            def onPhpFileFn(self, file_path):
+              try:
+                encodings = ['utf-8', 'latin-1', 'cp1252']
+                for encoding in encodings:
+                  try:
+                    with open(file_path, 'r', encoding=encoding) as f:
+                      sourceCode = f.read()
+                    break
+                  except UnicodeDecodeError:
+                    continue
+                
+                pattern = r'(function\s+\w+\([^)]*\))\s*:\s*?\??\w+\s*\n\s*\{'
+                match = re.search(pattern, sourceCode)
+                if match:
+                  sourceCode = re.sub(pattern, r'\1 {', sourceCode)
+                  with open(file_path, 'w') as f:
+                    f.write(sourceCode)
+              
+              except FileNotFoundError:
+                print('php file not found : ', file_path)
+            
+          path = sys.argv[1]
+          worker = ReturnTypeRemover()
+          worker.walkThrough(path)
+          
+          EOF
+      - name: Run remove return types script
+        run: |
+          python3 remove-return-types.py ./src \
+          && rm -f remove-return-types.py
+      - name: Run API docs build
+        run: |
+          make api
