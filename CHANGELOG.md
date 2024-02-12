@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.8 - 2024-02-12
 
 * `Aws\NeptuneGraph` - Adding a new option "parameters" for data plane api ExecuteQuery to support running parameterized query via SDK.
 * `Aws\AppSync` - Adds support for new options on GraphqlAPIs, Resolvers and Data Sources for emitting Amazon CloudWatch metrics for enhanced monitoring of AppSync APIs.
