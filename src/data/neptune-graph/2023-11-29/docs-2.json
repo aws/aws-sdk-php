@@ -11,13 +11,13 @@
     "DeleteGraph": "<p>Deletes the specified graph. Graphs cannot be deleted if delete-protection is enabled.</p>",
     "DeleteGraphSnapshot": "<p>Deletes the specifed graph snapshot.</p>",
     "DeletePrivateGraphEndpoint": "<p>Deletes a private graph endpoint.</p>",
-    "ExecuteQuery": "<p>Execute an openCypher query. Currently, the SDK does not support parameterized queries. If you want to make a parameterized query call, you can use an HTTP request. </p> <note> <p> Non-parametrized queries are not considered for plan caching. You can force plan caching with <code>planCache=enabled</code>. The plan cache will be reused only for the same exact query. Slight variations in the query will not be able to reuse the query plan cache. </p> </note>",
+    "ExecuteQuery": "<p>Execute an openCypher query. Currently, the SDK does not support parameterized queries. If you want to make a parameterized query call, you can use an HTTP request. </p> <p> When invoking this operation in a Neptune Analytics cluster, the IAM user or role making the request must have a policy attached that allows one of the following IAM actions in that cluster, depending on the query: </p> <ul> <li> <p>neptune-graph:ReadDataViaQuery</p> </li> <li> <p>neptune-graph:WriteDataViaQuery</p> </li> <li> <p>neptune-graph:DeleteDataViaQuery</p> </li> </ul> <note> <p> Non-parametrized queries are not considered for plan caching. You can force plan caching with <code>planCache=enabled</code>. The plan cache will be reused only for the same exact query. Slight variations in the query will not be able to reuse the query plan cache. </p> </note>",
     "GetGraph": "<p>Gets information about a specified graph.</p>",
     "GetGraphSnapshot": "<p>Retrieves a specified graph snapshot.</p>",
     "GetGraphSummary": "<p>Gets a graph summary for a property graph.</p>",
     "GetImportTask": "<p>Retrieves a specified import task.</p>",
     "GetPrivateGraphEndpoint": "<p>Retrieves information about a specified private endpoint.</p>",
-    "GetQuery": "<p>Retrieves the status of a specified query.</p>",
+    "GetQuery": "<p>Retrieves the status of a specified query.</p> <note> <p> When invoking this operation in a Neptune Analytics cluster, the IAM user or role making the request must have the <code>neptune-graph:GetQueryStatus</code> IAM action attached. </p> </note>",
     "ListGraphSnapshots": "<p>Lists available snapshots of a specified Neptune Analytics graph.</p>",
     "ListGraphs": "<p>Lists available Neptune Analytics graphs.</p>",
     "ListImportTasks": "<p>Lists import tasks.</p>",
@@ -47,11 +47,11 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "CreateGraphInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
+        "CreateGraphInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
         "CreateGraphInput$deletionProtection": "<p>Indicates whether or not to enable deletion protection on the graph. The graph can’t be deleted when deletion protection is enabled. (<code>true</code> or <code>false</code>).</p>",
-        "CreateGraphOutput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated.</p>",
+        "CreateGraphOutput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated.</p>",
         "CreateGraphOutput$deletionProtection": "<p>A value that indicates whether the graph has deletion protection enabled. The graph can't be deleted when deletion protection is enabled.</p>",
-        "CreateGraphUsingImportTaskInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable).</p>",
+        "CreateGraphUsingImportTaskInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable).</p>",
         "CreateGraphUsingImportTaskInput$deletionProtection": "<p>Indicates whether or not to enable deletion protection on the graph. The graph can’t be deleted when deletion protection is enabled. (<code>true</code> or <code>false</code>).</p>",
         "CreateGraphUsingImportTaskInput$failOnError": "<p>If set to <code>true</code>, the task halts when an import error is encountered. If set to <code>false</code>, the task skips the data that caused the error and continues if possible.</p>",
         "DeleteGraphInput$skipSnapshot": "<p>Determines whether a final graph snapshot is created before the graph is deleted. If <code>true</code> is specified, no graph snapshot is created. If <code>false</code> is specified, a graph snapshot is created before the graph is deleted.</p>",
@@ -67,10 +67,10 @@
         "ResetGraphOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
         "ResetGraphOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
         "RestoreGraphFromSnapshotInput$deletionProtection": "<p>A value that indicates whether the graph has deletion protection enabled. The graph can't be deleted when deletion protection is enabled.</p>",
-        "RestoreGraphFromSnapshotInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable).</p>",
+        "RestoreGraphFromSnapshotInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable).</p>",
         "RestoreGraphFromSnapshotOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
         "RestoreGraphFromSnapshotOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
-        "UpdateGraphInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
+        "UpdateGraphInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
         "UpdateGraphInput$deletionProtection": "<p>A value that indicates whether the graph has deletion protection enabled. The graph can't be deleted when deletion protection is enabled.</p>",
         "UpdateGraphOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
         "UpdateGraphOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>"
@@ -170,6 +170,18 @@
     "DeletePrivateGraphEndpointOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "Document": {
+      "base": null,
+      "refs": {
+        "DocumentValuedMap$value": null
+      }
+    },
+    "DocumentValuedMap": {
+      "base": null,
+      "refs": {
+        "ExecuteQueryInput$parameters": "<p>The data parameters the query can use in JSON format. For example: {\"name\": \"john\", \"age\": 20}. (optional) </p>"
       }
     },
     "EdgeLabels": {
@@ -827,6 +839,7 @@
         "DeleteGraphOutput$endpoint": "<p>The graph endpoint.</p>",
         "DeleteGraphOutput$buildNumber": "<p>The build number associated with the graph.</p>",
         "DeleteGraphSnapshotOutput$arn": "<p>The ARN of the graph snapshot.</p>",
+        "DocumentValuedMap$key": null,
         "EdgeLabels$member": null,
         "EdgeProperties$member": null,
         "ExecuteQueryInput$queryString": "<p>The query string to be executed.</p>",

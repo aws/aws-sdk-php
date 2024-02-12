@@ -897,6 +897,17 @@
         "vpcEndpointId":{"shape":"VpcEndpointId"}
       }
     },
+    "Document":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
+    "DocumentValuedMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"Document"}
+    },
     "EdgeLabels":{
       "type":"list",
       "member":{"shape":"String"}
@@ -935,6 +946,7 @@
           "locationName":"query"
         },
         "language":{"shape":"QueryLanguage"},
+        "parameters":{"shape":"DocumentValuedMap"},
         "planCache":{"shape":"PlanCacheType"},
         "explainMode":{
           "shape":"ExplainMode",

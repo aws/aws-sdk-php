@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\NeptuneGraph` - Adding a new option "parameters" for data plane api ExecuteQuery to support running parameterized query via SDK.
+* `Aws\AppSync` - Adds support for new options on GraphqlAPIs, Resolvers and Data Sources for emitting Amazon CloudWatch metrics for enhanced monitoring of AppSync APIs.
+* `Aws\CloudWatch` - This release enables PutMetricData API request payload compression by default.
+* `Aws\Route53Domains` - This release adds bill contact support for RegisterDomain, TransferDomain, UpdateDomainContact and GetDomainDetail API.
+
 ## 3.298.7 - 2024-02-09
 
 * `Aws\ECS` - Documentation only update for Amazon ECS.
