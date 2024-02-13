@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixes issue with configured endpoint urls.
+* `Aws\ResourceExplorer2` - Resource Explorer now uses newly supported IPv4 'amazonaws.com' endpoints by default.
+* `Aws\MarketplaceCatalog` - AWS Marketplace Catalog API now supports setting intent on requests
+* `Aws\SecurityLake` - Documentation updates for Security Lake
+* `Aws\Lightsail` - This release adds support to upgrade the major version of a database.
+
 ## 3.298.8 - 2024-02-12
 
 * `Aws\NeptuneGraph` - Adding a new option "parameters" for data plane api ExecuteQuery to support running parameterized query via SDK.

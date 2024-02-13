@@ -743,6 +743,7 @@
         "ChangeSetId":{"shape":"ResourceId"},
         "ChangeSetArn":{"shape":"ARN"},
         "ChangeSetName":{"shape":"ChangeSetName"},
+        "Intent":{"shape":"Intent"},
         "StartTime":{"shape":"DateTimeISO8601"},
         "EndTime":{"shape":"DateTimeISO8601"},
         "Status":{"shape":"ChangeStatus"},
@@ -966,6 +967,13 @@
       "max":255,
       "min":1,
       "pattern":"^[\\w\\-@]+$"
+    },
+    "Intent":{
+      "type":"string",
+      "enum":[
+        "VALIDATE",
+        "APPLY"
+      ]
     },
     "InternalServiceException":{
       "type":"structure",
@@ -1841,7 +1849,8 @@
           "shape":"ClientRequestToken",
           "idempotencyToken":true
         },
-        "ChangeSetTags":{"shape":"TagList"}
+        "ChangeSetTags":{"shape":"TagList"},
+        "Intent":{"shape":"Intent"}
       }
     },
     "StartChangeSetResponse":{
