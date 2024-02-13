@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.9 - 2024-02-13
 
 * `Aws\` - Fixes issue with configured endpoint urls.
 * `Aws\ResourceExplorer2` - Resource Explorer now uses newly supported IPv4 'amazonaws.com' endpoints by default.
