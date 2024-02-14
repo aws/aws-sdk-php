@@ -48,6 +48,26 @@
       ],
       "idempotent":true
     },
+    "DisableBaseline":{
+      "name":"DisableBaseline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/disable-baseline",
+        "responseCode":200
+      },
+      "input":{"shape":"DisableBaselineInput"},
+      "output":{"shape":"DisableBaselineOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "DisableControl":{
       "name":"DisableControl",
       "http":{
@@ -57,6 +77,25 @@
       },
       "input":{"shape":"DisableControlInput"},
       "output":{"shape":"DisableControlOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "EnableBaseline":{
+      "name":"EnableBaseline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/enable-baseline",
+        "responseCode":200
+      },
+      "input":{"shape":"EnableBaselineInput"},
+      "output":{"shape":"EnableBaselineOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
@@ -86,6 +125,40 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetBaseline":{
+      "name":"GetBaseline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-baseline",
+        "responseCode":200
+      },
+      "input":{"shape":"GetBaselineInput"},
+      "output":{"shape":"GetBaselineOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetBaselineOperation":{
+      "name":"GetBaselineOperation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-baseline-operation",
+        "responseCode":200
+      },
+      "input":{"shape":"GetBaselineOperationInput"},
+      "output":{"shape":"GetBaselineOperationOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetControlOperation":{
       "name":"GetControlOperation",
       "http":{
@@ -95,6 +168,23 @@
       },
       "input":{"shape":"GetControlOperationInput"},
       "output":{"shape":"GetControlOperationOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetEnabledBaseline":{
+      "name":"GetEnabledBaseline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-enabled-baseline",
+        "responseCode":200
+      },
+      "input":{"shape":"GetEnabledBaselineInput"},
+      "output":{"shape":"GetEnabledBaselineOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -154,6 +244,38 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListBaselines":{
+      "name":"ListBaselines",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-baselines",
+        "responseCode":200
+      },
+      "input":{"shape":"ListBaselinesInput"},
+      "output":{"shape":"ListBaselinesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListEnabledBaselines":{
+      "name":"ListEnabledBaselines",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-enabled-baselines",
+        "responseCode":200
+      },
+      "input":{"shape":"ListEnabledBaselinesInput"},
+      "output":{"shape":"ListEnabledBaselinesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListEnabledControls":{
       "name":"ListEnabledControls",
       "http":{
@@ -202,6 +324,25 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ResetEnabledBaseline":{
+      "name":"ResetEnabledBaseline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/reset-enabled-baseline",
+        "responseCode":200
+      },
+      "input":{"shape":"ResetEnabledBaselineInput"},
+      "output":{"shape":"ResetEnabledBaselineOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ResetLandingZone":{
       "name":"ResetLandingZone",
       "http":{
@@ -247,6 +388,25 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateEnabledBaseline":{
+      "name":"UpdateEnabledBaseline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/update-enabled-baseline",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateEnabledBaselineInput"},
+      "output":{"shape":"UpdateEnabledBaselineOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -306,6 +466,60 @@
       "max":2048,
       "min":20,
       "pattern":"^arn:aws[0-9a-zA-Z_\\-:\\/]+$"
+    },
+    "BaselineArn":{
+      "type":"string",
+      "pattern":"^arn:[a-z-]+:controltower:[a-z0-9-]*:[0-9]{0,12}:baseline/[A-Z0-9]{16}$"
+    },
+    "BaselineOperation":{
+      "type":"structure",
+      "members":{
+        "endTime":{"shape":"Timestamp"},
+        "operationIdentifier":{"shape":"OperationIdentifier"},
+        "operationType":{"shape":"BaselineOperationType"},
+        "startTime":{"shape":"Timestamp"},
+        "status":{"shape":"BaselineOperationStatus"},
+        "statusMessage":{"shape":"String"}
+      }
+    },
+    "BaselineOperationStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "FAILED",
+        "IN_PROGRESS"
+      ]
+    },
+    "BaselineOperationType":{
+      "type":"string",
+      "enum":[
+        "ENABLE_BASELINE",
+        "DISABLE_BASELINE",
+        "UPDATE_ENABLED_BASELINE",
+        "RESET_ENABLED_BASELINE"
+      ]
+    },
+    "BaselineSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "name"
+      ],
+      "members":{
+        "arn":{"shape":"String"},
+        "description":{"shape":"String"},
+        "name":{"shape":"String"}
+      }
+    },
+    "BaselineVersion":{
+      "type":"string",
+      "max":10,
+      "min":1,
+      "pattern":"^\\d+(?:\\.\\d+){0,2}$"
+    },
+    "Baselines":{
+      "type":"list",
+      "member":{"shape":"BaselineSummary"}
     },
     "ConflictException":{
       "type":"structure",
@@ -388,6 +602,20 @@
         "operationIdentifier":{"shape":"OperationIdentifier"}
       }
     },
+    "DisableBaselineInput":{
+      "type":"structure",
+      "required":["enabledBaselineIdentifier"],
+      "members":{
+        "enabledBaselineIdentifier":{"shape":"Arn"}
+      }
+    },
+    "DisableBaselineOutput":{
+      "type":"structure",
+      "required":["operationIdentifier"],
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"}
+      }
+    },
     "DisableControlInput":{
       "type":"structure",
       "required":[
@@ -427,6 +655,32 @@
         "driftStatus":{"shape":"DriftStatus"}
       }
     },
+    "EnableBaselineInput":{
+      "type":"structure",
+      "required":[
+        "baselineIdentifier",
+        "baselineVersion",
+        "targetIdentifier"
+      ],
+      "members":{
+        "baselineIdentifier":{"shape":"Arn"},
+        "baselineVersion":{"shape":"BaselineVersion"},
+        "parameters":{"shape":"EnabledBaselineParameters"},
+        "tags":{"shape":"TagMap"},
+        "targetIdentifier":{"shape":"Arn"}
+      }
+    },
+    "EnableBaselineOutput":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "operationIdentifier"
+      ],
+      "members":{
+        "arn":{"shape":"Arn"},
+        "operationIdentifier":{"shape":"OperationIdentifier"}
+      }
+    },
     "EnableControlInput":{
       "type":"structure",
       "required":[
@@ -447,6 +701,98 @@
         "arn":{"shape":"Arn"},
         "operationIdentifier":{"shape":"OperationIdentifier"}
       }
+    },
+    "EnabledBaselineBaselineIdentifiers":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":5,
+      "min":1
+    },
+    "EnabledBaselineDetails":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "baselineIdentifier",
+        "statusSummary",
+        "targetIdentifier"
+      ],
+      "members":{
+        "arn":{"shape":"Arn"},
+        "baselineIdentifier":{"shape":"String"},
+        "baselineVersion":{"shape":"String"},
+        "parameters":{"shape":"EnabledBaselineParameterSummaries"},
+        "statusSummary":{"shape":"EnablementStatusSummary"},
+        "targetIdentifier":{"shape":"String"}
+      }
+    },
+    "EnabledBaselineFilter":{
+      "type":"structure",
+      "members":{
+        "baselineIdentifiers":{"shape":"EnabledBaselineBaselineIdentifiers"},
+        "targetIdentifiers":{"shape":"EnabledBaselineTargetIdentifiers"}
+      }
+    },
+    "EnabledBaselineParameter":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"String"},
+        "value":{"shape":"EnabledBaselineParameterDocument"}
+      }
+    },
+    "EnabledBaselineParameterDocument":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
+    "EnabledBaselineParameterSummaries":{
+      "type":"list",
+      "member":{"shape":"EnabledBaselineParameterSummary"}
+    },
+    "EnabledBaselineParameterSummary":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"String"},
+        "value":{"shape":"EnabledBaselineParameterDocument"}
+      }
+    },
+    "EnabledBaselineParameters":{
+      "type":"list",
+      "member":{"shape":"EnabledBaselineParameter"}
+    },
+    "EnabledBaselineSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "baselineIdentifier",
+        "statusSummary",
+        "targetIdentifier"
+      ],
+      "members":{
+        "arn":{"shape":"Arn"},
+        "baselineIdentifier":{"shape":"String"},
+        "baselineVersion":{"shape":"String"},
+        "statusSummary":{"shape":"EnablementStatusSummary"},
+        "targetIdentifier":{"shape":"String"}
+      }
+    },
+    "EnabledBaselineTargetIdentifiers":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":5,
+      "min":1
+    },
+    "EnabledBaselines":{
+      "type":"list",
+      "member":{"shape":"EnabledBaselineSummary"}
     },
     "EnabledControlDetails":{
       "type":"structure",
@@ -519,6 +865,39 @@
         "status":{"shape":"EnablementStatus"}
       }
     },
+    "GetBaselineInput":{
+      "type":"structure",
+      "required":["baselineIdentifier"],
+      "members":{
+        "baselineIdentifier":{"shape":"BaselineArn"}
+      }
+    },
+    "GetBaselineOperationInput":{
+      "type":"structure",
+      "required":["operationIdentifier"],
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"}
+      }
+    },
+    "GetBaselineOperationOutput":{
+      "type":"structure",
+      "required":["baselineOperation"],
+      "members":{
+        "baselineOperation":{"shape":"BaselineOperation"}
+      }
+    },
+    "GetBaselineOutput":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "name"
+      ],
+      "members":{
+        "arn":{"shape":"BaselineArn"},
+        "description":{"shape":"String"},
+        "name":{"shape":"String"}
+      }
+    },
     "GetControlOperationInput":{
       "type":"structure",
       "required":["operationIdentifier"],
@@ -531,6 +910,19 @@
       "required":["controlOperation"],
       "members":{
         "controlOperation":{"shape":"ControlOperation"}
+      }
+    },
+    "GetEnabledBaselineInput":{
+      "type":"structure",
+      "required":["enabledBaselineIdentifier"],
+      "members":{
+        "enabledBaselineIdentifier":{"shape":"Arn"}
+      }
+    },
+    "GetEnabledBaselineOutput":{
+      "type":"structure",
+      "members":{
+        "enabledBaselineDetails":{"shape":"EnabledBaselineDetails"}
       }
     },
     "GetEnabledControlInput":{
@@ -665,6 +1057,53 @@
       "min":3,
       "pattern":"^\\d+.\\d+$"
     },
+    "ListBaselinesInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListBaselinesMaxResults"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListBaselinesMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":4
+    },
+    "ListBaselinesOutput":{
+      "type":"structure",
+      "required":["baselines"],
+      "members":{
+        "baselines":{"shape":"Baselines"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListEnabledBaselinesInput":{
+      "type":"structure",
+      "members":{
+        "filter":{"shape":"EnabledBaselineFilter"},
+        "maxResults":{"shape":"ListEnabledBaselinesMaxResults"},
+        "nextToken":{"shape":"ListEnabledBaselinesNextToken"}
+      }
+    },
+    "ListEnabledBaselinesMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":5
+    },
+    "ListEnabledBaselinesNextToken":{
+      "type":"string",
+      "pattern":"\\S+"
+    },
+    "ListEnabledBaselinesOutput":{
+      "type":"structure",
+      "required":["enabledBaselines"],
+      "members":{
+        "enabledBaselines":{"shape":"EnabledBaselines"},
+        "nextToken":{"shape":"ListEnabledBaselinesNextToken"}
+      }
+    },
     "ListEnabledControlsInput":{
       "type":"structure",
       "required":["targetIdentifier"],
@@ -755,6 +1194,20 @@
       "type":"string",
       "max":50,
       "min":1
+    },
+    "ResetEnabledBaselineInput":{
+      "type":"structure",
+      "required":["enabledBaselineIdentifier"],
+      "members":{
+        "enabledBaselineIdentifier":{"shape":"Arn"}
+      }
+    },
+    "ResetEnabledBaselineOutput":{
+      "type":"structure",
+      "required":["operationIdentifier"],
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"}
+      }
     },
     "ResetLandingZoneInput":{
       "type":"structure",
@@ -898,6 +1351,25 @@
     "UntagResourceOutput":{
       "type":"structure",
       "members":{
+      }
+    },
+    "UpdateEnabledBaselineInput":{
+      "type":"structure",
+      "required":[
+        "baselineVersion",
+        "enabledBaselineIdentifier"
+      ],
+      "members":{
+        "baselineVersion":{"shape":"BaselineVersion"},
+        "enabledBaselineIdentifier":{"shape":"Arn"},
+        "parameters":{"shape":"EnabledBaselineParameters"}
+      }
+    },
+    "UpdateEnabledBaselineOutput":{
+      "type":"structure",
+      "required":["operationIdentifier"],
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"}
       }
     },
     "UpdateEnabledControlInput":{

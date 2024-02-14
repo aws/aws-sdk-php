@@ -1379,6 +1379,12 @@
       "type":"boolean",
       "box":true
     },
+    "BoostingDurationInSeconds":{
+      "type":"long",
+      "box":true,
+      "max":999999999,
+      "min":0
+    },
     "ChatSyncInput":{
       "type":"structure",
       "required":[
@@ -1825,6 +1831,14 @@
       "type":"list",
       "member":{"shape":"DataSource"}
     },
+    "DateAttributeBoostingConfiguration":{
+      "type":"structure",
+      "required":["boostingLevel"],
+      "members":{
+        "boostingDurationInSeconds":{"shape":"BoostingDurationInSeconds"},
+        "boostingLevel":{"shape":"DocumentAttributeBoostingLevel"}
+      }
+    },
     "DeleteApplicationRequest":{
       "type":"structure",
       "required":["applicationId"],
@@ -2112,6 +2126,32 @@
         "name":{"shape":"DocumentAttributeKey"},
         "value":{"shape":"DocumentAttributeValue"}
       }
+    },
+    "DocumentAttributeBoostingConfiguration":{
+      "type":"structure",
+      "members":{
+        "dateConfiguration":{"shape":"DateAttributeBoostingConfiguration"},
+        "numberConfiguration":{"shape":"NumberAttributeBoostingConfiguration"},
+        "stringConfiguration":{"shape":"StringAttributeBoostingConfiguration"},
+        "stringListConfiguration":{"shape":"StringListAttributeBoostingConfiguration"}
+      },
+      "union":true
+    },
+    "DocumentAttributeBoostingLevel":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "VERY_HIGH"
+      ]
+    },
+    "DocumentAttributeBoostingOverrideMap":{
+      "type":"map",
+      "key":{"shape":"DocumentAttributeKey"},
+      "value":{"shape":"DocumentAttributeBoostingConfiguration"},
+      "min":1
     },
     "DocumentAttributeCondition":{
       "type":"structure",
@@ -3415,7 +3455,11 @@
         "FACTUALLY_CORRECT",
         "COMPLETE",
         "RELEVANT_SOURCES",
-        "HELPFUL"
+        "HELPFUL",
+        "NOT_BASED_ON_DOCUMENTS",
+        "NOT_COMPLETE",
+        "NOT_CONCISE",
+        "OTHER"
       ]
     },
     "Messages":{
@@ -3430,6 +3474,7 @@
       "type":"structure",
       "required":["indexId"],
       "members":{
+        "boostingOverride":{"shape":"DocumentAttributeBoostingOverrideMap"},
         "indexId":{"shape":"IndexId"}
       }
     },
@@ -3437,6 +3482,21 @@
       "type":"string",
       "max":800,
       "min":1
+    },
+    "NumberAttributeBoostingConfiguration":{
+      "type":"structure",
+      "required":["boostingLevel"],
+      "members":{
+        "boostingLevel":{"shape":"DocumentAttributeBoostingLevel"},
+        "boostingType":{"shape":"NumberAttributeBoostingType"}
+      }
+    },
+    "NumberAttributeBoostingType":{
+      "type":"string",
+      "enum":[
+        "PRIORITIZE_LARGER_VALUES",
+        "PRIORITIZE_SMALLER_VALUES"
+      ]
     },
     "OAuth2ClientCredentialConfiguration":{
       "type":"structure",
@@ -3895,6 +3955,37 @@
       "type":"string",
       "max":2048,
       "min":1
+    },
+    "StringAttributeBoostingConfiguration":{
+      "type":"structure",
+      "required":["boostingLevel"],
+      "members":{
+        "attributeValueBoosting":{"shape":"StringAttributeValueBoosting"},
+        "boostingLevel":{"shape":"DocumentAttributeBoostingLevel"}
+      }
+    },
+    "StringAttributeValueBoosting":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"StringAttributeValueBoostingLevel"},
+      "max":10,
+      "min":1
+    },
+    "StringAttributeValueBoostingLevel":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "VERY_HIGH"
+      ]
+    },
+    "StringListAttributeBoostingConfiguration":{
+      "type":"structure",
+      "required":["boostingLevel"],
+      "members":{
+        "boostingLevel":{"shape":"DocumentAttributeBoostingLevel"}
+      }
     },
     "SubnetId":{
       "type":"string",

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ControlTower` - Adds support for new Baseline and EnabledBaseline APIs for automating multi-account governance.
+* `Aws\LookoutEquipment` - This feature allows customers to see pointwise model diagnostics results for their models.
+* `Aws\QBusiness` - This release adds the metadata-boosting feature, which allows customers to easily fine-tune the underlying ranking of retrieved RAG passages in order to optimize Q&A answer relevance. It also adds new feedback reasons for the PutFeedback API.
+
 ## 3.298.9 - 2024-02-13
 
 * `Aws\` - Fixes issue with configured endpoint urls.
