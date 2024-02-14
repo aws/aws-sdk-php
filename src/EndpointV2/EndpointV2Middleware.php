@@ -230,7 +230,18 @@ class EndpointV2Middleware
     ): void
     {
         $authScheme = $this->resolveAuthScheme($authSchemes);
-        $command->setAuthSchemes($authScheme);
+
+        $command['@context']['signature_version'] = $authScheme['version'];
+
+        if (isset($authScheme['name'])) {
+            $command['@context']['signing_service'] = $authScheme['name'];
+        }
+
+        if (isset($authScheme['region'])) {
+            $command['@context']['signing_region'] = $authScheme['region'];
+        } elseif (isset($authScheme['signingRegionSet'])) {
+            $command['@context']['signing_region_set'] = $authScheme['signingRegionSet'];
+        }
     }
 
     /**

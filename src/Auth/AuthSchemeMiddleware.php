@@ -34,18 +34,18 @@ class AuthSchemeMiddleware
     /**
      * Create a middleware wrapper function
      *
-     * @param AuthResolver|callable $authResolver
+     * @param AuthSchemeResolverInterface $authResolver
      * @param callable $identityProvider
      * @param Service $api
      * @param array $args
      * @return Closure
      */
     public static function wrap(
-        $authResolver,
+        AuthSchemeResolverInterface $authResolver,
         callable $identityProvider,
         Service $api,
-        array $args,
-    ) : Closure
+        array $args
+    ): Closure
     {
         return function (callable $handler) use ($authResolver, $identityProvider, $api, $args) {
             return new self($handler, $authResolver, $identityProvider, $api, $args);
@@ -54,7 +54,8 @@ class AuthSchemeMiddleware
 
     /**
      * @param callable $nextHandler
-     * @param EndpointProviderV2 $endpointProvider
+     * @param $authResolver
+     * @param callable $identityProvider
      * @param Service $api
      * @param array $args
      */
