@@ -8,7 +8,7 @@ use Aws\Identity\IdentityInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\Credentials\Credentials
+ * @covers \Aws\Credentials\Credentials
  */
 class CredentialsTest extends TestCase
 {

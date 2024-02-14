@@ -1443,7 +1443,11 @@ EOT;
             'service' => 's3',
             'region' => $configKey === 'region' ? null : 'x'
         ], new HandlerList());
-   
+
+        if ($configKey === 'endpoint') {
+            $this->assertTrue(isset($conf['config']['configured_endpoint_url']));
+        }
+
         if ($configType === 'args') {
             $this->assertEquals($conf[$configKey], $expected);
         } else {
@@ -1564,6 +1568,7 @@ EOT;
             'version' => 'latest',
             'ignore_configured_endpoint_urls' => true
         ], new HandlerList());
+        $this->assertFalse(isset($conf['config']['configured_endpoint_url']));
         $this->assertFalse(isset($conf['config']['endpoint']));
         unlink($dir . '/config');
         putenv("HOME=$home");

@@ -444,10 +444,14 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionManagedBlockchainQuery(array $args = [])
  * @method \Aws\ManagedGrafana\ManagedGrafanaClient createManagedGrafana(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionManagedGrafana(array $args = [])
+ * @method \Aws\MarketplaceAgreement\MarketplaceAgreementClient createMarketplaceAgreement(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMarketplaceAgreement(array $args = [])
  * @method \Aws\MarketplaceCatalog\MarketplaceCatalogClient createMarketplaceCatalog(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceCatalog(array $args = [])
  * @method \Aws\MarketplaceCommerceAnalytics\MarketplaceCommerceAnalyticsClient createMarketplaceCommerceAnalytics(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceCommerceAnalytics(array $args = [])
+ * @method \Aws\MarketplaceDeployment\MarketplaceDeploymentClient createMarketplaceDeployment(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMarketplaceDeployment(array $args = [])
  * @method \Aws\MarketplaceEntitlementService\MarketplaceEntitlementServiceClient createMarketplaceEntitlementService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceEntitlementService(array $args = [])
  * @method \Aws\MarketplaceMetering\MarketplaceMeteringClient createMarketplaceMetering(array $args = [])
@@ -488,12 +492,16 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMobile(array $args = [])
  * @method \Aws\Neptune\NeptuneClient createNeptune(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNeptune(array $args = [])
+ * @method \Aws\NeptuneGraph\NeptuneGraphClient createNeptuneGraph(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionNeptuneGraph(array $args = [])
  * @method \Aws\Neptunedata\NeptunedataClient createNeptunedata(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNeptunedata(array $args = [])
  * @method \Aws\NetworkFirewall\NetworkFirewallClient createNetworkFirewall(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNetworkFirewall(array $args = [])
  * @method \Aws\NetworkManager\NetworkManagerClient createNetworkManager(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNetworkManager(array $args = [])
+ * @method \Aws\NetworkMonitor\NetworkMonitorClient createNetworkMonitor(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionNetworkMonitor(array $args = [])
  * @method \Aws\NimbleStudio\NimbleStudioClient createNimbleStudio(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNimbleStudio(array $args = [])
  * @method \Aws\OAM\OAMClient createOAM(array $args = [])
@@ -678,6 +686,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionStorageGateway(array $args = [])
  * @method \Aws\Sts\StsClient createSts(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSts(array $args = [])
+ * @method \Aws\SupplyChain\SupplyChainClient createSupplyChain(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSupplyChain(array $args = [])
  * @method \Aws\Support\SupportClient createSupport(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSupport(array $args = [])
  * @method \Aws\SupportApp\SupportAppClient createSupportApp(array $args = [])
@@ -749,7 +759,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.292.0';
+    const VERSION = '3.298.9';
 
     /** @var array Arguments for creating clients */
     private $args;

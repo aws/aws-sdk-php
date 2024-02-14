@@ -13,11 +13,18 @@ use GuzzleHttp\Promise\Promise;
  * IMPORTANT: this middleware must be added to the "build" step.
  * Specifically, it must precede the 'builder' step.
  *
- *
  * @internal
  */
 class EndpointV2Middleware
 {
+    private static $validAuthSchemes = [
+        'sigv4' => true,
+        'sigv4a' => true,
+        'none' => true,
+        'bearer' => true,
+        'sigv4-s3express' => true
+    ];
+
     /** @var callable */
     private $nextHandler;
 
@@ -29,15 +36,6 @@ class EndpointV2Middleware
 
     /** @var array */
     private $clientArgs;
-
-    /** @var array */
-    private static $validAuthschemes = [
-        'sigv4' => true,
-        'sigv4a' => true,
-        'none' => true,
-        'bearer' => true,
-        'sigv4-s3express' => true
-    ];
 
     /**
      * Create a middleware wrapper function
@@ -92,9 +90,9 @@ class EndpointV2Middleware
         $providerArgs = $this->resolveArgs($commandArgs, $operation);
         $endpoint = $this->endpointProvider->resolveEndpoint($providerArgs);
 
-        if (!empty($endpoint->getProperties()['authSchemes'])) {
+        if (!empty($authSchemes = $endpoint->getProperty('authSchemes'))) {
             $this->applyAuthScheme(
-                $endpoint->getProperties()['authSchemes'],
+                $authSchemes,
                 $command
             );
         }
@@ -111,7 +109,7 @@ class EndpointV2Middleware
      *
      * @return array
      */
-    private function resolveArgs(array $commandArgs, Operation $operation) : array
+    private function resolveArgs(array $commandArgs, Operation $operation): array
     {
         $rulesetParams = $this->endpointProvider->getRuleset()->getParameters();
         $endpointCommandArgs = $this->filterEndpointCommandArgs(
@@ -182,13 +180,14 @@ class EndpointV2Middleware
      *
      * @return array
      */
-    private function bindStaticContextParams($staticContextParams) : array
+    private function bindStaticContextParams($staticContextParams): array
     {
         $scopedParams = [];
 
         forEach($staticContextParams as $paramName => $paramValue) {
             $scopedParams[$paramName] = $paramValue['value'];
         }
+
         return $scopedParams;
     }
 
@@ -213,6 +212,7 @@ class EndpointV2Middleware
                 $scopedParams[$name] = $commandArgs[$spec['shape']];
             }
         }
+
         return $scopedParams;
     }
 
@@ -230,18 +230,7 @@ class EndpointV2Middleware
     ): void
     {
         $authScheme = $this->resolveAuthScheme($authSchemes);
-
-        $command['@context']['signature_version'] = $authScheme['version'];
-
-        if (isset($authScheme['name'])) {
-            $command['@context']['signing_service'] = $authScheme['name'];
-        }
-
-        if (isset($authScheme['region'])) {
-            $command['@context']['signing_region'] = $authScheme['region'];
-        } elseif (isset($authScheme['signingRegionSet'])) {
-            $command['@context']['signing_region_set'] = $authScheme['signingRegionSet'];
-        }
+        $command->setAuthSchemes($authScheme);
     }
 
     /**
@@ -252,12 +241,12 @@ class EndpointV2Middleware
      *
      * @return array
      */
-    private function resolveAuthScheme(array $authSchemes) : array
+    private function resolveAuthScheme(array $authSchemes): array
     {
         $invalidAuthSchemes = [];
 
         foreach($authSchemes as $authScheme) {
-            if (isset(self::$validAuthschemes[$authScheme['name']])) {
+            if (isset(self::$validAuthSchemes[$authScheme['name']])) {
                 return $this->normalizeAuthScheme($authScheme);
             } else {
                 $invalidAuthSchemes[] = "`{$authScheme['name']}`";
@@ -265,7 +254,9 @@ class EndpointV2Middleware
         }
 
         $invalidAuthSchemesString = implode(', ', $invalidAuthSchemes);
-        $validAuthSchemesString = '`' . implode('`, `', array_keys(self::$validAuthschemes)) . '`';
+        $validAuthSchemesString = '`'
+            . implode('`, `', array_keys(self::$validAuthSchemes))
+            . '`';
         throw new \InvalidArgumentException(
             "This operation requests {$invalidAuthSchemesString}"
             . " auth schemes, but the client only supports {$validAuthSchemesString}."
@@ -279,7 +270,7 @@ class EndpointV2Middleware
      * @param array $authScheme
      * @return array
      */
-    private function normalizeAuthScheme(array $authScheme) : array
+    private function normalizeAuthScheme(array $authScheme): array
     {
         /*
             sigv4a will contain a regionSet property. which is guaranteed to be `*`
@@ -303,9 +294,12 @@ class EndpointV2Middleware
             );
         }
 
-        $normalizedAuthScheme['name'] = $authScheme['signingName'] ?? null;
-        $normalizedAuthScheme['region'] = $authScheme['signingRegion'] ?? null;
-        $normalizedAuthScheme['signingRegionSet'] = $authScheme['signingRegionSet'] ?? null;
+        $normalizedAuthScheme['name'] = isset($authScheme['signingName']) ?
+            $authScheme['signingName'] : null;
+        $normalizedAuthScheme['region'] = isset($authScheme['signingRegion']) ?
+            $authScheme['signingRegion'] : null;
+        $normalizedAuthScheme['signingRegionSet'] = isset($authScheme['signingRegionSet']) ?
+            $authScheme['signingRegionSet'] : null;
 
         return $normalizedAuthScheme;
     }

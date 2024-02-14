@@ -34,7 +34,7 @@ jobs:
     strategy:
       #for each of the following versions of PHP, with and without --prefer-lowest
       matrix:
-        php-versions: ['7.2.5', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
+        php-versions: ['7.2.5', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3']
         composer-options: ['', '--prefer-lowest']
     #set the name for each job
     name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
