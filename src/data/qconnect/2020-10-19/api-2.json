@@ -332,7 +332,9 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"GetRecommendations API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications."
     },
     "GetSession":{
       "name":"GetSession",
@@ -465,6 +467,22 @@
       ],
       "idempotent":true
     },
+    "PutFeedback":{
+      "name":"PutFeedback",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/assistants/{assistantId}/feedback",
+        "responseCode":200
+      },
+      "input":{"shape":"PutFeedbackRequest"},
+      "output":{"shape":"PutFeedbackResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "QueryAssistant":{
       "name":"QueryAssistant",
       "http":{
@@ -479,7 +497,9 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications."
     },
     "RemoveKnowledgeBaseTemplateUri":{
       "name":"RemoveKnowledgeBaseTemplateUri",
@@ -920,6 +940,13 @@
         "rankingData":{"shape":"RankingData"},
         "textData":{"shape":"TextData"}
       }
+    },
+    "ContentFeedbackData":{
+      "type":"structure",
+      "members":{
+        "generativeContentFeedbackData":{"shape":"GenerativeContentFeedbackData"}
+      },
+      "union":true
     },
     "ContentMetadata":{
       "type":"map",
@@ -1382,6 +1409,13 @@
     "FilterOperator":{
       "type":"string",
       "enum":["EQUALS"]
+    },
+    "GenerativeContentFeedbackData":{
+      "type":"structure",
+      "required":["relevance"],
+      "members":{
+        "relevance":{"shape":"Relevance"}
+      }
     },
     "GenerativeDataDetails":{
       "type":"structure",
@@ -2102,6 +2136,42 @@
         "LOW"
       ]
     },
+    "PutFeedbackRequest":{
+      "type":"structure",
+      "required":[
+        "assistantId",
+        "contentFeedback",
+        "targetId",
+        "targetType"
+      ],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "contentFeedback":{"shape":"ContentFeedbackData"},
+        "targetId":{"shape":"Uuid"},
+        "targetType":{"shape":"TargetType"}
+      }
+    },
+    "PutFeedbackResponse":{
+      "type":"structure",
+      "required":[
+        "assistantArn",
+        "assistantId",
+        "contentFeedback",
+        "targetId",
+        "targetType"
+      ],
+      "members":{
+        "assistantArn":{"shape":"UuidOrArn"},
+        "assistantId":{"shape":"Uuid"},
+        "contentFeedback":{"shape":"ContentFeedbackData"},
+        "targetId":{"shape":"Uuid"},
+        "targetType":{"shape":"TargetType"}
+      }
+    },
     "QueryAssistantRequest":{
       "type":"structure",
       "required":[
@@ -2291,7 +2361,7 @@
     },
     "QuickResponseName":{
       "type":"string",
-      "max":40,
+      "max":100,
       "min":1
     },
     "QuickResponseOrderField":{
@@ -2525,6 +2595,13 @@
         "KNOWLEDGE_CONTENT",
         "GENERATIVE_RESPONSE",
         "GENERATIVE_ANSWER"
+      ]
+    },
+    "Relevance":{
+      "type":"string",
+      "enum":[
+        "HELPFUL",
+        "NOT_HELPFUL"
       ]
     },
     "RelevanceLevel":{
@@ -2902,6 +2979,13 @@
       "type":"map",
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"}
+    },
+    "TargetType":{
+      "type":"string",
+      "enum":[
+        "RECOMMENDATION",
+        "RESULT"
+      ]
     },
     "TextData":{
       "type":"structure",

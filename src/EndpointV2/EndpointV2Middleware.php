@@ -30,6 +30,15 @@ class EndpointV2Middleware
     /** @var array */
     private $clientArgs;
 
+    /** @var array */
+    private static $validAuthschemes = [
+        'sigv4' => true,
+        'sigv4a' => true,
+        'none' => true,
+        'bearer' => true,
+        'sigv4-s3express' => true
+    ];
+
     /**
      * Create a middleware wrapper function
      *
@@ -43,7 +52,7 @@ class EndpointV2Middleware
         EndpointProviderV2 $endpointProvider,
         Service $api,
         array $args
-    ) : Closure
+    ): Closure
     {
         return function (callable $handler) use ($endpointProvider, $api, $args) {
             return new self($handler, $endpointProvider, $api, $args);
@@ -136,7 +145,7 @@ class EndpointV2Middleware
     private function filterEndpointCommandArgs(
         array $rulesetParams,
         array $commandArgs
-    ) : array
+    ): array
     {
         $endpointMiddlewareOpts = [
             '@use_dual_stack_endpoint' => 'UseDualStack',
@@ -195,7 +204,7 @@ class EndpointV2Middleware
     private function bindContextParams(
         array $commandArgs,
         array $contextParams
-    ) : array
+    ): array
     {
         $scopedParams = [];
 
@@ -218,10 +227,21 @@ class EndpointV2Middleware
     private function applyAuthScheme(
         array $authSchemes,
         CommandInterface $command
-    ) : void
+    ): void
     {
         $authScheme = $this->resolveAuthScheme($authSchemes);
-        $command->setAuthSchemes($authScheme);
+
+        $command['@context']['signature_version'] = $authScheme['version'];
+
+        if (isset($authScheme['name'])) {
+            $command['@context']['signing_service'] = $authScheme['name'];
+        }
+
+        if (isset($authScheme['region'])) {
+            $command['@context']['signing_region'] = $authScheme['region'];
+        } elseif (isset($authScheme['signingRegionSet'])) {
+            $command['@context']['signing_region_set'] = $authScheme['signingRegionSet'];
+        }
     }
 
     /**
@@ -234,11 +254,10 @@ class EndpointV2Middleware
      */
     private function resolveAuthScheme(array $authSchemes) : array
     {
-        $validAuthSchemes = ['sigv4', 'sigv4a', 'none', 'bearer', 'sigv4-s3express'];
         $invalidAuthSchemes = [];
 
         foreach($authSchemes as $authScheme) {
-            if (in_array($authScheme['name'], $validAuthSchemes)) {
+            if (isset(self::$validAuthschemes[$authScheme['name']])) {
                 return $this->normalizeAuthScheme($authScheme);
             } else {
                 $invalidAuthSchemes[] = "`{$authScheme['name']}`";
@@ -246,7 +265,7 @@ class EndpointV2Middleware
         }
 
         $invalidAuthSchemesString = implode(', ', $invalidAuthSchemes);
-        $validAuthSchemesString = '`' . implode('`, `', $validAuthSchemes) . '`';
+        $validAuthSchemesString = '`' . implode('`, `', array_keys(self::$validAuthschemes)) . '`';
         throw new \InvalidArgumentException(
             "This operation requests {$invalidAuthSchemesString}"
             . " auth schemes, but the client only supports {$validAuthSchemesString}."

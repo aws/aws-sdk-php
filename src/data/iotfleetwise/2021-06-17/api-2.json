@@ -2085,7 +2085,8 @@
       "members":{
         "name":{"shape":"resourceName"},
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"maxResults"}
+        "maxResults":{"shape":"maxResults"},
+        "signalNodeType":{"shape":"SignalNodeType"}
       }
     },
     "ListSignalCatalogNodesResponse":{
@@ -2246,8 +2247,7 @@
         "CAN_NETWORK_INTERFACE_INFO_IS_NULL",
         "OBD_NETWORK_INTERFACE_INFO_IS_NULL",
         "NETWORK_INTERFACE_TO_REMOVE_ASSOCIATED_WITH_SIGNALS",
-        "VEHICLE_MIDDLEWARE_NETWORK_INTERFACE_INFO_IS_NULL",
-        "CUSTOMER_DECODED_SIGNAL_NETWORK_INTERFACE_INFO_IS_NULL"
+        "VEHICLE_MIDDLEWARE_NETWORK_INTERFACE_INFO_IS_NULL"
       ]
     },
     "NetworkInterfaceType":{
@@ -2255,8 +2255,7 @@
       "enum":[
         "CAN_INTERFACE",
         "OBD_INTERFACE",
-        "VEHICLE_MIDDLEWARE",
-        "CUSTOMER_DECODED_INTERFACE"
+        "VEHICLE_MIDDLEWARE"
       ]
     },
     "NetworkInterfaces":{
@@ -2637,8 +2636,7 @@
         "STRUCT_SIZE_MISMATCH",
         "NO_SIGNAL_IN_CATALOG_FOR_DECODER_SIGNAL",
         "SIGNAL_DECODER_INCOMPATIBLE_WITH_SIGNAL_CATALOG",
-        "EMPTY_MESSAGE_SIGNAL",
-        "CUSTOMER_DECODED_SIGNAL_INFO_IS_NULL"
+        "EMPTY_MESSAGE_SIGNAL"
       ]
     },
     "SignalDecoderType":{
@@ -2646,8 +2644,7 @@
       "enum":[
         "CAN_SIGNAL",
         "OBD_SIGNAL",
-        "MESSAGE_SIGNAL",
-        "CUSTOMER_DECODED_SIGNAL"
+        "MESSAGE_SIGNAL"
       ]
     },
     "SignalDecoders":{
@@ -2670,6 +2667,17 @@
       "member":{"shape":"SignalInformation"},
       "max":1000,
       "min":0
+    },
+    "SignalNodeType":{
+      "type":"string",
+      "enum":[
+        "SENSOR",
+        "ACTUATOR",
+        "ATTRIBUTE",
+        "BRANCH",
+        "CUSTOM_STRUCT",
+        "CUSTOM_PROPERTY"
+      ]
     },
     "SpoolingMode":{
       "type":"string",
@@ -3156,7 +3164,8 @@
         "modelManifestArn":{"shape":"arn"},
         "decoderManifestArn":{"shape":"arn"},
         "creationTime":{"shape":"timestamp"},
-        "lastModificationTime":{"shape":"timestamp"}
+        "lastModificationTime":{"shape":"timestamp"},
+        "attributes":{"shape":"attributesMap"}
       }
     },
     "arn":{"type":"string"},

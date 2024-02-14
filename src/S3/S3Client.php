@@ -502,9 +502,8 @@ class S3Client extends AwsClient implements S3ClientInterface
         $command = clone $command;
         $command->getHandlerList()->remove('signer');
         $request = \Aws\serialize($command);
-        $signing_name = empty($command->getAuthSchemes())
-            ? $this->getSigningName($request->getUri()->getHost())
-            : $command->getAuthSchemes()['name'];
+        $signing_name = $command['@context']['signing_service']
+            ?? $this->getSigningName($request->getUri()->getHost());
         $signature_version = $this->getSignatureVersionFromCommand($command);
 
         /** @var \Aws\Signature\SignatureInterface $signer */
@@ -723,12 +722,10 @@ class S3Client extends AwsClient implements S3ClientInterface
                 CommandInterface $command,
                 RequestInterface $request = null
             ) use ($handler) {
-                if (!empty($command->getAuthSchemes()['version'] )
-                    && $command->getAuthSchemes()['version'] == 'v4-s3express'
+                if (!empty($command['@context']['signature_version'])
+                    && $command['@context']['signature_version'] === 'v4-s3express'
                 ) {
-                    $authScheme = $command->getAuthSchemes();
-                    $authScheme['version'] = 's3v4';
-                    $command->setAuthSchemes($authScheme);
+                    $command['@context']['signature_version'] = 's3v4';
                 }
                 return $handler($command, $request);
             };
@@ -1102,10 +1099,8 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     private function getSignatureVersionFromCommand(CommandInterface $command)
     {
-        $signatureVersion = empty($command->getAuthSchemes())
-            ? $this->getConfig('signature_version')
-            : $command->getAuthSchemes()['version'];
-        return $signatureVersion;
+        return $command['@context']['signature_version']
+            ?? $this->getConfig('signature_version');
     }
 
 }

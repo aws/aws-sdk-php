@@ -647,7 +647,8 @@
         {"shape":"ServerException"},
         {"shape":"ClientException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"ClusterNotFoundException"}
+        {"shape":"ClusterNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
       ]
     },
     "StopTask":{
@@ -837,7 +838,8 @@
         {"shape":"PlatformUnknownException"},
         {"shape":"PlatformTaskDefinitionIncompatibilityException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NamespaceNotFoundException"}
+        {"shape":"NamespaceNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
       ]
     },
     "UpdateServicePrimaryTaskSet":{
@@ -990,14 +992,16 @@
       "members":{
         "autoScalingGroupArn":{"shape":"String"},
         "managedScaling":{"shape":"ManagedScaling"},
-        "managedTerminationProtection":{"shape":"ManagedTerminationProtection"}
+        "managedTerminationProtection":{"shape":"ManagedTerminationProtection"},
+        "managedDraining":{"shape":"ManagedDraining"}
       }
     },
     "AutoScalingGroupProviderUpdate":{
       "type":"structure",
       "members":{
         "managedScaling":{"shape":"ManagedScaling"},
-        "managedTerminationProtection":{"shape":"ManagedTerminationProtection"}
+        "managedTerminationProtection":{"shape":"ManagedTerminationProtection"},
+        "managedDraining":{"shape":"ManagedDraining"}
       }
     },
     "AwsVpcConfiguration":{
@@ -1475,7 +1479,8 @@
         "enableECSManagedTags":{"shape":"Boolean"},
         "propagateTags":{"shape":"PropagateTags"},
         "enableExecuteCommand":{"shape":"Boolean"},
-        "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"}
+        "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
+        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"}
       }
     },
     "CreateServiceResponse":{
@@ -1636,7 +1641,8 @@
         "rolloutState":{"shape":"DeploymentRolloutState"},
         "rolloutStateReason":{"shape":"String"},
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
-        "serviceConnectResources":{"shape":"ServiceConnectServiceResourceList"}
+        "serviceConnectResources":{"shape":"ServiceConnectServiceResourceList"},
+        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"}
       }
     },
     "DeploymentAlarms":{
@@ -1905,6 +1911,32 @@
       }
     },
     "Double":{"type":"double"},
+    "Duration":{
+      "type":"integer",
+      "max":2147483647,
+      "min":0
+    },
+    "EBSKMSKeyId":{"type":"string"},
+    "EBSResourceType":{
+      "type":"string",
+      "enum":["volume"]
+    },
+    "EBSSnapshotId":{"type":"string"},
+    "EBSTagSpecification":{
+      "type":"structure",
+      "required":["resourceType"],
+      "members":{
+        "resourceType":{"shape":"EBSResourceType"},
+        "tags":{"shape":"Tags"},
+        "propagateTags":{"shape":"PropagateTags"}
+      }
+    },
+    "EBSTagSpecifications":{
+      "type":"list",
+      "member":{"shape":"EBSTagSpecification"}
+    },
+    "EBSVolumeType":{"type":"string"},
+    "ECSVolumeName":{"type":"string"},
     "EFSAuthorizationConfig":{
       "type":"structure",
       "members":{
@@ -2134,6 +2166,7 @@
         "sourcePath":{"shape":"String"}
       }
     },
+    "IAMRoleArn":{"type":"string"},
     "InferenceAccelerator":{
       "type":"structure",
       "required":[
@@ -2484,6 +2517,13 @@
     "ManagedAgents":{
       "type":"list",
       "member":{"shape":"ManagedAgent"}
+    },
+    "ManagedDraining":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "ManagedScaling":{
       "type":"structure",
@@ -2951,7 +2991,8 @@
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "volumeConfigurations":{"shape":"TaskVolumeConfigurations"}
       }
     },
     "RunTaskResponse":{
@@ -3085,7 +3126,9 @@
         "portName":{"shape":"String"},
         "discoveryName":{"shape":"String"},
         "clientAliases":{"shape":"ServiceConnectClientAliasList"},
-        "ingressPortOverride":{"shape":"PortNumber"}
+        "ingressPortOverride":{"shape":"PortNumber"},
+        "timeout":{"shape":"TimeoutConfiguration"},
+        "tls":{"shape":"ServiceConnectTlsConfiguration"}
       }
     },
     "ServiceConnectServiceList":{
@@ -3102,6 +3145,21 @@
     "ServiceConnectServiceResourceList":{
       "type":"list",
       "member":{"shape":"ServiceConnectServiceResource"}
+    },
+    "ServiceConnectTlsCertificateAuthority":{
+      "type":"structure",
+      "members":{
+        "awsPcaAuthorityArn":{"shape":"String"}
+      }
+    },
+    "ServiceConnectTlsConfiguration":{
+      "type":"structure",
+      "required":["issuerCertificateAuthority"],
+      "members":{
+        "issuerCertificateAuthority":{"shape":"ServiceConnectTlsCertificateAuthority"},
+        "kmsKey":{"shape":"String"},
+        "roleArn":{"shape":"String"}
+      }
     },
     "ServiceEvent":{
       "type":"structure",
@@ -3122,6 +3180,22 @@
     "ServiceFieldList":{
       "type":"list",
       "member":{"shape":"ServiceField"}
+    },
+    "ServiceManagedEBSVolumeConfiguration":{
+      "type":"structure",
+      "required":["roleArn"],
+      "members":{
+        "encrypted":{"shape":"BoxedBoolean"},
+        "kmsKeyId":{"shape":"EBSKMSKeyId"},
+        "volumeType":{"shape":"EBSVolumeType"},
+        "sizeInGiB":{"shape":"BoxedInteger"},
+        "snapshotId":{"shape":"EBSSnapshotId"},
+        "iops":{"shape":"BoxedInteger"},
+        "throughput":{"shape":"BoxedInteger"},
+        "tagSpecifications":{"shape":"EBSTagSpecifications"},
+        "roleArn":{"shape":"IAMRoleArn"},
+        "filesystemType":{"shape":"TaskFilesystemType"}
+      }
     },
     "ServiceNotActiveException":{
       "type":"structure",
@@ -3147,6 +3221,18 @@
         "containerName":{"shape":"String"},
         "containerPort":{"shape":"BoxedInteger"}
       }
+    },
+    "ServiceVolumeConfiguration":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"ECSVolumeName"},
+        "managedEBSVolume":{"shape":"ServiceManagedEBSVolumeConfiguration"}
+      }
+    },
+    "ServiceVolumeConfigurations":{
+      "type":"list",
+      "member":{"shape":"ServiceVolumeConfiguration"}
     },
     "Services":{
       "type":"list",
@@ -3226,7 +3312,8 @@
         "referenceId":{"shape":"String"},
         "startedBy":{"shape":"String"},
         "tags":{"shape":"Tags"},
-        "taskDefinition":{"shape":"String"}
+        "taskDefinition":{"shape":"String"},
+        "volumeConfigurations":{"shape":"TaskVolumeConfigurations"}
       }
     },
     "StartTaskResponse":{
@@ -3512,6 +3599,38 @@
       "type":"list",
       "member":{"shape":"TaskField"}
     },
+    "TaskFilesystemType":{
+      "type":"string",
+      "enum":[
+        "ext3",
+        "ext4",
+        "xfs"
+      ]
+    },
+    "TaskManagedEBSVolumeConfiguration":{
+      "type":"structure",
+      "required":["roleArn"],
+      "members":{
+        "encrypted":{"shape":"BoxedBoolean"},
+        "kmsKeyId":{"shape":"EBSKMSKeyId"},
+        "volumeType":{"shape":"EBSVolumeType"},
+        "sizeInGiB":{"shape":"BoxedInteger"},
+        "snapshotId":{"shape":"EBSSnapshotId"},
+        "iops":{"shape":"BoxedInteger"},
+        "throughput":{"shape":"BoxedInteger"},
+        "tagSpecifications":{"shape":"EBSTagSpecifications"},
+        "roleArn":{"shape":"IAMRoleArn"},
+        "terminationPolicy":{"shape":"TaskManagedEBSVolumeTerminationPolicy"},
+        "filesystemType":{"shape":"TaskFilesystemType"}
+      }
+    },
+    "TaskManagedEBSVolumeTerminationPolicy":{
+      "type":"structure",
+      "required":["deleteOnTermination"],
+      "members":{
+        "deleteOnTermination":{"shape":"BoxedBoolean"}
+      }
+    },
     "TaskOverride":{
       "type":"structure",
       "members":{
@@ -3582,9 +3701,28 @@
         "TerminationNotice"
       ]
     },
+    "TaskVolumeConfiguration":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"ECSVolumeName"},
+        "managedEBSVolume":{"shape":"TaskManagedEBSVolumeConfiguration"}
+      }
+    },
+    "TaskVolumeConfigurations":{
+      "type":"list",
+      "member":{"shape":"TaskVolumeConfiguration"}
+    },
     "Tasks":{
       "type":"list",
       "member":{"shape":"Task"}
+    },
+    "TimeoutConfiguration":{
+      "type":"structure",
+      "members":{
+        "idleTimeoutSeconds":{"shape":"Duration"},
+        "perRequestTimeoutSeconds":{"shape":"Duration"}
+      }
     },
     "Timestamp":{"type":"timestamp"},
     "Tmpfs":{
@@ -3798,7 +3936,8 @@
         "loadBalancers":{"shape":"LoadBalancers"},
         "propagateTags":{"shape":"PropagateTags"},
         "serviceRegistries":{"shape":"ServiceRegistries"},
-        "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"}
+        "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
+        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"}
       }
     },
     "UpdateServiceResponse":{
@@ -3864,7 +4003,8 @@
         "host":{"shape":"HostVolumeProperties"},
         "dockerVolumeConfiguration":{"shape":"DockerVolumeConfiguration"},
         "efsVolumeConfiguration":{"shape":"EFSVolumeConfiguration"},
-        "fsxWindowsFileServerVolumeConfiguration":{"shape":"FSxWindowsFileServerVolumeConfiguration"}
+        "fsxWindowsFileServerVolumeConfiguration":{"shape":"FSxWindowsFileServerVolumeConfiguration"},
+        "configuredAtLaunch":{"shape":"BoxedBoolean"}
       }
     },
     "VolumeFrom":{

@@ -27,6 +27,7 @@
     "CreateDBProxy": "<p>Creates a new DB proxy.</p>",
     "CreateDBProxyEndpoint": "<p>Creates a <code>DBProxyEndpoint</code>. Only applies to proxies that are associated with Aurora DB clusters. You can use DB proxy endpoints to specify read/write or read-only access to the DB cluster. You can also use DB proxy endpoints to access a DB proxy through a different VPC than the proxy's default VPC.</p>",
     "CreateDBSecurityGroup": "<p>Creates a new DB security group. DB security groups control access to a DB instance.</p> <p>A DB security group controls access to EC2-Classic DB instances that are not in a VPC.</p> <note> <p>EC2-Classic was retired on August 15, 2022. If you haven't migrated from EC2-Classic to a VPC, we recommend that you migrate as soon as possible. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html\">Migrate from EC2-Classic to a VPC</a> in the <i>Amazon EC2 User Guide</i>, the blog <a href=\"http://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/\">EC2-Classic Networking is Retiring – Here’s How to Prepare</a>, and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Non-VPC2VPC.html\">Moving a DB instance not in a VPC into a VPC</a> in the <i>Amazon RDS User Guide</i>.</p> </note>",
+    "CreateDBShardGroup": "<p>Creates a new DB shard group for Aurora Limitless Database. You must enable Aurora Limitless Database to create a DB shard group.</p> <p>Valid for: Aurora DB clusters only</p>",
     "CreateDBSnapshot": "<p>Creates a snapshot of a DB instance. The source DB instance must be in the <code>available</code> or <code>storage-optimization</code> state.</p>",
     "CreateDBSubnetGroup": "<p>Creates a new DB subnet group. DB subnet groups must contain at least one subnet in at least two AZs in the Amazon Web Services Region.</p>",
     "CreateEventSubscription": "<p>Creates an RDS event notification subscription. This operation requires a topic Amazon Resource Name (ARN) created by either the RDS console, the SNS console, or the SNS API. To obtain an ARN with SNS, you must create a topic in Amazon SNS and subscribe to the topic. The ARN is displayed in the SNS console.</p> <p>You can specify the type of source (<code>SourceType</code>) that you want to be notified of and provide a list of RDS sources (<code>SourceIds</code>) that triggers the events. You can also provide a list of event categories (<code>EventCategories</code>) for events that you want to be notified of. For example, you can specify <code>SourceType</code> = <code>db-instance</code>, <code>SourceIds</code> = <code>mydbinstance1</code>, <code>mydbinstance2</code> and <code>EventCategories</code> = <code>Availability</code>, <code>Backup</code>.</p> <p>If you specify both the <code>SourceType</code> and <code>SourceIds</code>, such as <code>SourceType</code> = <code>db-instance</code> and <code>SourceIds</code> = <code>myDBInstance1</code>, you are notified of all the <code>db-instance</code> events for the specified source. If you specify a <code>SourceType</code> but do not specify <code>SourceIds</code>, you receive notice of the events for that source type for all your RDS sources. If you don't specify either the SourceType or the <code>SourceIds</code>, you are notified of events generated from all RDS sources belonging to your customer account.</p> <p>For more information about subscribing to an event for RDS DB engines, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.Subscribing.html\"> Subscribing to Amazon RDS event notification</a> in the <i>Amazon RDS User Guide</i>.</p> <p>For more information about subscribing to an event for Aurora DB engines, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Events.Subscribing.html\"> Subscribing to Amazon RDS event notification</a> in the <i>Amazon Aurora User Guide</i>.</p>",
@@ -47,6 +48,7 @@
     "DeleteDBProxy": "<p>Deletes an existing DB proxy.</p>",
     "DeleteDBProxyEndpoint": "<p>Deletes a <code>DBProxyEndpoint</code>. Doing so removes the ability to access the DB proxy using the endpoint that you defined. The endpoint that you delete might have provided capabilities such as read/write or read-only operations, or using a different VPC than the DB proxy's default VPC.</p>",
     "DeleteDBSecurityGroup": "<p>Deletes a DB security group.</p> <p>The specified DB security group must not be associated with any DB instances.</p> <note> <p>EC2-Classic was retired on August 15, 2022. If you haven't migrated from EC2-Classic to a VPC, we recommend that you migrate as soon as possible. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html\">Migrate from EC2-Classic to a VPC</a> in the <i>Amazon EC2 User Guide</i>, the blog <a href=\"http://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/\">EC2-Classic Networking is Retiring – Here’s How to Prepare</a>, and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Non-VPC2VPC.html\">Moving a DB instance not in a VPC into a VPC</a> in the <i>Amazon RDS User Guide</i>.</p> </note>",
+    "DeleteDBShardGroup": "<p>Deletes an Aurora Limitless Database DB shard group.</p>",
     "DeleteDBSnapshot": "<p>Deletes a DB snapshot. If the snapshot is being copied, the copy operation is terminated.</p> <note> <p>The DB snapshot must be in the <code>available</code> state to be deleted.</p> </note>",
     "DeleteDBSubnetGroup": "<p>Deletes a DB subnet group.</p> <note> <p>The specified database subnet group must not be associated with any DB instances.</p> </note>",
     "DeleteEventSubscription": "<p>Deletes an RDS event notification subscription.</p>",
@@ -76,7 +78,9 @@
     "DescribeDBProxyEndpoints": "<p>Returns information about DB proxy endpoints.</p>",
     "DescribeDBProxyTargetGroups": "<p>Returns information about DB proxy target groups, represented by <code>DBProxyTargetGroup</code> data structures.</p>",
     "DescribeDBProxyTargets": "<p>Returns information about <code>DBProxyTarget</code> objects. This API supports pagination.</p>",
+    "DescribeDBRecommendations": "<p>Describes the recommendations to resolve the issues for your DB instances, DB clusters, and DB parameter groups.</p>",
     "DescribeDBSecurityGroups": "<p>Returns a list of <code>DBSecurityGroup</code> descriptions. If a <code>DBSecurityGroupName</code> is specified, the list will contain only the descriptions of the specified DB security group.</p> <note> <p>EC2-Classic was retired on August 15, 2022. If you haven't migrated from EC2-Classic to a VPC, we recommend that you migrate as soon as possible. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html\">Migrate from EC2-Classic to a VPC</a> in the <i>Amazon EC2 User Guide</i>, the blog <a href=\"http://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/\">EC2-Classic Networking is Retiring – Here’s How to Prepare</a>, and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Non-VPC2VPC.html\">Moving a DB instance not in a VPC into a VPC</a> in the <i>Amazon RDS User Guide</i>.</p> </note>",
+    "DescribeDBShardGroups": "<p>Describes existing Aurora Limitless Database DB shard groups.</p>",
     "DescribeDBSnapshotAttributes": "<p>Returns a list of DB snapshot attribute names and values for a manual DB snapshot.</p> <p>When sharing snapshots with other Amazon Web Services accounts, <code>DescribeDBSnapshotAttributes</code> returns the <code>restore</code> attribute and a list of IDs for the Amazon Web Services accounts that are authorized to copy or restore the manual DB snapshot. If <code>all</code> is included in the list of values for the <code>restore</code> attribute, then the manual DB snapshot is public and can be copied or restored by all Amazon Web Services accounts.</p> <p>To add or remove access for an Amazon Web Services account to copy or restore a manual DB snapshot, or to make the manual DB snapshot public or private, use the <code>ModifyDBSnapshotAttribute</code> API action.</p>",
     "DescribeDBSnapshotTenantDatabases": "<p>Describes the tenant databases that exist in a DB snapshot. This command only applies to RDS for Oracle DB instances in the multi-tenant configuration.</p> <p>You can use this command to inspect the tenant databases within a snapshot before restoring it. You can't directly interact with the tenant databases in a DB snapshot. If you restore a snapshot that was taken from DB instance using the multi-tenant configuration, you restore all its tenant databases.</p>",
     "DescribeDBSnapshots": "<p>Returns information about DB snapshots. This API action supports pagination.</p>",
@@ -98,8 +102,10 @@
     "DescribeSourceRegions": "<p>Returns a list of the source Amazon Web Services Regions where the current Amazon Web Services Region can create a read replica, copy a DB snapshot from, or replicate automated backups from.</p> <p>Use this operation to determine whether cross-Region features are supported between other Regions and your current Region. This operation supports pagination.</p> <p>To return information about the Regions that are enabled for your account, or all Regions, use the EC2 operation <code>DescribeRegions</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeRegions.html\"> DescribeRegions</a> in the <i>Amazon EC2 API Reference</i>.</p>",
     "DescribeTenantDatabases": "<p>Describes the tenant databases in a DB instance that uses the multi-tenant configuration. Only RDS for Oracle CDB instances are supported.</p>",
     "DescribeValidDBInstanceModifications": "<p>You can call <code>DescribeValidDBInstanceModifications</code> to learn what modifications you can make to your DB instance. You can use this information when you call <code>ModifyDBInstance</code>.</p> <p>This command doesn't apply to RDS Custom.</p>",
+    "DisableHttpEndpoint": "<p>Disables the HTTP endpoint for the specified DB cluster. Disabling this endpoint disables RDS Data API.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using RDS Data API</a> in the <i>Amazon Aurora User Guide</i>.</p> <note> <p>This operation applies only to Aurora PostgreSQL Serverless v2 and provisioned DB clusters. To disable the HTTP endpoint for Aurora Serverless v1 DB clusters, use the <code>EnableHttpEndpoint</code> parameter of the <code>ModifyDBCluster</code> operation.</p> </note>",
     "DownloadDBLogFilePortion": "<p>Downloads all or a portion of the specified log file, up to 1 MB in size.</p> <p>This command doesn't apply to RDS Custom.</p>",
-    "FailoverDBCluster": "<p>Forces a failover for a DB cluster.</p> <p>For an Aurora DB cluster, failover for a DB cluster promotes one of the Aurora Replicas (read-only instances) in the DB cluster to be the primary DB instance (the cluster writer).</p> <p>For a Multi-AZ DB cluster, failover for a DB cluster promotes one of the readable standby DB instances (read-only instances) in the DB cluster to be the primary DB instance (the cluster writer).</p> <p>An Amazon Aurora DB cluster automatically fails over to an Aurora Replica, if one exists, when the primary DB instance fails. A Multi-AZ DB cluster automatically fails over to a readable standby DB instance when the primary DB instance fails.</p> <p>To simulate a failure of a primary instance for testing, you can force a failover. Because each instance in a DB cluster has its own endpoint address, make sure to clean up and re-establish any existing connections that use those endpoint addresses when the failover is complete.</p> <p>For more information on Amazon Aurora DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html\"> What is Amazon Aurora?</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>For more information on Multi-AZ DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html\"> Multi-AZ DB cluster deployments</a> in the <i>Amazon RDS User Guide</i>.</p>",
+    "EnableHttpEndpoint": "<p>Enables the HTTP endpoint for the DB cluster. By default, the HTTP endpoint isn't enabled.</p> <p>When enabled, this endpoint provides a connectionless web service API (RDS Data API) for running SQL queries on the Aurora DB cluster. You can also query your database from inside the RDS console with the RDS query editor.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using RDS Data API</a> in the <i>Amazon Aurora User Guide</i>.</p> <note> <p>This operation applies only to Aurora PostgreSQL Serverless v2 and provisioned DB clusters. To enable the HTTP endpoint for Aurora Serverless v1 DB clusters, use the <code>EnableHttpEndpoint</code> parameter of the <code>ModifyDBCluster</code> operation.</p> </note>",
+    "FailoverDBCluster": "<p>Forces a failover for a DB cluster.</p> <p>For an Aurora DB cluster, failover for a DB cluster promotes one of the Aurora Replicas (read-only instances) in the DB cluster to be the primary DB instance (the cluster writer).</p> <p>For a Multi-AZ DB cluster, after RDS terminates the primary DB instance, the internal monitoring system detects that the primary DB instance is unhealthy and promotes a readable standby (read-only instances) in the DB cluster to be the primary DB instance (the cluster writer). Failover times are typically less than 35 seconds.</p> <p>An Amazon Aurora DB cluster automatically fails over to an Aurora Replica, if one exists, when the primary DB instance fails. A Multi-AZ DB cluster automatically fails over to a readable standby DB instance when the primary DB instance fails.</p> <p>To simulate a failure of a primary instance for testing, you can force a failover. Because each instance in a DB cluster has its own endpoint address, make sure to clean up and re-establish any existing connections that use those endpoint addresses when the failover is complete.</p> <p>For more information on Amazon Aurora DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html\"> What is Amazon Aurora?</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>For more information on Multi-AZ DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html\"> Multi-AZ DB cluster deployments</a> in the <i>Amazon RDS User Guide</i>.</p>",
     "FailoverGlobalCluster": "<p>Promotes the specified secondary DB cluster to be the primary DB cluster in the global database cluster to fail over or switch over a global database. Switchover operations were previously called \"managed planned failovers.\"</p> <note> <p>Although this operation can be used either to fail over or to switch over a global database cluster, its intended use is for global database failover. To switch over a global database cluster, we recommend that you use the <a>SwitchoverGlobalCluster</a> operation instead.</p> </note> <p>How you use this operation depends on whether you are failing over or switching over your global database cluster:</p> <ul> <li> <p>Failing over - Specify the <code>AllowDataLoss</code> parameter and don't specify the <code>Switchover</code> parameter.</p> </li> <li> <p>Switching over - Specify the <code>Switchover</code> parameter or omit it, but don't specify the <code>AllowDataLoss</code> parameter.</p> </li> </ul> <p> <b>About failing over and switching over</b> </p> <p>While failing over and switching over a global database cluster both change the primary DB cluster, you use these operations for different reasons:</p> <ul> <li> <p> <i>Failing over</i> - Use this operation to respond to an unplanned event, such as a Regional disaster in the primary Region. Failing over can result in a loss of write transaction data that wasn't replicated to the chosen secondary before the failover event occurred. However, the recovery process that promotes a DB instance on the chosen seconday DB cluster to be the primary writer DB instance guarantees that the data is in a transactionally consistent state.</p> <p>For more information about failing over an Amazon Aurora global database, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html#aurora-global-database-failover.managed-unplanned\">Performing managed failovers for Aurora global databases</a> in the <i>Amazon Aurora User Guide</i>.</p> </li> <li> <p> <i>Switching over</i> - Use this operation on a healthy global database cluster for planned events, such as Regional rotation or to fail back to the original primary DB cluster after a failover operation. With this operation, there is no data loss.</p> <p>For more information about switching over an Amazon Aurora global database, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html#aurora-global-database-disaster-recovery.managed-failover\">Performing switchovers for Aurora global databases</a> in the <i>Amazon Aurora User Guide</i>.</p> </li> </ul>",
     "ListTagsForResource": "<p>Lists all tags on an Amazon RDS resource.</p> <p>For an overview on tagging an Amazon RDS resource, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Tagging.html\">Tagging Amazon RDS Resources</a> in the <i>Amazon RDS User Guide</i>.</p>",
     "ModifyActivityStream": "<p>Changes the audit policy state of a database activity stream to either locked (default) or unlocked. A locked policy is read-only, whereas an unlocked policy is read/write. If your activity stream is started and locked, you can unlock it, customize your audit policy, and then lock your activity stream. Restarting the activity stream isn't required. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/DBActivityStreams.Modifying.html\"> Modifying a database activity stream</a> in the <i>Amazon RDS User Guide</i>. </p> <p>This operation is supported for RDS for Oracle and Microsoft SQL Server.</p>",
@@ -115,6 +121,8 @@
     "ModifyDBProxy": "<p>Changes the settings for an existing DB proxy.</p>",
     "ModifyDBProxyEndpoint": "<p>Changes the settings for an existing DB proxy endpoint.</p>",
     "ModifyDBProxyTargetGroup": "<p>Modifies the properties of a <code>DBProxyTargetGroup</code>.</p>",
+    "ModifyDBRecommendation": "<p>Updates the recommendation status and recommended action status for the specified recommendation.</p>",
+    "ModifyDBShardGroup": "<p>Modifies the settings of an Aurora Limitless Database DB shard group. You can change one or more settings by specifying these parameters and the new values in the request.</p>",
     "ModifyDBSnapshot": "<p>Updates a manual DB snapshot with a new engine version. The snapshot can be encrypted or unencrypted, but not shared or public. </p> <p>Amazon RDS supports upgrading DB snapshots for MySQL, PostgreSQL, and Oracle. This operation doesn't apply to RDS Custom or RDS for Db2.</p>",
     "ModifyDBSnapshotAttribute": "<p>Adds an attribute and values to, or removes an attribute and values from, a manual DB snapshot.</p> <p>To share a manual DB snapshot with other Amazon Web Services accounts, specify <code>restore</code> as the <code>AttributeName</code> and use the <code>ValuesToAdd</code> parameter to add a list of IDs of the Amazon Web Services accounts that are authorized to restore the manual DB snapshot. Uses the value <code>all</code> to make the manual DB snapshot public, which means it can be copied or restored by all Amazon Web Services accounts.</p> <note> <p>Don't add the <code>all</code> value for any manual DB snapshots that contain private information that you don't want available to all Amazon Web Services accounts.</p> </note> <p>If the manual DB snapshot is encrypted, it can be shared, but only by specifying a list of authorized Amazon Web Services account IDs for the <code>ValuesToAdd</code> parameter. You can't use <code>all</code> as a value for that parameter in this case.</p> <p>To view which Amazon Web Services accounts have access to copy or restore a manual DB snapshot, or whether a manual DB snapshot public or private, use the <a>DescribeDBSnapshotAttributes</a> API operation. The accounts are returned as values for the <code>restore</code> attribute.</p>",
     "ModifyDBSubnetGroup": "<p>Modifies an existing DB subnet group. DB subnet groups must contain at least one subnet in at least two AZs in the Amazon Web Services Region.</p>",
@@ -127,6 +135,7 @@
     "PurchaseReservedDBInstancesOffering": "<p>Purchases a reserved DB instance offering.</p>",
     "RebootDBCluster": "<p>You might need to reboot your DB cluster, usually for maintenance reasons. For example, if you make certain modifications, or if you change the DB cluster parameter group associated with the DB cluster, reboot the DB cluster for the changes to take effect.</p> <p>Rebooting a DB cluster restarts the database engine service. Rebooting a DB cluster results in a momentary outage, during which the DB cluster status is set to rebooting.</p> <p>Use this operation only for a non-Aurora Multi-AZ DB cluster.</p> <p>For more information on Multi-AZ DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html\"> Multi-AZ DB cluster deployments</a> in the <i>Amazon RDS User Guide.</i> </p>",
     "RebootDBInstance": "<p>You might need to reboot your DB instance, usually for maintenance reasons. For example, if you make certain modifications, or if you change the DB parameter group associated with the DB instance, you must reboot the instance for the changes to take effect.</p> <p>Rebooting a DB instance restarts the database engine service. Rebooting a DB instance results in a momentary outage, during which the DB instance status is set to rebooting.</p> <p>For more information about rebooting, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_RebootInstance.html\">Rebooting a DB Instance</a> in the <i>Amazon RDS User Guide.</i> </p> <p>This command doesn't apply to RDS Custom.</p> <p>If your DB instance is part of a Multi-AZ DB cluster, you can reboot the DB cluster with the <code>RebootDBCluster</code> operation.</p>",
+    "RebootDBShardGroup": "<p>You might need to reboot your DB shard group, usually for maintenance reasons. For example, if you make certain modifications, reboot the DB shard group for the changes to take effect.</p> <p>This operation applies only to Aurora Limitless Database DBb shard groups.</p>",
     "RegisterDBProxyTargets": "<p>Associate one or more <code>DBProxyTarget</code> data structures with a <code>DBProxyTargetGroup</code>.</p>",
     "RemoveFromGlobalCluster": "<p>Detaches an Aurora secondary cluster from an Aurora global database cluster. The cluster becomes a standalone cluster with read-write capability instead of being read-only and receiving data from a primary cluster in a different Region.</p> <note> <p>This operation only applies to Aurora DB clusters.</p> </note>",
     "RemoveRoleFromDBCluster": "<p>Removes the asssociation of an Amazon Web Services Identity and Access Management (IAM) role from a DB cluster.</p> <p>For more information on Amazon Aurora DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html\"> What is Amazon Aurora?</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>For more information on Multi-AZ DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html\"> Multi-AZ DB cluster deployments</a> in the <i>Amazon RDS User Guide.</i> </p>",
@@ -488,7 +497,9 @@
         "DescribeDBEngineVersionsMessage$DefaultOnly": "<p>Specifies whether to return only the default version of the specified engine or the engine and major version combination.</p>",
         "DescribeDBSnapshotsMessage$IncludeShared": "<p>Specifies whether to include shared manual DB cluster snapshots from other Amazon Web Services accounts that this Amazon Web Services account has been given permission to copy or restore. By default, these snapshots are not included.</p> <p>You can give an Amazon Web Services account permission to restore a manual DB snapshot from another Amazon Web Services account by using the <code>ModifyDBSnapshotAttribute</code> API action.</p> <p>This setting doesn't apply to RDS Custom.</p>",
         "DescribeDBSnapshotsMessage$IncludePublic": "<p>Specifies whether to include manual DB cluster snapshots that are public and can be copied or restored by any Amazon Web Services account. By default, the public snapshots are not included.</p> <p>You can share a manual DB snapshot as public by using the <a>ModifyDBSnapshotAttribute</a> API.</p> <p>This setting doesn't apply to RDS Custom.</p>",
+        "DisableHttpEndpointResponse$HttpEndpointEnabled": "<p>Indicates whether the HTTP endpoint is enabled or disabled for the DB cluster.</p>",
         "DownloadDBLogFilePortionDetails$AdditionalDataPending": "<p>A Boolean value that, if true, indicates there is more data to be downloaded.</p>",
+        "EnableHttpEndpointResponse$HttpEndpointEnabled": "<p>Indicates whether the HTTP endpoint is enabled or disabled for the DB cluster.</p>",
         "EventSubscription$Enabled": "<p>Specifies whether the subscription is enabled. True indicates the subscription is enabled.</p>",
         "FailoverState$IsDataLossAllowed": "<p>Indicates whether the operation is a global switchover or a global failover. If data loss is allowed, then the operation is a global failover. Otherwise, it's a switchover.</p>",
         "GlobalClusterMember$IsWriter": "<p>Indicates whether the Aurora DB cluster is the primary cluster (that is, has read-write capability) for the global cluster with which it is associated.</p>",
@@ -555,12 +566,13 @@
         "CreateDBClusterMessage$StorageEncrypted": "<p>Specifies whether the DB cluster is encrypted.</p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p>",
         "CreateDBClusterMessage$EnableIAMDatabaseAuthentication": "<p>Specifies whether to enable mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts. By default, mapping isn't enabled.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html\"> IAM Database Authentication</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>Valid for Cluster Type: Aurora DB clusters only</p>",
         "CreateDBClusterMessage$DeletionProtection": "<p>Specifies whether the DB cluster has deletion protection enabled. The database can't be deleted when deletion protection is enabled. By default, deletion protection isn't enabled.</p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p>",
-        "CreateDBClusterMessage$EnableHttpEndpoint": "<p>Specifies whether to enable the HTTP endpoint for an Aurora Serverless v1 DB cluster. By default, the HTTP endpoint is disabled.</p> <p>When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the Aurora Serverless v1 DB cluster. You can also query your database from inside the RDS console with the query editor.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using the Data API for Aurora Serverless v1</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>Valid for Cluster Type: Aurora DB clusters only</p>",
+        "CreateDBClusterMessage$EnableHttpEndpoint": "<p>Specifies whether to enable the HTTP endpoint for the DB cluster. By default, the HTTP endpoint isn't enabled.</p> <p>When enabled, the HTTP endpoint provides a connectionless web service API (RDS Data API) for running SQL queries on the DB cluster. You can also query your database from inside the RDS console with the RDS query editor.</p> <p>RDS Data API is supported with the following DB clusters:</p> <ul> <li> <p>Aurora PostgreSQL Serverless v2 and provisioned</p> </li> <li> <p>Aurora PostgreSQL and Aurora MySQL Serverless v1</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using RDS Data API</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>Valid for Cluster Type: Aurora DB clusters only</p>",
         "CreateDBClusterMessage$CopyTagsToSnapshot": "<p>Specifies whether to copy all tags from the DB cluster to snapshots of the DB cluster. The default is not to copy them.</p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p>",
         "CreateDBClusterMessage$EnableGlobalWriteForwarding": "<p>Specifies whether to enable this DB cluster to forward write operations to the primary cluster of a global cluster (Aurora global database). By default, write operations are not allowed on Aurora DB clusters that are secondary clusters in an Aurora global database.</p> <p>You can set this value only on Aurora DB clusters that are members of an Aurora global database. With this parameter enabled, a secondary cluster can forward writes to the current primary cluster, and the resulting changes are replicated back to this cluster. For the primary DB cluster of an Aurora global database, this value is used immediately if the primary is demoted by a global cluster API operation, but it does nothing until then.</p> <p>Valid for Cluster Type: Aurora DB clusters only</p>",
         "CreateDBClusterMessage$PubliclyAccessible": "<p>Specifies whether the DB cluster is publicly accessible.</p> <p>When the DB cluster is publicly accessible, its Domain Name System (DNS) endpoint resolves to the private IP address from within the DB cluster's virtual private cloud (VPC). It resolves to the public IP address from outside of the DB cluster's VPC. Access to the DB cluster is ultimately controlled by the security group it uses. That public access isn't permitted if the security group assigned to the DB cluster doesn't permit it.</p> <p>When the DB cluster isn't publicly accessible, it is an internal DB cluster with a DNS name that resolves to a private IP address.</p> <p>Valid for Cluster Type: Multi-AZ DB clusters only</p> <p>Default: The default behavior varies depending on whether <code>DBSubnetGroupName</code> is specified.</p> <p>If <code>DBSubnetGroupName</code> isn't specified, and <code>PubliclyAccessible</code> isn't specified, the following applies:</p> <ul> <li> <p>If the default VPC in the target Region doesn’t have an internet gateway attached to it, the DB cluster is private.</p> </li> <li> <p>If the default VPC in the target Region has an internet gateway attached to it, the DB cluster is public.</p> </li> </ul> <p>If <code>DBSubnetGroupName</code> is specified, and <code>PubliclyAccessible</code> isn't specified, the following applies:</p> <ul> <li> <p>If the subnets are part of a VPC that doesn’t have an internet gateway attached to it, the DB cluster is private.</p> </li> <li> <p>If the subnets are part of a VPC that has an internet gateway attached to it, the DB cluster is public.</p> </li> </ul>",
         "CreateDBClusterMessage$AutoMinorVersionUpgrade": "<p>Specifies whether minor engine upgrades are applied automatically to the DB cluster during the maintenance window. By default, minor engine upgrades are applied automatically.</p> <p>Valid for Cluster Type: Multi-AZ DB clusters only</p>",
         "CreateDBClusterMessage$EnablePerformanceInsights": "<p>Specifies whether to turn on Performance Insights for the DB cluster.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights.html\"> Using Amazon Performance Insights</a> in the <i>Amazon RDS User Guide</i>.</p> <p>Valid for Cluster Type: Multi-AZ DB clusters only</p>",
+        "CreateDBClusterMessage$EnableLimitlessDatabase": "<p>Specifies whether to enable Aurora Limitless Database. You must enable Aurora Limitless Database to create a DB shard group.</p> <p>Valid for: Aurora DB clusters only</p>",
         "CreateDBClusterMessage$ManageMasterUserPassword": "<p>Specifies whether to manage the master user password with Amazon Web Services Secrets Manager.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html\">Password management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS User Guide</i> and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-secrets-manager.html\">Password management with Amazon Web Services Secrets Manager</a> in the <i>Amazon Aurora User Guide.</i> </p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p> <p>Constraints:</p> <ul> <li> <p>Can't manage the master user password with Amazon Web Services Secrets Manager if <code>MasterUserPassword</code> is specified.</p> </li> </ul>",
         "CreateDBClusterMessage$EnableLocalWriteForwarding": "<p>Specifies whether read replicas can forward write operations to the writer DB instance in the DB cluster. By default, write operations aren't allowed on reader DB instances.</p> <p>Valid for: Aurora DB clusters only</p>",
         "CreateDBInstanceMessage$MultiAZ": "<p>Specifies whether the DB instance is a Multi-AZ deployment. You can't set the <code>AvailabilityZone</code> parameter if the DB instance is a Multi-AZ deployment.</p> <p>This setting doesn't apply to the following DB instances:</p> <ul> <li> <p>Amazon Aurora (DB instance Availability Zones (AZs) are managed by the DB cluster.)</p> </li> <li> <p>RDS Custom</p> </li> </ul>",
@@ -586,13 +598,14 @@
         "CreateDBInstanceReadReplicaMessage$EnableCustomerOwnedIp": "<p>Specifies whether to enable a customer-owned IP address (CoIP) for an RDS on Outposts read replica.</p> <p>A <i>CoIP</i> provides local or external connectivity to resources in your Outpost subnets through your on-premises network. For some use cases, a CoIP can provide lower latency for connections to the read replica from outside of its virtual private cloud (VPC) on your local network.</p> <p>For more information about RDS on Outposts, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-on-outposts.html\">Working with Amazon RDS on Amazon Web Services Outposts</a> in the <i>Amazon RDS User Guide</i>.</p> <p>For more information about CoIPs, see <a href=\"https://docs.aws.amazon.com/outposts/latest/userguide/routing.html#ip-addressing\">Customer-owned IP addresses</a> in the <i>Amazon Web Services Outposts User Guide</i>.</p>",
         "CreateDBInstanceReadReplicaMessage$DedicatedLogVolume": "<p>Indicates whether the DB instance has a dedicated log volume (DLV) enabled.</p>",
         "CreateDBInstanceReadReplicaMessage$UpgradeStorageConfig": "<p>Whether to upgrade the storage file system configuration on the read replica. This option migrates the read replica from the old storage file system layout to the preferred layout.</p>",
+        "CreateDBShardGroupMessage$PubliclyAccessible": "<p>Specifies whether the DB shard group is publicly accessible.</p> <p>When the DB shard group is publicly accessible, its Domain Name System (DNS) endpoint resolves to the private IP address from within the DB shard group's virtual private cloud (VPC). It resolves to the public IP address from outside of the DB shard group's VPC. Access to the DB shard group is ultimately controlled by the security group it uses. That public access is not permitted if the security group assigned to the DB shard group doesn't permit it.</p> <p>When the DB shard group isn't publicly accessible, it is an internal DB shard group with a DNS name that resolves to a private IP address.</p> <p>Default: The default behavior varies depending on whether <code>DBSubnetGroupName</code> is specified.</p> <p>If <code>DBSubnetGroupName</code> isn't specified, and <code>PubliclyAccessible</code> isn't specified, the following applies:</p> <ul> <li> <p>If the default VPC in the target Region doesn’t have an internet gateway attached to it, the DB shard group is private.</p> </li> <li> <p>If the default VPC in the target Region has an internet gateway attached to it, the DB shard group is public.</p> </li> </ul> <p>If <code>DBSubnetGroupName</code> is specified, and <code>PubliclyAccessible</code> isn't specified, the following applies:</p> <ul> <li> <p>If the subnets are part of a VPC that doesn’t have an internet gateway attached to it, the DB shard group is private.</p> </li> <li> <p>If the subnets are part of a VPC that has an internet gateway attached to it, the DB shard group is public.</p> </li> </ul>",
         "CreateEventSubscriptionMessage$Enabled": "<p>Specifies whether to activate the subscription. If the event notification subscription isn't activated, the subscription is created but not active.</p>",
         "CreateGlobalClusterMessage$DeletionProtection": "<p>Specifies whether to enable deletion protection for the new global database cluster. The global database can't be deleted when deletion protection is enabled.</p>",
         "CreateGlobalClusterMessage$StorageEncrypted": "<p>Specifies whether to enable storage encryption for the new global database cluster.</p> <p>Constraints:</p> <ul> <li> <p>Can't be specified if <code>SourceDBClusterIdentifier</code> is specified. In this case, Amazon Aurora uses the setting from the source DB cluster.</p> </li> </ul>",
         "DBCluster$MultiAZ": "<p>Indicates whether the DB cluster has instances in multiple Availability Zones.</p>",
         "DBCluster$IAMDatabaseAuthenticationEnabled": "<p>Indicates whether the mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled.</p>",
         "DBCluster$DeletionProtection": "<p>Indicates whether the DB cluster has deletion protection enabled. The database can't be deleted when deletion protection is enabled.</p>",
-        "DBCluster$HttpEndpointEnabled": "<p>Indicates whether the HTTP endpoint for an Aurora Serverless v1 DB cluster is enabled.</p> <p>When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the Aurora Serverless v1 DB cluster. You can also query your database from inside the RDS console with the query editor.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using the Data API for Aurora Serverless v1</a> in the <i>Amazon Aurora User Guide</i>.</p>",
+        "DBCluster$HttpEndpointEnabled": "<p>Indicates whether the HTTP endpoint is enabled for an Aurora DB cluster.</p> <p>When enabled, the HTTP endpoint provides a connectionless web service API (RDS Data API) for running SQL queries on the DB cluster. You can also query your database from inside the RDS console with the RDS query editor.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using RDS Data API</a> in the <i>Amazon Aurora User Guide</i>.</p>",
         "DBCluster$CopyTagsToSnapshot": "<p>Indicates whether tags are copied from the DB cluster to snapshots of the DB cluster.</p>",
         "DBCluster$CrossAccountClone": "<p>Indicates whether the DB cluster is a clone of a DB cluster owned by a different Amazon Web Services account.</p>",
         "DBCluster$GlobalWriteForwardingRequested": "<p>Indicates whether write forwarding is enabled for a secondary cluster in an Aurora global database. Because write forwarding takes time to enable, check the value of <code>GlobalWriteForwardingStatus</code> to confirm that the request has completed before using the write forwarding feature for this cluster.</p>",
@@ -607,6 +620,7 @@
         "DBInstance$MultiTenant": "<p>Specifies whether the DB instance is in the multi-tenant configuration (TRUE) or the single-tenant configuration (FALSE).</p>",
         "DBInstanceAutomatedBackup$DedicatedLogVolume": "<p>Indicates whether the DB instance has a dedicated log volume (DLV) enabled.</p>",
         "DBInstanceAutomatedBackup$MultiTenant": "<p>Specifies whether the automatic backup is for a DB instance in the multi-tenant configuration (TRUE) or the single-tenant configuration (FALSE). </p>",
+        "DBShardGroup$PubliclyAccessible": "<p>Indicates whether the DB shard group is publicly accessible.</p> <p>When the DB shard group is publicly accessible, its Domain Name System (DNS) endpoint resolves to the private IP address from within the DB shard group's virtual private cloud (VPC). It resolves to the public IP address from outside of the DB shard group's VPC. Access to the DB shard group is ultimately controlled by the security group it uses. That public access isn't permitted if the security group assigned to the DB shard group doesn't permit it.</p> <p>When the DB shard group isn't publicly accessible, it is an internal DB shard group with a DNS name that resolves to a private IP address.</p> <p>For more information, see <a>CreateDBShardGroup</a>.</p> <p>This setting is only for Aurora Limitless Database.</p>",
         "DBSnapshot$MultiTenant": "<p>Indicates whether the snapshot is of a DB instance using the multi-tenant configuration (TRUE) or the single-tenant configuration (FALSE).</p>",
         "DeleteBlueGreenDeploymentRequest$DeleteTarget": "<p>Specifies whether to delete the resources in the green environment. You can't specify this option if the blue/green deployment <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_BlueGreenDeployment.html\">status</a> is <code>SWITCHOVER_COMPLETED</code>.</p>",
         "DeleteDBClusterMessage$DeleteAutomatedBackups": "<p>Specifies whether to remove automated backups immediately after the DB cluster is deleted. This parameter isn't case-sensitive. The default is to remove automated backups immediately after the DB cluster is deleted.</p>",
@@ -625,7 +639,7 @@
         "ModifyCertificatesMessage$RemoveCustomerOverride": "<p>Specifies whether to remove the override for the default certificate. If the override is removed, the default certificate is the system default.</p>",
         "ModifyDBClusterMessage$EnableIAMDatabaseAuthentication": "<p>Specifies whether to enable mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts. By default, mapping isn't enabled.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html\"> IAM Database Authentication</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>Valid for Cluster Type: Aurora DB clusters only</p>",
         "ModifyDBClusterMessage$DeletionProtection": "<p>Specifies whether the DB cluster has deletion protection enabled. The database can't be deleted when deletion protection is enabled. By default, deletion protection isn't enabled.</p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p>",
-        "ModifyDBClusterMessage$EnableHttpEndpoint": "<p>Specifies whether to enable the HTTP endpoint for an Aurora Serverless v1 DB cluster. By default, the HTTP endpoint is disabled.</p> <p>When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the Aurora Serverless v1 DB cluster. You can also query your database from inside the RDS console with the query editor.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using the Data API for Aurora Serverless v1</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>Valid for Cluster Type: Aurora DB clusters only</p>",
+        "ModifyDBClusterMessage$EnableHttpEndpoint": "<p>Specifies whether to enable the HTTP endpoint for an Aurora Serverless v1 DB cluster. By default, the HTTP endpoint isn't enabled.</p> <p>When enabled, the HTTP endpoint provides a connectionless web service API (RDS Data API) for running SQL queries on the Aurora Serverless v1 DB cluster. You can also query your database from inside the RDS console with the RDS query editor.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using RDS Data API</a> in the <i>Amazon Aurora User Guide</i>.</p> <note> <p>This parameter applies only to Aurora Serverless v1 DB clusters. To enable or disable the HTTP endpoint for an Aurora PostgreSQL Serverless v2 or provisioned DB cluster, use the <code>EnableHttpEndpoint</code> and <code>DisableHttpEndpoint</code> operations.</p> </note> <p>Valid for Cluster Type: Aurora DB clusters only</p>",
         "ModifyDBClusterMessage$CopyTagsToSnapshot": "<p>Specifies whether to copy all tags from the DB cluster to snapshots of the DB cluster. The default is not to copy them.</p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p>",
         "ModifyDBClusterMessage$EnableGlobalWriteForwarding": "<p>Specifies whether to enable this DB cluster to forward write operations to the primary cluster of a global cluster (Aurora global database). By default, write operations are not allowed on Aurora DB clusters that are secondary clusters in an Aurora global database.</p> <p>You can set this value only on Aurora DB clusters that are members of an Aurora global database. With this parameter enabled, a secondary cluster can forward writes to the current primary cluster, and the resulting changes are replicated back to this cluster. For the primary DB cluster of an Aurora global database, this value is used immediately if the primary is demoted by a global cluster API operation, but it does nothing until then.</p> <p>Valid for Cluster Type: Aurora DB clusters only</p>",
         "ModifyDBClusterMessage$AutoMinorVersionUpgrade": "<p>Specifies whether minor engine upgrades are applied automatically to the DB cluster during the maintenance window. By default, minor engine upgrades are applied automatically.</p> <p>Valid for Cluster Type: Multi-AZ DB clusters only</p>",
@@ -633,6 +647,7 @@
         "ModifyDBClusterMessage$ManageMasterUserPassword": "<p>Specifies whether to manage the master user password with Amazon Web Services Secrets Manager.</p> <p>If the DB cluster doesn't manage the master user password with Amazon Web Services Secrets Manager, you can turn on this management. In this case, you can't specify <code>MasterUserPassword</code>.</p> <p>If the DB cluster already manages the master user password with Amazon Web Services Secrets Manager, and you specify that the master user password is not managed with Amazon Web Services Secrets Manager, then you must specify <code>MasterUserPassword</code>. In this case, RDS deletes the secret and uses the new password for the master user specified by <code>MasterUserPassword</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html\">Password management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS User Guide</i> and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-secrets-manager.html\">Password management with Amazon Web Services Secrets Manager</a> in the <i>Amazon Aurora User Guide.</i> </p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p>",
         "ModifyDBClusterMessage$RotateMasterUserPassword": "<p>Specifies whether to rotate the secret managed by Amazon Web Services Secrets Manager for the master user password.</p> <p>This setting is valid only if the master user password is managed by RDS in Amazon Web Services Secrets Manager for the DB cluster. The secret value contains the updated password.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html\">Password management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS User Guide</i> and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-secrets-manager.html\">Password management with Amazon Web Services Secrets Manager</a> in the <i>Amazon Aurora User Guide.</i> </p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p> <p>Constraints:</p> <ul> <li> <p>You must apply the change immediately when rotating the master user password.</p> </li> </ul>",
         "ModifyDBClusterMessage$EnableLocalWriteForwarding": "<p>Specifies whether read replicas can forward write operations to the writer DB instance in the DB cluster. By default, write operations aren't allowed on reader DB instances.</p> <p>Valid for: Aurora DB clusters only</p>",
+        "ModifyDBClusterMessage$EnableLimitlessDatabase": "<p>Specifies whether to enable Aurora Limitless Database. You must enable Aurora Limitless Database to create a DB shard group.</p> <p>Valid for: Aurora DB clusters only</p>",
         "ModifyDBInstanceMessage$MultiAZ": "<p>Specifies whether the DB instance is a Multi-AZ deployment. Changing this parameter doesn't result in an outage. The change is applied during the next maintenance window unless the <code>ApplyImmediately</code> parameter is enabled for this request.</p> <p>This setting doesn't apply to RDS Custom DB instances.</p>",
         "ModifyDBInstanceMessage$AutoMinorVersionUpgrade": "<p>Specifies whether minor version upgrades are applied automatically to the DB instance during the maintenance window. An outage occurs when all the following conditions are met:</p> <ul> <li> <p>The automatic upgrade is enabled for the maintenance window.</p> </li> <li> <p>A newer minor version is available.</p> </li> <li> <p>RDS has enabled automatic patching for the engine version.</p> </li> </ul> <p>If any of the preceding conditions isn't met, Amazon RDS applies the change as soon as possible and doesn't cause an outage.</p> <p>For an RDS Custom DB instance, don't enable this setting. Otherwise, the operation returns an error.</p>",
         "ModifyDBInstanceMessage$CopyTagsToSnapshot": "<p>Specifies whether to copy all tags from the DB instance to snapshots of the DB instance. By default, tags aren't copied.</p> <p>This setting doesn't apply to Amazon Aurora DB instances. Copying tags to snapshots is managed by the DB cluster. Setting this value for an Aurora DB instance has no effect on the DB cluster setting. For more information, see <code>ModifyDBCluster</code>.</p>",
@@ -802,6 +817,18 @@
         "DBProxyTargetGroup$ConnectionPoolConfig": "<p>The settings that determine the size and behavior of the connection pool for the target group.</p>"
       }
     },
+    "ContextAttribute": {
+      "base": "<p>The additional attributes of <code>RecommendedAction</code> data type.</p>",
+      "refs": {
+        "ContextAttributeList$member": null
+      }
+    },
+    "ContextAttributeList": {
+      "base": null,
+      "refs": {
+        "RecommendedAction$ContextAttributes": "<p>The supporting attributes to explain the recommended action.</p>"
+      }
+    },
     "CopyDBClusterParameterGroupMessage": {
       "base": null,
       "refs": {
@@ -963,6 +990,11 @@
       }
     },
     "CreateDBSecurityGroupResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDBShardGroupMessage": {
       "base": null,
       "refs": {
       }
@@ -1693,6 +1725,29 @@
       "refs": {
       }
     },
+    "DBRecommendation": {
+      "base": "<p>The recommendation for your DB instances, DB clusters, and DB parameter groups.</p>",
+      "refs": {
+        "DBRecommendationList$member": null,
+        "DBRecommendationMessage$DBRecommendation": null
+      }
+    },
+    "DBRecommendationList": {
+      "base": null,
+      "refs": {
+        "DBRecommendationsMessage$DBRecommendations": "<p>A list of recommendations which is returned from <code>DescribeDBRecommendations</code> API request.</p>"
+      }
+    },
+    "DBRecommendationMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DBRecommendationsMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DBSecurityGroup": {
       "base": "<p>Contains the details for an Amazon RDS DB security group.</p> <p>This data type is used as a response element in the <code>DescribeDBSecurityGroups</code> action.</p>",
       "refs": {
@@ -1753,6 +1808,28 @@
       "base": null,
       "refs": {
         "DBSecurityGroupMessage$DBSecurityGroups": "<p>A list of <code>DBSecurityGroup</code> instances.</p>"
+      }
+    },
+    "DBShardGroup": {
+      "base": null,
+      "refs": {
+        "DBShardGroupsList$member": null
+      }
+    },
+    "DBShardGroupAlreadyExistsFault": {
+      "base": "<p>The specified DB shard group name must be unique in your Amazon Web Services account in the specified Amazon Web Services Region.</p>",
+      "refs": {
+      }
+    },
+    "DBShardGroupNotFoundFault": {
+      "base": "<p>The specified DB shard group name wasn't found.</p>",
+      "refs": {
+      }
+    },
+    "DBShardGroupsList": {
+      "base": null,
+      "refs": {
+        "DescribeDBShardGroupsResponse$DBShardGroups": "<p>Contains a list of DB shard groups for the user.</p>"
       }
     },
     "DBSnapshot": {
@@ -1997,6 +2074,11 @@
       "refs": {
       }
     },
+    "DeleteDBShardGroupMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteDBSnapshotMessage": {
       "base": "<p/>",
       "refs": {
@@ -2214,8 +2296,23 @@
       "refs": {
       }
     },
+    "DescribeDBRecommendationsMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeDBSecurityGroupsMessage": {
       "base": "<p/>",
+      "refs": {
+      }
+    },
+    "DescribeDBShardGroupsMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeDBShardGroupsResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -2356,6 +2453,28 @@
         "ModifyCustomDBEngineVersionMessage$Description": "<p>An optional description of your CEV.</p>"
       }
     },
+    "DisableHttpEndpointRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisableHttpEndpointResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DocLink": {
+      "base": "<p>A link to documentation that provides additional information for a recommendation.</p>",
+      "refs": {
+        "DocLinkList$member": null
+      }
+    },
+    "DocLinkList": {
+      "base": null,
+      "refs": {
+        "DBRecommendation$Links": "<p>A link to documentation that provides additional information about the recommendation.</p>"
+      }
+    },
     "DomainMembership": {
       "base": "<p>An Active Directory Domain membership record associated with the DB instance or cluster.</p>",
       "refs": {
@@ -2383,12 +2502,17 @@
         "ReservedDBInstance$FixedPrice": "<p>The fixed price charged for this reserved DB instance.</p>",
         "ReservedDBInstance$UsagePrice": "<p>The hourly price charged for this reserved DB instance.</p>",
         "ReservedDBInstancesOffering$FixedPrice": "<p>The fixed price charged for this offering.</p>",
-        "ReservedDBInstancesOffering$UsagePrice": "<p>The hourly price charged for this offering.</p>"
+        "ReservedDBInstancesOffering$UsagePrice": "<p>The hourly price charged for this offering.</p>",
+        "ScalarReferenceDetails$Value": "<p>The value of a scalar reference.</p>"
       }
     },
     "DoubleOptional": {
       "base": null,
       "refs": {
+        "CreateDBShardGroupMessage$MaxACU": "<p>The maximum capacity of the DB shard group in Aurora capacity units (ACUs).</p>",
+        "DBShardGroup$MaxACU": "<p>The maximum capacity of the DB shard group in Aurora capacity units (ACUs).</p>",
+        "LimitlessDatabase$MinRequiredACU": "<p>The minimum required capacity for Aurora Limitless Database in Aurora capacity units (ACUs).</p>",
+        "ModifyDBShardGroupMessage$MaxACU": "<p>The maximum capacity of the DB shard group in Aurora capacity units (ACUs).</p>",
         "OrderableDBInstanceOption$MinIopsPerGib": "<p>Minimum provisioned IOPS per GiB for a DB instance.</p>",
         "OrderableDBInstanceOption$MaxIopsPerGib": "<p>Maximum provisioned IOPS per GiB for a DB instance.</p>",
         "OrderableDBInstanceOption$MinStorageThroughputPerIops": "<p>Minimum storage throughput to provisioned IOPS ratio for a DB instance.</p>",
@@ -2436,6 +2560,16 @@
     },
     "Ec2ImagePropertiesNotSupportedFault": {
       "base": "<p>The AMI configuration prerequisite has not been met.</p>",
+      "refs": {
+      }
+    },
+    "EnableHttpEndpointRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EnableHttpEndpointResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -2620,7 +2754,7 @@
       }
     },
     "Filter": {
-      "base": "<p>A filter name and value pair that is used to return a more specific list of results from a describe operation. Filters can be used to match a set of resources by specific criteria, such as IDs. The filters supported by a describe operation are documented with the describe operation.</p> <note> <p>Currently, wildcards are not supported in filters.</p> </note> <p>The following actions can be filtered:</p> <ul> <li> <p> <code>DescribeDBClusterBacktracks</code> </p> </li> <li> <p> <code>DescribeDBClusterEndpoints</code> </p> </li> <li> <p> <code>DescribeDBClusters</code> </p> </li> <li> <p> <code>DescribeDBInstances</code> </p> </li> <li> <p> <code>DescribePendingMaintenanceActions</code> </p> </li> </ul>",
+      "base": "<p>A filter name and value pair that is used to return a more specific list of results from a describe operation. Filters can be used to match a set of resources by specific criteria, such as IDs. The filters supported by a describe operation are documented with the describe operation.</p> <note> <p>Currently, wildcards are not supported in filters.</p> </note> <p>The following actions can be filtered:</p> <ul> <li> <p> <code>DescribeDBClusterBacktracks</code> </p> </li> <li> <p> <code>DescribeDBClusterEndpoints</code> </p> </li> <li> <p> <code>DescribeDBClusters</code> </p> </li> <li> <p> <code>DescribeDBInstances</code> </p> </li> <li> <p> <code>DescribeDBRecommendations</code> </p> </li> <li> <p> <code>DescribePendingMaintenanceActions</code> </p> </li> </ul>",
       "refs": {
         "FilterList$member": null
       }
@@ -2647,7 +2781,9 @@
         "DescribeDBProxyEndpointsRequest$Filters": "<p>This parameter is not currently supported.</p>",
         "DescribeDBProxyTargetGroupsRequest$Filters": "<p>This parameter is not currently supported.</p>",
         "DescribeDBProxyTargetsRequest$Filters": "<p>This parameter is not currently supported.</p>",
+        "DescribeDBRecommendationsMessage$Filters": "<p>A filter that specifies one or more recommendations to describe.</p> <p>Supported Filters:</p> <ul> <li> <p> <code>recommendation-id</code> - Accepts a list of recommendation identifiers. The results list only includes the recommendations whose identifier is one of the specified filter values.</p> </li> <li> <p> <code>status</code> - Accepts a list of recommendation statuses.</p> <p>Valid values:</p> <ul> <li> <p> <code>active</code> - The recommendations which are ready for you to apply.</p> </li> <li> <p> <code>pending</code> - The applied or scheduled recommendations which are in progress.</p> </li> <li> <p> <code>resolved</code> - The recommendations which are completed.</p> </li> <li> <p> <code>dismissed</code> - The recommendations that you dismissed.</p> </li> </ul> <p>The results list only includes the recommendations whose status is one of the specified filter values.</p> </li> <li> <p> <code>severity</code> - Accepts a list of recommendation severities. The results list only includes the recommendations whose severity is one of the specified filter values.</p> <p>Valid values:</p> <ul> <li> <p> <code>high</code> </p> </li> <li> <p> <code>medium</code> </p> </li> <li> <p> <code>low</code> </p> </li> <li> <p> <code>informational</code> </p> </li> </ul> </li> <li> <p> <code>type-id</code> - Accepts a list of recommendation type identifiers. The results list only includes the recommendations whose type is one of the specified filter values.</p> </li> <li> <p> <code>dbi-resource-id</code> - Accepts a list of database resource identifiers. The results list only includes the recommendations that generated for the specified databases.</p> </li> <li> <p> <code>cluster-resource-id</code> - Accepts a list of cluster resource identifiers. The results list only includes the recommendations that generated for the specified clusters.</p> </li> <li> <p> <code>pg-arn</code> - Accepts a list of parameter group ARNs. The results list only includes the recommendations that generated for the specified parameter groups.</p> </li> <li> <p> <code>cluster-pg-arn</code> - Accepts a list of cluster parameter group ARNs. The results list only includes the recommendations that generated for the specified cluster parameter groups.</p> </li> </ul>",
         "DescribeDBSecurityGroupsMessage$Filters": "<p>This parameter isn't currently supported.</p>",
+        "DescribeDBShardGroupsMessage$Filters": "<p>A filter that specifies one or more DB shard groups to describe.</p>",
         "DescribeDBSnapshotTenantDatabasesMessage$Filters": "<p>A filter that specifies one or more tenant databases to describe.</p> <p>Supported filters:</p> <ul> <li> <p> <code>tenant-db-name</code> - Tenant database names. The results list only includes information about the tenant databases that match these tenant DB names.</p> </li> <li> <p> <code>tenant-database-resource-id</code> - Tenant database resource identifiers. The results list only includes information about the tenant databases contained within the DB snapshots.</p> </li> <li> <p> <code>dbi-resource-id</code> - DB instance resource identifiers. The results list only includes information about snapshots containing tenant databases contained within the DB instances identified by these resource identifiers.</p> </li> <li> <p> <code>db-instance-id</code> - Accepts DB instance identifiers and DB instance Amazon Resource Names (ARNs).</p> </li> <li> <p> <code>db-snapshot-id</code> - Accepts DB snapshot identifiers.</p> </li> <li> <p> <code>snapshot-type</code> - Accepts types of DB snapshots.</p> </li> </ul>",
         "DescribeDBSnapshotsMessage$Filters": "<p>A filter that specifies one or more DB snapshots to describe.</p> <p>Supported filters:</p> <ul> <li> <p> <code>db-instance-id</code> - Accepts DB instance identifiers and DB instance Amazon Resource Names (ARNs).</p> </li> <li> <p> <code>db-snapshot-id</code> - Accepts DB snapshot identifiers.</p> </li> <li> <p> <code>dbi-resource-id</code> - Accepts identifiers of source DB instances.</p> </li> <li> <p> <code>snapshot-type</code> - Accepts types of DB snapshots.</p> </li> <li> <p> <code>engine</code> - Accepts names of database engines.</p> </li> </ul>",
         "DescribeDBSubnetGroupsMessage$Filters": "<p>This parameter isn't currently supported.</p>",
@@ -2818,6 +2954,7 @@
         "Endpoint$Port": "<p>Specifies the port that the database engine is listening on.</p>",
         "ExportTask$PercentProgress": "<p>The progress of the snapshot or cluster export task as a percentage.</p>",
         "ExportTask$TotalExtractedDataInGB": "<p>The total amount of data exported, in gigabytes.</p>",
+        "PerformanceInsightsMetricDimensionGroup$Limit": "<p>The maximum number of items to fetch for this dimension group.</p>",
         "Range$From": "<p>The minimum value in the range.</p>",
         "Range$To": "<p>The maximum value in the range.</p>",
         "ReservedDBInstance$Duration": "<p>The duration of the reservation in seconds.</p>",
@@ -2840,7 +2977,7 @@
         "CreateDBClusterMessage$Iops": "<p>The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for each DB instance in the Multi-AZ DB cluster.</p> <p>For information about valid IOPS values, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS\">Provisioned IOPS storage</a> in the <i>Amazon RDS User Guide</i>.</p> <p>This setting is required to create a Multi-AZ DB cluster.</p> <p>Valid for Cluster Type: Multi-AZ DB clusters only</p> <p>Constraints:</p> <ul> <li> <p>Must be a multiple between .5 and 50 of the storage amount for the DB cluster.</p> </li> </ul>",
         "CreateDBClusterMessage$MonitoringInterval": "<p>The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB cluster. To turn off collecting Enhanced Monitoring metrics, specify <code>0</code>.</p> <p>If <code>MonitoringRoleArn</code> is specified, also set <code>MonitoringInterval</code> to a value other than <code>0</code>.</p> <p>Valid for Cluster Type: Multi-AZ DB clusters only</p> <p>Valid Values: <code>0 | 1 | 5 | 10 | 15 | 30 | 60</code> </p> <p>Default: <code>0</code> </p>",
         "CreateDBClusterMessage$PerformanceInsightsRetentionPeriod": "<p>The number of days to retain Performance Insights data.</p> <p>Valid for Cluster Type: Multi-AZ DB clusters only</p> <p>Valid Values:</p> <ul> <li> <p> <code>7</code> </p> </li> <li> <p> <i>month</i> * 31, where <i>month</i> is a number of months from 1-23. Examples: <code>93</code> (3 months * 31), <code>341</code> (11 months * 31), <code>589</code> (19 months * 31)</p> </li> <li> <p> <code>731</code> </p> </li> </ul> <p>Default: <code>7</code> days</p> <p>If you specify a retention period that isn't valid, such as <code>94</code>, Amazon RDS issues an error.</p>",
-        "CreateDBInstanceMessage$AllocatedStorage": "<p>The amount of storage in gibibytes (GiB) to allocate for the DB instance.</p> <p>This setting doesn't apply to Amazon Aurora DB instances. Aurora cluster volumes automatically grow as the amount of data in your database increases, though you are only charged for the space that you use in an Aurora cluster volume.</p> <dl> <dt>Amazon RDS Custom</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 40 to 65536 for RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 40 to 65536 for RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> </ul> </dd> <dt>RDS for Db2</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 20 to 64000.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 100 to 64000.</p> </li> </ul> </dd> <dt>RDS for MariaDB</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> </dd> <dt>RDS for MySQL</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> </dd> <dt>RDS for Oracle</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard): Must be an integer from 10 to 3072.</p> </li> </ul> </dd> <dt>RDS for PostgreSQL</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> </dd> <dt>RDS for SQL Server</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3):</p> <ul> <li> <p>Enterprise and Standard editions: Must be an integer from 20 to 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from 20 to 16384.</p> </li> </ul> </li> <li> <p>Provisioned IOPS storage (io1):</p> <ul> <li> <p>Enterprise and Standard editions: Must be an integer from 100 to 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from 100 to 16384.</p> </li> </ul> </li> <li> <p>Magnetic storage (standard):</p> <ul> <li> <p>Enterprise and Standard editions: Must be an integer from 20 to 1024.</p> </li> <li> <p>Web and Express editions: Must be an integer from 20 to 1024.</p> </li> </ul> </li> </ul> </dd> </dl>",
+        "CreateDBInstanceMessage$AllocatedStorage": "<p>The amount of storage in gibibytes (GiB) to allocate for the DB instance.</p> <p>This setting doesn't apply to Amazon Aurora DB instances. Aurora cluster volumes automatically grow as the amount of data in your database increases, though you are only charged for the space that you use in an Aurora cluster volume.</p> <dl> <dt>Amazon RDS Custom</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 40 to 65536 for RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 40 to 65536 for RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> </ul> </dd> <dt>RDS for Db2</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp3): Must be an integer from 20 to 64000.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 100 to 64000.</p> </li> </ul> </dd> <dt>RDS for MariaDB</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> </dd> <dt>RDS for MySQL</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> </dd> <dt>RDS for Oracle</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard): Must be an integer from 10 to 3072.</p> </li> </ul> </dd> <dt>RDS for PostgreSQL</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> </dd> <dt>RDS for SQL Server</dt> <dd> <p>Constraints to the amount of storage for each storage type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3):</p> <ul> <li> <p>Enterprise and Standard editions: Must be an integer from 20 to 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from 20 to 16384.</p> </li> </ul> </li> <li> <p>Provisioned IOPS storage (io1):</p> <ul> <li> <p>Enterprise and Standard editions: Must be an integer from 100 to 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from 100 to 16384.</p> </li> </ul> </li> <li> <p>Magnetic storage (standard):</p> <ul> <li> <p>Enterprise and Standard editions: Must be an integer from 20 to 1024.</p> </li> <li> <p>Web and Express editions: Must be an integer from 20 to 1024.</p> </li> </ul> </li> </ul> </dd> </dl>",
         "CreateDBInstanceMessage$BackupRetentionPeriod": "<p>The number of days for which automated backups are retained. Setting this parameter to a positive number enables backups. Setting this parameter to <code>0</code> disables automated backups.</p> <p>This setting doesn't apply to Amazon Aurora DB instances. The retention period for automated backups is managed by the DB cluster.</p> <p>Default: <code>1</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be a value from 0 to 35.</p> </li> <li> <p>Can't be set to 0 if the DB instance is a source to read replicas.</p> </li> <li> <p>Can't be set to 0 for an RDS Custom for Oracle DB instance.</p> </li> </ul>",
         "CreateDBInstanceMessage$Port": "<p>The port number on which the database accepts connections.</p> <p>This setting doesn't apply to Aurora DB instances. The port number is managed by the cluster.</p> <p>Valid Values: <code>1150-65535</code> </p> <p>Default:</p> <ul> <li> <p>RDS for Db2 - <code>50000</code> </p> </li> <li> <p>RDS for MariaDB - <code>3306</code> </p> </li> <li> <p>RDS for Microsoft SQL Server - <code>1433</code> </p> </li> <li> <p>RDS for MySQL - <code>3306</code> </p> </li> <li> <p>RDS for Oracle - <code>1521</code> </p> </li> <li> <p>RDS for PostgreSQL - <code>5432</code> </p> </li> </ul> <p>Constraints:</p> <ul> <li> <p>For RDS for Microsoft SQL Server, the value can't be <code>1234</code>, <code>1434</code>, <code>3260</code>, <code>3343</code>, <code>3389</code>, <code>47001</code>, or <code>49152-49156</code>.</p> </li> </ul>",
         "CreateDBInstanceMessage$Iops": "<p>The amount of Provisioned IOPS (input/output operations per second) to initially allocate for the DB instance. For information about valid IOPS values, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html\">Amazon RDS DB instance storage</a> in the <i>Amazon RDS User Guide</i>.</p> <p>This setting doesn't apply to Amazon Aurora DB instances. Storage is managed by the DB cluster.</p> <p>Constraints:</p> <ul> <li> <p>For RDS for Db2, MariaDB, MySQL, Oracle, and PostgreSQL - Must be a multiple between .5 and 50 of the storage amount for the DB instance.</p> </li> <li> <p>For RDS for SQL Server - Must be a multiple between 1 and 50 of the storage amount for the DB instance.</p> </li> </ul>",
@@ -2857,6 +2994,7 @@
         "CreateDBInstanceReadReplicaMessage$StorageThroughput": "<p>Specifies the storage throughput value for the read replica.</p> <p>This setting doesn't apply to RDS Custom or Amazon Aurora DB instances.</p>",
         "CreateDBInstanceReadReplicaMessage$AllocatedStorage": "<p>The amount of storage (in gibibytes) to allocate initially for the read replica. Follow the allocation rules specified in <code>CreateDBInstance</code>.</p> <note> <p>Be sure to allocate enough storage for your read replica so that the create operation can succeed. You can also allocate additional storage for future growth.</p> </note>",
         "CreateDBProxyRequest$IdleClientTimeout": "<p>The number of seconds that a connection to the proxy can be inactive before the proxy disconnects it. You can set this value higher or lower than the connection timeout limit for the associated database.</p>",
+        "CreateDBShardGroupMessage$ComputeRedundancy": "<p>Specifies whether to create standby instances for the DB shard group. Valid values are the following:</p> <ul> <li> <p>0 - Creates a single, primary DB instance for each physical shard. This is the default value, and the only one supported for the preview.</p> </li> <li> <p>1 - Creates a primary DB instance and a standby instance in a different Availability Zone (AZ) for each physical shard.</p> </li> <li> <p>2 - Creates a primary DB instance and two standby instances in different AZs for each physical shard.</p> </li> </ul>",
         "DBCluster$AllocatedStorage": "<p>For all database engines except Amazon Aurora, <code>AllocatedStorage</code> specifies the allocated storage size in gibibytes (GiB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora DB cluster storage size isn't fixed, but instead automatically adjusts as needed.</p>",
         "DBCluster$BackupRetentionPeriod": "<p>The number of days for which automatic DB snapshots are retained.</p>",
         "DBCluster$Port": "<p>The port that the database engine is listening on.</p>",
@@ -2879,6 +3017,7 @@
         "DBInstanceAutomatedBackup$Iops": "<p>The IOPS (I/O operations per second) value for the automated backup.</p>",
         "DBInstanceAutomatedBackup$BackupRetentionPeriod": "<p>The retention period for the automated backups.</p>",
         "DBInstanceAutomatedBackup$StorageThroughput": "<p>The storage throughput for the automated backup.</p>",
+        "DBShardGroup$ComputeRedundancy": "<p>Specifies whether to create standby instances for the DB shard group. Valid values are the following:</p> <ul> <li> <p>0 - Creates a single, primary DB instance for each physical shard. This is the default value, and the only one supported for the preview.</p> </li> <li> <p>1 - Creates a primary DB instance and a standby instance in a different Availability Zone (AZ) for each physical shard.</p> </li> <li> <p>2 - Creates a primary DB instance and two standby instances in different AZs for each physical shard.</p> </li> </ul>",
         "DBSnapshot$Iops": "<p>Specifies the Provisioned IOPS (I/O operations per second) value of the DB instance at the time of the snapshot.</p>",
         "DBSnapshot$StorageThroughput": "<p>Specifies the storage throughput for the DB snapshot.</p>",
         "DescribeCertificatesMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
@@ -2888,13 +3027,14 @@
         "DescribeDBClusterParameterGroupsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeDBClusterParametersMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeDBClusterSnapshotsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
-        "DescribeDBClustersMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
+        "DescribeDBClustersMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100</p>",
         "DescribeDBEngineVersionsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more than the <code>MaxRecords</code> value is available, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeDBInstanceAutomatedBackupsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p>",
         "DescribeDBInstancesMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeDBLogFilesMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p>",
         "DescribeDBParameterGroupsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeDBParametersMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
+        "DescribeDBRecommendationsMessage$MaxRecords": "<p>The maximum number of recommendations to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p>",
         "DescribeDBSecurityGroupsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeDBSnapshotTenantDatabasesMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p>",
         "DescribeDBSnapshotsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
@@ -3119,6 +3259,11 @@
       "refs": {
       }
     },
+    "InvalidDBShardGroupStateFault": {
+      "base": "<p>The DB shard group must be in the available state.</p>",
+      "refs": {
+      }
+    },
     "InvalidDBSnapshotStateFault": {
       "base": "<p>The state of the DB snapshot doesn't allow deletion.</p>",
       "refs": {
@@ -3169,8 +3314,18 @@
       "refs": {
       }
     },
+    "InvalidMaxAcuFault": {
+      "base": "<p>The maximum capacity of the DB shard group must be 48-7168 Aurora capacity units (ACUs).</p>",
+      "refs": {
+      }
+    },
     "InvalidOptionGroupStateFault": {
       "base": "<p>The option group isn't in the <i>available</i> state.</p>",
+      "refs": {
+      }
+    },
+    "InvalidResourceStateFault": {
+      "base": "<p>The operation can't be performed because another operation is in progress.</p>",
       "refs": {
       }
     },
@@ -3194,6 +3349,13 @@
       "refs": {
       }
     },
+    "IssueDetails": {
+      "base": "<p>The details of an issue with your DB instances, DB clusters, and DB parameter groups.</p>",
+      "refs": {
+        "DBRecommendation$IssueDetails": "<p>Details of the issue that caused the recommendation.</p>",
+        "RecommendedAction$IssueDetails": "<p>The details of the issue.</p>"
+      }
+    },
     "KMSKeyNotAccessibleFault": {
       "base": "<p>An error occurred accessing an Amazon Web Services KMS key.</p>",
       "refs": {
@@ -3209,6 +3371,18 @@
       "base": null,
       "refs": {
         "CreateCustomDBEngineVersionMessage$KMSKeyId": "<p>The Amazon Web Services KMS key identifier for an encrypted CEV. A symmetric encryption KMS key is required for RDS Custom, but optional for Amazon RDS.</p> <p>If you have an existing symmetric encryption KMS key in your account, you can use it with RDS Custom. No further action is necessary. If you don't already have a symmetric encryption KMS key in your account, follow the instructions in <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html#create-symmetric-cmk\"> Creating a symmetric encryption KMS key</a> in the <i>Amazon Web Services Key Management Service Developer Guide</i>.</p> <p>You can choose the same symmetric encryption key when you create a CEV and a DB instance, or choose different keys.</p>"
+      }
+    },
+    "LimitlessDatabase": {
+      "base": "<p>Contains details for Aurora Limitless Database.</p>",
+      "refs": {
+        "DBCluster$LimitlessDatabase": "<p>The details for Aurora Limitless Database.</p>"
+      }
+    },
+    "LimitlessDatabaseStatus": {
+      "base": null,
+      "refs": {
+        "LimitlessDatabase$Status": "<p>The status of Aurora Limitless Database.</p>"
       }
     },
     "ListTagsForResourceMessage": {
@@ -3280,6 +3454,11 @@
         "DBInstance$MasterUserSecret": "<p>The secret managed by RDS in Amazon Web Services Secrets Manager for the master user password.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html\">Password management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS User Guide.</i> </p>"
       }
     },
+    "MaxDBShardGroupLimitReached": {
+      "base": "<p>The maximum number of DB shard groups for your Amazon Web Services account in the specified Amazon Web Services Region has been reached.</p>",
+      "refs": {
+      }
+    },
     "MaxRecords": {
       "base": null,
       "refs": {
@@ -3288,7 +3467,38 @@
         "DescribeDBProxyEndpointsRequest$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeDBProxyTargetGroupsRequest$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeDBProxyTargetsRequest$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
+        "DescribeDBShardGroupsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100</p>",
         "DescribeExportTasksMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified value, a pagination token called a marker is included in the response. You can use the marker in a later <code>DescribeExportTasks</code> request to retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"
+      }
+    },
+    "Metric": {
+      "base": "<p>The representation of a metric.</p>",
+      "refs": {
+        "MetricList$member": null
+      }
+    },
+    "MetricList": {
+      "base": null,
+      "refs": {
+        "PerformanceIssueDetails$Metrics": "<p>The metrics that are relevant to the performance issue.</p>"
+      }
+    },
+    "MetricQuery": {
+      "base": "<p>The query to retrieve metric data points.</p>",
+      "refs": {
+        "Metric$MetricQuery": "<p>The query to retrieve metric data points.</p>"
+      }
+    },
+    "MetricReference": {
+      "base": "<p>The reference (threshold) for a metric.</p>",
+      "refs": {
+        "MetricReferenceList$member": null
+      }
+    },
+    "MetricReferenceList": {
+      "base": null,
+      "refs": {
+        "Metric$References": "<p>A list of metric references (thresholds).</p>"
       }
     },
     "MinimumEngineVersionPerAllowedValue": {
@@ -3404,6 +3614,16 @@
       }
     },
     "ModifyDBProxyTargetGroupResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyDBRecommendationMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyDBShardGroupMessage": {
       "base": null,
       "refs": {
       }
@@ -3709,6 +3929,24 @@
         "DBInstance$PendingModifiedValues": "<p>Information about pending changes to the DB instance. This information is returned only when there are pending changes. Specific changes are identified by subelements.</p>"
       }
     },
+    "PerformanceInsightsMetricDimensionGroup": {
+      "base": "<p>A logical grouping of Performance Insights metrics for a related subject area. For example, the <code>db.sql</code> dimension group consists of the following dimensions: </p> <ul> <li> <p> <code>db.sql.id</code> - The hash of a running SQL statement, generated by Performance Insights.</p> </li> <li> <p> <code>db.sql.db_id</code> - Either the SQL ID generated by the database engine, or a value generated by Performance Insights that begins with <code>pi-</code>.</p> </li> <li> <p> <code>db.sql.statement</code> - The full text of the SQL statement that is running, for example, <code>SELECT * FROM employees</code>.</p> </li> <li> <p> <code>db.sql_tokenized.id</code> - The hash of the SQL digest generated by Performance Insights.</p> </li> </ul> <note> <p>Each response element returns a maximum of 500 bytes. For larger elements, such as SQL statements, only the first 500 bytes are returned.</p> </note>",
+      "refs": {
+        "PerformanceInsightsMetricQuery$GroupBy": "<p>A specification for how to aggregate the data points from a query result. You must specify a valid dimension group. Performance Insights will return all of the dimensions within that group, unless you provide the names of specific dimensions within that group. You can also request that Performance Insights return a limited number of values for a dimension.</p>"
+      }
+    },
+    "PerformanceInsightsMetricQuery": {
+      "base": "<p>A single Performance Insights metric query to process. You must provide the metric to the query. If other parameters aren't specified, Performance Insights returns all data points for the specified metric. Optionally, you can request the data points to be aggregated by dimension group (<code>GroupBy</code>) and return only those data points that match your criteria (<code>Filter</code>).</p> <p>Constraints:</p> <ul> <li> <p>Must be a valid Performance Insights query.</p> </li> </ul>",
+      "refs": {
+        "MetricQuery$PerformanceInsightsMetricQuery": "<p>The Performance Insights query that you can use to retrieve Performance Insights metric data points.</p>"
+      }
+    },
+    "PerformanceIssueDetails": {
+      "base": "<p>Details of the performance issue.</p>",
+      "refs": {
+        "IssueDetails$PerformanceIssueDetails": "<p>A detailed description of the issue when the recommendation category is <code>performance</code>.</p>"
+      }
+    },
     "PointInTimeRestoreNotEnabledFault": {
       "base": "<p> <code>SourceDBInstanceIdentifier</code> refers to a DB instance with <code>BackupRetentionPeriod</code> equal to 0.</p>",
       "refs": {
@@ -3837,6 +4075,47 @@
       "refs": {
       }
     },
+    "RebootDBShardGroupMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RecommendedAction": {
+      "base": "<p>The recommended actions to apply to resolve the issues associated with your DB instances, DB clusters, and DB parameter groups.</p>",
+      "refs": {
+        "RecommendedActionList$member": null
+      }
+    },
+    "RecommendedActionList": {
+      "base": null,
+      "refs": {
+        "DBRecommendation$RecommendedActions": "<p>A list of recommended actions.</p>"
+      }
+    },
+    "RecommendedActionParameter": {
+      "base": "<p>A single parameter to use with the <code>RecommendedAction</code> API operation to apply the action.</p>",
+      "refs": {
+        "RecommendedActionParameterList$member": null
+      }
+    },
+    "RecommendedActionParameterList": {
+      "base": null,
+      "refs": {
+        "RecommendedAction$Parameters": "<p>The parameters for the API operation.</p>"
+      }
+    },
+    "RecommendedActionUpdate": {
+      "base": "<p>The recommended status to update for the specified recommendation action ID.</p>",
+      "refs": {
+        "RecommendedActionUpdateList$member": null
+      }
+    },
+    "RecommendedActionUpdateList": {
+      "base": null,
+      "refs": {
+        "ModifyDBRecommendationMessage$RecommendedActionUpdates": "<p>The list of recommended action status to update. You can update multiple recommended actions at one time.</p>"
+      }
+    },
     "RecurringCharge": {
       "base": "<p>This data type is used as a response element in the <code>DescribeReservedDBInstances</code> and <code>DescribeReservedDBInstancesOfferings</code> actions.</p>",
       "refs": {
@@ -3848,6 +4127,12 @@
       "refs": {
         "ReservedDBInstance$RecurringCharges": "<p>The recurring price charged to run this reserved DB instance.</p>",
         "ReservedDBInstancesOffering$RecurringCharges": "<p>The recurring price charged to run this reserved DB instance.</p>"
+      }
+    },
+    "ReferenceDetails": {
+      "base": "<p>The reference details of a metric.</p>",
+      "refs": {
+        "MetricReference$ReferenceDetails": "<p>The details of a performance issue.</p>"
       }
     },
     "RegisterDBProxyTargetsRequest": {
@@ -4071,6 +4356,12 @@
     "SNSTopicArnNotFoundFault": {
       "base": "<p>The SNS topic ARN does not exist.</p>",
       "refs": {
+      }
+    },
+    "ScalarReferenceDetails": {
+      "base": "<p>The metric reference details when the reference is a scalar.</p>",
+      "refs": {
+        "ReferenceDetails$ScalarReferenceDetails": "<p>The metric reference details when the reference is a scalar.</p>"
       }
     },
     "ScalingConfiguration": {
@@ -4321,6 +4612,8 @@
         "ClusterPendingModifiedValues$StorageType": "<p>The storage type for the DB cluster.</p>",
         "ConnectionPoolConfiguration$InitQuery": "<p>One or more SQL statements for the proxy to run when opening each new database connection. Typically used with <code>SET</code> statements to make sure that each connection has identical settings such as time zone and character set. For multiple statements, use semicolons as the separator. You can also include multiple variables in a single <code>SET</code> statement, such as <code>SET x=1, y=2</code>.</p> <p>Default: no initialization query</p>",
         "ConnectionPoolConfigurationInfo$InitQuery": "<p>One or more SQL statements for the proxy to run when opening each new database connection. Typically used with <code>SET</code> statements to make sure that each connection has identical settings such as time zone and character set. This setting is empty by default. For multiple statements, use semicolons as the separator. You can also include multiple variables in a single <code>SET</code> statement, such as <code>SET x=1, y=2</code>.</p>",
+        "ContextAttribute$Key": "<p>The key of <code>ContextAttribute</code>.</p>",
+        "ContextAttribute$Value": "<p>The value of <code>ContextAttribute</code>.</p>",
         "CopyDBClusterParameterGroupMessage$SourceDBClusterParameterGroupIdentifier": "<p>The identifier or Amazon Resource Name (ARN) for the source DB cluster parameter group. For information about creating an ARN, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Tagging.ARN.html#USER_Tagging.ARN.Constructing\"> Constructing an ARN for Amazon RDS</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>Constraints:</p> <ul> <li> <p>Must specify a valid DB cluster parameter group.</p> </li> </ul>",
         "CopyDBClusterParameterGroupMessage$TargetDBClusterParameterGroupIdentifier": "<p>The identifier for the copied DB cluster parameter group.</p> <p>Constraints:</p> <ul> <li> <p>Can't be null, empty, or blank</p> </li> <li> <p>Must contain from 1 to 255 letters, numbers, or hyphens</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Can't end with a hyphen or contain two consecutive hyphens</p> </li> </ul> <p>Example: <code>my-cluster-param-group1</code> </p>",
         "CopyDBClusterParameterGroupMessage$TargetDBClusterParameterGroupDescription": "<p>A description for the copied DB cluster parameter group.</p>",
@@ -4436,12 +4729,14 @@
         "CreateDBProxyRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the proxy uses to access secrets in Amazon Web Services Secrets Manager.</p>",
         "CreateDBSecurityGroupMessage$DBSecurityGroupName": "<p>The name for the DB security group. This value is stored as a lowercase string.</p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 letters, numbers, or hyphens.</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Can't end with a hyphen or contain two consecutive hyphens</p> </li> <li> <p>Must not be \"Default\"</p> </li> </ul> <p>Example: <code>mysecuritygroup</code> </p>",
         "CreateDBSecurityGroupMessage$DBSecurityGroupDescription": "<p>The description for the DB security group.</p>",
+        "CreateDBShardGroupMessage$DBShardGroupIdentifier": "<p>The name of the DB shard group.</p>",
+        "CreateDBShardGroupMessage$DBClusterIdentifier": "<p>The name of the primary DB cluster for the DB shard group.</p>",
         "CreateDBSnapshotMessage$DBSnapshotIdentifier": "<p>The identifier for the DB snapshot.</p> <p>Constraints:</p> <ul> <li> <p>Can't be null, empty, or blank</p> </li> <li> <p>Must contain from 1 to 255 letters, numbers, or hyphens</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Can't end with a hyphen or contain two consecutive hyphens</p> </li> </ul> <p>Example: <code>my-snapshot-id</code> </p>",
         "CreateDBSnapshotMessage$DBInstanceIdentifier": "<p>The identifier of the DB instance that you want to create the snapshot of.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing DBInstance.</p> </li> </ul>",
         "CreateDBSubnetGroupMessage$DBSubnetGroupName": "<p>The name for the DB subnet group. This value is stored as a lowercase string.</p> <p>Constraints:</p> <ul> <li> <p>Must contain no more than 255 letters, numbers, periods, underscores, spaces, or hyphens.</p> </li> <li> <p>Must not be default.</p> </li> <li> <p>First character must be a letter.</p> </li> </ul> <p>Example: <code>mydbsubnetgroup</code> </p>",
         "CreateDBSubnetGroupMessage$DBSubnetGroupDescription": "<p>The description for the DB subnet group.</p>",
         "CreateEventSubscriptionMessage$SubscriptionName": "<p>The name of the subscription.</p> <p>Constraints: The name must be less than 255 characters.</p>",
-        "CreateEventSubscriptionMessage$SnsTopicArn": "<p>The Amazon Resource Name (ARN) of the SNS topic created for event notification. The ARN is created by Amazon SNS when you create a topic and subscribe to it.</p>",
+        "CreateEventSubscriptionMessage$SnsTopicArn": "<p>The Amazon Resource Name (ARN) of the SNS topic created for event notification. SNS automatically creates the ARN when you create a topic and subscribe to it.</p> <note> <p>RDS doesn't support FIFO (first in, first out) topics. For more information, see <a href=\"https://docs.aws.amazon.com/sns/latest/dg/sns-fifo-topics.html\">Message ordering and deduplication (FIFO topics)</a> in the <i>Amazon Simple Notification Service Developer Guide</i>.</p> </note>",
         "CreateEventSubscriptionMessage$SourceType": "<p>The type of source that is generating the events. For example, if you want to be notified of events generated by a DB instance, you set this parameter to <code>db-instance</code>. For RDS Proxy events, specify <code>db-proxy</code>. If this value isn't specified, all events are returned.</p> <p>Valid Values: <code>db-instance</code> | <code>db-cluster</code> | <code>db-parameter-group</code> | <code>db-security-group</code> | <code>db-snapshot</code> | <code>db-cluster-snapshot</code> | <code>db-proxy</code> </p>",
         "CreateGlobalClusterMessage$GlobalClusterIdentifier": "<p>The cluster identifier for this global database cluster. This parameter is stored as a lowercase string.</p>",
         "CreateGlobalClusterMessage$SourceDBClusterIdentifier": "<p>The Amazon Resource Name (ARN) to use as the primary cluster of the global database.</p> <p>If you provide a value for this parameter, don't specify values for the following settings because Amazon Aurora uses the values from the specified source DB cluster:</p> <ul> <li> <p> <code>DatabaseName</code> </p> </li> <li> <p> <code>Engine</code> </p> </li> <li> <p> <code>EngineVersion</code> </p> </li> <li> <p> <code>StorageEncrypted</code> </p> </li> </ul>",
@@ -4662,6 +4957,22 @@
         "DBProxyTargetGroup$TargetGroupName": "<p>The identifier for the target group. This name must be unique for all target groups owned by your Amazon Web Services account in the specified Amazon Web Services Region.</p>",
         "DBProxyTargetGroup$TargetGroupArn": "<p>The Amazon Resource Name (ARN) representing the target group.</p>",
         "DBProxyTargetGroup$Status": "<p>The current status of this target group. A status of <code>available</code> means the target group is correctly associated with a database. Other values indicate that you must wait for the target group to be ready, or take some action to resolve an issue.</p>",
+        "DBRecommendation$RecommendationId": "<p>The unique identifier of the recommendation.</p>",
+        "DBRecommendation$TypeId": "<p>A value that indicates the type of recommendation. This value determines how the description is rendered.</p>",
+        "DBRecommendation$Severity": "<p>The severity level of the recommendation. The severity level can help you decide the urgency with which to address the recommendation.</p> <p>Valid values:</p> <ul> <li> <p> <code>high</code> </p> </li> <li> <p> <code>medium</code> </p> </li> <li> <p> <code>low</code> </p> </li> <li> <p> <code>informational</code> </p> </li> </ul>",
+        "DBRecommendation$ResourceArn": "<p>The Amazon Resource Name (ARN) of the RDS resource associated with the recommendation.</p>",
+        "DBRecommendation$Status": "<p>The current status of the recommendation.</p> <p>Valid values:</p> <ul> <li> <p> <code>active</code> - The recommendations which are ready for you to apply.</p> </li> <li> <p> <code>pending</code> - The applied or scheduled recommendations which are in progress.</p> </li> <li> <p> <code>resolved</code> - The recommendations which are completed.</p> </li> <li> <p> <code>dismissed</code> - The recommendations that you dismissed.</p> </li> </ul>",
+        "DBRecommendation$Detection": "<p>A short description of the issue identified for this recommendation. The description might contain markdown.</p>",
+        "DBRecommendation$Recommendation": "<p>A short description of the recommendation to resolve an issue. The description might contain markdown.</p>",
+        "DBRecommendation$Description": "<p>A detailed description of the recommendation. The description might contain markdown.</p>",
+        "DBRecommendation$Reason": "<p>The reason why this recommendation was created. The information might contain markdown.</p>",
+        "DBRecommendation$Category": "<p>The category of the recommendation.</p> <p>Valid values:</p> <ul> <li> <p> <code>performance efficiency</code> </p> </li> <li> <p> <code>security</code> </p> </li> <li> <p> <code>reliability</code> </p> </li> <li> <p> <code>cost optimization</code> </p> </li> <li> <p> <code>operational excellence</code> </p> </li> <li> <p> <code>sustainability</code> </p> </li> </ul>",
+        "DBRecommendation$Source": "<p>The Amazon Web Services service that generated the recommendations.</p>",
+        "DBRecommendation$TypeDetection": "<p>A short description of the recommendation type. The description might contain markdown.</p>",
+        "DBRecommendation$TypeRecommendation": "<p>A short description that summarizes the recommendation to fix all the issues of the recommendation type. The description might contain markdown.</p>",
+        "DBRecommendation$Impact": "<p>A short description that explains the possible impact of an issue.</p>",
+        "DBRecommendation$AdditionalInfo": "<p>Additional information about the recommendation. The information might contain markdown.</p>",
+        "DBRecommendationsMessage$Marker": "<p>An optional pagination token provided by a previous <code>DBRecommendationsMessage</code> request. This token can be used later in a <code>DescribeDBRecomendations</code> request. </p>",
         "DBSecurityGroup$OwnerId": "<p>Provides the Amazon Web Services ID of the owner of a specific DB security group.</p>",
         "DBSecurityGroup$DBSecurityGroupName": "<p>Specifies the name of the DB security group.</p>",
         "DBSecurityGroup$DBSecurityGroupDescription": "<p>Provides the description of the DB security group.</p>",
@@ -4671,6 +4982,11 @@
         "DBSecurityGroupMembership$Status": "<p>The status of the DB security group.</p>",
         "DBSecurityGroupMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "DBSecurityGroupNameList$member": null,
+        "DBShardGroup$DBShardGroupResourceId": "<p>The Amazon Web Services Region-unique, immutable identifier for the DB shard group.</p>",
+        "DBShardGroup$DBShardGroupIdentifier": "<p>The name of the DB shard group.</p>",
+        "DBShardGroup$DBClusterIdentifier": "<p>The name of the primary DB cluster for the DB shard group.</p>",
+        "DBShardGroup$Status": "<p>The status of the DB shard group.</p>",
+        "DBShardGroup$Endpoint": "<p>The connection endpoint for the DB shard group.</p>",
         "DBSnapshot$DBSnapshotIdentifier": "<p>Specifies the identifier for the DB snapshot.</p>",
         "DBSnapshot$DBInstanceIdentifier": "<p>Specifies the DB instance identifier of the DB instance this DB snapshot was created from.</p>",
         "DBSnapshot$Engine": "<p>Specifies the name of the database engine.</p>",
@@ -4726,6 +5042,7 @@
         "DeleteDBParameterGroupMessage$DBParameterGroupName": "<p>The name of the DB parameter group.</p> <p>Constraints:</p> <ul> <li> <p>Must be the name of an existing DB parameter group</p> </li> <li> <p>You can't delete a default DB parameter group</p> </li> <li> <p>Can't be associated with any DB instances</p> </li> </ul>",
         "DeleteDBProxyRequest$DBProxyName": "<p>The name of the DB proxy to delete.</p>",
         "DeleteDBSecurityGroupMessage$DBSecurityGroupName": "<p>The name of the DB security group to delete.</p> <note> <p>You can't delete the default DB security group.</p> </note> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 letters, numbers, or hyphens.</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Can't end with a hyphen or contain two consecutive hyphens</p> </li> <li> <p>Must not be \"Default\"</p> </li> </ul>",
+        "DeleteDBShardGroupMessage$DBShardGroupIdentifier": "<p>Teh name of the DB shard group to delete.</p>",
         "DeleteDBSnapshotMessage$DBSnapshotIdentifier": "<p>The DB snapshot identifier.</p> <p>Constraints: Must be the name of an existing DB snapshot in the <code>available</code> state.</p>",
         "DeleteDBSubnetGroupMessage$DBSubnetGroupName": "<p>The name of the database subnet group to delete.</p> <note> <p>You can't delete the default subnet group.</p> </note> <p>Constraints: Must match the name of an existing DBSubnetGroup. Must not be default.</p> <p>Example: <code>mydbsubnetgroup</code> </p>",
         "DeleteEventSubscriptionMessage$SubscriptionName": "<p>The name of the RDS event notification subscription you want to delete.</p>",
@@ -4795,8 +5112,13 @@
         "DescribeDBProxyTargetsRequest$TargetGroupName": "<p>The identifier of the <code>DBProxyTargetGroup</code> to describe.</p>",
         "DescribeDBProxyTargetsRequest$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "DescribeDBProxyTargetsResponse$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
+        "DescribeDBRecommendationsMessage$Locale": "<p>The language that you choose to return the list of recommendations.</p> <p>Valid values:</p> <ul> <li> <p> <code>en</code> </p> </li> <li> <p> <code>en_UK</code> </p> </li> <li> <p> <code>de</code> </p> </li> <li> <p> <code>es</code> </p> </li> <li> <p> <code>fr</code> </p> </li> <li> <p> <code>id</code> </p> </li> <li> <p> <code>it</code> </p> </li> <li> <p> <code>ja</code> </p> </li> <li> <p> <code>ko</code> </p> </li> <li> <p> <code>pt_BR</code> </p> </li> <li> <p> <code>zh_TW</code> </p> </li> <li> <p> <code>zh_CN</code> </p> </li> </ul>",
+        "DescribeDBRecommendationsMessage$Marker": "<p>An optional pagination token provided by a previous <code>DescribeDBRecommendations</code> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>",
         "DescribeDBSecurityGroupsMessage$DBSecurityGroupName": "<p>The name of the DB security group to return details for.</p>",
         "DescribeDBSecurityGroupsMessage$Marker": "<p>An optional pagination token provided by a previous <code>DescribeDBSecurityGroups</code> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
+        "DescribeDBShardGroupsMessage$DBShardGroupIdentifier": "<p>The user-supplied DB shard group identifier or the Amazon Resource Name (ARN) of the DB shard group. If this parameter is specified, information for only the specific DB shard group is returned. This parameter isn't case-sensitive.</p> <p>Constraints:</p> <ul> <li> <p>If supplied, must match an existing DB shard group identifier.</p> </li> </ul>",
+        "DescribeDBShardGroupsMessage$Marker": "<p>An optional pagination token provided by a previous <code>DescribeDBShardGroups</code> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
+        "DescribeDBShardGroupsResponse$Marker": "<p>A pagination token that can be used in a later <code>DescribeDBClusters</code> request.</p>",
         "DescribeDBSnapshotAttributesMessage$DBSnapshotIdentifier": "<p>The identifier for the DB snapshot to describe the attributes for.</p>",
         "DescribeDBSnapshotTenantDatabasesMessage$DBInstanceIdentifier": "<p>The ID of the DB instance used to create the DB snapshots. This parameter isn't case-sensitive.</p> <p>Constraints:</p> <ul> <li> <p>If supplied, must match the identifier of an existing <code>DBInstance</code>.</p> </li> </ul>",
         "DescribeDBSnapshotTenantDatabasesMessage$DBSnapshotIdentifier": "<p>The ID of a DB snapshot that contains the tenant databases to describe. This value is stored as a lowercase string.</p> <p>Constraints:</p> <ul> <li> <p>If you specify this parameter, the value must match the ID of an existing DB snapshot.</p> </li> <li> <p>If you specify an automatic snapshot, you must also specify <code>SnapshotType</code>.</p> </li> </ul>",
@@ -4859,6 +5181,10 @@
         "DescribeTenantDatabasesMessage$TenantDBName": "<p>The user-supplied tenant database name, which must match the name of an existing tenant database on the specified DB instance owned by your Amazon Web Services account. This parameter isn’t case-sensitive.</p>",
         "DescribeTenantDatabasesMessage$Marker": "<p>An optional pagination token provided by a previous <code>DescribeTenantDatabases</code> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "DescribeValidDBInstanceModificationsMessage$DBInstanceIdentifier": "<p>The customer identifier or the ARN of your DB instance.</p>",
+        "DisableHttpEndpointRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the DB cluster.</p>",
+        "DisableHttpEndpointResponse$ResourceArn": "<p>The ARN of the DB cluster.</p>",
+        "DocLink$Text": "<p>The text with the link to documentation for the recommendation.</p>",
+        "DocLink$Url": "<p>The URL for the documentation for the recommendation.</p>",
         "DomainMembership$Domain": "<p>The identifier of the Active Directory Domain.</p>",
         "DomainMembership$Status": "<p>The status of the Active Directory Domain membership for the DB instance or cluster. Values include <code>joined</code>, <code>pending-join</code>, <code>failed</code>, and so on.</p>",
         "DomainMembership$FQDN": "<p>The fully qualified domain name (FQDN) of the Active Directory Domain.</p>",
@@ -4874,6 +5200,8 @@
         "EC2SecurityGroup$EC2SecurityGroupName": "<p>Specifies the name of the EC2 security group.</p>",
         "EC2SecurityGroup$EC2SecurityGroupId": "<p>Specifies the id of the EC2 security group.</p>",
         "EC2SecurityGroup$EC2SecurityGroupOwnerId": "<p>Specifies the Amazon Web Services ID of the owner of the EC2 security group specified in the <code>EC2SecurityGroupName</code> field.</p>",
+        "EnableHttpEndpointRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the DB cluster.</p>",
+        "EnableHttpEndpointResponse$ResourceArn": "<p>The ARN of the DB cluster.</p>",
         "EncryptionContextMap$key": null,
         "EncryptionContextMap$value": null,
         "Endpoint$Address": "<p>Specifies the DNS address of the DB instance.</p>",
@@ -4932,6 +5260,9 @@
         "MasterUserSecret$SecretArn": "<p>The Amazon Resource Name (ARN) of the secret.</p>",
         "MasterUserSecret$SecretStatus": "<p>The status of the secret.</p> <p>The possible status values include the following:</p> <ul> <li> <p> <code>creating</code> - The secret is being created.</p> </li> <li> <p> <code>active</code> - The secret is available for normal use and rotation.</p> </li> <li> <p> <code>rotating</code> - The secret is being rotated.</p> </li> <li> <p> <code>impaired</code> - The secret can be used to access database credentials, but it can't be rotated. A secret might have this status if, for example, permissions are changed so that RDS can no longer access either the secret or the KMS key for the secret.</p> <p>When a secret has this status, you can correct the condition that caused the status. Alternatively, modify the DB instance to turn off automatic management of database credentials, and then modify the DB instance again to turn on automatic management of database credentials.</p> </li> </ul>",
         "MasterUserSecret$KmsKeyId": "<p>The Amazon Web Services KMS key identifier that is used to encrypt the secret.</p>",
+        "Metric$Name": "<p>The name of a metric.</p>",
+        "Metric$StatisticsDetails": "<p>The details of different statistics for a metric. The description might contain markdown.</p>",
+        "MetricReference$Name": "<p>The name of the metric reference.</p>",
         "MinimumEngineVersionPerAllowedValue$AllowedValue": "<p>The allowed value for an option setting.</p>",
         "MinimumEngineVersionPerAllowedValue$MinimumEngineVersion": "<p>The minimum DB engine version required for the allowed value.</p>",
         "ModifyActivityStreamRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the RDS for Oracle or Microsoft SQL Server DB instance. For example, <code>arn:aws:rds:us-east-1:12345667890:instance:my-orcl-db</code>.</p>",
@@ -4995,6 +5326,10 @@
         "ModifyDBProxyTargetGroupRequest$TargetGroupName": "<p>The name of the target group to modify.</p>",
         "ModifyDBProxyTargetGroupRequest$DBProxyName": "<p>The name of the proxy.</p>",
         "ModifyDBProxyTargetGroupRequest$NewName": "<p>The new name for the modified <code>DBProxyTarget</code>. An identifier must begin with a letter and must contain only ASCII letters, digits, and hyphens; it can't end with a hyphen or contain two consecutive hyphens.</p>",
+        "ModifyDBRecommendationMessage$RecommendationId": "<p>The identifier of the recommendation to update.</p>",
+        "ModifyDBRecommendationMessage$Locale": "<p>The language of the modified recommendation.</p>",
+        "ModifyDBRecommendationMessage$Status": "<p>The recommendation status to update.</p> <p>Valid values:</p> <ul> <li> <p>active</p> </li> <li> <p>dismissed</p> </li> </ul>",
+        "ModifyDBShardGroupMessage$DBShardGroupIdentifier": "<p>The name of the DB shard group to modify.</p>",
         "ModifyDBSnapshotAttributeMessage$DBSnapshotIdentifier": "<p>The identifier for the DB snapshot to modify the attributes for.</p>",
         "ModifyDBSnapshotAttributeMessage$AttributeName": "<p>The name of the DB snapshot attribute to modify.</p> <p>To manage authorization for other Amazon Web Services accounts to copy or restore a manual DB snapshot, set this value to <code>restore</code>.</p> <note> <p>To view the list of attributes available to modify, use the <a>DescribeDBSnapshotAttributes</a> API operation.</p> </note>",
         "ModifyDBSnapshotMessage$DBSnapshotIdentifier": "<p>The identifier of the DB snapshot to modify.</p>",
@@ -5079,6 +5414,9 @@
         "PendingModifiedValues$CACertificateIdentifier": "<p>The identifier of the CA certificate for the DB instance.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html\">Using SSL/TLS to encrypt a connection to a DB instance</a> in the <i>Amazon RDS User Guide</i> and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.SSL.html\"> Using SSL/TLS to encrypt a connection to a DB cluster</a> in the <i>Amazon Aurora User Guide</i>.</p>",
         "PendingModifiedValues$DBSubnetGroupName": "<p>The DB subnet group for the DB instance.</p>",
         "PendingModifiedValues$Engine": "<p>The database engine of the DB instance.</p>",
+        "PerformanceInsightsMetricDimensionGroup$Group": "<p>The available dimension groups for Performance Insights metric type.</p>",
+        "PerformanceInsightsMetricQuery$Metric": "<p>The name of a Performance Insights metric to be measured.</p> <p>Valid Values:</p> <ul> <li> <p> <code>db.load.avg</code> - A scaled representation of the number of active sessions for the database engine.</p> </li> <li> <p> <code>db.sampledload.avg</code> - The raw number of active sessions for the database engine.</p> </li> <li> <p>The counter metrics listed in <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_PerfInsights_Counters.html#USER_PerfInsights_Counters.OS\">Performance Insights operating system counters</a> in the <i>Amazon Aurora User Guide</i>.</p> </li> </ul> <p>If the number of active sessions is less than an internal Performance Insights threshold, <code>db.load.avg</code> and <code>db.sampledload.avg</code> are the same value. If the number of active sessions is greater than the internal threshold, Performance Insights samples the active sessions, with <code>db.load.avg</code> showing the scaled values, <code>db.sampledload.avg</code> showing the raw values, and <code>db.sampledload.avg</code> less than <code>db.load.avg</code>. For most use cases, you can query <code>db.load.avg</code> only.</p>",
+        "PerformanceIssueDetails$Analysis": "<p>The analysis of the performance issue. The information might contain markdown.</p>",
         "ProcessorFeature$Name": "<p>The name of the processor feature. Valid names are <code>coreCount</code> and <code>threadsPerCore</code>.</p>",
         "ProcessorFeature$Value": "<p>The value of a processor feature name.</p>",
         "PromoteReadReplicaDBClusterMessage$DBClusterIdentifier": "<p>The identifier of the DB cluster read replica to promote. This parameter isn't case-sensitive.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing DB cluster read replica.</p> </li> </ul> <p>Example: <code>my-cluster-replica1</code> </p>",
@@ -5094,6 +5432,16 @@
         "ReadersArnList$member": null,
         "RebootDBClusterMessage$DBClusterIdentifier": "<p>The DB cluster identifier. This parameter is stored as a lowercase string.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing DBCluster.</p> </li> </ul>",
         "RebootDBInstanceMessage$DBInstanceIdentifier": "<p>The DB instance identifier. This parameter is stored as a lowercase string.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing DBInstance.</p> </li> </ul>",
+        "RebootDBShardGroupMessage$DBShardGroupIdentifier": "<p>The name of the DB shard group to reboot.</p>",
+        "RecommendedAction$ActionId": "<p>The unique identifier of the recommended action.</p>",
+        "RecommendedAction$Title": "<p>A short description to summarize the action. The description might contain markdown.</p>",
+        "RecommendedAction$Description": "<p>A detailed description of the action. The description might contain markdown.</p>",
+        "RecommendedAction$Operation": "<p>An API operation for the action.</p>",
+        "RecommendedAction$Status": "<p>The status of the action.</p> <ul> <li> <p> <code>ready</code> </p> </li> <li> <p> <code>applied</code> </p> </li> <li> <p> <code>scheduled</code> </p> </li> <li> <p> <code>resolved</code> </p> </li> </ul>",
+        "RecommendedActionParameter$Key": "<p>The key of the parameter to use with the <code>RecommendedAction</code> API operation.</p>",
+        "RecommendedActionParameter$Value": "<p>The value of the parameter to use with the <code>RecommendedAction</code> API operation.</p>",
+        "RecommendedActionUpdate$ActionId": "<p>A unique identifier of the updated recommendation action.</p>",
+        "RecommendedActionUpdate$Status": "<p>The status of the updated recommendation action.</p> <ul> <li> <p> <code>applied</code> </p> </li> <li> <p> <code>scheduled</code> </p> </li> </ul>",
         "RecurringCharge$RecurringChargeFrequency": "<p>The frequency of the recurring charge.</p>",
         "RegisterDBProxyTargetsRequest$DBProxyName": "<p>The identifier of the <code>DBProxy</code> that is associated with the <code>DBProxyTargetGroup</code>.</p>",
         "RegisterDBProxyTargetsRequest$TargetGroupName": "<p>The identifier of the <code>DBProxyTargetGroup</code>.</p>",
@@ -5357,6 +5705,8 @@
         "ModifyDBProxyEndpointRequest$VpcSecurityGroupIds": "<p>The VPC security group IDs for the DB proxy endpoint. When the DB proxy endpoint uses a different VPC than the original proxy, you also specify a different set of security group IDs than for the original proxy.</p>",
         "ModifyDBProxyRequest$SecurityGroups": "<p>The new list of security groups for the <code>DBProxy</code>.</p>",
         "OrderableDBInstanceOption$SupportedNetworkTypes": "<p>The network types supported by the DB instance (<code>IPV4</code> or <code>DUAL</code>).</p> <p>A DB instance can support only the IPv4 protocol or the IPv4 and the IPv6 protocols (<code>DUAL</code>).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html\"> Working with a DB instance in a VPC</a> in the <i>Amazon RDS User Guide.</i> </p>",
+        "PerformanceInsightsMetricDimensionGroup$Dimensions": "<p>A list of specific dimensions from a dimension group. If this list isn't included, then all of the dimensions in the group were requested, or are present in the response.</p>",
+        "RecommendedAction$ApplyModes": "<p>The methods to apply the recommended action.</p> <p>Valid values:</p> <ul> <li> <p> <code>manual</code> - The action requires you to resolve the recommendation manually.</p> </li> <li> <p> <code>immediately</code> - The action is applied immediately.</p> </li> <li> <p> <code>next-maintainance-window</code> - The action is applied during the next scheduled maintainance.</p> </li> </ul>",
         "RegisterDBProxyTargetsRequest$DBInstanceIdentifiers": "<p>One or more DB instance identifiers.</p>",
         "RegisterDBProxyTargetsRequest$DBClusterIdentifiers": "<p>One or more DB cluster identifiers.</p>",
         "RestoreDBInstanceFromDBSnapshotMessage$DomainDnsIps": "<p>The IPv4 DNS IP addresses of your primary and secondary Active Directory domain controllers.</p> <p>Constraints:</p> <ul> <li> <p>Two IP addresses must be provided. If there isn't a secondary domain controller, use the IP address of the primary domain controller for both entries in the list.</p> </li> </ul> <p>Example: <code>123.124.125.126,234.235.236.237</code> </p>",
@@ -5503,11 +5853,15 @@
         "DBProxyEndpoint$CreatedDate": "<p>The date and time when the DB proxy endpoint was first created.</p>",
         "DBProxyTargetGroup$CreatedDate": "<p>The date and time when the target group was first created.</p>",
         "DBProxyTargetGroup$UpdatedDate": "<p>The date and time when the target group was last updated.</p>",
+        "DBRecommendation$CreatedTime": "<p>The time when the recommendation was created. For example, <code>2023-09-28T01:13:53.931000+00:00</code>.</p>",
+        "DBRecommendation$UpdatedTime": "<p>The time when the recommendation was last updated.</p>",
         "DBSnapshot$SnapshotCreateTime": "<p>Specifies when the snapshot was taken in Coordinated Universal Time (UTC). Changes for the copy when the snapshot is copied.</p>",
         "DBSnapshot$InstanceCreateTime": "<p>Specifies the time in Coordinated Universal Time (UTC) when the DB instance, from which the snapshot was taken, was created.</p>",
         "DBSnapshot$OriginalSnapshotCreateTime": "<p>Specifies the time of the CreateDBSnapshot operation in Coordinated Universal Time (UTC). Doesn't change when the snapshot is copied.</p>",
         "DBSnapshot$SnapshotDatabaseTime": "<p>The timestamp of the most recent transaction applied to the database that you're backing up. Thus, if you restore a snapshot, SnapshotDatabaseTime is the most recent transaction in the restored DB instance. In contrast, originalSnapshotCreateTime specifies the system time that the snapshot completed.</p> <p>If you back up a read replica, you can determine the replica lag by comparing SnapshotDatabaseTime with originalSnapshotCreateTime. For example, if originalSnapshotCreateTime is two hours later than SnapshotDatabaseTime, then the replica lag is two hours.</p>",
         "DBSnapshotTenantDatabase$TenantDatabaseCreateTime": "<p>The time the DB snapshot was taken, specified in Coordinated Universal Time (UTC). If you copy the snapshot, the creation time changes.</p>",
+        "DescribeDBRecommendationsMessage$LastUpdatedAfter": "<p>A filter to include only the recommendations that were updated after this specified time.</p>",
+        "DescribeDBRecommendationsMessage$LastUpdatedBefore": "<p>A filter to include only the recommendations that were updated before this specified time.</p>",
         "DescribeEventsMessage$StartTime": "<p>The beginning of the time interval to retrieve events for, specified in ISO 8601 format. For more information about ISO 8601, go to the <a href=\"http://en.wikipedia.org/wiki/ISO_8601\">ISO8601 Wikipedia page.</a> </p> <p>Example: 2009-07-08T18:00Z</p>",
         "DescribeEventsMessage$EndTime": "<p>The end of the time interval for which to retrieve events, specified in ISO 8601 format. For more information about ISO 8601, go to the <a href=\"http://en.wikipedia.org/wiki/ISO_8601\">ISO8601 Wikipedia page.</a> </p> <p>Example: 2009-07-08T18:00Z</p>",
         "Event$Date": "<p>Specifies the date and time of the event.</p>",
@@ -5520,6 +5874,8 @@
         "PendingMaintenanceAction$ForcedApplyDate": "<p>The date when the maintenance action is automatically applied.</p> <p>On this date, the maintenance action is applied to the resource as soon as possible, regardless of the maintenance window for the resource. There might be a delay of one or more days from this date before the maintenance action is applied.</p>",
         "PendingMaintenanceAction$CurrentApplyDate": "<p>The effective date when the pending maintenance action is applied to the resource. This date takes into account opt-in requests received from the <code>ApplyPendingMaintenanceAction</code> API, the <code>AutoAppliedAfterDate</code>, and the <code>ForcedApplyDate</code>. This value is blank if an opt-in request has not been received and nothing has been specified as <code>AutoAppliedAfterDate</code> or <code>ForcedApplyDate</code>.</p>",
         "PendingModifiedValues$ResumeFullAutomationModeTime": "<p>The number of minutes to pause the automation. When the time period ends, RDS Custom resumes full automation. The minimum value is 60 (default). The maximum value is 1,440.</p>",
+        "PerformanceIssueDetails$StartTime": "<p>The time when the performance issue started.</p>",
+        "PerformanceIssueDetails$EndTime": "<p>The time when the performance issue stopped.</p>",
         "ReservedDBInstance$StartTime": "<p>The time the reservation started.</p>",
         "RestoreDBClusterToPointInTimeMessage$RestoreToTime": "<p>The date and time to restore the DB cluster to.</p> <p>Valid Values: Value must be a time in Universal Coordinated Time (UTC) format</p> <p>Constraints:</p> <ul> <li> <p>Must be before the latest restorable time for the DB instance</p> </li> <li> <p>Must be specified if <code>UseLatestRestorableTime</code> parameter isn't provided</p> </li> <li> <p>Can't be specified if the <code>UseLatestRestorableTime</code> parameter is enabled</p> </li> <li> <p>Can't be specified if the <code>RestoreType</code> parameter is <code>copy-on-write</code> </p> </li> </ul> <p>Example: <code>2015-03-07T23:45:00Z</code> </p> <p>Valid for: Aurora DB clusters and Multi-AZ DB clusters</p>",
         "RestoreDBInstanceToPointInTimeMessage$RestoreTime": "<p>The date and time to restore from.</p> <p>Constraints:</p> <ul> <li> <p>Must be a time in Universal Coordinated Time (UTC) format.</p> </li> <li> <p>Must be before the latest restorable time for the DB instance.</p> </li> <li> <p>Can't be specified if the <code>UseLatestRestorableTime</code> parameter is enabled.</p> </li> </ul> <p>Example: <code>2009-09-07T23:45:00Z</code> </p>",
@@ -5594,7 +5950,7 @@
     "TargetDBInstanceClass": {
       "base": null,
       "refs": {
-        "CreateBlueGreenDeploymentRequest$TargetDBInstanceClass": "<p>Specify the DB instance class for the databases in the green environment.</p>"
+        "CreateBlueGreenDeploymentRequest$TargetDBInstanceClass": "<p>Specify the DB instance class for the databases in the green environment.</p> <p>This parameter only applies to RDS DB instances, because DB instances within an Aurora DB cluster can have multiple different instance classes. If you're creating a blue/green deployment from an Aurora DB cluster, don't specify this parameter. After the green environment is created, you can individually modify the instance classes of the DB instances within the green DB cluster.</p>"
       }
     },
     "TargetDBParameterGroupName": {
@@ -5697,6 +6053,11 @@
       "base": "<p>A time zone associated with a <code>DBInstance</code> or a <code>DBSnapshot</code>. This data type is an element in the response to the <code>DescribeDBInstances</code>, the <code>DescribeDBSnapshots</code>, and the <code>DescribeDBEngineVersions</code> actions.</p>",
       "refs": {
         "SupportedTimezonesList$member": null
+      }
+    },
+    "UnsupportedDBEngineVersionFault": {
+      "base": "<p>The specified DB engine version isn't supported for Aurora Limitless Database.</p>",
+      "refs": {
       }
     },
     "UpgradeTarget": {

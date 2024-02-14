@@ -950,6 +950,23 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "StartLiveTail":{
+      "name":"StartLiveTail",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartLiveTailRequest"},
+      "output":{"shape":"StartLiveTailResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"streaming-"}
+    },
     "StartQuery":{
       "name":"StartQuery",
       "http":{
@@ -1111,6 +1128,7 @@
         "lastUpdatedTime":{"shape":"Timestamp"},
         "policyType":{"shape":"PolicyType"},
         "scope":{"shape":"Scope"},
+        "selectionCriteria":{"shape":"SelectionCriteria"},
         "accountId":{"shape":"AccountId"}
       }
     },
@@ -2197,6 +2215,7 @@
       },
       "exception":true
     },
+    "IsSampled":{"type":"boolean"},
     "KmsKeyId":{
       "type":"string",
       "max":256
@@ -2278,6 +2297,46 @@
       "deprecated":true,
       "deprecatedMessage":"Please use the generic tagging API model ListTagsForResourceRequest and ListTagsForResourceResponse"
     },
+    "LiveTailSessionLogEvent":{
+      "type":"structure",
+      "members":{
+        "logStreamName":{"shape":"LogStreamName"},
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "message":{"shape":"EventMessage"},
+        "timestamp":{"shape":"Timestamp"},
+        "ingestionTime":{"shape":"Timestamp"}
+      }
+    },
+    "LiveTailSessionMetadata":{
+      "type":"structure",
+      "members":{
+        "sampled":{"shape":"IsSampled"}
+      }
+    },
+    "LiveTailSessionResults":{
+      "type":"list",
+      "member":{"shape":"LiveTailSessionLogEvent"}
+    },
+    "LiveTailSessionStart":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"RequestId"},
+        "sessionId":{"shape":"SessionId"},
+        "logGroupIdentifiers":{"shape":"StartLiveTailLogGroupIdentifiers"},
+        "logStreamNames":{"shape":"InputLogStreamNames"},
+        "logStreamNamePrefixes":{"shape":"InputLogStreamNames"},
+        "logEventFilterPattern":{"shape":"FilterPattern"}
+      },
+      "event":true
+    },
+    "LiveTailSessionUpdate":{
+      "type":"structure",
+      "members":{
+        "sessionMetadata":{"shape":"LiveTailSessionMetadata"},
+        "sessionResults":{"shape":"LiveTailSessionResults"}
+      },
+      "event":true
+    },
     "LogEvent":{
       "type":"string",
       "min":1
@@ -2295,7 +2354,8 @@
         "kmsKeyId":{"shape":"KmsKeyId"},
         "dataProtectionStatus":{"shape":"DataProtectionStatus"},
         "inheritedProperties":{"shape":"InheritedProperties"},
-        "logGroupClass":{"shape":"LogGroupClass"}
+        "logGroupClass":{"shape":"LogGroupClass"},
+        "logGroupArn":{"shape":"Arn"}
       }
     },
     "LogGroupArn":{
@@ -2554,7 +2614,10 @@
     "PolicyName":{"type":"string"},
     "PolicyType":{
       "type":"string",
-      "enum":["DATA_PROTECTION_POLICY"]
+      "enum":[
+        "DATA_PROTECTION_POLICY",
+        "SUBSCRIPTION_FILTER_POLICY"
+      ]
     },
     "Priority":{
       "type":"string",
@@ -2571,7 +2634,8 @@
         "policyName":{"shape":"PolicyName"},
         "policyDocument":{"shape":"AccountPolicyDocument"},
         "policyType":{"shape":"PolicyType"},
-        "scope":{"shape":"Scope"}
+        "scope":{"shape":"Scope"},
+        "selectionCriteria":{"shape":"SelectionCriteria"}
       }
     },
     "PutAccountPolicyResponse":{
@@ -2887,6 +2951,11 @@
         "expiredLogEventEndIndex":{"shape":"LogEventIndex"}
       }
     },
+    "RequestId":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
     "ResourceAlreadyExistsException":{
       "type":"structure",
       "members":{
@@ -2951,6 +3020,7 @@
       "type":"list",
       "member":{"shape":"SearchedLogStream"}
     },
+    "SelectionCriteria":{"type":"string"},
     "SequenceToken":{
       "type":"string",
       "min":1
@@ -2973,6 +3043,25 @@
       },
       "exception":true,
       "fault":true
+    },
+    "SessionId":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "SessionStreamingException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"Message"}
+      },
+      "exception":true
+    },
+    "SessionTimeoutException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"Message"}
+      },
+      "exception":true
     },
     "StandardUnit":{
       "type":"string",
@@ -3007,6 +3096,38 @@
       ]
     },
     "StartFromHead":{"type":"boolean"},
+    "StartLiveTailLogGroupIdentifiers":{
+      "type":"list",
+      "member":{"shape":"LogGroupIdentifier"},
+      "max":10,
+      "min":1
+    },
+    "StartLiveTailRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifiers"],
+      "members":{
+        "logGroupIdentifiers":{"shape":"StartLiveTailLogGroupIdentifiers"},
+        "logStreamNames":{"shape":"InputLogStreamNames"},
+        "logStreamNamePrefixes":{"shape":"InputLogStreamNames"},
+        "logEventFilterPattern":{"shape":"FilterPattern"}
+      }
+    },
+    "StartLiveTailResponse":{
+      "type":"structure",
+      "members":{
+        "responseStream":{"shape":"StartLiveTailResponseStream"}
+      }
+    },
+    "StartLiveTailResponseStream":{
+      "type":"structure",
+      "members":{
+        "sessionStart":{"shape":"LiveTailSessionStart"},
+        "sessionUpdate":{"shape":"LiveTailSessionUpdate"},
+        "SessionTimeoutException":{"shape":"SessionTimeoutException"},
+        "SessionStreamingException":{"shape":"SessionStreamingException"}
+      },
+      "eventstream":true
+    },
     "StartQueryRequest":{
       "type":"structure",
       "required":[

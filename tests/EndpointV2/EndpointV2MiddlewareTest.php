@@ -33,10 +33,6 @@ class EndpointV2MiddlewareTest extends TestCase
         $nextHandler = function ($command, $endpoint) use ($service, $expectedUri) {
             $this->assertInstanceOf(RulesetEndpoint::class, $endpoint);
             $this->assertEquals($expectedUri, $endpoint->getUrl());
-
-            if (isset($endpoint->getProperties()['authSchemes'])) {
-                self::assertNotEmpty($command->getAuthSchemes());
-            }
         };
 
         $client = $this->getTestClient($service, $clientArgs);

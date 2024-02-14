@@ -290,7 +290,8 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"InvalidRoleException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidParameterCombinationException"}
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"OperationNotPermittedException"}
       ]
     },
     "CreateStreamingURL":{
@@ -2927,6 +2928,7 @@
         "WINDOWS",
         "WINDOWS_SERVER_2016",
         "WINDOWS_SERVER_2019",
+        "WINDOWS_SERVER_2022",
         "AMAZON_LINUX2"
       ]
     },
@@ -3596,7 +3598,8 @@
       ],
       "members":{
         "Action":{"shape":"Action"},
-        "Permission":{"shape":"Permission"}
+        "Permission":{"shape":"Permission"},
+        "MaximumLength":{"shape":"Integer"}
       }
     },
     "UserSettingList":{

@@ -5520,7 +5520,8 @@
         "amazon-web-services",
         "amd",
         "nvidia",
-        "xilinx"
+        "xilinx",
+        "habana"
       ]
     },
     "AcceleratorManufacturerSet":{
@@ -5541,7 +5542,10 @@
         "radeon-pro-v520",
         "t4",
         "vu9p",
-        "v100"
+        "v100",
+        "a10g",
+        "h100",
+        "t4g"
       ]
     },
     "AcceleratorNameSet":{
@@ -6147,7 +6151,8 @@
       "members":{
         "Cidr":{"shape":"String"},
         "Asn":{"shape":"String"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "NetworkBorderGroup":{"shape":"String"}
       }
     },
     "AdvertiseByoipCidrResult":{
@@ -7913,7 +7918,8 @@
         "available",
         "information",
         "impaired",
-        "unavailable"
+        "unavailable",
+        "constrained"
       ]
     },
     "AvailabilityZoneStringList":{
@@ -8231,6 +8237,10 @@
         "State":{
           "shape":"ByoipCidrState",
           "locationName":"state"
+        },
+        "NetworkBorderGroup":{
+          "shape":"String",
+          "locationName":"networkBorderGroup"
         }
       }
     },
@@ -10114,6 +10124,7 @@
         "amazon-web-services"
       ]
     },
+    "CpuManufacturerName":{"type":"string"},
     "CpuManufacturerSet":{
       "type":"list",
       "member":{
@@ -11307,6 +11318,10 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
         }
       }
     },
@@ -11316,6 +11331,10 @@
         "NetworkAcl":{
           "shape":"NetworkAcl",
           "locationName":"networkAcl"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
         }
       }
     },
@@ -11707,6 +11726,10 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
         }
       }
     },
@@ -11716,6 +11739,10 @@
         "RouteTable":{
           "shape":"RouteTable",
           "locationName":"routeTable"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
         }
       }
     },
@@ -20713,6 +20740,14 @@
         "VolumeId":{
           "shape":"String",
           "locationName":"volumeId"
+        },
+        "AssociatedResource":{
+          "shape":"String",
+          "locationName":"associatedResource"
+        },
+        "VolumeOwnerId":{
+          "shape":"String",
+          "locationName":"volumeOwnerId"
         }
       }
     },
@@ -27278,6 +27313,10 @@
         "AllowedInstanceTypes":{
           "shape":"AllowedInstanceTypeSet",
           "locationName":"allowedInstanceTypeSet"
+        },
+        "MaxSpotPriceAsPercentageOfOptimalOnDemandPrice":{
+          "shape":"Integer",
+          "locationName":"maxSpotPriceAsPercentageOfOptimalOnDemandPrice"
         }
       }
     },
@@ -27334,7 +27373,8 @@
         "AllowedInstanceTypes":{
           "shape":"AllowedInstanceTypeSet",
           "locationName":"AllowedInstanceType"
-        }
+        },
+        "MaxSpotPriceAsPercentageOfOptimalOnDemandPrice":{"shape":"Integer"}
       }
     },
     "InstanceRequirementsWithMetadataRequest":{
@@ -28383,7 +28423,18 @@
         "r7i.16xlarge",
         "r7i.24xlarge",
         "r7i.48xlarge",
-        "dl2q.24xlarge"
+        "dl2q.24xlarge",
+        "mac2-m2.metal",
+        "i4i.12xlarge",
+        "i4i.24xlarge",
+        "c7i.metal-24xl",
+        "c7i.metal-48xl",
+        "m7i.metal-24xl",
+        "m7i.metal-48xl",
+        "r7i.metal-24xl",
+        "r7i.metal-48xl",
+        "r7iz.metal-16xl",
+        "r7iz.metal-32xl"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -36292,6 +36343,10 @@
         "SupportedFeatures":{
           "shape":"SupportedAdditionalProcessorFeatureList",
           "locationName":"supportedFeatures"
+        },
+        "Manufacturer":{
+          "shape":"CpuManufacturerName",
+          "locationName":"manufacturer"
         }
       }
     },
@@ -36393,7 +36448,8 @@
           "shape":"TagSpecificationList",
           "locationName":"PoolTagSpecification"
         },
-        "MultiRegion":{"shape":"Boolean"}
+        "MultiRegion":{"shape":"Boolean"},
+        "NetworkBorderGroup":{"shape":"String"}
       }
     },
     "ProvisionByoipCidrResult":{
@@ -42013,7 +42069,8 @@
       "type":"string",
       "enum":[
         "pending",
-        "available"
+        "available",
+        "unavailable"
       ]
     },
     "Subscription":{
@@ -45589,6 +45646,14 @@
         "DeleteOnTermination":{
           "shape":"Boolean",
           "locationName":"deleteOnTermination"
+        },
+        "AssociatedResource":{
+          "shape":"String",
+          "locationName":"associatedResource"
+        },
+        "InstanceOwningService":{
+          "shape":"String",
+          "locationName":"instanceOwningService"
         }
       }
     },

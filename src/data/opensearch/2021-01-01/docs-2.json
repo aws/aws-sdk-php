@@ -3,16 +3,17 @@
   "service": "<p>Use the Amazon OpenSearch Service configuration API to create, configure, and manage OpenSearch Service domains.</p> <p>For sample code that uses the configuration API, see the <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/opensearch-configuration-samples.html\"> <i>Amazon OpenSearch Service Developer Guide</i> </a>. The guide also contains <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/request-signing.html\">sample code</a> for sending signed HTTP requests to the OpenSearch APIs. The endpoint for configuration service requests is Region specific: es.<i>region</i>.amazonaws.com. For example, es.us-east-1.amazonaws.com. For a current list of supported Regions and endpoints, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#service-regions\">Amazon Web Services service endpoints</a>.</p>",
   "operations": {
     "AcceptInboundConnection": "<p>Allows the destination Amazon OpenSearch Service domain owner to accept an inbound cross-cluster search connection request. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
-    "AddDataSource": "<p>Adds the data source on the domain.</p>",
+    "AddDataSource": "<p>Creates a new direct-query data source to the specified domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Creating Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
     "AddTags": "<p>Attaches tags to an existing Amazon OpenSearch Service domain. Tags are a set of case-sensitive key-value pairs. A domain can have up to 10 tags. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service domains</a>.</p>",
     "AssociatePackage": "<p>Associates a package with an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "AuthorizeVpcEndpointAccess": "<p>Provides access to an Amazon OpenSearch Service domain through the use of an interface VPC endpoint.</p>",
+    "CancelDomainConfigChange": "<p>Cancels a pending configuration change on an Amazon OpenSearch Service domain.</p>",
     "CancelServiceSoftwareUpdate": "<p>Cancels a scheduled service software update for an Amazon OpenSearch Service domain. You can only perform this operation before the <code>AutomatedUpdateDate</code> and when the domain's <code>UpdateStatus</code> is <code>PENDING_UPDATE</code>. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
     "CreateDomain": "<p>Creates an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html\">Creating and managing Amazon OpenSearch Service domains</a>.</p>",
     "CreateOutboundConnection": "<p>Creates a new cross-cluster search connection from a source Amazon OpenSearch Service domain to a destination domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "CreatePackage": "<p>Creates a package for use with Amazon OpenSearch Service domains. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "CreateVpcEndpoint": "<p>Creates an Amazon OpenSearch Service-managed VPC endpoint.</p>",
-    "DeleteDataSource": "<p>Deletes the data source.</p>",
+    "DeleteDataSource": "<p>Deletes a direct-query data source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-delete.html\">Deleting an Amazon OpenSearch Service data source with Amazon S3</a>.</p>",
     "DeleteDomain": "<p>Deletes an Amazon OpenSearch Service domain and all of its data. You can't recover a domain after you delete it.</p>",
     "DeleteInboundConnection": "<p>Allows the destination Amazon OpenSearch Service domain owner to delete an existing inbound cross-cluster search connection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "DeleteOutboundConnection": "<p>Allows the source Amazon OpenSearch Service domain owner to delete an existing outbound cross-cluster search connection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
@@ -35,12 +36,12 @@
     "DescribeVpcEndpoints": "<p>Describes one or more Amazon OpenSearch Service-managed VPC endpoints.</p>",
     "DissociatePackage": "<p>Removes a package from the specified Amazon OpenSearch Service domain. The package can't be in use with any OpenSearch index for the dissociation to succeed. The package is still available in OpenSearch Service for association later. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "GetCompatibleVersions": "<p>Returns a map of OpenSearch or Elasticsearch versions and the versions you can upgrade them to.</p>",
-    "GetDataSource": "<p>Describes the data source details.</p>",
+    "GetDataSource": "<p>Retrieves information about a direct query data source.</p>",
     "GetDomainMaintenanceStatus": "<p>The status of the maintenance action.</p>",
     "GetPackageVersionHistory": "<p>Returns a list of Amazon OpenSearch Service package versions, along with their creation time, commit message, and plugin properties (if the package is a zip plugin package). For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "GetUpgradeHistory": "<p>Retrieves the complete history of the last 10 upgrades performed on an Amazon OpenSearch Service domain.</p>",
     "GetUpgradeStatus": "<p>Returns the most recent status of the last upgrade or upgrade eligibility check performed on an Amazon OpenSearch Service domain.</p>",
-    "ListDataSources": "<p>A list of the data source details of the domain.</p>",
+    "ListDataSources": "<p>Lists direct-query data sources for a specific domain. For more information, see For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3.html\">Working with Amazon OpenSearch Service direct queries with Amazon S3</a>.</p>",
     "ListDomainMaintenances": "<p>A list of maintenance actions for the domain.</p>",
     "ListDomainNames": "<p>Returns the names of all Amazon OpenSearch Service domains owned by the current user in the active Region.</p>",
     "ListDomainsForPackage": "<p>Lists all Amazon OpenSearch Service domains associated with a given package. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
@@ -58,7 +59,7 @@
     "RevokeVpcEndpointAccess": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
     "StartDomainMaintenance": "<p>Starts the node maintenance process on the data node. These processes can include a node reboot, an Opensearch or Elasticsearch process restart, or a Dashboard or Kibana restart.</p>",
     "StartServiceSoftwareUpdate": "<p>Schedules a service software update for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
-    "UpdateDataSource": "<p>Updates the data source on the domain.</p>",
+    "UpdateDataSource": "<p>Updates a direct-query data source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Working with Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
     "UpdateDomainConfig": "<p>Modifies the cluster configuration of the specified Amazon OpenSearch Service domain.</p>",
     "UpdatePackage": "<p>Updates a package for use with Amazon OpenSearch Service domains. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "UpdateScheduledAction": "<p>Reschedules a planned domain configuration change for a later time. This change can be a scheduled <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">service software update</a> or a <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html#auto-tune-types\">blue/green Auto-Tune enhancement</a>.</p>",
@@ -67,7 +68,7 @@
   },
   "shapes": {
     "ARN": {
-      "base": "<p>The Amazon Resource Name (ARN) of the domain. See <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/index.html\">Identifiers for IAM Entities </a> in <i>Using AWS Identity and Access Management</i> for more information. </p>",
+      "base": "<p>The Amazon Resource Name (ARN) of the domain. See <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/index.html\">Identifiers for IAM Entities </a> in <i>Using Amazon Web Services Identity and Access Management</i> for more information. </p>",
       "refs": {
         "AddTagsRequest$ARN": "<p>Amazon Resource Name (ARN) for the OpenSearch Service domain to which you want to attach resource tags.</p>",
         "DomainEndpointOptions$CustomEndpointCertificateArn": "<p>The ARN for your security certificate, managed in Amazon Web Services Certificate Manager (ACM).</p>",
@@ -404,6 +405,16 @@
         "UpgradeDomainResponse$PerformCheckOnly": "<p>When true, indicates that an upgrade eligibility check was performed.</p>"
       }
     },
+    "CancelDomainConfigChangeRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CancelDomainConfigChangeResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CancelServiceSoftwareUpdateRequest": {
       "base": "<p>Container for the request parameters to cancel a service software update.</p>",
       "refs": {
@@ -412,6 +423,18 @@
     "CancelServiceSoftwareUpdateResponse": {
       "base": "<p>Container for the response to a <code>CancelServiceSoftwareUpdate</code> operation. Contains the status of the update.</p>",
       "refs": {
+      }
+    },
+    "CancelledChangeProperty": {
+      "base": "<p>A property change that was cancelled for an Amazon OpenSearch Service domain.</p>",
+      "refs": {
+        "CancelledChangePropertyList$member": null
+      }
+    },
+    "CancelledChangePropertyList": {
+      "base": null,
+      "refs": {
+        "CancelDomainConfigChangeResponse$CancelledChangeProperties": "<p>The domain change properties that were cancelled.</p>"
       }
     },
     "ChangeProgressDetails": {
@@ -517,6 +540,13 @@
       "base": "<p>A map of OpenSearch or Elasticsearch versions and the versions you can upgrade them to.</p>",
       "refs": {
         "CompatibleVersionsList$member": null
+      }
+    },
+    "ConfigChangeStatus": {
+      "base": null,
+      "refs": {
+        "ChangeProgressDetails$ConfigChangeStatus": "<p>The current status of the configuration change.</p>",
+        "ChangeProgressStatusDetails$ConfigChangeStatus": "<p>The current status of the configuration change.</p>"
       }
     },
     "ConflictException": {
@@ -627,11 +657,11 @@
         "AddDataSourceRequest$Description": "<p>A description of the data source.</p>",
         "DataSourceDetails$Description": "<p>A description of the data source.</p>",
         "GetDataSourceResponse$Description": "<p>A description of the data source.</p>",
-        "UpdateDataSourceRequest$Description": "<p>A description of the data source.</p>"
+        "UpdateDataSourceRequest$Description": "<p>A new description of the data source.</p>"
       }
     },
     "DataSourceDetails": {
-      "base": "<p>Details about the data sources.</p>",
+      "base": "<p>Details about a direct-query data source.</p>",
       "refs": {
         "DataSourceList$member": null
       }
@@ -639,22 +669,22 @@
     "DataSourceList": {
       "base": null,
       "refs": {
-        "ListDataSourcesResponse$DataSources": "<p>A list of the data sources.</p>"
+        "ListDataSourcesResponse$DataSources": "<p>A list of data sources associated with specified domain.</p>"
       }
     },
     "DataSourceName": {
       "base": null,
       "refs": {
-        "AddDataSourceRequest$Name": "<p>The name of the data source.</p>",
+        "AddDataSourceRequest$Name": "<p>A name for the data source.</p>",
         "DataSourceDetails$Name": "<p>The name of the data source.</p>",
-        "DeleteDataSourceRequest$Name": "<p>The name of the data source.</p>",
-        "GetDataSourceRequest$Name": "<p>The name of the data source.</p>",
+        "DeleteDataSourceRequest$Name": "<p>The name of the data source to delete.</p>",
+        "GetDataSourceRequest$Name": "<p>The name of the data source to get information about.</p>",
         "GetDataSourceResponse$Name": "<p>The name of the data source.</p>",
-        "UpdateDataSourceRequest$Name": "<p>The name of the data source.</p>"
+        "UpdateDataSourceRequest$Name": "<p>The name of the data source to modify.</p>"
       }
     },
     "DataSourceType": {
-      "base": "<p>Information about the data source.</p>",
+      "base": "<p>The type of data source.</p>",
       "refs": {
         "AddDataSourceRequest$DataSourceType": "<p>The type of data source.</p>",
         "DataSourceDetails$DataSourceType": "<p>The type of data source.</p>",
@@ -1035,9 +1065,10 @@
       "base": "<p>The name of an OpenSearch Service domain. Domain names are unique across the domains owned by an account within an Amazon Web Services Region.</p>",
       "refs": {
         "AWSDomainInformation$DomainName": "<p>Name of the domain.</p>",
-        "AddDataSourceRequest$DomainName": "<p>The name of the domain.</p>",
+        "AddDataSourceRequest$DomainName": "<p>The name of the domain to add the data source to.</p>",
         "AssociatePackageRequest$DomainName": "<p>Name of the domain to associate the package with.</p>",
         "AuthorizeVpcEndpointAccessRequest$DomainName": "<p>The name of the OpenSearch Service domain to provide access to.</p>",
+        "CancelDomainConfigChangeRequest$DomainName": null,
         "CancelServiceSoftwareUpdateRequest$DomainName": "<p>Name of the OpenSearch Service domain that you want to cancel the service software update on.</p>",
         "CreateDomainRequest$DomainName": "<p>Name of the OpenSearch Service domain to create. Domain names are unique across the domains owned by an account within an Amazon Web Services Region.</p>",
         "DeleteDataSourceRequest$DomainName": "<p>The name of the domain.</p>",
@@ -1123,6 +1154,12 @@
         "DomainPackageDetails$DomainPackageStatus": "<p>State of the association.</p>"
       }
     },
+    "DomainProcessingStatusType": {
+      "base": null,
+      "refs": {
+        "DomainStatus$DomainProcessingStatus": "<p>The status of any changes that are currently in progress for the domain.</p>"
+      }
+    },
     "DomainState": {
       "base": null,
       "refs": {
@@ -1159,6 +1196,8 @@
     "DryRun": {
       "base": null,
       "refs": {
+        "CancelDomainConfigChangeRequest$DryRun": "<p>When set to <code>True</code>, returns the list of change IDs and properties that will be cancelled without actually cancelling the change.</p>",
+        "CancelDomainConfigChangeResponse$DryRun": "<p>Whether or not the request was a dry run. If <code>True</code>, the changes were not actually cancelled. </p>",
         "UpdateDomainConfigRequest$DryRun": "<p>This flag, when set to True, specifies whether the <code>UpdateDomain</code> request should return the results of a dry run analysis without actually applying the change. A dry run determines what type of deployment the update will cause.</p>"
       }
     },
@@ -1210,7 +1249,7 @@
       }
     },
     "EncryptionAtRestOptions": {
-      "base": "<p>Specifies whether the domain should encrypt data at rest, and if so, the Key Management Service (KMS) key to use. Can be used only to create a new domain, not update an existing one.</p>",
+      "base": "<p>Specifies whether the domain should encrypt data at rest, and if so, the Key Management Service (KMS) key to use. Can only be used when creating a new domain or enabling encryption at rest for the first time on an existing domain. You can't modify this parameter after it's already been specified.</p>",
       "refs": {
         "CreateDomainRequest$EncryptionAtRestOptions": "<p>Key-value pairs to enable encryption at rest.</p>",
         "DomainStatus$EncryptionAtRestOptions": "<p>Encryption at rest settings for the domain.</p>",
@@ -1234,7 +1273,7 @@
     "EndpointsMap": {
       "base": null,
       "refs": {
-        "DomainStatus$Endpoints": "<p>The key-value pair that exists if the OpenSearch Service domain uses VPC endpoints.. Example <code>key, value</code>: <code>'vpc','vpc-endpoint-h2dsd34efgyghrtguk5gt6j2foh4.us-east-1.es.amazonaws.com'</code>.</p>"
+        "DomainStatus$Endpoints": "<p>The key-value pair that exists if the OpenSearch Service domain uses VPC endpoints. Example <code>key, value</code>: <code>'vpc','vpc-endpoint-h2dsd34efgyghrtguk5gt6j2foh4.us-east-1.es.amazonaws.com'</code>.</p>"
       }
     },
     "EngineType": {
@@ -1305,10 +1344,17 @@
         "DescribeReservedInstanceOfferingsRequest$ReservedInstanceOfferingId": "<p>The Reserved Instance identifier filter value. Use this parameter to show only the available instance types that match the specified reservation identifier.</p>",
         "DescribeReservedInstancesRequest$ReservedInstanceId": "<p>The reserved instance identifier filter value. Use this parameter to show only the reservation that matches the specified reserved OpenSearch instance ID.</p>",
         "DryRunProgressStatus$DryRunId": "<p>The unique identifier of the dry run.</p>",
+        "GUIDList$member": null,
         "PurchaseReservedInstanceOfferingRequest$ReservedInstanceOfferingId": "<p>The ID of the Reserved Instance offering to purchase.</p>",
         "PurchaseReservedInstanceOfferingResponse$ReservedInstanceId": "<p>The ID of the Reserved Instance offering that was purchased.</p>",
         "ReservedInstance$ReservedInstanceId": "<p>The unique identifier for the reservation.</p>",
         "ReservedInstanceOffering$ReservedInstanceOfferingId": "<p>The unique identifier of the Reserved Instance offering.</p>"
+      }
+    },
+    "GUIDList": {
+      "base": null,
+      "refs": {
+        "CancelDomainConfigChangeResponse$CancelledChangeIds": "<p>The unique identifiers of the changes that were cancelled.</p>"
       }
     },
     "GetCompatibleVersionsRequest": {
@@ -1374,16 +1420,16 @@
     "IPAddressType": {
       "base": null,
       "refs": {
-        "CreateDomainRequest$IPAddressType": "<p>The type of IP addresses supported by the endpoint for the domain.</p>",
+        "CreateDomainRequest$IPAddressType": "<p>Specify either dual stack or IPv4 as your IP address type. Dual stack allows you to share domain resources across IPv4 and IPv6 address types, and is the recommended option. If you set your IP address type to dual stack, you can't change your address type later.</p>",
         "DomainStatus$IPAddressType": "<p>The type of IP addresses supported by the endpoint for the domain.</p>",
         "IPAddressTypeStatus$Options": "<p>The IP address options for the domain.</p>",
-        "UpdateDomainConfigRequest$IPAddressType": "<p>The type of IP addresses supported by the endpoint for the domain.</p>"
+        "UpdateDomainConfigRequest$IPAddressType": "<p>Specify either dual stack or IPv4 as your IP address type. Dual stack allows you to share domain resources across IPv4 and IPv6 address types, and is the recommended option. If your IP address type is currently set to dual stack, you can't change it. </p>"
       }
     },
     "IPAddressTypeStatus": {
       "base": "<p>The IP address type status for the domain.</p>",
       "refs": {
-        "DomainConfig$IPAddressType": "<p>The type of IP addresses supported by the endpoint for the domain.</p>"
+        "DomainConfig$IPAddressType": "<p>Choose either dual stack or IPv4 as your IP address type. Dual stack allows you to share domain resources across IPv4 and IPv6 address types, and is the recommended option. If you set your IP address type to dual stack, you can't change your address type later.</p>"
       }
     },
     "IdentityPoolId": {
@@ -1417,6 +1463,13 @@
       "base": null,
       "refs": {
         "DescribeInboundConnectionsResponse$Connections": "<p>List of inbound connections.</p>"
+      }
+    },
+    "InitiatedBy": {
+      "base": null,
+      "refs": {
+        "ChangeProgressDetails$InitiatedBy": "<p>The IAM principal who initiated the configuration change.</p>",
+        "ChangeProgressStatusDetails$InitiatedBy": "<p>The IAM principal who initiated the configuration change.</p>"
       }
     },
     "InstanceCount": {
@@ -1800,6 +1853,19 @@
         "InstanceCountLimits$MinimumInstanceCount": "<p>The maximum allowed number of instances.</p>"
       }
     },
+    "ModifyingProperties": {
+      "base": "<p>Information about the domain properties that are currently being modified.</p>",
+      "refs": {
+        "ModifyingPropertiesList$member": null
+      }
+    },
+    "ModifyingPropertiesList": {
+      "base": null,
+      "refs": {
+        "DomainConfig$ModifyingProperties": "<p>Information about the domain properties that are currently being modified.</p>",
+        "DomainStatus$ModifyingProperties": "<p>Information about the domain properties that are currently being modified.</p>"
+      }
+    },
     "NextToken": {
       "base": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
       "refs": {
@@ -2145,6 +2211,12 @@
         "AuthorizedPrincipal$PrincipalType": "<p>The type of principal.</p>"
       }
     },
+    "PropertyValueType": {
+      "base": null,
+      "refs": {
+        "ModifyingProperties$ValueType": "<p>The type of value that is currently being modified. Properties can have two types:</p> <ul> <li> <p> <code>PLAIN_TEXT</code>: Contain direct values such as \"1\", \"True\", or \"c5.large.search\".</p> </li> <li> <p> <code>STRINGIFIED_JSON</code>: Contain content in JSON format, such as {\"Enabled\":\"True\"}\".</p> </li> </ul>"
+      }
+    },
     "PurchaseReservedInstanceOfferingRequest": {
       "base": "<p>Container for request parameters to the <code>PurchaseReservedInstanceOffering</code> operation.</p>",
       "refs": {
@@ -2266,7 +2338,7 @@
       "base": null,
       "refs": {
         "CognitoOptions$RoleArn": "<p>The <code>AmazonOpenSearchServiceCognitoAccess</code> role that allows OpenSearch Service to configure your user pool and identity pool.</p>",
-        "S3GlueDataCatalog$RoleArn": "<p>The role ARN for the AWS S3 Glue Data Catalog.</p>"
+        "S3GlueDataCatalog$RoleArn": "<p>&gt;The Amazon Resource Name (ARN) for the S3 Glue Data Catalog.</p>"
       }
     },
     "RollbackOnDisable": {
@@ -2282,9 +2354,9 @@
       }
     },
     "S3GlueDataCatalog": {
-      "base": "<p>Information about the AWS S3 Glue Data Catalog.</p>",
+      "base": "<p>Information about the Amazon S3 Glue Data Catalog.</p>",
       "refs": {
-        "DataSourceType$S3GlueDataCatalog": "<p>The data source for the AWS S3 Glue Data Catalog.</p>"
+        "DataSourceType$S3GlueDataCatalog": "<p>An Amazon S3 data source.</p>"
       }
     },
     "S3Key": {
@@ -2386,7 +2458,7 @@
       "base": "<p>The domain endpoint to which index and search requests are submitted. For example, <code>search-imdb-movies-oopcnjfn6ugo.eu-west-1.es.amazonaws.com</code> or <code>doc-imdb-movies-oopcnjfn6u.eu-west-1.es.amazonaws.com</code>.</p>",
       "refs": {
         "DomainStatus$Endpoint": "<p>Domain-specific endpoint used to submit index, search, and data upload requests to the domain.</p>",
-        "DomainStatus$EndpointV2": null,
+        "DomainStatus$EndpointV2": "<p>If <code>IPAddressType</code> to set to <code>dualstack</code>, a version 2 domain endpoint is provisioned. This endpoint functions like a normal endpoint, except that it works with both IPv4 and IPv6 IP addresses. Normal endpoints work only with IPv4 IP addresses. </p>",
         "EndpointsMap$value": null
       }
     },
@@ -2521,14 +2593,17 @@
     "String": {
       "base": null,
       "refs": {
-        "AddDataSourceResponse$Message": "<p>A message associated with the data source.</p>",
+        "AddDataSourceResponse$Message": "<p>A message associated with creation of the data source.</p>",
         "AdvancedOptions$key": null,
         "AdvancedOptions$value": null,
         "AuthorizedPrincipal$Principal": "<p>The <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html\">IAM principal</a> that is allowed access to the domain.</p>",
         "AutoTuneMaintenanceSchedule$CronExpressionForRecurrence": "<p>A cron expression for a recurring maintenance schedule during which Auto-Tune can deploy changes.</p>",
         "AutoTuneOptionsOutput$ErrorMessage": "<p>Any errors that occurred while enabling or disabling Auto-Tune.</p>",
         "AutoTuneStatus$ErrorMessage": "<p>Any errors that occurred while enabling or disabling Auto-Tune.</p>",
-        "DeleteDataSourceResponse$Message": "<p>A message associated with the initiated request.</p>",
+        "CancelledChangeProperty$PropertyName": "<p>The name of the property whose change was cancelled.</p>",
+        "CancelledChangeProperty$CancelledValue": "<p>The pending value of the property that was cancelled. This would have been the eventual value of the property if the chance had not been cancelled.</p>",
+        "CancelledChangeProperty$ActiveValue": "<p>The current value of the property, after the change was cancelled.</p>",
+        "DeleteDataSourceResponse$Message": "<p>A message associated with deletion of the data source.</p>",
         "DescribePackagesResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "DescribeReservedInstancesResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "DryRunProgressStatus$DryRunStatus": "<p>The current status of the dry run.</p>",
@@ -2539,6 +2614,9 @@
         "GetUpgradeHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListDomainsForPackageResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListPackagesForDomainResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
+        "ModifyingProperties$Name": "<p>The name of the property that is currently being modified.</p>",
+        "ModifyingProperties$ActiveValue": "<p>The current value of the domain property that is being modified.</p>",
+        "ModifyingProperties$PendingValue": "<p>The value that the property that is currently being modified will eventually have.</p>",
         "RecurringCharge$RecurringChargeFrequency": "<p>The frequency of the recurring charge.</p>",
         "ReservedInstance$ReservedInstanceOfferingId": "<p>The unique identifier of the Reserved Instance offering.</p>",
         "ReservedInstance$CurrencyCode": "<p>The currency code for the offering.</p>",
@@ -2554,7 +2632,7 @@
         "ServiceSoftwareOptions$NewVersion": "<p>The new service software version, if one is available.</p>",
         "ServiceSoftwareOptions$Description": "<p>A description of the service software update status.</p>",
         "StringList$member": null,
-        "UpdateDataSourceResponse$Message": "<p>A message associated with the data source.</p>",
+        "UpdateDataSourceResponse$Message": "<p>A message associated with the updated data source.</p>",
         "UpdateScheduledActionRequest$ActionID": "<p>The unique identifier of the action to reschedule. To retrieve this ID, send a <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/APIReference/API_ListScheduledActions.html\">ListScheduledActions</a> request.</p>",
         "UpgradeDomainResponse$UpgradeId": "<p>The unique identifier of the domain upgrade.</p>",
         "VPCDerivedInfo$VPCId": "<p>The ID for your VPC. Amazon VPC generates this value when you create a VPC.</p>",
@@ -2580,7 +2658,7 @@
     "TLSSecurityPolicy": {
       "base": null,
       "refs": {
-        "DomainEndpointOptions$TLSSecurityPolicy": "<p>Specify the TLS security policy to apply to the HTTPS endpoint of the domain. The policy can be one of the following values:</p> <ul> <li> <p> <b>Policy-Min-TLS-1-0-2019-07:</b> TLS security policy which supports TLS version 1.0 to TLS version 1.2</p> </li> <li> <p> <b>Policy-Min-TLS-1-2-2019-07:</b> TLS security policy which supports only TLS version 1.2</p> </li> <li> <p> <b>Policy-Min-TLS-1-0-2023-10:</b> TLS security policy which supports TLS version 1.0 to TLS version 1.3</p> </li> <li> <p> <b>Policy-Min-TLS-1-2-2023-10:</b> TLS security policy which supports TLS version 1.2 to TLS version 1.3 with perfect forward secrecy cipher suites</p> </li> </ul>"
+        "DomainEndpointOptions$TLSSecurityPolicy": "<p>Specify the TLS security policy to apply to the HTTPS endpoint of the domain. The policy can be one of the following values:</p> <ul> <li> <p> <b>Policy-Min-TLS-1-0-2019-07:</b> TLS security policy that supports TLS version 1.0 to TLS version 1.2</p> </li> <li> <p> <b>Policy-Min-TLS-1-2-2019-07:</b> TLS security policy that supports only TLS version 1.2</p> </li> <li> <p> <b>Policy-Min-TLS-1-2-PFS-2023-10:</b> TLS security policy that supports TLS version 1.2 to TLS version 1.3 with perfect forward secrecy cipher suites</p> </li> </ul>"
       }
     },
     "Tag": {
@@ -2679,7 +2757,10 @@
       "refs": {
         "AutoTuneStatus$CreationDate": "<p>Date and time when Auto-Tune was enabled for the domain.</p>",
         "AutoTuneStatus$UpdateDate": "<p>Date and time when the Auto-Tune options were last updated for the domain.</p>",
+        "ChangeProgressDetails$StartTime": "<p>The time that the configuration change was initiated, in Universal Coordinated Time (UTC).</p>",
+        "ChangeProgressDetails$LastUpdatedTime": "<p>The last time that the configuration change was updated.</p>",
         "ChangeProgressStatusDetails$StartTime": "<p>The time at which the configuration change is made on the domain.</p>",
+        "ChangeProgressStatusDetails$LastUpdatedTime": "<p>The last time that the status of the configuration change was updated.</p>",
         "DomainMaintenanceDetails$CreatedAt": "<p>The time at which the action was created.</p>",
         "DomainMaintenanceDetails$UpdatedAt": "<p>The time at which the action was updated.</p>",
         "GetDomainMaintenanceStatusResponse$CreatedAt": "<p>The time at which the action was created.</p>",

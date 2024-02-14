@@ -271,6 +271,25 @@
       "type":"string",
       "pattern":"[-A-Za-z0-9]{13,74}"
     },
+    "ConfirmationStatus":{
+      "type":"string",
+      "enum":[
+        "FINAL",
+        "NONFINAL"
+      ]
+    },
+    "ConfirmationStatusFilter":{
+      "type":"structure",
+      "required":["include"],
+      "members":{
+        "include":{"shape":"ConfirmationStatusIncludeList"}
+      }
+    },
+    "ConfirmationStatusIncludeList":{
+      "type":"list",
+      "member":{"shape":"ConfirmationStatus"},
+      "min":1
+    },
     "ContractFilter":{
       "type":"structure",
       "required":[
@@ -313,6 +332,13 @@
     "ExceptionMessage":{
       "type":"string",
       "min":1
+    },
+    "ExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "SUCCEEDED"
+      ]
     },
     "GetAssetContractInput":{
       "type":"structure",
@@ -492,7 +518,8 @@
         "toBlockchainInstant":{"shape":"BlockchainInstant"},
         "sort":{"shape":"ListTransactionsSort"},
         "nextToken":{"shape":"NextToken"},
-        "maxResults":{"shape":"ListTransactionsInputMaxResultsInteger"}
+        "maxResults":{"shape":"ListTransactionsInputMaxResultsInteger"},
+        "confirmationStatusFilter":{"shape":"ConfirmationStatusFilter"}
       }
     },
     "ListTransactionsInputMaxResultsInteger":{
@@ -547,9 +574,9 @@
       "type":"string",
       "enum":[
         "ETHEREUM_MAINNET",
+        "ETHEREUM_SEPOLIA_TESTNET",
         "BITCOIN_MAINNET",
-        "BITCOIN_TESTNET",
-        "ETHEREUM_SEPOLIA_TESTNET"
+        "BITCOIN_TESTNET"
       ]
     },
     "QueryTokenId":{
@@ -583,13 +610,6 @@
     "QueryTransactionHash":{
       "type":"string",
       "pattern":"(0x[A-Fa-f0-9]{64}|[A-Fa-f0-9]{64})"
-    },
-    "QueryTransactionStatus":{
-      "type":"string",
-      "enum":[
-        "FINAL",
-        "FAILED"
-      ]
     },
     "QuotaCode":{"type":"string"},
     "ResourceId":{"type":"string"},
@@ -717,7 +737,6 @@
         "transactionTimestamp",
         "transactionIndex",
         "numberOfTransactions",
-        "status",
         "to"
       ],
       "members":{
@@ -728,7 +747,6 @@
         "transactionTimestamp":{"shape":"Timestamp"},
         "transactionIndex":{"shape":"Long"},
         "numberOfTransactions":{"shape":"Long"},
-        "status":{"shape":"QueryTransactionStatus"},
         "to":{"shape":"ChainAddress"},
         "from":{"shape":"ChainAddress"},
         "contractAddress":{"shape":"ChainAddress"},
@@ -739,7 +757,9 @@
         "signatureR":{"shape":"String"},
         "signatureS":{"shape":"String"},
         "transactionFee":{"shape":"String"},
-        "transactionId":{"shape":"String"}
+        "transactionId":{"shape":"String"},
+        "confirmationStatus":{"shape":"ConfirmationStatus"},
+        "executionStatus":{"shape":"ExecutionStatus"}
       }
     },
     "TransactionEvent":{
@@ -778,7 +798,8 @@
       "members":{
         "transactionHash":{"shape":"QueryTransactionHash"},
         "network":{"shape":"QueryNetwork"},
-        "transactionTimestamp":{"shape":"Timestamp"}
+        "transactionTimestamp":{"shape":"Timestamp"},
+        "confirmationStatus":{"shape":"ConfirmationStatus"}
       }
     },
     "TransactionOutputList":{

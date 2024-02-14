@@ -4,6 +4,9 @@ namespace Aws;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Api\Validator;
+use Aws\Auth\AuthResolver;
+use Aws\Auth\AuthSchemeResolver;
+use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\Configuration;
@@ -115,6 +118,12 @@ class ClientResolver
             'valid'   => ['callable'],
             'doc'     => 'A callable that accepts a signature version name (e.g., "v4"), a service name, and region, and  returns a SignatureInterface object or null. This provider is used to create signers utilized by the client. See Aws\\Signature\\SignatureProvider for a list of built-in providers',
             'default' => [__CLASS__, '_default_signature_provider'],
+        ],
+        'auth_scheme_resolver' => [
+            'type'    => 'value',
+            'valid'   => [AuthSchemeResolverInterface::class],
+            'doc'     => 'A callable or Aws\Auth\AuthResolver object which accept a priority-ordered list of auth scheme versions and an identity and returns an auth scheme version',
+            'default' => [__CLASS__, '_default_auth_scheme_resolver'],
         ],
         'api_provider' => [
             'type'     => 'value',
@@ -1073,6 +1082,11 @@ class ClientResolver
     public static function _default_signature_provider()
     {
         return SignatureProvider::defaultProvider();
+    }
+
+    public static function _default_auth_scheme_resolver()
+    {
+        return new AuthSchemeResolver();
     }
 
     public static function _default_signature_version(array &$args)

@@ -4111,6 +4111,49 @@
       "members": {
       }
     },
+    "ColorCorrection": {
+      "type": "structure",
+      "members": {
+        "InputColorSpace": {
+          "shape": "ColorSpace",
+          "locationName": "inputColorSpace"
+        },
+        "OutputColorSpace": {
+          "shape": "ColorSpace",
+          "locationName": "outputColorSpace"
+        },
+        "Uri": {
+          "shape": "__string",
+          "locationName": "uri"
+        }
+      },
+      "required": [
+        "OutputColorSpace",
+        "InputColorSpace",
+        "Uri"
+      ]
+    },
+    "ColorCorrectionSettings": {
+      "type": "structure",
+      "members": {
+        "GlobalColorCorrections": {
+          "shape": "__listOfColorCorrection",
+          "locationName": "globalColorCorrections"
+        }
+      },
+      "required": [
+        "GlobalColorCorrections"
+      ]
+    },
+    "ColorSpace": {
+      "type": "string",
+      "enum": [
+        "HDR10",
+        "HLG_2020",
+        "REC_601",
+        "REC_709"
+      ]
+    },
     "ColorSpacePassthroughSettings": {
       "type": "structure",
       "members": {
@@ -6354,6 +6397,10 @@
         "ThumbnailConfiguration": {
           "shape": "ThumbnailConfiguration",
           "locationName": "thumbnailConfiguration"
+        },
+        "ColorCorrectionSettings": {
+          "shape": "ColorCorrectionSettings",
+          "locationName": "colorCorrectionSettings"
         }
       },
       "required": [
@@ -8335,6 +8382,10 @@
         "MediaconnectSettings": {
           "shape": "InputDeviceMediaConnectConfigurableSettings",
           "locationName": "mediaconnectSettings"
+        },
+        "AudioChannelPairs": {
+          "shape": "__listOfInputDeviceConfigurableAudioChannelPairConfig",
+          "locationName": "audioChannelPairs"
         }
       }
     },
@@ -8650,6 +8701,10 @@
         "MediaconnectSettings": {
           "shape": "InputDeviceMediaConnectSettings",
           "locationName": "mediaconnectSettings"
+        },
+        "AudioChannelPairs": {
+          "shape": "__listOfInputDeviceUhdAudioChannelPairConfig",
+          "locationName": "audioChannelPairs"
         }
       }
     },
@@ -14503,6 +14558,12 @@
         "shape": "ChannelSummary"
       }
     },
+    "__listOfColorCorrection": {
+      "type": "list",
+      "member": {
+        "shape": "ColorCorrection"
+      }
+    },
     "__listOfFailoverCondition": {
       "type": "list",
       "member": {
@@ -14868,6 +14929,70 @@
     },
     "__timestamp": {
       "type": "timestamp"
+    },
+    "InputDeviceConfigurableAudioChannelPairConfig": {
+      "type": "structure",
+      "members": {
+        "Id": {
+          "shape": "__integer",
+          "locationName": "id"
+        },
+        "Profile": {
+          "shape": "InputDeviceConfigurableAudioChannelPairProfile",
+          "locationName": "profile"
+        }
+      }
+    },
+    "InputDeviceConfigurableAudioChannelPairProfile": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "VBR-AAC_HHE-16000",
+        "VBR-AAC_HE-64000",
+        "VBR-AAC_LC-128000",
+        "CBR-AAC_HQ-192000",
+        "CBR-AAC_HQ-256000",
+        "CBR-AAC_HQ-384000",
+        "CBR-AAC_HQ-512000"
+      ]
+    },
+    "InputDeviceUhdAudioChannelPairConfig": {
+      "type": "structure",
+      "members": {
+        "Id": {
+          "shape": "__integer",
+          "locationName": "id"
+        },
+        "Profile": {
+          "shape": "InputDeviceUhdAudioChannelPairProfile",
+          "locationName": "profile"
+        }
+      }
+    },
+    "InputDeviceUhdAudioChannelPairProfile": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "VBR-AAC_HHE-16000",
+        "VBR-AAC_HE-64000",
+        "VBR-AAC_LC-128000",
+        "CBR-AAC_HQ-192000",
+        "CBR-AAC_HQ-256000",
+        "CBR-AAC_HQ-384000",
+        "CBR-AAC_HQ-512000"
+      ]
+    },
+    "__listOfInputDeviceConfigurableAudioChannelPairConfig": {
+      "type": "list",
+      "member": {
+        "shape": "InputDeviceConfigurableAudioChannelPairConfig"
+      }
+    },
+    "__listOfInputDeviceUhdAudioChannelPairConfig": {
+      "type": "list",
+      "member": {
+        "shape": "InputDeviceUhdAudioChannelPairConfig"
+      }
     }
   }
 }

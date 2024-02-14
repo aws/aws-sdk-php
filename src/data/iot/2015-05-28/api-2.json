@@ -335,6 +335,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateCertificateProvider":{
+      "name":"CreateCertificateProvider",
+      "http":{
+        "method":"POST",
+        "requestUri":"/certificate-providers/{certificateProviderName}"
+      },
+      "input":{"shape":"CreateCertificateProviderRequest"},
+      "output":{"shape":"CreateCertificateProviderResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "CreateCustomMetric":{
       "name":"CreateCustomMetric",
       "http":{
@@ -882,6 +900,24 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DeleteCertificateProvider":{
+      "name":"DeleteCertificateProvider",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/certificate-providers/{certificateProviderName}"
+      },
+      "input":{"shape":"DeleteCertificateProviderRequest"},
+      "output":{"shape":"DeleteCertificateProviderResponse"},
+      "errors":[
+        {"shape":"DeleteConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "DeleteCustomMetric":{
@@ -1469,6 +1505,23 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DescribeCertificateProvider":{
+      "name":"DescribeCertificateProvider",
+      "http":{
+        "method":"GET",
+        "requestUri":"/certificate-providers/{certificateProviderName}"
+      },
+      "input":{"shape":"DescribeCertificateProviderRequest"},
+      "output":{"shape":"DescribeCertificateProviderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "DescribeCustomMetric":{
@@ -2400,6 +2453,22 @@
       },
       "input":{"shape":"ListCACertificatesRequest"},
       "output":{"shape":"ListCACertificatesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListCertificateProviders":{
+      "name":"ListCertificateProviders",
+      "http":{
+        "method":"GET",
+        "requestUri":"/certificate-providers/"
+      },
+      "input":{"shape":"ListCertificateProvidersRequest"},
+      "output":{"shape":"ListCertificateProvidersResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottlingException"},
@@ -3671,6 +3740,23 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateCertificateProvider":{
+      "name":"UpdateCertificateProvider",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/certificate-providers/{certificateProviderName}"
+      },
+      "input":{"shape":"UpdateCertificateProviderRequest"},
+      "output":{"shape":"UpdateCertificateProviderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateCustomMetric":{
       "name":"UpdateCustomMetric",
       "http":{
@@ -3826,6 +3912,7 @@
       "output":{"shape":"UpdatePackageResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
@@ -3843,6 +3930,7 @@
       "output":{"shape":"UpdatePackageConfigurationResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
       ],
@@ -3859,6 +3947,7 @@
       "output":{"shape":"UpdatePackageVersionResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
@@ -5227,6 +5316,42 @@
       "min":1,
       "pattern":"[\\s\\S]*"
     },
+    "CertificateProviderAccountDefaultForOperations":{
+      "type":"list",
+      "member":{"shape":"CertificateProviderOperation"},
+      "max":1,
+      "min":1
+    },
+    "CertificateProviderArn":{
+      "type":"string",
+      "max":2048
+    },
+    "CertificateProviderFunctionArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"[\\s\\S]*"
+    },
+    "CertificateProviderName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\w=,@-]+"
+    },
+    "CertificateProviderOperation":{
+      "type":"string",
+      "enum":["CreateCertificateFromCsr"]
+    },
+    "CertificateProviderSummary":{
+      "type":"structure",
+      "members":{
+        "certificateProviderName":{"shape":"CertificateProviderName"},
+        "certificateProviderArn":{"shape":"CertificateProviderArn"}
+      }
+    },
+    "CertificateProviders":{
+      "type":"list",
+      "member":{"shape":"CertificateProviderSummary"}
+    },
     "CertificateSigningRequest":{
       "type":"string",
       "max":4096,
@@ -5567,6 +5692,35 @@
         "certificatePem":{"shape":"CertificatePem"}
       }
     },
+    "CreateCertificateProviderRequest":{
+      "type":"structure",
+      "required":[
+        "certificateProviderName",
+        "lambdaFunctionArn",
+        "accountDefaultForOperations"
+      ],
+      "members":{
+        "certificateProviderName":{
+          "shape":"CertificateProviderName",
+          "location":"uri",
+          "locationName":"certificateProviderName"
+        },
+        "lambdaFunctionArn":{"shape":"CertificateProviderFunctionArn"},
+        "accountDefaultForOperations":{"shape":"CertificateProviderAccountDefaultForOperations"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateCertificateProviderResponse":{
+      "type":"structure",
+      "members":{
+        "certificateProviderName":{"shape":"CertificateProviderName"},
+        "certificateProviderArn":{"shape":"CertificateProviderArn"}
+      }
+    },
     "CreateCustomMetricRequest":{
       "type":"structure",
       "required":[
@@ -5641,7 +5795,8 @@
         "authorizerConfig":{"shape":"AuthorizerConfig"},
         "serviceType":{"shape":"ServiceType"},
         "tags":{"shape":"TagList"},
-        "tlsConfig":{"shape":"TlsConfig"}
+        "tlsConfig":{"shape":"TlsConfig"},
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
       }
     },
     "CreateDomainConfigurationResponse":{
@@ -6418,6 +6573,22 @@
       "members":{
       }
     },
+    "DeleteCertificateProviderRequest":{
+      "type":"structure",
+      "required":["certificateProviderName"],
+      "members":{
+        "certificateProviderName":{
+          "shape":"CertificateProviderName",
+          "location":"uri",
+          "locationName":"certificateProviderName"
+        }
+      }
+    },
+    "DeleteCertificateProviderResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteCertificateRequest":{
       "type":"structure",
       "required":["certificateId"],
@@ -7123,6 +7294,28 @@
         "registrationConfig":{"shape":"RegistrationConfig"}
       }
     },
+    "DescribeCertificateProviderRequest":{
+      "type":"structure",
+      "required":["certificateProviderName"],
+      "members":{
+        "certificateProviderName":{
+          "shape":"CertificateProviderName",
+          "location":"uri",
+          "locationName":"certificateProviderName"
+        }
+      }
+    },
+    "DescribeCertificateProviderResponse":{
+      "type":"structure",
+      "members":{
+        "certificateProviderName":{"shape":"CertificateProviderName"},
+        "certificateProviderArn":{"shape":"CertificateProviderArn"},
+        "lambdaFunctionArn":{"shape":"CertificateProviderFunctionArn"},
+        "accountDefaultForOperations":{"shape":"CertificateProviderAccountDefaultForOperations"},
+        "creationDate":{"shape":"DateType"},
+        "lastModifiedDate":{"shape":"DateType"}
+      }
+    },
     "DescribeCertificateRequest":{
       "type":"structure",
       "required":["certificateId"],
@@ -7235,7 +7428,8 @@
         "serviceType":{"shape":"ServiceType"},
         "domainType":{"shape":"DomainType"},
         "lastStatusChangeDate":{"shape":"DateType"},
-        "tlsConfig":{"shape":"TlsConfig"}
+        "tlsConfig":{"shape":"TlsConfig"},
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
       }
     },
     "DescribeEndpointRequest":{
@@ -8090,6 +8284,7 @@
         "logLevel":{"shape":"LogLevel"}
       }
     },
+    "EnableOCSPCheck":{"type":"boolean"},
     "EnableTopicRuleRequest":{
       "type":"structure",
       "required":["ruleName"],
@@ -9635,6 +9830,28 @@
       "members":{
         "certificates":{"shape":"CACertificates"},
         "nextMarker":{"shape":"Marker"}
+      }
+    },
+    "ListCertificateProvidersRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"Marker",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "ascendingOrder":{
+          "shape":"AscendingOrder",
+          "location":"querystring",
+          "locationName":"isAscendingOrder"
+        }
+      }
+    },
+    "ListCertificateProvidersResponse":{
+      "type":"structure",
+      "members":{
+        "certificateProviders":{"shape":"CertificateProviders"},
+        "nextToken":{"shape":"Marker"}
       }
     },
     "ListCertificatesByCARequest":{
@@ -11192,9 +11409,7 @@
         "THING_GROUP",
         "CLIENT_ID",
         "SOURCE_IP",
-        "PRINCIPAL_ID",
-        "EVENT_TYPE",
-        "DEVICE_DEFENDER"
+        "PRINCIPAL_ID"
       ]
     },
     "LoggingOptionsPayload":{
@@ -12629,6 +12844,12 @@
       "max":1,
       "min":0
     },
+    "ServerCertificateConfig":{
+      "type":"structure",
+      "members":{
+        "enableOCSPCheck":{"shape":"EnableOCSPCheck"}
+      }
+    },
     "ServerCertificateStatus":{
       "type":"string",
       "enum":[
@@ -13893,6 +14114,26 @@
         "removeAutoRegistration":{"shape":"RemoveAutoRegistration"}
       }
     },
+    "UpdateCertificateProviderRequest":{
+      "type":"structure",
+      "required":["certificateProviderName"],
+      "members":{
+        "certificateProviderName":{
+          "shape":"CertificateProviderName",
+          "location":"uri",
+          "locationName":"certificateProviderName"
+        },
+        "lambdaFunctionArn":{"shape":"CertificateProviderFunctionArn"},
+        "accountDefaultForOperations":{"shape":"CertificateProviderAccountDefaultForOperations"}
+      }
+    },
+    "UpdateCertificateProviderResponse":{
+      "type":"structure",
+      "members":{
+        "certificateProviderName":{"shape":"CertificateProviderName"},
+        "certificateProviderArn":{"shape":"CertificateProviderArn"}
+      }
+    },
     "UpdateCertificateRequest":{
       "type":"structure",
       "required":[
@@ -13983,7 +14224,8 @@
         "authorizerConfig":{"shape":"AuthorizerConfig"},
         "domainConfigurationStatus":{"shape":"DomainConfigurationStatus"},
         "removeAuthorizerConfig":{"shape":"RemoveAuthorizerConfig"},
-        "tlsConfig":{"shape":"TlsConfig"}
+        "tlsConfig":{"shape":"TlsConfig"},
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
       }
     },
     "UpdateDomainConfigurationResponse":{

@@ -1613,6 +1613,7 @@
         "DestinationPosition"
       ],
       "members":{
+        "ArrivalTime":{"shape":"Timestamp"},
         "CalculatorName":{
           "shape":"ResourceName",
           "location":"uri",
@@ -1630,6 +1631,7 @@
           "location":"querystring",
           "locationName":"key"
         },
+        "OptimizeFor":{"shape":"OptimizationMode"},
         "TravelMode":{"shape":"TravelMode"},
         "TruckModeOptions":{"shape":"CalculateRouteTruckModeOptions"},
         "WaypointPositions":{"shape":"CalculateRouteRequestWaypointPositionsList"}
@@ -1930,6 +1932,18 @@
         "TrackerName":{"shape":"ResourceName"}
       }
     },
+    "CustomLayer":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^[-._\\w]+$"
+    },
+    "CustomLayerList":{
+      "type":"list",
+      "member":{"shape":"CustomLayer"},
+      "max":10,
+      "min":0
+    },
     "DataSourceConfiguration":{
       "type":"structure",
       "members":{
@@ -1956,6 +1970,11 @@
       "type":"structure",
       "required":["KeyName"],
       "members":{
+        "ForceDelete":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"forceDelete"
+        },
         "KeyName":{
           "shape":"ResourceName",
           "location":"uri",
@@ -3225,6 +3244,7 @@
       "type":"structure",
       "required":["Style"],
       "members":{
+        "CustomLayers":{"shape":"CustomLayerList"},
         "PoliticalView":{"shape":"CountryCode3"},
         "Style":{"shape":"MapStyle"}
       }
@@ -3232,6 +3252,7 @@
     "MapConfigurationUpdate":{
       "type":"structure",
       "members":{
+        "CustomLayers":{"shape":"CustomLayerList"},
         "PoliticalView":{"shape":"CountryCode3OrEmpty"}
       }
     },
@@ -3240,6 +3261,13 @@
       "max":100,
       "min":1,
       "pattern":"^[-._\\w]+$"
+    },
+    "OptimizationMode":{
+      "type":"string",
+      "enum":[
+        "FastestRoute",
+        "ShortestRoute"
+      ]
     },
     "Place":{
       "type":"structure",
@@ -3256,6 +3284,7 @@
         "PostalCode":{"shape":"String"},
         "Region":{"shape":"String"},
         "Street":{"shape":"String"},
+        "SubMunicipality":{"shape":"String"},
         "SubRegion":{"shape":"String"},
         "SupplementalCategories":{"shape":"PlaceSupplementalCategoryList"},
         "TimeZone":{"shape":"TimeZone"},

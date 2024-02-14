@@ -61,23 +61,14 @@ class Command implements CommandInterface
     }
 
     /**
-     * For overriding auth schemes on a per endpoint basis when using
-     * EndpointV2 provider. Intended for internal use only.
-     *
-     * @param array $authSchemes
-     *
-     * @internal
-     */
-    public function setAuthSchemes(array $authSchemes)
-    {
-        $this->authSchemes = $authSchemes;
-    }
-
-    /**
      * Get auth schemes added to command as required
      * for endpoint resolution
      *
      * @returns array
+     *
+     * @deprecated In favor of using the @context key.
+     * Auth schemes are now accessible via the `signature_version` key
+     * in a Command's context, if applicable.
      */
     public function getAuthSchemes()
     {

@@ -147,9 +147,9 @@ class ApplyChecksumMiddleware
      * @param CommandInterface $command
      * @return bool
      */
-    private function isS3Express($command): bool
+    private function isS3Express(CommandInterface $command): bool
     {
-        $authSchemes = $command->getAuthSchemes();
-        return isset($authSchemes['name']) && $authSchemes['name'] == 's3express';
+        return isset($command['@context']['signing_service'])
+            && $command['@context']['signing_service'] === 's3express';
     }
 }

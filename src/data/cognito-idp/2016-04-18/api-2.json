@@ -4088,6 +4088,7 @@
         "VerifyAuthChallengeResponse":{"shape":"ArnType"},
         "PreTokenGeneration":{"shape":"ArnType"},
         "UserMigration":{"shape":"ArnType"},
+        "PreTokenGenerationConfig":{"shape":"PreTokenGenerationVersionConfigType"},
         "CustomSMSSender":{"shape":"CustomSMSLambdaVersionConfigType"},
         "CustomEmailSender":{"shape":"CustomEmailLambdaVersionConfigType"},
         "KMSKeyID":{"shape":"ArnType"}
@@ -4460,6 +4461,24 @@
       "type":"string",
       "max":2048,
       "min":0
+    },
+    "PreTokenGenerationLambdaVersionType":{
+      "type":"string",
+      "enum":[
+        "V1_0",
+        "V2_0"
+      ]
+    },
+    "PreTokenGenerationVersionConfigType":{
+      "type":"structure",
+      "required":[
+        "LambdaVersion",
+        "LambdaArn"
+      ],
+      "members":{
+        "LambdaVersion":{"shape":"PreTokenGenerationLambdaVersionType"},
+        "LambdaArn":{"shape":"ArnType"}
+      }
     },
     "PrecedenceType":{
       "type":"integer",

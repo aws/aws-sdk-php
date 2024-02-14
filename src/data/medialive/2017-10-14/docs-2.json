@@ -656,6 +656,25 @@
       "refs": {
       }
     },
+    "ColorCorrection": {
+      "base": "Property of ColorCorrectionSettings. Used for custom color space conversion. The object identifies one 3D LUT file and specifies the input/output color space combination that the file will be used for.",
+      "refs": {
+        "__listOfColorCorrection$member": null
+      }
+    },
+    "ColorCorrectionSettings": {
+      "base": "Property of encoderSettings. Controls color conversion when you are using 3D LUT files to perform color conversion on video.",
+      "refs": {
+        "EncoderSettings$ColorCorrectionSettings": "Color Correction Settings"
+      }
+    },
+    "ColorSpace": {
+      "base": "Property of colorCorrections. When you are using 3D LUT files to perform color conversion on video, these are the supported color spaces.",
+      "refs": {
+        "ColorCorrection$InputColorSpace": "The color space of the input.",
+        "ColorCorrection$OutputColorSpace": "The color space of the output."
+      }
+    },
     "ColorSpacePassthroughSettings": {
       "base": "Passthrough applies no color space conversion to the output",
       "refs": {
@@ -3815,7 +3834,9 @@
         "Reservation$Duration": "Lease duration, e.g. '12'",
         "VideoDescription$Height": "Output video height, in pixels. Must be an even number. For most codecs, you can leave this field and width blank in order to use the height and width (resolution) from the source. Note, however, that leaving blank is not recommended. For the Frame Capture codec, height and width are required.",
         "VideoDescription$Width": "Output video width, in pixels. Must be an even number. For most codecs, you can leave this field and height blank in order to use the height and width (resolution) from the source. Note, however, that leaving blank is not recommended. For the Frame Capture codec, height and width are required.",
-        "__listOf__integer$member": null
+        "__listOf__integer$member": null,
+        "InputDeviceConfigurableAudioChannelPairConfig$Id": "The ID for one audio pair configuration, a value from 1 to 8.",
+        "InputDeviceUhdAudioChannelPairConfig$Id": "The ID for one audio pair configuration, a value from 1 to 8."
       }
     },
     "__integerMin0": {
@@ -4330,6 +4351,12 @@
         "ListChannelsResultModel$Channels": null
       }
     },
+    "__listOfColorCorrection": {
+      "base": null,
+      "refs": {
+        "ColorCorrectionSettings$GlobalColorCorrections": "An array of colorCorrections that applies when you are using 3D LUT files to perform color conversion on video. Each colorCorrection contains one 3D LUT file (that defines the color mapping for converting an input color space to an output color space), and the input/output combination that this 3D LUT file applies to. MediaLive reads the color space in the input metadata, determines the color space that you have specified for the output, and finds and uses the LUT file that applies to this combination."
+      }
+    },
     "__listOfFailoverCondition": {
       "base": null,
       "refs": {
@@ -4691,6 +4718,7 @@
         "ChannelSummary$Name": "The name of the channel. (user-mutable)",
         "ChannelSummary$RoleArn": "The Amazon Resource Name (ARN) of the role assumed when running the Channel.",
         "ClaimDeviceRequest$Id": "The id of the device you want to claim.",
+        "ColorCorrection$Uri": "The URI of the 3D LUT file. The protocol must be 's3:' or 's3ssl:':.",
         "CreateChannel$Name": "Name of channel.",
         "CreateChannel$RequestId": "Unique request ID to be specified. This is needed to prevent retries from\ncreating multiple resources.\n",
         "CreateChannel$Reserved": "Deprecated field that's only usable by whitelisted customers.",
@@ -5034,6 +5062,42 @@
       "refs": {
         "MaintenanceCreateSettings$MaintenanceStartTime": "Choose the hour that maintenance will start. The chosen time is used for all future maintenance windows.",
         "MaintenanceUpdateSettings$MaintenanceStartTime": "Choose the hour that maintenance will start. The chosen time is used for all future maintenance windows."
+      }
+    },
+    "InputDeviceConfigurableAudioChannelPairConfig": {
+      "base": "One audio configuration that specifies the format for one audio pair that the device produces as output.",
+      "refs": {
+        "__listOfInputDeviceConfigurableAudioChannelPairConfig$member": null
+      }
+    },
+    "InputDeviceConfigurableAudioChannelPairProfile": {
+      "base": "Property of InputDeviceConfigurableAudioChannelPairConfig, which configures one audio channel that the device produces.",
+      "refs": {
+        "InputDeviceConfigurableAudioChannelPairConfig$Profile": "The profile to set for one audio pair configuration. Choose an enumeration value. Each value describes one audio configuration using the format (rate control algorithm)-(codec)_(quality)-(bitrate in bytes). For example, CBR-AAC_HQ-192000. Or choose DISABLED, in which case the device won't produce audio for this pair."
+      }
+    },
+    "InputDeviceUhdAudioChannelPairConfig": {
+      "base": "One audio configuration that specifies the format for one audio pair that the device produces as output.",
+      "refs": {
+        "__listOfInputDeviceUhdAudioChannelPairConfig$member": null
+      }
+    },
+    "InputDeviceUhdAudioChannelPairProfile": {
+      "base": "Property of InputDeviceUhdAudioChannelPairConfig, which describes one audio channel that the device is configured to produce.",
+      "refs": {
+        "InputDeviceUhdAudioChannelPairConfig$Profile": "The profile for one audio pair configuration. This property describes one audio configuration in the format (rate control algorithm)-(codec)_(quality)-(bitrate in bytes). For example, CBR-AAC_HQ-192000. Or DISABLED, in which case the device won't produce audio for this pair."
+      }
+    },
+    "__listOfInputDeviceConfigurableAudioChannelPairConfig": {
+      "base": null,
+      "refs": {
+        "InputDeviceConfigurableSettings$AudioChannelPairs": "An array of eight audio configurations, one for each audio pair in the source. Set up each audio configuration either to exclude the pair, or to format it and include it in the output from the device. This parameter applies only to UHD devices, and only when the device is configured as the source for a MediaConnect flow. For an HD device, you configure the audio by setting up audio selectors in the channel configuration."
+      }
+    },
+    "__listOfInputDeviceUhdAudioChannelPairConfig": {
+      "base": null,
+      "refs": {
+        "InputDeviceUhdSettings$AudioChannelPairs": "An array of eight audio configurations, one for each audio pair in the source. Each audio configuration specifies either to exclude the pair, or to format it and include it in the output from the UHD device. Applies only when the device is configured as the source for a MediaConnect flow."
       }
     }
   }

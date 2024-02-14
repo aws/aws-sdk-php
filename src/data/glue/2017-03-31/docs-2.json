@@ -26,7 +26,7 @@
     "CheckSchemaVersionValidity": "<p>Validates the supplied schema. This call has no side effects, it simply validates using the supplied schema using <code>DataFormat</code> as the format. Since it does not take a schema set name, no compatibility checks are performed.</p>",
     "CreateBlueprint": "<p>Registers a blueprint with Glue.</p>",
     "CreateClassifier": "<p>Creates a classifier in the user's account. This can be a <code>GrokClassifier</code>, an <code>XMLClassifier</code>, a <code>JsonClassifier</code>, or a <code>CsvClassifier</code>, depending on which field of the request is present.</p>",
-    "CreateConnection": "<p>Creates a connection definition in the Data Catalog.</p>",
+    "CreateConnection": "<p>Creates a connection definition in the Data Catalog.</p> <p>Connections used for creating federated resources require the IAM <code>glue:PassConnection</code> permission.</p>",
     "CreateCrawler": "<p>Creates a new crawler with specified targets, role, configuration, and optional schedule. At least one crawl target must be specified, in the <code>s3Targets</code> field, the <code>jdbcTargets</code> field, or the <code>DynamoDBTargets</code> field.</p>",
     "CreateCustomEntityType": "<p>Creates a custom pattern that is used to detect sensitive data across the columns and rows of your structured data.</p> <p>Each custom pattern you create specifies a regular expression and an optional list of context words. If no context words are passed only a regular expression is checked.</p>",
     "CreateDataQualityRuleset": "<p>Creates a data quality ruleset with DQDL rules applied to a specified Glue table.</p> <p>You create the ruleset using the Data Quality Definition Language (DQDL). For more information, see the Glue developer guide.</p>",
@@ -243,6 +243,12 @@
         "TriggerUpdate$Actions": "<p>The actions initiated by this trigger.</p>"
       }
     },
+    "AdditionalContextMap": {
+      "base": null,
+      "refs": {
+        "QuerySessionContext$AdditionalContext": "<p>An opaque string-string map passed by the query engine.</p>"
+      }
+    },
     "AdditionalOptionKeys": {
       "base": null,
       "refs": {
@@ -343,6 +349,7 @@
     "ArnString": {
       "base": null,
       "refs": {
+        "GetUnfilteredTableMetadataResponse$ResourceArn": "<p>The resource ARN of the parent resource extracted from the request.</p>",
         "TableOptimizerConfiguration$roleArn": "<p>A role passed by the caller which gives the service permission to update the resources associated with the optimizer on the caller's behalf.</p>"
       }
     },
@@ -1545,7 +1552,7 @@
     "ConnectionProperties": {
       "base": null,
       "refs": {
-        "Connection$ConnectionProperties": "<p>These key-value pairs define parameters for the connection:</p> <ul> <li> <p> <code>HOST</code> - The host URI: either the fully qualified domain name (FQDN) or the IPv4 address of the database host.</p> </li> <li> <p> <code>PORT</code> - The port number, between 1024 and 65535, of the port on which the database host is listening for database connections.</p> </li> <li> <p> <code>USER_NAME</code> - The name under which to log in to the database. The value string for <code>USER_NAME</code> is \"<code>USERNAME</code>\".</p> </li> <li> <p> <code>PASSWORD</code> - A password, if one is used, for the user name.</p> </li> <li> <p> <code>ENCRYPTED_PASSWORD</code> - When you enable connection password protection by setting <code>ConnectionPasswordEncryption</code> in the Data Catalog encryption settings, this field stores the encrypted password.</p> </li> <li> <p> <code>JDBC_DRIVER_JAR_URI</code> - The Amazon Simple Storage Service (Amazon S3) path of the JAR file that contains the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_DRIVER_CLASS_NAME</code> - The class name of the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_ENGINE</code> - The name of the JDBC engine to use.</p> </li> <li> <p> <code>JDBC_ENGINE_VERSION</code> - The version of the JDBC engine to use.</p> </li> <li> <p> <code>CONFIG_FILES</code> - (Reserved for future use.)</p> </li> <li> <p> <code>INSTANCE_ID</code> - The instance ID to use.</p> </li> <li> <p> <code>JDBC_CONNECTION_URL</code> - The URL for connecting to a JDBC data source.</p> </li> <li> <p> <code>JDBC_ENFORCE_SSL</code> - A Boolean string (true, false) specifying whether Secure Sockets Layer (SSL) with hostname matching is enforced for the JDBC connection on the client. The default is false.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT</code> - An Amazon S3 location specifying the customer's root certificate. Glue uses this root certificate to validate the customer’s certificate when connecting to the customer database. Glue only handles X.509 certificates. The certificate provided must be DER-encoded and supplied in Base64 encoding PEM format.</p> </li> <li> <p> <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code> - By default, this is <code>false</code>. Glue validates the Signature algorithm and Subject Public Key Algorithm for the customer certificate. The only permitted algorithms for the Signature algorithm are SHA256withRSA, SHA384withRSA or SHA512withRSA. For the Subject Public Key Algorithm, the key length must be at least 2048. You can set the value of this property to <code>true</code> to skip Glue’s validation of the customer certificate.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT_STRING</code> - A custom JDBC certificate string which is used for domain match or distinguished name match to prevent a man-in-the-middle attack. In Oracle database, this is used as the <code>SSL_SERVER_CERT_DN</code>; in Microsoft SQL Server, this is used as the <code>hostNameInCertificate</code>.</p> </li> <li> <p> <code>CONNECTION_URL</code> - The URL for connecting to a general (non-JDBC) data source.</p> </li> <li> <p> <code>SECRET_ID</code> - The secret ID used for the secret manager of credentials.</p> </li> <li> <p> <code>CONNECTOR_URL</code> - The connector URL for a MARKETPLACE or CUSTOM connection.</p> </li> <li> <p> <code>CONNECTOR_TYPE</code> - The connector type for a MARKETPLACE or CUSTOM connection.</p> </li> <li> <p> <code>CONNECTOR_CLASS_NAME</code> - The connector class name for a MARKETPLACE or CUSTOM connection.</p> </li> <li> <p> <code>KAFKA_BOOTSTRAP_SERVERS</code> - A comma-separated list of host and port pairs that are the addresses of the Apache Kafka brokers in a Kafka cluster to which a Kafka client will connect to and bootstrap itself.</p> </li> <li> <p> <code>KAFKA_SSL_ENABLED</code> - Whether to enable or disable SSL on an Apache Kafka connection. Default value is \"true\".</p> </li> <li> <p> <code>KAFKA_CUSTOM_CERT</code> - The Amazon S3 URL for the private CA cert file (.pem format). The default is an empty string.</p> </li> <li> <p> <code>KAFKA_SKIP_CUSTOM_CERT_VALIDATION</code> - Whether to skip the validation of the CA cert file or not. Glue validates for three algorithms: SHA256withRSA, SHA384withRSA and SHA512withRSA. Default value is \"false\".</p> </li> <li> <p> <code>KAFKA_CLIENT_KEYSTORE</code> - The Amazon S3 location of the client keystore file for Kafka client side authentication (Optional).</p> </li> <li> <p> <code>KAFKA_CLIENT_KEYSTORE_PASSWORD</code> - The password to access the provided keystore (Optional).</p> </li> <li> <p> <code>KAFKA_CLIENT_KEY_PASSWORD</code> - A keystore can consist of multiple keys, so this is the password to access the client key to be used with the Kafka server side key (Optional).</p> </li> <li> <p> <code>ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD</code> - The encrypted version of the Kafka client keystore password (if the user has the Glue encrypt passwords setting selected).</p> </li> <li> <p> <code>ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD</code> - The encrypted version of the Kafka client key password (if the user has the Glue encrypt passwords setting selected).</p> </li> <li> <p> <code>KAFKA_SASL_MECHANISM</code> - <code>\"SCRAM-SHA-512\"</code>, <code>\"GSSAPI\"</code>, or <code>\"AWS_MSK_IAM\"</code>. These are the supported <a href=\"https://www.iana.org/assignments/sasl-mechanisms/sasl-mechanisms.xhtml\">SASL Mechanisms</a>.</p> </li> <li> <p> <code>KAFKA_SASL_SCRAM_USERNAME</code> - A plaintext username used to authenticate with the \"SCRAM-SHA-512\" mechanism.</p> </li> <li> <p> <code>KAFKA_SASL_SCRAM_PASSWORD</code> - A plaintext password used to authenticate with the \"SCRAM-SHA-512\" mechanism.</p> </li> <li> <p> <code>ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD</code> - The encrypted version of the Kafka SASL SCRAM password (if the user has the Glue encrypt passwords setting selected).</p> </li> <li> <p> <code>KAFKA_SASL_SCRAM_SECRETS_ARN</code> - The Amazon Resource Name of a secret in Amazon Web Services Secrets Manager.</p> </li> <li> <p> <code>KAFKA_SASL_GSSAPI_KEYTAB</code> - The S3 location of a Kerberos <code>keytab</code> file. A keytab stores long-term keys for one or more principals. For more information, see <a href=\"https://web.mit.edu/kerberos/krb5-latest/doc/basic/keytab_def.html\">MIT Kerberos Documentation: Keytab</a>.</p> </li> <li> <p> <code>KAFKA_SASL_GSSAPI_KRB5_CONF</code> - The S3 location of a Kerberos <code>krb5.conf</code> file. A krb5.conf stores Kerberos configuration information, such as the location of the KDC server. For more information, see <a href=\"https://web.mit.edu/kerberos/krb5-1.12/doc/admin/conf_files/krb5_conf.html\">MIT Kerberos Documentation: krb5.conf</a>.</p> </li> <li> <p> <code>KAFKA_SASL_GSSAPI_SERVICE</code> - The Kerberos service name, as set with <code>sasl.kerberos.service.name</code> in your <a href=\"https://kafka.apache.org/documentation/#brokerconfigs_sasl.kerberos.service.name\">Kafka Configuration</a>.</p> </li> <li> <p> <code>KAFKA_SASL_GSSAPI_PRINCIPAL</code> - The name of the Kerberos princial used by Glue. For more information, see <a href=\"https://kafka.apache.org/documentation/#security_sasl_kerberos_clientconfig\">Kafka Documentation: Configuring Kafka Brokers</a>.</p> </li> </ul>",
+        "Connection$ConnectionProperties": "<p>These key-value pairs define parameters for the connection:</p> <ul> <li> <p> <code>HOST</code> - The host URI: either the fully qualified domain name (FQDN) or the IPv4 address of the database host.</p> </li> <li> <p> <code>PORT</code> - The port number, between 1024 and 65535, of the port on which the database host is listening for database connections.</p> </li> <li> <p> <code>USER_NAME</code> - The name under which to log in to the database. The value string for <code>USER_NAME</code> is \"<code>USERNAME</code>\".</p> </li> <li> <p> <code>PASSWORD</code> - A password, if one is used, for the user name.</p> </li> <li> <p> <code>ENCRYPTED_PASSWORD</code> - When you enable connection password protection by setting <code>ConnectionPasswordEncryption</code> in the Data Catalog encryption settings, this field stores the encrypted password.</p> </li> <li> <p> <code>JDBC_DRIVER_JAR_URI</code> - The Amazon Simple Storage Service (Amazon S3) path of the JAR file that contains the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_DRIVER_CLASS_NAME</code> - The class name of the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_ENGINE</code> - The name of the JDBC engine to use.</p> </li> <li> <p> <code>JDBC_ENGINE_VERSION</code> - The version of the JDBC engine to use.</p> </li> <li> <p> <code>CONFIG_FILES</code> - (Reserved for future use.)</p> </li> <li> <p> <code>INSTANCE_ID</code> - The instance ID to use.</p> </li> <li> <p> <code>JDBC_CONNECTION_URL</code> - The URL for connecting to a JDBC data source.</p> </li> <li> <p> <code>JDBC_ENFORCE_SSL</code> - A Boolean string (true, false) specifying whether Secure Sockets Layer (SSL) with hostname matching is enforced for the JDBC connection on the client. The default is false.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT</code> - An Amazon S3 location specifying the customer's root certificate. Glue uses this root certificate to validate the customer’s certificate when connecting to the customer database. Glue only handles X.509 certificates. The certificate provided must be DER-encoded and supplied in Base64 encoding PEM format.</p> </li> <li> <p> <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code> - By default, this is <code>false</code>. Glue validates the Signature algorithm and Subject Public Key Algorithm for the customer certificate. The only permitted algorithms for the Signature algorithm are SHA256withRSA, SHA384withRSA or SHA512withRSA. For the Subject Public Key Algorithm, the key length must be at least 2048. You can set the value of this property to <code>true</code> to skip Glue’s validation of the customer certificate.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT_STRING</code> - A custom JDBC certificate string which is used for domain match or distinguished name match to prevent a man-in-the-middle attack. In Oracle database, this is used as the <code>SSL_SERVER_CERT_DN</code>; in Microsoft SQL Server, this is used as the <code>hostNameInCertificate</code>.</p> </li> <li> <p> <code>CONNECTION_URL</code> - The URL for connecting to a general (non-JDBC) data source.</p> </li> <li> <p> <code>SECRET_ID</code> - The secret ID used for the secret manager of credentials.</p> </li> <li> <p> <code>CONNECTOR_URL</code> - The connector URL for a MARKETPLACE or CUSTOM connection.</p> </li> <li> <p> <code>CONNECTOR_TYPE</code> - The connector type for a MARKETPLACE or CUSTOM connection.</p> </li> <li> <p> <code>CONNECTOR_CLASS_NAME</code> - The connector class name for a MARKETPLACE or CUSTOM connection.</p> </li> <li> <p> <code>KAFKA_BOOTSTRAP_SERVERS</code> - A comma-separated list of host and port pairs that are the addresses of the Apache Kafka brokers in a Kafka cluster to which a Kafka client will connect to and bootstrap itself.</p> </li> <li> <p> <code>KAFKA_SSL_ENABLED</code> - Whether to enable or disable SSL on an Apache Kafka connection. Default value is \"true\".</p> </li> <li> <p> <code>KAFKA_CUSTOM_CERT</code> - The Amazon S3 URL for the private CA cert file (.pem format). The default is an empty string.</p> </li> <li> <p> <code>KAFKA_SKIP_CUSTOM_CERT_VALIDATION</code> - Whether to skip the validation of the CA cert file or not. Glue validates for three algorithms: SHA256withRSA, SHA384withRSA and SHA512withRSA. Default value is \"false\".</p> </li> <li> <p> <code>KAFKA_CLIENT_KEYSTORE</code> - The Amazon S3 location of the client keystore file for Kafka client side authentication (Optional).</p> </li> <li> <p> <code>KAFKA_CLIENT_KEYSTORE_PASSWORD</code> - The password to access the provided keystore (Optional).</p> </li> <li> <p> <code>KAFKA_CLIENT_KEY_PASSWORD</code> - A keystore can consist of multiple keys, so this is the password to access the client key to be used with the Kafka server side key (Optional).</p> </li> <li> <p> <code>ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD</code> - The encrypted version of the Kafka client keystore password (if the user has the Glue encrypt passwords setting selected).</p> </li> <li> <p> <code>ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD</code> - The encrypted version of the Kafka client key password (if the user has the Glue encrypt passwords setting selected).</p> </li> <li> <p> <code>KAFKA_SASL_MECHANISM</code> - <code>\"SCRAM-SHA-512\"</code>, <code>\"GSSAPI\"</code>, <code>\"AWS_MSK_IAM\"</code>, or <code>\"PLAIN\"</code>. These are the supported <a href=\"https://www.iana.org/assignments/sasl-mechanisms/sasl-mechanisms.xhtml\">SASL Mechanisms</a>.</p> </li> <li> <p> <code>KAFKA_SASL_PLAIN_USERNAME</code> - A plaintext username used to authenticate with the \"PLAIN\" mechanism.</p> </li> <li> <p> <code>KAFKA_SASL_PLAIN_PASSWORD</code> - A plaintext password used to authenticate with the \"PLAIN\" mechanism.</p> </li> <li> <p> <code>ENCRYPTED_KAFKA_SASL_PLAIN_PASSWORD</code> - The encrypted version of the Kafka SASL PLAIN password (if the user has the Glue encrypt passwords setting selected).</p> </li> <li> <p> <code>KAFKA_SASL_SCRAM_USERNAME</code> - A plaintext username used to authenticate with the \"SCRAM-SHA-512\" mechanism.</p> </li> <li> <p> <code>KAFKA_SASL_SCRAM_PASSWORD</code> - A plaintext password used to authenticate with the \"SCRAM-SHA-512\" mechanism.</p> </li> <li> <p> <code>ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD</code> - The encrypted version of the Kafka SASL SCRAM password (if the user has the Glue encrypt passwords setting selected).</p> </li> <li> <p> <code>KAFKA_SASL_SCRAM_SECRETS_ARN</code> - The Amazon Resource Name of a secret in Amazon Web Services Secrets Manager.</p> </li> <li> <p> <code>KAFKA_SASL_GSSAPI_KEYTAB</code> - The S3 location of a Kerberos <code>keytab</code> file. A keytab stores long-term keys for one or more principals. For more information, see <a href=\"https://web.mit.edu/kerberos/krb5-latest/doc/basic/keytab_def.html\">MIT Kerberos Documentation: Keytab</a>.</p> </li> <li> <p> <code>KAFKA_SASL_GSSAPI_KRB5_CONF</code> - The S3 location of a Kerberos <code>krb5.conf</code> file. A krb5.conf stores Kerberos configuration information, such as the location of the KDC server. For more information, see <a href=\"https://web.mit.edu/kerberos/krb5-1.12/doc/admin/conf_files/krb5_conf.html\">MIT Kerberos Documentation: krb5.conf</a>.</p> </li> <li> <p> <code>KAFKA_SASL_GSSAPI_SERVICE</code> - The Kerberos service name, as set with <code>sasl.kerberos.service.name</code> in your <a href=\"https://kafka.apache.org/documentation/#brokerconfigs_sasl.kerberos.service.name\">Kafka Configuration</a>.</p> </li> <li> <p> <code>KAFKA_SASL_GSSAPI_PRINCIPAL</code> - The name of the Kerberos princial used by Glue. For more information, see <a href=\"https://kafka.apache.org/documentation/#security_sasl_kerberos_clientconfig\">Kafka Documentation: Configuring Kafka Brokers</a>.</p> </li> </ul>",
         "ConnectionInput$ConnectionProperties": "<p>These key-value pairs define parameters for the connection.</p>"
       }
     },
@@ -1590,6 +1597,18 @@
       "refs": {
         "ConnectorDataSource$Data": "<p>A map specifying connection options for the node. You can find standard connection options for the corresponding connection type in the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html\"> Connection parameters</a> section of the Glue documentation.</p>",
         "ConnectorDataTarget$Data": "<p>A map specifying connection options for the node. You can find standard connection options for the corresponding connection type in the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html\"> Connection parameters</a> section of the Glue documentation.</p>"
+      }
+    },
+    "ContextKey": {
+      "base": null,
+      "refs": {
+        "AdditionalContextMap$key": null
+      }
+    },
+    "ContextValue": {
+      "base": null,
+      "refs": {
+        "AdditionalContextMap$value": null
       }
     },
     "ContextWords": {
@@ -2192,11 +2211,49 @@
         "DataLakePrincipal$DataLakePrincipalIdentifier": "<p>An identifier for the Lake Formation principal.</p>"
       }
     },
+    "DataQualityAnalyzerResult": {
+      "base": "<p>Describes the result of the evaluation of a data quality analyzer.</p>",
+      "refs": {
+        "DataQualityAnalyzerResults$member": null
+      }
+    },
+    "DataQualityAnalyzerResults": {
+      "base": null,
+      "refs": {
+        "DataQualityResult$AnalyzerResults": "<p>A list of <code>DataQualityAnalyzerResult</code> objects representing the results for each analyzer. </p>",
+        "GetDataQualityResultResponse$AnalyzerResults": "<p>A list of <code>DataQualityAnalyzerResult</code> objects representing the results for each analyzer. </p>"
+      }
+    },
     "DataQualityEvaluationRunAdditionalRunOptions": {
       "base": "<p>Additional run options you can specify for an evaluation run.</p>",
       "refs": {
         "GetDataQualityRulesetEvaluationRunResponse$AdditionalRunOptions": "<p>Additional run options you can specify for an evaluation run.</p>",
         "StartDataQualityRulesetEvaluationRunRequest$AdditionalRunOptions": "<p>Additional run options you can specify for an evaluation run.</p>"
+      }
+    },
+    "DataQualityMetricValues": {
+      "base": "<p>Describes the data quality metric value according to the analysis of historical data.</p>",
+      "refs": {
+        "MetricBasedObservation$MetricValues": "<p>An object of type <code>DataQualityMetricValues</code> representing the analysis of the data quality metric value.</p>"
+      }
+    },
+    "DataQualityObservation": {
+      "base": "<p>Describes the observation generated after evaluating the rules and analyzers.</p>",
+      "refs": {
+        "DataQualityObservations$member": null
+      }
+    },
+    "DataQualityObservationDescription": {
+      "base": null,
+      "refs": {
+        "DataQualityObservation$Description": "<p>A description of the data quality observation.</p>"
+      }
+    },
+    "DataQualityObservations": {
+      "base": null,
+      "refs": {
+        "DataQualityResult$Observations": "<p>A list of <code>DataQualityObservation</code> objects representing the observations generated after evaluating the rules and analyzers. </p>",
+        "GetDataQualityResultResponse$Observations": "<p>A list of <code>DataQualityObservation</code> objects representing the observations generated after evaluating the rules and analyzers. </p>"
       }
     },
     "DataQualityResult": {
@@ -2264,6 +2321,15 @@
       "base": "<p>Describes the result of the evaluation of a data quality rule.</p>",
       "refs": {
         "DataQualityRuleResults$member": null
+      }
+    },
+    "DataQualityRuleResultDescription": {
+      "base": null,
+      "refs": {
+        "DataQualityAnalyzerResult$Description": "<p>A description of the data quality analyzer.</p>",
+        "DataQualityAnalyzerResult$EvaluationMessage": "<p>An evaluation message.</p>",
+        "DataQualityRuleResult$Description": "<p>A description of the data quality rule.</p>",
+        "DataQualityRuleResult$EvaluationMessage": "<p>An evaluation message.</p>"
       }
     },
     "DataQualityRuleResultStatus": {
@@ -2731,8 +2797,6 @@
         "CreateSchemaResponse$Description": "<p>A description of the schema if specified when created.</p>",
         "CreateSessionRequest$Description": "<p>The description of the session. </p>",
         "CreateTriggerRequest$Description": "<p>A description of the new trigger.</p>",
-        "DataQualityRuleResult$Description": "<p>A description of the data quality rule.</p>",
-        "DataQualityRuleResult$EvaluationMessage": "<p>An evaluation message.</p>",
         "DataQualityRulesetFilterCriteria$Description": "<p>The description of the ruleset filter criteria.</p>",
         "DataQualityRulesetListDetails$Description": "<p>A description of the data quality ruleset.</p>",
         "Database$Description": "<p>A description of the database.</p>",
@@ -3187,6 +3251,7 @@
     "EvaluatedMetricsMap": {
       "base": null,
       "refs": {
+        "DataQualityAnalyzerResult$EvaluatedMetrics": "<p>A map of metrics associated with the evaluation of the analyzer.</p>",
         "DataQualityRuleResult$EvaluatedMetrics": "<p>A map of metrics associated with the evaluation of the rule.</p>"
       }
     },
@@ -3298,7 +3363,7 @@
       }
     },
     "FederationSourceRetryableException": {
-      "base": null,
+      "base": "<p>A federation source failed, but the operation may be retried.</p>",
       "refs": {
       }
     },
@@ -4522,10 +4587,13 @@
         "GetMLTransformRequest$TransformId": "<p>The unique identifier of the transform, generated at the time that the transform was created.</p>",
         "GetMLTransformResponse$TransformId": "<p>The unique identifier of the transform, generated at the time that the transform was created.</p>",
         "GetResourcePolicyResponse$PolicyHash": "<p>Contains the hash value associated with this policy.</p>",
+        "GetUnfilteredTableMetadataResponse$QueryAuthorizationId": "<p>A cryptographically generated query identifier generated by Glue or Lake Formation.</p>",
         "GluePolicy$PolicyHash": "<p>Contains the hash value associated with this policy.</p>",
         "MLTransform$TransformId": "<p>The unique transform ID that is generated for the machine learning transform. The ID is guaranteed to be unique and does not change.</p>",
         "PutResourcePolicyRequest$PolicyHashCondition": "<p>The hash value returned when the previous policy was set using <code>PutResourcePolicy</code>. Its purpose is to prevent concurrent modifications of a policy. Do not use this parameter if no previous policy has been set.</p>",
         "PutResourcePolicyResponse$PolicyHash": "<p>A hash of the policy that has just been set. This must be included in a subsequent call that overwrites or updates this policy.</p>",
+        "QuerySessionContext$QueryId": "<p>A unique identifier generated by the query engine for the query.</p>",
+        "QuerySessionContext$QueryAuthorizationId": "<p>A cryptographically generated query identifier generated by Glue or Lake Formation.</p>",
         "StartColumnStatisticsTaskRunResponse$ColumnStatisticsTaskRunId": "<p>The identifier for the column statistics task run.</p>",
         "StartDataQualityRuleRecommendationRunRequest$ClientToken": "<p>Used for idempotency and is recommended to be set to a random ID (such as a UUID) to avoid creating or starting multiple instances of the same resource.</p>",
         "StartDataQualityRuleRecommendationRunResponse$RunId": "<p>The unique run identifier associated with this run.</p>",
@@ -4562,6 +4630,12 @@
       "base": null,
       "refs": {
         "CrawlerTargets$HudiTargets": "<p>Specifies Apache Hudi data store targets.</p>"
+      }
+    },
+    "IAMRoleArn": {
+      "base": null,
+      "refs": {
+        "EncryptionAtRest$CatalogEncryptionServiceRole": "<p>The role that Glue assumes to encrypt and decrypt the Data Catalog objects on the caller's behalf.</p>"
       }
     },
     "IcebergInput": {
@@ -5456,7 +5530,7 @@
         "EntityNotFoundException$Message": "<p>A message describing the problem.</p>",
         "FederatedResourceAlreadyExistsException$Message": "<p>The message describing the problem.</p>",
         "FederationSourceException$Message": "<p>The message describing the problem.</p>",
-        "FederationSourceRetryableException$Message": null,
+        "FederationSourceRetryableException$Message": "<p>A message describing the problem.</p>",
         "GlueEncryptionException$Message": "<p>The message describing the problem.</p>",
         "IdempotentParameterMismatchException$Message": "<p>A message describing the problem.</p>",
         "IllegalBlueprintStateException$Message": "<p>A message describing the problem.</p>",
@@ -5532,6 +5606,12 @@
         "OtherMetadataValueListItem$MetadataValue": "<p>The metadata key’s corresponding value for the other metadata belonging to the same metadata key.</p>",
         "PutSchemaVersionMetadataResponse$MetadataValue": "<p>The value of the metadata key.</p>",
         "RemoveSchemaVersionMetadataResponse$MetadataValue": "<p>The value of the metadata key.</p>"
+      }
+    },
+    "MetricBasedObservation": {
+      "base": "<p>Describes the metric based observation generated based on evaluated data quality metrics.</p>",
+      "refs": {
+        "DataQualityObservation$MetricBasedObservation": "<p>An object of type <code>MetricBasedObservation</code> representing the observation that is based on evaluated data quality metrics.</p>"
       }
     },
     "MicrosoftSQLServerCatalogSource": {
@@ -5663,6 +5743,7 @@
         "CustomEntityType$Name": "<p>A name for the custom pattern that allows it to be retrieved or deleted later. This name must be unique per Amazon Web Services account.</p>",
         "CustomEntityType$RegexString": "<p>A regular expression string that is used for detecting sensitive data in a custom pattern.</p>",
         "CustomEntityTypeNames$member": null,
+        "DataQualityAnalyzerResult$Name": "<p>The name of the data quality analyzer.</p>",
         "DataQualityResult$RulesetName": "<p>The name of the ruleset associated with the data quality result.</p>",
         "DataQualityResult$JobName": "<p>The job name associated with the data quality result, if any.</p>",
         "DataQualityResultDescription$JobName": "<p>The job name associated with the data quality result.</p>",
@@ -5813,7 +5894,9 @@
         "MLTransform$Name": "<p>A user-defined name for the machine learning transform. Names are not guaranteed unique and can be changed at any time.</p>",
         "MLUserDataEncryption$KmsKeyId": "<p>The ID for the customer-provided KMS key.</p>",
         "MatchCriteria$member": null,
+        "MetricBasedObservation$MetricName": "<p>The name of the data quality metric used for generating the observation.</p>",
         "NameStringList$member": null,
+        "NewRules$member": null,
         "Node$Name": "<p>The name of the Glue component represented by the node.</p>",
         "Node$UniqueId": "<p>The unique Id assigned to the node within the workflow.</p>",
         "NodeIdList$member": null,
@@ -5937,6 +6020,12 @@
         "SkewedInfo$SkewedColumnNames": "<p>A list of names of columns that contain skewed values.</p>",
         "StorageDescriptor$BucketColumns": "<p>A list of reducer grouping columns, clustering columns, and bucketing columns in the table.</p>",
         "UnfilteredPartition$AuthorizedColumns": "<p>The list of columns the user has permissions to access.</p>"
+      }
+    },
+    "NewRules": {
+      "base": null,
+      "refs": {
+        "MetricBasedObservation$NewRules": "<p>A list of new data quality rules generated as part of the observation based on the data quality metric value.</p>"
       }
     },
     "NoScheduleException": {
@@ -6180,6 +6269,10 @@
         "CreateJobRequest$MaxCapacity": "<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\"> Glue pricing page</a>.</p> <p>For Glue version 2.0+ jobs, you cannot specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p> <p>Do not set <code>MaxCapacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "CreateMLTransformRequest$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>. </p> <p> <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p> <ul> <li> <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p> </li> <li> <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p> </li> <li> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p> </li> <li> <p> <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p> </li> </ul> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
         "CreateSessionRequest$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that can be allocated when the job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB memory. </p>",
+        "DataQualityMetricValues$ActualValue": "<p>The actual value of the data quality metric.</p>",
+        "DataQualityMetricValues$ExpectedValue": "<p>The expected value of the data quality metric according to the analysis of historical data.</p>",
+        "DataQualityMetricValues$LowerLimit": "<p>The lower limit of the data quality metric value according to the analysis of historical data.</p>",
+        "DataQualityMetricValues$UpperLimit": "<p>The upper limit of the data quality metric value according to the analysis of historical data.</p>",
         "DynamoDBTarget$scanRate": "<p>The percentage of the configured read capacity units to use by the Glue crawler. Read capacity units is a term defined by DynamoDB, and is a numeric value that acts as rate limiter for the number of reads that can be performed on that table per second.</p> <p>The valid values are null or a value between 0.1 to 1.5. A null value is used when user does not provide a value, and defaults to 0.5 of the configured Read Capacity Unit (for provisioned tables), or 0.25 of the max configured Read Capacity Unit (for tables using on-demand mode).</p>",
         "EvaluatedMetricsMap$value": null,
         "GetMLTransformResponse$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>. </p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
@@ -6229,6 +6322,12 @@
         "UpdateMLTransformRequest$MaxRetries": "<p>The maximum number of times to retry a task for this transform after a task run fails.</p>",
         "UpdateWorkflowRequest$MaxConcurrentRuns": "<p>You can use this parameter to prevent unwanted multiple updates to data, to control costs, or in some cases, to prevent exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs.</p>",
         "Workflow$MaxConcurrentRuns": "<p>You can use this parameter to prevent unwanted multiple updates to data, to control costs, or in some cases, to prevent exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs.</p>"
+      }
+    },
+    "NullableString": {
+      "base": null,
+      "refs": {
+        "QuerySessionContext$ClusterId": "<p>An identifier string for the consumer cluster.</p>"
       }
     },
     "OneInput": {
@@ -6361,6 +6460,21 @@
         "UpdateBlueprintRequest$Name": "<p>The name of the blueprint.</p>"
       }
     },
+    "OrchestrationPageSize200": {
+      "base": null,
+      "refs": {
+        "GetJobRunsRequest$MaxResults": "<p>The maximum size of the response.</p>",
+        "GetTriggersRequest$MaxResults": "<p>The maximum size of the response.</p>",
+        "ListTriggersRequest$MaxResults": "<p>The maximum size of a list to return.</p>"
+      }
+    },
+    "OrchestrationPageSize25": {
+      "base": null,
+      "refs": {
+        "ListBlueprintsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
+        "ListWorkflowsRequest$MaxResults": "<p>The maximum size of a list to return.</p>"
+      }
+    },
     "OrchestrationRoleArn": {
       "base": null,
       "refs": {
@@ -6437,17 +6551,14 @@
         "GetCrawlerMetricsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "GetCrawlersRequest$MaxResults": "<p>The number of crawlers to return on each call.</p>",
         "GetDevEndpointsRequest$MaxResults": "<p>The maximum size of information to return.</p>",
-        "GetJobRunsRequest$MaxResults": "<p>The maximum size of the response.</p>",
         "GetJobsRequest$MaxResults": "<p>The maximum size of the response.</p>",
         "GetMLTaskRunsRequest$MaxResults": "<p>The maximum number of results to return. </p>",
         "GetMLTransformsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetPartitionsRequest$MaxResults": "<p>The maximum number of partitions to return in a single response.</p>",
         "GetResourcePoliciesRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "GetSecurityConfigurationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
-        "GetTriggersRequest$MaxResults": "<p>The maximum size of the response.</p>",
         "GetUnfilteredPartitionsMetadataRequest$MaxResults": "<p>The maximum number of partitions to return in a single response.</p>",
         "GetWorkflowRunsRequest$MaxResults": "<p>The maximum number of workflow runs to be included in the response.</p>",
-        "ListBlueprintsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListColumnStatisticsTaskRunsRequest$MaxResults": "<p>The maximum size of the response.</p>",
         "ListCrawlersRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListCrawlsRequest$MaxResults": "<p>The maximum number of results to return. The default is 20, and maximum is 100.</p>",
@@ -6460,8 +6571,6 @@
         "ListJobsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListMLTransformsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListSessionsRequest$MaxResults": "<p>The maximum number of results. </p>",
-        "ListTriggersRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
-        "ListWorkflowsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "SearchTablesRequest$MaxResults": "<p>The maximum number of tables to return in a single response.</p>"
       }
     },
@@ -6634,6 +6743,8 @@
     "PermissionList": {
       "base": null,
       "refs": {
+        "GetUnfilteredTableMetadataRequest$Permissions": "<p>The Lake Formation data permissions of the caller on the table. Used to authorize the call when no view context is found.</p>",
+        "GetUnfilteredTableMetadataResponse$Permissions": "<p>The Lake Formation data permissions of the caller on the table. Used to authorize the call when no view context is found.</p>",
         "PrincipalPermissions$Permissions": "<p>The permissions that are granted to the principal.</p>"
       }
     },
@@ -6845,6 +6956,14 @@
     "QuerySchemaVersionMetadataResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "QuerySessionContext": {
+      "base": "<p>A structure used as a protocol between query engines and Lake Formation or Glue. Contains both a Lake Formation generated authorization identifier and information from the request's authorization context.</p>",
+      "refs": {
+        "GetUnfilteredPartitionMetadataRequest$QuerySessionContext": "<p>A structure used as a protocol between query engines and Lake Formation or Glue. Contains both a Lake Formation generated authorization identifier and information from the request's authorization context.</p>",
+        "GetUnfilteredPartitionsMetadataRequest$QuerySessionContext": "<p>A structure used as a protocol between query engines and Lake Formation or Glue. Contains both a Lake Formation generated authorization identifier and information from the request's authorization context.</p>",
+        "GetUnfilteredTableMetadataRequest$QuerySessionContext": "<p>A structure used as a protocol between query engines and Lake Formation or Glue. Contains both a Lake Formation generated authorization identifier and information from the request's authorization context.</p>"
       }
     },
     "QuoteChar": {
@@ -7107,7 +7226,7 @@
     "RuntimeNameString": {
       "base": null,
       "refs": {
-        "JobCommand$Runtime": "<p>In Ray jobs, Runtime is used to specify the versions of Ray, Python and additional libraries available in your environment. This field is not used in other job types. For supported runtime environment values, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/author-job-ray-runtimes.html\">Working with Ray jobs</a> in the Glue Developer Guide.</p>"
+        "JobCommand$Runtime": "<p>In Ray jobs, Runtime is used to specify the versions of Ray, Python and additional libraries available in your environment. This field is not used in other job types. For supported runtime environment values, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/ray-jobs-section.html\">Supported Ray runtime environments</a> in the Glue Developer Guide.</p>"
       }
     },
     "S3CatalogDeltaSource": {
@@ -7989,6 +8108,12 @@
         "UpdateDevEndpointRequest$DeleteArguments": "<p>The list of argument keys to be deleted from the map of arguments used to configure the <code>DevEndpoint</code>.</p>"
       }
     },
+    "SupportedDialect": {
+      "base": "<p>A structure specifying the dialect and dialect version used by the query engine.</p>",
+      "refs": {
+        "GetUnfilteredTableMetadataRequest$SupportedDialect": "<p>A structure specifying the dialect and dialect version used by the query engine.</p>"
+      }
+    },
     "Table": {
       "base": "<p>Represents a collection of related data organized in columns and rows.</p>",
       "refs": {
@@ -8345,6 +8470,7 @@
         "Partition$LastAnalyzedTime": "<p>The last time at which column statistics were computed for this partition.</p>",
         "PartitionInput$LastAccessTime": "<p>The last time at which the partition was accessed.</p>",
         "PartitionInput$LastAnalyzedTime": "<p>The last time at which column statistics were computed for this partition.</p>",
+        "QuerySessionContext$QueryStartTime": "<p>A timestamp provided by the query engine for when the query started.</p>",
         "Table$CreateTime": "<p>The time when the table definition was created in the Data Catalog.</p>",
         "Table$UpdateTime": "<p>The last time that the table was updated.</p>",
         "Table$LastAccessTime": "<p>The last time that the table was accessed. This is usually taken from HDFS, and might not be reliable.</p>",
@@ -8970,6 +9096,9 @@
       "refs": {
         "BoundedPartitionValueList$member": null,
         "ConnectionProperties$value": null,
+        "GetUnfilteredPartitionMetadataRequest$Region": "<p>Specified only if the base tables belong to a different Amazon Web Services Region.</p>",
+        "GetUnfilteredPartitionsMetadataRequest$Region": "<p>Specified only if the base tables belong to a different Amazon Web Services Region.</p>",
+        "GetUnfilteredTableMetadataRequest$Region": "<p>Specified only if the base tables belong to a different Amazon Web Services Region.</p>",
         "PropertyPredicate$Key": "<p>The key of the property.</p>",
         "PropertyPredicate$Value": "<p>The value of the property.</p>",
         "SearchTablesRequest$SearchText": "<p>A string used for a text search.</p> <p>Specifying a value in quotes filters based on an exact match to the value.</p>",
@@ -9041,6 +9170,18 @@
       "base": null,
       "refs": {
         "DeleteSchemaVersionsInput$Versions": "<p>A version range may be supplied which may be of the format:</p> <ul> <li> <p>a single version number, 5</p> </li> <li> <p>a range, 5-8 : deletes versions 5, 6, 7, 8</p> </li> </ul>"
+      }
+    },
+    "ViewDialect": {
+      "base": null,
+      "refs": {
+        "SupportedDialect$Dialect": "<p>The dialect of the query engine.</p>"
+      }
+    },
+    "ViewDialectVersionString": {
+      "base": null,
+      "refs": {
+        "SupportedDialect$DialectVersion": "<p>The version of the dialect of the query engine. For example, 3.0.0.</p>"
       }
     },
     "ViewTextString": {

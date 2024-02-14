@@ -290,6 +290,7 @@
       },
       "errors":[
         {"shape":"DBClusterAlreadyExistsFault"},
+        {"shape":"InsufficientDBInstanceCapacityFault"},
         {"shape":"InsufficientStorageClusterCapacityFault"},
         {"shape":"DBClusterQuotaExceededFault"},
         {"shape":"StorageQuotaExceededFault"},
@@ -506,6 +507,27 @@
         {"shape":"DBSecurityGroupAlreadyExistsFault"},
         {"shape":"DBSecurityGroupQuotaExceededFault"},
         {"shape":"DBSecurityGroupNotSupportedFault"}
+      ]
+    },
+    "CreateDBShardGroup":{
+      "name":"CreateDBShardGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDBShardGroupMessage"},
+      "output":{
+        "shape":"DBShardGroup",
+        "resultWrapper":"CreateDBShardGroupResult"
+      },
+      "errors":[
+        {"shape":"DBShardGroupAlreadyExistsFault"},
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"MaxDBShardGroupLimitReached"},
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"InvalidMaxAcuFault"},
+        {"shape":"UnsupportedDBEngineVersionFault"},
+        {"shape":"InvalidVPCNetworkStateFault"}
       ]
     },
     "CreateDBSnapshot":{
@@ -841,6 +863,23 @@
       "errors":[
         {"shape":"InvalidDBSecurityGroupStateFault"},
         {"shape":"DBSecurityGroupNotFoundFault"}
+      ]
+    },
+    "DeleteDBShardGroup":{
+      "name":"DeleteDBShardGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteDBShardGroupMessage"},
+      "output":{
+        "shape":"DBShardGroup",
+        "resultWrapper":"DeleteDBShardGroupResult"
+      },
+      "errors":[
+        {"shape":"DBShardGroupNotFoundFault"},
+        {"shape":"InvalidDBShardGroupStateFault"},
+        {"shape":"InvalidDBClusterStateFault"}
       ]
     },
     "DeleteDBSnapshot":{
@@ -1284,6 +1323,18 @@
         {"shape":"InvalidDBProxyStateFault"}
       ]
     },
+    "DescribeDBRecommendations":{
+      "name":"DescribeDBRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDBRecommendationsMessage"},
+      "output":{
+        "shape":"DBRecommendationsMessage",
+        "resultWrapper":"DescribeDBRecommendationsResult"
+      }
+    },
     "DescribeDBSecurityGroups":{
       "name":"DescribeDBSecurityGroups",
       "http":{
@@ -1297,6 +1348,22 @@
       },
       "errors":[
         {"shape":"DBSecurityGroupNotFoundFault"}
+      ]
+    },
+    "DescribeDBShardGroups":{
+      "name":"DescribeDBShardGroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDBShardGroupsMessage"},
+      "output":{
+        "shape":"DescribeDBShardGroupsResponse",
+        "resultWrapper":"DescribeDBShardGroupsResult"
+      },
+      "errors":[
+        {"shape":"DBShardGroupNotFoundFault"},
+        {"shape":"DBClusterNotFoundFault"}
       ]
     },
     "DescribeDBSnapshotAttributes":{
@@ -1594,6 +1661,22 @@
         {"shape":"InvalidDBInstanceStateFault"}
       ]
     },
+    "DisableHttpEndpoint":{
+      "name":"DisableHttpEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableHttpEndpointRequest"},
+      "output":{
+        "shape":"DisableHttpEndpointResponse",
+        "resultWrapper":"DisableHttpEndpointResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"InvalidResourceStateFault"}
+      ]
+    },
     "DownloadDBLogFilePortion":{
       "name":"DownloadDBLogFilePortion",
       "http":{
@@ -1608,6 +1691,22 @@
       "errors":[
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"DBLogFileNotFoundFault"}
+      ]
+    },
+    "EnableHttpEndpoint":{
+      "name":"EnableHttpEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableHttpEndpointRequest"},
+      "output":{
+        "shape":"EnableHttpEndpointResponse",
+        "resultWrapper":"EnableHttpEndpointResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"InvalidResourceStateFault"}
       ]
     },
     "FailoverDBCluster":{
@@ -1917,6 +2016,37 @@
         {"shape":"InvalidDBProxyStateFault"}
       ]
     },
+    "ModifyDBRecommendation":{
+      "name":"ModifyDBRecommendation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyDBRecommendationMessage"},
+      "output":{
+        "shape":"DBRecommendationMessage",
+        "resultWrapper":"ModifyDBRecommendationResult"
+      },
+      "errors":[]
+    },
+    "ModifyDBShardGroup":{
+      "name":"ModifyDBShardGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyDBShardGroupMessage"},
+      "output":{
+        "shape":"DBShardGroup",
+        "resultWrapper":"ModifyDBShardGroupResult"
+      },
+      "errors":[
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBShardGroupAlreadyExistsFault"},
+        {"shape":"DBShardGroupNotFoundFault"},
+        {"shape":"InvalidMaxAcuFault"}
+      ]
+    },
     "ModifyDBSnapshot":{
       "name":"ModifyDBSnapshot",
       "http":{
@@ -2122,6 +2252,22 @@
         {"shape":"DBInstanceNotFoundFault"}
       ]
     },
+    "RebootDBShardGroup":{
+      "name":"RebootDBShardGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RebootDBShardGroupMessage"},
+      "output":{
+        "shape":"DBShardGroup",
+        "resultWrapper":"RebootDBShardGroupResult"
+      },
+      "errors":[
+        {"shape":"DBShardGroupNotFoundFault"},
+        {"shape":"InvalidDBShardGroupStateFault"}
+      ]
+    },
     "RegisterDBProxyTargets":{
       "name":"RegisterDBProxyTargets",
       "http":{
@@ -2316,7 +2462,8 @@
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"DomainNotFoundFault"},
         {"shape":"DBClusterParameterGroupNotFoundFault"},
-        {"shape":"InvalidDBInstanceStateFault"}
+        {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"InsufficientDBInstanceCapacityFault"}
       ]
     },
     "RestoreDBClusterToPointInTime":{
@@ -2349,7 +2496,8 @@
         {"shape":"StorageQuotaExceededFault"},
         {"shape":"DomainNotFoundFault"},
         {"shape":"DBClusterParameterGroupNotFoundFault"},
-        {"shape":"DBClusterAutomatedBackupNotFoundFault"}
+        {"shape":"DBClusterAutomatedBackupNotFoundFault"},
+        {"shape":"InsufficientDBInstanceCapacityFault"}
       ]
     },
     "RestoreDBInstanceFromDBSnapshot":{
@@ -3175,6 +3323,17 @@
         "InitQuery":{"shape":"String"}
       }
     },
+    "ContextAttribute":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"String"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "ContextAttributeList":{
+      "type":"list",
+      "member":{"shape":"ContextAttribute"}
+    },
     "CopyDBClusterParameterGroupMessage":{
       "type":"structure",
       "required":[
@@ -3405,6 +3564,7 @@
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
+        "EnableLimitlessDatabase":{"shape":"BooleanOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "NetworkType":{"shape":"String"},
         "DBSystemId":{"shape":"String"},
@@ -3678,6 +3838,21 @@
       "type":"structure",
       "members":{
         "DBSecurityGroup":{"shape":"DBSecurityGroup"}
+      }
+    },
+    "CreateDBShardGroupMessage":{
+      "type":"structure",
+      "required":[
+        "DBShardGroupIdentifier",
+        "DBClusterIdentifier",
+        "MaxACU"
+      ],
+      "members":{
+        "DBShardGroupIdentifier":{"shape":"String"},
+        "DBClusterIdentifier":{"shape":"String"},
+        "ComputeRedundancy":{"shape":"IntegerOptional"},
+        "MaxACU":{"shape":"DoubleOptional"},
+        "PubliclyAccessible":{"shape":"BooleanOptional"}
       }
     },
     "CreateDBSnapshotMessage":{
@@ -3975,7 +4150,8 @@
         "MasterUserSecret":{"shape":"MasterUserSecret"},
         "IOOptimizedNextAllowedModificationTime":{"shape":"TStamp"},
         "LocalWriteForwardingStatus":{"shape":"LocalWriteForwardingStatus"},
-        "AwsBackupRecoveryPointArn":{"shape":"String"}
+        "AwsBackupRecoveryPointArn":{"shape":"String"},
+        "LimitlessDatabase":{"shape":"LimitlessDatabase"}
       },
       "wrapper":true
     },
@@ -5075,6 +5251,48 @@
       },
       "exception":true
     },
+    "DBRecommendation":{
+      "type":"structure",
+      "members":{
+        "RecommendationId":{"shape":"String"},
+        "TypeId":{"shape":"String"},
+        "Severity":{"shape":"String"},
+        "ResourceArn":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "CreatedTime":{"shape":"TStamp"},
+        "UpdatedTime":{"shape":"TStamp"},
+        "Detection":{"shape":"String"},
+        "Recommendation":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Reason":{"shape":"String"},
+        "RecommendedActions":{"shape":"RecommendedActionList"},
+        "Category":{"shape":"String"},
+        "Source":{"shape":"String"},
+        "TypeDetection":{"shape":"String"},
+        "TypeRecommendation":{"shape":"String"},
+        "Impact":{"shape":"String"},
+        "AdditionalInfo":{"shape":"String"},
+        "Links":{"shape":"DocLinkList"},
+        "IssueDetails":{"shape":"IssueDetails"}
+      }
+    },
+    "DBRecommendationList":{
+      "type":"list",
+      "member":{"shape":"DBRecommendation"}
+    },
+    "DBRecommendationMessage":{
+      "type":"structure",
+      "members":{
+        "DBRecommendation":{"shape":"DBRecommendation"}
+      }
+    },
+    "DBRecommendationsMessage":{
+      "type":"structure",
+      "members":{
+        "DBRecommendations":{"shape":"DBRecommendationList"},
+        "Marker":{"shape":"String"}
+      }
+    },
     "DBSecurityGroup":{
       "type":"structure",
       "members":{
@@ -5165,6 +5383,48 @@
       "member":{
         "shape":"DBSecurityGroup",
         "locationName":"DBSecurityGroup"
+      }
+    },
+    "DBShardGroup":{
+      "type":"structure",
+      "members":{
+        "DBShardGroupResourceId":{"shape":"String"},
+        "DBShardGroupIdentifier":{"shape":"String"},
+        "DBClusterIdentifier":{"shape":"String"},
+        "MaxACU":{"shape":"DoubleOptional"},
+        "ComputeRedundancy":{"shape":"IntegerOptional"},
+        "Status":{"shape":"String"},
+        "PubliclyAccessible":{"shape":"BooleanOptional"},
+        "Endpoint":{"shape":"String"}
+      }
+    },
+    "DBShardGroupAlreadyExistsFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"DBShardGroupAlreadyExists",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "DBShardGroupNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"DBShardGroupNotFound",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "DBShardGroupsList":{
+      "type":"list",
+      "member":{
+        "shape":"DBShardGroup",
+        "locationName":"DBShardGroup"
       }
     },
     "DBSnapshot":{
@@ -5572,6 +5832,13 @@
         "DBSecurityGroupName":{"shape":"String"}
       }
     },
+    "DeleteDBShardGroupMessage":{
+      "type":"structure",
+      "required":["DBShardGroupIdentifier"],
+      "members":{
+        "DBShardGroupIdentifier":{"shape":"String"}
+      }
+    },
     "DeleteDBSnapshotMessage":{
       "type":"structure",
       "required":["DBSnapshotIdentifier"],
@@ -5943,12 +6210,39 @@
         "Marker":{"shape":"String"}
       }
     },
+    "DescribeDBRecommendationsMessage":{
+      "type":"structure",
+      "members":{
+        "LastUpdatedAfter":{"shape":"TStamp"},
+        "LastUpdatedBefore":{"shape":"TStamp"},
+        "Locale":{"shape":"String"},
+        "Filters":{"shape":"FilterList"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
     "DescribeDBSecurityGroupsMessage":{
       "type":"structure",
       "members":{
         "DBSecurityGroupName":{"shape":"String"},
         "Filters":{"shape":"FilterList"},
         "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeDBShardGroupsMessage":{
+      "type":"structure",
+      "members":{
+        "DBShardGroupIdentifier":{"shape":"String"},
+        "Filters":{"shape":"FilterList"},
+        "Marker":{"shape":"String"},
+        "MaxRecords":{"shape":"MaxRecords"}
+      }
+    },
+    "DescribeDBShardGroupsResponse":{
+      "type":"structure",
+      "members":{
+        "DBShardGroups":{"shape":"DBShardGroupsList"},
         "Marker":{"shape":"String"}
       }
     },
@@ -6212,6 +6506,31 @@
       "min":1,
       "pattern":".*"
     },
+    "DisableHttpEndpointRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"String"}
+      }
+    },
+    "DisableHttpEndpointResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"String"},
+        "HttpEndpointEnabled":{"shape":"Boolean"}
+      }
+    },
+    "DocLink":{
+      "type":"structure",
+      "members":{
+        "Text":{"shape":"String"},
+        "Url":{"shape":"String"}
+      }
+    },
+    "DocLinkList":{
+      "type":"list",
+      "member":{"shape":"DocLink"}
+    },
     "DomainMembership":{
       "type":"structure",
       "members":{
@@ -6305,6 +6624,20 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "EnableHttpEndpointRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"String"}
+      }
+    },
+    "EnableHttpEndpointResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"String"},
+        "HttpEndpointEnabled":{"shape":"Boolean"}
+      }
     },
     "EncryptionContextMap":{
       "type":"map",
@@ -7028,6 +7361,17 @@
       },
       "exception":true
     },
+    "InvalidDBShardGroupStateFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InvalidDBShardGroupState",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "InvalidDBSnapshotStateFault":{
       "type":"structure",
       "members":{
@@ -7138,12 +7482,34 @@
       },
       "exception":true
     },
+    "InvalidMaxAcuFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InvalidMaxAcu",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "InvalidOptionGroupStateFault":{
       "type":"structure",
       "members":{
       },
       "error":{
         "code":"InvalidOptionGroupStateFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "InvalidResourceStateFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InvalidResourceStateFault",
         "httpStatusCode":400,
         "senderFault":true
       },
@@ -7193,6 +7559,12 @@
       },
       "exception":true
     },
+    "IssueDetails":{
+      "type":"structure",
+      "members":{
+        "PerformanceIssueDetails":{"shape":"PerformanceIssueDetails"}
+      }
+    },
     "KMSKeyNotAccessibleFault":{
       "type":"structure",
       "members":{
@@ -7213,6 +7585,26 @@
       "max":2048,
       "min":1,
       "pattern":"[a-zA-Z0-9_:\\-\\/]+"
+    },
+    "LimitlessDatabase":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"LimitlessDatabaseStatus"},
+        "MinRequiredACU":{"shape":"DoubleOptional"}
+      }
+    },
+    "LimitlessDatabaseStatus":{
+      "type":"string",
+      "enum":[
+        "active",
+        "not-in-use",
+        "enabled",
+        "disabled",
+        "enabling",
+        "disabling",
+        "modifying-max-capacity",
+        "error"
+      ]
     },
     "ListTagsForResourceMessage":{
       "type":"structure",
@@ -7251,10 +7643,51 @@
         "KmsKeyId":{"shape":"String"}
       }
     },
+    "MaxDBShardGroupLimitReached":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"MaxDBShardGroupLimitReached",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "MaxRecords":{
       "type":"integer",
       "max":100,
       "min":20
+    },
+    "Metric":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "References":{"shape":"MetricReferenceList"},
+        "StatisticsDetails":{"shape":"String"},
+        "MetricQuery":{"shape":"MetricQuery"}
+      }
+    },
+    "MetricList":{
+      "type":"list",
+      "member":{"shape":"Metric"}
+    },
+    "MetricQuery":{
+      "type":"structure",
+      "members":{
+        "PerformanceInsightsMetricQuery":{"shape":"PerformanceInsightsMetricQuery"}
+      }
+    },
+    "MetricReference":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "ReferenceDetails":{"shape":"ReferenceDetails"}
+      }
+    },
+    "MetricReferenceList":{
+      "type":"list",
+      "member":{"shape":"MetricReference"}
     },
     "MinimumEngineVersionPerAllowedValue":{
       "type":"structure",
@@ -7380,7 +7813,8 @@
         "EngineMode":{"shape":"String"},
         "AllowEngineModeChange":{"shape":"Boolean"},
         "EnableLocalWriteForwarding":{"shape":"BooleanOptional"},
-        "AwsBackupRecoveryPointArn":{"shape":"AwsBackupRecoveryPointArn"}
+        "AwsBackupRecoveryPointArn":{"shape":"AwsBackupRecoveryPointArn"},
+        "EnableLimitlessDatabase":{"shape":"BooleanOptional"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -7554,6 +7988,24 @@
       "type":"structure",
       "members":{
         "DBProxyTargetGroup":{"shape":"DBProxyTargetGroup"}
+      }
+    },
+    "ModifyDBRecommendationMessage":{
+      "type":"structure",
+      "required":["RecommendationId"],
+      "members":{
+        "RecommendationId":{"shape":"String"},
+        "Locale":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "RecommendedActionUpdates":{"shape":"RecommendedActionUpdateList"}
+      }
+    },
+    "ModifyDBShardGroupMessage":{
+      "type":"structure",
+      "required":["DBShardGroupIdentifier"],
+      "members":{
+        "DBShardGroupIdentifier":{"shape":"String"},
+        "MaxACU":{"shape":"DoubleOptional"}
       }
     },
     "ModifyDBSnapshotAttributeMessage":{
@@ -8072,6 +8524,30 @@
         "MultiTenant":{"shape":"BooleanOptional"}
       }
     },
+    "PerformanceInsightsMetricDimensionGroup":{
+      "type":"structure",
+      "members":{
+        "Dimensions":{"shape":"StringList"},
+        "Group":{"shape":"String"},
+        "Limit":{"shape":"Integer"}
+      }
+    },
+    "PerformanceInsightsMetricQuery":{
+      "type":"structure",
+      "members":{
+        "GroupBy":{"shape":"PerformanceInsightsMetricDimensionGroup"},
+        "Metric":{"shape":"String"}
+      }
+    },
+    "PerformanceIssueDetails":{
+      "type":"structure",
+      "members":{
+        "StartTime":{"shape":"TStamp"},
+        "EndTime":{"shape":"TStamp"},
+        "Metrics":{"shape":"MetricList"},
+        "Analysis":{"shape":"String"}
+      }
+    },
     "PointInTimeRestoreNotEnabledFault":{
       "type":"structure",
       "members":{
@@ -8227,6 +8703,57 @@
         "DBInstance":{"shape":"DBInstance"}
       }
     },
+    "RebootDBShardGroupMessage":{
+      "type":"structure",
+      "required":["DBShardGroupIdentifier"],
+      "members":{
+        "DBShardGroupIdentifier":{"shape":"String"}
+      }
+    },
+    "RecommendedAction":{
+      "type":"structure",
+      "members":{
+        "ActionId":{"shape":"String"},
+        "Title":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Operation":{"shape":"String"},
+        "Parameters":{"shape":"RecommendedActionParameterList"},
+        "ApplyModes":{"shape":"StringList"},
+        "Status":{"shape":"String"},
+        "IssueDetails":{"shape":"IssueDetails"},
+        "ContextAttributes":{"shape":"ContextAttributeList"}
+      }
+    },
+    "RecommendedActionList":{
+      "type":"list",
+      "member":{"shape":"RecommendedAction"}
+    },
+    "RecommendedActionParameter":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"String"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "RecommendedActionParameterList":{
+      "type":"list",
+      "member":{"shape":"RecommendedActionParameter"}
+    },
+    "RecommendedActionUpdate":{
+      "type":"structure",
+      "required":[
+        "ActionId",
+        "Status"
+      ],
+      "members":{
+        "ActionId":{"shape":"String"},
+        "Status":{"shape":"String"}
+      }
+    },
+    "RecommendedActionUpdateList":{
+      "type":"list",
+      "member":{"shape":"RecommendedActionUpdate"}
+    },
     "RecurringCharge":{
       "type":"structure",
       "members":{
@@ -8240,6 +8767,12 @@
       "member":{
         "shape":"RecurringCharge",
         "locationName":"RecurringCharge"
+      }
+    },
+    "ReferenceDetails":{
+      "type":"structure",
+      "members":{
+        "ScalarReferenceDetails":{"shape":"ScalarReferenceDetails"}
       }
     },
     "RegisterDBProxyTargetsRequest":{
@@ -8853,6 +9386,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ScalarReferenceDetails":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"Double"}
+      }
     },
     "ScalingConfiguration":{
       "type":"structure",
@@ -9501,6 +10040,17 @@
       "members":{
         "TimezoneName":{"shape":"String"}
       }
+    },
+    "UnsupportedDBEngineVersionFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"UnsupportedDBEngineVersion",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "UpgradeTarget":{
       "type":"structure",
