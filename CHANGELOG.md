@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.298.10 - 2024-02-14
 
 * `Aws\ControlTower` - Adds support for new Baseline and EnabledBaseline APIs for automating multi-account governance.
 * `Aws\LookoutEquipment` - This feature allows customers to see pointwise model diagnostics results for their models.
