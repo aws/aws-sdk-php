@@ -42,7 +42,9 @@ class AuthSchemeResolver implements AuthSchemeResolverInterface
         $failureReasons = [];
 
         foreach($authSchemes as $authScheme) {
-            $normalizedAuthScheme  = $this->authSchemeMap[$authScheme] ?? $authScheme;
+            $normalizedAuthScheme = isset($this->authSchemeMap[$authScheme])
+                ? $this->authSchemeMap[$authScheme]
+                : $authScheme;
 
             if ($this->isCompatibleAuthScheme($normalizedAuthScheme, $identity)) {
                 return $normalizedAuthScheme;

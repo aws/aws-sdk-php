@@ -4,7 +4,7 @@ namespace Aws;
 use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
-use Aws\Auth\AuthSchemeMiddleware;
+use Aws\Auth\AuthSelectionMiddleware;
 use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\EndpointV2\EndpointProviderV2;
@@ -250,8 +250,7 @@ class AwsClient implements AwsClientInterface
         if ($this->isUseEndpointV2()) {
             $this->addEndpointV2Middleware();
         }
-        $this->addAuthenticationMiddleware();
-
+        $this->addAuthMiddleware();
 
         if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
             $this->addQueryCompatibleInputMiddleware($this->api);
@@ -516,19 +515,19 @@ class AwsClient implements AwsClientInterface
         );
     }
 
-    private function addAuthenticationMiddleware()
+    private function addAuthMiddleware()
     {
         $list = $this->getHandlerList();
         $endpointArgs = $this->getEndpointProviderArgs();
 
         $list->prependBuild(
-            AuthSchemeMiddleware::wrap(
+            AuthSelectionMiddleware::wrap(
                 $this->authSchemeResolver,
                 $this->credentialProvider,
                 $this->getApi(),
                 $endpointArgs
             ),
-            'auth-scheme-resolution'
+            'auth-selection'
         );
     }
 

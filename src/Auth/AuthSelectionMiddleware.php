@@ -14,7 +14,7 @@ use GuzzleHttp\Promise\Promise;
  *
  * @internal
  */
-class AuthSchemeMiddleware
+class AuthSelectionMiddleware
 {
     /** @var callable */
     private $nextHandler;
@@ -84,14 +84,19 @@ class AuthSchemeMiddleware
         $nextHandler = $this->nextHandler;
         $identityFn = $this->identityProvider;
         $identity = $identityFn()->wait();
-        $serviceAuth = $this->api->getMetadata('auth') ?? [];
-        $operationAuth = $this->api->getOperation($command->getName())['auth'] ?? [];
+        $serviceAuth = $this->api->getMetadata('auth') ?: [];
+        $operation = $this->api->getOperation($command->getName());
+        $operationAuth = isset($operation['auth']) ? $operation['auth'] : [];
         $resolvableAuth = $operationAuth ?: $serviceAuth;
 
         if (!empty($resolvableAuth)) {
-            $resolver = ($command['@context']['authResolver'] ?? null) instanceof AuthSchemeResolverInterface
-                ? $command['@context']['authResolver']
-                : $this->authResolver;
+            if (isset($command['@context']['authResolver'])
+                && $command['@context']['authResolver'] instanceof AuthSchemeResolverInterface
+            ){
+                $resolver = $command['@context']['authResolver'];
+            } else {
+                $resolver = $this->authResolver;
+            }
             $selectedAuthScheme = $resolver->selectAuthScheme($resolvableAuth, $identity);
 
             if (!empty($selectedAuthScheme)) {

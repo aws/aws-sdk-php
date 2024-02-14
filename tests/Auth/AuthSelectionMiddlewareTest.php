@@ -3,7 +3,7 @@
 namespace Aws\Test\Auth;
 
 use Aws\Api\Service;
-use Aws\Auth\AuthSchemeMiddleware;
+use Aws\Auth\AuthSelectionMiddleware;
 use Aws\Auth\AuthSchemeResolver;
 use Aws\Auth\Exception\AuthException;
 use Aws\AwsClient;
@@ -17,7 +17,7 @@ use Aws\Token\Token;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class AuthSchemeMiddlewareTest extends TestCase
+class AuthSelectionMiddlewareTest extends TestCase
 {
     /**
      * @param $serviceAuth
@@ -49,7 +49,7 @@ class AuthSchemeMiddlewareTest extends TestCase
         $client = $this->generateTestClient($service);
         $command = $client->getCommand('fooOperation', ['FooParam' => 'bar']);
 
-        $middleware = new AuthSchemeMiddleware($nextHandler, $authResolver, $identity, $service);
+        $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $identity, $service);
 
         if ($expected === 'error') {
             $this->expectException(AuthException::class);
@@ -121,7 +121,7 @@ class AuthSchemeMiddlewareTest extends TestCase
         $client = $this->generateTestClient($service);
         $command = $client->getCommand('fooOperation', ['FooParam' => 'bar']);
 
-        $middleware = new AuthSchemeMiddleware($nextHandler, $authResolver, $identity, $service);
+        $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $identity, $service);
 
         $middleware($command);
     }
@@ -174,7 +174,7 @@ class AuthSchemeMiddlewareTest extends TestCase
         $client = $this->generateTestClient($service);
         $command = $client->getCommand('fooOperation', ['FooParam' => 'bar']);
 
-        $middleware = new AuthSchemeMiddleware($nextHandler, $authResolver, $identity, $service);
+        $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $identity, $service);
 
         if ($expected === 'error') {
             $this->expectException(AuthException::class);
@@ -252,7 +252,7 @@ class AuthSchemeMiddlewareTest extends TestCase
         $client = $this->generateTestClient($service);
         $command = $client->getCommand('fooOperation', ['FooParam' => 'bar']);
 
-        $middleware = new AuthSchemeMiddleware($nextHandler, $authResolver, $identity, $service);
+        $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $identity, $service);
 
         $middleware($command);
     }
@@ -274,6 +274,8 @@ class AuthSchemeMiddlewareTest extends TestCase
             )
         );
     }
+
+    //TODO write resolver command override test
 
     private function generateTestService($serviceAuth, $operationAuth)
     {
