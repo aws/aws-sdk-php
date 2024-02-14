@@ -1109,7 +1109,8 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     private function getSignatureVersionFromCommand(CommandInterface $command)
     {
-        return $command['@context']['signature_version']
-            ?? $this->getConfig('signature_version');
+        return isset($command['@context']['signature_version'])
+            ? $command['@context']['signature_version']
+            : $this->getConfig('signature_version');
     }
 }
