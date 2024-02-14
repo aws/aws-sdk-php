@@ -5,6 +5,7 @@ use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
 use Aws\Auth\AuthSchemeMiddleware;
+use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2Middleware;
@@ -37,8 +38,8 @@ class AwsClient implements AwsClientInterface
     /** @var callable */
     private $signatureProvider;
 
-    /** @var AuthResolver | callable */
-    private $authResolver;
+    /** @var AuthSchemeResolverInterface */
+    private $authSchemeResolver;
 
     /** @var callable */
     private $credentialProvider;

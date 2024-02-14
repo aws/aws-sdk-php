@@ -502,8 +502,9 @@ class S3Client extends AwsClient implements S3ClientInterface
         $command = clone $command;
         $command->getHandlerList()->remove('signer');
         $request = \Aws\serialize($command);
-        $signing_name = $command['@context']['signing_service']
-            ?? $this->getSigningName($request->getUri()->getHost());
+        $signing_name = isset($command['@context']['signing_service'])
+            ? $command['@context']['signing_service']
+            :$this->getSigningName($request->getUri()->getHost());
         $signature_version = $this->getSignatureVersionFromCommand($command);
 
         /** @var \Aws\Signature\SignatureInterface $signer */
@@ -1111,5 +1112,4 @@ class S3Client extends AwsClient implements S3ClientInterface
         return $command['@context']['signature_version']
             ?? $this->getConfig('signature_version');
     }
-
 }
