@@ -7,10 +7,12 @@ use Closure;
 use GuzzleHttp\Promise\Promise;
 
 /**
- * Handles auth scheme resolution.
+ * Handles auth scheme resolution. If a service models and auth scheme using
+ * the `auth` trait and the operation or metadata levels, this middleware will
+ * attempt to select the first compatible auth scheme it encounters and apply its
+ * signature version to the command's `@context` property bag.
  *
  * IMPORTANT: this middleware must be added to the "build" step.
- * Specifically, it must precede the 'endpoint-v2-middleware' step.
  *
  * @internal
  */
@@ -19,7 +21,7 @@ class AuthSelectionMiddleware
     /** @var callable */
     private $nextHandler;
 
-    /** @var callable | AuthResolver */
+    /** @var AuthSchemeResolverInterface */
     private $authResolver;
 
     /** @var callable */
@@ -82,14 +84,15 @@ class AuthSelectionMiddleware
     public function __invoke(CommandInterface $command)
     {
         $nextHandler = $this->nextHandler;
-        $identityFn = $this->identityProvider;
-        $identity = $identityFn()->wait();
         $serviceAuth = $this->api->getMetadata('auth') ?: [];
         $operation = $this->api->getOperation($command->getName());
         $operationAuth = isset($operation['auth']) ? $operation['auth'] : [];
         $resolvableAuth = $operationAuth ?: $serviceAuth;
 
         if (!empty($resolvableAuth)) {
+            $identityFn = $this->identityProvider;
+            $identity = $identityFn()->wait();
+
             if (isset($command['@context']['authResolver'])
                 && $command['@context']['authResolver'] instanceof AuthSchemeResolverInterface
             ){

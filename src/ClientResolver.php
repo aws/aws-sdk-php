@@ -122,7 +122,7 @@ class ClientResolver
         'auth_scheme_resolver' => [
             'type'    => 'value',
             'valid'   => [AuthSchemeResolverInterface::class],
-            'doc'     => 'A callable or Aws\Auth\AuthResolver object which accept a priority-ordered list of auth scheme versions and an identity and returns an auth scheme version',
+            'doc'     => 'An instance of Aws\Auth\AuthSchemeResolverInterface which selects a modeled auth scheme and returns a signature version',
             'default' => [__CLASS__, '_default_auth_scheme_resolver'],
         ],
         'api_provider' => [

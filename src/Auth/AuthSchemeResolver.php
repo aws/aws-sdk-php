@@ -6,13 +6,22 @@ use Aws\Auth\Exception\AuthException;
 use Aws\Identity\BearerTokenIdentity;
 use Aws\Identity\IdentityInterface;
 
+/**
+ * Houses logic for selecting an auth scheme modeled in a service's `auth` trait.
+ * The `auth` trait can be modeled either in a service's metadata, or at the operation level.
+ */
 class AuthSchemeResolver implements AuthSchemeResolverInterface
 {
     /**
-     * @var array
+     * @var array Mapping of auth schemes to signature versions used in
+     *            resolving a signature version.
      */
     private $authSchemeMap;
 
+    /**
+     * @var string[] Default mapping of modeled auth trait auth schemes
+     *               to the SDK's supported signature versions.
+     */
     private static $defaultAuthSchemeMap = [
         'aws.auth#sigv4' => 'v4',
         'aws.auth#sigv4a' => 'v4a',
@@ -28,6 +37,11 @@ class AuthSchemeResolver implements AuthSchemeResolverInterface
     }
 
     /**
+     * Accepts a priority-ordered list of auth schemes and an Identity
+     * and selects the first compatible auth schemes, returning a normalized
+     * signature version.  For example, based on the default auth scheme mapping,
+     * if `aws.auth#sigv4` is selected, `v4` will be returned.
+     *
      * @param array $authSchemes
      * @param $identity
      *
@@ -60,6 +74,9 @@ class AuthSchemeResolver implements AuthSchemeResolverInterface
     }
 
     /**
+     * Determines compatibility based on either Identity or the availability
+     * of the CRT extension.
+     *
      * @param $authScheme
      * @param $identity
      *
@@ -85,6 +102,9 @@ class AuthSchemeResolver implements AuthSchemeResolverInterface
     }
 
     /**
+     * Provides incompatibility messages in the event an incompatible auth scheme
+     * is encountered.
+     *
      * @param $authScheme
      *
      * @return string

@@ -2,6 +2,9 @@
 
 namespace Aws\Identity;
 
+/**
+ * @internal
+ */
 interface IdentityInterface
 {
     /**

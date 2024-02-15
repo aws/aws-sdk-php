@@ -2,5 +2,9 @@
 
 namespace Aws\Auth\Exception;
 
+use Aws\Exception\AwsException;
 
-class AuthException extends \RuntimeException {}
+/**
+ * Represents an error when attempting to resolve authentication.
+ */
+class AuthException extends AwsException {}

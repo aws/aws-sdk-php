@@ -66,9 +66,9 @@ class Command implements CommandInterface
      *
      * @returns array
      *
-     * @deprecated In favor of using the @context key.
-     * Auth schemes are now accessible via the `signature_version` key
-     * in a Command's context, if applicable.
+     * @deprecated In favor of using the @context property bag.
+     *             Auth schemes are now accessible via the `signature_version` key
+     *             in a Command's context, if applicable.
      */
     public function getAuthSchemes()
     {
