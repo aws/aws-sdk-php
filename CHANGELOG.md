@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.299.0 - 2024-02-15
 
 * `Aws\Polly` - Amazon Polly adds 1 new voice - Burcu (tr-TR)
 * `Aws\OpenSearchService` - Adds additional supported instance types.
