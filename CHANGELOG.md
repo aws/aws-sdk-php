@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Polly` - Amazon Polly adds 1 new voice - Burcu (tr-TR)
+* `Aws\OpenSearchService` - Adds additional supported instance types.
+* `Aws\Detective` - Doc only updates for content enhancement
+* `Aws\Artifact` - This is the initial SDK release for AWS Artifact. AWS Artifact provides on-demand access to compliance and third-party compliance reports. This release includes access to List and Get reports, along with their metadata. This release also includes access to AWS Artifact notifications settings.
+* `Aws\CodePipeline` - Add ability to override timeout on action level.
+* `Aws\SageMaker` - This release adds a new API UpdateClusterSoftware for SageMaker HyperPod. This API allows users to patch HyperPod clusters with latest platform softwares.
+* `Aws\HealthLake` - This release adds a new response parameter, JobProgressReport, to the DescribeFHIRImportJob and ListFHIRImportJobs API operation. JobProgressReport provides details on the progress of the import job on the server.
+* `Aws\SecretsManager` - Doc only update for Secrets Manager
+* `Aws\GuardDuty` - Marked fields IpAddressV4, PrivateIpAddress, Email as Sensitive.
+
 ## 3.298.10 - 2024-02-14
 
 * `Aws\ControlTower` - Adds support for new Baseline and EnabledBaseline APIs for automating multi-account governance.

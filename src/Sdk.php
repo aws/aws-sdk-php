@@ -56,6 +56,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionApplicationInsights(array $args = [])
  * @method \Aws\Appstream\AppstreamClient createAppstream(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppstream(array $args = [])
+ * @method \Aws\Artifact\ArtifactClient createArtifact(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionArtifact(array $args = [])
  * @method \Aws\Athena\AthenaClient createAthena(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAthena(array $args = [])
  * @method \Aws\AuditManager\AuditManagerClient createAuditManager(array $args = [])
