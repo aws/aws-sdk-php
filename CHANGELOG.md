@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.299.1 - 2024-02-16
 
 * `Aws\Firehose` - This release adds support for Data Message Extraction for decompressed CloudWatch logs, and to use a custom file extension or time zone for S3 destinations.
 * `Aws\EMR` - adds fine grained control over Unhealthy Node Replacement to Amazon ElasticMapReduce
