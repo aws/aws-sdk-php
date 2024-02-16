@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Firehose` - This release adds support for Data Message Extraction for decompressed CloudWatch logs, and to use a custom file extension or time zone for S3 destinations.
+* `Aws\EMR` - adds fine grained control over Unhealthy Node Replacement to Amazon ElasticMapReduce
+* `Aws\SNS` - This release marks phone numbers as sensitive inputs.
+* `Aws\ConnectParticipant` - Doc only update to GetTranscript API reference guide to inform users about presence of events in the chat transcript.
+* `Aws\Lambda` - Documentation-only updates for Lambda to clarify a number of existing actions and properties.
+* `Aws\RDS` - Doc only update for a valid option in DB parameter group
+
 ## 3.299.0 - 2024-02-15
 
 * `Aws\Polly` - Amazon Polly adds 1 new voice - Burcu (tr-TR)
