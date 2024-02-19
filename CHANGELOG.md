@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.0 - 2024-02-19
 
 * `Aws\Keyspaces` - Documentation updates for Amazon Keyspaces
 * `Aws\Chatbot` - This release adds support for AWS Chatbot. You can now monitor, operate, and troubleshoot your AWS resources with interactive ChatOps using the AWS SDK.
