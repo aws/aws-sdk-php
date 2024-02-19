@@ -2,9 +2,14 @@
 
 namespace Aws\Auth\Exception;
 
-use Aws\Exception\AwsException;
+use Aws\HasMonitoringEventsTrait;
+use Aws\MonitoringEventsInterface;
 
 /**
  * Represents an error when attempting to resolve authentication.
  */
-class AuthException extends AwsException {}
+class AuthException extends \RuntimeException implements
+    MonitoringEventsInterface
+{
+    use HasMonitoringEventsTrait;
+}

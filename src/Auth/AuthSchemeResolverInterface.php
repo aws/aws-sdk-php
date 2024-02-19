@@ -20,5 +20,5 @@ interface AuthSchemeResolverInterface
     public function selectAuthScheme(
         array $authSchemes,
         IdentityInterface $identity
-    ): string;
+    ): ?string;
 }

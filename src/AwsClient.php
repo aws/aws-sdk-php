@@ -518,14 +518,14 @@ class AwsClient implements AwsClientInterface
     private function addAuthMiddleware()
     {
         $list = $this->getHandlerList();
-        $endpointArgs = $this->getEndpointProviderArgs();
+        $config = $this->getConfig();
 
         $list->prependBuild(
             AuthSelectionMiddleware::wrap(
                 $this->authSchemeResolver,
                 $this->credentialProvider,
                 $this->getApi(),
-                $endpointArgs
+                $config
             ),
             'auth-selection'
         );
