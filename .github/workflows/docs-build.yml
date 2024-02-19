@@ -83,12 +83,16 @@ jobs:
                   except UnicodeDecodeError:
                     continue
                 
-                pattern = r'(function\s+\w+\([^)]*\))\s*:\s*?\??\w+\s*\n\s*\{'
+                pattern = r'(function\s+\w+\([^)]*\))\s*:\s*?\??\w+(\s*\n\s*\{|;)'
                 match = re.search(pattern, sourceCode)
                 if match:
-                  sourceCode = re.sub(pattern, r'\1 {', sourceCode)
+                  def replace_function(match):
+                    return match.group(1) + " {\n" if '{' in match.group(2) else match.group(1) + ';'
+                  
+                  new_source_code = re.sub(pattern, replace_function, source_code)
+        
                   with open(file_path, 'w') as f:
-                    f.write(sourceCode)
+                    f.write(new_source_code)
               
               except FileNotFoundError:
                 print('php file not found : ', file_path)

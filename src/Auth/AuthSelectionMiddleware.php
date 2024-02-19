@@ -93,10 +93,10 @@ class AuthSelectionMiddleware
             $identityFn = $this->identityProvider;
             $identity = $identityFn()->wait();
 
-            if (isset($command['@context']['authResolver'])
-                && $command['@context']['authResolver'] instanceof AuthSchemeResolverInterface
+            if (isset($command['@context']['authSchemeResolver'])
+                && $command['@context']['authSchemeResolver'] instanceof AuthSchemeResolverInterface
             ){
-                $resolver = $command['@context']['authResolver'];
+                $resolver = $command['@context']['authSchemeResolver'];
             } else {
                 $resolver = $this->authResolver;
             }

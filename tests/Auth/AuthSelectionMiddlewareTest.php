@@ -257,6 +257,35 @@ class AuthSelectionMiddlewareTest extends TestCase
         $middleware($command);
     }
 
+    public function testCommandOverrideResolver()
+    {
+        $nextHandler = function (CommandInterface $command) {
+            $this->assertEquals('v4', $command['@context']['signature_version']);
+        };
+        $authResolver = new AuthSchemeResolver(['notanauthscheme' => 'foo']);
+        $service = $this->generateTestService(['v4'], []);
+        $identity = function () {
+            return Promise\Create::promiseFor(
+                new Credentials('foo', 'bar')
+            );
+        };
+        $client = $this->generateTestClient($service);
+        $command = $client->getCommand('fooOperation', ['FooParam' => 'bar']);
+        $command['@context']['authSchemeResolver'] = new AuthSchemeResolver();
+
+        $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $identity, $service);
+
+        $middleware($command);
+    }
+
+    public function testMiddlewareAppliedAtInitialization()
+    {
+        $service = $this->generateTestService([], []);
+        $client = $this->generateTestClient($service);
+        $list = $client->getHandlerList();
+        $this->assertStringContainsString('auth-selection', $list->__toString());
+    }
+
     private function generateTestClient(Service $service, $args = [])
     {
         return new AwsClient(
@@ -274,8 +303,6 @@ class AuthSelectionMiddlewareTest extends TestCase
             )
         );
     }
-
-    //TODO write resolver command override test
 
     private function generateTestService($serviceAuth, $operationAuth)
     {
