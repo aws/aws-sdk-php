@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Keyspaces` - Documentation updates for Amazon Keyspaces
+* `Aws\Chatbot` - This release adds support for AWS Chatbot. You can now monitor, operate, and troubleshoot your AWS resources with interactive ChatOps using the AWS SDK.
+* `Aws\Amplify` - This release contains API changes that enable users to configure their Amplify domains with their own custom SSL/TLS certificate.
+* `Aws\IVS` - Changed description for latencyMode in Create/UpdateChannel and Channel/ChannelSummary.
+* `Aws\MediaTailor` - MediaTailor: marking #AdBreak.OffsetMillis as required.
+* `Aws\ConfigService` - Documentation updates for the AWS Config CLI
+
 ## 3.299.1 - 2024-02-16
 
 * `Aws\Firehose` - This release adds support for Data Message Extraction for decompressed CloudWatch logs, and to use a custom file extension or time zone for S3 destinations.

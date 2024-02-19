@@ -94,6 +94,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBraket(array $args = [])
  * @method \Aws\Budgets\BudgetsClient createBudgets(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBudgets(array $args = [])
+ * @method \Aws\Chatbot\ChatbotClient createChatbot(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionChatbot(array $args = [])
  * @method \Aws\Chime\ChimeClient createChime(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionChime(array $args = [])
  * @method \Aws\ChimeSDKIdentity\ChimeSDKIdentityClient createChimeSDKIdentity(array $args = [])
