@@ -78,13 +78,13 @@ jobs:
                 for encoding in encodings:
                   try:
                     with open(file_path, 'r', encoding=encoding) as f:
-                      sourceCode = f.read()
+                      source_code = f.read()
                     break
                   except UnicodeDecodeError:
                     continue
                 
                 pattern = r'(function\s+\w+\([^)]*\))\s*:\s*?\??\w+(\s*\n\s*\{|;)'
-                match = re.search(pattern, sourceCode)
+                match = re.search(pattern, source_code)
                 if match:
                   def replace_function(match):
                     return match.group(1) + " {\n" if '{' in match.group(2) else match.group(1) + ';'
