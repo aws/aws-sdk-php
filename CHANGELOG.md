@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.1 - 2024-02-20
 
 * `Aws\DynamoDB` - Publishing quick fix for doc only update.
 * `Aws\Lambda` - Add .NET 8 (dotnet8) Runtime support to AWS Lambda.
