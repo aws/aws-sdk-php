@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Publishing quick fix for doc only update.
+* `Aws\Lambda` - Add .NET 8 (dotnet8) Runtime support to AWS Lambda.
+* `Aws\Firehose` - This release updates a few Firehose related APIs.
+
 ## 3.300.0 - 2024-02-19
 
 * `Aws\Keyspaces` - Documentation updates for Amazon Keyspaces
