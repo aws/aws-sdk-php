@@ -84,10 +84,6 @@ class AuthSchemeResolver implements AuthSchemeResolverInterface
      */
     private function isCompatibleAuthScheme($authScheme, $identity): bool
     {
-        if ($this->authSchemeMap !== self::$defaultAuthSchemeMap) {
-            return true;
-        }
-
         switch ($authScheme) {
             case 'v4':
             case 'anonymous':

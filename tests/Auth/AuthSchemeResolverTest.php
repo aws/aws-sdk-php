@@ -19,10 +19,10 @@ class AuthSchemeResolverTest extends TestCase
 
     public function testAcceptsCustomSchemeMap()
     {
-        $customMap = ['custom.auth#example' => 'customScheme'];
+        $customMap = ['custom.auth#example' => 'v4'];
         $resolver = new AuthSchemeResolver($customMap);
         $identity = $this->createMock(IdentityInterface::class);
-        $this->assertEquals('customScheme', $resolver->selectAuthScheme(['custom.auth#example'], $identity));
+        $this->assertEquals('v4', $resolver->selectAuthScheme(['custom.auth#example'], $identity));
     }
 
     public function testSelectAuthSchemeReturnsCorrectSchemeForIdentity()
@@ -44,7 +44,6 @@ class AuthSchemeResolverTest extends TestCase
     {
         $resolver = new AuthSchemeResolver();
         $identity = $this->createMock(IdentityInterface::class);
-        // Assuming the identity is compatible with 'v4' but not 'v4a'
         $this->assertEquals('v4', $resolver->selectAuthScheme(['aws.auth#sigv4', 'aws.auth#sigv4a'], $identity));
     }
 
