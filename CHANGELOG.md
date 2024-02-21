@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.2 - 2024-02-21
 
 * `Aws\MediaLive` - MediaLive now supports the ability to restart pipelines in a running channel.
 * `Aws\IoTEvents` - Increase the maximum length of descriptions for Inputs, Detector Models, and Alarm Models
