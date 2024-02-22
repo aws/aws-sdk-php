@@ -706,5 +706,44 @@
         }
       }
     ]
+  },
+  {
+    "description": "Ignores an unrecognized __type property",
+    "metadata": {
+      "protocol": "json"
+    },
+    "shapes": {
+      "AllTypesUnionStructure": {
+        "type": "structure",
+        "union": true,
+        "members": {
+          "StringMember": {
+            "shape": "String"
+          },
+          "UnionMember": {
+            "shape": "AllTypesUnionStructure"
+          }
+        }
+      },
+      "String":{"type":"string"}
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "AllTypesUnionStructure"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "UnionMember": {"StringMember":"foobar"}
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"UnionMember\": {\"StringMember\":\"foobar\", \"__type\": \"aws.protocoltests.json10#MyUnion\"}}"
+        }
+      }
+    ]
   }
 ]
