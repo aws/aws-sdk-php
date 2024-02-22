@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.3 - 2024-02-22
 
 * `Aws\InternetMonitor` - This release adds IPv4 prefixes to health events
 * `Aws\KinesisVideo` - Increasing NextToken parameter length restriction for List APIs from 512 to 1024.
