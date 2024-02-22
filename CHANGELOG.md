@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\InternetMonitor` - This release adds IPv4 prefixes to health events
+* `Aws\KinesisVideo` - Increasing NextToken parameter length restriction for List APIs from 512 to 1024.
+
 ## 3.300.2 - 2024-02-21
 
 * `Aws\MediaLive` - MediaLive now supports the ability to restart pipelines in a running channel.
