@@ -224,11 +224,11 @@ class AwsClient implements AwsClientInterface
         $this->api = $config['api'];
         $this->signatureProvider = $config['signature_provider'];
         $this->endpoint = new Uri($config['endpoint']);
-        $this->credentialProvider = $config['credentials'];
+        $this->credentialProvider = new CredentialsLazyResolver($config['credentials']);
         $this->tokenProvider = $config['token'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->config = $config['config'];
-        $this->setClientBuiltIns($args);
+        $this->setClientBuiltIns($args, $config);
         $this->clientContextParams = $this->setClientContextParams($args);
         $this->defaultRequestOptions = $config['http'];
         $this->endpointProvider = $config['endpoint_provider'];
@@ -558,7 +558,7 @@ class AwsClient implements AwsClientInterface
     /**
      * Retrieves and sets default values used for endpoint resolution.
      */
-    private function setClientBuiltIns($args)
+    private function setClientBuiltIns($args, $clientConfig)
     {
         $builtIns = [];
         $config = $this->getConfig();
@@ -582,6 +582,8 @@ class AwsClient implements AwsClientInterface
             $builtIns['AWS::S3::ForcePathStyle'] = $config['use_path_style_endpoint'];
             $builtIns['AWS::S3::DisableMultiRegionAccessPoints'] = $config['disable_multiregion_access_points'];
         }
+        $builtIns['AWS::Auth::AccountId'] = new AccountIdLazyResolver($this->credentialProvider, $clientConfig['account_id_endpoint_mode']);
+
         $this->clientBuiltIns += $builtIns;
     }
 

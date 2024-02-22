@@ -4,6 +4,7 @@ namespace Aws\EndpointV2;
 use Aws\Api\Operation;
 use Aws\Api\Service;
 use Aws\CommandInterface;
+use Aws\LazyResolver;
 use Closure;
 use GuzzleHttp\Promise\Promise;
 
@@ -86,7 +87,6 @@ class EndpointV2Middleware
         $nextHandler = $this->nextHandler;
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
-
         $providerArgs = $this->resolveArgs($commandArgs, $operation);
         $endpoint = $this->endpointProvider->resolveEndpoint($providerArgs);
 
@@ -122,6 +122,7 @@ class EndpointV2Middleware
         $contextParams = $this->bindContextParams(
             $commandArgs, $operation->getContextParams()
         );
+        $this->resolveClientResolvableArguments();
 
         return array_merge(
             $this->clientArgs,
@@ -302,5 +303,14 @@ class EndpointV2Middleware
             $authScheme['signingRegionSet'] : null;
 
         return $normalizedAuthScheme;
+    }
+
+    private function resolveClientResolvableArguments()
+    {
+        foreach ($this->clientArgs as $key => $value) {
+            if ($value instanceof LazyResolver) {
+                $this->clientArgs[$key] = $value->resolve();
+            }
+        }
     }
 }

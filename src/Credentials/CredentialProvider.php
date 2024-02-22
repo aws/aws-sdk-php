@@ -48,6 +48,7 @@ class CredentialProvider
     const ENV_PROFILE = 'AWS_PROFILE';
     const ENV_ROLE_SESSION_NAME = 'AWS_ROLE_SESSION_NAME';
     const ENV_SECRET = 'AWS_SECRET_ACCESS_KEY';
+    const ENV_ACCOUNT_ID = 'AWS_ACCOUNT_ID';
     const ENV_SESSION = 'AWS_SESSION_TOKEN';
     const ENV_TOKEN_FILE = 'AWS_WEB_IDENTITY_TOKEN_FILE';
     const ENV_SHARED_CREDENTIALS_FILE = 'AWS_SHARED_CREDENTIALS_FILE';
@@ -291,9 +292,20 @@ class CredentialProvider
             // Use credentials from environment variables, if available
             $key = getenv(self::ENV_KEY);
             $secret = getenv(self::ENV_SECRET);
+            $accountId = getenv(self::ENV_ACCOUNT_ID);
+            if ($accountId === false) {
+                $accountId = null;
+            }
+
             if ($key && $secret) {
                 return Promise\Create::promiseFor(
-                    new Credentials($key, $secret, getenv(self::ENV_SESSION) ?: NULL)
+                    new Credentials(
+                        $key,
+                        $secret,
+                        getenv(self::ENV_SESSION) ?: NULL,
+                        null,
+                        $accountId
+                    )
                 );
             }
 
@@ -537,11 +549,18 @@ class CredentialProvider
                     : null;
             }
 
+            $accountId = null;
+            if (!empty($data[$profile]['aws_account_id'])) {
+                $accountId = $data[$profile]['aws_account_id'];
+            }
+
             return Promise\Create::promiseFor(
                 new Credentials(
                     $data[$profile]['aws_access_key_id'],
                     $data[$profile]['aws_secret_access_key'],
-                    $data[$profile]['aws_session_token']
+                    $data[$profile]['aws_session_token'],
+                    null,
+                    $accountId
                 )
             );
         };
@@ -616,12 +635,20 @@ class CredentialProvider
                 $processData['SessionToken'] = null;
             }
 
+            $accountId = null;
+            if (!empty($processData['AccountId'])) {
+                $accountId = $processData['AccountId'];
+            } elseif (!empty($data[$profile]['aws_account_id'])) {
+                $accountId = $data[$profile]['aws_account_id'];
+            }
+
             return Promise\Create::promiseFor(
                 new Credentials(
                     $processData['AccessKeyId'],
                     $processData['SecretAccessKey'],
                     $processData['SessionToken'],
-                    $expires
+                    $expires,
+                    $accountId
                 )
             );
         };
@@ -704,8 +731,8 @@ class CredentialProvider
             'RoleArn' => $roleArn,
             'RoleSessionName' => $roleSessionName
         ]);
-
         $credentials = $stsClient->createCredentials($result);
+
         return Promise\Create::promiseFor($credentials);
     }
 
@@ -897,7 +924,8 @@ class CredentialProvider
                 $ssoCredentials['accessKeyId'],
                 $ssoCredentials['secretAccessKey'],
                 $ssoCredentials['sessionToken'],
-                $expiration
+                $expiration,
+                $ssoProfile['sso_account_id']
             )
         );
     }
@@ -956,7 +984,8 @@ class CredentialProvider
                 $ssoCredentials['accessKeyId'],
                 $ssoCredentials['secretAccessKey'],
                 $ssoCredentials['sessionToken'],
-                $expiration
+                $expiration,
+                $ssoProfile['sso_account_id']
             )
         );
     }

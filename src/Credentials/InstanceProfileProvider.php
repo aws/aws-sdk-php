@@ -216,11 +216,17 @@ class InstanceProfileProvider
             if (!isset($result)) {
                 $credentials = $previousCredentials;
             } else {
+                $accountId = null;
+                if (!empty($result['AccountId'])) {
+                    $accountId = $result['AccountId'];
+                }
+
                 $credentials = new Credentials(
                     $result['AccessKeyId'],
                     $result['SecretAccessKey'],
                     $result['Token'],
-                    strtotime($result['Expiration'])
+                    strtotime($result['Expiration']),
+                    $accountId
                 );
             }
 
