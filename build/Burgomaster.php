@@ -326,7 +326,7 @@ EOT
         $this->debug("Creating phar stub at $dest");
 
         $alias = $alias ?: basename($dest);
-        $constName = str_replace('.phar', '', strtoupper($alias)) . '_PHAR';
+        $constName = strtoupper(str_replace('.phar', '', $alias)) . '_PHAR';
         $stub  = "<?php\n";
         $stub .= "define('$constName', true);\n";
         $stub .= "Phar::mapPhar('$alias');\n";
