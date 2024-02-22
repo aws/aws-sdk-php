@@ -2,10 +2,13 @@
 namespace Aws\S3;
 
 use Aws\Credentials\CredentialsInterface;
+use Aws\Credentials\SsoCredentials;
+use Aws\Exception\CredentialsException;
 use GuzzleHttp\Psr7\Uri;
 use Aws\Signature\SignatureTrait;
 use Aws\Signature\SignatureV4 as SignatureV4;
 use Aws\Api\TimestampShape as TimestampShape;
+use http\Exception\InvalidArgumentException;
 
 /**
  * Encapsulates the logic for getting the data for an S3 object POST upload form
@@ -54,6 +57,10 @@ class PostObjectV4
         ];
 
         $credentials   = $this->client->getCredentials()->wait();
+
+        if ($credentials instanceof SsoCredentials) {
+            throw new CredentialsException("Using Sso credentials with PostObjectV4 is not supported");
+        }
 
         if ($securityToken = $credentials->getSecurityToken()) {
             $options [] = ['x-amz-security-token' => $securityToken];

@@ -2,6 +2,8 @@
 namespace Aws\Test\S3;
 
 use Aws\Credentials\Credentials;
+use Aws\Credentials\SsoCredentials;
+use Aws\Exception\CredentialsException;
 use Aws\S3\PostObjectV4;
 use Aws\S3\S3Client;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -310,5 +312,18 @@ class PostObjectV4Test extends TestCase
             ['http://s3.amazonaws.com', 'foo.bar', 'http://s3.amazonaws.com/foo.bar'],
             ['http://foo.com', 'foo.com', 'http://foo.com/foo.com'],
         ];
+    }
+
+    public function testThrowsExceptionWithSsoCredentials()
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage("Using Sso credentials with PostObjectV4 is not supported");
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => new SsoCredentials("key", "secret", "token")
+        ]);
+        $postObject = new PostObjectV4($s3, "fake-bucket", []);
+        $formAttrs = $postObject->getFormAttributes();
     }
 }

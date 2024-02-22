@@ -103,7 +103,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
             ) {
                 return $token;
             }
-        } finally {
+        } catch (TokenException $tokenException) {
             //if reload from disk fails, try refreshing
             $tokenLocation = self::getTokenLocation($this->ssoProfileName);
             $tokenData = $this->getTokenData($tokenLocation);
@@ -119,12 +119,13 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
             $response = $this->ssoOidcClient->createToken([
                 'clientId' => $tokenData['clientId'],
                 'clientSecret' => $tokenData['clientSecret'],
-                'grantType' => 'refresh_token', // REQUIRED
+                'grantType' => 'refresh_token',
+                // REQUIRED
                 'refreshToken' => $tokenData['refreshToken'],
             ]);
             if ($response['@metadata']['statusCode'] == 200) {
                 $tokenData['accessToken'] = $response['accessToken'];
-                $tokenData['expiresAt'] = time () + $response['expiresIn'];
+                $tokenData['expiresAt'] = time() + $response['expiresIn'];
                 $tokenData['refreshToken'] = $response['refreshToken'];
                 $token = new SsoToken(
                     $tokenData['accessToken'],
@@ -134,7 +135,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
                     isset($tokenData['clientSecret']) ? $tokenData['clientSecret'] : null,
                     isset($tokenData['registrationExpiresAt']) ? $tokenData['registrationExpiresAt'] : null,
                     isset($tokenData['region']) ? $tokenData['region'] : null,
-                    isset($tokenData['startUrl']) ? $tokenData['startUrl'] : null                );
+                    isset($tokenData['startUrl']) ? $tokenData['startUrl'] : null);
 
                 $this->writeNewTokenDataToDisk($tokenData, $tokenLocation);
 
