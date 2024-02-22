@@ -290,6 +290,12 @@ class ClientResolver
             'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.  This will be ignored if you set the \'profile\' setting.',
             'default'   => true,
         ],
+        'account_id_endpoint_mode' => [
+            'type'      => 'value',
+            'valid'     => ['string'],
+            'doc'       => 'To decide whether account_id must a be a required resolved credentials parameter. If this configuration is set to disabled, then account_id is not required. If set to preferred a warning will be logged when account_id is not resolved, and when set to required an exception will be thrown if account_id is not resolved.',
+            'default'  => [__CLASS__, '_default_account_id_endpoint_mode']
+        ],
     ];
 
     /**
@@ -1039,6 +1045,31 @@ class ClientResolver
         }
     }
 
+    /**
+     * This function prepend a middleware that resolves credentials
+     * and that validates whether account_id should have been present
+     * as part of the resolved identity. We assume that at this point
+     * the default credentials has been applied to the configuration.
+     *
+     * @param array $args is the client arguments
+     * @return void
+     */
+    public static function _default_account_id_endpoint_mode(
+        array $args
+    ) {
+        $accountIdEndpointMode = $args['account_id_endpoint_mode'];
+        if (empty($accountIdEndpointMode)) {
+            $accountIdEndpointMode = ConfigurationResolver::resolve(
+                'account_id_endpoint_mode',
+                'preferred',
+                'string',
+                ['use_aws_shared_config_files' => true]
+            );
+        }
+
+        return $accountIdEndpointMode;
+    }
+
     public static function _default_endpoint_provider(array $args)
     {
         $service =  isset($args['api']) ? $args['api'] : null;
@@ -1187,7 +1218,7 @@ class ClientResolver
 
         return $value;
     }
-  
+
     public static function _apply_region($value, array &$args)
     {
         if (empty($value)) {

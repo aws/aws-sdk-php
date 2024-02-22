@@ -245,6 +245,8 @@ class AwsClient implements AwsClientInterface
             $this->addEndpointV2Middleware();
         }
 
+        $this->addAccountIdEndpointMiddleware($config, $args);
+
         if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
             $this->addQueryCompatibleInputMiddleware($this->api);
         }
@@ -532,6 +534,22 @@ class AwsClient implements AwsClientInterface
             ),
             'endpoint-resolution'
         );
+    }
+
+    private function addAccountIdEndpointMiddleware(array $config, array $args)
+    {
+        $accountIdEndpointMode = !empty($args['account_id_endpoint_mode'])
+            ? $args['account_id_endpoint_mode']
+            : $config['account_id_endpoint_mode'];
+        if ($accountIdEndpointMode !== 'disabled') {
+            $this->handlerList->prependBuild(
+                AccountIdEndpointMiddleware::wrap(
+                    $accountIdEndpointMode,
+                    $this->credentialProvider
+                ),
+                'account_id_endpoint-middleware'
+            );
+        }
     }
 
     /**

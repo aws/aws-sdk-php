@@ -84,4 +84,32 @@ class StsClientTest extends TestCase
 
         $this->assertSame($uri->getHost(), $client->getEndpoint()->getHost());
     }
+
+    public function testCanCreateCredentialsObjectFromStsResultWithAccountId()
+    {
+        $result = new Result([
+            'AssumedRoleUser' => [
+                'Arn' => 'arn:aws:iam::123456789000:user/test-user-1'
+            ],
+            'Credentials' => [
+                'AccessKeyId' => 'foo',
+                'SecretAccessKey' => 'bar',
+                'SessionToken' => 'baz',
+                'Expiration' => DateTimeResult::fromEpoch(time() + 10)
+            ]
+        ]);
+
+        $client = new StsClient(['region' => 'us-east-1', 'version' => 'latest']);
+        $credentials = $client->createCredentials($result);
+        $this->assertInstanceOf(
+            CredentialsInterface::class,
+            $credentials
+        );
+        $this->assertSame('foo', $credentials->getAccessKeyId());
+        $this->assertSame('bar', $credentials->getSecretKey());
+        $this->assertSame('baz', $credentials->getSecurityToken());
+        $this->assertSame('123456789000', $credentials->getAccountId());
+        $this->assertIsInt($credentials->getExpiration());
+        $this->assertFalse($credentials->isExpired());
+    }
 }

@@ -86,7 +86,7 @@ class EndpointV2Middleware
         $nextHandler = $this->nextHandler;
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
-
+        $this->appendAccountIdParameter($commandArgs);
         $providerArgs = $this->resolveArgs($commandArgs, $operation);
         $endpoint = $this->endpointProvider->resolveEndpoint($providerArgs);
 
@@ -302,5 +302,12 @@ class EndpointV2Middleware
             $authScheme['signingRegionSet'] : null;
 
         return $normalizedAuthScheme;
+    }
+
+    private function appendAccountIdParameter(&$commandArgs)
+    {
+        if (isset($commandArgs['@context']['resolved_identity'])) {
+            $commandArgs['AWS::Auth::AccountId'] = $commandArgs['@context']['resolved_identity']->getAccountId();
+        }
     }
 }
