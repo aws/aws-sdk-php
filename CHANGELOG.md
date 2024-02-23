@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QLDB` - Clarify possible values for KmsKeyArn and EncryptionDescription.
+* `Aws\CloudWatchRUM` - Doc-only update for new RUM metrics that were added
+* `Aws\RDS` - Add pattern and length based validations for DBShardGroupIdentifier
+* `Aws\AppSync` - Documentation only updates for AppSync
+
 ## 3.300.3 - 2024-02-22
 
 * `Aws\InternetMonitor` - This release adds IPv4 prefixes to health events

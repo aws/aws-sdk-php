@@ -5389,7 +5389,7 @@
       "type":"structure",
       "members":{
         "DBShardGroupResourceId":{"shape":"String"},
-        "DBShardGroupIdentifier":{"shape":"String"},
+        "DBShardGroupIdentifier":{"shape":"DBShardGroupIdentifier"},
         "DBClusterIdentifier":{"shape":"String"},
         "MaxACU":{"shape":"DoubleOptional"},
         "ComputeRedundancy":{"shape":"IntegerOptional"},
@@ -5408,6 +5408,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "DBShardGroupIdentifier":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
     },
     "DBShardGroupNotFoundFault":{
       "type":"structure",
@@ -5836,7 +5842,7 @@
       "type":"structure",
       "required":["DBShardGroupIdentifier"],
       "members":{
-        "DBShardGroupIdentifier":{"shape":"String"}
+        "DBShardGroupIdentifier":{"shape":"DBShardGroupIdentifier"}
       }
     },
     "DeleteDBSnapshotMessage":{
@@ -6233,7 +6239,7 @@
     "DescribeDBShardGroupsMessage":{
       "type":"structure",
       "members":{
-        "DBShardGroupIdentifier":{"shape":"String"},
+        "DBShardGroupIdentifier":{"shape":"DBShardGroupIdentifier"},
         "Filters":{"shape":"FilterList"},
         "Marker":{"shape":"String"},
         "MaxRecords":{"shape":"MaxRecords"}
@@ -8004,7 +8010,7 @@
       "type":"structure",
       "required":["DBShardGroupIdentifier"],
       "members":{
-        "DBShardGroupIdentifier":{"shape":"String"},
+        "DBShardGroupIdentifier":{"shape":"DBShardGroupIdentifier"},
         "MaxACU":{"shape":"DoubleOptional"}
       }
     },
@@ -8707,7 +8713,7 @@
       "type":"structure",
       "required":["DBShardGroupIdentifier"],
       "members":{
-        "DBShardGroupIdentifier":{"shape":"String"}
+        "DBShardGroupIdentifier":{"shape":"DBShardGroupIdentifier"}
       }
     },
     "RecommendedAction":{
