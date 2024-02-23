@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.4 - 2024-02-23
 
 * `Aws\QLDB` - Clarify possible values for KmsKeyArn and EncryptionDescription.
 * `Aws\CloudWatchRUM` - Doc-only update for new RUM metrics that were added
