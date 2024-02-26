@@ -34,6 +34,7 @@ use Aws\Token\TokenInterface;
 use Aws\Token\TokenProvider;
 use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException as IAE;
+use PHPUnit\TextUI\RuntimeException;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -294,7 +295,7 @@ class ClientResolver
             'type'      => 'value',
             'valid'     => ['string'],
             'doc'       => 'To decide whether account_id must a be a required resolved credentials parameter. If this configuration is set to disabled, then account_id is not required. If set to preferred a warning will be logged when account_id is not resolved, and when set to required an exception will be thrown if account_id is not resolved.',
-            'default'  => '',
+            'default'  => [__CLASS__, '_default_account_id_endpoint_mode'],
             'fn'       => [__CLASS__, '_apply_account_id_endpoint_mode']
         ],
     ];
@@ -1047,19 +1048,23 @@ class ClientResolver
         }
     }
 
+    public static function _default_account_id_endpoint_mode($args)
+    {
+        return ConfigurationResolver::resolve(
+            'account_id_endpoint_mode',
+            'preferred',
+            'string',
+            ['use_aws_shared_config_files' => true]
+        );
+    }
+
     public static function _apply_account_id_endpoint_mode($value, array &$args)
     {
-        $accountIdEndpointMode = $value;
-        if (empty($accountIdEndpointMode)) {
-            $accountIdEndpointMode = ConfigurationResolver::resolve(
-                'account_id_endpoint_mode',
-                'preferred',
-                'string',
-                ['use_aws_shared_config_files' => true]
-            );
+        if (!in_array($value, ['disabled', 'required', 'preferred'])) {
+            throw new RuntimeException("valid values");
         }
 
-        $args['account_id_endpoint_mode'] = $accountIdEndpointMode;
+        $args['account_id_endpoint_mode'] = $value;
     }
 
     public static function _default_endpoint_provider(array $args)

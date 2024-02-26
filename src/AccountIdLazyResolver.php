@@ -3,8 +3,6 @@
 namespace Aws;
 
 use Aws\Exception\AccountIdNotFoundException;
-use GuzzleHttp\Promise\FulfilledPromise;
-use GuzzleHttp\Promise\Promise;
 
 /**
  * @inheritDoc
@@ -24,7 +22,7 @@ class AccountIdLazyResolver implements LazyResolver
      */
     private $accountIdEndpointMode;
 
-    public function __construct(LazyResolver $credentialsProvider, $accountIdEndpointMode)
+    public function __construct($credentialsProvider, $accountIdEndpointMode)
     {
         $this->credentialsProvider = $credentialsProvider;
         $this->accountIdEndpointMode = $accountIdEndpointMode;
@@ -33,7 +31,7 @@ class AccountIdLazyResolver implements LazyResolver
     /**
      * @inheritDoc
      */
-    public function resolve(bool $force = false): mixed
+    public function resolve(bool $force = false)
     {
         $identity = $this->credentialsProvider->resolve();
         $accountId = $identity->getAccountId();

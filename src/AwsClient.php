@@ -249,6 +249,8 @@ class AwsClient implements AwsClientInterface
             $this->addQueryCompatibleInputMiddleware($this->api);
         }
 
+        $this->addForceCredentialsResolutionMiddleware();
+
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
         }
@@ -372,6 +374,21 @@ class AwsClient implements AwsClientInterface
             strtolower($service),
             "Aws\\{$service}\\Exception\\{$service}Exception"
         ];
+    }
+
+    private function addForceCredentialsResolutionMiddleware()
+    {
+        $middleware = function (callable $handler) {
+            return function (
+                CommandInterface $command
+            ) use ($handler) {
+                $this->credentialProvider->forceResolutionOnce();
+
+                return $handler($command);
+            };
+        };
+
+        $this->handlerList->prependBuild($middleware, 'force-lazy-credentials-resolution');
     }
 
     private function addEndpointParameterMiddleware($args)

@@ -14,7 +14,7 @@ interface LazyResolver
      *  If true, forces re-computation of the value even if it has been resolved before.
      * @return mixed The resolved value.
      */
-    public function resolve(bool $force = false): mixed;
+    public function resolve(bool $force = false);
 
     /**
      * Checks if the value has been resolved.

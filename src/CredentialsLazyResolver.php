@@ -21,6 +21,10 @@ class CredentialsLazyResolver implements LazyResolver
      * @var bool $resolvedValueWasPromise
      */
     private $resolvedValueIsDeferred;
+    /**
+     * @var bool $forceResolution
+     */
+    private $forceResolutionOnce;
 
     /**
      * Constructs a new LazyResolver instance.
@@ -36,10 +40,14 @@ class CredentialsLazyResolver implements LazyResolver
      * @inheritDoc
      * this implementation caches the result to avoid re-computation.
      */
-    public function resolve(bool $force = false): mixed
+    public function resolve(bool $force = false)
     {
-        if ($this->isResolved() && !$force) {
+        if ($this->isResolved() && !$force && !$this->forceResolutionOnce) {
             return $this->resolvedValue;
+        }
+
+        if ($this->forceResolutionOnce) {
+            $this->forceResolutionOnce = false;
         }
 
         $fn = $this->callable;
@@ -80,5 +88,10 @@ class CredentialsLazyResolver implements LazyResolver
         }
 
         return $value;
+    }
+
+    public function forceResolutionOnce()
+    {
+        $this->forceResolutionOnce = true;
     }
 }
