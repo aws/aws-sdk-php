@@ -293,7 +293,7 @@ class CredentialProvider
             $key = getenv(self::ENV_KEY);
             $secret = getenv(self::ENV_SECRET);
             $accountId = getenv(self::ENV_ACCOUNT_ID);
-            if ($accountId === false) {
+            if (empty($accountId)) {
                 $accountId = null;
             }
 

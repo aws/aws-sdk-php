@@ -144,6 +144,8 @@ final class Middleware
 
                 if ($signer instanceof S3ExpressSignature) {
                     $credentialPromise = $config['s3_express_identity_provider']($command);
+                } elseif (isset($command['@context']['resolved_identity'])) {
+                    $credentialPromise = $command['@context']['resolved_identity'];
                 } else {
                     $credentialPromise = $credProvider();
                 }

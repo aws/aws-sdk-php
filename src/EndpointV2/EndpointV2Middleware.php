@@ -4,8 +4,9 @@ namespace Aws\EndpointV2;
 use Aws\Api\Operation;
 use Aws\Api\Service;
 use Aws\CommandInterface;
-use Aws\LazyResolver;
+use Aws\Exception\AccountIdNotFoundException;
 use Closure;
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\Promise;
 
 /**
@@ -18,6 +19,7 @@ use GuzzleHttp\Promise\Promise;
  */
 class EndpointV2Middleware
 {
+    const ACCOUNT_ID_PARAM = 'AccountId';
     private static $validAuthSchemes = [
         'sigv4' => true,
         'sigv4a' => true,
@@ -37,6 +39,8 @@ class EndpointV2Middleware
 
     /** @var array */
     private $clientArgs;
+    /** @var Closure */
+    private $identityProvider;
 
     /**
      * Create a middleware wrapper function
@@ -44,17 +48,19 @@ class EndpointV2Middleware
      * @param EndpointProviderV2 $endpointProvider
      * @param Service $api
      * @param array $args
+     * @param callable $identityProvider
      *
      * @return Closure
      */
     public static function wrap(
         EndpointProviderV2 $endpointProvider,
         Service $api,
-        array $args
+        array $args,
+        callable $identityProvider
     ) : Closure
     {
-        return function (callable $handler) use ($endpointProvider, $api, $args) {
-            return new self($handler, $endpointProvider, $api, $args);
+        return function (callable $handler) use ($endpointProvider, $api, $args, $identityProvider) {
+            return new self($handler, $endpointProvider, $api, $args, $identityProvider);
         };
     }
 
@@ -68,13 +74,15 @@ class EndpointV2Middleware
         callable $nextHandler,
         EndpointProviderV2 $endpointProvider,
         Service $api,
-        array $args
+        array $args,
+        callable $identityProvider
     )
     {
         $this->nextHandler = $nextHandler;
         $this->endpointProvider = $endpointProvider;
         $this->api = $api;
         $this->clientArgs = $args;
+        $this->identityProvider = $identityProvider;
     }
 
     /**
@@ -112,6 +120,9 @@ class EndpointV2Middleware
     private function resolveArgs(array $commandArgs, Operation $operation) : array
     {
         $rulesetParams = $this->endpointProvider->getRuleset()->getParameters();
+
+        $this->resolveAccountId($commandArgs, $rulesetParams);
+
         $endpointCommandArgs = $this->filterEndpointCommandArgs(
             $rulesetParams,
             $commandArgs
@@ -122,7 +133,6 @@ class EndpointV2Middleware
         $contextParams = $this->bindContextParams(
             $commandArgs, $operation->getContextParams()
         );
-        $this->resolveClientResolvableArguments();
 
         return array_merge(
             $this->clientArgs,
@@ -305,12 +315,55 @@ class EndpointV2Middleware
         return $normalizedAuthScheme;
     }
 
-    private function resolveClientResolvableArguments()
+    /**
+     * This method tries to resolve an `AccountId` parameter from a resolved identity.
+     * We will just perform this operation if the parameter `AccountId` is part of the ruleset parameters and
+     * `AccountIdEndpointMode` is not disabled, otherwise, we will ignore it.
+     * We also are going to resolve identity from a supplied identity provider,
+     * and we will inject the resolved identity into the $command['@context'] property, so it can be reused along the way.
+     *
+     * @param array $commandArgs
+     * @param array $rulesetParams
+     * @return void
+     */
+    private function resolveAccountId(array &$commandArgs, array $rulesetParams)
     {
-        foreach ($this->clientArgs as $key => $value) {
-            if ($value instanceof LazyResolver) {
-                $this->clientArgs[$key] = $value->resolve();
-            }
+        $accountIdEndpointMode = $this->clientArgs['AccountIdEndpointMode'];
+        if (!isset($rulesetParams[self::ACCOUNT_ID_PARAM]) || $accountIdEndpointMode === 'disabled') {
+            return;
         }
+
+        $identity = null;
+        if (isset($commandArgs['@context']['resolved_identity'])) {
+            $identity = $commandArgs['@context']['resolved_identity']->wait();
+        } else {
+            $identityProviderFn = $this->identityProvider;
+            $identity = $identityProviderFn()->wait();
+            $commandArgs['@context']['resolved_identity'] = Create::promiseFor($identity);
+        }
+
+        if (empty($identity->getAccountId())) {
+            switch ($accountIdEndpointMode) {
+                case 'preferred':
+                    trigger_error($this->getAccountIdNotResolvedErrorMessage($accountIdEndpointMode), E_USER_WARNING);
+                    break;
+                case 'required':
+                    throw new AccountIdNotFoundException($this->getAccountIdNotResolvedErrorMessage($accountIdEndpointMode));
+                default:
+                    throw new \InvalidArgumentException('account_id_endpoint_mode value not supported: '. $accountIdEndpointMode);
+            }
+
+            return;
+        }
+
+        $commandArgs[self::ACCOUNT_ID_PARAM] = $identity->getAccountId();
+    }
+
+    private function getAccountIdNotResolvedErrorMessage($mode) : string
+    {
+        return "Unable to resolve an `accountId` as part of the credentials identity when `account_id_endpoint_mode` is set to {$mode}. "
+            . "\nTo remedy this you can:"
+            . "\n- disable this behavior by setting `account_id_endpoint_mode` to disabled. "
+            . "\n- configure your credential provider for supplying an `accountId`.";
     }
 }

@@ -34,7 +34,6 @@ use Aws\Token\TokenInterface;
 use Aws\Token\TokenProvider;
 use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException as IAE;
-use PHPUnit\TextUI\RuntimeException;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -1054,14 +1053,18 @@ class ClientResolver
             'account_id_endpoint_mode',
             'preferred',
             'string',
-            ['use_aws_shared_config_files' => true]
+            $args
         );
     }
 
     public static function _apply_account_id_endpoint_mode($value, array &$args)
     {
-        if (!in_array($value, ['disabled', 'required', 'preferred'])) {
-            throw new RuntimeException("valid values");
+        static $accountIdEndpointModes = ['disabled', 'required', 'preferred'];
+        if (!in_array($value, $accountIdEndpointModes)) {
+            throw new IAE(
+                "The value provided for the config account_id_endpoint_mode is invalid."
+                ."Valid values are: " . implode(", ", $accountIdEndpointModes)
+            );
         }
 
         $args['account_id_endpoint_mode'] = $value;

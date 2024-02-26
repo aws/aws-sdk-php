@@ -203,6 +203,16 @@ class AwsClient implements AwsClientInterface
      *   client-side parameter validation.
      * - version: (string, required) The version of the webservice to
      *   utilize (e.g., 2006-03-01).
+     * - account_id_endpoint_mode: (string, default(preferred)) this option
+     *   decides whether credentials should resolve an accountId value,
+     *   which is going to be used as part of the endpoint resolution.
+     *   The valid values for this option are:
+     *   - preferred: when this value is set then, a warning is logged when
+     *     accountId is empty in the resolved identity.
+     *   - required: when this value is set then, an exception is thrown when
+     *     accountId is empty in the resolved identity.
+     *   - disabled: when this value is set then, the validation for if accountId
+     *     was resolved or not, is ignored.
      *
      * @param array $args Client configuration arguments.
      *
@@ -224,7 +234,7 @@ class AwsClient implements AwsClientInterface
         $this->api = $config['api'];
         $this->signatureProvider = $config['signature_provider'];
         $this->endpoint = new Uri($config['endpoint']);
-        $this->credentialProvider = new CredentialsLazyResolver($config['credentials']);
+        $this->credentialProvider = $config['credentials'];
         $this->tokenProvider = $config['token'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->config = $config['config'];
@@ -248,8 +258,6 @@ class AwsClient implements AwsClientInterface
         if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
             $this->addQueryCompatibleInputMiddleware($this->api);
         }
-
-        $this->addForceCredentialsResolutionMiddleware();
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -374,21 +382,6 @@ class AwsClient implements AwsClientInterface
             strtolower($service),
             "Aws\\{$service}\\Exception\\{$service}Exception"
         ];
-    }
-
-    private function addForceCredentialsResolutionMiddleware()
-    {
-        $middleware = function (callable $handler) {
-            return function (
-                CommandInterface $command
-            ) use ($handler) {
-                $this->credentialProvider->forceResolutionOnce();
-
-                return $handler($command);
-            };
-        };
-
-        $this->handlerList->prependBuild($middleware, 'force-lazy-credentials-resolution');
     }
 
     private function addEndpointParameterMiddleware($args)
@@ -545,7 +538,8 @@ class AwsClient implements AwsClientInterface
             EndpointV2Middleware::wrap(
                 $this->endpointProvider,
                 $this->getApi(),
-                $endpointArgs
+                $endpointArgs,
+                $this->credentialProvider
             ),
             'endpoint-resolution'
         );
@@ -575,7 +569,7 @@ class AwsClient implements AwsClientInterface
     /**
      * Retrieves and sets default values used for endpoint resolution.
      */
-    private function setClientBuiltIns($args, $clientConfig)
+    private function setClientBuiltIns($args, $resolvedConfig)
     {
         $builtIns = [];
         $config = $this->getConfig();
@@ -599,7 +593,8 @@ class AwsClient implements AwsClientInterface
             $builtIns['AWS::S3::ForcePathStyle'] = $config['use_path_style_endpoint'];
             $builtIns['AWS::S3::DisableMultiRegionAccessPoints'] = $config['disable_multiregion_access_points'];
         }
-        $builtIns['AWS::Auth::AccountId'] = new AccountIdLazyResolver($this->credentialProvider, $clientConfig['account_id_endpoint_mode']);
+        $builtIns['AWS::Auth::AccountId'] = null;
+        $builtIns['AWS::Auth::AccountIdEndpointMode'] = $resolvedConfig['account_id_endpoint_mode'];
 
         $this->clientBuiltIns += $builtIns;
     }
