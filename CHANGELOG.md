@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\KafkaConnect` - Adds support for tagging, with new TagResource, UntagResource and ListTagsForResource APIs to manage tags and updates to existing APIs to allow tag on create. This release also adds support for the new DeleteWorkerConfiguration API.
+* `Aws\RDS` - This release adds support for gp3 data volumes for Multi-AZ DB Clusters.
+* `Aws\drs` - Added volume status to DescribeSourceServer replicated volumes.
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway.
+
 ## 3.300.4 - 2024-02-23
 
 * `Aws\QLDB` - Clarify possible values for KmsKeyArn and EncryptionDescription.
