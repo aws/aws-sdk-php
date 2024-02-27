@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AmplifyUIBuilder` - We have added the ability to tag resources after they are created
+
 ## 3.300.5 - 2024-02-26
 
 * `Aws\KafkaConnect` - Adds support for tagging, with new TagResource, UntagResource and ListTagsForResource APIs to manage tags and updates to existing APIs to allow tag on create. This release also adds support for the new DeleteWorkerConfiguration API.
