@@ -110,7 +110,6 @@ class AuthSelectionMiddleware
             }
 
             $selectedAuthScheme = $resolver->selectAuthScheme($resolvableAuth, $identity);
-
             if (!empty($selectedAuthScheme)) {
                 $command['@context']['signature_version'] = $selectedAuthScheme;
             }
