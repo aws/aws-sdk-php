@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.6 - 2024-02-27
 
 * `Aws\AmplifyUIBuilder` - We have added the ability to tag resources after they are created
 
