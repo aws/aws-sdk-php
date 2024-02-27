@@ -91,7 +91,7 @@ class AuthSelectionMiddleware
         $resolvableAuth = $operationAuth ?: $serviceAuth;
 
         if (!empty($resolvableAuth)) {
-            if (!empty($command['@context']['resolved_identity'])
+            if (isset($command['@context']['resolved_identity'])
                 && $command['@context']['resolved_identity'] instanceof IdentityInterface
             ) {
                 $identity = $command['@context']['resolved_identity'];
@@ -108,6 +108,7 @@ class AuthSelectionMiddleware
             } else {
                 $resolver = $this->authResolver;
             }
+
             $selectedAuthScheme = $resolver->selectAuthScheme($resolvableAuth, $identity);
 
             if (!empty($selectedAuthScheme)) {
