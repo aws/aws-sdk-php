@@ -9,6 +9,7 @@ use Aws\Auth\Exception\AuthException;
 use Aws\AwsClient;
 use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
+use Aws\Identity\AwsCredentialIdentity;
 use Aws\Identity\BearerTokenIdentity;
 use Aws\Identity\IdentityInterface;
 use Aws\MockHandler;
@@ -246,7 +247,7 @@ class AuthSelectionMiddlewareTest extends TestCase
         $service = $this->generateTestService(['notAnAuthScheme'], []);
         $identity = function () {
             return Promise\Create::promiseFor(
-                new Credentials('foo', 'bar')
+                $this->createMock(IdentityInterface::class)
             );
         };
         $client = $this->generateTestClient($service);
@@ -266,12 +267,38 @@ class AuthSelectionMiddlewareTest extends TestCase
         $service = $this->generateTestService(['v4'], []);
         $identity = function () {
             return Promise\Create::promiseFor(
-                new Credentials('foo', 'bar')
+                $this->createMock(IdentityInterface::class)
             );
         };
         $client = $this->generateTestClient($service);
         $command = $client->getCommand('fooOperation', ['FooParam' => 'bar']);
-        $command['@context']['authSchemeResolver'] = new AuthSchemeResolver();
+        $command['@context']['auth_scheme_resolver'] = new AuthSchemeResolver();
+
+        $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $identity, $service);
+
+        $middleware($command);
+    }
+
+    public function testCommandOverrideIdentity()
+    {
+        $nextHandler = function (CommandInterface $command) {
+            $this->assertInstanceOf(
+                AwsCredentialIdentity::class,
+                $command['@context']['resolved_identity']
+            );
+        };
+        $authResolver = new AuthSchemeResolver();
+        $service = $this->generateTestService(['v4'], []);
+        $identityOverride = $this->createMock(AwsCredentialIdentity::class);
+        $identity = function () {
+            return Promise\Create::promiseFor(
+                $this->createMock(BearerTokenIdentity::class)
+            );
+        };
+
+        $client = $this->generateTestClient($service);
+        $command = $client->getCommand('fooOperation', ['FooParam' => 'bar']);
+        $command['@context']['resolved_identity'] = $identityOverride;
 
         $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $identity, $service);
 

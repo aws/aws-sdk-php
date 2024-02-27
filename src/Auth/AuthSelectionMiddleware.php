@@ -3,6 +3,7 @@ namespace Aws\Auth;
 
 use Aws\Api\Service;
 use Aws\CommandInterface;
+use Aws\Identity\IdentityInterface;
 use Closure;
 use GuzzleHttp\Promise\Promise;
 
@@ -90,13 +91,20 @@ class AuthSelectionMiddleware
         $resolvableAuth = $operationAuth ?: $serviceAuth;
 
         if (!empty($resolvableAuth)) {
-            $identityFn = $this->identityProvider;
-            $identity = $identityFn()->wait();
+            if (!empty($command['@context']['resolved_identity'])
+                && $command['@context']['resolved_identity'] instanceof IdentityInterface
+            ) {
+                $identity = $command['@context']['resolved_identity'];
+            } else {
+                $identityFn = $this->identityProvider;
+                $identity = $identityFn()->wait();
+                $command['@context']['resolved_identity'] = $identity;
+            }
 
-            if (isset($command['@context']['authSchemeResolver'])
-                && $command['@context']['authSchemeResolver'] instanceof AuthSchemeResolverInterface
+            if (isset($command['@context']['auth_scheme_resolver'])
+                && $command['@context']['auth_scheme_resolver'] instanceof AuthSchemeResolverInterface
             ){
-                $resolver = $command['@context']['authSchemeResolver'];
+                $resolver = $command['@context']['auth_scheme_resolver'];
             } else {
                 $resolver = $this->authResolver;
             }
