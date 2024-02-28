@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.7 - 2024-02-28
 
 * `Aws\EC2` - This release increases the range of MaxResults for GetNetworkInsightsAccessScopeAnalysisFindings to 1,000.
 * `Aws\IoT` - This release reduces the maximum results returned per query invocation from 500 to 100 for the SearchIndex API. This change has no implications as long as the API is invoked until the nextToken is NULL.
