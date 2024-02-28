@@ -2,7 +2,7 @@
 
 namespace Aws\Auth;
 
-use Aws\Auth\Exception\AuthException;
+use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\Identity\BearerTokenIdentity;
 use Aws\Identity\IdentityInterface;
 
@@ -46,7 +46,7 @@ class AuthSchemeResolver implements AuthSchemeResolverInterface
      * @param $identity
      *
      * @return string
-     * @throws AuthException
+     * @throws UnresolvedAuthSchemeException
      */
     public function selectAuthScheme(
         array $authSchemes,
@@ -67,7 +67,7 @@ class AuthSchemeResolver implements AuthSchemeResolverInterface
             }
         }
 
-        throw new AuthException(
+        throw new UnresolvedAuthSchemeException(
             'Could not resolve an authentication scheme: '
             . implode('; ', $failureReasons)
         );

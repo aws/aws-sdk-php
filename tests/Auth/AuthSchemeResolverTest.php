@@ -2,7 +2,7 @@
 
 namespace Aws\Test\Auth;
 
-use Aws\Auth\Exception\AuthException;
+use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\Auth\AuthSchemeResolver;
 use Aws\Identity\BearerTokenIdentity;
 use Aws\Identity\IdentityInterface;
@@ -34,7 +34,7 @@ class AuthSchemeResolverTest extends TestCase
 
     public function testSelectAuthSchemeThrowsExceptionWhenNoCompatibleScheme()
     {
-        $this->expectException(AuthException::class);
+        $this->expectException(UnresolvedAuthSchemeException::class);
         $resolver = new AuthSchemeResolver();
         $identity = $this->createMock(IdentityInterface::class);
         $resolver->selectAuthScheme(['non.existent#scheme'], $identity);

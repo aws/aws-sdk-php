@@ -8,7 +8,7 @@ use Aws\MonitoringEventsInterface;
 /**
  * Represents an error when attempting to resolve authentication.
  */
-class AuthException extends \RuntimeException implements
+class UnresolvedAuthSchemeException extends \RuntimeException implements
     MonitoringEventsInterface
 {
     use HasMonitoringEventsTrait;

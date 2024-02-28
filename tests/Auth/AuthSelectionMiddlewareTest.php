@@ -5,7 +5,7 @@ namespace Aws\Test\Auth;
 use Aws\Api\Service;
 use Aws\Auth\AuthSelectionMiddleware;
 use Aws\Auth\AuthSchemeResolver;
-use Aws\Auth\Exception\AuthException;
+use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\AwsClient;
 use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
@@ -53,7 +53,7 @@ class AuthSelectionMiddlewareTest extends TestCase
         $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $identity, $service);
 
         if ($expected === 'error') {
-            $this->expectException(AuthException::class);
+            $this->expectException(UnresolvedAuthSchemeException::class);
             $this->expectExceptionMessage(
                 'Could not resolve an authentication scheme: The service does not support `aws.auth#sigv4a` authentication.'
             );
@@ -178,7 +178,7 @@ class AuthSelectionMiddlewareTest extends TestCase
         $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $identity, $service);
 
         if ($expected === 'error') {
-            $this->expectException(AuthException::class);
+            $this->expectException(UnresolvedAuthSchemeException::class);
             $this->expectExceptionMessage(
                 'Could not resolve an authentication scheme: The service does not support `smithy.api#httpBearerAuth` authentication'
             );
@@ -235,7 +235,7 @@ class AuthSelectionMiddlewareTest extends TestCase
 
     public function testUnknownAuthSchemeThrows()
     {
-        $this->expectException(AuthException::class);
+        $this->expectException(UnresolvedAuthSchemeException::class);
         $this->expectExceptionMessage(
             'Could not resolve an authentication scheme: The service does not support `notAnAuthScheme` authentication.'
         );

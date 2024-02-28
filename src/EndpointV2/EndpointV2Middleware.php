@@ -3,6 +3,7 @@ namespace Aws\EndpointV2;
 
 use Aws\Api\Operation;
 use Aws\Api\Service;
+use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\CommandInterface;
 use Closure;
 use GuzzleHttp\Promise\Promise;
@@ -268,7 +269,7 @@ class EndpointV2Middleware
         $validAuthSchemesString = '`'
             . implode('`, `', array_keys(self::$validAuthSchemes))
             . '`';
-        throw new \InvalidArgumentException(
+        throw new UnresolvedAuthSchemeException(
             "This operation requests {$invalidAuthSchemesString}"
             . " auth schemes, but the client only supports {$validAuthSchemesString}."
         );

@@ -2,6 +2,7 @@
 namespace Aws\Test\EndpointV2;
 
 use Aws\Api\Service;
+use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2Middleware;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
@@ -124,7 +125,7 @@ class EndpointV2MiddlewareTest extends TestCase
         $method = $reflection->getMethod('resolveAuthScheme');
         $method->setAccessible(true);
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(UnresolvedAuthSchemeException::class);
         $this->expectExceptionMessage(
             "This operation requests `invalidAuthScheme` auth schemes, but the client only supports"
         );
