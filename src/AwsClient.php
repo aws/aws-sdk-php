@@ -548,7 +548,7 @@ class AwsClient implements AwsClientInterface
         if (!empty($paramDefinitions = $api->getClientContextParams())) {
             foreach($paramDefinitions as $paramName => $paramValue) {
                 if (isset($args[$paramName])) {
-                   $result[$paramName] = $args[$paramName];
+                   $resolvedParams[$paramName] = $args[$paramName];
                }
             }
         }
