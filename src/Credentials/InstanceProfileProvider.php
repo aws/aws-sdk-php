@@ -59,6 +59,8 @@ class InstanceProfileProvider
 
     /** @var string */
     private $endpointMode;
+    /** @var bool */
+    private $useAwsSharedConfigFiles;
 
     /**
      * The constructor accepts the following options:
@@ -88,6 +90,7 @@ class InstanceProfileProvider
         }
 
         $this->endpointMode = $config[self::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE] ?? null;
+        $this->useAwsSharedConfigFiles = $config['use_aws_shared_config_files'] ?? false;
     }
 
     /**
@@ -216,11 +219,7 @@ class InstanceProfileProvider
             if (!isset($result)) {
                 $credentials = $previousCredentials;
             } else {
-                $accountId = null;
-                if (!empty($result['AccountId'])) {
-                    $accountId = $result['AccountId'];
-                }
-
+                $accountId = $result['AccountId'] ?? null;
                 $credentials = new Credentials(
                     $result['AccessKeyId'],
                     $result['SecretAccessKey'],
@@ -350,7 +349,7 @@ class InstanceProfileProvider
                     self::CFG_EC2_METADATA_V1_DISABLED,
                     self::DEFAULT_AWS_EC2_METADATA_V1_DISABLED,
                     'bool',
-                    ['use_aws_shared_config_files' => true]
+                    ['use_aws_shared_config_files' => $this->useAwsSharedConfigFiles]
                 )
             )
             ?? self::DEFAULT_AWS_EC2_METADATA_V1_DISABLED;
@@ -375,7 +374,7 @@ class InstanceProfileProvider
                 self::CFG_EC2_METADATA_SERVICE_ENDPOINT,
                 $this->getDefaultEndpoint(),
                 'string',
-                ['use_aws_shared_config_files' => true]
+                ['use_aws_shared_config_files' => $this->useAwsSharedConfigFiles]
             );
         }
 
@@ -426,7 +425,7 @@ class InstanceProfileProvider
                 self::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE,
                     self::ENDPOINT_MODE_IPv4,
                 'string',
-                ['use_aws_shared_config_files' => true]
+                ['use_aws_shared_config_files' => $this->useAwsSharedConfigFiles]
             );
         }
 
