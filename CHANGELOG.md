@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.9 - 2024-03-01
 
 * `Aws\AccessAnalyzer` - Fixed a typo in description field.
 * `Aws\AutoScaling` - With this release, Amazon EC2 Auto Scaling groups, EC2 Fleet, and Spot Fleet improve the default price protection behavior of attribute-based instance type selection of Spot Instances, to consistently select from a wide range of instance types.
