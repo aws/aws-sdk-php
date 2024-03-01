@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AccessAnalyzer` - Fixed a typo in description field.
+* `Aws\AutoScaling` - With this release, Amazon EC2 Auto Scaling groups, EC2 Fleet, and Spot Fleet improve the default price protection behavior of attribute-based instance type selection of Spot Instances, to consistently select from a wide range of instance types.
+* `Aws\EC2` - With this release, Amazon EC2 Auto Scaling groups, EC2 Fleet, and Spot Fleet improve the default price protection behavior of attribute-based instance type selection of Spot Instances, to consistently select from a wide range of instance types.
+
 ## 3.300.8 - 2024-02-29
 
 * `Aws\SageMaker` - Adds support for ModelDataSource in Model Packages to support unzipped models. Adds support to specify SourceUri for models which allows registration of models without mandating a container for hosting. Using SourceUri, customers can decouple the model from hosting information during registration.
