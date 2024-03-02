@@ -4,11 +4,15 @@ namespace Aws\Test;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Command;
+use Aws\Credentials\Credentials;
 use Aws\EventBridge\EventBridgeClient;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
+use Aws\Identity\AwsCredentialIdentity;
+use Aws\Identity\BearerTokenIdentity;
 use Aws\MockHandler;
 use Aws\Result;
+use Aws\Token\Token;
 use Aws\TraceMiddleware;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
@@ -302,6 +306,61 @@ class TraceMiddlewareTest extends TestCase
         }
     }
 
+    /**
+     * @param $identity
+     * @param $expected
+     *
+     * @dataProvider scrubsSensitiveContextProvider
+     */
+    public function testScrubsSensitiveCommandContext($identity, $expected)
+    {
+        $service = $this->generateTestService(['auth' => ["aws.auth#sigv4a"]]);
+        $client = $this->generateTestClient($service);
+        $command = $client->getCommand(
+            'SensitiveOp',
+            [
+                "InputShape" => [
+                    "PublicParameter" => "foo",
+                ]
+            ]
+        );
+
+        $str = '';
+        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $list = new HandlerList();
+        $list->setHandler(function () {
+            return Promise\Create::promiseFor(new Result());
+        });
+        $list->appendInit(function ($handler) use ($identity) {
+            return function ($cmd, $req) use ($handler, $identity) {
+                $cmd['@context']['resolved_identity'] = $identity;
+                return $handler($cmd, $req);
+            };
+        });
+        $list->interpose(new TraceMiddleware(['logfn' => $logfn], $service));
+
+        $handler = $list->resolve();
+        $request = new Request('post', "/");
+        $handler($command, $request);
+
+        $this->assertStringContainsString("instance of {$expected}", $str);
+        $this->assertStringNotContainsString('shh-its-a-secret', $str);
+    }
+
+    public function scrubsSensitiveContextProvider()
+    {
+        return [
+            [
+                new Credentials('shh-its-a-secret', 'shh-its-a-secret'),
+                AwsCredentialIdentity::class
+            ],
+            [
+                new Token('shh-its-a-secret'),
+                BearerTokenIdentity::class
+            ]
+        ];
+    }
+
     private function generateTestClient(Service $service, $args = [])
     {
         return new AwsClient(
@@ -319,14 +378,15 @@ class TraceMiddlewareTest extends TestCase
         );
     }
 
-    private function generateTestService()
+    private function generateTestService($args = [])
     {
         return new Service(
             [
                 'metadata' => [
                     "protocol" => "json",
                     "apiVersion" => "2014-01-01",
-                    "jsonVersion" => "1.1"
+                    "jsonVersion" => "1.1",
+                    "auth" => $args['auth'] ?? null
                 ],
                 'shapes' => [
                     "InputShape" => [

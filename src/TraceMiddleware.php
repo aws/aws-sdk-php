@@ -3,6 +3,8 @@ namespace Aws;
 
 use Aws\Api\Service;
 use Aws\Exception\AwsException;
+use Aws\Identity\AwsCredentialIdentity;
+use Aws\Identity\BearerTokenIdentity;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -38,6 +40,13 @@ class TraceMiddleware
         '/X-Amz-Security-Token=[^&]+/i' => 'X-Amz-Security-Token=[TOKEN]',
         // Crypto *Stream Keys
         '/\["key.{27,36}Stream.{9}\]=>\s+.{7}\d{2}\) "\X{16,64}"/U' => '["key":[CONTENT KEY]]',
+    ];
+
+    private static $sensitiveContext = [
+        'resolved_identity' => [
+            AwsCredentialIdentity::class => true,
+            BearerTokenIdentity::class => true
+        ]
     ];
 
     /**
@@ -333,13 +342,21 @@ class TraceMiddleware
         }
         $shapes = $this->service["shapes"];
         $cmdArray = $cmd->toArray();
+
+        if ($keys = array_intersect_key(
+            self::$sensitiveContext,
+            $cmdArray['@context']
+        )) {
+            $this->scrubSensitiveContext($keys, $cmdArray);
+        }
+
         $iterator = new RecursiveIteratorIterator(
             new RecursiveArrayIterator($cmdArray),
             RecursiveIteratorIterator::SELF_FIRST
         );
         foreach ($iterator as $parameter => $value) {
-           if (isset($shapes[$parameter]['sensitive']) &&
-               $shapes[$parameter]['sensitive'] === true
+            if (((isset($shapes[$parameter]['sensitive']) &&
+               $shapes[$parameter]['sensitive'] === true))
            ) {
                $redactedValue = is_string($value) ? "[{$parameter}]" : ["[{$parameter}]"];
                $currentDepth = $iterator->getDepth();
@@ -353,8 +370,22 @@ class TraceMiddleware
                        )
                    );
                }
-           }
+            }
         }
         return $iterator->getArrayCopy();
+    }
+
+    private function scrubSensitiveContext(array $keys, array &$cmdArray)
+    {
+        foreach($keys as $key => $value) {
+            $contextElement = &$cmdArray['@context'][$key];
+            foreach($value as $namespace => $_) {
+                if ($contextElement instanceof $namespace) {
+                    $cmdArray['@context'][$key] = "instance of {$namespace}";
+                    break;
+                }
+            }
+            unset($contextElement);
+        }
     }
 }

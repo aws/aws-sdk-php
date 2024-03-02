@@ -250,7 +250,7 @@ class AwsClient implements AwsClientInterface
         if ($this->isUseEndpointV2()) {
             $this->addEndpointV2Middleware();
         }
-        $this->addAuthMiddleware();
+        $this->addAuthSelectionMiddleware();
 
         if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
             $this->addQueryCompatibleInputMiddleware($this->api);
@@ -515,7 +515,7 @@ class AwsClient implements AwsClientInterface
         );
     }
 
-    private function addAuthMiddleware()
+    private function addAuthSelectionMiddleware()
     {
         $list = $this->getHandlerList();
         $config = $this->getConfig();
