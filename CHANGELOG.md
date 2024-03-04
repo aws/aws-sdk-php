@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Add DetailedStatus field to DescribeStackEvents and DescribeStacks APIs
+* `Aws\Organizations` - Documentation update for AWS Organizations
+* `Aws\FSx` - Added support for creating FSx for NetApp ONTAP file systems with up to 12 HA pairs, delivering up to 72 GB/s of read throughput and 12 GB/s of write throughput.
+
 ## 3.300.9 - 2024-03-01
 
 * `Aws\AccessAnalyzer` - Fixed a typo in description field.
