@@ -572,7 +572,7 @@ class AwsClient implements AwsClientInterface
     private function setClientBuiltIns($args, $resolvedConfig)
     {
         $builtIns = [];
-        $config = $this->getConfig();
+        $config = $resolvedConfig['config'];
         $service = $args['service'];
 
         $builtIns['SDK::Endpoint'] = null;
@@ -593,7 +593,6 @@ class AwsClient implements AwsClientInterface
             $builtIns['AWS::S3::ForcePathStyle'] = $config['use_path_style_endpoint'];
             $builtIns['AWS::S3::DisableMultiRegionAccessPoints'] = $config['disable_multiregion_access_points'];
         }
-        $builtIns['AWS::Auth::AccountId'] = null;
         $builtIns['AWS::Auth::AccountIdEndpointMode'] = $resolvedConfig['account_id_endpoint_mode'];
 
         $this->clientBuiltIns += $builtIns;

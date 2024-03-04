@@ -80,6 +80,9 @@ class StsClient extends AwsClient
         if ($result->hasKey('AssumedRoleUser')) {
             $parsedArn = ArnParser::parse($result->get('AssumedRoleUser')['Arn']);
             $accountId = $parsedArn->getAccountId();
+        } elseif ($result->hasKey('FederatedUser')) {
+            $parsedArn = ArnParser::parse($result->get('FederatedUser')['Arn']);
+            $accountId = $parsedArn->getAccountId();
         }
 
         $credentials = $result['Credentials'];

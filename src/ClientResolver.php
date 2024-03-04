@@ -293,7 +293,7 @@ class ClientResolver
         'account_id_endpoint_mode' => [
             'type'      => 'value',
             'valid'     => ['string'],
-            'doc'       => 'To decide whether account_id must a be a required resolved credentials parameter. If this configuration is set to disabled, then account_id is not required. If set to preferred a warning will be logged when account_id is not resolved, and when set to required an exception will be thrown if account_id is not resolved.',
+            'doc'       => 'Decides whether account_id must a be a required resolved credentials property. If this configuration is set to disabled, then account_id is not required. If set to preferred a warning will be logged when account_id is not resolved, and when set to required an exception will be thrown if account_id is not resolved.',
             'default'  => [__CLASS__, '_default_account_id_endpoint_mode'],
             'fn'       => [__CLASS__, '_apply_account_id_endpoint_mode']
         ],

@@ -504,6 +504,7 @@ class AwsClientTest extends TestCase
             'AWS::UseFIPS' => false,
             'AWS::UseDualStack' => false,
             'AWS::STS::UseGlobalEndpoint' => true,
+            'AWS::Auth::AccountIdEndpointMode' => 'preferred',
         ];
         $builtIns = $client->getClientBuiltIns();
         $this->assertEquals(
@@ -524,6 +525,7 @@ class AwsClientTest extends TestCase
             'UseFIPS' => false,
             'UseDualStack' => false,
             'UseGlobalEndpoint' => true,
+            'AccountIdEndpointMode' => 'preferred'
         ];
         $providerArgs = $client->getEndpointProviderArgs();
         $this->assertEquals(

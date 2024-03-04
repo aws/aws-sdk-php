@@ -76,7 +76,7 @@ class EcsCredentialProvider
                     $result['SecretAccessKey'],
                     $result['Token'],
                     strtotime($result['Expiration']),
-                    $result['AccountId']
+                    $result['AccountId'] ?? null
                 );
             })->otherwise(function ($reason) {
                 $reason = is_array($reason) ? $reason['exception'] : $reason;

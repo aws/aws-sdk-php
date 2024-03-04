@@ -292,17 +292,15 @@ class CredentialProvider
             // Use credentials from environment variables, if available
             $key = getenv(self::ENV_KEY);
             $secret = getenv(self::ENV_SECRET);
-            $accountId = getenv(self::ENV_ACCOUNT_ID);
-            if (empty($accountId)) {
-                $accountId = null;
-            }
+            $accountId = getenv(self::ENV_ACCOUNT_ID) ?: null;
+            $token = getenv(self::ENV_SESSION) ?: null;
 
             if ($key && $secret) {
                 return Promise\Create::promiseFor(
                     new Credentials(
                         $key,
                         $secret,
-                        getenv(self::ENV_SESSION) ?: NULL,
+                        $token,
                         null,
                         $accountId
                     )
@@ -549,18 +547,13 @@ class CredentialProvider
                     : null;
             }
 
-            $accountId = null;
-            if (!empty($data[$profile]['aws_account_id'])) {
-                $accountId = $data[$profile]['aws_account_id'];
-            }
-
             return Promise\Create::promiseFor(
                 new Credentials(
                     $data[$profile]['aws_access_key_id'],
                     $data[$profile]['aws_secret_access_key'],
                     $data[$profile]['aws_session_token'],
                     null,
-                    $accountId
+                    $data[$profile]['aws_account_id'] ?? null
                 )
             );
         };
