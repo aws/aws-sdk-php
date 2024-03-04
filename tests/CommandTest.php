@@ -3,7 +3,7 @@ namespace Aws\Test;
 
 use Aws\Command;
 use Aws\HandlerList;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Command
@@ -84,5 +84,29 @@ class CommandTest extends TestCase
         unset($c['boo']);
         $this->assertArrayNotHasKey('boo', $c);
         $this->assertNull($c['boo']);
+    }
+
+    public function testGetAuthSchemesEmitsDeprecationNotice()
+    {
+        $this->expectDeprecation(E_USER_DEPRECATED);
+        $this->expectDeprecationMessage(
+            'Aws\Command::getAuthSchemes is deprecated.  Auth schemes resolved using the service'
+        .' `auth` trait or via endpoint resolution can now be found in the command `@context` property.'
+        );
+
+        $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
+        $c->getAuthSchemes();
+    }
+
+    public function testSetAuthSchemesEmitsDeprecationNotice()
+    {
+        $this->expectDeprecation(E_USER_DEPRECATED);
+        $this->expectDeprecationMessage(
+            'Aws\Command::setAuthSchemes is deprecated.  Auth schemes resolved using the service'
+            .' `auth` trait or via endpoint resolution are now set in the command `@context` property.'
+        );
+
+        $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
+        $c->setAuthSchemes([]);
     }
 }

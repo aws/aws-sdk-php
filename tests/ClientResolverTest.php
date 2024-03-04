@@ -2,6 +2,8 @@
 namespace Aws\Test;
 
 use Aws\Api\Service;
+use Aws\Auth\AuthSchemeResolver;
+use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientResolver;
 use Aws\ClientSideMonitoring\Configuration;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
@@ -1659,5 +1661,20 @@ EOF;
         } finally {
             $deferTask();
         }
+    }
+
+    public function testAppliesAuthSchemeResolver()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'dynamodb',
+            'region' => 'x',
+            'version' => 'latest',
+        ], new HandlerList());
+        $this->assertArrayHasKey('auth_scheme_resolver', $conf);
+        $this->assertInstanceOf(
+            AuthSchemeResolverInterface::class,
+            $conf['auth_scheme_resolver']
+        );
     }
 }
