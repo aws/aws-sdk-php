@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.10 - 2024-03-04
 
 * `Aws\CloudFormation` - Add DetailedStatus field to DescribeStackEvents and DescribeStacks APIs
 * `Aws\Organizations` - Documentation update for AWS Organizations
