@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SESv2` - Adds support for providing custom headers within SendEmail and SendBulkEmail for SESv2.
+* `Aws\Chatbot` - Minor update to documentation.
+* `Aws\Organizations` - This release contains an endpoint addition
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway
+
 ## 3.300.10 - 2024-03-04
 
 * `Aws\CloudFormation` - Add DetailedStatus field to DescribeStackEvents and DescribeStacks APIs
