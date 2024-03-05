@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.11 - 2024-03-05
 
 * `Aws\SESv2` - Adds support for providing custom headers within SendEmail and SendBulkEmail for SESv2.
 * `Aws\Chatbot` - Minor update to documentation.
