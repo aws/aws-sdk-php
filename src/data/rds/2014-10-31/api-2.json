@@ -3300,7 +3300,8 @@
         "AllocatedStorage":{"shape":"IntegerOptional"},
         "RdsCustomClusterConfiguration":{"shape":"RdsCustomClusterConfiguration"},
         "Iops":{"shape":"IntegerOptional"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "CertificateDetails":{"shape":"CertificateDetails"}
       }
     },
     "ConnectionPoolConfiguration":{
@@ -3570,7 +3571,8 @@
         "DBSystemId":{"shape":"String"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"},
-        "EnableLocalWriteForwarding":{"shape":"BooleanOptional"}
+        "EnableLocalWriteForwarding":{"shape":"BooleanOptional"},
+        "CACertificateIdentifier":{"shape":"String"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -4152,7 +4154,8 @@
         "LocalWriteForwardingStatus":{"shape":"LocalWriteForwardingStatus"},
         "AwsBackupRecoveryPointArn":{"shape":"String"},
         "LimitlessDatabase":{"shape":"LimitlessDatabase"},
-        "StorageThroughput":{"shape":"IntegerOptional"}
+        "StorageThroughput":{"shape":"IntegerOptional"},
+        "CertificateDetails":{"shape":"CertificateDetails"}
       },
       "wrapper":true
     },
@@ -7823,7 +7826,8 @@
         "AllowEngineModeChange":{"shape":"Boolean"},
         "EnableLocalWriteForwarding":{"shape":"BooleanOptional"},
         "AwsBackupRecoveryPointArn":{"shape":"AwsBackupRecoveryPointArn"},
-        "EnableLimitlessDatabase":{"shape":"BooleanOptional"}
+        "EnableLimitlessDatabase":{"shape":"BooleanOptional"},
+        "CACertificateIdentifier":{"shape":"String"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
