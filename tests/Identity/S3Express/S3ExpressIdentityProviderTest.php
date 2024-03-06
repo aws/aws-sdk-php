@@ -4,17 +4,11 @@ namespace Aws\Test\Identity\S3Express;
 use Aws\Api\DateTimeResult;
 use Aws\Identity\S3\S3ExpressIdentityProvider;
 use Aws\Result;
-use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
-use Behat\Gherkin\Exception\CacheException;
-use Composer\Cache;
-use GuzzleHttp\Promise\FulfilledPromise;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * @covers Aws\Identity\S3Express\S3ExpressIdentityProvider
+ * @covers Aws\Identity\S3\S3ExpressIdentityProvider
  */
 class S3ExpressIdentityProviderTest extends TestCase
 {

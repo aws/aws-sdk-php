@@ -1,8 +1,8 @@
 <?php
 namespace Aws\Test\EndpointV2;
 
+use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\EndpointV2\EndpointDefinitionProvider;
-use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\Ruleset\Ruleset;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
@@ -10,7 +10,6 @@ use Aws\Exception\CommonRuntimeException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
-use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -303,7 +302,7 @@ class EndpointProviderV2Test extends TestCase
         $handler = $list->resolve();
         try {
             $handler($command)->wait();
-        } catch (CommonRuntimeException $e) {
+        } catch (CommonRuntimeException | UnresolvedAuthSchemeException $e) {
             $this->markTestSkipped();
         }
     }

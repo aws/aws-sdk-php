@@ -2,6 +2,7 @@
 namespace Aws\Test\EndpointV2;
 
 use Aws\Api\Service;
+use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2Middleware;
@@ -99,22 +100,11 @@ class EndpointV2MiddlewareTest extends TestCase
         ];
     }
 
-    public function testInvalidAuthSchemeThrows() {
+    public function testInvalidAuthSchemeThrows()
+    {
         $mockedEndpointProvider = $this->getMockBuilder(EndpointProviderV2::class)
-            ->setMethods(['resolveEndpoint'])
             ->disableOriginalConstructor()
             ->getMock();
-
-        $mockedEndpoint = $this->getMockBuilder(RulesetEndpoint::class)
-            ->setMethods(['getProperties'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $mockedEndpoint->method('getProperties')
-            ->willReturn(['authSchemes' => [ ['name' => 'invalidAuthScheme'] ]]);
-
-        $mockedEndpointProvider->method('resolveEndpoint')
-            ->willReturn($mockedEndpoint);
 
         $middleware = new EndpointV2Middleware(
             function ($command, $endpoint) {},
@@ -129,12 +119,92 @@ class EndpointV2MiddlewareTest extends TestCase
         $method = $reflection->getMethod('resolveAuthScheme');
         $method->setAccessible(true);
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(UnresolvedAuthSchemeException::class);
         $this->expectExceptionMessage(
-            "This operation requests `invalidAuthScheme` auth schemes, but the client only supports"
+            "This operation requests `invalidAuthScheme` auth schemes, but the client currently supports"
         );
 
         $method->invoke($middleware, [['name' => 'invalidAuthScheme']]);
+    }
+
+    /**
+     * @param $authSchemes
+     * @param $expected
+     *
+     * @dataProvider v4aAuthProvider
+     */
+    public function testV4aAuthSchemeSelection($authSchemes, $expected)
+    {
+        if ($expected === 'v4a' && (!extension_loaded('awscrt'))) {
+            $this->markTestSkipped();
+        } elseif ($expected === 'v4' && (extension_loaded('awscrt'))) {
+            $this->markTestSkipped();
+        }
+
+        $mockedEndpointProvider = $this->getMockBuilder(EndpointProviderV2::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $middleware = new EndpointV2Middleware(
+            function ($command, $endpoint) {},
+            $mockedEndpointProvider,
+            $this->getMockBuilder(Service::class)
+                ->disableOriginalConstructor()
+                ->getMock(),
+            []
+        );
+
+        $reflection = new ReflectionClass(EndpointV2Middleware::class);
+        $method = $reflection->getMethod('resolveAuthScheme');
+        $method->setAccessible(true);
+
+        $result = $method->invoke($middleware, $authSchemes);
+        $this->assertSame($expected, $result['version']);
+    }
+
+    public function v4aAuthProvider()
+    {
+        return [
+            [
+                [['name' => 'sigv4a'], ['name' => 'sigv4']],
+                'v4'
+            ],
+            [
+                [['name' => 'sigv4a'], ['name' => 'sigv4']],
+                'v4a'
+            ]
+        ];
+    }
+
+    public function testThrowsForIncompatibleV4a()
+    {
+        if (extension_loaded('awscrt')) {
+            $this->markTestSkipped();
+        }
+
+        $this->expectException(UnresolvedAuthSchemeException::class);
+        $this->expectExceptionMessage('This operation requests `sigv4a` auth schemes,'
+            . ' but the client currently supports `sigv4`, `none`, `bearer`, `sigv4-s3express`.'
+        );
+
+        $mockedEndpointProvider = $this->getMockBuilder(EndpointProviderV2::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $middleware = new EndpointV2Middleware(
+            function ($command, $endpoint) {},
+            $mockedEndpointProvider,
+            $this->getMockBuilder(Service::class)
+                ->disableOriginalConstructor()
+                ->getMock(),
+            []
+        );
+
+        $reflection = new ReflectionClass(EndpointV2Middleware::class);
+        $method = $reflection->getMethod('resolveAuthScheme');
+        $method->setAccessible(true);
+
+       $method->invoke($middleware, [['name' => 'sigv4a']]);
     }
 
     /**
