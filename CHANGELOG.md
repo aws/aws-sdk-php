@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.12 - 2024-03-06
 
 * `Aws\Redshift` - Update for documentation only. Covers port ranges, definition updates for data sharing, and definition updates to cluster-snapshot documentation.
 * `Aws\RDS` - Updated the input of CreateDBCluster and ModifyDBCluster to support setting CA certificates. Updated the output of DescribeDBCluster to show current CA certificate setting value.
