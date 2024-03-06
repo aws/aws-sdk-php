@@ -271,7 +271,8 @@ EOT;
             "key" => "foo",
             "secret" => "bar",
             "token" => "baz",
-            "expires" => null
+            "expires" => null,
+            "accountId" => null
         ];
         putenv('HOME=' . dirname($dir));
         $creds = call_user_func(

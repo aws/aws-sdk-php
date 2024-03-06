@@ -303,8 +303,7 @@ class EndpointV2Middleware
             $normalizedAuthScheme['version'] = 's3v4';
         } elseif ($authScheme['name'] === 'none') {
             $normalizedAuthScheme['version'] = 'anonymous';
-        }
-        else {
+        } else {
             $normalizedAuthScheme['version'] = str_replace(
                 'sig', '', $authScheme['name']
             );
@@ -349,6 +348,8 @@ class EndpointV2Middleware
                     break;
                 case 'required':
                     throw new AccountIdNotFoundException($this->getAccountIdErrorMessage($accountIdEndpointMode));
+                case 'disabled':
+                    return null;
                 default:
                     throw new \InvalidArgumentException('account_id_endpoint_mode value not supported: '. $accountIdEndpointMode);
             }
@@ -359,7 +360,7 @@ class EndpointV2Middleware
         $commandArgs[self::ACCOUNT_ID_PARAM] = $identity->getAccountId();
     }
 
-    private function getAccountIdErrorMessage($mode) : string
+    private function getAccountIdErrorMessage($mode): string
     {
         return "Unable to resolve an `accountId` as part of the credentials identity when `account_id_endpoint_mode` is set to {$mode}. "
             . "\nTo remedy this you can:"
