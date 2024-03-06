@@ -247,19 +247,10 @@ class EndpointV2Middleware
         $invalidAuthSchemes = [];
 
         foreach($authSchemes as $authScheme) {
-            if (isset(self::$validAuthSchemes[$authScheme['name']])) {
-                switch($authScheme['name']) {
-                    case 'sigv4a':
-                        if (!extension_loaded('awscrt')) {
-                            $invalidAuthSchemes[$authScheme['name']] = false;
-                            continue 2;
-                        }
-                        break;
-                }
+            if ($this->isValidAuthScheme($authScheme['name'])) {
                 return $this->normalizeAuthScheme($authScheme);
-            } else {
-                $invalidAuthSchemes[$authScheme['name']] = false;
             }
+            $invalidAuthSchemes[$authScheme['name']] = false;
         }
 
         $invalidAuthSchemesString = '`' . implode(
@@ -311,5 +302,16 @@ class EndpointV2Middleware
             $authScheme['signingRegionSet'] : null;
 
         return $normalizedAuthScheme;
+    }
+
+    private function isValidAuthScheme($signatureVersion): bool
+    {
+        if (isset(self::$validAuthSchemes[$signatureVersion])) {
+              if ($signatureVersion === 'sigv4a') {
+                  return extension_loaded('awscrt');
+              }
+              return true;
+        }
+        return false;
     }
 }
