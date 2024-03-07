@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Snowball` - Doc-only update for change to EKS-Anywhere ordering.
+* `Aws\Lambda` - Documentation updates for AWS Lambda
+* `Aws\WAFV2` - You can increase the max request body inspection size for some regional resources. The size setting is in the web ACL association config. Also, the AWSManagedRulesBotControlRuleSet EnableMachineLearning setting now takes a Boolean instead of a primitive boolean type, for languages like Java.
+* `Aws\AppConfig` - AWS AppConfig now supports dynamic parameters, which enhance the functionality of AppConfig Extensions by allowing you to provide parameter values to your Extensions at the time you deploy your configuration.
+* `Aws\WorkSpaces` - Added note for user decoupling
+* `Aws\EC2` - This release adds an optional parameter to RegisterImage and CopyImage APIs to support tagging AMIs at the time of creation.
+* `Aws\RDS` - Updates Amazon RDS documentation for io2 storage for Multi-AZ DB clusters
+* `Aws\PaymentCryptographyData` - AWS Payment Cryptography EMV Decrypt Feature Release
+* `Aws\ManagedGrafana` - Adds support for the new GrafanaToken as part of the Amazon Managed Grafana Enterprise plugins upgrade to associate your AWS account with a Grafana Labs account.
+
 ## 3.300.12 - 2024-03-06
 
 * `Aws\Redshift` - Update for documentation only. Covers port ranges, definition updates for data sharing, and definition updates to cluster-snapshot documentation.
