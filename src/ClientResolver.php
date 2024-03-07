@@ -1190,10 +1190,15 @@ class ClientResolver
   
     public static function _apply_region($value, array &$args)
     {
+        if (isset($value)) {
+            $args['region'] = $value;
+        } else {
+            $args['region'] = self::_default_region($args);
+        }
+        
         if (empty($value)) {
             self::_missing_region($args);
         }
-        $args['region'] = $value;
     }
 
     public static function _default_region(&$args)
