@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.13 - 2024-03-07
 
 * `Aws\Snowball` - Doc-only update for change to EKS-Anywhere ordering.
 * `Aws\Lambda` - Documentation updates for AWS Lambda
