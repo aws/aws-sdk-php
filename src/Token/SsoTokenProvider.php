@@ -158,8 +158,19 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     {
         return self::getHomeDir()
             . '/.aws/sso/cache/'
-            . mb_convert_encoding(sha1($sso_session), "UTF-8")
+            . self::encodeUtf8(sha1($sso_session))
             . ".json";
+    }
+
+    /**
+     * @param $toEncode
+     * @return string
+     */
+    private static function encodeUtf8($toEncode)
+    {
+        return \function_exists('mb_convert_encoding')
+            ? mb_convert_encoding($toEncode, 'UTF-8', mb_list_encodings())
+            : utf8_encode($toEncode);
     }
 
     /**
