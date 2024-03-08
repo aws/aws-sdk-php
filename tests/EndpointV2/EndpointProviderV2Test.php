@@ -275,22 +275,22 @@ class EndpointProviderV2Test extends TestCase
                         $expectedVersion = str_replace('sig', '', $expectedAuthScheme['name']);
                     }
                     $this->assertEquals(
-                        $cmd->getAuthSchemes()['version'],
-                        $expectedVersion
+                        $expectedVersion,
+                        $cmd->getAuthSchemes()['version']
                     );
                     $this->assertEquals(
-                        $cmd->getAuthSchemes()['name'],
-                        $expectedAuthScheme['signingName']
+                        $expectedAuthScheme['signingName'],
+                        $cmd->getAuthSchemes()['name']
                     );
                     if (isset($cmd->getAuthSchemes()['region'])) {
                         $this->assertEquals(
-                            $cmd->getAuthSchemes()['region'],
-                            $expectedAuthScheme['signingRegion']
+                            $expectedAuthScheme['signingRegion'],
+                            $cmd->getAuthSchemes()['region']
                         );
                     } elseif (isset($cmd->getAuthSchemes['signingRegionSet'])) {
                         $this->assertEquals(
-                            $cmd->getAuthSchemes()['region'],
-                            $expectedAuthScheme['signingRegionSet']
+                            $expectedAuthScheme['signingRegionSet'],
+                            $cmd->getAuthSchemes()['region']
                         );
                     }
                 }
@@ -302,8 +302,8 @@ class EndpointProviderV2Test extends TestCase
                 foreach($expectedHeaders as $headerKey => $headerValue) {
                     $this->assertArrayHasKey($headerKey, $returnedHeaders);
                     $this->assertEquals(
-                        $returnedHeaders[$headerKey][0],
-                        $headerValue[0]
+                        $headerValue[0],
+                        $returnedHeaders[$headerKey][0]
                     );
                 }
             }
