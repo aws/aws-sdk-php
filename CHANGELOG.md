@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EndpointV2` - Updates auth scheme selection criteria
+* `Aws\CloudTrail` - Added exceptions to CreateTrail, DescribeTrails, and ListImportFailures APIs.
+* `Aws\Transfer` - Added DES_EDE3_CBC to the list of supported encryption algorithms for messages sent with an AS2 connector.
+* `Aws\BedrockAgentRuntime` - Documentation update for Bedrock Runtime Agent
+* `Aws\CodeBuild` - This release adds support for a new webhook event: PULL_REQUEST_CLOSED.
+* `Aws\CognitoIdentityProvider` - Add ConcurrentModificationException to SetUserPoolMfaConfig
+* `Aws\GuardDuty` - Add RDS Provisioned and Serverless Usage types
+* `Aws\Batch` - This release adds JobStateTimeLimitActions setting to the Job Queue API. It allows you to configure an action Batch can take for a blocking job in front of the queue after the defined period of time. The new parameter applies for ECS, EKS, and FARGATE Job Queues.
+
 ## 3.300.13 - 2024-03-07
 
 * `Aws\Snowball` - Doc-only update for change to EKS-Anywhere ordering.
