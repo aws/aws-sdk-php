@@ -254,33 +254,45 @@ class EndpointProviderV2Test extends TestCase
             );
 
             if (isset($expectedEndpoint['properties']['authSchemes'])) {
-                $expectedAuthSchemes = $expectedEndpoint['properties']['authSchemes'][0];
-                if ((isset($expectedAuthSchemes['disableDoubleEncoding'])
-                    && $expectedAuthSchemes['disableDoubleEncoding'] === true)
-                    && $expectedAuthSchemes['name'] !== 'sigv4a'
-                ) {
-                    $expectedVersion = 's3v4';
-                } else {
-                    $expectedVersion = str_replace('sig', '', $expectedAuthSchemes['name']);
+                $expectedAuthScheme = null;
+                foreach ($expectedEndpoint['properties']['authSchemes'] as $authScheme) {
+                    // Skip sigv4a if awscrt extension is not loaded
+                    if ($authScheme['name'] === 'sigv4a' && !extension_loaded('awscrt')) {
+                        continue;
+                    }
+
+                    $expectedAuthScheme = $authScheme;
+                    break;
                 }
-                $this->assertEquals(
-                    $cmd->getAuthSchemes()['version'],
-                    $expectedVersion
-                );
-                $this->assertEquals(
-                    $cmd->getAuthSchemes()['name'],
-                    $expectedAuthSchemes['signingName']
-                );
-                if (isset($cmd->getAuthSchemes()['region'])) {
+
+                if ($expectedAuthScheme) {
+                    if ((isset($expectedAuthScheme['disableDoubleEncoding'])
+                            && $expectedAuthScheme['disableDoubleEncoding'] === true)
+                        && $expectedAuthScheme['name'] !== 'sigv4a'
+                    ) {
+                        $expectedVersion = 's3v4';
+                    } else {
+                        $expectedVersion = str_replace('sig', '', $expectedAuthScheme['name']);
+                    }
                     $this->assertEquals(
-                        $cmd->getAuthSchemes()['region'],
-                        $expectedAuthSchemes['signingRegion']
+                        $expectedVersion,
+                        $cmd->getAuthSchemes()['version']
                     );
-                } elseif (isset($cmd->getAuthSchemes['signingRegionSet'])) {
                     $this->assertEquals(
-                        $cmd->getAuthSchemes()['region'],
-                        $expectedAuthSchemes['signingRegionSet']
+                        $expectedAuthScheme['signingName'],
+                        $cmd->getAuthSchemes()['name']
                     );
+                    if (isset($cmd->getAuthSchemes()['region'])) {
+                        $this->assertEquals(
+                            $expectedAuthScheme['signingRegion'],
+                            $cmd->getAuthSchemes()['region']
+                        );
+                    } elseif (isset($cmd->getAuthSchemes['signingRegionSet'])) {
+                        $this->assertEquals(
+                            $expectedAuthScheme['signingRegionSet'],
+                            $cmd->getAuthSchemes()['region']
+                        );
+                    }
                 }
             }
             if (isset($expectedEndpoint['headers'])) {
@@ -290,11 +302,10 @@ class EndpointProviderV2Test extends TestCase
                 foreach($expectedHeaders as $headerKey => $headerValue) {
                     $this->assertArrayHasKey($headerKey, $returnedHeaders);
                     $this->assertEquals(
-                        $returnedHeaders[$headerKey][0],
-                        $headerValue[0]
+                        $headerValue[0],
+                        $returnedHeaders[$headerKey][0]
                     );
                 }
-
             }
         }));
         resolveHandler:
