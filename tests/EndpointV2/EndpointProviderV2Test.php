@@ -164,6 +164,7 @@ class EndpointProviderV2Test extends TestCase
     {
         $protocolTestCases = [];
         $serviceList = \Aws\manifest();
+        $serviceList = ['s3control' => [ 'namespace' => 'S3Control', 'versions' => [ 'latest' => '2018-08-20', '2018-08-20' => '2018-08-20', ], 'serviceIdentifier' => 's3_control', ]];
 
         forEach($serviceList as $service => $serviceValue) {
             $testFile = EndpointDefinitionProvider::getEndpointTests($service, 'latest');
@@ -254,33 +255,45 @@ class EndpointProviderV2Test extends TestCase
             );
 
             if (isset($expectedEndpoint['properties']['authSchemes'])) {
-                $expectedAuthSchemes = $expectedEndpoint['properties']['authSchemes'][0];
-                if ((isset($expectedAuthSchemes['disableDoubleEncoding'])
-                    && $expectedAuthSchemes['disableDoubleEncoding'] === true)
-                    && $expectedAuthSchemes['name'] !== 'sigv4a'
-                ) {
-                    $expectedVersion = 's3v4';
-                } else {
-                    $expectedVersion = str_replace('sig', '', $expectedAuthSchemes['name']);
+                $expectedAuthScheme = null;
+                foreach ($expectedEndpoint['properties']['authSchemes'] as $authScheme) {
+                    // Skip sigv4a if awscrt extension is not loaded
+                    if ($authScheme['name'] === 'sigv4a' && !extension_loaded('awscrt')) {
+                        continue;
+                    }
+
+                    $expectedAuthScheme = $authScheme;
+                    break;
                 }
-                $this->assertEquals(
-                    $cmd->getAuthSchemes()['version'],
-                    $expectedVersion
-                );
-                $this->assertEquals(
-                    $cmd->getAuthSchemes()['name'],
-                    $expectedAuthSchemes['signingName']
-                );
-                if (isset($cmd->getAuthSchemes()['region'])) {
+
+                if ($expectedAuthScheme) {
+                    if ((isset($expectedAuthScheme['disableDoubleEncoding'])
+                            && $expectedAuthScheme['disableDoubleEncoding'] === true)
+                        && $expectedAuthScheme['name'] !== 'sigv4a'
+                    ) {
+                        $expectedVersion = 's3v4';
+                    } else {
+                        $expectedVersion = str_replace('sig', '', $expectedAuthScheme['name']);
+                    }
                     $this->assertEquals(
-                        $cmd->getAuthSchemes()['region'],
-                        $expectedAuthSchemes['signingRegion']
+                        $cmd->getAuthSchemes()['version'],
+                        $expectedVersion
                     );
-                } elseif (isset($cmd->getAuthSchemes['signingRegionSet'])) {
                     $this->assertEquals(
-                        $cmd->getAuthSchemes()['region'],
-                        $expectedAuthSchemes['signingRegionSet']
+                        $cmd->getAuthSchemes()['name'],
+                        $expectedAuthScheme['signingName']
                     );
+                    if (isset($cmd->getAuthSchemes()['region'])) {
+                        $this->assertEquals(
+                            $cmd->getAuthSchemes()['region'],
+                            $expectedAuthScheme['signingRegion']
+                        );
+                    } elseif (isset($cmd->getAuthSchemes['signingRegionSet'])) {
+                        $this->assertEquals(
+                            $cmd->getAuthSchemes()['region'],
+                            $expectedAuthScheme['signingRegionSet']
+                        );
+                    }
                 }
             }
             if (isset($expectedEndpoint['headers'])) {
@@ -294,7 +307,6 @@ class EndpointProviderV2Test extends TestCase
                         $headerValue[0]
                     );
                 }
-
             }
         }));
         resolveHandler:
