@@ -164,7 +164,6 @@ class EndpointProviderV2Test extends TestCase
     {
         $protocolTestCases = [];
         $serviceList = \Aws\manifest();
-        $serviceList = ['s3control' => [ 'namespace' => 'S3Control', 'versions' => [ 'latest' => '2018-08-20', '2018-08-20' => '2018-08-20', ], 'serviceIdentifier' => 's3_control', ]];
 
         forEach($serviceList as $service => $serviceValue) {
             $testFile = EndpointDefinitionProvider::getEndpointTests($service, 'latest');
