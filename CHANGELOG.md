@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.14 - 2024-03-08
 
 * `Aws\EndpointV2` - Updates auth scheme selection criteria
 * `Aws\CloudTrail` - Added exceptions to CreateTrail, DescribeTrails, and ListImportFailures APIs.
