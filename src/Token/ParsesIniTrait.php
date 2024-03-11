@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Token;
 
+use function Aws\getenv;
+
 trait ParsesIniTrait
 {
     /**

@@ -21,6 +21,8 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Assert;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+use function Aws\getenv;
+
 class ClientSideMonitoringContext extends TestCase
     implements Context, SnippetAcceptingContext
 {

@@ -7,6 +7,8 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
 
+use function Aws\getenv;
+
 /**
  * Credential provider that fetches container credentials with GET request.
  * container environment variables are used in constructing request URI.

@@ -7,6 +7,8 @@ use Aws\CacheInterface;
 use Aws\Exception\TokenException;
 use GuzzleHttp\Promise;
 
+use function Aws\getenv;
+
 /**
  * Token providers are functions that accept no arguments and return a
  * promise that is fulfilled with an {@see \Aws\Token\TokenInterface}

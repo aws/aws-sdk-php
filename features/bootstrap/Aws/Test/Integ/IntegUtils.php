@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Test\Integ;
 
+use function Aws\getenv;
+
 trait IntegUtils
 {
     private static $originalCsmEnabled;

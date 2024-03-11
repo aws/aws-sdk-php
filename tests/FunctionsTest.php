@@ -516,4 +516,13 @@ EOT
             ]
         ];
     }
+
+    /**
+     * @covers Aws\getenv()
+     */
+    public function testgetenv()
+    {
+        $this->assertEquals(false, Aws\getenv('FOO'));
+        $this->assertEquals($_ENV['FOO'] = 'bar', Aws\getenv('FOO'));
+    }
 }

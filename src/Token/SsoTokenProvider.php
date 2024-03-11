@@ -4,6 +4,8 @@ namespace Aws\Token;
 use Aws\Exception\TokenException;
 use GuzzleHttp\Promise;
 
+use function Aws\getenv;
+
 /**
  * Token that comes from the SSO provider
  */

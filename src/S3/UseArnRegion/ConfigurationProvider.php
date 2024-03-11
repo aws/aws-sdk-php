@@ -7,6 +7,8 @@ use Aws\ConfigurationProviderInterface;
 use Aws\S3\UseArnRegion\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 
+use function Aws\getenv;
+
 /**
  * A configuration provider is a function that returns a promise that is
  * fulfilled with a {@see \Aws\S3\UseArnRegion\ConfigurationInterface}
