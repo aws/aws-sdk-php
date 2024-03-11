@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.15 - 2024-03-11
 
 * `Aws\ElastiCache` - Revisions to API text that are now to be carried over to SDK text, changing usages of "SFO" in code examples to "us-west-1", and some other typos.
 * `Aws\CodeStarconnections` - Added a sync configuration enum to disable publishing of deployment status to source providers (PublishDeploymentStatus). Added a sync configuration enum (TriggerStackUpdateOn) to only trigger changes.
