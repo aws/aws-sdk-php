@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Documentation updates for Amazon EC2.
+* `Aws\Kafka` - Added support for specifying the starting position of topic replication in MSK-Replicator.
+* `Aws\Connect` - This release increases MaxResults limit to 500 in request for SearchUsers, SearchQueues and SearchRoutingProfiles APIs of Amazon Connect.
+* `Aws\CloudFormation` - CloudFormation documentation update for March, 2024
+* `Aws\SSM` - March 2024 doc-only updates for Systems Manager.
+
 ## 3.300.15 - 2024-03-11
 
 * `Aws\ElastiCache` - Revisions to API text that are now to be carried over to SDK text, changing usages of "SFO" in code examples to "us-west-1", and some other typos.
