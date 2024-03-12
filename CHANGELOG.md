@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.16 - 2024-03-12
 
 * `Aws\EC2` - Documentation updates for Amazon EC2.
 * `Aws\Kafka` - Added support for specifying the starting position of topic replication in MSK-Replicator.
