@@ -2616,36 +2616,42 @@ class AesGcmTest extends TestCase
     {
         if (PHP_VERSION_ID < 70100) {
             $this->markTestSkipped('This test can only run on PHP 7.1');
+
             return;
         }
-        $ptLen = \random_int(0, 1024);
-        $aadLen = \random_int(0, 1024);
-        $i = 0;
-        $tag1 = $tag2 = '';
-        for ($i = 0; $i < 16; ++$i) {
-            $plaintext = \random_bytes($ptLen + $i);
-            $aad = \random_bytes($aadLen + $i);
-            $key = \random_bytes(32);
-            $nonce = \random_bytes(12);
 
-            $exp = \openssl_encrypt(
-                $plaintext,
-                'aes-256-gcm',
-                $key,
-                OPENSSL_RAW_DATA | OPENSSL_NO_PADDING,
-                $nonce,
-                $tag1,
-                $aad
-            );
-            $got = AesGcm::encrypt(
-                $plaintext,
-                $nonce,
-                new Key($key),
-                $aad,
-                $tag2
-            );
-            $this->assertSame(bin2hex($exp), bin2hex($got));
-            $this->assertSame(bin2hex($tag1), bin2hex($tag2));
+        $tag1 = $tag2 = '';
+
+        // https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf
+        $tagLengths       = array(128, 120, 112, 104, 96);
+        $plaintextLengths = array(128, 256, 512, 1024);
+
+        foreach ($plaintextLengths as $plaintextLength) {
+            foreach ($tagLengths as $tagLength) {
+                $plaintext = \random_bytes($plaintextLength / 8);
+                $aad       = \random_bytes($tagLength / 8);
+                $key       = \random_bytes(32);
+                $nonce     = \random_bytes(12);
+
+                $exp = \openssl_encrypt(
+                    $plaintext,
+                    'aes-256-gcm',
+                    $key,
+                    OPENSSL_RAW_DATA | OPENSSL_NO_PADDING,
+                    $nonce,
+                    $tag1,
+                    $aad
+                );
+                $got = AesGcm::encrypt(
+                    $plaintext,
+                    $nonce,
+                    new Key($key),
+                    $aad,
+                    $tag2
+                );
+                $this->assertSame(bin2hex($exp), bin2hex($got));
+                $this->assertSame(bin2hex($tag1), bin2hex($tag2));
+            }
         }
     }
 }
