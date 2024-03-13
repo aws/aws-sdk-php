@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.300.17 - 2024-03-13
 
 * `Aws\S3` - This release makes the default option for S3 on Outposts request signing to use the SigV4A algorithm when using AWS Common Runtime (CRT).
 * `Aws\KinesisAnalyticsV2` - Support new RuntimeEnvironmentUpdate parameter within UpdateApplication API allowing callers to change the Flink version upon which their application runs.
