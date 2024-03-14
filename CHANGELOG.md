@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.0 - 2024-03-14
 
 * `Aws\` - Amazon IOT Roborunner has been removed from the SDK because it has been discontinued.
 * `Aws\EC2InstanceConnect` - This release includes a new exception type "SerialConsoleSessionUnsupportedException" for SendSerialConsoleSSHPublicKey API.
