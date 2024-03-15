@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.1 - 2024-03-15
 
 * `Aws\S3` - Documentation updates for Amazon S3.
 * `Aws\EC2` - Add media accelerator and neuron device information on the describe instance types API.
