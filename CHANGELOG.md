@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Fix two issues with response root node names.
+* `Aws\KMS` - Adds the ability to use the default policy name by omitting the policyName parameter in calls to PutKeyPolicy and GetKeyPolicy
+* `Aws\CloudFormation` - This release supports for a new API ListStackSetAutoDeploymentTargets, which provider auto-deployment configuration as a describable resource. Customers can now view the specific combinations of regions and OUs that are being auto-deployed.
+* `Aws\TimestreamQuery` - Documentation updates, March 2024
+* `Aws\RDS` - This release launches the ModifyIntegration API and support for data filtering for zero-ETL Integrations.
+* `Aws\MediaTailor` - This release adds support to allow customers to show different content within a channel depending on metadata associated with the viewer.
+
 ## 3.301.1 - 2024-03-15
 
 * `Aws\S3` - Documentation updates for Amazon S3.
