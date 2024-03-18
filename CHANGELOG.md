@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.2 - 2024-03-18
 
 * `Aws\S3` - Fix two issues with response root node names.
 * `Aws\KMS` - Adds the ability to use the default policy name by omitting the policyName parameter in calls to PutKeyPolicy and GetKeyPolicy
