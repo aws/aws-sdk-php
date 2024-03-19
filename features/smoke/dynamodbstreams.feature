@@ -9,4 +9,4 @@ Feature: Amazon DynamoDB Streams
   Scenario: Handling errors
     When I attempt to call the "DescribeStream" API with:
     | StreamArn | arn:aws:dynamodb:us-west-2:111122223333:table/Forum/stream/2015-05-20T20:51:10.252 |
-    Then I expect the response error code to be "ResourceNotFoundException"
+    Then I expect the response error code to be "AccessDeniedException"
