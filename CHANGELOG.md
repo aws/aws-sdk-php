@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\finspace` - Adding new attributes readWrite and onDemand to dataview models for Database Maintenance operations.
+* `Aws\ManagedBlockchainQuery` - Introduces a new API for Amazon Managed Blockchain Query: ListFilteredTransactionEvents.
+* `Aws\CloudFormation` - Documentation update, March 2024. Corrects some formatting.
+* `Aws\CloudWatchLogs` - Update LogSamples field in Anomaly model to be a list of LogEvent
+* `Aws\EC2` - This release adds the new DescribeMacHosts API operation for getting information about EC2 Mac Dedicated Hosts. Users can now see the latest macOS versions that their underlying Apple Mac can support without needing to be updated.
+
 ## 3.301.2 - 2024-03-18
 
 * `Aws\S3` - Fix two issues with response root node names.

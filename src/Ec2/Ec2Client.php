@@ -814,6 +814,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise describeLocalGatewaysAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeLockedSnapshots(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise describeLockedSnapshotsAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result describeMacHosts(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise describeMacHostsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeManagedPrefixLists(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise describeManagedPrefixListsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeNetworkInsightsAccessScopeAnalyses(array $args = []) (supported in versions 2016-11-15)
