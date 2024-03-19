@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.3 - 2024-03-19
 
 * `Aws\finspace` - Adding new attributes readWrite and onDemand to dataview models for Database Maintenance operations.
 * `Aws\ManagedBlockchainQuery` - Introduces a new API for Amazon Managed Blockchain Query: ListFilteredTransactionEvents.
