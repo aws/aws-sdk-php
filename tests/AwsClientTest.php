@@ -724,4 +724,26 @@ EOT
             'version'      => 'latest'
         ]);
     }
+
+    public function testClientDefaultsAccountIdEndpointModeBuiltInsToPreferred()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-1'
+        ]);
+        $builtIns = $client->getClientBuiltIns();
+
+        self::assertEquals('preferred', $builtIns['AWS::Auth::AccountIdEndpointMode']);
+    }
+
+    public function testClientParameterOverridesDefaultAccountIdEndpointModeBuiltIns()
+    {
+        $expectedAccountIdEndpointMode = 'required';
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'account_id_endpoint_mode' => $expectedAccountIdEndpointMode
+        ]);
+        $builtIns = $client->getClientBuiltIns();
+
+        self::assertEquals($expectedAccountIdEndpointMode, $builtIns['AWS::Auth::AccountIdEndpointMode']);
+    }
 }
