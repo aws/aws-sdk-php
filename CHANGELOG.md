@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.4 - 2024-03-20
 
 * `Aws\ManagedBlockchainQuery` - AMB Query: update GetTransaction to include transactionId as input
 * `Aws\CodeBuild` - This release adds support for new webhook events (RELEASED and PRERELEASED) and filter types (TAG_NAME and RELEASE_NAME).
