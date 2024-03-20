@@ -1340,6 +1340,7 @@ class InstanceProfileProviderTest extends TestCase
 
             return Promise\Create::rejectionFor(['exception' => new \Exception('Unexpected error!')]);
         };
+        $config['use_aws_shared_config_files'] = true;
         $provider = new InstanceProfileProvider(array_merge(($config ?? []), ['client' => $mockHandler]));
         try {
             $provider()->wait();
@@ -1385,7 +1386,8 @@ class InstanceProfileProviderTest extends TestCase
                     default:
                         $this->fail("The expected value for endpoint_mode should be either one of the following options[" . InstanceProfileProvider::ENDPOINT_MODE_IPv4 . ', ' . InstanceProfileProvider::ENDPOINT_MODE_IPv6 . "]");
                 }
-            })
+            }),
+            'use_aws_shared_config_files' => true
         ];
         if (!is_null($endpointModeClientConfig)) {
             $providerConfig[InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE] = $endpointModeClientConfig;
@@ -1498,7 +1500,8 @@ class InstanceProfileProviderTest extends TestCase
             'client' => $this->getClientForEndpointTesting(function ($uri) use ($expectedEndpoint) {
                 $endpoint = $uri->getScheme() . '://' . $uri->getHost();
                 $this->assertSame($expectedEndpoint, $endpoint);
-            })
+            }),
+            'use_aws_shared_config_files' => true
         ];
         $deferredTasks = [];
         if (!is_null($endpointEnv)) {

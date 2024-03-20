@@ -540,6 +540,11 @@
         "DeliveryStreamARN":{"shape":"DeliveryStreamARN"}
       }
     },
+    "CustomTimeZone":{
+      "type":"string",
+      "max":50,
+      "min":0
+    },
     "Data":{
       "type":"blob",
       "max":1024000,
@@ -932,7 +937,9 @@
         "S3BackupMode":{"shape":"S3BackupMode"},
         "S3BackupConfiguration":{"shape":"S3DestinationConfiguration"},
         "DataFormatConversionConfiguration":{"shape":"DataFormatConversionConfiguration"},
-        "DynamicPartitioningConfiguration":{"shape":"DynamicPartitioningConfiguration"}
+        "DynamicPartitioningConfiguration":{"shape":"DynamicPartitioningConfiguration"},
+        "FileExtension":{"shape":"FileExtension"},
+        "CustomTimeZone":{"shape":"CustomTimeZone"}
       }
     },
     "ExtendedS3DestinationDescription":{
@@ -957,7 +964,9 @@
         "S3BackupMode":{"shape":"S3BackupMode"},
         "S3BackupDescription":{"shape":"S3DestinationDescription"},
         "DataFormatConversionConfiguration":{"shape":"DataFormatConversionConfiguration"},
-        "DynamicPartitioningConfiguration":{"shape":"DynamicPartitioningConfiguration"}
+        "DynamicPartitioningConfiguration":{"shape":"DynamicPartitioningConfiguration"},
+        "FileExtension":{"shape":"FileExtension"},
+        "CustomTimeZone":{"shape":"CustomTimeZone"}
       }
     },
     "ExtendedS3DestinationUpdate":{
@@ -975,7 +984,9 @@
         "S3BackupMode":{"shape":"S3BackupMode"},
         "S3BackupUpdate":{"shape":"S3DestinationUpdate"},
         "DataFormatConversionConfiguration":{"shape":"DataFormatConversionConfiguration"},
-        "DynamicPartitioningConfiguration":{"shape":"DynamicPartitioningConfiguration"}
+        "DynamicPartitioningConfiguration":{"shape":"DynamicPartitioningConfiguration"},
+        "FileExtension":{"shape":"FileExtension"},
+        "CustomTimeZone":{"shape":"CustomTimeZone"}
       }
     },
     "FailureDescription":{
@@ -988,6 +999,12 @@
         "Type":{"shape":"DeliveryStreamFailureType"},
         "Details":{"shape":"NonEmptyString"}
       }
+    },
+    "FileExtension":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^$|\\.[0-9a-z!\\-_.*'()]+"
     },
     "HECAcknowledgmentTimeoutInSeconds":{
       "type":"integer",
@@ -1518,7 +1535,8 @@
         "BufferIntervalInSeconds",
         "SubRecordType",
         "Delimiter",
-        "CompressionFormat"
+        "CompressionFormat",
+        "DataMessageExtraction"
       ]
     },
     "ProcessorParameterValue":{
@@ -1532,6 +1550,7 @@
       "enum":[
         "RecordDeAggregation",
         "Decompression",
+        "CloudWatchLogProcessing",
         "Lambda",
         "MetadataExtraction",
         "AppendDelimiterToRecord"

@@ -257,21 +257,6 @@
     "DeleteObject": [
       {
         "input": {
-          "Bucket": "ExampleBucket",
-          "Key": "HappyFace.jpg"
-        },
-        "comments": {
-          "input": {
-          },
-          "output": {
-          }
-        },
-        "description": "The following example deletes an object from a non-versioned bucket.",
-        "id": "to-delete-an-object-from-a-non-versioned-bucket-1481588533089",
-        "title": "To delete an object (from a non-versioned bucket)"
-      },
-      {
-        "input": {
           "Bucket": "examplebucket",
           "Key": "objectkey.jpg"
         },
@@ -286,6 +271,21 @@
         "description": "The following example deletes an object from an S3 bucket.",
         "id": "to-delete-an-object-1472850136595",
         "title": "To delete an object"
+      },
+      {
+        "input": {
+          "Bucket": "ExampleBucket",
+          "Key": "HappyFace.jpg"
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "The following example deletes an object from a non-versioned bucket.",
+        "id": "to-delete-an-object-from-a-non-versioned-bucket-1481588533089",
+        "title": "To delete an object (from a non-versioned bucket)"
       }
     ],
     "DeleteObjectTagging": [
@@ -840,6 +840,31 @@
       {
         "input": {
           "Bucket": "examplebucket",
+          "Key": "exampleobject",
+          "VersionId": "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI"
+        },
+        "output": {
+          "TagSet": [
+            {
+              "Key": "Key1",
+              "Value": "Value1"
+            }
+          ],
+          "VersionId": "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI"
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "The following example retrieves tag set of an object. The request specifies object version.",
+        "id": "to-retrieve-tag-set-of-a-specific-object-version-1483400283663",
+        "title": "To retrieve tag set of a specific object version"
+      },
+      {
+        "input": {
+          "Bucket": "examplebucket",
           "Key": "HappyFace.jpg"
         },
         "output": {
@@ -864,31 +889,6 @@
         "description": "The following example retrieves tag set of an object.",
         "id": "to-retrieve-tag-set-of-an-object-1481833847896",
         "title": "To retrieve tag set of an object"
-      },
-      {
-        "input": {
-          "Bucket": "examplebucket",
-          "Key": "exampleobject",
-          "VersionId": "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI"
-        },
-        "output": {
-          "TagSet": [
-            {
-              "Key": "Key1",
-              "Value": "Value1"
-            }
-          ],
-          "VersionId": "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI"
-        },
-        "comments": {
-          "input": {
-          },
-          "output": {
-          }
-        },
-        "description": "The following example retrieves tag set of an object. The request specifies object version.",
-        "id": "to-retrieve-tag-set-of-a-specific-object-version-1483400283663",
-        "title": "To retrieve tag set of a specific object version"
       }
     ],
     "GetObjectTorrent": [
@@ -1132,7 +1132,7 @@
           "output": {
           }
         },
-        "description": "The following example return versions of an object with specific key name prefix. The request limits the number of items returned to two. If there are are more than two object version, S3 returns NextToken in the response. You can specify this token value in your next request to fetch next set of object versions.",
+        "description": "The following example returns versions of an object with specific key name prefix.",
         "id": "to-list-object-versions-1481910996058",
         "title": "To list object versions"
       }
@@ -1567,16 +1567,13 @@
     "PutObject": [
       {
         "input": {
-          "Body": "filetoupload",
+          "Body": "HappyFace.jpg",
           "Bucket": "examplebucket",
-          "Key": "exampleobject",
-          "ServerSideEncryption": "AES256",
-          "Tagging": "key1=value1&key2=value2"
+          "Key": "HappyFace.jpg"
         },
         "output": {
           "ETag": "\"6805f2cfc46c0f04559748bb039d69ae\"",
-          "ServerSideEncryption": "AES256",
-          "VersionId": "Ri.vC6qVlA4dEnjgRV4ZHsHoFIjqEMNt"
+          "VersionId": "tpf3zF08nBplQK1XLOefGskR7mGDwcDk"
         },
         "comments": {
           "input": {
@@ -1584,29 +1581,9 @@
           "output": {
           }
         },
-        "description": "The following example uploads an object. The request specifies the optional server-side encryption option. The request also specifies optional object tags. If the bucket is versioning enabled, S3 returns version ID in response.",
-        "id": "to-upload-an-object-and-specify-server-side-encryption-and-object-tags-1483398331831",
-        "title": "To upload an object and specify server-side encryption and object tags"
-      },
-      {
-        "input": {
-          "Body": "filetoupload",
-          "Bucket": "examplebucket",
-          "Key": "objectkey"
-        },
-        "output": {
-          "ETag": "\"6805f2cfc46c0f04559748bb039d69ae\"",
-          "VersionId": "Bvq0EDKxOcXLJXNo_Lkz37eM3R4pfzyQ"
-        },
-        "comments": {
-          "input": {
-          },
-          "output": {
-          }
-        },
-        "description": "The following example creates an object. If the bucket is versioning enabled, S3 returns version ID in response.",
-        "id": "to-create-an-object-1483147613675",
-        "title": "To create an object."
+        "description": "The following example uploads an object to a versioning-enabled bucket. The source file is specified using Windows file syntax. S3 returns VersionId of the newly created object.",
+        "id": "to-upload-an-object-1481760101010",
+        "title": "To upload an object"
       },
       {
         "input": {
@@ -1630,27 +1607,6 @@
         "description": "The following example uploads an object. The request specifies optional request headers to directs S3 to use specific storage class and use server-side encryption.",
         "id": "to-upload-an-object-(specify-optional-headers)",
         "title": "To upload an object (specify optional headers)"
-      },
-      {
-        "input": {
-          "Body": "c:\\HappyFace.jpg",
-          "Bucket": "examplebucket",
-          "Key": "HappyFace.jpg",
-          "Tagging": "key1=value1&key2=value2"
-        },
-        "output": {
-          "ETag": "\"6805f2cfc46c0f04559748bb039d69ae\"",
-          "VersionId": "psM2sYY4.o1501dSx8wMvnkOzSBB.V4a"
-        },
-        "comments": {
-          "input": {
-          },
-          "output": {
-          }
-        },
-        "description": "The following example uploads an object. The request specifies optional object tags. The bucket is versioned, therefore S3 returns version ID of the newly created object.",
-        "id": "to-upload-an-object-and-specify-optional-tags-1481762310955",
-        "title": "To upload an object and specify optional tags"
       },
       {
         "input": {
@@ -1699,13 +1655,13 @@
       },
       {
         "input": {
-          "Body": "HappyFace.jpg",
+          "Body": "filetoupload",
           "Bucket": "examplebucket",
-          "Key": "HappyFace.jpg"
+          "Key": "objectkey"
         },
         "output": {
           "ETag": "\"6805f2cfc46c0f04559748bb039d69ae\"",
-          "VersionId": "tpf3zF08nBplQK1XLOefGskR7mGDwcDk"
+          "VersionId": "Bvq0EDKxOcXLJXNo_Lkz37eM3R4pfzyQ"
         },
         "comments": {
           "input": {
@@ -1713,9 +1669,53 @@
           "output": {
           }
         },
-        "description": "The following example uploads an object to a versioning-enabled bucket. The source file is specified using Windows file syntax. S3 returns VersionId of the newly created object.",
-        "id": "to-upload-an-object-1481760101010",
-        "title": "To upload an object"
+        "description": "The following example creates an object. If the bucket is versioning enabled, S3 returns version ID in response.",
+        "id": "to-create-an-object-1483147613675",
+        "title": "To create an object."
+      },
+      {
+        "input": {
+          "Body": "filetoupload",
+          "Bucket": "examplebucket",
+          "Key": "exampleobject",
+          "ServerSideEncryption": "AES256",
+          "Tagging": "key1=value1&key2=value2"
+        },
+        "output": {
+          "ETag": "\"6805f2cfc46c0f04559748bb039d69ae\"",
+          "ServerSideEncryption": "AES256",
+          "VersionId": "Ri.vC6qVlA4dEnjgRV4ZHsHoFIjqEMNt"
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "The following example uploads an object. The request specifies the optional server-side encryption option. The request also specifies optional object tags. If the bucket is versioning enabled, S3 returns version ID in response.",
+        "id": "to-upload-an-object-and-specify-server-side-encryption-and-object-tags-1483398331831",
+        "title": "To upload an object and specify server-side encryption and object tags"
+      },
+      {
+        "input": {
+          "Body": "c:\\HappyFace.jpg",
+          "Bucket": "examplebucket",
+          "Key": "HappyFace.jpg",
+          "Tagging": "key1=value1&key2=value2"
+        },
+        "output": {
+          "ETag": "\"6805f2cfc46c0f04559748bb039d69ae\"",
+          "VersionId": "psM2sYY4.o1501dSx8wMvnkOzSBB.V4a"
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "The following example uploads an object. The request specifies optional object tags. The bucket is versioned, therefore S3 returns version ID of the newly created object.",
+        "id": "to-upload-an-object-and-specify-optional-tags-1481762310955",
+        "title": "To upload an object and specify optional tags"
       }
     ],
     "PutObjectAcl": [

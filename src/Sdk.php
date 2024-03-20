@@ -94,6 +94,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBraket(array $args = [])
  * @method \Aws\Budgets\BudgetsClient createBudgets(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBudgets(array $args = [])
+ * @method \Aws\Chatbot\ChatbotClient createChatbot(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionChatbot(array $args = [])
  * @method \Aws\Chime\ChimeClient createChime(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionChime(array $args = [])
  * @method \Aws\ChimeSDKIdentity\ChimeSDKIdentityClient createChimeSDKIdentity(array $args = [])
@@ -356,8 +358,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionIoTFleetWise(array $args = [])
  * @method \Aws\IoTJobsDataPlane\IoTJobsDataPlaneClient createIoTJobsDataPlane(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTJobsDataPlane(array $args = [])
- * @method \Aws\IoTRoboRunner\IoTRoboRunnerClient createIoTRoboRunner(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionIoTRoboRunner(array $args = [])
  * @method \Aws\IoTSecureTunneling\IoTSecureTunnelingClient createIoTSecureTunneling(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTSecureTunneling(array $args = [])
  * @method \Aws\IoTSiteWise\IoTSiteWiseClient createIoTSiteWise(array $args = [])
@@ -700,6 +700,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSynthetics(array $args = [])
  * @method \Aws\Textract\TextractClient createTextract(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTextract(array $args = [])
+ * @method \Aws\TimestreamInfluxDB\TimestreamInfluxDBClient createTimestreamInfluxDB(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionTimestreamInfluxDB(array $args = [])
  * @method \Aws\TimestreamQuery\TimestreamQueryClient createTimestreamQuery(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTimestreamQuery(array $args = [])
  * @method \Aws\TimestreamWrite\TimestreamWriteClient createTimestreamWrite(array $args = [])
@@ -761,7 +763,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.299.0';
+    const VERSION = '3.301.3';
 
     /** @var array Arguments for creating clients */
     private $args;

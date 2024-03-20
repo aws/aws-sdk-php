@@ -4577,10 +4577,21 @@
         "Value":{"shape":"InstanceAttributeValue"}
       }
     },
+    "AttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"},
+        "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
+      }
+    },
     "AttributeName":{
       "type":"string",
       "max":32767,
       "min":1
+    },
+    "AttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"AttributeAndCondition"}
     },
     "AttributeValue":{
       "type":"string",
@@ -5215,6 +5226,15 @@
         "TagCondition":{"shape":"TagCondition"}
       }
     },
+    "ControlPlaneUserAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"AttributeOrConditionList"},
+        "AndCondition":{"shape":"AttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"},
+        "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
+      }
+    },
     "CreateAgentStatusRequest":{
       "type":"structure",
       "required":[
@@ -5676,7 +5696,9 @@
         "Tags":{"shape":"TagMap"},
         "AllowedAccessControlTags":{"shape":"AllowedAccessControlTags"},
         "TagRestrictedResources":{"shape":"TagRestrictedResourceList"},
-        "Applications":{"shape":"Applications"}
+        "Applications":{"shape":"Applications"},
+        "HierarchyRestrictedResources":{"shape":"HierarchyRestrictedResourceList"},
+        "AllowedAccessControlHierarchyGroupId":{"shape":"HierarchyGroupId"}
       }
     },
     "CreateSecurityProfileResponse":{
@@ -8652,6 +8674,15 @@
         "LevelFive":{"shape":"HierarchyGroupSummaryReference"}
       }
     },
+    "HierarchyRestrictedResourceList":{
+      "type":"list",
+      "member":{"shape":"HierarchyRestrictedResourceName"}
+    },
+    "HierarchyRestrictedResourceName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "HierarchyStructure":{
       "type":"structure",
       "members":{
@@ -10695,6 +10726,12 @@
     "MaxResult25":{
       "type":"integer",
       "max":25,
+      "min":1
+    },
+    "MaxResult500":{
+      "type":"integer",
+      "box":true,
+      "max":500,
       "min":1
     },
     "MaxResult7":{
@@ -12853,7 +12890,7 @@
         "InstanceId":{"shape":"InstanceId"},
         "NextToken":{"shape":"NextToken2500"},
         "MaxResults":{
-          "shape":"MaxResult100",
+          "shape":"MaxResult500",
           "box":true
         },
         "SearchFilter":{"shape":"QueueSearchFilter"},
@@ -12918,7 +12955,7 @@
         "InstanceId":{"shape":"InstanceId"},
         "NextToken":{"shape":"NextToken2500"},
         "MaxResults":{
-          "shape":"MaxResult100",
+          "shape":"MaxResult500",
           "box":true
         },
         "SearchFilter":{"shape":"RoutingProfileSearchFilter"},
@@ -12973,7 +13010,7 @@
         "InstanceId":{"shape":"InstanceId"},
         "NextToken":{"shape":"NextToken2500"},
         "MaxResults":{
-          "shape":"MaxResult100",
+          "shape":"MaxResult500",
           "box":true
         },
         "SearchFilter":{"shape":"UserSearchFilter"},
@@ -13082,7 +13119,9 @@
         "AllowedAccessControlTags":{"shape":"AllowedAccessControlTags"},
         "TagRestrictedResources":{"shape":"TagRestrictedResourceList"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "LastModifiedRegion":{"shape":"RegionName"}
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "HierarchyRestrictedResources":{"shape":"HierarchyRestrictedResourceList"},
+        "AllowedAccessControlHierarchyGroupId":{"shape":"HierarchyGroupId"}
       }
     },
     "SecurityProfileDescription":{
@@ -15074,7 +15113,9 @@
         },
         "AllowedAccessControlTags":{"shape":"AllowedAccessControlTags"},
         "TagRestrictedResources":{"shape":"TagRestrictedResourceList"},
-        "Applications":{"shape":"Applications"}
+        "Applications":{"shape":"Applications"},
+        "HierarchyRestrictedResources":{"shape":"HierarchyRestrictedResourceList"},
+        "AllowedAccessControlHierarchyGroupId":{"shape":"HierarchyGroupId"}
       }
     },
     "UpdateTaskTemplateRequest":{
@@ -15544,7 +15585,8 @@
     "UserSearchFilter":{
       "type":"structure",
       "members":{
-        "TagFilter":{"shape":"ControlPlaneTagFilter"}
+        "TagFilter":{"shape":"ControlPlaneTagFilter"},
+        "UserAttributeFilter":{"shape":"ControlPlaneUserAttributeFilter"}
       }
     },
     "UserSearchSummary":{
