@@ -92,6 +92,27 @@ class WrappedHttpHandlerTest extends TestCase
         }
     }
 
+    public function testCanRejectWithOtherTypeOfError()
+    {
+        $e = new \TypeError('a');
+        $cmd = new Command('foo');
+        $req = new Request('GET', 'http://foo.com');
+        $handler = function () use ($e) {
+            return new RejectedPromise(['exception' => $e]);
+        };
+        $parser = $errorParser = [$this, 'fail'];
+        $wrapped = new WrappedHttpHandler($handler, $parser, $errorParser);
+        try {
+            $wrapped($cmd, $req)->wait();
+            $this->fail();
+        } catch (AwsException $e) {
+            $this->assertSame($req, $e->getRequest());
+            $this->assertSame($cmd, $e->getCommand());
+            $this->assertNull($e->getResponse());
+            $this->assertNull($e->getResult());
+        }
+    }
+
     /**
      * @dataProvider responseAndParserProvider
      *
