@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeArtifact` - This release adds Package groups to CodeArtifact so you can more conveniently configure package origin controls for multiple packages.
+
 ## 3.301.4 - 2024-03-20
 
 * `Aws\ManagedBlockchainQuery` - AMB Query: update GetTransaction to include transactionId as input
