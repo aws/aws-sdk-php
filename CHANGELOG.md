@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.5 - 2024-03-21
 
 * `Aws\CodeArtifact` - This release adds Package groups to CodeArtifact so you can more conveniently configure package origin controls for multiple packages.
 
