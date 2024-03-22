@@ -553,7 +553,7 @@ class CredentialProvider
                     $data[$profile]['aws_secret_access_key'],
                     $data[$profile]['aws_session_token'],
                     null,
-                    $data[$profile]['aws_account_id'] ?? null
+                    !empty($data[$profile]['aws_account_id']) ? $data[$profile]['aws_account_id'] : null
                 )
             );
         };
