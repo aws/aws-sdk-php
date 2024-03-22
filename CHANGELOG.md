@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.6 - 2024-03-22
 
 * `Aws\kendra` - Documentation update, March 2024. Corrects some docs for Amazon Kendra.
 * `Aws\Pricing` - Add ResourceNotFoundException to ListPriceLists and GetPriceListFileUrl APIs
