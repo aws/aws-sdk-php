@@ -124,7 +124,7 @@ class EndpointV2Middleware
 
         if (isset($rulesetParams[self::ACCOUNT_ID_PARAM])
             && isset($rulesetParams[self::ACCOUNT_ID_ENDPOINT_MODE_PARAM])) {
-            $commandArgs[self::ACCOUNT_ID_PARAM] = $this->resolveAccountId();
+            $this->clientArgs[self::ACCOUNT_ID_PARAM] = $this->resolveAccountId();
         }
 
         $endpointCommandArgs = $this->filterEndpointCommandArgs(
