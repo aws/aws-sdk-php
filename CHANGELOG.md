@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\kendra` - Documentation update, March 2024. Corrects some docs for Amazon Kendra.
+* `Aws\Pricing` - Add ResourceNotFoundException to ListPriceLists and GetPriceListFileUrl APIs
+* `Aws\RolesAnywhere` - This release relaxes constraints on the durationSeconds request parameter for the *Profile APIs that support it. This parameter can now take on values that go up to 43200.
+* `Aws\SecurityHub` - Added new resource detail object to ASFF, including resource for LastKnownExploitAt
+* `Aws\Firehose` - Updates Amazon Firehose documentation for message regarding Enforcing Tags IAM Policy.
+
 ## 3.301.5 - 2024-03-21
 
 * `Aws\CodeArtifact` - This release adds Package groups to CodeArtifact so you can more conveniently configure package origin controls for multiple packages.
