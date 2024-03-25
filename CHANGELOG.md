@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.7 - 2024-03-25
 
 * `Aws\EC2` - Added support for ModifyInstanceMetadataDefaults and GetInstanceMetadataDefaults to set Instance Metadata Service account defaults
 * `Aws\SageMaker` - Introduced support for the following new instance types on SageMaker Studio for JupyterLab and CodeEditor applications: m6i, m6id, m7i, c6i, c6id, c7i, r6i, r6id, r7i, and p5
