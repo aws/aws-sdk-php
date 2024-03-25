@@ -7,11 +7,23 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Composer
 {
-    public static function removeUnusedServices(
-        Event      $event,
-        Filesystem $filesystem = null
-    )
+
+    public static function removeUnusedServicesInDevOnly(Event $event, Filesystem $filesystem = null)
     {
+        self::removeUnusedServicesByExtraConfig($event, $filesystem, true);
+    }
+
+    public static function removeUnusedServices(Event $event, Filesystem $filesystem = null)
+    {
+        self::removeUnusedServicesByExtraConfig($event, $filesystem, false);
+    }
+
+    private static function removeUnusedServicesByExtraConfig(Event $event, Filesystem $filesystem = null, $onlyRunInDev = false)
+    {
+        if ($onlyRunInDev && !$event->isDevMode()){
+            return;
+        }
+
         $composer = $event->getComposer();
         $extra = $composer->getPackage()->getExtra();
         $listedServices = isset($extra['aws/aws-sdk-php'])
