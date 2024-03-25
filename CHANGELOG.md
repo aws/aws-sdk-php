@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Added support for ModifyInstanceMetadataDefaults and GetInstanceMetadataDefaults to set Instance Metadata Service account defaults
+* `Aws\SageMaker` - Introduced support for the following new instance types on SageMaker Studio for JupyterLab and CodeEditor applications: m6i, m6id, m7i, c6i, c6id, c7i, r6i, r6id, r7i, and p5
+* `Aws\ECS` - Documentation only update for Amazon ECS.
+* `Aws\MediaLive` - Exposing TileMedia H265 options
+* `Aws\EMRContainers` - This release increases the number of supported job template parameters from 20 to 100.
+* `Aws\GlobalAccelerator` - AWS Global Accelerator now supports cross-account sharing for bring your own IP addresses.
+* `Aws\CodeBuild` - Supporting GitLab and GitLab Self Managed as source types in AWS CodeBuild.
+
 ## 3.301.6 - 2024-03-22
 
 * `Aws\kendra` - Documentation update, March 2024. Corrects some docs for Amazon Kendra.
