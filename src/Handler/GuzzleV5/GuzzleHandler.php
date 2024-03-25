@@ -11,6 +11,7 @@ use GuzzleHttp\Message\ResponseInterface as GuzzleResponse;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface as Psr7Request;
 use Psr\Http\Message\StreamInterface as Psr7StreamInterface;
 
@@ -163,7 +164,7 @@ class GuzzleHandler
         $request->setHeader(
             'User-Agent',
             $request->getHeader('User-Agent')
-                . ' ' . Client::getDefaultUserAgent()
+                . ' ' . Utils::defaultUserAgent()
         );
 
         // Make sure the delay is configured, if provided.
