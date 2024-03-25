@@ -203,6 +203,16 @@ class AwsClient implements AwsClientInterface
      *   client-side parameter validation.
      * - version: (string, required) The version of the webservice to
      *   utilize (e.g., 2006-03-01).
+     * - account_id_endpoint_mode: (string, default(preferred)) this option
+     *   decides whether credentials should resolve an accountId value,
+     *   which is going to be used as part of the endpoint resolution.
+     *   The valid values for this option are:
+     *   - preferred: when this value is set then, a warning is logged when
+     *     accountId is empty in the resolved identity.
+     *   - required: when this value is set then, an exception is thrown when
+     *     accountId is empty in the resolved identity.
+     *   - disabled: when this value is set then, the validation for if accountId
+     *     was resolved or not, is ignored.
      *
      * @param array $args Client configuration arguments.
      *
@@ -228,7 +238,7 @@ class AwsClient implements AwsClientInterface
         $this->tokenProvider = $config['token'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->config = $config['config'];
-        $this->setClientBuiltIns($args);
+        $this->setClientBuiltIns($args, $config);
         $this->clientContextParams = $this->setClientContextParams($args);
         $this->defaultRequestOptions = $config['http'];
         $this->endpointProvider = $config['endpoint_provider'];
@@ -528,7 +538,8 @@ class AwsClient implements AwsClientInterface
             EndpointV2Middleware::wrap(
                 $this->endpointProvider,
                 $this->getApi(),
-                $endpointArgs
+                $endpointArgs,
+                $this->credentialProvider
             ),
             'endpoint-resolution'
         );
@@ -558,10 +569,10 @@ class AwsClient implements AwsClientInterface
     /**
      * Retrieves and sets default values used for endpoint resolution.
      */
-    private function setClientBuiltIns($args)
+    private function setClientBuiltIns($args, $resolvedConfig)
     {
         $builtIns = [];
-        $config = $this->getConfig();
+        $config = $resolvedConfig['config'];
         $service = $args['service'];
 
         $builtIns['SDK::Endpoint'] = null;
@@ -582,6 +593,8 @@ class AwsClient implements AwsClientInterface
             $builtIns['AWS::S3::ForcePathStyle'] = $config['use_path_style_endpoint'];
             $builtIns['AWS::S3::DisableMultiRegionAccessPoints'] = $config['disable_multiregion_access_points'];
         }
+        $builtIns['AWS::Auth::AccountIdEndpointMode'] = $resolvedConfig['account_id_endpoint_mode'];
+
         $this->clientBuiltIns += $builtIns;
     }
 
