@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.8 - 2024-03-26
 
 * `Aws\CostExplorer` - Adds support for backfill of cost allocation tags, with new StartCostAllocationTagBackfill and ListCostAllocationTagBackfillHistory API.
 * `Aws\finspace` - Add new operation delete-kx-cluster-node and add status parameter to list-kx-cluster-node operation.
