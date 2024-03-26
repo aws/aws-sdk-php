@@ -49,7 +49,14 @@ class PutObjectUrlMiddleware
                             : null;
                         break;
                     case 'CompleteMultipartUpload':
-                        $result['ObjectURL'] = $result['Location'];
+                        $objectUrl = null;
+                        $effectiveUri = $result['@metadata']['effectiveUri'] ?? null;
+                        if ($effectiveUri !== null) {
+                            $parsedUrl = parse_url($effectiveUri);
+                            $objectUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $parsedUrl['path'];
+                        }
+                        
+                        $result['ObjectURL'] = $objectUrl ?? $result['Location'];
                         break;
                 }
                 return $result;
