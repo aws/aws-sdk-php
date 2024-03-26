@@ -23,8 +23,8 @@ class Credentials implements CredentialsInterface, \Serializable
      */
     public function __construct($key, $secret, $token = null, $expires = null)
     {
-        $this->key = trim($key);
-        $this->secret = trim($secret);
+        $this->key = trim((string) $key);
+        $this->secret = trim((string) $secret);
         $this->token = $token;
         $this->expires = $expires;
     }
