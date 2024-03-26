@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CostExplorer` - Adds support for backfill of cost allocation tags, with new StartCostAllocationTagBackfill and ListCostAllocationTagBackfillHistory API.
+* `Aws\finspace` - Add new operation delete-kx-cluster-node and add status parameter to list-kx-cluster-node operation.
+* `Aws\ECS` - This is a documentation update for Amazon ECS.
+* `Aws\EC2` - Documentation updates for Elastic Compute Cloud (EC2).
+* `Aws\BedrockAgentRuntime` - This release adds support to customize prompts sent through the RetrieveAndGenerate API in Agents for Amazon Bedrock.
+
 ## 3.301.7 - 2024-03-25
 
 * `Aws\EC2` - Added support for ModifyInstanceMetadataDefaults and GetInstanceMetadataDefaults to set Instance Metadata Service account defaults
