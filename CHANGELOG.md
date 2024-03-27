@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockAgentRuntime` - This release introduces filtering support on Retrieve and RetrieveAndGenerate APIs.
+* `Aws\ElastiCache` - Added minimum capacity to Amazon ElastiCache Serverless. This feature allows customer to ensure minimum capacity even without current load
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+* `Aws\BedrockAgent` - This changes introduces metadata documents statistics and also updates the documentation for bedrock agent.
+* `Aws\Batch` - This feature allows AWS Batch to support configuration of imagePullSecrets and allowPrivilegeEscalation for jobs running on EKS
+
 ## 3.301.8 - 2024-03-26
 
 * `Aws\CostExplorer` - Adds support for backfill of cost allocation tags, with new StartCostAllocationTagBackfill and ListCostAllocationTagBackfillHistory API.

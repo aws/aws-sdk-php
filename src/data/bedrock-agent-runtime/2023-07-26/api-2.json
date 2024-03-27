@@ -216,6 +216,28 @@
       },
       "sensitive":true
     },
+    "FilterAttribute":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"FilterKey"},
+        "value":{"shape":"FilterValue"}
+      }
+    },
+    "FilterKey":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "FilterValue":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
     "FinalResponse":{
       "type":"structure",
       "members":{
@@ -388,6 +410,7 @@
       "members":{
         "content":{"shape":"RetrievalResultContent"},
         "location":{"shape":"RetrievalResultLocation"},
+        "metadata":{"shape":"RetrievalResultMetadata"},
         "score":{"shape":"Double"}
       }
     },
@@ -412,6 +435,7 @@
     "KnowledgeBaseVectorSearchConfiguration":{
       "type":"structure",
       "members":{
+        "filter":{"shape":"RetrievalFilter"},
         "numberOfResults":{
           "shape":"KnowledgeBaseVectorSearchConfigurationNumberOfResultsInteger",
           "box":true
@@ -637,6 +661,30 @@
       },
       "eventstream":true
     },
+    "RetrievalFilter":{
+      "type":"structure",
+      "members":{
+        "andAll":{"shape":"RetrievalFilterList"},
+        "equals":{"shape":"FilterAttribute"},
+        "greaterThan":{"shape":"FilterAttribute"},
+        "greaterThanOrEquals":{"shape":"FilterAttribute"},
+        "in":{"shape":"FilterAttribute"},
+        "lessThan":{"shape":"FilterAttribute"},
+        "lessThanOrEquals":{"shape":"FilterAttribute"},
+        "notEquals":{"shape":"FilterAttribute"},
+        "notIn":{"shape":"FilterAttribute"},
+        "orAll":{"shape":"RetrievalFilterList"},
+        "startsWith":{"shape":"FilterAttribute"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "RetrievalFilterList":{
+      "type":"list",
+      "member":{"shape":"RetrievalFilter"},
+      "max":5,
+      "min":2
+    },
     "RetrievalResultContent":{
       "type":"structure",
       "required":["text"],
@@ -657,6 +705,24 @@
     "RetrievalResultLocationType":{
       "type":"string",
       "enum":["S3"]
+    },
+    "RetrievalResultMetadata":{
+      "type":"map",
+      "key":{"shape":"RetrievalResultMetadataKey"},
+      "value":{"shape":"RetrievalResultMetadataValue"},
+      "min":1,
+      "sensitive":true
+    },
+    "RetrievalResultMetadataKey":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "RetrievalResultMetadataValue":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
     },
     "RetrievalResultS3Location":{
       "type":"structure",
@@ -755,7 +821,8 @@
       "type":"structure",
       "members":{
         "content":{"shape":"RetrievalResultContent"},
-        "location":{"shape":"RetrievalResultLocation"}
+        "location":{"shape":"RetrievalResultLocation"},
+        "metadata":{"shape":"RetrievalResultMetadata"}
       }
     },
     "RetrievedReferences":{
