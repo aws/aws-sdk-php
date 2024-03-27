@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.9 - 2024-03-27
 
 * `Aws\BedrockAgentRuntime` - This release introduces filtering support on Retrieve and RetrieveAndGenerate APIs.
 * `Aws\ElastiCache` - Added minimum capacity to Amazon ElastiCache Serverless. This feature allows customer to ensure minimum capacity even without current load
