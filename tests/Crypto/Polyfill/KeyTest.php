@@ -6,7 +6,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * Class KeyTest
- * @package Aws\Test\Crypto\Polyfill
+ * @covers Aws\Test\Crypto\Polyfill
  */
 class KeyTest extends TestCase
 {
