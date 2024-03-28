@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.301.10 - 2024-03-28
 
 * `Aws\EKS` - Add multiple customer error code to handle customer caused failure when managing EKS node groups
 * `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze and generate recommendations with a new customization preference, Memory Utilization.
