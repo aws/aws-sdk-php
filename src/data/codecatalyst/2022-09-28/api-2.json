@@ -1533,7 +1533,9 @@
       "type":"structure",
       "members":{
         "subscriptionType":{"shape":"String"},
-        "awsAccountName":{"shape":"NameString"}
+        "awsAccountName":{"shape":"NameString"},
+        "pendingSubscriptionType":{"shape":"String"},
+        "pendingSubscriptionStartTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "GetUserDetailsRequest":{
@@ -1560,7 +1562,7 @@
       "type":"string",
       "max":100,
       "min":3,
-      "pattern":"[a-zA-Z0-9]{3,100}"
+      "pattern":"[a-zA-Z0-9_.-]{3,100}"
     },
     "GetUserDetailsResponse":{
       "type":"structure",
