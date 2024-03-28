@@ -7,11 +7,11 @@ use GuzzleHttp\Promise;
 
 class S3ExpressIdentityProvider
 {
-
     private $cache;
     private $region;
     private $config;
     private $s3Client;
+
     public function __construct($clientRegion, array $config = [])
     {
         $this->cache = new LruArrayCache(100);

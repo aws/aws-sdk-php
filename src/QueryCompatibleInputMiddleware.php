@@ -102,7 +102,7 @@ class QueryCompatibleInputMiddleware
         array $input,
         StructureShape $shape,
         array $path
-    ) : void
+    ): void
     {
         foreach ($input as $param => $value) {
             if ($shape->hasMember($param)) {
@@ -123,7 +123,7 @@ class QueryCompatibleInputMiddleware
         array $input,
         ListShape $shape,
         array $path
-    ) : void
+    ): void
     {
         foreach ($input as $param => $value) {
             $memberPath = array_merge($path, [$param]);
@@ -138,7 +138,7 @@ class QueryCompatibleInputMiddleware
      *
      * @return void
      */
-    private function processMap(array $input, MapShape $shape, array $path) : void
+    private function processMap(array $input, MapShape $shape, array $path): void
     {
         foreach ($input as $param => $value) {
             $memberPath = array_merge($path, [$param]);
@@ -153,7 +153,7 @@ class QueryCompatibleInputMiddleware
      *
      * @return void
      */
-    private function processScalar($input, Shape $shape, array $path) : void
+    private function processScalar($input, Shape $shape, array $path): void
     {
         $expectedType = $shape->getType();
 
@@ -177,7 +177,7 @@ class QueryCompatibleInputMiddleware
      *
      * @return void
      */
-    private function changeValueAtPath(array $path, $newValue) : void
+    private function changeValueAtPath(array $path, $newValue): void
     {
         $commandRef = &$this->command;
 
@@ -196,7 +196,7 @@ class QueryCompatibleInputMiddleware
      *
      * @return bool
      */
-    private function isModeledType($value, $type) : bool
+    private function isModeledType($value, $type): bool
     {
         switch ($type) {
             case 'string':

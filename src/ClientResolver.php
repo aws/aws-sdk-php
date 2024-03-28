@@ -4,6 +4,9 @@ namespace Aws;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Api\Validator;
+use Aws\Auth\AuthResolver;
+use Aws\Auth\AuthSchemeResolver;
+use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\Configuration;
@@ -195,6 +198,12 @@ class ClientResolver
             'doc'     => 'Specifies the token used to authorize requests. Provide an Aws\Token\TokenInterface object, an associative array of "token", and an optional "expiration" key, `false` to use a null token, or a callable token provider used to fetch a token or return null. See Aws\\Token\\TokenProvider for a list of built-in credentials providers. If no token is provided, the SDK will attempt to load one from the environment.',
             'fn'      => [__CLASS__, '_apply_token'],
             'default' => [__CLASS__, '_default_token_provider'],
+        ],
+        'auth_scheme_resolver' => [
+            'type'    => 'value',
+            'valid'   => [AuthSchemeResolverInterface::class],
+            'doc'     => 'An instance of Aws\Auth\AuthSchemeResolverInterface which selects a modeled auth scheme and returns a signature version',
+            'default' => [__CLASS__, '_default_auth_scheme_resolver'],
         ],
         'endpoint_discovery' => [
             'type'     => 'value',
@@ -1073,6 +1082,11 @@ class ClientResolver
     public static function _default_signature_provider()
     {
         return SignatureProvider::defaultProvider();
+    }
+
+    public static function _default_auth_scheme_resolver(array $args)
+    {
+        return new AuthSchemeResolver($args['credentials'], $args['token']);
     }
 
     public static function _default_signature_version(array &$args)
