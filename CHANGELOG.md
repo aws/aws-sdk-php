@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\NeptuneGraph` - Add the new API Start-Import-Task for Amazon Neptune Analytics.
+* `Aws\CodeBuild` - Add new fleet status code for Reserved Capacity.
+* `Aws\B2bi` - Supporting new EDI X12 transaction sets for X12 versions 4010, 4030, and 5010.
+* `Aws\IoTWireless` - Add support for retrieving key historical and live metrics for LoRaWAN devices and gateways
+* `Aws\InternetMonitor` - This release adds support to allow customers to track cross account monitors through ListMonitor, GetMonitor, ListHealthEvents, GetHealthEvent, StartQuery APIs.
+* `Aws\CodeConnections` - Duplicating the CodeStar Connections service into the new, rebranded AWS CodeConnections service.
+* `Aws\SageMaker` - This release adds support for custom images for the CodeEditor App on SageMaker Studio
+* `Aws\MarketplaceCatalog` - This release enhances the ListEntities API to support ResaleAuthorizationId filter and sort for OfferEntity in the request and the addition of a ResaleAuthorizationId field in the response of OfferSummary.
+
 ## 3.301.10 - 2024-03-28
 
 * `Aws\EKS` - Add multiple customer error code to handle customer caused failure when managing EKS node groups

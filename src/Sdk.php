@@ -154,6 +154,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCodeCatalyst(array $args = [])
  * @method \Aws\CodeCommit\CodeCommitClient createCodeCommit(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCodeCommit(array $args = [])
+ * @method \Aws\CodeConnections\CodeConnectionsClient createCodeConnections(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCodeConnections(array $args = [])
  * @method \Aws\CodeDeploy\CodeDeployClient createCodeDeploy(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCodeDeploy(array $args = [])
  * @method \Aws\CodeGuruProfiler\CodeGuruProfilerClient createCodeGuruProfiler(array $args = [])
