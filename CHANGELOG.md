@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.302.0 - 2024-03-29
 
 * `Aws\NeptuneGraph` - Add the new API Start-Import-Task for Amazon Neptune Analytics.
 * `Aws\CodeBuild` - Add new fleet status code for Reserved Capacity.
