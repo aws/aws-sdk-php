@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.303.0 - 2024-04-01
 
 * `Aws\CloudWatch` - This release adds support for CloudWatch Anomaly Detection on cross-account metrics. SingleMetricAnomalyDetector and MetricDataQuery inputs to Anomaly Detection APIs now take an optional AccountId field.
 * `Aws\EMR` - This release fixes a broken link in the documentation.
