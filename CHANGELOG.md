@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.303.1 - 2024-04-02
 
 * `Aws\ivschat` - Doc-only update. Changed "Resources" to "Key Concepts" in docs and updated text.
 * `Aws\SecurityHub` - Documentation updates for AWS Security Hub
