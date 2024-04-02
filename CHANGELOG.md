@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ivschat` - Doc-only update. Changed "Resources" to "Key Concepts" in docs and updated text.
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub
+* `Aws\RolesAnywhere` - This release increases the limit on the roleArns request parameter for the *Profile APIs that support it. This parameter can now take up to 250 role ARNs.
+* `Aws\ECS` - Documentation only update for Amazon ECS.
+* `Aws\Glue` - Adding View related fields to responses of read-only Table APIs.
+
 ## 3.303.0 - 2024-04-01
 
 * `Aws\CloudWatch` - This release adds support for CloudWatch Anomaly Detection on cross-account metrics. SingleMetricAnomalyDetector and MetricDataQuery inputs to Anomaly Detection APIs now take an optional AccountId field.
