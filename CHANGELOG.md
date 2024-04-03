@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.303.2 - 2024-04-03
 
 * `Aws\CleanRoomsML` - The release includes a public SDK for AWS Clean Rooms ML APIs, making them globally available to developers worldwide.
 * `Aws\Transfer` - Add ability to specify Security Policies for SFTP Connectors
