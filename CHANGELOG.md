@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.303.3 - 2024-04-04
 
 * `Aws\VerifiedPermissions` - Adds GroupConfiguration field to Identity Source API's
 * `Aws\B2bi` - Adding support for X12 5010 HIPAA EDI version and associated transaction sets.
