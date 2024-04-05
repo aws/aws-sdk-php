@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QuickSight` - Adding IAMIdentityCenterInstanceArn parameter to CreateAccountSubscription
+* `Aws\ResourceGroups` - Added a new QueryErrorCode RESOURCE_TYPE_NOT_SUPPORTED that is returned by the ListGroupResources operation if the group query contains unsupported resource types.
+* `Aws\VerifiedPermissions` - Adding BatchIsAuthorizedWithToken API which supports multiple authorization requests against a PolicyStore given a bearer token.
+
 ## 3.303.3 - 2024-04-04
 
 * `Aws\VerifiedPermissions` - Adds GroupConfiguration field to Identity Source API's
