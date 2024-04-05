@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.303.4 - 2024-04-05
 
 * `Aws\QuickSight` - Adding IAMIdentityCenterInstanceArn parameter to CreateAccountSubscription
 * `Aws\ResourceGroups` - Added a new QueryErrorCode RESOURCE_TYPE_NOT_SUPPORTED that is returned by the ListGroupResources operation if the group query contains unsupported resource types.
