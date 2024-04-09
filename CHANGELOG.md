@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.304.1 - 2024-04-09
 
 * `Aws\MediaConvert` - This release includes support for bringing your own fonts to use for burn-in or DVB-Sub captioning workflows.
 * `Aws\Pinpoint` - The OrchestrationSendingRoleArn has been added to the email channel and is used to send emails from campaigns or journeys.
