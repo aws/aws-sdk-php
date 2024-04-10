@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.304.2 - 2024-04-10
 
 * `Aws\NetworkMonitor` - Examples were added to CloudWatch Network Monitor commands.
 * `Aws\Rekognition` - Added support for ContentType to content moderation detections.
