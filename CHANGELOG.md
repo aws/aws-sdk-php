@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\NetworkMonitor` - Examples were added to CloudWatch Network Monitor commands.
+* `Aws\Rekognition` - Added support for ContentType to content moderation detections.
+* `Aws\WorkSpacesThinClient` - Adding tags field to SoftwareSet. Removing tags fields from Summary objects. Changing the list of exceptions in tagging APIs. Fixing an issue where the SDK returns empty tags in Get APIs.
+* `Aws\SupplyChain` - This release includes API SendDataIntegrationEvent for AWS Supply Chain
+* `Aws\CleanRooms` - AWS Clean Rooms Differential Privacy is now fully available. Differential privacy protects against user-identification attempts.
+* `Aws\QConnect` - This release adds a new QiC public API updateSession and updates an existing QiC public API createSession
+* `Aws\Connect` - This release adds new Submit Auto Evaluation Action for Amazon Connect Rules.
+
 ## 3.304.1 - 2024-04-09
 
 * `Aws\MediaConvert` - This release includes support for bringing your own fonts to use for burn-in or DVB-Sub captioning workflows.
