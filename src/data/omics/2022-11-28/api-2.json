@@ -2029,8 +2029,14 @@
       "members":{
         "partNumber":{"shape":"CompleteReadSetUploadPartListItemPartNumberInteger"},
         "partSource":{"shape":"ReadSetPartSource"},
-        "checksum":{"shape":"String"}
+        "checksum":{"shape":"CompleteReadSetUploadPartListItemChecksumString"}
       }
+    },
+    "CompleteReadSetUploadPartListItemChecksumString":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "CompleteReadSetUploadPartListItemPartNumberInteger":{
       "type":"integer",
@@ -2261,7 +2267,8 @@
         "sseConfig":{"shape":"SseConfig"},
         "tags":{"shape":"TagMap"},
         "clientToken":{"shape":"ClientToken"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
     },
     "CreateSequenceStoreResponse":{
@@ -2278,7 +2285,8 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
     },
     "CreateShareRequest":{
@@ -2570,7 +2578,21 @@
       "enum":[
         "FASTQ_MD5up",
         "BAM_MD5up",
-        "CRAM_MD5up"
+        "CRAM_MD5up",
+        "FASTQ_SHA256up",
+        "BAM_SHA256up",
+        "CRAM_SHA256up",
+        "FASTQ_SHA512up",
+        "BAM_SHA512up",
+        "CRAM_SHA512up"
+      ]
+    },
+    "ETagAlgorithmFamily":{
+      "type":"string",
+      "enum":[
+        "MD5up",
+        "SHA256up",
+        "SHA512up"
       ]
     },
     "Encoding":{
@@ -2656,7 +2678,8 @@
       "members":{
         "totalParts":{"shape":"FileInformationTotalPartsInteger"},
         "partSize":{"shape":"FileInformationPartSizeLong"},
-        "contentLength":{"shape":"FileInformationContentLengthLong"}
+        "contentLength":{"shape":"FileInformationContentLengthLong"},
+        "s3Access":{"shape":"ReadSetS3Access"}
       }
     },
     "FileInformationContentLengthLong":{
@@ -3420,7 +3443,9 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "s3Access":{"shape":"SequenceStoreS3Access"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
     },
     "GetShareRequest":{
@@ -4783,6 +4808,12 @@
       "requiresLength":true,
       "streaming":true
     },
+    "ReadSetS3Access":{
+      "type":"structure",
+      "members":{
+        "s3Uri":{"shape":"S3Uri"}
+      }
+    },
     "ReadSetStatus":{
       "type":"string",
       "enum":[
@@ -5317,6 +5348,12 @@
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
+    "S3AccessPointArn":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"arn:[^:]*:s3:[^:]*:[^:]*:accesspoint/.*"
+    },
     "S3Destination":{
       "type":"string",
       "pattern":"s3://([a-z0-9][a-z0-9-.]{1,61}[a-z0-9])/?((.{1,1024})/)?"
@@ -5393,7 +5430,8 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
     },
     "SequenceStoreDetailList":{
@@ -5419,6 +5457,13 @@
       "max":127,
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "SequenceStoreS3Access":{
+      "type":"structure",
+      "members":{
+        "s3Uri":{"shape":"S3Uri"},
+        "s3AccessPointArn":{"shape":"S3AccessPointArn"}
+      }
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
