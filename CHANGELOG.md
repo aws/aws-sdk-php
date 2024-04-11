@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.304.3 - 2024-04-11
 
 * `Aws\Batch` - This release adds the task properties field to attempt details and the name field on EKS container detail.
 * `Aws\MediaLive` - AWS Elemental MediaLive introduces workflow monitor, a new feature that enables the visualization and monitoring of your media workflows. Create signal maps of your existing workflows and monitor them by creating notification and monitoring template groups.
