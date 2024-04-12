@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.304.4 - 2024-04-12
 
 * `Aws\HealthLake` - Added new CREATE_FAILED status for data stores. Added new errorCause to DescribeFHIRDatastore API and ListFHIRDatastores API response for additional insights into data store creation and deletion workflows.
 * `Aws\CloudFormation` - Adding support for the new parameter "IncludePropertyValues" in the CloudFormation DescribeChangeSet API. When this parameter is included, the DescribeChangeSet response will include more detailed information such as before and after values for the resource properties that will change.
