@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\HealthLake` - Added new CREATE_FAILED status for data stores. Added new errorCause to DescribeFHIRDatastore API and ListFHIRDatastores API response for additional insights into data store creation and deletion workflows.
+* `Aws\CloudFormation` - Adding support for the new parameter "IncludePropertyValues" in the CloudFormation DescribeChangeSet API. When this parameter is included, the DescribeChangeSet response will include more detailed information such as before and after values for the resource properties that will change.
+* `Aws\ConfigService` - Updates documentation for AWS Config
+* `Aws\KMS` - This feature supports the ability to specify a custom rotation period for automatic key rotations, the ability to perform on-demand key rotations, and visibility into your key material rotations.
+* `Aws\Outposts` - This release adds EXPEDITORS as a valid shipment carrier.
+* `Aws\NeptuneGraph` - Update to API documentation to resolve customer reported issues.
+* `Aws\IoTFleetHub` - Documentation updates for AWS IoT Fleet Hub to clarify that Fleet Hub supports organization instance of IAM Identity Center.
+* `Aws\Transfer` - This change releases support for importing self signed certificates to the Transfer Family for sending outbound file transfers over TLS/HTTPS.
+* `Aws\Redshift` - Adds support for Amazon Redshift DescribeClusterSnapshots API to include Snapshot ARN response field.
+* `Aws\MediaTailor` - Added InsertionMode to PlaybackConfigurations. This setting controls whether players can use stitched or guided ad insertion. The default for players that do not specify an insertion mode is stitched.
+* `Aws\Glue` - Modifying request for GetUnfilteredTableMetadata for view-related fields.
+
 ## 3.304.3 - 2024-04-11
 
 * `Aws\Batch` - This release adds the task properties field to attempt details and the name field on EKS container detail.
