@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.304.5 - 2024-04-16
 
 * `Aws\BedrockAgent` - For Create Agent API, the agentResourceRoleArn parameter is no longer required.
 * `Aws\EntityResolution` - Cross Account Resource Support .
