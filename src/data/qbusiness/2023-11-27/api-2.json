@@ -1192,6 +1192,13 @@
         "attachmentsControlMode":{"shape":"AttachmentsControlMode"}
       }
     },
+    "AppliedCreatorModeConfiguration":{
+      "type":"structure",
+      "required":["creatorModeControl"],
+      "members":{
+        "creatorModeControl":{"shape":"CreatorModeControl"}
+      }
+    },
     "AttachmentInput":{
       "type":"structure",
       "required":[
@@ -1385,12 +1392,24 @@
       "max":999999999,
       "min":0
     },
+    "ChatMode":{
+      "type":"string",
+      "enum":[
+        "RETRIEVAL_MODE",
+        "CREATOR_MODE",
+        "PLUGIN_MODE"
+      ]
+    },
+    "ChatModeConfiguration":{
+      "type":"structure",
+      "members":{
+        "pluginConfiguration":{"shape":"PluginConfiguration"}
+      },
+      "union":true
+    },
     "ChatSyncInput":{
       "type":"structure",
-      "required":[
-        "applicationId",
-        "userId"
-      ],
+      "required":["applicationId"],
       "members":{
         "actionExecution":{"shape":"ActionExecution"},
         "applicationId":{
@@ -1400,6 +1419,8 @@
         },
         "attachments":{"shape":"AttachmentsInput"},
         "attributeFilter":{"shape":"AttributeFilter"},
+        "chatMode":{"shape":"ChatMode"},
+        "chatModeConfiguration":{"shape":"ChatModeConfiguration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -1517,6 +1538,7 @@
         "description":{"shape":"Description"},
         "displayName":{"shape":"ApplicationName"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "identityCenterInstanceArn":{"shape":"InstanceArn"},
         "roleArn":{"shape":"RoleArn"},
         "tags":{"shape":"Tags"}
       }
@@ -1706,6 +1728,7 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
+        "roleArn":{"shape":"RoleArn"},
         "samplePromptsControlMode":{"shape":"WebExperienceSamplePromptsControlMode"},
         "subtitle":{"shape":"WebExperienceSubtitle"},
         "tags":{"shape":"Tags"},
@@ -1719,6 +1742,20 @@
         "webExperienceArn":{"shape":"WebExperienceArn"},
         "webExperienceId":{"shape":"WebExperienceId"}
       }
+    },
+    "CreatorModeConfiguration":{
+      "type":"structure",
+      "required":["creatorModeControl"],
+      "members":{
+        "creatorModeControl":{"shape":"CreatorModeControl"}
+      }
+    },
+    "CreatorModeControl":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "DataSource":{
       "type":"structure",
@@ -1875,8 +1912,7 @@
       "type":"structure",
       "required":[
         "applicationId",
-        "conversationId",
-        "userId"
+        "conversationId"
       ],
       "members":{
         "applicationId":{
@@ -2387,6 +2423,7 @@
         "displayName":{"shape":"ApplicationName"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "error":{"shape":"ErrorDetail"},
+        "identityCenterApplicationArn":{"shape":"IdcApplicationArn"},
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"ApplicationStatus"},
         "updatedAt":{"shape":"Timestamp"}
@@ -2417,6 +2454,7 @@
       "type":"structure",
       "members":{
         "blockedPhrases":{"shape":"BlockedPhrasesConfiguration"},
+        "creatorModeConfiguration":{"shape":"AppliedCreatorModeConfiguration"},
         "nextToken":{"shape":"NextToken"},
         "responseScope":{"shape":"ResponseScope"},
         "topicConfigurations":{"shape":"TopicConfigurations"}
@@ -2661,6 +2699,7 @@
         "createdAt":{"shape":"Timestamp"},
         "defaultEndpoint":{"shape":"Url"},
         "error":{"shape":"ErrorDetail"},
+        "roleArn":{"shape":"RoleArn"},
         "samplePromptsControlMode":{"shape":"WebExperienceSamplePromptsControlMode"},
         "status":{"shape":"WebExperienceStatus"},
         "subtitle":{"shape":"WebExperienceSubtitle"},
@@ -2724,6 +2763,12 @@
         "roleArn":{"shape":"RoleArn"},
         "s3BucketName":{"shape":"S3BucketName"}
       }
+    },
+    "IdcApplicationArn":{
+      "type":"string",
+      "max":1224,
+      "min":10,
+      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}$"
     },
     "Index":{
       "type":"structure",
@@ -2808,6 +2853,12 @@
       "max":100,
       "min":1
     },
+    "InstanceArn":{
+      "type":"string",
+      "max":1224,
+      "min":10,
+      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}$"
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -2883,10 +2934,7 @@
     },
     "ListConversationsRequest":{
       "type":"structure",
-      "required":[
-        "applicationId",
-        "userId"
-      ],
+      "required":["applicationId"],
       "members":{
         "applicationId":{
           "shape":"ApplicationId",
@@ -3130,8 +3178,7 @@
       "type":"structure",
       "required":[
         "applicationId",
-        "conversationId",
-        "userId"
+        "conversationId"
       ],
       "members":{
         "applicationId":{
@@ -3535,6 +3582,13 @@
       },
       "union":true
     },
+    "PluginConfiguration":{
+      "type":"structure",
+      "required":["pluginId"],
+      "members":{
+        "pluginId":{"shape":"PluginId"}
+      }
+    },
     "PluginId":{
       "type":"string",
       "max":36,
@@ -3602,8 +3656,7 @@
       "required":[
         "applicationId",
         "conversationId",
-        "messageId",
-        "userId"
+        "messageId"
       ],
       "members":{
         "applicationId":{
@@ -4193,6 +4246,7 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
+        "creatorModeConfiguration":{"shape":"CreatorModeConfiguration"},
         "responseScope":{"shape":"ResponseScope"},
         "topicConfigurationsToCreateOrUpdate":{"shape":"TopicConfigurations"},
         "topicConfigurationsToDelete":{"shape":"TopicConfigurations"}
