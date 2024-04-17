@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.304.6 - 2024-04-17
 
 * `Aws\QBusiness` - This release adds support for IAM Identity Center (IDC) as the identity gateway for Q Business. It also allows users to provide an explicit intent for Q Business to identify how the Chat request should be handled.
 * `Aws\EC2` - Documentation updates for Elastic Compute Cloud (EC2).
