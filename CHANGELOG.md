@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\drs` - Outpost ARN added to Source Server and Recovery Instance
+* `Aws\WorkSpaces` - Adds new APIs for managing and sharing WorkSpaces BYOL configuration across accounts.
+* `Aws\RolesAnywhere` - This release introduces the PutAttributeMapping and DeleteAttributeMapping APIs. IAM Roles Anywhere now provides the capability to define a set of mapping rules, allowing customers to specify which data is extracted from their X.509 end-entity certificates.
+* `Aws\GuardDuty` - Added IPv6Address fields for local and remote IP addresses
+* `Aws\EMRServerless` - This release adds the capability to publish detailed Spark engine metrics to Amazon Managed Service for Prometheus (AMP) for enhanced monitoring for Spark jobs.
+* `Aws\QuickSight` - This release adds support for the Cross Sheet Filter and Control features, and support for warnings in asset imports for any permitted errors encountered during execution
+* `Aws\SageMaker` - Removed deprecated enum values and updated API documentation.
+
 ## 3.304.6 - 2024-04-17
 
 * `Aws\QBusiness` - This release adds support for IAM Identity Center (IDC) as the identity gateway for Q Business. It also allows users to provide an explicit intent for Q Business to identify how the Chat request should be handled.
