@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.304.7 - 2024-04-18
 
 * `Aws\drs` - Outpost ARN added to Source Server and Recovery Instance
 * `Aws\WorkSpaces` - Adds new APIs for managing and sharing WorkSpaces BYOL configuration across accounts.
