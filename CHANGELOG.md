@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Personalize` - This releases auto training capability while creating a solution and automatically syncing latest solution versions when creating/updating a campaign
+* `Aws\InternetMonitor` - This update introduces the GetInternetEvent and ListInternetEvents APIs, which provide access to internet events displayed on the Amazon CloudWatch Internet Weather Map.
+* `Aws\Glue` - Adding RowFilter in the response for GetUnfilteredTableMetadata API
+
 ## 3.304.7 - 2024-04-18
 
 * `Aws\drs` - Outpost ARN added to Source Server and Recovery Instance
