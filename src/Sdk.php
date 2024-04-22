@@ -610,6 +610,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionRoute53(array $args = [])
  * @method \Aws\Route53Domains\Route53DomainsClient createRoute53Domains(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRoute53Domains(array $args = [])
+ * @method \Aws\Route53Profiles\Route53ProfilesClient createRoute53Profiles(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionRoute53Profiles(array $args = [])
  * @method \Aws\Route53RecoveryCluster\Route53RecoveryClusterClient createRoute53RecoveryCluster(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRoute53RecoveryCluster(array $args = [])
  * @method \Aws\Route53RecoveryControlConfig\Route53RecoveryControlConfigClient createRoute53RecoveryControlConfig(array $args = [])
