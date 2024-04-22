@@ -3,18 +3,16 @@ namespace Aws\Test\Token;
 
 
 use Aws\Exception\TokenException;
-use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use Aws\Token\SsoTokenProvider;
-use Aws\Token\Token;
 use Aws\Token\TokenProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 require_once __DIR__ . '/../Token/token_hack.php';
 
 /**
- * @covers Aws\Token\SsoTokenProvider
+ * @covers \Aws\Token\SsoTokenProvider
  */
 class SsoTokenProviderTest extends TestCase
 {
@@ -107,7 +105,7 @@ EOT;
                 ['ssoClient' => $sso]
             ))->wait();
             $this->assertSame('token', $token->getToken());
-            $this->assertSame('2500-12-25T21:30:00Z', $token->getExpiration());
+            $this->assertSame(strtotime('2500-12-25T21:30:00Z'), $token->getExpiration());
             $this->assertNull($token->getRegistrationExpiresAt());
 
         } finally {
@@ -120,18 +118,20 @@ EOT;
     public function testThrowsExceptionWithOnlyStartUrl()
     {
         $dir = $this->clearEnv();
+        $ssoSessionName = "admin";
         $ini = <<<EOT
 [profile test]
-sso_session = admin
-[sso-session admin]
+sso_session = $ssoSessionName
+[sso-session $ssoSessionName]
 sso_start_url = https://d-abc123.awsapps.com/start
 EOT;
-        file_put_contents($dir . '/config', $ini);
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
         putenv('HOME=' . dirname($dir));
         putenv('AWS_PROFILE=test');
 
         $this->expectException(TokenException::class);
-        $this->expectExceptionMessage("must contain the following keys: sso_start_url and sso_region.");
+        $this->expectExceptionMessage("Sso session `{$ssoSessionName}` in {$configFilename} is missing the required property `sso_region`");
         try {
             $tokenProvider = new SsoTokenProvider('test', $dir . '/config');
             $tokenProvider()->wait();
@@ -143,10 +143,11 @@ EOT;
     public function testThrowsExceptionWithOnlySsoRegion()
     {
         $dir = $this->clearEnv();
+        $ssoSessionName = "admin";
         $ini = <<<EOT
 [profile test]
-sso_session = admin
-[sso-session admin]
+sso_session = $ssoSessionName
+[sso-session $ssoSessionName]
 sso_region = us-east-2
 EOT;
         $configFilename = $dir . '/config';
@@ -155,7 +156,7 @@ EOT;
         putenv('AWS_PROFILE=test');
 
         $this->expectException(TokenException::class);
-        $this->expectExceptionMessage("must contain the following keys: sso_start_url and sso_region.");
+        $this->expectExceptionMessage("Sso session `{$ssoSessionName}` in {$configFilename} is missing the required property `sso_start_url`");
         try {
             $tokenProvider = new SsoTokenProvider('test', $dir . '/config');
             $tokenProvider()->wait();
@@ -171,12 +172,13 @@ EOT;
 [profile test]
 sso_session = admin
 EOT;
-        file_put_contents($dir . '/config', $ini);
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
         putenv('HOME=' . dirname($dir));
         putenv('AWS_PROFILE=test');
 
         $this->expectException(TokenException::class);
-        $this->expectExceptionMessage("Profile test does not exist");
+        $this->expectExceptionMessage("Sso session `admin` does not exist in {$configFilename}");
         try {
             $tokenProvider = new SsoTokenProvider('test', $dir . '/config');
             $tokenProvider()->wait();
@@ -209,7 +211,4 @@ EOT;
             unlink($dir . '/config');
         }
     }
-
-
-
 }
