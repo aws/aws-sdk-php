@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.305.0 - 2024-04-22
 
 * `Aws\BedrockAgent` - Releasing the support for simplified configuration and return of control
 * `Aws\SageMaker` - This release adds support for Real-Time Collaboration and Shared Space for JupyterLab App on SageMaker Studio.
