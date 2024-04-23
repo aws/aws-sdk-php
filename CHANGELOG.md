@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.305.1 - 2024-04-23
 
 * `Aws\BedrockAgentRuntime` - This release introduces zero-setup file upload support for the RetrieveAndGenerate API. This allows you to chat with your data without setting up a Knowledge Base.
 * `Aws\PI` - Clarifies how aggregation works for GetResourceMetrics in the Performance Insights API.
