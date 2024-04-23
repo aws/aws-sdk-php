@@ -207,6 +207,25 @@
       "type":"boolean",
       "box":true
     },
+    "ByteContentBlob":{
+      "type":"blob",
+      "max":10485760,
+      "min":1,
+      "sensitive":true
+    },
+    "ByteContentDoc":{
+      "type":"structure",
+      "required":[
+        "contentType",
+        "data",
+        "identifier"
+      ],
+      "members":{
+        "contentType":{"shape":"ContentType"},
+        "data":{"shape":"ByteContentBlob"},
+        "identifier":{"shape":"Identifier"}
+      }
+    },
     "Citation":{
       "type":"structure",
       "members":{
@@ -240,6 +259,10 @@
       "key":{"shape":"String"},
       "value":{"shape":"Parameters"}
     },
+    "ContentType":{
+      "type":"string",
+      "pattern":"[a-z]{1,20}/.{1,20}"
+    },
     "CreationMode":{
       "type":"string",
       "enum":[
@@ -262,6 +285,46 @@
     "Double":{
       "type":"double",
       "box":true
+    },
+    "ExternalSource":{
+      "type":"structure",
+      "required":["sourceType"],
+      "members":{
+        "byteContent":{"shape":"ByteContentDoc"},
+        "s3Location":{"shape":"S3ObjectDoc"},
+        "sourceType":{"shape":"ExternalSourceType"}
+      }
+    },
+    "ExternalSourceType":{
+      "type":"string",
+      "enum":[
+        "S3",
+        "BYTE_CONTENT"
+      ]
+    },
+    "ExternalSources":{
+      "type":"list",
+      "member":{"shape":"ExternalSource"},
+      "max":1,
+      "min":1
+    },
+    "ExternalSourcesGenerationConfiguration":{
+      "type":"structure",
+      "members":{
+        "promptTemplate":{"shape":"PromptTemplate"}
+      }
+    },
+    "ExternalSourcesRetrieveAndGenerateConfiguration":{
+      "type":"structure",
+      "required":[
+        "modelArn",
+        "sources"
+      ],
+      "members":{
+        "generationConfiguration":{"shape":"ExternalSourcesGenerationConfiguration"},
+        "modelArn":{"shape":"BedrockModelArn"},
+        "sources":{"shape":"ExternalSources"}
+      }
     },
     "FailureReasonString":{
       "type":"string",
@@ -353,6 +416,12 @@
       "members":{
         "promptTemplate":{"shape":"PromptTemplate"}
       }
+    },
+    "Identifier":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
     },
     "InferenceConfiguration":{
       "type":"structure",
@@ -876,6 +945,7 @@
       "type":"structure",
       "required":["type"],
       "members":{
+        "externalSourcesConfiguration":{"shape":"ExternalSourcesRetrieveAndGenerateConfiguration"},
         "knowledgeBaseConfiguration":{"shape":"KnowledgeBaseRetrieveAndGenerateConfiguration"},
         "type":{"shape":"RetrieveAndGenerateType"}
       }
@@ -932,7 +1002,10 @@
     },
     "RetrieveAndGenerateType":{
       "type":"string",
-      "enum":["KNOWLEDGE_BASE"]
+      "enum":[
+        "KNOWLEDGE_BASE",
+        "EXTERNAL_SOURCES"
+      ]
     },
     "RetrieveRequest":{
       "type":"structure",
@@ -985,6 +1058,19 @@
       },
       "event":true,
       "sensitive":true
+    },
+    "S3ObjectDoc":{
+      "type":"structure",
+      "required":["uri"],
+      "members":{
+        "uri":{"shape":"S3Uri"}
+      }
+    },
+    "S3Uri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.{1,1024}$"
     },
     "SearchType":{
       "type":"string",
