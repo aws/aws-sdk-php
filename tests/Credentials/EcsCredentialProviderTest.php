@@ -509,4 +509,44 @@ class EcsCredentialProviderTest extends TestCase
             ],
         ];
     }
+
+    public function testReadsRetriesFromEnvironment()
+    {
+        putenv('AWS_METADATA_SERVICE_NUM_ATTEMPTS=1');
+
+        $connectException = new ConnectException(
+            'cURL error 28: Connection timed out after 1000 milliseconds',
+            new Psr7\Request('GET', '/latest')
+        );
+        $rejectionConnection = Promise\Create::rejectionFor([
+            'exception' => $connectException,
+        ]);
+
+        $provider = new EcsCredentialProvider([
+            'client' => $this->getTestClient(
+                [
+                    $rejectionConnection,
+                    $rejectionConnection,
+                ]
+            ),
+        ]);
+
+        $expected = new CredentialsException(
+            'Error retrieving credentials from container metadata after attempt 1/1 (cURL error 28: Connection timed out after 1000 milliseconds)'
+        );
+
+        try {
+            $provider()->wait();
+            $this->fail('Provider should have thrown an exception.');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(get_class($expected), $e);
+            $this->assertSame($expected->getMessage(), $e->getMessage());
+        }
+    }
+
+    public function testAttemptsAreResetWhenProviderIsWhenSameProviderIsReused()
+    {
+        // Test attempts are reset.
+        $this->assertTrue(false);
+    }
 }
