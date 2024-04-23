@@ -69,6 +69,8 @@ class EcsCredentialProvider
      */
     public function __invoke()
     {
+        $this->attempts = 0;
+
         $uri = $this->getEcsUri();
 
         if ($this->isCompatibleUri($uri)) {
