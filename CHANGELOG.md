@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.305.2 - 2024-04-24
 
 * `Aws\EntityResolution` - Support Batch Unique IDs Deletion.
 * `Aws\DataSync` - This change allows users to disable and enable the schedules associated with their tasks.
