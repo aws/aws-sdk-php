@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS EntityResolution** service.
  * @method \Aws\Result addPolicyStatement(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addPolicyStatementAsync(array $args = [])
+ * @method \Aws\Result batchDeleteUniqueId(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDeleteUniqueIdAsync(array $args = [])
  * @method \Aws\Result createIdMappingWorkflow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createIdMappingWorkflowAsync(array $args = [])
  * @method \Aws\Result createIdNamespace(array $args = [])

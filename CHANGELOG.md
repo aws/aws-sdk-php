@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EntityResolution` - Support Batch Unique IDs Deletion.
+* `Aws\DataSync` - This change allows users to disable and enable the schedules associated with their tasks.
+* `Aws\EMRContainers` - EMRonEKS Service support for SecurityConfiguration enforcement for Spark Jobs.
+* `Aws\EC2` - Launching capability for customers to enable or disable automatic assignment of public IPv4 addresses to their network interface
+* `Aws\SSM` - Add SSM DescribeInstanceProperties API to public AWS SDK.
+* `Aws\GameLift` - Amazon GameLift releases container fleets support for public preview. Deploy Linux-based containerized game server software for hosting on Amazon GameLift.
+
 ## 3.305.1 - 2024-04-23
 
 * `Aws\BedrockAgentRuntime` - This release introduces zero-setup file upload support for the RetrieveAndGenerate API. This allows you to chat with your data without setting up a Knowledge Base.
