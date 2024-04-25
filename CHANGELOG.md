@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.305.3 - 2024-04-25
 
 * `Aws\Credentials` - Makes the SSO token to be refreshed when required and allowed by the rules states on the sso token provider specs.
 * `Aws\FMS` - AWS Firewall Manager adds support for network ACL policies to manage Amazon Virtual Private Cloud (VPC) network access control lists (ACLs) for accounts in your organization.
