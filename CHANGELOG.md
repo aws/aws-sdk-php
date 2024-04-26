@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.305.4 - 2024-04-26
 
 * `Aws\OAM` - This release introduces support for Source Accounts to define which Metrics and Logs to share with the Monitoring Account
 * `Aws\RDS` - SupportsLimitlessDatabase field added to describe-db-engine-versions to indicate whether the DB engine version supports Aurora Limitless Database.
