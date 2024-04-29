@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.305.5 - 2024-04-29
 
 * `Aws\ConnectCases` - This feature releases DeleteField, DeletedLayout, and DeleteTemplate API's
 * `Aws\Amplify` - Updating max results limit for listing any resources (Job, Artifacts, Branch, BackendResources, DomainAssociation) to 50 with the exception of list apps that where max results can be up to 100.
