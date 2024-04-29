@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConnectCases` - This feature releases DeleteField, DeletedLayout, and DeleteTemplate API's
+* `Aws\Amplify` - Updating max results limit for listing any resources (Job, Artifacts, Branch, BackendResources, DomainAssociation) to 50 with the exception of list apps that where max results can be up to 100.
+* `Aws\Inspector2` - Update Inspector2 to include new Agentless API parameters.
+* `Aws\TranscribeService` - This update provides error messaging for generative call summarization in Transcribe Call Analytics
+* `Aws\TimestreamQuery` - This change allows users to update and describe account settings associated with their accounts.
+* `Aws\TrustedAdvisor` - This release adds the BatchUpdateRecommendationResourceExclusion API to support batch updates of Recommendation Resource exclusion statuses and introduces a new exclusion status filter to the ListRecommendationResources and ListOrganizationRecommendationResources APIs.
+
 ## 3.305.4 - 2024-04-26
 
 * `Aws\OAM` - This release introduces support for Source Accounts to define which Metrics and Logs to share with the Monitoring Account
