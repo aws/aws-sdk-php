@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.305.6 - 2024-04-30
 
 * `Aws\QuickSight` - New Q embedding supporting Generative Q&A
 * `Aws\OpenSearchService` - This release enables customers to create Route53 A and AAAA alias record types to point custom endpoint domain to OpenSearch domain's dualstack search endpoint.
