@@ -2713,7 +2713,8 @@
       "type":"structure",
       "members":{
         "resourceArns":{"shape":"ArnList"},
-        "status":{"shape":"StatusList"}
+        "status":{"shape":"StatusList"},
+        "type":{"shape":"TypeList"}
       }
     },
     "FormatOptions":{
@@ -3351,7 +3352,9 @@
         "failureReason":{"shape":"RunFailureReason"},
         "logLocation":{"shape":"RunLogLocation"},
         "uuid":{"shape":"RunUuid"},
-        "runOutputUri":{"shape":"RunOutputUri"}
+        "runOutputUri":{"shape":"RunOutputUri"},
+        "storageType":{"shape":"StorageType"},
+        "workflowOwnerId":{"shape":"WorkflowOwnerId"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -3563,6 +3566,11 @@
           "shape":"WorkflowExportList",
           "location":"querystring",
           "locationName":"export"
+        },
+        "workflowOwnerId":{
+          "shape":"WorkflowOwnerId",
+          "location":"querystring",
+          "locationName":"workflowOwnerId"
         }
       }
     },
@@ -5215,7 +5223,8 @@
         "storageCapacity":{"shape":"RunListItemStorageCapacityInteger"},
         "creationTime":{"shape":"RunTimestamp"},
         "startTime":{"shape":"RunTimestamp"},
-        "stopTime":{"shape":"RunTimestamp"}
+        "stopTime":{"shape":"RunTimestamp"},
+        "storageType":{"shape":"StorageType"}
       }
     },
     "RunListItemPriorityInteger":{
@@ -5482,6 +5491,7 @@
       "members":{
         "shareId":{"shape":"String"},
         "resourceArn":{"shape":"String"},
+        "resourceId":{"shape":"String"},
         "principalSubscriber":{"shape":"String"},
         "ownerId":{"shape":"String"},
         "status":{"shape":"ShareStatus"},
@@ -5500,6 +5510,14 @@
       "max":256,
       "min":1,
       "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "ShareResourceType":{
+      "type":"string",
+      "enum":[
+        "VARIANT_STORE",
+        "ANNOTATION_STORE",
+        "WORKFLOW"
+      ]
     },
     "ShareStatus":{
       "type":"string",
@@ -5783,7 +5801,9 @@
           "shape":"RunRequestId",
           "idempotencyToken":true
         },
-        "retentionMode":{"shape":"RunRetentionMode"}
+        "retentionMode":{"shape":"RunRetentionMode"},
+        "storageType":{"shape":"StorageType"},
+        "workflowOwnerId":{"shape":"WorkflowOwnerId"}
       }
     },
     "StartRunRequestPriorityInteger":{
@@ -5833,12 +5853,23 @@
     },
     "StatusList":{
       "type":"list",
-      "member":{"shape":"ShareStatus"}
+      "member":{"shape":"ShareStatus"},
+      "max":10,
+      "min":1
     },
     "StatusMessage":{
       "type":"string",
       "max":1000,
       "min":0
+    },
+    "StorageType":{
+      "type":"string",
+      "enum":[
+        "STATIC",
+        "DYNAMIC"
+      ],
+      "max":64,
+      "min":1
     },
     "StoreFormat":{
       "type":"string",
@@ -6068,6 +6099,12 @@
       "type":"list",
       "member":{"shape":"SchemaItem"},
       "max":5000,
+      "min":1
+    },
+    "TypeList":{
+      "type":"list",
+      "member":{"shape":"ShareResourceType"},
+      "max":10,
       "min":1
     },
     "UntagResourceRequest":{
@@ -6566,6 +6603,10 @@
       "max":128,
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "WorkflowOwnerId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
     },
     "WorkflowParameter":{
       "type":"structure",
