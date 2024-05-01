@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.305.7 - 2024-05-01
 
 * `Aws\SESv2` - Fixes ListContacts and ListImportJobs APIs to use POST instead of GET.
 * `Aws\BedrockAgent` - This release adds support for using MongoDB Atlas as a vector store when creating a knowledge base.
