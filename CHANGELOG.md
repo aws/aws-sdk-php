@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.305.8 - 2024-05-02
 
 * `Aws\EC2` - This release includes a new API for retrieving the public endorsement key of the EC2 instance's Nitro Trusted Platform Module (NitroTPM).
 * `Aws\Personalize` - This releases ability to delete users and their data, including their metadata and interactions data, from a dataset group.
