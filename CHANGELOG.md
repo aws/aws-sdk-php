@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixes issue with manually configured signature versions.
+* `Aws\Connect` - This release adds 5 new APIs for managing attachments: StartAttachedFileUpload, CompleteAttachedFileUpload, GetAttachedFile, BatchGetAttachedFileMetadata, DeleteAttachedFile. These APIs can be used to programmatically upload and download attachments to Connect resources, like cases.
+* `Aws\SageMaker` - Amazon SageMaker Inference now supports m6i, c6i, r6i, m7i, c7i, r7i and g5 instance types for Batch Transform Jobs
+* `Aws\DataSync` - Updated guidance on using private or self-signed certificate authorities (CAs) with AWS DataSync object storage locations.
+* `Aws\ConnectCases` - This feature supports the release of Files related items
+* `Aws\SESv2` - Adds support for specifying replacement headers per BulkEmailEntry in SendBulkEmail in SESv2.
+* `Aws\Inspector2` - This release adds CSV format to GetCisScanReport for Inspector v2
+* `Aws\BedrockAgent` - This release adds support for using Provisioned Throughput with Bedrock Agents.
+
 ## 3.305.8 - 2024-05-02
 
 * `Aws\EC2` - This release includes a new API for retrieving the public endorsement key of the EC2 instance's Nitro Trusted Platform Module (NitroTPM).
