@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.305.9 - 2024-05-03
 
 * `Aws\` - Fixes issue with manually configured signature versions.
 * `Aws\Connect` - This release adds 5 new APIs for managing attachments: StartAttachedFileUpload, CompleteAttachedFileUpload, GetAttachedFile, BatchGetAttachedFileMetadata, DeleteAttachedFile. These APIs can be used to programmatically upload and download attachments to Connect resources, like cases.
