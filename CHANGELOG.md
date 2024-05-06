@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Parser` - Adds support for event streaming on JSON-RPC protocol parser
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports configuring how SCTE 35 passthrough triggers segment breaks in HLS and MediaPackage output groups. Previously, messages triggered breaks in all these output groups. The new option is to trigger segment breaks only in groups that have SCTE 35 passthrough enabled.
+
 ## 3.305.9 - 2024-05-03
 
 * `Aws\` - Fixes issue with manually configured signature versions.
