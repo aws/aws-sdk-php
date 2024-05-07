@@ -126,7 +126,7 @@ class DocModel
             'output-html' => true,
             'show-body-only' => true,
             'drop-empty-paras' => true,
-            'drop-font-tags' => true,
+            'clean' => true,
             'drop-proprietary-attributes' => true,
             'hide-comments' => true,
             'logical-emphasis' => true

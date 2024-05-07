@@ -1,0 +1,11 @@
+{% set aws_svg %}
+    <img class="aws-logo" src="static/aws_logo.svg" alt="aws-icon">
+{% endset %}
+
+{% set title_with_logo = project.name | replace({'AWS': aws_svg}) %}
+
+<h1 class="phpdocumentor-title">
+    <a href="index.html" class="phpdocumentor-title__link">
+        {{ title_with_logo | raw }}
+    </a>
+</h1>
