@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.306.1 - 2024-05-07
 
 * `Aws\Budgets` - This release adds tag support for budgets and budget actions.
 * `Aws\Route53Profiles` - Doc only update for Route 53 profiles that fixes some link issues
