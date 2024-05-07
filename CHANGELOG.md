@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Budgets` - This release adds tag support for budgets and budget actions.
+* `Aws\Route53Profiles` - Doc only update for Route 53 profiles that fixes some link issues
+* `Aws\B2bi` - Documentation update to clarify the MappingTemplate definition.
+* `Aws\ResilienceHub` - AWS Resilience Hub has expanded its drift detection capabilities by introducing a new type of drift detection - application resource drift. This new enhancement detects changes, such as the addition or deletion of resources within the application's input sources.
+
 ## 3.306.0 - 2024-05-06
 
 * `Aws\Parser` - Adds support for event streaming on JSON-RPC protocol parser
