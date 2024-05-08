@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.306.2 - 2024-05-08
 
 * `Aws\ECR` - This release adds pull through cache rules support for GitLab container registry in Amazon ECR.
 * `Aws\CognitoIdentityProvider` - Add EXTERNAL_PROVIDER enum value to UserStatusType.
