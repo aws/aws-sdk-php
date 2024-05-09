@@ -113,6 +113,22 @@
       "type":"string",
       "sensitive":true
     },
+    "AdditionalModelRequestFields":{
+      "type":"map",
+      "key":{"shape":"AdditionalModelRequestFieldsKey"},
+      "value":{"shape":"AdditionalModelRequestFieldsValue"}
+    },
+    "AdditionalModelRequestFieldsKey":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "AdditionalModelRequestFieldsValue":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
     "AgentAliasId":{
       "type":"string",
       "max":10,
@@ -311,6 +327,9 @@
     "ExternalSourcesGenerationConfiguration":{
       "type":"structure",
       "members":{
+        "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"},
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
+        "inferenceConfig":{"shape":"InferenceConfig"},
         "promptTemplate":{"shape":"PromptTemplate"}
       }
     },
@@ -414,14 +433,53 @@
     "GenerationConfiguration":{
       "type":"structure",
       "members":{
+        "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"},
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
+        "inferenceConfig":{"shape":"InferenceConfig"},
         "promptTemplate":{"shape":"PromptTemplate"}
       }
+    },
+    "GuadrailAction":{
+      "type":"string",
+      "enum":[
+        "INTERVENED",
+        "NONE"
+      ]
+    },
+    "GuardrailConfiguration":{
+      "type":"structure",
+      "required":[
+        "guardrailId",
+        "guardrailVersion"
+      ],
+      "members":{
+        "guardrailId":{"shape":"GuardrailConfigurationGuardrailIdString"},
+        "guardrailVersion":{"shape":"GuardrailConfigurationGuardrailVersionString"}
+      }
+    },
+    "GuardrailConfigurationGuardrailIdString":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"^[a-z0-9]+$"
+    },
+    "GuardrailConfigurationGuardrailVersionString":{
+      "type":"string",
+      "max":5,
+      "min":1,
+      "pattern":"^(([1-9][0-9]{0,7})|(DRAFT))$"
     },
     "Identifier":{
       "type":"string",
       "max":1024,
       "min":1,
       "sensitive":true
+    },
+    "InferenceConfig":{
+      "type":"structure",
+      "members":{
+        "textInferenceConfig":{"shape":"TextInferenceConfig"}
+      }
     },
     "InferenceConfiguration":{
       "type":"structure",
@@ -638,6 +696,12 @@
       "min":1
     },
     "LambdaArn":{"type":"string"},
+    "MaxTokens":{
+      "type":"integer",
+      "box":true,
+      "max":65536,
+      "min":0
+    },
     "MaximumLength":{
       "type":"integer",
       "box":true,
@@ -804,6 +868,17 @@
       "members":{
         "properties":{"shape":"ParameterList"}
       }
+    },
+    "RAGStopSequences":{
+      "type":"list",
+      "member":{"shape":"RAGStopSequencesMemberString"},
+      "max":4,
+      "min":0
+    },
+    "RAGStopSequencesMemberString":{
+      "type":"string",
+      "max":1000,
+      "min":1
     },
     "Rationale":{
       "type":"structure",
@@ -989,6 +1064,7 @@
       ],
       "members":{
         "citations":{"shape":"Citations"},
+        "guardrailAction":{"shape":"GuadrailAction"},
         "output":{"shape":"RetrieveAndGenerateOutput"},
         "sessionId":{"shape":"SessionId"}
       }
@@ -1148,6 +1224,15 @@
       "box":true,
       "max":1,
       "min":0
+    },
+    "TextInferenceConfig":{
+      "type":"structure",
+      "members":{
+        "maxTokens":{"shape":"MaxTokens"},
+        "stopSequences":{"shape":"RAGStopSequences"},
+        "temperature":{"shape":"Temperature"},
+        "topP":{"shape":"TopP"}
+      }
     },
     "TextPromptTemplate":{
       "type":"string",
