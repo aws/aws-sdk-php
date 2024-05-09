@@ -644,7 +644,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         return static function (callable $handler) {
             return function (Command $command, $request = null) use ($handler) {
                 $autoSet = false;
-                if ($command->getName() === 'ListObjects'
+                if (strpos($command->getName(), 'ListObjects') === 0
                     && empty($command['EncodingType'])
                 ) {
                     $command['EncodingType'] = 'url';
