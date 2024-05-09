@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.306.3 - 2024-05-09
 
 * `Aws\VerifiedPermissions` - Adds policy effect and actions fields to Policy API's.
 * `Aws\SsmSap` - Added support for application-aware start/stop of SAP applications running on EC2 instances, with SSM for SAP
