@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - Introduced support for G6 instance types on Sagemaker Notebook Instances and on SageMaker Studio for JupyterLab and CodeEditor applications.
+* `Aws\GreengrassV2` - Mark ComponentVersion in ComponentDeploymentSpecification as required.
+* `Aws\SSOOIDC` - Updated request parameters for PKCE support.
+* `Aws\ApplicationDiscoveryService` - add v2 smoke tests and smithy smokeTests trait for SDK testing
+
 ## 3.306.3 - 2024-05-09
 
 * `Aws\VerifiedPermissions` - Adds policy effect and actions fields to Policy API's.
