@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.306.4 - 2024-05-10
 
 * `Aws\SageMaker` - Introduced support for G6 instance types on Sagemaker Notebook Instances and on SageMaker Studio for JupyterLab and CodeEditor applications.
 * `Aws\GreengrassV2` - Mark ComponentVersion in ComponentDeploymentSpecification as required.
