@@ -122,6 +122,16 @@ class EcsCredentialProvider
     }
 
     /**
+     * Returns the number of attempts that have been done.
+     *
+     * @return int
+     */
+    public function getAttempts(): int
+    {
+        return $this->attempts;
+    }
+
+    /**
      * Retrieves authorization token.
      *
      * @return array|false|string
