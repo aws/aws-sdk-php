@@ -509,4 +509,110 @@ class EcsCredentialProviderTest extends TestCase
             ],
         ];
     }
+
+    public function testReadsRetriesFromEnvironment()
+    {
+        putenv('AWS_METADATA_SERVICE_NUM_ATTEMPTS=1');
+
+        $connectException = new ConnectException(
+            'cURL error 28: Connection timed out after 1000 milliseconds',
+            new Psr7\Request('GET', '/latest')
+        );
+        $rejectionConnection = Promise\Create::rejectionFor([
+            'exception' => $connectException,
+        ]);
+
+        $provider = new EcsCredentialProvider([
+            'client' => $this->getTestClient(
+                [
+                    $rejectionConnection,
+                    $rejectionConnection,
+                ]
+            ),
+        ]);
+
+        $expected = new CredentialsException(
+            'Error retrieving credentials from container metadata after attempt 1/1 (cURL error 28: Connection timed out after 1000 milliseconds)'
+        );
+
+        try {
+            $provider()->wait();
+            $this->fail('Provider should have thrown an exception.');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(get_class($expected), $e);
+            $this->assertSame($expected->getMessage(), $e->getMessage());
+        }
+    }
+
+    public function testAttemptsAreResetWhenProviderIsWhenSameProviderIsReused()
+    {
+        // Test attempts are reset.
+        $expiry = time() + 1000;
+        $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
+
+        $credsObject = new Credentials($creds[0], $creds[1], $creds[2], $expiry);
+
+        $connectException = new ConnectException(
+            'cURL error 28: Connection timed out after 1000 milliseconds',
+            new Psr7\Request('GET', '/latest')
+        );
+        $rejectionConnection = Promise\Create::rejectionFor([
+            'exception' => $connectException,
+        ]);
+        $promiseCreds = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor(
+                json_encode(call_user_func_array(
+                    [$this, 'getCredentialArray'],
+                    $creds
+                )))
+            )
+        );
+
+        $provider = new EcsCredentialProvider([
+            'client' => $this->getTestClient(
+                [
+                    $rejectionConnection,
+                    $rejectionConnection,
+                    $promiseCreds,
+                ],
+                $creds
+            ),
+            'retries' => 2
+        ]);
+
+        $expected = new CredentialsException(
+            'Error retrieving credentials from container metadata after attempt 1/1 (cURL error 28: Connection timed out after 1000 milliseconds)'
+        );
+
+        try {
+            $credentials = $provider()->wait();
+            $this->assertSame(
+                $credsObject->getAccessKeyId(),
+                $credentials->getAccessKeyId()
+            );
+            $this->assertSame(
+                $credsObject->getSecretKey(),
+                $credentials->getSecretKey()
+            );
+            $this->assertEquals(
+                $credsObject->getSecurityToken(),
+                $credentials->getSecurityToken()
+            );
+            $this->assertEquals(
+                $credsObject->getExpiration(),
+                $credentials->getExpiration()
+            );
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(get_class($expected), $e);
+            $this->assertSame($expected->getMessage(), $e->getMessage());
+        }
+
+        $this->assertSame(3, $provider->getAttempts());
+
+        try {
+            $provider();
+        } catch (\Throwable $throwable) {
+            $this->assertSame(0, $provider->getAttempts());
+        }
+    }
 }

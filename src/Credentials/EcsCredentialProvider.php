@@ -55,7 +55,7 @@ class EcsCredentialProvider
             : (getenv(self::ENV_TIMEOUT) ?: self::DEFAULT_ENV_TIMEOUT);
         $this->retries = (int) isset($config['retries'])
             ? $config['retries']
-            : (getenv(self::ENV_RETRIES) ?: self::DEFAULT_ENV_RETRIES);
+            : ((int) getenv(self::ENV_RETRIES) ?: self::DEFAULT_ENV_RETRIES);
         $this->attempts = 0;
 
         $this->client = $config['client'] ?? \Aws\default_http_handler();
@@ -69,6 +69,8 @@ class EcsCredentialProvider
      */
     public function __invoke()
     {
+        $this->attempts = 0;
+
         $uri = $this->getEcsUri();
 
         if ($this->isCompatibleUri($uri)) {
@@ -117,6 +119,16 @@ class EcsCredentialProvider
         }
 
         throw new CredentialsException("Uri '{$uri}' contains an unsupported host.");
+    }
+
+    /**
+     * Returns the number of attempts that have been done.
+     *
+     * @return int
+     */
+    public function getAttempts(): int
+    {
+        return $this->attempts;
     }
 
     /**
