@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Amazon Connect provides enhanced search capabilities for flows & flow modules on the Connect admin website and programmatically using APIs. You can search for flows and flow modules by name, description, type, status, and tags, to filter and identify a specific flow in your Connect instances.
+* `Aws\S3` - Updated a few x-id in the http uri traits
+
 ## 3.306.5 - 2024-05-13
 
 * `Aws\VPCLattice` - This release adds TLS Passthrough support. It also increases max number of target group per rule to 10.
