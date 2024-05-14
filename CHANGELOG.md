@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.306.6 - 2024-05-14
 
 * `Aws\Connect` - Amazon Connect provides enhanced search capabilities for flows & flow modules on the Connect admin website and programmatically using APIs. You can search for flows and flow modules by name, description, type, status, and tags, to filter and identify a specific flow in your Connect instances.
 * `Aws\S3` - Updated a few x-id in the http uri traits
