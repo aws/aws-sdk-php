@@ -324,8 +324,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionHealth(array $args = [])
  * @method \Aws\HealthLake\HealthLakeClient createHealthLake(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionHealthLake(array $args = [])
- * @method \Aws\Honeycode\HoneycodeClient createHoneycode(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionHoneycode(array $args = [])
  * @method \Aws\IVS\IVSClient createIVS(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIVS(array $args = [])
  * @method \Aws\IVSRealTime\IVSRealTimeClient createIVSRealTime(array $args = [])
