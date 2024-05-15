@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.306.7 - 2024-05-15
 
 * `Aws\` - Remove Honeycode and AlexaForBusiness clients from the SDK since they have been discontinued.
 * `Aws\BedrockAgentRuntime` - Updating Bedrock Knowledge Base Metadata & Filters feature with two new filters listContains and stringContains
