@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.307.0 - 2024-05-16
 
 * `Aws\User-Agent` - Update user agent implementation for supporting AppId and user agent version
 * `Aws\SecretsManager` - Documentation updates for AWS Secrets Manager
