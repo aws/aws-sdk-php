@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElasticLoadBalancingv2` - This release adds dualstack-without-public-ipv4 IP address type for ALB.
+* `Aws\ApplicationAutoScaling` - add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\CodeBuild` - Aws CodeBuild now supports 36 hours build timeout
+* `Aws\LakeFormation` - Introduces a new API, GetDataLakePrincipal, that returns the identity of the invoking principal
+* `Aws\Transfer` - Enable use of CloudFormation traits in Smithy model to improve generated CloudFormation schema from the Smithy API model.
+
 ## 3.307.0 - 2024-05-16
 
 * `Aws\User-Agent` - Update user agent implementation for supporting AppId and user agent version
