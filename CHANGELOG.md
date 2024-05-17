@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.307.1 - 2024-05-17
 
 * `Aws\ElasticLoadBalancingv2` - This release adds dualstack-without-public-ipv4 IP address type for ALB.
 * `Aws\ApplicationAutoScaling` - add v2 smoke tests and smithy smokeTests trait for SDK testing.
