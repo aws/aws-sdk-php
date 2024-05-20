@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.307.2 - 2024-05-20
 
 * `Aws\RDS` - This release adds support for EngineLifecycleSupport on DBInstances, DBClusters, and GlobalClusters.
 * `Aws\SecretsManager` - add v2 smoke tests and smithy smokeTests trait for SDK testing
