@@ -40,6 +40,9 @@ class EcsCredentialProviderTest extends TestCase
         putenv(EcsCredentialProvider::ENV_AUTH_TOKEN_FILE . '=');
         unset($_SERVER[EcsCredentialProvider::ENV_AUTH_TOKEN_FILE]);
 
+        putenv(EcsCredentialProvider::ENV_RETRIES . '=');
+        unset($_SERVER[EcsCredentialProvider::ENV_RETRIES]);
+
         $dir = sys_get_temp_dir() . '/path/to';
 
         if (!is_dir($dir)) {
@@ -405,46 +408,6 @@ class EcsCredentialProviderTest extends TestCase
     }
 
     /**
-     * @param Promise\PromiseInterface[] $responses
-     * @param array $creds
-     * @return \Closure
-     */
-    private function getTestClient(
-        $responses = [],
-        $creds = ['foo_key', 'baz_secret', 'qux_token', null]
-    ) {
-        $getRequests = 0;
-
-        return function (RequestInterface $request) use (
-            $responses,
-            $creds,
-            &$getRequests
-        ) {
-            if (!empty($responses)) {
-                return $responses[$getRequests++];
-            }
-            return Promise\Create::promiseFor(
-                new Response(
-                    200,
-                    [],
-                    Psr7\Utils::streamFor(
-                        json_encode(call_user_func_array(
-                            [$this, 'getCredentialArray'],
-                            $creds
-                        ))
-                    )
-                )
-            );
-
-            return Promise\Create::rejectionFor([
-                'exception' => new \Exception(
-                    'Invalid request passed to test server'
-                )
-            ]);
-        };
-    }
-
-    /**
      * @dataProvider failureTestCases
      *
      * @param $client
@@ -542,6 +505,8 @@ class EcsCredentialProviderTest extends TestCase
             $this->assertInstanceOf(get_class($expected), $e);
             $this->assertSame($expected->getMessage(), $e->getMessage());
         }
+
+        $this->clearEnv();
     }
 
     public function testAttemptsAreResetWhenProviderIsWhenSameProviderIsReused()
@@ -614,5 +579,39 @@ class EcsCredentialProviderTest extends TestCase
         } catch (\Throwable $throwable) {
             $this->assertSame(0, $provider->getAttempts());
         }
+    }
+
+    /**
+     * @param Promise\PromiseInterface[] $responses
+     * @param array $creds
+     * @return \Closure
+     */
+    private function getTestClient(
+        $responses = [],
+        $creds = ['foo_key', 'baz_secret', 'qux_token', null]
+    ) {
+        $getRequests = 0;
+
+        return function (RequestInterface $request) use (
+            $responses,
+            $creds,
+            &$getRequests
+        ) {
+            if (!empty($responses)) {
+                return $responses[$getRequests++];
+            }
+            return Promise\Create::promiseFor(
+                new Response(
+                    200,
+                    [],
+                    Psr7\Utils::streamFor(
+                        json_encode(call_user_func_array(
+                            [$this, 'getCredentialArray'],
+                            $creds
+                        ))
+                    )
+                )
+            );
+        };
     }
 }

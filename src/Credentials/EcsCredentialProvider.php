@@ -56,7 +56,6 @@ class EcsCredentialProvider
         $this->retries = (int) isset($config['retries'])
             ? $config['retries']
             : ((int) getenv(self::ENV_RETRIES) ?: self::DEFAULT_ENV_RETRIES);
-        $this->attempts = 0;
 
         $this->client = $config['client'] ?? \Aws\default_http_handler();
     }
