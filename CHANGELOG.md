@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.308.0 - 2024-05-21
 
 * `Aws\StorageGateway` - Added new SMBSecurityStrategy enum named MandatoryEncryptionNoAes128, new mode enforces encryption and disables AES 128-bit algorithums.
 * `Aws\Lightsail` - This release adds support for Amazon Lightsail instances to switch between dual-stack or IPv4 only and IPv6-only public IP address types.
