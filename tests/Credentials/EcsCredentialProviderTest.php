@@ -594,8 +594,8 @@ class EcsCredentialProviderTest extends TestCase
 
         return function (RequestInterface $request) use (
             $responses,
-            $creds,
-            &$getRequests
+            &$getRequests,
+            $creds
         ) {
             if (!empty($responses)) {
                 return $responses[$getRequests++];
