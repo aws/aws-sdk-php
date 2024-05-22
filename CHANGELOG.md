@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.308.1 - 2024-05-22
 
 * `Aws\KMS` - This release includes feature to import customer's asymmetric (RSA, ECC and SM2) and HMAC keys into KMS in China.
 * `Aws\CloudFormation` - Added DeletionMode FORCE_DELETE_STACK for deleting a stack that is stuck in DELETE_FAILED state due to resource deletion failure.
