@@ -1,0 +1,21 @@
+<nav class="phpdocumentor-topnav">
+    <ul class="phpdocumentor-topnav__menu">
+    {% for key,menu in topMenu|default([]) %}
+        {% for menuitem in menu %}
+            <li class="phpdocumentor-topnav__menu-item -{{ key }}">
+                <a href="{{ menuitem.url }}">
+                    <span>
+                        {% if menuitem.icon %}
+                        <i class="fab fa-{{ menuitem.icon }}">{{ menuitem.icon }}</i>
+                        {% endif %}
+                        {% if menuitem.iconClass %}
+                        <i class="{{ menuitem.iconClass }}"></i>
+                        {% endif %}
+                        {{ menuitem.name }}
+                    </span>
+                </a>
+            </li>
+        {% endfor %}
+    {% endfor %}
+    </ul>
+</nav>
