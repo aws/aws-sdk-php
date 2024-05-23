@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.308.2 - 2024-05-23
 
 * `Aws\OpsWorks` - Documentation-only update for OpsWorks Stacks.
 * `Aws\EMRServerless` - This release adds the capability to run interactive workloads using Apache Livy Endpoint.
