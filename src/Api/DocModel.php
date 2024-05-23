@@ -113,6 +113,7 @@ class DocModel
         return $this->clean($result);
     }
 
+
     private function clean($content)
     {
         if (!$content) {

@@ -58,10 +58,10 @@
       }
     },
     "ActionGroupExecutor": {
-      "base": "<p>Contains details about the Lambda function containing the business logic that is carried out upon invoking the action.</p>",
+      "base": "<p>Contains details about the Lambda function containing the business logic that is carried out upon invoking the action or the custom control method for handling the information elicited from the user.</p>",
       "refs": {
-        "AgentActionGroup$actionGroupExecutor": "<p>The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action.</p>",
-        "CreateAgentActionGroupRequest$actionGroupExecutor": "<p>The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action.</p>",
+        "AgentActionGroup$actionGroupExecutor": "<p>The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action or the custom control method for handling the information elicited from the user.</p>",
+        "CreateAgentActionGroupRequest$actionGroupExecutor": "<p>The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action or the custom control method for handling the information elicited from the user.</p>",
         "UpdateAgentActionGroupRequest$actionGroupExecutor": "<p>The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action.</p>"
       }
     },
@@ -274,7 +274,7 @@
     "BasePromptTemplate": {
       "base": null,
       "refs": {
-        "PromptConfiguration$basePromptTemplate": "<p>Defines the prompt template with which to replace the default prompt template. You can use placeholder variables in the base prompt template to customize the prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html\">Prompt template placeholder variables</a>.</p>"
+        "PromptConfiguration$basePromptTemplate": "<p>Defines the prompt template with which to replace the default prompt template. You can use placeholder variables in the base prompt template to customize the prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html\">Prompt template placeholder variables</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts-configure.html\">Configure the prompt templates</a>.</p>"
       }
     },
     "BedrockEmbeddingModelArn": {
@@ -295,7 +295,7 @@
     "BucketOwnerAccountId": {
       "base": null,
       "refs": {
-        "S3DataSourceConfiguration$bucketOwnerAccountId": "<p>The account ID for the owner of the S3 bucket.</p>"
+        "S3DataSourceConfiguration$bucketOwnerAccountId": "<p>The bucket account owner ID for the S3 bucket.</p>"
       }
     },
     "ChunkingConfiguration": {
@@ -404,8 +404,8 @@
     "DataDeletionPolicy": {
       "base": null,
       "refs": {
-        "CreateDataSourceRequest$dataDeletionPolicy": "<p>The deletion policy for the requested data source</p>",
-        "DataSource$dataDeletionPolicy": "<p>The deletion policy for the data source.</p>",
+        "CreateDataSourceRequest$dataDeletionPolicy": "<p>The data deletion policy assigned to the data source.</p>",
+        "DataSource$dataDeletionPolicy": "<p>The data deletion policy for a data source.</p>",
         "UpdateDataSourceRequest$dataDeletionPolicy": "<p>The data deletion policy of the updated data source.</p>"
       }
     },
@@ -613,8 +613,9 @@
       "base": null,
       "refs": {
         "Agent$failureReasons": "<p>Contains reasons that the agent-related API that you invoked failed.</p>",
+        "AgentAlias$failureReasons": "<p>Information on the failure of Provisioned Throughput assigned to an agent alias.</p>",
         "AgentVersion$failureReasons": "<p>A list of reasons that the API operation on the version failed.</p>",
-        "DataSource$failureReasons": "<p>The details of the failure reasons related to the data source.</p>",
+        "DataSource$failureReasons": "<p>The detailed reasons on the failure to delete a data source.</p>",
         "IngestionJob$failureReasons": "<p>A list of reasons that the ingestion job failed.</p>",
         "KnowledgeBase$failureReasons": "<p>A list of reasons that the API operation on the knowledge base failed.</p>"
       }
@@ -622,6 +623,9 @@
     "FieldName": {
       "base": null,
       "refs": {
+        "MongoDbAtlasFieldMapping$metadataField": "<p>The name of the field in which Amazon Bedrock stores metadata about the vector store.</p>",
+        "MongoDbAtlasFieldMapping$textField": "<p>The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.</p>",
+        "MongoDbAtlasFieldMapping$vectorField": "<p>The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.</p>",
         "OpenSearchServerlessFieldMapping$metadataField": "<p>The name of the field in which Amazon Bedrock stores metadata about the vector store.</p>",
         "OpenSearchServerlessFieldMapping$textField": "<p>The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.</p>",
         "OpenSearchServerlessFieldMapping$vectorField": "<p>The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.</p>",
@@ -754,6 +758,29 @@
     "GetKnowledgeBaseResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "GuardrailConfiguration": {
+      "base": "<p>The details of the guardrails configuration.</p>",
+      "refs": {
+        "Agent$guardrailConfiguration": "<p>The guardrails configuration assigned to the agent.</p>",
+        "AgentSummary$guardrailConfiguration": "<p>The details of the guardrails configuration in the agent summary.</p>",
+        "AgentVersion$guardrailConfiguration": "<p>The guardrails configuration assigned to the agent version.</p>",
+        "AgentVersionSummary$guardrailConfiguration": "<p>The details of the guardrails configuration in the agent version summary.</p>",
+        "CreateAgentRequest$guardrailConfiguration": "<p>The unique Guardrail configuration assigned to the agent when it is created.</p>",
+        "UpdateAgentRequest$guardrailConfiguration": "<p>The unique Guardrail configuration assigned to the agent when it is updated.</p>"
+      }
+    },
+    "GuardrailIdentifier": {
+      "base": null,
+      "refs": {
+        "GuardrailConfiguration$guardrailIdentifier": "<p>The guardrails identifier assigned to the guardrails configuration.</p>"
+      }
+    },
+    "GuardrailVersion": {
+      "base": null,
+      "refs": {
+        "GuardrailConfiguration$guardrailVersion": "<p>The guardrails version assigned to the guardrails configuration.</p>"
       }
     },
     "Id": {
@@ -1023,7 +1050,7 @@
       "base": null,
       "refs": {
         "ActionGroupExecutor$lambda": "<p>The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action.</p>",
-        "PromptOverrideConfiguration$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the <code>promptConfigurations</code> must contain a <code>parserMode</code> value that is set to <code>OVERRIDDEN</code>.</p>"
+        "PromptOverrideConfiguration$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the <code>promptConfigurations</code> must contain a <code>parserMode</code> value that is set to <code>OVERRIDDEN</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/lambda-parser.html\">Parser Lambda function in Agents for Amazon Bedrock</a>.</p>"
       }
     },
     "ListAgentActionGroupsRequest": {
@@ -1142,6 +1169,48 @@
         "AgentVersion$foundationModel": "<p>The foundation model that the version invokes.</p>",
         "CreateAgentRequest$foundationModel": "<p>The foundation model to be used for orchestration by the agent you create.</p>",
         "UpdateAgentRequest$foundationModel": "<p>Specifies a new foundation model to be used for orchestration by the agent.</p>"
+      }
+    },
+    "MongoDbAtlasCollectionName": {
+      "base": null,
+      "refs": {
+        "MongoDbAtlasConfiguration$collectionName": "<p>The collection name of the knowledge base in MongoDB Atlas.</p>"
+      }
+    },
+    "MongoDbAtlasConfiguration": {
+      "base": "<p>Contains details about the storage configuration of the knowledge base in MongoDB Atlas. </p>",
+      "refs": {
+        "StorageConfiguration$mongoDbAtlasConfiguration": "<p>Contains the storage configuration of the knowledge base in MongoDB Atlas.</p>"
+      }
+    },
+    "MongoDbAtlasDatabaseName": {
+      "base": null,
+      "refs": {
+        "MongoDbAtlasConfiguration$databaseName": "<p>The database name in your MongoDB Atlas cluster for your knowledge base.</p>"
+      }
+    },
+    "MongoDbAtlasEndpoint": {
+      "base": null,
+      "refs": {
+        "MongoDbAtlasConfiguration$endpoint": "<p>The endpoint URL of your MongoDB Atlas cluster for your knowledge base.</p>"
+      }
+    },
+    "MongoDbAtlasEndpointServiceName": {
+      "base": null,
+      "refs": {
+        "MongoDbAtlasConfiguration$endpointServiceName": "<p>The name of the VPC endpoint service in your account that is connected to your MongoDB Atlas cluster.</p>"
+      }
+    },
+    "MongoDbAtlasFieldMapping": {
+      "base": "<p>Contains the names of the fields to which to map information about the vector store.</p>",
+      "refs": {
+        "MongoDbAtlasConfiguration$fieldMapping": "<p>Contains the names of the fields to which to map information about the vector store.</p>"
+      }
+    },
+    "MongoDbAtlasIndexName": {
+      "base": null,
+      "refs": {
+        "MongoDbAtlasConfiguration$vectorIndexName": "<p>The name of the MongoDB Atlas vector search index.</p>"
       }
     },
     "Name": {
@@ -1344,6 +1413,12 @@
         "PromptConfiguration$promptType": "<p>The step in the agent sequence that this prompt configuration applies to.</p>"
       }
     },
+    "ProvisionedModelIdentifier": {
+      "base": null,
+      "refs": {
+        "AgentAliasRoutingConfigurationListItem$provisionedThroughput": "<p>Information on the Provisioned Throughput assigned to an agent alias.</p>"
+      }
+    },
     "RdsArn": {
       "base": null,
       "refs": {
@@ -1461,6 +1536,7 @@
     "SecretArn": {
       "base": null,
       "refs": {
+        "MongoDbAtlasConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that contains user credentials for your MongoDB Atlas cluster.</p>",
         "PineconeConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Pinecone API key.</p>",
         "RdsConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Amazon RDS database.</p>",
         "RedisEnterpriseCloudConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Redis Enterprise Cloud database.</p>"

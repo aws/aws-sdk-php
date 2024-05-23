@@ -311,4 +311,64 @@ class EventParsingIteratorTest extends TestCase
                 throw new ParserException('Unknown parser protocol "' . $protocol . '"');
         }
     }
+
+    public function testCanHandleNonSeekableStream()
+    {
+        $encodedEvents = <<<EOF
+AAAAhQAAAExjTu0wDTptZXNzYWdlLXR5cGUHAAVldmVudAs6ZXZlbnQtdHlwZQcABnBlcnNvbg06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbnsibmFtZSI6ImZvbyIsImxhc3ROYW1lIjo
+iZnV6eiIsImFnZSI6Mjh9+hfixw==
+EOF;
+        $noSeekableStream = new Psr7\NoSeekStream(
+            Psr7\Utils::streamFor(base64_decode($encodedEvents))
+        );
+        $structureShape = new StructureShape([
+            'type' => 'structure',
+            'members' => [
+                'person' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'name' => [
+                            'type' => 'string'
+                        ],
+                        'lastName' => [
+                            'type' => 'string'
+                        ],
+                        'age' => [
+                            'type' => 'integer'
+                        ],
+                        'DOB' => [
+                            'type' => 'timestamp'
+                        ]
+                    ]
+                ]
+            ]
+        ], new ShapeMap([]));
+        $eventParsingIterator = new EventParsingIterator(
+            $noSeekableStream,
+            $structureShape,
+            $this->createRestParser(self::PROTOCOL_JSON)
+        );
+        $expected = [
+            'person' => [
+                'name' => 'foo',
+                'lastName' => 'fuzz',
+                'age' => 28
+            ]
+        ];
+        $eventParsingIterator->rewind();
+
+        $this->assertEquals($expected, $eventParsingIterator->current());
+    }
+
+    public function testHandleInitialResponse()
+    {
+        $event = <<<EOF
+AAAAaAAAAFZOaBckDTptZXNzYWdlLXR5cGUHAAVldmVudAs6ZXZlbnQtdHlwZQcAEGluaXRpYWwtcmVzcG9uc2UNOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb25bXVB+KHc=
+EOF;
+        $stream = Psr7\Utils::streamFor(base64_decode($event));
+        $structureShape = new StructureShape([], new ShapeMap([]));
+        $iterator = new EventParsingIterator($stream, $structureShape, $this->createRestParser(self::PROTOCOL_JSON));
+
+        $this->assertEquals(['initial-response' => []], $iterator->current());
+    }
 }
