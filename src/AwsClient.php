@@ -203,6 +203,13 @@ class AwsClient implements AwsClientInterface
      *   client-side parameter validation.
      * - version: (string, required) The version of the webservice to
      *   utilize (e.g., 2006-03-01).
+     * - ua_append: (string, array) To pass custom user agent parameters.
+     * - app_id: (string) an optional application specific identifier that can be set.
+     *   When set it will be appended to the User-Agent header of every request
+     *   in the form of App/{AppId}. This variable is sourced from environment
+     *   variable AWS_SDK_UA_APP_ID or the shared config profile attribute sdk_ua_app_id.
+     *   See https://docs.aws.amazon.com/sdkref/latest/guide/settings-reference.html for
+     *   more information on environment variables and shared config settings.
      *
      * @param array $args Client configuration arguments.
      *
@@ -233,7 +240,7 @@ class AwsClient implements AwsClientInterface
         $this->defaultRequestOptions = $config['http'];
         $this->endpointProvider = $config['endpoint_provider'];
         $this->serializer = $config['serializer'];
-        $this->addSignatureMiddleware();
+        $this->addSignatureMiddleware($args);
         $this->addInvocationId();
         $this->addEndpointParameterMiddleware($args);
         $this->addEndpointDiscoveryMiddleware($config, $args);
@@ -403,7 +410,7 @@ class AwsClient implements AwsClientInterface
         }
     }
 
-    private function addSignatureMiddleware()
+    private function addSignatureMiddleware(array $args)
     {
         $api = $this->getApi();
         $provider = $this->signatureProvider;
@@ -411,9 +418,17 @@ class AwsClient implements AwsClientInterface
         $name = $this->config['signing_name'];
         $region = $this->config['signing_region'];
 
+        if (isset($args['signature_version'])
+         || isset($this->config['configured_signature_version'])
+        ) {
+            $configuredSignatureVersion = true;
+        } else {
+            $configuredSignatureVersion = false;
+        }
+
         $resolver = static function (
             CommandInterface $c
-        ) use ($api, $provider, $name, $region, $version) {
+        ) use ($api, $provider, $name, $region, $version, $configuredSignatureVersion) {
             if (!empty($c['@context']['signing_region'])) {
                 $region = $c['@context']['signing_region'];
             }
@@ -421,30 +436,33 @@ class AwsClient implements AwsClientInterface
                 $name = $c['@context']['signing_service'];
             }
 
-            $authType = $api->getOperation($c->getName())['authtype'];
-            switch ($authType){
-                case 'none':
-                    $version = 'anonymous';
-                    break;
-                case 'v4-unsigned-body':
-                    $version = 'v4-unsigned-body';
-                    break;
-                case 'bearer':
-                    $version = 'bearer';
-                    break;
-            }
-            if (isset($c['@context']['signature_version'])) {
-                if ($c['@context']['signature_version'] == 'v4a') {
-                    $version = 'v4a';
+            if (!$configuredSignatureVersion) {
+                $authType = $api->getOperation($c->getName())['authtype'];
+                switch ($authType){
+                    case 'none':
+                        $version = 'anonymous';
+                        break;
+                    case 'v4-unsigned-body':
+                        $version = 'v4-unsigned-body';
+                        break;
+                    case 'bearer':
+                        $version = 'bearer';
+                        break;
+                }
+                if (isset($c['@context']['signature_version'])) {
+                    if ($c['@context']['signature_version'] == 'v4a') {
+                        $version = 'v4a';
+                    }
+                }
+                if (!empty($endpointAuthSchemes = $c->getAuthSchemes())) {
+                    $version = $endpointAuthSchemes['version'];
+                    $name = isset($endpointAuthSchemes['name']) ?
+                        $endpointAuthSchemes['name'] : $name;
+                    $region = isset($endpointAuthSchemes['region']) ?
+                        $endpointAuthSchemes['region'] : $region;
                 }
             }
-            if (!empty($endpointAuthSchemes = $c->getAuthSchemes())) {
-                $version = $endpointAuthSchemes['version'];
-                $name = isset($endpointAuthSchemes['name']) ?
-                    $endpointAuthSchemes['name'] : $name;
-                $region = isset($endpointAuthSchemes['region']) ?
-                    $endpointAuthSchemes['region'] : $region;
-            }
+
             return SignatureProvider::resolve($provider, $version, $name, $region);
         };
         $this->handlerList->appendSign(

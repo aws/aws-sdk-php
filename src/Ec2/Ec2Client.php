@@ -1002,6 +1002,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise getImageBlockPublicAccessStateAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getInstanceMetadataDefaults(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getInstanceMetadataDefaultsAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result getInstanceTpmEkPub(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise getInstanceTpmEkPubAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getInstanceTypesFromInstanceRequirements(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getInstanceTypesFromInstanceRequirementsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getInstanceUefiData(array $args = []) (supported in versions 2016-11-15)

@@ -5,6 +5,7 @@
     "endpointPrefix":"controltower",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Control Tower",
     "serviceId":"ControlTower",
     "signatureVersion":"v4",
@@ -253,6 +254,22 @@
       },
       "input":{"shape":"ListBaselinesInput"},
       "output":{"shape":"ListBaselinesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListControlOperations":{
+      "name":"ListControlOperations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-control-operations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListControlOperationsInput"},
+      "output":{"shape":"ListControlOperationsOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -539,14 +556,34 @@
       "min":20,
       "pattern":"^arn:aws[0-9a-zA-Z_\\-:\\/]+$"
     },
+    "ControlIdentifiers":{
+      "type":"list",
+      "member":{"shape":"ControlIdentifier"},
+      "max":1,
+      "min":1
+    },
     "ControlOperation":{
       "type":"structure",
       "members":{
+        "controlIdentifier":{"shape":"ControlIdentifier"},
+        "enabledControlIdentifier":{"shape":"Arn"},
         "endTime":{"shape":"SyntheticTimestamp_date_time"},
+        "operationIdentifier":{"shape":"OperationIdentifier"},
         "operationType":{"shape":"ControlOperationType"},
         "startTime":{"shape":"SyntheticTimestamp_date_time"},
         "status":{"shape":"ControlOperationStatus"},
-        "statusMessage":{"shape":"String"}
+        "statusMessage":{"shape":"String"},
+        "targetIdentifier":{"shape":"TargetIdentifier"}
+      }
+    },
+    "ControlOperationFilter":{
+      "type":"structure",
+      "members":{
+        "controlIdentifiers":{"shape":"ControlIdentifiers"},
+        "controlOperationTypes":{"shape":"ControlOperationTypes"},
+        "enabledControlIdentifiers":{"shape":"EnabledControlIdentifiers"},
+        "statuses":{"shape":"ControlOperationStatuses"},
+        "targetIdentifiers":{"shape":"TargetIdentifiers"}
       }
     },
     "ControlOperationStatus":{
@@ -557,6 +594,26 @@
         "IN_PROGRESS"
       ]
     },
+    "ControlOperationStatuses":{
+      "type":"list",
+      "member":{"shape":"ControlOperationStatus"},
+      "max":1,
+      "min":1
+    },
+    "ControlOperationSummary":{
+      "type":"structure",
+      "members":{
+        "controlIdentifier":{"shape":"ControlIdentifier"},
+        "enabledControlIdentifier":{"shape":"Arn"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"},
+        "operationIdentifier":{"shape":"OperationIdentifier"},
+        "operationType":{"shape":"ControlOperationType"},
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "status":{"shape":"ControlOperationStatus"},
+        "statusMessage":{"shape":"String"},
+        "targetIdentifier":{"shape":"TargetIdentifier"}
+      }
+    },
     "ControlOperationType":{
       "type":"string",
       "enum":[
@@ -564,6 +621,16 @@
         "DISABLE_CONTROL",
         "UPDATE_ENABLED_CONTROL"
       ]
+    },
+    "ControlOperationTypes":{
+      "type":"list",
+      "member":{"shape":"ControlOperationType"},
+      "max":1,
+      "min":1
+    },
+    "ControlOperations":{
+      "type":"list",
+      "member":{"shape":"ControlOperationSummary"}
     },
     "CreateLandingZoneInput":{
       "type":"structure",
@@ -654,6 +721,12 @@
       "members":{
         "driftStatus":{"shape":"DriftStatus"}
       }
+    },
+    "DriftStatuses":{
+      "type":"list",
+      "member":{"shape":"DriftStatus"},
+      "max":1,
+      "min":1
     },
     "EnableBaselineInput":{
       "type":"structure",
@@ -806,6 +879,20 @@
         "targetRegions":{"shape":"TargetRegions"}
       }
     },
+    "EnabledControlFilter":{
+      "type":"structure",
+      "members":{
+        "controlIdentifiers":{"shape":"ControlIdentifiers"},
+        "driftStatuses":{"shape":"DriftStatuses"},
+        "statuses":{"shape":"EnablementStatuses"}
+      }
+    },
+    "EnabledControlIdentifiers":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":1,
+      "min":1
+    },
     "EnabledControlParameter":{
       "type":"structure",
       "required":[
@@ -864,6 +951,12 @@
         "lastOperationIdentifier":{"shape":"OperationIdentifier"},
         "status":{"shape":"EnablementStatus"}
       }
+    },
+    "EnablementStatuses":{
+      "type":"list",
+      "member":{"shape":"EnablementStatus"},
+      "max":1,
+      "min":1
     },
     "GetBaselineInput":{
       "type":"structure",
@@ -1078,6 +1171,32 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListControlOperationsInput":{
+      "type":"structure",
+      "members":{
+        "filter":{"shape":"ControlOperationFilter"},
+        "maxResults":{"shape":"ListControlOperationsMaxResults"},
+        "nextToken":{"shape":"ListControlOperationsNextToken"}
+      }
+    },
+    "ListControlOperationsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListControlOperationsNextToken":{
+      "type":"string",
+      "pattern":"\\S+"
+    },
+    "ListControlOperationsOutput":{
+      "type":"structure",
+      "required":["controlOperations"],
+      "members":{
+        "controlOperations":{"shape":"ControlOperations"},
+        "nextToken":{"shape":"ListControlOperationsNextToken"}
+      }
+    },
     "ListEnabledBaselinesInput":{
       "type":"structure",
       "members":{
@@ -1106,8 +1225,8 @@
     },
     "ListEnabledControlsInput":{
       "type":"structure",
-      "required":["targetIdentifier"],
       "members":{
+        "filter":{"shape":"EnabledControlFilter"},
         "maxResults":{"shape":"MaxResults"},
         "nextToken":{"shape":"String"},
         "targetIdentifier":{"shape":"TargetIdentifier"}
@@ -1300,6 +1419,12 @@
       "max":2048,
       "min":20,
       "pattern":"^arn:aws[0-9a-zA-Z_\\-:\\/]+$"
+    },
+    "TargetIdentifiers":{
+      "type":"list",
+      "member":{"shape":"TargetIdentifier"},
+      "max":1,
+      "min":1
     },
     "TargetRegions":{
       "type":"list",
