@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.308.3 - 2024-05-24
 
 * `Aws\DynamoDB` - Documentation only updates for DynamoDB.
 * `Aws\IoTFleetWise` - AWS IoT FleetWise now supports listing vehicles with attributes filter, ListVehicles API is updated to support additional attributes filter.
