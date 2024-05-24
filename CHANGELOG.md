@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Documentation only updates for DynamoDB.
+* `Aws\IoTFleetWise` - AWS IoT FleetWise now supports listing vehicles with attributes filter, ListVehicles API is updated to support additional attributes filter.
+* `Aws\ManagedBlockchain` - This is a minor documentation update to address the impact of the shut down of the Goerli and Polygon networks.
+
 ## 3.308.2 - 2024-05-23
 
 * `Aws\OpsWorks` - Documentation-only update for OpsWorks Stacks.
