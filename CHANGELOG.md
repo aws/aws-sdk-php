@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.308.4 - 2024-05-28
 
 * `Aws\Kafka` - Adds ControllerNodeInfo in ListNodes response to support Raft mode for MSK
 * `Aws\SWF` - This release adds new APIs for deleting activity type and workflow type resources.
