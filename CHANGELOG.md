@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kafka` - Adds ControllerNodeInfo in ListNodes response to support Raft mode for MSK
+* `Aws\SWF` - This release adds new APIs for deleting activity type and workflow type resources.
+* `Aws\EC2` - Providing support to accept BgpAsnExtended attribute
+* `Aws\DynamoDB` - Doc-only update for DynamoDB. Specified the IAM actions needed to authorize a user to create a table with a resource-based policy.
+
 ## 3.308.3 - 2024-05-24
 
 * `Aws\DynamoDB` - Documentation only updates for DynamoDB.
