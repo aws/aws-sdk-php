@@ -4,7 +4,9 @@ namespace Aws\Test\Ec2;
 use Aws\Ec2\Ec2Client;
 use Aws\MockHandler;
 use Aws\Result;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\Ec2\Ec2Client
@@ -84,6 +86,30 @@ class Ec2ClientTest extends TestCase
             'ScheduledInstanceId' => 'test-instance-id',
             'InstanceCount' => 1,
             'ClientToken' => 'foo',
+        ]);
+    }
+
+    public function testSkipEmptyListSerialization()
+    {
+
+        $ec2Client = new Ec2Client([
+            'region' => 'us-east-1',
+            'http_handler' => function (RequestInterface $request) {
+                $testResponse = <<<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<DescribeFleetsResponse xmlns="http://ec2.amazonaws.com/doc/2016-11-15/">
+    <requestId>TestRequestId</requestId>
+    <fleetSet/>
+</DescribeFleetsResponse>
+EOF;
+                $parameters = explode('&',  $request->getBody()->getContents());
+                $this->assertNotContains('Filter=0', $parameters);
+
+                return new Response(200, [], $testResponse);
+            }
+        ]);
+        $ec2Client->describeFleets([
+            'Filters' => []
         ]);
     }
 }
