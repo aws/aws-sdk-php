@@ -76,16 +76,17 @@ smoke-noassumerole:
 package:
 	php build/packager.php $(SERVICE)
 
-api-get-apigen:
+api-get-phpdocumentor:
 	mkdir -p build/artifacts
-	[ -f build/artifacts/apigen.phar ] || wget -q -O build/artifacts/apigen.phar https://github.com/ApiGen/ApiGen/releases/download/v4.1.2/apigen.phar
+	[ -f build/artifacts/phpDocumentor.phar ] || wget -q -O build/artifacts/phpDocumentor.phar https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.4.3/phpDocumentor.phar
 
-api: api-get-apigen
+api: api-get-phpdocumentor
 	# Build the package if necessary.
 	[ -d build/artifacts/staging ] || make package
 	# Delete a previously built API build to avoid the prompt.
 	rm -rf build/artifacts/docs
-	php build/artifacts/apigen.phar generate --config build/docs/apigen.neon --debug
+	php build/artifacts/phpDocumentor.phar run --config build/docs/phpdoc.dist.xml
+	php build/normalize-docs-files.php
 	make api-models
 	make redirect-map
 
