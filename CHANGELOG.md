@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.308.5 - 2024-05-29
 
 * `Aws\Credentials` - Clears cached path for authorization token when necessary on ECS credentials provider.
 * `Aws\CodeBuild` - AWS CodeBuild now supports manually creating GitHub webhooks
