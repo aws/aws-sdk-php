@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section>
+        <h2>Documentation</h2>
+
+        <p class="lead">
+            This API documentation for the AWS SDK for PHP documents
+            every namespace, class, and method in the SDK and its required
+            dependencies. More importantly, it describes each of the services'
+            APIs, including the parameter and result structures for each operation,
+            so you can see how to use the operations in your PHP code. To view the
+            API documentation for a particular service, look in the table below. To
+            view API documentation for various classes in the SDK, use the
+            namespace and class trees in the left sidebar.
+        </p>
+
+        <h3>Service APIs</h3>
+        <table class="table table-striped table-responsive phpdocumentor-table-of-contents">
+            <thead>
+            <tr>
+                <th class="phpdocumentor-heading">Service Name</th>
+                <th class="phpdocumentor-heading">Client Class</th>
+                <th class="phpdocumentor-heading">API Version</th>
+            </tr>
+            </thead>
+            <tbody>
+            :services:
+            </tbody>
+        </table>
+
+        {% set node = project.namespace.children['Aws'] %}
+
+        {{
+        include(
+            'components/table-of-contents.html.twig',
+            {
+                'node': project.namespace.children['Aws'],
+                'namespaces': usesNamespaces or not usesPackages ? node.children : [],
+            }
+        )
+        }}
+        {{ include('components/constants.html.twig', {'node': project.namespace}) }}
+        {{ include('components/functions.html.twig', {'node': project.namespace}) }}
+    </section>
+{% endblock %}
+
