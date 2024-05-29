@@ -199,7 +199,7 @@ normalizeAndMoveFiles($packagesDirectory, "package-");
 updateHtmlHrefs($parentDirectory);
 
 // Updates search index urls with generated api pages
-updateSearchIndex($parentDirectory . '/js/searchindex.js');
+updateSearchIndex($parentDirectory . '/js/searchIndex.js');
 
 //move static assets
 copyDirectory(__DIR__ . '/docs/static', $parentDirectory . '/static');
