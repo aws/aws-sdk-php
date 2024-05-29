@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Clears cached path for authorization token when necessary on ECS credentials provider.
+* `Aws\CodeBuild` - AWS CodeBuild now supports manually creating GitHub webhooks
+* `Aws\Connect` - This release includes changes to DescribeContact API's response by including ConnectedToSystemTimestamp, RoutingCriteria, Customer, Campaign, AnsweringMachineDetectionStatus, CustomerVoiceActivity, QualityMetrics, DisconnectDetails, and SegmentAttributes information from a contact in Amazon Connect.
+* `Aws\Athena` - Throwing validation errors on CreateNotebook with Name containing `/`,`:`,`\`
+* `Aws\SecurityHub` - Add ROOT type for TargetType model
+* `Aws\Glue` - Add optional field JobMode to CreateJob and UpdateJob APIs.
+
 ## 3.308.4 - 2024-05-28
 
 * `Aws\Kafka` - Adds ControllerNodeInfo in ListNodes response to support Raft mode for MSK
