@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.308.6 - 2024-05-30
 
 * `Aws\BedrockRuntime` - This release adds Converse and ConverseStream APIs to Bedrock Runtime
 * `Aws\ACM` - add v2 smoke tests and smithy smokeTests trait for SDK testing.
