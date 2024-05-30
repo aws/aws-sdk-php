@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockRuntime` - This release adds Converse and ConverseStream APIs to Bedrock Runtime
+* `Aws\ACM` - add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\EMRServerless` - The release adds support for spark structured streaming.
+* `Aws\Connect` - Adding associatedQueueIds as a SearchCriteria and response field to the SearchRoutingProfiles API
+* `Aws\BedrockAgent` - With this release, Knowledge bases for Bedrock adds support for Titan Text Embedding v2.
+* `Aws\SageMaker` - Adds Model Card information as a new component to Model Package. Autopilot launches algorithm selection for TimeSeries modality to generate AutoML candidates per algorithm.
+* `Aws\CloudTrail` - CloudTrail Lake returns PartitionKeys in the GetEventDataStore API response. Events are grouped into partitions based on these keys for better query performance. For example, the calendarday key groups events by day, while combining the calendarday key with the hour key groups them by day and hour.
+* `Aws\RDS` - Updates Amazon RDS documentation for Aurora Postgres DBname.
+
 ## 3.308.5 - 2024-05-29
 
 * `Aws\Credentials` - Clears cached path for authorization token when necessary on ECS credentials provider.
