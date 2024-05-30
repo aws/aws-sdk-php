@@ -203,6 +203,8 @@ updateSearchIndex($parentDirectory . '/js/searchIndex.js');
 
 //move static assets
 copyDirectory(__DIR__ . '/docs/static', $parentDirectory . '/static');
+copyDirectory(__DIR__ . '/docs/js', $parentDirectory . '/js');
+copyDirectory(__DIR__ . '/docs/css', $parentDirectory . '/css');
 
 //remove unnecessary files/directories
 $removableDirs = ['classes', 'files', 'graphs', 'indices', 'namespaces', 'packages', 'reports'];
