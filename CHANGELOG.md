@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.308.7 - 2024-05-31
 
 * `Aws\LaunchWizard` - This release adds support for describing workload deployment specifications, deploying additional workload types, and managing tags for Launch Wizard resources with API operations.
 * `Aws\CodeBuild` - AWS CodeBuild now supports Self-hosted GitHub Actions runners for Github Enterprise
