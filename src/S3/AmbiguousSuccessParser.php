@@ -60,7 +60,7 @@ class AmbiguousSuccessParser extends AbstractParser
                 throw new $this->exceptionClass(
                     $parsed['message'],
                     $command,
-                    ['connection_error' => true]
+                    ['connection_error' => true, 'code' => $parsed['code'], 'message' => $parsed['message']]
                 );
             }
         }
