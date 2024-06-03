@@ -8,7 +8,7 @@
         {% endif %}
     {% endif %}
     <p class="phpdocumentor-summary">{{ new_summary ? new_summary | raw : node.summary}}</p>
-    {% if 'interact with the **' in node.summary or 'interact with **' in node.summary %}
+    {% if 'used to interact with' in node.summary %}
         <!-- api -->
     {% endif %}
 {% endif %}
