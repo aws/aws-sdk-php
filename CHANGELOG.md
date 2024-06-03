@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EcsCredentialsProvider` - Add support for retries in the ECS credentials provider
+* `Aws\Amplify` - This doc-only update identifies fields that are specific to Gen 1 and Gen 2 applications.
+* `Aws\IoTTwinMaker` - Support RESET_VALUE UpdateType for PropertyUpdates to reset property value to default or null
+* `Aws\EKS` - Adds support for EKS add-ons pod identity associations integration
+* `Aws\Batch` - This release adds support for the AWS Batch GetJobQueueSnapshot API operation.
+
 ## 3.308.7 - 2024-05-31
 
 * `Aws\LaunchWizard` - This release adds support for describing workload deployment specifications, deploying additional workload types, and managing tags for Launch Wizard resources with API operations.
