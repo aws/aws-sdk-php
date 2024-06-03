@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.309.0 - 2024-06-03
 
 * `Aws\EcsCredentialsProvider` - Add support for retries in the ECS credentials provider
 * `Aws\Amplify` - This doc-only update identifies fields that are specific to Gen 1 and Gen 2 applications.
