@@ -46,4 +46,27 @@ class PutObjectUrlMiddlewareTest extends TestCase
             $result['ObjectURL']
         );
     }
+
+    public function testDecodesEncodedUrl()
+    {
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, [
+            [
+                'Location' => 'https://test.s3.amazonaws.com/testdir%2Ftestfile',
+                '@metadata' => [
+                    'effectiveUri' => 'http://foo.com',
+                ]
+            ]
+        ]);
+        $result = $client->completeMultipartUpload([
+            'Bucket'   => 'test',
+            'Key'      => 'key',
+            'UploadId' => '123'
+        ]);
+
+        $this->assertSame(
+            'https://test.s3.amazonaws.com/testdir/testfile',
+            $result['ObjectURL']
+        );
+    }
 }
