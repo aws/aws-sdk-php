@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.310.0 - 2024-06-04
 
 * `Aws\Pipes` - This release adds Timestream for LiveAnalytics as a supported target in EventBridge Pipes
 * `Aws\EC2` - U7i instances with up to 32 TiB of DDR5 memory and 896 vCPUs are now available. C7i-flex instances are launched and are lower-priced variants of the Amazon EC2 C7i instances that offer a baseline level of CPU performance with the ability to scale up to the full compute performance 95% of the time.
