@@ -704,6 +704,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSwf(array $args = [])
  * @method \Aws\Synthetics\SyntheticsClient createSynthetics(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSynthetics(array $args = [])
+ * @method \Aws\TaxSettings\TaxSettingsClient createTaxSettings(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionTaxSettings(array $args = [])
  * @method \Aws\Textract\TextractClient createTextract(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTextract(array $args = [])
  * @method \Aws\TimestreamInfluxDB\TimestreamInfluxDBClient createTimestreamInfluxDB(array $args = [])
