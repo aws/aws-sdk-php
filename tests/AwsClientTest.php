@@ -19,6 +19,7 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Signature\SignatureV4;
 use Aws\Sts\StsClient;
+use Aws\Token\Token;
 use Aws\Waiter;
 use Aws\WrappedHttpHandler;
 use Exception;
@@ -343,34 +344,72 @@ class AwsClientTest extends TestCase
         $client->bar();
     }
 
-    public function testSignOperationsWithAnAuthType()
+    /**
+     * @param $service
+     * @param $clientConfig
+     *
+     * @dataProvider signOperationsWithAnAuthTypeProvider
+     */
+    public function testSignOperationsWithAnAuthType($service, $clientConfig)
     {
-        $client = $this->createHttpsEndpointClient(
+        $client = $this->createHttpsEndpointClient($service, $clientConfig);
+        $client->bar();
+    }
+
+    public function signOperationsWithAnAuthTypeProvider()
+    {
+        return [
             [
-                'metadata' => [
-                    'signatureVersion' => 'v4',
-                ],
-                'operations' => [
-                    'Bar' => [
-                        'http' => ['method' => 'POST'],
-                        'authtype' => 'v4-unsigned-body',
+                [
+                    'metadata' => [
+                        'signatureVersion' => 'v4',
+                    ],
+                    'operations' => [
+                        'Bar' => [
+                            'http' => ['method' => 'POST'],
+                            'authtype' => 'v4-unsigned-body',
+                        ],
                     ],
                 ],
+                [
+                    'handler' => function (
+                        CommandInterface $command,
+                        RequestInterface $request
+                    ) {
+                        foreach (['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'] as $signatureHeader) {
+                            $this->assertTrue($request->hasHeader($signatureHeader));
+                        }
+                        $this->assertSame('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
+                        return new Result;
+                    }
+                ]
             ],
             [
-                'handler' => function (
-                    CommandInterface $command,
-                    RequestInterface $request
-                ) {
-                    foreach (['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'] as $signatureHeader) {
-                        $this->assertTrue($request->hasHeader($signatureHeader));
-                    }
-                    $this->assertSame('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
-                    return new Result;
-                }
+                [
+                    'metadata' => [
+                        'signatureVersion' => 'v4',
+                    ],
+                    'operations' => [
+                        'Bar' => [
+                            'http' => ['method' => 'POST'],
+                            'authtype' => 'bearer',
+                        ],
+                    ],
+                ],
+                [
+                    'handler' => function (
+                        CommandInterface $command,
+                        RequestInterface $request
+                    ) {
+
+                        $this->assertTrue($request->hasHeader('Authorization'));
+                        $this->assertSame('Bearer foo', $request->getHeader('Authorization')[0]);
+                        return new Result;
+                    },
+                    'token' => new Token('foo', time() + 1000)
+                ]
             ]
-        );
-        $client->bar();
+        ];
     }
 
     public function testUsesCommandContextSigningRegionAndService()

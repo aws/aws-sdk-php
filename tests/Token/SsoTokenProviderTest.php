@@ -18,6 +18,10 @@ class SsoTokenProviderTest extends TestCase
 {
     use UsesServiceTrait;
 
+    private $home;
+    private $homedrive;
+    private $homepath;
+
     private function clearEnv() {
         putenv('AWS_SHARED_CREDENTIALS_FILE');
         putenv('HOME');
