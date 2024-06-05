@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.311.0 - 2024-06-05
 
 * `Aws\Auth` - Adds support for the `auth` service trait.  This allows for auth scheme selection at both the service and operation level.
 * `Aws\GlobalAccelerator` - This release contains a new optional ip-addresses input field for the update accelerator and update custom routing accelerator apis. This input enables consumers to replace IPv4 addresses on existing accelerators with addresses provided in the input.
