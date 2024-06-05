@@ -85,6 +85,7 @@ api: api-get-phpdocumentor
 	[ -d build/artifacts/staging ] || make package
 	# Delete a previously built API build to avoid the prompt.
 	rm -rf build/artifacts/docs
+	php build/remove-method-annotations.php
 	php build/artifacts/phpDocumentor.phar run --config build/docs/phpdoc.dist.xml
 	php build/normalize-docs-files.php
 	make api-models
