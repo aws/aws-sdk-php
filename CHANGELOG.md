@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Updates error level on deprecated `Command` methods.  Removes suppressed call to deprecated method.
+* `Aws\Glue` - This release adds support for creating and updating Glue Data Catalog Views.
+* `Aws\FSx` - This release adds support to increase metadata performance on FSx for Lustre file systems beyond the default level provisioned when a file system is created. This can be done by specifying MetadataConfiguration during the creation of Persistent_2 file systems or by updating it on demand.
+* `Aws\Firehose` - Adds integration with Secrets Manager for Redshift, Splunk, HttpEndpoint, and Snowflake destinations
+* `Aws\StorageGateway` - Adds SoftwareUpdatePreferences to DescribeMaintenanceStartTime and UpdateMaintenanceStartTime, a structure which contains AutomaticUpdatePolicy.
+* `Aws\LocationService` - Added two new APIs, VerifyDevicePosition and ForecastGeofenceEvents. Added support for putting larger geofences up to 100,000 vertices with Geobuf fields.
+* `Aws\SQS` - Doc only updates for SQS. These updates include customer-reported issues and TCX3 modifications.
+* `Aws\IoTWireless` - Adds support for wireless device to be in Conflict FUOTA Device Status due to a FUOTA Task, so it couldn't be attached to a new one.
+* `Aws\SNS` - Doc-only update for SNS. These changes include customer-reported issues and TXC3 updates.
+* `Aws\Account` - This release adds 3 new APIs (AcceptPrimaryEmailUpdate, GetPrimaryEmail, and StartPrimaryEmailUpdate) used to centrally manage the root user email address of member accounts within an AWS organization.
+
 ## 3.311.0 - 2024-06-05
 
 * `Aws\Auth` - Adds support for the `auth` service trait.  This allows for auth scheme selection at both the service and operation level.
