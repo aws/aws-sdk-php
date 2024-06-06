@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.311.1 - 2024-06-06
 
 * `Aws\` - Updates error level on deprecated `Command` methods.  Removes suppressed call to deprecated method.
 * `Aws\Glue` - This release adds support for creating and updating Glue Data Catalog Views.
