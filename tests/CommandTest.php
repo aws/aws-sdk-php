@@ -86,10 +86,10 @@ class CommandTest extends TestCase
         $this->assertNull($c['boo']);
     }
 
-    public function testGetAuthSchemesEmitsDeprecationNotice()
+    public function testGetAuthSchemesEmitsWarning()
     {
-        $this->expectDeprecation(E_USER_DEPRECATED);
-        $this->expectDeprecationMessage(
+        $this->expectWarning();
+        $this->expectWarningMessage(
             'Aws\Command::getAuthSchemes is deprecated.  Auth schemes resolved using the service'
         .' `auth` trait or via endpoint resolution can now be found in the command `@context` property.'
         );
@@ -98,10 +98,10 @@ class CommandTest extends TestCase
         $c->getAuthSchemes();
     }
 
-    public function testSetAuthSchemesEmitsDeprecationNotice()
+    public function testSetAuthSchemesEmitsWarning()
     {
-        $this->expectDeprecation(E_USER_DEPRECATED);
-        $this->expectDeprecationMessage(
+        $this->expectWarning();
+        $this->expectWarningMessage(
             'Aws\Command::setAuthSchemes is deprecated.  Auth schemes resolved using the service'
             .' `auth` trait or via endpoint resolution are now set in the command `@context` property.'
         );
