@@ -288,7 +288,7 @@ EOT;
 
     public function testEnsuresIniFileIsValid()
     {
-        $this->expectExceptionMessage("Invalid credentials file:");
+        $this->expectExceptionMessage("'default' not found in config or credentials files");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/credentials', "wef \n=\nwef");
@@ -477,7 +477,7 @@ EOT;
 
     public function testEnsuresProcessCredentialIsPresent()
     {
-        $this->expectExceptionMessage("No credential_process present in INI profile");
+        $this->expectExceptionMessage("No credential_process present in config or credentials files with profile");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
@@ -991,7 +991,7 @@ EOT;
 
     public function testEnsuresSourceProfileHasCredentials()
     {
-        $this->expectExceptionMessage("No credentials present in INI profile 'default'");
+        $this->expectExceptionMessage("No credentials present in config or credentials files with profile 'default'");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
@@ -1344,7 +1344,7 @@ EOT;
 
     public function testSsoProfileProviderBadFile()
     {
-        $this->expectExceptionMessage("Cannot read credentials from");
+        $this->expectExceptionMessage("Profile default does not exist in config or credentials files.");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
 

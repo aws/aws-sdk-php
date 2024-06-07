@@ -254,13 +254,13 @@ class TokenProvider
      * Token provider that creates a token from cached sso credentials
      *
      * @param string $profileName the name of the ini profile name
-     * @param string $filename the location of the ini file
+     * @param string|null $filename If provided, also load from a custom config file.
      * @param array $config configuration options
      *
      * @return SsoTokenProvider
      * @see Aws\Token\SsoTokenProvider for $config details.
      */
-    public static function sso($profileName, $filename, $config = [])
+    public static function sso($profileName, $filename = null, $config = [])
     {
         $ssoClient = isset($config['ssoClient']) ? $config['ssoClient'] : null;
 

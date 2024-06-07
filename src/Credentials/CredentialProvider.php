@@ -96,19 +96,13 @@ class CredentialProvider
         ) {
             $defaultChain['sso'] = self::sso(
                 $profileName,
-                self::getHomeDir() . '/.aws/config',
+                null,
                 $config
             );
             $defaultChain['process_credentials'] = self::process();
             $defaultChain['ini'] = self::ini();
-            $defaultChain['process_config'] = self::process(
-                $profileName,
-                self::getHomeDir() . '/.aws/config'
-            );
-            $defaultChain['ini_config'] = self::ini(
-                $profileName,
-                self::getHomeDir() . '/.aws/config'
-            );
+            $defaultChain['process_config'] = self::process($profileName);
+            $defaultChain['ini_config'] = self::ini($profileName);
         }
 
         if (self::shouldUseEcs()) {
@@ -325,18 +319,14 @@ class CredentialProvider
                                $filename = null,
                                $config = []
     ) {
-        $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
 
         return function () use ($ssoProfileName, $filename, $config) {
-            if (!@is_readable($filename)) {
-                return self::reject("Cannot read credentials from $filename");
-            }
             $profiles = self::loadProfiles($filename);
 
             if (isset($profiles[$ssoProfileName])) {
                 $ssoProfile = $profiles[$ssoProfileName];
             } else {
-                return self::reject("Profile {$ssoProfileName} does not exist in {$filename}.");
+                return self::reject("Profile {$ssoProfileName} does not exist in config or credentials files.");
             }
 
             if (!empty($ssoProfile['sso_session'])) {
@@ -452,8 +442,7 @@ class CredentialProvider
      *
      * @param string|null $profile  Profile to use. If not specified will use
      *                              the "default" profile in "~/.aws/credentials".
-     * @param string|null $filename If provided, uses a custom filename rather
-     *                              than looking in the home directory.
+     * @param string|null $filename If provided, also load from a custom config file.
      * @param array|null $config If provided, may contain the following:
      *                           preferStaticCredentials: If true, prefer static
      *                           credentials to role_arn if both are present
@@ -466,7 +455,6 @@ class CredentialProvider
      */
     public static function ini($profile = null, $filename = null, array $config = [])
     {
-        $filename = self::getFileName($filename);
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename, $config) {
@@ -478,15 +466,9 @@ class CredentialProvider
                 : false;
             $stsClient = isset($config['stsClient']) ? $config['stsClient'] : null;
 
-            if (!@is_readable($filename)) {
-                return self::reject("Cannot read credentials from $filename");
-            }
             $data = self::loadProfiles($filename);
-            if ($data === false) {
-                return self::reject("Invalid credentials file: $filename");
-            }
             if (!isset($data[$profile])) {
-                return self::reject("'$profile' not found in credentials file");
+                return self::reject("'$profile' not found in config or credentials files");
             }
 
             /*
@@ -523,8 +505,8 @@ class CredentialProvider
             if (!isset($data[$profile]['aws_access_key_id'])
                 || !isset($data[$profile]['aws_secret_access_key'])
             ) {
-                return self::reject("No credentials present in INI profile "
-                    . "'$profile' ($filename)");
+                return self::reject("No credentials present in config or credentials files with profile "
+                    . "'$profile'");
             }
 
             if (empty($data[$profile]['aws_session_token'])) {
@@ -550,30 +532,22 @@ class CredentialProvider
      *
      * @param string|null $profile  Profile to use. If not specified will use
      *                              the "default" profile in "~/.aws/credentials".
-     * @param string|null $filename If provided, uses a custom filename rather
-     *                              than looking in the home directory.
+     * @param string|null $filename If provided, also load from a custom config file.
      *
      * @return callable
      */
     public static function process($profile = null, $filename = null)
     {
-        $filename = self::getFileName($filename);
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename) {
-            if (!@is_readable($filename)) {
-                return self::reject("Cannot read process credentials from $filename");
-            }
             $data = self::loadProfiles($filename);
-            if ($data === false) {
-                return self::reject("Invalid credentials file: $filename");
-            }
             if (!isset($data[$profile])) {
-                return self::reject("'$profile' not found in credentials file");
+                return self::reject("'$profile' not found in config or credentials files");
             }
             if (!isset($data[$profile]['credential_process'])) {
-                return self::reject("No credential_process present in INI profile "
-                    . "'$profile' ($filename)");
+                return self::reject("No credential_process present in config or credentials files with profile "
+                    . "'$profile'");
             }
 
             $credentialProcess = $data[$profile]['credential_process'];
@@ -669,7 +643,7 @@ class CredentialProvider
             if (empty($roleArn)) {
                 return self::reject(
                     "A role_arn must be provided with credential_source in " .
-                    "file {$filename} under profile {$profileName} "
+                    "config or credentials files under profile {$profileName} "
                 );
             }
         }
@@ -766,7 +740,7 @@ class CredentialProvider
 
     public static function getCredentialsFromSource(
         $profileName = '',
-        $filename = '',
+        $filename = null,
         $config = []
     ) {
         $data = self::loadProfiles($filename);
@@ -813,19 +787,6 @@ class CredentialProvider
     }
 
     /**
-     * @param $filename
-     * @return string
-     */
-    private static function getFileName($filename)
-    {
-        if (!isset($filename)) {
-            $filename = getenv(self::ENV_SHARED_CREDENTIALS_FILE) ?:
-                (self::getHomeDir() . '/.aws/credentials');
-        }
-        return $filename;
-    }
-
-    /**
      * @return boolean
      */
     public static function shouldUseEcs()
@@ -852,7 +813,7 @@ class CredentialProvider
             $sessionName = $ssoProfile['sso_session'];
             if (empty($profiles['sso-session ' . $sessionName])) {
                 return self::reject(
-                    "Could not find sso-session {$sessionName} in {$filename}"
+                    "Could not find sso-session {$sessionName} in config or credentials files"
                 );
             }
             $ssoSession = $profiles['sso-session ' . $ssoProfile['sso_session']];
@@ -904,7 +865,7 @@ class CredentialProvider
             || empty($ssoProfile['sso_role_name'])
         ) {
             return self::reject(
-                "Profile {$ssoProfileName} in {$filename} must contain the following keys: "
+                "Profile {$ssoProfileName} in config or credential files must contain the following keys: "
                 . "sso_start_url, sso_region, sso_account_id, and sso_role_name."
             );
         }

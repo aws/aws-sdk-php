@@ -4,23 +4,34 @@ namespace Aws\Token;
 trait ParsesIniTrait
 {
     /**
-     * Gets profiles from specified $filename, or default ini files.
+     * Gets profiles from specified $extraFilename, or default ini files.
      */
-    private static function loadProfiles($filename)
-    {
-        $profileData = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
-        $configFilename = self::getHomeDir() . '/.aws/config';
-        if (is_readable($configFilename)) {
-            $configProfiles = \Aws\parse_ini_file($configFilename, true, INI_SCANNER_RAW);
-            $profileData = array_merge($configProfiles, $profileData);
-        }
-        foreach ($profileData as $name => $profile) {
-            // standardize config profile names
-            $name = str_replace('profile ', '', $name);
-            $profileData[$name] = $profile;
+    private static function loadProfiles($extraFilename = null) {
+        $profiles = [];
+        $credFile = getenv('AWS_SHARED_CREDENTIALS_FILE') ?: (self::getHomeDir() . '/.aws/credentials');
+        $configFile = getenv('AWS_CONFIG_FILE') ?: (self::getHomeDir() . '/.aws/config');
+        if (file_exists($credFile)) {
+            $profiles = \Aws\parse_ini_file($credFile, true, INI_SCANNER_RAW);
         }
 
-        return $profileData;
+        if (file_exists($configFile)) {
+            $configProfileData = \Aws\parse_ini_file($configFile, true, INI_SCANNER_RAW);
+            foreach ($configProfileData as $name => $profile) {
+                // standardize config profile names
+                $name = str_replace('profile ', '', $name);
+                $profiles[$name] = array_merge($profiles[$name] ?? [], $profile);
+            }
+        }
+
+        if (!is_null($extraFilename) && $extraFilename != $credFile && $extraFilename != $configFile) {
+            $extraFileData = \Aws\parse_ini_file($extraFilename, true, INI_SCANNER_RAW);
+            foreach ($extraFileData as $name => $profile) {
+                // standardize config profile names
+                $name = str_replace('profile ', '', $name);
+                $profiles[$name] = array_merge($profiles[$name] ?? [], $profile);
+            }
+        }
+        return $profiles;
     }
 
     /**
