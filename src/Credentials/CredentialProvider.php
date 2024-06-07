@@ -102,11 +102,11 @@ class CredentialProvider
             $defaultChain['process_credentials'] = self::process();
             $defaultChain['ini'] = self::ini();
             $defaultChain['process_config'] = self::process(
-                'profile ' . $profileName,
+                $profileName,
                 self::getHomeDir() . '/.aws/config'
             );
             $defaultChain['ini_config'] = self::ini(
-                'profile '. $profileName,
+                $profileName,
                 self::getHomeDir() . '/.aws/config'
             );
         }
@@ -334,9 +334,6 @@ class CredentialProvider
             $profiles = self::loadProfiles($filename);
 
             if (isset($profiles[$ssoProfileName])) {
-                $ssoProfile = $profiles[$ssoProfileName];
-            } elseif (isset($profiles['profile ' . $ssoProfileName])) {
-                $ssoProfileName = 'profile ' . $ssoProfileName;
                 $ssoProfile = $profiles[$ssoProfileName];
             } else {
                 return self::reject("Profile {$ssoProfileName} does not exist in {$filename}.");
@@ -567,7 +564,7 @@ class CredentialProvider
             if (!@is_readable($filename)) {
                 return self::reject("Cannot read process credentials from $filename");
             }
-            $data = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
+            $data = self::loadProfiles($filename);
             if ($data === false) {
                 return self::reject("Invalid credentials file: $filename");
             }
@@ -733,33 +730,16 @@ class CredentialProvider
      */
     private static function loadProfiles($filename)
     {
-        $profileData = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
-
-        // If loading .aws/credentials, also load .aws/config when AWS_SDK_LOAD_NONDEFAULT_CONFIG is set
-        if ($filename === self::getHomeDir() . '/.aws/credentials'
-            && getenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG')
-        ) {
-            $configFilename = self::getHomeDir() . '/.aws/config';
-            $configProfileData = \Aws\parse_ini_file($configFilename, true, INI_SCANNER_RAW);
-            foreach ($configProfileData as $name => $profile) {
-                // standardize config profile names
-                $name = str_replace('profile ', '', $name);
-                if (!isset($profileData[$name])) {
-                    $profileData[$name] = $profile;
-                }
-            }
-        }
-
-        return $profileData;
+        return self::loadDefaultProfiles($filename);
     }
 
     /**
      * Gets profiles from ~/.aws/credentials and ~/.aws/config ini files
      */
-    private static function loadDefaultProfiles() {
+    private static function loadDefaultProfiles($extraFilename = null) {
         $profiles = [];
-        $credFile = self::getHomeDir() . '/.aws/credentials';
-        $configFile = self::getHomeDir() . '/.aws/config';
+        $credFile = getenv('AWS_SHARED_CREDENTIALS_FILE') ?: (self::getHomeDir() . '/.aws/credentials');
+        $configFile = getenv('AWS_CONFIG_FILE') ?: (self::getHomeDir() . '/.aws/config');
         if (file_exists($credFile)) {
             $profiles = \Aws\parse_ini_file($credFile, true, INI_SCANNER_RAW);
         }
@@ -769,12 +749,18 @@ class CredentialProvider
             foreach ($configProfileData as $name => $profile) {
                 // standardize config profile names
                 $name = str_replace('profile ', '', $name);
-                if (!isset($profiles[$name])) {
-                    $profiles[$name] = $profile;
-                }
+                $profiles[$name] = array_merge($profiles[$name] ?? [], $profile);
             }
         }
 
+        if (!is_null($extraFilename) && $extraFilename != $credFile && $extraFilename != $configFile) {
+            $extraFileData = \Aws\parse_ini_file($extraFilename, true, INI_SCANNER_RAW);
+            foreach ($extraFileData as $name => $profile) {
+                // standardize config profile names
+                $name = str_replace('profile ', '', $name);
+                $profiles[$name] = array_merge($profiles[$name] ?? [], $profile);
+            }
+        }
         return $profiles;
     }
 
