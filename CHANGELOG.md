@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.313.0 - 2024-06-11
 
 * `Aws\Serializer` - Fixes empty list serialization on empty lists
 * `Aws\AccessAnalyzer` - IAM Access Analyzer now provides policy recommendations to help resolve unused permissions for IAM roles and users. Additionally, IAM Access Analyzer now extends its custom policy checks to detect when IAM policies grant public access or access to critical resources ahead of deployments.
