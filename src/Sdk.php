@@ -540,6 +540,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPaymentCryptographyData(array $args = [])
  * @method \Aws\PcaConnectorAd\PcaConnectorAdClient createPcaConnectorAd(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPcaConnectorAd(array $args = [])
+ * @method \Aws\PcaConnectorScep\PcaConnectorScepClient createPcaConnectorScep(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPcaConnectorScep(array $args = [])
  * @method \Aws\Personalize\PersonalizeClient createPersonalize(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPersonalize(array $args = [])
  * @method \Aws\PersonalizeEvents\PersonalizeEventsClient createPersonalizeEvents(array $args = [])
