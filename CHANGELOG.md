@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.314.0 - 2024-06-12
 
 * `Aws\` - Removes Backup Storage client, which has been deprecated.
 * `Aws\OSIS` - SDK changes for self-managed vpc endpoint to OpenSearch ingestion pipelines.
