@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Removes Backup Storage client, which has been deprecated.
+* `Aws\OSIS` - SDK changes for self-managed vpc endpoint to OpenSearch ingestion pipelines.
+* `Aws\SecretsManager` - Introducing RotationToken parameter for PutSecretValue API
+* `Aws\Redshift` - Updates to remove DC1 and DS2 node types.
+* `Aws\SecurityLake` - This release updates request validation regex to account for non-commercial aws partitions.
+* `Aws\SESv2` - This release adds support for Amazon EventBridge as an email sending events destination.
+* `Aws\AppTest` - AWS Mainframe Modernization Application Testing is an AWS Mainframe Modernization service feature that automates functional equivalence testing for mainframe application modernization and migration to AWS, and regression testing.
+* `Aws\EC2` - Tagging support for Traffic Mirroring FilterRule resource
+
 ## 3.313.0 - 2024-06-11
 
 * `Aws\Serializer` - Fixes empty list serialization on empty lists

@@ -42,6 +42,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAppRunner(array $args = [])
  * @method \Aws\AppSync\AppSyncClient createAppSync(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppSync(array $args = [])
+ * @method \Aws\AppTest\AppTestClient createAppTest(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAppTest(array $args = [])
  * @method \Aws\Appflow\AppflowClient createAppflow(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppflow(array $args = [])
  * @method \Aws\ApplicationAutoScaling\ApplicationAutoScalingClient createApplicationAutoScaling(array $args = [])
