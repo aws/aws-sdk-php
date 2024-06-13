@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - This release adds support for configuration of evaluation method for composite rules in Glue Data Quality rulesets.
+* `Aws\IoTWireless` - Add RoamingDeviceSNR and RoamingDeviceRSSI to Customer Metrics.
+* `Aws\CloudHSMV2` - Added support for hsm type hsm2m.medium. Added supported for creating a cluster in FIPS or NON_FIPS mode.
+* `Aws\KMS` - This feature allows customers to use their keys stored in KMS to derive a shared secret which can then be used to establish a secured channel for communication, provide proof of possession, or establish trust with other parties.
+* `Aws\MediaPackageV2` - This release adds support for CMAF ingest (DASH-IF live media ingest protocol interface 1)
+
 ## 3.314.0 - 2024-06-12
 
 * `Aws\` - Removes Backup Storage client, which has been deprecated.
