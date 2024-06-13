@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.314.1 - 2024-06-13
 
 * `Aws\Glue` - This release adds support for configuration of evaluation method for composite rules in Glue Data Quality rulesets.
 * `Aws\IoTWireless` - Add RoamingDeviceSNR and RoamingDeviceRSSI to Customer Metrics.
