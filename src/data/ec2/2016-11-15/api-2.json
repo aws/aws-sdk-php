@@ -4,12 +4,14 @@
     "apiVersion":"2016-11-15",
     "endpointPrefix":"ec2",
     "protocol":"ec2",
+    "protocols":["query"],
     "serviceAbbreviation":"Amazon EC2",
     "serviceFullName":"Amazon Elastic Compute Cloud",
     "serviceId":"EC2",
     "signatureVersion":"v4",
     "uid":"ec2-2016-11-15",
-    "xmlNamespace":"http://ec2.amazonaws.com/doc/2016-11-15"
+    "xmlNamespace":"http://ec2.amazonaws.com/doc/2016-11-15",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptAddressTransfer":{
@@ -2981,6 +2983,15 @@
       },
       "input":{"shape":"DescribeTagsRequest"},
       "output":{"shape":"DescribeTagsResult"}
+    },
+    "DescribeTrafficMirrorFilterRules":{
+      "name":"DescribeTrafficMirrorFilterRules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeTrafficMirrorFilterRulesRequest"},
+      "output":{"shape":"DescribeTrafficMirrorFilterRulesResult"}
     },
     "DescribeTrafficMirrorFilters":{
       "name":"DescribeTrafficMirrorFilters",
@@ -10497,7 +10508,8 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
-        }
+        },
+        "BgpAsnExtended":{"shape":"Long"}
       }
     },
     "CreateCustomerGatewayResult":{
@@ -12070,6 +12082,10 @@
         "ClientToken":{
           "shape":"String",
           "idempotencyToken":true
+        },
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
         }
       }
     },
@@ -13001,6 +13017,10 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "BgpAsnExtended":{
+          "shape":"String",
+          "locationName":"bgpAsnExtended"
         }
       }
     },
@@ -18492,6 +18512,36 @@
         "Tags":{
           "shape":"TagDescriptionList",
           "locationName":"tagSet"
+        }
+      }
+    },
+    "DescribeTrafficMirrorFilterRulesRequest":{
+      "type":"structure",
+      "members":{
+        "TrafficMirrorFilterRuleIds":{
+          "shape":"TrafficMirrorFilterRuleIdList",
+          "locationName":"TrafficMirrorFilterRuleId"
+        },
+        "TrafficMirrorFilterId":{"shape":"TrafficMirrorFilterId"},
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"TrafficMirroringMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeTrafficMirrorFilterRulesResult":{
+      "type":"structure",
+      "members":{
+        "TrafficMirrorFilterRules":{
+          "shape":"TrafficMirrorFilterRuleSet",
+          "locationName":"trafficMirrorFilterRuleSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -28701,7 +28751,16 @@
         "g6.24xlarge",
         "g6.48xlarge",
         "gr6.4xlarge",
-        "gr6.8xlarge"
+        "gr6.8xlarge",
+        "c7i-flex.large",
+        "c7i-flex.xlarge",
+        "c7i-flex.2xlarge",
+        "c7i-flex.4xlarge",
+        "c7i-flex.8xlarge",
+        "u7i-12tb.224xlarge",
+        "u7in-16tb.224xlarge",
+        "u7in-24tb.224xlarge",
+        "u7in-32tb.224xlarge"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -39119,6 +39178,7 @@
         "verified-access-trust-provider",
         "vpn-connection-device-type",
         "vpc-block-public-access-exclusion",
+        "vpc-encryption-control",
         "ipam-resource-discovery",
         "ipam-resource-discovery-association",
         "instance-connect-endpoint"
@@ -43116,6 +43176,10 @@
         "Description":{
           "shape":"String",
           "locationName":"description"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
         }
       }
     },
@@ -43132,8 +43196,22 @@
       "type":"list",
       "member":{"shape":"TrafficMirrorFilterRuleField"}
     },
+    "TrafficMirrorFilterRuleIdList":{
+      "type":"list",
+      "member":{
+        "shape":"TrafficMirrorFilterRuleIdWithResolver",
+        "locationName":"item"
+      }
+    },
     "TrafficMirrorFilterRuleIdWithResolver":{"type":"string"},
     "TrafficMirrorFilterRuleList":{
+      "type":"list",
+      "member":{
+        "shape":"TrafficMirrorFilterRule",
+        "locationName":"item"
+      }
+    },
+    "TrafficMirrorFilterRuleSet":{
       "type":"list",
       "member":{
         "shape":"TrafficMirrorFilterRule",

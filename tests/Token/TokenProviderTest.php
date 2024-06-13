@@ -298,7 +298,7 @@ EOT;
     "startUrl": "https://d-abc123.awsapps.com/start"
 }
 EOT;
-        $cachedFileName = $this->getHomeDir() . '/.aws/sso/cache/' . utf8_encode(sha1($ssoSessionName)) . '.json';
+        $cachedFileName = $this->getHomeDir() . '/.aws/sso/cache/' . mb_convert_encoding(sha1($ssoSessionName), "UTF-8") . '.json';
         $dir = sys_get_temp_dir() . '/.aws';
         $iniFileName = $dir . '/config';
 

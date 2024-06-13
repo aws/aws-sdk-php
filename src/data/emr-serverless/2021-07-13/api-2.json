@@ -120,6 +120,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListJobRunAttempts":{
+      "name":"ListJobRunAttempts",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{applicationId}/jobruns/{jobRunId}/attempts",
+        "responseCode":200
+      },
+      "input":{"shape":"ListJobRunAttemptsRequest"},
+      "output":{"shape":"ListJobRunAttemptsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListJobRuns":{
       "name":"ListJobRuns",
       "http":{
@@ -278,7 +293,8 @@
         "imageConfiguration":{"shape":"ImageConfiguration"},
         "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationMap"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
-        "monitoringConfiguration":{"shape":"MonitoringConfiguration"}
+        "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "interactiveConfiguration":{"shape":"InteractiveConfiguration"}
       }
     },
     "ApplicationArn":{
@@ -351,6 +367,11 @@
         "ARM64",
         "X86_64"
       ]
+    },
+    "AttemptNumber":{
+      "type":"integer",
+      "box":true,
+      "min":1
     },
     "AutoStartConfig":{
       "type":"structure",
@@ -499,7 +520,8 @@
         "imageConfiguration":{"shape":"ImageConfigurationInput"},
         "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationInputMap"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
-        "monitoringConfiguration":{"shape":"MonitoringConfiguration"}
+        "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "interactiveConfiguration":{"shape":"InteractiveConfiguration"}
       }
     },
     "CreateApplicationResponse":{
@@ -613,6 +635,11 @@
           "shape":"JobRunId",
           "location":"uri",
           "locationName":"jobRunId"
+        },
+        "attempt":{
+          "shape":"AttemptNumber",
+          "location":"querystring",
+          "locationName":"attempt"
         }
       }
     },
@@ -638,6 +665,11 @@
           "shape":"JobRunId",
           "location":"uri",
           "locationName":"jobRunId"
+        },
+        "attempt":{
+          "shape":"AttemptNumber",
+          "location":"querystring",
+          "locationName":"attempt"
         }
       }
     },
@@ -720,6 +752,13 @@
       "type":"integer",
       "box":true
     },
+    "InteractiveConfiguration":{
+      "type":"structure",
+      "members":{
+        "studioEnabled":{"shape":"Boolean"},
+        "livyEndpointEnabled":{"shape":"Boolean"}
+      }
+    },
     "InternalServerException":{
       "type":"structure",
       "required":["message"],
@@ -781,14 +820,63 @@
           "shape":"Duration",
           "box":true
         },
-        "billedResourceUtilization":{"shape":"ResourceUtilization"}
+        "billedResourceUtilization":{"shape":"ResourceUtilization"},
+        "mode":{"shape":"JobRunMode"},
+        "retryPolicy":{"shape":"RetryPolicy"},
+        "attempt":{"shape":"AttemptNumber"},
+        "attemptCreatedAt":{"shape":"Date"},
+        "attemptUpdatedAt":{"shape":"Date"}
       }
+    },
+    "JobRunAttemptSummary":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "id",
+        "arn",
+        "createdBy",
+        "jobCreatedAt",
+        "createdAt",
+        "updatedAt",
+        "executionRole",
+        "state",
+        "stateDetails",
+        "releaseLabel"
+      ],
+      "members":{
+        "applicationId":{"shape":"ApplicationId"},
+        "id":{"shape":"JobRunId"},
+        "name":{"shape":"String256"},
+        "mode":{"shape":"JobRunMode"},
+        "arn":{"shape":"JobArn"},
+        "createdBy":{"shape":"RequestIdentityUserArn"},
+        "jobCreatedAt":{"shape":"Date"},
+        "createdAt":{"shape":"Date"},
+        "updatedAt":{"shape":"Date"},
+        "executionRole":{"shape":"IAMRoleArn"},
+        "state":{"shape":"JobRunState"},
+        "stateDetails":{"shape":"String256"},
+        "releaseLabel":{"shape":"ReleaseLabel"},
+        "type":{"shape":"JobRunType"},
+        "attempt":{"shape":"AttemptNumber"}
+      }
+    },
+    "JobRunAttempts":{
+      "type":"list",
+      "member":{"shape":"JobRunAttemptSummary"}
     },
     "JobRunId":{
       "type":"string",
       "max":64,
       "min":1,
       "pattern":"[0-9a-z]+"
+    },
+    "JobRunMode":{
+      "type":"string",
+      "enum":[
+        "BATCH",
+        "STREAMING"
+      ]
     },
     "JobRunState":{
       "type":"string",
@@ -827,6 +915,7 @@
         "applicationId":{"shape":"ApplicationId"},
         "id":{"shape":"JobRunId"},
         "name":{"shape":"String256"},
+        "mode":{"shape":"JobRunMode"},
         "arn":{"shape":"JobArn"},
         "createdBy":{"shape":"RequestIdentityUserArn"},
         "createdAt":{"shape":"Date"},
@@ -835,7 +924,10 @@
         "state":{"shape":"JobRunState"},
         "stateDetails":{"shape":"String256"},
         "releaseLabel":{"shape":"ReleaseLabel"},
-        "type":{"shape":"JobRunType"}
+        "type":{"shape":"JobRunType"},
+        "attempt":{"shape":"AttemptNumber"},
+        "attemptCreatedAt":{"shape":"Date"},
+        "attemptUpdatedAt":{"shape":"Date"}
       }
     },
     "JobRunType":{"type":"string"},
@@ -877,6 +969,49 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListJobRunAttemptsRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "jobRunId"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "jobRunId":{
+          "shape":"JobRunId",
+          "location":"uri",
+          "locationName":"jobRunId"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListJobRunAttemptsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListJobRunAttemptsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "ListJobRunAttemptsResponse":{
+      "type":"structure",
+      "required":["jobRunAttempts"],
+      "members":{
+        "jobRunAttempts":{"shape":"JobRunAttempts"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListJobRunsRequest":{
       "type":"structure",
       "required":["applicationId"],
@@ -910,6 +1045,11 @@
           "shape":"JobRunStateSet",
           "location":"querystring",
           "locationName":"states"
+        },
+        "mode":{
+          "shape":"JobRunMode",
+          "location":"querystring",
+          "locationName":"mode"
         }
       }
     },
@@ -1079,6 +1219,18 @@
         "storageGBHour":{"shape":"Double"}
       }
     },
+    "RetryPolicy":{
+      "type":"structure",
+      "members":{
+        "maxAttempts":{"shape":"AttemptNumber"},
+        "maxFailedAttemptsPerHour":{"shape":"RetryPolicyMaxFailedAttemptsPerHourInteger"}
+      }
+    },
+    "RetryPolicyMaxFailedAttemptsPerHourInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "S3MonitoringConfiguration":{
       "type":"structure",
       "members":{
@@ -1175,7 +1327,9 @@
           "shape":"Duration",
           "box":true
         },
-        "name":{"shape":"String256"}
+        "name":{"shape":"String256"},
+        "mode":{"shape":"JobRunMode"},
+        "retryPolicy":{"shape":"RetryPolicy"}
       }
     },
     "StartJobRunResponse":{
@@ -1332,6 +1486,7 @@
         "architecture":{"shape":"Architecture"},
         "imageConfiguration":{"shape":"ImageConfigurationInput"},
         "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationInputMap"},
+        "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
         "releaseLabel":{"shape":"ReleaseLabel"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"}

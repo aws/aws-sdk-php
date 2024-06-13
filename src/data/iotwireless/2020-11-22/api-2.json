@@ -4,11 +4,13 @@
     "apiVersion":"2020-11-22",
     "endpointPrefix":"api.iotwireless",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS IoT Wireless",
     "serviceId":"IoT Wireless",
     "signatureVersion":"v4",
     "signingName":"iotwireless",
-    "uid":"iotwireless-2020-11-22"
+    "uid":"iotwireless-2020-11-22",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateAwsAccountWithPartnerAccount":{
@@ -3365,7 +3367,8 @@
         "MissingFrag",
         "MemoryError",
         "MICError",
-        "Successful"
+        "Successful",
+        "Device_exist_in_conflict_fuota_task"
       ]
     },
     "FuotaTask":{
@@ -5121,6 +5124,8 @@
       "enum":[
         "DeviceRSSI",
         "DeviceSNR",
+        "DeviceRoamingRSSI",
+        "DeviceRoamingSNR",
         "DeviceUplinkCount",
         "DeviceDownlinkCount",
         "DeviceUplinkLostCount",

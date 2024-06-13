@@ -14,8 +14,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAccount(array $args = [])
  * @method \Aws\Acm\AcmClient createAcm(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAcm(array $args = [])
- * @method \Aws\AlexaForBusiness\AlexaForBusinessClient createAlexaForBusiness(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionAlexaForBusiness(array $args = [])
  * @method \Aws\Amplify\AmplifyClient createAmplify(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAmplify(array $args = [])
  * @method \Aws\AmplifyBackend\AmplifyBackendClient createAmplifyBackend(array $args = [])
@@ -44,6 +42,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAppRunner(array $args = [])
  * @method \Aws\AppSync\AppSyncClient createAppSync(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppSync(array $args = [])
+ * @method \Aws\AppTest\AppTestClient createAppTest(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAppTest(array $args = [])
  * @method \Aws\Appflow\AppflowClient createAppflow(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppflow(array $args = [])
  * @method \Aws\ApplicationAutoScaling\ApplicationAutoScalingClient createApplicationAutoScaling(array $args = [])
@@ -54,6 +54,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionApplicationDiscoveryService(array $args = [])
  * @method \Aws\ApplicationInsights\ApplicationInsightsClient createApplicationInsights(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionApplicationInsights(array $args = [])
+ * @method \Aws\ApplicationSignals\ApplicationSignalsClient createApplicationSignals(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionApplicationSignals(array $args = [])
  * @method \Aws\Appstream\AppstreamClient createAppstream(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppstream(array $args = [])
  * @method \Aws\Artifact\ArtifactClient createArtifact(array $args = [])
@@ -76,8 +78,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBackup(array $args = [])
  * @method \Aws\BackupGateway\BackupGatewayClient createBackupGateway(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBackupGateway(array $args = [])
- * @method \Aws\BackupStorage\BackupStorageClient createBackupStorage(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionBackupStorage(array $args = [])
  * @method \Aws\Batch\BatchClient createBatch(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBatch(array $args = [])
  * @method \Aws\Bedrock\BedrockClient createBedrock(array $args = [])
@@ -326,8 +326,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionHealth(array $args = [])
  * @method \Aws\HealthLake\HealthLakeClient createHealthLake(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionHealthLake(array $args = [])
- * @method \Aws\Honeycode\HoneycodeClient createHoneycode(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionHoneycode(array $args = [])
  * @method \Aws\IVS\IVSClient createIVS(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIVS(array $args = [])
  * @method \Aws\IVSRealTime\IVSRealTimeClient createIVSRealTime(array $args = [])
@@ -444,6 +442,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMachineLearning(array $args = [])
  * @method \Aws\Macie2\Macie2Client createMacie2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMacie2(array $args = [])
+ * @method \Aws\MailManager\MailManagerClient createMailManager(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMailManager(array $args = [])
  * @method \Aws\MainframeModernization\MainframeModernizationClient createMainframeModernization(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMainframeModernization(array $args = [])
  * @method \Aws\ManagedBlockchain\ManagedBlockchainClient createManagedBlockchain(array $args = [])
@@ -540,6 +540,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPaymentCryptographyData(array $args = [])
  * @method \Aws\PcaConnectorAd\PcaConnectorAdClient createPcaConnectorAd(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPcaConnectorAd(array $args = [])
+ * @method \Aws\PcaConnectorScep\PcaConnectorScepClient createPcaConnectorScep(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPcaConnectorScep(array $args = [])
  * @method \Aws\Personalize\PersonalizeClient createPersonalize(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPersonalize(array $args = [])
  * @method \Aws\PersonalizeEvents\PersonalizeEventsClient createPersonalizeEvents(array $args = [])
@@ -706,6 +708,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSwf(array $args = [])
  * @method \Aws\Synthetics\SyntheticsClient createSynthetics(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSynthetics(array $args = [])
+ * @method \Aws\TaxSettings\TaxSettingsClient createTaxSettings(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionTaxSettings(array $args = [])
  * @method \Aws\Textract\TextractClient createTextract(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTextract(array $args = [])
  * @method \Aws\TimestreamInfluxDB\TimestreamInfluxDBClient createTimestreamInfluxDB(array $args = [])
@@ -771,7 +775,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.306.2';
+    const VERSION = '3.314.1';
 
     /** @var array Arguments for creating clients */
     private $args;

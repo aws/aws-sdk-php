@@ -1,0 +1,14 @@
+{% if node.summary %}
+    {% if 'interact with the **' in node.summary or 'interact with **' or 'interacting with the **' in node.summary %}
+
+        {% set parts = node.summary | split('**') %}
+        {% if parts|length >= 3 %}
+            {% set service_name = parts[1] %}
+            {% set new_summary = parts[0] ~ '<strong>' ~ service_name ~ '</strong>' ~ parts[2] %}
+        {% endif %}
+    {% endif %}
+    <p class="phpdocumentor-summary">{{ new_summary ? new_summary | raw : node.summary}}</p>
+    {% if 'used to interact with' in node.summary %}
+        <!-- api -->
+    {% endif %}
+{% endif %}

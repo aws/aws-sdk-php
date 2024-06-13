@@ -275,23 +275,22 @@ class EndpointProviderV2Test extends TestCase
                         $expectedVersion = str_replace('sig', '', $expectedAuthScheme['name']);
                     }
                     $this->assertEquals(
-                        $expectedVersion,
-                        $cmd->getAuthSchemes()['version']
+                        $cmd['@context']['signature_version'],
+                        $expectedVersion
                     );
                     $this->assertEquals(
-                        $expectedAuthScheme['signingName'],
-                        $cmd->getAuthSchemes()['name']
+                        $cmd['@context']['signing_service'],
+                        $expectedAuthScheme['signingName']
                     );
-                    if (isset($cmd->getAuthSchemes()['region'])) {
+                    if (isset($cmd['@context']['signing_region'])) {
                         $this->assertEquals(
-                            $expectedAuthScheme['signingRegion'],
-                            $cmd->getAuthSchemes()['region']
+                            $cmd['@context']['signing_region'],
+                            $expectedAuthScheme['signingRegion']
                         );
-                    } elseif (isset($cmd->getAuthSchemes['signingRegionSet'])) {
+                    } elseif (isset($cmd['@context']['signing_region_set'])) {
                         $this->assertEquals(
-                            $expectedAuthScheme['signingRegionSet'],
-                            $cmd->getAuthSchemes()['region']
-                        );
+                            $cmd['@context']['signing_region_set'],
+                            $expectedAuthScheme['signingRegionSet']);
                     }
                 }
             }

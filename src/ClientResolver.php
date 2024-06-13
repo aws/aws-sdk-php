@@ -4,6 +4,9 @@ namespace Aws;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Api\Validator;
+use Aws\Auth\AuthResolver;
+use Aws\Auth\AuthSchemeResolver;
+use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\Configuration;
@@ -196,6 +199,12 @@ class ClientResolver
             'fn'      => [__CLASS__, '_apply_token'],
             'default' => [__CLASS__, '_default_token_provider'],
         ],
+        'auth_scheme_resolver' => [
+            'type'    => 'value',
+            'valid'   => [AuthSchemeResolverInterface::class],
+            'doc'     => 'An instance of Aws\Auth\AuthSchemeResolverInterface which selects a modeled auth scheme and returns a signature version',
+            'default' => [__CLASS__, '_default_auth_scheme_resolver'],
+        ],
         'endpoint_discovery' => [
             'type'     => 'value',
             'valid'    => [ConfigurationInterface::class, CacheInterface::class, 'array', 'callable'],
@@ -269,6 +278,15 @@ class ClientResolver
             'doc'      => 'A handler that accepts a command object, request object and returns a promise that is fulfilled with an Aws\ResultInterface object or rejected with an Aws\Exception\AwsException. A handler does not accept a next handler as it is terminal and expected to fulfill a command. If no handler is provided, a default Guzzle handler will be utilized.',
             'fn'       => [__CLASS__, '_apply_handler'],
             'default'  => [__CLASS__, '_default_handler']
+        ],
+        'app_id' => [
+            'type' => 'value',
+            'valid' => ['string'],
+            'doc' => 'app_id(AppId) is an optional application specific identifier that can be set. 
+             When set it will be appended to the User-Agent header of every request in the form of App/{AppId}. 
+             This value is also sourced from environment variable AWS_SDK_UA_APP_ID or the shared config profile attribute sdk_ua_app_id.',
+            'fn' => [__CLASS__, '_apply_app_id'],
+            'default' => [__CLASS__, '_default_app_id']
         ],
         'ua_append' => [
             'type'     => 'value',
@@ -599,8 +617,8 @@ class ClientResolver
                 new Credentials(
                     $value['key'],
                     $value['secret'],
-                    isset($value['token']) ? $value['token'] : null,
-                    isset($value['expires']) ? $value['expires'] : null
+                    $value['token'] ?? null,
+                    $value['expires'] ?? null
                 )
             );
         } elseif ($value === false) {
@@ -638,7 +656,7 @@ class ClientResolver
             $args['token'] = TokenProvider::fromToken(
                 new Token(
                     $value['token'],
-                    isset($value['expires']) ? $value['expires'] : null
+                    $value['expires'] ?? null
                 )
             );
         } elseif ($value instanceof CacheInterface) {
@@ -722,9 +740,7 @@ class ClientResolver
                     ->getPartition($args['region'], $args['service']);
             }
 
-            $endpointPrefix = isset($args['api']['metadata']['endpointPrefix'])
-                ? $args['api']['metadata']['endpointPrefix']
-                : $args['service'];
+            $endpointPrefix = $args['api']['metadata']['endpointPrefix'] ?? $args['service'];
 
             // Check region is a valid host label when it is being used to
             // generate an endpoint
@@ -917,17 +933,43 @@ class ClientResolver
         );
     }
 
+    public static function _apply_app_id($value, array &$args)
+    {
+        // AppId should not be longer than 50 chars
+        static $MAX_APP_ID_LENGTH = 50;
+        if (strlen($value) > $MAX_APP_ID_LENGTH) {
+            trigger_error("The provided or configured value for `AppId`, "
+                ."which is an user agent parameter, exceeds the maximum length of "
+            ."$MAX_APP_ID_LENGTH characters.", E_USER_WARNING);
+        }
+
+        $args['app_id'] = $value;
+    }
+
+    public static function _default_app_id(array $args)
+    {
+        return ConfigurationResolver::resolve(
+            'sdk_ua_app_id',
+            '',
+            'string',
+            $args
+        );
+    }
+
     public static function _apply_user_agent($inputUserAgent, array &$args, HandlerList $list)
     {
-        //Add SDK version
+        // Add SDK version
         $userAgent = ['aws-sdk-php/' . Sdk::VERSION];
 
-        //If on HHVM add the HHVM version
+        // User Agent Metadata
+        $userAgent[] = 'ua/2.0';
+
+        // If on HHVM add the HHVM version
         if (defined('HHVM_VERSION')) {
             $userAgent []= 'HHVM/' . HHVM_VERSION;
         }
 
-        //Add OS version
+        // Add OS version
         $disabledFunctions = explode(',', ini_get('disable_functions'));
         if (function_exists('php_uname')
             && !in_array('php_uname', $disabledFunctions, true)
@@ -938,15 +980,15 @@ class ClientResolver
             }
         }
 
-        //Add the language version
+        // Add the language version
         $userAgent []= 'lang/php#' . phpversion();
 
-        //Add exec environment if present
+        // Add exec environment if present
         if ($executionEnvironment = getenv('AWS_EXECUTION_ENV')) {
             $userAgent []= $executionEnvironment;
         }
 
-        //Add endpoint discovery if set
+        // Add endpoint discovery if set
         if (isset($args['endpoint_discovery'])) {
             if (($args['endpoint_discovery'] instanceof \Aws\EndpointDiscovery\Configuration
                 && $args['endpoint_discovery']->isEnabled())
@@ -960,7 +1002,7 @@ class ClientResolver
             }
         }
 
-        //Add retry mode if set
+        // Add retry mode if set
         if (isset($args['retries'])) {
             if ($args['retries'] instanceof \Aws\Retry\Configuration) {
                 $userAgent []= 'cfg/retry-mode#' . $args["retries"]->getMode();
@@ -970,7 +1012,13 @@ class ClientResolver
                 $userAgent []= 'cfg/retry-mode#' . $args["retries"]["mode"];
             }
         }
-        //Add the input to the end
+
+        // AppID Metadata
+        if (!empty($args['app_id'])) {
+            $userAgent[] = 'app/' . $args['app_id'];
+        }
+
+        // Add the input to the end
         if ($inputUserAgent){
             if (!is_array($inputUserAgent)) {
                 $inputUserAgent = [$inputUserAgent];
@@ -1042,7 +1090,7 @@ class ClientResolver
 
     public static function _default_endpoint_provider(array $args)
     {
-        $service =  isset($args['api']) ? $args['api'] : null;
+        $service = $args['api'] ?? null;
         $serviceName = isset($service) ? $service->getServiceName() : null;
         $apiVersion = isset($service) ? $service->getApiVersion() : null;
 
@@ -1074,6 +1122,11 @@ class ClientResolver
     public static function _default_signature_provider()
     {
         return SignatureProvider::defaultProvider();
+    }
+
+    public static function _default_auth_scheme_resolver(array $args)
+    {
+        return new AuthSchemeResolver($args['credentials'], $args['token']);
     }
 
     public static function _default_signature_version(array &$args)
@@ -1131,9 +1184,7 @@ class ClientResolver
                 'region' => $args['region'],
             ]);
 
-        return isset($args['__partition_result']['signingRegion'])
-            ? $args['__partition_result']['signingRegion']
-            : $args['region'];
+        return $args['__partition_result']['signingRegion'] ?? $args['region'];
     }
 
     public static function _apply_ignore_configured_endpoint_urls($value, array &$args)
@@ -1188,7 +1239,7 @@ class ClientResolver
 
         return $value;
     }
-  
+
     public static function _apply_region($value, array &$args)
     {
         if (empty($value)) {
@@ -1204,7 +1255,7 @@ class ClientResolver
 
     public static function _missing_region(array $args)
     {
-        $service = isset($args['service']) ? $args['service'] : '';
+        $service = $args['service'] ?? '';
 
         $msg = <<<EOT
 Missing required client configuration options:
@@ -1269,8 +1320,7 @@ EOT;
                 $definition = [
                     'type' => 'value',
                     'valid' => [$paramDefinition['type']],
-                    'doc' => isset($paramDefinition['documentation']) ?
-                        $paramDefinition['documentation'] : null
+                    'doc' => $paramDefinition['documentation'] ?? null
                 ];
                 $this->argDefinitions[$paramName] = $definition;
 
