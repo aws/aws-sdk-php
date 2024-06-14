@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.314.2 - 2024-06-14
 
 * `Aws\DataZone` - This release introduces a new default service blueprint for custom environment creation.
 * `Aws\MediaConvert` - This release adds the ability to search for historical job records within the management console using a search box and/or via the SDK/CLI with partial string matching search on input file name.
