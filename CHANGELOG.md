@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.314.3 - 2024-06-17
 
 * `Aws\MediaConvert` - This release includes support for creating I-frame only video segments for DASH trick play.
 * `Aws\SecretsManager` - Doc only update for Secrets Manager
