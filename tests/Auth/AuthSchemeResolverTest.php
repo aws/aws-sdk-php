@@ -83,7 +83,7 @@ class AuthSchemeResolverTest extends TestCase
               'v4a'
           ],
           [
-              ['smithy.auth#noAuth'],
+              ['smithy.api#noAuth'],
               'anonymous'
           ],
         ];
@@ -169,7 +169,7 @@ class AuthSchemeResolverTest extends TestCase
         $tokenProvider = $credentialProvider;
 
         $resolver = new AuthSchemeResolver($credentialProvider, $tokenProvider);
-        $resolver->selectAuthScheme(['aws.auth#sigv4', 'smithy.auth#noAuth', 'smithy.api#httpBearerAuth']);
+        $resolver->selectAuthScheme(['aws.auth#sigv4', 'smithy.api#noAuth', 'smithy.api#httpBearerAuth']);
     }
 
     public function testUnmetV4aRequirementsThrows()
