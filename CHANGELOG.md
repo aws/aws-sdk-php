@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.314.4 - 2024-06-18
 
 * `Aws\Auth` - Corrects an issue with modeling for `noAuth` auth types.
 * `Aws\Lightsail` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
