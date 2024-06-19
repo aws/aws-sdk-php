@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.314.5 - 2024-06-19
 
 * `Aws\DirectConnect` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
 * `Aws\CostandUsageReportService` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
