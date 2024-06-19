@@ -1,0 +1,103 @@
+.phpdocumentor-sidebar {
+    margin: 0;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.phpdocumentor .phpdocumentor-sidebar .phpdocumentor-list {
+    padding: var(--spacing-xs) var(--spacing-md);
+    list-style: none;
+    margin: 0;
+}
+
+.phpdocumentor .phpdocumentor-sidebar li {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 0 0 var(--spacing-xxxs) var(--spacing-md);
+}
+
+.phpdocumentor .phpdocumentor-sidebar abbr,
+.phpdocumentor .phpdocumentor-sidebar a {
+    text-decoration: none;
+    border-bottom: none;
+    color: var(--text-color);
+    font-size: var(--text-md);
+    padding-left: 0;
+    transition: padding-left .4s ease-out;
+}
+
+.phpdocumentor .phpdocumentor-sidebar a:hover,
+.phpdocumentor .phpdocumentor-sidebar a.-active {
+    padding-left: 5px;
+    font-weight: 600;
+}
+
+.phpdocumentor .phpdocumentor-sidebar__category > * {
+    border-left: 1px solid var(--primary-color-lighten);
+}
+
+.phpdocumentor .phpdocumentor-sidebar__category {
+    margin-bottom: var(--spacing-lg);
+}
+
+.phpdocumentor .phpdocumentor-sidebar__category-header {
+    font-size: var(--text-md);
+    margin-top: 0;
+    margin-bottom: var(--spacing-xs);
+    color: var(--link-color-primary);
+    font-weight: 600;
+    border-left: 0;
+}
+
+.phpdocumentor .phpdocumentor-sidebar__root-package,
+.phpdocumentor .phpdocumentor-sidebar__root-namespace {
+    font-size: var(--text-md);
+    margin: 0;
+    padding-top: var(--spacing-xs);
+    padding-left: var(--spacing-md);
+    color: var(--text-color);
+    font-weight: normal;
+}
+
+@media (min-width: {{ breakpoints['md'] }}) {
+    .phpdocumentor-sidebar {
+        border-right: var(--sidebar-border-color) solid 1px;
+    }
+}
+
+.phpdocumentor-sidebar__menu-button {
+    position: absolute;
+    top: -100%;
+    left: -100%;
+}
+
+.phpdocumentor-sidebar__menu-icon {
+    font-size: var(--text-md);
+    font-weight: 600;
+    background: var(--primary-color-darker);
+    color: white;
+    margin: 0 0 var(--spacing-lg);
+    display: block;
+    padding: var(--spacing-sm);
+    text-align: center;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: .15rem;
+}
+
+.phpdocumentor-sidebar__menu-button:checked ~ .phpdocumentor-sidebar {
+    max-height: 100%;
+    padding-top: var(--spacing-md);
+}
+
+@media (min-width: {{ breakpoints['md'] }}) {
+    .phpdocumentor-sidebar {
+        overflow: visible;
+        max-height: 100%;
+    }
+
+    .phpdocumentor-sidebar__menu-icon {
+        display: none;
+    }
+}
