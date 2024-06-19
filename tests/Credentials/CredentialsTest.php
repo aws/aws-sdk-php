@@ -2,6 +2,9 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\Credentials;
+use Aws\Identity\AwsCredentialIdentity;
+use Aws\Identity\AwsCredentialIdentityInterface;
+use Aws\Identity\IdentityInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -61,5 +64,11 @@ class CredentialsTest extends TestCase
             'expires' => 10,
             'accountId' => $accountId
         ], $actual);
+    }
+
+    public function testIsInstanceOfIdentity()
+    {
+        $credentials = new Credentials('key-value', 'secret-value');
+        $this->assertInstanceOf(AwsCredentialIdentity::class, $credentials);
     }
 }

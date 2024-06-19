@@ -5,6 +5,7 @@
     "endpointPrefix":"transfer",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"AWS Transfer",
     "serviceFullName":"AWS Transfer Family",
     "serviceId":"Transfer",
@@ -112,7 +113,8 @@
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceExistsException"}
-      ]
+      ],
+      "idempotent":true
     },
     "CreateWorkflow":{
       "name":"CreateWorkflow",
@@ -157,7 +159,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "idempotent":true
     },
     "DeleteCertificate":{
       "name":"DeleteCertificate",
@@ -171,7 +174,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "idempotent":true
     },
     "DeleteConnector":{
       "name":"DeleteConnector",
@@ -185,7 +189,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "idempotent":true
     },
     "DeleteHostKey":{
       "name":"DeleteHostKey",
@@ -214,7 +219,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "idempotent":true
     },
     "DeleteServer":{
       "name":"DeleteServer",
@@ -229,7 +235,8 @@
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "idempotent":true
     },
     "DeleteSshPublicKey":{
       "name":"DeleteSshPublicKey",
@@ -258,7 +265,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "idempotent":true
     },
     "DeleteWorkflow":{
       "name":"DeleteWorkflow",
@@ -273,7 +281,8 @@
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "idempotent":true
     },
     "DescribeAccess":{
       "name":"DescribeAccess",
@@ -694,6 +703,22 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "StartDirectoryListing":{
+      "name":"StartDirectoryListing",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartDirectoryListingRequest"},
+      "output":{"shape":"StartDirectoryListingResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "StartFileTransfer":{
       "name":"StartFileTransfer",
       "http":{
@@ -1061,7 +1086,8 @@
       "type":"string",
       "enum":[
         "SIGNING",
-        "ENCRYPTION"
+        "ENCRYPTION",
+        "TLS"
       ]
     },
     "CompressionEnum":{
@@ -1084,6 +1110,12 @@
       "max":19,
       "min":19,
       "pattern":"c-([0-9a-f]{17})"
+    },
+    "ConnectorSecurityPolicyName":{
+      "type":"string",
+      "max":100,
+      "min":0,
+      "pattern":"TransferSFTPConnectorSecurityPolicy-[A-Za-z0-9-]+"
     },
     "CopyStepDetails":{
       "type":"structure",
@@ -1162,7 +1194,8 @@
         "AccessRole":{"shape":"Role"},
         "LoggingRole":{"shape":"Role"},
         "Tags":{"shape":"Tags"},
-        "SftpConfig":{"shape":"SftpConnectorConfig"}
+        "SftpConfig":{"shape":"SftpConnectorConfig"},
+        "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"}
       }
     },
     "CreateConnectorResponse":{
@@ -1657,7 +1690,8 @@
         "LoggingRole":{"shape":"Role"},
         "Tags":{"shape":"Tags"},
         "SftpConfig":{"shape":"SftpConnectorConfig"},
-        "ServiceManagedEgressIpAddresses":{"shape":"ServiceManagedEgressIpAddresses"}
+        "ServiceManagedEgressIpAddresses":{"shape":"ServiceManagedEgressIpAddresses"},
+        "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"}
       }
     },
     "DescribedExecution":{
@@ -1707,7 +1741,10 @@
         "SshCiphers":{"shape":"SecurityPolicyOptions"},
         "SshKexs":{"shape":"SecurityPolicyOptions"},
         "SshMacs":{"shape":"SecurityPolicyOptions"},
-        "TlsCiphers":{"shape":"SecurityPolicyOptions"}
+        "TlsCiphers":{"shape":"SecurityPolicyOptions"},
+        "SshHostKeyAlgorithms":{"shape":"SecurityPolicyOptions"},
+        "Type":{"shape":"SecurityPolicyResourceType"},
+        "Protocols":{"shape":"SecurityPolicyProtocols"}
       }
     },
     "DescribedServer":{
@@ -2470,6 +2507,12 @@
       "type":"list",
       "member":{"shape":"ListedWorkflow"}
     },
+    "ListingId":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[0-9a-zA-Z./-]+"
+    },
     "LogGroupName":{
       "type":"string",
       "max":512,
@@ -2501,6 +2544,12 @@
         "FILE",
         "DIRECTORY"
       ]
+    },
+    "MaxItems":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
     },
     "MaxResults":{
       "type":"integer",
@@ -2555,6 +2604,12 @@
       "member":{"shape":"WorkflowDetail"},
       "max":1,
       "min":0
+    },
+    "OutputFileName":{
+      "type":"string",
+      "max":537,
+      "min":26,
+      "pattern":"c-([0-9a-f]{17})-[0-9a-zA-Z./-]+.json"
     },
     "OverwriteExisting":{
       "type":"string",
@@ -2785,7 +2840,7 @@
       "type":"string",
       "max":100,
       "min":0,
-      "pattern":"TransferSecurityPolicy-.+"
+      "pattern":"Transfer[A-Za-z0-9]*SecurityPolicy-[A-Za-z0-9-]+"
     },
     "SecurityPolicyNames":{
       "type":"list",
@@ -2799,6 +2854,26 @@
     "SecurityPolicyOptions":{
       "type":"list",
       "member":{"shape":"SecurityPolicyOption"}
+    },
+    "SecurityPolicyProtocol":{
+      "type":"string",
+      "enum":[
+        "SFTP",
+        "FTPS"
+      ]
+    },
+    "SecurityPolicyProtocols":{
+      "type":"list",
+      "member":{"shape":"SecurityPolicyProtocol"},
+      "max":5,
+      "min":1
+    },
+    "SecurityPolicyResourceType":{
+      "type":"string",
+      "enum":[
+        "SERVER",
+        "CONNECTOR"
+      ]
     },
     "SendWorkflowStepStateRequest":{
       "type":"structure",
@@ -2928,7 +3003,8 @@
     "SshPublicKeyBody":{
       "type":"string",
       "max":2048,
-      "min":0
+      "min":0,
+      "pattern":"\\s*(ssh|ecdsa)-[a-z0-9-]+[ \\t]+(([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{1,3})?(={0,3})?)(\\s*|[ \\t]+[\\S \\t]*\\s*)"
     },
     "SshPublicKeyCount":{
       "type":"integer",
@@ -2945,6 +3021,31 @@
       "member":{"shape":"SshPublicKey"},
       "max":5,
       "min":0
+    },
+    "StartDirectoryListingRequest":{
+      "type":"structure",
+      "required":[
+        "ConnectorId",
+        "RemoteDirectoryPath",
+        "OutputDirectoryPath"
+      ],
+      "members":{
+        "ConnectorId":{"shape":"ConnectorId"},
+        "RemoteDirectoryPath":{"shape":"FilePath"},
+        "MaxItems":{"shape":"MaxItems"},
+        "OutputDirectoryPath":{"shape":"FilePath"}
+      }
+    },
+    "StartDirectoryListingResponse":{
+      "type":"structure",
+      "required":[
+        "ListingId",
+        "OutputFileName"
+      ],
+      "members":{
+        "ListingId":{"shape":"ListingId"},
+        "OutputFileName":{"shape":"OutputFileName"}
+      }
     },
     "StartFileTransferRequest":{
       "type":"structure",
@@ -3211,7 +3312,8 @@
         "As2Config":{"shape":"As2ConnectorConfig"},
         "AccessRole":{"shape":"Role"},
         "LoggingRole":{"shape":"Role"},
-        "SftpConfig":{"shape":"SftpConnectorConfig"}
+        "SftpConfig":{"shape":"SftpConnectorConfig"},
+        "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"}
       }
     },
     "UpdateConnectorResponse":{

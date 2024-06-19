@@ -5,6 +5,7 @@
     "endpointPrefix":"lakeformation",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Lake Formation",
     "serviceId":"LakeFormation",
     "signatureVersion":"v4",
@@ -352,6 +353,20 @@
         {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetDataLakePrincipal":{
+      "name":"GetDataLakePrincipal",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetDataLakePrincipal"
+      },
+      "input":{"shape":"GetDataLakePrincipalRequest"},
+      "output":{"shape":"GetDataLakePrincipalResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
         {"shape":"AccessDeniedException"}
       ]
     },
@@ -1174,7 +1189,8 @@
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "InstanceArn":{"shape":"IdentityCenterInstanceArn"},
-        "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"}
+        "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"},
+        "ShareRecipients":{"shape":"DataLakePrincipalList"}
       }
     },
     "CreateLakeFormationIdentityCenterConfigurationResponse":{
@@ -1414,7 +1430,9 @@
         "CatalogId":{"shape":"CatalogIdString"},
         "InstanceArn":{"shape":"IdentityCenterInstanceArn"},
         "ApplicationArn":{"shape":"ApplicationArn"},
-        "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"}
+        "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"},
+        "ShareRecipients":{"shape":"DataLakePrincipalList"},
+        "ResourceShare":{"shape":"RAMResourceShareArn"}
       }
     },
     "DescribeResourceRequest":{
@@ -1570,6 +1588,17 @@
       "type":"structure",
       "members":{
         "DataCellsFilter":{"shape":"DataCellsFilter"}
+      }
+    },
+    "GetDataLakePrincipalRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetDataLakePrincipalResponse":{
+      "type":"structure",
+      "members":{
+        "Identity":{"shape":"IdentityString"}
       }
     },
     "GetDataLakeSettingsRequest":{
@@ -1847,6 +1876,7 @@
       "min":1
     },
     "IdentityCenterInstanceArn":{"type":"string"},
+    "IdentityString":{"type":"string"},
     "Integer":{
       "type":"integer",
       "box":true
@@ -2773,6 +2803,7 @@
       "type":"structure",
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
+        "ShareRecipients":{"shape":"DataLakePrincipalList"},
         "ApplicationStatus":{"shape":"ApplicationStatus"},
         "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"}
       }

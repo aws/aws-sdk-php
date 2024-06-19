@@ -7,6 +7,7 @@
     "endpointPrefix":"sqs",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Amazon SQS",
     "serviceFullName":"Amazon Simple Queue Service",
     "serviceId":"SQS",
@@ -932,6 +933,11 @@
       },
       "exception":true
     },
+    "MessageSystemAttributeList":{
+      "type":"list",
+      "member":{"shape":"MessageSystemAttributeName"},
+      "flattened":true
+    },
     "MessageSystemAttributeMap":{
       "type":"map",
       "key":{"shape":"MessageSystemAttributeName"},
@@ -941,6 +947,7 @@
     "MessageSystemAttributeName":{
       "type":"string",
       "enum":[
+        "All",
         "SenderId",
         "SentTimestamp",
         "ApproximateReceiveCount",
@@ -1067,7 +1074,12 @@
       "required":["QueueUrl"],
       "members":{
         "QueueUrl":{"shape":"String"},
-        "AttributeNames":{"shape":"AttributeNameList"},
+        "AttributeNames":{
+          "shape":"AttributeNameList",
+          "deprecated":true,
+          "deprecatedMessage":"AttributeNames has been replaced by MessageSystemAttributeNames"
+        },
+        "MessageSystemAttributeNames":{"shape":"MessageSystemAttributeList"},
         "MessageAttributeNames":{"shape":"MessageAttributeNameList"},
         "MaxNumberOfMessages":{"shape":"NullableInteger"},
         "VisibilityTimeout":{"shape":"NullableInteger"},

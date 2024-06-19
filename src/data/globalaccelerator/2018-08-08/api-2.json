@@ -5,12 +5,14 @@
     "endpointPrefix":"globalaccelerator",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Global Accelerator",
     "serviceId":"Global Accelerator",
     "signatureVersion":"v4",
     "signingName":"globalaccelerator",
     "targetPrefix":"GlobalAccelerator_V20180706",
-    "uid":"globalaccelerator-2018-08-08"
+    "uid":"globalaccelerator-2018-08-08",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddCustomRoutingEndpoints":{
@@ -1283,6 +1285,7 @@
       "type":"structure",
       "members":{
         "EndpointId":{"shape":"GenericString"},
+        "Cidr":{"shape":"GenericString"},
         "AttachmentArn":{"shape":"GenericString"}
       }
     },
@@ -2198,9 +2201,9 @@
     },
     "Resource":{
       "type":"structure",
-      "required":["EndpointId"],
       "members":{
         "EndpointId":{"shape":"GenericString"},
+        "Cidr":{"shape":"GenericString"},
         "Region":{"shape":"GenericString"}
       }
     },
@@ -2328,6 +2331,7 @@
         "AcceleratorArn":{"shape":"GenericString"},
         "Name":{"shape":"GenericString"},
         "IpAddressType":{"shape":"IpAddressType"},
+        "IpAddresses":{"shape":"IpAddresses"},
         "Enabled":{"shape":"GenericBoolean"}
       }
     },
@@ -2378,6 +2382,7 @@
         "AcceleratorArn":{"shape":"GenericString"},
         "Name":{"shape":"GenericString"},
         "IpAddressType":{"shape":"IpAddressType"},
+        "IpAddresses":{"shape":"IpAddresses"},
         "Enabled":{"shape":"GenericBoolean"}
       }
     },

@@ -44,6 +44,7 @@
     "CreateTable": "<p>Creates a new table definition in the Data Catalog.</p>",
     "CreateTableOptimizer": "<p>Creates a new table optimizer for a specific function. <code>compaction</code> is the only currently supported optimizer type.</p>",
     "CreateTrigger": "<p>Creates a new trigger.</p>",
+    "CreateUsageProfile": "<p>Creates an Glue usage profile.</p>",
     "CreateUserDefinedFunction": "<p>Creates a new function definition in the Data Catalog.</p>",
     "CreateWorkflow": "<p>Creates a new workflow.</p>",
     "DeleteBlueprint": "<p>Deletes an existing blueprint.</p>",
@@ -70,6 +71,7 @@
     "DeleteTableOptimizer": "<p>Deletes an optimizer and all associated metadata for a table. The optimization will no longer be performed on the table.</p>",
     "DeleteTableVersion": "<p>Deletes a specified version of a table.</p>",
     "DeleteTrigger": "<p>Deletes a specified trigger. If the trigger is not found, no exception is thrown.</p>",
+    "DeleteUsageProfile": "<p>Deletes the Glue specified usage profile.</p>",
     "DeleteUserDefinedFunction": "<p>Deletes an existing function definition from the Data Catalog.</p>",
     "DeleteWorkflow": "<p>Deletes a workflow.</p>",
     "GetBlueprint": "<p>Retrieves the details of a blueprint.</p>",
@@ -100,7 +102,7 @@
     "GetDevEndpoints": "<p>Retrieves all the development endpoints in this Amazon Web Services account.</p> <note> <p>When you create a development endpoint in a virtual private cloud (VPC), Glue returns only a private IP address and the public IP address field is not populated. When you create a non-VPC development endpoint, Glue returns only a public IP address.</p> </note>",
     "GetJob": "<p>Retrieves an existing job definition.</p>",
     "GetJobBookmark": "<p>Returns information on a job bookmark entry.</p> <p>For more information about enabling and using job bookmarks, see:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html\">Tracking processed data using job bookmarks</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Job parameters used by Glue</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-jobs-job.html#aws-glue-api-jobs-job-Job\">Job structure</a> </p> </li> </ul>",
-    "GetJobRun": "<p>Retrieves the metadata for a given job run.</p>",
+    "GetJobRun": "<p>Retrieves the metadata for a given job run. Job run history is accessible for 90 days for your workflow and job run.</p>",
     "GetJobRuns": "<p>Retrieves metadata for all runs of a given job definition.</p>",
     "GetJobs": "<p>Retrieves all current job definitions.</p>",
     "GetMLTaskRun": "<p>Gets details for a specific task run on a machine learning transform. Machine learning task runs are asynchronous tasks that Glue runs on your behalf as part of various machine learning workflows. You can check the stats of any task run by calling <code>GetMLTaskRun</code> with the <code>TaskRunID</code> and its parent transform's <code>TransformID</code>.</p>",
@@ -133,11 +135,12 @@
     "GetTriggers": "<p>Gets all the triggers associated with a job.</p>",
     "GetUnfilteredPartitionMetadata": "<p>Retrieves partition metadata from the Data Catalog that contains unfiltered metadata.</p> <p>For IAM authorization, the public IAM action associated with this API is <code>glue:GetPartition</code>.</p>",
     "GetUnfilteredPartitionsMetadata": "<p>Retrieves partition metadata from the Data Catalog that contains unfiltered metadata.</p> <p>For IAM authorization, the public IAM action associated with this API is <code>glue:GetPartitions</code>.</p>",
-    "GetUnfilteredTableMetadata": "<p>Retrieves table metadata from the Data Catalog that contains unfiltered metadata.</p> <p>For IAM authorization, the public IAM action associated with this API is <code>glue:GetTable</code>.</p>",
+    "GetUnfilteredTableMetadata": "<p>Allows a third-party analytical engine to retrieve unfiltered table metadata from the Data Catalog.</p> <p>For IAM authorization, the public IAM action associated with this API is <code>glue:GetTable</code>.</p>",
+    "GetUsageProfile": "<p>Retrieves information about the specified Glue usage profile.</p>",
     "GetUserDefinedFunction": "<p>Retrieves a specified function definition from the Data Catalog.</p>",
     "GetUserDefinedFunctions": "<p>Retrieves multiple function definitions from the Data Catalog.</p>",
     "GetWorkflow": "<p>Retrieves resource metadata for a workflow.</p>",
-    "GetWorkflowRun": "<p>Retrieves the metadata for a given workflow run. </p>",
+    "GetWorkflowRun": "<p>Retrieves the metadata for a given workflow run. Job run history is accessible for 90 days for your workflow and job run.</p>",
     "GetWorkflowRunProperties": "<p>Retrieves the workflow run properties which were set during the run.</p>",
     "GetWorkflowRuns": "<p>Retrieves metadata for all runs of a given workflow.</p>",
     "ImportCatalogToGlue": "<p>Imports an existing Amazon Athena Data Catalog to Glue.</p>",
@@ -160,6 +163,7 @@
     "ListStatements": "<p>Lists statements for the session.</p>",
     "ListTableOptimizerRuns": "<p>Lists the history of previous optimizer runs for a specific table.</p>",
     "ListTriggers": "<p>Retrieves the names of all trigger resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
+    "ListUsageProfiles": "<p>List all the Glue usage profiles.</p>",
     "ListWorkflows": "<p>Lists names of workflows created in the account.</p>",
     "PutDataCatalogEncryptionSettings": "<p>Sets the security configuration for a specified catalog. After the configuration has been set, the specified encryption is applied to every catalog write thereafter.</p>",
     "PutResourcePolicy": "<p>Sets the Data Catalog resource policy for access control.</p>",
@@ -213,10 +217,17 @@
     "UpdateTable": "<p>Updates a metadata table in the Data Catalog.</p>",
     "UpdateTableOptimizer": "<p>Updates the configuration for an existing table optimizer.</p>",
     "UpdateTrigger": "<p>Updates a trigger definition.</p>",
+    "UpdateUsageProfile": "<p>Update an Glue usage profile.</p>",
     "UpdateUserDefinedFunction": "<p>Updates an existing function definition in the Data Catalog.</p>",
     "UpdateWorkflow": "<p>Updates an existing workflow.</p>"
   },
   "shapes": {
+    "AWSManagedClientApplicationReference": {
+      "base": null,
+      "refs": {
+        "OAuth2ClientApplication$AWSManagedClientApplicationReference": "<p>The reference to the SaaS-side client app that is Amazon Web Services managed.</p>"
+      }
+    },
     "AccessDeniedException": {
       "base": "<p>Access to a resource was denied.</p>",
       "refs": {
@@ -304,6 +315,12 @@
         "Aggregate$Aggs": "<p>Specifies the aggregate functions to be performed on specified fields. </p>"
       }
     },
+    "AllowedValuesStringList": {
+      "base": null,
+      "refs": {
+        "ConfigurationObject$AllowedValues": "<p>A list of allowed values for the parameter.</p>"
+      }
+    },
     "AlreadyExistsException": {
       "base": "<p>A resource to be created or added already exists.</p>",
       "refs": {
@@ -349,8 +366,13 @@
     "ArnString": {
       "base": null,
       "refs": {
+        "GetUnfilteredTableMetadataRequest$ParentResourceArn": "<p>The resource ARN of the view.</p>",
+        "GetUnfilteredTableMetadataRequest$RootResourceArn": "<p>The resource ARN of the root view in a chain of nested views.</p>",
         "GetUnfilteredTableMetadataResponse$ResourceArn": "<p>The resource ARN of the parent resource extracted from the request.</p>",
-        "TableOptimizerConfiguration$roleArn": "<p>A role passed by the caller which gives the service permission to update the resources associated with the optimizer on the caller's behalf.</p>"
+        "TableOptimizerConfiguration$roleArn": "<p>A role passed by the caller which gives the service permission to update the resources associated with the optimizer on the caller's behalf.</p>",
+        "ViewDefinition$Definer": "<p>The definer of a view in SQL.</p>",
+        "ViewDefinitionInput$Definer": "<p>The definer of a view in SQL.</p>",
+        "ViewSubObjectsList$member": null
       }
     },
     "AthenaConnectorSource": {
@@ -390,6 +412,37 @@
       "refs": {
         "UpdateJobFromSourceControlRequest$AuthToken": "<p>The value of the authorization token.</p>",
         "UpdateSourceControlFromJobRequest$AuthToken": "<p>The value of the authorization token.</p>"
+      }
+    },
+    "AuthenticationConfiguration": {
+      "base": "<p>A structure containing the authentication configuration.</p>",
+      "refs": {
+        "Connection$AuthenticationConfiguration": "<p>The authentication properties of the connection.</p>"
+      }
+    },
+    "AuthenticationConfigurationInput": {
+      "base": "<p>A structure containing the authentication configuration in the CreateConnection request.</p>",
+      "refs": {
+        "ConnectionInput$AuthenticationConfiguration": "<p>The authentication properties of the connection. Used for a Salesforce connection.</p>"
+      }
+    },
+    "AuthenticationType": {
+      "base": null,
+      "refs": {
+        "AuthenticationConfiguration$AuthenticationType": "<p>A structure containing the authentication configuration.</p>",
+        "AuthenticationConfigurationInput$AuthenticationType": "<p>A structure containing the authentication configuration in the CreateConnection request.</p>"
+      }
+    },
+    "AuthorizationCode": {
+      "base": null,
+      "refs": {
+        "AuthorizationCodeProperties$AuthorizationCode": "<p>An authorization code to be used in the third leg of the <code>AUTHORIZATION_CODE</code> grant workflow. This is a single-use code which becomes invalid once exchanged for an access token, thus it is acceptable to have this value as a request parameter.</p>"
+      }
+    },
+    "AuthorizationCodeProperties": {
+      "base": "<p>The set of properties required for the the OAuth2 <code>AUTHORIZATION_CODE</code> grant type workflow.</p>",
+      "refs": {
+        "OAuth2PropertiesInput$AuthorizationCodeProperties": "<p>The set of properties required for the the OAuth2 <code>AUTHORIZATION_CODE</code> grant type.</p>"
       }
     },
     "BackfillError": {
@@ -807,16 +860,20 @@
       "refs": {
         "CatalogImportStatus$ImportCompleted": "<p> <code>True</code> if the migration has completed, or <code>False</code> otherwise.</p>",
         "CodeGenNodeArg$Param": "<p>True if the value is used as a parameter.</p>",
+        "ConnectionInput$ValidateCredentials": "<p>A flag to validate the credentials during create connection. Used for a Salesforce connection. Default is true. </p>",
         "ConnectionPasswordEncryption$ReturnConnectionPasswordEncrypted": "<p>When the <code>ReturnConnectionPasswordEncrypted</code> flag is set to \"true\", passwords remain encrypted in the responses of <code>GetConnection</code> and <code>GetConnections</code>. This encryption takes effect independently from catalog encryption. </p>",
         "CrawlerMetrics$StillEstimating": "<p>True if the crawler is still estimating how long it will take to complete this run.</p>",
         "GetConnectionRequest$HidePassword": "<p>Allows you to retrieve the connection metadata without returning the password. For instance, the Glue console uses this flag to retrieve the connection, and does not display the password. Set this parameter when the caller might not have permission to use the KMS key to decrypt the password, but it does have permission to access the rest of the connection properties.</p>",
         "GetConnectionsRequest$HidePassword": "<p>Allows you to retrieve the connection metadata without returning the password. For instance, the Glue console uses this flag to retrieve the connection, and does not display the password. Set this parameter when the caller might not have permission to use the KMS key to decrypt the password, but it does have permission to access the rest of the connection properties.</p>",
         "GetUnfilteredPartitionMetadataResponse$IsRegisteredWithLakeFormation": "<p>A Boolean value that indicates whether the partition location is registered with Lake Formation.</p>",
         "GetUnfilteredTableMetadataResponse$IsRegisteredWithLakeFormation": "<p>A Boolean value that indicates whether the partition location is registered with Lake Formation.</p>",
+        "GetUnfilteredTableMetadataResponse$IsMultiDialectView": "<p>Specifies whether the view supports the SQL dialects of one or more different query engines and can therefore be read by those engines.</p>",
+        "GetUnfilteredTableMetadataResponse$IsProtected": "<p>A flag that instructs the engine not to push user-provided operations into the logical plan of the view during query planning. However, if set this flag does not guarantee that the engine will comply. Refer to the engine's documentation to understand the guarantees provided, if any.</p>",
         "StorageDescriptor$Compressed": "<p> <code>True</code> if the data in the table is compressed, or <code>False</code> if not.</p>",
         "StorageDescriptor$StoredAsSubDirectories": "<p> <code>True</code> if the table data is stored in subdirectories, or <code>False</code> if not.</p>",
         "Table$IsRegisteredWithLakeFormation": "<p>Indicates whether the table has been registered with Lake Formation.</p>",
-        "UnfilteredPartition$IsRegisteredWithLakeFormation": "<p>A Boolean value indicating that the partition location is registered with Lake Formation.</p>"
+        "UnfilteredPartition$IsRegisteredWithLakeFormation": "<p>A Boolean value indicating that the partition location is registered with Lake Formation.</p>",
+        "UpdateTableRequest$Force": "<p>A flag that can be set to true to ignore matching storage descriptor and subobject matching requirements.</p>"
       }
     },
     "BooleanColumnStatisticsData": {
@@ -922,8 +979,8 @@
         "KafkaStreamingSourceOptions$PollTimeoutMs": "<p>The timeout in milliseconds to poll data from Kafka in Spark job executors. The default value is <code>512</code>.</p>",
         "KafkaStreamingSourceOptions$RetryIntervalMs": "<p>The time in milliseconds to wait before retrying to fetch Kafka offsets. The default value is <code>10</code>.</p>",
         "KafkaStreamingSourceOptions$MaxOffsetsPerTrigger": "<p>The rate limit on the maximum number of offsets that are processed per trigger interval. The specified total number of offsets is proportionally split across <code>topicPartitions</code> of different volumes. The default value is null, which means that the consumer reads all offsets until the known latest offset.</p>",
-        "KinesisStreamingSourceOptions$MaxFetchTimeInMs": "<p>The maximum time spent in the job executor to fetch a record from the Kinesis data stream per shard, specified in milliseconds (ms). The default value is <code>1000</code>.</p>",
-        "KinesisStreamingSourceOptions$MaxFetchRecordsPerShard": "<p>The maximum number of records to fetch per shard in the Kinesis data stream. The default value is <code>100000</code>.</p>",
+        "KinesisStreamingSourceOptions$MaxFetchTimeInMs": "<p>The maximum time spent for the job executor to read records for the current batch from the Kinesis data stream, specified in milliseconds (ms). Multiple <code>GetRecords</code> API calls may be made within this time. The default value is <code>1000</code>.</p>",
+        "KinesisStreamingSourceOptions$MaxFetchRecordsPerShard": "<p>The maximum number of records to fetch per shard in the Kinesis data stream per microbatch. Note: The client can exceed this limit if the streaming job has already read extra records from Kinesis (in the same get-records call). If <code>MaxFetchRecordsPerShard</code> needs to be strict then it needs to be a multiple of <code>MaxRecordPerRead</code>. The default value is <code>100000</code>.</p>",
         "KinesisStreamingSourceOptions$MaxRecordPerRead": "<p>The maximum number of records to fetch from the Kinesis data stream in each getRecords operation. The default value is <code>10000</code>.</p>",
         "KinesisStreamingSourceOptions$IdleTimeBetweenReadsInMs": "<p>The minimum time delay between two consecutive getRecords operations, specified in ms. The default value is <code>1000</code>. This option is only configurable for Glue version 2.0 and above.</p>",
         "KinesisStreamingSourceOptions$DescribeShardInterval": "<p>The minimum time interval between two ListShards API calls for your script to consider resharding. The default value is <code>1s</code>.</p>",
@@ -1500,6 +1557,28 @@
         "Predicate$Conditions": "<p>A list of the conditions that determine when the trigger will fire.</p>"
       }
     },
+    "ConfigValueString": {
+      "base": null,
+      "refs": {
+        "AllowedValuesStringList$member": null,
+        "ConfigurationObject$DefaultValue": "<p>A default value for the parameter.</p>",
+        "ConfigurationObject$MinValue": "<p>A minimum allowed value for the parameter.</p>",
+        "ConfigurationObject$MaxValue": "<p>A maximum allowed value for the parameter.</p>"
+      }
+    },
+    "ConfigurationMap": {
+      "base": null,
+      "refs": {
+        "ProfileConfiguration$SessionConfiguration": "<p>A key-value map of configuration parameters for Glue sessions. </p>",
+        "ProfileConfiguration$JobConfiguration": "<p>A key-value map of configuration parameters for Glue jobs. </p>"
+      }
+    },
+    "ConfigurationObject": {
+      "base": "<p>Specifies the values that an admin sets for each job or session parameter configured in a Glue usage profile.</p>",
+      "refs": {
+        "ConfigurationMap$value": null
+      }
+    },
     "ConflictException": {
       "base": "<p>The <code>CreatePartitions</code> API was called on a table that has indexes enabled. </p>",
       "refs": {
@@ -1562,11 +1641,18 @@
         "ConnectionProperties$key": null
       }
     },
+    "ConnectionStatus": {
+      "base": null,
+      "refs": {
+        "Connection$Status": "<p>The status of the connection. Can be one of: <code>READY</code>, <code>IN_PROGRESS</code>, or <code>FAILED</code>.</p>",
+        "CreateConnectionResponse$CreateConnectionStatus": "<p>The status of the connection creation request. The request can take some time for certain authentication types, for example when creating an OAuth connection with token exchange over VPC.</p>"
+      }
+    },
     "ConnectionType": {
       "base": null,
       "refs": {
         "Connection$ConnectionType": "<p>The type of the connection. Currently, SFTP is not supported.</p>",
-        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, these types are supported:</p> <ul> <li> <p> <code>JDBC</code> - Designates a connection to a database through Java Database Connectivity (JDBC).</p> <p> <code>JDBC</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: All of (<code>HOST</code>, <code>PORT</code>, <code>JDBC_ENGINE</code>) or <code>JDBC_CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> <li> <p>Optional: <code>JDBC_ENFORCE_SSL</code>, <code>CUSTOM_JDBC_CERT</code>, <code>CUSTOM_JDBC_CERT_STRING</code>, <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code>. These parameters are used to configure SSL with JDBC.</p> </li> </ul> </li> <li> <p> <code>KAFKA</code> - Designates a connection to an Apache Kafka streaming platform.</p> <p> <code>KAFKA</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>KAFKA_BOOTSTRAP_SERVERS</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SSL_ENABLED</code>, <code>KAFKA_CUSTOM_CERT</code>, <code>KAFKA_SKIP_CUSTOM_CERT_VALIDATION</code>. These parameters are used to configure SSL with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_CLIENT_KEYSTORE</code>, <code>KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>KAFKA_CLIENT_KEY_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD</code>. These parameters are used to configure TLS client configuration with SSL in <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_MECHANISM</code>. Can be specified as <code>SCRAM-SHA-512</code>, <code>GSSAPI</code>, or <code>AWS_MSK_IAM</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_SCRAM_USERNAME</code>, <code>KAFKA_SASL_SCRAM_PASSWORD</code>, <code>ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD</code>. These parameters are used to configure SASL/SCRAM-SHA-512 authentication with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_GSSAPI_KEYTAB</code>, <code>KAFKA_SASL_GSSAPI_KRB5_CONF</code>, <code>KAFKA_SASL_GSSAPI_SERVICE</code>, <code>KAFKA_SASL_GSSAPI_PRINCIPAL</code>. These parameters are used to configure SASL/GSSAPI authentication with <code>KAFKA</code>.</p> </li> </ul> </li> <li> <p> <code>MONGODB</code> - Designates a connection to a MongoDB document database.</p> <p> <code>MONGODB</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>NETWORK</code> - Designates a network connection to a data source within an Amazon Virtual Private Cloud environment (Amazon VPC).</p> <p> <code>NETWORK</code> Connections do not require ConnectionParameters. Instead, provide a PhysicalConnectionRequirements.</p> </li> <li> <p> <code>MARKETPLACE</code> - Uses configuration settings contained in a connector purchased from Amazon Web Services Marketplace to read from and write to data stores that are not natively supported by Glue.</p> <p> <code>MARKETPLACE</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTOR_TYPE</code>, <code>CONNECTOR_URL</code>, <code>CONNECTOR_CLASS_NAME</code>, <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required for <code>JDBC</code> <code>CONNECTOR_TYPE</code> connections: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>CUSTOM</code> - Uses configuration settings contained in a custom connector to read from and write to data stores that are not natively supported by Glue.</p> </li> </ul> <p> <code>SFTP</code> is not supported.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue, consult <a href=\"https://docs.aws.amazon.com/glue/latest/dg/connection-defining.html\">Glue connection properties</a>.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue Studio, consult <a href=\"https://docs.aws.amazon.com/glue/latest/ug/connectors-chapter.html\">Using connectors and connections</a>.</p>",
+        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, these types are supported:</p> <ul> <li> <p> <code>JDBC</code> - Designates a connection to a database through Java Database Connectivity (JDBC).</p> <p> <code>JDBC</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: All of (<code>HOST</code>, <code>PORT</code>, <code>JDBC_ENGINE</code>) or <code>JDBC_CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> <li> <p>Optional: <code>JDBC_ENFORCE_SSL</code>, <code>CUSTOM_JDBC_CERT</code>, <code>CUSTOM_JDBC_CERT_STRING</code>, <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code>. These parameters are used to configure SSL with JDBC.</p> </li> </ul> </li> <li> <p> <code>KAFKA</code> - Designates a connection to an Apache Kafka streaming platform.</p> <p> <code>KAFKA</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>KAFKA_BOOTSTRAP_SERVERS</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SSL_ENABLED</code>, <code>KAFKA_CUSTOM_CERT</code>, <code>KAFKA_SKIP_CUSTOM_CERT_VALIDATION</code>. These parameters are used to configure SSL with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_CLIENT_KEYSTORE</code>, <code>KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>KAFKA_CLIENT_KEY_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD</code>. These parameters are used to configure TLS client configuration with SSL in <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_MECHANISM</code>. Can be specified as <code>SCRAM-SHA-512</code>, <code>GSSAPI</code>, or <code>AWS_MSK_IAM</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_SCRAM_USERNAME</code>, <code>KAFKA_SASL_SCRAM_PASSWORD</code>, <code>ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD</code>. These parameters are used to configure SASL/SCRAM-SHA-512 authentication with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_GSSAPI_KEYTAB</code>, <code>KAFKA_SASL_GSSAPI_KRB5_CONF</code>, <code>KAFKA_SASL_GSSAPI_SERVICE</code>, <code>KAFKA_SASL_GSSAPI_PRINCIPAL</code>. These parameters are used to configure SASL/GSSAPI authentication with <code>KAFKA</code>.</p> </li> </ul> </li> <li> <p> <code>MONGODB</code> - Designates a connection to a MongoDB document database.</p> <p> <code>MONGODB</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>SALESFORCE</code> - Designates a connection to Salesforce using OAuth authencation.</p> <ul> <li> <p>Requires the <code>AuthenticationConfiguration</code> member to be configured.</p> </li> </ul> </li> <li> <p> <code>NETWORK</code> - Designates a network connection to a data source within an Amazon Virtual Private Cloud environment (Amazon VPC).</p> <p> <code>NETWORK</code> Connections do not require ConnectionParameters. Instead, provide a PhysicalConnectionRequirements.</p> </li> <li> <p> <code>MARKETPLACE</code> - Uses configuration settings contained in a connector purchased from Amazon Web Services Marketplace to read from and write to data stores that are not natively supported by Glue.</p> <p> <code>MARKETPLACE</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTOR_TYPE</code>, <code>CONNECTOR_URL</code>, <code>CONNECTOR_CLASS_NAME</code>, <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required for <code>JDBC</code> <code>CONNECTOR_TYPE</code> connections: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>CUSTOM</code> - Uses configuration settings contained in a custom connector to read from and write to data stores that are not natively supported by Glue.</p> </li> </ul> <p> <code>SFTP</code> is not supported.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue, consult <a href=\"https://docs.aws.amazon.com/glue/latest/dg/connection-defining.html\">Glue connection properties</a>.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue Studio, consult <a href=\"https://docs.aws.amazon.com/glue/latest/ug/connectors-chapter.html\">Using connectors and connections</a>.</p>",
         "GetConnectionsFilter$ConnectionType": "<p>The type of connections to return. Currently, SFTP is not supported.</p>"
       }
     },
@@ -1985,6 +2071,16 @@
       "refs": {
       }
     },
+    "CreateUsageProfileRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateUsageProfileResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateUserDefinedFunctionRequest": {
       "base": null,
       "refs": {
@@ -2126,6 +2222,12 @@
       "base": null,
       "refs": {
         "EvaluateDataQualityMultiFrame$AdditionalOptions": "<p>Options to configure runtime behavior of the transform.</p>"
+      }
+    },
+    "DQCompositeRuleEvaluationMethod": {
+      "base": null,
+      "refs": {
+        "DataQualityEvaluationRunAdditionalRunOptions$CompositeRuleEvaluationMethod": "<p>Set the evaluation method for composite rules in the ruleset to ROW/COLUMN</p>"
       }
     },
     "DQDLAliases": {
@@ -2740,6 +2842,16 @@
       "refs": {
       }
     },
+    "DeleteUsageProfileRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteUsageProfileResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteUserDefinedFunctionRequest": {
       "base": null,
       "refs": {
@@ -2797,6 +2909,7 @@
         "CreateSchemaResponse$Description": "<p>A description of the schema if specified when created.</p>",
         "CreateSessionRequest$Description": "<p>The description of the session. </p>",
         "CreateTriggerRequest$Description": "<p>A description of the new trigger.</p>",
+        "CreateUsageProfileRequest$Description": "<p>A description of the usage profile.</p>",
         "DataQualityRulesetFilterCriteria$Description": "<p>The description of the ruleset filter criteria.</p>",
         "DataQualityRulesetListDetails$Description": "<p>A description of the data quality ruleset.</p>",
         "Database$Description": "<p>A description of the database.</p>",
@@ -2806,6 +2919,7 @@
         "GetMLTransformResponse$Description": "<p>A description of the transform.</p>",
         "GetRegistryResponse$Description": "<p>A description of the registry.</p>",
         "GetSchemaResponse$Description": "<p>A description of schema if specified when created</p>",
+        "GetUsageProfileResponse$Description": "<p>A description of the usage profile.</p>",
         "GlueTableAdditionalOptions$value": null,
         "Job$Description": "<p>A description of the job.</p>",
         "JobUpdate$Description": "<p>Description of the job being defined.</p>",
@@ -2823,7 +2937,9 @@
         "UpdateDataQualityRulesetResponse$Description": "<p>A description of the ruleset.</p>",
         "UpdateMLTransformRequest$Description": "<p>A description of the transform. The default is an empty string.</p>",
         "UpdateRegistryInput$Description": "<p>A description of the registry. If description is not provided, this field will not be updated.</p>",
-        "UpdateSchemaInput$Description": "<p>The new description for the schema.</p>"
+        "UpdateSchemaInput$Description": "<p>The new description for the schema.</p>",
+        "UpdateUsageProfileRequest$Description": "<p>A description of the usage profile.</p>",
+        "UsageProfileDefinition$Description": "<p>A description of the usage profile.</p>"
       }
     },
     "DescriptionStringRemovable": {
@@ -4299,6 +4415,16 @@
       "refs": {
       }
     },
+    "GetUsageProfileRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetUsageProfileResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetUserDefinedFunctionRequest": {
       "base": null,
       "refs": {
@@ -4895,6 +5021,15 @@
         "GetJobsResponse$Jobs": "<p>A list of job definitions.</p>"
       }
     },
+    "JobMode": {
+      "base": null,
+      "refs": {
+        "CreateJobRequest$JobMode": "<p>A mode that describes how a job was created. Valid values are:</p> <ul> <li> <p> <code>SCRIPT</code> - The job was created using the Glue Studio script editor.</p> </li> <li> <p> <code>VISUAL</code> - The job was created using the Glue Studio visual editor.</p> </li> <li> <p> <code>NOTEBOOK</code> - The job was created using an interactive sessions notebook.</p> </li> </ul> <p>When the <code>JobMode</code> field is missing or null, <code>SCRIPT</code> is assigned as the default value.</p>",
+        "Job$JobMode": "<p>A mode that describes how a job was created. Valid values are:</p> <ul> <li> <p> <code>SCRIPT</code> - The job was created using the Glue Studio script editor.</p> </li> <li> <p> <code>VISUAL</code> - The job was created using the Glue Studio visual editor.</p> </li> <li> <p> <code>NOTEBOOK</code> - The job was created using an interactive sessions notebook.</p> </li> </ul> <p>When the <code>JobMode</code> field is missing or null, <code>SCRIPT</code> is assigned as the default value.</p>",
+        "JobRun$JobMode": "<p>A mode that describes how a job was created. Valid values are:</p> <ul> <li> <p> <code>SCRIPT</code> - The job was created using the Glue Studio script editor.</p> </li> <li> <p> <code>VISUAL</code> - The job was created using the Glue Studio visual editor.</p> </li> <li> <p> <code>NOTEBOOK</code> - The job was created using an interactive sessions notebook.</p> </li> </ul> <p>When the <code>JobMode</code> field is missing or null, <code>SCRIPT</code> is assigned as the default value.</p>",
+        "JobUpdate$JobMode": "<p>A mode that describes how a job was created. Valid values are:</p> <ul> <li> <p> <code>SCRIPT</code> - The job was created using the Glue Studio script editor.</p> </li> <li> <p> <code>VISUAL</code> - The job was created using the Glue Studio visual editor.</p> </li> <li> <p> <code>NOTEBOOK</code> - The job was created using an interactive sessions notebook.</p> </li> </ul> <p>When the <code>JobMode</code> field is missing or null, <code>SCRIPT</code> is assigned as the default value.</p>"
+      }
+    },
     "JobName": {
       "base": null,
       "refs": {
@@ -5305,6 +5440,16 @@
       "refs": {
       }
     },
+    "ListUsageProfilesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListUsageProfilesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListWorkflowsRequest": {
       "base": null,
       "refs": {
@@ -5389,6 +5534,12 @@
         "Statement$CompletedOn": "<p>The unix time and date that the job definition was completed.</p>"
       }
     },
+    "LongValueString": {
+      "base": null,
+      "refs": {
+        "Connection$StatusReason": "<p>The reason for the connection status.</p>"
+      }
+    },
     "MLTransform": {
       "base": "<p>A structure for a machine learning transform.</p>",
       "refs": {
@@ -5410,6 +5561,15 @@
       "base": null,
       "refs": {
         "MLUserDataEncryption$MlUserDataEncryptionMode": "<p>The encryption mode applied to user data. Valid values are:</p> <ul> <li> <p>DISABLED: encryption is disabled</p> </li> <li> <p>SSEKMS: use of server-side encryption with Key Management Service (SSE-KMS) for user data stored in Amazon S3.</p> </li> </ul>"
+      }
+    },
+    "MaintenanceWindow": {
+      "base": null,
+      "refs": {
+        "CreateJobRequest$MaintenanceWindow": "<p>This field specifies a day of the week and hour for a maintenance window for streaming jobs. Glue periodically performs maintenance activities. During these maintenance windows, Glue will need to restart your streaming jobs.</p> <p>Glue will restart the job within 3 hours of the specified maintenance window. For instance, if you set up the maintenance window for Monday at 10:00AM GMT, your jobs will be restarted between 10:00AM GMT to 1:00PM GMT.</p>",
+        "Job$MaintenanceWindow": "<p>This field specifies a day of the week and hour for a maintenance window for streaming jobs. Glue periodically performs maintenance activities. During these maintenance windows, Glue will need to restart your streaming jobs.</p> <p>Glue will restart the job within 3 hours of the specified maintenance window. For instance, if you set up the maintenance window for Monday at 10:00AM GMT, your jobs will be restarted between 10:00AM GMT to 1:00PM GMT.</p>",
+        "JobRun$MaintenanceWindow": "<p>This field specifies a day of the week and hour for a maintenance window for streaming jobs. Glue periodically performs maintenance activities. During these maintenance windows, Glue will need to restart your streaming jobs.</p> <p>Glue will restart the job within 3 hours of the specified maintenance window. For instance, if you set up the maintenance window for Monday at 10:00AM GMT, your jobs will be restarted between 10:00AM GMT to 1:00PM GMT.</p>",
+        "JobUpdate$MaintenanceWindow": "<p>This field specifies a day of the week and hour for a maintenance window for streaming jobs. Glue periodically performs maintenance activities. During these maintenance windows, Glue will need to restart your streaming jobs.</p> <p>Glue will restart the job within 3 hours of the specified maintenance window. For instance, if you set up the maintenance window for Monday at 10:00AM GMT, your jobs will be restarted between 10:00AM GMT to 1:00PM GMT.</p>"
       }
     },
     "ManyInputs": {
@@ -5541,6 +5701,7 @@
         "InvalidStateException$Message": "<p>A message describing the problem.</p>",
         "MLTransformNotReadyException$Message": "<p>A message describing the problem.</p>",
         "NoScheduleException$Message": "<p>A message describing the problem.</p>",
+        "OperationNotSupportedException$Message": "<p>A message describing the problem.</p>",
         "OperationTimeoutException$Message": "<p>A message describing the problem.</p>",
         "PermissionTypeMismatchException$Message": "<p>There is a mismatch between the SupportedPermissionType used in the query request and the permissions defined on the target table.</p>",
         "ResourceNotReadyException$Message": "<p>A message describing the problem.</p>",
@@ -5694,9 +5855,10 @@
         "ColumnStatisticsTaskRun$WorkerType": "<p>The type of workers being used for generating stats. The default is <code>g.1x</code>.</p>",
         "Condition$JobName": "<p>The name of the job whose <code>JobRuns</code> this condition applies to, and on which this trigger waits.</p>",
         "Condition$CrawlerName": "<p>The name of the crawler to which this condition applies.</p>",
+        "ConfigurationMap$key": null,
         "Connection$Name": "<p>The name of the connection definition.</p>",
         "Connection$LastUpdatedBy": "<p>The user, group, or role that last updated this connection definition.</p>",
-        "ConnectionInput$Name": "<p>The name of the connection. Connection will not function as expected without a name.</p>",
+        "ConnectionInput$Name": "<p>The name of the connection.</p>",
         "ConnectionPasswordEncryption$AwsKmsKeyId": "<p>An KMS key that is used to encrypt the connection password. </p> <p>If connection password protection is enabled, the caller of <code>CreateConnection</code> and <code>UpdateConnection</code> needs at least <code>kms:Encrypt</code> permission on the specified KMS key, to encrypt passwords before storing them in the Data Catalog. </p> <p>You can set the decrypt permission to enable or restrict access on the password key according to your security requirements.</p>",
         "ContextWords$member": null,
         "Crawler$Name": "<p>The name of the crawler.</p>",
@@ -5733,6 +5895,8 @@
         "CreateTriggerRequest$Name": "<p>The name of the trigger.</p>",
         "CreateTriggerRequest$WorkflowName": "<p>The name of the workflow associated with the trigger.</p>",
         "CreateTriggerResponse$Name": "<p>The name of the trigger.</p>",
+        "CreateUsageProfileRequest$Name": "<p>The name of the usage profile.</p>",
+        "CreateUsageProfileResponse$Name": "<p>The name of the usage profile that was created.</p>",
         "CreateUserDefinedFunctionRequest$DatabaseName": "<p>The name of the catalog database in which to create the function.</p>",
         "CreateWorkflowRequest$Name": "<p>The name to be assigned to the workflow. It should be unique within your account.</p>",
         "CreateWorkflowResponse$Name": "<p>The name of the workflow which was provided as part of the request.</p>",
@@ -5793,6 +5957,7 @@
         "DeleteTableVersionRequest$TableName": "<p>The name of the table. For Hive compatibility, this name is entirely lowercase.</p>",
         "DeleteTriggerRequest$Name": "<p>The name of the trigger to delete.</p>",
         "DeleteTriggerResponse$Name": "<p>The name of the trigger that was deleted.</p>",
+        "DeleteUsageProfileRequest$Name": "<p>The name of the usage profile to delete.</p>",
         "DeleteUserDefinedFunctionRequest$DatabaseName": "<p>The name of the catalog database where the function is located.</p>",
         "DeleteUserDefinedFunctionRequest$FunctionName": "<p>The name of the function definition to be deleted.</p>",
         "DeleteWorkflowRequest$Name": "<p>Name of the workflow to be deleted.</p>",
@@ -5860,6 +6025,8 @@
         "GetUnfilteredPartitionsMetadataRequest$TableName": "<p>The name of the table that contains the partition.</p>",
         "GetUnfilteredTableMetadataRequest$DatabaseName": "<p>(Required) Specifies the name of a database that contains the table.</p>",
         "GetUnfilteredTableMetadataRequest$Name": "<p>(Required) Specifies the name of a table for which you are requesting metadata.</p>",
+        "GetUsageProfileRequest$Name": "<p>The name of the usage profile to retrieve.</p>",
+        "GetUsageProfileResponse$Name": "<p>The name of the usage profile.</p>",
         "GetUserDefinedFunctionRequest$DatabaseName": "<p>The name of the catalog database where the function is located.</p>",
         "GetUserDefinedFunctionRequest$FunctionName": "<p>The name of the function.</p>",
         "GetUserDefinedFunctionsRequest$DatabaseName": "<p>The name of the catalog database where the functions are located. If none is provided, functions from all the databases across the catalog will be returned.</p>",
@@ -5876,10 +6043,12 @@
         "GrokClassifier$Name": "<p>The name of the classifier.</p>",
         "Job$Name": "<p>The name you assign to this job definition.</p>",
         "Job$SecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used with this job.</p>",
+        "Job$ProfileName": "<p>The name of an Glue usage profile associated with the job.</p>",
         "JobNameList$member": null,
         "JobRun$TriggerName": "<p>The name of the trigger that started this job run.</p>",
         "JobRun$JobName": "<p>The name of the job definition being used in this run.</p>",
         "JobRun$SecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used with this job run.</p>",
+        "JobRun$ProfileName": "<p>The name of an Glue usage profile associated with the job run.</p>",
         "JobUpdate$SecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used with this job.</p>",
         "JsonClassifier$Name": "<p>The name of the classifier.</p>",
         "KeyList$member": null,
@@ -5906,7 +6075,7 @@
         "PartitionIndex$IndexName": "<p>The name of the partition index.</p>",
         "PartitionIndexDescriptor$IndexName": "<p>The name of the partition index.</p>",
         "PhysicalConnectionRequirements$SubnetId": "<p>The subnet ID used by the connection.</p>",
-        "PhysicalConnectionRequirements$AvailabilityZone": "<p>The connection's Availability Zone. This field is redundant because the specified subnet implies the Availability Zone to be used. Currently the field must be populated, but it will be deprecated in the future.</p>",
+        "PhysicalConnectionRequirements$AvailabilityZone": "<p>The connection's Availability Zone.</p>",
         "Predecessor$JobName": "<p>The name of the job definition used by the predecessor job run.</p>",
         "PutWorkflowRunPropertiesRequest$Name": "<p>Name of the workflow which was run.</p>",
         "ResumeWorkflowRunRequest$Name": "<p>The name of the workflow to resume.</p>",
@@ -5918,6 +6087,7 @@
         "SerDeInfo$SerializationLibrary": "<p>Usually the class that implements the SerDe. An example is <code>org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe</code>.</p>",
         "Session$Id": "<p>The ID of the session.</p>",
         "Session$SecurityConfiguration": "<p>The name of the SecurityConfiguration structure to be used with the session.</p>",
+        "Session$ProfileName": "<p>The name of an Glue usage profile associated with the session.</p>",
         "SessionCommand$Name": "<p>Specifies the name of the SessionCommand. Can be 'glueetl' or 'gluestreaming'.</p>",
         "SessionIdList$member": null,
         "StartColumnStatisticsTaskRunRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
@@ -5993,11 +6163,14 @@
         "UpdateTableOptimizerRequest$TableName": "<p>The name of the table.</p>",
         "UpdateTableRequest$DatabaseName": "<p>The name of the catalog database in which the table resides. For Hive compatibility, this name is entirely lowercase.</p>",
         "UpdateTriggerRequest$Name": "<p>The name of the trigger to update.</p>",
+        "UpdateUsageProfileRequest$Name": "<p>The name of the usage profile.</p>",
+        "UpdateUsageProfileResponse$Name": "<p>The name of the usage profile that was updated.</p>",
         "UpdateUserDefinedFunctionRequest$DatabaseName": "<p>The name of the catalog database where the function to be updated is located.</p>",
         "UpdateUserDefinedFunctionRequest$FunctionName": "<p>The name of the function.</p>",
         "UpdateWorkflowRequest$Name": "<p>Name of the workflow to be updated.</p>",
         "UpdateWorkflowResponse$Name": "<p>The name of the workflow which was specified in input.</p>",
         "UpdateXMLClassifierRequest$Name": "<p>The name of the classifier.</p>",
+        "UsageProfileDefinition$Name": "<p>The name of the usage profile.</p>",
         "UserDefinedFunction$FunctionName": "<p>The name of the function.</p>",
         "UserDefinedFunction$DatabaseName": "<p>The name of the catalog database that contains the function.</p>",
         "UserDefinedFunction$ClassName": "<p>The Java class that contains the function code.</p>",
@@ -6005,6 +6178,8 @@
         "UserDefinedFunctionInput$FunctionName": "<p>The name of the function.</p>",
         "UserDefinedFunctionInput$ClassName": "<p>The Java class that contains the function code.</p>",
         "UserDefinedFunctionInput$OwnerName": "<p>The owner of the function.</p>",
+        "ViewRepresentation$ValidationConnection": "<p>The name of the connection to be used to validate the specific representation of the view.</p>",
+        "ViewRepresentationInput$ValidationConnection": "<p>The name of the connection to be used to validate the specific representation of the view.</p>",
         "Workflow$Name": "<p>The name of the workflow.</p>",
         "WorkflowNames$member": null,
         "WorkflowRun$Name": "<p>Name of the workflow that was run.</p>",
@@ -6257,10 +6432,14 @@
         "InvalidInputException$FromFederationSource": "<p>Indicates whether or not the exception relates to a federated source.</p>",
         "LakeFormationConfiguration$UseLakeFormationCredentials": "<p>Specifies whether to use Lake Formation credentials for the crawler instead of the IAM role credentials.</p>",
         "MongoDBTarget$ScanAll": "<p>Indicates whether to scan all the records, or to sample rows from the table. Scanning all the records can take a long time when the table is not a high throughput table.</p> <p>A value of <code>true</code> means to scan all records, while a value of <code>false</code> means to sample the records. If no value is specified, the value defaults to <code>true</code>.</p>",
+        "Table$IsMultiDialectView": "<p>Specifies whether the view supports the SQL dialects of one or more different query engines and can therefore be read by those engines.</p>",
         "TableOptimizerConfiguration$enabled": "<p>Whether table optimization is enabled. </p>",
         "UpdateCsvClassifierRequest$DisableValueTrimming": "<p>Specifies not to trim values before identifying the type of column values. The default value is true.</p>",
         "UpdateCsvClassifierRequest$AllowSingleColumn": "<p>Enables the processing of files that contain only one column.</p>",
-        "UpdateCsvClassifierRequest$CustomDatatypeConfigured": "<p>Specifies the configuration of custom datatypes.</p>"
+        "UpdateCsvClassifierRequest$CustomDatatypeConfigured": "<p>Specifies the configuration of custom datatypes.</p>",
+        "ViewDefinition$IsProtected": "<p>You can set this flag as true to instruct the engine not to push user-provided operations into the logical plan of the view during query planning. However, setting this flag does not guarantee that the engine will comply. Refer to the engine's documentation to understand the guarantees provided, if any.</p>",
+        "ViewDefinitionInput$IsProtected": "<p>You can set this flag as true to instruct the engine not to push user-provided operations into the logical plan of the view during query planning. However, setting this flag does not guarantee that the engine will comply. Refer to the engine's documentation to understand the guarantees provided, if any.</p>",
+        "ViewRepresentation$IsStale": "<p>Dialects marked as stale are no longer valid and must be updated before they can be queried in their respective query engines.</p>"
       }
     },
     "NullableDouble": {
@@ -6278,7 +6457,7 @@
         "GetMLTransformResponse$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>. </p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
         "Job$MaxCapacity": "<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\"> Glue pricing page</a>.</p> <p>For Glue version 2.0 or later jobs, you cannot specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p> <p>Do not set <code>MaxCapacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "JobRun$MaxCapacity": "<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\"> Glue pricing page</a>.</p> <p>For Glue version 2.0+ jobs, you cannot specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p> <p>Do not set <code>MaxCapacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
-        "JobRun$DPUSeconds": "<p>This field populates only for Auto Scaling job runs, and represents the total time each executor ran during the lifecycle of a job run in seconds, multiplied by a DPU factor (1 for <code>G.1X</code>, 2 for <code>G.2X</code>, or 0.25 for <code>G.025X</code> workers). This value may be different than the <code>executionEngineRuntime</code> * <code>MaxCapacity</code> as in the case of Auto Scaling jobs, as the number of executors running at a given time may be less than the <code>MaxCapacity</code>. Therefore, it is possible that the value of <code>DPUSeconds</code> is less than <code>executionEngineRuntime</code> * <code>MaxCapacity</code>.</p>",
+        "JobRun$DPUSeconds": "<p>This field can be set for either job runs with execution class <code>FLEX</code> or when Auto Scaling is enabled, and represents the total time each executor ran during the lifecycle of a job run in seconds, multiplied by a DPU factor (1 for <code>G.1X</code>, 2 for <code>G.2X</code>, or 0.25 for <code>G.025X</code> workers). This value may be different than the <code>executionEngineRuntime</code> * <code>MaxCapacity</code> as in the case of Auto Scaling jobs, as the number of executors running at a given time may be less than the <code>MaxCapacity</code>. Therefore, it is possible that the value of <code>DPUSeconds</code> is less than <code>executionEngineRuntime</code> * <code>MaxCapacity</code>.</p>",
         "JobUpdate$MaxCapacity": "<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\"> Glue pricing page</a>.</p> <p>For Glue version 2.0+ jobs, you cannot specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p> <p>Do not set <code>MaxCapacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "MLTransform$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"http://aws.amazon.com/glue/pricing/\">Glue pricing page</a>. </p> <p> <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p> <ul> <li> <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p> </li> <li> <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p> </li> <li> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p> </li> <li> <p> <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p> </li> </ul> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
         "Session$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that can be allocated when the job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB memory. </p>",
@@ -6330,6 +6509,32 @@
         "QuerySessionContext$ClusterId": "<p>An identifier string for the consumer cluster.</p>"
       }
     },
+    "OAuth2ClientApplication": {
+      "base": "<p>The OAuth2 client app used for the connection.</p>",
+      "refs": {
+        "OAuth2Properties$OAuth2ClientApplication": "<p>The client application type. For example, AWS_MANAGED or USER_MANAGED.</p>",
+        "OAuth2PropertiesInput$OAuth2ClientApplication": "<p>The client application type in the CreateConnection request. For example, <code>AWS_MANAGED</code> or <code>USER_MANAGED</code>.</p>"
+      }
+    },
+    "OAuth2GrantType": {
+      "base": null,
+      "refs": {
+        "OAuth2Properties$OAuth2GrantType": "<p>The OAuth2 grant type. For example, <code>AUTHORIZATION_CODE</code>, <code>JWT_BEARER</code>, or <code>CLIENT_CREDENTIALS</code>.</p>",
+        "OAuth2PropertiesInput$OAuth2GrantType": "<p>The OAuth2 grant type in the CreateConnection request. For example, <code>AUTHORIZATION_CODE</code>, <code>JWT_BEARER</code>, or <code>CLIENT_CREDENTIALS</code>.</p>"
+      }
+    },
+    "OAuth2Properties": {
+      "base": "<p>A structure containing properties for OAuth2 authentication.</p>",
+      "refs": {
+        "AuthenticationConfiguration$OAuth2Properties": "<p>The properties for OAuth2 authentication.</p>"
+      }
+    },
+    "OAuth2PropertiesInput": {
+      "base": "<p>A structure containing properties for OAuth2 in the CreateConnection request.</p>",
+      "refs": {
+        "AuthenticationConfigurationInput$OAuth2Properties": "<p>The properties for OAuth2 authentication in the CreateConnection request.</p>"
+      }
+    },
     "OneInput": {
       "base": null,
       "refs": {
@@ -6374,6 +6579,11 @@
       "base": "<p>A structure representing an open format table.</p>",
       "refs": {
         "CreateTableRequest$OpenTableFormatInput": "<p>Specifies an <code>OpenTableFormatInput</code> structure when creating an open format table.</p>"
+      }
+    },
+    "OperationNotSupportedException": {
+      "base": "<p>The operation is not available in the region.</p>",
+      "refs": {
       }
     },
     "OperationTimeoutException": {
@@ -6465,7 +6675,8 @@
       "refs": {
         "GetJobRunsRequest$MaxResults": "<p>The maximum size of the response.</p>",
         "GetTriggersRequest$MaxResults": "<p>The maximum size of the response.</p>",
-        "ListTriggersRequest$MaxResults": "<p>The maximum size of a list to return.</p>"
+        "ListTriggersRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
+        "ListUsageProfilesRequest$MaxResults": "<p>The maximum number of usage profiles to return in a single response.</p>"
       }
     },
     "OrchestrationPageSize25": {
@@ -6508,7 +6719,9 @@
         "ListSessionsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more result. </p>",
         "ListSessionsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more result. </p>",
         "ListStatementsRequest$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
-        "ListStatementsResponse$NextToken": "<p>A continuation token, if not all statements have yet been returned.</p>"
+        "ListStatementsResponse$NextToken": "<p>A continuation token, if not all statements have yet been returned.</p>",
+        "ListUsageProfilesRequest$NextToken": "<p>A continuation token, included if this is a continuation call.</p>",
+        "ListUsageProfilesResponse$NextToken": "<p>A continuation token, present if the current list segment is not the last.</p>"
       }
     },
     "Order": {
@@ -6759,7 +6972,7 @@
       "refs": {
         "GetUnfilteredPartitionMetadataRequest$SupportedPermissionTypes": "<p>(Required) A list of supported permission types. </p>",
         "GetUnfilteredPartitionsMetadataRequest$SupportedPermissionTypes": "<p>A list of supported permission types. </p>",
-        "GetUnfilteredTableMetadataRequest$SupportedPermissionTypes": "<p>(Required) A list of supported permission types. </p>"
+        "GetUnfilteredTableMetadataRequest$SupportedPermissionTypes": "<p>Indicates the level of filtering a third-party analytical engine is capable of enforcing when calling the <code>GetUnfilteredTableMetadata</code> API operation. Accepted values are:</p> <ul> <li> <p> <code>COLUMN_PERMISSION</code> - Column permissions ensure that users can access only specific columns in the table. If there are particular columns contain sensitive data, data lake administrators can define column filters that exclude access to specific columns.</p> </li> <li> <p> <code>CELL_FILTER_PERMISSION</code> - Cell-level filtering combines column filtering (include or exclude columns) and row filter expressions to restrict access to individual elements in the table.</p> </li> <li> <p> <code>NESTED_PERMISSION</code> - Nested permissions combines cell-level filtering and nested column filtering to restrict access to columns and/or nested columns in specific rows based on row filter expressions.</p> </li> <li> <p> <code>NESTED_CELL_PERMISSION</code> - Nested cell permissions combines nested permission with nested cell-level filtering. This allows different subsets of nested columns to be restricted based on an array of row filter expressions. </p> </li> </ul> <p>Note: Each of these permission types follows a hierarchical order where each subsequent permission type includes all permission of the previous type.</p> <p>Important: If you provide a supported permission type that doesn't match the user's level of permissions on the table, then Lake Formation raises an exception. For example, if the third-party engine calling the <code>GetUnfilteredTableMetadata</code> operation can enforce only column-level filtering, and the user has nested cell filtering applied on the table, Lake Formation throws an exception, and will not return unfiltered table metadata and data access credentials.</p>"
       }
     },
     "PermissionTypeMismatchException": {
@@ -6768,10 +6981,10 @@
       }
     },
     "PhysicalConnectionRequirements": {
-      "base": "<p>Specifies the physical requirements for a connection.</p>",
+      "base": "<p>The OAuth client app in GetConnection response.</p>",
       "refs": {
-        "Connection$PhysicalConnectionRequirements": "<p>A map of physical connection requirements, such as virtual private cloud (VPC) and <code>SecurityGroup</code>, that are needed to make this connection successfully.</p>",
-        "ConnectionInput$PhysicalConnectionRequirements": "<p>A map of physical connection requirements, such as virtual private cloud (VPC) and <code>SecurityGroup</code>, that are needed to successfully make this connection.</p>"
+        "Connection$PhysicalConnectionRequirements": "<p>The physical connection requirements, such as virtual private cloud (VPC) and <code>SecurityGroup</code>, that are needed to make this connection successfully.</p>",
+        "ConnectionInput$PhysicalConnectionRequirements": "<p>The physical connection requirements, such as virtual private cloud (VPC) and <code>SecurityGroup</code>, that are needed to successfully make this connection.</p>"
       }
     },
     "PiiType": {
@@ -6843,7 +7056,8 @@
       "refs": {
         "ColumnRowFilter$RowFilterExpression": "<p>A string containing the row-level filter expression.</p>",
         "GetPartitionsRequest$Expression": "<p>An expression that filters the partitions to be returned.</p> <p>The expression uses SQL syntax similar to the SQL <code>WHERE</code> filter clause. The SQL statement parser <a href=\"http://jsqlparser.sourceforge.net/home.php\">JSQLParser</a> parses the expression. </p> <p> <i>Operators</i>: The following are the operators that you can use in the <code>Expression</code> API call:</p> <dl> <dt>=</dt> <dd> <p>Checks whether the values of the two operands are equal; if yes, then the condition becomes true.</p> <p>Example: Assume 'variable a' holds 10 and 'variable b' holds 20. </p> <p>(a = b) is not true.</p> </dd> <dt>&lt; &gt;</dt> <dd> <p>Checks whether the values of two operands are equal; if the values are not equal, then the condition becomes true.</p> <p>Example: (a &lt; &gt; b) is true.</p> </dd> <dt>&gt;</dt> <dd> <p>Checks whether the value of the left operand is greater than the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &gt; b) is not true.</p> </dd> <dt>&lt;</dt> <dd> <p>Checks whether the value of the left operand is less than the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &lt; b) is true.</p> </dd> <dt>&gt;=</dt> <dd> <p>Checks whether the value of the left operand is greater than or equal to the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &gt;= b) is not true.</p> </dd> <dt>&lt;=</dt> <dd> <p>Checks whether the value of the left operand is less than or equal to the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &lt;= b) is true.</p> </dd> <dt>AND, OR, IN, BETWEEN, LIKE, NOT, IS NULL</dt> <dd> <p>Logical operators.</p> </dd> </dl> <p> <i>Supported Partition Key Types</i>: The following are the supported partition keys.</p> <ul> <li> <p> <code>string</code> </p> </li> <li> <p> <code>date</code> </p> </li> <li> <p> <code>timestamp</code> </p> </li> <li> <p> <code>int</code> </p> </li> <li> <p> <code>bigint</code> </p> </li> <li> <p> <code>long</code> </p> </li> <li> <p> <code>tinyint</code> </p> </li> <li> <p> <code>smallint</code> </p> </li> <li> <p> <code>decimal</code> </p> </li> </ul> <p>If an type is encountered that is not valid, an exception is thrown. </p> <p>The following list shows the valid operators on each type. When you define a crawler, the <code>partitionKey</code> type is created as a <code>STRING</code>, to be compatible with the catalog partitions. </p> <p> <i>Sample API Call</i>: </p>",
-        "GetUnfilteredPartitionsMetadataRequest$Expression": "<p>An expression that filters the partitions to be returned.</p> <p>The expression uses SQL syntax similar to the SQL <code>WHERE</code> filter clause. The SQL statement parser <a href=\"http://jsqlparser.sourceforge.net/home.php\">JSQLParser</a> parses the expression. </p> <p> <i>Operators</i>: The following are the operators that you can use in the <code>Expression</code> API call:</p> <dl> <dt>=</dt> <dd> <p>Checks whether the values of the two operands are equal; if yes, then the condition becomes true.</p> <p>Example: Assume 'variable a' holds 10 and 'variable b' holds 20. </p> <p>(a = b) is not true.</p> </dd> <dt>&lt; &gt;</dt> <dd> <p>Checks whether the values of two operands are equal; if the values are not equal, then the condition becomes true.</p> <p>Example: (a &lt; &gt; b) is true.</p> </dd> <dt>&gt;</dt> <dd> <p>Checks whether the value of the left operand is greater than the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &gt; b) is not true.</p> </dd> <dt>&lt;</dt> <dd> <p>Checks whether the value of the left operand is less than the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &lt; b) is true.</p> </dd> <dt>&gt;=</dt> <dd> <p>Checks whether the value of the left operand is greater than or equal to the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &gt;= b) is not true.</p> </dd> <dt>&lt;=</dt> <dd> <p>Checks whether the value of the left operand is less than or equal to the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &lt;= b) is true.</p> </dd> <dt>AND, OR, IN, BETWEEN, LIKE, NOT, IS NULL</dt> <dd> <p>Logical operators.</p> </dd> </dl> <p> <i>Supported Partition Key Types</i>: The following are the supported partition keys.</p> <ul> <li> <p> <code>string</code> </p> </li> <li> <p> <code>date</code> </p> </li> <li> <p> <code>timestamp</code> </p> </li> <li> <p> <code>int</code> </p> </li> <li> <p> <code>bigint</code> </p> </li> <li> <p> <code>long</code> </p> </li> <li> <p> <code>tinyint</code> </p> </li> <li> <p> <code>smallint</code> </p> </li> <li> <p> <code>decimal</code> </p> </li> </ul> <p>If an type is encountered that is not valid, an exception is thrown. </p>"
+        "GetUnfilteredPartitionsMetadataRequest$Expression": "<p>An expression that filters the partitions to be returned.</p> <p>The expression uses SQL syntax similar to the SQL <code>WHERE</code> filter clause. The SQL statement parser <a href=\"http://jsqlparser.sourceforge.net/home.php\">JSQLParser</a> parses the expression. </p> <p> <i>Operators</i>: The following are the operators that you can use in the <code>Expression</code> API call:</p> <dl> <dt>=</dt> <dd> <p>Checks whether the values of the two operands are equal; if yes, then the condition becomes true.</p> <p>Example: Assume 'variable a' holds 10 and 'variable b' holds 20. </p> <p>(a = b) is not true.</p> </dd> <dt>&lt; &gt;</dt> <dd> <p>Checks whether the values of two operands are equal; if the values are not equal, then the condition becomes true.</p> <p>Example: (a &lt; &gt; b) is true.</p> </dd> <dt>&gt;</dt> <dd> <p>Checks whether the value of the left operand is greater than the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &gt; b) is not true.</p> </dd> <dt>&lt;</dt> <dd> <p>Checks whether the value of the left operand is less than the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &lt; b) is true.</p> </dd> <dt>&gt;=</dt> <dd> <p>Checks whether the value of the left operand is greater than or equal to the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &gt;= b) is not true.</p> </dd> <dt>&lt;=</dt> <dd> <p>Checks whether the value of the left operand is less than or equal to the value of the right operand; if yes, then the condition becomes true.</p> <p>Example: (a &lt;= b) is true.</p> </dd> <dt>AND, OR, IN, BETWEEN, LIKE, NOT, IS NULL</dt> <dd> <p>Logical operators.</p> </dd> </dl> <p> <i>Supported Partition Key Types</i>: The following are the supported partition keys.</p> <ul> <li> <p> <code>string</code> </p> </li> <li> <p> <code>date</code> </p> </li> <li> <p> <code>timestamp</code> </p> </li> <li> <p> <code>int</code> </p> </li> <li> <p> <code>bigint</code> </p> </li> <li> <p> <code>long</code> </p> </li> <li> <p> <code>tinyint</code> </p> </li> <li> <p> <code>smallint</code> </p> </li> <li> <p> <code>decimal</code> </p> </li> </ul> <p>If an type is encountered that is not valid, an exception is thrown. </p>",
+        "GetUnfilteredTableMetadataResponse$RowFilter": "<p>The filter that applies to the table. For example when applying the filter in SQL, it would go in the <code>WHERE</code> clause and can be evaluated by using an <code>AND</code> operator with any other predicates applied by the user querying the table.</p>"
       }
     },
     "PrincipalPermissions": {
@@ -6870,6 +7084,14 @@
       "base": null,
       "refs": {
         "Spigot$Prob": "<p>The probability (a decimal value with a maximum value of 1) of picking any given record. A value of 1 indicates that each row read from the dataset should be included in the sample output.</p>"
+      }
+    },
+    "ProfileConfiguration": {
+      "base": "<p>Specifies the job and session values that an admin configures in an Glue usage profile.</p>",
+      "refs": {
+        "CreateUsageProfileRequest$Configuration": "<p>A <code>ProfileConfiguration</code> object specifying the job and session values for the profile.</p>",
+        "GetUsageProfileResponse$Configuration": "<p>A <code>ProfileConfiguration</code> object specifying the job and session values for the profile.</p>",
+        "UpdateUsageProfileRequest$Configuration": "<p>A <code>ProfileConfiguration</code> object specifying the job and session values for the profile.</p>"
       }
     },
     "PropertyPredicate": {
@@ -7011,6 +7233,12 @@
         "Crawler$RecrawlPolicy": "<p>A policy that specifies whether to crawl the entire dataset again, or to crawl only folders that were added since the last crawler run.</p>",
         "CreateCrawlerRequest$RecrawlPolicy": "<p>A policy that specifies whether to crawl the entire dataset again, or to crawl only folders that were added since the last crawler run.</p>",
         "UpdateCrawlerRequest$RecrawlPolicy": "<p>A policy that specifies whether to crawl the entire dataset again, or to crawl only folders that were added since the last crawler run.</p>"
+      }
+    },
+    "RedirectUri": {
+      "base": null,
+      "refs": {
+        "AuthorizationCodeProperties$RedirectUri": "<p>The redirect URI where the user gets redirected to by authorization server when issuing an authorization code. The URI is subsequently used when the authorization code is exchanged for an access token.</p>"
       }
     },
     "RedshiftSource": {
@@ -7194,7 +7422,7 @@
     "RulesetNames": {
       "base": null,
       "refs": {
-        "GetDataQualityRulesetEvaluationRunResponse$RulesetNames": "<p>A list of ruleset names for the run.</p>",
+        "GetDataQualityRulesetEvaluationRunResponse$RulesetNames": "<p>A list of ruleset names for the run. Currently, this parameter takes only one Ruleset name.</p>",
         "StartDataQualityRulesetEvaluationRunRequest$RulesetNames": "<p>A list of ruleset names.</p>"
       }
     },
@@ -7633,6 +7861,13 @@
     "SearchTablesResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "SecretArn": {
+      "base": null,
+      "refs": {
+        "AuthenticationConfiguration$SecretArn": "<p>The secret manager ARN to store credentials.</p>",
+        "AuthenticationConfigurationInput$SecretArn": "<p>The secret manager ARN to store credentials in the CreateConnection request.</p>"
       }
     },
     "SecurityConfiguration": {
@@ -8299,6 +8534,7 @@
         "CreateSchemaResponse$Tags": "<p>The tags for the schema.</p>",
         "CreateSessionRequest$Tags": "<p>The map of key value pairs (tags) belonging to the session.</p>",
         "CreateTriggerRequest$Tags": "<p>The tags to use with this trigger. You may use tags to limit access to the trigger. For more information about tags in Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">Amazon Web Services Tags in Glue</a> in the developer guide. </p>",
+        "CreateUsageProfileRequest$Tags": "<p>A list of tags applied to the usage profile.</p>",
         "CreateWorkflowRequest$Tags": "<p>The tags to be used with this workflow.</p>",
         "GetTagsResponse$Tags": "<p>The requested tags.</p>",
         "ListBlueprintsRequest$Tags": "<p>Filters the list by an Amazon Web Services resource tag.</p>",
@@ -8382,20 +8618,20 @@
       "base": null,
       "refs": {
         "Action$Timeout": "<p>The <code>JobRun</code> timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours). This overrides the timeout value set in the parent job.</p>",
-        "CreateJobRequest$Timeout": "<p>The job timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
+        "CreateJobRequest$Timeout": "<p>The job timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours) for batch jobs.</p> <p>Streaming jobs must have timeout values less than 7 days or 10080 minutes. When the value is left blank, the job will be restarted after 7 days based if you have not setup a maintenance window. If you have setup maintenance window, it will be restarted during the maintenance window after 7 days.</p>",
         "CreateMLTransformRequest$Timeout": "<p>The timeout of the task run for this transform in minutes. This is the maximum time that a task run for this transform can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "CreateSessionRequest$Timeout": "<p> The number of minutes before session times out. Default for Spark ETL jobs is 48 hours (2880 minutes), the maximum session lifetime for this job type. Consult the documentation for other job types. </p>",
         "CreateSessionRequest$IdleTimeout": "<p> The number of minutes when idle before session times out. Default for Spark ETL jobs is value of Timeout. Consult the documentation for other job types. </p>",
         "GetDataQualityRuleRecommendationRunResponse$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "GetDataQualityRulesetEvaluationRunResponse$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "GetMLTransformResponse$Timeout": "<p>The timeout for a task run for this transform in minutes. This is the maximum time that a task run for this transform can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
-        "Job$Timeout": "<p>The job timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
-        "JobRun$Timeout": "<p>The <code>JobRun</code> timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. This value overrides the timeout value set in the parent job.</p> <p>Streaming jobs do not have a timeout. The default for non-streaming jobs is 2,880 minutes (48 hours).</p>",
-        "JobUpdate$Timeout": "<p>The job timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
+        "Job$Timeout": "<p>The job timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours) for batch jobs.</p> <p>Streaming jobs must have timeout values less than 7 days or 10080 minutes. When the value is left blank, the job will be restarted after 7 days based if you have not setup a maintenance window. If you have setup maintenance window, it will be restarted during the maintenance window after 7 days.</p>",
+        "JobRun$Timeout": "<p>The <code>JobRun</code> timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. This value overrides the timeout value set in the parent job.</p> <p>Streaming jobs must have timeout values less than 7 days or 10080 minutes. When the value is left blank, the job will be restarted after 7 days based if you have not setup a maintenance window. If you have setup maintenance window, it will be restarted during the maintenance window after 7 days.</p>",
+        "JobUpdate$Timeout": "<p>The job timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours) for batch jobs.</p> <p>Streaming jobs must have timeout values less than 7 days or 10080 minutes. When the value is left blank, the job will be restarted after 7 days based if you have not setup a maintenance window. If you have setup maintenance window, it will be restarted during the maintenance window after 7 days.</p>",
         "MLTransform$Timeout": "<p>The timeout in minutes of the machine learning transform.</p>",
         "StartDataQualityRuleRecommendationRunRequest$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "StartDataQualityRulesetEvaluationRunRequest$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
-        "StartJobRunRequest$Timeout": "<p>The <code>JobRun</code> timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. This value overrides the timeout value set in the parent job.</p> <p>Streaming jobs do not have a timeout. The default for non-streaming jobs is 2,880 minutes (48 hours).</p>",
+        "StartJobRunRequest$Timeout": "<p>The <code>JobRun</code> timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. This value overrides the timeout value set in the parent job. </p> <p>Streaming jobs must have timeout values less than 7 days or 10080 minutes. When the value is left blank, the job will be restarted after 7 days based if you have not setup a maintenance window. If you have setup maintenance window, it will be restarted during the maintenance window after 7 days.</p>",
         "UpdateMLTransformRequest$Timeout": "<p>The timeout for a task run for this transform in minutes. This is the maximum time that a task run for this transform can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>"
       }
     },
@@ -8408,8 +8644,9 @@
         "ColumnStatisticsTaskRun$LastUpdated": "<p>The last point in time when this task was modified.</p>",
         "ColumnStatisticsTaskRun$StartTime": "<p>The start time of the task.</p>",
         "ColumnStatisticsTaskRun$EndTime": "<p>The end time of the task.</p>",
-        "Connection$CreationTime": "<p>The time that this connection definition was created.</p>",
-        "Connection$LastUpdatedTime": "<p>The last time that this connection definition was updated.</p>",
+        "Connection$CreationTime": "<p>The timestamp of the time that this connection definition was created.</p>",
+        "Connection$LastUpdatedTime": "<p>The timestamp of the last time the connection definition was updated.</p>",
+        "Connection$LastConnectionValidationTime": "<p>A timestamp of the time this connection was last validated.</p>",
         "Crawler$CreationTime": "<p>The time that the crawler was created.</p>",
         "Crawler$LastUpdated": "<p>The time that the crawler was last updated.</p>",
         "CrawlerHistory$StartTime": "<p>The date and time on which the crawl started.</p>",
@@ -8504,6 +8741,8 @@
         "CreateSecurityConfigurationResponse$CreatedTimestamp": "<p>The time at which the new security configuration was created.</p>",
         "DevEndpoint$CreatedTimestamp": "<p>The point in time at which this DevEndpoint was created.</p>",
         "DevEndpoint$LastModifiedTimestamp": "<p>The point in time at which this <code>DevEndpoint</code> was last modified.</p>",
+        "GetUsageProfileResponse$CreatedOn": "<p>The date and time when the usage profile was created.</p>",
+        "GetUsageProfileResponse$LastModifiedOn": "<p>The date and time when the usage profile was last modified.</p>",
         "Job$CreatedOn": "<p>The time and date that this job definition was created.</p>",
         "Job$LastModifiedOn": "<p>The last point in time when this job definition was modified.</p>",
         "JobRun$StartedOn": "<p>The date and time at which this job run was started.</p>",
@@ -8513,6 +8752,8 @@
         "SecurityConfiguration$CreatedTimeStamp": "<p>The time at which this security configuration was created.</p>",
         "Session$CreatedOn": "<p>The time and date when the session was created.</p>",
         "Session$CompletedOn": "<p>The date and time that this session is completed.</p>",
+        "UsageProfileDefinition$CreatedOn": "<p>The date and time when the usage profile was created.</p>",
+        "UsageProfileDefinition$LastModifiedOn": "<p>The date and time when the usage profile was last modified.</p>",
         "Workflow$CreatedOn": "<p>The date and time when the workflow was created.</p>",
         "Workflow$LastModifiedOn": "<p>The date and time when the workflow was last modified.</p>",
         "WorkflowRun$StartedOn": "<p>The date and time when the workflow run was started.</p>",
@@ -8556,6 +8797,32 @@
         "ListCrawlsResponse$NextToken": "<p>A continuation token for paginating the returned list of tokens, returned if the current segment of the list is not the last.</p>",
         "SearchTablesRequest$NextToken": "<p>A continuation token, included if this is a continuation call.</p>",
         "SearchTablesResponse$NextToken": "<p>A continuation token, present if the current list segment is not the last.</p>"
+      }
+    },
+    "TokenUrl": {
+      "base": null,
+      "refs": {
+        "OAuth2Properties$TokenUrl": "<p>The URL of the provider's authentication server, to exchange an authorization code for an access token.</p>",
+        "OAuth2PropertiesInput$TokenUrl": "<p>The URL of the provider's authentication server, to exchange an authorization code for an access token.</p>"
+      }
+    },
+    "TokenUrlParameterKey": {
+      "base": null,
+      "refs": {
+        "TokenUrlParametersMap$key": null
+      }
+    },
+    "TokenUrlParameterValue": {
+      "base": null,
+      "refs": {
+        "TokenUrlParametersMap$value": null
+      }
+    },
+    "TokenUrlParametersMap": {
+      "base": null,
+      "refs": {
+        "OAuth2Properties$TokenUrlParametersMap": "<p>A map of parameters that are added to the token <code>GET</code> request.</p>",
+        "OAuth2PropertiesInput$TokenUrlParametersMap": "<p>A map of parameters that are added to the token <code>GET</code> request.</p>"
       }
     },
     "Topk": {
@@ -9010,6 +9277,16 @@
       "refs": {
       }
     },
+    "UpdateUsageProfileRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateUsageProfileResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateUserDefinedFunctionRequest": {
       "base": null,
       "refs": {
@@ -9066,6 +9343,18 @@
         "StartMLLabelingSetGenerationTaskRunRequest$OutputS3Path": "<p>The Amazon Simple Storage Service (Amazon S3) path where you generate the labeling set.</p>"
       }
     },
+    "UsageProfileDefinition": {
+      "base": "<p>Describes an Glue usage profile.</p>",
+      "refs": {
+        "UsageProfileDefinitionList$member": null
+      }
+    },
+    "UsageProfileDefinitionList": {
+      "base": null,
+      "refs": {
+        "ListUsageProfilesResponse$Profiles": "<p>A list of usage profile (<code>UsageProfileDefinition</code>) objects.</p>"
+      }
+    },
     "UserDefinedFunction": {
       "base": "<p>Represents the equivalent of a Hive user-defined function (<code>UDF</code>) definition.</p>",
       "refs": {
@@ -9084,6 +9373,12 @@
       "base": null,
       "refs": {
         "GetUserDefinedFunctionsResponse$UserDefinedFunctions": "<p>A list of requested function definitions.</p>"
+      }
+    },
+    "UserManagedClientApplicationClientId": {
+      "base": null,
+      "refs": {
+        "OAuth2ClientApplication$UserManagedClientApplicationClientId": "<p>The client application clientID if the ClientAppType is <code>USER_MANAGED</code>.</p>"
       }
     },
     "ValidationException": {
@@ -9172,16 +9467,63 @@
         "DeleteSchemaVersionsInput$Versions": "<p>A version range may be supplied which may be of the format:</p> <ul> <li> <p>a single version number, 5</p> </li> <li> <p>a range, 5-8 : deletes versions 5, 6, 7, 8</p> </li> </ul>"
       }
     },
+    "ViewDefinition": {
+      "base": "<p>A structure containing details for representations.</p>",
+      "refs": {
+        "Table$ViewDefinition": "<p>A structure that contains all the information that defines the view, including the dialect or dialects for the view, and the query.</p>"
+      }
+    },
+    "ViewDefinitionInput": {
+      "base": "<p>A structure containing details for creating or updating an Glue view.</p>",
+      "refs": {
+        "TableInput$ViewDefinition": "<p>A structure that contains all the information that defines the view, including the dialect or dialects for the view, and the query.</p>"
+      }
+    },
     "ViewDialect": {
       "base": null,
       "refs": {
-        "SupportedDialect$Dialect": "<p>The dialect of the query engine.</p>"
+        "SupportedDialect$Dialect": "<p>The dialect of the query engine.</p>",
+        "ViewRepresentation$Dialect": "<p>The dialect of the query engine.</p>",
+        "ViewRepresentationInput$Dialect": "<p>A parameter that specifies the engine type of a specific representation.</p>"
       }
     },
     "ViewDialectVersionString": {
       "base": null,
       "refs": {
-        "SupportedDialect$DialectVersion": "<p>The version of the dialect of the query engine. For example, 3.0.0.</p>"
+        "SupportedDialect$DialectVersion": "<p>The version of the dialect of the query engine. For example, 3.0.0.</p>",
+        "ViewRepresentation$DialectVersion": "<p>The version of the dialect of the query engine. For example, 3.0.0.</p>",
+        "ViewRepresentationInput$DialectVersion": "<p>A parameter that specifies the version of the engine of a specific representation.</p>"
+      }
+    },
+    "ViewRepresentation": {
+      "base": "<p>A structure that contains the dialect of the view, and the query that defines the view.</p>",
+      "refs": {
+        "ViewRepresentationList$member": null
+      }
+    },
+    "ViewRepresentationInput": {
+      "base": "<p>A structure containing details of a representation to update or create a Lake Formation view.</p>",
+      "refs": {
+        "ViewRepresentationInputList$member": null
+      }
+    },
+    "ViewRepresentationInputList": {
+      "base": null,
+      "refs": {
+        "ViewDefinitionInput$Representations": "<p>A list of structures that contains the dialect of the view, and the query that defines the view.</p>"
+      }
+    },
+    "ViewRepresentationList": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$Representations": "<p>A list of representations.</p>"
+      }
+    },
+    "ViewSubObjectsList": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$SubObjects": "<p>A list of table Amazon Resource Names (ARNs).</p>",
+        "ViewDefinitionInput$SubObjects": "<p>A list of base table ARNs that make up the view.</p>"
       }
     },
     "ViewTextString": {
@@ -9190,7 +9532,17 @@
         "Table$ViewOriginalText": "<p>Included for Apache Hive compatibility. Not used in the normal course of Glue operations. If the table is a <code>VIRTUAL_VIEW</code>, certain Athena configuration encoded in base64.</p>",
         "Table$ViewExpandedText": "<p>Included for Apache Hive compatibility. Not used in the normal course of Glue operations.</p>",
         "TableInput$ViewOriginalText": "<p>Included for Apache Hive compatibility. Not used in the normal course of Glue operations. If the table is a <code>VIRTUAL_VIEW</code>, certain Athena configuration encoded in base64.</p>",
-        "TableInput$ViewExpandedText": "<p>Included for Apache Hive compatibility. Not used in the normal course of Glue operations.</p>"
+        "TableInput$ViewExpandedText": "<p>Included for Apache Hive compatibility. Not used in the normal course of Glue operations.</p>",
+        "ViewRepresentation$ViewOriginalText": "<p>The <code>SELECT</code> query provided by the customer during <code>CREATE VIEW DDL</code>. This SQL is not used during a query on a view (<code>ViewExpandedText</code> is used instead). <code>ViewOriginalText</code> is used for cases like <code>SHOW CREATE VIEW</code> where users want to see the original DDL command that created the view.</p>",
+        "ViewRepresentation$ViewExpandedText": "<p>The expanded SQL for the view. This SQL is used by engines while processing a query on a view. Engines may perform operations during view creation to transform <code>ViewOriginalText</code> to <code>ViewExpandedText</code>. For example:</p> <ul> <li> <p>Fully qualified identifiers: <code>SELECT * from table1 -&gt; SELECT * from db1.table1</code> </p> </li> </ul>",
+        "ViewRepresentationInput$ViewOriginalText": "<p>A string that represents the original SQL query that describes the view.</p>",
+        "ViewRepresentationInput$ViewExpandedText": "<p>A string that represents the SQL query that describes the view with expanded resource ARNs</p>"
+      }
+    },
+    "ViewUpdateAction": {
+      "base": null,
+      "refs": {
+        "UpdateTableRequest$ViewUpdateAction": "<p>The operation to be performed when updating the view.</p>"
       }
     },
     "WorkerType": {

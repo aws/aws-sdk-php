@@ -4,6 +4,7 @@
     "apiVersion":"2021-01-01",
     "endpointPrefix":"es",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon OpenSearch Service",
     "serviceId":"OpenSearch",
     "signatureVersion":"v4",
@@ -1707,7 +1708,8 @@
       "members":{
         "DataSourceType":{"shape":"DataSourceType"},
         "Name":{"shape":"DataSourceName"},
-        "Description":{"shape":"DataSourceDescription"}
+        "Description":{"shape":"DataSourceDescription"},
+        "Status":{"shape":"DataSourceStatus"}
       }
     },
     "DataSourceList":{
@@ -1719,6 +1721,13 @@
       "max":80,
       "min":3,
       "pattern":"[a-z][a-z0-9_]+"
+    },
+    "DataSourceStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DISABLED"
+      ]
     },
     "DataSourceType":{
       "type":"structure",
@@ -2436,6 +2445,7 @@
         "Endpoint":{"shape":"ServiceUrl"},
         "EndpointV2":{"shape":"ServiceUrl"},
         "Endpoints":{"shape":"EndpointsMap"},
+        "DomainEndpointV2HostedZoneId":{"shape":"HostedZoneId"},
         "Processing":{"shape":"Boolean"},
         "UpgradeProcessing":{"shape":"Boolean"},
         "EngineVersion":{"shape":"VersionString"},
@@ -2648,7 +2658,8 @@
       "members":{
         "DataSourceType":{"shape":"DataSourceType"},
         "Name":{"shape":"DataSourceName"},
-        "Description":{"shape":"DataSourceDescription"}
+        "Description":{"shape":"DataSourceDescription"},
+        "Status":{"shape":"DataSourceStatus"}
       }
     },
     "GetDomainMaintenanceStatusRequest":{
@@ -2757,6 +2768,7 @@
         "UpgradeName":{"shape":"UpgradeName"}
       }
     },
+    "HostedZoneId":{"type":"string"},
     "IPAddressType":{
       "type":"string",
       "enum":[
@@ -4230,7 +4242,8 @@
           "locationName":"DataSourceName"
         },
         "DataSourceType":{"shape":"DataSourceType"},
-        "Description":{"shape":"DataSourceDescription"}
+        "Description":{"shape":"DataSourceDescription"},
+        "Status":{"shape":"DataSourceStatus"}
       }
     },
     "UpdateDataSourceResponse":{

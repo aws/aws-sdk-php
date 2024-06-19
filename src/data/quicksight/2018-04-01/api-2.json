@@ -5,6 +5,7 @@
     "endpointPrefix":"quicksight",
     "jsonVersion":"1.0",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon QuickSight",
     "serviceId":"QuickSight",
     "signatureVersion":"v4",
@@ -1342,6 +1343,21 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DescribeKeyRegistration":{
+      "name":"DescribeKeyRegistration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/key-registration"
+      },
+      "input":{"shape":"DescribeKeyRegistrationRequest"},
+      "output":{"shape":"DescribeKeyRegistrationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -2791,6 +2807,21 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateKeyRegistration":{
+      "name":"UpdateKeyRegistration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/key-registration"
+      },
+      "input":{"shape":"UpdateKeyRegistrationRequest"},
+      "output":{"shape":"UpdateKeyRegistrationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdatePublicSharingSettings":{
       "name":"UpdatePublicSharingSettings",
       "http":{
@@ -2842,6 +2873,22 @@
         {"shape":"PreconditionNotMetException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "UpdateSPICECapacityConfiguration":{
+      "name":"UpdateSPICECapacityConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/spice-capacity-configuration"
+      },
+      "input":{"shape":"UpdateSPICECapacityConfigurationRequest"},
+      "output":{"shape":"UpdateSPICECapacityConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "UpdateTemplate":{
@@ -3336,7 +3383,15 @@
       "members":{
         "Dashboard":{"shape":"AnonymousUserDashboardEmbeddingConfiguration"},
         "DashboardVisual":{"shape":"AnonymousUserDashboardVisualEmbeddingConfiguration"},
-        "QSearchBar":{"shape":"AnonymousUserQSearchBarEmbeddingConfiguration"}
+        "QSearchBar":{"shape":"AnonymousUserQSearchBarEmbeddingConfiguration"},
+        "GenerativeQnA":{"shape":"AnonymousUserGenerativeQnAEmbeddingConfiguration"}
+      }
+    },
+    "AnonymousUserGenerativeQnAEmbeddingConfiguration":{
+      "type":"structure",
+      "required":["InitialTopicId"],
+      "members":{
+        "InitialTopicId":{"shape":"RestrictiveResourceId"}
       }
     },
     "AnonymousUserQSearchBarEmbeddingConfiguration":{
@@ -3551,7 +3606,8 @@
         "ClusterId",
         "ManifestFileLocation",
         "Warehouse",
-        "RoleArn"
+        "RoleArn",
+        "ProductType"
       ]
     },
     "AssetBundleExportJobDataSourcePropertyToOverrideList":{
@@ -4116,6 +4172,17 @@
       "member":{"shape":"AssetBundleImportJobVPCConnectionOverrideTags"},
       "max":5,
       "min":1
+    },
+    "AssetBundleImportJobWarning":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "Message":{"shape":"NonEmptyString"}
+      }
+    },
+    "AssetBundleImportJobWarningList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobWarning"}
     },
     "AssetBundleImportSource":{
       "type":"structure",
@@ -4824,7 +4891,8 @@
       "members":{
         "FilterId":{"shape":"ShortRestrictiveResourceId"},
         "Column":{"shape":"ColumnIdentifier"},
-        "Configuration":{"shape":"CategoryFilterConfiguration"}
+        "Configuration":{"shape":"CategoryFilterConfiguration"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "CategoryFilterConfiguration":{
@@ -5466,7 +5534,6 @@
     "CreateAccountSubscriptionRequest":{
       "type":"structure",
       "required":[
-        "Edition",
         "AuthenticationMethod",
         "AwsAccountId",
         "AccountName",
@@ -5488,10 +5555,14 @@
         "AdminGroup":{"shape":"GroupsList"},
         "AuthorGroup":{"shape":"GroupsList"},
         "ReaderGroup":{"shape":"GroupsList"},
+        "AdminProGroup":{"shape":"GroupsList"},
+        "AuthorProGroup":{"shape":"GroupsList"},
+        "ReaderProGroup":{"shape":"GroupsList"},
         "FirstName":{"shape":"String"},
         "LastName":{"shape":"String"},
         "EmailAddress":{"shape":"String"},
-        "ContactNumber":{"shape":"String"}
+        "ContactNumber":{"shape":"String"},
+        "IAMIdentityCenterInstanceArn":{"shape":"String"}
       }
     },
     "CreateAccountSubscriptionResponse":{
@@ -7576,6 +7647,52 @@
         "VARP"
       ]
     },
+    "DefaultDateTimePickerControlOptions":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"SheetControlDateTimePickerType"},
+        "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"}
+      }
+    },
+    "DefaultFilterControlConfiguration":{
+      "type":"structure",
+      "required":[
+        "Title",
+        "ControlOptions"
+      ],
+      "members":{
+        "Title":{"shape":"SheetControlTitle"},
+        "ControlOptions":{"shape":"DefaultFilterControlOptions"}
+      }
+    },
+    "DefaultFilterControlOptions":{
+      "type":"structure",
+      "members":{
+        "DefaultDateTimePickerOptions":{"shape":"DefaultDateTimePickerControlOptions"},
+        "DefaultListOptions":{"shape":"DefaultFilterListControlOptions"},
+        "DefaultDropdownOptions":{"shape":"DefaultFilterDropDownControlOptions"},
+        "DefaultTextFieldOptions":{"shape":"DefaultTextFieldControlOptions"},
+        "DefaultTextAreaOptions":{"shape":"DefaultTextAreaControlOptions"},
+        "DefaultSliderOptions":{"shape":"DefaultSliderControlOptions"},
+        "DefaultRelativeDateTimeOptions":{"shape":"DefaultRelativeDateTimeControlOptions"}
+      }
+    },
+    "DefaultFilterDropDownControlOptions":{
+      "type":"structure",
+      "members":{
+        "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
+        "Type":{"shape":"SheetControlListType"},
+        "SelectableValues":{"shape":"FilterSelectableValues"}
+      }
+    },
+    "DefaultFilterListControlOptions":{
+      "type":"structure",
+      "members":{
+        "DisplayOptions":{"shape":"ListControlDisplayOptions"},
+        "Type":{"shape":"SheetControlListType"},
+        "SelectableValues":{"shape":"FilterSelectableValues"}
+      }
+    },
     "DefaultFormatting":{
       "type":"structure",
       "members":{
@@ -7618,11 +7735,45 @@
         "SectionBased":{"shape":"DefaultSectionBasedLayoutConfiguration"}
       }
     },
+    "DefaultRelativeDateTimeControlOptions":{
+      "type":"structure",
+      "members":{
+        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"}
+      }
+    },
     "DefaultSectionBasedLayoutConfiguration":{
       "type":"structure",
       "required":["CanvasSizeOptions"],
       "members":{
         "CanvasSizeOptions":{"shape":"SectionBasedLayoutCanvasSizeOptions"}
+      }
+    },
+    "DefaultSliderControlOptions":{
+      "type":"structure",
+      "required":[
+        "MaximumValue",
+        "MinimumValue",
+        "StepSize"
+      ],
+      "members":{
+        "DisplayOptions":{"shape":"SliderControlDisplayOptions"},
+        "Type":{"shape":"SheetControlSliderType"},
+        "MaximumValue":{"shape":"Double"},
+        "MinimumValue":{"shape":"Double"},
+        "StepSize":{"shape":"Double"}
+      }
+    },
+    "DefaultTextAreaControlOptions":{
+      "type":"structure",
+      "members":{
+        "Delimiter":{"shape":"TextAreaControlDelimiter"},
+        "DisplayOptions":{"shape":"TextAreaControlDisplayOptions"}
+      }
+    },
+    "DefaultTextFieldControlOptions":{
+      "type":"structure",
+      "members":{
+        "DisplayOptions":{"shape":"TextFieldControlDisplayOptions"}
       }
     },
     "DeleteAccountCustomizationRequest":{
@@ -8774,7 +8925,8 @@
         },
         "OverridePermissions":{"shape":"AssetBundleImportJobOverridePermissions"},
         "OverrideTags":{"shape":"AssetBundleImportJobOverrideTags"},
-        "OverrideValidationStrategy":{"shape":"AssetBundleImportJobOverrideValidationStrategy"}
+        "OverrideValidationStrategy":{"shape":"AssetBundleImportJobOverrideValidationStrategy"},
+        "Warnings":{"shape":"AssetBundleImportJobWarningList"}
       }
     },
     "DescribeDashboardDefinitionRequest":{
@@ -9426,12 +9578,39 @@
       "members":{
         "AwsAccountId":{"shape":"AwsAccountId"},
         "IpRestrictionRuleMap":{"shape":"IpRestrictionRuleMap"},
+        "VpcIdRestrictionRuleMap":{"shape":"VpcIdRestrictionRuleMap"},
+        "VpcEndpointIdRestrictionRuleMap":{"shape":"VpcEndpointIdRestrictionRuleMap"},
         "Enabled":{"shape":"NullableBoolean"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "DescribeKeyRegistrationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "DefaultKeyOnly":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"default-key-only"
+        }
+      }
+    },
+    "DescribeKeyRegistrationResponse":{
+      "type":"structure",
+      "members":{
+        "AwsAccountId":{"shape":"AwsAccountId"},
+        "KeyRegistration":{"shape":"KeyRegistration"},
+        "RequestId":{"shape":"NonEmptyString"},
+        "Status":{"shape":"StatusCode"}
       }
     },
     "DescribeNamespaceRequest":{
@@ -10253,6 +10432,24 @@
       "min":1,
       "sensitive":true
     },
+    "FailedKeyRegistrationEntries":{
+      "type":"list",
+      "member":{"shape":"FailedKeyRegistrationEntry"}
+    },
+    "FailedKeyRegistrationEntry":{
+      "type":"structure",
+      "required":[
+        "Message",
+        "StatusCode",
+        "SenderFault"
+      ],
+      "members":{
+        "KeyArn":{"shape":"String"},
+        "Message":{"shape":"NonEmptyString"},
+        "StatusCode":{"shape":"StatusCode"},
+        "SenderFault":{"shape":"Boolean"}
+      }
+    },
     "FieldBasedTooltip":{
       "type":"structure",
       "members":{
@@ -10470,13 +10667,26 @@
         "TextField":{"shape":"FilterTextFieldControl"},
         "TextArea":{"shape":"FilterTextAreaControl"},
         "Slider":{"shape":"FilterSliderControl"},
-        "RelativeDateTime":{"shape":"FilterRelativeDateTimeControl"}
+        "RelativeDateTime":{"shape":"FilterRelativeDateTimeControl"},
+        "CrossSheet":{"shape":"FilterCrossSheetControl"}
       }
     },
     "FilterControlList":{
       "type":"list",
       "member":{"shape":"FilterControl"},
       "max":200
+    },
+    "FilterCrossSheetControl":{
+      "type":"structure",
+      "required":[
+        "FilterControlId",
+        "SourceFilterId"
+      ],
+      "members":{
+        "FilterControlId":{"shape":"ShortRestrictiveResourceId"},
+        "SourceFilterId":{"shape":"ShortRestrictiveResourceId"},
+        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"}
+      }
     },
     "FilterDateTimePickerControl":{
       "type":"structure",
@@ -11054,6 +11264,13 @@
         "ForegroundColor":{"shape":"ConditionalFormattingColor"}
       }
     },
+    "GaugeChartColorConfiguration":{
+      "type":"structure",
+      "members":{
+        "ForegroundColor":{"shape":"HexColor"},
+        "BackgroundColor":{"shape":"HexColor"}
+      }
+    },
     "GaugeChartConditionalFormatting":{
       "type":"structure",
       "members":{
@@ -11080,6 +11297,7 @@
         "DataLabels":{"shape":"DataLabelOptions"},
         "TooltipOptions":{"shape":"TooltipOptions"},
         "VisualPalette":{"shape":"VisualPalette"},
+        "ColorConfiguration":{"shape":"GaugeChartColorConfiguration"},
         "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
@@ -12405,6 +12623,10 @@
         "CLASSIC",
         "VERTICAL"
       ]
+    },
+    "KeyRegistration":{
+      "type":"list",
+      "member":{"shape":"RegisteredCustomerManagedKey"}
     },
     "LabelOptions":{
       "type":"structure",
@@ -14337,7 +14559,8 @@
         "MatchOperator":{"shape":"NumericEqualityMatchOperator"},
         "AggregationFunction":{"shape":"AggregationFunction"},
         "ParameterName":{"shape":"ParameterName"},
-        "NullOption":{"shape":"FilterNullOption"}
+        "NullOption":{"shape":"FilterNullOption"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "NumericEqualityMatchOperator":{
@@ -14387,7 +14610,8 @@
         },
         "SelectAllOptions":{"shape":"NumericFilterSelectAllOptions"},
         "AggregationFunction":{"shape":"AggregationFunction"},
-        "NullOption":{"shape":"FilterNullOption"}
+        "NullOption":{"shape":"FilterNullOption"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "NumericRangeFilterValue":{
@@ -14941,7 +15165,7 @@
     "PivotTableConditionalFormattingOptionList":{
       "type":"list",
       "member":{"shape":"PivotTableConditionalFormattingOption"},
-      "max":100
+      "max":500
     },
     "PivotTableConditionalFormattingScope":{
       "type":"structure",
@@ -15309,6 +15533,13 @@
         "MEASURE"
       ]
     },
+    "PurchaseMode":{
+      "type":"string",
+      "enum":[
+        "MANUAL",
+        "AUTO_PURCHASE"
+      ]
+    },
     "PutDataSetRefreshPropertiesRequest":{
       "type":"structure",
       "required":[
@@ -15499,10 +15730,7 @@
     },
     "RedshiftIAMParameters":{
       "type":"structure",
-      "required":[
-        "RoleArn",
-        "DatabaseUser"
-      ],
+      "required":["RoleArn"],
       "members":{
         "RoleArn":{"shape":"RoleArn"},
         "DatabaseUser":{"shape":"DatabaseUser"},
@@ -15726,6 +15954,13 @@
         }
       }
     },
+    "RegisteredCustomerManagedKey":{
+      "type":"structure",
+      "members":{
+        "KeyArn":{"shape":"String"},
+        "DefaultKey":{"shape":"Boolean"}
+      }
+    },
     "RegisteredUserConsoleFeatureConfigurations":{
       "type":"structure",
       "members":{
@@ -15760,7 +15995,14 @@
         "Dashboard":{"shape":"RegisteredUserDashboardEmbeddingConfiguration"},
         "QuickSightConsole":{"shape":"RegisteredUserQuickSightConsoleEmbeddingConfiguration"},
         "QSearchBar":{"shape":"RegisteredUserQSearchBarEmbeddingConfiguration"},
-        "DashboardVisual":{"shape":"RegisteredUserDashboardVisualEmbeddingConfiguration"}
+        "DashboardVisual":{"shape":"RegisteredUserDashboardVisualEmbeddingConfiguration"},
+        "GenerativeQnA":{"shape":"RegisteredUserGenerativeQnAEmbeddingConfiguration"}
+      }
+    },
+    "RegisteredUserGenerativeQnAEmbeddingConfiguration":{
+      "type":"structure",
+      "members":{
+        "InitialTopicId":{"shape":"RestrictiveResourceId"}
       }
     },
     "RegisteredUserQSearchBarEmbeddingConfiguration":{
@@ -15845,7 +16087,8 @@
         },
         "ParameterName":{"shape":"ParameterName"},
         "NullOption":{"shape":"FilterNullOption"},
-        "ExcludePeriodConfiguration":{"shape":"ExcludePeriodConfiguration"}
+        "ExcludePeriodConfiguration":{"shape":"ExcludePeriodConfiguration"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "RelativeFontSize":{
@@ -15983,7 +16226,10 @@
       "enum":[
         "ADMIN",
         "AUTHOR",
-        "READER"
+        "READER",
+        "ADMIN_PRO",
+        "AUTHOR_PRO",
+        "READER_PRO"
       ]
     },
     "RoleArn":{
@@ -16690,7 +16936,7 @@
     "SeriesItemList":{
       "type":"list",
       "member":{"shape":"SeriesItem"},
-      "max":10
+      "max":2000
     },
     "ServiceNowParameters":{
       "type":"structure",
@@ -17341,7 +17587,7 @@
     },
     "SqlQuery":{
       "type":"string",
-      "max":65536,
+      "max":168000,
       "min":1
     },
     "SqlServerParameters":{
@@ -17631,6 +17877,21 @@
         "StyleTargets":{"shape":"TableStyleTargetList"}
       }
     },
+    "SuccessfulKeyRegistrationEntries":{
+      "type":"list",
+      "member":{"shape":"SuccessfulKeyRegistrationEntry"}
+    },
+    "SuccessfulKeyRegistrationEntry":{
+      "type":"structure",
+      "required":[
+        "KeyArn",
+        "StatusCode"
+      ],
+      "members":{
+        "KeyArn":{"shape":"String"},
+        "StatusCode":{"shape":"StatusCode"}
+      }
+    },
     "Suffix":{
       "type":"string",
       "max":128,
@@ -17719,7 +17980,7 @@
     "TableConditionalFormattingOptionList":{
       "type":"list",
       "member":{"shape":"TableConditionalFormattingOption"},
-      "max":100
+      "max":500
     },
     "TableConfiguration":{
       "type":"structure",
@@ -18387,7 +18648,8 @@
         "Value":{"shape":"Timestamp"},
         "ParameterName":{"shape":"ParameterName"},
         "TimeGranularity":{"shape":"TimeGranularity"},
-        "RollingDate":{"shape":"RollingDateConfiguration"}
+        "RollingDate":{"shape":"RollingDateConfiguration"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "TimeGranularity":{
@@ -18441,7 +18703,8 @@
         "RangeMaximumValue":{"shape":"TimeRangeFilterValue"},
         "NullOption":{"shape":"FilterNullOption"},
         "ExcludePeriodConfiguration":{"shape":"ExcludePeriodConfiguration"},
-        "TimeGranularity":{"shape":"TimeGranularity"}
+        "TimeGranularity":{"shape":"TimeGranularity"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "TimeRangeFilterValue":{
@@ -18511,7 +18774,8 @@
         },
         "AggregationSortConfigurations":{"shape":"AggregationSortConfigurationList"},
         "TimeGranularity":{"shape":"TimeGranularity"},
-        "ParameterName":{"shape":"ParameterName"}
+        "ParameterName":{"shape":"ParameterName"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "TopBottomMoversComputation":{
@@ -18818,7 +19082,8 @@
       "members":{
         "Arn":{"shape":"Arn"},
         "TopicId":{"shape":"TopicId"},
-        "Name":{"shape":"ResourceName"}
+        "Name":{"shape":"ResourceName"},
+        "UserExperienceVersion":{"shape":"TopicUserExperienceVersion"}
       }
     },
     "TopicTimeGranularity":{
@@ -19750,6 +20015,8 @@
           "locationName":"AwsAccountId"
         },
         "IpRestrictionRuleMap":{"shape":"IpRestrictionRuleMap"},
+        "VpcIdRestrictionRuleMap":{"shape":"VpcIdRestrictionRuleMap"},
+        "VpcEndpointIdRestrictionRuleMap":{"shape":"VpcEndpointIdRestrictionRuleMap"},
         "Enabled":{"shape":"NullableBoolean"}
       }
     },
@@ -19762,6 +20029,29 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "UpdateKeyRegistrationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KeyRegistration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KeyRegistration":{"shape":"KeyRegistration"}
+      }
+    },
+    "UpdateKeyRegistrationResponse":{
+      "type":"structure",
+      "members":{
+        "FailedKeyRegistration":{"shape":"FailedKeyRegistrationEntries"},
+        "SuccessfulKeyRegistration":{"shape":"SuccessfulKeyRegistrationEntries"},
+        "RequestId":{"shape":"NonEmptyString"}
       }
     },
     "UpdateLinkPermissionList":{
@@ -19861,6 +20151,31 @@
       "members":{
         "RequestId":{"shape":"String"},
         "Status":{"shape":"StatusCode"}
+      }
+    },
+    "UpdateSPICECapacityConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "PurchaseMode"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "PurchaseMode":{"shape":"PurchaseMode"}
+      }
+    },
+    "UpdateSPICECapacityConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
       }
     },
     "UpdateTemplateAliasRequest":{
@@ -20326,7 +20641,10 @@
         "AUTHOR",
         "READER",
         "RESTRICTED_AUTHOR",
-        "RESTRICTED_READER"
+        "RESTRICTED_READER",
+        "ADMIN_PRO",
+        "AUTHOR_PRO",
+        "READER_PRO"
       ]
     },
     "VPCConnection":{
@@ -20589,6 +20907,38 @@
       "members":{
         "VpcConnectionArn":{"shape":"Arn"}
       }
+    },
+    "VpcEndpointId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^vpce-[0-9a-z]*$"
+    },
+    "VpcEndpointIdRestrictionRuleDescription":{
+      "type":"string",
+      "max":150,
+      "min":0
+    },
+    "VpcEndpointIdRestrictionRuleMap":{
+      "type":"map",
+      "key":{"shape":"VpcEndpointId"},
+      "value":{"shape":"VpcEndpointIdRestrictionRuleDescription"}
+    },
+    "VpcId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^vpc-[0-9a-z]*$"
+    },
+    "VpcIdRestrictionRuleDescription":{
+      "type":"string",
+      "max":150,
+      "min":0
+    },
+    "VpcIdRestrictionRuleMap":{
+      "type":"map",
+      "key":{"shape":"VpcId"},
+      "value":{"shape":"VpcIdRestrictionRuleDescription"}
     },
     "Warehouse":{
       "type":"string",

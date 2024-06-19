@@ -502,6 +502,26 @@
         "ApiType":{"value":"ControlPlane"}
       }
     },
+    "StartImportTask":{
+      "name":"StartImportTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/graphs/{graphIdentifier}/importtasks",
+        "responseCode":201
+      },
+      "input":{"shape":"StartImportTaskInput"},
+      "output":{"shape":"StartImportTaskOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ApiType":{"value":"ControlPlane"}
+      }
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -1224,7 +1244,8 @@
         "RESETTING",
         "UPDATING",
         "SNAPSHOTTING",
-        "FAILED"
+        "FAILED",
+        "IMPORTING"
       ]
     },
     "GraphSummary":{
@@ -1802,6 +1823,44 @@
         "DELETING",
         "FAILED"
       ]
+    },
+    "StartImportTaskInput":{
+      "type":"structure",
+      "required":[
+        "source",
+        "graphIdentifier",
+        "roleArn"
+      ],
+      "members":{
+        "importOptions":{"shape":"ImportOptions"},
+        "failOnError":{"shape":"Boolean"},
+        "source":{"shape":"String"},
+        "format":{"shape":"Format"},
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "location":"uri",
+          "locationName":"graphIdentifier"
+        },
+        "roleArn":{"shape":"RoleArn"}
+      }
+    },
+    "StartImportTaskOutput":{
+      "type":"structure",
+      "required":[
+        "taskId",
+        "source",
+        "roleArn",
+        "status"
+      ],
+      "members":{
+        "graphId":{"shape":"GraphId"},
+        "taskId":{"shape":"TaskId"},
+        "source":{"shape":"String"},
+        "format":{"shape":"Format"},
+        "roleArn":{"shape":"RoleArn"},
+        "status":{"shape":"ImportTaskStatus"},
+        "importOptions":{"shape":"ImportOptions"}
+      }
     },
     "String":{"type":"string"},
     "SubnetId":{

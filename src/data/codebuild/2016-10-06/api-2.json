@@ -5,11 +5,13 @@
     "endpointPrefix":"codebuild",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS CodeBuild",
     "serviceId":"CodeBuild",
     "signatureVersion":"v4",
     "targetPrefix":"CodeBuild_20161006",
-    "uid":"codebuild-2016-10-06"
+    "uid":"codebuild-2016-10-06",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchDeleteBuilds":{
@@ -681,7 +683,8 @@
       "enum":[
         "OAUTH",
         "BASIC_AUTH",
-        "PERSONAL_ACCESS_TOKEN"
+        "PERSONAL_ACCESS_TOKEN",
+        "CODECONNECTIONS"
       ]
     },
     "BatchDeleteBuildsInput":{
@@ -1023,6 +1026,11 @@
         "secondaryArtifacts":{"shape":"ResolvedSecondaryArtifacts"}
       }
     },
+    "BuildTimeOut":{
+      "type":"integer",
+      "max":2160,
+      "min":5
+    },
     "Builds":{
       "type":"list",
       "member":{"shape":"Build"}
@@ -1120,6 +1128,8 @@
         "computeType":{"shape":"ComputeType"},
         "scalingConfiguration":{"shape":"ScalingConfigurationInput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
+        "vpcConfig":{"shape":"VpcConfig"},
+        "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
       }
     },
@@ -1150,7 +1160,7 @@
         "cache":{"shape":"ProjectCache"},
         "environment":{"shape":"ProjectEnvironment"},
         "serviceRole":{"shape":"NonEmptyString"},
-        "timeoutInMinutes":{"shape":"TimeOut"},
+        "timeoutInMinutes":{"shape":"BuildTimeOut"},
         "queuedTimeoutInMinutes":{"shape":"TimeOut"},
         "encryptionKey":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"},
@@ -1195,7 +1205,9 @@
         "projectName":{"shape":"ProjectName"},
         "branchFilter":{"shape":"String"},
         "filterGroups":{"shape":"FilterGroups"},
-        "buildType":{"shape":"WebhookBuildType"}
+        "buildType":{"shape":"WebhookBuildType"},
+        "manualCreation":{"shape":"WrapperBoolean"},
+        "scopeConfiguration":{"shape":"ScopeConfiguration"}
       }
     },
     "CreateWebhookOutput":{
@@ -1460,6 +1472,8 @@
         "computeType":{"shape":"ComputeType"},
         "scalingConfiguration":{"shape":"ScalingConfigurationOutput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
+        "vpcConfig":{"shape":"VpcConfig"},
+        "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
       }
     },
@@ -1477,7 +1491,8 @@
       "type":"string",
       "enum":[
         "CREATE_FAILED",
-        "UPDATE_FAILED"
+        "UPDATE_FAILED",
+        "ACTION_REQUIRED"
       ]
     },
     "FleetName":{
@@ -1529,6 +1544,7 @@
         "CREATING",
         "UPDATING",
         "ROTATING",
+        "PENDING_DELETION",
         "DELETING",
         "CREATE_FAILED",
         "UPDATE_ROLLBACK_FAILED",
@@ -1950,7 +1966,7 @@
         "cache":{"shape":"ProjectCache"},
         "environment":{"shape":"ProjectEnvironment"},
         "serviceRole":{"shape":"NonEmptyString"},
-        "timeoutInMinutes":{"shape":"TimeOut"},
+        "timeoutInMinutes":{"shape":"BuildTimeOut"},
         "queuedTimeoutInMinutes":{"shape":"TimeOut"},
         "encryptionKey":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"},
@@ -2072,9 +2088,9 @@
     },
     "ProjectName":{
       "type":"string",
-      "max":255,
+      "max":150,
       "min":2,
-      "pattern":"[A-Za-z0-9][A-Za-z0-9\\-_]{1,254}"
+      "pattern":"[A-Za-z0-9][A-Za-z0-9\\-_]{1,149}"
     },
     "ProjectNames":{
       "type":"list",
@@ -2427,6 +2443,18 @@
         "desiredCapacity":{"shape":"FleetCapacity"}
       }
     },
+    "ScopeConfiguration":{
+      "type":"structure",
+      "required":[
+        "name",
+        "scope"
+      ],
+      "members":{
+        "name":{"shape":"String"},
+        "domain":{"shape":"String"},
+        "scope":{"shape":"WebhookScopeType"}
+      }
+    },
     "SecurityGroupIds":{
       "type":"list",
       "member":{"shape":"NonEmptyString"},
@@ -2446,7 +2474,9 @@
       "enum":[
         "GITHUB",
         "BITBUCKET",
-        "GITHUB_ENTERPRISE"
+        "GITHUB_ENTERPRISE",
+        "GITLAB",
+        "GITLAB_SELF_MANAGED"
       ]
     },
     "SharedResourceSortByType":{
@@ -2473,14 +2503,18 @@
     },
     "SourceAuthType":{
       "type":"string",
-      "enum":["OAUTH"]
+      "enum":[
+        "OAUTH",
+        "CODECONNECTIONS"
+      ]
     },
     "SourceCredentialsInfo":{
       "type":"structure",
       "members":{
         "arn":{"shape":"NonEmptyString"},
         "serverType":{"shape":"ServerType"},
-        "authType":{"shape":"AuthType"}
+        "authType":{"shape":"AuthType"},
+        "resource":{"shape":"String"}
       }
     },
     "SourceCredentialsInfos":{
@@ -2493,6 +2527,8 @@
         "CODECOMMIT",
         "CODEPIPELINE",
         "GITHUB",
+        "GITLAB",
+        "GITLAB_SELF_MANAGED",
         "S3",
         "BITBUCKET",
         "GITHUB_ENTERPRISE",
@@ -2525,7 +2561,7 @@
         "cacheOverride":{"shape":"ProjectCache"},
         "serviceRoleOverride":{"shape":"NonEmptyString"},
         "privilegedModeOverride":{"shape":"WrapperBoolean"},
-        "buildTimeoutInMinutesOverride":{"shape":"TimeOut"},
+        "buildTimeoutInMinutesOverride":{"shape":"BuildTimeOut"},
         "queuedTimeoutInMinutesOverride":{"shape":"TimeOut"},
         "encryptionKeyOverride":{"shape":"NonEmptyString"},
         "idempotencyToken":{"shape":"String"},
@@ -2569,7 +2605,7 @@
         "cacheOverride":{"shape":"ProjectCache"},
         "serviceRoleOverride":{"shape":"NonEmptyString"},
         "privilegedModeOverride":{"shape":"WrapperBoolean"},
-        "timeoutInMinutesOverride":{"shape":"TimeOut"},
+        "timeoutInMinutesOverride":{"shape":"BuildTimeOut"},
         "queuedTimeoutInMinutesOverride":{"shape":"TimeOut"},
         "encryptionKeyOverride":{"shape":"NonEmptyString"},
         "idempotencyToken":{"shape":"String"},
@@ -2706,6 +2742,8 @@
         "computeType":{"shape":"ComputeType"},
         "scalingConfiguration":{"shape":"ScalingConfigurationInput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
+        "vpcConfig":{"shape":"VpcConfig"},
+        "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
       }
     },
@@ -2730,7 +2768,7 @@
         "cache":{"shape":"ProjectCache"},
         "environment":{"shape":"ProjectEnvironment"},
         "serviceRole":{"shape":"NonEmptyString"},
-        "timeoutInMinutes":{"shape":"TimeOut"},
+        "timeoutInMinutes":{"shape":"BuildTimeOut"},
         "queuedTimeoutInMinutes":{"shape":"TimeOut"},
         "encryptionKey":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"},
@@ -2823,7 +2861,9 @@
         "branchFilter":{"shape":"String"},
         "filterGroups":{"shape":"FilterGroups"},
         "buildType":{"shape":"WebhookBuildType"},
-        "lastModifiedSecret":{"shape":"Timestamp"}
+        "manualCreation":{"shape":"WrapperBoolean"},
+        "lastModifiedSecret":{"shape":"Timestamp"},
+        "scopeConfiguration":{"shape":"ScopeConfiguration"}
       }
     },
     "WebhookBuildType":{
@@ -2853,7 +2893,17 @@
         "HEAD_REF",
         "ACTOR_ACCOUNT_ID",
         "FILE_PATH",
-        "COMMIT_MESSAGE"
+        "COMMIT_MESSAGE",
+        "WORKFLOW_NAME",
+        "TAG_NAME",
+        "RELEASE_NAME"
+      ]
+    },
+    "WebhookScopeType":{
+      "type":"string",
+      "enum":[
+        "GITHUB_ORGANIZATION",
+        "GITHUB_GLOBAL"
       ]
     },
     "WrapperBoolean":{"type":"boolean"},

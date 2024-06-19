@@ -5,11 +5,13 @@
     "endpointPrefix":"glue",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Glue",
     "serviceId":"Glue",
     "signatureVersion":"v4",
     "targetPrefix":"AWSGlue",
-    "uid":"glue-2017-03-31"
+    "uid":"glue-2017-03-31",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchCreatePartition":{
@@ -684,6 +686,23 @@
         {"shape":"ConcurrentModificationException"}
       ]
     },
+    "CreateUsageProfile":{
+      "name":"CreateUsageProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateUsageProfileRequest"},
+      "output":{"shape":"CreateUsageProfileResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AlreadyExistsException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"OperationNotSupportedException"}
+      ]
+    },
     "CreateUserDefinedFunction":{
       "name":"CreateUserDefinedFunction",
       "http":{
@@ -1082,6 +1101,21 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"ConcurrentModificationException"}
+      ]
+    },
+    "DeleteUsageProfile":{
+      "name":"DeleteUsageProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteUsageProfileRequest"},
+      "output":{"shape":"DeleteUsageProfileResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"OperationNotSupportedException"}
       ]
     },
     "DeleteUserDefinedFunction":{
@@ -2060,6 +2094,22 @@
         {"shape":"FederationSourceRetryableException"}
       ]
     },
+    "GetUsageProfile":{
+      "name":"GetUsageProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetUsageProfileRequest"},
+      "output":{"shape":"GetUsageProfileResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"OperationNotSupportedException"}
+      ]
+    },
     "GetUserDefinedFunction":{
       "name":"GetUserDefinedFunction",
       "http":{
@@ -2437,6 +2487,21 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "ListUsageProfiles":{
+      "name":"ListUsageProfiles",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListUsageProfilesRequest"},
+      "output":{"shape":"ListUsageProfilesResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationNotSupportedException"}
       ]
     },
     "ListWorkflows":{
@@ -3292,6 +3357,23 @@
         {"shape":"ConcurrentModificationException"}
       ]
     },
+    "UpdateUsageProfile":{
+      "name":"UpdateUsageProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateUsageProfileRequest"},
+      "output":{"shape":"UpdateUsageProfileResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "UpdateUserDefinedFunction":{
       "name":"UpdateUserDefinedFunction",
       "http":{
@@ -3326,6 +3408,11 @@
     }
   },
   "shapes":{
+    "AWSManagedClientApplicationReference":{
+      "type":"string",
+      "max":2048,
+      "pattern":"\\S+"
+    },
     "AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -3426,6 +3513,10 @@
       "member":{"shape":"AggregateOperation"},
       "max":30,
       "min":1
+    },
+    "AllowedValuesStringList":{
+      "type":"list",
+      "member":{"shape":"ConfigValueString"}
     },
     "AlreadyExistsException":{
       "type":"structure",
@@ -3551,6 +3642,43 @@
       "max":255,
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
+    "AuthenticationConfiguration":{
+      "type":"structure",
+      "members":{
+        "AuthenticationType":{"shape":"AuthenticationType"},
+        "SecretArn":{"shape":"SecretArn"},
+        "OAuth2Properties":{"shape":"OAuth2Properties"}
+      }
+    },
+    "AuthenticationConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "AuthenticationType":{"shape":"AuthenticationType"},
+        "SecretArn":{"shape":"SecretArn"},
+        "OAuth2Properties":{"shape":"OAuth2PropertiesInput"}
+      }
+    },
+    "AuthenticationType":{
+      "type":"string",
+      "enum":[
+        "BASIC",
+        "OAUTH2",
+        "CUSTOM"
+      ]
+    },
+    "AuthorizationCode":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "pattern":"\\S+"
+    },
+    "AuthorizationCodeProperties":{
+      "type":"structure",
+      "members":{
+        "AuthorizationCode":{"shape":"AuthorizationCode"},
+        "RedirectUri":{"shape":"RedirectUri"}
+      }
     },
     "BackfillError":{
       "type":"structure",
@@ -4826,6 +4954,26 @@
       "type":"list",
       "member":{"shape":"Condition"}
     },
+    "ConfigValueString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.-]+"
+    },
+    "ConfigurationMap":{
+      "type":"map",
+      "key":{"shape":"NameString"},
+      "value":{"shape":"ConfigurationObject"}
+    },
+    "ConfigurationObject":{
+      "type":"structure",
+      "members":{
+        "DefaultValue":{"shape":"ConfigValueString"},
+        "AllowedValues":{"shape":"AllowedValuesStringList"},
+        "MinValue":{"shape":"ConfigValueString"},
+        "MaxValue":{"shape":"ConfigValueString"}
+      }
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -4853,7 +5001,11 @@
         "PhysicalConnectionRequirements":{"shape":"PhysicalConnectionRequirements"},
         "CreationTime":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"},
-        "LastUpdatedBy":{"shape":"NameString"}
+        "LastUpdatedBy":{"shape":"NameString"},
+        "Status":{"shape":"ConnectionStatus"},
+        "StatusReason":{"shape":"LongValueString"},
+        "LastConnectionValidationTime":{"shape":"Timestamp"},
+        "AuthenticationConfiguration":{"shape":"AuthenticationConfiguration"}
       }
     },
     "ConnectionInput":{
@@ -4869,7 +5021,9 @@
         "ConnectionType":{"shape":"ConnectionType"},
         "MatchCriteria":{"shape":"MatchCriteria"},
         "ConnectionProperties":{"shape":"ConnectionProperties"},
-        "PhysicalConnectionRequirements":{"shape":"PhysicalConnectionRequirements"}
+        "PhysicalConnectionRequirements":{"shape":"PhysicalConnectionRequirements"},
+        "AuthenticationConfiguration":{"shape":"AuthenticationConfigurationInput"},
+        "ValidateCredentials":{"shape":"Boolean"}
       }
     },
     "ConnectionList":{
@@ -4936,7 +5090,16 @@
         "KAFKA_SASL_GSSAPI_KEYTAB",
         "KAFKA_SASL_GSSAPI_KRB5_CONF",
         "KAFKA_SASL_GSSAPI_SERVICE",
-        "KAFKA_SASL_GSSAPI_PRINCIPAL"
+        "KAFKA_SASL_GSSAPI_PRINCIPAL",
+        "ROLE_ARN"
+      ]
+    },
+    "ConnectionStatus":{
+      "type":"string",
+      "enum":[
+        "READY",
+        "IN_PROGRESS",
+        "FAILED"
       ]
     },
     "ConnectionType":{
@@ -4948,7 +5111,8 @@
         "KAFKA",
         "NETWORK",
         "MARKETPLACE",
-        "CUSTOM"
+        "CUSTOM",
+        "SALESFORCE"
       ]
     },
     "ConnectionsList":{
@@ -5231,6 +5395,7 @@
     "CreateConnectionResponse":{
       "type":"structure",
       "members":{
+        "CreateConnectionStatus":{"shape":"ConnectionStatus"}
       }
     },
     "CreateCrawlerRequest":{
@@ -5404,6 +5569,7 @@
       ],
       "members":{
         "Name":{"shape":"NameString"},
+        "JobMode":{"shape":"JobMode"},
         "Description":{"shape":"DescriptionString"},
         "LogUri":{"shape":"UriString"},
         "Role":{"shape":"RoleString"},
@@ -5428,7 +5594,8 @@
         "WorkerType":{"shape":"WorkerType"},
         "CodeGenConfigurationNodes":{"shape":"CodeGenConfigurationNodes"},
         "ExecutionClass":{"shape":"ExecutionClass"},
-        "SourceControlDetails":{"shape":"SourceControlDetails"}
+        "SourceControlDetails":{"shape":"SourceControlDetails"},
+        "MaintenanceWindow":{"shape":"MaintenanceWindow"}
       }
     },
     "CreateJobResponse":{
@@ -5701,6 +5868,25 @@
         "Name":{"shape":"NameString"}
       }
     },
+    "CreateUsageProfileRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Configuration"
+      ],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Description":{"shape":"DescriptionString"},
+        "Configuration":{"shape":"ProfileConfiguration"},
+        "Tags":{"shape":"TagsMap"}
+      }
+    },
+    "CreateUsageProfileResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"}
+      }
+    },
     "CreateUserDefinedFunctionRequest":{
       "type":"structure",
       "required":[
@@ -5853,6 +6039,13 @@
       "key":{"shape":"AdditionalOptionKeys"},
       "value":{"shape":"GenericString"}
     },
+    "DQCompositeRuleEvaluationMethod":{
+      "type":"string",
+      "enum":[
+        "COLUMN",
+        "ROW"
+      ]
+    },
     "DQDLAliases":{
       "type":"map",
       "key":{"shape":"NodeName"},
@@ -5946,7 +6139,8 @@
       "type":"structure",
       "members":{
         "CloudWatchMetricsEnabled":{"shape":"NullableBoolean"},
-        "ResultsS3Prefix":{"shape":"UriString"}
+        "ResultsS3Prefix":{"shape":"UriString"},
+        "CompositeRuleEvaluationMethod":{"shape":"DQCompositeRuleEvaluationMethod"}
       }
     },
     "DataQualityMetricValues":{
@@ -6628,6 +6822,18 @@
         "Name":{"shape":"NameString"}
       }
     },
+    "DeleteUsageProfileRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"}
+      }
+    },
+    "DeleteUsageProfileResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteUserDefinedFunctionRequest":{
       "type":"structure",
       "required":[
@@ -7105,10 +7311,15 @@
     "FederationSourceErrorCode":{
       "type":"string",
       "enum":[
+        "AccessDeniedException",
+        "EntityNotFoundException",
+        "InvalidCredentialsException",
+        "InvalidInputException",
         "InvalidResponseException",
         "OperationTimeoutException",
         "OperationNotSupportedException",
         "InternalServiceException",
+        "PartialFailureException",
         "ThrottlingException"
       ]
     },
@@ -8429,6 +8640,8 @@
         "Name":{"shape":"NameString"},
         "AuditContext":{"shape":"AuditContext"},
         "SupportedPermissionTypes":{"shape":"PermissionTypeList"},
+        "ParentResourceArn":{"shape":"ArnString"},
+        "RootResourceArn":{"shape":"ArnString"},
         "SupportedDialect":{"shape":"SupportedDialect"},
         "Permissions":{"shape":"PermissionList"},
         "QuerySessionContext":{"shape":"QuerySessionContext"}
@@ -8442,8 +8655,28 @@
         "IsRegisteredWithLakeFormation":{"shape":"Boolean"},
         "CellFilters":{"shape":"ColumnRowFilterList"},
         "QueryAuthorizationId":{"shape":"HashString"},
+        "IsMultiDialectView":{"shape":"Boolean"},
         "ResourceArn":{"shape":"ArnString"},
-        "Permissions":{"shape":"PermissionList"}
+        "IsProtected":{"shape":"Boolean"},
+        "Permissions":{"shape":"PermissionList"},
+        "RowFilter":{"shape":"PredicateString"}
+      }
+    },
+    "GetUsageProfileRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"}
+      }
+    },
+    "GetUsageProfileResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Description":{"shape":"DescriptionString"},
+        "Configuration":{"shape":"ProfileConfiguration"},
+        "CreatedOn":{"shape":"TimestampValue"},
+        "LastModifiedOn":{"shape":"TimestampValue"}
       }
     },
     "GetUserDefinedFunctionRequest":{
@@ -8985,6 +9218,7 @@
       "type":"structure",
       "members":{
         "Name":{"shape":"NameString"},
+        "JobMode":{"shape":"JobMode"},
         "Description":{"shape":"DescriptionString"},
         "LogUri":{"shape":"UriString"},
         "Role":{"shape":"RoleString"},
@@ -9010,7 +9244,9 @@
         "GlueVersion":{"shape":"GlueVersionString"},
         "CodeGenConfigurationNodes":{"shape":"CodeGenConfigurationNodes"},
         "ExecutionClass":{"shape":"ExecutionClass"},
-        "SourceControlDetails":{"shape":"SourceControlDetails"}
+        "SourceControlDetails":{"shape":"SourceControlDetails"},
+        "MaintenanceWindow":{"shape":"MaintenanceWindow"},
+        "ProfileName":{"shape":"NameString"}
       }
     },
     "JobBookmarkEntry":{
@@ -9052,6 +9288,14 @@
       "type":"list",
       "member":{"shape":"Job"}
     },
+    "JobMode":{
+      "type":"string",
+      "enum":[
+        "SCRIPT",
+        "VISUAL",
+        "NOTEBOOK"
+      ]
+    },
     "JobName":{"type":"string"},
     "JobNameList":{
       "type":"list",
@@ -9071,6 +9315,7 @@
         "PreviousRunId":{"shape":"IdString"},
         "TriggerName":{"shape":"NameString"},
         "JobName":{"shape":"NameString"},
+        "JobMode":{"shape":"JobMode"},
         "StartedOn":{"shape":"TimestampValue"},
         "LastModifiedOn":{"shape":"TimestampValue"},
         "CompletedOn":{"shape":"TimestampValue"},
@@ -9093,7 +9338,9 @@
         "NotificationProperty":{"shape":"NotificationProperty"},
         "GlueVersion":{"shape":"GlueVersionString"},
         "DPUSeconds":{"shape":"NullableDouble"},
-        "ExecutionClass":{"shape":"ExecutionClass"}
+        "ExecutionClass":{"shape":"ExecutionClass"},
+        "MaintenanceWindow":{"shape":"MaintenanceWindow"},
+        "ProfileName":{"shape":"NameString"}
       }
     },
     "JobRunList":{
@@ -9111,12 +9358,14 @@
         "FAILED",
         "TIMEOUT",
         "ERROR",
-        "WAITING"
+        "WAITING",
+        "EXPIRED"
       ]
     },
     "JobUpdate":{
       "type":"structure",
       "members":{
+        "JobMode":{"shape":"JobMode"},
         "Description":{"shape":"DescriptionString"},
         "LogUri":{"shape":"UriString"},
         "Role":{"shape":"RoleString"},
@@ -9140,7 +9389,8 @@
         "GlueVersion":{"shape":"GlueVersionString"},
         "CodeGenConfigurationNodes":{"shape":"CodeGenConfigurationNodes"},
         "ExecutionClass":{"shape":"ExecutionClass"},
-        "SourceControlDetails":{"shape":"SourceControlDetails"}
+        "SourceControlDetails":{"shape":"SourceControlDetails"},
+        "MaintenanceWindow":{"shape":"MaintenanceWindow"}
       }
     },
     "Join":{
@@ -9656,6 +9906,20 @@
         "NextToken":{"shape":"GenericString"}
       }
     },
+    "ListUsageProfilesRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"OrchestrationToken"},
+        "MaxResults":{"shape":"OrchestrationPageSize200"}
+      }
+    },
+    "ListUsageProfilesResponse":{
+      "type":"structure",
+      "members":{
+        "Profiles":{"shape":"UsageProfileDefinitionList"},
+        "NextToken":{"shape":"OrchestrationToken"}
+      }
+    },
     "ListWorkflowsRequest":{
       "type":"structure",
       "members":{
@@ -9730,6 +9994,11 @@
       }
     },
     "LongValue":{"type":"long"},
+    "LongValueString":{
+      "type":"string",
+      "max":16384,
+      "min":1
+    },
     "MLTransform":{
       "type":"structure",
       "members":{
@@ -9775,6 +10044,10 @@
         "DISABLED",
         "SSE-KMS"
       ]
+    },
+    "MaintenanceWindow":{
+      "type":"string",
+      "pattern":"^(Sun|Mon|Tue|Wed|Thu|Fri|Sat):([01]?[0-9]|2[0-3])$"
     },
     "ManyInputs":{
       "type":"list",
@@ -10102,6 +10375,40 @@
       "type":"string",
       "box":true
     },
+    "OAuth2ClientApplication":{
+      "type":"structure",
+      "members":{
+        "UserManagedClientApplicationClientId":{"shape":"UserManagedClientApplicationClientId"},
+        "AWSManagedClientApplicationReference":{"shape":"AWSManagedClientApplicationReference"}
+      }
+    },
+    "OAuth2GrantType":{
+      "type":"string",
+      "enum":[
+        "AUTHORIZATION_CODE",
+        "CLIENT_CREDENTIALS",
+        "JWT_BEARER"
+      ]
+    },
+    "OAuth2Properties":{
+      "type":"structure",
+      "members":{
+        "OAuth2GrantType":{"shape":"OAuth2GrantType"},
+        "OAuth2ClientApplication":{"shape":"OAuth2ClientApplication"},
+        "TokenUrl":{"shape":"TokenUrl"},
+        "TokenUrlParametersMap":{"shape":"TokenUrlParametersMap"}
+      }
+    },
+    "OAuth2PropertiesInput":{
+      "type":"structure",
+      "members":{
+        "OAuth2GrantType":{"shape":"OAuth2GrantType"},
+        "OAuth2ClientApplication":{"shape":"OAuth2ClientApplication"},
+        "TokenUrl":{"shape":"TokenUrl"},
+        "TokenUrlParametersMap":{"shape":"TokenUrlParametersMap"},
+        "AuthorizationCodeProperties":{"shape":"AuthorizationCodeProperties"}
+      }
+    },
     "OneInput":{
       "type":"list",
       "member":{"shape":"NodeId"},
@@ -10113,6 +10420,13 @@
       "members":{
         "IcebergInput":{"shape":"IcebergInput"}
       }
+    },
+    "OperationNotSupportedException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
     },
     "OperationTimeoutException":{
       "type":"structure",
@@ -10557,6 +10871,13 @@
       "max":1,
       "min":0
     },
+    "ProfileConfiguration":{
+      "type":"structure",
+      "members":{
+        "SessionConfiguration":{"shape":"ConfigurationMap"},
+        "JobConfiguration":{"shape":"ConfigurationMap"}
+      }
+    },
     "PropertyPredicate":{
       "type":"structure",
       "members":{
@@ -10735,6 +11056,11 @@
       "members":{
         "RecrawlBehavior":{"shape":"RecrawlBehavior"}
       }
+    },
+    "RedirectUri":{
+      "type":"string",
+      "max":512,
+      "pattern":"^(https?):\\/\\/[^\\s/$.?#].[^\\s]*$"
     },
     "RedshiftSource":{
       "type":"structure",
@@ -11523,6 +11849,10 @@
         "TableList":{"shape":"TableList"}
       }
     },
+    "SecretArn":{
+      "type":"string",
+      "pattern":"^arn:aws(-(cn|us-gov|iso(-[bef])?))?:secretsmanager:.*$"
+    },
     "SecurityConfiguration":{
       "type":"structure",
       "members":{
@@ -11617,7 +11947,8 @@
         "CompletedOn":{"shape":"TimestampValue"},
         "ExecutionTime":{"shape":"NullableDouble"},
         "DPUSeconds":{"shape":"NullableDouble"},
-        "IdleTimeout":{"shape":"IdleTimeout"}
+        "IdleTimeout":{"shape":"IdleTimeout"},
+        "ProfileName":{"shape":"NameString"}
       }
     },
     "SessionCommand":{
@@ -12307,7 +12638,9 @@
         "TargetTable":{"shape":"TableIdentifier"},
         "CatalogId":{"shape":"CatalogIdString"},
         "VersionId":{"shape":"VersionString"},
-        "FederatedTable":{"shape":"FederatedTable"}
+        "FederatedTable":{"shape":"FederatedTable"},
+        "ViewDefinition":{"shape":"ViewDefinition"},
+        "IsMultiDialectView":{"shape":"NullableBoolean"}
       }
     },
     "TableError":{
@@ -12346,7 +12679,8 @@
         "ViewExpandedText":{"shape":"ViewTextString"},
         "TableType":{"shape":"TableTypeString"},
         "Parameters":{"shape":"ParametersMap"},
-        "TargetTable":{"shape":"TableIdentifier"}
+        "TargetTable":{"shape":"TableIdentifier"},
+        "ViewDefinition":{"shape":"ViewDefinitionInput"}
       }
     },
     "TableList":{
@@ -12563,6 +12897,26 @@
     "Timestamp":{"type":"timestamp"},
     "TimestampValue":{"type":"timestamp"},
     "Token":{"type":"string"},
+    "TokenUrl":{
+      "type":"string",
+      "max":256,
+      "pattern":"^(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
+    },
+    "TokenUrlParameterKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TokenUrlParameterValue":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "TokenUrlParametersMap":{
+      "type":"map",
+      "key":{"shape":"TokenUrlParameterKey"},
+      "value":{"shape":"TokenUrlParameterValue"}
+    },
     "Topk":{
       "type":"integer",
       "box":true,
@@ -13210,7 +13564,9 @@
         "TableInput":{"shape":"TableInput"},
         "SkipArchive":{"shape":"BooleanNullable"},
         "TransactionId":{"shape":"TransactionIdString"},
-        "VersionId":{"shape":"VersionString"}
+        "VersionId":{"shape":"VersionString"},
+        "ViewUpdateAction":{"shape":"ViewUpdateAction"},
+        "Force":{"shape":"Boolean"}
       }
     },
     "UpdateTableResponse":{
@@ -13233,6 +13589,24 @@
       "type":"structure",
       "members":{
         "Trigger":{"shape":"Trigger"}
+      }
+    },
+    "UpdateUsageProfileRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Configuration"
+      ],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Description":{"shape":"DescriptionString"},
+        "Configuration":{"shape":"ProfileConfiguration"}
+      }
+    },
+    "UpdateUsageProfileResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"}
       }
     },
     "UpdateUserDefinedFunctionRequest":{
@@ -13289,6 +13663,19 @@
       }
     },
     "UriString":{"type":"string"},
+    "UsageProfileDefinition":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Description":{"shape":"DescriptionString"},
+        "CreatedOn":{"shape":"TimestampValue"},
+        "LastModifiedOn":{"shape":"TimestampValue"}
+      }
+    },
+    "UsageProfileDefinitionList":{
+      "type":"list",
+      "member":{"shape":"UsageProfileDefinition"}
+    },
     "UserDefinedFunction":{
       "type":"structure",
       "members":{
@@ -13315,6 +13702,11 @@
     "UserDefinedFunctionList":{
       "type":"list",
       "member":{"shape":"UserDefinedFunction"}
+    },
+    "UserManagedClientApplicationClientId":{
+      "type":"string",
+      "max":2048,
+      "pattern":"\\S+"
     },
     "ValidationException":{
       "type":"structure",
@@ -13356,6 +13748,24 @@
       "min":1,
       "pattern":"[1-9][0-9]*|[1-9][0-9]*-[1-9][0-9]*"
     },
+    "ViewDefinition":{
+      "type":"structure",
+      "members":{
+        "IsProtected":{"shape":"NullableBoolean"},
+        "Definer":{"shape":"ArnString"},
+        "SubObjects":{"shape":"ViewSubObjectsList"},
+        "Representations":{"shape":"ViewRepresentationList"}
+      }
+    },
+    "ViewDefinitionInput":{
+      "type":"structure",
+      "members":{
+        "IsProtected":{"shape":"NullableBoolean"},
+        "Definer":{"shape":"ArnString"},
+        "Representations":{"shape":"ViewRepresentationInputList"},
+        "SubObjects":{"shape":"ViewSubObjectsList"}
+      }
+    },
     "ViewDialect":{
       "type":"string",
       "enum":[
@@ -13369,9 +13779,57 @@
       "max":255,
       "min":1
     },
+    "ViewRepresentation":{
+      "type":"structure",
+      "members":{
+        "Dialect":{"shape":"ViewDialect"},
+        "DialectVersion":{"shape":"ViewDialectVersionString"},
+        "ViewOriginalText":{"shape":"ViewTextString"},
+        "ViewExpandedText":{"shape":"ViewTextString"},
+        "ValidationConnection":{"shape":"NameString"},
+        "IsStale":{"shape":"NullableBoolean"}
+      }
+    },
+    "ViewRepresentationInput":{
+      "type":"structure",
+      "members":{
+        "Dialect":{"shape":"ViewDialect"},
+        "DialectVersion":{"shape":"ViewDialectVersionString"},
+        "ViewOriginalText":{"shape":"ViewTextString"},
+        "ValidationConnection":{"shape":"NameString"},
+        "ViewExpandedText":{"shape":"ViewTextString"}
+      }
+    },
+    "ViewRepresentationInputList":{
+      "type":"list",
+      "member":{"shape":"ViewRepresentationInput"},
+      "max":10,
+      "min":1
+    },
+    "ViewRepresentationList":{
+      "type":"list",
+      "member":{"shape":"ViewRepresentation"},
+      "max":1000,
+      "min":1
+    },
+    "ViewSubObjectsList":{
+      "type":"list",
+      "member":{"shape":"ArnString"},
+      "max":10,
+      "min":0
+    },
     "ViewTextString":{
       "type":"string",
       "max":409600
+    },
+    "ViewUpdateAction":{
+      "type":"string",
+      "enum":[
+        "ADD",
+        "REPLACE",
+        "ADD_OR_REPLACE",
+        "DROP"
+      ]
     },
     "WorkerType":{
       "type":"string",

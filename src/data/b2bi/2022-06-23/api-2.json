@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-06-23",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"b2bi",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"AWS B2BI",
     "serviceFullName":"AWS B2B Data Interchange",
     "serviceId":"b2bi",
@@ -245,7 +247,13 @@
         "requestUri":"/"
       },
       "input":{"shape":"ListCapabilitiesRequest"},
-      "output":{"shape":"ListCapabilitiesResponse"}
+      "output":{"shape":"ListCapabilitiesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "ListPartnerships":{
       "name":"ListPartnerships",
@@ -270,7 +278,13 @@
         "requestUri":"/"
       },
       "input":{"shape":"ListProfilesRequest"},
-      "output":{"shape":"ListProfilesResponse"}
+      "output":{"shape":"ListProfilesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -293,7 +307,13 @@
         "requestUri":"/"
       },
       "input":{"shape":"ListTransformersRequest"},
-      "output":{"shape":"ListTransformersResponse"}
+      "output":{"shape":"ListTransformersResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "StartTransformerJob":{
       "name":"StartTransformerJob",
@@ -304,6 +324,7 @@
       "input":{"shape":"StartTransformerJobRequest"},
       "output":{"shape":"StartTransformerJobResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
@@ -569,7 +590,8 @@
       "required":[
         "profileId",
         "name",
-        "email"
+        "email",
+        "capabilities"
       ],
       "members":{
         "profileId":{"shape":"ProfileId"},
@@ -1514,17 +1536,39 @@
         "X12_180",
         "X12_204",
         "X12_210",
+        "X12_211",
         "X12_214",
         "X12_215",
+        "X12_259",
+        "X12_260",
+        "X12_266",
+        "X12_269",
+        "X12_270",
+        "X12_271",
+        "X12_274",
+        "X12_275",
+        "X12_276",
+        "X12_277",
+        "X12_278",
         "X12_310",
         "X12_315",
         "X12_322",
         "X12_404",
         "X12_410",
+        "X12_417",
+        "X12_421",
+        "X12_426",
+        "X12_810",
         "X12_820",
         "X12_824",
         "X12_830",
+        "X12_832",
+        "X12_834",
+        "X12_835",
+        "X12_837",
+        "X12_844",
         "X12_846",
+        "X12_849",
         "X12_850",
         "X12_852",
         "X12_855",
@@ -1532,9 +1576,37 @@
         "X12_860",
         "X12_861",
         "X12_864",
+        "X12_865",
+        "X12_869",
+        "X12_870",
         "X12_940",
+        "X12_945",
         "X12_990",
-        "X12_997"
+        "X12_997",
+        "X12_999",
+        "X12_270_X279",
+        "X12_271_X279",
+        "X12_275_X210",
+        "X12_275_X211",
+        "X12_276_X212",
+        "X12_277_X212",
+        "X12_277_X214",
+        "X12_277_X364",
+        "X12_278_X217",
+        "X12_820_X218",
+        "X12_820_X306",
+        "X12_824_X186",
+        "X12_834_X220",
+        "X12_834_X307",
+        "X12_834_X318",
+        "X12_835_X221",
+        "X12_837_X222",
+        "X12_837_X223",
+        "X12_837_X224",
+        "X12_837_X291",
+        "X12_837_X292",
+        "X12_837_X298",
+        "X12_999_X231"
       ]
     },
     "X12Version":{
@@ -1542,7 +1614,8 @@
       "enum":[
         "VERSION_4010",
         "VERSION_4030",
-        "VERSION_5010"
+        "VERSION_5010",
+        "VERSION_5010_HIPAA"
       ]
     }
   }

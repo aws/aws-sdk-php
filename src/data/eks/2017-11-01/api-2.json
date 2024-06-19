@@ -5,12 +5,14 @@
     "endpointPrefix":"eks",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Amazon EKS",
     "serviceFullName":"Amazon Elastic Kubernetes Service",
     "serviceId":"EKS",
     "signatureVersion":"v4",
     "signingName":"eks",
-    "uid":"eks-2017-11-01"
+    "uid":"eks-2017-11-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateAccessPolicy":{
@@ -982,7 +984,8 @@
         "publisher":{"shape":"String"},
         "owner":{"shape":"String"},
         "marketplaceInformation":{"shape":"MarketplaceInformation"},
-        "configurationValues":{"shape":"String"}
+        "configurationValues":{"shape":"String"},
+        "podIdentityAssociations":{"shape":"StringList"}
       }
     },
     "AddonHealth":{
@@ -1020,12 +1023,40 @@
         "ConfigurationConflict",
         "AdmissionRequestDenied",
         "UnsupportedAddonModification",
-        "K8sResourceNotFound"
+        "K8sResourceNotFound",
+        "AddonSubscriptionNeeded",
+        "AddonPermissionFailure"
       ]
     },
     "AddonIssueList":{
       "type":"list",
       "member":{"shape":"AddonIssue"}
+    },
+    "AddonPodIdentityAssociations":{
+      "type":"structure",
+      "required":[
+        "serviceAccount",
+        "roleArn"
+      ],
+      "members":{
+        "serviceAccount":{"shape":"String"},
+        "roleArn":{"shape":"String"}
+      }
+    },
+    "AddonPodIdentityAssociationsList":{
+      "type":"list",
+      "member":{"shape":"AddonPodIdentityAssociations"}
+    },
+    "AddonPodIdentityConfiguration":{
+      "type":"structure",
+      "members":{
+        "serviceAccount":{"shape":"String"},
+        "recommendedManagedPolicies":{"shape":"StringList"}
+      }
+    },
+    "AddonPodIdentityConfigurationList":{
+      "type":"list",
+      "member":{"shape":"AddonPodIdentityConfiguration"}
     },
     "AddonStatus":{
       "type":"string",
@@ -1046,7 +1077,8 @@
         "addonVersion":{"shape":"String"},
         "architecture":{"shape":"StringList"},
         "compatibilities":{"shape":"Compatibilities"},
-        "requiresConfiguration":{"shape":"Boolean"}
+        "requiresConfiguration":{"shape":"Boolean"},
+        "requiresIamPermissions":{"shape":"Boolean"}
       }
     },
     "AddonVersionInfoList":{
@@ -1439,7 +1471,8 @@
           "idempotencyToken":true
         },
         "tags":{"shape":"TagMap"},
-        "configurationValues":{"shape":"String"}
+        "configurationValues":{"shape":"String"},
+        "podIdentityAssociations":{"shape":"AddonPodIdentityAssociationsList"}
       }
     },
     "CreateAddonResponse":{
@@ -1848,7 +1881,8 @@
       "members":{
         "addonName":{"shape":"String"},
         "addonVersion":{"shape":"String"},
-        "configurationSchema":{"shape":"String"}
+        "configurationSchema":{"shape":"String"},
+        "podIdentityConfiguration":{"shape":"AddonPodIdentityConfigurationList"}
       }
     },
     "DescribeAddonRequest":{
@@ -2288,8 +2322,36 @@
         "subnets":{"shape":"StringList"},
         "selectors":{"shape":"FargateProfileSelectors"},
         "status":{"shape":"FargateProfileStatus"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "health":{"shape":"FargateProfileHealth"}
       }
+    },
+    "FargateProfileHealth":{
+      "type":"structure",
+      "members":{
+        "issues":{"shape":"FargateProfileIssueList"}
+      }
+    },
+    "FargateProfileIssue":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"FargateProfileIssueCode"},
+        "message":{"shape":"String"},
+        "resourceIds":{"shape":"StringList"}
+      }
+    },
+    "FargateProfileIssueCode":{
+      "type":"string",
+      "enum":[
+        "PodExecutionRoleAlreadyInUse",
+        "AccessDenied",
+        "ClusterUnreachable",
+        "InternalFailure"
+      ]
+    },
+    "FargateProfileIssueList":{
+      "type":"list",
+      "member":{"shape":"FargateProfileIssue"}
     },
     "FargateProfileLabel":{
       "type":"map",
@@ -3048,7 +3110,9 @@
         "SourceEc2LaunchTemplateNotFound",
         "LimitExceeded",
         "Unknown",
-        "AutoScalingGroupInstanceRefreshActive"
+        "AutoScalingGroupInstanceRefreshActive",
+        "KubernetesLabelInvalid",
+        "Ec2LaunchTemplateVersionMaxLimitExceeded"
       ]
     },
     "NodegroupResources":{
@@ -3180,7 +3244,8 @@
         "associationId":{"shape":"String"},
         "tags":{"shape":"TagMap"},
         "createdAt":{"shape":"Timestamp"},
-        "modifiedAt":{"shape":"Timestamp"}
+        "modifiedAt":{"shape":"Timestamp"},
+        "ownerArn":{"shape":"String"}
       }
     },
     "PodIdentityAssociationSummaries":{
@@ -3194,7 +3259,8 @@
         "namespace":{"shape":"String"},
         "serviceAccount":{"shape":"String"},
         "associationArn":{"shape":"String"},
-        "associationId":{"shape":"String"}
+        "associationId":{"shape":"String"},
+        "ownerArn":{"shape":"String"}
       }
     },
     "Provider":{
@@ -3481,7 +3547,8 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "configurationValues":{"shape":"String"}
+        "configurationValues":{"shape":"String"},
+        "podIdentityAssociations":{"shape":"AddonPodIdentityAssociationsList"}
       }
     },
     "UpdateAddonResponse":{
@@ -3673,7 +3740,8 @@
         "ConfigurationValues",
         "SecurityGroups",
         "Subnets",
-        "AuthenticationMode"
+        "AuthenticationMode",
+        "PodIdentityAssociations"
       ]
     },
     "UpdateParams":{

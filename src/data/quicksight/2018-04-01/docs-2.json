@@ -77,6 +77,7 @@
     "DescribeIAMPolicyAssignment": "<p>Describes an existing IAM policy assignment, as specified by the assignment name.</p>",
     "DescribeIngestion": "<p>Describes a SPICE ingestion.</p>",
     "DescribeIpRestriction": "<p>Provides a summary and status of IP rules.</p>",
+    "DescribeKeyRegistration": "<p>Describes all customer managed key registrations in a Amazon QuickSight account.</p>",
     "DescribeNamespace": "<p>Describes the current namespace.</p>",
     "DescribeRefreshSchedule": "<p>Provides a summary of a refresh schedule.</p>",
     "DescribeRoleCustomPermission": "<p>Describes all custom permissions that are mapped to a role.</p>",
@@ -138,7 +139,7 @@
     "SearchGroups": "<p>Use the <code>SearchGroups</code> operation to search groups in a specified Amazon QuickSight namespace using the supplied filters.</p>",
     "StartAssetBundleExportJob": "<p>Starts an Asset Bundle export job.</p> <p>An Asset Bundle export job exports specified Amazon QuickSight assets. You can also choose to export any asset dependencies in the same job. Export jobs run asynchronously and can be polled with a <code>DescribeAssetBundleExportJob</code> API call. When a job is successfully completed, a download URL that contains the exported assets is returned. The URL is valid for 5 minutes and can be refreshed with a <code>DescribeAssetBundleExportJob</code> API call. Each Amazon QuickSight account can run up to 5 export jobs concurrently.</p> <p>The API caller must have the necessary permissions in their IAM role to access each resource before the resources can be exported.</p>",
     "StartAssetBundleImportJob": "<p>Starts an Asset Bundle import job.</p> <p>An Asset Bundle import job imports specified Amazon QuickSight assets into an Amazon QuickSight account. You can also choose to import a naming prefix and specified configuration overrides. The assets that are contained in the bundle file that you provide are used to create or update a new or existing asset in your Amazon QuickSight account. Each Amazon QuickSight account can run up to 5 import jobs concurrently.</p> <p>The API caller must have the necessary <code>\"create\"</code>, <code>\"describe\"</code>, and <code>\"update\"</code> permissions in their IAM role to access each resource type that is contained in the bundle file before the resources can be imported.</p>",
-    "StartDashboardSnapshotJob": "<p>Starts an asynchronous job that generates a dashboard snapshot. You can request one of the following format configurations per API call.</p> <ul> <li> <p>1 paginated PDF</p> </li> <li> <p>1 Excel workbook</p> </li> <li> <p>5 CSVs</p> </li> </ul> <p>Poll job descriptions with a <code>DescribeDashboardSnapshotJob</code> API call. Once the job succeeds, use the <code>DescribeDashboardSnapshotJobResult</code> API to obtain the download URIs that the job generates.</p>",
+    "StartDashboardSnapshotJob": "<p>Starts an asynchronous job that generates a snapshot of a dashboard's output. You can request one or several of the following format configurations in each API call.</p> <ul> <li> <p>1 Paginated PDF</p> </li> <li> <p>1 Excel workbook that includes up to 5 table or pivot table visuals</p> </li> <li> <p>5 CSVs from table or pivot table visuals</p> </li> </ul> <p>The status of a submitted job can be polled with the <code>DescribeDashboardSnapshotJob</code> API. When you call the <code>DescribeDashboardSnapshotJob</code> API, check the <code>JobStatus</code> field in the response. Once the job reaches a <code>COMPLETED</code> or <code>FAILED</code> status, use the <code>DescribeDashboardSnapshotJobResult</code> API to obtain the URLs for the generated files. If the job fails, the <code>DescribeDashboardSnapshotJobResult</code> API returns detailed information about the error that occurred.</p> <p> <b>StartDashboardSnapshotJob API throttling</b> </p> <p>Amazon QuickSight utilizes API throttling to create a more consistent user experience within a time span for customers when they call the <code>StartDashboardSnapshotJob</code>. By default, 12 jobs can run simlutaneously in one Amazon Web Services account and users can submit up 10 API requests per second before an account is throttled. If an overwhelming number of API requests are made by the same user in a short period of time, Amazon QuickSight throttles the API calls to maintin an optimal experience and reliability for all Amazon QuickSight users.</p> <p> <b>Common throttling scenarios</b> </p> <p>The following list provides information about the most commin throttling scenarios that can occur.</p> <ul> <li> <p> <b>A large number of <code>SnapshotExport</code> API jobs are running simultaneously on an Amazon Web Services account.</b> When a new <code>StartDashboardSnapshotJob</code> is created and there are already 12 jobs with the <code>RUNNING</code> status, the new job request fails and returns a <code>LimitExceededException</code> error. Wait for a current job to comlpete before you resubmit the new job.</p> </li> <li> <p> <b>A large number of API requests are submitted on an Amazon Web Services account.</b> When a user makes more than 10 API calls to the Amazon QuickSight API in one second, a <code>ThrottlingException</code> is returned.</p> </li> </ul> <p>If your use case requires a higher throttling limit, contact your account admin or <a href=\"http://aws.amazon.com/contact-us/\">Amazon Web ServicesSupport</a> to explore options to tailor a more optimal expereince for your account.</p> <p> <b>Best practices to handle throttling</b> </p> <p>If your use case projects high levels of API traffic, try to reduce the degree of frequency and parallelism of API calls as much as you can to avoid throttling. You can also perform a timing test to calculate an estimate for the total processing time of your projected load that stays within the throttling limits of the Amazon QuickSight APIs. For example, if your projected traffic is 100 snapshot jobs before 12:00 PM per day, start 12 jobs in parallel and measure the amount of time it takes to proccess all 12 jobs. Once you obtain the result, multiply the duration by 9, for example <code>(12 minutes * 9 = 108 minutes)</code>. Use the new result to determine the latest time at which the jobs need to be started to meet your target deadline.</p> <p>The time that it takes to process a job can be impacted by the following factors:</p> <ul> <li> <p>The dataset type (Direct Query or SPICE).</p> </li> <li> <p>The size of the dataset.</p> </li> <li> <p>The complexity of the calculated fields that are used in the dashboard.</p> </li> <li> <p>The number of visuals that are on a sheet.</p> </li> <li> <p>The types of visuals that are on the sheet.</p> </li> <li> <p>The number of formats and snapshots that are requested in the job configuration.</p> </li> <li> <p>The size of the generated snapshots.</p> </li> </ul>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified Amazon QuickSight resource. </p> <p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values. You can use the <code>TagResource</code> operation with a resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a resource. Amazon QuickSight supports tagging on data set, data source, dashboard, template, topic, and user. </p> <p>Tagging for Amazon QuickSight works in a similar way to tagging for other Amazon Web Services services, except for the following:</p> <ul> <li> <p>Tags are used to track costs for users in Amazon QuickSight. You can't tag other resources that Amazon QuickSight costs are based on, such as storage capacoty (SPICE), session usage, alert consumption, or reporting units.</p> </li> <li> <p>Amazon QuickSight doesn't currently support the tag editor for Resource Groups.</p> </li> </ul>",
     "UntagResource": "<p>Removes a tag or tags from a resource.</p>",
     "UpdateAccountCustomization": "<p>Updates Amazon QuickSight customizations for the current Amazon Web Services Region. Currently, the only customization that you can use is a theme.</p> <p>You can use customizations for your Amazon Web Services account or, if you specify a namespace, for a Amazon QuickSight namespace instead. Customizations that apply to a namespace override customizations that apply to an Amazon Web Services account. To find out which customizations apply, use the <code>DescribeAccountCustomization</code> API operation. </p>",
@@ -158,10 +159,12 @@
     "UpdateGroup": "<p>Changes a group description. </p>",
     "UpdateIAMPolicyAssignment": "<p>Updates an existing IAM policy assignment. This operation updates only the optional parameter or parameters that are specified in the request. This overwrites all of the users included in <code>Identities</code>. </p>",
     "UpdateIdentityPropagationConfig": "<p>Adds or updates services and authorized targets to configure what the Amazon QuickSight IAM Identity Center application can access.</p> <p>This operation is only supported for Amazon QuickSight accounts using IAM Identity Center</p>",
-    "UpdateIpRestriction": "<p>Updates the content and status of IP rules. To use this operation, you must provide the entire map of rules. You can use the <code>DescribeIpRestriction</code> operation to get the current rule map.</p>",
+    "UpdateIpRestriction": "<p>Updates the content and status of IP rules. Traffic from a source is allowed when the source satisfies either the <code>IpRestrictionRule</code>, <code>VpcIdRestrictionRule</code>, or <code>VpcEndpointIdRestrictionRule</code>. To use this operation, you must provide the entire map of rules. You can use the <code>DescribeIpRestriction</code> operation to get the current rule map.</p>",
+    "UpdateKeyRegistration": "<p>Updates a customer managed key in a Amazon QuickSight account.</p>",
     "UpdatePublicSharingSettings": "<p>Use the <code>UpdatePublicSharingSettings</code> operation to turn on or turn off the public sharing settings of an Amazon QuickSight dashboard.</p> <p>To use this operation, turn on session capacity pricing for your Amazon QuickSight account.</p> <p>Before you can turn on public sharing on your account, make sure to give public sharing permissions to an administrative user in the Identity and Access Management (IAM) console. For more information on using IAM with Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/security_iam_service-with-iam.html\">Using Amazon QuickSight with IAM</a> in the <i>Amazon QuickSight User Guide</i>.</p>",
     "UpdateRefreshSchedule": "<p>Updates a refresh schedule for a dataset.</p>",
     "UpdateRoleCustomPermission": "<p>Updates the custom permissions that are associated with a role.</p>",
+    "UpdateSPICECapacityConfiguration": "<p>Updates the SPICE capacity configuration for a Amazon QuickSight account.</p>",
     "UpdateTemplate": "<p>Updates a template from an existing Amazon QuickSight analysis or another template.</p>",
     "UpdateTemplateAlias": "<p>Updates the template alias of a template.</p>",
     "UpdateTemplatePermissions": "<p>Updates the resource permissions for a template.</p>",
@@ -291,9 +294,9 @@
       }
     },
     "AllSheetsFilterScopeConfiguration": {
-      "base": "<p>The configuration for applying a filter to all sheets. You can apply this filter to all visuals on every sheet.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
+      "base": "<p>An empty object that represents that the <code>AllSheets</code> option is the chosen value for the <code>FilterScopeConfiguration</code> parameter. This structure applies the filter to all visuals on all sheets of an Analysis, Dashboard, or Template.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
       "refs": {
-        "FilterScopeConfiguration$AllSheets": "<p>The configuration for applying a filter to all sheets.</p>"
+        "FilterScopeConfiguration$AllSheets": "<p>The configuration that applies a filter to all sheets. When you choose <code>AllSheets</code> as the value for a <code>FilterScopeConfiguration</code>, this filter is applied to all visuals of all sheets in an Analysis, Dashboard, or Template. The <code>AllSheetsFilterScopeConfiguration</code> is chosen.</p>"
       }
     },
     "AmazonElasticsearchParameters": {
@@ -433,6 +436,12 @@
         "GenerateEmbedUrlForAnonymousUserRequest$ExperienceConfiguration": "<p>The configuration of the experience that you are embedding.</p>"
       }
     },
+    "AnonymousUserGenerativeQnAEmbeddingConfiguration": {
+      "base": "<p>The settings that you want to use for the Generative Q&amp;A experience.</p>",
+      "refs": {
+        "AnonymousUserEmbeddingExperienceConfiguration$GenerativeQnA": "<p>The Generative Q&amp;A experience that you want to use for anonymous user embedding.</p>"
+      }
+    },
     "AnonymousUserQSearchBarEmbeddingConfiguration": {
       "base": "<p>The settings that you want to use with the Q search bar.</p>",
       "refs": {
@@ -510,6 +519,7 @@
         "AssetBundleExportJobWarning$Arn": "<p>The ARN of the resource whose processing caused a warning.</p>",
         "AssetBundleImportJobError$Arn": "<p>The ARN of the resource whose processing caused an error.</p>",
         "AssetBundleImportJobSummary$Arn": "<p>The ARN of the import job.</p>",
+        "AssetBundleImportJobWarning$Arn": "<p>The ARN of the resource that the warning occurred for.</p>",
         "AssetBundleResourceArns$member": null,
         "CancelIngestionResponse$Arn": "<p>The Amazon Resource Name (ARN) for the data ingestion.</p>",
         "CreateAccountCustomizationResponse$Arn": "<p>The Amazon Resource Name (ARN) for the customization that you created for this Amazon Web Services account.</p>",
@@ -674,7 +684,7 @@
     "ArnList": {
       "base": null,
       "refs": {
-        "GenerateEmbedUrlForAnonymousUserRequest$AuthorizedResourceArns": "<p>The Amazon Resource Names (ARNs) for the Amazon QuickSight resources that the user is authorized to access during the lifetime of the session.</p> <p>If you choose <code>Dashboard</code> embedding experience, pass the list of dashboard ARNs in the account that you want the user to be able to view.</p> <p>Currently, you can pass up to 25 dashboard ARNs in each API call.</p>"
+        "GenerateEmbedUrlForAnonymousUserRequest$AuthorizedResourceArns": "<p>The Amazon Resource Names (ARNs) for the Amazon QuickSight resources that the user is authorized to access during the lifetime of the session.</p> <p>If you choose <code>Dashboard</code> embedding experience, pass the list of dashboard ARNs in the account that you want the user to be able to view.</p> <p>If you want to make changes to the theme of your embedded content, pass a list of theme ARNs that the anonymous users need access to.</p> <p>Currently, you can pass up to 25 theme ARNs in each API call.</p>"
       }
     },
     "AssetBundleCloudFormationOverridePropertyConfiguration": {
@@ -898,7 +908,7 @@
       }
     },
     "AssetBundleExportJobValidationStrategy": {
-      "base": "<p>The option to relax the validation that is required to export each asset. When <code>StrictModeForAllResource</code> is set to true, validation is skipped for specific UI errors.</p>",
+      "base": "<p>The option to relax the validation that is required to export each asset. When <code>StrictModeForAllResource</code> is set to <code>false</code>, validation is skipped for specific UI errors.</p>",
       "refs": {
         "DescribeAssetBundleExportJobResponse$ValidationStrategy": "<p>The validation strategy that is used to export the analysis or dashboard.</p>",
         "StartAssetBundleExportJobRequest$ValidationStrategy": "<p>An optional parameter that determines which validation strategy to use for the export job. If <code>StrictModeForAllResources</code> is set to <code>TRUE</code>, strict validation for every error is enforced. If it is set to <code>FALSE</code>, validation is skipped for specific UI errors that are shown as warnings. The default value for <code>StrictModeForAllResources</code> is <code>FALSE</code>.</p>"
@@ -1224,6 +1234,18 @@
         "AssetBundleImportJobOverrideTags$VPCConnections": "<p>A list of tag overrides for any <code>VPCConnection</code> resources that are present in the asset bundle that is imported.</p>"
       }
     },
+    "AssetBundleImportJobWarning": {
+      "base": "<p>Describes a warning that occurred during an Asset Bundle import job.</p>",
+      "refs": {
+        "AssetBundleImportJobWarningList$member": null
+      }
+    },
+    "AssetBundleImportJobWarningList": {
+      "base": null,
+      "refs": {
+        "DescribeAssetBundleImportJobResponse$Warnings": "<p>An array of warning records that describe all permitted errors that are encountered during the import job.</p>"
+      }
+    },
     "AssetBundleImportSource": {
       "base": "<p>The source of the asset bundle zip file that contains the data that you want to import. The file must be in <code>QUICKSIGHT_JSON</code> format.</p>",
       "refs": {
@@ -1456,6 +1478,8 @@
         "DescribeIngestionRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeIpRestrictionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the IP rules.</p>",
         "DescribeIpRestrictionResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the IP rules.</p>",
+        "DescribeKeyRegistrationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration that you want to describe.</p>",
+        "DescribeKeyRegistrationResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration specified in the request.</p>",
         "DescribeNamespaceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Amazon QuickSight namespace that you want to describe.</p>",
         "DescribeRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon QuickSight account.</p>",
@@ -1537,9 +1561,11 @@
         "UpdateIdentityPropagationConfigRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the identity propagation configuration that you want to update.</p>",
         "UpdateIpRestrictionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the IP rules.</p>",
         "UpdateIpRestrictionResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the IP rules.</p>",
+        "UpdateKeyRegistrationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration that you want to update.</p>",
         "UpdatePublicSharingSettingsRequest$AwsAccountId": "<p>The Amazon Web Services account ID associated with your Amazon QuickSight subscription.</p>",
         "UpdateRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "UpdateRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon QuickSight account.</p>",
+        "UpdateSPICECapacityConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the SPICE configuration that you want to update.</p>",
         "UpdateTemplateAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template alias that you're updating.</p>",
         "UpdateTemplatePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template.</p>",
         "UpdateTemplateRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template that you're updating.</p>",
@@ -1792,8 +1818,10 @@
         "DescribeAssetBundleExportJobResponse$IncludeAllDependencies": "<p>The include dependencies flag.</p>",
         "DescribeAssetBundleExportJobResponse$IncludePermissions": "<p>The include permissions flag.</p>",
         "DescribeAssetBundleExportJobResponse$IncludeTags": "<p>The include tags flag.</p>",
+        "DescribeKeyRegistrationRequest$DefaultKeyOnly": "<p>Determines whether the request returns the default key only.</p>",
         "DisplayFormatOptions$UseBlankCellFormat": "<p>A Boolean value that indicates whether to use blank cell format.</p>",
         "DisplayFormatOptions$UseGrouping": "<p>A Boolean value that indicates whether to use grouping.</p>",
+        "FailedKeyRegistrationEntry$SenderFault": "<p>A boolean that indicates whether a <code>FailedKeyRegistrationEntry</code> resulted from user error. If the value of this property is <code>True</code>, the error was caused by user error. If the value of this property is <code>False</code>, the error occurred on the backend. If your job continues fail and with a <code>False</code> <code>SenderFault</code> value, contact Amazon Web Services Support.</p>",
         "GetDashboardEmbedUrlRequest$UndoRedoDisabled": "<p>Remove the undo/redo button on the embedded dashboard. The default is FALSE, which enables the undo/redo button.</p>",
         "GetDashboardEmbedUrlRequest$ResetDisabled": "<p>Remove the reset button on the embedded dashboard. The default is FALSE, which enables the reset button.</p>",
         "GetDashboardEmbedUrlRequest$StatePersistenceEnabled": "<p>Adds persistence of state for the user session in an embedded dashboard. Persistence applies to the sheet and the parameter settings. These are control settings that the dashboard subscriber (Amazon QuickSight reader) chooses while viewing the dashboard. If this is set to <code>TRUE</code>, the settings are the same when the subscriber reopens the same dashboard URL. The state is stored in Amazon QuickSight, not in a browser cookie. If this is set to FALSE, the state of the user session is not persisted. The default is <code>FALSE</code>.</p>",
@@ -1804,6 +1832,7 @@
         "NumericRangeFilter$IncludeMinimum": "<p>Determines whether the minimum value in the filter value range should be included in the filtered results.</p>",
         "NumericRangeFilter$IncludeMaximum": "<p>Determines whether the maximum value in the filter value range should be included in the filtered results.</p>",
         "RedshiftIAMParameters$AutoCreateDatabaseUser": "<p>Automatically creates a database user. If your database doesn't have a <code>DatabaseUser</code>, set this parameter to <code>True</code>. If there is no <code>DatabaseUser</code>, Amazon QuickSight can't connect to your cluster. The <code>RoleArn</code> that you use for this operation must grant access to <code>redshift:CreateClusterUser</code> to successfully create the user.</p>",
+        "RegisteredCustomerManagedKey$DefaultKey": "<p>Indicates whether a <code>RegisteredCustomerManagedKey</code> is set as the default key for encryption and decryption use.</p>",
         "SignupResponse$IAMUser": "<p>A Boolean that is <code>TRUE</code> if the Amazon QuickSight uses IAM as an authentication method.</p>",
         "SslProperties$DisableSsl": "<p>A Boolean option to control whether SSL should be disabled.</p>",
         "StartAssetBundleExportJobRequest$IncludeAllDependencies": "<p>A Boolean that determines whether all dependencies of each resource ARN are recursively exported with the job. For example, say you provided a Dashboard ARN to the <code>ResourceArns</code> parameter. If you set <code>IncludeAllDependencies</code> to <code>TRUE</code>, any theme, dataset, and data source resource that is a dependency of the dashboard is also exported.</p>",
@@ -1956,6 +1985,7 @@
     "CascadingControlConfiguration": {
       "base": "<p>The values that are displayed in a control can be configured to only show values that are valid based on what's selected in other controls.</p>",
       "refs": {
+        "FilterCrossSheetControl$CascadingControlConfiguration": "<p>The values that are displayed in a control can be configured to only show values that are valid based on what's selected in other controls.</p>",
         "FilterDropDownControl$CascadingControlConfiguration": "<p>The values that are displayed in a control can be configured to only show values that are valid based on what's selected in other controls.</p>",
         "FilterListControl$CascadingControlConfiguration": "<p>The values that are displayed in a control can be configured to only show values that are valid based on what's selected in other controls.</p>",
         "ParameterDropDownControl$CascadingControlConfiguration": "<p>The values that are displayed in a control can be configured to only show values that are valid based on what's selected in other controls.</p>",
@@ -2008,7 +2038,7 @@
       }
     },
     "CategoryDrillDownFilter": {
-      "base": "<p>The numeric equality type drill down filter.</p>",
+      "base": "<p>The category drill down filter.</p>",
       "refs": {
         "DrillDownFilter$CategoryFilter": "<p>The category type drill down filter. This filter is used for string type columns.</p>"
       }
@@ -3557,7 +3587,7 @@
       }
     },
     "DatasetParameter": {
-      "base": "<p>A dataset parameter.</p>",
+      "base": "<p>A parameter that is created in a dataset. The parameter can be a string, integer, decimal, or datetime data type.</p>",
       "refs": {
         "DatasetParameterList$member": null
       }
@@ -3591,7 +3621,7 @@
       }
     },
     "DatasetParameterValueType": {
-      "base": null,
+      "base": "<p>The value type of the parameter. The value type is used to validate the parameter before it is evaluated.</p>",
       "refs": {
         "DateTimeDatasetParameter$ValueType": "<p>The value type of the dataset parameter. Valid values are <code>single value</code> or <code>multi value</code>.</p>",
         "DecimalDatasetParameter$ValueType": "<p>The value type of the dataset parameter. Valid values are <code>single value</code> or <code>multi value</code>.</p>",
@@ -3711,6 +3741,7 @@
     "DateTimePickerControlDisplayOptions": {
       "base": "<p>The display options of a control.</p>",
       "refs": {
+        "DefaultDateTimePickerControlOptions$DisplayOptions": "<p>The display options of a control.</p>",
         "FilterDateTimePickerControl$DisplayOptions": "<p>The display options of a control.</p>",
         "ParameterDateTimePickerControl$DisplayOptions": "<p>The display options of a control.</p>"
       }
@@ -3829,6 +3860,42 @@
         "TopicColumn$Aggregation": "<p>The type of aggregation that is performed on the column data when it's queried.</p>"
       }
     },
+    "DefaultDateTimePickerControlOptions": {
+      "base": "<p>The default options that correspond to the filter control type of a <code>DateTimePicker</code>.</p>",
+      "refs": {
+        "DefaultFilterControlOptions$DefaultDateTimePickerOptions": "<p>The default options that correspond to the filter control type of a <code>DateTimePicker</code>.</p>"
+      }
+    },
+    "DefaultFilterControlConfiguration": {
+      "base": "<p>The default configuration for all dependent controls of the filter.</p>",
+      "refs": {
+        "CategoryFilter$DefaultFilterControlConfiguration": "<p>The default configurations for the associated controls. This applies only for filters that are scoped to multiple sheets.</p>",
+        "NumericEqualityFilter$DefaultFilterControlConfiguration": "<p>The default configurations for the associated controls. This applies only for filters that are scoped to multiple sheets.</p>",
+        "NumericRangeFilter$DefaultFilterControlConfiguration": "<p>The default configurations for the associated controls. This applies only for filters that are scoped to multiple sheets.</p>",
+        "RelativeDatesFilter$DefaultFilterControlConfiguration": "<p>The default configurations for the associated controls. This applies only for filters that are scoped to multiple sheets.</p>",
+        "TimeEqualityFilter$DefaultFilterControlConfiguration": "<p>The default configurations for the associated controls. This applies only for filters that are scoped to multiple sheets.</p>",
+        "TimeRangeFilter$DefaultFilterControlConfiguration": "<p>The default configurations for the associated controls. This applies only for filters that are scoped to multiple sheets.</p>",
+        "TopBottomFilter$DefaultFilterControlConfiguration": "<p>The default configurations for the associated controls. This applies only for filters that are scoped to multiple sheets.</p>"
+      }
+    },
+    "DefaultFilterControlOptions": {
+      "base": "<p>The option that corresponds to the control type of the filter.</p>",
+      "refs": {
+        "DefaultFilterControlConfiguration$ControlOptions": "<p>The control option for the <code>DefaultFilterControlConfiguration</code>.</p>"
+      }
+    },
+    "DefaultFilterDropDownControlOptions": {
+      "base": "<p>The default options that correspond to the <code>Dropdown</code> filter control type.</p>",
+      "refs": {
+        "DefaultFilterControlOptions$DefaultDropdownOptions": "<p>The default options that correspond to the <code>Dropdown</code> filter control type.</p>"
+      }
+    },
+    "DefaultFilterListControlOptions": {
+      "base": "<p>The default options that correspond to the <code>List</code> filter control type.</p>",
+      "refs": {
+        "DefaultFilterControlOptions$DefaultListOptions": "<p>The default options that correspond to the <code>List</code> filter control type.</p>"
+      }
+    },
     "DefaultFormatting": {
       "base": "<p>A structure that represents a default formatting definition.</p>",
       "refs": {
@@ -3866,10 +3933,34 @@
         "DefaultNewSheetConfiguration$PaginatedLayoutConfiguration": "<p>The options that determine the default settings for a paginated layout configuration.</p>"
       }
     },
+    "DefaultRelativeDateTimeControlOptions": {
+      "base": "<p>The default options that correspond to the <code>RelativeDateTime</code> filter control type.</p>",
+      "refs": {
+        "DefaultFilterControlOptions$DefaultRelativeDateTimeOptions": "<p>The default options that correspond to the <code>RelativeDateTime</code> filter control type.</p>"
+      }
+    },
     "DefaultSectionBasedLayoutConfiguration": {
       "base": "<p>The options that determine the default settings for a section-based layout configuration.</p>",
       "refs": {
         "DefaultPaginatedLayoutConfiguration$SectionBased": "<p>The options that determine the default settings for a section-based layout configuration.</p>"
+      }
+    },
+    "DefaultSliderControlOptions": {
+      "base": "<p>The default options that correspond to the <code>Slider</code> filter control type.</p>",
+      "refs": {
+        "DefaultFilterControlOptions$DefaultSliderOptions": "<p>The default options that correspond to the <code>Slider</code> filter control type.</p>"
+      }
+    },
+    "DefaultTextAreaControlOptions": {
+      "base": "<p>The default options that correspond to the <code>TextArea</code> filter control type.</p>",
+      "refs": {
+        "DefaultFilterControlOptions$DefaultTextAreaOptions": "<p>The default options that correspond to the <code>TextArea</code> filter control type.</p>"
+      }
+    },
+    "DefaultTextFieldControlOptions": {
+      "base": "<p>The default options that correspond to the <code>TextField</code> filter control type.</p>",
+      "refs": {
+        "DefaultFilterControlOptions$DefaultTextFieldOptions": "<p>The default options that correspond to the <code>TextField</code> filter control type.</p>"
       }
     },
     "DeleteAccountCustomizationRequest": {
@@ -4398,6 +4489,16 @@
       "refs": {
       }
     },
+    "DescribeKeyRegistrationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeKeyRegistrationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeNamespaceRequest": {
       "base": null,
       "refs": {
@@ -4672,8 +4773,11 @@
         "AxisLogarithmicScale$Base": "<p>The base setup of a logarithmic axis scale.</p>",
         "AxisTickLabelOptions$RotationAngle": "<p>The rotation angle of the axis tick labels.</p>",
         "DataColor$DataValue": "<p>The data value that the color is applied to.</p>",
-        "FilterSliderControl$MaximumValue": "<p>The smaller value that is displayed at the left of the slider.</p>",
-        "FilterSliderControl$MinimumValue": "<p>The larger value that is displayed at the right of the slider.</p>",
+        "DefaultSliderControlOptions$MaximumValue": "<p>The larger value that is displayed at the right of the slider.</p>",
+        "DefaultSliderControlOptions$MinimumValue": "<p>The smaller value that is displayed at the left of the slider.</p>",
+        "DefaultSliderControlOptions$StepSize": "<p>The number of increments that the slider bar is divided into.</p>",
+        "FilterSliderControl$MaximumValue": "<p>The larger value that is displayed at the right of the slider.</p>",
+        "FilterSliderControl$MinimumValue": "<p>The smaller value that is displayed at the left of the slider.</p>",
         "FilterSliderControl$StepSize": "<p>The number of increments that the slider bar is divided into.</p>",
         "ForecastComputation$UpperBoundary": "<p>The upper boundary setup of a forecast computation.</p>",
         "ForecastComputation$LowerBoundary": "<p>The lower boundary setup of a forecast computation.</p>",
@@ -4683,8 +4787,8 @@
         "NumericEqualityDrillDownFilter$Value": "<p>The value of the double input numeric drill down filter.</p>",
         "NumericEqualityFilter$Value": "<p>The input value.</p>",
         "NumericRangeFilterValue$StaticValue": "<p>The static value of the numeric range filter.</p>",
-        "ParameterSliderControl$MaximumValue": "<p>The smaller value that is displayed at the left of the slider.</p>",
-        "ParameterSliderControl$MinimumValue": "<p>The larger value that is displayed at the right of the slider.</p>",
+        "ParameterSliderControl$MaximumValue": "<p>The larger value that is displayed at the right of the slider.</p>",
+        "ParameterSliderControl$MinimumValue": "<p>The smaller value that is displayed at the left of the slider.</p>",
         "ParameterSliderControl$StepSize": "<p>The number of increments that the slider bar is divided into.</p>",
         "TimeBasedForecastProperties$UpperBoundary": "<p>The upper boundary setup of a forecast computation.</p>",
         "TimeBasedForecastProperties$LowerBoundary": "<p>The lower boundary setup of a forecast computation.</p>",
@@ -4709,6 +4813,7 @@
     "DropDownControlDisplayOptions": {
       "base": "<p>The display options of a control.</p>",
       "refs": {
+        "DefaultFilterDropDownControlOptions$DisplayOptions": "<p>The display options of a control.</p>",
         "FilterDropDownControl$DisplayOptions": "<p>The display options of the <code>FilterDropDownControl</code>.</p>",
         "ParameterDropDownControl$DisplayOptions": "<p>The display options of a control.</p>"
       }
@@ -4740,7 +4845,7 @@
       "base": null,
       "refs": {
         "GenerateEmbedUrlForAnonymousUserResponse$EmbedUrl": "<p>The embed URL for the dashboard.</p>",
-        "GenerateEmbedUrlForRegisteredUserResponse$EmbedUrl": "<p>The embed URL for the Amazon QuickSight dashboard, visual, Q search bar, or console.</p>",
+        "GenerateEmbedUrlForRegisteredUserResponse$EmbedUrl": "<p>The embed URL for the Amazon QuickSight dashboard, visual, Q search bar, Generative Q&amp;A experience, or console.</p>",
         "GetDashboardEmbedUrlResponse$EmbedUrl": "<p>A single-use URL that you can put into your server-side webpage to embed your dashboard. This URL is valid for 5 minutes. The API operation provides the URL with an <code>auth_code</code> value that enables one (and only one) sign-on to a user session that is valid for 10 hours. </p>",
         "GetSessionEmbedUrlResponse$EmbedUrl": "<p>A single-use URL that you can put into your server-side web page to embed your Amazon QuickSight session. This URL is valid for 5 minutes. The API operation provides the URL with an <code>auth_code</code> value that enables one (and only one) sign-on to a user session that is valid for 10 hours. </p>"
       }
@@ -4848,6 +4953,18 @@
         "RollingDateConfiguration$Expression": "<p>The expression of the rolling date configuration.</p>",
         "SheetElementRenderingRule$Expression": "<p>The expression of the rendering rules of a sheet.</p>",
         "TopicCalculatedField$Expression": "<p>The calculated field expression.</p>"
+      }
+    },
+    "FailedKeyRegistrationEntries": {
+      "base": null,
+      "refs": {
+        "UpdateKeyRegistrationResponse$FailedKeyRegistration": "<p>A list of all customer managed key registrations that failed to update.</p>"
+      }
+    },
+    "FailedKeyRegistrationEntry": {
+      "base": "<p>An entry that appears when a <code>KeyRegistration</code> update to Amazon QuickSight fails.</p>",
+      "refs": {
+        "FailedKeyRegistrationEntries$member": null
       }
     },
     "FieldBasedTooltip": {
@@ -5085,6 +5202,12 @@
         "SheetDefinition$FilterControls": "<p>The list of filter controls that are on a sheet.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/filter-controls.html\">Adding filter controls to analysis sheets</a> in the <i>Amazon QuickSight User Guide</i>.</p>"
       }
     },
+    "FilterCrossSheetControl": {
+      "base": "<p>A control from a filter that is scoped across more than one sheet. This represents your filter control on a sheet</p>",
+      "refs": {
+        "FilterControl$CrossSheet": "<p>A control from a filter that is scoped across more than one sheet. This represents your filter control on a sheet</p>"
+      }
+    },
     "FilterDateTimePickerControl": {
       "base": "<p>A control from a date filter that is used to specify date and time.</p>",
       "refs": {
@@ -5184,6 +5307,8 @@
     "FilterSelectableValues": {
       "base": "<p>A list of selectable values that are used in a control.</p>",
       "refs": {
+        "DefaultFilterDropDownControlOptions$SelectableValues": "<p>A list of selectable values that are used in a control.</p>",
+        "DefaultFilterListControlOptions$SelectableValues": "<p>A list of selectable values that are used in a control.</p>",
         "FilterDropDownControl$SelectableValues": "<p>A list of selectable values that are used in a control.</p>",
         "FilterListControl$SelectableValues": "<p>A list of selectable values that are used in a control.</p>"
       }
@@ -5509,6 +5634,12 @@
       "base": "<p>The options that determine the presentation of the arc of a <code>GaugeChartVisual</code>.</p>",
       "refs": {
         "GaugeChartConditionalFormattingOption$Arc": "<p>The options that determine the presentation of the arc of a <code>GaugeChartVisual</code>.</p>"
+      }
+    },
+    "GaugeChartColorConfiguration": {
+      "base": "<p>The color configuration of a <code>GaugeChartVisual</code>.</p>",
+      "refs": {
+        "GaugeChartConfiguration$ColorConfiguration": "<p>The color configuration of a <code>GaugeChartVisual</code>.</p>"
       }
     },
     "GaugeChartConditionalFormatting": {
@@ -5868,9 +5999,12 @@
     "GroupsList": {
       "base": null,
       "refs": {
-        "CreateAccountSubscriptionRequest$AdminGroup": "<p>The admin group associated with your Active Directory or IAM Identity Center account. This field is required if <code>ACTIVE_DIRECTORY</code> or <code>IAM_IDENTITY_CENTER</code> is the selected authentication method of the new Amazon QuickSight account.</p> <p>For more information about using IAM Identity Center in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sec-identity-management-identity-center.html\">Using IAM Identity Center with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide. For more information about using Active Directory in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html\">Using Active Directory with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide.</p>",
+        "CreateAccountSubscriptionRequest$AdminGroup": "<p>The admin group associated with your Active Directory or IAM Identity Center account. Either this field or the <code>AdminProGroup</code> field is required if <code>ACTIVE_DIRECTORY</code> or <code>IAM_IDENTITY_CENTER</code> is the selected authentication method of the new Amazon QuickSight account.</p> <p>For more information about using IAM Identity Center in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sec-identity-management-identity-center.html\">Using IAM Identity Center with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide. For more information about using Active Directory in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html\">Using Active Directory with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide.</p>",
         "CreateAccountSubscriptionRequest$AuthorGroup": "<p>The author group associated with your Active Directory or IAM Identity Center account.</p> <p>For more information about using IAM Identity Center in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sec-identity-management-identity-center.html\">Using IAM Identity Center with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide. For more information about using Active Directory in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html\">Using Active Directory with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide.</p>",
         "CreateAccountSubscriptionRequest$ReaderGroup": "<p>The reader group associated with your Active Directory or IAM Identity Center account.</p> <p>For more information about using IAM Identity Center in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sec-identity-management-identity-center.html\">Using IAM Identity Center with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide. For more information about using Active Directory in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html\">Using Active Directory with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide.</p>",
+        "CreateAccountSubscriptionRequest$AdminProGroup": "<p>The admin pro group associated with your Active Directory or IAM Identity Center account. Either this field or the <code>AdminGroup</code> field is required if <code>ACTIVE_DIRECTORY</code> or <code>IAM_IDENTITY_CENTER</code> is the selected authentication method of the new Amazon QuickSight account.</p> <p>For more information about using IAM Identity Center in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sec-identity-management-identity-center.html\">Using IAM Identity Center with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide. For more information about using Active Directory in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html\">Using Active Directory with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide.</p>",
+        "CreateAccountSubscriptionRequest$AuthorProGroup": "<p>The author pro group associated with your Active Directory or IAM Identity Center account.</p> <p>For more information about using IAM Identity Center in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sec-identity-management-identity-center.html\">Using IAM Identity Center with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide. For more information about using Active Directory in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html\">Using Active Directory with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide.</p>",
+        "CreateAccountSubscriptionRequest$ReaderProGroup": "<p>The reader pro group associated with your Active Directory or IAM Identity Center account.</p> <p>For more information about using IAM Identity Center in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sec-identity-management-identity-center.html\">Using IAM Identity Center with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide. For more information about using Active Directory in Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html\">Using Active Directory with Amazon QuickSight Enterprise Edition</a> in the Amazon QuickSight User Guide.</p>",
         "ListRoleMembershipsResponse$MembersList": "<p>The list of groups associated with a role</p>"
       }
     },
@@ -5963,6 +6097,8 @@
         "DataPathColor$Color": "<p>The color that needs to be applied to the element.</p>",
         "FontConfiguration$FontColor": "<p>Determines the color of the text.</p>",
         "FunnelChartDataLabelOptions$LabelColor": "<p>The color of the data label text.</p>",
+        "GaugeChartColorConfiguration$ForegroundColor": "<p>The foreground color configuration of a <code>GaugeChartVisual</code>.</p>",
+        "GaugeChartColorConfiguration$BackgroundColor": "<p>The background color configuration of a <code>GaugeChartVisual</code>.</p>",
         "GeospatialHeatmapDataColor$Color": "<p>The hex color to be used in the heatmap point style.</p>",
         "GradientStop$Color": "<p>Determines the color.</p>",
         "KPISparklineOptions$Color": "<p>The color of the sparkline.</p>",
@@ -6171,7 +6307,7 @@
     "IdentityType": {
       "base": null,
       "refs": {
-        "RegisterUserRequest$IdentityType": "<p>Amazon QuickSight supports several ways of managing the identity of users. This parameter accepts two values:</p> <ul> <li> <p> <code>IAM</code>: A user whose identity maps to an existing IAM user or role. </p> </li> <li> <p> <code>QUICKSIGHT</code>: A user whose identity is owned and managed internally by Amazon QuickSight. </p> </li> </ul>",
+        "RegisterUserRequest$IdentityType": "<p>The identity type that your Amazon QuickSight account uses to manage the identity of users.</p>",
         "User$IdentityType": "<p>The type of identity authentication used by the user.</p>"
       }
     },
@@ -6545,6 +6681,13 @@
         "KPIVisualStandardLayout$Type": "<p>The standard layout type.</p>"
       }
     },
+    "KeyRegistration": {
+      "base": null,
+      "refs": {
+        "DescribeKeyRegistrationResponse$KeyRegistration": "<p>A list of <code>RegisteredCustomerManagedKey</code> objects in a Amazon QuickSight account.</p>",
+        "UpdateKeyRegistrationRequest$KeyRegistration": "<p>A list of <code>RegisteredCustomerManagedKey</code> objects to be updated to the Amazon QuickSight account.</p>"
+      }
+    },
     "LabelOptions": {
       "base": "<p>The share label options for the labels.</p>",
       "refs": {
@@ -6819,6 +6962,7 @@
     "ListControlDisplayOptions": {
       "base": "<p>The display options of a control.</p>",
       "refs": {
+        "DefaultFilterListControlOptions$DisplayOptions": "<p>The display options of a control.</p>",
         "FilterListControl$DisplayOptions": "<p>The display options of a control.</p>",
         "ParameterListControl$DisplayOptions": "<p>The display options of a control.</p>"
       }
@@ -7588,6 +7732,7 @@
         "AssetBundleExportJobWarning$Message": "<p>A description of the warning.</p>",
         "AssetBundleImportJobError$Type": "<p>The specific error type or the error that occurred.</p>",
         "AssetBundleImportJobError$Message": "<p>A description of the error.</p>",
+        "AssetBundleImportJobWarning$Message": "<p>A description of the warning that occurred during an Asset Bundle import job.</p>",
         "DashboardError$Message": "<p>Message.</p>",
         "DataSetReference$DataSetPlaceholder": "<p>Dataset placeholder.</p>",
         "DateTimeParameter$Name": "<p>A display name for the date-time parameter.</p>",
@@ -7596,7 +7741,9 @@
         "DescribeAssetBundleImportJobResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeDashboardSnapshotJobResponse$RequestId": "<p> The Amazon Web Services request ID for this operation. </p>",
         "DescribeDashboardSnapshotJobResultResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeKeyRegistrationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "Entity$Path": "<p>The hierarchical path of the entity within the analysis, template, or dashboard definition tree.</p>",
+        "FailedKeyRegistrationEntry$Message": "<p>A message that provides information about why a <code>FailedKeyRegistrationEntry</code> error occurred.</p>",
         "IntegerParameter$Name": "<p>The name of the integer parameter.</p>",
         "ListAssetBundleExportJobsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListAssetBundleImportJobsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -7609,7 +7756,8 @@
         "StartDashboardSnapshotJobResponse$RequestId": "<p> The Amazon Web Services request ID for this operation. </p>",
         "StringParameter$Name": "<p>A display name for a string parameter.</p>",
         "TemplateError$Message": "<p>Description of the error type.</p>",
-        "ThemeError$Message": "<p>The error message.</p>"
+        "ThemeError$Message": "<p>The error message.</p>",
+        "UpdateKeyRegistrationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>"
       }
     },
     "NullString": {
@@ -7670,7 +7818,7 @@
       }
     },
     "NumericEqualityDrillDownFilter": {
-      "base": "<p>The category drill down filter.</p>",
+      "base": "<p>The numeric equality type drill down filter.</p>",
       "refs": {
         "DrillDownFilter$NumericEqualityFilter": "<p>The numeric equality type drill down filter. This filter is used for number type columns.</p>"
       }
@@ -8461,6 +8609,12 @@
         "NamedEntityDefinition$PropertyUsage": "<p>The property usage. Valid values for this structure are <code>INHERIT</code>, <code>DIMENSION</code>, and <code>MEASURE</code>.</p>"
       }
     },
+    "PurchaseMode": {
+      "base": null,
+      "refs": {
+        "UpdateSPICECapacityConfigurationRequest$PurchaseMode": "<p>Determines how SPICE capacity can be purchased. The following options are available. </p> <ul> <li> <p> <code>MANUAL</code>: SPICE capacity can only be purchased manually.</p> </li> <li> <p> <code>AUTO_PURCHASE</code>: Extra SPICE capacity is automatically purchased on your behalf as needed. SPICE capacity can also be purchased manually with this option.</p> </li> </ul>"
+      }
+    },
     "PutDataSetRefreshPropertiesRequest": {
       "base": null,
       "refs": {
@@ -8732,6 +8886,12 @@
       "refs": {
       }
     },
+    "RegisteredCustomerManagedKey": {
+      "base": "<p>A customer managed key structure that contains the information listed below: </p> <ul> <li> <p> <code>KeyArn</code> - The ARN of a KMS key that is registered to a Amazon QuickSight account for encryption and decryption use.</p> </li> <li> <p> <code>DefaultKey</code> - Indicates whether the current key is set as the default key for encryption and decryption use.</p> </li> </ul>",
+      "refs": {
+        "KeyRegistration$member": null
+      }
+    },
     "RegisteredUserConsoleFeatureConfigurations": {
       "base": "<p>The feature configurations of an embedded Amazon QuickSight console.</p>",
       "refs": {
@@ -8759,7 +8919,13 @@
     "RegisteredUserEmbeddingExperienceConfiguration": {
       "base": "<p>The type of experience you want to embed. For registered users, you can embed Amazon QuickSight dashboards or the Amazon QuickSight console.</p> <note> <p>Exactly one of the experience configurations is required. You can choose <code>Dashboard</code> or <code>QuickSightConsole</code>. You cannot choose more than one experience configuration.</p> </note>",
       "refs": {
-        "GenerateEmbedUrlForRegisteredUserRequest$ExperienceConfiguration": "<p>The experience you are embedding. For registered users, you can embed Amazon QuickSight dashboards, Amazon QuickSight visuals, the Amazon QuickSight Q search bar, or the entire Amazon QuickSight console.</p>"
+        "GenerateEmbedUrlForRegisteredUserRequest$ExperienceConfiguration": "<p>The experience that you want to embed. For registered users, you can embed Amazon QuickSight dashboards, Amazon QuickSight visuals, the Amazon QuickSight Q search bar, the Amazon QuickSight Generative Q&amp;A experience, or the entire Amazon QuickSight console.</p>"
+      }
+    },
+    "RegisteredUserGenerativeQnAEmbeddingConfiguration": {
+      "base": "<p>An object that provides information about the configuration of a Generative Q&amp;A experience.</p>",
+      "refs": {
+        "RegisteredUserEmbeddingExperienceConfiguration$GenerativeQnA": "<p>The configuration details for embedding the Generative Q&amp;A experience.</p> <p>For more information about embedding the Generative Q&amp;A experience, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/embedding-overview.html\">Embedding Overview</a> in the <i>Amazon QuickSight User Guide</i>.</p>"
       }
     },
     "RegisteredUserQSearchBarEmbeddingConfiguration": {
@@ -8801,6 +8967,7 @@
     "RelativeDateTimeControlDisplayOptions": {
       "base": "<p>The display options of a control.</p>",
       "refs": {
+        "DefaultRelativeDateTimeControlOptions$DisplayOptions": "<p>The display options of a control.</p>",
         "FilterRelativeDateTimeControl$DisplayOptions": "<p>The display options of a control.</p>"
       }
     },
@@ -9005,7 +9172,8 @@
     "RestrictiveResourceId": {
       "base": null,
       "refs": {
-        "AnonymousUserQSearchBarEmbeddingConfiguration$InitialTopicId": "<p>The QuickSight Q topic ID of the topic that you want the anonymous user to see first. This ID is included in the output URL. When the URL in response is accessed, Amazon QuickSight renders the Q search bar with this topic pre-selected.</p> <p>The Amazon Resource Name (ARN) of this Q topic must be included in the <code>AuthorizedResourceArns</code> parameter. Otherwise, the request will fail with <code>InvalidParameterValueException</code>.</p>",
+        "AnonymousUserGenerativeQnAEmbeddingConfiguration$InitialTopicId": "<p>The Amazon QuickSight Q topic ID of the new reader experience topic that you want the anonymous user to see first. This ID is included in the output URL. When the URL in response is accessed, Amazon QuickSight renders the Generative Q&amp;A experience with this new reader experience topic pre selected.</p> <p>The Amazon Resource Name (ARN) of this Q new reader experience topic must be included in the <code>AuthorizedResourceArns</code> parameter. Otherwise, the request fails with an <code>InvalidParameterValueException</code> error.</p>",
+        "AnonymousUserQSearchBarEmbeddingConfiguration$InitialTopicId": "<p>The Amazon QuickSight Q topic ID of the legacy topic that you want the anonymous user to see first. This ID is included in the output URL. When the URL in response is accessed, Amazon QuickSight renders the Q search bar with this legacy topic pre-selected.</p> <p>The Amazon Resource Name (ARN) of this Q legacy topic must be included in the <code>AuthorizedResourceArns</code> parameter. Otherwise, the request fails with an <code>InvalidParameterValueException</code> error.</p>",
         "CreateFolderMembershipRequest$FolderId": "<p>The ID of the folder.</p>",
         "CreateFolderMembershipRequest$MemberId": "<p>The ID of the asset that you want to add to the folder.</p>",
         "CreateFolderRequest$FolderId": "<p>The ID of the folder.</p>",
@@ -9024,7 +9192,8 @@
         "FolderSummary$FolderId": "<p>The ID of the folder.</p>",
         "ListFolderMembersRequest$FolderId": "<p>The ID of the folder.</p>",
         "MemberIdArnPair$MemberId": "<p>The ID of the member.</p>",
-        "RegisteredUserQSearchBarEmbeddingConfiguration$InitialTopicId": "<p>The ID of the Q topic that you want to make the starting topic in the Q search bar. You can find a topic ID by navigating to the Topics pane in the Amazon QuickSight application and opening a topic. The ID is in the URL for the topic that you open.</p> <p>If you don't specify an initial topic, a list of all shared topics is shown in the Q bar for your readers. When you select an initial topic, you can specify whether or not readers are allowed to select other topics from the available ones in the list.</p>",
+        "RegisteredUserGenerativeQnAEmbeddingConfiguration$InitialTopicId": "<p>The ID of the new Q reader experience topic that you want to make the starting topic in the Generative Q&amp;A experience. You can find a topic ID by navigating to the Topics pane in the Amazon QuickSight application and opening a topic. The ID is in the URL for the topic that you open.</p> <p>If you don't specify an initial topic or you specify a legacy topic, a list of all shared new reader experience topics is shown in the Generative Q&amp;A experience for your readers. When you select an initial new reader experience topic, you can specify whether or not readers are allowed to select other new reader experience topics from the available ones in the list.</p>",
+        "RegisteredUserQSearchBarEmbeddingConfiguration$InitialTopicId": "<p>The ID of the legacy Q topic that you want to use as the starting topic in the Q search bar. To locate the topic ID of the topic that you want to use, open the <a href=\"https://quicksight.aws.amazon.com/\">Amazon QuickSight console</a>, navigate to the <b>Topics</b> pane, and choose thre topic that you want to use. The <code>TopicID</code> is located in the URL of the topic that opens. When you select an initial topic, you can specify whether or not readers are allowed to select other topics from the list of available topics.</p> <p>If you don't specify an initial topic or if you specify a new reader experience topic, a list of all shared legacy topics is shown in the Q bar. </p>",
         "UpdateFolderPermissionsRequest$FolderId": "<p>The ID of the folder.</p>",
         "UpdateFolderPermissionsResponse$FolderId": "<p>The ID of the folder.</p>",
         "UpdateFolderRequest$FolderId": "<p>The ID of the folder.</p>",
@@ -9057,7 +9226,7 @@
       "base": null,
       "refs": {
         "DescribeRoleCustomPermissionResponse$CustomPermissionsName": "<p>The name of the custom permission that is described.</p>",
-        "RegisterUserRequest$CustomPermissionsName": "<p>(Enterprise edition only) The name of the custom permissions profile that you want to assign to this user. Customized permissions allows you to control a user's access by restricting access the following operations:</p> <ul> <li> <p>Create and update data sources</p> </li> <li> <p>Create and update datasets</p> </li> <li> <p>Create and update email reports</p> </li> <li> <p>Subscribe to email reports</p> </li> </ul> <p>To add custom permissions to an existing user, use <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateUser.html\">UpdateUser</a> </code> instead.</p> <p>A set of custom permissions includes any combination of these restrictions. Currently, you need to create the profile names for custom permission sets by using the Amazon QuickSight console. Then, you use the <code>RegisterUser</code> API operation to assign the named set of permissions to a Amazon QuickSight user. </p> <p>Amazon QuickSight custom permissions are applied through IAM policies. Therefore, they override the permissions typically granted by assigning Amazon QuickSight users to one of the default security cohorts in Amazon QuickSight (admin, author, reader).</p> <p>This feature is available only to Amazon QuickSight Enterprise edition subscriptions.</p>",
+        "RegisterUserRequest$CustomPermissionsName": "<p>(Enterprise edition only) The name of the custom permissions profile that you want to assign to this user. Customized permissions allows you to control a user's access by restricting access the following operations:</p> <ul> <li> <p>Create and update data sources</p> </li> <li> <p>Create and update datasets</p> </li> <li> <p>Create and update email reports</p> </li> <li> <p>Subscribe to email reports</p> </li> </ul> <p>To add custom permissions to an existing user, use <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateUser.html\">UpdateUser</a> </code> instead.</p> <p>A set of custom permissions includes any combination of these restrictions. Currently, you need to create the profile names for custom permission sets by using the Amazon QuickSight console. Then, you use the <code>RegisterUser</code> API operation to assign the named set of permissions to a Amazon QuickSight user. </p> <p>Amazon QuickSight custom permissions are applied through IAM policies. Therefore, they override the permissions typically granted by assigning Amazon QuickSight users to one of the default security cohorts in Amazon QuickSight (admin, author, reader, admin pro, author pro, reader pro).</p> <p>This feature is available only to Amazon QuickSight Enterprise edition subscriptions.</p>",
         "UpdateRoleCustomPermissionRequest$CustomPermissionsName": "<p>The name of the custom permission that you want to update the role with.</p>",
         "UpdateUserRequest$CustomPermissionsName": "<p>(Enterprise edition only) The name of the custom permissions profile that you want to assign to this user. Customized permissions allows you to control a user's access by restricting access the following operations:</p> <ul> <li> <p>Create and update data sources</p> </li> <li> <p>Create and update datasets</p> </li> <li> <p>Create and update email reports</p> </li> <li> <p>Subscribe to email reports</p> </li> </ul> <p>A set of custom permissions includes any combination of these restrictions. Currently, you need to create the profile names for custom permission sets by using the Amazon QuickSight console. Then, you use the <code>RegisterUser</code> API operation to assign the named set of permissions to a Amazon QuickSight user. </p> <p>Amazon QuickSight custom permissions are applied through IAM policies. Therefore, they override the permissions typically granted by assigning Amazon QuickSight users to one of the default security cohorts in Amazon QuickSight (admin, author, reader).</p> <p>This feature is available only to Amazon QuickSight Enterprise edition subscriptions.</p>",
         "User$CustomPermissionsName": "<p>The custom permissions profile associated with this user.</p>"
@@ -9674,7 +9843,8 @@
     "SheetControlDateTimePickerType": {
       "base": null,
       "refs": {
-        "FilterDateTimePickerControl$Type": "<p>The date time picker type of a <code>FilterDateTimePickerControl</code>. Choose one of the following options:</p> <ul> <li> <p> <code>SINGLE_VALUED</code>: The filter condition is a fixed date.</p> </li> <li> <p> <code>DATE_RANGE</code>: The filter condition is a date time range.</p> </li> </ul>"
+        "DefaultDateTimePickerControlOptions$Type": "<p>The date time picker type of the <code>DefaultDateTimePickerControlOptions</code>. Choose one of the following options:</p> <ul> <li> <p> <code>SINGLE_VALUED</code>: The filter condition is a fixed date.</p> </li> <li> <p> <code>DATE_RANGE</code>: The filter condition is a date time range.</p> </li> </ul>",
+        "FilterDateTimePickerControl$Type": "<p>The type of the <code>FilterDropDownControl</code>. Choose one of the following options:</p> <ul> <li> <p> <code>MULTI_SELECT</code>: The user can select multiple entries from a dropdown menu.</p> </li> <li> <p> <code>SINGLE_SELECT</code>: The user can select a single entry from a dropdown menu.</p> </li> </ul>"
       }
     },
     "SheetControlInfoIconLabelOptions": {
@@ -9716,8 +9886,10 @@
     "SheetControlListType": {
       "base": null,
       "refs": {
+        "DefaultFilterDropDownControlOptions$Type": "<p>The type of the <code>FilterDropDownControl</code>. Choose one of the following options:</p> <ul> <li> <p> <code>MULTI_SELECT</code>: The user can select multiple entries from a dropdown menu.</p> </li> <li> <p> <code>SINGLE_SELECT</code>: The user can select a single entry from a dropdown menu.</p> </li> </ul>",
+        "DefaultFilterListControlOptions$Type": "<p>The type of the <code>DefaultFilterListControlOptions</code>. Choose one of the following options:</p> <ul> <li> <p> <code>MULTI_SELECT</code>: The user can select multiple entries from the list.</p> </li> <li> <p> <code>SINGLE_SELECT</code>: The user can select a single entry from the list.</p> </li> </ul>",
         "FilterDropDownControl$Type": "<p>The type of the <code>FilterDropDownControl</code>. Choose one of the following options:</p> <ul> <li> <p> <code>MULTI_SELECT</code>: The user can select multiple entries from a dropdown menu.</p> </li> <li> <p> <code>SINGLE_SELECT</code>: The user can select a single entry from a dropdown menu.</p> </li> </ul>",
-        "FilterListControl$Type": "<p>The type of <code>FilterListControl</code>. Choose one of the following options:</p> <ul> <li> <p> <code>MULTI_SELECT</code>: The user can select multiple entries from the list.</p> </li> <li> <p> <code>SINGLE_SELECT</code>: The user can select a single entry from the list.</p> </li> </ul>",
+        "FilterListControl$Type": "<p>The type of the <code>FilterListControl</code>. Choose one of the following options:</p> <ul> <li> <p> <code>MULTI_SELECT</code>: The user can select multiple entries from the list.</p> </li> <li> <p> <code>SINGLE_SELECT</code>: The user can select a single entry from the list.</p> </li> </ul>",
         "ParameterDropDownControl$Type": "<p>The type parameter name of the <code>ParameterDropDownControl</code>.</p>",
         "ParameterListControl$Type": "<p>The type of <code>ParameterListControl</code>.</p>"
       }
@@ -9725,12 +9897,14 @@
     "SheetControlSliderType": {
       "base": null,
       "refs": {
-        "FilterSliderControl$Type": "<p>The type of <code>FilterSliderControl</code>. Choose one of the following options:</p> <ul> <li> <p> <code>SINGLE_POINT</code>: Filter against(equals) a single data point.</p> </li> <li> <p> <code>RANGE</code>: Filter data that is in a specified range.</p> </li> </ul>"
+        "DefaultSliderControlOptions$Type": "<p>The type of the <code>DefaultSliderControlOptions</code>. Choose one of the following options:</p> <ul> <li> <p> <code>SINGLE_POINT</code>: Filter against(equals) a single data point.</p> </li> <li> <p> <code>RANGE</code>: Filter data that is in a specified range.</p> </li> </ul>",
+        "FilterSliderControl$Type": "<p>The type of the <code>FilterSliderControl</code>. Choose one of the following options:</p> <ul> <li> <p> <code>SINGLE_POINT</code>: Filter against(equals) a single data point.</p> </li> <li> <p> <code>RANGE</code>: Filter data that is in a specified range.</p> </li> </ul>"
       }
     },
     "SheetControlTitle": {
       "base": null,
       "refs": {
+        "DefaultFilterControlConfiguration$Title": "<p>The title of the <code>DefaultFilterControlConfiguration</code>. This title is shared by all controls that are tied to this filter.</p>",
         "FilterDateTimePickerControl$Title": "<p>The title of the <code>FilterDateTimePickerControl</code>.</p>",
         "FilterDropDownControl$Title": "<p>The title of the <code>FilterDropDownControl</code>.</p>",
         "FilterListControl$Title": "<p>The title of the <code>FilterListControl</code>.</p>",
@@ -9940,6 +10114,8 @@
         "DescribeThemeRequest$ThemeId": "<p>The ID for the theme.</p>",
         "EmptyVisual$VisualId": "<p>The unique identifier of a visual. This identifier must be unique within the context of a dashboard, template, or analysis. Two dashboards, analyses, or templates can have visuals with the same identifiers.</p>",
         "FilledMapVisual$VisualId": "<p>The unique identifier of a visual. This identifier must be unique within the context of a dashboard, template, or analysis. Two dashboards, analyses, or templates can have visuals with the same identifiers..</p>",
+        "FilterCrossSheetControl$FilterControlId": "<p>The ID of the <code>FilterCrossSheetControl</code>.</p>",
+        "FilterCrossSheetControl$SourceFilterId": "<p>The source filter ID of the <code>FilterCrossSheetControl</code>.</p>",
         "FilterDateTimePickerControl$FilterControlId": "<p>The ID of the <code>FilterDateTimePickerControl</code>.</p>",
         "FilterDateTimePickerControl$SourceFilterId": "<p>The source filter ID of the <code>FilterDateTimePickerControl</code>.</p>",
         "FilterDropDownControl$FilterControlId": "<p>The ID of the <code>FilterDropDownControl</code>.</p>",
@@ -10111,6 +10287,7 @@
     "SliderControlDisplayOptions": {
       "base": "<p>The display options of a control.</p>",
       "refs": {
+        "DefaultSliderControlOptions$DisplayOptions": "<p>The display options of a control.</p>",
         "FilterSliderControl$DisplayOptions": "<p>The display options of a control.</p>",
         "ParameterSliderControl$DisplayOptions": "<p>The display options of a control.</p>"
       }
@@ -10517,6 +10694,7 @@
         "DescribeIAMPolicyAssignmentResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeIngestionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeIpRestrictionResponse$Status": "<p>The HTTP status of the request. </p>",
+        "DescribeKeyRegistrationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeNamespaceResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeRoleCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -10533,6 +10711,7 @@
         "DescribeTopicResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeUserResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeVPCConnectionResponse$Status": "<p>The HTTP status of the request.</p>",
+        "FailedKeyRegistrationEntry$StatusCode": "<p>The HTTP status of a <code>FailedKeyRegistrationEntry</code> error.</p>",
         "GenerateEmbedUrlForAnonymousUserResponse$Status": "<p>The HTTP status of the request.</p>",
         "GenerateEmbedUrlForRegisteredUserResponse$Status": "<p>The HTTP status of the request.</p>",
         "GetDashboardEmbedUrlResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -10579,6 +10758,7 @@
         "StartAssetBundleExportJobResponse$Status": "<p>The HTTP status of the response.</p>",
         "StartAssetBundleImportJobResponse$Status": "<p>The HTTP status of the response.</p>",
         "StartDashboardSnapshotJobResponse$Status": "<p>The HTTP status of the request</p>",
+        "SuccessfulKeyRegistrationEntry$StatusCode": "<p>The HTTP status of a <code>SuccessfulKeyRegistrationEntry</code> entry.</p>",
         "TagResourceResponse$Status": "<p>The HTTP status of the request.</p>",
         "UntagResourceResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateAccountCustomizationResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -10602,6 +10782,7 @@
         "UpdatePublicSharingSettingsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateRoleCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateSPICECapacityConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTemplateAliasResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTemplatePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTemplateResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -10658,6 +10839,7 @@
         "CreateAccountSubscriptionRequest$LastName": "<p>The last name of the author of the Amazon QuickSight account to use for future communications. This field is required if <code>ENTERPPRISE_AND_Q</code> is the selected edition of the new Amazon QuickSight account.</p>",
         "CreateAccountSubscriptionRequest$EmailAddress": "<p>The email address of the author of the Amazon QuickSight account to use for future communications. This field is required if <code>ENTERPPRISE_AND_Q</code> is the selected edition of the new Amazon QuickSight account.</p>",
         "CreateAccountSubscriptionRequest$ContactNumber": "<p>A 10-digit phone number for the author of the Amazon QuickSight account to use for future communications. This field is required if <code>ENTERPPRISE_AND_Q</code> is the selected edition of the new Amazon QuickSight account.</p>",
+        "CreateAccountSubscriptionRequest$IAMIdentityCenterInstanceArn": "<p>The Amazon Resource Name (ARN) for the IAM Identity Center instance.</p>",
         "CreateAccountSubscriptionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateDashboardResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -10768,6 +10950,7 @@
         "DomainNotWhitelistedException$Message": null,
         "DomainNotWhitelistedException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
         "ErrorInfo$Message": "<p>Error message.</p>",
+        "FailedKeyRegistrationEntry$KeyArn": "<p>The ARN of the KMS key that failed to update.</p>",
         "FieldTooltipItem$Label": "<p>The label of the tooltip item.</p>",
         "FolderColumnList$member": null,
         "FolderSearchFilter$Value": "<p>The value of the named item (in this example, <code>PARENT_FOLDER_ARN</code>), that you want to use as a filter. For example, <code>\"Value\": \"arn:aws:quicksight:us-east-1:1:folder/folderId\"</code>.</p>",
@@ -10910,6 +11093,7 @@
         "RegisterUserRequest$ExternalLoginId": "<p>The identity ID for a user in the external login provider.</p>",
         "RegisterUserResponse$UserInvitationUrl": "<p>The URL the user visits to complete registration and provide a password. This is returned only for users with an identity type of <code>QUICKSIGHT</code>.</p>",
         "RegisterUserResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "RegisteredCustomerManagedKey$KeyArn": "<p>The ARN of the KMS key that is registered to a Amazon QuickSight account for encryption and decryption use.</p>",
         "ResourceExistsException$Message": null,
         "ResourceExistsException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
         "ResourceNotFoundException$Message": null,
@@ -10947,6 +11131,7 @@
         "SnapshotJobResultErrorInfo$ErrorType": "<p>The error type.</p>",
         "StringList$member": null,
         "SubtotalOptions$CustomLabel": "<p>The custom label string for the subtotal cells.</p>",
+        "SuccessfulKeyRegistrationEntry$KeyArn": "<p>The ARN of the KMS key that is associated with the <code>SuccessfulKeyRegistrationEntry</code> entry.</p>",
         "TableFieldCustomTextContent$Value": "<p>The string value of the custom text content for the table URL link content.</p>",
         "TagResourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ThrottlingException$Message": null,
@@ -10985,6 +11170,7 @@
         "UpdateRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateRefreshScheduleResponse$ScheduleId": "<p>The ID of the refresh schedule.</p>",
         "UpdateRoleCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateSPICECapacityConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTemplateAliasResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTemplatePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTemplateResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -11121,6 +11307,18 @@
       "refs": {
         "PivotTableTotalOptions$RowSubtotalOptions": "<p>The row subtotal options.</p>",
         "PivotTableTotalOptions$ColumnSubtotalOptions": "<p>The column subtotal options.</p>"
+      }
+    },
+    "SuccessfulKeyRegistrationEntries": {
+      "base": null,
+      "refs": {
+        "UpdateKeyRegistrationResponse$SuccessfulKeyRegistration": "<p>A list of all customer managed key registrations that were successfully updated.</p>"
+      }
+    },
+    "SuccessfulKeyRegistrationEntry": {
+      "base": "<p>A success entry that occurs when a <code>KeyRegistration</code> job is successfully applied to the Amazon QuickSight account.</p>",
+      "refs": {
+        "SuccessfulKeyRegistrationEntries$member": null
       }
     },
     "Suffix": {
@@ -11594,6 +11792,7 @@
     "TextAreaControlDelimiter": {
       "base": null,
       "refs": {
+        "DefaultTextAreaControlOptions$Delimiter": "<p>The delimiter that is used to separate the lines in text.</p>",
         "FilterTextAreaControl$Delimiter": "<p>The delimiter that is used to separate the lines in text.</p>",
         "ParameterTextAreaControl$Delimiter": "<p>The delimiter that is used to separate the lines in text.</p>"
       }
@@ -11601,6 +11800,7 @@
     "TextAreaControlDisplayOptions": {
       "base": "<p>The display options of a control.</p>",
       "refs": {
+        "DefaultTextAreaControlOptions$DisplayOptions": "<p>The display options of a control.</p>",
         "FilterTextAreaControl$DisplayOptions": "<p>The display options of a control.</p>",
         "ParameterTextAreaControl$DisplayOptions": "<p>The display options of a control.</p>"
       }
@@ -11622,6 +11822,7 @@
     "TextFieldControlDisplayOptions": {
       "base": "<p>The display options of a control.</p>",
       "refs": {
+        "DefaultTextFieldControlOptions$DisplayOptions": "<p>The display options of a control.</p>",
         "FilterTextFieldControl$DisplayOptions": "<p>The display options of a control.</p>",
         "ParameterTextFieldControl$DisplayOptions": "<p>The display options of a control.</p>"
       }
@@ -12163,7 +12364,8 @@
     "TopicUserExperienceVersion": {
       "base": null,
       "refs": {
-        "TopicDetails$UserExperienceVersion": "<p>The user experience version of a topic.</p>"
+        "TopicDetails$UserExperienceVersion": "<p>The user experience version of a topic.</p>",
+        "TopicSummary$UserExperienceVersion": "<p>The user experience version of the topic.</p>"
       }
     },
     "TotalAggregationComputation": {
@@ -12551,6 +12753,16 @@
       "refs": {
       }
     },
+    "UpdateKeyRegistrationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateKeyRegistrationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateLinkPermissionList": {
       "base": null,
       "refs": {
@@ -12599,6 +12811,16 @@
       }
     },
     "UpdateRoleCustomPermissionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSPICECapacityConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSPICECapacityConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -12749,9 +12971,9 @@
     "UserRole": {
       "base": null,
       "refs": {
-        "RegisterUserRequest$UserRole": "<p>The Amazon QuickSight role for the user. The user role can be one of the following:</p> <ul> <li> <p> <code>READER</code>: A user who has read-only access to dashboards.</p> </li> <li> <p> <code>AUTHOR</code>: A user who can create data sources, datasets, analyses, and dashboards.</p> </li> <li> <p> <code>ADMIN</code>: A user who is an author, who can also manage Amazon QuickSight settings.</p> </li> <li> <p> <code>RESTRICTED_READER</code>: This role isn't currently available for use.</p> </li> <li> <p> <code>RESTRICTED_AUTHOR</code>: This role isn't currently available for use.</p> </li> </ul>",
-        "UpdateUserRequest$Role": "<p>The Amazon QuickSight role of the user. The role can be one of the following default security cohorts:</p> <ul> <li> <p> <code>READER</code>: A user who has read-only access to dashboards.</p> </li> <li> <p> <code>AUTHOR</code>: A user who can create data sources, datasets, analyses, and dashboards.</p> </li> <li> <p> <code>ADMIN</code>: A user who is an author, who can also manage Amazon QuickSight settings.</p> </li> </ul> <p>The name of the Amazon QuickSight role is invisible to the user except for the console screens dealing with permissions.</p>",
-        "User$Role": "<p>The Amazon QuickSight role for the user. The user role can be one of the following:.</p> <ul> <li> <p> <code>READER</code>: A user who has read-only access to dashboards.</p> </li> <li> <p> <code>AUTHOR</code>: A user who can create data sources, datasets, analyses, and dashboards.</p> </li> <li> <p> <code>ADMIN</code>: A user who is an author, who can also manage Amazon Amazon QuickSight settings.</p> </li> <li> <p> <code>RESTRICTED_READER</code>: This role isn't currently available for use.</p> </li> <li> <p> <code>RESTRICTED_AUTHOR</code>: This role isn't currently available for use.</p> </li> </ul>"
+        "RegisterUserRequest$UserRole": "<p>The Amazon QuickSight role for the user. The user role can be one of the following:</p> <ul> <li> <p> <code>READER</code>: A user who has read-only access to dashboards.</p> </li> <li> <p> <code>AUTHOR</code>: A user who can create data sources, datasets, analyses, and dashboards.</p> </li> <li> <p> <code>ADMIN</code>: A user who is an author, who can also manage Amazon QuickSight settings.</p> </li> <li> <p> <code>READER_PRO</code>: Reader Pro adds Generative BI capabilities to the Reader role. Reader Pros have access to Amazon Q in Amazon QuickSight, can build stories with Amazon Q, and can generate executive summaries from dashboards.</p> </li> <li> <p> <code>AUTHOR_PRO</code>: Author Pro adds Generative BI capabilities to the Author role. Author Pros can author dashboards with natural language with Amazon Q, build stories with Amazon Q, create Topics for Q&amp;A, and generate executive summaries from dashboards.</p> </li> <li> <p> <code>ADMIN_PRO</code>: Admin Pros are Author Pros who can also manage Amazon QuickSight administrative settings. Admin Pro users are billed at Author Pro pricing.</p> </li> <li> <p> <code>RESTRICTED_READER</code>: This role isn't currently available for use.</p> </li> <li> <p> <code>RESTRICTED_AUTHOR</code>: This role isn't currently available for use.</p> </li> </ul>",
+        "UpdateUserRequest$Role": "<p>The Amazon QuickSight role of the user. The role can be one of the following default security cohorts:</p> <ul> <li> <p> <code>READER</code>: A user who has read-only access to dashboards.</p> </li> <li> <p> <code>AUTHOR</code>: A user who can create data sources, datasets, analyses, and dashboards.</p> </li> <li> <p> <code>ADMIN</code>: A user who is an author, who can also manage Amazon QuickSight settings.</p> </li> <li> <p> <code>READER_PRO</code>: Reader Pro adds Generative BI capabilities to the Reader role. Reader Pros have access to Amazon Q in Amazon QuickSight, can build stories with Amazon Q, and can generate executive summaries from dashboards.</p> </li> <li> <p> <code>AUTHOR_PRO</code>: Author Pro adds Generative BI capabilities to the Author role. Author Pros can author dashboards with natural language with Amazon Q, build stories with Amazon Q, create Topics for Q&amp;A, and generate executive summaries from dashboards.</p> </li> <li> <p> <code>ADMIN_PRO</code>: Admin Pros are Author Pros who can also manage Amazon QuickSight administrative settings. Admin Pro users are billed at Author Pro pricing.</p> </li> </ul> <p>The name of the Amazon QuickSight role is invisible to the user except for the console screens dealing with permissions.</p>",
+        "User$Role": "<p>The Amazon QuickSight role for the user. The user role can be one of the following:.</p> <ul> <li> <p> <code>READER</code>: A user who has read-only access to dashboards.</p> </li> <li> <p> <code>AUTHOR</code>: A user who can create data sources, datasets, analyses, and dashboards.</p> </li> <li> <p> <code>ADMIN</code>: A user who is an author, who can also manage Amazon Amazon QuickSight settings.</p> </li> <li> <p> <code>READER_PRO</code>: Reader Pro adds Generative BI capabilities to the Reader role. Reader Pros have access to Amazon Q in Amazon QuickSight, can build stories with Amazon Q, and can generate executive summaries from dashboards.</p> </li> <li> <p> <code>AUTHOR_PRO</code>: Author Pro adds Generative BI capabilities to the Author role. Author Pros can author dashboards with natural language with Amazon Q, build stories with Amazon Q, create Topics for Q&amp;A, and generate executive summaries from dashboards.</p> </li> <li> <p> <code>ADMIN_PRO</code>: Admin Pros are Author Pros who can also manage Amazon QuickSight administrative settings. Admin Pro users are billed at Author Pro pricing.</p> </li> <li> <p> <code>RESTRICTED_READER</code>: This role isn't currently available for use.</p> </li> <li> <p> <code>RESTRICTED_AUTHOR</code>: This role isn't currently available for use.</p> </li> </ul>"
       }
     },
     "VPCConnection": {
@@ -13168,6 +13390,44 @@
         "CreateDataSourceRequest$VpcConnectionProperties": "<p>Use this parameter only when you want Amazon QuickSight to use a VPC connection when connecting to your underlying source.</p>",
         "DataSource$VpcConnectionProperties": "<p>The VPC connection information. You need to use this parameter only when you want Amazon QuickSight to use a VPC connection when connecting to your underlying source.</p>",
         "UpdateDataSourceRequest$VpcConnectionProperties": "<p>Use this parameter only when you want Amazon QuickSight to use a VPC connection when connecting to your underlying source.</p>"
+      }
+    },
+    "VpcEndpointId": {
+      "base": null,
+      "refs": {
+        "VpcEndpointIdRestrictionRuleMap$key": null
+      }
+    },
+    "VpcEndpointIdRestrictionRuleDescription": {
+      "base": null,
+      "refs": {
+        "VpcEndpointIdRestrictionRuleMap$value": null
+      }
+    },
+    "VpcEndpointIdRestrictionRuleMap": {
+      "base": null,
+      "refs": {
+        "DescribeIpRestrictionResponse$VpcEndpointIdRestrictionRuleMap": "<p>A map of allowed VPC endpoint IDs and their rule descriptions.</p>",
+        "UpdateIpRestrictionRequest$VpcEndpointIdRestrictionRuleMap": "<p>A map of allowed VPC endpoint IDs and their corresponding rule descriptions.</p>"
+      }
+    },
+    "VpcId": {
+      "base": null,
+      "refs": {
+        "VpcIdRestrictionRuleMap$key": null
+      }
+    },
+    "VpcIdRestrictionRuleDescription": {
+      "base": null,
+      "refs": {
+        "VpcIdRestrictionRuleMap$value": null
+      }
+    },
+    "VpcIdRestrictionRuleMap": {
+      "base": null,
+      "refs": {
+        "DescribeIpRestrictionResponse$VpcIdRestrictionRuleMap": "<p>A map of allowed VPC IDs and their rule descriptions.</p>",
+        "UpdateIpRestrictionRequest$VpcIdRestrictionRuleMap": "<p>A map of VPC IDs and their corresponding rules. When you configure this parameter, traffic from all VPC endpoints that are present in the specified VPC is allowed.</p>"
       }
     },
     "Warehouse": {

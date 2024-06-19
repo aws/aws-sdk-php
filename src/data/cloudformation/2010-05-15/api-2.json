@@ -4,6 +4,7 @@
     "apiVersion":"2010-05-15",
     "endpointPrefix":"cloudformation",
     "protocol":"query",
+    "protocols":["query"],
     "serviceFullName":"AWS CloudFormation",
     "serviceId":"CloudFormation",
     "signatureVersion":"v4",
@@ -1318,6 +1319,8 @@
         "Arn":{"shape":"PrivateTypeArn"}
       }
     },
+    "AfterContext":{"type":"string"},
+    "AfterValue":{"type":"string"},
     "AllowedValue":{"type":"string"},
     "AllowedValues":{
       "type":"list",
@@ -1335,6 +1338,14 @@
       "exception":true
     },
     "Arn":{"type":"string"},
+    "AttributeChangeType":{
+      "type":"string",
+      "enum":[
+        "Add",
+        "Remove",
+        "Modify"
+      ]
+    },
     "AutoDeployment":{
       "type":"structure",
       "members":{
@@ -1371,6 +1382,8 @@
         "TypeConfigurations":{"shape":"TypeConfigurationDetailsList"}
       }
     },
+    "BeforeContext":{"type":"string"},
+    "BeforeValue":{"type":"string"},
     "BoxedInteger":{
       "type":"integer",
       "box":true
@@ -1832,7 +1845,8 @@
         "StackName":{"shape":"StackName"},
         "RetainResources":{"shape":"RetainResources"},
         "RoleARN":{"shape":"RoleARN"},
-        "ClientRequestToken":{"shape":"ClientRequestToken"}
+        "ClientRequestToken":{"shape":"ClientRequestToken"},
+        "DeletionMode":{"shape":"DeletionMode"}
       }
     },
     "DeleteStackInstancesInput":{
@@ -1874,6 +1888,13 @@
       "type":"structure",
       "members":{
       }
+    },
+    "DeletionMode":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "FORCE_DELETE_STACK"
+      ]
     },
     "DeletionTime":{"type":"timestamp"},
     "DeploymentTargets":{
@@ -1947,7 +1968,8 @@
       "members":{
         "ChangeSetName":{"shape":"ChangeSetNameOrId"},
         "StackName":{"shape":"StackNameOrId"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "IncludePropertyValues":{"shape":"IncludePropertyValues"}
       }
     },
     "DescribeChangeSetOutput":{
@@ -2686,6 +2708,7 @@
       "min":0
     },
     "IncludeNestedStacks":{"type":"boolean"},
+    "IncludePropertyValues":{"type":"boolean"},
     "InsufficientCapabilitiesException":{
       "type":"structure",
       "members":{
@@ -3355,6 +3378,17 @@
         "Value":{"shape":"Value"}
       }
     },
+    "PolicyAction":{
+      "type":"string",
+      "enum":[
+        "Delete",
+        "Retain",
+        "Snapshot",
+        "ReplaceAndDelete",
+        "ReplaceAndRetain",
+        "ReplaceAndSnapshot"
+      ]
+    },
     "PrivateTypeArn":{
       "type":"string",
       "max":1024,
@@ -3589,6 +3623,7 @@
     "ResourceChange":{
       "type":"structure",
       "members":{
+        "PolicyAction":{"shape":"PolicyAction"},
         "Action":{"shape":"ChangeAction"},
         "LogicalResourceId":{"shape":"LogicalResourceId"},
         "PhysicalResourceId":{"shape":"PhysicalResourceId"},
@@ -3597,7 +3632,9 @@
         "Scope":{"shape":"Scope"},
         "Details":{"shape":"ResourceChangeDetails"},
         "ChangeSetId":{"shape":"ChangeSetId"},
-        "ModuleInfo":{"shape":"ModuleInfo"}
+        "ModuleInfo":{"shape":"ModuleInfo"},
+        "BeforeContext":{"shape":"BeforeContext"},
+        "AfterContext":{"shape":"AfterContext"}
       }
     },
     "ResourceChangeDetail":{
@@ -3688,6 +3725,7 @@
       "min":1
     },
     "ResourceProperties":{"type":"string"},
+    "ResourcePropertyPath":{"type":"string"},
     "ResourceScanId":{"type":"string"},
     "ResourceScanInProgressException":{
       "type":"structure",
@@ -3796,7 +3834,11 @@
       "members":{
         "Attribute":{"shape":"ResourceAttribute"},
         "Name":{"shape":"PropertyName"},
-        "RequiresRecreation":{"shape":"RequiresRecreation"}
+        "RequiresRecreation":{"shape":"RequiresRecreation"},
+        "Path":{"shape":"ResourcePropertyPath"},
+        "BeforeValue":{"shape":"BeforeValue"},
+        "AfterValue":{"shape":"AfterValue"},
+        "AttributeChangeType":{"shape":"AttributeChangeType"}
       }
     },
     "ResourceToImport":{
@@ -4039,6 +4081,7 @@
         "RootId":{"shape":"StackId"},
         "DriftInformation":{"shape":"StackDriftInformation"},
         "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"},
+        "DeletionMode":{"shape":"DeletionMode"},
         "DetailedStatus":{"shape":"DetailedStatus"}
       }
     },

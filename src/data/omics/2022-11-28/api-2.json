@@ -2029,8 +2029,14 @@
       "members":{
         "partNumber":{"shape":"CompleteReadSetUploadPartListItemPartNumberInteger"},
         "partSource":{"shape":"ReadSetPartSource"},
-        "checksum":{"shape":"String"}
+        "checksum":{"shape":"CompleteReadSetUploadPartListItemChecksumString"}
       }
+    },
+    "CompleteReadSetUploadPartListItemChecksumString":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "CompleteReadSetUploadPartListItemPartNumberInteger":{
       "type":"integer",
@@ -2261,7 +2267,8 @@
         "sseConfig":{"shape":"SseConfig"},
         "tags":{"shape":"TagMap"},
         "clientToken":{"shape":"ClientToken"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
     },
     "CreateSequenceStoreResponse":{
@@ -2278,7 +2285,8 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
     },
     "CreateShareRequest":{
@@ -2570,7 +2578,21 @@
       "enum":[
         "FASTQ_MD5up",
         "BAM_MD5up",
-        "CRAM_MD5up"
+        "CRAM_MD5up",
+        "FASTQ_SHA256up",
+        "BAM_SHA256up",
+        "CRAM_SHA256up",
+        "FASTQ_SHA512up",
+        "BAM_SHA512up",
+        "CRAM_SHA512up"
+      ]
+    },
+    "ETagAlgorithmFamily":{
+      "type":"string",
+      "enum":[
+        "MD5up",
+        "SHA256up",
+        "SHA512up"
       ]
     },
     "Encoding":{
@@ -2656,7 +2678,8 @@
       "members":{
         "totalParts":{"shape":"FileInformationTotalPartsInteger"},
         "partSize":{"shape":"FileInformationPartSizeLong"},
-        "contentLength":{"shape":"FileInformationContentLengthLong"}
+        "contentLength":{"shape":"FileInformationContentLengthLong"},
+        "s3Access":{"shape":"ReadSetS3Access"}
       }
     },
     "FileInformationContentLengthLong":{
@@ -2690,7 +2713,8 @@
       "type":"structure",
       "members":{
         "resourceArns":{"shape":"ArnList"},
-        "status":{"shape":"StatusList"}
+        "status":{"shape":"StatusList"},
+        "type":{"shape":"TypeList"}
       }
     },
     "FormatOptions":{
@@ -3328,7 +3352,9 @@
         "failureReason":{"shape":"RunFailureReason"},
         "logLocation":{"shape":"RunLogLocation"},
         "uuid":{"shape":"RunUuid"},
-        "runOutputUri":{"shape":"RunOutputUri"}
+        "runOutputUri":{"shape":"RunOutputUri"},
+        "storageType":{"shape":"StorageType"},
+        "workflowOwnerId":{"shape":"WorkflowOwnerId"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -3420,7 +3446,9 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "s3Access":{"shape":"SequenceStoreS3Access"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
     },
     "GetShareRequest":{
@@ -3538,6 +3566,11 @@
           "shape":"WorkflowExportList",
           "location":"querystring",
           "locationName":"export"
+        },
+        "workflowOwnerId":{
+          "shape":"WorkflowOwnerId",
+          "location":"querystring",
+          "locationName":"workflowOwnerId"
         }
       }
     },
@@ -4783,6 +4816,12 @@
       "requiresLength":true,
       "streaming":true
     },
+    "ReadSetS3Access":{
+      "type":"structure",
+      "members":{
+        "s3Uri":{"shape":"S3Uri"}
+      }
+    },
     "ReadSetStatus":{
       "type":"string",
       "enum":[
@@ -5184,7 +5223,8 @@
         "storageCapacity":{"shape":"RunListItemStorageCapacityInteger"},
         "creationTime":{"shape":"RunTimestamp"},
         "startTime":{"shape":"RunTimestamp"},
-        "stopTime":{"shape":"RunTimestamp"}
+        "stopTime":{"shape":"RunTimestamp"},
+        "storageType":{"shape":"StorageType"}
       }
     },
     "RunListItemPriorityInteger":{
@@ -5317,6 +5357,12 @@
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
+    "S3AccessPointArn":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"arn:[^:]*:s3:[^:]*:[^:]*:accesspoint/.*"
+    },
     "S3Destination":{
       "type":"string",
       "pattern":"s3://([a-z0-9][a-z0-9-.]{1,61}[a-z0-9])/?((.{1,1024})/)?"
@@ -5393,7 +5439,8 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
     },
     "SequenceStoreDetailList":{
@@ -5420,6 +5467,13 @@
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
+    "SequenceStoreS3Access":{
+      "type":"structure",
+      "members":{
+        "s3Uri":{"shape":"S3Uri"},
+        "s3AccessPointArn":{"shape":"S3AccessPointArn"}
+      }
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":["message"],
@@ -5437,6 +5491,7 @@
       "members":{
         "shareId":{"shape":"String"},
         "resourceArn":{"shape":"String"},
+        "resourceId":{"shape":"String"},
         "principalSubscriber":{"shape":"String"},
         "ownerId":{"shape":"String"},
         "status":{"shape":"ShareStatus"},
@@ -5455,6 +5510,14 @@
       "max":256,
       "min":1,
       "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "ShareResourceType":{
+      "type":"string",
+      "enum":[
+        "VARIANT_STORE",
+        "ANNOTATION_STORE",
+        "WORKFLOW"
+      ]
     },
     "ShareStatus":{
       "type":"string",
@@ -5738,7 +5801,9 @@
           "shape":"RunRequestId",
           "idempotencyToken":true
         },
-        "retentionMode":{"shape":"RunRetentionMode"}
+        "retentionMode":{"shape":"RunRetentionMode"},
+        "storageType":{"shape":"StorageType"},
+        "workflowOwnerId":{"shape":"WorkflowOwnerId"}
       }
     },
     "StartRunRequestPriorityInteger":{
@@ -5788,12 +5853,23 @@
     },
     "StatusList":{
       "type":"list",
-      "member":{"shape":"ShareStatus"}
+      "member":{"shape":"ShareStatus"},
+      "max":10,
+      "min":1
     },
     "StatusMessage":{
       "type":"string",
       "max":1000,
       "min":0
+    },
+    "StorageType":{
+      "type":"string",
+      "enum":[
+        "STATIC",
+        "DYNAMIC"
+      ],
+      "max":64,
+      "min":1
     },
     "StoreFormat":{
       "type":"string",
@@ -6023,6 +6099,12 @@
       "type":"list",
       "member":{"shape":"SchemaItem"},
       "max":5000,
+      "min":1
+    },
+    "TypeList":{
+      "type":"list",
+      "member":{"shape":"ShareResourceType"},
+      "max":10,
       "min":1
     },
     "UntagResourceRequest":{
@@ -6521,6 +6603,10 @@
       "max":128,
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "WorkflowOwnerId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
     },
     "WorkflowParameter":{
       "type":"structure",

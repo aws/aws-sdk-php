@@ -1132,6 +1132,7 @@
         "EntityId":{"shape":"OfferEntityIdFilter"},
         "Name":{"shape":"OfferNameFilter"},
         "ProductId":{"shape":"OfferProductIdFilter"},
+        "ResaleAuthorizationId":{"shape":"OfferResaleAuthorizationIdFilter"},
         "ReleaseDate":{"shape":"OfferReleaseDateFilter"},
         "AvailabilityEndDate":{"shape":"OfferAvailabilityEndDateFilter"},
         "BuyerAccounts":{"shape":"OfferBuyerAccountsFilter"},
@@ -1203,6 +1204,24 @@
         "BeforeValue":{"shape":"DateTimeISO8601"}
       }
     },
+    "OfferResaleAuthorizationIdFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"OfferResaleAuthorizationIdFilterValueList"}
+      }
+    },
+    "OfferResaleAuthorizationIdFilterValueList":{
+      "type":"list",
+      "member":{"shape":"OfferResaleAuthorizationIdString"},
+      "max":10,
+      "min":1
+    },
+    "OfferResaleAuthorizationIdString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9][.a-zA-Z0-9/-]+[a-zA-Z0-9]$"
+    },
     "OfferSort":{
       "type":"structure",
       "members":{
@@ -1216,6 +1235,7 @@
         "EntityId",
         "Name",
         "ProductId",
+        "ResaleAuthorizationId",
         "ReleaseDate",
         "AvailabilityEndDate",
         "BuyerAccounts",
@@ -1248,6 +1268,7 @@
       "members":{
         "Name":{"shape":"OfferNameString"},
         "ProductId":{"shape":"OfferProductIdString"},
+        "ResaleAuthorizationId":{"shape":"OfferResaleAuthorizationIdString"},
         "ReleaseDate":{"shape":"DateTimeISO8601"},
         "AvailabilityEndDate":{"shape":"DateTimeISO8601"},
         "BuyerAccounts":{"shape":"OfferBuyerAccountsList"},

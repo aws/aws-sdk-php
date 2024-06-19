@@ -5,6 +5,7 @@
     "endpointPrefix":"inspector2",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Inspector2",
     "serviceFullName":"Inspector2",
     "serviceId":"Inspector2",
@@ -379,6 +380,7 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -1579,6 +1581,13 @@
       "type":"string",
       "pattern":"^\\d{12}|o-[a-z0-9]{10,32}$"
     },
+    "CisReportFormat":{
+      "type":"string",
+      "enum":[
+        "PDF",
+        "CSV"
+      ]
+    },
     "CisReportStatus":{
       "type":"string",
       "enum":[
@@ -2180,6 +2189,7 @@
         "lastScannedAt":{"shape":"CoverageDateFilterList"},
         "resourceId":{"shape":"CoverageStringFilterList"},
         "resourceType":{"shape":"CoverageStringFilterList"},
+        "scanMode":{"shape":"CoverageStringFilterList"},
         "scanStatusCode":{"shape":"CoverageStringFilterList"},
         "scanStatusReason":{"shape":"CoverageStringFilterList"},
         "scanType":{"shape":"CoverageStringFilterList"}
@@ -2259,6 +2269,7 @@
         "resourceId":{"shape":"ResourceId"},
         "resourceMetadata":{"shape":"ResourceScanMetadata"},
         "resourceType":{"shape":"CoverageResourceType"},
+        "scanMode":{"shape":"ScanMode"},
         "scanStatus":{"shape":"ScanStatus"},
         "scanType":{"shape":"ScanType"}
       }
@@ -2636,6 +2647,19 @@
       "type":"double",
       "box":true
     },
+    "Ec2Configuration":{
+      "type":"structure",
+      "required":["scanMode"],
+      "members":{
+        "scanMode":{"shape":"Ec2ScanMode"}
+      }
+    },
+    "Ec2ConfigurationState":{
+      "type":"structure",
+      "members":{
+        "scanModeState":{"shape":"Ec2ScanModeState"}
+      }
+    },
     "Ec2DeepInspectionStatus":{
       "type":"string",
       "enum":[
@@ -2693,6 +2717,27 @@
         "LINUX",
         "UNKNOWN",
         "MACOS"
+      ]
+    },
+    "Ec2ScanMode":{
+      "type":"string",
+      "enum":[
+        "EC2_SSM_AGENT_BASED",
+        "EC2_HYBRID"
+      ]
+    },
+    "Ec2ScanModeState":{
+      "type":"structure",
+      "members":{
+        "scanMode":{"shape":"Ec2ScanMode"},
+        "scanModeStatus":{"shape":"Ec2ScanModeStatus"}
+      }
+    },
+    "Ec2ScanModeStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "PENDING"
       ]
     },
     "EcrConfiguration":{
@@ -3298,6 +3343,7 @@
       "type":"structure",
       "required":["scanArn"],
       "members":{
+        "reportFormat":{"shape":"CisReportFormat"},
         "scanArn":{"shape":"CisScanArn"},
         "targetAccounts":{"shape":"ReportTargetAccounts"}
       }
@@ -3348,6 +3394,7 @@
     "GetConfigurationResponse":{
       "type":"structure",
       "members":{
+        "ec2Configuration":{"shape":"Ec2ConfigurationState"},
         "ecrConfiguration":{"shape":"EcrConfigurationState"}
       }
     },
@@ -4698,6 +4745,13 @@
         "SPDX_2_3"
       ]
     },
+    "ScanMode":{
+      "type":"string",
+      "enum":[
+        "EC2_SSM_AGENT_BASED",
+        "EC2_AGENTLESS"
+      ]
+    },
     "ScanStatus":{
       "type":"structure",
       "required":[
@@ -5365,8 +5419,8 @@
     },
     "UpdateConfigurationRequest":{
       "type":"structure",
-      "required":["ecrConfiguration"],
       "members":{
+        "ec2Configuration":{"shape":"Ec2Configuration"},
         "ecrConfiguration":{"shape":"EcrConfiguration"}
       }
     },

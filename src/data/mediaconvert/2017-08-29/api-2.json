@@ -9,7 +9,10 @@
     "jsonVersion": "1.1",
     "uid": "mediaconvert-2017-08-29",
     "signatureVersion": "v4",
-    "serviceAbbreviation": "MediaConvert"
+    "serviceAbbreviation": "MediaConvert",
+    "auth": [
+      "aws.auth#sigv4"
+    ]
   },
   "operations": {
     "AssociateCertificate": {
@@ -774,6 +777,40 @@
       },
       "output": {
         "shape": "PutPolicyResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "SearchJobs": {
+      "name": "SearchJobs",
+      "http": {
+        "method": "GET",
+        "requestUri": "/2017-08-29/search",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "SearchJobsRequest"
+      },
+      "output": {
+        "shape": "SearchJobsResponse"
       },
       "errors": [
         {
@@ -2066,6 +2103,22 @@
           "shape": "BurninSubtitleFontColor",
           "locationName": "fontColor"
         },
+        "FontFileBold": {
+          "shape": "__stringPatternS3TtfHttpsTtf",
+          "locationName": "fontFileBold"
+        },
+        "FontFileBoldItalic": {
+          "shape": "__string",
+          "locationName": "fontFileBoldItalic"
+        },
+        "FontFileItalic": {
+          "shape": "__stringPatternS3TtfHttpsTtf",
+          "locationName": "fontFileItalic"
+        },
+        "FontFileRegular": {
+          "shape": "__stringPatternS3TtfHttpsTtf",
+          "locationName": "fontFileRegular"
+        },
         "FontOpacity": {
           "shape": "__integerMin0Max255",
           "locationName": "fontOpacity"
@@ -2534,6 +2587,10 @@
         "CodecSpecification": {
           "shape": "CmafCodecSpecification",
           "locationName": "codecSpecification"
+        },
+        "DashIFrameTrickPlayNameModifier": {
+          "shape": "__stringMin1Max256",
+          "locationName": "dashIFrameTrickPlayNameModifier"
         },
         "DashManifestStyle": {
           "shape": "DashManifestStyle",
@@ -3366,6 +3423,10 @@
           "shape": "__string",
           "locationName": "baseUrl"
         },
+        "DashIFrameTrickPlayNameModifier": {
+          "shape": "__stringMin1Max256",
+          "locationName": "dashIFrameTrickPlayNameModifier"
+        },
         "DashManifestStyle": {
           "shape": "DashManifestStyle",
           "locationName": "dashManifestStyle"
@@ -3879,6 +3940,22 @@
         "FontColor": {
           "shape": "DvbSubtitleFontColor",
           "locationName": "fontColor"
+        },
+        "FontFileBold": {
+          "shape": "__stringPatternS3TtfHttpsTtf",
+          "locationName": "fontFileBold"
+        },
+        "FontFileBoldItalic": {
+          "shape": "__stringPatternS3TtfHttpsTtf",
+          "locationName": "fontFileBoldItalic"
+        },
+        "FontFileItalic": {
+          "shape": "__stringPatternS3TtfHttpsTtf",
+          "locationName": "fontFileItalic"
+        },
+        "FontFileRegular": {
+          "shape": "__stringPatternS3TtfHttpsTtf",
+          "locationName": "fontFileRegular"
         },
         "FontOpacity": {
           "shape": "__integerMin0Max255",
@@ -6336,11 +6413,11 @@
       "type": "structure",
       "members": {
         "EndTimecode": {
-          "shape": "__stringPattern010920405090509092",
+          "shape": "__stringPattern010920405090509092090909",
           "locationName": "endTimecode"
         },
         "StartTimecode": {
-          "shape": "__stringPattern010920405090509092",
+          "shape": "__stringPattern010920405090509092090909",
           "locationName": "startTimecode"
         }
       }
@@ -6527,9 +6604,25 @@
     "InputVideoGenerator": {
       "type": "structure",
       "members": {
+        "Channels": {
+          "shape": "__integerMin1Max32",
+          "locationName": "channels"
+        },
         "Duration": {
           "shape": "__integerMin50Max86400000",
           "locationName": "duration"
+        },
+        "FramerateDenominator": {
+          "shape": "__integerMin1Max1001",
+          "locationName": "framerateDenominator"
+        },
+        "FramerateNumerator": {
+          "shape": "__integerMin1Max60000",
+          "locationName": "framerateNumerator"
+        },
+        "SampleRate": {
+          "shape": "__integerMin32000Max48000",
+          "locationName": "sampleRate"
         }
       }
     },
@@ -7454,6 +7547,13 @@
         "CONFIGURED_PCR_PERIOD"
       ]
     },
+    "M2tsPreventBufferUnderflow": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
     "M2tsRateMode": {
       "type": "string",
       "enum": [
@@ -7605,6 +7705,10 @@
         "PmtPid": {
           "shape": "__integerMin32Max8182",
           "locationName": "pmtPid"
+        },
+        "PreventBufferUnderflow": {
+          "shape": "M2tsPreventBufferUnderflow",
+          "locationName": "preventBufferUnderflow"
         },
         "PrivateMetadataPid": {
           "shape": "__integerMin32Max8182",
@@ -8834,7 +8938,7 @@
           "locationName": "extension"
         },
         "NameModifier": {
-          "shape": "__stringMin1",
+          "shape": "__stringMin1Max256",
           "locationName": "nameModifier"
         },
         "OutputSettings": {
@@ -9563,6 +9667,54 @@
         "Framerate": {
           "shape": "SccDestinationFramerate",
           "locationName": "framerate"
+        }
+      }
+    },
+    "SearchJobsRequest": {
+      "type": "structure",
+      "members": {
+        "InputFile": {
+          "shape": "__string",
+          "locationName": "inputFile",
+          "location": "querystring"
+        },
+        "MaxResults": {
+          "shape": "__integerMin1Max20",
+          "locationName": "maxResults",
+          "location": "querystring"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken",
+          "location": "querystring"
+        },
+        "Order": {
+          "shape": "Order",
+          "locationName": "order",
+          "location": "querystring"
+        },
+        "Queue": {
+          "shape": "__string",
+          "locationName": "queue",
+          "location": "querystring"
+        },
+        "Status": {
+          "shape": "JobStatus",
+          "locationName": "status",
+          "location": "querystring"
+        }
+      }
+    },
+    "SearchJobsResponse": {
+      "type": "structure",
+      "members": {
+        "Jobs": {
+          "shape": "__listOfJob",
+          "locationName": "jobs"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         }
       }
     },
@@ -12117,6 +12269,10 @@
       "type": "string",
       "pattern": "^([01][0-9]|2[0-4]):[0-5][0-9]:[0-5][0-9][:;][0-9]{2}$"
     },
+    "__stringPattern010920405090509092090909": {
+      "type": "string",
+      "pattern": "^([01][0-9]|2[0-4]):[0-5][0-9]:[0-5][0-9][:;][0-9]{2}(@[0-9]+(\\.[0-9]+)?(:[0-9]+)?)?$"
+    },
     "__stringPattern01D20305D205D": {
       "type": "string",
       "pattern": "^((([0-1]\\d)|(2[0-3]))(:[0-5]\\d){2}([:;][0-5]\\d))$"
@@ -12188,6 +12344,10 @@
     "__stringPatternS3Https": {
       "type": "string",
       "pattern": "^s3://([^\\/]+\\/+)+((([^\\/]*)))|^https?://[^\\/].*[^&]$"
+    },
+    "__stringPatternS3TtfHttpsTtf": {
+      "type": "string",
+      "pattern": "^((s3://(.*?)\\.(ttf))|(https?://(.*?)\\.(ttf)(\\?([^&=]+=[^&]+&)*[^&=]+=[^&]+)?))$"
     },
     "__stringPatternSNManifestConfirmConditionNotificationNS": {
       "type": "string",

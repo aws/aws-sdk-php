@@ -1,0 +1,52 @@
+.phpdocumentor-search {
+    position: relative;
+    display: none; /** disable by default for non-js flow */
+    opacity: .3; /** white-out default for loading indication */
+    transition: opacity .3s, background .3s;
+    margin: var(--spacing-sm) 0;
+    flex: 1;
+    min-width: 100%;
+}
+
+.phpdocumentor-search label {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.phpdocumentor-search__icon {
+    color: var(--primary-color-darker);
+    margin-right: var(--spacing-sm);
+    width: 1rem;
+    height: 1rem;
+}
+
+.phpdocumentor-search--enabled {
+    display: flex;
+}
+
+.phpdocumentor-search--active {
+    opacity: 1;
+}
+
+.phpdocumentor-search input:disabled {
+    background-color: lightgray;
+}
+
+.phpdocumentor-search__field:focus,
+.phpdocumentor-search__field {
+    margin-bottom: 0;
+    border: 0;
+    border-bottom: 2px solid var(--primary-color-darker);
+    padding: 0;
+    border-radius: 0;
+    flex: 1;
+}
+
+@media (min-width: {{ breakpoints['menu'] }}) {
+    .phpdocumentor-search {
+        min-width: auto;
+        max-width: 20rem;
+        margin: 0 0 0 auto;
+    }
+}

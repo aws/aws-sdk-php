@@ -5,12 +5,14 @@
     "endpointPrefix":"email",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Amazon SES V2",
     "serviceFullName":"Amazon Simple Email Service",
     "serviceId":"SESv2",
     "signatureVersion":"v4",
     "signingName":"ses",
-    "uid":"sesv2-2019-09-27"
+    "uid":"sesv2-2019-09-27",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchGetMetricData":{
@@ -700,8 +702,8 @@
     "ListContacts":{
       "name":"ListContacts",
       "http":{
-        "method":"GET",
-        "requestUri":"/v2/email/contact-lists/{ContactListName}/contacts"
+        "method":"POST",
+        "requestUri":"/v2/email/contact-lists/{ContactListName}/contacts/list"
       },
       "input":{"shape":"ListContactsRequest"},
       "output":{"shape":"ListContactsResponse"},
@@ -807,8 +809,8 @@
     "ListImportJobs":{
       "name":"ListImportJobs",
       "http":{
-        "method":"GET",
-        "requestUri":"/v2/email/import-jobs"
+        "method":"POST",
+        "requestUri":"/v2/email/import-jobs/list"
       },
       "input":{"shape":"ListImportJobsRequest"},
       "output":{"shape":"ListImportJobsResponse"},
@@ -1493,7 +1495,8 @@
       "members":{
         "Destination":{"shape":"Destination"},
         "ReplacementTags":{"shape":"MessageTagList"},
-        "ReplacementEmailContent":{"shape":"ReplacementEmailContent"}
+        "ReplacementEmailContent":{"shape":"ReplacementEmailContent"},
+        "ReplacementHeaders":{"shape":"MessageHeaderList"}
       }
     },
     "BulkEmailEntryList":{
@@ -2411,6 +2414,13 @@
       "type":"list",
       "member":{"shape":"Esp"}
     },
+    "EventBridgeDestination":{
+      "type":"structure",
+      "required":["EventBusArn"],
+      "members":{
+        "EventBusArn":{"shape":"AmazonResourceName"}
+      }
+    },
     "EventDestination":{
       "type":"structure",
       "required":[
@@ -2424,6 +2434,7 @@
         "KinesisFirehoseDestination":{"shape":"KinesisFirehoseDestination"},
         "CloudWatchDestination":{"shape":"CloudWatchDestination"},
         "SnsDestination":{"shape":"SnsDestination"},
+        "EventBridgeDestination":{"shape":"EventBridgeDestination"},
         "PinpointDestination":{"shape":"PinpointDestination"}
       }
     },
@@ -2435,6 +2446,7 @@
         "KinesisFirehoseDestination":{"shape":"KinesisFirehoseDestination"},
         "CloudWatchDestination":{"shape":"CloudWatchDestination"},
         "SnsDestination":{"shape":"SnsDestination"},
+        "EventBridgeDestination":{"shape":"EventBridgeDestination"},
         "PinpointDestination":{"shape":"PinpointDestination"}
       }
     },
@@ -3271,16 +3283,8 @@
           "locationName":"ContactListName"
         },
         "Filter":{"shape":"ListContactsFilter"},
-        "PageSize":{
-          "shape":"MaxItems",
-          "location":"querystring",
-          "locationName":"PageSize"
-        },
-        "NextToken":{
-          "shape":"NextToken",
-          "location":"querystring",
-          "locationName":"NextToken"
-        }
+        "PageSize":{"shape":"MaxItems"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListContactsResponse":{
@@ -3464,16 +3468,8 @@
       "type":"structure",
       "members":{
         "ImportDestinationType":{"shape":"ImportDestinationType"},
-        "NextToken":{
-          "shape":"NextToken",
-          "location":"querystring",
-          "locationName":"NextToken"
-        },
-        "PageSize":{
-          "shape":"MaxItems",
-          "location":"querystring",
-          "locationName":"PageSize"
-        }
+        "NextToken":{"shape":"NextToken"},
+        "PageSize":{"shape":"MaxItems"}
       }
     },
     "ListImportJobsResponse":{

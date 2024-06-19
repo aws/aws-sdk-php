@@ -2,6 +2,8 @@
 namespace Aws\Test;
 
 use Aws\Api\Service;
+use Aws\Auth\AuthSchemeResolver;
+use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientResolver;
 use Aws\ClientSideMonitoring\Configuration;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
@@ -18,6 +20,7 @@ use Aws\S3\S3Client;
 use Aws\HandlerList;
 use Aws\Sdk;
 use Aws\Result;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -1573,5 +1576,105 @@ EOT;
         putenv("HOME=$home");
         putenv('AWS_ENDPOINT_URL' . '=');
         putenv('AWS_ENDPOINT_URL_S3' . '=');
+    }
+
+    public function testResolvesAppIdFromClientConfig()
+    {
+        $appId = 'TestAppId';
+        $s3 = new S3Client([
+            'region' => 'us-east-1',
+            'app_id' => $appId,
+            'http_handler' => function (RequestInterface $request) use ($appId) {
+                $userAgentValues = explode(' ', $request->getHeader('user-agent')[0]);
+                $expectedHeader = "app/$appId";
+                $idx = array_search($expectedHeader, $userAgentValues);
+                $this->assertNotFalse($idx);
+                $this->assertEquals($expectedHeader, $userAgentValues[$idx]);
+
+                return new Response;
+            }
+        ]);
+        $s3->listBuckets();
+    }
+
+    public function testResolvesAppIdSourcedFromEnv()
+    {
+        $currentAppIdFromEnv = getenv('AWS_SDK_UA_APP_ID');
+        $deferTask = function () use ($currentAppIdFromEnv) {
+            if (!empty($currentAppIdFromEnv)) {
+                putenv("AWS_SDK_UA_APP_ID=$currentAppIdFromEnv");
+            }
+        };
+
+        try {
+            $appId = 'TestAppId';
+            putenv("AWS_SDK_UA_APP_ID=$appId");
+            $s3 = new S3Client([
+                'region' => 'us-east-1',
+                'http_handler' => function (RequestInterface $request) use ($appId) {
+                    $userAgentValues = explode(' ', $request->getHeader('user-agent')[0]);
+                    $expectedHeader = "app/$appId";
+                    $idx = array_search($expectedHeader, $userAgentValues);
+                    $this->assertNotFalse($idx);
+                    $this->assertEquals($expectedHeader, $userAgentValues[$idx]);
+
+                    return new Response;
+                }
+            ]);
+            $s3->listBuckets();
+        } finally {
+            $deferTask();
+        }
+    }
+
+    public function testResolvesAppIdSourcedFromIniFile()
+    {
+        $tempIniConfigFile = sys_get_temp_dir() . '/.aws/config';
+        $currentAwsConfigFileFromEnv = getenv('AWS_CONFIG_FILE');
+        $deferTask = function () use ($tempIniConfigFile, $currentAwsConfigFileFromEnv) {
+            unlink($tempIniConfigFile);
+            if (!empty($currentAwsConfigFileFromEnv)) {
+                putenv("AWS_CONFIG_FILE=$currentAwsConfigFileFromEnv");
+            }
+        };
+        $appId = 'TestAppId';
+        $iniContent = <<<EOF
+[default]
+sdk_ua_app_id=$appId
+EOF;
+        file_put_contents($tempIniConfigFile, $iniContent);
+        putenv("AWS_CONFIG_FILE=$tempIniConfigFile");
+        try {
+            $s3 = new S3Client([
+                'region' => 'us-east-1',
+                'http_handler' => function (RequestInterface $request) use ($appId) {
+                    $userAgentValues = explode(' ', $request->getHeader('user-agent')[0]);
+                    $expectedHeader = "app/$appId";
+                    $idx = array_search($expectedHeader, $userAgentValues);
+                    $this->assertNotFalse($idx);
+                    $this->assertEquals($expectedHeader, $userAgentValues[$idx]);
+
+                    return new Response;
+                }
+            ]);
+            $s3->listBuckets();
+        } finally {
+            $deferTask();
+        }
+    }
+
+    public function testAppliesAuthSchemeResolver()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'dynamodb',
+            'region' => 'x',
+            'version' => 'latest',
+        ], new HandlerList());
+        $this->assertArrayHasKey('auth_scheme_resolver', $conf);
+        $this->assertInstanceOf(
+            AuthSchemeResolverInterface::class,
+            $conf['auth_scheme_resolver']
+        );
     }
 }

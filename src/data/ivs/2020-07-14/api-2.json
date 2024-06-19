@@ -681,6 +681,7 @@
         "playbackUrl":{"shape":"PlaybackURL"},
         "preset":{"shape":"TranscodePreset"},
         "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
+        "srt":{"shape":"Srt"},
         "tags":{"shape":"Tags"},
         "type":{"shape":"ChannelType"}
       }
@@ -689,7 +690,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:[is]vs:[a-z0-9-]+:[0-9]+:channel/[a-zA-Z0-9-]+$"
+      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:channel/[a-zA-Z0-9-]+$"
     },
     "ChannelArnList":{
       "type":"list",
@@ -1215,7 +1216,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:[is]vs:[a-z0-9-]+:[0-9]+:playback-key/[a-zA-Z0-9-]+$"
+      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-key/[a-zA-Z0-9-]+$"
     },
     "PlaybackKeyPairFingerprint":{"type":"string"},
     "PlaybackKeyPairList":{
@@ -1420,7 +1421,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:[is]vs:[a-z0-9-]+:[0-9]+:[a-z-]/[a-zA-Z0-9-]+$"
+      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:[a-z-]/[a-zA-Z0-9-]+$"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1456,6 +1457,18 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Srt":{
+      "type":"structure",
+      "members":{
+        "endpoint":{"shape":"SrtEndpoint"},
+        "passphrase":{"shape":"SrtPassphrase"}
+      }
+    },
+    "SrtEndpoint":{"type":"string"},
+    "SrtPassphrase":{
+      "type":"string",
+      "sensitive":true
     },
     "StartViewerSessionRevocationRequest":{
       "type":"structure",
@@ -1545,7 +1558,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:[is]vs:[a-z0-9-]+:[0-9]+:stream-key/[a-zA-Z0-9-]+$"
+      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:stream-key/[a-zA-Z0-9-]+$"
     },
     "StreamKeyArnList":{
       "type":"list",

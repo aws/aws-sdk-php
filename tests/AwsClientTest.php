@@ -10,6 +10,7 @@ use Aws\Ec2\Ec2Client;
 use Aws\Endpoint\UseFipsEndpoint\Configuration as FipsConfiguration;
 use Aws\Endpoint\UseDualStackEndpoint\Configuration as DualStackConfiguration;
 use Aws\EndpointV2\EndpointProviderV2;
+use Aws\Middleware;
 use Aws\ResultPaginator;
 use Aws\S3\Exception\S3Exception;
 use Aws\Ses\SesClient;
@@ -18,6 +19,7 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Signature\SignatureV4;
 use Aws\Sts\StsClient;
+use Aws\Token\Token;
 use Aws\Waiter;
 use Aws\WrappedHttpHandler;
 use Exception;
@@ -342,34 +344,72 @@ class AwsClientTest extends TestCase
         $client->bar();
     }
 
-    public function testSignOperationsWithAnAuthType()
+    /**
+     * @param $service
+     * @param $clientConfig
+     *
+     * @dataProvider signOperationsWithAnAuthTypeProvider
+     */
+    public function testSignOperationsWithAnAuthType($service, $clientConfig)
     {
-        $client = $this->createHttpsEndpointClient(
+        $client = $this->createHttpsEndpointClient($service, $clientConfig);
+        $client->bar();
+    }
+
+    public function signOperationsWithAnAuthTypeProvider()
+    {
+        return [
             [
-                'metadata' => [
-                    'signatureVersion' => 'v4',
-                ],
-                'operations' => [
-                    'Bar' => [
-                        'http' => ['method' => 'POST'],
-                        'authtype' => 'v4-unsigned-body',
+                [
+                    'metadata' => [
+                        'signatureVersion' => 'v4',
+                    ],
+                    'operations' => [
+                        'Bar' => [
+                            'http' => ['method' => 'POST'],
+                            'authtype' => 'v4-unsigned-body',
+                        ],
                     ],
                 ],
+                [
+                    'handler' => function (
+                        CommandInterface $command,
+                        RequestInterface $request
+                    ) {
+                        foreach (['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'] as $signatureHeader) {
+                            $this->assertTrue($request->hasHeader($signatureHeader));
+                        }
+                        $this->assertSame('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
+                        return new Result;
+                    }
+                ]
             ],
             [
-                'handler' => function (
-                    CommandInterface $command,
-                    RequestInterface $request
-                ) {
-                    foreach (['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'] as $signatureHeader) {
-                        $this->assertTrue($request->hasHeader($signatureHeader));
-                    }
-                    $this->assertSame('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
-                    return new Result;
-                }
+                [
+                    'metadata' => [
+                        'signatureVersion' => 'v4',
+                    ],
+                    'operations' => [
+                        'Bar' => [
+                            'http' => ['method' => 'POST'],
+                            'authtype' => 'bearer',
+                        ],
+                    ],
+                ],
+                [
+                    'handler' => function (
+                        CommandInterface $command,
+                        RequestInterface $request
+                    ) {
+
+                        $this->assertTrue($request->hasHeader('Authorization'));
+                        $this->assertSame('Bearer foo', $request->getHeader('Authorization')[0]);
+                        return new Result;
+                    },
+                    'token' => new Token('foo', time() + 1000)
+                ]
             ]
-        );
-        $client->bar();
+        ];
     }
 
     public function testUsesCommandContextSigningRegionAndService()
@@ -670,6 +710,61 @@ EOT
                 'https://foo-bar.com',
             ]
         ];
+    }
+
+    public function testAppliesConfiguredSignatureVersionViaFalseCredentials()
+    {
+        $client = new S3Client([
+            'region' => 'us-west-2',
+            'handler' => new MockHandler([new Result([])]),
+            'credentials' => false
+        ]);
+
+        $this->assertTrue($client->getConfig('configured_signature_version'));
+
+        $list = $client->getHandlerList();
+        $list->appendSign(Middleware::tap(function($cmd, $req) {
+            foreach (['Authorization', 'X-Amz-Date'] as $signatureHeader) {
+                $this->assertFalse($req->hasHeader($signatureHeader));
+            }
+        }));
+
+        $client->putObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            'Body' => 'test'
+        ]);
+    }
+
+    public function testAppliesConfiguredSignatureVersionViaClientConfig() {
+        $client = $this->createClient(
+            [
+                'metadata' => [
+                    'signatureVersion' => 'v4',
+                ],
+                'operations' => [
+                    'Foo' => [
+                        'http' => ['method' => 'POST'],
+                        'authtype' => 'none',
+                    ],
+                ],
+            ],
+            [
+                'handler' => function (
+                    CommandInterface $command,
+                    RequestInterface $request
+                ) {
+                    foreach (['Authorization', 'X-Amz-Date'] as $signatureHeader) {
+                        $this->assertTrue($request->hasHeader($signatureHeader));
+                    }
+
+                    return new Result;
+                },
+                'signature_version' => 'v4'
+            ]
+        );
+
+        $client->foo();
     }
 
     private function createHttpsEndpointClient(array $service = [], array $config = [])

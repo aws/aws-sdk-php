@@ -7,11 +7,11 @@
     "CreateGraph": "<p>Creates a new Neptune Analytics graph.</p>",
     "CreateGraphSnapshot": "<p>Creates a snapshot of the specific graph.</p>",
     "CreateGraphUsingImportTask": "<p>Creates a new Neptune Analytics graph and imports data into it, either from Amazon Simple Storage Service (S3) or from a Neptune database or a Neptune database snapshot.</p> <p>The data can be loaded from files in S3 that in either the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
-    "CreatePrivateGraphEndpoint": "<p>Create a private graph endpoint to allow private access from to the graph from within a VPC. You can attach security groups to the private graph endpoint. VPC endpoint charges apply.</p>",
+    "CreatePrivateGraphEndpoint": "<p>Create a private graph endpoint to allow private access from to the graph from within a VPC. You can attach security groups to the private graph endpoint.</p> <note> <p>VPC endpoint charges apply.</p> </note>",
     "DeleteGraph": "<p>Deletes the specified graph. Graphs cannot be deleted if delete-protection is enabled.</p>",
     "DeleteGraphSnapshot": "<p>Deletes the specifed graph snapshot.</p>",
     "DeletePrivateGraphEndpoint": "<p>Deletes a private graph endpoint.</p>",
-    "ExecuteQuery": "<p>Execute an openCypher query. Currently, the SDK does not support parameterized queries. If you want to make a parameterized query call, you can use an HTTP request. </p> <p> When invoking this operation in a Neptune Analytics cluster, the IAM user or role making the request must have a policy attached that allows one of the following IAM actions in that cluster, depending on the query: </p> <ul> <li> <p>neptune-graph:ReadDataViaQuery</p> </li> <li> <p>neptune-graph:WriteDataViaQuery</p> </li> <li> <p>neptune-graph:DeleteDataViaQuery</p> </li> </ul> <note> <p> Non-parametrized queries are not considered for plan caching. You can force plan caching with <code>planCache=enabled</code>. The plan cache will be reused only for the same exact query. Slight variations in the query will not be able to reuse the query plan cache. </p> </note>",
+    "ExecuteQuery": "<p>Execute an openCypher query.</p> <p> When invoking this operation in a Neptune Analytics cluster, the IAM user or role making the request must have a policy attached that allows one of the following IAM actions in that cluster, depending on the query: </p> <ul> <li> <p>neptune-graph:ReadDataViaQuery</p> </li> <li> <p>neptune-graph:WriteDataViaQuery</p> </li> <li> <p>neptune-graph:DeleteDataViaQuery</p> </li> </ul>",
     "GetGraph": "<p>Gets information about a specified graph.</p>",
     "GetGraphSnapshot": "<p>Retrieves a specified graph snapshot.</p>",
     "GetGraphSummary": "<p>Gets a graph summary for a property graph.</p>",
@@ -26,6 +26,7 @@
     "ListTagsForResource": "<p>Lists tags associated with a specified resource.</p>",
     "ResetGraph": "<p>Empties the data from a specified Neptune Analytics graph.</p>",
     "RestoreGraphFromSnapshot": "<p>Restores a graph from a snapshot.</p>",
+    "StartImportTask": "<p>Import data into existing Neptune Analytics graph from Amazon Simple Storage Service (S3). The graph needs to be empty and in the AVAILABLE state.</p>",
     "TagResource": "<p>Adds tags to the specified resource.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateGraph": "<p>Updates the configuration of a specified Neptune Analytics graph</p>"
@@ -49,7 +50,7 @@
       "refs": {
         "CreateGraphInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
         "CreateGraphInput$deletionProtection": "<p>Indicates whether or not to enable deletion protection on the graph. The graph can’t be deleted when deletion protection is enabled. (<code>true</code> or <code>false</code>).</p>",
-        "CreateGraphOutput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated.</p>",
+        "CreateGraphOutput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated.</p> <note> <p>If enabling public connectivity for the first time, there will be a delay while it is enabled.</p> </note>",
         "CreateGraphOutput$deletionProtection": "<p>A value that indicates whether the graph has deletion protection enabled. The graph can't be deleted when deletion protection is enabled.</p>",
         "CreateGraphUsingImportTaskInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable).</p>",
         "CreateGraphUsingImportTaskInput$deletionProtection": "<p>Indicates whether or not to enable deletion protection on the graph. The graph can’t be deleted when deletion protection is enabled. (<code>true</code> or <code>false</code>).</p>",
@@ -70,6 +71,7 @@
         "RestoreGraphFromSnapshotInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable).</p>",
         "RestoreGraphFromSnapshotOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
         "RestoreGraphFromSnapshotOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
+        "StartImportTaskInput$failOnError": "<p>If set to true, the task halts when an import error is encountered. If set to false, the task skips the data that caused the error and continues if possible.</p>",
         "UpdateGraphInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
         "UpdateGraphInput$deletionProtection": "<p>A value that indicates whether the graph has deletion protection enabled. The graph can't be deleted when deletion protection is enabled.</p>",
         "UpdateGraphOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
@@ -231,7 +233,9 @@
         "CreateGraphUsingImportTaskInput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
         "CreateGraphUsingImportTaskOutput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
         "GetImportTaskOutput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
-        "ImportTaskSummary$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>"
+        "ImportTaskSummary$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
+        "StartImportTaskInput$format": "<p>Specifies the format of Amazon S3 data to be imported. Valid values are CSV, which identifies the Gremlin CSV format or OPENCYPHER, which identies the openCypher load format.</p>",
+        "StartImportTaskOutput$format": "<p>Specifies the format of Amazon S3 data to be imported. Valid values are CSV, which identifies the Gremlin CSV format or OPENCYPHER, which identies the openCypher load format.</p>"
       }
     },
     "GetGraphInput": {
@@ -317,6 +321,7 @@
         "ImportTaskSummary$graphId": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "ResetGraphOutput$id": "<p>The unique identifier of the graph.</p>",
         "RestoreGraphFromSnapshotOutput$id": "<p>The unique identifier of the graph.</p>",
+        "StartImportTaskOutput$graphId": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "UpdateGraphOutput$id": "<p>The unique identifier of the graph.</p>"
       }
     },
@@ -337,6 +342,7 @@
         "ListPrivateGraphEndpointsInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "ListQueriesInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "ResetGraphInput$graphIdentifier": "<p>ID of the graph to reset.</p>",
+        "StartImportTaskInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "UpdateGraphInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>"
       }
     },
@@ -402,7 +408,9 @@
       "refs": {
         "CreateGraphUsingImportTaskInput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>",
         "CreateGraphUsingImportTaskOutput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>",
-        "GetImportTaskOutput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>"
+        "GetImportTaskOutput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>",
+        "StartImportTaskInput$importOptions": null,
+        "StartImportTaskOutput$importOptions": null
       }
     },
     "ImportTaskDetails": {
@@ -417,7 +425,8 @@
         "CancelImportTaskOutput$status": "<p>Current status of the task. Status is CANCELLING when the import task is cancelled.</p>",
         "CreateGraphUsingImportTaskOutput$status": "<p>The status of the import task.</p>",
         "GetImportTaskOutput$status": "<p>The status of the import task:</p> <ul> <li> <p> <b>INITIALIZING</b>   –   The necessary resources needed to create the graph are being prepared.</p> </li> <li> <p> <b>ANALYZING_DATA</b>   –   The data is being analyzed to determine the optimal infrastructure configuration for the new graph.</p> </li> <li> <p> <b>RE_PROVISIONING</b>   –   The data did not fit into the provisioned graph, so it is being re-provisioned with more capacity.</p> </li> <li> <p> <b>IMPORTING</b>   –   The data is being loaded.</p> </li> <li> <p> <b>ERROR_ENCOUNTERED</b>   –   An error has been encountered while trying to create the graph and import the data.</p> </li> <li> <p> <b>ERROR_ENCOUNTERED_ROLLING_BACK</b>   –   Because of the error that was encountered, the graph is being rolled back and all its resources released.</p> </li> <li> <p> <b>SUCCEEDED</b>   –   Graph creation and data loading succeeded.</p> </li> <li> <p> <b>FAILED</b>   –   Graph creation or data loading failed. When the status is <code>FAILED</code>, you can use <code>get-graphs</code> to get more information about the state of the graph.</p> </li> <li> <p> <b>CANCELLING</b>   –   Because you cancelled the import task, cancellation is in progress.</p> </li> <li> <p> <b>CANCELLED</b>   –   You have successfully cancelled the import task.</p> </li> </ul>",
-        "ImportTaskSummary$status": "<p>Status of the import task.</p>"
+        "ImportTaskSummary$status": "<p>Status of the import task.</p>",
+        "StartImportTaskOutput$status": "<p>The status of the import task.</p>"
       }
     },
     "ImportTaskSummary": {
@@ -661,16 +670,16 @@
       "base": null,
       "refs": {
         "CreateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 128</p>",
-        "CreateGraphOutput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 128</p>",
+        "CreateGraphOutput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 128</p>",
         "CreateGraphUsingImportTaskInput$maxProvisionedMemory": "<p>The maximum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 1024, or the approved upper limit for your account.</p> <p> If both the minimum and maximum values are specified, the max of the <code>min-provisioned-memory</code> and <code>max-provisioned memory</code> is used to create the graph. If neither value is specified 128 m-NCUs are used.</p>",
         "CreateGraphUsingImportTaskInput$minProvisionedMemory": "<p>The minimum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 128</p>",
         "DeleteGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
         "GetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
         "GraphSummary$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
         "ResetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "RestoreGraphFromSnapshotInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 128</p>",
+        "RestoreGraphFromSnapshotInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 128</p>",
         "RestoreGraphFromSnapshotOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "UpdateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 128</p>",
+        "UpdateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 128</p>",
         "UpdateGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>"
       }
     },
@@ -714,14 +723,14 @@
     "ReplicaCount": {
       "base": null,
       "refs": {
-        "CreateGraphInput$replicaCount": "<p>The number of replicas in other AZs. Min =0, Max = 2, Default = 1.</p>",
-        "CreateGraphOutput$replicaCount": "<p>The number of replicas in other AZs.</p>",
-        "CreateGraphUsingImportTaskInput$replicaCount": "<p>The number of replicas in other AZs to provision on the new graph after import. Default = 0, Min = 0, Max = 2.</p>",
+        "CreateGraphInput$replicaCount": "<p>The number of replicas in other AZs. Min =0, Max = 2, Default = 1.</p> <important> <p> Additional charges equivalent to the m-NCUs selected for the graph apply for each replica. </p> </important>",
+        "CreateGraphOutput$replicaCount": "<p>The number of replicas in other AZs.</p> <p>Default: If not specified, the default value is 1.</p>",
+        "CreateGraphUsingImportTaskInput$replicaCount": "<p>The number of replicas in other AZs to provision on the new graph after import. Default = 0, Min = 0, Max = 2.</p> <important> <p> Additional charges equivalent to the m-NCUs selected for the graph apply for each replica. </p> </important>",
         "DeleteGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
         "GetGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
         "GraphSummary$replicaCount": "<p>The number of replicas for the graph.</p>",
         "ResetGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
-        "RestoreGraphFromSnapshotInput$replicaCount": "<p>The number of replicas in other AZs. Min =0, Max = 2, Default =1</p>",
+        "RestoreGraphFromSnapshotInput$replicaCount": "<p>The number of replicas in other AZs. Min =0, Max = 2, Default =1</p> <important> <p> Additional charges equivalent to the m-NCUs selected for the graph apply for each replica. </p> </important>",
         "RestoreGraphFromSnapshotOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
         "UpdateGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>"
       }
@@ -758,7 +767,9 @@
         "CreateGraphUsingImportTaskInput$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>",
         "CreateGraphUsingImportTaskOutput$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>",
         "GetImportTaskOutput$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>",
-        "ImportTaskSummary$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>"
+        "ImportTaskSummary$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>",
+        "StartImportTaskInput$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>",
+        "StartImportTaskOutput$roleArn": "<p>The ARN of the IAM role that will allow access to the data that is to be imported.</p>"
       }
     },
     "SecurityGroupId": {
@@ -818,6 +829,16 @@
         "DeleteGraphSnapshotOutput$status": "<p>The status of the graph snapshot.</p>",
         "GetGraphSnapshotOutput$status": "<p>The status of the graph snapshot.</p>",
         "GraphSnapshotSummary$status": "<p>The status of the graph snapshot.</p>"
+      }
+    },
+    "StartImportTaskInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartImportTaskOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "String": {
@@ -882,6 +903,8 @@
         "ServiceQuotaExceededException$resourceType": "<p>The type of the resource that exceeded quota. Ex: Graph, Snapshot</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>The service code that exceeded quota.</p>",
         "ServiceQuotaExceededException$quotaCode": "<p>Service quota code of the resource for which quota was exceeded.</p>",
+        "StartImportTaskInput$source": "<p>A URL identifying the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot.</p>",
+        "StartImportTaskOutput$source": "<p>A URL identifying the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot.</p>",
         "ThrottlingException$message": "<p>A message describing the problem.</p>",
         "UnprocessableException$message": null,
         "UpdateGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
@@ -961,7 +984,8 @@
         "CreateGraphUsingImportTaskOutput$taskId": "<p>The unique identifier of the import task.</p>",
         "GetImportTaskInput$taskIdentifier": "<p>The unique identifier of the import task.</p>",
         "GetImportTaskOutput$taskId": "<p>The unique identifier of the import task.</p>",
-        "ImportTaskSummary$taskId": "<p>The unique identifier of the import task.</p>"
+        "ImportTaskSummary$taskId": "<p>The unique identifier of the import task.</p>",
+        "StartImportTaskOutput$taskId": "<p>The unique identifier of the import task.</p>"
       }
     },
     "ThrottlingException": {
