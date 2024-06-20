@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.314.6 - 2024-06-20
 
 * `Aws\DynamoDB` - Doc-only update for DynamoDB. Fixed Important note in 6 Global table APIs - CreateGlobalTable, DescribeGlobalTable, DescribeGlobalTableSettings, ListGlobalTables, UpdateGlobalTable, and UpdateGlobalTableSettings.
 * `Aws\BedrockRuntime` - This release adds document support to Converse and ConverseStream APIs
