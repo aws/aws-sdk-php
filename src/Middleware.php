@@ -14,6 +14,8 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use Psr\Http\Message\RequestInterface;
 
+use function Aws\getenv;
+
 final class Middleware
 {
     /**
