@@ -25,15 +25,13 @@ class PutObjectUrlMiddlewareTest extends TestCase
         $this->assertSame('http://foo.com', $result['ObjectURL']);
     }
 
-    public function testAddsObjectUrlToCompleteMultipart()
+    public function testAddsObjectUrlToCompleteMultipartWithoutEffectiveUri()
     {
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
             [
                 'Location' => 'https://test.s3.amazonaws.com/key',
-                '@metadata' => [
-                    'effectiveUri' => 'http://foo.com',
-                ]
+                '@metadata' => []
             ]
         ]);
         $result = $client->completeMultipartUpload([
@@ -43,6 +41,28 @@ class PutObjectUrlMiddlewareTest extends TestCase
         ]);
         $this->assertSame(
             'https://test.s3.amazonaws.com/key',
+            $result['ObjectURL']
+        );
+    }
+
+    public function testAddsObjectUrlToCompleteMultipartWithEffectiveUri()
+    {
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, [
+            [
+                'Location' => 'https://test.s3.amazonaws.com/key',
+                '@metadata' => [
+                    'effectiveUri' => 'http://foo.com/key?some=query',
+                ]
+            ]
+        ]);
+        $result = $client->completeMultipartUpload([
+            'Bucket'   => 'test',
+            'Key'      => 'key',
+            'UploadId' => '123'
+        ]);
+        $this->assertSame(
+            'http://foo.com/key',
             $result['ObjectURL']
         );
     }
