@@ -129,6 +129,7 @@
       "members":{
         "text":{"shape":"String"},
         "image":{"shape":"ImageBlock"},
+        "document":{"shape":"DocumentBlock"},
         "toolUse":{"shape":"ToolUseBlock"},
         "toolResult":{"shape":"ToolResultBlock"},
         "guardContent":{"shape":"GuardrailConverseContentBlock"}
@@ -354,6 +355,49 @@
       "members":{
       },
       "document":true
+    },
+    "DocumentBlock":{
+      "type":"structure",
+      "required":[
+        "format",
+        "name",
+        "source"
+      ],
+      "members":{
+        "format":{"shape":"DocumentFormat"},
+        "name":{"shape":"DocumentBlockNameString"},
+        "source":{"shape":"DocumentSource"}
+      }
+    },
+    "DocumentBlockNameString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "DocumentFormat":{
+      "type":"string",
+      "enum":[
+        "pdf",
+        "csv",
+        "doc",
+        "docx",
+        "xls",
+        "xlsx",
+        "html",
+        "txt",
+        "md"
+      ]
+    },
+    "DocumentSource":{
+      "type":"structure",
+      "members":{
+        "bytes":{"shape":"DocumentSourceBytesBlob"}
+      },
+      "union":true
+    },
+    "DocumentSourceBytesBlob":{
+      "type":"blob",
+      "min":1
     },
     "GuardrailAssessment":{
       "type":"structure",
@@ -1143,7 +1187,8 @@
       "members":{
         "json":{"shape":"Document"},
         "text":{"shape":"String"},
-        "image":{"shape":"ImageBlock"}
+        "image":{"shape":"ImageBlock"},
+        "document":{"shape":"DocumentBlock"}
       },
       "union":true
     },
