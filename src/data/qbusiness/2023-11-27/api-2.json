@@ -2,6 +2,9 @@
     "version": "2.0",
     "metadata": {
         "apiVersion": "2023-11-27",
+        "auth": [
+            "aws.auth#sigv4"
+        ],
         "endpointPrefix": "qbusiness",
         "protocol": "rest-json",
         "protocolSettings": {
@@ -2894,6 +2897,9 @@
                 },
                 "attachmentsConfiguration": {
                     "shape": "AttachmentsConfiguration"
+                },
+                "qAppsConfiguration": {
+                    "shape": "QAppsConfiguration"
                 }
             }
         },
@@ -4118,6 +4124,9 @@
                 },
                 "attachmentsConfiguration": {
                     "shape": "AppliedAttachmentsConfiguration"
+                },
+                "qAppsConfiguration": {
+                    "shape": "QAppsConfiguration"
                 }
             }
         },
@@ -5854,6 +5863,24 @@
             "type": "structure",
             "members": []
         },
+        "QAppsConfiguration": {
+            "type": "structure",
+            "required": [
+                "qAppsControlMode"
+            ],
+            "members": {
+                "qAppsControlMode": {
+                    "shape": "QAppsControlMode"
+                }
+            }
+        },
+        "QAppsControlMode": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
+            ]
+        },
         "ReadAccessType": {
             "type": "string",
             "enum": [
@@ -6544,6 +6571,9 @@
                 },
                 "attachmentsConfiguration": {
                     "shape": "AttachmentsConfiguration"
+                },
+                "qAppsConfiguration": {
+                    "shape": "QAppsConfiguration"
                 }
             }
         },
