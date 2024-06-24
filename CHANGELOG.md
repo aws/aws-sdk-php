@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.314.7 - 2024-06-24
 
 * `Aws\SSM` - Add sensitive trait to SSM IPAddress property for CloudTrail redaction
 * `Aws\EC2` - Fix EC2 multi-protocol info in models.
