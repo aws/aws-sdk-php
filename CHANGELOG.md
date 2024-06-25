@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.314.8 - 2024-06-25
 
 * `Aws\EC2` - This release is for the launch of the new u7ib-12tb.224xlarge, R8g, c7gn.metal and mac2-m1ultra.metal instance types
 * `Aws\AutoScaling` - Doc only update for Auto Scaling's TargetTrackingMetricDataQuery
