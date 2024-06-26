@@ -3,7 +3,7 @@
     {% for key,menu in topMenu|default([]) %}
         {% for menuitem in menu %}
             <li class="phpdocumentor-topnav__menu-item -{{ key }}">
-                <a href="{{ menuitem.url }}">
+                <a href="{{ menuitem.url }}" aria-label="{{ menuitem.accessiblename }}">
                     <span>
                         {% if menuitem.icon %}
                         <i class="fab fa-{{ menuitem.icon }}">{{ menuitem.icon }}</i>
