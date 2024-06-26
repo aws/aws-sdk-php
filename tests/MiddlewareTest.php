@@ -28,7 +28,7 @@ class MiddlewareTest extends TestCase
 {
     public function set_up()
     {
-        \GuzzleHttp\Promise\queue()->run();
+        Promise\Utils::queue()->run();
     }
 
     public function testCanTapIntoHandlerList()
@@ -39,8 +39,8 @@ class MiddlewareTest extends TestCase
             $called = func_get_args();
         }));
         $handler = $list->resolve();
-        $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
-        Promise\queue()->run();
+        $handler(new Command('foo'), new Request('GET', 'http://example.com'));
+        Promise\Utils::queue()->run();
         $this->assertCount(2, $called);
         $this->assertInstanceOf(CommandInterface::class, $called[0]);
         $this->assertInstanceOf(RequestInterface::class, $called[1]);
@@ -55,7 +55,7 @@ class MiddlewareTest extends TestCase
         }));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
-        Promise\queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertTrue($called);
     }
 
@@ -104,7 +104,7 @@ class MiddlewareTest extends TestCase
         $list->appendSign(Middleware::signer($creds, Aws\constantly($signature)));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
-        Promise\queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertTrue($req->hasHeader('Authorization'));
     }
 
@@ -247,7 +247,7 @@ class MiddlewareTest extends TestCase
             'Key'        => 'key',
             'SourceFile' => __FILE__
         ]), new Request('PUT', 'http://foo.com'));
-        Promise\queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertTrue($called);
     }
 
@@ -261,7 +261,7 @@ class MiddlewareTest extends TestCase
         $req = new Request('GET', 'http://www.foo.com');
         $cmd = new Command('foo');
         $handler($cmd, $req);
-        Promise\queue()->run();
+        Promise\Utils::queue()->run();
         $this->assertCount(1, $h);
     }
 

@@ -38,6 +38,7 @@
       "input":{"shape":"DeregisterApplicationInput"},
       "output":{"shape":"DeregisterApplicationOutput"},
       "errors":[
+        {"shape":"UnauthorizedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
@@ -66,6 +67,7 @@
       "input":{"shape":"GetComponentInput"},
       "output":{"shape":"GetComponentOutput"},
       "errors":[
+        {"shape":"UnauthorizedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
@@ -138,6 +140,7 @@
       "input":{"shape":"ListComponentsInput"},
       "output":{"shape":"ListComponentsOutput"},
       "errors":[
+        {"shape":"UnauthorizedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
@@ -154,6 +157,20 @@
       "output":{"shape":"ListDatabasesOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListOperationEvents":{
+      "name":"ListOperationEvents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-operation-events",
+        "responseCode":200
+      },
+      "input":{"shape":"ListOperationEventsInput"},
+      "output":{"shape":"ListOperationEventsOutput"},
+      "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
@@ -212,6 +229,56 @@
       "input":{"shape":"RegisterApplicationInput"},
       "output":{"shape":"RegisterApplicationOutput"},
       "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "StartApplication":{
+      "name":"StartApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/start-application",
+        "responseCode":200
+      },
+      "input":{"shape":"StartApplicationInput"},
+      "output":{"shape":"StartApplicationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "StartApplicationRefresh":{
+      "name":"StartApplicationRefresh",
+      "http":{
+        "method":"POST",
+        "requestUri":"/start-application-refresh",
+        "responseCode":200
+      },
+      "input":{"shape":"StartApplicationRefreshInput"},
+      "output":{"shape":"StartApplicationRefreshOutput"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "StopApplication":{
+      "name":"StopApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/stop-application",
+        "responseCode":200
+      },
+      "input":{"shape":"StopApplicationInput"},
+      "output":{"shape":"StopApplicationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
@@ -258,13 +325,24 @@
       "input":{"shape":"UpdateApplicationSettingsInput"},
       "output":{"shape":"UpdateApplicationSettingsOutput"},
       "errors":[
+        {"shape":"UnauthorizedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ]
     }
   },
   "shapes":{
+    "AllocationType":{
+      "type":"string",
+      "enum":[
+        "VPC_SUBNET",
+        "ELASTIC_IP",
+        "OVERLAY",
+        "UNKNOWN"
+      ]
+    },
     "AppRegistryArn":{
       "type":"string",
       "pattern":"arn:aws:servicecatalog:[a-z0-9:\\/-]+"
@@ -277,6 +355,7 @@
         "Arn":{"shape":"SsmSapArn"},
         "AppRegistryArn":{"shape":"AppRegistryArn"},
         "Status":{"shape":"ApplicationStatus"},
+        "DiscoveryStatus":{"shape":"ApplicationDiscoveryStatus"},
         "Components":{"shape":"ComponentIdList"},
         "LastUpdated":{"shape":"Timestamp"},
         "StatusMessage":{"shape":"String"}
@@ -299,7 +378,17 @@
       "type":"list",
       "member":{"shape":"ApplicationCredential"},
       "max":20,
-      "min":1
+      "min":0
+    },
+    "ApplicationDiscoveryStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "REGISTRATION_FAILED",
+        "REFRESH_FAILED",
+        "REGISTERING",
+        "DELETING"
+      ]
     },
     "ApplicationId":{
       "type":"string",
@@ -322,6 +411,7 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"ApplicationId"},
+        "DiscoveryStatus":{"shape":"ApplicationDiscoveryStatus"},
         "Type":{"shape":"ApplicationType"},
         "Arn":{"shape":"SsmSapArn"},
         "Tags":{"shape":"TagMap"}
@@ -333,23 +423,84 @@
     },
     "ApplicationType":{
       "type":"string",
-      "enum":["HANA"]
+      "enum":[
+        "HANA",
+        "SAP_ABAP"
+      ]
     },
     "Arn":{
       "type":"string",
       "pattern":"arn:(.+:){2,4}.+$|^arn:(.+:){1,3}.+\\/.+"
     },
+    "AssociatedHost":{
+      "type":"structure",
+      "members":{
+        "Hostname":{"shape":"String"},
+        "Ec2InstanceId":{"shape":"String"},
+        "IpAddresses":{"shape":"IpAddressList"},
+        "OsVersion":{"shape":"String"}
+      }
+    },
+    "BackintConfig":{
+      "type":"structure",
+      "required":[
+        "BackintMode",
+        "EnsureNoBackupInProcess"
+      ],
+      "members":{
+        "BackintMode":{"shape":"BackintMode"},
+        "EnsureNoBackupInProcess":{"shape":"Boolean"}
+      }
+    },
+    "BackintMode":{
+      "type":"string",
+      "enum":["AWSBackup"]
+    },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
+    "ClusterStatus":{
+      "type":"string",
+      "enum":[
+        "ONLINE",
+        "STANDBY",
+        "MAINTENANCE",
+        "OFFLINE",
+        "NONE"
+      ]
+    },
     "Component":{
       "type":"structure",
       "members":{
         "ComponentId":{"shape":"ComponentId"},
+        "Sid":{"shape":"SID"},
+        "SystemNumber":{"shape":"SAPInstanceNumber"},
+        "ParentComponent":{"shape":"ComponentId"},
+        "ChildComponents":{"shape":"ComponentIdList"},
         "ApplicationId":{"shape":"ApplicationId"},
         "ComponentType":{"shape":"ComponentType"},
         "Status":{"shape":"ComponentStatus"},
+        "SapHostname":{"shape":"String"},
+        "SapFeature":{"shape":"String"},
+        "SapKernelVersion":{"shape":"String"},
+        "HdbVersion":{"shape":"String"},
+        "Resilience":{"shape":"Resilience"},
+        "AssociatedHost":{"shape":"AssociatedHost"},
         "Databases":{"shape":"DatabaseIdList"},
-        "Hosts":{"shape":"HostList"},
-        "PrimaryHost":{"shape":"String"},
-        "LastUpdated":{"shape":"Timestamp"}
+        "Hosts":{
+          "shape":"HostList",
+          "deprecated":true,
+          "deprecatedMessage":"This shape is no longer used. Please use AssociatedHost."
+        },
+        "PrimaryHost":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"This shape is no longer used. Please use AssociatedHost."
+        },
+        "DatabaseConnection":{"shape":"DatabaseConnection"},
+        "LastUpdated":{"shape":"Timestamp"},
+        "Arn":{"shape":"SsmSapArn"}
       }
     },
     "ComponentId":{
@@ -362,7 +513,15 @@
     },
     "ComponentStatus":{
       "type":"string",
-      "enum":["ACTIVATED"]
+      "enum":[
+        "ACTIVATED",
+        "STARTING",
+        "STOPPED",
+        "STOPPING",
+        "RUNNING",
+        "RUNNING_WITH_ERROR",
+        "UNDEFINED"
+      ]
     },
     "ComponentSummary":{
       "type":"structure",
@@ -370,7 +529,8 @@
         "ApplicationId":{"shape":"ApplicationId"},
         "ComponentId":{"shape":"ComponentId"},
         "ComponentType":{"shape":"ComponentType"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "Arn":{"shape":"SsmSapArn"}
       }
     },
     "ComponentSummaryList":{
@@ -379,7 +539,16 @@
     },
     "ComponentType":{
       "type":"string",
-      "enum":["HANA"]
+      "enum":[
+        "HANA",
+        "HANA_NODE",
+        "ABAP",
+        "ASCS",
+        "DIALOG",
+        "WEBDISP",
+        "WD",
+        "ERS"
+      ]
     },
     "ConflictException":{
       "type":"structure",
@@ -391,6 +560,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ConnectedEntityType":{
+      "type":"string",
+      "enum":["DBMS"]
     },
     "CredentialType":{
       "type":"string",
@@ -412,6 +585,21 @@
         "LastUpdated":{"shape":"Timestamp"}
       }
     },
+    "DatabaseConnection":{
+      "type":"structure",
+      "members":{
+        "DatabaseConnectionMethod":{"shape":"DatabaseConnectionMethod"},
+        "DatabaseArn":{"shape":"SsmSapArn"},
+        "ConnectionIp":{"shape":"String"}
+      }
+    },
+    "DatabaseConnectionMethod":{
+      "type":"string",
+      "enum":[
+        "DIRECT",
+        "OVERLAY"
+      ]
+    },
     "DatabaseId":{
       "type":"string",
       "pattern":".*[\\w\\d]+"
@@ -432,7 +620,8 @@
         "STARTING",
         "STOPPED",
         "WARNING",
-        "UNKNOWN"
+        "UNKNOWN",
+        "ERROR"
       ]
     },
     "DatabaseSummary":{
@@ -550,7 +739,8 @@
     "GetComponentOutput":{
       "type":"structure",
       "members":{
-        "Component":{"shape":"Component"}
+        "Component":{"shape":"Component"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "GetDatabaseInput":{
@@ -600,9 +790,11 @@
       "type":"structure",
       "members":{
         "HostName":{"shape":"String"},
-        "HostRole":{"shape":"HostRole"},
         "HostIp":{"shape":"String"},
-        "InstanceId":{"shape":"String"}
+        "EC2InstanceId":{"shape":"String"},
+        "InstanceId":{"shape":"String"},
+        "HostRole":{"shape":"HostRole"},
+        "OsVersion":{"shape":"String"}
       }
     },
     "HostList":{
@@ -641,14 +833,24 @@
       "exception":true,
       "fault":true
     },
+    "IpAddressList":{
+      "type":"list",
+      "member":{"shape":"IpAddressMember"}
+    },
+    "IpAddressMember":{
+      "type":"structure",
+      "members":{
+        "IpAddress":{"shape":"String"},
+        "Primary":{"shape":"Boolean"},
+        "AllocationType":{"shape":"AllocationType"}
+      }
+    },
     "ListApplicationsInput":{
       "type":"structure",
       "members":{
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"},
+        "Filters":{"shape":"FilterList"}
       }
     },
     "ListApplicationsOutput":{
@@ -663,10 +865,7 @@
       "members":{
         "ApplicationId":{"shape":"ApplicationId"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListComponentsOutput":{
@@ -682,10 +881,7 @@
         "ApplicationId":{"shape":"ApplicationId"},
         "ComponentId":{"shape":"ComponentId"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListDatabasesOutput":{
@@ -695,15 +891,29 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListOperationEventsInput":{
+      "type":"structure",
+      "required":["OperationId"],
+      "members":{
+        "OperationId":{"shape":"OperationId"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "Filters":{"shape":"FilterList"}
+      }
+    },
+    "ListOperationEventsOutput":{
+      "type":"structure",
+      "members":{
+        "OperationEvents":{"shape":"OperationEventList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListOperationsInput":{
       "type":"structure",
       "required":["ApplicationId"],
       "members":{
         "ApplicationId":{"shape":"ApplicationId"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        },
+        "MaxResults":{"shape":"MaxResults"},
         "NextToken":{"shape":"NextToken"},
         "Filters":{"shape":"FilterList"}
       }
@@ -734,6 +944,7 @@
     },
     "MaxResults":{
       "type":"integer",
+      "box":true,
       "max":50,
       "min":1
     },
@@ -757,6 +968,32 @@
         "LastUpdatedTime":{"shape":"Timestamp"}
       }
     },
+    "OperationEvent":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"String"},
+        "Resource":{"shape":"Resource"},
+        "Status":{"shape":"OperationEventStatus"},
+        "StatusMessage":{"shape":"String"},
+        "Timestamp":{"shape":"Timestamp"}
+      }
+    },
+    "OperationEventList":{
+      "type":"list",
+      "member":{"shape":"OperationEvent"}
+    },
+    "OperationEventResourceType":{
+      "type":"string",
+      "pattern":"[\\w]+::[\\w]+::[\\w]+"
+    },
+    "OperationEventStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
     "OperationId":{
       "type":"string",
       "pattern":"[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?"
@@ -768,6 +1005,16 @@
     "OperationList":{
       "type":"list",
       "member":{"shape":"Operation"}
+    },
+    "OperationMode":{
+      "type":"string",
+      "enum":[
+        "PRIMARY",
+        "LOGREPLAY",
+        "DELTA_DATASHIPPING",
+        "LOGREPLAY_READACCESS",
+        "NONE"
+      ]
     },
     "OperationProperties":{
       "type":"map",
@@ -811,8 +1058,7 @@
       "required":[
         "ApplicationId",
         "ApplicationType",
-        "Instances",
-        "Credentials"
+        "Instances"
       ],
       "members":{
         "ApplicationId":{"shape":"ApplicationId"},
@@ -821,7 +1067,8 @@
         "SapInstanceNumber":{"shape":"SAPInstanceNumber"},
         "Sid":{"shape":"SID"},
         "Tags":{"shape":"TagMap"},
-        "Credentials":{"shape":"ApplicationCredentialList"}
+        "Credentials":{"shape":"ApplicationCredentialList"},
+        "DatabaseArn":{"shape":"SsmSapArn"}
       }
     },
     "RegisterApplicationOutput":{
@@ -829,6 +1076,33 @@
       "members":{
         "Application":{"shape":"Application"},
         "OperationId":{"shape":"OperationId"}
+      }
+    },
+    "ReplicationMode":{
+      "type":"string",
+      "enum":[
+        "PRIMARY",
+        "NONE",
+        "SYNC",
+        "SYNCMEM",
+        "ASYNC"
+      ]
+    },
+    "Resilience":{
+      "type":"structure",
+      "members":{
+        "HsrTier":{"shape":"String"},
+        "HsrReplicationMode":{"shape":"ReplicationMode"},
+        "HsrOperationMode":{"shape":"OperationMode"},
+        "ClusterStatus":{"shape":"ClusterStatus"},
+        "EnqueueReplication":{"shape":"Boolean"}
+      }
+    },
+    "Resource":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"Arn"},
+        "ResourceType":{"shape":"OperationEventResourceType"}
       }
     },
     "ResourceId":{
@@ -870,6 +1144,47 @@
       "type":"string",
       "pattern":"arn:(.+:){2,4}.+$|^arn:(.+:){1,3}.+\\/.+"
     },
+    "StartApplicationInput":{
+      "type":"structure",
+      "required":["ApplicationId"],
+      "members":{
+        "ApplicationId":{"shape":"ApplicationId"}
+      }
+    },
+    "StartApplicationOutput":{
+      "type":"structure",
+      "members":{
+        "OperationId":{"shape":"OperationId"}
+      }
+    },
+    "StartApplicationRefreshInput":{
+      "type":"structure",
+      "required":["ApplicationId"],
+      "members":{
+        "ApplicationId":{"shape":"ApplicationId"}
+      }
+    },
+    "StartApplicationRefreshOutput":{
+      "type":"structure",
+      "members":{
+        "OperationId":{"shape":"OperationId"}
+      }
+    },
+    "StopApplicationInput":{
+      "type":"structure",
+      "required":["ApplicationId"],
+      "members":{
+        "ApplicationId":{"shape":"ApplicationId"},
+        "StopConnectedEntity":{"shape":"ConnectedEntityType"},
+        "IncludeEc2InstanceShutdown":{"shape":"Boolean"}
+      }
+    },
+    "StopApplicationOutput":{
+      "type":"structure",
+      "members":{
+        "OperationId":{"shape":"OperationId"}
+      }
+    },
     "String":{"type":"string"},
     "TagKey":{
       "type":"string",
@@ -910,6 +1225,17 @@
       "min":1
     },
     "Timestamp":{"type":"timestamp"},
+    "UnauthorizedException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":401,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -940,7 +1266,9 @@
       "members":{
         "ApplicationId":{"shape":"ApplicationId"},
         "CredentialsToAddOrUpdate":{"shape":"ApplicationCredentialList"},
-        "CredentialsToRemove":{"shape":"ApplicationCredentialList"}
+        "CredentialsToRemove":{"shape":"ApplicationCredentialList"},
+        "Backint":{"shape":"BackintConfig"},
+        "DatabaseArn":{"shape":"SsmSapArn"}
       }
     },
     "UpdateApplicationSettingsOutput":{

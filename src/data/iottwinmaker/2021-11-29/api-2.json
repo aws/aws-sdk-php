@@ -3,8 +3,8 @@
   "metadata":{
     "apiVersion":"2021-11-29",
     "endpointPrefix":"iottwinmaker",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS IoT TwinMaker",
     "serviceId":"IoTTwinMaker",
     "signatureVersion":"v4",
@@ -28,6 +28,25 @@
         {"shape":"ValidationException"}
       ],
       "endpoint":{"hostPrefix":"data."}
+    },
+    "CancelMetadataTransferJob":{
+      "name":"CancelMetadataTransferJob",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/metadata-transfer-jobs/{metadataTransferJobId}/cancel",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelMetadataTransferJobRequest"},
+      "output":{"shape":"CancelMetadataTransferJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
     },
     "CreateComponentType":{
       "name":"CreateComponentType",
@@ -60,6 +79,26 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "CreateMetadataTransferJob":{
+      "name":"CreateMetadataTransferJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metadata-transfer-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateMetadataTransferJobRequest"},
+      "output":{"shape":"CreateMetadataTransferJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
@@ -270,6 +309,24 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "GetMetadataTransferJob":{
+      "name":"GetMetadataTransferJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/metadata-transfer-jobs/{metadataTransferJobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMetadataTransferJobRequest"},
+      "output":{"shape":"GetMetadataTransferJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "GetPricingPlan":{
       "name":"GetPricingPlan",
       "http":{
@@ -399,6 +456,24 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "ListComponents":{
+      "name":"ListComponents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceId}/entities/{entityId}/components-list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListComponentsRequest"},
+      "output":{"shape":"ListComponentsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "ListEntities":{
       "name":"ListEntities",
       "http":{
@@ -413,6 +488,41 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "ListMetadataTransferJobs":{
+      "name":"ListMetadataTransferJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metadata-transfer-jobs-list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMetadataTransferJobsRequest"},
+      "output":{"shape":"ListMetadataTransferJobsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "ListProperties":{
+      "name":"ListProperties",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceId}/properties-list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPropertiesRequest"},
+      "output":{"shape":"ListPropertiesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
       ],
       "endpoint":{"hostPrefix":"api."}
     },
@@ -698,6 +808,33 @@
       "min":1,
       "pattern":".*"
     },
+    "CancelMetadataTransferJobRequest":{
+      "type":"structure",
+      "required":["metadataTransferJobId"],
+      "members":{
+        "metadataTransferJobId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"metadataTransferJobId"
+        }
+      }
+    },
+    "CancelMetadataTransferJobResponse":{
+      "type":"structure",
+      "required":[
+        "metadataTransferJobId",
+        "arn",
+        "updateDateTime",
+        "status"
+      ],
+      "members":{
+        "metadataTransferJobId":{"shape":"Id"},
+        "arn":{"shape":"TwinMakerArn"},
+        "updateDateTime":{"shape":"Timestamp"},
+        "status":{"shape":"MetadataTransferJobStatus"},
+        "progress":{"shape":"MetadataTransferJobProgress"}
+      }
+    },
     "ColumnDescription":{
       "type":"structure",
       "members":{
@@ -720,6 +857,12 @@
         "EDGE",
         "VALUE"
       ]
+    },
+    "ComponentPath":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z_\\-0-9/]+"
     },
     "ComponentPropertyGroupRequest":{
       "type":"structure",
@@ -771,7 +914,32 @@
         "definedIn":{"shape":"String"},
         "properties":{"shape":"PropertyResponses"},
         "propertyGroups":{"shape":"ComponentPropertyGroupResponses"},
-        "syncSource":{"shape":"SyncSource"}
+        "syncSource":{"shape":"SyncSource"},
+        "areAllPropertiesReturned":{"shape":"Boolean"},
+        "compositeComponents":{"shape":"CompositeComponentResponse"},
+        "areAllCompositeComponentsReturned":{"shape":"Boolean"}
+      }
+    },
+    "ComponentSummaries":{
+      "type":"list",
+      "member":{"shape":"ComponentSummary"}
+    },
+    "ComponentSummary":{
+      "type":"structure",
+      "required":[
+        "componentName",
+        "componentTypeId",
+        "status"
+      ],
+      "members":{
+        "componentName":{"shape":"Name"},
+        "componentTypeId":{"shape":"ComponentTypeId"},
+        "definedIn":{"shape":"String"},
+        "description":{"shape":"Description"},
+        "propertyGroups":{"shape":"ComponentPropertyGroupResponses"},
+        "status":{"shape":"Status"},
+        "syncSource":{"shape":"SyncSource"},
+        "componentPath":{"shape":"ComponentPath"}
       }
     },
     "ComponentTypeId":{
@@ -841,6 +1009,61 @@
       "key":{"shape":"Name"},
       "value":{"shape":"ComponentRequest"}
     },
+    "CompositeComponentRequest":{
+      "type":"structure",
+      "members":{
+        "description":{"shape":"Description"},
+        "properties":{"shape":"PropertyRequests"},
+        "propertyGroups":{"shape":"ComponentPropertyGroupRequests"}
+      }
+    },
+    "CompositeComponentResponse":{
+      "type":"map",
+      "key":{"shape":"Name"},
+      "value":{"shape":"ComponentSummary"}
+    },
+    "CompositeComponentTypeRequest":{
+      "type":"structure",
+      "members":{
+        "componentTypeId":{"shape":"ComponentTypeId"}
+      }
+    },
+    "CompositeComponentTypeResponse":{
+      "type":"structure",
+      "members":{
+        "componentTypeId":{"shape":"ComponentTypeId"},
+        "isInherited":{"shape":"Boolean"}
+      }
+    },
+    "CompositeComponentTypesRequest":{
+      "type":"map",
+      "key":{"shape":"Name"},
+      "value":{"shape":"CompositeComponentTypeRequest"}
+    },
+    "CompositeComponentTypesResponse":{
+      "type":"map",
+      "key":{"shape":"Name"},
+      "value":{"shape":"CompositeComponentTypeResponse"}
+    },
+    "CompositeComponentUpdateRequest":{
+      "type":"structure",
+      "members":{
+        "updateType":{"shape":"ComponentUpdateType"},
+        "description":{"shape":"Description"},
+        "propertyUpdates":{"shape":"PropertyRequests"},
+        "propertyGroupUpdates":{"shape":"ComponentPropertyGroupRequests"}
+      }
+    },
+    "CompositeComponentUpdatesMapRequest":{
+      "type":"map",
+      "key":{"shape":"ComponentPath"},
+      "value":{"shape":"CompositeComponentUpdateRequest"}
+    },
+    "CompositeComponentsMapRequest":{
+      "type":"map",
+      "key":{"shape":"ComponentPath"},
+      "value":{"shape":"CompositeComponentRequest"}
+    },
     "Configuration":{
       "type":"map",
       "key":{"shape":"Name"},
@@ -903,7 +1126,8 @@
         "functions":{"shape":"FunctionsRequest"},
         "tags":{"shape":"TagMap"},
         "propertyGroups":{"shape":"PropertyGroupsRequest"},
-        "componentTypeName":{"shape":"ComponentTypeName"}
+        "componentTypeName":{"shape":"ComponentTypeName"},
+        "compositeComponentTypes":{"shape":"CompositeComponentTypesRequest"}
       }
     },
     "CreateComponentTypeResponse":{
@@ -935,6 +1159,7 @@
         "entityName":{"shape":"EntityName"},
         "description":{"shape":"Description"},
         "components":{"shape":"ComponentsMapRequest"},
+        "compositeComponents":{"shape":"CompositeComponentsMapRequest"},
         "parentEntityId":{"shape":"ParentEntityId"},
         "tags":{"shape":"TagMap"}
       }
@@ -952,6 +1177,34 @@
         "arn":{"shape":"TwinMakerArn"},
         "creationDateTime":{"shape":"Timestamp"},
         "state":{"shape":"State"}
+      }
+    },
+    "CreateMetadataTransferJobRequest":{
+      "type":"structure",
+      "required":[
+        "sources",
+        "destination"
+      ],
+      "members":{
+        "metadataTransferJobId":{"shape":"Id"},
+        "description":{"shape":"Description"},
+        "sources":{"shape":"SourceConfigurations"},
+        "destination":{"shape":"DestinationConfiguration"}
+      }
+    },
+    "CreateMetadataTransferJobResponse":{
+      "type":"structure",
+      "required":[
+        "metadataTransferJobId",
+        "arn",
+        "creationDateTime",
+        "status"
+      ],
+      "members":{
+        "metadataTransferJobId":{"shape":"Id"},
+        "arn":{"shape":"TwinMakerArn"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "status":{"shape":"MetadataTransferJobStatus"}
       }
     },
     "CreateSceneRequest":{
@@ -1023,11 +1276,7 @@
     },
     "CreateWorkspaceRequest":{
       "type":"structure",
-      "required":[
-        "workspaceId",
-        "s3Location",
-        "role"
-      ],
+      "required":["workspaceId"],
       "members":{
         "workspaceId":{
           "shape":"Id",
@@ -1217,6 +1466,7 @@
     "DeleteWorkspaceResponse":{
       "type":"structure",
       "members":{
+        "message":{"shape":"WorkspaceDeleteMessage"}
       }
     },
     "Description":{
@@ -1224,6 +1474,23 @@
       "max":2048,
       "min":0,
       "pattern":".*"
+    },
+    "DestinationConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"DestinationType"},
+        "s3Configuration":{"shape":"S3DestinationConfiguration"},
+        "iotTwinMakerConfiguration":{"shape":"IotTwinMakerDestinationConfiguration"}
+      }
+    },
+    "DestinationType":{
+      "type":"string",
+      "enum":[
+        "s3",
+        "iotsitewise",
+        "iottwinmaker"
+      ]
     },
     "Double":{
       "type":"double",
@@ -1246,6 +1513,7 @@
       "required":["propertyName"],
       "members":{
         "componentName":{"shape":"Name"},
+        "componentPath":{"shape":"ComponentPath"},
         "externalIdProperty":{"shape":"ExternalIdProperty"},
         "entityId":{"shape":"EntityId"},
         "propertyName":{"shape":"Name"}
@@ -1290,7 +1558,10 @@
         "INTERNAL_FAILURE",
         "SYNC_INITIALIZING_ERROR",
         "SYNC_CREATING_ERROR",
-        "SYNC_PROCESSING_ERROR"
+        "SYNC_PROCESSING_ERROR",
+        "SYNC_DELETING_ERROR",
+        "PROCESSING_ERROR",
+        "COMPOSITE_COMPONENT_FAILURE"
       ]
     },
     "ErrorDetails":{
@@ -1353,6 +1624,38 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
+    },
+    "FilterByAsset":{
+      "type":"structure",
+      "members":{
+        "assetId":{"shape":"Uuid"},
+        "assetExternalId":{"shape":"SiteWiseExternalId"},
+        "includeOffspring":{"shape":"Boolean"},
+        "includeAssetModel":{"shape":"Boolean"}
+      }
+    },
+    "FilterByAssetModel":{
+      "type":"structure",
+      "members":{
+        "assetModelId":{"shape":"Uuid"},
+        "assetModelExternalId":{"shape":"SiteWiseExternalId"},
+        "includeOffspring":{"shape":"Boolean"},
+        "includeAssets":{"shape":"Boolean"}
+      }
+    },
+    "FilterByComponentType":{
+      "type":"structure",
+      "required":["componentTypeId"],
+      "members":{
+        "componentTypeId":{"shape":"ComponentTypeId"}
+      }
+    },
+    "FilterByEntity":{
+      "type":"structure",
+      "required":["entityId"],
+      "members":{
+        "entityId":{"shape":"EntityId"}
+      }
     },
     "FunctionRequest":{
       "type":"structure",
@@ -1432,7 +1735,8 @@
         "status":{"shape":"Status"},
         "propertyGroups":{"shape":"PropertyGroupsResponse"},
         "syncSource":{"shape":"SyncSource"},
-        "componentTypeName":{"shape":"ComponentTypeName"}
+        "componentTypeName":{"shape":"ComponentTypeName"},
+        "compositeComponentTypes":{"shape":"CompositeComponentTypesResponse"}
       }
     },
     "GetEntityRequest":{
@@ -1479,7 +1783,45 @@
         "hasChildEntities":{"shape":"Boolean"},
         "creationDateTime":{"shape":"Timestamp"},
         "updateDateTime":{"shape":"Timestamp"},
-        "syncSource":{"shape":"SyncSource"}
+        "syncSource":{"shape":"SyncSource"},
+        "areAllComponentsReturned":{"shape":"Boolean"}
+      }
+    },
+    "GetMetadataTransferJobRequest":{
+      "type":"structure",
+      "required":["metadataTransferJobId"],
+      "members":{
+        "metadataTransferJobId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"metadataTransferJobId"
+        }
+      }
+    },
+    "GetMetadataTransferJobResponse":{
+      "type":"structure",
+      "required":[
+        "metadataTransferJobId",
+        "arn",
+        "sources",
+        "destination",
+        "metadataTransferJobRole",
+        "creationDateTime",
+        "updateDateTime",
+        "status"
+      ],
+      "members":{
+        "metadataTransferJobId":{"shape":"Id"},
+        "arn":{"shape":"TwinMakerArn"},
+        "description":{"shape":"Description"},
+        "sources":{"shape":"SourceConfigurations"},
+        "destination":{"shape":"DestinationConfiguration"},
+        "metadataTransferJobRole":{"shape":"RoleArn"},
+        "reportUrl":{"shape":"String"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "updateDateTime":{"shape":"Timestamp"},
+        "status":{"shape":"MetadataTransferJobStatus"},
+        "progress":{"shape":"MetadataTransferJobProgress"}
       }
     },
     "GetPricingPlanRequest":{
@@ -1509,6 +1851,7 @@
         },
         "entityId":{"shape":"EntityId"},
         "componentName":{"shape":"Name"},
+        "componentPath":{"shape":"ComponentPath"},
         "componentTypeId":{"shape":"ComponentTypeId"},
         "selectedProperties":{"shape":"SelectedPropertyList"},
         "propertyFilters":{"shape":"PropertyFilters"},
@@ -1546,6 +1889,7 @@
       ],
       "members":{
         "componentName":{"shape":"Name"},
+        "componentPath":{"shape":"ComponentPath"},
         "componentTypeId":{"shape":"ComponentTypeId"},
         "entityId":{"shape":"EntityId"},
         "selectedProperties":{"shape":"SelectedPropertyList"},
@@ -1664,8 +2008,6 @@
       "required":[
         "workspaceId",
         "arn",
-        "s3Location",
-        "role",
         "creationDateTime",
         "updateDateTime"
       ],
@@ -1673,6 +2015,7 @@
         "workspaceId":{"shape":"Id"},
         "arn":{"shape":"TwinMakerArn"},
         "description":{"shape":"Description"},
+        "linkedServices":{"shape":"LinkedServices"},
         "s3Location":{"shape":"S3Location"},
         "role":{"shape":"RoleArn"},
         "creationDateTime":{"shape":"Timestamp"},
@@ -1723,6 +2066,51 @@
       "type":"long",
       "box":true
     },
+    "IotSiteWiseSourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"IotSiteWiseSourceConfigurationFilters"}
+      }
+    },
+    "IotSiteWiseSourceConfigurationFilter":{
+      "type":"structure",
+      "members":{
+        "filterByAssetModel":{"shape":"FilterByAssetModel"},
+        "filterByAsset":{"shape":"FilterByAsset"}
+      },
+      "union":true
+    },
+    "IotSiteWiseSourceConfigurationFilters":{
+      "type":"list",
+      "member":{"shape":"IotSiteWiseSourceConfigurationFilter"}
+    },
+    "IotTwinMakerDestinationConfiguration":{
+      "type":"structure",
+      "required":["workspace"],
+      "members":{
+        "workspace":{"shape":"TwinMakerArn"}
+      }
+    },
+    "IotTwinMakerSourceConfiguration":{
+      "type":"structure",
+      "required":["workspace"],
+      "members":{
+        "workspace":{"shape":"TwinMakerArn"},
+        "filters":{"shape":"IotTwinMakerSourceConfigurationFilters"}
+      }
+    },
+    "IotTwinMakerSourceConfigurationFilter":{
+      "type":"structure",
+      "members":{
+        "filterByComponentType":{"shape":"FilterByComponentType"},
+        "filterByEntity":{"shape":"FilterByEntity"}
+      },
+      "union":true
+    },
+    "IotTwinMakerSourceConfigurationFilters":{
+      "type":"list",
+      "member":{"shape":"IotTwinMakerSourceConfigurationFilter"}
+    },
     "LambdaArn":{
       "type":"string",
       "max":2048,
@@ -1735,6 +2123,14 @@
       "members":{
         "arn":{"shape":"LambdaArn"}
       }
+    },
+    "LinkedService":{
+      "type":"string",
+      "pattern":"[a-zA-Z_0-9]+"
+    },
+    "LinkedServices":{
+      "type":"list",
+      "member":{"shape":"LinkedService"}
     },
     "ListComponentTypesFilter":{
       "type":"structure",
@@ -1776,6 +2172,36 @@
         "maxResults":{"shape":"MaxResults"}
       }
     },
+    "ListComponentsRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "entityId"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "entityId":{
+          "shape":"EntityId",
+          "location":"uri",
+          "locationName":"entityId"
+        },
+        "componentPath":{"shape":"ComponentPath"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListComponentsResponse":{
+      "type":"structure",
+      "required":["componentSummaries"],
+      "members":{
+        "componentSummaries":{"shape":"ComponentSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListEntitiesFilter":{
       "type":"structure",
       "members":{
@@ -1807,6 +2233,67 @@
       "type":"structure",
       "members":{
         "entitySummaries":{"shape":"EntitySummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListMetadataTransferJobsFilter":{
+      "type":"structure",
+      "members":{
+        "workspaceId":{"shape":"Id"},
+        "state":{"shape":"MetadataTransferJobState"}
+      },
+      "union":true
+    },
+    "ListMetadataTransferJobsFilters":{
+      "type":"list",
+      "member":{"shape":"ListMetadataTransferJobsFilter"}
+    },
+    "ListMetadataTransferJobsRequest":{
+      "type":"structure",
+      "required":[
+        "sourceType",
+        "destinationType"
+      ],
+      "members":{
+        "sourceType":{"shape":"SourceType"},
+        "destinationType":{"shape":"DestinationType"},
+        "filters":{"shape":"ListMetadataTransferJobsFilters"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListMetadataTransferJobsResponse":{
+      "type":"structure",
+      "required":["metadataTransferJobSummaries"],
+      "members":{
+        "metadataTransferJobSummaries":{"shape":"MetadataTransferJobSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListPropertiesRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "entityId"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "componentName":{"shape":"Name"},
+        "componentPath":{"shape":"ComponentPath"},
+        "entityId":{"shape":"EntityId"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListPropertiesResponse":{
+      "type":"structure",
+      "required":["propertySummaries"],
+      "members":{
+        "propertySummaries":{"shape":"PropertySummaries"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -1918,6 +2405,57 @@
       "box":true,
       "max":200,
       "min":0
+    },
+    "MetadataTransferJobProgress":{
+      "type":"structure",
+      "members":{
+        "totalCount":{"shape":"Integer"},
+        "succeededCount":{"shape":"Integer"},
+        "skippedCount":{"shape":"Integer"},
+        "failedCount":{"shape":"Integer"}
+      }
+    },
+    "MetadataTransferJobState":{
+      "type":"string",
+      "enum":[
+        "VALIDATING",
+        "PENDING",
+        "RUNNING",
+        "CANCELLING",
+        "ERROR",
+        "COMPLETED",
+        "CANCELLED"
+      ]
+    },
+    "MetadataTransferJobStatus":{
+      "type":"structure",
+      "members":{
+        "state":{"shape":"MetadataTransferJobState"},
+        "error":{"shape":"ErrorDetails"},
+        "queuedPosition":{"shape":"Integer"}
+      }
+    },
+    "MetadataTransferJobSummaries":{
+      "type":"list",
+      "member":{"shape":"MetadataTransferJobSummary"}
+    },
+    "MetadataTransferJobSummary":{
+      "type":"structure",
+      "required":[
+        "metadataTransferJobId",
+        "arn",
+        "creationDateTime",
+        "updateDateTime",
+        "status"
+      ],
+      "members":{
+        "metadataTransferJobId":{"shape":"Id"},
+        "arn":{"shape":"TwinMakerArn"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "updateDateTime":{"shape":"Timestamp"},
+        "status":{"shape":"MetadataTransferJobStatus"},
+        "progress":{"shape":"MetadataTransferJobProgress"}
+      }
     },
     "Name":{
       "type":"string",
@@ -2161,13 +2699,28 @@
       "type":"structure",
       "members":{
         "definition":{"shape":"PropertyDefinitionResponse"},
-        "value":{"shape":"DataValue"}
+        "value":{"shape":"DataValue"},
+        "areAllPropertyValuesReturned":{"shape":"Boolean"}
       }
     },
     "PropertyResponses":{
       "type":"map",
       "key":{"shape":"Name"},
       "value":{"shape":"PropertyResponse"}
+    },
+    "PropertySummaries":{
+      "type":"list",
+      "member":{"shape":"PropertySummary"}
+    },
+    "PropertySummary":{
+      "type":"structure",
+      "required":["propertyName"],
+      "members":{
+        "definition":{"shape":"PropertyDefinitionResponse"},
+        "propertyName":{"shape":"Name"},
+        "value":{"shape":"DataValue"},
+        "areAllPropertyValuesReturned":{"shape":"Boolean"}
+      }
     },
     "PropertyTableValue":{
       "type":"map",
@@ -2179,7 +2732,8 @@
       "enum":[
         "UPDATE",
         "DELETE",
-        "CREATE"
+        "CREATE",
+        "RESET_VALUE"
       ]
     },
     "PropertyValue":{
@@ -2300,11 +2854,33 @@
       "type":"list",
       "member":{"shape":"Row"}
     },
+    "S3DestinationConfiguration":{
+      "type":"structure",
+      "required":["location"],
+      "members":{
+        "location":{"shape":"S3DestinationLocation"}
+      }
+    },
+    "S3DestinationLocation":{
+      "type":"string",
+      "pattern":".*(^arn:((aws)|(aws-cn)|(aws-us-gov)):s3:::)([/a-zA-Z0-9_-]+$).*"
+    },
     "S3Location":{
       "type":"string",
       "max":1024,
       "min":0,
       "pattern":".*(^arn:((aws)|(aws-cn)|(aws-us-gov)):s3:::)([a-zA-Z0-9_-]+$).*"
+    },
+    "S3SourceConfiguration":{
+      "type":"structure",
+      "required":["location"],
+      "members":{
+        "location":{"shape":"S3SourceLocation"}
+      }
+    },
+    "S3SourceLocation":{
+      "type":"string",
+      "pattern":".*(^arn:((aws)|(aws-cn)|(aws-us-gov)):s3:::)([a-zA-Z0-9_-]+)\\/([/.a-zA-Z0-9_-]+$).*"
     },
     "S3Url":{
       "type":"string",
@@ -2393,6 +2969,36 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SiteWiseExternalId":{
+      "type":"string",
+      "max":128,
+      "min":2,
+      "pattern":".*[a-zA-Z0-9_][a-zA-Z_\\-0-9.:]*[a-zA-Z0-9_]+.*"
+    },
+    "SourceConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"SourceType"},
+        "s3Configuration":{"shape":"S3SourceConfiguration"},
+        "iotSiteWiseConfiguration":{"shape":"IotSiteWiseSourceConfiguration"},
+        "iotTwinMakerConfiguration":{"shape":"IotTwinMakerSourceConfiguration"}
+      }
+    },
+    "SourceConfigurations":{
+      "type":"list",
+      "member":{"shape":"SourceConfiguration"},
+      "max":1,
+      "min":1
+    },
+    "SourceType":{
+      "type":"string",
+      "enum":[
+        "s3",
+        "iotsitewise",
+        "iottwinmaker"
+      ]
     },
     "State":{
       "type":"string",
@@ -2655,7 +3261,8 @@
         "extendsFrom":{"shape":"ExtendsFrom"},
         "functions":{"shape":"FunctionsRequest"},
         "propertyGroups":{"shape":"PropertyGroupsRequest"},
-        "componentTypeName":{"shape":"ComponentTypeName"}
+        "componentTypeName":{"shape":"ComponentTypeName"},
+        "compositeComponentTypes":{"shape":"CompositeComponentTypesRequest"}
       }
     },
     "UpdateComponentTypeResponse":{
@@ -2693,6 +3300,7 @@
         "entityName":{"shape":"EntityName"},
         "description":{"shape":"Description"},
         "componentUpdates":{"shape":"ComponentUpdatesMapRequest"},
+        "compositeComponentUpdates":{"shape":"CompositeComponentUpdatesMapRequest"},
         "parentEntityUpdate":{"shape":"ParentEntityUpdateRequest"}
       }
     },
@@ -2773,7 +3381,8 @@
           "locationName":"workspaceId"
         },
         "description":{"shape":"Description"},
-        "role":{"shape":"RoleArn"}
+        "role":{"shape":"RoleArn"},
+        "s3Location":{"shape":"S3Location"}
       }
     },
     "UpdateWorkspaceResponse":{
@@ -2782,6 +3391,12 @@
       "members":{
         "updateDateTime":{"shape":"Timestamp"}
       }
+    },
+    "Uuid":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
     "ValidationException":{
       "type":"structure",
@@ -2802,6 +3417,12 @@
       "type":"list",
       "member":{"shape":"PropertyValue"}
     },
+    "WorkspaceDeleteMessage":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":".*"
+    },
     "WorkspaceSummaries":{
       "type":"list",
       "member":{"shape":"WorkspaceSummary"}
@@ -2818,6 +3439,7 @@
         "workspaceId":{"shape":"Id"},
         "arn":{"shape":"TwinMakerArn"},
         "description":{"shape":"Description"},
+        "linkedServices":{"shape":"LinkedServices"},
         "creationDateTime":{"shape":"Timestamp"},
         "updateDateTime":{"shape":"Timestamp"}
       }

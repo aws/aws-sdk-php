@@ -500,7 +500,8 @@
         {"shape":"MissingRequiredParameterException"},
         {"shape":"InvalidParameterCombinationException"},
         {"shape":"InternalServiceFault"}
-      ]
+      ],
+      "requestcompression":{"encodings":["gzip"]}
     },
     "PutMetricStream":{
       "name":"PutMetricStream",
@@ -715,6 +716,7 @@
         },
         "Configuration":{"shape":"AnomalyDetectorConfiguration"},
         "StateValue":{"shape":"AnomalyDetectorStateValue"},
+        "MetricCharacteristics":{"shape":"MetricCharacteristics"},
         "SingleMetricAnomalyDetector":{"shape":"SingleMetricAnomalyDetector"},
         "MetricMathAnomalyDetector":{"shape":"MetricMathAnomalyDetector"}
       }
@@ -1835,6 +1837,12 @@
       "type":"list",
       "member":{"shape":"MetricAlarm"}
     },
+    "MetricCharacteristics":{
+      "type":"structure",
+      "members":{
+        "PeriodicSpikes":{"shape":"PeriodicSpikes"}
+      }
+    },
     "MetricData":{
       "type":"list",
       "member":{"shape":"MetricDatum"}
@@ -1970,7 +1978,8 @@
       "type":"string",
       "enum":[
         "json",
-        "opentelemetry0.7"
+        "opentelemetry0.7",
+        "opentelemetry1.0"
       ],
       "max":255,
       "min":1
@@ -2055,6 +2064,7 @@
       "type":"integer",
       "min":1
     },
+    "PeriodicSpikes":{"type":"boolean"},
     "PutAnomalyDetectorInput":{
       "type":"structure",
       "members":{
@@ -2079,6 +2089,7 @@
           "deprecatedMessage":"Use SingleMetricAnomalyDetector."
         },
         "Configuration":{"shape":"AnomalyDetectorConfiguration"},
+        "MetricCharacteristics":{"shape":"MetricCharacteristics"},
         "SingleMetricAnomalyDetector":{"shape":"SingleMetricAnomalyDetector"},
         "MetricMathAnomalyDetector":{"shape":"MetricMathAnomalyDetector"}
       }
@@ -2306,6 +2317,7 @@
     "SingleMetricAnomalyDetector":{
       "type":"structure",
       "members":{
+        "AccountId":{"shape":"AccountId"},
         "Namespace":{"shape":"Namespace"},
         "MetricName":{"shape":"MetricName"},
         "Dimensions":{"shape":"Dimensions"},

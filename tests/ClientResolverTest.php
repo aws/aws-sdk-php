@@ -2,6 +2,8 @@
 namespace Aws\Test;
 
 use Aws\Api\Service;
+use Aws\Auth\AuthSchemeResolver;
+use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientResolver;
 use Aws\ClientSideMonitoring\Configuration;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
@@ -18,6 +20,7 @@ use Aws\S3\S3Client;
 use Aws\HandlerList;
 use Aws\Sdk;
 use Aws\Result;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -752,27 +755,25 @@ EOT;
         $r->resolve([], new HandlerList());
     }
 
-    public function testHasSpecificMessageForMissingVersion()
+    public function testAppliesLatestAsDefaultVersionWithoutSuppliedVersion()
     {
-        $this->expectExceptionMessage("A \"version\" configuration value is required");
-        $this->expectException(\InvalidArgumentException::class);
-        $args = ClientResolver::getDefaultArguments()['version'];
-        $r = new ClientResolver(['version' => $args]);
-        $r->resolve(['service' => 'foo'], new HandlerList());
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'ec2',
+            'region' => 'us-west-2',
+        ], new HandlerList());
+        self::assertSame('latest', $conf['version']);
     }
 
-    public function testHasSpecificMessageForNullRequiredVersion()
+    public function testAppliesVersion()
     {
-        $this->expectExceptionMessage("A \"version\" configuration value is required");
-        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
-        $list = new HandlerList();
-        $r->resolve([
-            'service' => 'foo',
-            'region' => 'x',
-            'credentials' => ['key' => 'a', 'secret' => 'b'],
-            'version' => null,
-        ], $list);
+        $conf = $r->resolve([
+            'service' => 'ec2',
+            'region' => 'us-west-2',
+            'version' => '2015-10-01'
+        ], new HandlerList());
+        self::assertSame('2015-10-01', $conf['version']);
     }
 
     public function testHasSpecificMessageForMissingRegion()
@@ -1324,13 +1325,356 @@ EOT;
                 'x',
             ],
             [
-                '',
-                new InvalidRegionException('Region must be a valid RFC host label.'),
-            ],
-            [
                 'hosthijack.com/',
                 new InvalidRegionException('Region must be a valid RFC host label.'),
             ],
         ];
+    }
+
+    public function invalidDisableRequestCompressionValues()
+    {
+        return [
+            ['foo'],
+            [ 1 ],
+            [function () {return 'nothing';}]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidDisableRequestCompressionValues
+     */
+    public function testInvalidDisableRequestCompressionTypeThrowsException($invalidType)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/Invalid configuration value provided/');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+            'disable_request_compression' => $invalidType
+        ], $list);
+        $this->assertArrayHasKey('disable_request_compression', $conf);
+        $this->assertFalse($conf['disable_request_compression']);
+    }
+
+    public function testDisableRequestCompressionDefault()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+        ], $list);
+        $this->assertArrayHasKey('disable_request_compression', $conf);
+        $this->assertFalse($conf['disable_request_compression']);
+    }
+
+    public function invalidMinCompressionSizeValues()
+    {
+        return [
+            [ true ],
+            [ 'foo' ],
+            [function () {return 'nothing';}],
+            [ 99999999 ],
+            [ -1 ]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidMinCompressionSizeValues
+     */
+    public function testInvalidMinCompressionSizeValues($invalidType)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/Invalid configuration value provided/');
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+            'request_min_compression_size_bytes' => $invalidType
+        ], $list);
+    }
+
+    public function testMinCompressionSizeDefault()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version' => 'latest',
+        ], $list);
+        $this->assertArrayHasKey('request_min_compression_size_bytes', $conf);
+        $this->assertEquals(10240, $conf['request_min_compression_size_bytes']);
+    }
+
+    /**
+     * @dataProvider configResolutionProvider
+     *
+     * @param $ini
+     * @param $env
+     * @param $expected
+     * @param $configKey
+     * @param $configType
+     */
+    public function testConfigResolutionOrder($ini, $env, $expected, $configKey, $configType)
+    {
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        if ($env) {
+            putenv($env['key'] . '=' . $env['value']);
+        }
+
+        file_put_contents($dir . '/config', $ini);
+        $home = getenv('HOME');
+        putenv('HOME=' . dirname($dir));
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 's3',
+            'region' => $configKey === 'region' ? null : 'x'
+        ], new HandlerList());
+
+        if ($configKey === 'endpoint') {
+            $this->assertTrue(isset($conf['config']['configured_endpoint_url']));
+        }
+
+        if ($configType === 'args') {
+            $this->assertEquals($conf[$configKey], $expected);
+        } else {
+            $this->assertEquals($conf['config'][$configKey], $expected);
+        }
+        unlink($dir . '/config');
+        putenv("HOME=$home");
+        if ($env) {
+            putenv($env['key'] . '=');
+        }
+    }
+
+    public function configResolutionProvider()
+    {
+        return [
+            [
+                <<<EOT
+[default]
+region = foo-region
+EOT
+                ,
+                ['key' => 'AWS_REGION', 'value' => 'bar-region'],
+                'bar-region',
+                'region',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+region = 'foo-region'
+EOT
+                    ,
+                    null,
+                    'foo-region',
+                    'region',
+                    'args'
+                ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT
+                ,
+                ['key' => 'AWS_ENDPOINT_URL_S3', 'value' => 'https://test.com'],
+                'https://test.com',
+                'endpoint',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT
+                ,
+                null,
+                'https://test-foo.com',
+                'endpoint',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+EOT
+                ,
+                ['key' => 'AWS_ENDPOINT_URL', 'value' => 'https://baz.com'],
+                'https://baz.com',
+                'endpoint',
+                'args'
+            ],
+            [
+                <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+EOT
+                ,
+                null,
+                'https://foo-bar.com',
+                'endpoint',
+                'args'
+            ]
+        ];
+    }
+
+    public function testIgnoreConfiguredEndpointUrls()
+    {
+        $ini = <<<EOT
+[default]
+endpoint_url = https://foo-bar.com
+services = my-services
+[services my-services]
+s3 =
+  endpoint_url = https://test-foo.com
+EOT;
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        putenv('AWS_ENDPOINT_URL' . '=' . 'https://test-foo.com');
+        putenv('AWS_ENDPOINT_URL_S3' . '=' . 'https://test-service-foo.com');
+
+        file_put_contents($dir . '/config', $ini);
+        $home = getenv('HOME');
+        putenv('HOME=' . dirname($dir));
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 's3',
+            'region' => 'x',
+            'version' => 'latest',
+            'ignore_configured_endpoint_urls' => true
+        ], new HandlerList());
+        $this->assertFalse(isset($conf['config']['configured_endpoint_url']));
+        $this->assertFalse(isset($conf['config']['endpoint']));
+        unlink($dir . '/config');
+        putenv("HOME=$home");
+        putenv('AWS_ENDPOINT_URL' . '=');
+        putenv('AWS_ENDPOINT_URL_S3' . '=');
+    }
+
+    public function testResolvesAppIdFromClientConfig()
+    {
+        $appId = 'TestAppId';
+        $s3 = new S3Client([
+            'region' => 'us-east-1',
+            'app_id' => $appId,
+            'http_handler' => function (RequestInterface $request) use ($appId) {
+                $userAgentValues = explode(' ', $request->getHeader('user-agent')[0]);
+                $expectedHeader = "app/$appId";
+                $idx = array_search($expectedHeader, $userAgentValues);
+                $this->assertNotFalse($idx);
+                $this->assertEquals($expectedHeader, $userAgentValues[$idx]);
+
+                return new Response;
+            }
+        ]);
+        $s3->listBuckets();
+    }
+
+    public function testResolvesAppIdSourcedFromEnv()
+    {
+        $currentAppIdFromEnv = getenv('AWS_SDK_UA_APP_ID');
+        $deferTask = function () use ($currentAppIdFromEnv) {
+            if (!empty($currentAppIdFromEnv)) {
+                putenv("AWS_SDK_UA_APP_ID=$currentAppIdFromEnv");
+            }
+        };
+
+        try {
+            $appId = 'TestAppId';
+            putenv("AWS_SDK_UA_APP_ID=$appId");
+            $s3 = new S3Client([
+                'region' => 'us-east-1',
+                'http_handler' => function (RequestInterface $request) use ($appId) {
+                    $userAgentValues = explode(' ', $request->getHeader('user-agent')[0]);
+                    $expectedHeader = "app/$appId";
+                    $idx = array_search($expectedHeader, $userAgentValues);
+                    $this->assertNotFalse($idx);
+                    $this->assertEquals($expectedHeader, $userAgentValues[$idx]);
+
+                    return new Response;
+                }
+            ]);
+            $s3->listBuckets();
+        } finally {
+            $deferTask();
+        }
+    }
+
+    public function testResolvesAppIdSourcedFromIniFile()
+    {
+        $tempIniConfigFile = sys_get_temp_dir() . '/.aws/config';
+        $currentAwsConfigFileFromEnv = getenv('AWS_CONFIG_FILE');
+        $deferTask = function () use ($tempIniConfigFile, $currentAwsConfigFileFromEnv) {
+            unlink($tempIniConfigFile);
+            if (!empty($currentAwsConfigFileFromEnv)) {
+                putenv("AWS_CONFIG_FILE=$currentAwsConfigFileFromEnv");
+            }
+        };
+        $appId = 'TestAppId';
+        $iniContent = <<<EOF
+[default]
+sdk_ua_app_id=$appId
+EOF;
+        file_put_contents($tempIniConfigFile, $iniContent);
+        putenv("AWS_CONFIG_FILE=$tempIniConfigFile");
+        try {
+            $s3 = new S3Client([
+                'region' => 'us-east-1',
+                'http_handler' => function (RequestInterface $request) use ($appId) {
+                    $userAgentValues = explode(' ', $request->getHeader('user-agent')[0]);
+                    $expectedHeader = "app/$appId";
+                    $idx = array_search($expectedHeader, $userAgentValues);
+                    $this->assertNotFalse($idx);
+                    $this->assertEquals($expectedHeader, $userAgentValues[$idx]);
+
+                    return new Response;
+                }
+            ]);
+            $s3->listBuckets();
+        } finally {
+            $deferTask();
+        }
+    }
+
+    public function testAppliesAuthSchemeResolver()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'dynamodb',
+            'region' => 'x',
+            'version' => 'latest',
+        ], new HandlerList());
+        $this->assertArrayHasKey('auth_scheme_resolver', $conf);
+        $this->assertInstanceOf(
+            AuthSchemeResolverInterface::class,
+            $conf['auth_scheme_resolver']
+        );
     }
 }

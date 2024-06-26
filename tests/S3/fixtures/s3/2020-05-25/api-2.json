@@ -76,6 +76,22 @@
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
       }
+    },
+    "PutBucketPolicy":{
+      "name":"PutBucketPolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}?policy"
+      },
+      "input":{"shape":"PutBucketPolicyRequest"},
+      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html",
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      },
+      "staticContextParams":{
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
     }
   },
   "shapes":{
@@ -224,6 +240,7 @@
       "type":"string",
       "min":1
     },
+    "Policy":{"type":"string"},
     "PutBucketLoggingRequest":{
       "type":"structure",
       "required":[
@@ -250,6 +267,33 @@
         }
       },
       "payload":"BucketLoggingStatus"
+    },
+    "PutBucketPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "Policy"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "ContentMD5":{
+          "shape":"ContentMD5",
+          "location":"header",
+          "locationName":"Content-MD5"
+        },
+        "ChecksumAlgorithm":{
+          "shape":"ChecksumAlgorithm",
+          "location":"header",
+          "locationName":"x-amz-sdk-checksum-algorithm"
+        },
+        "Policy":{"shape":"Policy"}
+      },
+      "payload":"Policy"
     },
     "PutObjectOutput": {
       "type": "structure",

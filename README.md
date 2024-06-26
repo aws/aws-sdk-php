@@ -25,7 +25,7 @@ Jump To:
 1. **Sign up for AWS** – Before you begin, you need to
    sign up for an AWS account and retrieve your [AWS credentials][docs-signup].
 2. **Minimum requirements** – To run the SDK, your system will need to meet the
-   [minimum requirements][docs-requirements], including having **PHP >= 5.5**.
+   [minimum requirements][docs-requirements], including having **PHP >= 7.2.5**.
    We highly recommend having it compiled with the cURL extension and cURL
    7.16.2+ compiled with a TLS backend (e.g., NSS or OpenSSL).
 3. **Install the SDK** – Using [Composer] is the recommended way to install the

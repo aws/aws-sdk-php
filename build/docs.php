@@ -5,8 +5,10 @@ use Aws\Build\Docs\DocsBuilder;
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
 // Setup directories.
-$config = \Nette\Neon\Neon::decode(file_get_contents(__DIR__ . '/docs/apigen.neon'));
-$outputDir = __DIR__ . '/../' . $config['destination'];
+$xmlObj = simplexml_load_file(__DIR__ . '/docs/phpdoc.dist.xml');
+$xmlJson = json_encode($xmlObj);
+$config = json_decode($xmlJson, true);
+$outputDir = __DIR__ . '/artifacts/docs';
 $apiProvider = \Aws\Api\ApiProvider::defaultProvider();
 
 // Extract the built homepage into a template file.
@@ -14,13 +16,15 @@ $xml = new DOMDocument();
 @$xml->loadHTMLFile(__DIR__ . '/artifacts/docs/index.html');
 $ele = $xml->getElementById('content');
 $ele->nodeValue = '{{ contents }}';
-$template = str_replace('class="homepage"', 'class="generated-page"', $xml->saveHTML());
-
-$quickLinkServices = ['s3', 'dynamodb', 'glacier', 'ec2'];
+//$template = str_replace('class="phpdocumentor"', 'class="generated-page"', $xml->saveHTML());
+$template = $xml->saveHTML();
 
 $sourceDirs = array_map(function ($dirRelativeToProjectRoot) {
     return __DIR__ . '/../' . $dirRelativeToProjectRoot;
-}, is_array($config['source']) ? $config['source'] : [$config['source']]);
+}, is_array($config['version']['api']['source']['path'])
+    ? $config['version']['api']['source']['path']
+    : [$config['version']['api']['source']['path']]
+);
 $sourceFiles = [];
 foreach ($sourceDirs as $dir) {
     $sourceFiles = array_merge(
@@ -44,8 +48,8 @@ $builder = new DocsBuilder(
     $apiProvider,
     $outputDir,
     $template,
-    $config['baseUrl'],
-    $quickLinkServices,
+    'http://docs.aws.amazon.com/aws-sdk-php/v3/api/',
+    [],
     $sourceFiles,
     $issueLoggingEnabled
 );

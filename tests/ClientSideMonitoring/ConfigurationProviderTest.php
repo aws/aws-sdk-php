@@ -13,7 +13,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 
 /**
- * @covers ConfigurationProvider
+ * @covers Aws\ClientSideMonitoring\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {

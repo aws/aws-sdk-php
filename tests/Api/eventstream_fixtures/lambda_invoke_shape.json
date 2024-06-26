@@ -1,0 +1,28 @@
+{
+  "type": "union",
+  "eventstream": true,
+  "members": {
+    "PayloadChunk": {
+      "type": "structure",
+      "members": {
+        "Payload": {
+          "type": "blob"
+        }
+      }
+    },
+    "InvokeComplete": {
+      "type": "structure",
+      "members": {
+        "ErrorCode": {
+          "type": "string"
+        },
+        "ErrorDetails": {
+          "type": "string"
+        },
+        "LogResult": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

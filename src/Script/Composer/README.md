@@ -5,7 +5,7 @@ you have feedback on the implementation, please visit the [open discussion](http
 we have on the topic.
 
 To avoid shipping unused services, specify which services you would like to keep in your `composer.json` file and
-use the `Aws\\Script\\Composer::removeUnusedServices` script:   
+use the `Aws\\Script\\Composer::removeUnusedServices` or `Aws\\Script\\Composer::removeUnusedServicesInDev` script:   
 
 ```
 {

@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class GmacTest
- * @package Aws\Test\Crypto\Polyfill
+ * @covers Aws\Test\Crypto\Polyfill
  */
 class GmacTest extends TestCase
 {

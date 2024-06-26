@@ -1,21 +1,29 @@
 <?php
 namespace Aws;
 
-use Aws\Api\Validator;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
+use Aws\Api\Validator;
+use Aws\Auth\AuthResolver;
+use Aws\Auth\AuthSchemeResolver;
+use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\Configuration;
+use Aws\Configuration\ConfigurationResolver;
+use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
+use Aws\DefaultsMode\ConfigurationInterface as ConfigModeInterface;
+use Aws\DefaultsMode\ConfigurationProvider as ConfigModeProvider;
+use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
-use Aws\Endpoint\UseFipsEndpoint\Configuration as UseFipsEndpointConfiguration;
-use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider as UseFipsConfigProvider;
-use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface as UseFipsEndpointConfigurationInterface;
 use Aws\Endpoint\UseDualstackEndpoint\Configuration as UseDualStackEndpointConfiguration;
-use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider as UseDualStackConfigProvider;
 use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface as UseDualStackEndpointConfigurationInterface;
+use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider as UseDualStackConfigProvider;
+use Aws\Endpoint\UseFipsEndpoint\Configuration as UseFipsEndpointConfiguration;
+use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface as UseFipsEndpointConfigurationInterface;
+use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider as UseFipsConfigProvider;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointV2\EndpointDefinitionProvider;
@@ -23,15 +31,11 @@ use Aws\Exception\AwsException;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
-use Aws\DefaultsMode\ConfigurationInterface as ConfigModeInterface;
-use Aws\DefaultsMode\ConfigurationProvider as ConfigModeProvider;
 use Aws\Signature\SignatureProvider;
-use Aws\Endpoint\EndpointProvider;
 use Aws\Token\Token;
 use Aws\Token\TokenInterface;
 use Aws\Token\TokenProvider;
 use GuzzleHttp\Promise\PromiseInterface;
-use Aws\Credentials\CredentialProvider;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\RequestInterface;
 
@@ -82,23 +86,32 @@ class ClientResolver
             'doc'       => 'Set to true to disable host prefix injection logic for services that use it. This disables the entire prefix injection, including the portions supplied by user-defined parameters. Setting this flag will have no effect on services that do not use host prefix injection.',
             'default'   => false,
         ],
+        'ignore_configured_endpoint_urls' => [
+            'type'      => 'value',
+            'valid'     => ['bool'],
+            'doc'       => 'Set to true to disable endpoint urls configured using `AWS_ENDPOINT_URL` and `endpoint_url` shared config option.',
+            'fn'        => [__CLASS__, '_apply_ignore_configured_endpoint_urls'],
+            'default'   => [__CLASS__, '_default_ignore_configured_endpoint_urls'],
+        ],
         'endpoint' => [
             'type'  => 'value',
             'valid' => ['string'],
             'doc'   => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3).',
             'fn'    => [__CLASS__, '_apply_endpoint'],
+            'default'   => [__CLASS__, '_default_endpoint']
         ],
         'region' => [
             'type'     => 'value',
             'valid'    => ['string'],
-            'required' => [__CLASS__, '_missing_region'],
             'doc'      => 'Region to connect to. See http://docs.aws.amazon.com/general/latest/gr/rande.html for a list of available regions.',
+            'fn'       => [__CLASS__, '_apply_region'],
+            'default'  => [__CLASS__, '_default_region']
         ],
         'version' => [
             'type'     => 'value',
             'valid'    => ['string'],
-            'required' => [__CLASS__, '_missing_version'],
             'doc'      => 'The version of the webservice to utilize (e.g., 2006-03-01).',
+            'default' => 'latest',
         ],
         'signature_provider' => [
             'type'    => 'value',
@@ -143,6 +156,7 @@ class ClientResolver
         ],
         'serializer' => [
             'default'   => [__CLASS__, '_default_serializer'],
+            'fn'        => [__CLASS__, '_apply_serializer'],
             'internal'  => true,
             'type'      => 'value',
             'valid'     => ['callable'],
@@ -185,6 +199,12 @@ class ClientResolver
             'fn'      => [__CLASS__, '_apply_token'],
             'default' => [__CLASS__, '_default_token_provider'],
         ],
+        'auth_scheme_resolver' => [
+            'type'    => 'value',
+            'valid'   => [AuthSchemeResolverInterface::class],
+            'doc'     => 'An instance of Aws\Auth\AuthSchemeResolverInterface which selects a modeled auth scheme and returns a signature version',
+            'default' => [__CLASS__, '_default_auth_scheme_resolver'],
+        ],
         'endpoint_discovery' => [
             'type'     => 'value',
             'valid'    => [ConfigurationInterface::class, CacheInterface::class, 'array', 'callable'],
@@ -219,6 +239,20 @@ class ClientResolver
             'doc'   => 'Set to true to display debug information when sending requests. Alternatively, you can provide an associative array with the following keys: logfn: (callable) Function that is invoked with log messages; stream_size: (int) When the size of a stream is greater than this number, the stream data will not be logged (set to "0" to not log any stream data); scrub_auth: (bool) Set to false to disable the scrubbing of auth data from the logged messages; http: (bool) Set to false to disable the "debug" feature of lower level HTTP adapters (e.g., verbose curl output).',
             'fn'    => [__CLASS__, '_apply_debug'],
         ],
+        'disable_request_compression' => [
+            'type'      => 'value',
+            'valid'     => ['bool', 'callable'],
+            'doc'       => 'Set to true to disable request compression for supported operations',
+            'fn'        => [__CLASS__, '_apply_disable_request_compression'],
+            'default'   => [__CLASS__, '_default_disable_request_compression'],
+        ],
+        'request_min_compression_size_bytes' => [
+            'type'      => 'value',
+            'valid'     => ['int', 'callable'],
+            'doc'       => 'Set to a value between between 0 and 10485760 bytes, inclusive. This value will be ignored if `disable_request_compression` is set to `true`',
+            'fn'        => [__CLASS__, '_apply_min_compression_size'],
+            'default'   => [__CLASS__, '_default_min_compression_size'],
+        ],
         'csm' => [
             'type'     => 'value',
             'valid'    => [\Aws\ClientSideMonitoring\ConfigurationInterface::class, 'callable', 'array', 'bool'],
@@ -245,6 +279,15 @@ class ClientResolver
             'fn'       => [__CLASS__, '_apply_handler'],
             'default'  => [__CLASS__, '_default_handler']
         ],
+        'app_id' => [
+            'type' => 'value',
+            'valid' => ['string'],
+            'doc' => 'app_id(AppId) is an optional application specific identifier that can be set. 
+             When set it will be appended to the User-Agent header of every request in the form of App/{AppId}. 
+             This value is also sourced from environment variable AWS_SDK_UA_APP_ID or the shared config profile attribute sdk_ua_app_id.',
+            'fn' => [__CLASS__, '_apply_app_id'],
+            'default' => [__CLASS__, '_default_app_id']
+        ],
         'ua_append' => [
             'type'     => 'value',
             'valid'    => ['string', 'array'],
@@ -264,13 +307,6 @@ class ClientResolver
             'valid'     => ['bool'],
             'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.  This will be ignored if you set the \'profile\' setting.',
             'default'   => true,
-        ],
-        'suppress_php_deprecation_warning' => [
-            'type'      => 'value',
-            'valid'     => ['bool'],
-            'doc'       => 'Set to false to disable the deprecation warning of PHP versions 7.2.4 and below',
-            'default'   => false,
-            'fn'        => [__CLASS__, '_apply_suppress_php_deprecation_warning']
         ],
     ];
 
@@ -520,6 +556,51 @@ class ClientResolver
         }
     }
 
+    public static function _apply_disable_request_compression($value, array &$args) {
+        if (is_callable($value)) {
+            $value = $value();
+        }
+        if (!is_bool($value)) {
+            throw new IAE(
+                "Invalid configuration value provided for 'disable_request_compression'."
+                . " value must be a bool."
+            );
+        }
+        $args['config']['disable_request_compression'] = $value;
+    }
+
+    public static function _default_disable_request_compression(array &$args) {
+        return ConfigurationResolver::resolve(
+            'disable_request_compression',
+            false,
+            'bool',
+            $args
+        );
+    }
+
+    public static function _apply_min_compression_size($value, array &$args) {
+        if (is_callable($value)) {
+            $value = $value();
+        }
+        if (!is_int($value)
+            || (is_int($value)
+                && ($value < 0 || $value > 10485760))
+        ) {
+            throw new IAE(" Invalid configuration value provided for 'min_compression_size_bytes'."
+                . " value must be an integer between 0 and 10485760, inclusive.");
+        }
+        $args['config']['request_min_compression_size_bytes'] = $value;
+    }
+
+    public static function _default_min_compression_size(array &$args) {
+        return ConfigurationResolver::resolve(
+            'request_min_compression_size_bytes',
+            10240,
+            'int',
+            $args
+        );
+    }
+
     public static function _apply_credentials($value, array &$args)
     {
         if (is_callable($value)) {
@@ -536,8 +617,8 @@ class ClientResolver
                 new Credentials(
                     $value['key'],
                     $value['secret'],
-                    isset($value['token']) ? $value['token'] : null,
-                    isset($value['expires']) ? $value['expires'] : null
+                    $value['token'] ?? null,
+                    $value['expires'] ?? null
                 )
             );
         } elseif ($value === false) {
@@ -545,6 +626,7 @@ class ClientResolver
                 new Credentials('', '')
             );
             $args['config']['signature_version'] = 'anonymous';
+            $args['config']['configured_signature_version'] = true;
         } elseif ($value instanceof CacheInterface) {
             $args['credentials'] = CredentialProvider::defaultProvider($args);
         } else {
@@ -574,7 +656,7 @@ class ClientResolver
             $args['token'] = TokenProvider::fromToken(
                 new Token(
                     $value['token'],
-                    isset($value['expires']) ? $value['expires'] : null
+                    $value['expires'] ?? null
                 )
             );
         } elseif ($value instanceof CacheInterface) {
@@ -658,9 +740,7 @@ class ClientResolver
                     ->getPartition($args['region'], $args['service']);
             }
 
-            $endpointPrefix = isset($args['api']['metadata']['endpointPrefix'])
-                ? $args['api']['metadata']['endpointPrefix']
-                : $args['service'];
+            $endpointPrefix = $args['api']['metadata']['endpointPrefix'] ?? $args['service'];
 
             // Check region is a valid host label when it is being used to
             // generate an endpoint
@@ -772,6 +852,11 @@ class ClientResolver
         return UseDualStackConfigProvider::defaultProvider($args);
     }
 
+    public static function _apply_serializer($value, array &$args, HandlerList $list)
+    {
+        $list->prependBuild(Middleware::requestBuilder($value), 'builder');
+    }
+
     public static function _apply_debug($value, array &$args, HandlerList $list)
     {
         if ($value !== false) {
@@ -848,17 +933,43 @@ class ClientResolver
         );
     }
 
+    public static function _apply_app_id($value, array &$args)
+    {
+        // AppId should not be longer than 50 chars
+        static $MAX_APP_ID_LENGTH = 50;
+        if (strlen($value) > $MAX_APP_ID_LENGTH) {
+            trigger_error("The provided or configured value for `AppId`, "
+                ."which is an user agent parameter, exceeds the maximum length of "
+            ."$MAX_APP_ID_LENGTH characters.", E_USER_WARNING);
+        }
+
+        $args['app_id'] = $value;
+    }
+
+    public static function _default_app_id(array $args)
+    {
+        return ConfigurationResolver::resolve(
+            'sdk_ua_app_id',
+            '',
+            'string',
+            $args
+        );
+    }
+
     public static function _apply_user_agent($inputUserAgent, array &$args, HandlerList $list)
     {
-        //Add SDK version
+        // Add SDK version
         $userAgent = ['aws-sdk-php/' . Sdk::VERSION];
 
-        //If on HHVM add the HHVM version
+        // User Agent Metadata
+        $userAgent[] = 'ua/2.0';
+
+        // If on HHVM add the HHVM version
         if (defined('HHVM_VERSION')) {
             $userAgent []= 'HHVM/' . HHVM_VERSION;
         }
 
-        //Add OS version
+        // Add OS version
         $disabledFunctions = explode(',', ini_get('disable_functions'));
         if (function_exists('php_uname')
             && !in_array('php_uname', $disabledFunctions, true)
@@ -869,15 +980,15 @@ class ClientResolver
             }
         }
 
-        //Add the language version
+        // Add the language version
         $userAgent []= 'lang/php#' . phpversion();
 
-        //Add exec environment if present
+        // Add exec environment if present
         if ($executionEnvironment = getenv('AWS_EXECUTION_ENV')) {
             $userAgent []= $executionEnvironment;
         }
 
-        //Add endpoint discovery if set
+        // Add endpoint discovery if set
         if (isset($args['endpoint_discovery'])) {
             if (($args['endpoint_discovery'] instanceof \Aws\EndpointDiscovery\Configuration
                 && $args['endpoint_discovery']->isEnabled())
@@ -891,7 +1002,7 @@ class ClientResolver
             }
         }
 
-        //Add retry mode if set
+        // Add retry mode if set
         if (isset($args['retries'])) {
             if ($args['retries'] instanceof \Aws\Retry\Configuration) {
                 $userAgent []= 'cfg/retry-mode#' . $args["retries"]->getMode();
@@ -901,7 +1012,13 @@ class ClientResolver
                 $userAgent []= 'cfg/retry-mode#' . $args["retries"]["mode"];
             }
         }
-        //Add the input to the end
+
+        // AppID Metadata
+        if (!empty($args['app_id'])) {
+            $userAgent[] = 'app/' . $args['app_id'];
+        }
+
+        // Add the input to the end
         if ($inputUserAgent){
             if (!is_array($inputUserAgent)) {
                 $inputUserAgent = [$inputUserAgent];
@@ -939,6 +1056,11 @@ class ClientResolver
 
     public static function _apply_endpoint($value, array &$args, HandlerList $list)
     {
+        if (empty($value)) {
+            unset($args['endpoint']);
+            return;
+        }
+
         $args['endpoint'] = $value;
     }
 
@@ -966,24 +1088,9 @@ class ClientResolver
         }
     }
 
-    public static function _apply_suppress_php_deprecation_warning($suppressWarning, array &$args) {
-        if ($suppressWarning) {
-            $args['suppress_php_deprecation_warning'] = true;
-        } elseif (!empty($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
-            $args['suppress_php_deprecation_warning'] =
-                $_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
-        } elseif (!empty($_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"])) {
-            $args['suppress_php_deprecation_warning'] =
-                $_SERVER["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"];
-        } elseif (!empty(getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING"))) {
-            $args['suppress_php_deprecation_warning']
-                = getenv("AWS_SUPPRESS_PHP_DEPRECATION_WARNING");
-        }
-    }
-
     public static function _default_endpoint_provider(array $args)
     {
-        $service =  isset($args['api']) ? $args['api'] : null;
+        $service = $args['api'] ?? null;
         $serviceName = isset($service) ? $service->getServiceName() : null;
         $apiVersion = isset($service) ? $service->getApiVersion() : null;
 
@@ -1015,6 +1122,11 @@ class ClientResolver
     public static function _default_signature_provider()
     {
         return SignatureProvider::defaultProvider();
+    }
+
+    public static function _default_auth_scheme_resolver(array $args)
+    {
+        return new AuthSchemeResolver($args['credentials'], $args['token']);
     }
 
     public static function _default_signature_version(array &$args)
@@ -1072,47 +1184,89 @@ class ClientResolver
                 'region' => $args['region'],
             ]);
 
-        return isset($args['__partition_result']['signingRegion'])
-            ? $args['__partition_result']['signingRegion']
-            : $args['region'];
+        return $args['__partition_result']['signingRegion'] ?? $args['region'];
     }
 
-    public static function _missing_version(array $args)
+    public static function _apply_ignore_configured_endpoint_urls($value, array &$args)
     {
-        $service = isset($args['service']) ? $args['service'] : '';
-        $versions = ApiProvider::defaultProvider()->getVersions($service);
-        $versions = implode("\n", array_map(function ($v) {
-            return "* \"$v\"";
-        }, $versions)) ?: '* (none found)';
+        $args['config']['ignore_configured_endpoint_urls'] = $value;
+    }
 
-        return <<<EOT
-A "version" configuration value is required. Specifying a version constraint
-ensures that your code will not be affected by a breaking change made to the
-service. For example, when using Amazon S3, you can lock your API version to
-"2006-03-01".
+    public static function _default_ignore_configured_endpoint_urls(array &$args)
+    {
+        return ConfigurationResolver::resolve(
+            'ignore_configured_endpoint_urls',
+            false,
+            'bool',
+            $args
+        );
+    }
 
-Your build of the SDK has the following version(s) of "{$service}": {$versions}
+    public static function _default_endpoint(array &$args)
+    {
+        if ($args['config']['ignore_configured_endpoint_urls']
+            || !self::isValidService($args['service'])
+        ) {
+            return '';
+        }
 
-You may provide "latest" to the "version" configuration value to utilize the
-most recent available API version that your client's API provider can find.
-Note: Using 'latest' in a production application is not recommended.
+        $serviceIdentifier = \Aws\manifest($args['service'])['serviceIdentifier'];
+        $value =  ConfigurationResolver::resolve(
+            'endpoint_url_' . $serviceIdentifier,
+            '',
+            'string',
+            $args + [
+                'ini_resolver_options' => [
+                    'section' => 'services',
+                    'subsection' => $serviceIdentifier,
+                    'key' => 'endpoint_url'
+                ]
+            ]
+        );
 
-A list of available API versions can be found on each client's API documentation
-page: http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html. If you are
-unable to load a specific API version, then you may need to update your copy of
-the SDK.
-EOT;
+        if (empty($value)) {
+            $value = ConfigurationResolver::resolve(
+                'endpoint_url',
+                '',
+                'string',
+                $args
+            );
+        }
+
+        if (!empty($value)) {
+            $args['config']['configured_endpoint_url'] = true;
+        }
+
+        return $value;
+    }
+
+    public static function _apply_region($value, array &$args)
+    {
+        if (empty($value)) {
+            self::_missing_region($args);
+        }
+        $args['region'] = $value;
+    }
+
+    public static function _default_region(&$args)
+    {
+        return ConfigurationResolver::resolve('region', '', 'string');
     }
 
     public static function _missing_region(array $args)
     {
-        $service = isset($args['service']) ? $args['service'] : '';
+        $service = $args['service'] ?? '';
 
-        return <<<EOT
+        $msg = <<<EOT
+Missing required client configuration options:
+
+region: (string)
+
 A "region" configuration value is required for the "{$service}" service
 (e.g., "us-west-2"). A list of available public regions and endpoints can be
 found at http://docs.aws.amazon.com/general/latest/gr/rande.html.
 EOT;
+        throw new IAE($msg);
     }
 
     /**
@@ -1127,7 +1281,7 @@ EOT;
         $optionKeys = [
             'sts_regional_endpoints',
             's3_us_east_1_regional_endpoint',
-            ];
+        ];
         $configKeys = [
             'use_dual_stack_endpoint',
             'use_fips_endpoint',
@@ -1159,15 +1313,14 @@ EOT;
     private function _apply_client_context_params(array $args)
     {
         if (isset($args['api'])
-           && !empty($args['api']->getClientContextParams()))
+            && !empty($args['api']->getClientContextParams()))
         {
             $clientContextParams = $args['api']->getClientContextParams();
             foreach($clientContextParams as $paramName => $paramDefinition) {
                 $definition = [
                     'type' => 'value',
                     'valid' => [$paramDefinition['type']],
-                    'doc' => isset($paramDefinition['documentation']) ?
-                        $paramDefinition['documentation'] : null
+                    'doc' => $paramDefinition['documentation'] ?? null
                 ];
                 $this->argDefinitions[$paramName] = $definition;
 
@@ -1194,7 +1347,7 @@ EOT;
             return false;
         }
         return is_dir(
-          __DIR__ . "/data/{$service}/$apiVersion"
+            __DIR__ . "/data/{$service}/$apiVersion"
         );
     }
 }

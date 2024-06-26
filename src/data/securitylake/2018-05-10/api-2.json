@@ -5,11 +5,13 @@
     "endpointPrefix":"securitylake",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Security Lake",
     "serviceId":"SecurityLake",
     "signatureVersion":"v4",
     "signingName":"securitylake",
-    "uid":"securitylake-2018-05-10"
+    "uid":"securitylake-2018-05-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateAwsLogSource":{
@@ -433,6 +435,24 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/tags/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "RegisterDataLakeDelegatedAdministrator":{
       "name":"RegisterDataLakeDelegatedAdministrator",
       "http":{
@@ -450,6 +470,44 @@
         {"shape":"ConflictException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/tags/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/tags/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
     },
     "UpdateDataLake":{
       "name":"UpdateDataLake",
@@ -560,7 +618,7 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^arn:aws:securitylake:[A-za-z0-9_/.\\-]{0,63}:[A-za-z0-9_/.\\-]{0,63}:[A-Za-z0-9][A-za-z0-9_/.\\-]{0,127}$"
+      "pattern":"^arn:(aws|aws-us-gov|aws-cn):securitylake:[A-za-z0-9_/.\\-]{0,63}:[A-za-z0-9_/.\\-]{0,63}:[A-Za-z0-9][A-za-z0-9_/.\\-]{0,127}$"
     },
     "AwsAccountId":{
       "type":"string",
@@ -596,7 +654,7 @@
       "type":"list",
       "member":{"shape":"AwsLogSourceConfiguration"},
       "max":50,
-      "min":0
+      "min":1
     },
     "AwsLogSourceName":{
       "type":"string",
@@ -606,7 +664,9 @@
         "SH_FINDINGS",
         "CLOUD_TRAIL_MGMT",
         "LAMBDA_EXECUTION",
-        "S3_DATA"
+        "S3_DATA",
+        "EKS_AUDIT",
+        "WAF"
       ]
     },
     "AwsLogSourceResource":{
@@ -618,7 +678,8 @@
     },
     "AwsLogSourceResourceList":{
       "type":"list",
-      "member":{"shape":"AwsLogSourceResource"}
+      "member":{"shape":"AwsLogSourceResource"},
+      "min":1
     },
     "AwsLogSourceVersion":{
       "type":"string",
@@ -667,7 +728,10 @@
     },
     "CreateCustomLogSourceRequest":{
       "type":"structure",
-      "required":["sourceName"],
+      "required":[
+        "configuration",
+        "sourceName"
+      ],
       "members":{
         "configuration":{"shape":"CustomLogSourceConfiguration"},
         "eventClasses":{"shape":"OcsfEventClassList"},
@@ -705,7 +769,6 @@
     },
     "CreateDataLakeOrganizationConfigurationRequest":{
       "type":"structure",
-      "required":["autoEnableNewAccount"],
       "members":{
         "autoEnableNewAccount":{"shape":"DataLakeAutoEnableNewAccountConfigurationList"}
       }
@@ -723,7 +786,8 @@
       ],
       "members":{
         "configurations":{"shape":"DataLakeConfigurationList"},
-        "metaStoreManagerRoleArn":{"shape":"RoleArn"}
+        "metaStoreManagerRoleArn":{"shape":"RoleArn"},
+        "tags":{"shape":"TagList"}
       }
     },
     "CreateDataLakeResponse":{
@@ -765,7 +829,8 @@
         "sources":{"shape":"LogSourceResourceList"},
         "subscriberDescription":{"shape":"DescriptionString"},
         "subscriberIdentity":{"shape":"AwsIdentity"},
-        "subscriberName":{"shape":"CreateSubscriberRequestSubscriberNameString"}
+        "subscriberName":{"shape":"CreateSubscriberRequestSubscriberNameString"},
+        "tags":{"shape":"TagList"}
       }
     },
     "CreateSubscriberRequestSubscriberNameString":{
@@ -809,7 +874,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[\\\\\\w\\-_:/.]*$"
+      "pattern":"^[\\w\\-\\_\\:\\.]*$"
     },
     "CustomLogSourceProvider":{
       "type":"structure",
@@ -846,7 +911,8 @@
     },
     "DataLakeAutoEnableNewAccountConfigurationList":{
       "type":"list",
-      "member":{"shape":"DataLakeAutoEnableNewAccountConfiguration"}
+      "member":{"shape":"DataLakeAutoEnableNewAccountConfiguration"},
+      "min":1
     },
     "DataLakeConfiguration":{
       "type":"structure",
@@ -860,7 +926,8 @@
     },
     "DataLakeConfigurationList":{
       "type":"list",
-      "member":{"shape":"DataLakeConfiguration"}
+      "member":{"shape":"DataLakeConfiguration"},
+      "min":1
     },
     "DataLakeEncryptionConfiguration":{
       "type":"structure",
@@ -1038,7 +1105,6 @@
     },
     "DeleteDataLakeOrganizationConfigurationRequest":{
       "type":"structure",
-      "required":["autoEnableNewAccount"],
       "members":{
         "autoEnableNewAccount":{"shape":"DataLakeAutoEnableNewAccountConfigurationList"}
       }
@@ -1278,6 +1344,23 @@
         "subscribers":{"shape":"SubscriberResourceList"}
       }
     },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"AmazonResourceName",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"TagList"}
+      }
+    },
     "LogSource":{
       "type":"structure",
       "members":{
@@ -1314,7 +1397,8 @@
     },
     "NextToken":{
       "type":"string",
-      "pattern":"^[\\\\\\w\\-_:/.@=+]*$"
+      "max":2048,
+      "min":0
     },
     "NotificationConfiguration":{
       "type":"structure",
@@ -1334,7 +1418,7 @@
     },
     "Region":{
       "type":"string",
-      "pattern":"^(af|ap|ca|eu|me|sa|us)-(central|north|(north(?:east|west))|south|south(?:east|west)|east|west)-\\d+$"
+      "pattern":"^(us(-gov)?|af|ap|ca|eu|me|sa)-(central|north|(north(?:east|west))|south|south(?:east|west)|east|west)-\\d+$"
     },
     "RegionList":{
       "type":"list",
@@ -1372,7 +1456,7 @@
     },
     "RoleArn":{
       "type":"string",
-      "pattern":"^arn:.*$"
+      "pattern":"^arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+$"
     },
     "S3BucketArn":{"type":"string"},
     "S3URI":{
@@ -1447,6 +1531,59 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "Tag":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"TagKey"},
+        "value":{"shape":"TagValue"}
+      }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":50,
+      "min":0
+    },
+    "TagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":50,
+      "min":0
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tags"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"AmazonResourceName",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -1469,6 +1606,30 @@
     "UUID":{
       "type":"string",
       "pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"AmazonResourceName",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tagKeys":{
+          "shape":"TagKeyList",
+          "location":"querystring",
+          "locationName":"tagKeys"
+        }
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "UpdateDataLakeExceptionSubscriptionRequest":{
       "type":"structure",
@@ -1496,7 +1657,8 @@
       "type":"structure",
       "required":["configurations"],
       "members":{
-        "configurations":{"shape":"DataLakeConfigurationList"}
+        "configurations":{"shape":"DataLakeConfigurationList"},
+        "metaStoreManagerRoleArn":{"shape":"RoleArn"}
       }
     },
     "UpdateDataLakeResponse":{

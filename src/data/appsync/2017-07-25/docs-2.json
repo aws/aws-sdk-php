@@ -30,9 +30,11 @@
     "GetApiAssociation": "<p>Retrieves an <code>ApiAssociation</code> object.</p>",
     "GetApiCache": "<p>Retrieves an <code>ApiCache</code> object.</p>",
     "GetDataSource": "<p>Retrieves a <code>DataSource</code> object.</p>",
+    "GetDataSourceIntrospection": "<p>Retrieves the record of an existing introspection. If the retrieval is successful, the result of the instrospection will also be returned. If the retrieval fails the operation, an error message will be returned instead.</p>",
     "GetDomainName": "<p>Retrieves a custom <code>DomainName</code> object.</p>",
     "GetFunction": "<p>Get a <code>Function</code>.</p>",
     "GetGraphqlApi": "<p>Retrieves a <code>GraphqlApi</code> object.</p>",
+    "GetGraphqlApiEnvironmentVariables": "<p>Retrieves the list of environmental variable key-value pairs associated with an API by its ID value.</p>",
     "GetIntrospectionSchema": "<p>Retrieves the introspection schema for a GraphQL API.</p>",
     "GetResolver": "<p>Retrieves a <code>Resolver</code> object.</p>",
     "GetSchemaCreationStatus": "<p>Retrieves the current status of a schema creation operation.</p>",
@@ -49,6 +51,8 @@
     "ListTagsForResource": "<p>Lists the tags for a resource.</p>",
     "ListTypes": "<p>Lists the types for a given API.</p>",
     "ListTypesByAssociation": "<p>Lists <code>Type</code> objects by the source API association ID.</p>",
+    "PutGraphqlApiEnvironmentVariables": "<p>Creates a list of environmental variables in an API by its ID value. </p> <p>When creating an environmental variable, it must follow the constraints below:</p> <ul> <li> <p>Both JavaScript and VTL templates support environmental variables.</p> </li> <li> <p>Environmental variables are not evaluated before function invocation.</p> </li> <li> <p>Environmental variables only support string values.</p> </li> <li> <p>Any defined value in an environmental variable is considered a string literal and not expanded.</p> </li> <li> <p>Variable evaluations should ideally be performed in the function code.</p> </li> </ul> <p>When creating an environmental variable key-value pair, it must follow the additional constraints below:</p> <ul> <li> <p>Keys must begin with a letter.</p> </li> <li> <p>Keys must be at least two characters long.</p> </li> <li> <p>Keys can only contain letters, numbers, and the underscore character (_).</p> </li> <li> <p>Values can be up to 512 characters long.</p> </li> <li> <p>You can configure up to 50 key-value pairs in a GraphQL API.</p> </li> </ul> <p>You can create a list of environmental variables by adding it to the <code>environmentVariables</code> payload as a list in the format <code>{\"key1\":\"value1\",\"key2\":\"value2\", …}</code>. Note that each call of the <code>PutGraphqlApiEnvironmentVariables</code> action will result in the overwriting of the existing environmental variable list of that API. This means the existing environmental variables will be lost. To avoid this, you must include all existing and new environmental variables in the list each time you call this action.</p>",
+    "StartDataSourceIntrospection": "<p>Creates a new introspection. Returns the <code>introspectionId</code> of the new introspection after its creation. </p>",
     "StartSchemaCreation": "<p>Adds a new schema to your GraphQL API.</p> <p>This operation is asynchronous. Use to determine when it has completed.</p>",
     "StartSchemaMerge": "<p>Initiates a merge operation. Returns a status that shows the result of the merge operation.</p>",
     "TagResource": "<p>Tags a resource with user-supplied tags.</p>",
@@ -258,6 +262,7 @@
         "CreateGraphqlApiRequest$xrayEnabled": "<p>A flag indicating whether to use X-Ray tracing for the <code>GraphqlApi</code>.</p>",
         "DynamodbDataSourceConfig$useCallerCredentials": "<p>Set to TRUE to use Amazon Cognito credentials with this data source.</p>",
         "DynamodbDataSourceConfig$versioned": "<p>Set to TRUE to use Conflict Detection and Resolution with this data source.</p>",
+        "GetDataSourceIntrospectionRequest$includeModelsSDL": "<p>A boolean flag that determines whether SDL should be generated for introspected types or not. If set to <code>true</code>, each model will contain an <code>sdl</code> property that contains the SDL for that type. The SDL only contains the type data and no additional metadata or directives. </p>",
         "GraphqlApi$xrayEnabled": "<p>A flag indicating whether to use X-Ray tracing for this <code>GraphqlApi</code>.</p>",
         "LogConfig$excludeVerboseContent": "<p>Set to TRUE to exclude sections that contain information such as headers, context, and evaluated mapping templates, regardless of logging level.</p>",
         "UpdateGraphqlApiRequest$xrayEnabled": "<p>A flag indicating whether to use X-Ray tracing for the <code>GraphqlApi</code>.</p>"
@@ -267,6 +272,14 @@
       "base": null,
       "refs": {
         "GetIntrospectionSchemaRequest$includeDirectives": "<p>A flag that specifies whether the schema introspection should contain directives.</p>"
+      }
+    },
+    "CacheHealthMetricsConfig": {
+      "base": null,
+      "refs": {
+        "ApiCache$healthMetricsConfig": "<p>Controls how cache health metrics will be emitted to CloudWatch. Cache health metrics include:</p> <ul> <li> <p>NetworkBandwidthOutAllowanceExceeded: The network packets dropped because the throughput exceeded the aggregated bandwidth limit. This is useful for diagnosing bottlenecks in a cache configuration.</p> </li> <li> <p>EngineCPUUtilization: The CPU utilization (percentage) allocated to the Redis process. This is useful for diagnosing bottlenecks in a cache configuration.</p> </li> </ul> <p>Metrics will be recorded by API ID. You can set the value to <code>ENABLED</code> or <code>DISABLED</code>.</p>",
+        "CreateApiCacheRequest$healthMetricsConfig": "<p>Controls how cache health metrics will be emitted to CloudWatch. Cache health metrics include:</p> <ul> <li> <p>NetworkBandwidthOutAllowanceExceeded: The network packets dropped because the throughput exceeded the aggregated bandwidth limit. This is useful for diagnosing bottlenecks in a cache configuration.</p> </li> <li> <p>EngineCPUUtilization: The CPU utilization (percentage) allocated to the Redis process. This is useful for diagnosing bottlenecks in a cache configuration.</p> </li> </ul> <p>Metrics will be recorded by API ID. You can set the value to <code>ENABLED</code> or <code>DISABLED</code>.</p>",
+        "UpdateApiCacheRequest$healthMetricsConfig": "<p>Controls how cache health metrics will be emitted to CloudWatch. Cache health metrics include:</p> <ul> <li> <p>NetworkBandwidthOutAllowanceExceeded: The network packets dropped because the throughput exceeded the aggregated bandwidth limit. This is useful for diagnosing bottlenecks in a cache configuration.</p> </li> <li> <p>EngineCPUUtilization: The CPU utilization (percentage) allocated to the Redis process. This is useful for diagnosing bottlenecks in a cache configuration.</p> </li> </ul> <p>Metrics will be recorded by API ID. You can set the value to <code>ENABLED</code> or <code>DISABLED</code>.</p>"
       }
     },
     "CachingConfig": {
@@ -456,6 +469,89 @@
         "DataSources$member": null,
         "GetDataSourceResponse$dataSource": "<p>The <code>DataSource</code> object.</p>",
         "UpdateDataSourceResponse$dataSource": "<p>The updated <code>DataSource</code> object.</p>"
+      }
+    },
+    "DataSourceIntrospectionModel": {
+      "base": "<p>Contains the introspected data that was retrieved from the data source.</p>",
+      "refs": {
+        "DataSourceIntrospectionModels$member": null
+      }
+    },
+    "DataSourceIntrospectionModelField": {
+      "base": "<p>Represents the fields that were retrieved from the introspected data.</p>",
+      "refs": {
+        "DataSourceIntrospectionModelFields$member": null
+      }
+    },
+    "DataSourceIntrospectionModelFieldType": {
+      "base": "<p>Represents the type data for each field retrieved from the introspection.</p>",
+      "refs": {
+        "DataSourceIntrospectionModelField$type": "<p>The <code>DataSourceIntrospectionModelFieldType</code> object data.</p>",
+        "DataSourceIntrospectionModelFieldType$type": "<p>The <code>DataSourceIntrospectionModelFieldType</code> object data. The <code>type</code> is only present if <code>DataSourceIntrospectionModelFieldType.kind</code> is set to <code>NonNull</code> or <code>List</code>. </p> <p>The <code>type</code> typically contains its own <code>kind</code> and <code>name</code> fields to represent the actual type data. For instance, <code>type</code> could contain a <code>kind</code> value of <code>Scalar</code> with a <code>name</code> value of <code>String</code>. The values <code>Scalar</code> and <code>String</code> will be collectively stored in the <code>values</code> field.</p>"
+      }
+    },
+    "DataSourceIntrospectionModelFieldTypeValues": {
+      "base": null,
+      "refs": {
+        "DataSourceIntrospectionModelFieldType$values": "<p>The values of the <code>type</code> field. This field represents the AppSync data type equivalent of the introspected field.</p>"
+      }
+    },
+    "DataSourceIntrospectionModelFields": {
+      "base": null,
+      "refs": {
+        "DataSourceIntrospectionModel$fields": "<p>The <code>DataSourceIntrospectionModelField</code> object data.</p>"
+      }
+    },
+    "DataSourceIntrospectionModelIndex": {
+      "base": "<p>The index that was retrieved from the introspected data.</p>",
+      "refs": {
+        "DataSourceIntrospectionModel$primaryKey": "<p>The primary key stored as a <code>DataSourceIntrospectionModelIndex</code> object.</p>",
+        "DataSourceIntrospectionModelIndexes$member": null
+      }
+    },
+    "DataSourceIntrospectionModelIndexFields": {
+      "base": null,
+      "refs": {
+        "DataSourceIntrospectionModelIndex$fields": "<p>The fields of the index.</p>"
+      }
+    },
+    "DataSourceIntrospectionModelIndexes": {
+      "base": null,
+      "refs": {
+        "DataSourceIntrospectionModel$indexes": "<p>The array of <code>DataSourceIntrospectionModelIndex</code> objects.</p>"
+      }
+    },
+    "DataSourceIntrospectionModels": {
+      "base": null,
+      "refs": {
+        "DataSourceIntrospectionResult$models": "<p>The array of <code>DataSourceIntrospectionModel</code> objects.</p>"
+      }
+    },
+    "DataSourceIntrospectionResult": {
+      "base": "<p>Represents the output of a <code>DataSourceIntrospectionResult</code>. This is the populated result of a <code>GetDataSourceIntrospection</code> operation.</p>",
+      "refs": {
+        "GetDataSourceIntrospectionResponse$introspectionResult": "<p>The <code>DataSourceIntrospectionResult</code> object data.</p>"
+      }
+    },
+    "DataSourceIntrospectionStatus": {
+      "base": null,
+      "refs": {
+        "GetDataSourceIntrospectionResponse$introspectionStatus": "<p>The status of the introspection during retrieval. By default, when a new instrospection is being retrieved, the status will be set to <code>PROCESSING</code>. Once the operation has been completed, the status will change to <code>SUCCESS</code> or <code>FAILED</code> depending on how the data was parsed. A <code>FAILED</code> operation will return an error and its details as an <code>introspectionStatusDetail</code>.</p>",
+        "StartDataSourceIntrospectionResponse$introspectionStatus": "<p>The status of the introspection during creation. By default, when a new instrospection has been created, the status will be set to <code>PROCESSING</code>. Once the operation has been completed, the status will change to <code>SUCCESS</code> or <code>FAILED</code> depending on how the data was parsed. A <code>FAILED</code> operation will return an error and its details as an <code>introspectionStatusDetail</code>.</p>"
+      }
+    },
+    "DataSourceLevelMetricsBehavior": {
+      "base": null,
+      "refs": {
+        "EnhancedMetricsConfig$dataSourceLevelMetricsBehavior": "<p>Controls how data source metrics will be emitted to CloudWatch. Data source metrics include:</p> <ul> <li> <p>Requests: The number of invocations that occured during a request.</p> </li> <li> <p>Latency: The time to complete a data source invocation.</p> </li> <li> <p>Errors: The number of errors that occurred during a data source invocation.</p> </li> </ul> <p>These metrics can be emitted to CloudWatch per data source or for all data sources in the request. Metrics will be recorded by API ID and data source name. <code>dataSourceLevelMetricsBehavior</code> accepts one of these values at a time:</p> <ul> <li> <p> <code>FULL_REQUEST_DATA_SOURCE_METRICS</code>: Records and emits metric data for all data sources in the request.</p> </li> <li> <p> <code>PER_DATA_SOURCE_METRICS</code>: Records and emits metric data for data sources that have the <code>metricsConfig</code> value set to <code>ENABLED</code>.</p> </li> </ul>"
+      }
+    },
+    "DataSourceLevelMetricsConfig": {
+      "base": null,
+      "refs": {
+        "CreateDataSourceRequest$metricsConfig": "<p>Enables or disables enhanced data source metrics for specified data sources. Note that <code>metricsConfig</code> won't be used unless the <code>dataSourceLevelMetricsBehavior</code> value is set to <code>PER_DATA_SOURCE_METRICS</code>. If the <code>dataSourceLevelMetricsBehavior</code> is set to <code>FULL_REQUEST_DATA_SOURCE_METRICS</code> instead, <code>metricsConfig</code> will be ignored. However, you can still set its value.</p> <p> <code>metricsConfig</code> can be <code>ENABLED</code> or <code>DISABLED</code>.</p>",
+        "DataSource$metricsConfig": "<p>Enables or disables enhanced data source metrics for specified data sources. Note that <code>metricsConfig</code> won't be used unless the <code>dataSourceLevelMetricsBehavior</code> value is set to <code>PER_DATA_SOURCE_METRICS</code>. If the <code>dataSourceLevelMetricsBehavior</code> is set to <code>FULL_REQUEST_DATA_SOURCE_METRICS</code> instead, <code>metricsConfig</code> will be ignored. However, you can still set its value.</p> <p> <code>metricsConfig</code> can be <code>ENABLED</code> or <code>DISABLED</code>.</p>",
+        "UpdateDataSourceRequest$metricsConfig": "<p>Enables or disables enhanced data source metrics for specified data sources. Note that <code>metricsConfig</code> won't be used unless the <code>dataSourceLevelMetricsBehavior</code> value is set to <code>PER_DATA_SOURCE_METRICS</code>. If the <code>dataSourceLevelMetricsBehavior</code> is set to <code>FULL_REQUEST_DATA_SOURCE_METRICS</code> instead, <code>metricsConfig</code> will be ignored. However, you can still set its value.</p> <p> <code>metricsConfig</code> can be <code>ENABLED</code> or <code>DISABLED</code>.</p>"
       }
     },
     "DataSourceType": {
@@ -653,6 +749,34 @@
         "UpdateDataSourceRequest$elasticsearchConfig": "<p>The new OpenSearch configuration.</p> <p>As of September 2021, Amazon Elasticsearch service is Amazon OpenSearch Service. This configuration is deprecated. Instead, use <a>UpdateDataSourceRequest$openSearchServiceConfig</a> to update an OpenSearch data source.</p>"
       }
     },
+    "EnhancedMetricsConfig": {
+      "base": "<p>Enables and controls the enhanced metrics feature. Enhanced metrics emit granular data on API usage and performance such as AppSync request and error counts, latency, and cache hits/misses. All enhanced metric data is sent to your CloudWatch account, and you can configure the types of data that will be sent. </p> <p>Enhanced metrics can be configured at the resolver, data source, and operation levels. <code>EnhancedMetricsConfig</code> contains three required parameters, each controlling one of these categories:</p> <ol> <li> <p> <code>resolverLevelMetricsBehavior</code>: Controls how resolver metrics will be emitted to CloudWatch. Resolver metrics include:</p> <ul> <li> <p>GraphQL errors: The number of GraphQL errors that occurred.</p> </li> <li> <p>Requests: The number of invocations that occurred during a request. </p> </li> <li> <p>Latency: The time to complete a resolver invocation.</p> </li> <li> <p>Cache hits: The number of cache hits during a request.</p> </li> <li> <p>Cache misses: The number of cache misses during a request.</p> </li> </ul> <p>These metrics can be emitted to CloudWatch per resolver or for all resolvers in the request. Metrics will be recorded by API ID and resolver name. <code>resolverLevelMetricsBehavior</code> accepts one of these values at a time:</p> <ul> <li> <p> <code>FULL_REQUEST_RESOLVER_METRICS</code>: Records and emits metric data for all resolvers in the request.</p> </li> <li> <p> <code>PER_RESOLVER_METRICS</code>: Records and emits metric data for resolvers that have the <code>metricsConfig</code> value set to <code>ENABLED</code>.</p> </li> </ul> </li> <li> <p> <code>dataSourceLevelMetricsBehavior</code>: Controls how data source metrics will be emitted to CloudWatch. Data source metrics include:</p> <ul> <li> <p>Requests: The number of invocations that occured during a request.</p> </li> <li> <p>Latency: The time to complete a data source invocation.</p> </li> <li> <p>Errors: The number of errors that occurred during a data source invocation.</p> </li> </ul> <p>These metrics can be emitted to CloudWatch per data source or for all data sources in the request. Metrics will be recorded by API ID and data source name. <code>dataSourceLevelMetricsBehavior</code> accepts one of these values at a time:</p> <ul> <li> <p> <code>FULL_REQUEST_DATA_SOURCE_METRICS</code>: Records and emits metric data for all data sources in the request.</p> </li> <li> <p> <code>PER_DATA_SOURCE_METRICS</code>: Records and emits metric data for data sources that have the <code>metricsConfig</code> value set to <code>ENABLED</code>.</p> </li> </ul> </li> <li> <p> <code>operationLevelMetricsConfig</code>: Controls how operation metrics will be emitted to CloudWatch. Operation metrics include:</p> <ul> <li> <p>Requests: The number of times a specified GraphQL operation was called.</p> </li> <li> <p>GraphQL errors: The number of GraphQL errors that occurred during a specified GraphQL operation.</p> </li> </ul> <p>Metrics will be recorded by API ID and operation name. You can set the value to <code>ENABLED</code> or <code>DISABLED</code>.</p> </li> </ol>",
+      "refs": {
+        "CreateGraphqlApiRequest$enhancedMetricsConfig": "<p>The <code>enhancedMetricsConfig</code> object.</p>",
+        "GraphqlApi$enhancedMetricsConfig": "<p>The <code>enhancedMetricsConfig</code> object.</p>",
+        "UpdateGraphqlApiRequest$enhancedMetricsConfig": "<p>The <code>enhancedMetricsConfig</code> object.</p>"
+      }
+    },
+    "EnvironmentVariableKey": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariableMap$key": null
+      }
+    },
+    "EnvironmentVariableMap": {
+      "base": null,
+      "refs": {
+        "GetGraphqlApiEnvironmentVariablesResponse$environmentVariables": "<p>The payload containing each environmental variable in the <code>\"key\" : \"value\"</code> format.</p>",
+        "PutGraphqlApiEnvironmentVariablesRequest$environmentVariables": "<p>The list of environmental variables to add to the API.</p> <p>When creating an environmental variable key-value pair, it must follow the additional constraints below:</p> <ul> <li> <p>Keys must begin with a letter.</p> </li> <li> <p>Keys must be at least two characters long.</p> </li> <li> <p>Keys can only contain letters, numbers, and the underscore character (_).</p> </li> <li> <p>Values can be up to 512 characters long.</p> </li> <li> <p>You can configure up to 50 key-value pairs in a GraphQL API.</p> </li> </ul> <p>You can create a list of environmental variables by adding it to the <code>environmentVariables</code> payload as a list in the format <code>{\"key1\":\"value1\",\"key2\":\"value2\", …}</code>. Note that each call of the <code>PutGraphqlApiEnvironmentVariables</code> action will result in the overwriting of the existing environmental variable list of that API. This means the existing environmental variables will be lost. To avoid this, you must include all existing and new environmental variables in the list each time you call this action.</p>",
+        "PutGraphqlApiEnvironmentVariablesResponse$environmentVariables": "<p>The payload containing each environmental variable in the <code>\"key\" : \"value\"</code> format.</p>"
+      }
+    },
+    "EnvironmentVariableValue": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariableMap$value": null
+      }
+    },
     "ErrorDetail": {
       "base": "<p>Contains the list of errors generated. When using JavaScript, this will apply to the request or response function evaluation.</p>",
       "refs": {
@@ -767,6 +891,16 @@
       "refs": {
       }
     },
+    "GetDataSourceIntrospectionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDataSourceIntrospectionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetDataSourceRequest": {
       "base": null,
       "refs": {
@@ -793,6 +927,16 @@
       }
     },
     "GetFunctionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetGraphqlApiEnvironmentVariablesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetGraphqlApiEnvironmentVariablesResponse": {
       "base": null,
       "refs": {
       }
@@ -855,6 +999,14 @@
     "GetTypeResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "GraphQLApiIntrospectionConfig": {
+      "base": null,
+      "refs": {
+        "CreateGraphqlApiRequest$introspectionConfig": "<p>Sets the value of the GraphQL API to enable (<code>ENABLED</code>) or disable (<code>DISABLED</code>) introspection. If no value is provided, the introspection configuration will be set to <code>ENABLED</code> by default. This field will produce an error if the operation attempts to use the introspection feature while this field is disabled.</p> <p>For more information about introspection, see <a href=\"https://graphql.org/learn/introspection/\">GraphQL introspection</a>.</p>",
+        "GraphqlApi$introspectionConfig": "<p>Sets the value of the GraphQL API to enable (<code>ENABLED</code>) or disable (<code>DISABLED</code>) introspection. If no value is provided, the introspection configuration will be set to <code>ENABLED</code> by default. This field will produce an error if the operation attempts to use the introspection feature while this field is disabled.</p> <p>For more information about introspection, see <a href=\"https://graphql.org/learn/introspection/\">GraphQL introspection</a>.</p>",
+        "UpdateGraphqlApiRequest$introspectionConfig": "<p>Sets the value of the GraphQL API to enable (<code>ENABLED</code>) or disable (<code>DISABLED</code>) introspection. If no value is provided, the introspection configuration will be set to <code>ENABLED</code> by default. This field will produce an error if the operation attempts to use the introspection feature while this field is disabled.</p> <p>For more information about introspection, see <a href=\"https://graphql.org/learn/introspection/\">GraphQL introspection</a>.</p>"
       }
     },
     "GraphQLApiType": {
@@ -1067,6 +1219,7 @@
         "CachingConfig$ttl": "<p>The TTL in seconds for a resolver that has caching activated.</p> <p>Valid values are 1–3,600 seconds.</p>",
         "CreateApiCacheRequest$ttl": "<p>TTL in seconds for cache entries.</p> <p>Valid values are 1–3,600 seconds.</p>",
         "CreateApiKeyRequest$expires": "<p>From the creation time, the time after which the API key expires. The date is represented as seconds since the epoch, rounded down to the nearest hour. The default value for this parameter is 7 days from creation time. For more information, see .</p>",
+        "DataSourceIntrospectionModelField$length": "<p>The length value of the introspected field.</p>",
         "DeltaSyncConfig$baseTableTTL": "<p>The number of minutes that an Item is stored in the data source.</p>",
         "DeltaSyncConfig$deltaSyncTableTTL": "<p>The number of minutes that a Delta Sync log entry is stored in the Delta Sync table.</p>",
         "OpenIDConnectConfig$iatTTL": "<p>The number of milliseconds that a token is valid after it's issued to a user.</p>",
@@ -1113,6 +1266,7 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "GetDataSourceIntrospectionRequest$maxResults": "<p>The maximum number of introspected types that will be returned in a single response.</p>",
         "ListApiKeysRequest$maxResults": "<p>The maximum number of results that you want the request to return.</p>",
         "ListDataSourcesRequest$maxResults": "<p>The maximum number of results that you want the request to return.</p>",
         "ListDomainNamesRequest$maxResults": "<p>The maximum number of results that you want the request to return.</p>",
@@ -1153,6 +1307,12 @@
         "UpdateDataSourceRequest$openSearchServiceConfig": "<p>The new OpenSearch configuration.</p>"
       }
     },
+    "OperationLevelMetricsConfig": {
+      "base": null,
+      "refs": {
+        "EnhancedMetricsConfig$operationLevelMetricsConfig": "<p> Controls how operation metrics will be emitted to CloudWatch. Operation metrics include:</p> <ul> <li> <p>Requests: The number of times a specified GraphQL operation was called.</p> </li> <li> <p>GraphQL errors: The number of GraphQL errors that occurred during a specified GraphQL operation.</p> </li> </ul> <p>Metrics will be recorded by API ID and operation name. You can set the value to <code>ENABLED</code> or <code>DISABLED</code>.</p>"
+      }
+    },
     "OutputType": {
       "base": null,
       "refs": {
@@ -1168,6 +1328,8 @@
     "PaginationToken": {
       "base": null,
       "refs": {
+        "DataSourceIntrospectionResult$nextToken": "<p>Determines the number of types to be returned in a single response before paginating. This value is typically taken from <code>nextToken</code> value from the previous response.</p>",
+        "GetDataSourceIntrospectionRequest$nextToken": "<p>Determines the number of types to be returned in a single response before paginating. This value is typically taken from <code>nextToken</code> value from the previous response.</p>",
         "ListApiKeysRequest$nextToken": "<p>An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.</p>",
         "ListApiKeysResponse$nextToken": "<p>An identifier to pass in the next request to this operation to return the next set of items in the list.</p>",
         "ListDataSourcesRequest$nextToken": "<p>An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.</p>",
@@ -1196,6 +1358,48 @@
         "CreateResolverRequest$pipelineConfig": "<p>The <code>PipelineConfig</code>.</p>",
         "Resolver$pipelineConfig": "<p>The <code>PipelineConfig</code>.</p>",
         "UpdateResolverRequest$pipelineConfig": "<p>The <code>PipelineConfig</code>.</p>"
+      }
+    },
+    "PutGraphqlApiEnvironmentVariablesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutGraphqlApiEnvironmentVariablesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "QueryDepthLimit": {
+      "base": null,
+      "refs": {
+        "CreateGraphqlApiRequest$queryDepthLimit": "<p>The maximum depth a query can have in a single request. Depth refers to the amount of nested levels allowed in the body of query. The default value is <code>0</code> (or unspecified), which indicates there's no depth limit. If you set a limit, it can be between <code>1</code> and <code>75</code> nested levels. This field will produce a limit error if the operation falls out of bounds.</p> <p>Note that fields can still be set to nullable or non-nullable. If a non-nullable field produces an error, the error will be thrown upwards to the first nullable field available.</p>",
+        "GraphqlApi$queryDepthLimit": "<p>The maximum depth a query can have in a single request. Depth refers to the amount of nested levels allowed in the body of query. The default value is <code>0</code> (or unspecified), which indicates there's no depth limit. If you set a limit, it can be between <code>1</code> and <code>75</code> nested levels. This field will produce a limit error if the operation falls out of bounds.</p> <p>Note that fields can still be set to nullable or non-nullable. If a non-nullable field produces an error, the error will be thrown upwards to the first nullable field available.</p>",
+        "UpdateGraphqlApiRequest$queryDepthLimit": "<p>The maximum depth a query can have in a single request. Depth refers to the amount of nested levels allowed in the body of query. The default value is <code>0</code> (or unspecified), which indicates there's no depth limit. If you set a limit, it can be between <code>1</code> and <code>75</code> nested levels. This field will produce a limit error if the operation falls out of bounds.</p> <p>Note that fields can still be set to nullable or non-nullable. If a non-nullable field produces an error, the error will be thrown upwards to the first nullable field available.</p>"
+      }
+    },
+    "RdsDataApiConfig": {
+      "base": "<p>Contains the metadata required to introspect the RDS cluster.</p>",
+      "refs": {
+        "StartDataSourceIntrospectionRequest$rdsDataApiConfig": "<p>The <code>rdsDataApiConfig</code> object data.</p>"
+      }
+    },
+    "RdsDataApiConfigDatabaseName": {
+      "base": null,
+      "refs": {
+        "RdsDataApiConfig$databaseName": "<p>The name of the database in the cluster.</p>"
+      }
+    },
+    "RdsDataApiConfigResourceArn": {
+      "base": null,
+      "refs": {
+        "RdsDataApiConfig$resourceArn": "<p>The resource ARN of the RDS cluster.</p>"
+      }
+    },
+    "RdsDataApiConfigSecretArn": {
+      "base": null,
+      "refs": {
+        "RdsDataApiConfig$secretArn": "<p>The secret's ARN that was obtained from Secrets Manager. A secret consists of secret information, the secret value, plus metadata about the secret. A secret value can be a string or binary. It typically includes the ARN, secret name and description, policies, tags, encryption key from the Key Management Service, and key rotation data.</p>"
       }
     },
     "RdsHttpEndpointConfig": {
@@ -1227,12 +1431,34 @@
         "UpdateResolverResponse$resolver": "<p>The updated <code>Resolver</code> object.</p>"
       }
     },
+    "ResolverCountLimit": {
+      "base": null,
+      "refs": {
+        "CreateGraphqlApiRequest$resolverCountLimit": "<p>The maximum number of resolvers that can be invoked in a single request. The default value is <code>0</code> (or unspecified), which will set the limit to <code>10000</code>. When specified, the limit value can be between <code>1</code> and <code>10000</code>. This field will produce a limit error if the operation falls out of bounds.</p>",
+        "GraphqlApi$resolverCountLimit": "<p>The maximum number of resolvers that can be invoked in a single request. The default value is <code>0</code> (or unspecified), which will set the limit to <code>10000</code>. When specified, the limit value can be between <code>1</code> and <code>10000</code>. This field will produce a limit error if the operation falls out of bounds.</p>",
+        "UpdateGraphqlApiRequest$resolverCountLimit": "<p>The maximum number of resolvers that can be invoked in a single request. The default value is <code>0</code> (or unspecified), which will set the limit to <code>10000</code>. When specified, the limit value can be between <code>1</code> and <code>10000</code>. This field will produce a limit error if the operation falls out of bounds.</p>"
+      }
+    },
     "ResolverKind": {
       "base": null,
       "refs": {
         "CreateResolverRequest$kind": "<p>The resolver type.</p> <ul> <li> <p> <b>UNIT</b>: A UNIT resolver type. A UNIT resolver is the default resolver type. You can use a UNIT resolver to run a GraphQL query against a single data source.</p> </li> <li> <p> <b>PIPELINE</b>: A PIPELINE resolver type. You can use a PIPELINE resolver to invoke a series of <code>Function</code> objects in a serial manner. You can use a pipeline resolver to run a GraphQL query against multiple data sources.</p> </li> </ul>",
         "Resolver$kind": "<p>The resolver type.</p> <ul> <li> <p> <b>UNIT</b>: A UNIT resolver type. A UNIT resolver is the default resolver type. You can use a UNIT resolver to run a GraphQL query against a single data source.</p> </li> <li> <p> <b>PIPELINE</b>: A PIPELINE resolver type. You can use a PIPELINE resolver to invoke a series of <code>Function</code> objects in a serial manner. You can use a pipeline resolver to run a GraphQL query against multiple data sources.</p> </li> </ul>",
         "UpdateResolverRequest$kind": "<p>The resolver type.</p> <ul> <li> <p> <b>UNIT</b>: A UNIT resolver type. A UNIT resolver is the default resolver type. You can use a UNIT resolver to run a GraphQL query against a single data source.</p> </li> <li> <p> <b>PIPELINE</b>: A PIPELINE resolver type. You can use a PIPELINE resolver to invoke a series of <code>Function</code> objects in a serial manner. You can use a pipeline resolver to run a GraphQL query against multiple data sources.</p> </li> </ul>"
+      }
+    },
+    "ResolverLevelMetricsBehavior": {
+      "base": null,
+      "refs": {
+        "EnhancedMetricsConfig$resolverLevelMetricsBehavior": "<p>Controls how resolver metrics will be emitted to CloudWatch. Resolver metrics include:</p> <ul> <li> <p>GraphQL errors: The number of GraphQL errors that occurred.</p> </li> <li> <p>Requests: The number of invocations that occurred during a request. </p> </li> <li> <p>Latency: The time to complete a resolver invocation.</p> </li> <li> <p>Cache hits: The number of cache hits during a request.</p> </li> <li> <p>Cache misses: The number of cache misses during a request.</p> </li> </ul> <p>These metrics can be emitted to CloudWatch per resolver or for all resolvers in the request. Metrics will be recorded by API ID and resolver name. <code>resolverLevelMetricsBehavior</code> accepts one of these values at a time:</p> <ul> <li> <p> <code>FULL_REQUEST_RESOLVER_METRICS</code>: Records and emits metric data for all resolvers in the request.</p> </li> <li> <p> <code>PER_RESOLVER_METRICS</code>: Records and emits metric data for resolvers that have the <code>metricsConfig</code> value set to <code>ENABLED</code>.</p> </li> </ul>"
+      }
+    },
+    "ResolverLevelMetricsConfig": {
+      "base": null,
+      "refs": {
+        "CreateResolverRequest$metricsConfig": "<p>Enables or disables enhanced resolver metrics for specified resolvers. Note that <code>metricsConfig</code> won't be used unless the <code>resolverLevelMetricsBehavior</code> value is set to <code>PER_RESOLVER_METRICS</code>. If the <code>resolverLevelMetricsBehavior</code> is set to <code>FULL_REQUEST_RESOLVER_METRICS</code> instead, <code>metricsConfig</code> will be ignored. However, you can still set its value.</p> <p> <code>metricsConfig</code> can be <code>ENABLED</code> or <code>DISABLED</code>.</p>",
+        "Resolver$metricsConfig": "<p>Enables or disables enhanced resolver metrics for specified resolvers. Note that <code>metricsConfig</code> won't be used unless the <code>resolverLevelMetricsBehavior</code> value is set to <code>PER_RESOLVER_METRICS</code>. If the <code>resolverLevelMetricsBehavior</code> is set to <code>FULL_REQUEST_RESOLVER_METRICS</code> instead, <code>metricsConfig</code> will be ignored. However, you can still set its value.</p> <p> <code>metricsConfig</code> can be <code>ENABLED</code> or <code>DISABLED</code>.</p>",
+        "UpdateResolverRequest$metricsConfig": "<p>Enables or disables enhanced resolver metrics for specified resolvers. Note that <code>metricsConfig</code> won't be used unless the <code>resolverLevelMetricsBehavior</code> value is set to <code>PER_RESOLVER_METRICS</code>. If the <code>resolverLevelMetricsBehavior</code> is set to <code>FULL_REQUEST_RESOLVER_METRICS</code> instead, <code>metricsConfig</code> will be ignored. However, you can still set its value.</p> <p> <code>metricsConfig</code> can be <code>ENABLED</code> or <code>DISABLED</code>.</p>"
       }
     },
     "Resolvers": {
@@ -1339,6 +1565,16 @@
         "ListSourceApiAssociationsResponse$sourceApiAssociationSummaries": "<p>The <code>SourceApiAssociationSummary</code> object data.</p>"
       }
     },
+    "StartDataSourceIntrospectionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartDataSourceIntrospectionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StartSchemaCreationRequest": {
       "base": null,
       "refs": {
@@ -1404,6 +1640,14 @@
         "DataSource$dataSourceArn": "<p>The data source Amazon Resource Name (ARN).</p>",
         "DataSource$description": "<p>The description of the data source.</p>",
         "DataSource$serviceRoleArn": "<p>The Identity and Access Management (IAM) service role Amazon Resource Name (ARN) for the data source. The system assumes this role when accessing the data source.</p>",
+        "DataSourceIntrospectionModel$name": "<p>The name of the model. For example, this could be the name of a single table in a database.</p>",
+        "DataSourceIntrospectionModel$sdl": "<p>Contains the output of the SDL that was generated from the introspected types. This is controlled by the <code>includeModelsSDL</code> parameter of the <code>GetDataSourceIntrospection</code> operation.</p>",
+        "DataSourceIntrospectionModelField$name": "<p>The name of the field that was retrieved from the introspected data.</p>",
+        "DataSourceIntrospectionModelFieldType$kind": "<p>Specifies the classification of data. For example, this could be set to values like <code>Scalar</code> or <code>NonNull</code> to indicate a fundamental property of the field.</p> <p>Valid values include:</p> <ul> <li> <p> <code>Scalar</code>: Indicates the value is a primitive type (scalar).</p> </li> <li> <p> <code>NonNull</code>: Indicates the field cannot be <code>null</code>.</p> </li> <li> <p> <code>List</code>: Indicates the field contains a list.</p> </li> </ul>",
+        "DataSourceIntrospectionModelFieldType$name": "<p>The name of the data type that represents the field. For example, <code>String</code> is a valid <code>name</code> value.</p>",
+        "DataSourceIntrospectionModelFieldTypeValues$member": null,
+        "DataSourceIntrospectionModelIndex$name": "<p>The name of the index.</p>",
+        "DataSourceIntrospectionModelIndexFields$member": null,
         "DeleteApiCacheRequest$apiId": "<p>The API ID.</p>",
         "DeleteApiKeyRequest$apiId": "<p>The API ID.</p>",
         "DeleteApiKeyRequest$id": "<p>The ID for the API key.</p>",
@@ -1432,8 +1676,12 @@
         "FunctionConfiguration$functionVersion": "<p>The version of the request mapping template. Currently, only the 2018-05-29 version of the template is supported.</p>",
         "FunctionsIds$member": null,
         "GetApiCacheRequest$apiId": "<p>The API ID.</p>",
+        "GetDataSourceIntrospectionRequest$introspectionId": "<p>The introspection ID. Each introspection contains a unique ID that can be used to reference the instrospection record.</p>",
+        "GetDataSourceIntrospectionResponse$introspectionId": "<p>The introspection ID. Each introspection contains a unique ID that can be used to reference the instrospection record.</p>",
+        "GetDataSourceIntrospectionResponse$introspectionStatusDetail": "<p>The error detail field. When a <code>FAILED</code> <code>introspectionStatus</code> is returned, the <code>introspectionStatusDetail</code> will also return the exact error that was generated during the operation.</p>",
         "GetDataSourceRequest$apiId": "<p>The API ID.</p>",
         "GetFunctionRequest$apiId": "<p>The GraphQL API ID.</p>",
+        "GetGraphqlApiEnvironmentVariablesRequest$apiId": "<p>The ID of the API from which the environmental variable list will be retrieved.</p>",
         "GetGraphqlApiRequest$apiId": "<p>The API ID for the GraphQL API.</p>",
         "GetIntrospectionSchemaRequest$apiId": "<p>The API ID.</p>",
         "GetResolverRequest$apiId": "<p>The API ID.</p>",
@@ -1475,6 +1723,7 @@
         "OpenIDConnectConfig$clientId": "<p>The client identifier of the relying party at the OpenID identity provider. This identifier is typically obtained when the relying party is registered with the OpenID identity provider. You can specify a regular expression so that AppSync can validate against multiple client identifiers at a time.</p>",
         "OpenSearchServiceDataSourceConfig$endpoint": "<p>The endpoint.</p>",
         "OpenSearchServiceDataSourceConfig$awsRegion": "<p>The Amazon Web Services Region.</p>",
+        "PutGraphqlApiEnvironmentVariablesRequest$apiId": "<p>The ID of the API to which the environmental variable list will be written.</p>",
         "RdsHttpEndpointConfig$awsRegion": "<p>Amazon Web Services Region for Amazon RDS HTTP endpoint.</p>",
         "RdsHttpEndpointConfig$dbClusterIdentifier": "<p>Amazon RDS cluster Amazon Resource Name (ARN).</p>",
         "RdsHttpEndpointConfig$databaseName": "<p>Logical database name.</p>",
@@ -1496,6 +1745,8 @@
         "SourceApiAssociationSummary$mergedApiId": "<p>The ID of the AppSync Merged API.</p>",
         "SourceApiAssociationSummary$mergedApiArn": "<p>The Amazon Resource Name (ARN) of the AppSync Merged API.</p>",
         "SourceApiAssociationSummary$description": "<p>The description field.</p>",
+        "StartDataSourceIntrospectionResponse$introspectionId": "<p>The introspection ID. Each introspection contains a unique ID that can be used to reference the instrospection record.</p>",
+        "StartDataSourceIntrospectionResponse$introspectionStatusDetail": "<p>The error detail field. When a <code>FAILED</code> <code>introspectionStatus</code> is returned, the <code>introspectionStatusDetail</code> will also return the exact error that was generated during the operation.</p>",
         "StartSchemaCreationRequest$apiId": "<p>The API ID.</p>",
         "StartSchemaMergeRequest$associationId": "<p>The ID generated by the AppSync service for the source API association.</p>",
         "StartSchemaMergeRequest$mergedApiIdentifier": "<p>The identifier of the AppSync Merged API. This is generated by the AppSync service. In most cases, Merged APIs (especially in your account) only require the API ID value or ARN of the merged API. However, Merged APIs in other accounts (cross-account use cases) strictly require the full resource ARN of the merged API.</p>",

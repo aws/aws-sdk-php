@@ -47,6 +47,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listJobsAsync(array $args = [])
  * @method \Aws\Result listLongTermPricing(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listLongTermPricingAsync(array $args = [])
+ * @method \Aws\Result listPickupLocations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPickupLocationsAsync(array $args = [])
  * @method \Aws\Result listServiceVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listServiceVersionsAsync(array $args = [])
  * @method \Aws\Result updateCluster(array $args = [])

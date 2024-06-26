@@ -3,6 +3,7 @@ namespace Aws\Test\Script;
 
 use Aws;
 use Aws\Script\Composer\Composer;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -112,10 +113,72 @@ class ComposerTest extends TestCase
         }
     }
 
+    /**
+     * @dataProvider retryProvider
+     */
+    public function testRetriesOnException($success, $writeCalls)
+    {
+        if (!$success) {
+            $this->expectException(IOException::class);
+            $this->expectExceptionMessage(
+                'Removal failed after several attempts. Last error: Simulated Exception'
+            );
+        }
+        $exception = new IOException('Simulated Exception');
+        $filesystem = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $filesystem->expects($this->any())
+            ->method('remove')
+            ->will($this->onConsecutiveCalls(
+                $this->throwException($exception),
+                $this->throwException($exception),
+                $success ? $this->returnValue(true) : $this->throwException($exception)
+            ));
+        $filesystem->expects($this->any())
+            ->method('exists')
+            ->willReturn(true);
+
+        $tempDir = sys_get_temp_dir();
+        $vendorDir = $tempDir . '/aws/aws-sdk-php';
+        $clientPath = $vendorDir . '/src/';
+        $modelPath = $clientPath . 'data/';
+
+        $serviceList = composer::buildServiceMapping();
+
+        foreach ($serviceList as $client => $data) {
+            $clientDir = $clientPath . $client;
+            $modelDir = $modelPath . $data;
+
+            $filesystem->mkdir($clientDir);
+            $filesystem->mkdir($modelDir);
+            break; //one service directory is all that's needed
+        }
+
+        Composer::removeUnusedServices(
+            $this->getMockEvent(
+                ['S3'],
+                $tempDir,
+                null,
+                $writeCalls
+            ),
+            $filesystem
+        );
+    }
+
+    public function retryProvider()
+    {
+        return [
+            'success' => [true , 3],
+            'failure' => [false, 2]
+        ];
+    }
+
     private function getMockEvent(
         array $servicesToKeep,
-              $vendorDir = '',
-              $message = null
+        $vendorDir = '',
+        $message = null,
+        $writeCalls = 0
     ) {
         $mockPackage = $this->getMockBuilder('Composer\Package\RootPackage')
             ->disableOriginalConstructor()
@@ -148,13 +211,18 @@ class ComposerTest extends TestCase
             ->method('getComposer')
             ->willReturn($mockComposer);
 
-        if ($message) {
+        if ($message || $writeCalls) {
             $mockIO = $this->getMockBuilder('Composer\IO\ConsoleIO')
                 ->disableOriginalConstructor()
                 ->getMock();
-            $mockIO->expects($this->once())
-                ->method('write')
-                ->with($message);
+            if ($writeCalls) {
+                $mockIO->expects($this->exactly($writeCalls))
+                    ->method('write');
+            } elseif($message) {
+                $mockIO->expects($this->once())
+                    ->method('write')
+                    ->with($message);
+            }
             $mockEvent->expects($this->any())
                 ->method('getIO')
                 ->willReturn($mockIO);
