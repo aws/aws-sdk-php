@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.315.0 - 2024-06-26
 
 * `Aws\` - Decodes URL returned by CompleteMultipartUpload operation so special characters are removed.
 * `Aws\ControlTower` - Added ListLandingZoneOperations API.
