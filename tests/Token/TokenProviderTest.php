@@ -278,10 +278,11 @@ EOT;
         $this->addMockResults($ssooidc, [
             new Result($refreshResponse)
         ]);
+        $ssoSessionName = 'admin';
         $ini = <<<EOT
 [profile testCachedSuccess]
-sso_session = admin
-[sso-session admin]
+sso_session = $ssoSessionName
+[sso-session $ssoSessionName]
 sso_region = us-east-1
 sso_start_url = https://d-abc123.awsapps.com/start
 EOT;
@@ -297,7 +298,7 @@ EOT;
     "startUrl": "https://d-abc123.awsapps.com/start"
 }
 EOT;
-        $cachedFileName = $this->getHomeDir() . '/.aws/sso/cache/62404d1783c218061f00887eb8f75121dbdef861.json';
+        $cachedFileName = $this->getHomeDir() . '/.aws/sso/cache/' . mb_convert_encoding(sha1($ssoSessionName), "UTF-8") . '.json';
         $dir = sys_get_temp_dir() . '/.aws';
         $iniFileName = $dir . '/config';
 
@@ -309,6 +310,13 @@ EOT;
             file_put_contents($cachedFileName, $token);
 
             $ssoTokenProvider = new SsoTokenProvider('profile testCachedSuccess', $dir . '/config', $ssooidc);
+            $ssoTokenProvider(); // This is done because before a refresh happens, the provider should have been invoked at least once.
+
+            // This is needed to make the refresh to happen. The validation states that
+            // the token needs to be refreshed at least 30 seconds after the previous refresh.
+            unlink($cachedFileName);
+            file_put_contents($cachedFileName, $token);
+            touch($cachedFileName, strtotime('-35 seconds'));
 
             $token = new SsoToken(
                 $cachedToken['accessToken'],
@@ -323,7 +331,9 @@ EOT;
             $saved = [
                 'token' => $token,
                 'refreshMethod' => function () use ($ssoTokenProvider) {
-                    return $ssoTokenProvider->refresh();
+                    return SsoToken::fromTokenData(
+                        $ssoTokenProvider->refresh()
+                    );
                 }
             ];
             $cache->set($key, $saved, $token->getExpiration());

@@ -166,18 +166,30 @@ class SqsClientTest extends TestCase
         $client->listQueues();
     }
 
-    public function testUpdatesQueueUrl()
+    public function testDoesNotValidateEmptyMessageAttributes()
     {
-        // Setup state of command/request
-        $newUrl = 'https://queue.amazonaws.com/stuff/in/the/path';
         $client = new SqsClient([
-            'region'  => 'us-east-1',
+            'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $this->addMockResults($client, [[]]);
-        $client->getHandlerList()->appendSign(Middleware::tap(function ($c, $r) use ($newUrl) {
-            $this->assertSame($newUrl, (string)$r->getUri());
-        }));
-        $client->receiveMessage(['QueueUrl' => $newUrl]);
+
+        $mock = new Result([
+            'Messages' => [
+                [
+                    'Body' => 'Test',
+                    'MessageAttributes' => []
+                ]
+            ]
+        ]);
+
+        $this->addMockResults($client, [$mock]);
+        $response = $client->receiveMessage([
+            'QueueUrl' => 'http://foo.com',
+            'MessageAttributeNames' => [
+                'All'
+            ],
+        ]);
+
+        $this->assertEmpty($response->get('MessageAttributes'));
     }
 }

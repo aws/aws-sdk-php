@@ -80,7 +80,7 @@ class AbstractConfigurationProviderTest extends TestCase
         $ref = new \ReflectionClass('\Aws\AbstractConfigurationProvider');
         $property = $ref->getProperty('interfaceClass');
         $property->setAccessible(true);
-        $property->setValue('\Aws\ResultInterface');
+        $property->setValue(null,'\Aws\ResultInterface');
 
         $timesCalled = 0;
         $volatileProvider = function () use ($expected, &$timesCalled) {

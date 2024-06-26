@@ -9,7 +9,8 @@
     "CreateBot": "<p>Creates an Amazon Lex conversational bot. </p>",
     "CreateBotAlias": "<p>Creates an alias for the specified version of a bot. Use an alias to enable you to change the version of a bot without updating applications that use the bot.</p> <p>For example, you can create an alias called \"PROD\" that your applications use to call the Amazon Lex bot. </p>",
     "CreateBotLocale": "<p>Creates a locale in the bot. The locale contains the intents and slot types that the bot uses in conversations with users in the specified language and locale. You must add a locale to a bot before you can add intents and slot types to the bot.</p>",
-    "CreateBotVersion": "<p>Creates a new version of the bot based on the <code>DRAFT</code> version. If the <code>DRAFT</code> version of this resource hasn't changed since you created the last version, Amazon Lex doesn't create a new version, it returns the last created version.</p> <p>When you create the first version of a bot, Amazon Lex sets the version to 1. Subsequent versions increment by 1.</p>",
+    "CreateBotReplica": "<p>Action to create a replication of the source bot in the secondary region.</p>",
+    "CreateBotVersion": "<p>Creates an immutable version of the bot. When you create the first version of a bot, Amazon Lex sets the version number to 1. Subsequent bot versions increase in an increment of 1. The version number will always represent the total number of versions created of the bot, not the current number of versions. If a bot version is deleted, that bot version number will not be reused.</p>",
     "CreateExport": "<p>Creates a zip archive containing the contents of a bot or a bot locale. The archive contains a directory structure that contains JSON files that define the bot.</p> <p>You can create an archive that contains the complete definition of a bot, or you can specify that the archive contain only the definition of a single bot locale.</p> <p>For more information about exporting bots, and about the structure of the export archive, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/importing-exporting.html\"> Importing and exporting bots </a> </p>",
     "CreateIntent": "<p>Creates an intent.</p> <p>To define the interaction between the user and your bot, you define one or more intents. For example, for a pizza ordering bot you would create an <code>OrderPizza</code> intent.</p> <p>When you create an intent, you must provide a name. You can optionally provide the following:</p> <ul> <li> <p>Sample utterances. For example, \"I want to order a pizza\" and \"Can I order a pizza.\" You can't provide utterances for built-in intents.</p> </li> <li> <p>Information to be gathered. You specify slots for the information that you bot requests from the user. You can specify standard slot types, such as date and time, or custom slot types for your application.</p> </li> <li> <p>How the intent is fulfilled. You can provide a Lambda function or configure the intent to return the intent information to your client application. If you use a Lambda function, Amazon Lex invokes the function when all of the intent information is available.</p> </li> <li> <p>A confirmation prompt to send to the user to confirm an intent. For example, \"Shall I order your pizza?\"</p> </li> <li> <p>A conclusion statement to send to the user after the intent is fulfilled. For example, \"I ordered your pizza.\"</p> </li> <li> <p>A follow-up prompt that asks the user for additional activity. For example, \"Do you want a drink with your pizza?\"</p> </li> </ul>",
     "CreateResourcePolicy": "<p>Creates a new resource policy with the specified policy statements.</p>",
@@ -21,6 +22,7 @@
     "DeleteBot": "<p>Deletes all versions of a bot, including the <code>Draft</code> version. To delete a specific version, use the <code>DeleteBotVersion</code> operation.</p> <p>When you delete a bot, all of the resources contained in the bot are also deleted. Deleting a bot removes all locales, intents, slot, and slot types defined for the bot.</p> <p>If a bot has an alias, the <code>DeleteBot</code> operation returns a <code>ResourceInUseException</code> exception. If you want to delete the bot and the alias, set the <code>skipResourceInUseCheck</code> parameter to <code>true</code>.</p>",
     "DeleteBotAlias": "<p>Deletes the specified bot alias.</p>",
     "DeleteBotLocale": "<p>Removes a locale from a bot.</p> <p>When you delete a locale, all intents, slots, and slot types defined for the locale are also deleted.</p>",
+    "DeleteBotReplica": "<p>The action to delete the replicated bot in the secondary region.</p>",
     "DeleteBotVersion": "<p>Deletes a specific version of a bot. To delete all versions of a bot, use the <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_DeleteBot.html\">DeleteBot</a> operation.</p>",
     "DeleteCustomVocabulary": "<p>Removes a custom vocabulary from the specified locale in the specified bot.</p>",
     "DeleteExport": "<p>Removes a previous export and the associated files stored in an S3 bucket.</p>",
@@ -36,6 +38,8 @@
     "DescribeBotAlias": "<p>Get information about a specific bot alias.</p>",
     "DescribeBotLocale": "<p>Describes the settings that a bot has for a specific locale. </p>",
     "DescribeBotRecommendation": "<p>Provides metadata information about a bot recommendation. This information will enable you to get a description on the request inputs, to download associated transcripts after processing is complete, and to download intents and slot-types generated by the bot recommendation.</p>",
+    "DescribeBotReplica": "<p>Monitors the bot replication status through the UI console.</p>",
+    "DescribeBotResourceGeneration": "<p>Returns information about a request to generate a bot through natural language description, made through the <code>StartBotResource</code> API. Use the <code>generatedBotLocaleUrl</code> to retrieve the Amazon S3 object containing the bot locale configuration. You can then modify and import this configuration.</p>",
     "DescribeBotVersion": "<p>Provides metadata about a version of a bot.</p>",
     "DescribeCustomVocabularyMetadata": "<p>Provides metadata information about a custom vocabulary.</p>",
     "DescribeExport": "<p>Gets information about a specific export.</p>",
@@ -48,11 +52,16 @@
     "DescribeTestSet": "<p>Gets metadata information about the test set.</p>",
     "DescribeTestSetDiscrepancyReport": "<p>Gets metadata information about the test set discrepancy report.</p>",
     "DescribeTestSetGeneration": "<p>Gets metadata information about the test set generation.</p>",
+    "GenerateBotElement": "<p>Generates sample utterances for an intent.</p>",
     "GetTestExecutionArtifactsUrl": "<p>The pre-signed Amazon S3 URL to download the test execution result artifacts.</p>",
     "ListAggregatedUtterances": "<p>Provides a list of utterances that users have sent to the bot.</p> <p>Utterances are aggregated by the text of the utterance. For example, all instances where customers used the phrase \"I want to order pizza\" are aggregated into the same line in the response.</p> <p>You can see both detected utterances and missed utterances. A detected utterance is where the bot properly recognized the utterance and activated the associated intent. A missed utterance was not recognized by the bot and didn't activate an intent.</p> <p>Utterances can be aggregated for a bot alias or for a bot version, but not both at the same time.</p> <p>Utterances statistics are not generated under the following conditions:</p> <ul> <li> <p>The <code>childDirected</code> field was set to true when the bot was created.</p> </li> <li> <p>You are using slot obfuscation with one or more slots.</p> </li> <li> <p>You opted out of participating in improving Amazon Lex.</p> </li> </ul>",
+    "ListBotAliasReplicas": "<p>The action to list the replicated bots created from the source bot alias.</p>",
     "ListBotAliases": "<p>Gets a list of aliases for the specified bot.</p>",
     "ListBotLocales": "<p>Gets a list of locales for the specified bot.</p>",
     "ListBotRecommendations": "<p>Get a list of bot recommendations that meet the specified criteria.</p>",
+    "ListBotReplicas": "<p>The action to list the replicated bots.</p>",
+    "ListBotResourceGenerations": "<p>Lists the generation requests made for a bot locale.</p>",
+    "ListBotVersionReplicas": "<p>Contains information about all the versions replication statuses applicable for Global Resiliency.</p>",
     "ListBotVersions": "<p>Gets information about all of the versions of a bot.</p> <p>The <code>ListBotVersions</code> operation returns a summary of each version of a bot. For example, if a bot has three numbered versions, the <code>ListBotVersions</code> operation returns for summaries, one for each numbered version and one for the <code>DRAFT</code> version.</p> <p>The <code>ListBotVersions</code> operation always returns at least one version, the <code>DRAFT</code> version.</p>",
     "ListBots": "<p>Gets a list of available bots.</p>",
     "ListBuiltInIntents": "<p>Gets a list of built-in intents provided by Amazon Lex that you can use in your bot. </p> <p>To use a built-in intent as a the base for your own intent, include the built-in intent signature in the <code>parentIntentSignature</code> parameter when you call the <code>CreateIntent</code> operation. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_CreateIntent.html\">CreateIntent</a>.</p>",
@@ -60,8 +69,13 @@
     "ListCustomVocabularyItems": "<p>Paginated list of custom vocabulary items for a given bot locale's custom vocabulary.</p>",
     "ListExports": "<p>Lists the exports for a bot, bot locale, or custom vocabulary. Exports are kept in the list for 7 days.</p>",
     "ListImports": "<p>Lists the imports for a bot, bot locale, or custom vocabulary. Imports are kept in the list for 7 days.</p>",
+    "ListIntentMetrics": "<p>Retrieves summary metrics for the intents in your bot. The following fields are required:</p> <ul> <li> <p> <code>metrics</code> – A list of <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_AnalyticsIntentMetric.html\">AnalyticsIntentMetric</a> objects. In each object, use the <code>name</code> field to specify the metric to calculate, the <code>statistic</code> field to specify whether to calculate the <code>Sum</code>, <code>Average</code>, or <code>Max</code> number, and the <code>order</code> field to specify whether to sort the results in <code>Ascending</code> or <code>Descending</code> order.</p> </li> <li> <p> <code>startDateTime</code> and <code>endDateTime</code> – Define a time range for which you want to retrieve results.</p> </li> </ul> <p>Of the optional fields, you can organize the results in the following ways:</p> <ul> <li> <p>Use the <code>filters</code> field to filter the results, the <code>groupBy</code> field to specify categories by which to group the results, and the <code>binBy</code> field to specify time intervals by which to group the results.</p> </li> <li> <p>Use the <code>maxResults</code> field to limit the number of results to return in a single response and the <code>nextToken</code> field to return the next batch of results if the response does not return the full set of results.</p> </li> </ul> <p>Note that an <code>order</code> field exists in both <code>binBy</code> and <code>metrics</code>. You can specify only one <code>order</code> in a given request.</p>",
+    "ListIntentPaths": "<p>Retrieves summary statistics for a path of intents that users take over sessions with your bot. The following fields are required:</p> <ul> <li> <p> <code>startDateTime</code> and <code>endDateTime</code> – Define a time range for which you want to retrieve results.</p> </li> <li> <p> <code>intentPath</code> – Define an order of intents for which you want to retrieve metrics. Separate intents in the path with a forward slash. For example, populate the <code>intentPath</code> field with <code>/BookCar/BookHotel</code> to see details about how many times users invoked the <code>BookCar</code> and <code>BookHotel</code> intents in that order.</p> </li> </ul> <p>Use the optional <code>filters</code> field to filter the results.</p>",
+    "ListIntentStageMetrics": "<p>Retrieves summary metrics for the stages within intents in your bot. The following fields are required:</p> <ul> <li> <p> <code>metrics</code> – A list of <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_AnalyticsIntentStageMetric.html\">AnalyticsIntentStageMetric</a> objects. In each object, use the <code>name</code> field to specify the metric to calculate, the <code>statistic</code> field to specify whether to calculate the <code>Sum</code>, <code>Average</code>, or <code>Max</code> number, and the <code>order</code> field to specify whether to sort the results in <code>Ascending</code> or <code>Descending</code> order.</p> </li> <li> <p> <code>startDateTime</code> and <code>endDateTime</code> – Define a time range for which you want to retrieve results.</p> </li> </ul> <p>Of the optional fields, you can organize the results in the following ways:</p> <ul> <li> <p>Use the <code>filters</code> field to filter the results, the <code>groupBy</code> field to specify categories by which to group the results, and the <code>binBy</code> field to specify time intervals by which to group the results.</p> </li> <li> <p>Use the <code>maxResults</code> field to limit the number of results to return in a single response and the <code>nextToken</code> field to return the next batch of results if the response does not return the full set of results.</p> </li> </ul> <p>Note that an <code>order</code> field exists in both <code>binBy</code> and <code>metrics</code>. You can only specify one <code>order</code> in a given request.</p>",
     "ListIntents": "<p>Get a list of intents that meet the specified criteria.</p>",
     "ListRecommendedIntents": "<p>Gets a list of recommended intents provided by the bot recommendation that you can use in your bot. Intents in the response are ordered by relevance.</p>",
+    "ListSessionAnalyticsData": "<p>Retrieves a list of metadata for individual user sessions with your bot. The <code>startDateTime</code> and <code>endDateTime</code> fields are required. These fields define a time range for which you want to retrieve results. Of the optional fields, you can organize the results in the following ways:</p> <ul> <li> <p>Use the <code>filters</code> field to filter the results and the <code>sortBy</code> field to specify the values by which to sort the results.</p> </li> <li> <p>Use the <code>maxResults</code> field to limit the number of results to return in a single response and the <code>nextToken</code> field to return the next batch of results if the response does not return the full set of results.</p> </li> </ul>",
+    "ListSessionMetrics": "<p>Retrieves summary metrics for the user sessions with your bot. The following fields are required:</p> <ul> <li> <p> <code>metrics</code> – A list of <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_AnalyticsSessionMetric.html\">AnalyticsSessionMetric</a> objects. In each object, use the <code>name</code> field to specify the metric to calculate, the <code>statistic</code> field to specify whether to calculate the <code>Sum</code>, <code>Average</code>, or <code>Max</code> number, and the <code>order</code> field to specify whether to sort the results in <code>Ascending</code> or <code>Descending</code> order.</p> </li> <li> <p> <code>startDateTime</code> and <code>endDateTime</code> – Define a time range for which you want to retrieve results.</p> </li> </ul> <p>Of the optional fields, you can organize the results in the following ways:</p> <ul> <li> <p>Use the <code>filters</code> field to filter the results, the <code>groupBy</code> field to specify categories by which to group the results, and the <code>binBy</code> field to specify time intervals by which to group the results.</p> </li> <li> <p>Use the <code>maxResults</code> field to limit the number of results to return in a single response and the <code>nextToken</code> field to return the next batch of results if the response does not return the full set of results.</p> </li> </ul> <p>Note that an <code>order</code> field exists in both <code>binBy</code> and <code>metrics</code>. Currently, you can specify it in either field, but not in both.</p>",
     "ListSlotTypes": "<p>Gets a list of slot types that match the specified criteria.</p>",
     "ListSlots": "<p>Gets a list of slots that match the specified criteria.</p>",
     "ListTagsForResource": "<p>Gets a list of tags associated with a resource. Only bots, bot aliases, and bot channels can have tags associated with them.</p>",
@@ -69,8 +83,11 @@
     "ListTestExecutions": "<p>The list of test set executions.</p>",
     "ListTestSetRecords": "<p>The list of test set records.</p>",
     "ListTestSets": "<p>The list of the test sets</p>",
+    "ListUtteranceAnalyticsData": "<note> <p>To use this API operation, your IAM role must have permissions to perform the <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_ListAggregatedUtterances.html\">ListAggregatedUtterances</a> operation, which provides access to utterance-related analytics. See <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/monitoring-utterances.html\">Viewing utterance statistics</a> for the IAM policy to apply to the IAM role.</p> </note> <p>Retrieves a list of metadata for individual user utterances to your bot. The following fields are required:</p> <ul> <li> <p> <code>startDateTime</code> and <code>endDateTime</code> – Define a time range for which you want to retrieve results.</p> </li> </ul> <p>Of the optional fields, you can organize the results in the following ways:</p> <ul> <li> <p>Use the <code>filters</code> field to filter the results and the <code>sortBy</code> field to specify the values by which to sort the results.</p> </li> <li> <p>Use the <code>maxResults</code> field to limit the number of results to return in a single response and the <code>nextToken</code> field to return the next batch of results if the response does not return the full set of results.</p> </li> </ul>",
+    "ListUtteranceMetrics": "<note> <p>To use this API operation, your IAM role must have permissions to perform the <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_ListAggregatedUtterances.html\">ListAggregatedUtterances</a> operation, which provides access to utterance-related analytics. See <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/monitoring-utterances.html\">Viewing utterance statistics</a> for the IAM policy to apply to the IAM role.</p> </note> <p>Retrieves summary metrics for the utterances in your bot. The following fields are required:</p> <ul> <li> <p> <code>metrics</code> – A list of <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_AnalyticsUtteranceMetric.html\">AnalyticsUtteranceMetric</a> objects. In each object, use the <code>name</code> field to specify the metric to calculate, the <code>statistic</code> field to specify whether to calculate the <code>Sum</code>, <code>Average</code>, or <code>Max</code> number, and the <code>order</code> field to specify whether to sort the results in <code>Ascending</code> or <code>Descending</code> order.</p> </li> <li> <p> <code>startDateTime</code> and <code>endDateTime</code> – Define a time range for which you want to retrieve results.</p> </li> </ul> <p>Of the optional fields, you can organize the results in the following ways:</p> <ul> <li> <p>Use the <code>filters</code> field to filter the results, the <code>groupBy</code> field to specify categories by which to group the results, and the <code>binBy</code> field to specify time intervals by which to group the results.</p> </li> <li> <p>Use the <code>maxResults</code> field to limit the number of results to return in a single response and the <code>nextToken</code> field to return the next batch of results if the response does not return the full set of results.</p> </li> </ul> <p>Note that an <code>order</code> field exists in both <code>binBy</code> and <code>metrics</code>. Currently, you can specify it in either field, but not in both.</p>",
     "SearchAssociatedTranscripts": "<p>Search for associated transcripts that meet the specified criteria.</p>",
     "StartBotRecommendation": "<p>Use this to provide your transcript data, and to start the bot recommendation process.</p>",
+    "StartBotResourceGeneration": "<p>Starts a request for the descriptive bot builder to generate a bot locale configuration based on the prompt you provide it. After you make this call, use the <code>DescribeBotResourceGeneration</code> operation to check on the status of the generation and for the <code>generatedBotLocaleUrl</code> when the generation is complete. Use that value to retrieve the Amazon S3 object containing the bot locale configuration. You can then modify and import this configuration.</p>",
     "StartImport": "<p>Starts importing a bot, bot locale, or custom vocabulary from a zip archive that you uploaded to an S3 bucket.</p>",
     "StartTestExecution": "<p>The action to start test set execution.</p>",
     "StartTestSetGeneration": "<p>The action to start the generation of test set.</p>",
@@ -200,6 +217,632 @@
         "UpdateResourcePolicyResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy is attached to.</p>"
       }
     },
+    "AnalyticsBinByList": {
+      "base": null,
+      "refs": {
+        "ListIntentMetricsRequest$binBy": "<p>A list of objects, each of which contains specifications for organizing the results by time.</p>",
+        "ListIntentStageMetricsRequest$binBy": "<p>A list of objects, each of which contains specifications for organizing the results by time.</p>",
+        "ListSessionMetricsRequest$binBy": "<p>A list of objects, each of which contains specifications for organizing the results by time.</p>",
+        "ListUtteranceMetricsRequest$binBy": "<p>A list of objects, each of which contains specifications for organizing the results by time.</p>"
+      }
+    },
+    "AnalyticsBinByName": {
+      "base": null,
+      "refs": {
+        "AnalyticsBinBySpecification$name": "<p>Specifies the time metric by which to bin the analytics data.</p>",
+        "AnalyticsBinKey$name": "<p>The criterion by which to bin the results.</p>"
+      }
+    },
+    "AnalyticsBinBySpecification": {
+      "base": "<p>Contains the time metric, interval, and method by which to bin the analytics data.</p>",
+      "refs": {
+        "AnalyticsBinByList$member": null
+      }
+    },
+    "AnalyticsBinKey": {
+      "base": "<p>An object containing the criterion by which to bin the results and the value that defines that bin.</p>",
+      "refs": {
+        "AnalyticsBinKeys$member": null
+      }
+    },
+    "AnalyticsBinKeys": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentResult$binKeys": "<p>A list of objects containing the criteria you requested for binning results and the values of the bins.</p>",
+        "AnalyticsIntentStageResult$binKeys": "<p>A list of objects containing the criteria you requested for binning results and the values of the bins.</p>",
+        "AnalyticsSessionResult$binKeys": "<p>A list of objects containing the criteria you requested for binning results and the values of the bins.</p>",
+        "AnalyticsUtteranceResult$binKeys": "<p>A list of objects containing the criteria you requested for binning results and the values of the bins.</p>"
+      }
+    },
+    "AnalyticsBinValue": {
+      "base": null,
+      "refs": {
+        "AnalyticsBinKey$value": "<p>The value of the criterion that defines the bin.</p>"
+      }
+    },
+    "AnalyticsChannel": {
+      "base": null,
+      "refs": {
+        "SessionSpecification$channel": "<p>The channel that is integrated with the bot that the session was held with.</p>",
+        "UtteranceSpecification$channel": "<p>The channel that is integrated with the bot that the utterance was made to.</p>"
+      }
+    },
+    "AnalyticsCommonFilterName": {
+      "base": null,
+      "refs": {
+        "AnalyticsPathFilter$name": "<p>The category by which to filter the intent paths. The descriptions for each option are as follows:</p> <ul> <li> <p> <code>BotAlias</code> – The name of the bot alias.</p> </li> <li> <p> <code>BotVersion</code> – The version of the bot.</p> </li> <li> <p> <code>LocaleId</code> – The locale of the bot.</p> </li> <li> <p> <code>Modality</code> – The modality of the session with the bot (audio, DTMF, or text).</p> </li> <li> <p> <code>Channel</code> – The channel that the bot is integrated with.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsFilterOperator": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentFilter$operator": "<p>The operation by which to filter the category. The following operations are possible:</p> <ul> <li> <p> <code>CO</code> – Contains</p> </li> <li> <p> <code>EQ</code> – Equals</p> </li> <li> <p> <code>GT</code> – Greater than</p> </li> <li> <p> <code>LT</code> – Less than</p> </li> </ul> <p>The operators that each filter supports are listed below:</p> <ul> <li> <p> <code>BotAlias</code> – <code>EQ</code>.</p> </li> <li> <p> <code>BotVersion</code> – <code>EQ</code>.</p> </li> <li> <p> <code>LocaleId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Modality</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Channel</code> – <code>EQ</code>.</p> </li> <li> <p> <code>SessionId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>OriginatingRequestId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>IntentName</code> – <code>EQ</code>, <code>CO</code>.</p> </li> <li> <p> <code>IntentEndState</code> – <code>EQ</code>, <code>CO</code>.</p> </li> </ul>",
+        "AnalyticsIntentStageFilter$operator": "<p>The operation by which to filter the category. The following operations are possible:</p> <ul> <li> <p> <code>CO</code> – Contains</p> </li> <li> <p> <code>EQ</code> – Equals</p> </li> <li> <p> <code>GT</code> – Greater than</p> </li> <li> <p> <code>LT</code> – Less than</p> </li> </ul> <p>The operators that each filter supports are listed below:</p> <ul> <li> <p> <code>BotAlias</code> – <code>EQ</code>.</p> </li> <li> <p> <code>BotVersion</code> – <code>EQ</code>.</p> </li> <li> <p> <code>LocaleId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Modality</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Channel</code> – <code>EQ</code>.</p> </li> <li> <p> <code>SessionId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>OriginatingRequestId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>IntentName</code> – <code>EQ</code>, <code>CO</code>.</p> </li> <li> <p> <code>IntentStageName</code> – <code>EQ</code>, <code>CO</code>.</p> </li> </ul>",
+        "AnalyticsPathFilter$operator": "<p>The operation by which to filter the category. The following operations are possible:</p> <ul> <li> <p> <code>CO</code> – Contains</p> </li> <li> <p> <code>EQ</code> – Equals</p> </li> <li> <p> <code>GT</code> – Greater than</p> </li> <li> <p> <code>LT</code> – Less than</p> </li> </ul> <p>The operators that each filter supports are listed below:</p> <ul> <li> <p> <code>BotAlias</code> – <code>EQ</code>.</p> </li> <li> <p> <code>BotVersion</code> – <code>EQ</code>.</p> </li> <li> <p> <code>LocaleId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Modality</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Channel</code> – <code>EQ</code>.</p> </li> </ul>",
+        "AnalyticsSessionFilter$operator": "<p>The operation by which to filter the category. The following operations are possible:</p> <ul> <li> <p> <code>CO</code> – Contains</p> </li> <li> <p> <code>EQ</code> – Equals</p> </li> <li> <p> <code>GT</code> – Greater than</p> </li> <li> <p> <code>LT</code> – Less than</p> </li> </ul> <p>The operators that each filter supports are listed below:</p> <ul> <li> <p> <code>BotAlias</code> – <code>EQ</code>.</p> </li> <li> <p> <code>BotVersion</code> – <code>EQ</code>.</p> </li> <li> <p> <code>LocaleId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Modality</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Channel</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Duration</code> – <code>EQ</code>, <code>GT</code>, <code>LT</code>.</p> </li> <li> <p> <code>conversationEndState</code> – <code>EQ</code>, <code>CO</code>.</p> </li> <li> <p> <code>SessionId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>OriginatingRequestId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>IntentPath</code> – <code>EQ</code>.</p> </li> </ul>",
+        "AnalyticsUtteranceFilter$operator": "<p>The operation by which to filter the category. The following operations are possible:</p> <ul> <li> <p> <code>CO</code> – Contains</p> </li> <li> <p> <code>EQ</code> – Equals</p> </li> <li> <p> <code>GT</code> – Greater than</p> </li> <li> <p> <code>LT</code> – Less than</p> </li> </ul> <p>The operators that each filter supports are listed below:</p> <ul> <li> <p> <code>BotAlias</code> – <code>EQ</code>.</p> </li> <li> <p> <code>BotVersion</code> – <code>EQ</code>.</p> </li> <li> <p> <code>LocaleId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Modality</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Channel</code> – <code>EQ</code>.</p> </li> <li> <p> <code>SessionId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>OriginatingRequestId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>UtteranceState</code> – <code>EQ</code>.</p> </li> <li> <p> <code>UtteranceText</code> – <code>EQ</code>, <code>CO</code>.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsFilterValue": {
+      "base": null,
+      "refs": {
+        "AnalyticsFilterValues$member": null
+      }
+    },
+    "AnalyticsFilterValues": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentFilter$values": "<p>An array containing the values of the category by which to apply the operator to filter the results. You can provide multiple values if the operator is <code>EQ</code> or <code>CO</code>. If you provide multiple values, you filter for results that equal/contain any of the values. For example, if the <code>name</code>, <code>operator</code>, and <code>values</code> fields are <code>Modality</code>, <code>EQ</code>, and <code>[Speech, Text]</code>, the operation filters for results where the modality was either <code>Speech</code> or <code>Text</code>.</p>",
+        "AnalyticsIntentStageFilter$values": "<p>An array containing the values of the category by which to apply the operator to filter the results. You can provide multiple values if the operator is <code>EQ</code> or <code>CO</code>. If you provide multiple values, you filter for results that equal/contain any of the values. For example, if the <code>name</code>, <code>operator</code>, and <code>values</code> fields are <code>Modality</code>, <code>EQ</code>, and <code>[Speech, Text]</code>, the operation filters for results where the modality was either <code>Speech</code> or <code>Text</code>.</p>",
+        "AnalyticsPathFilter$values": "<p>An array containing the values of the category by which to apply the operator to filter the results. You can provide multiple values if the operator is <code>EQ</code> or <code>CO</code>. If you provide multiple values, you filter for results that equal/contain any of the values. For example, if the <code>name</code>, <code>operator</code>, and <code>values</code> fields are <code>Modality</code>, <code>EQ</code>, and <code>[Speech, Text]</code>, the operation filters for results where the modality was either <code>Speech</code> or <code>Text</code>.</p>",
+        "AnalyticsSessionFilter$values": "<p>An array containing the values of the category by which to apply the operator to filter the results. You can provide multiple values if the operator is <code>EQ</code> or <code>CO</code>. If you provide multiple values, you filter for results that equal/contain any of the values. For example, if the <code>name</code>, <code>operator</code>, and <code>values</code> fields are <code>Modality</code>, <code>EQ</code>, and <code>[Speech, Text]</code>, the operation filters for results where the modality was either <code>Speech</code> or <code>Text</code>.</p>",
+        "AnalyticsUtteranceFilter$values": "<p>An array containing the values of the category by which to apply the operator to filter the results. You can provide multiple values if the operator is <code>EQ</code> or <code>CO</code>. If you provide multiple values, you filter for results that equal/contain any of the values. For example, if the <code>name</code>, <code>operator</code>, and <code>values</code> fields are <code>Modality</code>, <code>EQ</code>, and <code>[Speech, Text]</code>, the operation filters for results where the modality was either <code>Speech</code> or <code>Text</code>.</p>"
+      }
+    },
+    "AnalyticsGroupByValue": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentGroupByKey$value": "<p>A member of the category by which the intent analytics were grouped.</p>",
+        "AnalyticsIntentStageGroupByKey$value": "<p>A member of the category by which the intent stage analytics were grouped.</p>",
+        "AnalyticsSessionGroupByKey$value": "<p>A member of the category by which the session analytics were grouped.</p>",
+        "AnalyticsUtteranceGroupByKey$value": "<p>A member of the category by which the utterance analytics were grouped.</p>"
+      }
+    },
+    "AnalyticsIntentField": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentGroupByKey$name": "<p>A category by which the intent analytics were grouped.</p>",
+        "AnalyticsIntentGroupBySpecification$name": "<p>Specifies whether to group the intent stages by their name or their end state.</p>"
+      }
+    },
+    "AnalyticsIntentFilter": {
+      "base": "<p>Contains fields describing a condition by which to filter the intents. The expression may be understood as <code>name</code> <code>operator</code> <code>values</code>. For example:</p> <ul> <li> <p> <code>IntentName CO Book</code> – The intent name contains the string \"Book.\"</p> </li> <li> <p> <code>BotVersion EQ 2</code> – The bot version is equal to two.</p> </li> </ul> <p>The operators that each filter supports are listed below:</p> <ul> <li> <p> <code>BotAlias</code> – <code>EQ</code>.</p> </li> <li> <p> <code>BotVersion</code> – <code>EQ</code>.</p> </li> <li> <p> <code>LocaleId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Modality</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Channel</code> – <code>EQ</code>.</p> </li> <li> <p> <code>SessionId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>OriginatingRequestId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>IntentName</code> – <code>EQ</code>, <code>CO</code>.</p> </li> <li> <p> <code>IntentEndState</code> – <code>EQ</code>, <code>CO</code>.</p> </li> </ul>",
+      "refs": {
+        "AnalyticsIntentFilters$member": null
+      }
+    },
+    "AnalyticsIntentFilterName": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentFilter$name": "<p>The category by which to filter the intents. The descriptions for each option are as follows:</p> <ul> <li> <p> <code>BotAlias</code> – The name of the bot alias.</p> </li> <li> <p> <code>BotVersion</code> – The version of the bot.</p> </li> <li> <p> <code>LocaleId</code> – The locale of the bot.</p> </li> <li> <p> <code>Modality</code> – The modality of the session with the bot (audio, DTMF, or text).</p> </li> <li> <p> <code>Channel</code> – The channel that the bot is integrated with.</p> </li> <li> <p> <code>SessionId</code> – The identifier of the session with the bot.</p> </li> <li> <p> <code>OriginatingRequestId</code> – The identifier of the first request in a session.</p> </li> <li> <p> <code>IntentName</code> – The name of the intent.</p> </li> <li> <p> <code>IntentEndState</code> – The final state of the intent.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsIntentFilters": {
+      "base": null,
+      "refs": {
+        "ListIntentMetricsRequest$filters": "<p>A list of objects, each of which describes a condition by which you want to filter the results.</p>"
+      }
+    },
+    "AnalyticsIntentGroupByKey": {
+      "base": "<p>Contains the category by which the intent analytics were grouped and a member of that category.</p>",
+      "refs": {
+        "AnalyticsIntentGroupByKeys$member": null
+      }
+    },
+    "AnalyticsIntentGroupByKeys": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentResult$groupByKeys": "<p>A list of objects containing the criteria you requested for grouping results and the values of the groups.</p>"
+      }
+    },
+    "AnalyticsIntentGroupByList": {
+      "base": null,
+      "refs": {
+        "ListIntentMetricsRequest$groupBy": "<p>A list of objects, each of which specifies how to group the results. You can group by the following criteria:</p> <ul> <li> <p> <code>IntentName</code> – The name of the intent.</p> </li> <li> <p> <code>IntentEndState</code> – The final state of the intent. The possible end states are detailed in <a href=\"https://docs.aws.amazon.com/analytics-key-definitions-intents\">Key definitions</a> in the user guide.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsIntentGroupBySpecification": {
+      "base": "<p>Contains the category by which to group the intents.</p>",
+      "refs": {
+        "AnalyticsIntentGroupByList$member": null
+      }
+    },
+    "AnalyticsIntentMetric": {
+      "base": "<p>Contains the metric and the summary statistic you want to calculate, and the order in which to sort the results, for the intents in the bot.</p>",
+      "refs": {
+        "AnalyticsIntentMetrics$member": null
+      }
+    },
+    "AnalyticsIntentMetricName": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentMetric$name": "<p>The metric for which you want to get intent summary statistics.</p> <ul> <li> <p> <code>Count</code> – The number of times the intent was invoked.</p> </li> <li> <p> <code>Success</code> – The number of times the intent succeeded.</p> </li> <li> <p> <code>Failure</code> – The number of times the intent failed.</p> </li> <li> <p> <code>Switched</code> – The number of times there was a switch to a different intent.</p> </li> <li> <p> <code>Dropped</code> – The number of times the user dropped the intent.</p> </li> </ul>",
+        "AnalyticsIntentMetricResult$name": "<p>The metric that you requested. See <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/analytics-key-definitions.html\">Key definitions</a> for more details about these metrics.</p> <ul> <li> <p> <code>Count</code> – The number of times the intent was invoked.</p> </li> <li> <p> <code>Success</code> – The number of times the intent succeeded.</p> </li> <li> <p> <code>Failure</code> – The number of times the intent failed.</p> </li> <li> <p> <code>Switched</code> – The number of times there was a switch to a different intent.</p> </li> <li> <p> <code>Dropped</code> – The number of times the user dropped the intent.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsIntentMetricResult": {
+      "base": "<p>An object containing the results for the intent metric you requested.</p>",
+      "refs": {
+        "AnalyticsIntentMetricResults$member": null
+      }
+    },
+    "AnalyticsIntentMetricResults": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentResult$metricsResults": "<p>A list of objects, each of which contains a metric you want to list, the statistic for the metric you want to return, and the method by which to organize the results.</p>"
+      }
+    },
+    "AnalyticsIntentMetrics": {
+      "base": null,
+      "refs": {
+        "ListIntentMetricsRequest$metrics": "<p>A list of objects, each of which contains a metric you want to list, the statistic for the metric you want to return, and the order by which to organize the results.</p>"
+      }
+    },
+    "AnalyticsIntentNodeSummaries": {
+      "base": null,
+      "refs": {
+        "ListIntentPathsResponse$nodeSummaries": "<p>A list of objects, each of which contains information about a node in the intent path for which you requested metrics.</p>"
+      }
+    },
+    "AnalyticsIntentNodeSummary": {
+      "base": "<p>An object containing information about the requested path.</p>",
+      "refs": {
+        "AnalyticsIntentNodeSummaries$member": null
+      }
+    },
+    "AnalyticsIntentResult": {
+      "base": "<p>An object containing the results for the intent metrics you requested and the bin and/or group(s) they refer to, if applicable.</p>",
+      "refs": {
+        "AnalyticsIntentResults$member": null
+      }
+    },
+    "AnalyticsIntentResults": {
+      "base": null,
+      "refs": {
+        "ListIntentMetricsResponse$results": "<p>The results for the intent metrics.</p>"
+      }
+    },
+    "AnalyticsIntentStageField": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentStageGroupByKey$name": "<p>A category by which the intent stage analytics were grouped.</p>",
+        "AnalyticsIntentStageGroupBySpecification$name": "<p>Specifies whether to group the intent stages by their name or the intent to which the session was switched.</p>"
+      }
+    },
+    "AnalyticsIntentStageFilter": {
+      "base": "<p>Contains fields describing a condition by which to filter the intent stages. The expression may be understood as <code>name</code> <code>operator</code> <code>values</code>. For example:</p> <ul> <li> <p> <code>IntentName CO Book</code> – The intent name contains the string \"Book.\"</p> </li> <li> <p> <code>BotVersion EQ 2</code> – The bot version is equal to two.</p> </li> </ul> <p>The operators that each filter supports are listed below:</p> <ul> <li> <p> <code>BotAlias</code> – <code>EQ</code>.</p> </li> <li> <p> <code>BotVersion</code> – <code>EQ</code>.</p> </li> <li> <p> <code>LocaleId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Modality</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Channel</code> – <code>EQ</code>.</p> </li> <li> <p> <code>SessionId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>OriginatingRequestId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>IntentName</code> – <code>EQ</code>, <code>CO</code>.</p> </li> <li> <p> <code>IntentStageName</code> – <code>EQ</code>, <code>CO</code>.</p> </li> </ul>",
+      "refs": {
+        "AnalyticsIntentStageFilters$member": null
+      }
+    },
+    "AnalyticsIntentStageFilterName": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentStageFilter$name": "<p>The category by which to filter the intent stages. The descriptions for each option are as follows:</p> <ul> <li> <p> <code>BotAlias</code> – The name of the bot alias.</p> </li> <li> <p> <code>BotVersion</code> – The version of the bot.</p> </li> <li> <p> <code>LocaleId</code> – The locale of the bot.</p> </li> <li> <p> <code>Modality</code> – The modality of the session with the bot (audio, DTMF, or text).</p> </li> <li> <p> <code>Channel</code> – The channel that the bot is integrated with.</p> </li> <li> <p> <code>SessionId</code> – The identifier of the session with the bot.</p> </li> <li> <p> <code>OriginatingRequestId</code> – The identifier of the first request in a session.</p> </li> <li> <p> <code>IntentName</code> – The name of the intent.</p> </li> <li> <p> <code>IntentStageName</code> – The stage in the intent.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsIntentStageFilters": {
+      "base": null,
+      "refs": {
+        "ListIntentStageMetricsRequest$filters": "<p>A list of objects, each of which describes a condition by which you want to filter the results.</p>"
+      }
+    },
+    "AnalyticsIntentStageGroupByKey": {
+      "base": "<p>Contains the category by which the intent stage analytics and the values for that category were grouped.</p>",
+      "refs": {
+        "AnalyticsIntentStageGroupByKeys$member": null
+      }
+    },
+    "AnalyticsIntentStageGroupByKeys": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentStageResult$groupByKeys": "<p>A list of objects containing the criteria you requested for grouping results and the values of the bins.</p>"
+      }
+    },
+    "AnalyticsIntentStageGroupByList": {
+      "base": null,
+      "refs": {
+        "ListIntentStageMetricsRequest$groupBy": "<p>A list of objects, each of which specifies how to group the results. You can group by the following criteria:</p> <ul> <li> <p> <code>IntentStageName</code> – The name of the intent stage.</p> </li> <li> <p> <code>SwitchedToIntent</code> – The intent to which the conversation was switched (if any).</p> </li> </ul>"
+      }
+    },
+    "AnalyticsIntentStageGroupBySpecification": {
+      "base": "<p>Contains the category by which to group the intent stages.</p>",
+      "refs": {
+        "AnalyticsIntentStageGroupByList$member": null
+      }
+    },
+    "AnalyticsIntentStageMetric": {
+      "base": "<p>Contains the metric and the summary statistic you want to calculate, and the order in which to sort the results, for the intent stages across the user sessions with the bot.</p>",
+      "refs": {
+        "AnalyticsIntentStageMetrics$member": null
+      }
+    },
+    "AnalyticsIntentStageMetricName": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentStageMetric$name": "<p>The metric for which you want to get intent stage summary statistics. See <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/analytics-key-definitions.html\">Key definitions</a> for more details about these metrics.</p> <ul> <li> <p> <code>Count</code> – The number of times the intent stage occurred.</p> </li> <li> <p> <code>Success</code> – The number of times the intent stage succeeded.</p> </li> <li> <p> <code>Failure</code> – The number of times the intent stage failed.</p> </li> <li> <p> <code>Dropped</code> – The number of times the user dropped the intent stage.</p> </li> <li> <p> <code>Retry</code> – The number of times the bot tried to elicit a response from the user at this stage.</p> </li> </ul>",
+        "AnalyticsIntentStageMetricResult$name": "<p>The metric that you requested.</p> <ul> <li> <p> <code>Count</code> – The number of times the intent stage occurred.</p> </li> <li> <p> <code>Success</code> – The number of times the intent stage succeeded.</p> </li> <li> <p> <code>Failure</code> – The number of times the intent stage failed.</p> </li> <li> <p> <code>Dropped</code> – The number of times the user dropped the intent stage.</p> </li> <li> <p> <code>Retry</code> – The number of times the bot tried to elicit a response from the user at this stage.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsIntentStageMetricResult": {
+      "base": "<p>An object containing the results for an intent stage metric you requested.</p>",
+      "refs": {
+        "AnalyticsIntentStageMetricResults$member": null
+      }
+    },
+    "AnalyticsIntentStageMetricResults": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentStageResult$metricsResults": "<p>A list of objects, each of which contains a metric you want to list, the statistic for the metric you want to return, and the method by which to organize the results.</p>"
+      }
+    },
+    "AnalyticsIntentStageMetrics": {
+      "base": null,
+      "refs": {
+        "ListIntentStageMetricsRequest$metrics": "<p>A list of objects, each of which contains a metric you want to list, the statistic for the metric you want to return, and the method by which to organize the results.</p>"
+      }
+    },
+    "AnalyticsIntentStageResult": {
+      "base": "<p>An object containing the results for the intent stage metrics you requested and the bin and/or group they refer to, if applicable.</p>",
+      "refs": {
+        "AnalyticsIntentStageResults$member": null
+      }
+    },
+    "AnalyticsIntentStageResults": {
+      "base": null,
+      "refs": {
+        "ListIntentStageMetricsResponse$results": "<p>The results for the intent stage metrics.</p>"
+      }
+    },
+    "AnalyticsInterval": {
+      "base": null,
+      "refs": {
+        "AnalyticsBinBySpecification$interval": "<p>Specifies the interval of time by which to bin the analytics data.</p>"
+      }
+    },
+    "AnalyticsLongValue": {
+      "base": null,
+      "refs": {
+        "SessionSpecification$conversationDurationSeconds": "<p>The duration of the conversation in seconds. A conversation is defined as a unique combination of a <code>sessionId</code> and an <code>originatingRequestId</code>.</p>",
+        "SessionSpecification$numberOfTurns": "<p>The number of turns that the session took.</p>",
+        "UtteranceSpecification$audioVoiceDurationMillis": "<p>The duration in milliseconds of the audio associated with the utterance.</p>"
+      }
+    },
+    "AnalyticsMetricStatistic": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentMetric$statistic": "<p>The summary statistic to calculate.</p> <ul> <li> <p> <code>Sum</code> – The total count for the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Average</code> – The total count divided by the number of intents in the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Max</code> – The highest count in the category you provide in <code>name</code>.</p> </li> </ul>",
+        "AnalyticsIntentMetricResult$statistic": "<p>The statistic that you requested to calculate.</p> <ul> <li> <p> <code>Sum</code> – The total count for the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Average</code> – The total count divided by the number of intents in the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Max</code> – The highest count in the category you provide in <code>name</code>.</p> </li> </ul>",
+        "AnalyticsIntentStageMetric$statistic": "<p>The summary statistic to calculate.</p> <ul> <li> <p> <code>Sum</code> – The total count for the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Average</code> – The total count divided by the number of intent stages in the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Max</code> – The highest count in the category you provide in <code>name</code>.</p> </li> </ul>",
+        "AnalyticsIntentStageMetricResult$statistic": "<p>The summary statistic that you requested to calculate.</p> <ul> <li> <p> <code>Sum</code> – The total count for the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Average</code> – The total count divided by the number of intent stages in the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Max</code> – The highest count in the category you provide in <code>name</code>.</p> </li> </ul>",
+        "AnalyticsSessionMetric$statistic": "<p>The summary statistic to calculate.</p> <ul> <li> <p> <code>Sum</code> – The total count for the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Average</code> – The total count divided by the number of sessions in the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Max</code> – The highest count in the category you provide in <code>name</code>.</p> </li> </ul>",
+        "AnalyticsSessionMetricResult$statistic": "<p>The summary statistic that you requested to calculate.</p> <ul> <li> <p> <code>Sum</code> – The total count for the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Average</code> – The total count divided by the number of sessions in the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Max</code> – The highest count in the category you provide in <code>name</code>.</p> </li> </ul>",
+        "AnalyticsUtteranceMetric$statistic": "<p>The summary statistic to calculate.</p> <ul> <li> <p> <code>Sum</code> – The total count for the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Average</code> – The total count divided by the number of utterances in the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Max</code> – The highest count in the category you provide in <code>name</code>.</p> </li> </ul>",
+        "AnalyticsUtteranceMetricResult$statistic": "<p>The summary statistic that you requested to calculate.</p> <ul> <li> <p> <code>Sum</code> – The total count for the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Average</code> – The total count divided by the number of utterances in the category you provide in <code>name</code>.</p> </li> <li> <p> <code>Max</code> – The highest count in the category you provide in <code>name</code>.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsMetricValue": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentMetricResult$value": "<p>The value of the summary statistic for the metric that you requested.</p>",
+        "AnalyticsIntentStageMetricResult$value": "<p>The value of the summary statistic for the metric that you requested.</p>",
+        "AnalyticsSessionMetricResult$value": "<p>The value of the summary statistic for the metric that you requested.</p>",
+        "AnalyticsUtteranceMetricResult$value": "<p>The value of the summary statistic for the metric that you requested.</p>"
+      }
+    },
+    "AnalyticsModality": {
+      "base": null,
+      "refs": {
+        "SessionSpecification$mode": "<p>The mode of the session. The possible values are as follows:</p> <ul> <li> <p> <code>Speech</code> – The session was spoken.</p> </li> <li> <p> <code>Text</code> – The session was written.</p> </li> <li> <p> <code>DTMF</code> – The session used a touch-tone keypad (Dual Tone Multi-Frequency).</p> </li> <li> <p> <code>MultiMode</code> – The session used multiple modes.</p> </li> </ul>",
+        "UtteranceSpecification$mode": "<p>The mode of the session. The possible values are as follows:</p> <ul> <li> <p> <code>Speech</code> – The session consisted of spoken dialogue.</p> </li> <li> <p> <code>Text</code> – The session consisted of written dialogue.</p> </li> <li> <p> <code>DTMF</code> – The session consisted of touch-tone keypad (Dual Tone Multi-Frequency) key presses.</p> </li> <li> <p> <code>MultiMode</code> – The session consisted of multiple modes.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsNodeCount": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentNodeSummary$intentCount": "<p>The total number of sessions that follow the given path to the given intent.</p>"
+      }
+    },
+    "AnalyticsNodeLevel": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentNodeSummary$intentLevel": "<p>The number of intents up to and including the requested path.</p>"
+      }
+    },
+    "AnalyticsNodeType": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentNodeSummary$nodeType": "<p>Specifies whether the node is the end of a path (<code>Exit</code>) or not (<code>Inner</code>).</p>"
+      }
+    },
+    "AnalyticsOriginatingRequestId": {
+      "base": null,
+      "refs": {
+        "SessionSpecification$originatingRequestId": "<p>The identifier of the first request in a session.</p>"
+      }
+    },
+    "AnalyticsPath": {
+      "base": null,
+      "refs": {
+        "AnalyticsIntentNodeSummary$intentPath": "<p>The path.</p>",
+        "ListIntentPathsRequest$intentPath": "<p>The intent path for which you want to retrieve metrics. Use a forward slash to separate intents in the path. For example:</p> <ul> <li> <p>/BookCar</p> </li> <li> <p>/BookCar/BookHotel</p> </li> <li> <p>/BookHotel/BookCar</p> </li> </ul>"
+      }
+    },
+    "AnalyticsPathFilter": {
+      "base": "<p>Contains fields describing a condition by which to filter the paths. The expression may be understood as <code>name</code> <code>operator</code> <code>values</code>. For example:</p> <ul> <li> <p> <code>LocaleId EQ en</code> – The locale is \"en\".</p> </li> <li> <p> <code>BotVersion EQ 2</code> – The bot version is equal to two.</p> </li> </ul> <p>The operators that each filter supports are listed below:</p> <ul> <li> <p> <code>BotAlias</code> – <code>EQ</code>.</p> </li> <li> <p> <code>BotVersion</code> – <code>EQ</code>.</p> </li> <li> <p> <code>LocaleId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Modality</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Channel</code> – <code>EQ</code>.</p> </li> </ul>",
+      "refs": {
+        "AnalyticsPathFilters$member": null
+      }
+    },
+    "AnalyticsPathFilters": {
+      "base": null,
+      "refs": {
+        "ListIntentPathsRequest$filters": "<p>A list of objects, each describes a condition by which you want to filter the results.</p>"
+      }
+    },
+    "AnalyticsSessionField": {
+      "base": null,
+      "refs": {
+        "AnalyticsSessionGroupByKey$name": "<p>The category by which the session analytics were grouped.</p>",
+        "AnalyticsSessionGroupBySpecification$name": "<p>Specifies whether to group the session by their end state or their locale.</p>"
+      }
+    },
+    "AnalyticsSessionFilter": {
+      "base": "<p>Contains fields describing a condition by which to filter the sessions. The expression may be understood as <code>name</code> <code>operator</code> <code>values</code>. For example:</p> <ul> <li> <p> <code>LocaleId EQ en</code> – The locale is \"en\".</p> </li> <li> <p> <code>Duration GT 200</code> – The duration is greater than 200 seconds.</p> </li> </ul> <p>The operators that each filter supports are listed below:</p> <ul> <li> <p> <code>BotAlias</code> – <code>EQ</code>.</p> </li> <li> <p> <code>BotVersion</code> – <code>EQ</code>.</p> </li> <li> <p> <code>LocaleId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Modality</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Channel</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Duration</code> – <code>EQ</code>, <code>GT</code>, <code>LT</code>.</p> </li> <li> <p> <code>conversationEndState</code> – <code>EQ</code>, <code>CO</code>.</p> </li> <li> <p> <code>SessionId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>OriginatingRequestId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>IntentPath</code> – <code>EQ</code>.</p> </li> </ul>",
+      "refs": {
+        "AnalyticsSessionFilters$member": null
+      }
+    },
+    "AnalyticsSessionFilterName": {
+      "base": null,
+      "refs": {
+        "AnalyticsSessionFilter$name": "<p>The category by which to filter the sessions. The descriptions for each option are as follows:</p> <ul> <li> <p> <code>BotAlias</code> – The name of the bot alias.</p> </li> <li> <p> <code>BotVersion</code> – The version of the bot.</p> </li> <li> <p> <code>LocaleId</code> – The locale of the bot.</p> </li> <li> <p> <code>Modality</code> – The modality of the session with the bot (audio, DTMF, or text).</p> </li> <li> <p> <code>Channel</code> – The channel that the bot is integrated with.</p> </li> <li> <p> <code>Duration</code> – The duration of the session.</p> </li> <li> <p> <code>conversationEndState</code> – The final state of the session.</p> </li> <li> <p> <code>SessionId</code> – The identifier of the session with the bot.</p> </li> <li> <p> <code>OriginatingRequestId</code> – The identifier of the first request in a session.</p> </li> <li> <p> <code>IntentPath</code> – The order of intents taken in a session.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsSessionFilters": {
+      "base": null,
+      "refs": {
+        "ListSessionAnalyticsDataRequest$filters": "<p>A list of objects, each of which describes a condition by which you want to filter the results.</p>",
+        "ListSessionMetricsRequest$filters": "<p>A list of objects, each of which describes a condition by which you want to filter the results.</p>"
+      }
+    },
+    "AnalyticsSessionGroupByKey": {
+      "base": "<p>Contains the category by which the session analytics were grouped and a member of that category.</p>",
+      "refs": {
+        "AnalyticsSessionGroupByKeys$member": null
+      }
+    },
+    "AnalyticsSessionGroupByKeys": {
+      "base": null,
+      "refs": {
+        "AnalyticsSessionResult$groupByKeys": "<p>A list of objects containing the criteria you requested for grouping results and the values of the bins.</p>"
+      }
+    },
+    "AnalyticsSessionGroupByList": {
+      "base": null,
+      "refs": {
+        "ListSessionMetricsRequest$groupBy": "<p>A list of objects, each of which specifies how to group the results. You can group by the following criteria:</p> <ul> <li> <p> <code>ConversationEndState</code> – The final state of the conversation. The possible end states are detailed in <a href=\"https://docs.aws.amazon.com/analytics-key-definitions-conversations\">Key definitions</a> in the user guide.</p> </li> <li> <p> <code>LocaleId</code> – The unique identifier of the bot locale.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsSessionGroupBySpecification": {
+      "base": "<p>Contains the category by which to group the sessions.</p>",
+      "refs": {
+        "AnalyticsSessionGroupByList$member": null
+      }
+    },
+    "AnalyticsSessionId": {
+      "base": null,
+      "refs": {
+        "SessionSpecification$sessionId": "<p>The identifier of the session.</p>",
+        "UtteranceSpecification$sessionId": "<p>The identifier of the session that the utterance was made in.</p>"
+      }
+    },
+    "AnalyticsSessionMetric": {
+      "base": "<p>Contains the metric and the summary statistic you want to calculate, and the order in which to sort the results, for the user sessions with the bot.</p>",
+      "refs": {
+        "AnalyticsSessionMetrics$member": null
+      }
+    },
+    "AnalyticsSessionMetricName": {
+      "base": null,
+      "refs": {
+        "AnalyticsSessionMetric$name": "<p>The metric for which you want to get session summary statistics.</p> <ul> <li> <p> <code>Count</code> – The number of sessions.</p> </li> <li> <p> <code>Success</code> – The number of sessions that succeeded.</p> </li> <li> <p> <code>Failure</code> – The number of sessions that failed.</p> </li> <li> <p> <code>Dropped</code> – The number of sessions that the user dropped.</p> </li> <li> <p> <code>Duration</code> – The duration of sessions.</p> </li> <li> <p> <code>TurnsPerSession</code> – The number of turns in the sessions.</p> </li> <li> <p> <code>Concurrency</code> – The number of sessions occurring in the same period of time.</p> </li> </ul>",
+        "AnalyticsSessionMetricResult$name": "<p>The metric that you requested.</p> <ul> <li> <p> <code>Count</code> – The number of sessions.</p> </li> <li> <p> <code>Success</code> – The number of sessions that succeeded.</p> </li> <li> <p> <code>Failure</code> – The number of sessions that failed.</p> </li> <li> <p> <code>Dropped</code> – The number of sessions that the user dropped.</p> </li> <li> <p> <code>Duration</code> – The duration of sessions.</p> </li> <li> <p> <code>TurnPersession</code> – The number of turns in the sessions.</p> </li> <li> <p> <code>Concurrency</code> – The number of sessions occurring in the same period of time.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsSessionMetricResult": {
+      "base": "<p>An object containing the results for a session metric you requested.</p>",
+      "refs": {
+        "AnalyticsSessionMetricResults$member": null
+      }
+    },
+    "AnalyticsSessionMetricResults": {
+      "base": null,
+      "refs": {
+        "AnalyticsSessionResult$metricsResults": "<p>A list of objects, each of which contains a metric you want to list, the statistic for the metric you want to return, and the method by which to organize the results.</p>"
+      }
+    },
+    "AnalyticsSessionMetrics": {
+      "base": null,
+      "refs": {
+        "ListSessionMetricsRequest$metrics": "<p>A list of objects, each of which contains a metric you want to list, the statistic for the metric you want to return, and the method by which to organize the results.</p>"
+      }
+    },
+    "AnalyticsSessionResult": {
+      "base": "<p>An object containing the results for the session metrics you requested and the bin and/or group(s) they refer to, if applicable.</p>",
+      "refs": {
+        "AnalyticsSessionResults$member": null
+      }
+    },
+    "AnalyticsSessionResults": {
+      "base": null,
+      "refs": {
+        "ListSessionMetricsResponse$results": "<p>The results for the session metrics.</p>"
+      }
+    },
+    "AnalyticsSessionSortByName": {
+      "base": null,
+      "refs": {
+        "SessionDataSortBy$name": "<p>The measure by which to sort the session analytics data.</p> <ul> <li> <p> <code>conversationStartTime</code> – The date and time when the conversation began. A conversation is defined as a unique combination of a <code>sessionId</code> and an <code>originatingRequestId</code>.</p> </li> <li> <p> <code>numberOfTurns</code> – The number of turns that the session took.</p> </li> <li> <p> <code>conversationDurationSeconds</code> – The duration of the conversation in seconds.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsSortOrder": {
+      "base": null,
+      "refs": {
+        "AnalyticsBinBySpecification$order": "<p>Specifies whether to bin the analytics data in ascending or descending order. If this field is left blank, the default order is by the key of the bin in descending order.</p>",
+        "AnalyticsIntentMetric$order": "<p>Specifies whether to sort the results in ascending or descending order.</p>",
+        "AnalyticsIntentStageMetric$order": "<p>Specifies whether to sort the results in ascending or descending order of the summary statistic (<code>value</code> in the response).</p>",
+        "AnalyticsSessionMetric$order": "<p>Specifies whether to sort the results in ascending or descending order.</p>",
+        "AnalyticsUtteranceMetric$order": "<p>Specifies whether to sort the results in ascending or descending order.</p>",
+        "SessionDataSortBy$order": "<p>Specifies whether to sort the results in ascending or descending order.</p>",
+        "UtteranceDataSortBy$order": "<p>Specifies whether to sort the results in ascending or descending order.</p>"
+      }
+    },
+    "AnalyticsUtteranceAttribute": {
+      "base": "<p>An object that specifies the last used intent at the time of the utterance as an attribute to return.</p>",
+      "refs": {
+        "AnalyticsUtteranceAttributes$member": null
+      }
+    },
+    "AnalyticsUtteranceAttributeName": {
+      "base": null,
+      "refs": {
+        "AnalyticsUtteranceAttribute$name": "<p>An attribute to return. The only available attribute is the intent that the bot mapped the utterance to.</p>"
+      }
+    },
+    "AnalyticsUtteranceAttributeResult": {
+      "base": "<p>An object containing the intent that the bot mapped the utterance to.</p>",
+      "refs": {
+        "AnalyticsUtteranceAttributeResults$member": null
+      }
+    },
+    "AnalyticsUtteranceAttributeResults": {
+      "base": null,
+      "refs": {
+        "AnalyticsUtteranceResult$attributeResults": "<p>A list of objects containing information about the last used intent at the time of an utterance.</p>"
+      }
+    },
+    "AnalyticsUtteranceAttributes": {
+      "base": null,
+      "refs": {
+        "ListUtteranceMetricsRequest$attributes": "<p>A list containing attributes related to the utterance that you want the response to return. The following attributes are possible:</p> <ul> <li> <p> <code>LastUsedIntent</code> – The last used intent at the time of the utterance.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsUtteranceField": {
+      "base": null,
+      "refs": {
+        "AnalyticsUtteranceGroupByKey$name": "<p>The category by which the utterance analytics were grouped.</p>",
+        "AnalyticsUtteranceGroupBySpecification$name": "<p>Specifies whether to group the utterances by their text or their state.</p>"
+      }
+    },
+    "AnalyticsUtteranceFilter": {
+      "base": "<p>Contains fields describing a condition by which to filter the utterances. The expression may be understood as <code>name</code> <code>operator</code> <code>values</code>. For example:</p> <ul> <li> <p> <code>LocaleId EQ Book</code> – The locale is the string \"en\".</p> </li> <li> <p> <code>UtteranceText CO help</code> – The text of the utterance contains the string \"help\".</p> </li> </ul> <p>The operators that each filter supports are listed below:</p> <ul> <li> <p> <code>BotAlias</code> – <code>EQ</code>.</p> </li> <li> <p> <code>BotVersion</code> – <code>EQ</code>.</p> </li> <li> <p> <code>LocaleId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Modality</code> – <code>EQ</code>.</p> </li> <li> <p> <code>Channel</code> – <code>EQ</code>.</p> </li> <li> <p> <code>SessionId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>OriginatingRequestId</code> – <code>EQ</code>.</p> </li> <li> <p> <code>UtteranceState</code> – <code>EQ</code>.</p> </li> <li> <p> <code>UtteranceText</code> – <code>EQ</code>, <code>CO</code>.</p> </li> </ul>",
+      "refs": {
+        "AnalyticsUtteranceFilters$member": null
+      }
+    },
+    "AnalyticsUtteranceFilterName": {
+      "base": null,
+      "refs": {
+        "AnalyticsUtteranceFilter$name": "<p>The category by which to filter the utterances. The descriptions for each option are as follows:</p> <ul> <li> <p> <code>BotAlias</code> – The name of the bot alias.</p> </li> <li> <p> <code>BotVersion</code> – The version of the bot.</p> </li> <li> <p> <code>LocaleId</code> – The locale of the bot.</p> </li> <li> <p> <code>Modality</code> – The modality of the session with the bot (audio, DTMF, or text).</p> </li> <li> <p> <code>Channel</code> – The channel that the bot is integrated with.</p> </li> <li> <p> <code>SessionId</code> – The identifier of the session with the bot.</p> </li> <li> <p> <code>OriginatingRequestId</code> – The identifier of the first request in a session.</p> </li> <li> <p> <code>UtteranceState</code> – The state of the utterance.</p> </li> <li> <p> <code>UtteranceText</code> – The text in the utterance.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsUtteranceFilters": {
+      "base": null,
+      "refs": {
+        "ListUtteranceAnalyticsDataRequest$filters": "<p>A list of objects, each of which describes a condition by which you want to filter the results.</p>",
+        "ListUtteranceMetricsRequest$filters": "<p>A list of objects, each of which describes a condition by which you want to filter the results.</p>"
+      }
+    },
+    "AnalyticsUtteranceGroupByKey": {
+      "base": "<p>Contains the category by which the utterance analytics were grouped and the values for that category.</p>",
+      "refs": {
+        "AnalyticsUtteranceGroupByKeys$member": null
+      }
+    },
+    "AnalyticsUtteranceGroupByKeys": {
+      "base": null,
+      "refs": {
+        "AnalyticsUtteranceResult$groupByKeys": "<p>A list of objects containing the criteria you requested for grouping results and the values of the bins.</p>"
+      }
+    },
+    "AnalyticsUtteranceGroupByList": {
+      "base": null,
+      "refs": {
+        "ListUtteranceMetricsRequest$groupBy": "<p>A list of objects, each of which specifies how to group the results. You can group by the following criteria:</p> <ul> <li> <p> <code>UtteranceText</code> – The transcription of the utterance.</p> </li> <li> <p> <code>UtteranceState</code> – The state of the utterance. The possible states are detailed in <a href=\"https://docs.aws.amazon.com/analytics-key-definitions-utterances\">Key definitions</a> in the user guide.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsUtteranceGroupBySpecification": {
+      "base": "<p>Contains the category by which to group the utterances.</p>",
+      "refs": {
+        "AnalyticsUtteranceGroupByList$member": null
+      }
+    },
+    "AnalyticsUtteranceMetric": {
+      "base": "<p>Contains the metric and the summary statistic you want to calculate, and the order in which to sort the results, for the utterances across the user sessions with the bot.</p>",
+      "refs": {
+        "AnalyticsUtteranceMetrics$member": null
+      }
+    },
+    "AnalyticsUtteranceMetricName": {
+      "base": null,
+      "refs": {
+        "AnalyticsUtteranceMetric$name": "<p>The metric for which you want to get utterance summary statistics.</p> <ul> <li> <p> <code>Count</code> – The number of utterances.</p> </li> <li> <p> <code>Missed</code> – The number of utterances that Amazon Lex failed to recognize.</p> </li> <li> <p> <code>Detected</code> – The number of utterances that Amazon Lex managed to detect.</p> </li> <li> <p> <code>UtteranceTimestamp</code> – The date and time of the utterance.</p> </li> </ul>",
+        "AnalyticsUtteranceMetricResult$name": "<p>The metric that you requested.</p> <ul> <li> <p> <code>Count</code> – The number of utterances.</p> </li> <li> <p> <code>Missed</code> – The number of utterances that Amazon Lex failed to recognize.</p> </li> <li> <p> <code>Detected</code> – The number of utterances that Amazon Lex managed to detect.</p> </li> <li> <p> <code>UtteranceTimestamp</code> – The date and time of the utterance.</p> </li> </ul>"
+      }
+    },
+    "AnalyticsUtteranceMetricResult": {
+      "base": "<p>An object containing the results for the utterance metric you requested.</p>",
+      "refs": {
+        "AnalyticsUtteranceMetricResults$member": null
+      }
+    },
+    "AnalyticsUtteranceMetricResults": {
+      "base": null,
+      "refs": {
+        "AnalyticsUtteranceResult$metricsResults": "<p>A list of objects, each of which contains a metric you want to list, the statistic for the metric you want to return, and the method by which to organize the results.</p>"
+      }
+    },
+    "AnalyticsUtteranceMetrics": {
+      "base": null,
+      "refs": {
+        "ListUtteranceMetricsRequest$metrics": "<p>A list of objects, each of which contains a metric you want to list, the statistic for the metric you want to return, and the method by which to organize the results.</p>"
+      }
+    },
+    "AnalyticsUtteranceResult": {
+      "base": "<p>An object containing the results for the utterance metrics you requested and the bin and/or group(s) they refer to, if applicable.</p>",
+      "refs": {
+        "AnalyticsUtteranceResults$member": null
+      }
+    },
+    "AnalyticsUtteranceResults": {
+      "base": null,
+      "refs": {
+        "ListUtteranceMetricsResponse$results": "<p>The results for the utterance metrics.</p>"
+      }
+    },
+    "AnalyticsUtteranceSortByName": {
+      "base": null,
+      "refs": {
+        "UtteranceDataSortBy$name": "<p>The measure by which to sort the utterance analytics data.</p> <ul> <li> <p> <code>Count</code> – The number of utterances.</p> </li> <li> <p> <code>UtteranceTimestamp</code> – The date and time of the utterance.</p> </li> </ul>"
+      }
+    },
+    "AnswerField": {
+      "base": null,
+      "refs": {
+        "ExactResponseFields$answerField": "<p>The name of the field that contains the answer to the query made to the OpenSearch Service database.</p>"
+      }
+    },
     "AssociatedTranscript": {
       "base": "<p>The object containing information that associates the recommended intent/slot type with a conversation.</p>",
       "refs": {
@@ -315,18 +958,51 @@
       "refs": {
       }
     },
+    "BedrockKnowledgeBaseArn": {
+      "base": null,
+      "refs": {
+        "BedrockKnowledgeStoreConfiguration$bedrockKnowledgeBaseArn": "<p>The ARN of the knowledge base used.</p>"
+      }
+    },
+    "BedrockKnowledgeStoreConfiguration": {
+      "base": "<p>Contains details about the configuration of a Amazon Bedrock knowledge base.</p>",
+      "refs": {
+        "DataSourceConfiguration$bedrockKnowledgeStoreConfiguration": "<p>Contains details about the configuration of the Amazon Bedrock knowledge base used for the <code>AMAZON.QnAIntent</code>. To set up a knowledge base, follow the steps at <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html\">Building a knowledge base</a>.</p>"
+      }
+    },
+    "BedrockModelArn": {
+      "base": null,
+      "refs": {
+        "BedrockModelSpecification$modelArn": "<p>The ARN of the foundation model used in descriptive bot building.</p>",
+        "DescribeBotResourceGenerationResponse$modelArn": "<p>The ARN of the model used to generate the bot resources.</p>"
+      }
+    },
+    "BedrockModelSpecification": {
+      "base": "<p>Contains information about the Amazon Bedrock model used to interpret the prompt used in descriptive bot building.</p>",
+      "refs": {
+        "DescriptiveBotBuilderSpecification$bedrockModelSpecification": "<p>An object containing information about the Amazon Bedrock model used to interpret the prompt used in descriptive bot building.</p>",
+        "QnAIntentConfiguration$bedrockModelConfiguration": null,
+        "SampleUtteranceGenerationSpecification$bedrockModelSpecification": null,
+        "SlotResolutionImprovementSpecification$bedrockModelSpecification": "<p>An object containing information about the Amazon Bedrock model used to assist slot resolution.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
         "AudioLogSetting$enabled": "<p>Determines whether audio logging in enabled for the bot.</p>",
         "BotAliasLocaleSettings$enabled": "<p>Determines whether the locale is enabled for the bot. If the value is <code>false</code>, the locale isn't available for use.</p>",
+        "DescriptiveBotBuilderSpecification$enabled": "<p>Specifies whether the descriptive bot building feature is activated or not.</p>",
         "DialogCodeHookSettings$enabled": "<p>Enables the dialog code hook so that it processes user requests.</p>",
         "FulfillmentCodeHookSettings$enabled": "<p>Indicates whether a Lambda function should be invoked to fulfill a specific intent.</p>",
         "IntentClassificationTestResultItem$multiTurnConversation": "<p>Indicates whether the conversation involves multiple turns or not.</p>",
         "IntentLevelSlotResolutionTestResultItem$multiTurnConversation": "<p>Indicates whether the conversation involves multiple turns or not.</p>",
         "KendraConfiguration$queryFilterStringEnabled": "<p>Determines whether the <code>AMAZON.KendraSearchIntent</code> intent uses a custom query string to query the Amazon Kendra index.</p>",
         "MultipleValuesSetting$allowMultipleValues": "<p>Indicates whether a slot can return multiple values. When <code>true</code>, the slot may return more than one value in a response. When <code>false</code>, the slot returns only a single value.</p> <p>Multi-value slots are only available in the en-US locale. If you set this value to <code>true</code> in any other locale, Amazon Lex throws a <code>ValidationException</code>.</p> <p>If the <code>allowMutlipleValues</code> is not set, the default value is <code>false</code>.</p>",
+        "OpensearchConfiguration$exactResponse": "<p>Specifies whether to return an exact response or to return an answer generated by the model using the fields you specify from the database.</p>",
         "OverallTestResultItem$multiTurnConversation": "<p>Indicates whether the conversation contains multiple turns or not.</p>",
+        "QnAKendraConfiguration$queryFilterStringEnabled": "<p>Specifies whether to enable an Amazon Kendra filter string or not.</p>",
+        "QnAKendraConfiguration$exactResponse": "<p>Specifies whether to return an exact response from the Amazon Kendra index or to let the Amazon Bedrock model you select generate a response based on the results. To use this feature, you must first add FAQ questions to your index by following the steps at <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/in-creating-faq.html\">Adding frequently asked questions (FAQs) to an index</a>.</p>",
+        "SampleUtteranceGenerationSpecification$enabled": "<p>Specifies whether to enable sample utterance generation or not.</p>",
         "SentimentAnalysisSettings$detectSentiment": "<p>Sets whether Amazon Lex uses Amazon Comprehend to detect the sentiment of user utterances.</p>",
         "TextLogSetting$enabled": "<p>Determines whether conversation logs should be stored for an alias.</p>"
       }
@@ -346,6 +1022,7 @@
     "BotAliasId": {
       "base": null,
       "refs": {
+        "BotAliasReplicaSummary$botAliasId": "<p>The bot alias ID for all the alias bot replications.</p>",
         "BotAliasSummary$botAliasId": "<p>The unique identifier assigned to the bot alias. You can use this ID to get detailed information about the alias using the <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_DescribeBotAlias.html\">DescribeBotAlias</a> operation.</p>",
         "BotAliasTestExecutionTarget$botAliasId": "<p>The bot alias Id of the bot alias used in the test set execution.</p>",
         "BotMember$botMemberAliasId": "<p>The alias ID of a bot that is a member of this network of bots.</p>",
@@ -357,9 +1034,11 @@
         "DescribeBotAliasResponse$botAliasId": "<p>The identifier of the bot alias.</p>",
         "ListAggregatedUtterancesRequest$botAliasId": "<p>The identifier of the bot alias associated with this request. If you specify the bot alias, you can't specify the bot version.</p>",
         "ListAggregatedUtterancesResponse$botAliasId": "<p>The identifier of the bot alias that contains the utterances. If you specified the bot version, the bot alias ID isn't returned.</p>",
+        "SessionSpecification$botAliasId": "<p>The identifier of the alias of the bot that the session was held with.</p>",
         "TestSetDiscrepancyReportBotAliasTarget$botAliasId": "<p>The unique identifier for the bot associated with the bot alias.</p>",
         "UpdateBotAliasRequest$botAliasId": "<p>The unique identifier of the bot alias.</p>",
-        "UpdateBotAliasResponse$botAliasId": "<p>The identifier of the updated bot alias.</p>"
+        "UpdateBotAliasResponse$botAliasId": "<p>The identifier of the updated bot alias.</p>",
+        "UtteranceSpecification$botAliasId": "<p>The identifier of the alias of the bot that the utterance was made to.</p>"
       }
     },
     "BotAliasLocaleSettings": {
@@ -382,6 +1061,24 @@
       "base": null,
       "refs": {
         "BotMember$botMemberAliasName": "<p>The alias name of a bot that is a member of this network of bots.</p>"
+      }
+    },
+    "BotAliasReplicaSummary": {
+      "base": "<p>Contains information about all the aliases replication statuses applicable for global resiliency.</p>",
+      "refs": {
+        "BotAliasReplicaSummaryList$member": null
+      }
+    },
+    "BotAliasReplicaSummaryList": {
+      "base": null,
+      "refs": {
+        "ListBotAliasReplicasResponse$botAliasReplicaSummaries": "<p>The summary information of the replicated bot created from the source bot alias.</p>"
+      }
+    },
+    "BotAliasReplicationStatus": {
+      "base": "<p>The status of the operation to replicate the bot alias. Values: Creating, Updating, Available, Deleting, Failed.</p>",
+      "refs": {
+        "BotAliasReplicaSummary$botAliasReplicationStatus": "<p>The replication statuses for all the alias bot replications.</p>"
       }
     },
     "BotAliasStatus": {
@@ -588,6 +1285,27 @@
         "ListBotRecommendationsResponse$botRecommendationSummaries": "<p>Summary information for the bot recommendations that meet the filter specified in this request. The length of the list is specified in the maxResults parameter of the request. If there are more bot recommendations available, the nextToken field contains a token to get the next page of results.</p>"
       }
     },
+    "BotReplicaStatus": {
+      "base": "<p>The status of the operation to replicate the bot. Values: Enabling, Enabled, Deleting, Failed.</p>",
+      "refs": {
+        "BotReplicaSummary$botReplicaStatus": "<p>The operation status for the replicated bot applicable.</p>",
+        "CreateBotReplicaResponse$botReplicaStatus": "<p>The operational status of the replicated bot generated.</p>",
+        "DeleteBotReplicaResponse$botReplicaStatus": "<p>The operational status of the replicated bot generated.</p>",
+        "DescribeBotReplicaResponse$botReplicaStatus": "<p>The operational status of the replicated bot being monitored.</p>"
+      }
+    },
+    "BotReplicaSummary": {
+      "base": "<p>Contains summary information about all the replication statuses applicable for global resiliency.</p>",
+      "refs": {
+        "BotReplicaSummaryList$member": null
+      }
+    },
+    "BotReplicaSummaryList": {
+      "base": null,
+      "refs": {
+        "ListBotReplicasResponse$botReplicaSummaries": "<p>The summary details for the replicated bots.</p>"
+      }
+    },
     "BotSortAttribute": {
       "base": null,
       "refs": {
@@ -648,16 +1366,20 @@
         "BatchUpdateCustomVocabularyItemRequest$botVersion": "<p>The identifier of the version of the bot associated with this custom vocabulary.</p>",
         "BatchUpdateCustomVocabularyItemResponse$botVersion": "<p>The identifier of the version of the bot associated with this custom vocabulary.</p>",
         "BotAliasHistoryEvent$botVersion": "<p>The version of the bot that was used in the event. </p>",
+        "BotAliasReplicaSummary$botVersion": "<p>The bot version for all the alias bot replications.</p>",
         "BotAliasSummary$botVersion": "<p>The version of the bot that the bot alias references.</p>",
         "BotExportSpecification$botVersion": "<p>The version of the bot that was exported. This will be either <code>DRAFT</code> or the version number.</p>",
         "BotLocaleExportSpecification$botVersion": "<p>The version of the bot to export.</p>",
         "BotMember$botMemberVersion": "<p>The version of a bot that is a member of this network of bots.</p>",
         "BotVersionLocaleDetails$sourceBotVersion": "<p>The version of a bot used for a bot locale.</p>",
+        "BotVersionReplicaSummary$botVersion": "<p>The bot version for the summary information for all the version replication statuses.</p>",
         "BotVersionSummary$botVersion": "<p>The numeric version of the bot, or <code>DRAFT</code> to indicate that this is the version of the bot that can be updated..</p>",
         "CustomVocabularyExportSpecification$botVersion": "<p>The version of the bot that contains the custom vocabulary to export.</p>",
         "DescribeBotAliasResponse$botVersion": "<p>The version of the bot associated with the bot alias.</p>",
         "DescribeBotLocaleRequest$botVersion": "<p>The version of the bot associated with the locale.</p>",
         "DescribeBotLocaleResponse$botVersion": "<p>The version of the bot associated with the locale.</p>",
+        "DescribeBotResourceGenerationRequest$botVersion": "<p>The version of the bot for which to return the generation details.</p>",
+        "DescribeBotResourceGenerationResponse$botVersion": "<p>The version of the bot for which the generation request was made.</p>",
         "DescribeCustomVocabularyMetadataRequest$botVersion": "<p>The bot version of the bot to return metadata for.</p>",
         "DescribeCustomVocabularyMetadataResponse$botVersion": "<p>The version of the bot that contains the custom vocabulary to describe.</p>",
         "DescribeIntentRequest$botVersion": "<p>The version of the bot associated with the intent.</p>",
@@ -665,10 +1387,13 @@
         "DescribeSlotResponse$botVersion": "<p>The version of the bot associated with the slot.</p>",
         "DescribeSlotTypeRequest$botVersion": "<p>The version of the bot associated with the slot type.</p>",
         "DescribeSlotTypeResponse$botVersion": "<p>The version of the bot associated with the slot type.</p>",
+        "GenerateBotElementRequest$botVersion": "<p>The bot version for the bot request to generate utterances.</p>",
         "ListAggregatedUtterancesRequest$botVersion": "<p>The identifier of the bot version associated with this request. If you specify the bot version, you can't specify the bot alias.</p>",
         "ListAggregatedUtterancesResponse$botVersion": "<p>The identifier of the bot version that contains the utterances. If you specified the bot alias, the bot version isn't returned.</p>",
         "ListBotLocalesRequest$botVersion": "<p>The version of the bot to list locales for.</p>",
         "ListBotLocalesResponse$botVersion": "<p>The version of the bot.</p>",
+        "ListBotResourceGenerationsRequest$botVersion": "<p>The version of the bot whose generation requests you want to view.</p>",
+        "ListBotResourceGenerationsResponse$botVersion": "<p>The version of the bot for which the generation requests were made.</p>",
         "ListCustomVocabularyItemsRequest$botVersion": "<p>The bot version of the bot to the list custom vocabulary request.</p>",
         "ListCustomVocabularyItemsResponse$botVersion": "<p>The identifier of the version of the bot associated with this custom vocabulary.</p>",
         "ListExportsRequest$botVersion": "<p>The version of the bot to list exports for. </p>",
@@ -682,6 +1407,8 @@
         "ParentBotNetwork$botVersion": "<p>The version of the network of bots.</p>",
         "SearchAssociatedTranscriptsRequest$botVersion": "<p>The version of the bot containing the transcripts that you are searching.</p>",
         "SearchAssociatedTranscriptsResponse$botVersion": "<p>The version of the bot containing the transcripts that you are searching.</p>",
+        "StartBotResourceGenerationRequest$botVersion": "<p>The version of the bot for which to generate intents and slot types.</p>",
+        "StartBotResourceGenerationResponse$botVersion": "<p>The version of the bot for which the generation request was made.</p>",
         "UpdateBotAliasRequest$botVersion": "<p>The new bot version to assign to the bot alias.</p>",
         "UpdateBotAliasResponse$botVersion": "<p>The updated version of the bot that the alias points to.</p>"
       }
@@ -697,6 +1424,36 @@
       "refs": {
         "CreateBotVersionRequest$botVersionLocaleSpecification": "<p>Specifies the locales that Amazon Lex adds to this version. You can choose the <code>Draft</code> version or any other previously published version for each locale. When you specify a source version, the locale data is copied from the source version to the new version.</p>",
         "CreateBotVersionResponse$botVersionLocaleSpecification": "<p>The source versions used for each locale in the new version.</p>"
+      }
+    },
+    "BotVersionReplicaSortAttribute": {
+      "base": null,
+      "refs": {
+        "BotVersionReplicaSortBy$attribute": "<p>The attribute of the sort category for the version replicated bots.</p>"
+      }
+    },
+    "BotVersionReplicaSortBy": {
+      "base": "<p>The sort category for the version replicated bots.</p>",
+      "refs": {
+        "ListBotVersionReplicasRequest$sortBy": "<p>The requested sort category for the list of replicated bots.</p>"
+      }
+    },
+    "BotVersionReplicaSummary": {
+      "base": "<p>Contains summary information for all the version replication statuses applicable for Global resiliency.</p>",
+      "refs": {
+        "BotVersionReplicaSummaryList$member": null
+      }
+    },
+    "BotVersionReplicaSummaryList": {
+      "base": null,
+      "refs": {
+        "ListBotVersionReplicasResponse$botVersionReplicaSummaries": "<p>The information summary used for the replicated bots in the list of replicated bots.</p>"
+      }
+    },
+    "BotVersionReplicationStatus": {
+      "base": "<p>The status of the operation to replicate the bot version. Values: Creating, Available, Deleting, Failed.</p>",
+      "refs": {
+        "BotVersionReplicaSummary$botVersionReplicationStatus": "<p>The version replication status for all the replicated bots.</p>"
       }
     },
     "BotVersionSortAttribute": {
@@ -729,6 +1486,7 @@
         "AggregatedUtterancesSummary$containsDataFromDeletedResources": "<p>Aggregated utterance data may contain utterances from versions of your bot that have since been deleted. When the aggregated contains this kind of data, this field is set to true.</p>",
         "AllowedInputTypes$allowAudioInput": "<p>Indicates whether audio input is allowed.</p>",
         "AllowedInputTypes$allowDTMFInput": "<p>Indicates whether DTMF input is allowed.</p>",
+        "AudioLogSetting$selectiveLoggingEnabled": "<p>The option to enable selective conversation log capture for audio.</p>",
         "ConditionalSpecification$active": "<p>Determines whether a conditional branch is active. When <code>active</code> is false, the conditions are not evaluated.</p>",
         "DialogAction$suppressNextMessage": "<p>When true the next message for the intent is not used.</p>",
         "DialogCodeHookInvocationSetting$enableCodeHookInvocation": "<p>Indicates whether a Lambda function should be invoked for the dialog.</p>",
@@ -744,6 +1502,7 @@
         "PromptSpecification$allowInterrupt": "<p>Indicates whether the user can interrupt a speech prompt from the bot.</p>",
         "ResponseSpecification$allowInterrupt": "<p>Indicates whether the user can interrupt a speech response from Amazon Lex.</p>",
         "StillWaitingResponseSpecification$allowInterrupt": "<p>Indicates that the user can interrupt the response by speaking while the message is being played.</p>",
+        "TextLogSetting$selectiveLoggingEnabled": "<p>The option to enable selective conversation log capture for text.</p>",
         "WaitAndContinueSpecification$active": "<p>Specifies whether the bot will wait for a user to respond. When this field is false, wait and continue responses for a slot aren't used. If the <code>active</code> field isn't specified, the default is true.</p>"
       }
     },
@@ -755,6 +1514,12 @@
     "BuildBotLocaleResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "BuildtimeSettings": {
+      "base": "<p>Contains specifications about the Amazon Lex build time generative AI capabilities from Amazon Bedrock that you can turn on for your bot.</p>",
+      "refs": {
+        "GenerativeAISettings$buildtimeSettings": null
       }
     },
     "BuiltInIntentSortAttribute": {
@@ -989,6 +1754,12 @@
         "OutputContext$turnsToLive": "<p>The number of conversation turns that the output context should remain active. The number of turns is counted from the first time that the context is sent to the user.</p>"
       }
     },
+    "ConversationEndState": {
+      "base": null,
+      "refs": {
+        "SessionSpecification$conversationEndState": "<p>The final state of the conversation. A conversation is defined as a unique combination of a <code>sessionId</code> and an <code>originatingRequestId</code>.</p>"
+      }
+    },
     "ConversationLevelIntentClassificationResultItem": {
       "base": "<p>The item listing the evaluation of intent level success or failure.</p>",
       "refs": {
@@ -1101,6 +1872,16 @@
       }
     },
     "CreateBotLocaleResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateBotReplicaRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateBotReplicaResponse": {
       "base": null,
       "refs": {
       }
@@ -1289,6 +2070,12 @@
         "UpdateBotResponse$dataPrivacy": "<p>The data privacy settings for the bot after the update.</p>"
       }
     },
+    "DataSourceConfiguration": {
+      "base": "<p>Contains details about the configuration of the knowledge store used for the <code>AMAZON.QnAIntent</code>. You must have already created the knowledge store and indexed the documents within it.</p>",
+      "refs": {
+        "QnAIntentConfiguration$dataSourceConfiguration": "<p>Contains details about the configuration of the data source used for the <code>AMAZON.QnAIntent</code>.</p>"
+      }
+    },
     "DateRangeFilter": {
       "base": "<p>The object used for specifying the data range that the customer wants Amazon Lex to read through in the input transcripts.</p>",
       "refs": {
@@ -1317,6 +2104,16 @@
       }
     },
     "DeleteBotLocaleResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteBotReplicaRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteBotReplicaResponse": {
       "base": null,
       "refs": {
       }
@@ -1457,7 +2254,27 @@
       "refs": {
       }
     },
+    "DescribeBotReplicaRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeBotReplicaResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeBotRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeBotResourceGenerationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeBotResourceGenerationResponse": {
       "base": null,
       "refs": {
       }
@@ -1642,6 +2459,12 @@
         "UpdateTestSetResponse$description": "<p>The test set description for the updated test set.</p>"
       }
     },
+    "DescriptiveBotBuilderSpecification": {
+      "base": "<p>Contains specifications for the descriptive bot building feature.</p>",
+      "refs": {
+        "BuildtimeSettings$descriptiveBotBuilder": "<p>An object containing specifications for the descriptive bot building feature.</p>"
+      }
+    },
     "DialogAction": {
       "base": "<p>Defines the action that the bot executes at runtime when the conversation reaches this step.</p>",
       "refs": {
@@ -1692,6 +2515,12 @@
         "SlotCaptureSetting$failureNextStep": "<p>Specifies the next step that the bot runs when the slot value code is not recognized.</p>"
       }
     },
+    "DomainEndpoint": {
+      "base": null,
+      "refs": {
+        "OpensearchConfiguration$domainEndpoint": "<p>The endpoint of the Amazon OpenSearch Service domain.</p>"
+      }
+    },
     "DraftBotVersion": {
       "base": null,
       "refs": {
@@ -1717,6 +2546,7 @@
         "DescribeBotRecommendationRequest$botVersion": "<p>The version of the bot associated with the bot recommendation.</p>",
         "DescribeBotRecommendationResponse$botVersion": "<p>The version of the bot associated with the bot recommendation.</p>",
         "DescribeIntentResponse$botVersion": "<p>The version of the bot associated with the intent.</p>",
+        "GenerateBotElementResponse$botVersion": "<p>The unique bot version for the bot which received the response.</p>",
         "ListBotRecommendationsRequest$botVersion": "<p>The version of the bot that contains the bot recommendation list.</p>",
         "ListBotRecommendationsResponse$botVersion": "<p>The version of the bot that contains the bot recommendation list.</p>",
         "ListImportsRequest$botVersion": "<p>The version of the bot to list imports for.</p>",
@@ -1752,6 +2582,12 @@
         "SlotCaptureSetting$elicitationCodeHook": "<p>Code hook called when Amazon Lex doesn't capture a slot value.</p>"
       }
     },
+    "Enabled": {
+      "base": null,
+      "refs": {
+        "SlotResolutionImprovementSpecification$enabled": "<p>Specifies whether assisted slot resolution is turned on or off.</p>"
+      }
+    },
     "EncryptionSetting": {
       "base": "<p>The object representing the passwords that were used to encrypt the data related to the bot recommendation, as well as the KMS key ARN used to encrypt the associated metadata.</p>",
       "refs": {
@@ -1772,6 +2608,12 @@
       "base": null,
       "refs": {
         "FailedCustomVocabularyItem$errorMessage": "<p>The error message for the failed custom vocabulary item from the custom vocabulary list.</p>"
+      }
+    },
+    "ExactResponseFields": {
+      "base": "<p>Contains the names of the fields used for an exact response to the user.</p>",
+      "refs": {
+        "OpensearchConfiguration$exactResponseFields": "<p>Contains the names of the fields used for an exact response to the user.</p>"
       }
     },
     "ExceptionMessage": {
@@ -1894,8 +2736,13 @@
     "FailureReasons": {
       "base": null,
       "refs": {
+        "BotAliasReplicaSummary$failureReasons": "<p>The reasons for failure for the aliases bot replications.</p>",
+        "BotReplicaSummary$failureReasons": "<p>The reasons for the failure for the replicated bot.</p>",
+        "BotVersionReplicaSummary$failureReasons": "<p>The reasons for replication failure for all the replicated bots.</p>",
         "DescribeBotLocaleResponse$failureReasons": "<p>if <code>botLocaleStatus</code> is <code>Failed</code>, Amazon Lex explains why it failed to build the bot.</p>",
         "DescribeBotRecommendationResponse$failureReasons": "<p>If botRecommendationStatus is Failed, Amazon Lex explains why.</p>",
+        "DescribeBotReplicaResponse$failureReasons": "<p>The failure reasons the bot being monitored failed to replicate.</p>",
+        "DescribeBotResourceGenerationResponse$failureReasons": "<p>A list of reasons why the generation of bot resources through natural language description failed.</p>",
         "DescribeBotResponse$failureReasons": "<p>If the <code>botStatus</code> is <code>Failed</code>, this contains a list of reasons that the bot couldn't be built.</p>",
         "DescribeBotVersionResponse$failureReasons": "<p>If the <code>botStatus</code> is <code>Failed</code>, this contains a list of reasons that the version couldn't be built.</p>",
         "DescribeExportResponse$failureReasons": "<p>If the <code>exportStatus</code> is failed, contains one or more reasons why the export could not be completed.</p>",
@@ -1979,6 +2826,66 @@
         "FulfillmentCodeHookSettings$fulfillmentUpdatesSpecification": "<p>Provides settings for update messages sent to the user for long-running Lambda fulfillment functions. Fulfillment updates can be used only with streaming conversations.</p>"
       }
     },
+    "GenerateBotElementRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GenerateBotElementResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GenerationInput": {
+      "base": null,
+      "refs": {
+        "DescribeBotResourceGenerationResponse$generationInputPrompt": "<p>The prompt used in the generation request.</p>",
+        "StartBotResourceGenerationRequest$generationInputPrompt": "<p>The prompt to generate intents and slot types for the bot locale. Your description should be both <i>detailed</i> and <i>precise</i> to help generate appropriate and sufficient intents for your bot. Include a list of actions to improve the intent creation process.</p>",
+        "StartBotResourceGenerationResponse$generationInputPrompt": "<p>The prompt that was used generate intents and slot types for the bot locale.</p>"
+      }
+    },
+    "GenerationSortBy": {
+      "base": "<p>Specifies the attribute and method by which to sort the generation request information.</p>",
+      "refs": {
+        "ListBotResourceGenerationsRequest$sortBy": "<p>An object containing information about the attribute and the method by which to sort the results</p>"
+      }
+    },
+    "GenerationSortByAttribute": {
+      "base": null,
+      "refs": {
+        "GenerationSortBy$attribute": "<p>The attribute by which to sort the generation request information. You can sort by the following attributes.</p> <ul> <li> <p> <code>creationStartTime</code> – The time at which the generation request was created.</p> </li> <li> <p> <code>lastUpdatedTime</code> – The time at which the generation request was last updated.</p> </li> </ul>"
+      }
+    },
+    "GenerationStatus": {
+      "base": null,
+      "refs": {
+        "DescribeBotResourceGenerationResponse$generationStatus": "<p>The status of the generation request.</p>",
+        "GenerationSummary$generationStatus": "<p>The status of the generation request.</p>",
+        "StartBotResourceGenerationResponse$generationStatus": "<p>The status of the generation request.</p>"
+      }
+    },
+    "GenerationSummary": {
+      "base": "<p>Contains information about a generation request made for the bot locale.</p>",
+      "refs": {
+        "GenerationSummaryList$member": null
+      }
+    },
+    "GenerationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListBotResourceGenerationsResponse$generationSummaries": "<p>A list of objects, each containing information about a generation request for the bot locale.</p>"
+      }
+    },
+    "GenerativeAISettings": {
+      "base": "<p>Contains specifications about the generative AI capabilities from Amazon Bedrock that you can turn on for your bot.</p>",
+      "refs": {
+        "CreateBotLocaleRequest$generativeAISettings": null,
+        "CreateBotLocaleResponse$generativeAISettings": null,
+        "DescribeBotLocaleResponse$generativeAISettings": "<p>Contains settings for Amazon Bedrock's generative AI features for your bot locale.</p>",
+        "UpdateBotLocaleRequest$generativeAISettings": "<p>Contains settings for generative AI features powered by Amazon Bedrock for your bot locale. Use this object to turn generative AI features on and off. Pricing may differ if you turn a feature on. For more information, see LINK.</p>",
+        "UpdateBotLocaleResponse$generativeAISettings": "<p>Contains settings for generative AI features powered by Amazon Bedrock for your bot locale.</p>"
+      }
+    },
     "GetTestExecutionArtifactsUrlRequest": {
       "base": null,
       "refs": {
@@ -2030,6 +2937,8 @@
         "CreateBotAliasResponse$botId": "<p>The unique identifier of the bot that this alias applies to.</p>",
         "CreateBotLocaleRequest$botId": "<p>The identifier of the bot to create the locale for.</p>",
         "CreateBotLocaleResponse$botId": "<p>The specified bot identifier.</p>",
+        "CreateBotReplicaRequest$botId": "<p>The request for the unique bot ID of the source bot to be replicated in the secondary region.</p>",
+        "CreateBotReplicaResponse$botId": "<p>The unique bot ID of the replicated bot generated.</p>",
         "CreateBotResponse$botId": "<p>A unique identifier for a particular bot. You use this to identify the bot when you call other Amazon Lex API operations.</p>",
         "CreateBotVersionRequest$botId": "<p>The identifier of the bot to create the version for.</p>",
         "CreateBotVersionResponse$botId": "<p>The bot identifier specified in the request.</p>",
@@ -2055,6 +2964,8 @@
         "DeleteBotAliasResponse$botId": "<p>The unique identifier of the bot that contains the alias to delete.</p>",
         "DeleteBotLocaleRequest$botId": "<p>The unique identifier of the bot that contains the locale.</p>",
         "DeleteBotLocaleResponse$botId": "<p>The identifier of the bot that contained the deleted locale.</p>",
+        "DeleteBotReplicaRequest$botId": "<p>The unique ID of the replicated bot to be deleted from the secondary region</p>",
+        "DeleteBotReplicaResponse$botId": "<p>The unique bot ID of the replicated bot generated.</p>",
         "DeleteBotRequest$botId": "<p>The identifier of the bot to delete. </p>",
         "DeleteBotResponse$botId": "<p>The unique identifier of the bot that Amazon Lex is deleting.</p>",
         "DeleteBotVersionRequest$botId": "<p>The identifier of the bot that contains the version.</p>",
@@ -2082,7 +2993,13 @@
         "DescribeBotRecommendationRequest$botRecommendationId": "<p>The identifier of the bot recommendation to describe.</p>",
         "DescribeBotRecommendationResponse$botId": "<p>The identifier of the bot associated with the bot recommendation.</p>",
         "DescribeBotRecommendationResponse$botRecommendationId": "<p>The identifier of the bot recommendation being described.</p>",
+        "DescribeBotReplicaRequest$botId": "<p>The request for the unique bot ID of the replicated bot being monitored.</p>",
+        "DescribeBotReplicaResponse$botId": "<p>The unique bot ID of the replicated bot being monitored.</p>",
         "DescribeBotRequest$botId": "<p>The unique identifier of the bot to describe.</p>",
+        "DescribeBotResourceGenerationRequest$botId": "<p>The unique identifier of the bot for which to return the generation details.</p>",
+        "DescribeBotResourceGenerationRequest$generationId": "<p>The unique identifier of the generation request for which to return the generation details.</p>",
+        "DescribeBotResourceGenerationResponse$botId": "<p>The unique identifier of the bot for which the generation request was made.</p>",
+        "DescribeBotResourceGenerationResponse$generationId": "<p>The generation ID for which to return the generation details.</p>",
         "DescribeBotResponse$botId": "<p>The unique identifier of the bot.</p>",
         "DescribeBotVersionRequest$botId": "<p>The identifier of the bot containing the version to return metadata for.</p>",
         "DescribeBotVersionResponse$botId": "<p>The identifier of the bot that contains the version.</p>",
@@ -2118,18 +3035,31 @@
         "DescribeTestSetRequest$testSetId": "<p>The test set Id for the test set request.</p>",
         "DescribeTestSetResponse$testSetId": "<p>The test set Id for the test set response.</p>",
         "ExportSummary$exportId": "<p>The unique identifier that Amazon Lex assigned to the export.</p>",
+        "GenerateBotElementRequest$intentId": "<p>The intent unique Id for the bot request to generate utterances.</p>",
+        "GenerateBotElementRequest$botId": "<p>The bot unique Id for the bot request to generate utterances.</p>",
+        "GenerateBotElementResponse$botId": "<p>The unique bot Id for the bot which received the response.</p>",
+        "GenerateBotElementResponse$intentId": "<p>The unique intent Id for the bot which received the response.</p>",
+        "GenerationSummary$generationId": "<p>The unique identifier of the generation request.</p>",
         "GetTestExecutionArtifactsUrlRequest$testExecutionId": "<p>The unique identifier of the completed test execution.</p>",
         "GetTestExecutionArtifactsUrlResponse$testExecutionId": "<p>The unique identifier of the completed test execution.</p>",
         "ImportSummary$importId": "<p>The unique identifier that Amazon Lex assigned to the import.</p>",
         "IntentSummary$intentId": "<p>The unique identifier assigned to the intent. Use this ID to get detailed information about the intent with the <code>DescribeIntent</code> operation.</p>",
         "ListAggregatedUtterancesRequest$botId": "<p>The unique identifier of the bot associated with this request.</p>",
         "ListAggregatedUtterancesResponse$botId": "<p>The identifier of the bot that contains the utterances.</p>",
+        "ListBotAliasReplicasRequest$botId": "<p>The request for the unique bot ID of the replicated bot created from the source bot alias.</p>",
+        "ListBotAliasReplicasResponse$botId": "<p>The unique bot ID of the replicated bot created from the source bot alias.</p>",
         "ListBotAliasesRequest$botId": "<p>The identifier of the bot to list aliases for.</p>",
         "ListBotAliasesResponse$botId": "<p>The identifier of the bot associated with the aliases.</p>",
         "ListBotLocalesRequest$botId": "<p>The identifier of the bot to list locales for.</p>",
         "ListBotLocalesResponse$botId": "<p>The identifier of the bot to list locales for.</p>",
         "ListBotRecommendationsRequest$botId": "<p>The unique identifier of the bot that contains the bot recommendation list.</p>",
         "ListBotRecommendationsResponse$botId": "<p>The unique identifier of the bot that contains the bot recommendation list.</p>",
+        "ListBotReplicasRequest$botId": "<p>The request for the unique bot IDs in the list of replicated bots.</p>",
+        "ListBotReplicasResponse$botId": "<p>the unique bot IDs in the list of replicated bots.</p>",
+        "ListBotResourceGenerationsRequest$botId": "<p>The unique identifier of the bot whose generation requests you want to view.</p>",
+        "ListBotResourceGenerationsResponse$botId": "<p>The unique identifier of the bot for which the generation requests were made.</p>",
+        "ListBotVersionReplicasRequest$botId": "<p>The request for the unique ID in the list of replicated bots.</p>",
+        "ListBotVersionReplicasResponse$botId": "<p>The unique ID of the bots in the list of replicated bots.</p>",
         "ListBotVersionsRequest$botId": "<p>The identifier of the bot to list versions for.</p>",
         "ListBotVersionsResponse$botId": "<p>The identifier of the bot to list versions for.</p>",
         "ListCustomVocabularyItemsRequest$botId": "<p>The identifier of the version of the bot associated with this custom vocabulary.</p>",
@@ -2138,12 +3068,21 @@
         "ListExportsResponse$botId": "<p>The unique identifier assigned to the bot by Amazon Lex.</p>",
         "ListImportsRequest$botId": "<p>The unique identifier that Amazon Lex assigned to the bot.</p>",
         "ListImportsResponse$botId": "<p>The unique identifier assigned by Amazon Lex to the bot.</p>",
+        "ListIntentMetricsRequest$botId": "<p>The identifier for the bot for which you want to retrieve intent metrics.</p>",
+        "ListIntentMetricsResponse$botId": "<p>The identifier for the bot for which you retrieved intent metrics.</p>",
+        "ListIntentPathsRequest$botId": "<p>The identifier for the bot for which you want to retrieve intent path metrics.</p>",
+        "ListIntentStageMetricsRequest$botId": "<p>The identifier for the bot for which you want to retrieve intent stage metrics.</p>",
+        "ListIntentStageMetricsResponse$botId": "<p>The identifier for the bot for which you retrieved intent stage metrics.</p>",
         "ListIntentsRequest$botId": "<p>The unique identifier of the bot that contains the intent.</p>",
         "ListIntentsResponse$botId": "<p>The identifier of the bot that contains the intent.</p>",
         "ListRecommendedIntentsRequest$botId": "<p>The unique identifier of the bot associated with the recommended intents.</p>",
         "ListRecommendedIntentsRequest$botRecommendationId": "<p>The identifier of the bot recommendation that contains the recommended intents.</p>",
         "ListRecommendedIntentsResponse$botId": "<p>The unique identifier of the bot associated with the recommended intent.</p>",
         "ListRecommendedIntentsResponse$botRecommendationId": "<p>The identifier of the bot recommendation that contains the recommended intent.</p>",
+        "ListSessionAnalyticsDataRequest$botId": "<p>The identifier for the bot for which you want to retrieve session analytics.</p>",
+        "ListSessionAnalyticsDataResponse$botId": "<p>The unique identifier of the bot that the sessions belong to.</p>",
+        "ListSessionMetricsRequest$botId": "<p>The identifier for the bot for which you want to retrieve session metrics.</p>",
+        "ListSessionMetricsResponse$botId": "<p>The identifier for the bot for which you retrieved session metrics.</p>",
         "ListSlotTypesRequest$botId": "<p>The unique identifier of the bot that contains the slot types.</p>",
         "ListSlotTypesResponse$botId": "<p>The identifier of the bot that contains the slot types.</p>",
         "ListSlotsRequest$botId": "<p>The identifier of the bot that contains the slot.</p>",
@@ -2152,6 +3091,10 @@
         "ListSlotsResponse$intentId": "<p>The identifier of the intent that contains the slots.</p>",
         "ListTestExecutionResultItemsRequest$testExecutionId": "<p>The unique identifier of the test execution to list the result items.</p>",
         "ListTestSetRecordsRequest$testSetId": "<p>The identifier of the test set to list its test set records.</p>",
+        "ListUtteranceAnalyticsDataRequest$botId": "<p>The identifier for the bot for which you want to retrieve utterance analytics.</p>",
+        "ListUtteranceAnalyticsDataResponse$botId": "<p>The unique identifier of the bot that the utterances belong to.</p>",
+        "ListUtteranceMetricsRequest$botId": "<p>The identifier for the bot for which you want to retrieve utterance metrics.</p>",
+        "ListUtteranceMetricsResponse$botId": "<p>The identifier for the bot for which you retrieved utterance metrics.</p>",
         "ParentBotNetwork$botId": "<p>The identifier of the network of bots assigned by Amazon Lex.</p>",
         "RecommendedIntentSummary$intentId": "<p>The unique identifier of a recommended intent associated with the bot recommendation.</p>",
         "SearchAssociatedTranscriptsRequest$botId": "<p>The unique identifier of the bot associated with the transcripts that you are searching.</p>",
@@ -2164,6 +3107,9 @@
         "StartBotRecommendationRequest$botId": "<p>The unique identifier of the bot containing the bot recommendation.</p>",
         "StartBotRecommendationResponse$botId": "<p>The unique identifier of the bot containing the bot recommendation.</p>",
         "StartBotRecommendationResponse$botRecommendationId": "<p>The identifier of the bot recommendation that you have created.</p>",
+        "StartBotResourceGenerationRequest$botId": "<p>The unique identifier of the bot for which to generate intents and slot types.</p>",
+        "StartBotResourceGenerationResponse$generationId": "<p>The unique identifier of the generation request.</p>",
+        "StartBotResourceGenerationResponse$botId": "<p>The unique identifier of the bot for which the generation request was made.</p>",
         "StartImportRequest$importId": "<p>The unique identifier for the import. It is included in the response from the <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_CreateUploadUrl.html\">CreateUploadUrl</a> operation.</p>",
         "StartImportResponse$importId": "<p>A unique identifier for the import.</p>",
         "StartTestExecutionRequest$testSetId": "<p>The test set Id for the test set execution.</p>",
@@ -2206,13 +3152,15 @@
         "UpdateSlotTypeResponse$slotTypeId": "<p>The unique identifier of the updated slot type.</p>",
         "UpdateSlotTypeResponse$botId": "<p>The identifier of the bot that contains the slot type.</p>",
         "UpdateTestSetRequest$testSetId": "<p>The test set Id for which update test operation to be performed.</p>",
-        "UpdateTestSetResponse$testSetId": "<p>The test set Id for which update test operation to be performed.</p>"
+        "UpdateTestSetResponse$testSetId": "<p>The test set Id for which update test operation to be performed.</p>",
+        "UtteranceSpecification$utteranceRequestId": "<p>The identifier of the request associated with the utterance.</p>"
       }
     },
     "ImageResponseCard": {
       "base": "<p>A card that is shown to the user by a messaging platform. You define the contents of the card, the card is displayed by the platform. </p> <p>When you use a response card, the response from the user is constrained to the text associated with a button on the card.</p>",
       "refs": {
-        "Message$imageResponseCard": "<p>A message that defines a response card that the client application can show to the user.</p>"
+        "Message$imageResponseCard": "<p>A message that defines a response card that the client application can show to the user.</p>",
+        "UtteranceBotResponse$imageResponseCard": null
       }
     },
     "ImportExportFileFormat": {
@@ -2309,6 +3257,12 @@
       "refs": {
         "DescribeImportResponse$importedResourceId": "<p>The unique identifier that Amazon Lex assigned to the resource created by the import.</p>",
         "ImportSummary$importedResourceId": "<p>The unique identifier that Amazon Lex assigned to the imported resource.</p>"
+      }
+    },
+    "IncludeField": {
+      "base": null,
+      "refs": {
+        "OSIncludeFields$member": null
       }
     },
     "InitialResponseSetting": {
@@ -2460,6 +3414,12 @@
         "ListIntentsRequest$sortBy": "<p>Determines the sort order for the response from the <code>ListIntents</code> operation. You can choose to sort by the intent name or last updated date in either ascending or descending order.</p>"
       }
     },
+    "IntentState": {
+      "base": null,
+      "refs": {
+        "UtteranceSpecification$intentState": "<p>The state of the intent that the utterance is associated to.</p>"
+      }
+    },
     "IntentStatistics": {
       "base": "<p>The object that contains the statistical summary of recommended intents associated with the bot recommendation.</p>",
       "refs": {
@@ -2483,6 +3443,18 @@
       "refs": {
       }
     },
+    "InvokedIntentSample": {
+      "base": "<p>An object containing the name of an intent that was invoked.</p>",
+      "refs": {
+        "InvokedIntentSamples$member": null
+      }
+    },
+    "InvokedIntentSamples": {
+      "base": null,
+      "refs": {
+        "SessionSpecification$invokedIntentSamples": "<p>A list of objects containing the name of an intent that was invoked.</p>"
+      }
+    },
     "ItemId": {
       "base": null,
       "refs": {
@@ -2504,7 +3476,8 @@
     "KendraIndexArn": {
       "base": null,
       "refs": {
-        "KendraConfiguration$kendraIndex": "<p>The Amazon Resource Name (ARN) of the Amazon Kendra index that you want the <code>AMAZON.KendraSearchIntent</code> intent to search. The index must be in the same account and Region as the Amazon Lex bot.</p>"
+        "KendraConfiguration$kendraIndex": "<p>The Amazon Resource Name (ARN) of the Amazon Kendra index that you want the <code>AMAZON.KendraSearchIntent</code> intent to search. The index must be in the same account and Region as the Amazon Lex bot.</p>",
+        "QnAKendraConfiguration$kendraIndex": "<p>The ARN of the Amazon Kendra index to use.</p>"
       }
     },
     "KmsKeyArn": {
@@ -2545,6 +3518,16 @@
       "refs": {
       }
     },
+    "ListBotAliasReplicasRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBotAliasReplicasResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListBotAliasesRequest": {
       "base": null,
       "refs": {
@@ -2571,6 +3554,36 @@
       }
     },
     "ListBotRecommendationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBotReplicasRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBotReplicasResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBotResourceGenerationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBotResourceGenerationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBotVersionReplicasRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBotVersionReplicasResponse": {
       "base": null,
       "refs": {
       }
@@ -2645,6 +3658,36 @@
       "refs": {
       }
     },
+    "ListIntentMetricsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListIntentMetricsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListIntentPathsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListIntentPathsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListIntentStageMetricsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListIntentStageMetricsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListIntentsRequest": {
       "base": null,
       "refs": {
@@ -2661,6 +3704,26 @@
       }
     },
     "ListRecommendedIntentsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSessionAnalyticsDataRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSessionAnalyticsDataResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSessionMetricsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSessionMetricsResponse": {
       "base": null,
       "refs": {
       }
@@ -2735,6 +3798,26 @@
       "refs": {
       }
     },
+    "ListUtteranceAnalyticsDataRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListUtteranceAnalyticsDataResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListUtteranceMetricsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListUtteranceMetricsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "LocaleId": {
       "base": null,
       "refs": {
@@ -2775,6 +3858,8 @@
         "DescribeBotLocaleResponse$localeId": "<p>The unique identifier of the described locale.</p>",
         "DescribeBotRecommendationRequest$localeId": "<p>The identifier of the language and locale of the bot recommendation to describe. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "DescribeBotRecommendationResponse$localeId": "<p>The identifier of the language and locale of the bot recommendation to describe.</p>",
+        "DescribeBotResourceGenerationRequest$localeId": "<p>The locale of the bot for which to return the generation details.</p>",
+        "DescribeBotResourceGenerationResponse$localeId": "<p>The locale of the bot for which the generation request was made.</p>",
         "DescribeCustomVocabularyMetadataRequest$localeId": "<p>The locale to return the custom vocabulary information for. The locale must be <code>en_GB</code>.</p>",
         "DescribeCustomVocabularyMetadataResponse$localeId": "<p>The locale that contains the custom vocabulary to describe.</p>",
         "DescribeIntentRequest$localeId": "<p>The identifier of the language and locale of the intent to describe. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
@@ -2783,10 +3868,14 @@
         "DescribeSlotResponse$localeId": "<p>The language and locale specified for the slot.</p>",
         "DescribeSlotTypeRequest$localeId": "<p>The identifier of the language and locale of the slot type to describe. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "DescribeSlotTypeResponse$localeId": "<p>The language and locale specified for the slot type.</p>",
+        "GenerateBotElementRequest$localeId": "<p>The unique locale Id for the bot request to generate utterances.</p>",
+        "GenerateBotElementResponse$localeId": "<p>The unique locale Id for the bot which received the response.</p>",
         "ListAggregatedUtterancesRequest$localeId": "<p>The identifier of the language and locale where the utterances were collected. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "ListAggregatedUtterancesResponse$localeId": "<p>The identifier of the language and locale that the utterances are in.</p>",
         "ListBotRecommendationsRequest$localeId": "<p>The identifier of the language and locale of the bot recommendation list.</p>",
         "ListBotRecommendationsResponse$localeId": "<p>The identifier of the language and locale of the bot recommendation list.</p>",
+        "ListBotResourceGenerationsRequest$localeId": "<p>The locale of the bot whose generation requests you want to view.</p>",
+        "ListBotResourceGenerationsResponse$localeId": "<p>The locale of the bot for which the generation requests were made.</p>",
         "ListBuiltInIntentsRequest$localeId": "<p>The identifier of the language and locale of the intents to list. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "ListBuiltInIntentsResponse$localeId": "<p>The language and locale of the intents in the list.</p>",
         "ListBuiltInSlotTypesRequest$localeId": "<p>The identifier of the language and locale of the slot types to list. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
@@ -2807,8 +3896,11 @@
         "ListSlotsResponse$localeId": "<p>The language and locale of the slots in the list.</p>",
         "SearchAssociatedTranscriptsRequest$localeId": "<p>The identifier of the language and locale of the transcripts to search. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a> </p>",
         "SearchAssociatedTranscriptsResponse$localeId": "<p>The identifier of the language and locale of the transcripts to search. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a> </p>",
+        "SessionSpecification$localeId": "<p>The locale of the bot that the session was held with.</p>",
         "StartBotRecommendationRequest$localeId": "<p>The identifier of the language and locale of the bot recommendation to start. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a> </p>",
         "StartBotRecommendationResponse$localeId": "<p>The identifier of the language and locale of the bot recommendation to start. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a> </p>",
+        "StartBotResourceGenerationRequest$localeId": "<p>The locale of the bot for which to generate intents and slot types.</p>",
+        "StartBotResourceGenerationResponse$localeId": "<p>The locale of the bot for which the generation request was made.</p>",
         "StopBotRecommendationRequest$localeId": "<p>The identifier of the language and locale of the bot recommendation to stop. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a> </p>",
         "StopBotRecommendationResponse$localeId": "<p>The identifier of the language and locale of the bot response to stop. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a> </p>",
         "TestSetDiscrepancyReportBotAliasTarget$localeId": "<p>The unique identifier of the locale associated with the bot alias.</p>",
@@ -2821,7 +3913,8 @@
         "UpdateSlotRequest$localeId": "<p>The identifier of the language and locale that contains the slot. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "UpdateSlotResponse$localeId": "<p>The locale that contains the slot.</p>",
         "UpdateSlotTypeRequest$localeId": "<p>The identifier of the language and locale that contains the slot type. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
-        "UpdateSlotTypeResponse$localeId": "<p>The language and locale of the updated slot type.</p>"
+        "UpdateSlotTypeResponse$localeId": "<p>The language and locale of the updated slot type.</p>",
+        "UtteranceSpecification$localeId": "<p>The locale of the bot that the utterance was made to.</p>"
       }
     },
     "LocaleName": {
@@ -2844,22 +3937,31 @@
       "base": null,
       "refs": {
         "ListAggregatedUtterancesRequest$maxResults": "<p>The maximum number of utterances to return in each page of results. If there are fewer results than the maximum page size, only the actual number of results are returned. If you don't specify the <code>maxResults</code> parameter, 1,000 results are returned.</p>",
+        "ListBotAliasReplicasRequest$maxResults": "<p>The request for maximum results to list the replicated bots created from the source bot alias.</p>",
         "ListBotAliasesRequest$maxResults": "<p>The maximum number of aliases to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListBotLocalesRequest$maxResults": "<p>The maximum number of aliases to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListBotRecommendationsRequest$maxResults": "<p>The maximum number of bot recommendations to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
+        "ListBotResourceGenerationsRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
+        "ListBotVersionReplicasRequest$maxResults": "<p>The maximum results given in the list of replicated bots.</p>",
         "ListBotVersionsRequest$maxResults": "<p>The maximum number of versions to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListBotsRequest$maxResults": "<p>The maximum number of bots to return in each page of results. If there are fewer results than the maximum page size, only the actual number of results are returned.</p>",
         "ListCustomVocabularyItemsRequest$maxResults": "<p>The maximum number of items returned by the list operation.</p>",
         "ListExportsRequest$maxResults": "<p>The maximum number of exports to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListImportsRequest$maxResults": "<p>The maximum number of imports to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
+        "ListIntentMetricsRequest$maxResults": "<p>The maximum number of results to return in each page of results. If there are fewer results than the maximum page size, only the actual number of results are returned.</p>",
+        "ListIntentStageMetricsRequest$maxResults": "<p>The maximum number of results to return in each page of results. If there are fewer results than the maximum page size, only the actual number of results are returned.</p>",
         "ListIntentsRequest$maxResults": "<p>The maximum number of intents to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListRecommendedIntentsRequest$maxResults": "<p>The maximum number of bot recommendations to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
+        "ListSessionAnalyticsDataRequest$maxResults": "<p>The maximum number of results to return in each page of results. If there are fewer results than the maximum page size, only the actual number of results are returned.</p>",
+        "ListSessionMetricsRequest$maxResults": "<p>The maximum number of results to return in each page of results. If there are fewer results than the maximum page size, only the actual number of results are returned.</p>",
         "ListSlotTypesRequest$maxResults": "<p>The maximum number of slot types to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListSlotsRequest$maxResults": "<p>The maximum number of slots to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListTestExecutionResultItemsRequest$maxResults": "<p>The maximum number of test execution result items to return in each page. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListTestExecutionsRequest$maxResults": "<p>The maximum number of test executions to return in each page. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListTestSetRecordsRequest$maxResults": "<p>The maximum number of test set records to return in each page. If there are fewer records than the max page size, only the actual number of records are returned.</p>",
         "ListTestSetsRequest$maxResults": "<p>The maximum number of test sets to return in each page. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
+        "ListUtteranceAnalyticsDataRequest$maxResults": "<p>The maximum number of results to return in each page of results. If there are fewer results than the maximum page size, only the actual number of results are returned.</p>",
+        "ListUtteranceMetricsRequest$maxResults": "<p>The maximum number of results to return in each page of results. If there are fewer results than the maximum page size, only the actual number of results are returned.</p>",
         "SearchAssociatedTranscriptsRequest$maxResults": "<p>The maximum number of bot recommendations to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "SearchAssociatedTranscriptsResponse$totalResults": "<p>The total number of transcripts returned by the search.</p>"
       }
@@ -2934,6 +4036,8 @@
       "base": null,
       "refs": {
         "AgentTurnResult$actualIntent": "<p>The actual intent for the agent turn in a test set execution.</p>",
+        "AnalyticsIntentNodeSummary$intentName": "<p>The name of the intent at the end of the requested path.</p>",
+        "AnalyticsUtteranceAttributeResult$lastUsedIntent": "<p>The intent that the bot mapped the utterance to.</p>",
         "BotAliasSummary$botAliasName": "<p>The name of the bot alias.</p>",
         "BotImportSpecification$botName": "<p>The name that Amazon Lex should use for the bot.</p>",
         "BotMember$botMemberName": "<p>The unique name of a bot that is a member of this network of bots.</p>",
@@ -2973,6 +4077,7 @@
         "IntentLevelSlotResolutionTestResultItem$intentName": "<p>The name of the intent that was recognized.</p>",
         "IntentOverride$name": "<p>The name of the intent. Only required when you're switching intents.</p>",
         "IntentSummary$intentName": "<p>The name of the intent.</p>",
+        "InvokedIntentSample$intentName": "<p>The name of an intent that was invoked.</p>",
         "OutputContext$name": "<p>The name of the output context.</p>",
         "RecommendedIntentSummary$intentName": "<p>The name of a recommended intent associated with the bot recommendation.</p>",
         "SlotHintsIntentMap$key": null,
@@ -3003,7 +4108,9 @@
         "UpdateTestSetRequest$testSetName": "<p>The new test set name.</p>",
         "UpdateTestSetResponse$testSetName": "<p>The test set name for the updated test set.</p>",
         "UserTurnIntentOutput$name": "<p>The name of the intent.</p>",
-        "UserTurnSlotOutputMap$key": null
+        "UserTurnSlotOutputMap$key": null,
+        "UtteranceSpecification$associatedIntentName": "<p>The name of the intent that the utterance is associated to.</p>",
+        "UtteranceSpecification$associatedSlotName": "<p>The name of the slot that the utterance is associated to.</p>"
       }
     },
     "NewCustomVocabularyItem": {
@@ -3024,12 +4131,18 @@
       "refs": {
         "ListAggregatedUtterancesRequest$nextToken": "<p>If the response from the <code>ListAggregatedUtterances</code> operation contains more results that specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListAggregatedUtterancesResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListAggregatedUtterances</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListAggregatedUtterances</code> operation request to get the next page of results.</p>",
+        "ListBotAliasReplicasRequest$nextToken": "<p>The request for the next token for the replicated bot created from the source bot alias.</p>",
+        "ListBotAliasReplicasResponse$nextToken": "<p>The next token for the replicated bots created from the source bot alias.</p>",
         "ListBotAliasesRequest$nextToken": "<p>If the response from the <code>ListBotAliases</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListBotAliasesResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListBotAliases</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListBotAliases</code> operation request to get the next page of results.</p>",
         "ListBotLocalesRequest$nextToken": "<p>If the response from the <code>ListBotLocales</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token as the <code>nextToken</code> parameter to return the next page of results. </p>",
         "ListBotLocalesResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListBotLocales</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListBotLocales</code> operation request to get the next page of results.</p>",
         "ListBotRecommendationsRequest$nextToken": "<p>If the response from the ListBotRecommendation operation contains more results than specified in the maxResults parameter, a token is returned in the response. Use that token in the nextToken parameter to return the next page of results.</p>",
         "ListBotRecommendationsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the ListBotRecommendations operation. If the nextToken field is present, you send the contents as the nextToken parameter of a ListBotRecommendations operation request to get the next page of results. </p>",
+        "ListBotResourceGenerationsRequest$nextToken": "<p>If the total number of results is greater than the number specified in the <code>maxResults</code>, the response returns a token in the <code>nextToken</code> field. Use this token when making a request to return the next batch of results.</p>",
+        "ListBotResourceGenerationsResponse$nextToken": "<p>If the total number of results is greater than the number specified in the <code>maxResults</code>, the response returns a token in the <code>nextToken</code> field. Use this token when making a request to return the next batch of results.</p>",
+        "ListBotVersionReplicasRequest$nextToken": "<p>The next token given in the list of replicated bots.</p>",
+        "ListBotVersionReplicasResponse$nextToken": "<p>The next token used for the replicated bots in the list of replicated bots.</p>",
         "ListBotVersionsRequest$nextToken": "<p>If the response to the <code>ListBotVersion</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListBotVersionsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListBotVersions</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListBotAliases</code> operation request to get the next page of results.</p>",
         "ListBotsRequest$nextToken": "<p>If the response from the <code>ListBots</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. </p> <p>Use the returned token in the <code>nextToken</code> parameter of a <code>ListBots</code> request to return the next page of results. For a complete set of results, call the <code>ListBots</code> operation until the <code>nextToken</code> returned in the response is null.</p>",
@@ -3044,10 +4157,18 @@
         "ListExportsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListExports</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListExports</code> operation request to get the next page of results.</p>",
         "ListImportsRequest$nextToken": "<p>If the response from the <code>ListImports</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response.</p> <p>Use the returned token in the <code>nextToken</code> parameter of a <code>ListImports</code> request to return the next page of results. For a complete set of results, call the <code>ListImports</code> operation until the <code>nextToken</code> returned in the response is null.</p>",
         "ListImportsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListImports</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListImports</code> operation request to get the next page of results.</p>",
+        "ListIntentMetricsRequest$nextToken": "<p>If the response from the ListIntentMetrics operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListIntentMetrics request to return the next page of results. For a complete set of results, call the ListIntentMetrics operation until the nextToken returned in the response is null.</p>",
+        "ListIntentMetricsResponse$nextToken": "<p>If the response from the ListIntentMetrics operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListIntentMetrics request to return the next page of results. For a complete set of results, call the ListIntentMetrics operation until the nextToken returned in the response is null.</p>",
+        "ListIntentStageMetricsRequest$nextToken": "<p>If the response from the ListIntentStageMetrics operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListIntentStageMetrics request to return the next page of results. For a complete set of results, call the ListIntentStageMetrics operation until the nextToken returned in the response is null.</p>",
+        "ListIntentStageMetricsResponse$nextToken": "<p>If the response from the ListIntentStageMetrics operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListIntentStageMetrics request to return the next page of results. For a complete set of results, call the ListIntentStageMetrics operation until the nextToken returned in the response is null.</p>",
         "ListIntentsRequest$nextToken": "<p>If the response from the <code>ListIntents</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response.</p> <p>Use the returned token in the <code>nextToken</code> parameter of a <code>ListIntents</code> request to return the next page of results. For a complete set of results, call the <code>ListIntents</code> operation until the <code>nextToken</code> returned in the response is null.</p>",
         "ListIntentsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListIntents</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListIntents</code> operation request to get the next page of results.</p>",
         "ListRecommendedIntentsRequest$nextToken": "<p>If the response from the ListRecommendedIntents operation contains more results than specified in the maxResults parameter, a token is returned in the response. Use that token in the nextToken parameter to return the next page of results.</p>",
         "ListRecommendedIntentsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the ListRecommendedIntents operation. If the nextToken field is present, you send the contents as the nextToken parameter of a ListRecommendedIntents operation request to get the next page of results.</p>",
+        "ListSessionAnalyticsDataRequest$nextToken": "<p>If the response from the ListSessionAnalyticsData operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListSessionAnalyticsData request to return the next page of results. For a complete set of results, call the ListSessionAnalyticsData operation until the nextToken returned in the response is null.</p>",
+        "ListSessionAnalyticsDataResponse$nextToken": "<p>If the response from the ListSessionAnalyticsData operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListSessionAnalyticsData request to return the next page of results. For a complete set of results, call the ListSessionAnalyticsData operation until the nextToken returned in the response is null.</p>",
+        "ListSessionMetricsRequest$nextToken": "<p>If the response from the ListSessionMetrics operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListSessionMetrics request to return the next page of results. For a complete set of results, call the ListSessionMetrics operation until the nextToken returned in the response is null.</p>",
+        "ListSessionMetricsResponse$nextToken": "<p>If the response from the ListSessionMetrics operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListSessionMetrics request to return the next page of results. For a complete set of results, call the ListSessionMetrics operation until the nextToken returned in the response is null.</p>",
         "ListSlotTypesRequest$nextToken": "<p>If the response from the <code>ListSlotTypes</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListSlotTypesResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListSlotTypes</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListSlotTypes</code> operation request to get the next page of results.</p>",
         "ListSlotsRequest$nextToken": "<p>If the response from the <code>ListSlots</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
@@ -3059,7 +4180,11 @@
         "ListTestSetRecordsRequest$nextToken": "<p>If the response from the ListTestSetRecords operation contains more results than specified in the maxResults parameter, a token is returned in the response. Use that token in the nextToken parameter to return the next page of results.</p>",
         "ListTestSetRecordsResponse$nextToken": "<p>A token that indicates whether there are more records to return in a response to the ListTestSetRecords operation. If the nextToken field is present, you send the contents as the nextToken parameter of a ListTestSetRecords operation request to get the next page of records.</p>",
         "ListTestSetsRequest$nextToken": "<p>If the response from the ListTestSets operation contains more results than specified in the maxResults parameter, a token is returned in the response. Use that token in the nextToken parameter to return the next page of results.</p>",
-        "ListTestSetsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the ListTestSets operation. If the nextToken field is present, you send the contents as the nextToken parameter of a ListTestSets operation request to get the next page of results.</p>"
+        "ListTestSetsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the ListTestSets operation. If the nextToken field is present, you send the contents as the nextToken parameter of a ListTestSets operation request to get the next page of results.</p>",
+        "ListUtteranceAnalyticsDataRequest$nextToken": "<p>If the response from the ListUtteranceAnalyticsData operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListUtteranceAnalyticsData request to return the next page of results. For a complete set of results, call the ListUtteranceAnalyticsData operation until the nextToken returned in the response is null.</p>",
+        "ListUtteranceAnalyticsDataResponse$nextToken": "<p>If the response from the ListUtteranceAnalyticsData operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListUtteranceAnalyticsData request to return the next page of results. For a complete set of results, call the ListUtteranceAnalyticsData operation until the nextToken returned in the response is null.</p>",
+        "ListUtteranceMetricsRequest$nextToken": "<p>If the response from the ListUtteranceMetrics operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListUtteranceMetrics request to return the next page of results. For a complete set of results, call the ListUtteranceMetrics operation until the nextToken returned in the response is null.</p>",
+        "ListUtteranceMetricsResponse$nextToken": "<p>If the response from the ListUtteranceMetrics operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListUtteranceMetrics request to return the next page of results. For a complete set of results, call the ListUtteranceMetrics operation until the nextToken returned in the response is null.</p>"
       }
     },
     "NonEmptyString": {
@@ -3082,7 +4207,21 @@
         "DeleteBotVersionRequest$botVersion": "<p>The version of the bot to delete.</p>",
         "DeleteBotVersionResponse$botVersion": "<p>The version of the bot that is being deleted.</p>",
         "DescribeBotVersionRequest$botVersion": "<p>The version of the bot to return metadata for.</p>",
-        "DescribeBotVersionResponse$botVersion": "<p>The version of the bot that was described.</p>"
+        "DescribeBotVersionResponse$botVersion": "<p>The version of the bot that was described.</p>",
+        "SessionSpecification$botVersion": "<p>The version of the bot that the session was held with.</p>",
+        "UtteranceSpecification$botVersion": "<p>The version of the bot that the utterance was made to.</p>"
+      }
+    },
+    "OSIncludeFields": {
+      "base": null,
+      "refs": {
+        "OpensearchConfiguration$includeFields": "<p>Contains a list of fields from the Amazon OpenSearch Service that the model can use to generate the answer to the query.</p>"
+      }
+    },
+    "OSIndexName": {
+      "base": null,
+      "refs": {
+        "OpensearchConfiguration$indexName": "<p>The name of the Amazon OpenSearch Service index.</p>"
       }
     },
     "ObfuscationSetting": {
@@ -3111,6 +4250,12 @@
       "base": null,
       "refs": {
         "PathFormat$objectPrefixes": "<p>A list of Amazon S3 prefixes that points to sub-folders in the Amazon S3 bucket. Specify this list if you only want Lex to read the files under this set of sub-folders.</p>"
+      }
+    },
+    "OpensearchConfiguration": {
+      "base": "<p>Contains details about the configuration of the Amazon OpenSearch Service database used for the <code>AMAZON.QnAIntent</code>.</p>",
+      "refs": {
+        "DataSourceConfiguration$opensearchConfiguration": "<p>Contains details about the configuration of the Amazon OpenSearch Service database used for the <code>AMAZON.QnAIntent</code>. To create a domain, follow the steps at <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html\">Creating and managing Amazon OpenSearch Service domains</a>.</p>"
       }
     },
     "Operation": {
@@ -3231,6 +4376,7 @@
         "BotRecommendationResults$botLocaleExportUrl": "<p>The presigned URL link of the recommended bot definition.</p>",
         "BotRecommendationResults$associatedTranscriptsUrl": "<p>The presigned url link of the associated transcript.</p>",
         "CreateUploadUrlResponse$uploadUrl": "<p>A pre-signed S3 write URL. Upload the zip archive file that contains the definition of your bot or bot locale.</p>",
+        "DescribeBotResourceGenerationResponse$generatedBotLocaleUrl": "<p>The Amazon S3 location of the generated bot locale configuration.</p>",
         "DescribeExportResponse$downloadUrl": "<p>A pre-signed S3 URL that points to the bot or bot locale archive. The URL is only available for 5 minutes after calling the <code>DescribeExport</code> operation.</p>",
         "DescribeTestSetDiscrepancyReportResponse$testSetDiscrepancyRawOutputUrl": "<p>Pre-signed Amazon S3 URL to download the test set discrepancy report.</p>",
         "GetTestExecutionArtifactsUrlResponse$downloadArtifactsUrl": "<p>The pre-signed Amazon S3 URL to download completed test execution.</p>"
@@ -3293,10 +4439,33 @@
         "SubSlotValueElicitationSetting$promptSpecification": null
       }
     },
+    "QnAIntentConfiguration": {
+      "base": "<p>Details about the the configuration of the built-in <code>Amazon.QnAIntent</code>.</p>",
+      "refs": {
+        "CreateIntentRequest$qnAIntentConfiguration": "<p>Specifies the configuration of the built-in <code>Amazon.QnAIntent</code>. The <code>AMAZON.QnAIntent</code> intent is called when Amazon Lex can't determine another intent to invoke. If you specify this field, you can't specify the <code>kendraConfiguration</code> field.</p>",
+        "CreateIntentResponse$qnAIntentConfiguration": "<p>Details about the the configuration of the built-in <code>Amazon.QnAIntent</code>.</p>",
+        "DescribeIntentResponse$qnAIntentConfiguration": "<p>Details about the configuration of the built-in <code>Amazon.QnAIntent</code>.</p>",
+        "UpdateIntentRequest$qnAIntentConfiguration": "<p>Specifies the configuration of the built-in <code>Amazon.QnAIntent</code>. The <code>AMAZON.QnAIntent</code> intent is called when Amazon Lex can't determine another intent to invoke. If you specify this field, you can't specify the <code>kendraConfiguration</code> field.</p>",
+        "UpdateIntentResponse$qnAIntentConfiguration": "<p>Details about the configuration of the built-in <code>Amazon.QnAIntent</code>.</p>"
+      }
+    },
+    "QnAKendraConfiguration": {
+      "base": "<p>Contains details about the configuration of the Amazon Kendra index used for the <code>AMAZON.QnAIntent</code>.</p>",
+      "refs": {
+        "DataSourceConfiguration$kendraConfiguration": "<p>Contains details about the configuration of the Amazon Kendra index used for the <code>AMAZON.QnAIntent</code>. To create a Amazon Kendra index, follow the steps at <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/create-index.html\">Creating an index</a>.</p>"
+      }
+    },
     "QueryFilterString": {
       "base": null,
       "refs": {
-        "KendraConfiguration$queryFilterString": "<p>A query filter that Amazon Lex sends to Amazon Kendra to filter the response from a query. The filter is in the format defined by Amazon Kendra. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/filtering.html\">Filtering queries</a>.</p>"
+        "KendraConfiguration$queryFilterString": "<p>A query filter that Amazon Lex sends to Amazon Kendra to filter the response from a query. The filter is in the format defined by Amazon Kendra. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/filtering.html\">Filtering queries</a>.</p>",
+        "QnAKendraConfiguration$queryFilterString": "<p>Contains the Amazon Kendra filter string to use if enabled. For more information on the Amazon Kendra search filter JSON format, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/filtering.html#search-filtering\">Using document attributes to filter search results</a>.</p>"
+      }
+    },
+    "QuestionField": {
+      "base": null,
+      "refs": {
+        "ExactResponseFields$questionField": "<p>The name of the field that contains the query made to the OpenSearch Service database.</p>"
       }
     },
     "RecommendedAction": {
@@ -3341,6 +4510,27 @@
       "base": "<p>Specifies the time window that utterance statistics are returned for. The time window is always relative to the last time that the that utterances were aggregated. For example, if the <code>ListAggregatedUtterances</code> operation is called at 1600, the time window is set to 1 hour, and the last refresh time was 1530, only utterances made between 1430 and 1530 are returned.</p> <p>You can choose the time window that statistics should be returned for.</p> <ul> <li> <p> <b>Hours</b> - You can request utterance statistics for 1, 3, 6, 12, or 24 hour time windows. Statistics are refreshed every half hour for 1 hour time windows, and hourly for the other time windows.</p> </li> <li> <p> <b>Days</b> - You can request utterance statistics for 3 days. Statistics are refreshed every 6 hours.</p> </li> <li> <p> <b>Weeks</b> - You can see statistics for one or two weeks. Statistics are refreshed every 12 hours for one week time windows, and once per day for two week time windows.</p> </li> </ul>",
       "refs": {
         "UtteranceAggregationDuration$relativeAggregationDuration": "<p>The desired time window for aggregating utterances. </p>"
+      }
+    },
+    "ReplicaRegion": {
+      "base": "<p>The region that contains the replicated bots. Minimum value = 2, maximum value = 25.</p>",
+      "refs": {
+        "BotReplicaSummary$replicaRegion": "<p>The replica region used in the replication statuses summary.</p>",
+        "CreateBotReplicaRequest$replicaRegion": "<p>The request for the secondary region that will be used in the replication of the source bot.</p>",
+        "CreateBotReplicaResponse$replicaRegion": "<p>The region of the replicated bot generated.</p>",
+        "CreateBotReplicaResponse$sourceRegion": "<p>The source region for the source bot used for the replicated bot generated.</p>",
+        "DeleteBotReplicaRequest$replicaRegion": "<p>The secondary region of the replicated bot that will be deleted.</p>",
+        "DeleteBotReplicaResponse$replicaRegion": "<p>The region of the replicated bot generated.</p>",
+        "DescribeBotReplicaRequest$replicaRegion": "<p>The request for the region of the replicated bot being monitored.</p>",
+        "DescribeBotReplicaResponse$replicaRegion": "<p>The region of the replicated bot being monitored.</p>",
+        "DescribeBotReplicaResponse$sourceRegion": "<p>The source region of the replicated bot being monitored.</p>",
+        "ListBotAliasReplicasRequest$replicaRegion": "<p>The request for the secondary region of the replicated bot created from the source bot alias.</p>",
+        "ListBotAliasReplicasResponse$sourceRegion": "<p>The source region of the replicated bot created from the source bot alias.</p>",
+        "ListBotAliasReplicasResponse$replicaRegion": "<p>The secondary region of the replicated bot created from the source bot alias.</p>",
+        "ListBotReplicasResponse$sourceRegion": "<p>The source region of the source bots in the list of replicated bots.</p>",
+        "ListBotVersionReplicasRequest$replicaRegion": "<p>The request for the region used in the list of replicated bots.</p>",
+        "ListBotVersionReplicasResponse$sourceRegion": "<p>The source region used for the bots in the list of replicated bots.</p>",
+        "ListBotVersionReplicasResponse$replicaRegion": "<p>The region used for the replicated bots in the list of replicated bots.</p>"
       }
     },
     "ResourceCount": {
@@ -3447,6 +4637,12 @@
         "InputSessionStateSpecification$runtimeHints": "<p>Runtime hints for the session state.</p>"
       }
     },
+    "RuntimeSettings": {
+      "base": "<p>Contains specifications about the Amazon Lex runtime generative AI capabilities from Amazon Bedrock that you can turn on for your bot.</p>",
+      "refs": {
+        "GenerativeAISettings$runtimeSettings": null
+      }
+    },
     "S3BucketArn": {
       "base": null,
       "refs": {
@@ -3500,6 +4696,12 @@
         "SampleUtterancesList$member": null
       }
     },
+    "SampleUtteranceGenerationSpecification": {
+      "base": "<p>Contains specifications for the sample utterance generation feature.</p>",
+      "refs": {
+        "BuildtimeSettings$sampleUtteranceGeneration": "<p>Contains specifications for the sample utterance generation feature.</p>"
+      }
+    },
     "SampleUtterancesCount": {
       "base": null,
       "refs": {
@@ -3512,6 +4714,7 @@
         "CreateIntentRequest$sampleUtterances": "<p>An array of strings that a user might say to signal the intent. For example, \"I want a pizza\", or \"I want a {PizzaSize} pizza\". </p> <p>In an utterance, slot names are enclosed in curly braces (\"{\", \"}\") to indicate where they should be displayed in the utterance shown to the user.. </p>",
         "CreateIntentResponse$sampleUtterances": "<p>The sample utterances specified for the intent.</p>",
         "DescribeIntentResponse$sampleUtterances": "<p>User utterances that trigger this intent.</p>",
+        "GenerateBotElementResponse$sampleUtterances": "<p>The sample utterances for the bot which received the response.</p>",
         "SlotValueElicitationSetting$sampleUtterances": "<p>If you know a specific pattern that users might respond to an Amazon Lex request for a slot value, you can provide those utterances to improve accuracy. This is optional. In most cases, Amazon Lex is capable of understanding user utterances.</p>",
         "SubSlotValueElicitationSetting$sampleUtterances": "<p>If you know a specific pattern that users might respond to an Amazon Lex request for a sub slot value, you can provide those utterances to improve accuracy. This is optional. In most cases Amazon Lex is capable of understanding user utterances. This is similar to <code>SampleUtterances</code> for slots.</p>",
         "UpdateIntentRequest$sampleUtterances": "<p>New utterances used to invoke the intent.</p>",
@@ -3562,10 +4765,28 @@
       "refs": {
       }
     },
+    "SessionDataSortBy": {
+      "base": "<p>An object specifying the measure and method by which to sort the session analytics data.</p>",
+      "refs": {
+        "ListSessionAnalyticsDataRequest$sortBy": "<p>An object specifying the measure and method by which to sort the session analytics data.</p>"
+      }
+    },
     "SessionId": {
       "base": null,
       "refs": {
         "DeleteUtterancesRequest$sessionId": "<p>The unique identifier of the session with the user. The ID is returned in the response from the <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_runtime_RecognizeText.html\">RecognizeText</a> and <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_runtime_RecognizeUtterance.html\">RecognizeUtterance</a> operations.</p>"
+      }
+    },
+    "SessionSpecification": {
+      "base": "<p>An object containing information about a specific session.</p>",
+      "refs": {
+        "SessionSpecifications$member": null
+      }
+    },
+    "SessionSpecifications": {
+      "base": null,
+      "refs": {
+        "ListSessionAnalyticsDataResponse$sessions": "<p>A list of objects, each of which contains information about a session with the bot.</p>"
       }
     },
     "SessionTTL": {
@@ -3676,6 +4897,24 @@
       "base": "<p>Sets the priority that Amazon Lex should use when eliciting slot values from a user.</p>",
       "refs": {
         "SlotPrioritiesList$member": null
+      }
+    },
+    "SlotResolutionImprovementSpecification": {
+      "base": "<p>Contains specifications for the assisted slot resolution feature.</p>",
+      "refs": {
+        "RuntimeSettings$slotResolutionImprovement": "<p>An object containing specifications for the assisted slot resolution feature.</p>"
+      }
+    },
+    "SlotResolutionSetting": {
+      "base": "<p>Contains information about whether assisted slot resolution is turned on for the slot or not.</p>",
+      "refs": {
+        "SlotValueElicitationSetting$slotResolutionSetting": "<p>An object containing information about whether assisted slot resolution is turned on for the slot or not.</p>"
+      }
+    },
+    "SlotResolutionStrategy": {
+      "base": null,
+      "refs": {
+        "SlotResolutionSetting$slotResolutionStrategy": "<p>Specifies whether assisted slot resolution is turned on for the slot or not. If the value is <code>EnhancedFallback</code>, assisted slot resolution is activated when Amazon Lex defaults to the <code>AMAZON.FallbackIntent</code>. If the value is <code>Default</code>, assisted slot resolution is turned off.</p>"
       }
     },
     "SlotResolutionTestResultItem": {
@@ -3877,10 +5116,12 @@
         "AggregatedUtterancesSortBy$order": "<p>Specifies whether to sort the aggregated utterances in ascending or descending order.</p>",
         "BotLocaleSortBy$order": "<p>Specifies whether to sort the bot locales in ascending or descending order.</p>",
         "BotSortBy$order": "<p>The order to sort the list. You can choose ascending or descending.</p>",
+        "BotVersionReplicaSortBy$order": "<p>The order of the sort category for the version replicated bots.</p>",
         "BotVersionSortBy$order": "<p>The order to sort the list. You can specify ascending or descending order.</p>",
         "BuiltInIntentSortBy$order": "<p>The order to sort the list. You can specify ascending or descending order.</p>",
         "BuiltInSlotTypeSortBy$order": "<p>The order to sort the list. You can choose ascending or descending.</p>",
         "ExportSortBy$order": "<p>The order to sort the list.</p>",
+        "GenerationSortBy$order": "<p>The order by which to sort the generation request information.</p>",
         "ImportSortBy$order": "<p>The order to sort the list.</p>",
         "IntentSortBy$order": "<p>The order to sort the list. You can choose ascending or descending.</p>",
         "SlotSortBy$order": "<p>The order to sort the list. You can choose ascending or descending.</p>",
@@ -3901,6 +5142,16 @@
       }
     },
     "StartBotRecommendationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartBotResourceGenerationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartBotResourceGenerationResponse": {
       "base": null,
       "refs": {
       }
@@ -3968,7 +5219,14 @@
       "refs": {
         "StringMap$value": null,
         "TestSetIntentDiscrepancyItem$errorMessage": "<p>The error message for a discrepancy for an intent between the test set and the bot.</p>",
-        "TestSetSlotDiscrepancyItem$errorMessage": "<p>The error message for a discrepancy for an intent between the test set and the bot.</p>"
+        "TestSetSlotDiscrepancyItem$errorMessage": "<p>The error message for a discrepancy for an intent between the test set and the bot.</p>",
+        "UtteranceBotResponse$content": "<p>The text of the response to the utterance from the bot.</p>",
+        "UtteranceSpecification$utterance": "<p>The text of the utterance.</p>",
+        "UtteranceSpecification$inputType": "<p>The input type of the utterance. The possible values are as follows:</p> <ul> <li> <p>PCM format: audio data must be in little-endian byte order.</p> <ul> <li> <p> <code>audio/l16; rate=16000; channels=1</code> </p> </li> <li> <p> <code>audio/x-l16; sample-rate=16000; channel-count=1</code> </p> </li> <li> <p> <code>audio/lpcm; sample-rate=8000; sample-size-bits=16; channel-count=1; is-big-endian=false</code> </p> </li> </ul> </li> <li> <p>Opus format</p> <ul> <li> <p> <code>audio/x-cbr-opus-with-preamble;preamble-size=0;bit-rate=256000;frame-size-milliseconds=4</code> </p> </li> </ul> </li> <li> <p>Text format</p> <ul> <li> <p> <code>text/plain; charset=utf-8</code> </p> </li> </ul> </li> </ul>",
+        "UtteranceSpecification$outputType": "<p>The output type of the utterance. The possible values are as follows:</p> <ul> <li> <p> <code>audio/mpeg</code> </p> </li> <li> <p> <code>audio/ogg</code> </p> </li> <li> <p> <code>audio/pcm (16 KHz)</code> </p> </li> <li> <p> <code>audio/</code> (defaults to <code>mpeg</code>)</p> </li> <li> <p> <code>text/plain; charset=utf-8</code> </p> </li> </ul>",
+        "UtteranceSpecification$dialogActionType": "<p>The type of dialog action that the utterance is associated to. See the <code>type</code> field in <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_runtime_DialogAction.html\">DialogAction</a> for more information.</p>",
+        "UtteranceSpecification$botResponseAudioVoiceId": "<p>The identifier for the audio of the bot response.</p>",
+        "UtteranceSpecification$slotsFilledInSession": "<p>The slots that have been filled in the session by the time of the utterance.</p>"
       }
     },
     "StringMap": {
@@ -4419,6 +5677,8 @@
         "AggregatedUtterancesSummary$utteranceLastRecordedInAggregationDuration": "<p>The last date and time that an utterance was recorded in the time window for aggregation. An utterance may be sent to Amazon Lex after that time, but only utterances within the time window are counted.</p>",
         "BotAliasHistoryEvent$startDate": "<p>The date and time that the event started.</p>",
         "BotAliasHistoryEvent$endDate": "<p>The date and time that the event ended.</p>",
+        "BotAliasReplicaSummary$creationDateTime": "<p>The creation time and date for all the alias bot replications.</p>",
+        "BotAliasReplicaSummary$lastUpdatedDateTime": "<p>The last time and date updated for all the alias bot replications.</p>",
         "BotAliasSummary$creationDateTime": "<p>A timestamp of the date and time that the bot alias was created.</p>",
         "BotAliasSummary$lastUpdatedDateTime": "<p>A timestamp of the date and time that the bot alias was last updated.</p>",
         "BotLocaleHistoryEvent$eventDate": "<p>A timestamp of the date and time that the event occurred.</p>",
@@ -4426,13 +5686,16 @@
         "BotLocaleSummary$lastBuildSubmittedDateTime": "<p>A timestamp of the date and time that the bot locale was last built.</p>",
         "BotRecommendationSummary$creationDateTime": "<p>A timestamp of the date and time that the bot recommendation was created.</p>",
         "BotRecommendationSummary$lastUpdatedDateTime": "<p>A timestamp of the date and time that the bot recommendation was last updated.</p>",
+        "BotReplicaSummary$creationDateTime": "<p>The creation time and date for the replicated bots.</p>",
         "BotSummary$lastUpdatedDateTime": "<p>The date and time that the bot was last updated.</p>",
+        "BotVersionReplicaSummary$creationDateTime": "<p>The creation date and time of the replication status for all the replicated bots.</p>",
         "BotVersionSummary$creationDateTime": "<p>A timestamp of the date and time that the version was created.</p>",
         "BuildBotLocaleResponse$lastBuildSubmittedDateTime": "<p>A timestamp indicating the date and time that the bot was last built for this locale.</p>",
         "ConversationLogsDataSourceFilterBy$startTime": "<p>The start time for the conversation log.</p>",
         "ConversationLogsDataSourceFilterBy$endTime": "<p>The end time for the conversation log.</p>",
         "CreateBotAliasResponse$creationDateTime": "<p>A Unix timestamp indicating the date and time that the bot alias was created.</p>",
         "CreateBotLocaleResponse$creationDateTime": "<p>A timestamp specifying the date and time that the bot locale was created.</p>",
+        "CreateBotReplicaResponse$creationDateTime": "<p>The creation date and time of the replicated bot generated.</p>",
         "CreateBotResponse$creationDateTime": "<p>A timestamp indicating the date and time that the bot was created.</p>",
         "CreateBotVersionResponse$creationDateTime": "<p>A timestamp of the date and time that the version was created.</p>",
         "CreateExportResponse$creationDateTime": "<p>The date and time that the request to export a bot was created.</p>",
@@ -4449,6 +5712,9 @@
         "DescribeBotLocaleResponse$lastBuildSubmittedDateTime": "<p>The date and time that the locale was last submitted for building.</p>",
         "DescribeBotRecommendationResponse$creationDateTime": "<p>The date and time that the bot recommendation was created.</p>",
         "DescribeBotRecommendationResponse$lastUpdatedDateTime": "<p>The date and time that the bot recommendation was last updated.</p>",
+        "DescribeBotReplicaResponse$creationDateTime": "<p>The creation date and time of the replicated bot being monitored.</p>",
+        "DescribeBotResourceGenerationResponse$creationDateTime": "<p>The date and time at which the item was generated.</p>",
+        "DescribeBotResourceGenerationResponse$lastUpdatedDateTime": "<p>The date and time at which the generated item was updated.</p>",
         "DescribeBotResponse$creationDateTime": "<p>A timestamp of the date and time that the bot was created.</p>",
         "DescribeBotResponse$lastUpdatedDateTime": "<p>A timestamp of the date and time that the bot was last updated.</p>",
         "DescribeBotVersionResponse$creationDateTime": "<p>A timestamp of the date and time that the bot version was created.</p>",
@@ -4474,15 +5740,34 @@
         "DescribeTestSetResponse$lastUpdatedDateTime": "<p>The date and time for the last update of the test set data.</p>",
         "ExportSummary$creationDateTime": "<p>The date and time that the export was created.</p>",
         "ExportSummary$lastUpdatedDateTime": "<p>The date and time that the export was last updated.</p>",
+        "GenerationSummary$creationDateTime": "<p>The date and time at which the generation request was made.</p>",
+        "GenerationSummary$lastUpdatedDateTime": "<p>The date and time at which the generation request was last updated.</p>",
         "ImportSummary$creationDateTime": "<p>The date and time that the import was created.</p>",
         "ImportSummary$lastUpdatedDateTime": "<p>The date and time that the import was last updated.</p>",
         "IntentSummary$lastUpdatedDateTime": "<p>The timestamp of the date and time that the intent was last updated.</p>",
         "ListAggregatedUtterancesResponse$aggregationWindowStartTime": "<p>The date and time that the aggregation window begins. Only data collected after this time is returned in the results.</p>",
         "ListAggregatedUtterancesResponse$aggregationWindowEndTime": "<p>The date and time that the aggregation window ends. Only data collected between the start time and the end time are returned in the results. </p>",
         "ListAggregatedUtterancesResponse$aggregationLastRefreshedDateTime": "<p>The last date and time that the aggregated data was collected. The time period depends on the length of the aggregation window.</p> <ul> <li> <p> <b>Hours</b> - for 1 hour time window, every half hour; otherwise every hour.</p> </li> <li> <p> <b>Days</b> - every 6 hours</p> </li> <li> <p> <b>Weeks</b> - for a one week time window, every 12 hours; otherwise, every day</p> </li> </ul>",
+        "ListIntentMetricsRequest$startDateTime": "<p>The timestamp that marks the beginning of the range of time for which you want to see intent metrics.</p>",
+        "ListIntentMetricsRequest$endDateTime": "<p>The date and time that marks the end of the range of time for which you want to see intent metrics.</p>",
+        "ListIntentPathsRequest$startDateTime": "<p>The date and time that marks the beginning of the range of time for which you want to see intent path metrics.</p>",
+        "ListIntentPathsRequest$endDateTime": "<p>The date and time that marks the end of the range of time for which you want to see intent path metrics.</p>",
+        "ListIntentStageMetricsRequest$startDateTime": "<p>The date and time that marks the beginning of the range of time for which you want to see intent stage metrics.</p>",
+        "ListIntentStageMetricsRequest$endDateTime": "<p>The date and time that marks the end of the range of time for which you want to see intent stage metrics.</p>",
+        "ListSessionAnalyticsDataRequest$startDateTime": "<p>The date and time that marks the beginning of the range of time for which you want to see session analytics.</p>",
+        "ListSessionAnalyticsDataRequest$endDateTime": "<p>The date and time that marks the end of the range of time for which you want to see session analytics.</p>",
+        "ListSessionMetricsRequest$startDateTime": "<p>The date and time that marks the beginning of the range of time for which you want to see session metrics.</p>",
+        "ListSessionMetricsRequest$endDateTime": "<p>The date and time that marks the end of the range of time for which you want to see session metrics.</p>",
+        "ListUtteranceAnalyticsDataRequest$startDateTime": "<p>The date and time that marks the beginning of the range of time for which you want to see utterance analytics.</p>",
+        "ListUtteranceAnalyticsDataRequest$endDateTime": "<p>The date and time that marks the end of the range of time for which you want to see utterance analytics.</p>",
+        "ListUtteranceMetricsRequest$startDateTime": "<p>The date and time that marks the beginning of the range of time for which you want to see utterance metrics.</p>",
+        "ListUtteranceMetricsRequest$endDateTime": "<p>The date and time that marks the end of the range of time for which you want to see utterance metrics.</p>",
+        "SessionSpecification$conversationStartTime": "<p>The date and time when the conversation began. A conversation is defined as a unique combination of a <code>sessionId</code> and an <code>originatingRequestId</code>.</p>",
+        "SessionSpecification$conversationEndTime": "<p>The date and time when the conversation ended. A conversation is defined as a unique combination of a <code>sessionId</code> and an <code>originatingRequestId</code>.</p>",
         "SlotSummary$lastUpdatedDateTime": "<p>The timestamp of the last date and time that the slot was updated.</p>",
         "SlotTypeSummary$lastUpdatedDateTime": "<p>A timestamp of the date and time that the slot type was last updated.</p>",
         "StartBotRecommendationResponse$creationDateTime": "<p>A timestamp of the date and time that the bot recommendation was created.</p>",
+        "StartBotResourceGenerationResponse$creationDateTime": "<p>The date and time at which the generation request was made.</p>",
         "StartImportResponse$creationDateTime": "<p>The date and time that the import request was created.</p>",
         "StartTestExecutionResponse$creationDateTime": "<p>The creation date and time for the test set execution.</p>",
         "StartTestSetGenerationResponse$creationDateTime": "<p> The creation date and time for the test set generation.</p>",
@@ -4507,7 +5792,10 @@
         "UpdateSlotTypeResponse$creationDateTime": "<p>The timestamp of the date and time that the slot type was created.</p>",
         "UpdateSlotTypeResponse$lastUpdatedDateTime": "<p>A timestamp of the date and time that the slot type was last updated.</p>",
         "UpdateTestSetResponse$creationDateTime": "<p>The creation date and time for the updated test set.</p>",
-        "UpdateTestSetResponse$lastUpdatedDateTime": "<p> The date and time of the last update for the updated test set.</p>"
+        "UpdateTestSetResponse$lastUpdatedDateTime": "<p> The date and time of the last update for the updated test set.</p>",
+        "UtteranceSpecification$conversationStartTime": "<p>The date and time when the conversation in which the utterance took place began. A conversation is defined as a unique combination of a <code>sessionId</code> and an <code>originatingRequestId</code>.</p>",
+        "UtteranceSpecification$conversationEndTime": "<p>The date and time when the conversation in which the utterance took place ended. A conversation is defined as a unique combination of a <code>sessionId</code> and an <code>originatingRequestId</code>.</p>",
+        "UtteranceSpecification$utteranceTimestamp": "<p>The date and time when the utterance took place.</p>"
       }
     },
     "Transcript": {
@@ -4738,6 +6026,30 @@
         "UtteranceInputSpecification$audioInput": "<p>Contains information about the audio input for an utterance.</p>"
       }
     },
+    "UtteranceBotResponse": {
+      "base": "<p>An object that contains a response to the utterance from the bot.</p>",
+      "refs": {
+        "UtteranceBotResponses$member": null
+      }
+    },
+    "UtteranceBotResponses": {
+      "base": null,
+      "refs": {
+        "UtteranceSpecification$botResponses": "<p>A list of objects containing information about the bot response to the utterance.</p>"
+      }
+    },
+    "UtteranceContentType": {
+      "base": null,
+      "refs": {
+        "UtteranceBotResponse$contentType": "<p>The type of the response. The following values are possible:</p> <ul> <li> <p> <code>PlainText</code> – A plain text string.</p> </li> <li> <p> <code>CustomPayload</code> – A response string that you can customize to include data or metadata for your application.</p> </li> <li> <p> <code>SSML</code> – A string that includes Speech Synthesis Markup Language to customize the audio response.</p> </li> <li> <p> <code>ImageResponseCard</code> – An image with buttons that the customer can select. See <a href=\"https://docs.aws.amazon.com/lexv2/latest/APIReference/API_runtime_ImageResponseCard.html\">ImageResponseCard</a> for more information.</p> </li> </ul>"
+      }
+    },
+    "UtteranceDataSortBy": {
+      "base": "<p>An object specifying the measure and method by which to sort the utterance data.</p>",
+      "refs": {
+        "ListUtteranceAnalyticsDataRequest$sortBy": "<p>An object specifying the measure and method by which to sort the utterance analytics data.</p>"
+      }
+    },
     "UtteranceInputSpecification": {
       "base": "<p>Contains information about input of an utterance.</p>",
       "refs": {
@@ -4760,6 +6072,24 @@
       "base": "<p>Contains information about the utterances in the results of the test set execution.</p>",
       "refs": {
         "TestExecutionResultItems$utteranceLevelTestResults": "<p>Results related to utterances in the test set.</p>"
+      }
+    },
+    "UtteranceSpecification": {
+      "base": "<p>An object containing information about a specific utterance.</p>",
+      "refs": {
+        "UtteranceSpecifications$member": null
+      }
+    },
+    "UtteranceSpecifications": {
+      "base": null,
+      "refs": {
+        "ListUtteranceAnalyticsDataResponse$utterances": "<p>A list of objects, each of which contains information about an utterance in a user session with your bot.</p>"
+      }
+    },
+    "UtteranceUnderstood": {
+      "base": null,
+      "refs": {
+        "UtteranceSpecification$utteranceUnderstood": "<p>Specifies whether the bot understood the utterance or not.</p>"
       }
     },
     "ValidationException": {

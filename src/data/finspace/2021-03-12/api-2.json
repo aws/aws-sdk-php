@@ -28,7 +28,9 @@
         {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"LimitExceededException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"This method will be discontinued."
     },
     "CreateKxChangeset":{
       "name":"CreateKxChangeset",
@@ -86,6 +88,25 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "CreateKxDataview":{
+      "name":"CreateKxDataview",
+      "http":{
+        "method":"POST",
+        "requestUri":"/kx/environments/{environmentId}/databases/{databaseName}/dataviews"
+      },
+      "input":{"shape":"CreateKxDataviewRequest"},
+      "output":{"shape":"CreateKxDataviewResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceAlreadyExistsException"}
+      ]
+    },
     "CreateKxEnvironment":{
       "name":"CreateKxEnvironment",
       "http":{
@@ -102,6 +123,25 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"LimitExceededException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "CreateKxScalingGroup":{
+      "name":"CreateKxScalingGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/kx/environments/{environmentId}/scalingGroups"
+      },
+      "input":{"shape":"CreateKxScalingGroupRequest"},
+      "output":{"shape":"CreateKxScalingGroupResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "CreateKxUser":{
@@ -123,6 +163,26 @@
         {"shape":"ConflictException"}
       ]
     },
+    "CreateKxVolume":{
+      "name":"CreateKxVolume",
+      "http":{
+        "method":"POST",
+        "requestUri":"/kx/environments/{environmentId}/kxvolumes"
+      },
+      "input":{"shape":"CreateKxVolumeRequest"},
+      "output":{"shape":"CreateKxVolumeResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DeleteEnvironment":{
       "name":"DeleteEnvironment",
       "http":{
@@ -137,7 +197,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"This method will be discontinued."
     },
     "DeleteKxCluster":{
       "name":"DeleteKxCluster",
@@ -157,6 +219,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "DeleteKxClusterNode":{
+      "name":"DeleteKxClusterNode",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/kx/environments/{environmentId}/clusters/{clusterName}/nodes/{nodeId}"
+      },
+      "input":{"shape":"DeleteKxClusterNodeRequest"},
+      "output":{"shape":"DeleteKxClusterNodeResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DeleteKxDatabase":{
       "name":"DeleteKxDatabase",
       "http":{
@@ -165,6 +243,23 @@
       },
       "input":{"shape":"DeleteKxDatabaseRequest"},
       "output":{"shape":"DeleteKxDatabaseResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "DeleteKxDataview":{
+      "name":"DeleteKxDataview",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/kx/environments/{environmentId}/databases/{databaseName}/dataviews/{dataviewName}"
+      },
+      "input":{"shape":"DeleteKxDataviewRequest"},
+      "output":{"shape":"DeleteKxDataviewResponse"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -187,7 +282,26 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "DeleteKxScalingGroup":{
+      "name":"DeleteKxScalingGroup",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/kx/environments/{environmentId}/scalingGroups/{scalingGroupName}"
+      },
+      "input":{"shape":"DeleteKxScalingGroupRequest"},
+      "output":{"shape":"DeleteKxScalingGroupResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DeleteKxUser":{
@@ -203,7 +317,26 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "DeleteKxVolume":{
+      "name":"DeleteKxVolume",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/kx/environments/{environmentId}/kxvolumes/{volumeName}"
+      },
+      "input":{"shape":"DeleteKxVolumeRequest"},
+      "output":{"shape":"DeleteKxVolumeResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetEnvironment":{
@@ -219,7 +352,9 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"This method will be discontinued."
     },
     "GetKxChangeset":{
       "name":"GetKxChangeset",
@@ -287,6 +422,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetKxDataview":{
+      "name":"GetKxDataview",
+      "http":{
+        "method":"GET",
+        "requestUri":"/kx/environments/{environmentId}/databases/{databaseName}/dataviews/{dataviewName}"
+      },
+      "input":{"shape":"GetKxDataviewRequest"},
+      "output":{"shape":"GetKxDataviewResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetKxEnvironment":{
       "name":"GetKxEnvironment",
       "http":{
@@ -299,7 +450,26 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "GetKxScalingGroup":{
+      "name":"GetKxScalingGroup",
+      "http":{
+        "method":"GET",
+        "requestUri":"/kx/environments/{environmentId}/scalingGroups/{scalingGroupName}"
+      },
+      "input":{"shape":"GetKxScalingGroupRequest"},
+      "output":{"shape":"GetKxScalingGroupResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetKxUser":{
@@ -318,6 +488,24 @@
         {"shape":"ValidationException"}
       ]
     },
+    "GetKxVolume":{
+      "name":"GetKxVolume",
+      "http":{
+        "method":"GET",
+        "requestUri":"/kx/environments/{environmentId}/kxvolumes/{volumeName}"
+      },
+      "input":{"shape":"GetKxVolumeRequest"},
+      "output":{"shape":"GetKxVolumeResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListEnvironments":{
       "name":"ListEnvironments",
       "http":{
@@ -328,8 +516,11 @@
       "output":{"shape":"ListEnvironmentsResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ValidationException"}
-      ]
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"This method will be discontinued."
     },
     "ListKxChangesets":{
       "name":"ListKxChangesets",
@@ -398,6 +589,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListKxDataviews":{
+      "name":"ListKxDataviews",
+      "http":{
+        "method":"GET",
+        "requestUri":"/kx/environments/{environmentId}/databases/{databaseName}/dataviews"
+      },
+      "input":{"shape":"ListKxDataviewsRequest"},
+      "output":{"shape":"ListKxDataviewsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListKxEnvironments":{
       "name":"ListKxEnvironments",
       "http":{
@@ -408,7 +615,26 @@
       "output":{"shape":"ListKxEnvironmentsResponse"},
       "errors":[
         {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "ListKxScalingGroups":{
+      "name":"ListKxScalingGroups",
+      "http":{
+        "method":"GET",
+        "requestUri":"/kx/environments/{environmentId}/scalingGroups"
+      },
+      "input":{"shape":"ListKxScalingGroupsRequest"},
+      "output":{"shape":"ListKxScalingGroupsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListKxUsers":{
@@ -425,6 +651,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "ListKxVolumes":{
+      "name":"ListKxVolumes",
+      "http":{
+        "method":"GET",
+        "requestUri":"/kx/environments/{environmentId}/kxvolumes"
+      },
+      "input":{"shape":"ListKxVolumesRequest"},
+      "output":{"shape":"ListKxVolumesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListTagsForResource":{
@@ -483,6 +727,26 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
+      ],
+      "deprecated":true,
+      "deprecatedMessage":"This method will be discontinued."
+    },
+    "UpdateKxClusterCodeConfiguration":{
+      "name":"UpdateKxClusterCodeConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/kx/environments/{environmentId}/clusters/{clusterName}/configuration/code"
+      },
+      "input":{"shape":"UpdateKxClusterCodeConfigurationRequest"},
+      "output":{"shape":"UpdateKxClusterCodeConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "UpdateKxClusterDatabases":{
@@ -499,6 +763,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"LimitExceededException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -517,6 +782,24 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "UpdateKxDataview":{
+      "name":"UpdateKxDataview",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/kx/environments/{environmentId}/databases/{databaseName}/dataviews/{dataviewName}"
+      },
+      "input":{"shape":"UpdateKxDataviewRequest"},
+      "output":{"shape":"UpdateKxDataviewResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceAlreadyExistsException"}
       ]
     },
     "UpdateKxEnvironment":{
@@ -570,15 +853,38 @@
         {"shape":"LimitExceededException"},
         {"shape":"ConflictException"}
       ]
+    },
+    "UpdateKxVolume":{
+      "name":"UpdateKxVolume",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/kx/environments/{environmentId}/kxvolumes/{volumeName}"
+      },
+      "input":{"shape":"UpdateKxVolumeRequest"},
+      "output":{"shape":"UpdateKxVolumeResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
     }
   },
   "shapes":{
     "AccessDeniedException":{
       "type":"structure",
       "members":{
+        "message":{"shape":"errorMessage"}
       },
       "error":{"httpStatusCode":403},
       "exception":true
+    },
+    "AttachedClusterList":{
+      "type":"list",
+      "member":{"shape":"KxClusterName"}
     },
     "AttributeMap":{
       "type":"map",
@@ -605,7 +911,12 @@
       "max":100,
       "min":1
     },
-    "AvailabilityZoneId":{"type":"string"},
+    "AvailabilityZoneId":{
+      "type":"string",
+      "max":12,
+      "min":8,
+      "pattern":"^[a-zA-Z0-9-]+$"
+    },
     "AvailabilityZoneIds":{
       "type":"list",
       "member":{"shape":"AvailabilityZoneId"}
@@ -649,7 +960,8 @@
     "ChangesetId":{
       "type":"string",
       "max":26,
-      "min":1
+      "min":1,
+      "pattern":"^[a-zA-Z0-9]+$"
     },
     "ChangesetStatus":{
       "type":"string",
@@ -672,6 +984,10 @@
       "min":1,
       "pattern":"^[a-zA-Z0-9-]+$"
     },
+    "ClusterNodeCount":{
+      "type":"integer",
+      "min":1
+    },
     "CodeConfiguration":{
       "type":"structure",
       "members":{
@@ -693,6 +1009,10 @@
       "type":"double",
       "max":100000,
       "min":0
+    },
+    "CpuCount":{
+      "type":"double",
+      "min":0.1
     },
     "CreateEnvironmentRequest":{
       "type":"structure",
@@ -761,8 +1081,8 @@
         "environmentId",
         "clusterName",
         "clusterType",
-        "capacityConfiguration",
         "releaseLabel",
+        "vpcConfiguration",
         "azMode"
       ],
       "members":{
@@ -777,6 +1097,7 @@
         },
         "clusterName":{"shape":"KxClusterName"},
         "clusterType":{"shape":"KxClusterType"},
+        "tickerplantLogConfiguration":{"shape":"TickerplantLogConfiguration"},
         "databases":{"shape":"KxDatabaseConfigurations"},
         "cacheStorageConfigurations":{"shape":"KxCacheStorageConfigurations"},
         "autoScalingConfiguration":{"shape":"AutoScalingConfiguration"},
@@ -791,7 +1112,8 @@
         "savedownStorageConfiguration":{"shape":"KxSavedownStorageConfiguration"},
         "azMode":{"shape":"KxAzMode"},
         "availabilityZoneId":{"shape":"AvailabilityZoneId"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "scalingGroupConfiguration":{"shape":"KxScalingGroupConfiguration"}
       }
     },
     "CreateKxClusterResponse":{
@@ -802,6 +1124,8 @@
         "statusReason":{"shape":"KxClusterStatusReason"},
         "clusterName":{"shape":"KxClusterName"},
         "clusterType":{"shape":"KxClusterType"},
+        "tickerplantLogConfiguration":{"shape":"TickerplantLogConfiguration"},
+        "volumes":{"shape":"Volumes"},
         "databases":{"shape":"KxDatabaseConfigurations"},
         "cacheStorageConfigurations":{"shape":"KxCacheStorageConfigurations"},
         "autoScalingConfiguration":{"shape":"AutoScalingConfiguration"},
@@ -817,7 +1141,8 @@
         "savedownStorageConfiguration":{"shape":"KxSavedownStorageConfiguration"},
         "azMode":{"shape":"KxAzMode"},
         "availabilityZoneId":{"shape":"AvailabilityZoneId"},
-        "createdTimestamp":{"shape":"Timestamp"}
+        "createdTimestamp":{"shape":"Timestamp"},
+        "scalingGroupConfiguration":{"shape":"KxScalingGroupConfiguration"}
       }
     },
     "CreateKxDatabaseRequest":{
@@ -853,6 +1178,59 @@
         "lastModifiedTimestamp":{"shape":"Timestamp"}
       }
     },
+    "CreateKxDataviewRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "databaseName",
+        "dataviewName",
+        "azMode",
+        "clientToken"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "databaseName":{
+          "shape":"DatabaseName",
+          "location":"uri",
+          "locationName":"databaseName"
+        },
+        "dataviewName":{"shape":"KxDataviewName"},
+        "azMode":{"shape":"KxAzMode"},
+        "availabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "changesetId":{"shape":"ChangesetId"},
+        "segmentConfigurations":{"shape":"KxDataviewSegmentConfigurationList"},
+        "autoUpdate":{"shape":"booleanValue"},
+        "readWrite":{"shape":"booleanValue"},
+        "description":{"shape":"Description"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateKxDataviewResponse":{
+      "type":"structure",
+      "members":{
+        "dataviewName":{"shape":"KxDataviewName"},
+        "databaseName":{"shape":"DatabaseName"},
+        "environmentId":{"shape":"EnvironmentId"},
+        "azMode":{"shape":"KxAzMode"},
+        "availabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "changesetId":{"shape":"ChangesetId"},
+        "segmentConfigurations":{"shape":"KxDataviewSegmentConfigurationList"},
+        "description":{"shape":"Description"},
+        "autoUpdate":{"shape":"booleanValue"},
+        "readWrite":{"shape":"booleanValue"},
+        "createdTimestamp":{"shape":"Timestamp"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"},
+        "status":{"shape":"KxDataviewStatus"}
+      }
+    },
     "CreateKxEnvironmentRequest":{
       "type":"structure",
       "required":[
@@ -864,7 +1242,10 @@
         "description":{"shape":"Description"},
         "kmsKeyId":{"shape":"KmsKeyARN"},
         "tags":{"shape":"TagMap"},
-        "clientToken":{"shape":"ClientToken"}
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "CreateKxEnvironmentResponse":{
@@ -877,6 +1258,43 @@
         "environmentArn":{"shape":"EnvironmentArn"},
         "kmsKeyId":{"shape":"KmsKeyId"},
         "creationTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "CreateKxScalingGroupRequest":{
+      "type":"structure",
+      "required":[
+        "clientToken",
+        "environmentId",
+        "scalingGroupName",
+        "hostType",
+        "availabilityZoneId"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "scalingGroupName":{"shape":"KxScalingGroupName"},
+        "hostType":{"shape":"KxHostType"},
+        "availabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateKxScalingGroupResponse":{
+      "type":"structure",
+      "members":{
+        "environmentId":{"shape":"KxEnvironmentId"},
+        "scalingGroupName":{"shape":"KxScalingGroupName"},
+        "hostType":{"shape":"KxHostType"},
+        "availabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "status":{"shape":"KxScalingGroupStatus"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"},
+        "createdTimestamp":{"shape":"Timestamp"}
       }
     },
     "CreateKxUserRequest":{
@@ -895,7 +1313,10 @@
         "userName":{"shape":"KxUserNameString"},
         "iamRole":{"shape":"RoleArn"},
         "tags":{"shape":"TagMap"},
-        "clientToken":{"shape":"ClientToken"}
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "CreateKxUserResponse":{
@@ -905,6 +1326,50 @@
         "userArn":{"shape":"KxUserArn"},
         "environmentId":{"shape":"IdType"},
         "iamRole":{"shape":"RoleArn"}
+      }
+    },
+    "CreateKxVolumeRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "volumeType",
+        "volumeName",
+        "azMode",
+        "availabilityZoneIds"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "volumeType":{"shape":"KxVolumeType"},
+        "volumeName":{"shape":"KxVolumeName"},
+        "description":{"shape":"Description"},
+        "nas1Configuration":{"shape":"KxNAS1Configuration"},
+        "azMode":{"shape":"KxAzMode"},
+        "availabilityZoneIds":{"shape":"AvailabilityZoneIds"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateKxVolumeResponse":{
+      "type":"structure",
+      "members":{
+        "environmentId":{"shape":"KxEnvironmentId"},
+        "volumeName":{"shape":"KxVolumeName"},
+        "volumeType":{"shape":"KxVolumeType"},
+        "volumeArn":{"shape":"KxVolumeArn"},
+        "nas1Configuration":{"shape":"KxNAS1Configuration"},
+        "status":{"shape":"KxVolumeStatus"},
+        "statusReason":{"shape":"KxVolumeStatusReason"},
+        "azMode":{"shape":"KxAzMode"},
+        "description":{"shape":"Description"},
+        "availabilityZoneIds":{"shape":"AvailabilityZoneIds"},
+        "createdTimestamp":{"shape":"Timestamp"}
       }
     },
     "CustomDNSConfiguration":{
@@ -943,7 +1408,7 @@
       "type":"string",
       "max":1025,
       "min":1,
-      "pattern":"^\\/([^\\/]+\\/){0,2}[^\\/]*$"
+      "pattern":"^(\\*)*[\\/\\?\\*]([^\\/]+\\/){0,2}[^\\/]*$"
     },
     "DbPaths":{
       "type":"list",
@@ -961,6 +1426,36 @@
       }
     },
     "DeleteEnvironmentResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteKxClusterNodeRequest":{
+      "type":"structure",
+      "required":[
+        "clusterName",
+        "nodeId",
+        "environmentId"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "clusterName":{
+          "shape":"KxClusterName",
+          "location":"uri",
+          "locationName":"clusterName"
+        },
+        "nodeId":{
+          "shape":"KxClusterNodeIdString",
+          "location":"uri",
+          "locationName":"nodeId"
+        }
+      }
+    },
+    "DeleteKxClusterNodeResponse":{
       "type":"structure",
       "members":{
       }
@@ -1026,6 +1521,43 @@
       "members":{
       }
     },
+    "DeleteKxDataviewRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "databaseName",
+        "dataviewName",
+        "clientToken"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "databaseName":{
+          "shape":"DatabaseName",
+          "location":"uri",
+          "locationName":"databaseName"
+        },
+        "dataviewName":{
+          "shape":"KxDataviewName",
+          "location":"uri",
+          "locationName":"dataviewName"
+        },
+        "clientToken":{
+          "shape":"ClientTokenString",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteKxDataviewResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteKxEnvironmentRequest":{
       "type":"structure",
       "required":["environmentId"],
@@ -1034,10 +1566,46 @@
           "shape":"IdType",
           "location":"uri",
           "locationName":"environmentId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
     "DeleteKxEnvironmentResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteKxScalingGroupRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "scalingGroupName"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "scalingGroupName":{
+          "shape":"KxScalingGroupName",
+          "location":"uri",
+          "locationName":"scalingGroupName"
+        },
+        "clientToken":{
+          "shape":"ClientTokenString",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteKxScalingGroupResponse":{
       "type":"structure",
       "members":{
       }
@@ -1058,10 +1626,46 @@
           "shape":"IdType",
           "location":"uri",
           "locationName":"environmentId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
     "DeleteKxUserResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteKxVolumeRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "volumeName"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "volumeName":{
+          "shape":"KxVolumeName",
+          "location":"uri",
+          "locationName":"volumeName"
+        },
+        "clientToken":{
+          "shape":"ClientTokenString",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteKxVolumeResponse":{
       "type":"structure",
       "members":{
       }
@@ -1212,7 +1816,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws:finspace:[A-Za-z0-9_/.-]{0,63}:\\d+:(environment|kxEnvironment)/[0-9A-Za-z_-]{1,128}(/(kxDatabase|kxCluster|kxUser)/[a-zA-Z0-9_-]{1,255})?$"
+      "pattern":"^arn:aws:finspace:[A-Za-z0-9_/.-]{0,63}:\\d+:(environment|kxEnvironment)/[0-9A-Za-z_-]{1,128}(/(kxCluster|kxUser|kxVolume|kxScalingGroup)/[a-zA-Z0-9_-]{1,255}|/(kxDatabase/[a-zA-Z0-9_-]{1,255}(/kxDataview/[a-zA-Z0-9_-]{1,255})?))?$"
     },
     "GetEnvironmentRequest":{
       "type":"structure",
@@ -1296,6 +1900,8 @@
         "statusReason":{"shape":"KxClusterStatusReason"},
         "clusterName":{"shape":"KxClusterName"},
         "clusterType":{"shape":"KxClusterType"},
+        "tickerplantLogConfiguration":{"shape":"TickerplantLogConfiguration"},
+        "volumes":{"shape":"Volumes"},
         "databases":{"shape":"KxDatabaseConfigurations"},
         "cacheStorageConfigurations":{"shape":"KxCacheStorageConfigurations"},
         "autoScalingConfiguration":{"shape":"AutoScalingConfiguration"},
@@ -1311,7 +1917,8 @@
         "savedownStorageConfiguration":{"shape":"KxSavedownStorageConfiguration"},
         "azMode":{"shape":"KxAzMode"},
         "availabilityZoneId":{"shape":"AvailabilityZoneId"},
-        "createdTimestamp":{"shape":"Timestamp"}
+        "createdTimestamp":{"shape":"Timestamp"},
+        "scalingGroupConfiguration":{"shape":"KxScalingGroupConfiguration"}
       }
     },
     "GetKxConnectionStringRequest":{
@@ -1379,6 +1986,51 @@
         "numFiles":{"shape":"numFiles"}
       }
     },
+    "GetKxDataviewRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "databaseName",
+        "dataviewName"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "databaseName":{
+          "shape":"DatabaseName",
+          "location":"uri",
+          "locationName":"databaseName"
+        },
+        "dataviewName":{
+          "shape":"KxDataviewName",
+          "location":"uri",
+          "locationName":"dataviewName"
+        }
+      }
+    },
+    "GetKxDataviewResponse":{
+      "type":"structure",
+      "members":{
+        "databaseName":{"shape":"DatabaseName"},
+        "dataviewName":{"shape":"KxDataviewName"},
+        "azMode":{"shape":"KxAzMode"},
+        "availabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "changesetId":{"shape":"ChangesetId"},
+        "segmentConfigurations":{"shape":"KxDataviewSegmentConfigurationList"},
+        "activeVersions":{"shape":"KxDataviewActiveVersionList"},
+        "description":{"shape":"Description"},
+        "autoUpdate":{"shape":"booleanValue"},
+        "readWrite":{"shape":"booleanValue"},
+        "environmentId":{"shape":"EnvironmentId"},
+        "createdTimestamp":{"shape":"Timestamp"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"},
+        "status":{"shape":"KxDataviewStatus"},
+        "statusReason":{"shape":"KxDataviewStatusReason"}
+      }
+    },
     "GetKxEnvironmentRequest":{
       "type":"structure",
       "required":["environmentId"],
@@ -1412,6 +2064,39 @@
         "certificateAuthorityArn":{"shape":"stringValueLength1to255"}
       }
     },
+    "GetKxScalingGroupRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "scalingGroupName"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "scalingGroupName":{
+          "shape":"KxScalingGroupName",
+          "location":"uri",
+          "locationName":"scalingGroupName"
+        }
+      }
+    },
+    "GetKxScalingGroupResponse":{
+      "type":"structure",
+      "members":{
+        "scalingGroupName":{"shape":"KxScalingGroupName"},
+        "scalingGroupArn":{"shape":"arn"},
+        "hostType":{"shape":"KxHostType"},
+        "clusters":{"shape":"KxClusterNameList"},
+        "availabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "status":{"shape":"KxScalingGroupStatus"},
+        "statusReason":{"shape":"KxClusterStatusReason"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"},
+        "createdTimestamp":{"shape":"Timestamp"}
+      }
+    },
     "GetKxUserRequest":{
       "type":"structure",
       "required":[
@@ -1440,10 +2125,59 @@
         "iamRole":{"shape":"RoleArn"}
       }
     },
+    "GetKxVolumeRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "volumeName"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "volumeName":{
+          "shape":"KxVolumeName",
+          "location":"uri",
+          "locationName":"volumeName"
+        }
+      }
+    },
+    "GetKxVolumeResponse":{
+      "type":"structure",
+      "members":{
+        "environmentId":{"shape":"KxEnvironmentId"},
+        "volumeName":{"shape":"KxVolumeName"},
+        "volumeType":{"shape":"KxVolumeType"},
+        "volumeArn":{"shape":"KxVolumeArn"},
+        "nas1Configuration":{"shape":"KxNAS1Configuration"},
+        "status":{"shape":"KxVolumeStatus"},
+        "statusReason":{"shape":"KxVolumeStatusReason"},
+        "createdTimestamp":{"shape":"Timestamp"},
+        "description":{"shape":"Description"},
+        "azMode":{"shape":"KxAzMode"},
+        "availabilityZoneIds":{"shape":"AvailabilityZoneIds"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"},
+        "attachedClusters":{"shape":"KxAttachedClusters"}
+      }
+    },
     "IPAddressType":{
       "type":"string",
       "enum":["IP_V4"]
     },
+    "IcmpTypeCode":{
+      "type":"structure",
+      "required":[
+        "type",
+        "code"
+      ],
+      "members":{
+        "type":{"shape":"IcmpTypeOrCode"},
+        "code":{"shape":"IcmpTypeOrCode"}
+      }
+    },
+    "IcmpTypeOrCode":{"type":"integer"},
     "IdType":{
       "type":"string",
       "max":26,
@@ -1484,6 +2218,18 @@
       "min":1,
       "pattern":"^[a-zA-Z-0-9-:\\/]*$"
     },
+    "KxAttachedCluster":{
+      "type":"structure",
+      "members":{
+        "clusterName":{"shape":"KxClusterName"},
+        "clusterType":{"shape":"KxClusterType"},
+        "clusterStatus":{"shape":"KxClusterStatus"}
+      }
+    },
+    "KxAttachedClusters":{
+      "type":"list",
+      "member":{"shape":"KxAttachedCluster"}
+    },
     "KxAzMode":{
       "type":"string",
       "enum":[
@@ -1506,11 +2252,7 @@
       "type":"list",
       "member":{"shape":"KxCacheStorageConfiguration"}
     },
-    "KxCacheStorageSize":{
-      "type":"integer",
-      "max":33600,
-      "min":1200
-    },
+    "KxCacheStorageSize":{"type":"integer"},
     "KxCacheStorageType":{
       "type":"string",
       "max":10,
@@ -1539,6 +2281,7 @@
         "clusterType":{"shape":"KxClusterType"},
         "clusterDescription":{"shape":"KxClusterDescription"},
         "releaseLabel":{"shape":"ReleaseLabel"},
+        "volumes":{"shape":"Volumes"},
         "initializationScript":{"shape":"InitializationScriptFilePath"},
         "executionRole":{"shape":"ExecutionRoleArn"},
         "azMode":{"shape":"KxAzMode"},
@@ -1546,6 +2289,21 @@
         "lastModifiedTimestamp":{"shape":"Timestamp"},
         "createdTimestamp":{"shape":"Timestamp"}
       }
+    },
+    "KxClusterCodeDeploymentConfiguration":{
+      "type":"structure",
+      "required":["deploymentStrategy"],
+      "members":{
+        "deploymentStrategy":{"shape":"KxClusterCodeDeploymentStrategy"}
+      }
+    },
+    "KxClusterCodeDeploymentStrategy":{
+      "type":"string",
+      "enum":[
+        "NO_RESTART",
+        "ROLLING",
+        "FORCE"
+      ]
     },
     "KxClusterDescription":{
       "type":"string",
@@ -1558,6 +2316,10 @@
       "max":63,
       "min":3,
       "pattern":"^[a-zA-Z0-9][a-zA-Z0-9-_]*[a-zA-Z0-9]$"
+    },
+    "KxClusterNameList":{
+      "type":"list",
+      "member":{"shape":"KxClusterName"}
     },
     "KxClusterNodeIdString":{
       "type":"string",
@@ -1588,7 +2350,9 @@
       "enum":[
         "HDB",
         "RDB",
-        "GATEWAY"
+        "GATEWAY",
+        "GP",
+        "TICKERPLANT"
       ]
     },
     "KxClusters":{
@@ -1604,15 +2368,15 @@
     },
     "KxCommandLineArgumentKey":{
       "type":"string",
-      "max":50,
+      "max":1024,
       "min":1,
-      "pattern":"^(?![Aa][Ww][Ss])(s|([a-zA-Z][a-zA-Z0-9_]+))"
+      "pattern":"^(?![Aa][Ww][Ss])(s|([a-zA-Z][a-zA-Z0-9_]+))|(AWS_ZIP_DEFAULT)"
     },
     "KxCommandLineArgumentValue":{
       "type":"string",
-      "max":50,
+      "max":1024,
       "min":1,
-      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9_:.]*"
+      "pattern":"^[a-zA-Z0-9_:./,]+$"
     },
     "KxCommandLineArguments":{
       "type":"list",
@@ -1626,7 +2390,8 @@
       ],
       "members":{
         "cacheType":{"shape":"KxCacheStorageType"},
-        "dbPaths":{"shape":"DbPaths"}
+        "dbPaths":{"shape":"DbPaths"},
+        "dataviewName":{"shape":"KxDataviewName"}
       }
     },
     "KxDatabaseCacheConfigurations":{
@@ -1639,7 +2404,9 @@
       "members":{
         "databaseName":{"shape":"DatabaseName"},
         "cacheConfigurations":{"shape":"KxDatabaseCacheConfigurations"},
-        "changesetId":{"shape":"ChangesetId"}
+        "changesetId":{"shape":"ChangesetId"},
+        "dataviewName":{"shape":"KxDataviewName"},
+        "dataviewConfiguration":{"shape":"KxDataviewConfiguration"}
       }
     },
     "KxDatabaseConfigurations":{
@@ -1657,6 +2424,107 @@
     "KxDatabases":{
       "type":"list",
       "member":{"shape":"KxDatabaseListEntry"}
+    },
+    "KxDataviewActiveVersion":{
+      "type":"structure",
+      "members":{
+        "changesetId":{"shape":"ChangesetId"},
+        "segmentConfigurations":{"shape":"KxDataviewSegmentConfigurationList"},
+        "attachedClusters":{"shape":"AttachedClusterList"},
+        "createdTimestamp":{"shape":"Timestamp"},
+        "versionId":{"shape":"VersionId"}
+      }
+    },
+    "KxDataviewActiveVersionList":{
+      "type":"list",
+      "member":{"shape":"KxDataviewActiveVersion"}
+    },
+    "KxDataviewConfiguration":{
+      "type":"structure",
+      "members":{
+        "dataviewName":{"shape":"KxDataviewName"},
+        "dataviewVersionId":{"shape":"VersionId"},
+        "changesetId":{"shape":"ChangesetId"},
+        "segmentConfigurations":{"shape":"KxDataviewSegmentConfigurationList"}
+      }
+    },
+    "KxDataviewListEntry":{
+      "type":"structure",
+      "members":{
+        "environmentId":{"shape":"EnvironmentId"},
+        "databaseName":{"shape":"DatabaseName"},
+        "dataviewName":{"shape":"KxDataviewName"},
+        "azMode":{"shape":"KxAzMode"},
+        "availabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "changesetId":{"shape":"ChangesetId"},
+        "segmentConfigurations":{"shape":"KxDataviewSegmentConfigurationList"},
+        "activeVersions":{"shape":"KxDataviewActiveVersionList"},
+        "status":{"shape":"KxDataviewStatus"},
+        "description":{"shape":"Description"},
+        "autoUpdate":{"shape":"booleanValue"},
+        "readWrite":{"shape":"booleanValue"},
+        "createdTimestamp":{"shape":"Timestamp"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"},
+        "statusReason":{"shape":"KxDataviewStatusReason"}
+      }
+    },
+    "KxDataviewName":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9-_]*[a-zA-Z0-9]$"
+    },
+    "KxDataviewSegmentConfiguration":{
+      "type":"structure",
+      "required":[
+        "dbPaths",
+        "volumeName"
+      ],
+      "members":{
+        "dbPaths":{"shape":"SegmentConfigurationDbPathList"},
+        "volumeName":{"shape":"KxVolumeName"},
+        "onDemand":{"shape":"booleanValue"}
+      }
+    },
+    "KxDataviewSegmentConfigurationList":{
+      "type":"list",
+      "member":{"shape":"KxDataviewSegmentConfiguration"},
+      "max":50,
+      "min":0
+    },
+    "KxDataviewStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "FAILED",
+        "DELETING"
+      ]
+    },
+    "KxDataviewStatusReason":{
+      "type":"string",
+      "max":250,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\_\\-\\.\\s]+$"
+    },
+    "KxDataviews":{
+      "type":"list",
+      "member":{"shape":"KxDataviewListEntry"}
+    },
+    "KxDeploymentConfiguration":{
+      "type":"structure",
+      "required":["deploymentStrategy"],
+      "members":{
+        "deploymentStrategy":{"shape":"KxDeploymentStrategy"}
+      }
+    },
+    "KxDeploymentStrategy":{
+      "type":"string",
+      "enum":[
+        "NO_RESTART",
+        "ROLLING"
+      ]
     },
     "KxEnvironment":{
       "type":"structure",
@@ -1696,13 +2564,46 @@
       "min":3,
       "pattern":"^[a-zA-Z0-9][a-zA-Z0-9-_]*[a-zA-Z0-9]$"
     },
+    "KxHostType":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9._]+"
+    },
+    "KxNAS1Configuration":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"KxNAS1Type"},
+        "size":{"shape":"KxNAS1Size"}
+      }
+    },
+    "KxNAS1Size":{
+      "type":"integer",
+      "min":1200
+    },
+    "KxNAS1Type":{
+      "type":"string",
+      "enum":[
+        "SSD_1000",
+        "SSD_250",
+        "HDD_12"
+      ]
+    },
     "KxNode":{
       "type":"structure",
       "members":{
         "nodeId":{"shape":"KxClusterNodeIdString"},
         "availabilityZoneId":{"shape":"AvailabilityZoneId"},
-        "launchTime":{"shape":"Timestamp"}
+        "launchTime":{"shape":"Timestamp"},
+        "status":{"shape":"KxNodeStatus"}
       }
+    },
+    "KxNodeStatus":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "PROVISIONING"
+      ]
     },
     "KxNodeSummaries":{
       "type":"list",
@@ -1710,23 +2611,69 @@
     },
     "KxSavedownStorageConfiguration":{
       "type":"structure",
-      "required":[
-        "type",
-        "size"
-      ],
       "members":{
         "type":{"shape":"KxSavedownStorageType"},
-        "size":{"shape":"KxSavedownStorageSize"}
+        "size":{"shape":"KxSavedownStorageSize"},
+        "volumeName":{"shape":"KxVolumeName"}
       }
     },
     "KxSavedownStorageSize":{
       "type":"integer",
       "max":16000,
-      "min":4
+      "min":10
     },
     "KxSavedownStorageType":{
       "type":"string",
       "enum":["SDS01"]
+    },
+    "KxScalingGroup":{
+      "type":"structure",
+      "members":{
+        "scalingGroupName":{"shape":"KxScalingGroupName"},
+        "hostType":{"shape":"KxHostType"},
+        "clusters":{"shape":"KxClusterNameList"},
+        "availabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "status":{"shape":"KxScalingGroupStatus"},
+        "statusReason":{"shape":"KxClusterStatusReason"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"},
+        "createdTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "KxScalingGroupConfiguration":{
+      "type":"structure",
+      "required":[
+        "scalingGroupName",
+        "memoryReservation",
+        "nodeCount"
+      ],
+      "members":{
+        "scalingGroupName":{"shape":"KxScalingGroupName"},
+        "memoryLimit":{"shape":"MemoryMib"},
+        "memoryReservation":{"shape":"MemoryMib"},
+        "nodeCount":{"shape":"ClusterNodeCount"},
+        "cpu":{"shape":"CpuCount"}
+      }
+    },
+    "KxScalingGroupList":{
+      "type":"list",
+      "member":{"shape":"KxScalingGroup"}
+    },
+    "KxScalingGroupName":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9-_]*[a-zA-Z0-9]$"
+    },
+    "KxScalingGroupStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "ACTIVE",
+        "DELETING",
+        "DELETED",
+        "DELETE_FAILED"
+      ]
     },
     "KxUser":{
       "type":"structure",
@@ -1753,6 +2700,60 @@
       "max":50,
       "min":1,
       "pattern":"^[0-9A-Za-z_-]{1,50}$"
+    },
+    "KxVolume":{
+      "type":"structure",
+      "members":{
+        "volumeName":{"shape":"KxVolumeName"},
+        "volumeType":{"shape":"KxVolumeType"},
+        "status":{"shape":"KxVolumeStatus"},
+        "description":{"shape":"Description"},
+        "statusReason":{"shape":"KxVolumeStatusReason"},
+        "azMode":{"shape":"KxAzMode"},
+        "availabilityZoneIds":{"shape":"AvailabilityZoneIds"},
+        "createdTimestamp":{"shape":"Timestamp"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "KxVolumeArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws:finspace:[A-Za-z0-9_/.-]{0,63}:\\d+:kxEnvironment/[0-9A-Za-z_-]{1,128}(/kxSharedVolume/[a-zA-Z0-9_-]{1,255})?$"
+    },
+    "KxVolumeName":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9-_]*[a-zA-Z0-9]$"
+    },
+    "KxVolumeStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "ACTIVE",
+        "UPDATING",
+        "UPDATED",
+        "UPDATE_FAILED",
+        "DELETING",
+        "DELETED",
+        "DELETE_FAILED"
+      ]
+    },
+    "KxVolumeStatusReason":{
+      "type":"string",
+      "max":250,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\_\\-\\.\\s]+$"
+    },
+    "KxVolumeType":{
+      "type":"string",
+      "enum":["NAS_1"]
+    },
+    "KxVolumes":{
+      "type":"list",
+      "member":{"shape":"KxVolume"}
     },
     "LimitExceededException":{
       "type":"structure",
@@ -1917,6 +2918,42 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListKxDataviewsRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "databaseName"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "databaseName":{
+          "shape":"DatabaseName",
+          "location":"uri",
+          "locationName":"databaseName"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListKxDataviewsResponse":{
+      "type":"structure",
+      "members":{
+        "kxDataviews":{"shape":"KxDataviews"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListKxEnvironmentsRequest":{
       "type":"structure",
       "members":{
@@ -1936,6 +2973,34 @@
       "type":"structure",
       "members":{
         "environments":{"shape":"KxEnvironmentList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListKxScalingGroupsRequest":{
+      "type":"structure",
+      "required":["environmentId"],
+      "members":{
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListKxScalingGroupsResponse":{
+      "type":"structure",
+      "members":{
+        "scalingGroups":{"shape":"KxScalingGroupList"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1967,6 +3032,39 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListKxVolumesRequest":{
+      "type":"structure",
+      "required":["environmentId"],
+      "members":{
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "volumeType":{
+          "shape":"KxVolumeType",
+          "location":"querystring",
+          "locationName":"volumeType"
+        }
+      }
+    },
+    "ListKxVolumesResponse":{
+      "type":"structure",
+      "members":{
+        "kxVolumeSummaries":{"shape":"KxVolumes"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -1989,22 +3087,48 @@
       "max":100,
       "min":0
     },
+    "MemoryMib":{
+      "type":"integer",
+      "min":6
+    },
     "NameString":{
       "type":"string",
       "max":50,
       "min":1,
       "pattern":"^[a-zA-Z0-9]{1,50}$"
     },
+    "NetworkACLConfiguration":{
+      "type":"list",
+      "member":{"shape":"NetworkACLEntry"},
+      "max":100,
+      "min":1
+    },
+    "NetworkACLEntry":{
+      "type":"structure",
+      "required":[
+        "ruleNumber",
+        "protocol",
+        "ruleAction",
+        "cidrBlock"
+      ],
+      "members":{
+        "ruleNumber":{"shape":"RuleNumber"},
+        "protocol":{"shape":"Protocol"},
+        "ruleAction":{"shape":"RuleAction"},
+        "portRange":{"shape":"PortRange"},
+        "icmpTypeCode":{"shape":"IcmpTypeCode"},
+        "cidrBlock":{"shape":"ValidCIDRBlock"}
+      }
+    },
     "NodeCount":{
       "type":"integer",
-      "max":5,
       "min":1
     },
     "NodeType":{
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^[a-zA-Z0-9._]+"
+      "pattern":"^[a-zA-Z0-9._]+$"
     },
     "PaginationToken":{
       "type":"string",
@@ -2012,11 +3136,33 @@
       "min":1,
       "pattern":".*"
     },
+    "Port":{
+      "type":"integer",
+      "max":65535,
+      "min":0
+    },
+    "PortRange":{
+      "type":"structure",
+      "required":[
+        "from",
+        "to"
+      ],
+      "members":{
+        "from":{"shape":"Port"},
+        "to":{"shape":"Port"}
+      }
+    },
+    "Protocol":{
+      "type":"string",
+      "max":5,
+      "min":1,
+      "pattern":"^-1|[0-9]+$"
+    },
     "ReleaseLabel":{
       "type":"string",
       "max":16,
       "min":1,
-      "pattern":"^[a-zA-Z0-9._-]+"
+      "pattern":"^[a-zA-Z0-9._-]+$"
     },
     "ResourceAlreadyExistsException":{
       "type":"structure",
@@ -2045,6 +3191,18 @@
       "min":20,
       "pattern":"^arn:aws[a-z\\-]*:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+$"
     },
+    "RuleAction":{
+      "type":"string",
+      "enum":[
+        "allow",
+        "deny"
+      ]
+    },
+    "RuleNumber":{
+      "type":"integer",
+      "max":32766,
+      "min":1
+    },
     "S3Bucket":{
       "type":"string",
       "max":255,
@@ -2066,7 +3224,7 @@
       "type":"string",
       "max":1093,
       "min":9,
-      "pattern":"^s3:\\/\\/[a-z0-9][a-z0-9-]{1,61}[a-z0-9]\\/([^\\/]+\\/)*[^\\/]*$"
+      "pattern":"^s3:\\/\\/[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]\\/([^\\/]+\\/)*[^\\/]*$"
     },
     "SamlMetadataDocument":{
       "type":"string",
@@ -2083,6 +3241,12 @@
       "max":1024,
       "min":1,
       "pattern":"^sg-([a-z0-9]{8}$|[a-z0-9]{17}$)"
+    },
+    "SegmentConfigurationDbPathList":{
+      "type":"list",
+      "member":{"shape":"DbPath"},
+      "max":30,
+      "min":1
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -2176,9 +3340,20 @@
     "ThrottlingException":{
       "type":"structure",
       "members":{
+        "message":{"shape":"errorMessage"}
       },
       "error":{"httpStatusCode":429},
       "exception":true
+    },
+    "TickerplantLogConfiguration":{
+      "type":"structure",
+      "members":{
+        "tickerplantLogVolumes":{"shape":"TickerplantLogVolumes"}
+      }
+    },
+    "TickerplantLogVolumes":{
+      "type":"list",
+      "member":{"shape":"VolumeName"}
     },
     "Timestamp":{"type":"timestamp"},
     "TransitGatewayConfiguration":{
@@ -2189,7 +3364,8 @@
       ],
       "members":{
         "transitGatewayID":{"shape":"TransitGatewayID"},
-        "routableCIDRSpace":{"shape":"ValidCIDRSpace"}
+        "routableCIDRSpace":{"shape":"ValidCIDRSpace"},
+        "attachmentNetworkAclConfiguration":{"shape":"NetworkACLConfiguration"}
       }
     },
     "TransitGatewayID":{
@@ -2242,6 +3418,39 @@
         "environment":{"shape":"Environment"}
       }
     },
+    "UpdateKxClusterCodeConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "clusterName",
+        "code"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "clusterName":{
+          "shape":"KxClusterName",
+          "location":"uri",
+          "locationName":"clusterName"
+        },
+        "clientToken":{
+          "shape":"ClientTokenString",
+          "idempotencyToken":true
+        },
+        "code":{"shape":"CodeConfiguration"},
+        "initializationScript":{"shape":"InitializationScriptFilePath"},
+        "commandLineArguments":{"shape":"KxCommandLineArguments"},
+        "deploymentConfiguration":{"shape":"KxClusterCodeDeploymentConfiguration"}
+      }
+    },
+    "UpdateKxClusterCodeConfigurationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UpdateKxClusterDatabasesRequest":{
       "type":"structure",
       "required":[
@@ -2260,8 +3469,12 @@
           "location":"uri",
           "locationName":"clusterName"
         },
-        "clientToken":{"shape":"ClientTokenString"},
-        "databases":{"shape":"KxDatabaseConfigurations"}
+        "clientToken":{
+          "shape":"ClientTokenString",
+          "idempotencyToken":true
+        },
+        "databases":{"shape":"KxDatabaseConfigurations"},
+        "deploymentConfiguration":{"shape":"KxDeploymentConfiguration"}
       }
     },
     "UpdateKxClusterDatabasesResponse":{
@@ -2303,6 +3516,58 @@
         "lastModifiedTimestamp":{"shape":"Timestamp"}
       }
     },
+    "UpdateKxDataviewRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "databaseName",
+        "dataviewName",
+        "clientToken"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"EnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "databaseName":{
+          "shape":"DatabaseName",
+          "location":"uri",
+          "locationName":"databaseName"
+        },
+        "dataviewName":{
+          "shape":"KxDataviewName",
+          "location":"uri",
+          "locationName":"dataviewName"
+        },
+        "description":{"shape":"Description"},
+        "changesetId":{"shape":"ChangesetId"},
+        "segmentConfigurations":{"shape":"KxDataviewSegmentConfigurationList"},
+        "clientToken":{
+          "shape":"ClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateKxDataviewResponse":{
+      "type":"structure",
+      "members":{
+        "environmentId":{"shape":"EnvironmentId"},
+        "databaseName":{"shape":"DatabaseName"},
+        "dataviewName":{"shape":"KxDataviewName"},
+        "azMode":{"shape":"KxAzMode"},
+        "availabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "changesetId":{"shape":"ChangesetId"},
+        "segmentConfigurations":{"shape":"KxDataviewSegmentConfigurationList"},
+        "activeVersions":{"shape":"KxDataviewActiveVersionList"},
+        "status":{"shape":"KxDataviewStatus"},
+        "autoUpdate":{"shape":"booleanValue"},
+        "readWrite":{"shape":"booleanValue"},
+        "description":{"shape":"Description"},
+        "createdTimestamp":{"shape":"Timestamp"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"}
+      }
+    },
     "UpdateKxEnvironmentNetworkRequest":{
       "type":"structure",
       "required":["environmentId"],
@@ -2314,7 +3579,10 @@
         },
         "transitGatewayConfiguration":{"shape":"TransitGatewayConfiguration"},
         "customDNSConfiguration":{"shape":"CustomDNSConfiguration"},
-        "clientToken":{"shape":"ClientToken"}
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "UpdateKxEnvironmentNetworkResponse":{
@@ -2349,7 +3617,10 @@
         },
         "name":{"shape":"KxEnvironmentName"},
         "description":{"shape":"Description"},
-        "clientToken":{"shape":"ClientToken"}
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "UpdateKxEnvironmentResponse":{
@@ -2392,7 +3663,10 @@
           "locationName":"userName"
         },
         "iamRole":{"shape":"RoleArn"},
-        "clientToken":{"shape":"ClientToken"}
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "UpdateKxUserResponse":{
@@ -2404,10 +3678,56 @@
         "iamRole":{"shape":"RoleArn"}
       }
     },
-    "ValidCIDRSpace":{
-      "type":"string",
-      "pattern":"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\/26$"
+    "UpdateKxVolumeRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "volumeName"
+      ],
+      "members":{
+        "environmentId":{
+          "shape":"KxEnvironmentId",
+          "location":"uri",
+          "locationName":"environmentId"
+        },
+        "volumeName":{
+          "shape":"KxVolumeName",
+          "location":"uri",
+          "locationName":"volumeName"
+        },
+        "description":{"shape":"Description"},
+        "clientToken":{
+          "shape":"ClientTokenString",
+          "idempotencyToken":true
+        },
+        "nas1Configuration":{"shape":"KxNAS1Configuration"}
+      }
     },
+    "UpdateKxVolumeResponse":{
+      "type":"structure",
+      "members":{
+        "environmentId":{"shape":"KxEnvironmentId"},
+        "volumeName":{"shape":"KxVolumeName"},
+        "volumeType":{"shape":"KxVolumeType"},
+        "volumeArn":{"shape":"KxVolumeArn"},
+        "nas1Configuration":{"shape":"KxNAS1Configuration"},
+        "status":{"shape":"KxVolumeStatus"},
+        "description":{"shape":"Description"},
+        "statusReason":{"shape":"KxVolumeStatusReason"},
+        "createdTimestamp":{"shape":"Timestamp"},
+        "azMode":{"shape":"KxAzMode"},
+        "availabilityZoneIds":{"shape":"AvailabilityZoneIds"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"},
+        "attachedClusters":{"shape":"KxAttachedClusters"}
+      }
+    },
+    "ValidCIDRBlock":{
+      "type":"string",
+      "max":18,
+      "min":1,
+      "pattern":"^(?:\\d{1,3}\\.){3}\\d{1,3}(?:\\/(?:3[0-2]|[12]\\d|\\d))$"
+    },
+    "ValidCIDRSpace":{"type":"string"},
     "ValidHostname":{
       "type":"string",
       "max":255,
@@ -2426,6 +3746,34 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "VersionId":{
+      "type":"string",
+      "max":26,
+      "min":1
+    },
+    "Volume":{
+      "type":"structure",
+      "members":{
+        "volumeName":{"shape":"VolumeName"},
+        "volumeType":{"shape":"VolumeType"}
+      }
+    },
+    "VolumeName":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9-_]*[a-zA-Z0-9]$"
+    },
+    "VolumeType":{
+      "type":"string",
+      "enum":["NAS_1"]
+    },
+    "Volumes":{
+      "type":"list",
+      "member":{"shape":"Volume"},
+      "max":5,
+      "min":0
+    },
     "VpcConfiguration":{
       "type":"structure",
       "members":{
@@ -2441,6 +3789,13 @@
       "min":1,
       "pattern":"^vpc-([a-z0-9]{8}$|[a-z0-9]{17}$)"
     },
+    "arn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:*:*:*:*:*"
+    },
+    "booleanValue":{"type":"boolean"},
     "dnsStatus":{
       "type":"string",
       "enum":[

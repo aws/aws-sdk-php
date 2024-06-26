@@ -1,0 +1,12 @@
+<dt class="phpdocumentor-table-of-contents__entry -{{ type }} -{{ node.visibility }}">
+    <a href="{{ link(node) }}" aria-label="{{ node.name }}">{{ node is property ? '$' }}{{ node.name }}{{ node is method or node is function ? '()' }}</a>
+    <span>
+        {% if node is constant %}&nbsp;= {{ node.value }}{% endif %}
+        {% if node is enumCase %}{% if node.value %}&nbsp;= {{ node.value }}{% endif %}{% endif %}
+        {% if node is property %}&nbsp;: {{ node.type ? node.type|route('class:short')|join('|')|raw : 'mixed' }}{% endif %}
+        {% if node is method or node is function %}&nbsp;: {{ node.response.type|route('class:short')|join('|')|raw }}{% endif %}
+    </span>
+</dt>
+{% if node.summary %}
+    <dd>{{ node.summary }}</dd>
+{% endif %}

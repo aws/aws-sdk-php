@@ -5,6 +5,7 @@
     "endpointPrefix":"personalize",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon Personalize",
     "serviceId":"Personalize",
     "signatureVersion":"v4",
@@ -64,6 +65,23 @@
         {"shape":"TooManyTagsException"}
       ],
       "idempotent":true
+    },
+    "CreateDataDeletionJob":{
+      "name":"CreateDataDeletionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDataDeletionJobRequest"},
+      "output":{"shape":"CreateDataDeletionJobResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"TooManyTagsException"}
+      ]
     },
     "CreateDataset":{
       "name":"CreateDataset",
@@ -431,6 +449,20 @@
       ],
       "idempotent":true
     },
+    "DescribeDataDeletionJob":{
+      "name":"DescribeDataDeletionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDataDeletionJobRequest"},
+      "output":{"shape":"DescribeDataDeletionJobResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "DescribeDataset":{
       "name":"DescribeDataset",
       "http":{
@@ -662,6 +694,20 @@
       },
       "input":{"shape":"ListCampaignsRequest"},
       "output":{"shape":"ListCampaignsResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InvalidNextTokenException"}
+      ],
+      "idempotent":true
+    },
+    "ListDataDeletionJobs":{
+      "name":"ListDataDeletionJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDataDeletionJobsRequest"},
+      "output":{"shape":"ListDataDeletionJobsResponse"},
       "errors":[
         {"shape":"InvalidInputException"},
         {"shape":"InvalidNextTokenException"}
@@ -953,6 +999,21 @@
       ],
       "idempotent":true
     },
+    "UpdateDataset":{
+      "name":"UpdateDataset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateDatasetRequest"},
+      "output":{"shape":"UpdateDatasetResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"}
+      ],
+      "idempotent":true
+    },
     "UpdateMetricAttribution":{
       "name":"UpdateMetricAttribution",
       "http":{
@@ -1035,9 +1096,15 @@
         "bestRecipeArn":{"shape":"Arn"}
       }
     },
+    "AutoTrainingConfig":{
+      "type":"structure",
+      "members":{
+        "schedulingExpression":{"shape":"SchedulingExpression"}
+      }
+    },
     "AvroSchema":{
       "type":"string",
-      "max":10000
+      "max":20000
     },
     "BatchInferenceJob":{
       "type":"structure",
@@ -1052,6 +1119,8 @@
         "jobOutput":{"shape":"BatchInferenceJobOutput"},
         "batchInferenceJobConfig":{"shape":"BatchInferenceJobConfig"},
         "roleArn":{"shape":"RoleArn"},
+        "batchInferenceJobMode":{"shape":"BatchInferenceJobMode"},
+        "themeGenerationConfig":{"shape":"ThemeGenerationConfig"},
         "status":{"shape":"Status"},
         "creationDateTime":{"shape":"Date"},
         "lastUpdatedDateTime":{"shape":"Date"}
@@ -1070,6 +1139,13 @@
         "s3DataSource":{"shape":"S3DataConfig"}
       }
     },
+    "BatchInferenceJobMode":{
+      "type":"string",
+      "enum":[
+        "BATCH_INFERENCE",
+        "THEME_GENERATION"
+      ]
+    },
     "BatchInferenceJobOutput":{
       "type":"structure",
       "required":["s3DataDestination"],
@@ -1086,7 +1162,8 @@
         "creationDateTime":{"shape":"Date"},
         "lastUpdatedDateTime":{"shape":"Date"},
         "failureReason":{"shape":"FailureReason"},
-        "solutionVersionArn":{"shape":"Arn"}
+        "solutionVersionArn":{"shape":"Arn"},
+        "batchInferenceJobMode":{"shape":"BatchInferenceJobMode"}
       }
     },
     "BatchInferenceJobs":{
@@ -1161,7 +1238,9 @@
     "CampaignConfig":{
       "type":"structure",
       "members":{
-        "itemExplorationConfig":{"shape":"HyperParameters"}
+        "itemExplorationConfig":{"shape":"HyperParameters"},
+        "enableMetadataWithRecommendations":{"shape":"Boolean"},
+        "syncWithLatestSolutionVersion":{"shape":"Boolean"}
       }
     },
     "CampaignSummary":{
@@ -1261,7 +1340,9 @@
         "jobOutput":{"shape":"BatchInferenceJobOutput"},
         "roleArn":{"shape":"RoleArn"},
         "batchInferenceJobConfig":{"shape":"BatchInferenceJobConfig"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "batchInferenceJobMode":{"shape":"BatchInferenceJobMode"},
+        "themeGenerationConfig":{"shape":"ThemeGenerationConfig"}
       }
     },
     "CreateBatchInferenceJobResponse":{
@@ -1314,6 +1395,28 @@
       "type":"structure",
       "members":{
         "campaignArn":{"shape":"Arn"}
+      }
+    },
+    "CreateDataDeletionJobRequest":{
+      "type":"structure",
+      "required":[
+        "jobName",
+        "datasetGroupArn",
+        "dataSource",
+        "roleArn"
+      ],
+      "members":{
+        "jobName":{"shape":"Name"},
+        "datasetGroupArn":{"shape":"Arn"},
+        "dataSource":{"shape":"DataSource"},
+        "roleArn":{"shape":"RoleArn"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateDataDeletionJobResponse":{
+      "type":"structure",
+      "members":{
+        "dataDeletionJobArn":{"shape":"Arn"}
       }
     },
     "CreateDatasetExportJobRequest":{
@@ -1512,6 +1615,7 @@
         "name":{"shape":"Name"},
         "performHPO":{"shape":"Boolean"},
         "performAutoML":{"shape":"PerformAutoML"},
+        "performAutoTraining":{"shape":"PerformAutoTraining"},
         "recipeArn":{"shape":"Arn"},
         "datasetGroupArn":{"shape":"Arn"},
         "eventType":{"shape":"EventType"},
@@ -1541,6 +1645,38 @@
         "solutionVersionArn":{"shape":"Arn"}
       }
     },
+    "DataDeletionJob":{
+      "type":"structure",
+      "members":{
+        "jobName":{"shape":"Name"},
+        "dataDeletionJobArn":{"shape":"Arn"},
+        "datasetGroupArn":{"shape":"Arn"},
+        "dataSource":{"shape":"DataSource"},
+        "roleArn":{"shape":"RoleArn"},
+        "status":{"shape":"Status"},
+        "numDeleted":{"shape":"Integer"},
+        "creationDateTime":{"shape":"Date"},
+        "lastUpdatedDateTime":{"shape":"Date"},
+        "failureReason":{"shape":"FailureReason"}
+      }
+    },
+    "DataDeletionJobSummary":{
+      "type":"structure",
+      "members":{
+        "dataDeletionJobArn":{"shape":"Arn"},
+        "datasetGroupArn":{"shape":"Arn"},
+        "jobName":{"shape":"Name"},
+        "status":{"shape":"Status"},
+        "creationDateTime":{"shape":"Date"},
+        "lastUpdatedDateTime":{"shape":"Date"},
+        "failureReason":{"shape":"FailureReason"}
+      }
+    },
+    "DataDeletionJobs":{
+      "type":"list",
+      "member":{"shape":"DataDeletionJobSummary"},
+      "max":100
+    },
     "DataSource":{
       "type":"structure",
       "members":{
@@ -1557,7 +1693,9 @@
         "schemaArn":{"shape":"Arn"},
         "status":{"shape":"Status"},
         "creationDateTime":{"shape":"Date"},
-        "lastUpdatedDateTime":{"shape":"Date"}
+        "lastUpdatedDateTime":{"shape":"Date"},
+        "latestDatasetUpdate":{"shape":"DatasetUpdateSummary"},
+        "trackingId":{"shape":"TrackingId"}
       }
     },
     "DatasetExportJob":{
@@ -1697,6 +1835,16 @@
     "DatasetType":{
       "type":"string",
       "max":256
+    },
+    "DatasetUpdateSummary":{
+      "type":"structure",
+      "members":{
+        "schemaArn":{"shape":"Arn"},
+        "status":{"shape":"Status"},
+        "failureReason":{"shape":"FailureReason"},
+        "creationDateTime":{"shape":"Date"},
+        "lastUpdatedDateTime":{"shape":"Date"}
+      }
     },
     "Datasets":{
       "type":"list",
@@ -1866,6 +2014,19 @@
       "type":"structure",
       "members":{
         "campaign":{"shape":"Campaign"}
+      }
+    },
+    "DescribeDataDeletionJobRequest":{
+      "type":"structure",
+      "required":["dataDeletionJobArn"],
+      "members":{
+        "dataDeletionJobArn":{"shape":"Arn"}
+      }
+    },
+    "DescribeDataDeletionJobResponse":{
+      "type":"structure",
+      "members":{
+        "dataDeletionJob":{"shape":"DataDeletionJob"}
       }
     },
     "DescribeDatasetExportJobRequest":{
@@ -2116,6 +2277,13 @@
       "value":{"shape":"ParameterValue"},
       "max":100
     },
+    "FieldsForThemeGeneration":{
+      "type":"structure",
+      "required":["itemName"],
+      "members":{
+        "itemName":{"shape":"ColumnName"}
+      }
+    },
     "Filter":{
       "type":"structure",
       "members":{
@@ -2226,6 +2394,7 @@
         "ALL"
       ]
     },
+    "Integer":{"type":"integer"},
     "IntegerHyperParameterRange":{
       "type":"structure",
       "members":{
@@ -2320,6 +2489,21 @@
       "type":"structure",
       "members":{
         "campaigns":{"shape":"Campaigns"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDataDeletionJobsRequest":{
+      "type":"structure",
+      "members":{
+        "datasetGroupArn":{"shape":"Arn"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListDataDeletionJobsResponse":{
+      "type":"structure",
+      "members":{
+        "dataDeletionJobs":{"shape":"DataDeletionJobs"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -2622,7 +2806,8 @@
     },
     "NextToken":{
       "type":"string",
-      "max":1500
+      "max":1500,
+      "pattern":"\\p{ASCII}{0,1500}"
     },
     "NumBatchResults":{"type":"integer"},
     "ObjectiveSensitivity":{
@@ -2650,6 +2835,10 @@
       "max":1000
     },
     "PerformAutoML":{"type":"boolean"},
+    "PerformAutoTraining":{
+      "type":"boolean",
+      "box":true
+    },
     "PerformHPO":{"type":"boolean"},
     "Recipe":{
       "type":"structure",
@@ -2710,7 +2899,8 @@
       "members":{
         "itemExplorationConfig":{"shape":"HyperParameters"},
         "minRecommendationRequestsPerSecond":{"shape":"TransactionsPerSecond"},
-        "trainingDataConfig":{"shape":"TrainingDataConfig"}
+        "trainingDataConfig":{"shape":"TrainingDataConfig"},
+        "enableMetadataWithRecommendations":{"shape":"Boolean"}
       }
     },
     "RecommenderSummary":{
@@ -2786,6 +2976,12 @@
       "max":256,
       "pattern":"(s3|http|https)://.+"
     },
+    "SchedulingExpression":{
+      "type":"string",
+      "max":16,
+      "min":1,
+      "pattern":"rate\\(\\d+ days?\\)"
+    },
     "Schemas":{
       "type":"list",
       "member":{"shape":"DatasetSchemaSummary"},
@@ -2798,6 +2994,7 @@
         "solutionArn":{"shape":"Arn"},
         "performHPO":{"shape":"PerformHPO"},
         "performAutoML":{"shape":"PerformAutoML"},
+        "performAutoTraining":{"shape":"PerformAutoTraining"},
         "recipeArn":{"shape":"Arn"},
         "datasetGroupArn":{"shape":"Arn"},
         "eventType":{"shape":"EventType"},
@@ -2818,7 +3015,8 @@
         "featureTransformationParameters":{"shape":"FeatureTransformationParameters"},
         "autoMLConfig":{"shape":"AutoMLConfig"},
         "optimizationObjective":{"shape":"OptimizationObjective"},
-        "trainingDataConfig":{"shape":"TrainingDataConfig"}
+        "trainingDataConfig":{"shape":"TrainingDataConfig"},
+        "autoTrainingConfig":{"shape":"AutoTrainingConfig"}
       }
     },
     "SolutionSummary":{
@@ -2850,7 +3048,8 @@
         "status":{"shape":"Status"},
         "failureReason":{"shape":"FailureReason"},
         "creationDateTime":{"shape":"Date"},
-        "lastUpdatedDateTime":{"shape":"Date"}
+        "lastUpdatedDateTime":{"shape":"Date"},
+        "trainingType":{"shape":"TrainingType"}
       }
     },
     "SolutionVersionSummary":{
@@ -2858,6 +3057,8 @@
       "members":{
         "solutionVersionArn":{"shape":"Arn"},
         "status":{"shape":"Status"},
+        "trainingMode":{"shape":"TrainingMode"},
+        "trainingType":{"shape":"TrainingType"},
         "creationDateTime":{"shape":"Date"},
         "lastUpdatedDateTime":{"shape":"Date"},
         "failureReason":{"shape":"FailureReason"}
@@ -2961,6 +3162,13 @@
       "max":200,
       "min":0
     },
+    "ThemeGenerationConfig":{
+      "type":"structure",
+      "required":["fieldsForThemeGeneration"],
+      "members":{
+        "fieldsForThemeGeneration":{"shape":"FieldsForThemeGeneration"}
+      }
+    },
     "TooManyTagKeysException":{
       "type":"structure",
       "members":{
@@ -2997,7 +3205,15 @@
       "type":"string",
       "enum":[
         "FULL",
-        "UPDATE"
+        "UPDATE",
+        "AUTOTRAIN"
+      ]
+    },
+    "TrainingType":{
+      "type":"string",
+      "enum":[
+        "AUTOMATIC",
+        "MANUAL"
       ]
     },
     "TransactionsPerSecond":{
@@ -3041,6 +3257,23 @@
       "type":"structure",
       "members":{
         "campaignArn":{"shape":"Arn"}
+      }
+    },
+    "UpdateDatasetRequest":{
+      "type":"structure",
+      "required":[
+        "datasetArn",
+        "schemaArn"
+      ],
+      "members":{
+        "datasetArn":{"shape":"Arn"},
+        "schemaArn":{"shape":"Arn"}
+      }
+    },
+    "UpdateDatasetResponse":{
+      "type":"structure",
+      "members":{
+        "datasetArn":{"shape":"Arn"}
       }
     },
     "UpdateMetricAttributionRequest":{

@@ -1126,6 +1126,11 @@
       "pattern":".*\\S.*"
     },
     "AWSAccountID":{"type":"string"},
+    "AWSRegion":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "AccountLimit":{
       "type":"structure",
       "required":[
@@ -1226,6 +1231,11 @@
       "members":{
         "ChangeInfo":{"shape":"ChangeInfo"}
       }
+    },
+    "Bias":{
+      "type":"integer",
+      "max":99,
+      "min":-99
     },
     "Change":{
       "type":"structure",
@@ -1551,7 +1561,9 @@
         "us-iso-east-1",
         "us-iso-west-1",
         "us-isob-east-1",
-        "ap-southeast-4"
+        "ap-southeast-4",
+        "il-central-1",
+        "ca-west-1"
       ],
       "max":64,
       "min":1
@@ -1610,6 +1622,17 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "Coordinates":{
+      "type":"structure",
+      "required":[
+        "Latitude",
+        "Longitude"
+      ],
+      "members":{
+        "Latitude":{"shape":"Latitude"},
+        "Longitude":{"shape":"Longitude"}
+      }
     },
     "CreateCidrCollectionRequest":{
       "type":"structure",
@@ -2328,6 +2351,15 @@
       "max":64,
       "min":1
     },
+    "GeoProximityLocation":{
+      "type":"structure",
+      "members":{
+        "AWSRegion":{"shape":"AWSRegion"},
+        "LocalZoneGroup":{"shape":"LocalZoneGroup"},
+        "Coordinates":{"shape":"Coordinates"},
+        "Bias":{"shape":"Bias"}
+      }
+    },
     "GetAccountLimitRequest":{
       "type":"structure",
       "required":["Type"],
@@ -2934,6 +2966,10 @@
         "Owner":{"shape":"HostedZoneOwner"}
       }
     },
+    "HostedZoneType":{
+      "type":"string",
+      "enum":["PrivateHostedZone"]
+    },
     "HostedZones":{
       "type":"list",
       "member":{
@@ -3120,6 +3156,12 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "Latitude":{
+      "type":"string",
+      "max":6,
+      "min":1,
+      "pattern":"[-+]?[0-9]{1,2}(\\.[0-9]{0,2})?"
     },
     "LimitValue":{
       "type":"long",
@@ -3389,6 +3431,11 @@
           "shape":"ResourceId",
           "location":"querystring",
           "locationName":"delegationsetid"
+        },
+        "HostedZoneType":{
+          "shape":"HostedZoneType",
+          "location":"querystring",
+          "locationName":"hostedzonetype"
         }
       }
     },
@@ -3798,6 +3845,11 @@
         "VPCs":{"shape":"VPCs"}
       }
     },
+    "LocalZoneGroup":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "LocationSummaries":{
       "type":"list",
       "member":{"shape":"LocationSummary"}
@@ -3807,6 +3859,12 @@
       "members":{
         "LocationName":{"shape":"CidrLocationNameDefaultAllowed"}
       }
+    },
+    "Longitude":{
+      "type":"string",
+      "max":7,
+      "min":1,
+      "pattern":"[-+]?[0-9]{1,3}(\\.[0-9]{0,2})?"
     },
     "MaxResults":{"type":"string"},
     "MeasureLatency":{"type":"boolean"},
@@ -4102,7 +4160,8 @@
         "AliasTarget":{"shape":"AliasTarget"},
         "HealthCheckId":{"shape":"HealthCheckId"},
         "TrafficPolicyInstanceId":{"shape":"TrafficPolicyInstanceId"},
-        "CidrRoutingConfig":{"shape":"CidrRoutingConfig"}
+        "CidrRoutingConfig":{"shape":"CidrRoutingConfig"},
+        "GeoProximityLocation":{"shape":"GeoProximityLocation"}
       }
     },
     "ResourceRecordSetFailover":{
@@ -4149,7 +4208,9 @@
         "af-south-1",
         "eu-south-1",
         "eu-south-2",
-        "ap-southeast-4"
+        "ap-southeast-4",
+        "il-central-1",
+        "ca-west-1"
       ],
       "max":64,
       "min":1
@@ -4768,7 +4829,9 @@
         "af-south-1",
         "eu-south-1",
         "eu-south-2",
-        "ap-southeast-4"
+        "ap-southeast-4",
+        "il-central-1",
+        "ca-west-1"
       ],
       "max":64,
       "min":1

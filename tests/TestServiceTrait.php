@@ -9,8 +9,6 @@ use Aws\AwsClient;
  * Trait TestServiceTrait
  *
  * Used to generate a mock service and client for testing
- *
- * @package Aws\Test
  */
 trait TestServiceTrait
 {

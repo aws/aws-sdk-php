@@ -8,9 +8,9 @@ your [issues][] or [pull requests][pull-requests] through GitHub.
 
 Jump To:
 
-* [Bug Reports](_#Bug-Reports_)
-* [Feature Requests](_#Feature-Requests_)
-* [Code Contributions](_#Code-Contributions_)
+* [Bug Reports](#Bug-Reports)
+* [Feature Requests](#Feature-Requests)
+* [Code Contributions](#Code-Contributions)
 
 ## How to contribute
 
