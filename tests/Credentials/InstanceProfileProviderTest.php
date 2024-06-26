@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Credentials;
 
+use Aws\Configuration\ConfigurationResolver;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\InstanceProfileProvider;
@@ -1203,5 +1204,426 @@ class InstanceProfileProviderTest extends TestCase
         $provider()->wait();
         $provider()->wait();
         $this->assertLessThanOrEqual(3, $this->getPropertyValue($provider, 'attempts'));
+    }
+
+    /**
+     * This test checks for disabling IMDSv1 fallback by explicit client config passing.
+     *
+     * @return void
+     */
+    public function testIMDSv1DisabledByExplicitConfig() {
+        $config = [InstanceProfileProvider::CFG_EC2_METADATA_V1_DISABLED => true];
+        $wereCredentialsFetched = $this->fetchMockedCredentialsAndAlwaysExpectAToken($config);
+
+        $this->assertTrue($wereCredentialsFetched);
+    }
+
+    /**
+     * This test checks for disabling IMDSv1 fallback by setting AWS_EC2_METADATA_V1_DISABLED to true.
+     *
+     * @return void
+     */
+    public function testIMDSv1DisabledByEnvironment() {
+        $ec2MetadataV1Disabled = ConfigurationResolver::env(InstanceProfileProvider::CFG_EC2_METADATA_V1_DISABLED, 'string');
+        putenv('AWS_' . strtoupper(InstanceProfileProvider::CFG_EC2_METADATA_V1_DISABLED) . '=' . 'true');
+        try {
+            $wereCredentialsFetched = $this->fetchMockedCredentialsAndAlwaysExpectAToken();
+            $this->assertTrue($wereCredentialsFetched);
+        } finally {
+            putenv('AWS_' . strtoupper(InstanceProfileProvider::CFG_EC2_METADATA_V1_DISABLED) . '=' . $ec2MetadataV1Disabled);
+        }
+    }
+
+    /**
+     * This test checks for disabling IMDSv1 fallback by looking into the config file
+     * for the property aws_ec2_metadata_v1_disabled expected set to true.
+     *
+     * @return void
+     */
+    public function testIMDSv1DisabledByConfigFile() {
+        $currentConfigFile = getenv(ConfigurationResolver::ENV_CONFIG_FILE);
+        $mockConfigFile = "./mock-config";
+        try {
+            putenv(ConfigurationResolver::ENV_CONFIG_FILE . '=' . $mockConfigFile);
+            $configContent = "[default]" . "\n" . InstanceProfileProvider::CFG_EC2_METADATA_V1_DISABLED . "=" . "true";
+            file_put_contents($mockConfigFile, $configContent);
+            $wereCredentialsFetched = $this->fetchMockedCredentialsAndAlwaysExpectAToken();
+            $this->assertTrue($wereCredentialsFetched);
+        } finally {
+            unlink($mockConfigFile);
+            putenv(ConfigurationResolver::ENV_CONFIG_FILE . '=' . $currentConfigFile);
+        }
+    }
+
+    /**
+     * This test checks for having IMDSv1 fallback enabled by default.
+     * In this case credentials will not be fetched since it is expected to
+     * always use the secure mode, which means the assertion will be done against false.
+     *
+     * @return void
+     */
+    public function testIMDSv1EnabledByDefault() {
+        $wereCredentialsFetched = $this->fetchMockedCredentialsAndAlwaysExpectAToken();
+        $this->assertFalse($wereCredentialsFetched);
+    }
+
+    /**
+     * This function simulates the process for retrieving credential from the instance metadata
+     * service but always expecting a token, which means that the credentials should be retrieved
+     * in secure mode. It returns true if credentials were fetched with not exceptions;
+     * otherwise false will be returned.
+     * To accomplish this we pass a dummy http handler with the following steps:
+     * 1 - retrieve the token:
+     *   -- If $firstTokenTry is set to true then it will set $firstTokenTry to false, and
+     *      it will return a 401 error response to make this request to fail.
+     *   --- then, when catching the exception from this failed request, the provider
+     *       will check if it is allowed to switch to insecure mode (IMDSv1). And if so then,
+     *       it will jump to step 2, otherwise step 1:
+     *   -- If $firstTokenTry is set to false then a token will be returned.
+     * 2 - retrieve profile:
+     *   -- If a valid token was not provided, which in this case it needs to be equal
+     *      to $mockToken, then an exception will be thrown.
+     *   -- If a valid token is provided then, it will jump to step 3.
+     * 3 - retrieve credentials:
+     *   -- If a valid token was not provided, which in this case it needs to be equal
+     *      to $mockToken, then an exception will be thrown.
+     *   -- If a valid token is provided then, test credentials are returned.
+     *
+     * @param array $config the configuration to be passed to the provider.
+     *
+     * @return bool
+     */
+    private function fetchMockedCredentialsAndAlwaysExpectAToken($config=[]) {
+        $TOKEN_HEADER_KEY = 'x-aws-ec2-metadata-token';
+        $firstTokenTry = true;
+        $mockToken = 'MockToken';
+        $mockHandler = function (RequestInterface $request) use (&$firstTokenTry, $mockToken, $TOKEN_HEADER_KEY) {
+            $fnRejectionTokenNotProvided = function () use ($mockToken, $TOKEN_HEADER_KEY, $request) {
+                return Promise\Create::rejectionFor(
+                    ['exception' => new RequestException("Token with value $mockToken is expected as header $TOKEN_HEADER_KEY", $request, new Response(400))]
+                );
+            };
+            if ($request->getMethod() === 'PUT' && $request->getUri()->getPath() === '/latest/api/token') {
+                if ($firstTokenTry) {
+                    $firstTokenTry = false;
+
+                    return Promise\Create::rejectionFor(['exception' => new RequestException("Unexpected error!", $request, new Response(401))]);
+                } else {
+                    return Promise\Create::promiseFor(new Response(200, [], Psr7\Utils::streamFor($mockToken)));
+                }
+            } elseif ($request->getMethod() === 'GET') {
+                switch ($request->getUri()->getPath()) {
+                    case '/latest/meta-data/iam/security-credentials/':
+                        if ($mockToken !== ($request->getHeader($TOKEN_HEADER_KEY)[0] ?? '')) {
+                            return $fnRejectionTokenNotProvided();
+                        }
+
+                        return Promise\Create::promiseFor(new Response(200, [], Psr7\Utils::streamFor('MockProfile')));
+                    case '/latest/meta-data/iam/security-credentials/MockProfile':
+                        if ($mockToken !== ($request->getHeader($TOKEN_HEADER_KEY)[0] ?? '')) {
+                            return $fnRejectionTokenNotProvided();
+                        }
+
+                        $expiration = time() + 10000;
+
+                        return Promise\Create::promiseFor(
+                            new Response(
+                                200,
+                                [],
+                                Psr7\Utils::streamFor(
+                                    json_encode($this->getCredentialArray('foo', 'baz', null, "@$expiration"))
+                                )
+                            )
+                        );
+                }
+            }
+
+            return Promise\Create::rejectionFor(['exception' => new \Exception('Unexpected error!')]);
+        };
+        $config['use_aws_shared_config_files'] = true;
+        $provider = new InstanceProfileProvider(array_merge(($config ?? []), ['client' => $mockHandler]));
+        try {
+            $provider()->wait();
+
+            return true;
+        } catch (\Exception $ignored) {
+            return false;
+        }
+    }
+
+    /**
+     * This test checks for endpoint resolution mode based on the different sources
+     * from which this option can be configured/customized.
+     * @param string $endpointModeClientConfig if this parameter is not null then, we will set this
+     * parameter within the client config parameters.
+     * @param string $endpointModeEnv if this parameter is not null then, we will set its value in an
+     * environment variable called "AWS_EC2_METADATA_SERVICE_ENDPOINT_MODE".
+     * @param string $endpointModeConfig if this parameter is not null then, we will set its value within
+     * a test config file with the property name ec2_metadata_service_endpoint_mode, and we will make
+     * the ConfigurationResolver to resolve configuration from that test config file by setting AWS_CONFIG_FILE to the
+     * test config file name.
+     * @param string $expectedEndpointMode this parameter is the endpoint mode that is expected to be resolved by
+     * the credential provider.
+     *
+     * @dataProvider endpointModeCasesProvider
+     */
+    public function testEndpointModeResolution($endpointModeClientConfig, $endpointModeEnv, $endpointModeConfig, $expectedEndpointMode)
+    {
+        $deferredTasks = [];
+        $providerConfig = [
+            'client' => $this->getClientForEndpointTesting(function ($uri) use ($expectedEndpointMode) {
+                $host = $uri->getHost();
+                switch ($expectedEndpointMode) {
+                    case InstanceProfileProvider::ENDPOINT_MODE_IPv4:
+                        // If endpointMode is expected to be IPv4 then, the resolved endpoint should be IPv4
+                        $this->assertTrue(filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false);
+                        break;
+                    case InstanceProfileProvider::ENDPOINT_MODE_IPv6:
+                        // If endpointMode is expected to be IPv6 then, the resolved endpoint should be IPv6
+                        $hostWithoutBrackets = trim($host, '[]');
+                        $this->assertTrue(filter_var($hostWithoutBrackets, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false);
+                        break;
+                    default:
+                        $this->fail("The expected value for endpoint_mode should be either one of the following options[" . InstanceProfileProvider::ENDPOINT_MODE_IPv4 . ', ' . InstanceProfileProvider::ENDPOINT_MODE_IPv6 . "]");
+                }
+            }),
+            'use_aws_shared_config_files' => true
+        ];
+        if (!is_null($endpointModeClientConfig)) {
+            $providerConfig[InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE] = $endpointModeClientConfig;
+        }
+
+        if (!is_null($endpointModeEnv)) {
+            $currentEndpointMode = ConfigurationResolver::env(InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE, 'string');
+            putenv('AWS_' . strtoupper(InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE) . '=' . $endpointModeEnv);
+            $deferredTasks[] = function () use ($currentEndpointMode) {
+                putenv('AWS_' . strtoupper(InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE) . '=' . $currentEndpointMode);
+            };
+        }
+
+        if (!is_null($endpointModeConfig)) {
+            $currentConfigFile = getenv(ConfigurationResolver::ENV_CONFIG_FILE);
+            $mockConfigFile = "./mock-config";
+            putenv(ConfigurationResolver::ENV_CONFIG_FILE . '=' . $mockConfigFile);
+            $configContent = "[default]" . "\n" . InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE . "=" . $endpointModeConfig;
+            file_put_contents($mockConfigFile, $configContent);
+            $deferredTasks[] = function () use ($mockConfigFile, $currentConfigFile) {
+                unlink($mockConfigFile);
+                putenv(ConfigurationResolver::ENV_CONFIG_FILE . '=' . $currentConfigFile);
+            };
+        }
+
+        try {
+            $instanceProfileProvider = new InstanceProfileProvider($providerConfig);
+            $instanceProfileProvider()->wait();
+        } finally {
+            foreach ($deferredTasks as $task) {
+                $task();
+            }
+        }
+    }
+
+    /**
+     * This method is the data provider that returns the different scenarios
+     * for resolving the endpoint mode.
+     *
+     * @return array[]
+     */
+    public function endpointModeCasesProvider() : array
+    {
+        return [
+            'endpoint_mode_not_specified' => [
+                'client_configuration' => null,
+                'environment_variable' => null,
+                'config' => null,
+                'expected' => InstanceProfileProvider::ENDPOINT_MODE_IPv4
+            ],
+            'endpoint_mode_ipv4_client_config' => [
+                'client_configuration' => InstanceProfileProvider::ENDPOINT_MODE_IPv4,
+                'environment_variable' => InstanceProfileProvider::ENDPOINT_MODE_IPv6,
+                'config' => InstanceProfileProvider::ENDPOINT_MODE_IPv6,
+                'expected' => InstanceProfileProvider::ENDPOINT_MODE_IPv4
+            ],
+            'endpoint_mode_ipv6_client_config' => [
+                'client_configuration' => InstanceProfileProvider::ENDPOINT_MODE_IPv6,
+                'environment_variable' => InstanceProfileProvider::ENDPOINT_MODE_IPv4,
+                'config' => InstanceProfileProvider::ENDPOINT_MODE_IPv4,
+                'expected' => InstanceProfileProvider::ENDPOINT_MODE_IPv6
+            ],
+            'endpoint_mode_ipv4_env' => [
+                'client_configuration' => null,
+                'environment_variable' => InstanceProfileProvider::ENDPOINT_MODE_IPv4,
+                'config' => InstanceProfileProvider::ENDPOINT_MODE_IPv6,
+                'expected' => InstanceProfileProvider::ENDPOINT_MODE_IPv4
+            ],
+            'endpoint_mode_ipv6_env' => [
+                'client_configuration' => null,
+                'environment_variable' => InstanceProfileProvider::ENDPOINT_MODE_IPv6,
+                'config' => InstanceProfileProvider::ENDPOINT_MODE_IPv4,
+                'expected' => InstanceProfileProvider::ENDPOINT_MODE_IPv6
+            ],
+            'endpoint_mode_ipv4_config' => [
+                'client_configuration' => null,
+                'environment_variable' => null,
+                'config' => InstanceProfileProvider::ENDPOINT_MODE_IPv4,
+                'expected' => InstanceProfileProvider::ENDPOINT_MODE_IPv4
+            ],
+            'endpoint_mode_ipv6_config' => [
+                'client_configuration' => null,
+                'environment_variable' => null,
+                'config' => InstanceProfileProvider::ENDPOINT_MODE_IPv6,
+                'expected' => InstanceProfileProvider::ENDPOINT_MODE_IPv6
+            ]
+        ];
+    }
+
+    /**
+     * This test checks for endpoint resolution based on the different sources from
+     * which this option can be configured/customized.
+     * @param string $endpointMode the endpoint mode that we will be used to resolve
+     * the default endpoint, in case the endpoint is not explicitly specified.
+     * @param string $endpointEnv if this parameter is not null then we will set its value
+     * in an environment variable called AWS_EC2_METADATA_SERVICE_ENDPOINT.
+     * @param string $endpointConfig if this parameter is not null then, we will set its value within
+     *  a test config file with the property name ec2_metadata_service_endpoint_mode, and we will make
+     *  the ConfigurationResolver to resolve configuration from that test config file by setting AWS_CONFIG_FILE to the
+     *  test config file name.
+     * @param string $expectedEndpoint this parameter is the endpoint that is expected to be resolved
+     * by the credential provider.
+     *
+     * @dataProvider endpointCasesProvider
+     */
+    public function testEndpointResolution($endpointMode, $endpointEnv, $endpointConfig, $expectedEndpoint)
+    {
+        $providerConfig = [
+            InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE => $endpointMode,
+            'client' => $this->getClientForEndpointTesting(function ($uri) use ($expectedEndpoint) {
+                $endpoint = $uri->getScheme() . '://' . $uri->getHost();
+                $this->assertSame($expectedEndpoint, $endpoint);
+            }),
+            'use_aws_shared_config_files' => true
+        ];
+        $deferredTasks = [];
+        if (!is_null($endpointEnv)) {
+            $currentEndpointEnv = ConfigurationResolver::env(InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT, 'string');
+            putenv('AWS_' . strtoupper(InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT) . '=' . $endpointEnv);
+            $deferredTasks[] = function () use ($currentEndpointEnv) {
+                putenv('AWS_' . strtoupper(InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT) . '=' . $currentEndpointEnv);
+            };
+        }
+
+        if (!is_null($endpointConfig)) {
+            $currentConfigFile = getenv(ConfigurationResolver::ENV_CONFIG_FILE);
+            $mockConfigFile = "./mock-config";
+            putenv(ConfigurationResolver::ENV_CONFIG_FILE . '=' . $mockConfigFile);
+            $configContent = "[default]" . "\n" . InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT . "=" . $endpointConfig;
+            file_put_contents($mockConfigFile, $configContent);
+            $deferredTasks[] = function () use ($mockConfigFile, $currentConfigFile) {
+                unlink($mockConfigFile);
+                putenv(ConfigurationResolver::ENV_CONFIG_FILE . '=' . $currentConfigFile);
+            };
+        }
+
+        try {
+            $instanceProfileProvider = new InstanceProfileProvider($providerConfig);
+            $instanceProfileProvider()->wait();
+        } finally {
+            foreach ($deferredTasks as $task) {
+                $task();
+            }
+        }
+    }
+
+    /**
+     * This method is the data provider  that returns the different scenarios
+     * for resolving endpoint.
+     *
+     * @return array[]
+     */
+    public function endpointCasesProvider() : array
+    {
+        return [
+            'with_endpoint_mode_ipv4' => [
+                'endpoint_mode' => InstanceProfileProvider::ENDPOINT_MODE_IPv4,
+                'endpoint_env' => null,
+                'endpoint_config' => null,
+                'expected' => 'http://169.254.169.254'
+            ],
+            'with_endpoint_mode_ipv6' => [
+                'endpoint_mode' => InstanceProfileProvider::ENDPOINT_MODE_IPv6,
+                'endpoint_env' => null,
+                'endpoint_config' => null,
+                'expected' => 'http://[fd00:ec2::254]'
+            ],
+            'with_endpoint_env' => [
+                'endpoint_mode' => InstanceProfileProvider::ENDPOINT_MODE_IPv6,
+                'endpoint_env' => 'https://169.254.169.200',
+                'endpoint_config' => 'http://[fd00:ec2::254]',
+                'expected' => 'https://169.254.169.200'
+            ],
+            'with_endpoint_config' => [
+                'endpoint_mode' => InstanceProfileProvider::ENDPOINT_MODE_IPv4,
+                'endpoint_env' => null,
+                'endpoint_config' => 'https://[fd00:ec2::200]',
+                'expected' => 'https://[fd00:ec2::200]'
+            ]
+        ];
+    }
+
+
+    public function testEndpointNotValid()
+    {
+        $invalidEndpoint = 'htt://10.0.0.1';
+        $this->expectExceptionMessage('The provided URI "' . $invalidEndpoint . '" is invalid, or contains an unsupported host');
+        $providerConfig = [
+            InstanceProfileProvider::CFG_EC2_METADATA_SERVICE_ENDPOINT => $invalidEndpoint,
+            'client' => $this->getClientForEndpointTesting(function ($uri) {/*Ignored!*/})
+        ];
+        $instanceProfileProvider = new InstanceProfileProvider($providerConfig);
+        $instanceProfileProvider()->wait();
+    }
+
+    /**
+     * This method returns a test http handler which is intended to be used
+     * for testing endpoint and endpoint mode resolution. The way it works is
+     * that it receives an assertion function that is called within the first
+     * request done by the instance profile provider, and to which we pass the
+     * uri of the request as the parameter.
+     *
+     * @param \Closure $assertingFunction the assertion function which should
+     * holds the assertions to be done. This function should expect the uri of
+     * the request as a parameter.
+     *
+     * @return \Closure
+     */
+    private function getClientForEndpointTesting(\Closure $assertingFunction): \Closure
+    {
+        return function (RequestInterface $request) use ($assertingFunction) {
+            if ($request->getMethod() === 'PUT' && $request->getUri()->getPath() === '/latest/api/token') {
+                // Here is where we call the assertions provided as function.
+                $assertingFunction($request->getUri());
+
+                return Promise\Create::promiseFor(new Response(200, [], Psr7\Utils::streamFor('')));
+            } elseif ($request->getMethod() === 'GET') {
+                switch ($request->getUri()->getPath()) {
+                    case '/latest/meta-data/iam/security-credentials/':
+                        return Promise\Create::promiseFor(new Response(200, [], Psr7\Utils::streamFor('MockProfile')));
+                    case '/latest/meta-data/iam/security-credentials/MockProfile':
+                        $expiration = time() + 10000;
+
+                        return Promise\Create::promiseFor(
+                            new Response(
+                                200,
+                                [],
+                                Psr7\Utils::streamFor(
+                                    json_encode($this->getCredentialArray('foo', 'baz', null, "@$expiration"))
+                                )
+                            )
+                        );
+                }
+            }
+
+            return Promise\Create::rejectionFor(['exception' => new \Exception('Unexpected error!')]);
+        };
     }
 }

@@ -109,6 +109,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putPrincipalMappingAsync(array $args = [])
  * @method \Aws\Result query(array $args = [])
  * @method \GuzzleHttp\Promise\Promise queryAsync(array $args = [])
+ * @method \Aws\Result retrieve(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise retrieveAsync(array $args = [])
  * @method \Aws\Result startDataSourceSyncJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startDataSourceSyncJobAsync(array $args = [])
  * @method \Aws\Result stopDataSourceSyncJob(array $args = [])

@@ -335,6 +335,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateCertificateProvider":{
+      "name":"CreateCertificateProvider",
+      "http":{
+        "method":"POST",
+        "requestUri":"/certificate-providers/{certificateProviderName}"
+      },
+      "input":{"shape":"CreateCertificateProviderRequest"},
+      "output":{"shape":"CreateCertificateProviderResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "CreateCustomMetric":{
       "name":"CreateCustomMetric",
       "http":{
@@ -882,6 +900,24 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DeleteCertificateProvider":{
+      "name":"DeleteCertificateProvider",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/certificate-providers/{certificateProviderName}"
+      },
+      "input":{"shape":"DeleteCertificateProviderRequest"},
+      "output":{"shape":"DeleteCertificateProviderResponse"},
+      "errors":[
+        {"shape":"DeleteConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "DeleteCustomMetric":{
@@ -1469,6 +1505,23 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DescribeCertificateProvider":{
+      "name":"DescribeCertificateProvider",
+      "http":{
+        "method":"GET",
+        "requestUri":"/certificate-providers/{certificateProviderName}"
+      },
+      "input":{"shape":"DescribeCertificateProviderRequest"},
+      "output":{"shape":"DescribeCertificateProviderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "DescribeCustomMetric":{
@@ -2400,6 +2453,22 @@
       },
       "input":{"shape":"ListCACertificatesRequest"},
       "output":{"shape":"ListCACertificatesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListCertificateProviders":{
+      "name":"ListCertificateProviders",
+      "http":{
+        "method":"GET",
+        "requestUri":"/certificate-providers/"
+      },
+      "input":{"shape":"ListCertificateProvidersRequest"},
+      "output":{"shape":"ListCertificateProvidersResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottlingException"},
@@ -3671,6 +3740,23 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateCertificateProvider":{
+      "name":"UpdateCertificateProvider",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/certificate-providers/{certificateProviderName}"
+      },
+      "input":{"shape":"UpdateCertificateProviderRequest"},
+      "output":{"shape":"UpdateCertificateProviderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateCustomMetric":{
       "name":"UpdateCustomMetric",
       "http":{
@@ -3826,6 +3912,7 @@
       "output":{"shape":"UpdatePackageResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
@@ -3843,6 +3930,7 @@
       "output":{"shape":"UpdatePackageConfigurationResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
       ],
@@ -3859,6 +3947,7 @@
       "output":{"shape":"UpdatePackageVersionResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
@@ -4893,7 +4982,8 @@
         "metric":{"shape":"BehaviorMetric"},
         "metricDimension":{"shape":"MetricDimension"},
         "criteria":{"shape":"BehaviorCriteria"},
-        "suppressAlerts":{"shape":"SuppressAlerts"}
+        "suppressAlerts":{"shape":"SuppressAlerts"},
+        "exportMetric":{"shape":"ExportMetric"}
       }
     },
     "BehaviorCriteria":{
@@ -5225,6 +5315,42 @@
       "max":65536,
       "min":1,
       "pattern":"[\\s\\S]*"
+    },
+    "CertificateProviderAccountDefaultForOperations":{
+      "type":"list",
+      "member":{"shape":"CertificateProviderOperation"},
+      "max":1,
+      "min":1
+    },
+    "CertificateProviderArn":{
+      "type":"string",
+      "max":2048
+    },
+    "CertificateProviderFunctionArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"[\\s\\S]*"
+    },
+    "CertificateProviderName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\w=,@-]+"
+    },
+    "CertificateProviderOperation":{
+      "type":"string",
+      "enum":["CreateCertificateFromCsr"]
+    },
+    "CertificateProviderSummary":{
+      "type":"structure",
+      "members":{
+        "certificateProviderName":{"shape":"CertificateProviderName"},
+        "certificateProviderArn":{"shape":"CertificateProviderArn"}
+      }
+    },
+    "CertificateProviders":{
+      "type":"list",
+      "member":{"shape":"CertificateProviderSummary"}
     },
     "CertificateSigningRequest":{
       "type":"string",
@@ -5566,6 +5692,35 @@
         "certificatePem":{"shape":"CertificatePem"}
       }
     },
+    "CreateCertificateProviderRequest":{
+      "type":"structure",
+      "required":[
+        "certificateProviderName",
+        "lambdaFunctionArn",
+        "accountDefaultForOperations"
+      ],
+      "members":{
+        "certificateProviderName":{
+          "shape":"CertificateProviderName",
+          "location":"uri",
+          "locationName":"certificateProviderName"
+        },
+        "lambdaFunctionArn":{"shape":"CertificateProviderFunctionArn"},
+        "accountDefaultForOperations":{"shape":"CertificateProviderAccountDefaultForOperations"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateCertificateProviderResponse":{
+      "type":"structure",
+      "members":{
+        "certificateProviderName":{"shape":"CertificateProviderName"},
+        "certificateProviderArn":{"shape":"CertificateProviderArn"}
+      }
+    },
     "CreateCustomMetricRequest":{
       "type":"structure",
       "required":[
@@ -5640,7 +5795,8 @@
         "authorizerConfig":{"shape":"AuthorizerConfig"},
         "serviceType":{"shape":"ServiceType"},
         "tags":{"shape":"TagList"},
-        "tlsConfig":{"shape":"TlsConfig"}
+        "tlsConfig":{"shape":"TlsConfig"},
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
       }
     },
     "CreateDomainConfigurationResponse":{
@@ -6130,7 +6286,8 @@
           "deprecatedMessage":"Use additionalMetricsToRetainV2."
         },
         "additionalMetricsToRetainV2":{"shape":"AdditionalMetricsToRetainV2List"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "metricsExportConfig":{"shape":"MetricsExportConfig"}
       }
     },
     "CreateSecurityProfileResponse":{
@@ -6416,6 +6573,22 @@
       "members":{
       }
     },
+    "DeleteCertificateProviderRequest":{
+      "type":"structure",
+      "required":["certificateProviderName"],
+      "members":{
+        "certificateProviderName":{
+          "shape":"CertificateProviderName",
+          "location":"uri",
+          "locationName":"certificateProviderName"
+        }
+      }
+    },
+    "DeleteCertificateProviderResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteCertificateRequest":{
       "type":"structure",
       "required":["certificateId"],
@@ -6592,6 +6765,7 @@
         }
       }
     },
+    "DeleteMetricsExportConfig":{"type":"boolean"},
     "DeleteMitigationActionRequest":{
       "type":"structure",
       "required":["actionName"],
@@ -7120,6 +7294,28 @@
         "registrationConfig":{"shape":"RegistrationConfig"}
       }
     },
+    "DescribeCertificateProviderRequest":{
+      "type":"structure",
+      "required":["certificateProviderName"],
+      "members":{
+        "certificateProviderName":{
+          "shape":"CertificateProviderName",
+          "location":"uri",
+          "locationName":"certificateProviderName"
+        }
+      }
+    },
+    "DescribeCertificateProviderResponse":{
+      "type":"structure",
+      "members":{
+        "certificateProviderName":{"shape":"CertificateProviderName"},
+        "certificateProviderArn":{"shape":"CertificateProviderArn"},
+        "lambdaFunctionArn":{"shape":"CertificateProviderFunctionArn"},
+        "accountDefaultForOperations":{"shape":"CertificateProviderAccountDefaultForOperations"},
+        "creationDate":{"shape":"DateType"},
+        "lastModifiedDate":{"shape":"DateType"}
+      }
+    },
     "DescribeCertificateRequest":{
       "type":"structure",
       "required":["certificateId"],
@@ -7232,7 +7428,8 @@
         "serviceType":{"shape":"ServiceType"},
         "domainType":{"shape":"DomainType"},
         "lastStatusChangeDate":{"shape":"DateType"},
-        "tlsConfig":{"shape":"TlsConfig"}
+        "tlsConfig":{"shape":"TlsConfig"},
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
       }
     },
     "DescribeEndpointRequest":{
@@ -7562,7 +7759,8 @@
         "additionalMetricsToRetainV2":{"shape":"AdditionalMetricsToRetainV2List"},
         "version":{"shape":"Version"},
         "creationDate":{"shape":"Timestamp"},
-        "lastModifiedDate":{"shape":"Timestamp"}
+        "lastModifiedDate":{"shape":"Timestamp"},
+        "metricsExportConfig":{"shape":"MetricsExportConfig"}
       }
     },
     "DescribeStreamRequest":{
@@ -8086,6 +8284,7 @@
         "logLevel":{"shape":"LogLevel"}
       }
     },
+    "EnableOCSPCheck":{"type":"boolean"},
     "EnableTopicRuleRequest":{
       "type":"structure",
       "required":["ruleName"],
@@ -8185,6 +8384,7 @@
         "rateIncreaseCriteria":{"shape":"RateIncreaseCriteria"}
       }
     },
+    "ExportMetric":{"type":"boolean"},
     "FailedChecksCount":{"type":"integer"},
     "FailedFindingsCount":{"type":"long"},
     "FailedThings":{"type":"integer"},
@@ -8323,6 +8523,17 @@
     "FunctionArn":{"type":"string"},
     "GenerationId":{"type":"string"},
     "GenericLongValue":{"type":"long"},
+    "GeoLocationTarget":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"TargetFieldName"},
+        "order":{"shape":"TargetFieldOrder"}
+      }
+    },
+    "GeoLocationsFilter":{
+      "type":"list",
+      "member":{"shape":"GeoLocationTarget"}
+    },
     "GetBehaviorModelTrainingSummariesRequest":{
       "type":"structure",
       "members":{
@@ -8819,7 +9030,8 @@
     "IndexingFilter":{
       "type":"structure",
       "members":{
-        "namedShadowNames":{"shape":"NamedShadowNamesFilter"}
+        "namedShadowNames":{"shape":"NamedShadowNamesFilter"},
+        "geoLocations":{"shape":"GeoLocationsFilter"}
       }
     },
     "InlineDocument":{"type":"string"},
@@ -9190,8 +9402,36 @@
         "topic":{"shape":"String"},
         "key":{"shape":"String"},
         "partition":{"shape":"String"},
-        "clientProperties":{"shape":"ClientProperties"}
+        "clientProperties":{"shape":"ClientProperties"},
+        "headers":{"shape":"KafkaHeaders"}
       }
+    },
+    "KafkaActionHeader":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"KafkaHeaderKey"},
+        "value":{"shape":"KafkaHeaderValue"}
+      }
+    },
+    "KafkaHeaderKey":{
+      "type":"string",
+      "max":16384,
+      "min":0
+    },
+    "KafkaHeaderValue":{
+      "type":"string",
+      "max":16384,
+      "min":0
+    },
+    "KafkaHeaders":{
+      "type":"list",
+      "member":{"shape":"KafkaActionHeader"},
+      "max":100,
+      "min":1
     },
     "Key":{"type":"string"},
     "KeyName":{
@@ -9590,6 +9830,28 @@
       "members":{
         "certificates":{"shape":"CACertificates"},
         "nextMarker":{"shape":"Marker"}
+      }
+    },
+    "ListCertificateProvidersRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"Marker",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "ascendingOrder":{
+          "shape":"AscendingOrder",
+          "location":"querystring",
+          "locationName":"isAscendingOrder"
+        }
+      }
+    },
+    "ListCertificateProvidersResponse":{
+      "type":"structure",
+      "members":{
+        "certificateProviders":{"shape":"CertificateProviders"},
+        "nextToken":{"shape":"Marker"}
       }
     },
     "ListCertificatesByCARequest":{
@@ -11291,7 +11553,8 @@
       "required":["metric"],
       "members":{
         "metric":{"shape":"BehaviorMetric"},
-        "metricDimension":{"shape":"MetricDimension"}
+        "metricDimension":{"shape":"MetricDimension"},
+        "exportMetric":{"shape":"ExportMetric"}
       }
     },
     "MetricValue":{
@@ -11303,6 +11566,17 @@
         "number":{"shape":"Number"},
         "numbers":{"shape":"NumberList"},
         "strings":{"shape":"StringList"}
+      }
+    },
+    "MetricsExportConfig":{
+      "type":"structure",
+      "required":[
+        "mqttTopic",
+        "roleArn"
+      ],
+      "members":{
+        "mqttTopic":{"shape":"MqttTopic"},
+        "roleArn":{"shape":"RoleArn"}
       }
     },
     "Minimum":{"type":"double"},
@@ -11417,6 +11691,11 @@
     "MqttPassword":{
       "type":"blob",
       "max":65535,
+      "min":1
+    },
+    "MqttTopic":{
+      "type":"string",
+      "max":512,
       "min":1
     },
     "MqttUsername":{
@@ -12482,7 +12761,7 @@
         "indexName":{"shape":"IndexName"},
         "queryString":{"shape":"QueryString"},
         "nextToken":{"shape":"NextToken"},
-        "maxResults":{"shape":"QueryMaxResults"},
+        "maxResults":{"shape":"SearchQueryMaxResults"},
         "queryVersion":{"shape":"QueryVersion"}
       }
     },
@@ -12493,6 +12772,10 @@
         "things":{"shape":"ThingDocumentList"},
         "thingGroups":{"shape":"ThingGroupDocumentList"}
       }
+    },
+    "SearchQueryMaxResults":{
+      "type":"integer",
+      "min":1
     },
     "SearchableAttributes":{
       "type":"list",
@@ -12564,6 +12847,12 @@
       "member":{"shape":"AcmCertificateArn"},
       "max":1,
       "min":0
+    },
+    "ServerCertificateConfig":{
+      "type":"structure",
+      "members":{
+        "enableOCSPCheck":{"shape":"EnableOCSPCheck"}
+      }
     },
     "ServerCertificateStatus":{
       "type":"string",
@@ -12684,7 +12973,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[a-zA-Z0-9:_-]+"
+      "pattern":"[$a-zA-Z0-9:_-]+"
     },
     "SigV4Authorization":{
       "type":"structure",
@@ -13087,6 +13376,14 @@
     "TargetAuditCheckNames":{
       "type":"list",
       "member":{"shape":"AuditCheckName"}
+    },
+    "TargetFieldName":{"type":"string"},
+    "TargetFieldOrder":{
+      "type":"string",
+      "enum":[
+        "LatLon",
+        "LonLat"
+      ]
     },
     "TargetSelection":{
       "type":"string",
@@ -13821,6 +14118,26 @@
         "removeAutoRegistration":{"shape":"RemoveAutoRegistration"}
       }
     },
+    "UpdateCertificateProviderRequest":{
+      "type":"structure",
+      "required":["certificateProviderName"],
+      "members":{
+        "certificateProviderName":{
+          "shape":"CertificateProviderName",
+          "location":"uri",
+          "locationName":"certificateProviderName"
+        },
+        "lambdaFunctionArn":{"shape":"CertificateProviderFunctionArn"},
+        "accountDefaultForOperations":{"shape":"CertificateProviderAccountDefaultForOperations"}
+      }
+    },
+    "UpdateCertificateProviderResponse":{
+      "type":"structure",
+      "members":{
+        "certificateProviderName":{"shape":"CertificateProviderName"},
+        "certificateProviderArn":{"shape":"CertificateProviderArn"}
+      }
+    },
     "UpdateCertificateRequest":{
       "type":"structure",
       "required":[
@@ -13911,7 +14228,8 @@
         "authorizerConfig":{"shape":"AuthorizerConfig"},
         "domainConfigurationStatus":{"shape":"DomainConfigurationStatus"},
         "removeAuthorizerConfig":{"shape":"RemoveAuthorizerConfig"},
-        "tlsConfig":{"shape":"TlsConfig"}
+        "tlsConfig":{"shape":"TlsConfig"},
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
       }
     },
     "UpdateDomainConfigurationResponse":{
@@ -14197,7 +14515,9 @@
           "shape":"OptionalVersion",
           "location":"querystring",
           "locationName":"expectedVersion"
-        }
+        },
+        "metricsExportConfig":{"shape":"MetricsExportConfig"},
+        "deleteMetricsExportConfig":{"shape":"DeleteMetricsExportConfig"}
       }
     },
     "UpdateSecurityProfileResponse":{
@@ -14216,7 +14536,8 @@
         "additionalMetricsToRetainV2":{"shape":"AdditionalMetricsToRetainV2List"},
         "version":{"shape":"Version"},
         "creationDate":{"shape":"Timestamp"},
-        "lastModifiedDate":{"shape":"Timestamp"}
+        "lastModifiedDate":{"shape":"Timestamp"},
+        "metricsExportConfig":{"shape":"MetricsExportConfig"}
       }
     },
     "UpdateStreamRequest":{

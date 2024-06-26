@@ -4,11 +4,13 @@
     "apiVersion":"2011-01-01",
     "endpointPrefix":"autoscaling",
     "protocol":"query",
+    "protocols":["query"],
     "serviceFullName":"Auto Scaling",
     "serviceId":"Auto Scaling",
     "signatureVersion":"v4",
     "uid":"autoscaling-2011-01-01",
-    "xmlNamespace":"http://autoscaling.amazonaws.com/doc/2011-01-01/"
+    "xmlNamespace":"http://autoscaling.amazonaws.com/doc/2011-01-01/",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AttachInstances":{
@@ -1091,6 +1093,16 @@
         "AlarmARN":{"shape":"ResourceName"}
       }
     },
+    "AlarmList":{
+      "type":"list",
+      "member":{"shape":"XmlStringMaxLen255"}
+    },
+    "AlarmSpecification":{
+      "type":"structure",
+      "members":{
+        "Alarms":{"shape":"AlarmList"}
+      }
+    },
     "Alarms":{
       "type":"list",
       "member":{"shape":"Alarm"}
@@ -1099,7 +1111,7 @@
       "type":"string",
       "max":30,
       "min":1,
-      "pattern":"[a-zA-Z0-9\\.\\*]+"
+      "pattern":"[a-zA-Z0-9\\.\\*\\-]+"
     },
     "AllowedInstanceTypes":{
       "type":"list",
@@ -1117,6 +1129,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "AnyPrintableAsciiStringMaxLen4000":{
+      "type":"string",
+      "max":4000,
+      "min":1,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007e]+"
     },
     "AsciiStringMaxLen255":{
       "type":"string",
@@ -1228,7 +1246,8 @@
         "Context":{"shape":"Context"},
         "DesiredCapacityType":{"shape":"XmlStringMaxLen255"},
         "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"},
-        "TrafficSources":{"shape":"TrafficSources"}
+        "TrafficSources":{"shape":"TrafficSources"},
+        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"}
       }
     },
     "AutoScalingGroupDesiredCapacity":{"type":"integer"},
@@ -1506,7 +1525,8 @@
         "Context":{"shape":"Context"},
         "DesiredCapacityType":{"shape":"XmlStringMaxLen255"},
         "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"},
-        "TrafficSources":{"shape":"TrafficSources"}
+        "TrafficSources":{"shape":"TrafficSources"},
+        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"}
       }
     },
     "CreateLaunchConfigurationType":{
@@ -1968,7 +1988,7 @@
       "type":"string",
       "max":30,
       "min":1,
-      "pattern":"[a-zA-Z0-9\\.\\*]+"
+      "pattern":"[a-zA-Z0-9\\.\\*\\-]+"
     },
     "ExcludedInstanceTypes":{
       "type":"list",
@@ -2094,6 +2114,13 @@
       "type":"list",
       "member":{"shape":"XmlStringMaxLen19"}
     },
+    "InstanceMaintenancePolicy":{
+      "type":"structure",
+      "members":{
+        "MinHealthyPercentage":{"shape":"IntPercentResettable"},
+        "MaxHealthyPercentage":{"shape":"IntPercent100To200Resettable"}
+      }
+    },
     "InstanceMetadataEndpointState":{
       "type":"string",
       "enum":[
@@ -2214,6 +2241,7 @@
         "ExcludedInstanceTypes":{"shape":"ExcludedInstanceTypes"},
         "InstanceGenerations":{"shape":"InstanceGenerations"},
         "SpotMaxPricePercentageOverLowestPrice":{"shape":"NullablePositiveInteger"},
+        "MaxSpotPriceAsPercentageOfOptimalOnDemandPrice":{"shape":"NullablePositiveInteger"},
         "OnDemandMaxPricePercentageOverLowestPrice":{"shape":"NullablePositiveInteger"},
         "BareMetal":{"shape":"BareMetal"},
         "BurstablePerformance":{"shape":"BurstablePerformance"},
@@ -2261,6 +2289,21 @@
       "type":"integer",
       "max":100,
       "min":0
+    },
+    "IntPercent100To200":{
+      "type":"integer",
+      "max":200,
+      "min":100
+    },
+    "IntPercent100To200Resettable":{
+      "type":"integer",
+      "max":200,
+      "min":-1
+    },
+    "IntPercentResettable":{
+      "type":"integer",
+      "max":100,
+      "min":-1
     },
     "InvalidNextToken":{
       "type":"structure",
@@ -2392,7 +2435,7 @@
         "LifecycleTransition":{"shape":"LifecycleTransition"},
         "NotificationTargetARN":{"shape":"NotificationTargetResourceName"},
         "RoleARN":{"shape":"XmlStringMaxLen255"},
-        "NotificationMetadata":{"shape":"XmlStringMaxLen1023"},
+        "NotificationMetadata":{"shape":"AnyPrintableAsciiStringMaxLen4000"},
         "HeartbeatTimeout":{"shape":"HeartbeatTimeout"},
         "GlobalTimeout":{"shape":"GlobalTimeout"},
         "DefaultResult":{"shape":"LifecycleActionResult"}
@@ -2412,7 +2455,7 @@
       "members":{
         "LifecycleHookName":{"shape":"AsciiStringMaxLen255"},
         "LifecycleTransition":{"shape":"LifecycleTransition"},
-        "NotificationMetadata":{"shape":"XmlStringMaxLen1023"},
+        "NotificationMetadata":{"shape":"AnyPrintableAsciiStringMaxLen4000"},
         "HeartbeatTimeout":{"shape":"HeartbeatTimeout"},
         "DefaultResult":{"shape":"LifecycleActionResult"},
         "NotificationTargetARN":{"shape":"NotificationTargetResourceName"},
@@ -2932,7 +2975,7 @@
         "LifecycleTransition":{"shape":"LifecycleTransition"},
         "RoleARN":{"shape":"XmlStringMaxLen255"},
         "NotificationTargetARN":{"shape":"NotificationTargetResourceName"},
-        "NotificationMetadata":{"shape":"XmlStringMaxLen1023"},
+        "NotificationMetadata":{"shape":"AnyPrintableAsciiStringMaxLen4000"},
         "HeartbeatTimeout":{"shape":"HeartbeatTimeout"},
         "DefaultResult":{"shape":"LifecycleActionResult"}
       }
@@ -3040,7 +3083,9 @@
         "SkipMatching":{"shape":"SkipMatching"},
         "AutoRollback":{"shape":"AutoRollback"},
         "ScaleInProtectedInstances":{"shape":"ScaleInProtectedInstances"},
-        "StandbyInstances":{"shape":"StandbyInstances"}
+        "StandbyInstances":{"shape":"StandbyInstances"},
+        "AlarmSpecification":{"shape":"AlarmSpecification"},
+        "MaxHealthyPercentage":{"shape":"IntPercent100To200"}
       }
     },
     "RefreshStrategy":{
@@ -3097,6 +3142,7 @@
     },
     "RollbackInstanceRefreshType":{
       "type":"structure",
+      "required":["AutoScalingGroupName"],
       "members":{
         "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"}
       }
@@ -3407,7 +3453,7 @@
       "type":"structure",
       "required":["Id"],
       "members":{
-        "Id":{"shape":"XmlStringMaxLen255"},
+        "Id":{"shape":"XmlStringMaxLen64"},
         "Expression":{"shape":"XmlStringMaxLen2047"},
         "MetricStat":{"shape":"TargetTrackingMetricStat"},
         "Label":{"shape":"XmlStringMetricLabel"},
@@ -3502,7 +3548,8 @@
         "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"},
         "Context":{"shape":"Context"},
         "DesiredCapacityType":{"shape":"XmlStringMaxLen255"},
-        "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"}
+        "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"},
+        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"}
       }
     },
     "VCpuCountRequest":{

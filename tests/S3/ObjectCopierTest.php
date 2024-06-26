@@ -400,8 +400,8 @@ class ObjectCopierTest extends TestCase
 
     public function MultipartCopierProvider(){
         return [
-            ["中文", "%E4%B8%AD%E6%96%87"],
-            ["文件夹/文件", "%E6%96%87%E4%BB%B6%E5%A4%B9/%E6%96%87%E4%BB%B6"],
+            ["中文", "文件夹/文件"],
+            ["文件夹/文件", "中文"],
             ["first-folder/second-folder/key", "first-folder/second-folder/key"],
         ];
     }

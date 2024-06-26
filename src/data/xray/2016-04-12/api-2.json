@@ -1743,7 +1743,8 @@
       "type":"string",
       "enum":[
         "TraceId",
-        "Event"
+        "Event",
+        "Service"
       ]
     },
     "TimeSeriesServiceStatistics":{
@@ -1818,6 +1819,7 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"TraceId"},
+        "StartTime":{"shape":"Timestamp"},
         "Duration":{"shape":"NullableDouble"},
         "ResponseTime":{"shape":"NullableDouble"},
         "HasFault":{"shape":"NullableBoolean"},

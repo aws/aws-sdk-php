@@ -1,0 +1,23 @@
+{%- macro hue(name = "phpdocumentor-green") -%}
+    {% set hues = {
+        'red': 4,
+        'pink': 340,
+        'purple': 291,
+        'deep-purple': 262,
+        'indigo': 231,
+        'blue': 207,
+        'light-blue': 199,
+        'cyan': 187,
+        'teal': 174,
+        'green': 122,
+        'phpdocumentor-green': 96,
+        'light-green': 88,
+        'lime': 66,
+        'yellow': 54,
+        'amber': 45,
+        'orange': 36,
+        'deep-orange': 14,
+        'brown': 16
+    } %}
+    {{ hues[name] }}
+{%- endmacro -%}

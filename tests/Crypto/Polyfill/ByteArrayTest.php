@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class ByteArrayTest
- * @package Aws\Test\Crypto\Polyfill
+ * @covers Aws\Test\Crypto\Polyfill
  */
 class ByteArrayTest extends TestCase
 {

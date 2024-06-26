@@ -1,0 +1,188 @@
+{% set breakpoints = {
+    'sm': '400px',
+    'md': '550px',
+    'lg': '750px',
+    'xl': '1000px',
+    'xxl': '1200px',
+    'xxxl': '1900px',
+    'menu': '1000px'
+} %}
+
+{% include 'css/variables.css.twig' %}
+
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url(../static/glyphicons-halflings-regular.eot);
+    src: url(../static/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'),
+    url(../static/glyphicons-halflings-regular.woff2) format('woff2'),
+    url(../static/glyphicons-halflings-regular.woff) format('woff'),
+    url(../static/glyphicons-halflings-regular.ttf) format('truetype'),
+    url(../static/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg');
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-cog:before {
+    content:"\e019"
+}
+
+.glyphicon-link:before {
+    content:"\e144"
+}
+
+body {
+    background-color: #fff;
+    color: var(--text-color);
+    font-family: var(--font-primary);
+    font-size: var(--text-md);
+    letter-spacing: var(--letter-spacing--primary);
+    line-height: var(--line-height--primary);
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    background-color: transparent;
+}
+
+.table-responsive {
+    overflow-x: auto; /* Allows horizontal scrolling on smaller screens if necessary */
+}
+
+.table-responsive table {
+    width: 96%;
+    margin: 0 auto 4% auto; /* Centered with a 4% right margin effectively */
+    border-collapse: collapse;
+}
+
+.table-responsive th,
+.table-responsive td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align: top;
+}
+
+.table-responsive td:nth-child(2) { /* Targeting only the middle column of these specific tables */
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table-responsive .nowrap ul {
+    padding-left: 20px;
+    margin: 0;
+    list-style-type: none; /* Removes bullets from list */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.nowrap {
+    overflow: hidden;     /* Keeps the content within the cell's boundaries */
+    text-overflow: ellipsis; /* Adds an ellipsis if the text overflows the cell width */
+}
+
+.nowrap ul {
+    padding-left: 20px;   /* Provides padding to align the list nicely */
+    margin: 0;            /* Removes default margin to use space efficiently */
+    list-style-type: none; /* Optionally removes bullets, depending on design preference */
+}
+
+.nowrap ul li {
+    display: block;       /* Each list item on a new line */
+    white-space: nowrap;  /* Prevents the text in the list item from wrapping */
+}
+
+.article-container {
+    border: 1px solid #ccc; /* Thin gray border */
+    padding: 15px;          /* Padding inside the article for some spacing around the content */
+    margin-bottom: 20px;    /* Margin at the bottom to separate from subsequent content */
+    background-color: #f9f9f9; /* Optional: adds a light background color */
+}
+
+.my-container {
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden; /* Clears the float to contain the grid columns properly */
+}
+
+.my-col-full, .my-col-half, .my-col-third {
+    padding-right: 8px; /* Reduced padding between columns */
+    padding-left: 8px; /* Reduced padding between columns */
+    box-sizing: border-box;
+    float: left;
+    width: 100%; /* Default full width */
+    overflow-wrap: break-word; /* Ensures words do not overflow their container */
+    word-break: break-all; /* Allows unbreakable words to be broken */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis if text overflows */
+}
+
+@media (min-width: 768px) {
+    .my-col-half { /* Mimics col-md-6 */
+        width: 50%;
+    }
+}
+
+@media (min-width: 992px) {
+    .my-col-third { /* Mimics col-lg-4 */
+        width: 33.33333333%;
+    }
+}
+
+.supported-api-versions-methods {
+    list-style-type: none; /* Removes bullet points from the list */
+    padding-left: 0; /* Removes padding for the list to align with custom columns */
+    margin-left: 0; /* Removes default margin to utilize full container width */
+}
+
+.aws-logo {
+    margin-right: 7px;
+    width: 60px; /* Adjust width as needed */
+    height: 60px; /* Adjust height as needed */
+}
+
+{% include 'objects/headings.css.twig' %}
+{% include 'components/headerlink.css.twig' %}
+{% include 'objects/paragraph.css.twig' %}
+{% include 'objects/images.css.twig' %}
+{% include 'objects/line.css.twig' %}
+{% include 'objects/section.css.twig' %}
+{% include 'objects/grid.css.twig' %}
+{% include 'objects/links.css.twig' %}
+{% include 'objects/buttons.css.twig' %}
+{% include 'objects/forms.css.twig' %}
+{% include 'objects/lists.css.twig' %}
+{% include 'objects/code.css.twig' %}
+{% include 'objects/blockquote.css.twig' %}
+{% include 'objects/tables.css.twig' %}
+{% include 'objects/labels.css.twig' %}
+
+{% include 'components/header.css.twig' %}
+{% include 'components/header-title.css.twig' %}
+{% include 'components/topnav.css.twig' %}
+{% include 'components/sidebar.css.twig' %}
+{% include 'components/admonition.css.twig' %}
+{% include 'components/breadcrumbs.css.twig' %}
+{% include 'components/back-to-top.css.twig' %}
+{% include 'components/search.css.twig' %}
+{% include 'components/search-results.css.twig' %}
+{% include 'components/source-modal.css.twig' %}
+{% include 'components/on-this-page.css.twig' %}
+
+{% include 'css/utilities.css.twig' %}

@@ -62,7 +62,7 @@
     "AccessType": {
       "base": null,
       "refs": {
-        "AccessConfiguration$AccessType": "<p>The type of authentication used to access content from <code>HttpConfiguration::BaseUrl</code> on your source location. Accepted value: <code>S3_SIGV4</code>.</p> <p> <code>S3_SIGV4</code> - AWS Signature Version 4 authentication for Amazon S3 hosted virtual-style access. If your source location base URL is an Amazon S3 bucket, MediaTailor can use AWS Signature Version 4 (SigV4) authentication to access the bucket where your source content is stored. Your MediaTailor source location baseURL must follow the S3 virtual hosted-style request URL format. For example, https://bucket-name.s3.Region.amazonaws.com/key-name.</p> <p>Before you can use <code>S3_SIGV4</code>, you must meet these requirements:</p> <p>• You must allow MediaTailor to access your S3 bucket by granting mediatailor.amazonaws.com principal access in IAM. For information about configuring access in IAM, see Access management in the IAM User Guide.</p> <p>• The mediatailor.amazonaws.com service principal must have permissions to read all top level manifests referenced by the VodSource packaging configurations.</p> <p>• The caller of the API must have s3:GetObject IAM permissions to read all top level manifests referenced by your MediaTailor VodSource packaging configurations.</p>"
+        "AccessConfiguration$AccessType": "<p>The type of authentication used to access content from <code>HttpConfiguration::BaseUrl</code> on your source location.</p> <p> <code>S3_SIGV4</code> - AWS Signature Version 4 authentication for Amazon S3 hosted virtual-style access. If your source location base URL is an Amazon S3 bucket, MediaTailor can use AWS Signature Version 4 (SigV4) authentication to access the bucket where your source content is stored. Your MediaTailor source location baseURL must follow the S3 virtual hosted-style request URL format. For example, https://bucket-name.s3.Region.amazonaws.com/key-name.</p> <p>Before you can use <code>S3_SIGV4</code>, you must meet these requirements:</p> <p>• You must allow MediaTailor to access your S3 bucket by granting mediatailor.amazonaws.com principal access in IAM. For information about configuring access in IAM, see Access management in the IAM User Guide.</p> <p>• The mediatailor.amazonaws.com service principal must have permissions to read all top level manifests referenced by the VodSource packaging configurations.</p> <p>• The caller of the API must have s3:GetObject IAM permissions to read all top level manifests referenced by your MediaTailor VodSource packaging configurations.</p> <p> <code>AUTODETECT_SIGV4</code> - AWS Signature Version 4 authentication for a set of supported services: MediaPackage Version 2 and Amazon S3 hosted virtual-style access. If your source location base URL is a MediaPackage Version 2 endpoint or an Amazon S3 bucket, MediaTailor can use AWS Signature Version 4 (SigV4) authentication to access the resource where your source content is stored.</p> <p>Before you can use <code>AUTODETECT_SIGV4</code> with a MediaPackage Version 2 endpoint, you must meet these requirements:</p> <p>• You must grant MediaTailor access to your MediaPackage endpoint by granting <code>mediatailor.amazonaws.com</code> principal access in an Origin Access policy on the endpoint.</p> <p>• Your MediaTailor source location base URL must be a MediaPackage V2 endpoint.</p> <p>• The caller of the API must have <code>mediapackagev2:GetObject</code> IAM permissions to read all top level manifests referenced by the MediaTailor source packaging configurations.</p> <p>Before you can use <code>AUTODETECT_SIGV4</code> with an Amazon S3 bucket, you must meet these requirements:</p> <p>• You must grant MediaTailor access to your S3 bucket by granting <code>mediatailor.amazonaws.com</code> principal access in IAM. For more information about configuring access in IAM, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Access management</a> in the <i>IAM User Guide.</i>.</p> <p>• The <code>mediatailor.amazonaws.com</code> service principal must have permissions to read all top-level manifests referenced by the <code>VodSource</code> packaging configurations.</p> <p>• The caller of the API must have <code>s3:GetObject</code> IAM permissions to read all top level manifests referenced by your MediaTailor <code>VodSource</code> packaging configurations.</p>"
       }
     },
     "AdBreak": {
@@ -71,16 +71,70 @@
         "__listOfAdBreak$member": null
       }
     },
+    "AdBreakMetadataList": {
+      "base": null,
+      "refs": {
+        "AdBreak$AdBreakMetadata": "<p>Defines a list of key/value pairs that MediaTailor generates within the <code>EXT-X-ASSET</code>tag for <code>SCTE35_ENHANCED</code> output.</p>"
+      }
+    },
+    "AdBreakOpportunities": {
+      "base": "<p>The list of ad break opportunities detected within the VOD source.</p>",
+      "refs": {
+        "DescribeVodSourceResponse$AdBreakOpportunities": "<p>The ad break opportunities within the VOD source.</p>"
+      }
+    },
+    "AdBreakOpportunity": {
+      "base": "<p>A location at which a zero-duration ad marker was detected in a VOD source manifest.</p>",
+      "refs": {
+        "AdBreakOpportunities$member": null
+      }
+    },
     "AdMarkerPassthrough": {
       "base": "<p>For HLS, when set to <code>true</code>, MediaTailor passes through <code>EXT-X-CUE-IN</code>, <code>EXT-X-CUE-OUT</code>, and <code>EXT-X-SPLICEPOINT-SCTE35</code> ad markers from the origin manifest to the MediaTailor personalized manifest.</p> <p>No logic is applied to these ad markers. For example, if <code>EXT-X-CUE-OUT</code> has a value of <code>60</code>, but no ads are filled for that ad break, MediaTailor will not set the value to <code>0</code>.</p>",
       "refs": {
         "ManifestProcessingRules$AdMarkerPassthrough": "<p>For HLS, when set to <code>true</code>, MediaTailor passes through <code>EXT-X-CUE-IN</code>, <code>EXT-X-CUE-OUT</code>, and <code>EXT-X-SPLICEPOINT-SCTE35</code> ad markers from the origin manifest to the MediaTailor personalized manifest.</p> <p>No logic is applied to these ad markers. For example, if <code>EXT-X-CUE-OUT</code> has a value of <code>60</code>, but no ads are filled for that ad break, MediaTailor will not set the value to <code>0</code>.</p>"
       }
     },
+    "AdMarkupType": {
+      "base": null,
+      "refs": {
+        "adMarkupTypes$member": null
+      }
+    },
     "Alert": {
       "base": "<p>Alert configuration parameters.</p>",
       "refs": {
         "__listOfAlert$member": null
+      }
+    },
+    "AlertCategory": {
+      "base": null,
+      "refs": {
+        "Alert$Category": "<p>The category that MediaTailor assigns to the alert.</p>"
+      }
+    },
+    "AlternateMedia": {
+      "base": "<p>A playlist of media (VOD and/or live) to be played instead of the default media on a particular program.</p>",
+      "refs": {
+        "__listOfAlternateMedia$member": null
+      }
+    },
+    "AudienceMedia": {
+      "base": "<p>An AudienceMedia object contains an Audience and a list of AlternateMedia.</p>",
+      "refs": {
+        "__listOfAudienceMedia$member": null
+      }
+    },
+    "Audiences": {
+      "base": null,
+      "refs": {
+        "Channel$Audiences": "<p>The list of audiences defined in channel.</p>",
+        "CreateChannelRequest$Audiences": "<p>The list of audiences defined in channel.</p>",
+        "CreateChannelResponse$Audiences": "<p>The list of audiences defined in channel.</p>",
+        "DescribeChannelResponse$Audiences": "<p>The list of audiences defined in channel.</p>",
+        "ScheduleEntry$Audiences": "<p>The list of audiences defined in ScheduleEntry.</p>",
+        "UpdateChannelRequest$Audiences": "<p>The list of audiences defined in channel.</p>",
+        "UpdateChannelResponse$Audiences": "<p>The list of audiences defined in channel.</p>"
       }
     },
     "AvailMatchingCriteria": {
@@ -138,6 +192,7 @@
     "ClipRange": {
       "base": "<p>Clip range configuration for the VOD source associated with the program.</p>",
       "refs": {
+        "AlternateMedia$ClipRange": null,
         "CreateProgramResponse$ClipRange": "<p>The clip range configuration settings.</p>",
         "DescribeProgramResponse$ClipRange": "<p>The clip range configuration settings.</p>",
         "ScheduleConfiguration$ClipRange": "<p>Program clip range configuration.</p>",
@@ -496,6 +551,15 @@
         "VodSource$HttpPackageConfigurations": "<p>The HTTP package configurations for the VOD source.</p>"
       }
     },
+    "InsertionMode": {
+      "base": "<p>Insertion Mode controls whether players can use stitched or guided ad insertion.</p>",
+      "refs": {
+        "GetPlaybackConfigurationResponse$InsertionMode": "<p>The setting that controls whether players can use stitched or guided ad insertion. The default, <code>STITCHED_ONLY</code>, forces all player sessions to use stitched (server-side) ad insertion. Choosing <code>PLAYER_SELECT</code> allows players to select either stitched or guided ad insertion at session-initialization time. The default for players that do not specify an insertion mode is stitched.</p>",
+        "PlaybackConfiguration$InsertionMode": "<p>The setting that controls whether players can use stitched or guided ad insertion. The default, <code>STITCHED_ONLY</code>, forces all player sessions to use stitched (server-side) ad insertion. Choosing <code>PLAYER_SELECT</code> allows players to select either stitched or guided ad insertion at session-initialization time. The default for players that do not specify an insertion mode is stitched.</p>",
+        "PutPlaybackConfigurationRequest$InsertionMode": "<p>The setting that controls whether players can use stitched or guided ad insertion. The default, <code>STITCHED_ONLY</code>, forces all player sessions to use stitched (server-side) ad insertion. Choosing <code>PLAYER_SELECT</code> allows players to select either stitched or guided ad insertion at session-initialization time. The default for players that do not specify an insertion mode is stitched.</p>",
+        "PutPlaybackConfigurationResponse$InsertionMode": "<p>The setting that controls whether players can use stitched or guided ad insertion. The default, <code>STITCHED_ONLY</code>, forces all player sessions to use stitched (server-side) ad insertion. Choosing <code>PLAYER_SELECT</code> allows players to select either stitched or guided ad insertion at session-initialization time. The default for players that do not specify an insertion mode is stitched.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -506,6 +570,12 @@
         "SegmentationDescriptor$SegmentsExpected": "<p>The number of segments expected, which is assigned to the <code>segmentation_descriptor.segments_expectedS</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification Values must be between 0 and 256, inclusive. The default value is 0.</p>",
         "SegmentationDescriptor$SubSegmentNum": "<p>The sub-segment number to assign to the <code>segmentation_descriptor.sub_segment_num</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The defualt value is null.</p>",
         "SegmentationDescriptor$SubSegmentsExpected": "<p>The number of sub-segments expected, which is assigned to the <code>segmentation_descriptor.sub_segments_expected</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The default value is null.</p>"
+      }
+    },
+    "KeyValuePair": {
+      "base": "<p>For <code>SCTE35_ENHANCED</code> output, defines a key and corresponding value. MediaTailor generates these pairs within the <code>EXT-X-ASSET</code>tag.</p>",
+      "refs": {
+        "AdBreakMetadataList$member": null
       }
     },
     "ListAlertsRequest": {
@@ -869,6 +939,9 @@
     "String": {
       "base": null,
       "refs": {
+        "Audiences$member": null,
+        "KeyValuePair$Key": "<p>For <code>SCTE35_ENHANCED</code> output, defines a key. MediaTailor takes this key, and its associated value, and generates the key/value pair within the <code>EXT-X-ASSET</code>tag. If you specify a key, you must also specify a corresponding value.</p>",
+        "KeyValuePair$Value": "<p>For <code>SCTE35_ENHANCED</code> output, defines a value. MediaTailor; takes this value, and its associated key, and generates the key/value pair within the <code>EXT-X-ASSET</code>tag. If you specify a value, you must also specify a corresponding key.</p>",
         "SegmentationDescriptor$SegmentationUpid": "<p>The Upid to assign to the <code>segmentation_descriptor.segmentation_upid</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. The value must be a hexadecimal string containing only the characters 0 though 9 and A through F. The default value is \"\" (an empty string).</p>"
       }
     },
@@ -881,6 +954,16 @@
       "base": null,
       "refs": {
         "CreateChannelRequest$Tier": "<p>The tier of the channel.</p>"
+      }
+    },
+    "TimeShiftConfiguration": {
+      "base": "<p> The configuration for time-shifted viewing. </p>",
+      "refs": {
+        "CreateChannelRequest$TimeShiftConfiguration": "<p> The time-shifted viewing configuration you want to associate to the channel. </p>",
+        "CreateChannelResponse$TimeShiftConfiguration": "<p> The time-shifted viewing configuration assigned to the channel. </p>",
+        "DescribeChannelResponse$TimeShiftConfiguration": "<p> The time-shifted viewing configuration for the channel. </p>",
+        "UpdateChannelRequest$TimeShiftConfiguration": "<p> The time-shifted viewing configuration you want to associate to the channel. </p>",
+        "UpdateChannelResponse$TimeShiftConfiguration": "<p> The time-shifted viewing configuration for the channel. </p>"
       }
     },
     "TimeSignalMessage": {
@@ -995,7 +1078,8 @@
         "SpliceInsertMessage$AvailNum": "<p>This is written to <code>splice_insert.avail_num</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>",
         "SpliceInsertMessage$AvailsExpected": "<p>This is written to <code>splice_insert.avails_expected</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>",
         "SpliceInsertMessage$SpliceEventId": "<p>This is written to <code>splice_insert.splice_event_id</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>1</code>.</p>",
-        "SpliceInsertMessage$UniqueProgramId": "<p>This is written to <code>splice_insert.unique_program_id</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>"
+        "SpliceInsertMessage$UniqueProgramId": "<p>This is written to <code>splice_insert.unique_program_id</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>",
+        "TimeShiftConfiguration$MaxTimeDelaySeconds": "<p> The maximum time delay for time-shifted viewing. The minimum allowed maximum time delay is 0 seconds, and the maximum allowed maximum time delay is 21600 seconds (6 hours). </p>"
       }
     },
     "__integerMin1": {
@@ -1016,6 +1100,7 @@
     "__listOfAdBreak": {
       "base": null,
       "refs": {
+        "AlternateMedia$AdBreaks": "<p>Ad break configuration parameters defined in AlternateMedia.</p>",
         "CreateProgramRequest$AdBreaks": "<p>The ad break configuration settings.</p>",
         "CreateProgramResponse$AdBreaks": "<p>The ad break configuration settings.</p>",
         "DescribeProgramResponse$AdBreaks": "<p>The ad break configuration settings.</p>",
@@ -1027,6 +1112,22 @@
       "base": null,
       "refs": {
         "ListAlertsResponse$Items": "<p>A list of alerts that are associated with this resource.</p>"
+      }
+    },
+    "__listOfAlternateMedia": {
+      "base": null,
+      "refs": {
+        "AudienceMedia$AlternateMedia": "<p>The list of AlternateMedia defined in AudienceMedia.</p>"
+      }
+    },
+    "__listOfAudienceMedia": {
+      "base": null,
+      "refs": {
+        "CreateProgramRequest$AudienceMedia": "<p>The list of AudienceMedia defined in program.</p>",
+        "CreateProgramResponse$AudienceMedia": "<p>The list of AudienceMedia defined in program.</p>",
+        "DescribeProgramResponse$AudienceMedia": "<p>The list of AudienceMedia defined in program.</p>",
+        "UpdateProgramRequest$AudienceMedia": "<p>The list of AudienceMedia defined in program.</p>",
+        "UpdateProgramResponse$AudienceMedia": "<p>The list of AudienceMedia defined in program.</p>"
       }
     },
     "__listOfAvailMatchingCriteria": {
@@ -1105,7 +1206,11 @@
       "base": null,
       "refs": {
         "AdBreak$OffsetMillis": "<p>How long (in milliseconds) after the beginning of the program that an ad starts. This value must fall within 100ms of a segment boundary, otherwise the ad break will be skipped.</p>",
+        "AdBreakOpportunity$OffsetMillis": "<p>The offset in milliseconds from the start of the VOD source at which an ad marker was detected.</p>",
+        "AlternateMedia$DurationMillis": "<p>The duration of the alternateMedia in milliseconds.</p>",
+        "AlternateMedia$ScheduledStartTimeMillis": "<p>The date and time that the alternateMedia is scheduled to start, in epoch milliseconds.</p>",
         "ClipRange$EndOffsetMillis": "<p>The end offset of the clip range, in milliseconds, starting from the beginning of the VOD source associated with the program.</p>",
+        "ClipRange$StartOffsetMillis": "<p>The start offset of the clip range, in milliseconds. This offset truncates the start at the number of milliseconds into the duration of the VOD source.</p>",
         "CreateProgramResponse$DurationMillis": "<p>The duration of the live program in milliseconds.</p>",
         "ScheduleAdBreak$ApproximateDurationSeconds": "<p>The approximate duration of the ad break, in seconds.</p>",
         "ScheduleEntry$ApproximateDurationSeconds": "<p>The approximate duration of this program, in seconds.</p>",
@@ -1156,6 +1261,10 @@
         "Alert$AlertCode": "<p>The code for the alert. For example, <code>NOT_PROCESSED</code>.</p>",
         "Alert$AlertMessage": "<p>If an alert is generated for a resource, an explanation of the reason for the alert.</p>",
         "Alert$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "AlternateMedia$LiveSourceName": "<p>The name of the live source for alternateMedia.</p>",
+        "AlternateMedia$SourceLocationName": "<p>The name of the source location for alternateMedia.</p>",
+        "AlternateMedia$VodSourceName": "<p>The name of the VOD source for alternateMedia.</p>",
+        "AudienceMedia$Audience": "<p>The Audience defined in AudienceMedia.</p>",
         "AvailMatchingCriteria$DynamicVariable": "<p>The dynamic variable(s) that MediaTailor should use as avail matching criteria. MediaTailor only places the prefetched ads into the avail if the avail matches the criteria defined by the dynamic variable. For information about dynamic variables, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables.html\">Using dynamic ad variables</a> in the <i>MediaTailor User Guide</i>.</p> <p>You can include up to 100 dynamic variables.</p>",
         "AvailSuppression$Value": "<p>A live edge offset time in HH:MM:SS. MediaTailor won't fill ad breaks on or behind this time in the manifest lookback window. If Value is set to 00:00:00, it is in sync with the live edge, and MediaTailor won't fill any ad breaks on or behind the live edge. If you set a Value time, MediaTailor won't fill any ad breaks on or behind this time in the manifest lookback window. For example, if you set 00:45:00, then MediaTailor will fill ad breaks that occur within 45 minutes behind the live edge, but won't fill ad breaks on or behind 45 minutes behind the live edge.</p>",
         "BadRequestException$Message": null,
@@ -1254,6 +1363,7 @@
         "DescribeVodSourceResponse$VodSourceName": "<p>The name of the VOD source.</p>",
         "GetChannelPolicyRequest$ChannelName": "<p>The name of the channel associated with this Channel Policy.</p>",
         "GetChannelPolicyResponse$Policy": "<p>The IAM policy for the channel. IAM policies are used to control access to your channel.</p>",
+        "GetChannelScheduleRequest$Audience": "<p>The single audience for GetChannelScheduleRequest.</p>",
         "GetChannelScheduleRequest$ChannelName": "<p>The name of the channel associated with this Channel Schedule.</p>",
         "GetChannelScheduleRequest$DurationMinutes": "<p>The duration in minutes of the channel schedule.</p>",
         "GetChannelScheduleRequest$NextToken": "<p>(Optional) If the playback configuration has more than <code>MaxResults</code> channel schedules, use <code>NextToken</code> to get the second and subsequent pages of results.</p> <p>For the first <code>GetChannelScheduleRequest</code> request, omit this value.</p> <p>For the second and subsequent requests, get the value of <code>NextToken</code> from the previous response and specify that value for <code>NextToken</code> in the request.</p> <p>If the previous response didn't include a <code>NextToken</code> element, there are no more channel schedules to get.</p>",
@@ -1438,6 +1548,12 @@
         "UpdateVodSourceResponse$LastModifiedTime": "<p>The timestamp that indicates when the VOD source was last modified.</p>",
         "VodSource$CreationTime": "<p>The timestamp that indicates when the VOD source was created.</p>",
         "VodSource$LastModifiedTime": "<p>The timestamp that indicates when the VOD source was last modified.</p>"
+      }
+    },
+    "adMarkupTypes": {
+      "base": null,
+      "refs": {
+        "HlsPlaylistSettings$AdMarkupType": "<p>Determines the type of SCTE 35 tags to use in ad markup. Specify <code>DATERANGE</code> to use <code>DATERANGE</code> tags (for live or VOD content). Specify <code>SCTE35_ENHANCED</code> to use <code>EXT-X-CUE-OUT</code> and <code>EXT-X-CUE-IN</code> tags (for VOD content only).</p>"
       }
     }
   }

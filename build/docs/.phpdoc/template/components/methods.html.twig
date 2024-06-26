@@ -1,0 +1,15 @@
+{% set methods = methods(node)|sortByVisibility %}
+{% if methods is not empty %}
+    <section class="phpdocumentor-methods">
+        <h3 class="phpdocumentor-elements__header" id="methods">
+            Methods
+            {{ include('components/headerlink.html.twig', {'on': node, 'at': 'methods'}, with_context = false) }}
+        </h3>
+        {% for method in methods %}
+            {% include 'components/method.html.twig' %}
+        {% endfor %}
+    </section>
+    <section class="phpdocumentor-methods">
+        <-- modeled_exceptions -->
+    </section>
+{% endif %}

@@ -64,6 +64,22 @@
         {"shape":"ValidationException"}
       ]
     },
+    "GetInternetEvent":{
+      "name":"GetInternetEvent",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v20210603/InternetEvents/{EventId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetInternetEventInput"},
+      "output":{"shape":"GetInternetEventOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "GetMonitor":{
       "name":"GetMonitor",
       "http":{
@@ -80,6 +96,40 @@
         {"shape":"ValidationException"}
       ]
     },
+    "GetQueryResults":{
+      "name":"GetQueryResults",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v20210603/Monitors/{MonitorName}/Queries/{QueryId}/Results",
+        "responseCode":200
+      },
+      "input":{"shape":"GetQueryResultsInput"},
+      "output":{"shape":"GetQueryResultsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "GetQueryStatus":{
+      "name":"GetQueryStatus",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v20210603/Monitors/{MonitorName}/Queries/{QueryId}/Status",
+        "responseCode":200
+      },
+      "input":{"shape":"GetQueryStatusInput"},
+      "output":{"shape":"GetQueryStatusOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "ListHealthEvents":{
       "name":"ListHealthEvents",
       "http":{
@@ -89,6 +139,22 @@
       },
       "input":{"shape":"ListHealthEventsInput"},
       "output":{"shape":"ListHealthEventsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "ListInternetEvents":{
+      "name":"ListInternetEvents",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v20210603/InternetEvents",
+        "responseCode":200
+      },
+      "input":{"shape":"ListInternetEventsInput"},
+      "output":{"shape":"ListInternetEventsOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
@@ -127,6 +193,40 @@
         {"shape":"NotFoundException"},
         {"shape":"BadRequestException"},
         {"shape":"InternalServerErrorException"}
+      ]
+    },
+    "StartQuery":{
+      "name":"StartQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v20210603/Monitors/{MonitorName}/Queries",
+        "responseCode":200
+      },
+      "input":{"shape":"StartQueryInput"},
+      "output":{"shape":"StartQueryOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "StopQuery":{
+      "name":"StopQuery",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v20210603/Monitors/{MonitorName}/Queries/{QueryId}",
+        "responseCode":200
+      },
+      "input":{"shape":"StopQueryInput"},
+      "output":{"shape":"StopQueryOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"}
       ]
     },
     "TagResource":{
@@ -197,6 +297,11 @@
       },
       "exception":true
     },
+    "AccountId":{
+      "type":"string",
+      "max":12,
+      "min":12
+    },
     "Arn":{
       "type":"string",
       "max":2048,
@@ -222,6 +327,31 @@
       },
       "exception":true
     },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
+    "ClientLocation":{
+      "type":"structure",
+      "required":[
+        "ASName",
+        "ASNumber",
+        "Country",
+        "City",
+        "Latitude",
+        "Longitude"
+      ],
+      "members":{
+        "ASName":{"shape":"String"},
+        "ASNumber":{"shape":"Long"},
+        "Country":{"shape":"String"},
+        "Subdivision":{"shape":"String"},
+        "Metro":{"shape":"String"},
+        "City":{"shape":"String"},
+        "Latitude":{"shape":"Double"},
+        "Longitude":{"shape":"Double"}
+      }
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -246,7 +376,8 @@
         "Tags":{"shape":"TagMap"},
         "MaxCityNetworksToMonitor":{"shape":"MaxCityNetworksToMonitor"},
         "InternetMeasurementsLogDelivery":{"shape":"InternetMeasurementsLogDelivery"},
-        "TrafficPercentageToMonitor":{"shape":"TrafficPercentageToMonitor"}
+        "TrafficPercentageToMonitor":{"shape":"TrafficPercentageToMonitor"},
+        "HealthEventsConfig":{"shape":"HealthEventsConfig"}
       }
     },
     "CreateMonitorOutput":{
@@ -280,6 +411,22 @@
       "type":"double",
       "box":true
     },
+    "FilterList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "FilterParameter":{
+      "type":"structure",
+      "members":{
+        "Field":{"shape":"String"},
+        "Operator":{"shape":"Operator"},
+        "Values":{"shape":"FilterList"}
+      }
+    },
+    "FilterParameters":{
+      "type":"list",
+      "member":{"shape":"FilterParameter"}
+    },
     "GetHealthEventInput":{
       "type":"structure",
       "required":[
@@ -296,6 +443,11 @@
           "shape":"HealthEventName",
           "location":"uri",
           "locationName":"EventId"
+        },
+        "LinkedAccountId":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"LinkedAccountId"
         }
       }
     },
@@ -320,7 +472,39 @@
         "ImpactedLocations":{"shape":"ImpactedLocationsList"},
         "Status":{"shape":"HealthEventStatus"},
         "PercentOfTotalTrafficImpacted":{"shape":"Double"},
-        "ImpactType":{"shape":"HealthEventImpactType"}
+        "ImpactType":{"shape":"HealthEventImpactType"},
+        "HealthScoreThreshold":{"shape":"Percentage"}
+      }
+    },
+    "GetInternetEventInput":{
+      "type":"structure",
+      "required":["EventId"],
+      "members":{
+        "EventId":{
+          "shape":"InternetEventId",
+          "location":"uri",
+          "locationName":"EventId"
+        }
+      }
+    },
+    "GetInternetEventOutput":{
+      "type":"structure",
+      "required":[
+        "EventId",
+        "EventArn",
+        "StartedAt",
+        "ClientLocation",
+        "EventType",
+        "EventStatus"
+      ],
+      "members":{
+        "EventId":{"shape":"InternetEventId"},
+        "EventArn":{"shape":"Arn"},
+        "StartedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "EndedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "ClientLocation":{"shape":"ClientLocation"},
+        "EventType":{"shape":"InternetEventType"},
+        "EventStatus":{"shape":"InternetEventStatus"}
       }
     },
     "GetMonitorInput":{
@@ -331,6 +515,11 @@
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"MonitorName"
+        },
+        "LinkedAccountId":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"LinkedAccountId"
         }
       }
     },
@@ -356,7 +545,75 @@
         "Tags":{"shape":"TagMap"},
         "MaxCityNetworksToMonitor":{"shape":"MaxCityNetworksToMonitor"},
         "InternetMeasurementsLogDelivery":{"shape":"InternetMeasurementsLogDelivery"},
-        "TrafficPercentageToMonitor":{"shape":"TrafficPercentageToMonitor"}
+        "TrafficPercentageToMonitor":{"shape":"TrafficPercentageToMonitor"},
+        "HealthEventsConfig":{"shape":"HealthEventsConfig"}
+      }
+    },
+    "GetQueryResultsInput":{
+      "type":"structure",
+      "required":[
+        "MonitorName",
+        "QueryId"
+      ],
+      "members":{
+        "MonitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"MonitorName"
+        },
+        "QueryId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"QueryId"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"QueryMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "GetQueryResultsOutput":{
+      "type":"structure",
+      "required":[
+        "Fields",
+        "Data"
+      ],
+      "members":{
+        "Fields":{"shape":"QueryFields"},
+        "Data":{"shape":"QueryData"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "GetQueryStatusInput":{
+      "type":"structure",
+      "required":[
+        "MonitorName",
+        "QueryId"
+      ],
+      "members":{
+        "MonitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"MonitorName"
+        },
+        "QueryId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"QueryId"
+        }
+      }
+    },
+    "GetQueryStatusOutput":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"QueryStatus"}
       }
     },
     "HealthEvent":{
@@ -380,14 +637,17 @@
         "ImpactedLocations":{"shape":"ImpactedLocationsList"},
         "Status":{"shape":"HealthEventStatus"},
         "PercentOfTotalTrafficImpacted":{"shape":"Double"},
-        "ImpactType":{"shape":"HealthEventImpactType"}
+        "ImpactType":{"shape":"HealthEventImpactType"},
+        "HealthScoreThreshold":{"shape":"Percentage"}
       }
     },
     "HealthEventImpactType":{
       "type":"string",
       "enum":[
         "AVAILABILITY",
-        "PERFORMANCE"
+        "PERFORMANCE",
+        "LOCAL_AVAILABILITY",
+        "LOCAL_PERFORMANCE"
       ]
     },
     "HealthEventList":{
@@ -406,6 +666,15 @@
         "ACTIVE",
         "RESOLVED"
       ]
+    },
+    "HealthEventsConfig":{
+      "type":"structure",
+      "members":{
+        "AvailabilityScoreThreshold":{"shape":"Percentage"},
+        "PerformanceScoreThreshold":{"shape":"Percentage"},
+        "AvailabilityLocalHealthEventsConfig":{"shape":"LocalHealthEventsConfig"},
+        "PerformanceLocalHealthEventsConfig":{"shape":"LocalHealthEventsConfig"}
+      }
     },
     "ImpactedLocation":{
       "type":"structure",
@@ -429,7 +698,8 @@
         "ServiceLocation":{"shape":"String"},
         "Status":{"shape":"HealthEventStatus"},
         "CausedBy":{"shape":"NetworkImpairment"},
-        "InternetHealth":{"shape":"InternetHealth"}
+        "InternetHealth":{"shape":"InternetHealth"},
+        "Ipv4Prefixes":{"shape":"Ipv4PrefixList"}
       }
     },
     "ImpactedLocationsList":{
@@ -456,6 +726,56 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "InternetEventId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
+    },
+    "InternetEventMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "InternetEventStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "RESOLVED"
+      ]
+    },
+    "InternetEventSummary":{
+      "type":"structure",
+      "required":[
+        "EventId",
+        "EventArn",
+        "StartedAt",
+        "ClientLocation",
+        "EventType",
+        "EventStatus"
+      ],
+      "members":{
+        "EventId":{"shape":"InternetEventId"},
+        "EventArn":{"shape":"Arn"},
+        "StartedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "EndedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "ClientLocation":{"shape":"ClientLocation"},
+        "EventType":{"shape":"InternetEventType"},
+        "EventStatus":{"shape":"InternetEventStatus"}
+      }
+    },
+    "InternetEventType":{
+      "type":"string",
+      "enum":[
+        "AVAILABILITY",
+        "PERFORMANCE"
+      ]
+    },
+    "InternetEventsList":{
+      "type":"list",
+      "member":{"shape":"InternetEventSummary"}
+    },
     "InternetHealth":{
       "type":"structure",
       "members":{
@@ -468,6 +788,10 @@
       "members":{
         "S3Config":{"shape":"S3Config"}
       }
+    },
+    "Ipv4PrefixList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "LimitExceededException":{
       "type":"structure",
@@ -513,6 +837,11 @@
           "shape":"HealthEventStatus",
           "location":"querystring",
           "locationName":"EventStatus"
+        },
+        "LinkedAccountId":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"LinkedAccountId"
         }
       }
     },
@@ -521,6 +850,49 @@
       "required":["HealthEvents"],
       "members":{
         "HealthEvents":{"shape":"HealthEventList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListInternetEventsInput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"InternetEventMaxResults",
+          "location":"querystring",
+          "locationName":"InternetEventMaxResults"
+        },
+        "StartTime":{
+          "shape":"SyntheticTimestamp_date_time",
+          "location":"querystring",
+          "locationName":"StartTime"
+        },
+        "EndTime":{
+          "shape":"SyntheticTimestamp_date_time",
+          "location":"querystring",
+          "locationName":"EndTime"
+        },
+        "EventStatus":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"EventStatus"
+        },
+        "EventType":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"EventType"
+        }
+      }
+    },
+    "ListInternetEventsOutput":{
+      "type":"structure",
+      "required":["InternetEvents"],
+      "members":{
+        "InternetEvents":{"shape":"InternetEventsList"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -541,6 +913,11 @@
           "shape":"String",
           "location":"querystring",
           "locationName":"MonitorStatus"
+        },
+        "IncludeLinkedAccounts":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"IncludeLinkedAccounts"
         }
       }
     },
@@ -569,6 +946,21 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "LocalHealthEventsConfig":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"LocalHealthEventsConfigStatus"},
+        "HealthScoreThreshold":{"shape":"Percentage"},
+        "MinTrafficImpact":{"shape":"Percentage"}
+      }
+    },
+    "LocalHealthEventsConfigStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "LogDeliveryStatus":{
       "type":"string",
       "enum":[
@@ -582,11 +974,13 @@
     },
     "MaxCityNetworksToMonitor":{
       "type":"integer",
+      "box":true,
       "max":500000,
       "min":1
     },
     "MaxResults":{
       "type":"integer",
+      "box":true,
       "max":25,
       "min":1
     },
@@ -673,6 +1067,18 @@
       },
       "exception":true
     },
+    "Operator":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "NOT_EQUALS"
+      ]
+    },
+    "Percentage":{
+      "type":"double",
+      "max":100,
+      "min":0
+    },
     "PerformanceMeasurement":{
       "type":"structure",
       "members":{
@@ -681,6 +1087,49 @@
         "PercentOfClientLocationImpacted":{"shape":"Double"},
         "RoundTripTime":{"shape":"RoundTripTime"}
       }
+    },
+    "QueryData":{
+      "type":"list",
+      "member":{"shape":"QueryRow"}
+    },
+    "QueryField":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "Type":{"shape":"String"}
+      }
+    },
+    "QueryFields":{
+      "type":"list",
+      "member":{"shape":"QueryField"}
+    },
+    "QueryMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "QueryRow":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "QueryStatus":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "RUNNING",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELED"
+      ]
+    },
+    "QueryType":{
+      "type":"string",
+      "enum":[
+        "MEASUREMENTS",
+        "TOP_LOCATIONS",
+        "TOP_LOCATION_DETAILS"
+      ]
     },
     "ResourceName":{
       "type":"string",
@@ -722,6 +1171,58 @@
     "SetOfARNs":{
       "type":"list",
       "member":{"shape":"Arn"}
+    },
+    "StartQueryInput":{
+      "type":"structure",
+      "required":[
+        "MonitorName",
+        "StartTime",
+        "EndTime",
+        "QueryType"
+      ],
+      "members":{
+        "MonitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"MonitorName"
+        },
+        "StartTime":{"shape":"SyntheticTimestamp_date_time"},
+        "EndTime":{"shape":"SyntheticTimestamp_date_time"},
+        "QueryType":{"shape":"QueryType"},
+        "FilterParameters":{"shape":"FilterParameters"},
+        "LinkedAccountId":{"shape":"AccountId"}
+      }
+    },
+    "StartQueryOutput":{
+      "type":"structure",
+      "required":["QueryId"],
+      "members":{
+        "QueryId":{"shape":"String"}
+      }
+    },
+    "StopQueryInput":{
+      "type":"structure",
+      "required":[
+        "MonitorName",
+        "QueryId"
+      ],
+      "members":{
+        "MonitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"MonitorName"
+        },
+        "QueryId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"QueryId"
+        }
+      }
+    },
+    "StopQueryOutput":{
+      "type":"structure",
+      "members":{
+      }
     },
     "String":{"type":"string"},
     "SyntheticTimestamp_date_time":{
@@ -797,6 +1298,7 @@
     },
     "TrafficPercentageToMonitor":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
@@ -849,7 +1351,8 @@
         },
         "MaxCityNetworksToMonitor":{"shape":"MaxCityNetworksToMonitor"},
         "InternetMeasurementsLogDelivery":{"shape":"InternetMeasurementsLogDelivery"},
-        "TrafficPercentageToMonitor":{"shape":"TrafficPercentageToMonitor"}
+        "TrafficPercentageToMonitor":{"shape":"TrafficPercentageToMonitor"},
+        "HealthEventsConfig":{"shape":"HealthEventsConfig"}
       }
     },
     "UpdateMonitorOutput":{

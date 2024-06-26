@@ -5,6 +5,7 @@
     "endpointPrefix":"application-autoscaling",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Application Auto Scaling",
     "serviceId":"Application Auto Scaling",
     "signatureVersion":"v4",
@@ -510,7 +511,8 @@
         "ElastiCacheDatabaseMemoryUsageCountedForEvictPercentage",
         "NeptuneReaderAverageCPUUtilization",
         "SageMakerVariantProvisionedConcurrencyUtilization",
-        "ElastiCacheDatabaseCapacityUsageCountedForEvictPercentage"
+        "ElastiCacheDatabaseCapacityUsageCountedForEvictPercentage",
+        "SageMakerInferenceComponentInvocationsPerCopy"
       ]
     },
     "MetricUnit":{"type":"string"},
@@ -685,7 +687,8 @@
         "elasticache:replication-group:NodeGroups",
         "elasticache:replication-group:Replicas",
         "neptune:cluster:ReadReplicaCount",
-        "sagemaker:variant:DesiredProvisionedConcurrency"
+        "sagemaker:variant:DesiredProvisionedConcurrency",
+        "sagemaker:inference-component:DesiredCopyCount"
       ]
     },
     "ScalableTarget":{

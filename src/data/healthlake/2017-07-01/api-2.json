@@ -333,7 +333,8 @@
         "DatastoreEndpoint":{"shape":"String"},
         "SseConfiguration":{"shape":"SseConfiguration"},
         "PreloadDataConfig":{"shape":"PreloadDataConfig"},
-        "IdentityProviderConfiguration":{"shape":"IdentityProviderConfiguration"}
+        "IdentityProviderConfiguration":{"shape":"IdentityProviderConfiguration"},
+        "ErrorCause":{"shape":"ErrorCause"}
       }
     },
     "DatastorePropertiesList":{
@@ -346,7 +347,8 @@
         "CREATING",
         "ACTIVE",
         "DELETING",
-        "DELETED"
+        "DELETED",
+        "CREATE_FAILED"
       ]
     },
     "DeleteFHIRDatastoreRequest":{
@@ -427,6 +429,25 @@
       "min":1,
       "pattern":"(arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:kms:)?([a-z]{2}-[a-z]+(-[a-z]+)?-\\d:)?(\\d{12}:)?(((key/)?[a-zA-Z0-9-_]+)|(alias/[a-zA-Z0-9:/_-]+))"
     },
+    "ErrorCategory":{
+      "type":"string",
+      "enum":[
+        "RETRYABLE_ERROR",
+        "NON_RETRYABLE_ERROR"
+      ]
+    },
+    "ErrorCause":{
+      "type":"structure",
+      "members":{
+        "ErrorMessage":{"shape":"ErrorMessage"},
+        "ErrorCategory":{"shape":"ErrorCategory"}
+      }
+    },
+    "ErrorMessage":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
     "ExportJobProperties":{
       "type":"structure",
       "required":[
@@ -456,6 +477,8 @@
       "type":"string",
       "enum":["R4"]
     },
+    "GenericDouble":{"type":"double"},
+    "GenericLong":{"type":"long"},
     "IamRoleArn":{
       "type":"string",
       "max":2048,
@@ -490,6 +513,7 @@
         "DatastoreId":{"shape":"DatastoreId"},
         "InputDataConfig":{"shape":"InputDataConfig"},
         "JobOutputDataConfig":{"shape":"OutputDataConfig"},
+        "JobProgressReport":{"shape":"JobProgressReport"},
         "DataAccessRoleArn":{"shape":"IamRoleArn"},
         "Message":{"shape":"Message"}
       }
@@ -524,6 +548,19 @@
       "max":64,
       "min":1,
       "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)$"
+    },
+    "JobProgressReport":{
+      "type":"structure",
+      "members":{
+        "TotalNumberOfScannedFiles":{"shape":"GenericLong"},
+        "TotalSizeOfScannedFilesInMB":{"shape":"GenericDouble"},
+        "TotalNumberOfImportedFiles":{"shape":"GenericLong"},
+        "TotalNumberOfResourcesScanned":{"shape":"GenericLong"},
+        "TotalNumberOfResourcesImported":{"shape":"GenericLong"},
+        "TotalNumberOfResourcesWithCustomerError":{"shape":"GenericLong"},
+        "TotalNumberOfFilesReadWithCustomerError":{"shape":"GenericLong"},
+        "Throughput":{"shape":"GenericDouble"}
+      }
     },
     "JobStatus":{
       "type":"string",

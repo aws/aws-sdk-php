@@ -6,6 +6,7 @@ use Aws\Api\Service;
 use Aws\Command;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\EndpointV2\EndpointProviderV2;
+use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -111,14 +112,8 @@ class RestXmlSerializerTest extends TestCase
         $client = $this->getTestClient('s3', ['region' => 'us-east-1']);
         $serializer = new RestXmlSerializer($client->getApi(), 'http://test.com');
         $cmd = new Command('HeadObject', ['baz' => []]);
-        $endpointProvider = new EndpointProviderV2(
-            json_decode(
-                file_get_contents(__DIR__ . '/../../EndpointV2/valid-rules/aws-region.json'),
-                true
-            ),
-            EndpointDefinitionProvider::getPartitions()
-        );
-        $request = $serializer($cmd, $endpointProvider, ['Region' => 'us-east-1']);
-        $this->assertSame('http://us-east-1.amazonaws.com/', (string) $request->getUri());
+        $endpoint = new RulesetEndpoint('https://foo.com');
+        $request = $serializer($cmd, $endpoint);
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
     }
 }

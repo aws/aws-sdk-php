@@ -844,6 +844,40 @@
         }
       ]
     },
+    "DescribeAccountConfiguration": {
+      "name": "DescribeAccountConfiguration",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/accountConfiguration",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeAccountConfigurationRequest"
+      },
+      "output": {
+        "shape": "DescribeAccountConfigurationResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
     "DescribeChannel": {
       "name": "DescribeChannel",
       "http": {
@@ -1211,6 +1245,46 @@
         },
         {
           "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "DescribeThumbnails": {
+      "name": "DescribeThumbnails",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/channels/{channelId}/thumbnails",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeThumbnailsRequest"
+      },
+      "output": {
+        "shape": "DescribeThumbnailsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
         }
       ]
     },
@@ -1717,6 +1791,46 @@
         }
       ]
     },
+    "StartInputDevice": {
+      "name": "StartInputDevice",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/inputDevices/{inputDeviceId}/start",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "StartInputDeviceRequest"
+      },
+      "output": {
+        "shape": "StartInputDeviceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
     "StartInputDeviceMaintenanceWindow": {
       "name": "StartInputDeviceMaintenanceWindow",
       "http": {
@@ -1837,6 +1951,46 @@
         }
       ]
     },
+    "StopInputDevice": {
+      "name": "StopInputDevice",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/inputDevices/{inputDeviceId}/stop",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "StopInputDeviceRequest"
+      },
+      "output": {
+        "shape": "StopInputDeviceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
     "StopMultiplex": {
       "name": "StopMultiplex",
       "http": {
@@ -1917,6 +2071,43 @@
         },
         {
           "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateAccountConfiguration": {
+      "name": "UpdateAccountConfiguration",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/prod/accountConfiguration",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateAccountConfigurationRequest"
+      },
+      "output": {
+        "shape": "UpdateAccountConfigurationResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
         }
       ]
     },
@@ -2233,6 +2424,919 @@
           "shape": "ConflictException"
         }
       ]
+    },
+    "RestartChannelPipelines": {
+      "name": "RestartChannelPipelines",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/channels/{channelId}/restartChannelPipelines",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "RestartChannelPipelinesRequest"
+      },
+      "output": {
+        "shape": "RestartChannelPipelinesResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "CreateCloudWatchAlarmTemplate": {
+      "name": "CreateCloudWatchAlarmTemplate",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/cloudwatch-alarm-templates",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateCloudWatchAlarmTemplateRequest"
+      },
+      "output": {
+        "shape": "CreateCloudWatchAlarmTemplateResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "CreateCloudWatchAlarmTemplateGroup": {
+      "name": "CreateCloudWatchAlarmTemplateGroup",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/cloudwatch-alarm-template-groups",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateCloudWatchAlarmTemplateGroupRequest"
+      },
+      "output": {
+        "shape": "CreateCloudWatchAlarmTemplateGroupResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "CreateEventBridgeRuleTemplate": {
+      "name": "CreateEventBridgeRuleTemplate",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/eventbridge-rule-templates",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateEventBridgeRuleTemplateRequest"
+      },
+      "output": {
+        "shape": "CreateEventBridgeRuleTemplateResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "CreateEventBridgeRuleTemplateGroup": {
+      "name": "CreateEventBridgeRuleTemplateGroup",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/eventbridge-rule-template-groups",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateEventBridgeRuleTemplateGroupRequest"
+      },
+      "output": {
+        "shape": "CreateEventBridgeRuleTemplateGroupResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "CreateSignalMap": {
+      "name": "CreateSignalMap",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/signal-maps",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateSignalMapRequest"
+      },
+      "output": {
+        "shape": "CreateSignalMapResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteCloudWatchAlarmTemplate": {
+      "name": "DeleteCloudWatchAlarmTemplate",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/cloudwatch-alarm-templates/{identifier}",
+        "responseCode": 204
+      },
+      "input": {
+        "shape": "DeleteCloudWatchAlarmTemplateRequest"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteCloudWatchAlarmTemplateGroup": {
+      "name": "DeleteCloudWatchAlarmTemplateGroup",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/cloudwatch-alarm-template-groups/{identifier}",
+        "responseCode": 204
+      },
+      "input": {
+        "shape": "DeleteCloudWatchAlarmTemplateGroupRequest"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteEventBridgeRuleTemplate": {
+      "name": "DeleteEventBridgeRuleTemplate",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/eventbridge-rule-templates/{identifier}",
+        "responseCode": 204
+      },
+      "input": {
+        "shape": "DeleteEventBridgeRuleTemplateRequest"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteEventBridgeRuleTemplateGroup": {
+      "name": "DeleteEventBridgeRuleTemplateGroup",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/eventbridge-rule-template-groups/{identifier}",
+        "responseCode": 204
+      },
+      "input": {
+        "shape": "DeleteEventBridgeRuleTemplateGroupRequest"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteSignalMap": {
+      "name": "DeleteSignalMap",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/signal-maps/{identifier}",
+        "responseCode": 204
+      },
+      "input": {
+        "shape": "DeleteSignalMapRequest"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "GetCloudWatchAlarmTemplate": {
+      "name": "GetCloudWatchAlarmTemplate",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/cloudwatch-alarm-templates/{identifier}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetCloudWatchAlarmTemplateRequest"
+      },
+      "output": {
+        "shape": "GetCloudWatchAlarmTemplateResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "GetCloudWatchAlarmTemplateGroup": {
+      "name": "GetCloudWatchAlarmTemplateGroup",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/cloudwatch-alarm-template-groups/{identifier}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetCloudWatchAlarmTemplateGroupRequest"
+      },
+      "output": {
+        "shape": "GetCloudWatchAlarmTemplateGroupResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "GetEventBridgeRuleTemplate": {
+      "name": "GetEventBridgeRuleTemplate",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/eventbridge-rule-templates/{identifier}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetEventBridgeRuleTemplateRequest"
+      },
+      "output": {
+        "shape": "GetEventBridgeRuleTemplateResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "GetEventBridgeRuleTemplateGroup": {
+      "name": "GetEventBridgeRuleTemplateGroup",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/eventbridge-rule-template-groups/{identifier}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetEventBridgeRuleTemplateGroupRequest"
+      },
+      "output": {
+        "shape": "GetEventBridgeRuleTemplateGroupResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "GetSignalMap": {
+      "name": "GetSignalMap",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/signal-maps/{identifier}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetSignalMapRequest"
+      },
+      "output": {
+        "shape": "GetSignalMapResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "ListCloudWatchAlarmTemplateGroups": {
+      "name": "ListCloudWatchAlarmTemplateGroups",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/cloudwatch-alarm-template-groups",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListCloudWatchAlarmTemplateGroupsRequest"
+      },
+      "output": {
+        "shape": "ListCloudWatchAlarmTemplateGroupsResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "ListCloudWatchAlarmTemplates": {
+      "name": "ListCloudWatchAlarmTemplates",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/cloudwatch-alarm-templates",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListCloudWatchAlarmTemplatesRequest"
+      },
+      "output": {
+        "shape": "ListCloudWatchAlarmTemplatesResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "ListEventBridgeRuleTemplateGroups": {
+      "name": "ListEventBridgeRuleTemplateGroups",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/eventbridge-rule-template-groups",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListEventBridgeRuleTemplateGroupsRequest"
+      },
+      "output": {
+        "shape": "ListEventBridgeRuleTemplateGroupsResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "ListEventBridgeRuleTemplates": {
+      "name": "ListEventBridgeRuleTemplates",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/eventbridge-rule-templates",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListEventBridgeRuleTemplatesRequest"
+      },
+      "output": {
+        "shape": "ListEventBridgeRuleTemplatesResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "ListSignalMaps": {
+      "name": "ListSignalMaps",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/signal-maps",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListSignalMapsRequest"
+      },
+      "output": {
+        "shape": "ListSignalMapsResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "StartDeleteMonitorDeployment": {
+      "name": "StartDeleteMonitorDeployment",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/signal-maps/{identifier}/monitor-deployment",
+        "responseCode": 202
+      },
+      "input": {
+        "shape": "StartDeleteMonitorDeploymentRequest"
+      },
+      "output": {
+        "shape": "StartDeleteMonitorDeploymentResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "StartMonitorDeployment": {
+      "name": "StartMonitorDeployment",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/signal-maps/{identifier}/monitor-deployment",
+        "responseCode": 202
+      },
+      "input": {
+        "shape": "StartMonitorDeploymentRequest"
+      },
+      "output": {
+        "shape": "StartMonitorDeploymentResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "StartUpdateSignalMap": {
+      "name": "StartUpdateSignalMap",
+      "http": {
+        "method": "PATCH",
+        "requestUri": "/prod/signal-maps/{identifier}",
+        "responseCode": 202
+      },
+      "input": {
+        "shape": "StartUpdateSignalMapRequest"
+      },
+      "output": {
+        "shape": "StartUpdateSignalMapResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateCloudWatchAlarmTemplate": {
+      "name": "UpdateCloudWatchAlarmTemplate",
+      "http": {
+        "method": "PATCH",
+        "requestUri": "/prod/cloudwatch-alarm-templates/{identifier}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateCloudWatchAlarmTemplateRequest"
+      },
+      "output": {
+        "shape": "UpdateCloudWatchAlarmTemplateResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateCloudWatchAlarmTemplateGroup": {
+      "name": "UpdateCloudWatchAlarmTemplateGroup",
+      "http": {
+        "method": "PATCH",
+        "requestUri": "/prod/cloudwatch-alarm-template-groups/{identifier}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateCloudWatchAlarmTemplateGroupRequest"
+      },
+      "output": {
+        "shape": "UpdateCloudWatchAlarmTemplateGroupResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateEventBridgeRuleTemplate": {
+      "name": "UpdateEventBridgeRuleTemplate",
+      "http": {
+        "method": "PATCH",
+        "requestUri": "/prod/eventbridge-rule-templates/{identifier}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateEventBridgeRuleTemplateRequest"
+      },
+      "output": {
+        "shape": "UpdateEventBridgeRuleTemplateResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateEventBridgeRuleTemplateGroup": {
+      "name": "UpdateEventBridgeRuleTemplateGroup",
+      "http": {
+        "method": "PATCH",
+        "requestUri": "/prod/eventbridge-rule-template-groups/{identifier}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateEventBridgeRuleTemplateGroupRequest"
+      },
+      "output": {
+        "shape": "UpdateEventBridgeRuleTemplateGroupResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
     }
   },
   "shapes": {
@@ -2332,6 +3436,13 @@
         "MEDIUM_LOW"
       ]
     },
+    "Ac3AttenuationControl": {
+      "type": "string",
+      "enum": [
+        "ATTENUATE_3_DB",
+        "NONE"
+      ]
+    },
     "Ac3BitstreamMode": {
       "type": "string",
       "enum": [
@@ -2405,6 +3516,10 @@
         "MetadataControl": {
           "shape": "Ac3MetadataControl",
           "locationName": "metadataControl"
+        },
+        "AttenuationControl": {
+          "shape": "Ac3AttenuationControl",
+          "locationName": "attenuationControl"
         }
       }
     },
@@ -2441,6 +3556,15 @@
         "DOES_NOT_IMPLEMENT_ACCESSIBILITY_FEATURES",
         "IMPLEMENTS_ACCESSIBILITY_FEATURES"
       ]
+    },
+    "AccountConfiguration": {
+      "type": "structure",
+      "members": {
+        "KmsKeyId": {
+          "shape": "__string",
+          "locationName": "kmsKeyId"
+        }
+      }
     },
     "AfdSignaling": {
       "type": "string",
@@ -2643,6 +3767,14 @@
         "StreamName": {
           "shape": "__string",
           "locationName": "streamName"
+        },
+        "AudioDashRoles": {
+          "shape": "__listOfDashRoleAudio",
+          "locationName": "audioDashRoles"
+        },
+        "DvbDashAccessibility": {
+          "shape": "DvbDashAccessibility",
+          "locationName": "dvbDashAccessibility"
         }
       },
       "required": [
@@ -2951,6 +4083,10 @@
         "AvailSettings": {
           "shape": "AvailSettings",
           "locationName": "availSettings"
+        },
+        "Scte35SegmentationScope": {
+          "shape": "Scte35SegmentationScope",
+          "locationName": "scte35SegmentationScope"
         }
       }
     },
@@ -3511,6 +4647,14 @@
         "Name": {
           "shape": "__string",
           "locationName": "name"
+        },
+        "CaptionDashRoles": {
+          "shape": "__listOfDashRoleCaption",
+          "locationName": "captionDashRoles"
+        },
+        "DvbDashAccessibility": {
+          "shape": "DvbDashAccessibility",
+          "locationName": "dvbDashAccessibility"
         }
       },
       "required": [
@@ -3899,6 +5043,49 @@
       "type": "structure",
       "members": {
       }
+    },
+    "ColorCorrection": {
+      "type": "structure",
+      "members": {
+        "InputColorSpace": {
+          "shape": "ColorSpace",
+          "locationName": "inputColorSpace"
+        },
+        "OutputColorSpace": {
+          "shape": "ColorSpace",
+          "locationName": "outputColorSpace"
+        },
+        "Uri": {
+          "shape": "__string",
+          "locationName": "uri"
+        }
+      },
+      "required": [
+        "OutputColorSpace",
+        "InputColorSpace",
+        "Uri"
+      ]
+    },
+    "ColorCorrectionSettings": {
+      "type": "structure",
+      "members": {
+        "GlobalColorCorrections": {
+          "shape": "__listOfColorCorrection",
+          "locationName": "globalColorCorrections"
+        }
+      },
+      "required": [
+        "GlobalColorCorrections"
+      ]
+    },
+    "ColorSpace": {
+      "type": "string",
+      "enum": [
+        "HDR10",
+        "HLG_2020",
+        "REC_601",
+        "REC_709"
+      ]
     },
     "ColorSpacePassthroughSettings": {
       "type": "structure",
@@ -4793,6 +5980,29 @@
         "ResourceArn"
       ]
     },
+    "DescribeAccountConfigurationRequest": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "DescribeAccountConfigurationResponse": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "DescribeAccountConfigurationResultModel": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
     "DescribeChannelRequest": {
       "type": "structure",
       "members": {
@@ -4947,9 +6157,21 @@
           "shape": "InputDeviceUhdSettings",
           "locationName": "uhdDeviceSettings"
         },
-	  "Tags": {
+        "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
+        },
+        "MedialiveInputArns": {
+          "shape": "__listOf__string",
+          "locationName": "medialiveInputArns"
+        },
+        "OutputType": {
+          "shape": "InputDeviceOutputType",
+          "locationName": "outputType"
         }
       }
     },
@@ -5417,6 +6639,49 @@
         "ScheduleActions": {
           "shape": "__listOfScheduleAction",
           "locationName": "scheduleActions"
+        }
+      }
+    },
+    "DescribeThumbnailsRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelId"
+        },
+        "PipelineId": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "pipelineId"
+        },
+        "ThumbnailType": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "thumbnailType"
+        }
+      },
+      "required": [
+        "ThumbnailType",
+        "PipelineId",
+        "ChannelId"
+      ]
+    },
+    "DescribeThumbnailsResponse": {
+      "type": "structure",
+      "members": {
+        "ThumbnailDetails": {
+          "shape": "__listOfThumbnailDetail",
+          "locationName": "thumbnailDetails"
+        }
+      }
+    },
+    "DescribeThumbnailsResultModel": {
+      "type": "structure",
+      "members": {
+        "ThumbnailDetails": {
+          "shape": "__listOfThumbnailDetail",
+          "locationName": "thumbnailDetails"
         }
       }
     },
@@ -6061,6 +7326,14 @@
         "VideoDescriptions": {
           "shape": "__listOfVideoDescription",
           "locationName": "videoDescriptions"
+        },
+        "ThumbnailConfiguration": {
+          "shape": "ThumbnailConfiguration",
+          "locationName": "thumbnailConfiguration"
+        },
+        "ColorCorrectionSettings": {
+          "shape": "ColorCorrectionSettings",
+          "locationName": "colorCorrectionSettings"
         }
       },
       "required": [
@@ -6069,6 +7342,19 @@
         "OutputGroups",
         "TimecodeConfig"
       ]
+    },
+    "EpochLockingSettings": {
+      "type": "structure",
+      "members": {
+        "CustomEpoch": {
+          "shape": "__string",
+          "locationName": "customEpoch"
+        },
+        "JamSyncTime": {
+          "shape": "__string",
+          "locationName": "jamSyncTime"
+        }
+      }
     },
     "Esam": {
       "type": "structure",
@@ -6135,10 +7421,21 @@
         "InputPrepareScheduleActions": {
           "shape": "FeatureActivationsInputPrepareScheduleActions",
           "locationName": "inputPrepareScheduleActions"
+        },
+        "OutputStaticImageOverlayScheduleActions": {
+          "shape": "FeatureActivationsOutputStaticImageOverlayScheduleActions",
+          "locationName": "outputStaticImageOverlayScheduleActions"
         }
       }
     },
     "FeatureActivationsInputPrepareScheduleActions": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "FeatureActivationsOutputStaticImageOverlayScheduleActions": {
       "type": "string",
       "enum": [
         "DISABLED",
@@ -6383,6 +7680,10 @@
         "SupportLowFramerateInputs": {
           "shape": "GlobalConfigurationLowFramerateInputs",
           "locationName": "supportLowFramerateInputs"
+        },
+        "OutputLockingSettings": {
+          "shape": "OutputLockingSettings",
+          "locationName": "outputLockingSettings"
         }
       }
     },
@@ -7039,6 +8340,30 @@
         "TimecodeBurninSettings": {
           "shape": "TimecodeBurninSettings",
           "locationName": "timecodeBurninSettings"
+        },
+        "MvOverPictureBoundaries": {
+          "shape": "H265MvOverPictureBoundaries",
+          "locationName": "mvOverPictureBoundaries"
+        },
+        "MvTemporalPredictor": {
+          "shape": "H265MvTemporalPredictor",
+          "locationName": "mvTemporalPredictor"
+        },
+        "TileHeight": {
+          "shape": "__integerMin64Max2160",
+          "locationName": "tileHeight"
+        },
+        "TilePadding": {
+          "shape": "H265TilePadding",
+          "locationName": "tilePadding"
+        },
+        "TileWidth": {
+          "shape": "__integerMin256Max3840",
+          "locationName": "tileWidth"
+        },
+        "TreeblockSize": {
+          "shape": "H265TreeblockSize",
+          "locationName": "treeblockSize"
         }
       },
       "required": [
@@ -7702,6 +9027,14 @@
       "members": {
       }
     },
+    "IncludeFillerNalUnits": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "DROP",
+        "INCLUDE"
+      ]
+    },
     "Input": {
       "type": "structure",
       "members": {
@@ -7952,9 +9285,21 @@
           "shape": "InputDeviceUhdSettings",
           "locationName": "uhdDeviceSettings"
         },
-	"Tags": {
+        "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
+        },
+        "MedialiveInputArns": {
+          "shape": "__listOf__string",
+          "locationName": "medialiveInputArns"
+        },
+        "OutputType": {
+          "shape": "InputDeviceOutputType",
+          "locationName": "outputType"
         }
       }
     },
@@ -7963,6 +9308,13 @@
       "enum": [
         "HDMI",
         "SDI"
+      ]
+    },
+    "InputDeviceCodec": {
+      "type": "string",
+      "enum": [
+        "HEVC",
+        "AVC"
       ]
     },
     "InputDeviceConfigurableSettings": {
@@ -7979,6 +9331,18 @@
         "LatencyMs": {
           "shape": "__integer",
           "locationName": "latencyMs"
+        },
+        "Codec": {
+          "shape": "InputDeviceCodec",
+          "locationName": "codec"
+        },
+        "MediaconnectSettings": {
+          "shape": "InputDeviceMediaConnectConfigurableSettings",
+          "locationName": "mediaconnectSettings"
+        },
+        "AudioChannelPairs": {
+          "shape": "__listOfInputDeviceConfigurableAudioChannelPairConfig",
+          "locationName": "audioChannelPairs"
         }
       }
     },
@@ -8058,6 +9422,48 @@
         "DHCP"
       ]
     },
+    "InputDeviceMediaConnectConfigurableSettings": {
+      "type": "structure",
+      "members": {
+        "FlowArn": {
+          "shape": "__string",
+          "locationName": "flowArn"
+        },
+        "RoleArn": {
+          "shape": "__string",
+          "locationName": "roleArn"
+        },
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        },
+        "SourceName": {
+          "shape": "__string",
+          "locationName": "sourceName"
+        }
+      }
+    },
+    "InputDeviceMediaConnectSettings": {
+      "type": "structure",
+      "members": {
+        "FlowArn": {
+          "shape": "__string",
+          "locationName": "flowArn"
+        },
+        "RoleArn": {
+          "shape": "__string",
+          "locationName": "roleArn"
+        },
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        },
+        "SourceName": {
+          "shape": "__string",
+          "locationName": "sourceName"
+        }
+      }
+    },
     "InputDeviceNetworkSettings": {
       "type": "structure",
       "members": {
@@ -8082,6 +9488,14 @@
           "locationName": "subnetMask"
         }
       }
+    },
+    "InputDeviceOutputType": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "MEDIALIVE_INPUT",
+        "MEDIACONNECT_FLOW"
+      ]
     },
     "InputDeviceRequest": {
       "type": "structure",
@@ -8166,9 +9580,21 @@
           "shape": "InputDeviceUhdSettings",
           "locationName": "uhdDeviceSettings"
         },
-	  "Tags": {
+        "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
+        },
+        "MedialiveInputArns": {
+          "shape": "__listOf__string",
+          "locationName": "medialiveInputArns"
+        },
+        "OutputType": {
+          "shape": "InputDeviceOutputType",
+          "locationName": "outputType"
         }
       }
     },
@@ -8224,6 +9650,18 @@
         "LatencyMs": {
           "shape": "__integer",
           "locationName": "latencyMs"
+        },
+        "Codec": {
+          "shape": "InputDeviceCodec",
+          "locationName": "codec"
+        },
+        "MediaconnectSettings": {
+          "shape": "InputDeviceMediaConnectSettings",
+          "locationName": "mediaconnectSettings"
+        },
+        "AudioChannelPairs": {
+          "shape": "__listOfInputDeviceUhdAudioChannelPairConfig",
+          "locationName": "audioChannelPairs"
         }
       }
     },
@@ -9513,6 +10951,13 @@
         "PASSTHROUGH"
       ]
     },
+    "M3u8KlvBehavior": {
+      "type": "string",
+      "enum": [
+        "NO_PASSTHROUGH",
+        "PASSTHROUGH"
+      ]
+    },
     "M3u8NielsenId3Behavior": {
       "type": "string",
       "enum": [
@@ -9604,6 +11049,14 @@
         "VideoPid": {
           "shape": "__string",
           "locationName": "videoPid"
+        },
+        "KlvBehavior": {
+          "shape": "M3u8KlvBehavior",
+          "locationName": "klvBehavior"
+        },
+        "KlvDataPids": {
+          "shape": "__string",
+          "locationName": "klvDataPids"
         }
       }
     },
@@ -10759,6 +12212,10 @@
         "UdpGroupSettings": {
           "shape": "UdpGroupSettings",
           "locationName": "udpGroupSettings"
+        },
+        "CmafIngestGroupSettings": {
+          "shape": "CmafIngestGroupSettings",
+          "locationName": "cmafIngestGroupSettings"
         }
       }
     },
@@ -10768,6 +12225,19 @@
         "DestinationRefId": {
           "shape": "__string",
           "locationName": "destinationRefId"
+        }
+      }
+    },
+    "OutputLockingSettings": {
+      "type": "structure",
+      "members": {
+        "EpochLockingSettings": {
+          "shape": "EpochLockingSettings",
+          "locationName": "epochLockingSettings"
+        },
+        "PipelineLockingSettings": {
+          "shape": "PipelineLockingSettings",
+          "locationName": "pipelineLockingSettings"
         }
       }
     },
@@ -10805,6 +12275,10 @@
         "UdpOutputSettings": {
           "shape": "UdpOutputSettings",
           "locationName": "udpOutputSettings"
+        },
+        "CmafIngestOutputSettings": {
+          "shape": "CmafIngestOutputSettings",
+          "locationName": "cmafIngestOutputSettings"
         }
       }
     },
@@ -10853,6 +12327,11 @@
         "PIPELINE_0",
         "PIPELINE_1"
       ]
+    },
+    "PipelineLockingSettings": {
+      "type": "structure",
+      "members": {
+      }
     },
     "PipelinePauseStateSettings": {
       "type": "structure",
@@ -11337,6 +12816,10 @@
         "RestartDelay": {
           "shape": "__integerMin0",
           "locationName": "restartDelay"
+        },
+        "IncludeFillerNalUnits": {
+          "shape": "IncludeFillerNalUnits",
+          "locationName": "includeFillerNalUnits"
         }
       }
     },
@@ -11456,6 +12939,14 @@
         "StaticImageDeactivateSettings": {
           "shape": "StaticImageDeactivateScheduleActionSettings",
           "locationName": "staticImageDeactivateSettings"
+        },
+        "StaticImageOutputActivateSettings": {
+          "shape": "StaticImageOutputActivateScheduleActionSettings",
+          "locationName": "staticImageOutputActivateSettings"
+        },
+        "StaticImageOutputDeactivateSettings": {
+          "shape": "StaticImageOutputDeactivateScheduleActionSettings",
+          "locationName": "staticImageOutputDeactivateSettings"
         }
       }
     },
@@ -12011,6 +13502,24 @@
       "members": {
       }
     },
+    "StartInputDeviceRequest": {
+      "type": "structure",
+      "members": {
+        "InputDeviceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "inputDeviceId"
+        }
+      },
+      "required": [
+        "InputDeviceId"
+      ]
+    },
+    "StartInputDeviceResponse": {
+      "type": "structure",
+      "members": {
+      }
+    },
     "StartMultiplexRequest": {
       "type": "structure",
       "members": {
@@ -12139,6 +13648,79 @@
         }
       }
     },
+    "StaticImageOutputActivateScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Duration": {
+          "shape": "__integerMin0",
+          "locationName": "duration"
+        },
+        "FadeIn": {
+          "shape": "__integerMin0",
+          "locationName": "fadeIn"
+        },
+        "FadeOut": {
+          "shape": "__integerMin0",
+          "locationName": "fadeOut"
+        },
+        "Height": {
+          "shape": "__integerMin1",
+          "locationName": "height"
+        },
+        "Image": {
+          "shape": "InputLocation",
+          "locationName": "image"
+        },
+        "ImageX": {
+          "shape": "__integerMin0",
+          "locationName": "imageX"
+        },
+        "ImageY": {
+          "shape": "__integerMin0",
+          "locationName": "imageY"
+        },
+        "Layer": {
+          "shape": "__integerMin0Max7",
+          "locationName": "layer"
+        },
+        "Opacity": {
+          "shape": "__integerMin0Max100",
+          "locationName": "opacity"
+        },
+        "OutputNames": {
+          "shape": "__listOf__string",
+          "locationName": "outputNames"
+        },
+        "Width": {
+          "shape": "__integerMin1",
+          "locationName": "width"
+        }
+      },
+      "required": [
+        "OutputNames",
+        "Image"
+      ]
+    },
+    "StaticImageOutputDeactivateScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "FadeOut": {
+          "shape": "__integerMin0",
+          "locationName": "fadeOut"
+        },
+        "Layer": {
+          "shape": "__integerMin0Max7",
+          "locationName": "layer"
+        },
+        "OutputNames": {
+          "shape": "__listOf__string",
+          "locationName": "outputNames"
+        }
+      },
+      "required": [
+        "OutputNames"
+      ]
+    },
     "StaticKeySettings": {
       "type": "structure",
       "members": {
@@ -12243,6 +13825,24 @@
           "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
+      }
+    },
+    "StopInputDeviceRequest": {
+      "type": "structure",
+      "members": {
+        "InputDeviceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "inputDeviceId"
+        }
+      },
+      "required": [
+        "InputDeviceId"
+      ]
+    },
+    "StopInputDeviceResponse": {
+      "type": "structure",
+      "members": {
       }
     },
     "StopMultiplexRequest": {
@@ -12395,6 +13995,39 @@
         "STRENGTH_16"
       ]
     },
+    "Thumbnail": {
+      "type": "structure",
+      "members": {
+        "Body": {
+          "shape": "__string",
+          "locationName": "body"
+        },
+        "ContentType": {
+          "shape": "__string",
+          "locationName": "contentType"
+        },
+        "ThumbnailType": {
+          "shape": "ThumbnailType",
+          "locationName": "thumbnailType"
+        },
+        "TimeStamp": {
+          "shape": "__timestampIso8601",
+          "locationName": "timeStamp"
+        }
+      }
+    },
+    "ThumbnailConfiguration": {
+      "type": "structure",
+      "members": {
+        "State": {
+          "shape": "ThumbnailState",
+          "locationName": "state"
+        }
+      },
+      "required": [
+        "State"
+      ]
+    },
     "ThumbnailData": {
       "type": "structure",
       "members": {
@@ -12403,6 +14036,38 @@
           "locationName": "body"
         }
       }
+    },
+    "ThumbnailDetail": {
+      "type": "structure",
+      "members": {
+        "PipelineId": {
+          "shape": "__string",
+          "locationName": "pipelineId"
+        },
+        "Thumbnails": {
+          "shape": "__listOfThumbnail",
+          "locationName": "thumbnails"
+        }
+      }
+    },
+    "ThumbnailNoData": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "ThumbnailState": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "DISABLED"
+      ]
+    },
+    "ThumbnailType": {
+      "type": "string",
+      "enum": [
+        "UNSPECIFIED",
+        "CURRENT_ACTIVE"
+      ]
     },
     "TimecodeBurninFontSize": {
       "type": "string",
@@ -12645,6 +14310,42 @@
         "httpStatusCode": 422
       }
     },
+    "UpdateAccountConfigurationRequest": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "UpdateAccountConfigurationRequestModel": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "UpdateAccountConfigurationResponse": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
+    "UpdateAccountConfigurationResultModel": {
+      "type": "structure",
+      "members": {
+        "AccountConfiguration": {
+          "shape": "AccountConfiguration",
+          "locationName": "accountConfiguration"
+        }
+      }
+    },
     "UpdateChannel": {
       "type": "structure",
       "members": {
@@ -12847,6 +14548,10 @@
         "UhdDeviceSettings": {
           "shape": "InputDeviceConfigurableSettings",
           "locationName": "uhdDeviceSettings"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
         }
       }
     },
@@ -12869,6 +14574,10 @@
         "UhdDeviceSettings": {
           "shape": "InputDeviceConfigurableSettings",
           "locationName": "uhdDeviceSettings"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
         }
       },
       "required": [
@@ -12926,9 +14635,21 @@
           "shape": "InputDeviceUhdSettings",
           "locationName": "uhdDeviceSettings"
         },
-	"Tags": {
+        "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "AvailabilityZone": {
+          "shape": "__string",
+          "locationName": "availabilityZone"
+        },
+        "MedialiveInputArns": {
+          "shape": "__listOf__string",
+          "locationName": "medialiveInputArns"
+        },
+        "OutputType": {
+          "shape": "InputDeviceOutputType",
+          "locationName": "outputType"
         }
       }
     },
@@ -13467,6 +15188,15 @@
     "__doubleMin1Max65535": {
       "type": "double"
     },
+    "__doubleMin250Max5000": {
+      "type": "double"
+    },
+    "__doubleMin32Max46": {
+      "type": "double"
+    },
+    "__doubleMinNegative1Max5": {
+      "type": "double"
+    },
     "__doubleMinNegative59Max0": {
       "type": "double"
     },
@@ -13516,6 +15246,11 @@
       "type": "integer",
       "min": 0,
       "max": 15
+    },
+    "__integerMin0Max2000": {
+      "type": "integer",
+      "min": 0,
+      "max": 2000
     },
     "__integerMin0Max255": {
       "type": "integer",
@@ -13788,6 +15523,12 @@
         "shape": "ChannelSummary"
       }
     },
+    "__listOfColorCorrection": {
+      "type": "list",
+      "member": {
+        "shape": "ColorCorrection"
+      }
+    },
     "__listOfFailoverCondition": {
       "type": "list",
       "member": {
@@ -13986,6 +15727,18 @@
         "shape": "Scte35Descriptor"
       }
     },
+    "__listOfThumbnail": {
+      "type": "list",
+      "member": {
+        "shape": "Thumbnail"
+      }
+    },
+    "__listOfThumbnailDetail": {
+      "type": "list",
+      "member": {
+        "shape": "ThumbnailDetail"
+      }
+    },
     "__listOfTransferringInputDeviceSummary": {
       "type": "list",
       "member": {
@@ -14125,22 +15878,4118 @@
     },
     "InputDeviceThumbnail": {
       "type": "blob",
-      "streaming": true
+      "streaming": true,
+      "documentation": "The binary data for the thumbnail that the Link device has most recently sent to MediaLive."
     },
     "AcceptHeader": {
       "type": "string",
       "enum": [
         "image/jpeg"
-      ]
+      ],
+      "documentation": "The HTTP Accept header. Indicates the requested type fothe thumbnail."
     },
     "ContentType": {
       "type": "string",
       "enum": [
         "image/jpeg"
-      ]
+      ],
+      "documentation": "Specifies the media type of the thumbnail."
     },
     "__timestamp": {
-      "type": "timestamp"
+      "type": "timestamp",
+      "documentation": "Placeholder documentation for __timestamp"
+    },
+    "InputDeviceConfigurableAudioChannelPairConfig": {
+      "type": "structure",
+      "members": {
+        "Id": {
+          "shape": "__integer",
+          "locationName": "id"
+        },
+        "Profile": {
+          "shape": "InputDeviceConfigurableAudioChannelPairProfile",
+          "locationName": "profile"
+        }
+      }
+    },
+    "InputDeviceConfigurableAudioChannelPairProfile": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "VBR-AAC_HHE-16000",
+        "VBR-AAC_HE-64000",
+        "VBR-AAC_LC-128000",
+        "CBR-AAC_HQ-192000",
+        "CBR-AAC_HQ-256000",
+        "CBR-AAC_HQ-384000",
+        "CBR-AAC_HQ-512000"
+      ]
+    },
+    "InputDeviceUhdAudioChannelPairConfig": {
+      "type": "structure",
+      "members": {
+        "Id": {
+          "shape": "__integer",
+          "locationName": "id"
+        },
+        "Profile": {
+          "shape": "InputDeviceUhdAudioChannelPairProfile",
+          "locationName": "profile"
+        }
+      }
+    },
+    "InputDeviceUhdAudioChannelPairProfile": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "VBR-AAC_HHE-16000",
+        "VBR-AAC_HE-64000",
+        "VBR-AAC_LC-128000",
+        "CBR-AAC_HQ-192000",
+        "CBR-AAC_HQ-256000",
+        "CBR-AAC_HQ-384000",
+        "CBR-AAC_HQ-512000"
+      ]
+    },
+    "__listOfInputDeviceConfigurableAudioChannelPairConfig": {
+      "type": "list",
+      "member": {
+        "shape": "InputDeviceConfigurableAudioChannelPairConfig"
+      }
+    },
+    "__listOfInputDeviceUhdAudioChannelPairConfig": {
+      "type": "list",
+      "member": {
+        "shape": "InputDeviceUhdAudioChannelPairConfig"
+      }
+    },
+    "ChannelPipelineIdToRestart": {
+      "type": "string",
+      "enum": [
+        "PIPELINE_0",
+        "PIPELINE_1"
+      ]
+    },
+    "RestartChannelPipelinesRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelId"
+        },
+        "PipelineIds": {
+          "shape": "__listOfChannelPipelineIdToRestart",
+          "locationName": "pipelineIds"
+        }
+      },
+      "required": [
+        "ChannelId"
+      ]
+    },
+    "RestartChannelPipelinesResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "CdiInputSpecification": {
+          "shape": "CdiInputSpecification",
+          "locationName": "cdiInputSpecification"
+        },
+        "ChannelClass": {
+          "shape": "ChannelClass",
+          "locationName": "channelClass"
+        },
+        "Destinations": {
+          "shape": "__listOfOutputDestination",
+          "locationName": "destinations"
+        },
+        "EgressEndpoints": {
+          "shape": "__listOfChannelEgressEndpoint",
+          "locationName": "egressEndpoints"
+        },
+        "EncoderSettings": {
+          "shape": "EncoderSettings",
+          "locationName": "encoderSettings"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InputAttachments": {
+          "shape": "__listOfInputAttachment",
+          "locationName": "inputAttachments"
+        },
+        "InputSpecification": {
+          "shape": "InputSpecification",
+          "locationName": "inputSpecification"
+        },
+        "LogLevel": {
+          "shape": "LogLevel",
+          "locationName": "logLevel"
+        },
+        "Maintenance": {
+          "shape": "MaintenanceStatus",
+          "locationName": "maintenance"
+        },
+        "MaintenanceStatus": {
+          "shape": "__string",
+          "locationName": "maintenanceStatus"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "PipelineDetails": {
+          "shape": "__listOfPipelineDetail",
+          "locationName": "pipelineDetails"
+        },
+        "PipelinesRunningCount": {
+          "shape": "__integer",
+          "locationName": "pipelinesRunningCount"
+        },
+        "RoleArn": {
+          "shape": "__string",
+          "locationName": "roleArn"
+        },
+        "State": {
+          "shape": "ChannelState",
+          "locationName": "state"
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettingsDescription",
+          "locationName": "vpc"
+        }
+      }
+    },
+    "__listOfChannelPipelineIdToRestart": {
+      "type": "list",
+      "member": {
+        "shape": "ChannelPipelineIdToRestart"
+      }
+    },
+    "H265MvOverPictureBoundaries": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "H265MvTemporalPredictor": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "H265TilePadding": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "PADDED"
+      ]
+    },
+    "H265TreeblockSize": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "TREE_SIZE_32X32"
+      ]
+    },
+    "__integerMin256Max3840": {
+      "type": "integer",
+      "min": 256,
+      "max": 3840
+    },
+    "__integerMin64Max2160": {
+      "type": "integer",
+      "min": 64,
+      "max": 2160
+    },
+    "CmafIngestGroupSettings": {
+      "type": "structure",
+      "members": {
+        "Destination": {
+          "shape": "OutputLocationRef",
+          "locationName": "destination"
+        },
+        "NielsenId3Behavior": {
+          "shape": "CmafNielsenId3Behavior",
+          "locationName": "nielsenId3Behavior"
+        },
+        "Scte35Type": {
+          "shape": "Scte35Type",
+          "locationName": "scte35Type"
+        },
+        "SegmentLength": {
+          "shape": "__integerMin1",
+          "locationName": "segmentLength"
+        },
+        "SegmentLengthUnits": {
+          "shape": "CmafIngestSegmentLengthUnits",
+          "locationName": "segmentLengthUnits"
+        },
+        "SendDelayMs": {
+          "shape": "__integerMin0Max2000",
+          "locationName": "sendDelayMs"
+        }
+      },
+      "required": [
+        "Destination"
+      ]
+    },
+    "CmafIngestOutputSettings": {
+      "type": "structure",
+      "members": {
+        "NameModifier": {
+          "shape": "__string",
+          "locationName": "nameModifier"
+        }
+      }
+    },
+    "CmafIngestSegmentLengthUnits": {
+      "type": "string",
+      "enum": [
+        "MILLISECONDS",
+        "SECONDS"
+      ]
+    },
+    "CmafNielsenId3Behavior": {
+      "type": "string",
+      "enum": [
+        "NO_PASSTHROUGH",
+        "PASSTHROUGH"
+      ]
+    },
+    "DashRoleAudio": {
+      "type": "string",
+      "enum": [
+        "ALTERNATE",
+        "COMMENTARY",
+        "DESCRIPTION",
+        "DUB",
+        "EMERGENCY",
+        "ENHANCED-AUDIO-INTELLIGIBILITY",
+        "KARAOKE",
+        "MAIN",
+        "SUPPLEMENTARY"
+      ]
+    },
+    "DashRoleCaption": {
+      "type": "string",
+      "enum": [
+        "ALTERNATE",
+        "CAPTION",
+        "COMMENTARY",
+        "DESCRIPTION",
+        "DUB",
+        "EASYREADER",
+        "EMERGENCY",
+        "FORCED-SUBTITLE",
+        "KARAOKE",
+        "MAIN",
+        "METADATA",
+        "SUBTITLE",
+        "SUPPLEMENTARY"
+      ]
+    },
+    "DvbDashAccessibility": {
+      "type": "string",
+      "enum": [
+        "DVBDASH_1_VISUALLY_IMPAIRED",
+        "DVBDASH_2_HARD_OF_HEARING",
+        "DVBDASH_3_SUPPLEMENTAL_COMMENTARY",
+        "DVBDASH_4_DIRECTORS_COMMENTARY",
+        "DVBDASH_5_EDUCATIONAL_NOTES",
+        "DVBDASH_6_MAIN_PROGRAM",
+        "DVBDASH_7_CLEAN_FEED"
+      ]
+    },
+    "__listOfDashRoleAudio": {
+      "type": "list",
+      "member": {
+        "shape": "DashRoleAudio"
+      }
+    },
+    "__listOfDashRoleCaption": {
+      "type": "list",
+      "member": {
+        "shape": "DashRoleCaption"
+      }
+    },
+    "Scte35Type": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "SCTE_35_WITHOUT_SEGMENTATION"
+      ]
+    },
+    "BadRequestExceptionResponseContent": {
+      "type": "structure",
+      "members": {
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        }
+      }
+    },
+    "CloudWatchAlarmTemplateComparisonOperator": {
+      "type": "string",
+      "enum": [
+        "GreaterThanOrEqualToThreshold",
+        "GreaterThanThreshold",
+        "LessThanThreshold",
+        "LessThanOrEqualToThreshold"
+      ]
+    },
+    "CloudWatchAlarmTemplateGroupSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TemplateCount": {
+          "shape": "__integer",
+          "locationName": "templateCount"
+        }
+      },
+      "required": [
+        "TemplateCount",
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name"
+      ]
+    },
+    "CloudWatchAlarmTemplateStatistic": {
+      "type": "string",
+      "enum": [
+        "SampleCount",
+        "Average",
+        "Sum",
+        "Minimum",
+        "Maximum"
+      ]
+    },
+    "CloudWatchAlarmTemplateSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplate",
+          "locationName": "arn"
+        },
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      },
+      "required": [
+        "TargetResourceType",
+        "TreatMissingData",
+        "ComparisonOperator",
+        "CreatedAt",
+        "Period",
+        "EvaluationPeriods",
+        "Name",
+        "GroupId",
+        "MetricName",
+        "Statistic",
+        "Id",
+        "Arn",
+        "Threshold"
+      ]
+    },
+    "CloudWatchAlarmTemplateTargetResourceType": {
+      "type": "string",
+      "enum": [
+        "CLOUDFRONT_DISTRIBUTION",
+        "MEDIALIVE_MULTIPLEX",
+        "MEDIALIVE_CHANNEL",
+        "MEDIALIVE_INPUT_DEVICE",
+        "MEDIAPACKAGE_CHANNEL",
+        "MEDIAPACKAGE_ORIGIN_ENDPOINT",
+        "MEDIACONNECT_FLOW",
+        "S3_BUCKET"
+      ]
+    },
+    "CloudWatchAlarmTemplateTreatMissingData": {
+      "type": "string",
+      "enum": [
+        "notBreaching",
+        "breaching",
+        "ignore",
+        "missing"
+      ]
+    },
+    "ConflictExceptionResponseContent": {
+      "type": "structure",
+      "members": {
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        }
+      }
+    },
+    "CreateCloudWatchAlarmTemplateGroupRequest": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "Name"
+      ]
+    },
+    "CreateCloudWatchAlarmTemplateGroupRequestContent": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "Name"
+      ]
+    },
+    "CreateCloudWatchAlarmTemplateGroupResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "CreateCloudWatchAlarmTemplateGroupResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name"
+      ]
+    },
+    "CreateCloudWatchAlarmTemplateRequest": {
+      "type": "structure",
+      "members": {
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupIdentifier": {
+          "shape": "__stringPatternS",
+          "locationName": "groupIdentifier"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      },
+      "required": [
+        "TargetResourceType",
+        "MetricName",
+        "TreatMissingData",
+        "ComparisonOperator",
+        "Statistic",
+        "Period",
+        "EvaluationPeriods",
+        "Threshold",
+        "Name",
+        "GroupIdentifier"
+      ]
+    },
+    "CreateCloudWatchAlarmTemplateRequestContent": {
+      "type": "structure",
+      "members": {
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupIdentifier": {
+          "shape": "__stringPatternS",
+          "locationName": "groupIdentifier"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      },
+      "required": [
+        "TargetResourceType",
+        "MetricName",
+        "TreatMissingData",
+        "ComparisonOperator",
+        "Statistic",
+        "Period",
+        "EvaluationPeriods",
+        "Threshold",
+        "Name",
+        "GroupIdentifier"
+      ]
+    },
+    "CreateCloudWatchAlarmTemplateResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplate",
+          "locationName": "arn"
+        },
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      }
+    },
+    "CreateCloudWatchAlarmTemplateResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplate",
+          "locationName": "arn"
+        },
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      },
+      "required": [
+        "TargetResourceType",
+        "TreatMissingData",
+        "ComparisonOperator",
+        "CreatedAt",
+        "Period",
+        "EvaluationPeriods",
+        "Name",
+        "GroupId",
+        "MetricName",
+        "Statistic",
+        "Id",
+        "Arn",
+        "Threshold"
+      ]
+    },
+    "CreateEventBridgeRuleTemplateGroupRequest": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "Name"
+      ]
+    },
+    "CreateEventBridgeRuleTemplateGroupRequestContent": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "Name"
+      ]
+    },
+    "CreateEventBridgeRuleTemplateGroupResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "CreateEventBridgeRuleTemplateGroupResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name"
+      ]
+    },
+    "CreateEventBridgeRuleTemplateRequest": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargets": {
+          "shape": "__listOfEventBridgeRuleTemplateTarget",
+          "locationName": "eventTargets"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupIdentifier": {
+          "shape": "__stringPatternS",
+          "locationName": "groupIdentifier"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "EventType",
+        "Name",
+        "GroupIdentifier"
+      ]
+    },
+    "CreateEventBridgeRuleTemplateRequestContent": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargets": {
+          "shape": "__listOfEventBridgeRuleTemplateTarget",
+          "locationName": "eventTargets"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupIdentifier": {
+          "shape": "__stringPatternS",
+          "locationName": "groupIdentifier"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "EventType",
+        "Name",
+        "GroupIdentifier"
+      ]
+    },
+    "CreateEventBridgeRuleTemplateResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplate",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargets": {
+          "shape": "__listOfEventBridgeRuleTemplateTarget",
+          "locationName": "eventTargets"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "CreateEventBridgeRuleTemplateResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplate",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargets": {
+          "shape": "__listOfEventBridgeRuleTemplateTarget",
+          "locationName": "eventTargets"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "EventType",
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name",
+        "GroupId"
+      ]
+    },
+    "CreateSignalMapRequest": {
+      "type": "structure",
+      "members": {
+        "CloudWatchAlarmTemplateGroupIdentifiers": {
+          "shape": "__listOf__stringPatternS",
+          "locationName": "cloudWatchAlarmTemplateGroupIdentifiers"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "EventBridgeRuleTemplateGroupIdentifiers": {
+          "shape": "__listOf__stringPatternS",
+          "locationName": "eventBridgeRuleTemplateGroupIdentifiers"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "DiscoveryEntryPointArn",
+        "Name"
+      ]
+    },
+    "CreateSignalMapRequestContent": {
+      "type": "structure",
+      "members": {
+        "CloudWatchAlarmTemplateGroupIdentifiers": {
+          "shape": "__listOf__stringPatternS",
+          "locationName": "cloudWatchAlarmTemplateGroupIdentifiers"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "EventBridgeRuleTemplateGroupIdentifiers": {
+          "shape": "__listOf__stringPatternS",
+          "locationName": "eventBridgeRuleTemplateGroupIdentifiers"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "DiscoveryEntryPointArn",
+        "Name"
+      ]
+    },
+    "CreateSignalMapResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CloudWatchAlarmTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "cloudWatchAlarmTemplateGroupIds"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "EventBridgeRuleTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "eventBridgeRuleTemplateGroupIds"
+        },
+        "FailedMediaResourceMap": {
+          "shape": "FailedMediaResourceMap",
+          "locationName": "failedMediaResourceMap"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "LastDiscoveredAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastDiscoveredAt"
+        },
+        "LastSuccessfulMonitorDeployment": {
+          "shape": "SuccessfulMonitorDeployment",
+          "locationName": "lastSuccessfulMonitorDeployment"
+        },
+        "MediaResourceMap": {
+          "shape": "MediaResourceMap",
+          "locationName": "mediaResourceMap"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorChangesPendingDeployment": {
+          "shape": "__boolean",
+          "locationName": "monitorChangesPendingDeployment"
+        },
+        "MonitorDeployment": {
+          "shape": "MonitorDeployment",
+          "locationName": "monitorDeployment"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "CreateSignalMapResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CloudWatchAlarmTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "cloudWatchAlarmTemplateGroupIds"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "EventBridgeRuleTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "eventBridgeRuleTemplateGroupIds"
+        },
+        "FailedMediaResourceMap": {
+          "shape": "FailedMediaResourceMap",
+          "locationName": "failedMediaResourceMap"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "LastDiscoveredAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastDiscoveredAt"
+        },
+        "LastSuccessfulMonitorDeployment": {
+          "shape": "SuccessfulMonitorDeployment",
+          "locationName": "lastSuccessfulMonitorDeployment"
+        },
+        "MediaResourceMap": {
+          "shape": "MediaResourceMap",
+          "locationName": "mediaResourceMap"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorChangesPendingDeployment": {
+          "shape": "__boolean",
+          "locationName": "monitorChangesPendingDeployment"
+        },
+        "MonitorDeployment": {
+          "shape": "MonitorDeployment",
+          "locationName": "monitorDeployment"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "Status",
+        "CreatedAt",
+        "Name",
+        "Id",
+        "Arn",
+        "DiscoveryEntryPointArn",
+        "MonitorChangesPendingDeployment"
+      ]
+    },
+    "DeleteCloudWatchAlarmTemplateGroupRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "DeleteCloudWatchAlarmTemplateRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "DeleteEventBridgeRuleTemplateGroupRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "DeleteEventBridgeRuleTemplateRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "DeleteSignalMapRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "EventBridgeRuleTemplateEventType": {
+      "type": "string",
+      "enum": [
+        "MEDIALIVE_MULTIPLEX_ALERT",
+        "MEDIALIVE_MULTIPLEX_STATE_CHANGE",
+        "MEDIALIVE_CHANNEL_ALERT",
+        "MEDIALIVE_CHANNEL_INPUT_CHANGE",
+        "MEDIALIVE_CHANNEL_STATE_CHANGE",
+        "MEDIAPACKAGE_INPUT_NOTIFICATION",
+        "MEDIAPACKAGE_KEY_PROVIDER_NOTIFICATION",
+        "MEDIAPACKAGE_HARVEST_JOB_NOTIFICATION",
+        "SIGNAL_MAP_ACTIVE_ALARM",
+        "MEDIACONNECT_ALERT",
+        "MEDIACONNECT_SOURCE_HEALTH",
+        "MEDIACONNECT_OUTPUT_HEALTH",
+        "MEDIACONNECT_FLOW_STATUS_CHANGE"
+      ]
+    },
+    "EventBridgeRuleTemplateGroupSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TemplateCount": {
+          "shape": "__integer",
+          "locationName": "templateCount"
+        }
+      },
+      "required": [
+        "TemplateCount",
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name"
+      ]
+    },
+    "EventBridgeRuleTemplateSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplate",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargetCount": {
+          "shape": "__integerMax5",
+          "locationName": "eventTargetCount"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "EventType",
+        "CreatedAt",
+        "EventTargetCount",
+        "Id",
+        "Arn",
+        "Name",
+        "GroupId"
+      ]
+    },
+    "EventBridgeRuleTemplateTarget": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringMin1Max2048PatternArn",
+          "locationName": "arn"
+        }
+      },
+      "required": [
+        "Arn"
+      ]
+    },
+    "FailedMediaResourceMap": {
+      "type": "map",
+      "key": {
+        "shape": "__string"
+      },
+      "value": {
+        "shape": "MediaResource"
+      }
+    },
+    "ForbiddenExceptionResponseContent": {
+      "type": "structure",
+      "members": {
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        }
+      }
+    },
+    "GetCloudWatchAlarmTemplateGroupRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "GetCloudWatchAlarmTemplateGroupResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "GetCloudWatchAlarmTemplateGroupResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name"
+      ]
+    },
+    "GetCloudWatchAlarmTemplateRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "GetCloudWatchAlarmTemplateResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplate",
+          "locationName": "arn"
+        },
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      }
+    },
+    "GetCloudWatchAlarmTemplateResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplate",
+          "locationName": "arn"
+        },
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      },
+      "required": [
+        "TargetResourceType",
+        "TreatMissingData",
+        "ComparisonOperator",
+        "CreatedAt",
+        "Period",
+        "EvaluationPeriods",
+        "Name",
+        "GroupId",
+        "MetricName",
+        "Statistic",
+        "Id",
+        "Arn",
+        "Threshold"
+      ]
+    },
+    "GetEventBridgeRuleTemplateGroupRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "GetEventBridgeRuleTemplateGroupResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "GetEventBridgeRuleTemplateGroupResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name"
+      ]
+    },
+    "GetEventBridgeRuleTemplateRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "GetEventBridgeRuleTemplateResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplate",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargets": {
+          "shape": "__listOfEventBridgeRuleTemplateTarget",
+          "locationName": "eventTargets"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "GetEventBridgeRuleTemplateResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplate",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargets": {
+          "shape": "__listOfEventBridgeRuleTemplateTarget",
+          "locationName": "eventTargets"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "EventType",
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name",
+        "GroupId"
+      ]
+    },
+    "GetSignalMapRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "GetSignalMapResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CloudWatchAlarmTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "cloudWatchAlarmTemplateGroupIds"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "EventBridgeRuleTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "eventBridgeRuleTemplateGroupIds"
+        },
+        "FailedMediaResourceMap": {
+          "shape": "FailedMediaResourceMap",
+          "locationName": "failedMediaResourceMap"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "LastDiscoveredAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastDiscoveredAt"
+        },
+        "LastSuccessfulMonitorDeployment": {
+          "shape": "SuccessfulMonitorDeployment",
+          "locationName": "lastSuccessfulMonitorDeployment"
+        },
+        "MediaResourceMap": {
+          "shape": "MediaResourceMap",
+          "locationName": "mediaResourceMap"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorChangesPendingDeployment": {
+          "shape": "__boolean",
+          "locationName": "monitorChangesPendingDeployment"
+        },
+        "MonitorDeployment": {
+          "shape": "MonitorDeployment",
+          "locationName": "monitorDeployment"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "GetSignalMapResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CloudWatchAlarmTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "cloudWatchAlarmTemplateGroupIds"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "EventBridgeRuleTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "eventBridgeRuleTemplateGroupIds"
+        },
+        "FailedMediaResourceMap": {
+          "shape": "FailedMediaResourceMap",
+          "locationName": "failedMediaResourceMap"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "LastDiscoveredAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastDiscoveredAt"
+        },
+        "LastSuccessfulMonitorDeployment": {
+          "shape": "SuccessfulMonitorDeployment",
+          "locationName": "lastSuccessfulMonitorDeployment"
+        },
+        "MediaResourceMap": {
+          "shape": "MediaResourceMap",
+          "locationName": "mediaResourceMap"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorChangesPendingDeployment": {
+          "shape": "__boolean",
+          "locationName": "monitorChangesPendingDeployment"
+        },
+        "MonitorDeployment": {
+          "shape": "MonitorDeployment",
+          "locationName": "monitorDeployment"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "Status",
+        "CreatedAt",
+        "Name",
+        "Id",
+        "Arn",
+        "DiscoveryEntryPointArn",
+        "MonitorChangesPendingDeployment"
+      ]
+    },
+    "InternalServerErrorExceptionResponseContent": {
+      "type": "structure",
+      "members": {
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        }
+      }
+    },
+    "ListCloudWatchAlarmTemplateGroupsRequest": {
+      "type": "structure",
+      "members": {
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "Scope": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "scope"
+        },
+        "SignalMapIdentifier": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "signalMapIdentifier"
+        }
+      }
+    },
+    "ListCloudWatchAlarmTemplateGroupsResponse": {
+      "type": "structure",
+      "members": {
+        "CloudWatchAlarmTemplateGroups": {
+          "shape": "__listOfCloudWatchAlarmTemplateGroupSummary",
+          "locationName": "cloudWatchAlarmTemplateGroups"
+        },
+        "NextToken": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListCloudWatchAlarmTemplateGroupsResponseContent": {
+      "type": "structure",
+      "members": {
+        "CloudWatchAlarmTemplateGroups": {
+          "shape": "__listOfCloudWatchAlarmTemplateGroupSummary",
+          "locationName": "cloudWatchAlarmTemplateGroups"
+        },
+        "NextToken": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "nextToken"
+        }
+      },
+      "required": [
+        "CloudWatchAlarmTemplateGroups"
+      ]
+    },
+    "ListCloudWatchAlarmTemplatesRequest": {
+      "type": "structure",
+      "members": {
+        "GroupIdentifier": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "groupIdentifier"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "Scope": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "scope"
+        },
+        "SignalMapIdentifier": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "signalMapIdentifier"
+        }
+      }
+    },
+    "ListCloudWatchAlarmTemplatesResponse": {
+      "type": "structure",
+      "members": {
+        "CloudWatchAlarmTemplates": {
+          "shape": "__listOfCloudWatchAlarmTemplateSummary",
+          "locationName": "cloudWatchAlarmTemplates"
+        },
+        "NextToken": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListCloudWatchAlarmTemplatesResponseContent": {
+      "type": "structure",
+      "members": {
+        "CloudWatchAlarmTemplates": {
+          "shape": "__listOfCloudWatchAlarmTemplateSummary",
+          "locationName": "cloudWatchAlarmTemplates"
+        },
+        "NextToken": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "nextToken"
+        }
+      },
+      "required": [
+        "CloudWatchAlarmTemplates"
+      ]
+    },
+    "ListEventBridgeRuleTemplateGroupsRequest": {
+      "type": "structure",
+      "members": {
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "SignalMapIdentifier": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "signalMapIdentifier"
+        }
+      }
+    },
+    "ListEventBridgeRuleTemplateGroupsResponse": {
+      "type": "structure",
+      "members": {
+        "EventBridgeRuleTemplateGroups": {
+          "shape": "__listOfEventBridgeRuleTemplateGroupSummary",
+          "locationName": "eventBridgeRuleTemplateGroups"
+        },
+        "NextToken": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListEventBridgeRuleTemplateGroupsResponseContent": {
+      "type": "structure",
+      "members": {
+        "EventBridgeRuleTemplateGroups": {
+          "shape": "__listOfEventBridgeRuleTemplateGroupSummary",
+          "locationName": "eventBridgeRuleTemplateGroups"
+        },
+        "NextToken": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "nextToken"
+        }
+      },
+      "required": [
+        "EventBridgeRuleTemplateGroups"
+      ]
+    },
+    "ListEventBridgeRuleTemplatesRequest": {
+      "type": "structure",
+      "members": {
+        "GroupIdentifier": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "groupIdentifier"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "SignalMapIdentifier": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "signalMapIdentifier"
+        }
+      }
+    },
+    "ListEventBridgeRuleTemplatesResponse": {
+      "type": "structure",
+      "members": {
+        "EventBridgeRuleTemplates": {
+          "shape": "__listOfEventBridgeRuleTemplateSummary",
+          "locationName": "eventBridgeRuleTemplates"
+        },
+        "NextToken": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListEventBridgeRuleTemplatesResponseContent": {
+      "type": "structure",
+      "members": {
+        "EventBridgeRuleTemplates": {
+          "shape": "__listOfEventBridgeRuleTemplateSummary",
+          "locationName": "eventBridgeRuleTemplates"
+        },
+        "NextToken": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "nextToken"
+        }
+      },
+      "required": [
+        "EventBridgeRuleTemplates"
+      ]
+    },
+    "ListSignalMapsRequest": {
+      "type": "structure",
+      "members": {
+        "CloudWatchAlarmTemplateGroupIdentifier": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "cloudWatchAlarmTemplateGroupIdentifier"
+        },
+        "EventBridgeRuleTemplateGroupIdentifier": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "eventBridgeRuleTemplateGroupIdentifier"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListSignalMapsResponse": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "nextToken"
+        },
+        "SignalMaps": {
+          "shape": "__listOfSignalMapSummary",
+          "locationName": "signalMaps"
+        }
+      }
+    },
+    "ListSignalMapsResponseContent": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "nextToken"
+        },
+        "SignalMaps": {
+          "shape": "__listOfSignalMapSummary",
+          "locationName": "signalMaps"
+        }
+      },
+      "required": [
+        "SignalMaps"
+      ]
+    },
+    "MediaResource": {
+      "type": "structure",
+      "members": {
+        "Destinations": {
+          "shape": "__listOfMediaResourceNeighbor",
+          "locationName": "destinations"
+        },
+        "Name": {
+          "shape": "__stringMin1Max256",
+          "locationName": "name"
+        },
+        "Sources": {
+          "shape": "__listOfMediaResourceNeighbor",
+          "locationName": "sources"
+        }
+      }
+    },
+    "MediaResourceMap": {
+      "type": "map",
+      "key": {
+        "shape": "__string"
+      },
+      "value": {
+        "shape": "MediaResource"
+      }
+    },
+    "MediaResourceNeighbor": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringMin1Max2048PatternArn",
+          "locationName": "arn"
+        },
+        "Name": {
+          "shape": "__stringMin1Max256",
+          "locationName": "name"
+        }
+      },
+      "required": [
+        "Arn"
+      ]
+    },
+    "MonitorDeployment": {
+      "type": "structure",
+      "members": {
+        "DetailsUri": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "detailsUri"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "Status": {
+          "shape": "SignalMapMonitorDeploymentStatus",
+          "locationName": "status"
+        }
+      },
+      "required": [
+        "Status"
+      ]
+    },
+    "NotFoundExceptionResponseContent": {
+      "type": "structure",
+      "members": {
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        }
+      }
+    },
+    "SignalMapMonitorDeploymentStatus": {
+      "type": "string",
+      "enum": [
+        "NOT_DEPLOYED",
+        "DRY_RUN_DEPLOYMENT_COMPLETE",
+        "DRY_RUN_DEPLOYMENT_FAILED",
+        "DRY_RUN_DEPLOYMENT_IN_PROGRESS",
+        "DEPLOYMENT_COMPLETE",
+        "DEPLOYMENT_FAILED",
+        "DEPLOYMENT_IN_PROGRESS",
+        "DELETE_COMPLETE",
+        "DELETE_FAILED",
+        "DELETE_IN_PROGRESS"
+      ]
+    },
+    "SignalMapStatus": {
+      "type": "string",
+      "enum": [
+        "CREATE_IN_PROGRESS",
+        "CREATE_COMPLETE",
+        "CREATE_FAILED",
+        "UPDATE_IN_PROGRESS",
+        "UPDATE_COMPLETE",
+        "UPDATE_REVERTED",
+        "UPDATE_FAILED",
+        "READY",
+        "NOT_READY"
+      ]
+    },
+    "SignalMapSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorDeploymentStatus": {
+          "shape": "SignalMapMonitorDeploymentStatus",
+          "locationName": "monitorDeploymentStatus"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "Status",
+        "MonitorDeploymentStatus",
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name"
+      ]
+    },
+    "StartDeleteMonitorDeploymentRequest": {
+      "type": "structure",
+      "members": {
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "StartDeleteMonitorDeploymentResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CloudWatchAlarmTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "cloudWatchAlarmTemplateGroupIds"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "EventBridgeRuleTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "eventBridgeRuleTemplateGroupIds"
+        },
+        "FailedMediaResourceMap": {
+          "shape": "FailedMediaResourceMap",
+          "locationName": "failedMediaResourceMap"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "LastDiscoveredAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastDiscoveredAt"
+        },
+        "LastSuccessfulMonitorDeployment": {
+          "shape": "SuccessfulMonitorDeployment",
+          "locationName": "lastSuccessfulMonitorDeployment"
+        },
+        "MediaResourceMap": {
+          "shape": "MediaResourceMap",
+          "locationName": "mediaResourceMap"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorChangesPendingDeployment": {
+          "shape": "__boolean",
+          "locationName": "monitorChangesPendingDeployment"
+        },
+        "MonitorDeployment": {
+          "shape": "MonitorDeployment",
+          "locationName": "monitorDeployment"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "StartDeleteMonitorDeploymentResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CloudWatchAlarmTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "cloudWatchAlarmTemplateGroupIds"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "EventBridgeRuleTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "eventBridgeRuleTemplateGroupIds"
+        },
+        "FailedMediaResourceMap": {
+          "shape": "FailedMediaResourceMap",
+          "locationName": "failedMediaResourceMap"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "LastDiscoveredAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastDiscoveredAt"
+        },
+        "LastSuccessfulMonitorDeployment": {
+          "shape": "SuccessfulMonitorDeployment",
+          "locationName": "lastSuccessfulMonitorDeployment"
+        },
+        "MediaResourceMap": {
+          "shape": "MediaResourceMap",
+          "locationName": "mediaResourceMap"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorChangesPendingDeployment": {
+          "shape": "__boolean",
+          "locationName": "monitorChangesPendingDeployment"
+        },
+        "MonitorDeployment": {
+          "shape": "MonitorDeployment",
+          "locationName": "monitorDeployment"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "Status",
+        "CreatedAt",
+        "Name",
+        "Id",
+        "Arn",
+        "DiscoveryEntryPointArn",
+        "MonitorChangesPendingDeployment"
+      ]
+    },
+    "StartMonitorDeploymentRequest": {
+      "type": "structure",
+      "members": {
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
+        },
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "StartMonitorDeploymentRequestContent": {
+      "type": "structure",
+      "members": {
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
+        }
+      }
+    },
+    "StartMonitorDeploymentResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CloudWatchAlarmTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "cloudWatchAlarmTemplateGroupIds"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "EventBridgeRuleTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "eventBridgeRuleTemplateGroupIds"
+        },
+        "FailedMediaResourceMap": {
+          "shape": "FailedMediaResourceMap",
+          "locationName": "failedMediaResourceMap"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "LastDiscoveredAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastDiscoveredAt"
+        },
+        "LastSuccessfulMonitorDeployment": {
+          "shape": "SuccessfulMonitorDeployment",
+          "locationName": "lastSuccessfulMonitorDeployment"
+        },
+        "MediaResourceMap": {
+          "shape": "MediaResourceMap",
+          "locationName": "mediaResourceMap"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorChangesPendingDeployment": {
+          "shape": "__boolean",
+          "locationName": "monitorChangesPendingDeployment"
+        },
+        "MonitorDeployment": {
+          "shape": "MonitorDeployment",
+          "locationName": "monitorDeployment"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "StartMonitorDeploymentResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CloudWatchAlarmTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "cloudWatchAlarmTemplateGroupIds"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "EventBridgeRuleTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "eventBridgeRuleTemplateGroupIds"
+        },
+        "FailedMediaResourceMap": {
+          "shape": "FailedMediaResourceMap",
+          "locationName": "failedMediaResourceMap"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "LastDiscoveredAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastDiscoveredAt"
+        },
+        "LastSuccessfulMonitorDeployment": {
+          "shape": "SuccessfulMonitorDeployment",
+          "locationName": "lastSuccessfulMonitorDeployment"
+        },
+        "MediaResourceMap": {
+          "shape": "MediaResourceMap",
+          "locationName": "mediaResourceMap"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorChangesPendingDeployment": {
+          "shape": "__boolean",
+          "locationName": "monitorChangesPendingDeployment"
+        },
+        "MonitorDeployment": {
+          "shape": "MonitorDeployment",
+          "locationName": "monitorDeployment"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "Status",
+        "CreatedAt",
+        "Name",
+        "Id",
+        "Arn",
+        "DiscoveryEntryPointArn",
+        "MonitorChangesPendingDeployment"
+      ]
+    },
+    "StartUpdateSignalMapRequest": {
+      "type": "structure",
+      "members": {
+        "CloudWatchAlarmTemplateGroupIdentifiers": {
+          "shape": "__listOf__stringPatternS",
+          "locationName": "cloudWatchAlarmTemplateGroupIdentifiers"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "EventBridgeRuleTemplateGroupIdentifiers": {
+          "shape": "__listOf__stringPatternS",
+          "locationName": "eventBridgeRuleTemplateGroupIdentifiers"
+        },
+        "ForceRediscovery": {
+          "shape": "__boolean",
+          "locationName": "forceRediscovery"
+        },
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "StartUpdateSignalMapRequestContent": {
+      "type": "structure",
+      "members": {
+        "CloudWatchAlarmTemplateGroupIdentifiers": {
+          "shape": "__listOf__stringPatternS",
+          "locationName": "cloudWatchAlarmTemplateGroupIdentifiers"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "EventBridgeRuleTemplateGroupIdentifiers": {
+          "shape": "__listOf__stringPatternS",
+          "locationName": "eventBridgeRuleTemplateGroupIdentifiers"
+        },
+        "ForceRediscovery": {
+          "shape": "__boolean",
+          "locationName": "forceRediscovery"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        }
+      }
+    },
+    "StartUpdateSignalMapResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CloudWatchAlarmTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "cloudWatchAlarmTemplateGroupIds"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "EventBridgeRuleTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "eventBridgeRuleTemplateGroupIds"
+        },
+        "FailedMediaResourceMap": {
+          "shape": "FailedMediaResourceMap",
+          "locationName": "failedMediaResourceMap"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "LastDiscoveredAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastDiscoveredAt"
+        },
+        "LastSuccessfulMonitorDeployment": {
+          "shape": "SuccessfulMonitorDeployment",
+          "locationName": "lastSuccessfulMonitorDeployment"
+        },
+        "MediaResourceMap": {
+          "shape": "MediaResourceMap",
+          "locationName": "mediaResourceMap"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorChangesPendingDeployment": {
+          "shape": "__boolean",
+          "locationName": "monitorChangesPendingDeployment"
+        },
+        "MonitorDeployment": {
+          "shape": "MonitorDeployment",
+          "locationName": "monitorDeployment"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "StartUpdateSignalMapResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveSignalMap",
+          "locationName": "arn"
+        },
+        "CloudWatchAlarmTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "cloudWatchAlarmTemplateGroupIds"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "DiscoveryEntryPointArn": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "discoveryEntryPointArn"
+        },
+        "ErrorMessage": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "errorMessage"
+        },
+        "EventBridgeRuleTemplateGroupIds": {
+          "shape": "__listOf__stringMin7Max11PatternAws097",
+          "locationName": "eventBridgeRuleTemplateGroupIds"
+        },
+        "FailedMediaResourceMap": {
+          "shape": "FailedMediaResourceMap",
+          "locationName": "failedMediaResourceMap"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "LastDiscoveredAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastDiscoveredAt"
+        },
+        "LastSuccessfulMonitorDeployment": {
+          "shape": "SuccessfulMonitorDeployment",
+          "locationName": "lastSuccessfulMonitorDeployment"
+        },
+        "MediaResourceMap": {
+          "shape": "MediaResourceMap",
+          "locationName": "mediaResourceMap"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "MonitorChangesPendingDeployment": {
+          "shape": "__boolean",
+          "locationName": "monitorChangesPendingDeployment"
+        },
+        "MonitorDeployment": {
+          "shape": "MonitorDeployment",
+          "locationName": "monitorDeployment"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Status": {
+          "shape": "SignalMapStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "Status",
+        "CreatedAt",
+        "Name",
+        "Id",
+        "Arn",
+        "DiscoveryEntryPointArn",
+        "MonitorChangesPendingDeployment"
+      ]
+    },
+    "SuccessfulMonitorDeployment": {
+      "type": "structure",
+      "members": {
+        "DetailsUri": {
+          "shape": "__stringMin1Max2048",
+          "locationName": "detailsUri"
+        },
+        "Status": {
+          "shape": "SignalMapMonitorDeploymentStatus",
+          "locationName": "status"
+        }
+      },
+      "required": [
+        "DetailsUri",
+        "Status"
+      ]
+    },
+    "TagMap": {
+      "type": "map",
+      "key": {
+        "shape": "__string"
+      },
+      "value": {
+        "shape": "__string"
+      }
+    },
+    "TooManyRequestsExceptionResponseContent": {
+      "type": "structure",
+      "members": {
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        }
+      }
+    },
+    "UpdateCloudWatchAlarmTemplateGroupRequest": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "UpdateCloudWatchAlarmTemplateGroupRequestContent": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        }
+      }
+    },
+    "UpdateCloudWatchAlarmTemplateGroupResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "UpdateCloudWatchAlarmTemplateGroupResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name"
+      ]
+    },
+    "UpdateCloudWatchAlarmTemplateRequest": {
+      "type": "structure",
+      "members": {
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupIdentifier": {
+          "shape": "__stringPatternS",
+          "locationName": "groupIdentifier"
+        },
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "UpdateCloudWatchAlarmTemplateRequestContent": {
+      "type": "structure",
+      "members": {
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupIdentifier": {
+          "shape": "__stringPatternS",
+          "locationName": "groupIdentifier"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      }
+    },
+    "UpdateCloudWatchAlarmTemplateResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplate",
+          "locationName": "arn"
+        },
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      }
+    },
+    "UpdateCloudWatchAlarmTemplateResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveCloudwatchAlarmTemplate",
+          "locationName": "arn"
+        },
+        "ComparisonOperator": {
+          "shape": "CloudWatchAlarmTemplateComparisonOperator",
+          "locationName": "comparisonOperator"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "DatapointsToAlarm": {
+          "shape": "__integerMin1",
+          "locationName": "datapointsToAlarm"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EvaluationPeriods": {
+          "shape": "__integerMin1",
+          "locationName": "evaluationPeriods"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "MetricName": {
+          "shape": "__stringMax64",
+          "locationName": "metricName"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Period": {
+          "shape": "__integerMin10Max86400",
+          "locationName": "period"
+        },
+        "Statistic": {
+          "shape": "CloudWatchAlarmTemplateStatistic",
+          "locationName": "statistic"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        },
+        "TargetResourceType": {
+          "shape": "CloudWatchAlarmTemplateTargetResourceType",
+          "locationName": "targetResourceType"
+        },
+        "Threshold": {
+          "shape": "__double",
+          "locationName": "threshold"
+        },
+        "TreatMissingData": {
+          "shape": "CloudWatchAlarmTemplateTreatMissingData",
+          "locationName": "treatMissingData"
+        }
+      },
+      "required": [
+        "TargetResourceType",
+        "TreatMissingData",
+        "ComparisonOperator",
+        "CreatedAt",
+        "Period",
+        "EvaluationPeriods",
+        "Name",
+        "GroupId",
+        "MetricName",
+        "Statistic",
+        "Id",
+        "Arn",
+        "Threshold"
+      ]
+    },
+    "UpdateEventBridgeRuleTemplateGroupRequest": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "UpdateEventBridgeRuleTemplateGroupRequestContent": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        }
+      }
+    },
+    "UpdateEventBridgeRuleTemplateGroupResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "UpdateEventBridgeRuleTemplateGroupResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplateGroup",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name"
+      ]
+    },
+    "UpdateEventBridgeRuleTemplateRequest": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargets": {
+          "shape": "__listOfEventBridgeRuleTemplateTarget",
+          "locationName": "eventTargets"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupIdentifier": {
+          "shape": "__stringPatternS",
+          "locationName": "groupIdentifier"
+        },
+        "Identifier": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "identifier"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        }
+      },
+      "required": [
+        "Identifier"
+      ]
+    },
+    "UpdateEventBridgeRuleTemplateRequestContent": {
+      "type": "structure",
+      "members": {
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargets": {
+          "shape": "__listOfEventBridgeRuleTemplateTarget",
+          "locationName": "eventTargets"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupIdentifier": {
+          "shape": "__stringPatternS",
+          "locationName": "groupIdentifier"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        }
+      }
+    },
+    "UpdateEventBridgeRuleTemplateResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplate",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargets": {
+          "shape": "__listOfEventBridgeRuleTemplateTarget",
+          "locationName": "eventTargets"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      }
+    },
+    "UpdateEventBridgeRuleTemplateResponseContent": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__stringPatternArnMedialiveEventbridgeRuleTemplate",
+          "locationName": "arn"
+        },
+        "CreatedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "createdAt"
+        },
+        "Description": {
+          "shape": "__stringMin0Max1024",
+          "locationName": "description"
+        },
+        "EventTargets": {
+          "shape": "__listOfEventBridgeRuleTemplateTarget",
+          "locationName": "eventTargets"
+        },
+        "EventType": {
+          "shape": "EventBridgeRuleTemplateEventType",
+          "locationName": "eventType"
+        },
+        "GroupId": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "groupId"
+        },
+        "Id": {
+          "shape": "__stringMin7Max11PatternAws097",
+          "locationName": "id"
+        },
+        "ModifiedAt": {
+          "shape": "__timestampIso8601",
+          "locationName": "modifiedAt"
+        },
+        "Name": {
+          "shape": "__stringMin1Max255PatternS",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "TagMap",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "EventType",
+        "CreatedAt",
+        "Id",
+        "Arn",
+        "Name",
+        "GroupId"
+      ]
+    },
+    "__integerMax5": {
+      "type": "integer",
+      "max": 5
+    },
+    "__integerMin10Max86400": {
+      "type": "integer",
+      "min": 10,
+      "max": 86400
+    },
+    "__listOfCloudWatchAlarmTemplateGroupSummary": {
+      "type": "list",
+      "member": {
+        "shape": "CloudWatchAlarmTemplateGroupSummary"
+      }
+    },
+    "__listOfCloudWatchAlarmTemplateSummary": {
+      "type": "list",
+      "member": {
+        "shape": "CloudWatchAlarmTemplateSummary"
+      }
+    },
+    "__listOfEventBridgeRuleTemplateGroupSummary": {
+      "type": "list",
+      "member": {
+        "shape": "EventBridgeRuleTemplateGroupSummary"
+      }
+    },
+    "__listOfEventBridgeRuleTemplateSummary": {
+      "type": "list",
+      "member": {
+        "shape": "EventBridgeRuleTemplateSummary"
+      }
+    },
+    "__listOfEventBridgeRuleTemplateTarget": {
+      "type": "list",
+      "member": {
+        "shape": "EventBridgeRuleTemplateTarget"
+      }
+    },
+    "__listOfMediaResourceNeighbor": {
+      "type": "list",
+      "member": {
+        "shape": "MediaResourceNeighbor"
+      }
+    },
+    "__listOfSignalMapSummary": {
+      "type": "list",
+      "member": {
+        "shape": "SignalMapSummary"
+      }
+    },
+    "__listOf__stringMin7Max11PatternAws097": {
+      "type": "list",
+      "member": {
+        "shape": "__stringMin7Max11PatternAws097"
+      }
+    },
+    "__listOf__stringPatternS": {
+      "type": "list",
+      "member": {
+        "shape": "__stringPatternS"
+      }
+    },
+    "__stringMax64": {
+      "type": "string",
+      "max": 64
+    },
+    "__stringMin0Max1024": {
+      "type": "string",
+      "min": 0,
+      "max": 1024
+    },
+    "__stringMin1Max2048": {
+      "type": "string",
+      "min": 1,
+      "max": 2048
+    },
+    "__stringMin1Max2048PatternArn": {
+      "type": "string",
+      "min": 1,
+      "max": 2048,
+      "pattern": "^arn.+$"
+    },
+    "__stringMin1Max255PatternS": {
+      "type": "string",
+      "min": 1,
+      "max": 255,
+      "pattern": "^[^\\s]+$"
+    },
+    "__stringMin7Max11PatternAws097": {
+      "type": "string",
+      "min": 7,
+      "max": 11,
+      "pattern": "^(aws-)?[0-9]{7}$"
+    },
+    "__stringPatternArnMedialiveCloudwatchAlarmTemplate": {
+      "type": "string",
+      "pattern": "^arn:.+:medialive:.+:cloudwatch-alarm-template:.+$"
+    },
+    "__stringPatternArnMedialiveCloudwatchAlarmTemplateGroup": {
+      "type": "string",
+      "pattern": "^arn:.+:medialive:.+:cloudwatch-alarm-template-group:.+$"
+    },
+    "__stringPatternArnMedialiveEventbridgeRuleTemplate": {
+      "type": "string",
+      "pattern": "^arn:.+:medialive:.+:eventbridge-rule-template:.+$"
+    },
+    "__stringPatternArnMedialiveEventbridgeRuleTemplateGroup": {
+      "type": "string",
+      "pattern": "^arn:.+:medialive:.+:eventbridge-rule-template-group:.+$"
+    },
+    "__stringPatternArnMedialiveSignalMap": {
+      "type": "string",
+      "pattern": "^arn:.+:medialive:.+:signal-map:.+$"
+    },
+    "__stringPatternS": {
+      "type": "string",
+      "pattern": "^[^\\s]+$"
+    },
+    "Scte35SegmentationScope": {
+      "type": "string",
+      "enum": [
+        "ALL_OUTPUT_GROUPS",
+        "SCTE35_ENABLED_OUTPUT_GROUPS"
+      ]
     }
   }
 }

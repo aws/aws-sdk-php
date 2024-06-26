@@ -59,7 +59,8 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
         {"shape":"ConnectorAuthenticationException"},
-        {"shape":"ConnectorServerException"}
+        {"shape":"ConnectorServerException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteConnectorProfile":{
@@ -249,6 +250,21 @@
         {"shape":"ConnectorAuthenticationException"}
       ]
     },
+    "ResetConnectorMetadataCache":{
+      "name":"ResetConnectorMetadataCache",
+      "http":{
+        "method":"POST",
+        "requestUri":"/reset-connector-metadata-cache"
+      },
+      "input":{"shape":"ResetConnectorMetadataCacheRequest"},
+      "output":{"shape":"ResetConnectorMetadataCacheResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StartFlow":{
       "name":"StartFlow",
       "http":{
@@ -372,7 +388,8 @@
         {"shape":"ConflictException"},
         {"shape":"ConnectorAuthenticationException"},
         {"shape":"ConnectorServerException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"}
       ]
     }
   },
@@ -1638,7 +1655,9 @@
         "errorInfo":{"shape":"ErrorInfo"},
         "bytesProcessed":{"shape":"Long"},
         "bytesWritten":{"shape":"Long"},
-        "recordsProcessed":{"shape":"Long"}
+        "recordsProcessed":{"shape":"Long"},
+        "numParallelProcesses":{"shape":"Long"},
+        "maxPageSize":{"shape":"Long"}
       }
     },
     "ExecutionStatus":{
@@ -2584,6 +2603,21 @@
         "status":{"shape":"ExecutionStatus"}
       }
     },
+    "ResetConnectorMetadataCacheRequest":{
+      "type":"structure",
+      "members":{
+        "connectorProfileName":{"shape":"ConnectorProfileName"},
+        "connectorType":{"shape":"ConnectorType"},
+        "connectorEntityName":{"shape":"EntityName"},
+        "entitiesPath":{"shape":"EntitiesPath"},
+        "apiVersion":{"shape":"ApiVersion"}
+      }
+    },
+    "ResetConnectorMetadataCacheResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -2718,7 +2752,8 @@
         "clientNumber":{"shape":"ClientNumber"},
         "logonLanguage":{"shape":"LogonLanguage"},
         "privateLinkServiceName":{"shape":"PrivateLinkServiceName"},
-        "oAuthProperties":{"shape":"OAuthProperties"}
+        "oAuthProperties":{"shape":"OAuthProperties"},
+        "disableSSO":{"shape":"Boolean"}
       }
     },
     "SAPODataDestinationProperties":{
@@ -2732,15 +2767,47 @@
         "writeOperationType":{"shape":"WriteOperationType"}
       }
     },
+    "SAPODataMaxPageSize":{
+      "type":"integer",
+      "max":10000,
+      "min":1
+    },
+    "SAPODataMaxParallelism":{
+      "type":"integer",
+      "max":10,
+      "min":1
+    },
     "SAPODataMetadata":{
       "type":"structure",
       "members":{
       }
     },
+    "SAPODataPaginationConfig":{
+      "type":"structure",
+      "required":["maxPageSize"],
+      "members":{
+        "maxPageSize":{
+          "shape":"SAPODataMaxPageSize",
+          "box":true
+        }
+      }
+    },
+    "SAPODataParallelismConfig":{
+      "type":"structure",
+      "required":["maxParallelism"],
+      "members":{
+        "maxParallelism":{
+          "shape":"SAPODataMaxParallelism",
+          "box":true
+        }
+      }
+    },
     "SAPODataSourceProperties":{
       "type":"structure",
       "members":{
-        "objectPath":{"shape":"Object"}
+        "objectPath":{"shape":"Object"},
+        "parallelismConfig":{"shape":"SAPODataParallelismConfig"},
+        "paginationConfig":{"shape":"SAPODataPaginationConfig"}
       }
     },
     "SalesforceConnectorOperator":{
@@ -2908,13 +2975,10 @@
     },
     "ServiceNowConnectorProfileCredentials":{
       "type":"structure",
-      "required":[
-        "username",
-        "password"
-      ],
       "members":{
         "username":{"shape":"Username"},
-        "password":{"shape":"Password"}
+        "password":{"shape":"Password"},
+        "oAuth2Credentials":{"shape":"OAuth2Credentials"}
       }
     },
     "ServiceNowConnectorProfileProperties":{

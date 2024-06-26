@@ -69,6 +69,26 @@
       ],
       "idempotent":true
     },
+    "CreateScraper":{
+      "name":"CreateScraper",
+      "http":{
+        "method":"POST",
+        "requestUri":"/scrapers",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateScraperRequest"},
+      "output":{"shape":"CreateScraperResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "CreateWorkspace":{
       "name":"CreateWorkspace",
       "http":{
@@ -131,6 +151,25 @@
         "responseCode":202
       },
       "input":{"shape":"DeleteRuleGroupsNamespaceRequest"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteScraper":{
+      "name":"DeleteScraper",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/scrapers/{scraperId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteScraperRequest"},
+      "output":{"shape":"DeleteScraperResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
@@ -209,6 +248,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DescribeScraper":{
+      "name":"DescribeScraper",
+      "http":{
+        "method":"GET",
+        "requestUri":"/scrapers/{scraperId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeScraperRequest"},
+      "output":{"shape":"DescribeScraperResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DescribeWorkspace":{
       "name":"DescribeWorkspace",
       "http":{
@@ -226,6 +282,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetDefaultScraperConfiguration":{
+      "name":"GetDefaultScraperConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/scraperconfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDefaultScraperConfigurationRequest"},
+      "output":{"shape":"GetDefaultScraperConfigurationResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListRuleGroupsNamespaces":{
       "name":"ListRuleGroupsNamespaces",
       "http":{
@@ -239,6 +310,22 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListScrapers":{
+      "name":"ListScrapers",
+      "http":{
+        "method":"GET",
+        "requestUri":"/scrapers",
+        "responseCode":200
+      },
+      "input":{"shape":"ListScrapersRequest"},
+      "output":{"shape":"ListScrapersResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ]
@@ -437,6 +524,18 @@
         "UPDATE_FAILED"
       ]
     },
+    "AmpConfiguration":{
+      "type":"structure",
+      "required":["workspaceArn"],
+      "members":{
+        "workspaceArn":{"shape":"WorkspaceArn"}
+      }
+    },
+    "Blob":{"type":"blob"},
+    "ClusterArn":{
+      "type":"string",
+      "pattern":"^arn:aws[-a-z]*:eks:[-a-z0-9]+:[0-9]{12}:cluster/.+$"
+    },
     "ConflictException":{
       "type":"structure",
       "required":[
@@ -543,6 +642,39 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "CreateScraperRequest":{
+      "type":"structure",
+      "required":[
+        "destination",
+        "scrapeConfiguration",
+        "source"
+      ],
+      "members":{
+        "alias":{"shape":"ScraperAlias"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        },
+        "destination":{"shape":"Destination"},
+        "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
+        "source":{"shape":"Source"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateScraperResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "scraperId",
+        "status"
+      ],
+      "members":{
+        "arn":{"shape":"ScraperArn"},
+        "scraperId":{"shape":"ScraperId"},
+        "status":{"shape":"ScraperStatus"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "CreateWorkspaceRequest":{
       "type":"structure",
       "members":{
@@ -551,6 +683,7 @@
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -563,6 +696,7 @@
       ],
       "members":{
         "arn":{"shape":"WorkspaceArn"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "status":{"shape":"WorkspaceStatus"},
         "tags":{"shape":"TagMap"},
         "workspaceId":{"shape":"WorkspaceId"}
@@ -625,6 +759,34 @@
           "location":"uri",
           "locationName":"workspaceId"
         }
+      }
+    },
+    "DeleteScraperRequest":{
+      "type":"structure",
+      "required":["scraperId"],
+      "members":{
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        },
+        "scraperId":{
+          "shape":"ScraperId",
+          "location":"uri",
+          "locationName":"scraperId"
+        }
+      }
+    },
+    "DeleteScraperResponse":{
+      "type":"structure",
+      "required":[
+        "scraperId",
+        "status"
+      ],
+      "members":{
+        "scraperId":{"shape":"ScraperId"},
+        "status":{"shape":"ScraperStatus"}
       }
     },
     "DeleteWorkspaceRequest":{
@@ -706,6 +868,24 @@
         "ruleGroupsNamespace":{"shape":"RuleGroupsNamespaceDescription"}
       }
     },
+    "DescribeScraperRequest":{
+      "type":"structure",
+      "required":["scraperId"],
+      "members":{
+        "scraperId":{
+          "shape":"ScraperId",
+          "location":"uri",
+          "locationName":"scraperId"
+        }
+      }
+    },
+    "DescribeScraperResponse":{
+      "type":"structure",
+      "required":["scraper"],
+      "members":{
+        "scraper":{"shape":"ScraperDescription"}
+      }
+    },
     "DescribeWorkspaceRequest":{
       "type":"structure",
       "required":["workspaceId"],
@@ -724,11 +904,59 @@
         "workspace":{"shape":"WorkspaceDescription"}
       }
     },
+    "Destination":{
+      "type":"structure",
+      "members":{
+        "ampConfiguration":{"shape":"AmpConfiguration"}
+      },
+      "union":true
+    },
+    "EksConfiguration":{
+      "type":"structure",
+      "required":[
+        "clusterArn",
+        "subnetIds"
+      ],
+      "members":{
+        "clusterArn":{"shape":"ClusterArn"},
+        "securityGroupIds":{"shape":"SecurityGroupIds"},
+        "subnetIds":{"shape":"SubnetIds"}
+      }
+    },
+    "FilterKey":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "FilterValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "FilterValues":{
+      "type":"list",
+      "member":{"shape":"FilterValue"},
+      "max":20,
+      "min":1
+    },
+    "GetDefaultScraperConfigurationRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetDefaultScraperConfigurationResponse":{
+      "type":"structure",
+      "required":["configuration"],
+      "members":{
+        "configuration":{"shape":"Blob"}
+      }
+    },
+    "IamRoleArn":{"type":"string"},
     "IdempotencyToken":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[!-~]+"
+      "pattern":"^[!-~]+$"
     },
     "Integer":{
       "type":"integer",
@@ -749,6 +977,12 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws:kms:[a-z0-9\\-]+:\\d+:key/[a-f0-9\\-]+$"
     },
     "ListRuleGroupsNamespacesRequest":{
       "type":"structure",
@@ -788,6 +1022,39 @@
       "members":{
         "nextToken":{"shape":"PaginationToken"},
         "ruleGroupsNamespaces":{"shape":"RuleGroupsNamespaceSummaryList"}
+      }
+    },
+    "ListScrapersRequest":{
+      "type":"structure",
+      "members":{
+        "filters":{
+          "shape":"ScraperFilters",
+          "location":"querystring"
+        },
+        "maxResults":{
+          "shape":"ListScrapersRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListScrapersRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListScrapersResponse":{
+      "type":"structure",
+      "required":["scrapers"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "scrapers":{"shape":"ScraperSummaryList"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -881,7 +1148,11 @@
         "UPDATE_FAILED"
       ]
     },
-    "PaginationToken":{"type":"string"},
+    "PaginationToken":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
     "PutAlertManagerDefinitionRequest":{
       "type":"structure",
       "required":[
@@ -1034,6 +1305,120 @@
       "type":"list",
       "member":{"shape":"RuleGroupsNamespaceSummary"}
     },
+    "ScrapeConfiguration":{
+      "type":"structure",
+      "members":{
+        "configurationBlob":{"shape":"Blob"}
+      },
+      "union":true
+    },
+    "ScraperAlias":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^[0-9A-Za-z][-.0-9A-Z_a-z]*$"
+    },
+    "ScraperArn":{"type":"string"},
+    "ScraperDescription":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "createdAt",
+        "destination",
+        "lastModifiedAt",
+        "roleArn",
+        "scrapeConfiguration",
+        "scraperId",
+        "source",
+        "status"
+      ],
+      "members":{
+        "alias":{"shape":"ScraperAlias"},
+        "arn":{"shape":"ScraperArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "destination":{"shape":"Destination"},
+        "lastModifiedAt":{"shape":"Timestamp"},
+        "roleArn":{"shape":"IamRoleArn"},
+        "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
+        "scraperId":{"shape":"ScraperId"},
+        "source":{"shape":"Source"},
+        "status":{"shape":"ScraperStatus"},
+        "statusReason":{"shape":"StatusReason"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "ScraperFilters":{
+      "type":"map",
+      "key":{"shape":"FilterKey"},
+      "value":{"shape":"FilterValues"},
+      "max":4,
+      "min":1
+    },
+    "ScraperId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[0-9A-Za-z][-.0-9A-Z_a-z]*$"
+    },
+    "ScraperStatus":{
+      "type":"structure",
+      "required":["statusCode"],
+      "members":{
+        "statusCode":{"shape":"ScraperStatusCode"}
+      }
+    },
+    "ScraperStatusCode":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "DELETING",
+        "CREATION_FAILED",
+        "DELETION_FAILED"
+      ]
+    },
+    "ScraperSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "createdAt",
+        "destination",
+        "lastModifiedAt",
+        "roleArn",
+        "scraperId",
+        "source",
+        "status"
+      ],
+      "members":{
+        "alias":{"shape":"ScraperAlias"},
+        "arn":{"shape":"ScraperArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "destination":{"shape":"Destination"},
+        "lastModifiedAt":{"shape":"Timestamp"},
+        "roleArn":{"shape":"IamRoleArn"},
+        "scraperId":{"shape":"ScraperId"},
+        "source":{"shape":"Source"},
+        "status":{"shape":"ScraperStatus"},
+        "statusReason":{"shape":"StatusReason"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "ScraperSummaryList":{
+      "type":"list",
+      "member":{"shape":"ScraperSummary"}
+    },
+    "SecurityGroupId":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"^sg-[0-9a-z]+$"
+    },
+    "SecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":5,
+      "min":1
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -1056,7 +1441,31 @@
       },
       "exception":true
     },
+    "Source":{
+      "type":"structure",
+      "members":{
+        "eksConfiguration":{"shape":"EksConfiguration"}
+      },
+      "union":true
+    },
+    "StatusReason":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "String":{"type":"string"},
+    "SubnetId":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"^subnet-[0-9a-z]+$"
+    },
+    "SubnetIds":{
+      "type":"list",
+      "member":{"shape":"SubnetId"},
+      "max":5,
+      "min":1
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -1238,7 +1647,10 @@
       "max":100,
       "min":1
     },
-    "WorkspaceArn":{"type":"string"},
+    "WorkspaceArn":{
+      "type":"string",
+      "pattern":"^arn:aws[-a-z]*:aps:[-a-z0-9]+:[0-9]{12}:workspace/.+$"
+    },
     "WorkspaceDescription":{
       "type":"structure",
       "required":[
@@ -1251,6 +1663,7 @@
         "alias":{"shape":"WorkspaceAlias"},
         "arn":{"shape":"WorkspaceArn"},
         "createdAt":{"shape":"Timestamp"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "prometheusEndpoint":{"shape":"Uri"},
         "status":{"shape":"WorkspaceStatus"},
         "tags":{"shape":"TagMap"},
@@ -1292,6 +1705,7 @@
         "alias":{"shape":"WorkspaceAlias"},
         "arn":{"shape":"WorkspaceArn"},
         "createdAt":{"shape":"Timestamp"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "status":{"shape":"WorkspaceStatus"},
         "tags":{"shape":"TagMap"},
         "workspaceId":{"shape":"WorkspaceId"}

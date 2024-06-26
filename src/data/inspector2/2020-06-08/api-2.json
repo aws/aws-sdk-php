@@ -5,6 +5,7 @@
     "endpointPrefix":"inspector2",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Inspector2",
     "serviceFullName":"Inspector2",
     "serviceId":"Inspector2",
@@ -42,6 +43,38 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "BatchGetCodeSnippet":{
+      "name":"BatchGetCodeSnippet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/codesnippet/batchget",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetCodeSnippetRequest"},
+      "output":{"shape":"BatchGetCodeSnippetResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "BatchGetFindingDetails":{
+      "name":"BatchGetFindingDetails",
+      "http":{
+        "method":"POST",
+        "requestUri":"/findings/details/batch/get",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetFindingDetailsRequest"},
+      "output":{"shape":"BatchGetFindingDetailsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
@@ -111,6 +144,40 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CancelSbomExport":{
+      "name":"CancelSbomExport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/sbomexport/cancel",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelSbomExportRequest"},
+      "output":{"shape":"CancelSbomExportResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreateCisScanConfiguration":{
+      "name":"CreateCisScanConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cis/scan-configuration/create",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateCisScanConfigurationRequest"},
+      "output":{"shape":"CreateCisScanConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateFilter":{
       "name":"CreateFilter",
       "http":{
@@ -138,6 +205,41 @@
       },
       "input":{"shape":"CreateFindingsReportRequest"},
       "output":{"shape":"CreateFindingsReportResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "CreateSbomExport":{
+      "name":"CreateSbomExport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/sbomexport/create",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateSbomExportRequest"},
+      "output":{"shape":"CreateSbomExportResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteCisScanConfiguration":{
+      "name":"DeleteCisScanConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cis/scan-configuration/delete",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteCisScanConfigurationRequest"},
+      "output":{"shape":"DeleteCisScanConfigurationResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -265,6 +367,39 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetCisScanReport":{
+      "name":"GetCisScanReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cis/scan/report/get",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCisScanReportRequest"},
+      "output":{"shape":"GetCisScanReportResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetCisScanResultDetails":{
+      "name":"GetCisScanResultDetails",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cis/scan-result/details/get",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCisScanResultDetailsRequest"},
+      "output":{"shape":"GetCisScanResultDetailsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetConfiguration":{
       "name":"GetConfiguration",
       "http":{
@@ -313,6 +448,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetEncryptionKey":{
+      "name":"GetEncryptionKey",
+      "http":{
+        "method":"GET",
+        "requestUri":"/encryptionkey/get",
+        "responseCode":200
+      },
+      "input":{"shape":"GetEncryptionKeyRequest"},
+      "output":{"shape":"GetEncryptionKeyResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetFindingsReportStatus":{
       "name":"GetFindingsReportStatus",
       "http":{
@@ -347,6 +499,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetSbomExport":{
+      "name":"GetSbomExport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/sbomexport/get",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSbomExportRequest"},
+      "output":{"shape":"GetSbomExportResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "ListAccountPermissions":{
       "name":"ListAccountPermissions",
       "http":{
@@ -359,6 +529,70 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListCisScanConfigurations":{
+      "name":"ListCisScanConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cis/scan-configuration/list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCisScanConfigurationsRequest"},
+      "output":{"shape":"ListCisScanConfigurationsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListCisScanResultsAggregatedByChecks":{
+      "name":"ListCisScanResultsAggregatedByChecks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cis/scan-result/check/list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCisScanResultsAggregatedByChecksRequest"},
+      "output":{"shape":"ListCisScanResultsAggregatedByChecksResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListCisScanResultsAggregatedByTargetResource":{
+      "name":"ListCisScanResultsAggregatedByTargetResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cis/scan-result/resource/list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCisScanResultsAggregatedByTargetResourceRequest"},
+      "output":{"shape":"ListCisScanResultsAggregatedByTargetResourceResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListCisScans":{
+      "name":"ListCisScans",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cis/scan/list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCisScansRequest"},
+      "output":{"shape":"ListCisScansResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
@@ -503,6 +737,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ResetEncryptionKey":{
+      "name":"ResetEncryptionKey",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/encryptionkey/reset",
+        "responseCode":200
+      },
+      "input":{"shape":"ResetEncryptionKeyRequest"},
+      "output":{"shape":"ResetEncryptionKeyResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "SearchVulnerabilities":{
       "name":"SearchVulnerabilities",
       "http":{
@@ -518,6 +770,78 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "SendCisSessionHealth":{
+      "name":"SendCisSessionHealth",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/cissession/health/send",
+        "responseCode":200
+      },
+      "input":{"shape":"SendCisSessionHealthRequest"},
+      "output":{"shape":"SendCisSessionHealthResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "SendCisSessionTelemetry":{
+      "name":"SendCisSessionTelemetry",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/cissession/telemetry/send",
+        "responseCode":200
+      },
+      "input":{"shape":"SendCisSessionTelemetryRequest"},
+      "output":{"shape":"SendCisSessionTelemetryResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "StartCisSession":{
+      "name":"StartCisSession",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/cissession/start",
+        "responseCode":200
+      },
+      "input":{"shape":"StartCisSessionRequest"},
+      "output":{"shape":"StartCisSessionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "StopCisSession":{
+      "name":"StopCisSession",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/cissession/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopCisSessionRequest"},
+      "output":{"shape":"StopCisSessionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -548,6 +872,23 @@
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateCisScanConfiguration":{
+      "name":"UpdateCisScanConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cis/scan-configuration/update",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateCisScanConfigurationRequest"},
+      "output":{"shape":"UpdateCisScanConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -584,6 +925,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "UpdateEncryptionKey":{
+      "name":"UpdateEncryptionKey",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/encryptionkey/update",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateEncryptionKeyRequest"},
+      "output":{"shape":"UpdateEncryptionKeyResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     },
     "UpdateFilter":{
       "name":"UpdateFilter",
@@ -683,6 +1042,12 @@
       "min":12,
       "pattern":"^\\d{12}$"
     },
+    "AccountIdFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":10,
+      "min":1
+    },
     "AccountIdSet":{
       "type":"list",
       "member":{"shape":"AccountId"},
@@ -725,7 +1090,8 @@
       "type":"string",
       "enum":[
         "NETWORK_REACHABILITY",
-        "PACKAGE_VULNERABILITY"
+        "PACKAGE_VULNERABILITY",
+        "CODE_VULNERABILITY"
       ]
     },
     "AggregationRequest":{
@@ -871,7 +1237,8 @@
       "members":{
         "ec2":{"shape":"Boolean"},
         "ecr":{"shape":"Boolean"},
-        "lambda":{"shape":"Boolean"}
+        "lambda":{"shape":"Boolean"},
+        "lambdaCode":{"shape":"Boolean"}
       }
     },
     "AwsEc2InstanceDetails":{
@@ -988,6 +1355,40 @@
         "failedAccounts":{"shape":"FailedAccountList"}
       }
     },
+    "BatchGetCodeSnippetRequest":{
+      "type":"structure",
+      "required":["findingArns"],
+      "members":{
+        "findingArns":{"shape":"BatchGetCodeSnippetRequestFindingArnsList"}
+      }
+    },
+    "BatchGetCodeSnippetRequestFindingArnsList":{
+      "type":"list",
+      "member":{"shape":"FindingArn"},
+      "max":10,
+      "min":1
+    },
+    "BatchGetCodeSnippetResponse":{
+      "type":"structure",
+      "members":{
+        "codeSnippetResults":{"shape":"CodeSnippetResultList"},
+        "errors":{"shape":"CodeSnippetErrorList"}
+      }
+    },
+    "BatchGetFindingDetailsRequest":{
+      "type":"structure",
+      "required":["findingArns"],
+      "members":{
+        "findingArns":{"shape":"FindingArnList"}
+      }
+    },
+    "BatchGetFindingDetailsResponse":{
+      "type":"structure",
+      "members":{
+        "errors":{"shape":"FindingDetailsErrorList"},
+        "findingDetails":{"shape":"FindingDetails"}
+      }
+    },
     "BatchGetFreeTrialInfoRequest":{
       "type":"structure",
       "required":["accountIds"],
@@ -1039,6 +1440,16 @@
         "failedAccountIds":{"shape":"FailedMemberAccountEc2DeepInspectionStatusStateList"}
       }
     },
+    "BenchmarkProfile":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "BenchmarkVersion":{
+      "type":"string",
+      "max":8,
+      "min":0
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -1055,6 +1466,544 @@
       "required":["reportId"],
       "members":{
         "reportId":{"shape":"ReportId"}
+      }
+    },
+    "CancelSbomExportRequest":{
+      "type":"structure",
+      "required":["reportId"],
+      "members":{
+        "reportId":{"shape":"ReportId"}
+      }
+    },
+    "CancelSbomExportResponse":{
+      "type":"structure",
+      "members":{
+        "reportId":{"shape":"ReportId"}
+      }
+    },
+    "CheckCount":{
+      "type":"integer",
+      "max":65536,
+      "min":0
+    },
+    "CheckIdFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisAccountIdList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":10000,
+      "min":1
+    },
+    "CisCheckAggregation":{
+      "type":"structure",
+      "required":["scanArn"],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "checkDescription":{"shape":"String"},
+        "checkId":{"shape":"String"},
+        "level":{"shape":"CisSecurityLevel"},
+        "platform":{"shape":"String"},
+        "scanArn":{"shape":"CisScanArn"},
+        "statusCounts":{"shape":"StatusCounts"},
+        "title":{"shape":"String"}
+      }
+    },
+    "CisCheckAggregationList":{
+      "type":"list",
+      "member":{"shape":"CisCheckAggregation"},
+      "max":1000,
+      "min":1
+    },
+    "CisDateFilter":{
+      "type":"structure",
+      "members":{
+        "earliestScanStartTime":{"shape":"Timestamp"},
+        "latestScanStartTime":{"shape":"Timestamp"}
+      }
+    },
+    "CisFindingArn":{
+      "type":"string",
+      "pattern":"^arn:aws(-gov|-cn)?:inspector2:[-.a-z0-9]{0,20}:\\d{12}:owner/\\d{12}/cis-finding/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "CisFindingArnFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisFindingStatus":{
+      "type":"string",
+      "enum":[
+        "PASSED",
+        "FAILED",
+        "SKIPPED"
+      ]
+    },
+    "CisFindingStatusComparison":{
+      "type":"string",
+      "enum":["EQUALS"]
+    },
+    "CisFindingStatusFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"CisFindingStatusComparison"},
+        "value":{"shape":"CisFindingStatus"}
+      }
+    },
+    "CisFindingStatusFilterList":{
+      "type":"list",
+      "member":{"shape":"CisFindingStatusFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisNumberFilter":{
+      "type":"structure",
+      "members":{
+        "lowerInclusive":{"shape":"Integer"},
+        "upperInclusive":{"shape":"Integer"}
+      }
+    },
+    "CisNumberFilterList":{
+      "type":"list",
+      "member":{"shape":"CisNumberFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisOwnerId":{
+      "type":"string",
+      "pattern":"^\\d{12}|o-[a-z0-9]{10,32}$"
+    },
+    "CisReportFormat":{
+      "type":"string",
+      "enum":[
+        "PDF",
+        "CSV"
+      ]
+    },
+    "CisReportStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "FAILED",
+        "IN_PROGRESS"
+      ]
+    },
+    "CisResultStatus":{
+      "type":"string",
+      "enum":[
+        "PASSED",
+        "FAILED",
+        "SKIPPED"
+      ]
+    },
+    "CisResultStatusComparison":{
+      "type":"string",
+      "enum":["EQUALS"]
+    },
+    "CisResultStatusFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"CisResultStatusComparison"},
+        "value":{"shape":"CisResultStatus"}
+      }
+    },
+    "CisResultStatusFilterList":{
+      "type":"list",
+      "member":{"shape":"CisResultStatusFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisRuleDetails":{
+      "type":"blob",
+      "max":1000,
+      "min":0
+    },
+    "CisRuleStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "PASSED",
+        "NOT_EVALUATED",
+        "INFORMATIONAL",
+        "UNKNOWN",
+        "NOT_APPLICABLE",
+        "ERROR"
+      ]
+    },
+    "CisScan":{
+      "type":"structure",
+      "required":[
+        "scanArn",
+        "scanConfigurationArn"
+      ],
+      "members":{
+        "failedChecks":{"shape":"Integer"},
+        "scanArn":{"shape":"CisScanArn"},
+        "scanConfigurationArn":{"shape":"CisScanConfigurationArn"},
+        "scanDate":{"shape":"Timestamp"},
+        "scanName":{"shape":"CisScanName"},
+        "scheduledBy":{"shape":"String"},
+        "securityLevel":{"shape":"CisSecurityLevel"},
+        "status":{"shape":"CisScanStatus"},
+        "targets":{"shape":"CisTargets"},
+        "totalChecks":{"shape":"Integer"}
+      }
+    },
+    "CisScanArn":{
+      "type":"string",
+      "pattern":"^arn:aws(-us-gov|-cn)?:inspector2:[-.a-z0-9]{0,20}:\\d{12}:owner/(\\d{12}|o-[a-z0-9]{10,32})/cis-scan/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "CisScanArnFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisScanConfiguration":{
+      "type":"structure",
+      "required":["scanConfigurationArn"],
+      "members":{
+        "ownerId":{"shape":"CisOwnerId"},
+        "scanConfigurationArn":{"shape":"CisScanConfigurationArn"},
+        "scanName":{"shape":"CisScanName"},
+        "schedule":{"shape":"Schedule"},
+        "securityLevel":{"shape":"CisSecurityLevel"},
+        "tags":{"shape":"CisTagMap"},
+        "targets":{"shape":"CisTargets"}
+      }
+    },
+    "CisScanConfigurationArn":{
+      "type":"string",
+      "pattern":"^arn:aws(-us-gov|-cn)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-[0-9]{1}:[0-9]{12}:owner/(o-[a-z0-9]+|[0-9]{12})/cis-configuration/[0-9a-fA-F-]+$"
+    },
+    "CisScanConfigurationArnFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisScanConfigurationList":{
+      "type":"list",
+      "member":{"shape":"CisScanConfiguration"},
+      "max":100,
+      "min":0
+    },
+    "CisScanConfigurationsSortBy":{
+      "type":"string",
+      "enum":[
+        "SCAN_NAME",
+        "SCAN_CONFIGURATION_ARN"
+      ]
+    },
+    "CisScanDateFilterList":{
+      "type":"list",
+      "member":{"shape":"CisDateFilter"},
+      "max":1,
+      "min":1
+    },
+    "CisScanList":{
+      "type":"list",
+      "member":{"shape":"CisScan"},
+      "max":50,
+      "min":0
+    },
+    "CisScanName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "CisScanNameFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisScanResultDetails":{
+      "type":"structure",
+      "required":["scanArn"],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "checkDescription":{"shape":"String"},
+        "checkId":{"shape":"String"},
+        "findingArn":{"shape":"CisFindingArn"},
+        "level":{"shape":"CisSecurityLevel"},
+        "platform":{"shape":"String"},
+        "remediation":{"shape":"String"},
+        "scanArn":{"shape":"CisScanArn"},
+        "status":{"shape":"CisFindingStatus"},
+        "statusReason":{"shape":"String"},
+        "targetResourceId":{"shape":"ResourceId"},
+        "title":{"shape":"String"}
+      }
+    },
+    "CisScanResultDetailsFilterCriteria":{
+      "type":"structure",
+      "members":{
+        "checkIdFilters":{"shape":"CheckIdFilterList"},
+        "findingArnFilters":{"shape":"CisFindingArnFilterList"},
+        "findingStatusFilters":{"shape":"CisFindingStatusFilterList"},
+        "securityLevelFilters":{"shape":"CisSecurityLevelFilterList"},
+        "titleFilters":{"shape":"TitleFilterList"}
+      }
+    },
+    "CisScanResultDetailsList":{
+      "type":"list",
+      "member":{"shape":"CisScanResultDetails"},
+      "max":1000,
+      "min":1
+    },
+    "CisScanResultDetailsSortBy":{
+      "type":"string",
+      "enum":[
+        "CHECK_ID",
+        "STATUS"
+      ]
+    },
+    "CisScanResultsAggregatedByChecksFilterCriteria":{
+      "type":"structure",
+      "members":{
+        "accountIdFilters":{"shape":"OneAccountIdFilterList"},
+        "checkIdFilters":{"shape":"CheckIdFilterList"},
+        "failedResourcesFilters":{"shape":"CisNumberFilterList"},
+        "platformFilters":{"shape":"PlatformFilterList"},
+        "securityLevelFilters":{"shape":"CisSecurityLevelFilterList"},
+        "titleFilters":{"shape":"TitleFilterList"}
+      }
+    },
+    "CisScanResultsAggregatedByChecksSortBy":{
+      "type":"string",
+      "enum":[
+        "CHECK_ID",
+        "TITLE",
+        "PLATFORM",
+        "FAILED_COUNTS",
+        "SECURITY_LEVEL"
+      ]
+    },
+    "CisScanResultsAggregatedByTargetResourceFilterCriteria":{
+      "type":"structure",
+      "members":{
+        "accountIdFilters":{"shape":"AccountIdFilterList"},
+        "checkIdFilters":{"shape":"CheckIdFilterList"},
+        "failedChecksFilters":{"shape":"CisNumberFilterList"},
+        "platformFilters":{"shape":"PlatformFilterList"},
+        "statusFilters":{"shape":"CisResultStatusFilterList"},
+        "targetResourceIdFilters":{"shape":"ResourceIdFilterList"},
+        "targetResourceTagFilters":{"shape":"ResourceTagFilterList"},
+        "targetStatusFilters":{"shape":"TargetStatusFilterList"},
+        "targetStatusReasonFilters":{"shape":"TargetStatusReasonFilterList"}
+      }
+    },
+    "CisScanResultsAggregatedByTargetResourceSortBy":{
+      "type":"string",
+      "enum":[
+        "RESOURCE_ID",
+        "FAILED_COUNTS",
+        "ACCOUNT_ID",
+        "PLATFORM",
+        "TARGET_STATUS",
+        "TARGET_STATUS_REASON"
+      ]
+    },
+    "CisScanResultsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "CisScanStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "COMPLETED",
+        "CANCELLED",
+        "IN_PROGRESS"
+      ]
+    },
+    "CisScanStatusComparison":{
+      "type":"string",
+      "enum":["EQUALS"]
+    },
+    "CisScanStatusFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"CisScanStatusComparison"},
+        "value":{"shape":"CisScanStatus"}
+      }
+    },
+    "CisScanStatusFilterList":{
+      "type":"list",
+      "member":{"shape":"CisScanStatusFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisScheduledByFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisSecurityLevel":{
+      "type":"string",
+      "enum":[
+        "LEVEL_1",
+        "LEVEL_2"
+      ]
+    },
+    "CisSecurityLevelComparison":{
+      "type":"string",
+      "enum":["EQUALS"]
+    },
+    "CisSecurityLevelFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"CisSecurityLevelComparison"},
+        "value":{"shape":"CisSecurityLevel"}
+      }
+    },
+    "CisSecurityLevelFilterList":{
+      "type":"list",
+      "member":{"shape":"CisSecurityLevelFilter"},
+      "max":10,
+      "min":1
+    },
+    "CisSessionMessage":{
+      "type":"structure",
+      "required":[
+        "cisRuleDetails",
+        "ruleId",
+        "status"
+      ],
+      "members":{
+        "cisRuleDetails":{"shape":"CisRuleDetails"},
+        "ruleId":{"shape":"RuleId"},
+        "status":{"shape":"CisRuleStatus"}
+      }
+    },
+    "CisSessionMessages":{
+      "type":"list",
+      "member":{"shape":"CisSessionMessage"},
+      "max":150,
+      "min":1
+    },
+    "CisSortOrder":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC"
+      ]
+    },
+    "CisStringComparison":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "PREFIX",
+        "NOT_EQUALS"
+      ]
+    },
+    "CisStringFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"CisStringComparison"},
+        "value":{"shape":"String"}
+      }
+    },
+    "CisTagMap":{
+      "type":"map",
+      "key":{"shape":"MapKey"},
+      "value":{"shape":"MapValue"}
+    },
+    "CisTargetResourceAggregation":{
+      "type":"structure",
+      "required":["scanArn"],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "platform":{"shape":"String"},
+        "scanArn":{"shape":"CisScanArn"},
+        "statusCounts":{"shape":"StatusCounts"},
+        "targetResourceId":{"shape":"ResourceId"},
+        "targetResourceTags":{"shape":"TargetResourceTags"},
+        "targetStatus":{"shape":"CisTargetStatus"},
+        "targetStatusReason":{"shape":"CisTargetStatusReason"}
+      }
+    },
+    "CisTargetResourceAggregationList":{
+      "type":"list",
+      "member":{"shape":"CisTargetResourceAggregation"},
+      "max":1000,
+      "min":1
+    },
+    "CisTargetStatus":{
+      "type":"string",
+      "enum":[
+        "TIMED_OUT",
+        "CANCELLED",
+        "COMPLETED"
+      ]
+    },
+    "CisTargetStatusComparison":{
+      "type":"string",
+      "enum":["EQUALS"]
+    },
+    "CisTargetStatusFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"CisTargetStatusComparison"},
+        "value":{"shape":"CisTargetStatus"}
+      }
+    },
+    "CisTargetStatusReason":{
+      "type":"string",
+      "enum":[
+        "SCAN_IN_PROGRESS",
+        "UNSUPPORTED_OS",
+        "SSM_UNMANAGED"
+      ]
+    },
+    "CisTargetStatusReasonFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"CisTargetStatusComparison"},
+        "value":{"shape":"CisTargetStatusReason"}
+      }
+    },
+    "CisTargets":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"CisAccountIdList"},
+        "targetResourceTags":{"shape":"TargetResourceTags"}
       }
     },
     "CisaAction":{
@@ -1076,8 +2025,112 @@
       "max":64,
       "min":1
     },
+    "CodeFilePath":{
+      "type":"structure",
+      "required":[
+        "endLine",
+        "fileName",
+        "filePath",
+        "startLine"
+      ],
+      "members":{
+        "endLine":{"shape":"Integer"},
+        "fileName":{"shape":"NonEmptyString"},
+        "filePath":{"shape":"NonEmptyString"},
+        "startLine":{"shape":"Integer"}
+      }
+    },
+    "CodeLine":{
+      "type":"structure",
+      "required":[
+        "content",
+        "lineNumber"
+      ],
+      "members":{
+        "content":{"shape":"CodeLineContentString"},
+        "lineNumber":{"shape":"Integer"}
+      }
+    },
+    "CodeLineContentString":{
+      "type":"string",
+      "max":240,
+      "min":0
+    },
+    "CodeLineList":{
+      "type":"list",
+      "member":{"shape":"CodeLine"},
+      "max":20,
+      "min":1
+    },
+    "CodeSnippetError":{
+      "type":"structure",
+      "required":[
+        "errorCode",
+        "errorMessage",
+        "findingArn"
+      ],
+      "members":{
+        "errorCode":{"shape":"CodeSnippetErrorCode"},
+        "errorMessage":{"shape":"NonEmptyString"},
+        "findingArn":{"shape":"FindingArn"}
+      }
+    },
+    "CodeSnippetErrorCode":{
+      "type":"string",
+      "enum":[
+        "INTERNAL_ERROR",
+        "ACCESS_DENIED",
+        "CODE_SNIPPET_NOT_FOUND",
+        "INVALID_INPUT"
+      ]
+    },
+    "CodeSnippetErrorList":{
+      "type":"list",
+      "member":{"shape":"CodeSnippetError"}
+    },
+    "CodeSnippetResult":{
+      "type":"structure",
+      "members":{
+        "codeSnippet":{"shape":"CodeLineList"},
+        "endLine":{"shape":"Integer"},
+        "findingArn":{"shape":"FindingArn"},
+        "startLine":{"shape":"Integer"},
+        "suggestedFixes":{"shape":"SuggestedFixes"}
+      }
+    },
+    "CodeSnippetResultList":{
+      "type":"list",
+      "member":{"shape":"CodeSnippetResult"}
+    },
+    "CodeVulnerabilityDetails":{
+      "type":"structure",
+      "required":[
+        "cwes",
+        "detectorId",
+        "detectorName",
+        "filePath"
+      ],
+      "members":{
+        "cwes":{"shape":"CweList"},
+        "detectorId":{"shape":"NonEmptyString"},
+        "detectorName":{"shape":"NonEmptyString"},
+        "detectorTags":{"shape":"DetectorTagList"},
+        "filePath":{"shape":"CodeFilePath"},
+        "referenceUrls":{"shape":"ReferenceUrls"},
+        "ruleId":{"shape":"NonEmptyString"},
+        "sourceLambdaLayerArn":{"shape":"LambdaLayerArn"}
+      }
+    },
     "Component":{"type":"string"},
     "ComponentType":{"type":"string"},
+    "ComputePlatform":{
+      "type":"structure",
+      "members":{
+        "product":{"shape":"Product"},
+        "vendor":{"shape":"Vendor"},
+        "version":{"shape":"PlatformVersion"}
+      }
+    },
     "ConflictException":{
       "type":"structure",
       "required":[
@@ -1129,12 +2182,14 @@
         "ec2InstanceTags":{"shape":"CoverageMapFilterList"},
         "ecrImageTags":{"shape":"CoverageStringFilterList"},
         "ecrRepositoryName":{"shape":"CoverageStringFilterList"},
+        "imagePulledAt":{"shape":"CoverageDateFilterList"},
         "lambdaFunctionName":{"shape":"CoverageStringFilterList"},
         "lambdaFunctionRuntime":{"shape":"CoverageStringFilterList"},
         "lambdaFunctionTags":{"shape":"CoverageMapFilterList"},
         "lastScannedAt":{"shape":"CoverageDateFilterList"},
         "resourceId":{"shape":"CoverageStringFilterList"},
         "resourceType":{"shape":"CoverageStringFilterList"},
+        "scanMode":{"shape":"CoverageStringFilterList"},
         "scanStatusCode":{"shape":"CoverageStringFilterList"},
         "scanStatusReason":{"shape":"CoverageStringFilterList"},
         "scanType":{"shape":"CoverageStringFilterList"}
@@ -1214,6 +2269,7 @@
         "resourceId":{"shape":"ResourceId"},
         "resourceMetadata":{"shape":"ResourceScanMetadata"},
         "resourceType":{"shape":"CoverageResourceType"},
+        "scanMode":{"shape":"ScanMode"},
         "scanStatus":{"shape":"ScanStatus"},
         "scanType":{"shape":"ScanType"}
       }
@@ -1221,6 +2277,39 @@
     "CoveredResources":{
       "type":"list",
       "member":{"shape":"CoveredResource"}
+    },
+    "CreateCisScanConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "scanName",
+        "schedule",
+        "securityLevel",
+        "targets"
+      ],
+      "members":{
+        "scanName":{"shape":"CisScanName"},
+        "schedule":{"shape":"Schedule"},
+        "securityLevel":{"shape":"CisSecurityLevel"},
+        "tags":{"shape":"CisTagMap"},
+        "targets":{"shape":"CreateCisTargets"}
+      }
+    },
+    "CreateCisScanConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "scanConfigurationArn":{"shape":"CisScanConfigurationArn"}
+      }
+    },
+    "CreateCisTargets":{
+      "type":"structure",
+      "required":[
+        "accountIds",
+        "targetResourceTags"
+      ],
+      "members":{
+        "accountIds":{"shape":"TargetAccountList"},
+        "targetResourceTags":{"shape":"TargetResourceTags"}
+      }
     },
     "CreateFilterRequest":{
       "type":"structure",
@@ -1258,6 +2347,24 @@
       }
     },
     "CreateFindingsReportResponse":{
+      "type":"structure",
+      "members":{
+        "reportId":{"shape":"ReportId"}
+      }
+    },
+    "CreateSbomExportRequest":{
+      "type":"structure",
+      "required":[
+        "reportFormat",
+        "s3Destination"
+      ],
+      "members":{
+        "reportFormat":{"shape":"SbomReportFormat"},
+        "resourceFilterCriteria":{"shape":"ResourceFilterCriteria"},
+        "s3Destination":{"shape":"Destination"}
+      }
+    },
+    "CreateSbomExportResponse":{
       "type":"structure",
       "members":{
         "reportId":{"shape":"ReportId"}
@@ -1346,10 +2453,23 @@
       "type":"string",
       "min":0
     },
+    "CweList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "max":10,
+      "min":1
+    },
     "Cwes":{
       "type":"list",
       "member":{"shape":"Cwe"},
       "min":0
+    },
+    "DailySchedule":{
+      "type":"structure",
+      "required":["startTime"],
+      "members":{
+        "startTime":{"shape":"Time"}
+      }
     },
     "DateFilter":{
       "type":"structure",
@@ -1365,6 +2485,24 @@
       "min":1
     },
     "DateTimeTimestamp":{"type":"timestamp"},
+    "Day":{
+      "type":"string",
+      "enum":[
+        "SUN",
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT"
+      ]
+    },
+    "DaysList":{
+      "type":"list",
+      "member":{"shape":"Day"},
+      "max":7,
+      "min":1
+    },
     "DelegatedAdmin":{
       "type":"structure",
       "members":{
@@ -1391,6 +2529,20 @@
         "ENABLED",
         "DISABLE_IN_PROGRESS"
       ]
+    },
+    "DeleteCisScanConfigurationRequest":{
+      "type":"structure",
+      "required":["scanConfigurationArn"],
+      "members":{
+        "scanConfigurationArn":{"shape":"CisScanConfigurationArn"}
+      }
+    },
+    "DeleteCisScanConfigurationResponse":{
+      "type":"structure",
+      "required":["scanConfigurationArn"],
+      "members":{
+        "scanConfigurationArn":{"shape":"CisScanConfigurationArn"}
+      }
     },
     "DeleteFilterRequest":{
       "type":"structure",
@@ -1435,6 +2587,12 @@
       "member":{"shape":"NonEmptyString"},
       "max":100,
       "min":0
+    },
+    "DetectorTagList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "max":10,
+      "min":1
     },
     "DisableDelegatedAdminAccountRequest":{
       "type":"structure",
@@ -1488,6 +2646,19 @@
     "Double":{
       "type":"double",
       "box":true
+    },
+    "Ec2Configuration":{
+      "type":"structure",
+      "required":["scanMode"],
+      "members":{
+        "scanMode":{"shape":"Ec2ScanMode"}
+      }
+    },
+    "Ec2ConfigurationState":{
+      "type":"structure",
+      "members":{
+        "scanModeState":{"shape":"Ec2ScanModeState"}
+      }
     },
     "Ec2DeepInspectionStatus":{
       "type":"string",
@@ -1544,13 +2715,36 @@
       "enum":[
         "WINDOWS",
         "LINUX",
-        "UNKNOWN"
+        "UNKNOWN",
+        "MACOS"
+      ]
+    },
+    "Ec2ScanMode":{
+      "type":"string",
+      "enum":[
+        "EC2_SSM_AGENT_BASED",
+        "EC2_HYBRID"
+      ]
+    },
+    "Ec2ScanModeState":{
+      "type":"structure",
+      "members":{
+        "scanMode":{"shape":"Ec2ScanMode"},
+        "scanModeStatus":{"shape":"Ec2ScanModeStatus"}
+      }
+    },
+    "Ec2ScanModeStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "PENDING"
       ]
     },
     "EcrConfiguration":{
       "type":"structure",
       "required":["rescanDuration"],
       "members":{
+        "pullDateRescanDuration":{"shape":"EcrPullDateRescanDuration"},
         "rescanDuration":{"shape":"EcrRescanDuration"}
       }
     },
@@ -1563,8 +2757,19 @@
     "EcrContainerImageMetadata":{
       "type":"structure",
       "members":{
+        "imagePulledAt":{"shape":"DateTimeTimestamp"},
         "tags":{"shape":"TagList"}
       }
+    },
+    "EcrPullDateRescanDuration":{
+      "type":"string",
+      "enum":[
+        "DAYS_14",
+        "DAYS_30",
+        "DAYS_60",
+        "DAYS_90",
+        "DAYS_180"
+      ]
     },
     "EcrRepositoryMetadata":{
       "type":"structure",
@@ -1578,12 +2783,16 @@
       "enum":[
         "LIFETIME",
         "DAYS_30",
-        "DAYS_180"
+        "DAYS_180",
+        "DAYS_14",
+        "DAYS_60",
+        "DAYS_90"
       ]
     },
     "EcrRescanDurationState":{
       "type":"structure",
       "members":{
+        "pullDateRescanDuration":{"shape":"EcrPullDateRescanDuration"},
         "rescanDuration":{"shape":"EcrRescanDuration"},
         "status":{"shape":"EcrRescanDurationStatus"},
         "updatedAt":{"shape":"DateTimeTimestamp"}
@@ -1655,7 +2864,18 @@
         "score":{"shape":"EpssScore"}
       }
     },
+    "EpssDetails":{
+      "type":"structure",
+      "members":{
+        "score":{"shape":"EpssScoreValue"}
+      }
+    },
     "EpssScore":{"type":"double"},
+    "EpssScoreValue":{
+      "type":"double",
+      "max":1.0,
+      "min":0.0
+    },
     "ErrorCode":{
       "type":"string",
       "enum":[
@@ -1676,6 +2896,30 @@
       ]
     },
     "ErrorMessage":{"type":"string"},
+    "Evidence":{
+      "type":"structure",
+      "members":{
+        "evidenceDetail":{"shape":"EvidenceDetail"},
+        "evidenceRule":{"shape":"EvidenceRule"},
+        "severity":{"shape":"EvidenceSeverity"}
+      }
+    },
+    "EvidenceDetail":{
+      "type":"string",
+      "min":0
+    },
+    "EvidenceList":{
+      "type":"list",
+      "member":{"shape":"Evidence"}
+    },
+    "EvidenceRule":{
+      "type":"string",
+      "min":0
+    },
+    "EvidenceSeverity":{
+      "type":"string",
+      "min":0
+    },
     "ExecutionRoleArn":{
       "type":"string",
       "pattern":"^arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+$"
@@ -1794,6 +3038,9 @@
       "type":"structure",
       "members":{
         "awsAccountId":{"shape":"StringFilterList"},
+        "codeVulnerabilityDetectorName":{"shape":"StringFilterList"},
+        "codeVulnerabilityDetectorTags":{"shape":"StringFilterList"},
+        "codeVulnerabilityFilePath":{"shape":"StringFilterList"},
         "componentId":{"shape":"StringFilterList"},
         "componentType":{"shape":"StringFilterList"},
         "ec2InstanceImageId":{"shape":"StringFilterList"},
@@ -1805,6 +3052,7 @@
         "ecrImageRegistry":{"shape":"StringFilterList"},
         "ecrImageRepositoryName":{"shape":"StringFilterList"},
         "ecrImageTags":{"shape":"StringFilterList"},
+        "epssScore":{"shape":"NumberFilterList"},
         "exploitAvailable":{"shape":"StringFilterList"},
         "findingArn":{"shape":"StringFilterList"},
         "findingStatus":{"shape":"StringFilterList"},
@@ -1868,7 +3116,9 @@
       ],
       "members":{
         "awsAccountId":{"shape":"AccountId"},
+        "codeVulnerabilityDetails":{"shape":"CodeVulnerabilityDetails"},
         "description":{"shape":"FindingDescription"},
+        "epss":{"shape":"EpssDetails"},
         "exploitAvailable":{"shape":"ExploitAvailable"},
         "exploitabilityDetails":{"shape":"ExploitabilityDetails"},
         "findingArn":{"shape":"FindingArn"},
@@ -1894,10 +3144,62 @@
       "min":1,
       "pattern":"^arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:finding/[a-f0-9]{32}$"
     },
+    "FindingArnList":{
+      "type":"list",
+      "member":{"shape":"FindingArn"},
+      "max":10,
+      "min":1
+    },
     "FindingDescription":{
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "FindingDetail":{
+      "type":"structure",
+      "members":{
+        "cisaData":{"shape":"CisaData"},
+        "cwes":{"shape":"Cwes"},
+        "epssScore":{"shape":"Double"},
+        "evidences":{"shape":"EvidenceList"},
+        "exploitObserved":{"shape":"ExploitObserved"},
+        "findingArn":{"shape":"FindingArn"},
+        "referenceUrls":{"shape":"VulnerabilityReferenceUrls"},
+        "riskScore":{"shape":"RiskScore"},
+        "tools":{"shape":"Tools"},
+        "ttps":{"shape":"Ttps"}
+      }
+    },
+    "FindingDetails":{
+      "type":"list",
+      "member":{"shape":"FindingDetail"},
+      "min":0
+    },
+    "FindingDetailsError":{
+      "type":"structure",
+      "required":[
+        "errorCode",
+        "errorMessage",
+        "findingArn"
+      ],
+      "members":{
+        "errorCode":{"shape":"FindingDetailsErrorCode"},
+        "errorMessage":{"shape":"NonEmptyString"},
+        "findingArn":{"shape":"FindingArn"}
+      }
+    },
+    "FindingDetailsErrorCode":{
+      "type":"string",
+      "enum":[
+        "INTERNAL_ERROR",
+        "ACCESS_DENIED",
+        "FINDING_DETAILS_NOT_FOUND",
+        "INVALID_INPUT"
+      ]
+    },
+    "FindingDetailsErrorList":{
+      "type":"list",
+      "member":{"shape":"FindingDetailsError"}
     },
     "FindingList":{
       "type":"list",
@@ -1922,7 +3224,8 @@
       "type":"string",
       "enum":[
         "NETWORK_REACHABILITY",
-        "PACKAGE_VULNERABILITY"
+        "PACKAGE_VULNERABILITY",
+        "CODE_VULNERABILITY"
       ]
     },
     "FindingTypeAggregation":{
@@ -2028,12 +3331,60 @@
       "enum":[
         "EC2",
         "ECR",
-        "LAMBDA"
+        "LAMBDA",
+        "LAMBDA_CODE"
       ]
     },
     "FunctionName":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"
+    },
+    "GetCisScanReportRequest":{
+      "type":"structure",
+      "required":["scanArn"],
+      "members":{
+        "reportFormat":{"shape":"CisReportFormat"},
+        "scanArn":{"shape":"CisScanArn"},
+        "targetAccounts":{"shape":"ReportTargetAccounts"}
+      }
+    },
+    "GetCisScanReportResponse":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"CisReportStatus"},
+        "url":{"shape":"String"}
+      }
+    },
+    "GetCisScanResultDetailsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "GetCisScanResultDetailsRequest":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "scanArn",
+        "targetResourceId"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "filterCriteria":{"shape":"CisScanResultDetailsFilterCriteria"},
+        "maxResults":{"shape":"GetCisScanResultDetailsMaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "scanArn":{"shape":"CisScanArn"},
+        "sortBy":{"shape":"CisScanResultDetailsSortBy"},
+        "sortOrder":{"shape":"CisSortOrder"},
+        "targetResourceId":{"shape":"ResourceId"}
+      }
+    },
+    "GetCisScanResultDetailsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "scanResultDetails":{"shape":"CisScanResultDetailsList"}
+      }
     },
     "GetConfigurationRequest":{
       "type":"structure",
@@ -2043,6 +3394,7 @@
     "GetConfigurationResponse":{
       "type":"structure",
       "members":{
+        "ec2Configuration":{"shape":"Ec2ConfigurationState"},
         "ecrConfiguration":{"shape":"EcrConfigurationState"}
       }
     },
@@ -2069,6 +3421,32 @@
         "orgPackagePaths":{"shape":"PathList"},
         "packagePaths":{"shape":"PathList"},
         "status":{"shape":"Ec2DeepInspectionStatus"}
+      }
+    },
+    "GetEncryptionKeyRequest":{
+      "type":"structure",
+      "required":[
+        "resourceType",
+        "scanType"
+      ],
+      "members":{
+        "resourceType":{
+          "shape":"ResourceType",
+          "location":"querystring",
+          "locationName":"resourceType"
+        },
+        "scanType":{
+          "shape":"ScanType",
+          "location":"querystring",
+          "locationName":"scanType"
+        }
+      }
+    },
+    "GetEncryptionKeyResponse":{
+      "type":"structure",
+      "required":["kmsKeyId"],
+      "members":{
+        "kmsKeyId":{"shape":"KmsKeyArn"}
       }
     },
     "GetFindingsReportStatusRequest":{
@@ -2099,6 +3477,25 @@
       "type":"structure",
       "members":{
         "member":{"shape":"Member"}
+      }
+    },
+    "GetSbomExportRequest":{
+      "type":"structure",
+      "required":["reportId"],
+      "members":{
+        "reportId":{"shape":"ReportId"}
+      }
+    },
+    "GetSbomExportResponse":{
+      "type":"structure",
+      "members":{
+        "errorCode":{"shape":"ReportingErrorCode"},
+        "errorMessage":{"shape":"NonEmptyString"},
+        "filterCriteria":{"shape":"ResourceFilterCriteria"},
+        "format":{"shape":"SbomReportFormat"},
+        "reportId":{"shape":"ReportId"},
+        "s3Destination":{"shape":"Destination"},
+        "status":{"shape":"ExternalReportStatus"}
       }
     },
     "GroupKey":{
@@ -2199,6 +3596,10 @@
     "IpV6AddressList":{
       "type":"list",
       "member":{"shape":"IpV6Address"}
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "pattern":"^arn:aws(-(us-gov|cn))?:kms:([a-z0-9][-.a-z0-9]{0,62})?:[0-9]{12}?:key/(([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})|(mrk-[0-9a-zA-Z]{32}))$"
     },
     "LambdaFunctionAggregation":{
       "type":"structure",
@@ -2321,6 +3722,130 @@
         "nextToken":{"shape":"NextToken"},
         "permissions":{"shape":"Permissions"}
       }
+    },
+    "ListCisScanConfigurationsFilterCriteria":{
+      "type":"structure",
+      "members":{
+        "scanConfigurationArnFilters":{"shape":"CisScanConfigurationArnFilterList"},
+        "scanNameFilters":{"shape":"CisScanNameFilterList"},
+        "targetResourceTagFilters":{"shape":"ResourceTagFilterList"}
+      }
+    },
+    "ListCisScanConfigurationsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListCisScanConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "filterCriteria":{"shape":"ListCisScanConfigurationsFilterCriteria"},
+        "maxResults":{"shape":"ListCisScanConfigurationsMaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "sortBy":{"shape":"CisScanConfigurationsSortBy"},
+        "sortOrder":{"shape":"CisSortOrder"}
+      }
+    },
+    "ListCisScanConfigurationsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "scanConfigurations":{"shape":"CisScanConfigurationList"}
+      }
+    },
+    "ListCisScanResultsAggregatedByChecksRequest":{
+      "type":"structure",
+      "required":["scanArn"],
+      "members":{
+        "filterCriteria":{"shape":"CisScanResultsAggregatedByChecksFilterCriteria"},
+        "maxResults":{"shape":"CisScanResultsMaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "scanArn":{"shape":"CisScanArn"},
+        "sortBy":{"shape":"CisScanResultsAggregatedByChecksSortBy"},
+        "sortOrder":{"shape":"CisSortOrder"}
+      }
+    },
+    "ListCisScanResultsAggregatedByChecksResponse":{
+      "type":"structure",
+      "members":{
+        "checkAggregations":{"shape":"CisCheckAggregationList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCisScanResultsAggregatedByTargetResourceRequest":{
+      "type":"structure",
+      "required":["scanArn"],
+      "members":{
+        "filterCriteria":{"shape":"CisScanResultsAggregatedByTargetResourceFilterCriteria"},
+        "maxResults":{"shape":"CisScanResultsMaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "scanArn":{"shape":"CisScanArn"},
+        "sortBy":{"shape":"CisScanResultsAggregatedByTargetResourceSortBy"},
+        "sortOrder":{"shape":"CisSortOrder"}
+      }
+    },
+    "ListCisScanResultsAggregatedByTargetResourceResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "targetResourceAggregations":{"shape":"CisTargetResourceAggregationList"}
+      }
+    },
+    "ListCisScansDetailLevel":{
+      "type":"string",
+      "enum":[
+        "ORGANIZATION",
+        "MEMBER"
+      ]
+    },
+    "ListCisScansFilterCriteria":{
+      "type":"structure",
+      "members":{
+        "failedChecksFilters":{"shape":"CisNumberFilterList"},
+        "scanArnFilters":{"shape":"CisScanArnFilterList"},
+        "scanAtFilters":{"shape":"CisScanDateFilterList"},
+        "scanConfigurationArnFilters":{"shape":"CisScanConfigurationArnFilterList"},
+        "scanNameFilters":{"shape":"CisScanNameFilterList"},
+        "scanStatusFilters":{"shape":"CisScanStatusFilterList"},
+        "scheduledByFilters":{"shape":"CisScheduledByFilterList"},
+        "targetAccountIdFilters":{"shape":"AccountIdFilterList"},
+        "targetResourceIdFilters":{"shape":"ResourceIdFilterList"},
+        "targetResourceTagFilters":{"shape":"ResourceTagFilterList"}
+      }
+    },
+    "ListCisScansMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListCisScansRequest":{
+      "type":"structure",
+      "members":{
+        "detailLevel":{"shape":"ListCisScansDetailLevel"},
+        "filterCriteria":{"shape":"ListCisScansFilterCriteria"},
+        "maxResults":{"shape":"ListCisScansMaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "sortBy":{"shape":"ListCisScansSortBy"},
+        "sortOrder":{"shape":"CisSortOrder"}
+      }
+    },
+    "ListCisScansResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "scans":{"shape":"CisScanList"}
+      }
+    },
+    "ListCisScansSortBy":{
+      "type":"string",
+      "enum":[
+        "STATUS",
+        "SCHEDULED_BY",
+        "SCAN_START_DATE",
+        "FAILED_CHECKS"
+      ]
     },
     "ListCoverageMaxResults":{
       "type":"integer",
@@ -2605,6 +4130,17 @@
       "type":"double",
       "min":0
     },
+    "MonthlySchedule":{
+      "type":"structure",
+      "required":[
+        "day",
+        "startTime"
+      ],
+      "members":{
+        "day":{"shape":"Day"},
+        "startTime":{"shape":"Time"}
+      }
+    },
     "NetworkPath":{
       "type":"structure",
       "members":{
@@ -2656,6 +4192,17 @@
       "member":{"shape":"NumberFilter"},
       "max":10,
       "min":1
+    },
+    "OneAccountIdFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":1,
+      "min":1
+    },
+    "OneTimeSchedule":{
+      "type":"structure",
+      "members":{
+      }
     },
     "Operation":{
       "type":"string",
@@ -2818,6 +4365,17 @@
       "max":1024,
       "min":1
     },
+    "PlatformFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":10,
+      "min":1
+    },
+    "PlatformVersion":{
+      "type":"string",
+      "max":8,
+      "min":0
+    },
     "Port":{
       "type":"integer",
       "box":true,
@@ -2848,12 +4406,28 @@
       "max":10,
       "min":1
     },
+    "Product":{
+      "type":"string",
+      "max":32,
+      "min":0
+    },
+    "Reason":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "Recommendation":{
       "type":"structure",
       "members":{
         "Url":{"shape":"NonEmptyString"},
         "text":{"shape":"NonEmptyString"}
       }
+    },
+    "ReferenceUrls":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "max":10,
+      "min":1
     },
     "RelatedVulnerabilities":{
       "type":"list",
@@ -2899,6 +4473,12 @@
       "type":"string",
       "pattern":"\\b[a-f0-9]{8}\\b-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-\\b[a-f0-9]{12}\\b"
     },
+    "ReportTargetAccounts":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":1,
+      "min":0
+    },
     "ReportingErrorCode":{
       "type":"string",
       "enum":[
@@ -2937,6 +4517,22 @@
         "AFFECTED_IMAGES"
       ]
     },
+    "ResetEncryptionKeyRequest":{
+      "type":"structure",
+      "required":[
+        "resourceType",
+        "scanType"
+      ],
+      "members":{
+        "resourceType":{"shape":"ResourceType"},
+        "scanType":{"shape":"ScanType"}
+      }
+    },
+    "ResetEncryptionKeyResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "Resource":{
       "type":"structure",
       "required":[
@@ -2960,15 +4556,56 @@
         "awsLambdaFunction":{"shape":"AwsLambdaFunctionDetails"}
       }
     },
+    "ResourceFilterCriteria":{
+      "type":"structure",
+      "members":{
+        "accountId":{"shape":"ResourceStringFilterList"},
+        "ec2InstanceTags":{"shape":"ResourceMapFilterList"},
+        "ecrImageTags":{"shape":"ResourceStringFilterList"},
+        "ecrRepositoryName":{"shape":"ResourceStringFilterList"},
+        "lambdaFunctionName":{"shape":"ResourceStringFilterList"},
+        "lambdaFunctionTags":{"shape":"ResourceMapFilterList"},
+        "resourceId":{"shape":"ResourceStringFilterList"},
+        "resourceType":{"shape":"ResourceStringFilterList"}
+      }
+    },
     "ResourceId":{
       "type":"string",
       "max":341,
       "min":10,
       "pattern":"(^arn:.*:ecr:.*:\\d{12}:repository\\/(?:[a-z0-9]+(?:[._-][a-z0-9]+)*\\/)*[a-z0-9]+(?:[._-][a-z0-9]+)*(\\/sha256:[a-z0-9]{64})?$)|(^i-([a-z0-9]{8}|[a-z0-9]{17}|\\\\*)$|(^arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$))"
     },
+    "ResourceIdFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":10,
+      "min":1
+    },
     "ResourceList":{
       "type":"list",
       "member":{"shape":"Resource"},
+      "max":10,
+      "min":1
+    },
+    "ResourceMapComparison":{
+      "type":"string",
+      "enum":["EQUALS"]
+    },
+    "ResourceMapFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "key"
+      ],
+      "members":{
+        "comparison":{"shape":"ResourceMapComparison"},
+        "key":{"shape":"NonEmptyString"},
+        "value":{"shape":"NonEmptyString"}
+      }
+    },
+    "ResourceMapFilterList":{
+      "type":"list",
+      "member":{"shape":"ResourceMapFilter"},
       "max":10,
       "min":1
     },
@@ -2998,7 +4635,8 @@
       "enum":[
         "EC2",
         "ECR",
-        "LAMBDA"
+        "LAMBDA",
+        "LAMBDA_CODE"
       ]
     },
     "ResourceState":{
@@ -3010,7 +4648,8 @@
       "members":{
         "ec2":{"shape":"State"},
         "ecr":{"shape":"State"},
-        "lambda":{"shape":"State"}
+        "lambda":{"shape":"State"},
+        "lambdaCode":{"shape":"State"}
       }
     },
     "ResourceStatus":{
@@ -3022,8 +4661,44 @@
       "members":{
         "ec2":{"shape":"Status"},
         "ecr":{"shape":"Status"},
-        "lambda":{"shape":"Status"}
+        "lambda":{"shape":"Status"},
+        "lambdaCode":{"shape":"Status"}
       }
+    },
+    "ResourceStringComparison":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "NOT_EQUALS"
+      ]
+    },
+    "ResourceStringFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"ResourceStringComparison"},
+        "value":{"shape":"ResourceStringInput"}
+      }
+    },
+    "ResourceStringFilterList":{
+      "type":"list",
+      "member":{"shape":"ResourceStringFilter"},
+      "max":10,
+      "min":1
+    },
+    "ResourceStringInput":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ResourceTagFilterList":{
+      "type":"list",
+      "member":{"shape":"TagFilter"},
+      "max":10,
+      "min":1
     },
     "ResourceType":{
       "type":"string",
@@ -3033,6 +4708,15 @@
         "AWS_ECR_REPOSITORY",
         "AWS_LAMBDA_FUNCTION"
       ]
+    },
+    "RiskScore":{
+      "type":"integer",
+      "box":true
+    },
+    "RuleId":{
+      "type":"string",
+      "max":500,
+      "min":1
     },
     "Runtime":{
       "type":"string",
@@ -3049,7 +4733,23 @@
         "PYTHON_3_9",
         "UNSUPPORTED",
         "NODEJS_18_X",
-        "GO_1_X"
+        "GO_1_X",
+        "JAVA_17",
+        "PYTHON_3_10"
+      ]
+    },
+    "SbomReportFormat":{
+      "type":"string",
+      "enum":[
+        "CYCLONEDX_1_4",
+        "SPDX_2_3"
+      ]
+    },
+    "ScanMode":{
+      "type":"string",
+      "enum":[
+        "EC2_SSM_AGENT_BASED",
+        "EC2_AGENTLESS"
       ]
     },
     "ScanStatus":{
@@ -3103,8 +4803,19 @@
       "type":"string",
       "enum":[
         "NETWORK",
-        "PACKAGE"
+        "PACKAGE",
+        "CODE"
       ]
+    },
+    "Schedule":{
+      "type":"structure",
+      "members":{
+        "daily":{"shape":"DailySchedule"},
+        "monthly":{"shape":"MonthlySchedule"},
+        "oneTime":{"shape":"OneTimeSchedule"},
+        "weekly":{"shape":"WeeklySchedule"}
+      },
+      "union":true
     },
     "SearchVulnerabilitiesFilterCriteria":{
       "type":"structure",
@@ -3138,6 +4849,40 @@
       "member":{"shape":"SecurityGroupId"},
       "max":5,
       "min":0
+    },
+    "SendCisSessionHealthRequest":{
+      "type":"structure",
+      "required":[
+        "scanJobId",
+        "sessionToken"
+      ],
+      "members":{
+        "scanJobId":{"shape":"UUID"},
+        "sessionToken":{"shape":"UUID"}
+      }
+    },
+    "SendCisSessionHealthResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "SendCisSessionTelemetryRequest":{
+      "type":"structure",
+      "required":[
+        "messages",
+        "scanJobId",
+        "sessionToken"
+      ],
+      "members":{
+        "messages":{"shape":"CisSessionMessages"},
+        "scanJobId":{"shape":"UUID"},
+        "sessionToken":{"shape":"UUID"}
+      }
+    },
+    "SendCisSessionTelemetryResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "Service":{
       "type":"string",
@@ -3212,7 +4957,8 @@
         "VULNERABILITY_ID",
         "VULNERABILITY_SOURCE",
         "INSPECTOR_SCORE",
-        "VENDOR_SEVERITY"
+        "VENDOR_SEVERITY",
+        "EPSS_SCORE"
       ]
     },
     "SortOrder":{
@@ -3227,6 +4973,29 @@
       "max":71,
       "min":71,
       "pattern":"^sha256:[a-z0-9]{64}$"
+    },
+    "StartCisSessionMessage":{
+      "type":"structure",
+      "required":["sessionToken"],
+      "members":{
+        "sessionToken":{"shape":"UUID"}
+      }
+    },
+    "StartCisSessionRequest":{
+      "type":"structure",
+      "required":[
+        "message",
+        "scanJobId"
+      ],
+      "members":{
+        "message":{"shape":"StartCisSessionMessage"},
+        "scanJobId":{"shape":"UUID"}
+      }
+    },
+    "StartCisSessionResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "State":{
       "type":"structure",
@@ -3252,6 +5021,14 @@
         "SUSPENDED"
       ]
     },
+    "StatusCounts":{
+      "type":"structure",
+      "members":{
+        "failed":{"shape":"Integer"},
+        "passed":{"shape":"Integer"},
+        "skipped":{"shape":"Integer"}
+      }
+    },
     "Step":{
       "type":"structure",
       "required":[
@@ -3268,6 +5045,61 @@
       "member":{"shape":"Step"},
       "max":30,
       "min":1
+    },
+    "StopCisMessageProgress":{
+      "type":"structure",
+      "members":{
+        "errorChecks":{"shape":"CheckCount"},
+        "failedChecks":{"shape":"CheckCount"},
+        "informationalChecks":{"shape":"CheckCount"},
+        "notApplicableChecks":{"shape":"CheckCount"},
+        "notEvaluatedChecks":{"shape":"CheckCount"},
+        "successfulChecks":{"shape":"CheckCount"},
+        "totalChecks":{"shape":"CheckCount"},
+        "unknownChecks":{"shape":"CheckCount"}
+      }
+    },
+    "StopCisSessionMessage":{
+      "type":"structure",
+      "required":[
+        "progress",
+        "status"
+      ],
+      "members":{
+        "benchmarkProfile":{"shape":"BenchmarkProfile"},
+        "benchmarkVersion":{"shape":"BenchmarkVersion"},
+        "computePlatform":{"shape":"ComputePlatform"},
+        "progress":{"shape":"StopCisMessageProgress"},
+        "reason":{"shape":"Reason"},
+        "status":{"shape":"StopCisSessionStatus"}
+      }
+    },
+    "StopCisSessionRequest":{
+      "type":"structure",
+      "required":[
+        "message",
+        "scanJobId",
+        "sessionToken"
+      ],
+      "members":{
+        "message":{"shape":"StopCisSessionMessage"},
+        "scanJobId":{"shape":"UUID"},
+        "sessionToken":{"shape":"UUID"}
+      }
+    },
+    "StopCisSessionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "StopCisSessionStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "FAILED",
+        "INTERRUPTED",
+        "UNSUPPORTED_OS"
+      ]
     },
     "String":{"type":"string"},
     "StringComparison":{
@@ -3314,6 +5146,46 @@
       "max":16,
       "min":0
     },
+    "SuggestedFix":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"SuggestedFixCodeString"},
+        "description":{"shape":"SuggestedFixDescriptionString"}
+      }
+    },
+    "SuggestedFixCodeString":{
+      "type":"string",
+      "max":2500,
+      "min":1
+    },
+    "SuggestedFixDescriptionString":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
+    "SuggestedFixes":{
+      "type":"list",
+      "member":{"shape":"SuggestedFix"},
+      "max":5,
+      "min":1
+    },
+    "TagComparison":{
+      "type":"string",
+      "enum":["EQUALS"]
+    },
+    "TagFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "key",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"TagComparison"},
+        "key":{"shape":"NonEmptyString"},
+        "value":{"shape":"NonEmptyString"}
+      }
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -3355,10 +5227,45 @@
       "members":{
       }
     },
+    "TagValueList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5,
+      "min":1
+    },
     "Target":{
       "type":"string",
       "max":50,
       "min":0
+    },
+    "TargetAccount":{
+      "type":"string",
+      "pattern":"^\\d{12}|ALL_ACCOUNTS|SELF$"
+    },
+    "TargetAccountList":{
+      "type":"list",
+      "member":{"shape":"TargetAccount"},
+      "max":10000,
+      "min":1
+    },
+    "TargetResourceTags":{
+      "type":"map",
+      "key":{"shape":"NonEmptyString"},
+      "value":{"shape":"TagValueList"},
+      "max":5,
+      "min":1
+    },
+    "TargetStatusFilterList":{
+      "type":"list",
+      "member":{"shape":"CisTargetStatusFilter"},
+      "max":10,
+      "min":1
+    },
+    "TargetStatusReasonFilterList":{
+      "type":"list",
+      "member":{"shape":"CisTargetStatusReasonFilter"},
+      "max":10,
+      "min":1
     },
     "Targets":{
       "type":"list",
@@ -3383,10 +5290,31 @@
       "exception":true,
       "retryable":{"throttling":true}
     },
+    "Time":{
+      "type":"structure",
+      "required":[
+        "timeOfDay",
+        "timezone"
+      ],
+      "members":{
+        "timeOfDay":{"shape":"TimeOfDay"},
+        "timezone":{"shape":"Timezone"}
+      }
+    },
+    "TimeOfDay":{
+      "type":"string",
+      "pattern":"^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+    },
     "Timestamp":{"type":"timestamp"},
+    "Timezone":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
     "TitleAggregation":{
       "type":"structure",
       "members":{
+        "findingType":{"shape":"AggregationFindingType"},
         "resourceType":{"shape":"AggregationResourceType"},
         "sortBy":{"shape":"TitleSortBy"},
         "sortOrder":{"shape":"SortOrder"},
@@ -3404,6 +5332,12 @@
         "vulnerabilityId":{"shape":"String"}
       }
     },
+    "TitleFilterList":{
+      "type":"list",
+      "member":{"shape":"CisStringFilter"},
+      "max":10,
+      "min":1
+    },
     "TitleSortBy":{
       "type":"string",
       "enum":[
@@ -3411,6 +5345,14 @@
         "HIGH",
         "ALL"
       ]
+    },
+    "Tool":{
+      "type":"string",
+      "min":0
+    },
+    "Tools":{
+      "type":"list",
+      "member":{"shape":"Tool"}
     },
     "Ttp":{
       "type":"string",
@@ -3421,6 +5363,10 @@
       "type":"list",
       "member":{"shape":"Ttp"},
       "min":0
+    },
+    "UUID":{
+      "type":"string",
+      "pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -3446,10 +5392,35 @@
       "members":{
       }
     },
+    "UpdateCisScanConfigurationRequest":{
+      "type":"structure",
+      "required":["scanConfigurationArn"],
+      "members":{
+        "scanConfigurationArn":{"shape":"CisScanConfigurationArn"},
+        "scanName":{"shape":"CisScanName"},
+        "schedule":{"shape":"Schedule"},
+        "securityLevel":{"shape":"CisSecurityLevel"},
+        "targets":{"shape":"UpdateCisTargets"}
+      }
+    },
+    "UpdateCisScanConfigurationResponse":{
+      "type":"structure",
+      "required":["scanConfigurationArn"],
+      "members":{
+        "scanConfigurationArn":{"shape":"CisScanConfigurationArn"}
+      }
+    },
+    "UpdateCisTargets":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"TargetAccountList"},
+        "targetResourceTags":{"shape":"TargetResourceTags"}
+      }
+    },
     "UpdateConfigurationRequest":{
       "type":"structure",
-      "required":["ecrConfiguration"],
       "members":{
+        "ec2Configuration":{"shape":"Ec2Configuration"},
         "ecrConfiguration":{"shape":"EcrConfiguration"}
       }
     },
@@ -3472,6 +5443,24 @@
         "orgPackagePaths":{"shape":"PathList"},
         "packagePaths":{"shape":"PathList"},
         "status":{"shape":"Ec2DeepInspectionStatus"}
+      }
+    },
+    "UpdateEncryptionKeyRequest":{
+      "type":"structure",
+      "required":[
+        "kmsKeyId",
+        "resourceType",
+        "scanType"
+      ],
+      "members":{
+        "kmsKeyId":{"shape":"KmsKeyArn"},
+        "resourceType":{"shape":"ResourceType"},
+        "scanType":{"shape":"ScanType"}
+      }
+    },
+    "UpdateEncryptionKeyResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "UpdateFilterRequest":{
@@ -3559,7 +5548,8 @@
         "EC2_INSTANCE_HOURS",
         "ECR_INITIAL_SCAN",
         "ECR_RESCAN",
-        "LAMBDA_FUNCTION_HOURS"
+        "LAMBDA_FUNCTION_HOURS",
+        "LAMBDA_FUNCTION_CODE_HOURS"
       ]
     },
     "UsageValue":{
@@ -3605,6 +5595,11 @@
         "FIELD_VALIDATION_FAILED",
         "OTHER"
       ]
+    },
+    "Vendor":{
+      "type":"string",
+      "max":16,
+      "min":0
     },
     "VendorCreatedAt":{"type":"timestamp"},
     "VendorSeverity":{
@@ -3716,6 +5711,17 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "WeeklySchedule":{
+      "type":"structure",
+      "required":[
+        "days",
+        "startTime"
+      ],
+      "members":{
+        "days":{"shape":"DaysList"},
+        "startTime":{"shape":"Time"}
+      }
     }
   }
 }
