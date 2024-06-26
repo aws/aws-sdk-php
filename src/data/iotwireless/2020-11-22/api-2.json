@@ -4,11 +4,13 @@
     "apiVersion":"2020-11-22",
     "endpointPrefix":"api.iotwireless",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS IoT Wireless",
     "serviceId":"IoT Wireless",
     "signatureVersion":"v4",
     "signingName":"iotwireless",
-    "uid":"iotwireless-2020-11-22"
+    "uid":"iotwireless-2020-11-22",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateAwsAccountWithPartnerAccount":{
@@ -753,6 +755,41 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "GetMetricConfiguration":{
+      "name":"GetMetricConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/metric-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMetricConfigurationRequest"},
+      "output":{"shape":"GetMetricConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetMetrics":{
+      "name":"GetMetrics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metrics"
+      },
+      "input":{"shape":"GetMetricsRequest"},
+      "output":{"shape":"GetMetricsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetMulticastGroup":{
@@ -1694,6 +1731,25 @@
         {"shape":"ValidationException"}
       ]
     },
+    "UpdateMetricConfiguration":{
+      "name":"UpdateMetricConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/metric-configuration",
+        "responseCode":204
+      },
+      "input":{"shape":"UpdateMetricConfigurationRequest"},
+      "output":{"shape":"UpdateMetricConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "UpdateMulticastGroup":{
       "name":"UpdateMulticastGroup",
       "http":{
@@ -1891,6 +1947,14 @@
       "min":0
     },
     "AddGwMetadata":{"type":"boolean"},
+    "AggregationPeriod":{
+      "type":"string",
+      "enum":[
+        "OneHour",
+        "OneDay",
+        "OneWeek"
+      ]
+    },
     "AmazonId":{
       "type":"string",
       "max":2048
@@ -2093,6 +2157,7 @@
       }
     },
     "AutoCreateTasks":{"type":"boolean"},
+    "Avg":{"type":"double"},
     "BCCH":{
       "type":"integer",
       "max":1023,
@@ -2908,6 +2973,29 @@
       "type":"string",
       "max":2048
     },
+    "Dimension":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"DimensionName"},
+        "value":{"shape":"DimensionValue"}
+      }
+    },
+    "DimensionName":{
+      "type":"string",
+      "enum":[
+        "DeviceId",
+        "GatewayId"
+      ],
+      "max":256
+    },
+    "DimensionValue":{
+      "type":"string",
+      "max":256
+    },
+    "Dimensions":{
+      "type":"list",
+      "member":{"shape":"Dimension"}
+    },
     "DisassociateAwsAccountFromPartnerAccountRequest":{
       "type":"structure",
       "required":[
@@ -3052,6 +3140,7 @@
       "members":{
       }
     },
+    "DlAllowed":{"type":"boolean"},
     "DlBucketSize":{
       "type":"integer",
       "max":2147483647,
@@ -3278,7 +3367,8 @@
         "MissingFrag",
         "MemoryError",
         "MICError",
-        "Successful"
+        "Successful",
+        "Device_exist_in_conflict_fuota_task"
       ]
     },
     "FuotaTask":{
@@ -3447,6 +3537,29 @@
         "DefaultLogLevel":{"shape":"LogLevel"},
         "WirelessGatewayLogOptions":{"shape":"WirelessGatewayLogOptionList"},
         "WirelessDeviceLogOptions":{"shape":"WirelessDeviceLogOptionList"}
+      }
+    },
+    "GetMetricConfigurationRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetMetricConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "SummaryMetric":{"shape":"SummaryMetricConfiguration"}
+      }
+    },
+    "GetMetricsRequest":{
+      "type":"structure",
+      "members":{
+        "SummaryMetricQueries":{"shape":"SummaryMetricQueries"}
+      }
+    },
+    "GetMetricsResponse":{
+      "type":"structure",
+      "members":{
+        "SummaryMetricQueryResults":{"shape":"SummaryMetricQueryResults"}
       }
     },
     "GetMulticastGroupRequest":{
@@ -4047,6 +4160,10 @@
       "type":"string",
       "pattern":"^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$"
     },
+    "Id":{
+      "type":"string",
+      "max":256
+    },
     "Identifier":{
       "type":"string",
       "max":256
@@ -4645,7 +4762,8 @@
         "DataRate":{"shape":"Integer"},
         "Frequency":{"shape":"Integer"},
         "Timestamp":{"shape":"ISODateTimeString"},
-        "Gateways":{"shape":"LoRaWANGatewayMetadataList"}
+        "Gateways":{"shape":"LoRaWANGatewayMetadataList"},
+        "PublicGateways":{"shape":"LoRaWANPublicGatewayMetadataList"}
       }
     },
     "LoRaWANDeviceProfile":{
@@ -4797,6 +4915,21 @@
         "PingSlotPeriod":{"shape":"PingSlotPeriod"}
       }
     },
+    "LoRaWANPublicGatewayMetadata":{
+      "type":"structure",
+      "members":{
+        "ProviderNetId":{"shape":"ProviderNetId"},
+        "Id":{"shape":"Id"},
+        "Rssi":{"shape":"Double"},
+        "Snr":{"shape":"Double"},
+        "RfRegion":{"shape":"RfRegion"},
+        "DlAllowed":{"shape":"DlAllowed"}
+      }
+    },
+    "LoRaWANPublicGatewayMetadataList":{
+      "type":"list",
+      "member":{"shape":"LoRaWANPublicGatewayMetadata"}
+    },
     "LoRaWANSendDataToDevice":{
       "type":"structure",
       "members":{
@@ -4937,6 +5070,7 @@
       "type":"string",
       "max":64
     },
+    "Max":{"type":"double"},
     "MaxAllowedSignature":{"type":"integer"},
     "MaxDutyCycle":{
       "type":"integer",
@@ -4985,6 +5119,86 @@
         "CUSTOM_COMMAND_ID_RESP"
       ]
     },
+    "MetricName":{
+      "type":"string",
+      "enum":[
+        "DeviceRSSI",
+        "DeviceSNR",
+        "DeviceRoamingRSSI",
+        "DeviceRoamingSNR",
+        "DeviceUplinkCount",
+        "DeviceDownlinkCount",
+        "DeviceUplinkLostCount",
+        "DeviceUplinkLostRate",
+        "DeviceJoinRequestCount",
+        "DeviceJoinAcceptCount",
+        "DeviceRoamingUplinkCount",
+        "DeviceRoamingDownlinkCount",
+        "GatewayUpTime",
+        "GatewayDownTime",
+        "GatewayRSSI",
+        "GatewaySNR",
+        "GatewayUplinkCount",
+        "GatewayDownlinkCount",
+        "GatewayJoinRequestCount",
+        "GatewayJoinAcceptCount",
+        "AwsAccountUplinkCount",
+        "AwsAccountDownlinkCount",
+        "AwsAccountUplinkLostCount",
+        "AwsAccountUplinkLostRate",
+        "AwsAccountJoinRequestCount",
+        "AwsAccountJoinAcceptCount",
+        "AwsAccountRoamingUplinkCount",
+        "AwsAccountRoamingDownlinkCount",
+        "AwsAccountDeviceCount",
+        "AwsAccountGatewayCount",
+        "AwsAccountActiveDeviceCount",
+        "AwsAccountActiveGatewayCount"
+      ],
+      "max":256
+    },
+    "MetricQueryEndTimestamp":{"type":"timestamp"},
+    "MetricQueryError":{
+      "type":"string",
+      "max":256
+    },
+    "MetricQueryId":{
+      "type":"string",
+      "max":256
+    },
+    "MetricQueryStartTimestamp":{"type":"timestamp"},
+    "MetricQueryStatus":{
+      "type":"string",
+      "enum":[
+        "Succeeded",
+        "Failed"
+      ]
+    },
+    "MetricQueryTimestamp":{"type":"timestamp"},
+    "MetricQueryTimestamps":{
+      "type":"list",
+      "member":{"shape":"MetricQueryTimestamp"}
+    },
+    "MetricQueryValue":{
+      "type":"structure",
+      "members":{
+        "Min":{"shape":"Min"},
+        "Max":{"shape":"Max"},
+        "Sum":{"shape":"Sum"},
+        "Avg":{"shape":"Avg"},
+        "Std":{"shape":"Std"},
+        "P90":{"shape":"P90"}
+      }
+    },
+    "MetricQueryValues":{
+      "type":"list",
+      "member":{"shape":"MetricQueryValue"}
+    },
+    "MetricUnit":{
+      "type":"string",
+      "max":256
+    },
+    "Min":{"type":"double"},
     "MinGwDiversity":{
       "type":"integer",
       "max":100,
@@ -5131,6 +5345,7 @@
       "members":{
         "AppKey":{"shape":"AppKey"},
         "AppEui":{"shape":"AppEui"},
+        "JoinEui":{"shape":"JoinEui"},
         "GenAppKey":{"shape":"GenAppKey"}
       }
     },
@@ -5142,6 +5357,7 @@
         "JoinEui":{"shape":"JoinEui"}
       }
     },
+    "P90":{"type":"double"},
     "PCI":{
       "type":"integer",
       "max":503,
@@ -5306,6 +5522,10 @@
     "PrivateKeysList":{
       "type":"list",
       "member":{"shape":"CertificateList"}
+    },
+    "ProviderNetId":{
+      "type":"string",
+      "max":256
     },
     "ProximityEventConfiguration":{
       "type":"structure",
@@ -5900,6 +6120,7 @@
       "min":1
     },
     "StatusReason":{"type":"string"},
+    "Std":{"type":"double"},
     "SubBand":{
       "type":"integer",
       "max":8,
@@ -5910,6 +6131,55 @@
       "member":{"shape":"SubBand"},
       "max":8,
       "min":0
+    },
+    "Sum":{"type":"double"},
+    "SummaryMetricConfiguration":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"SummaryMetricConfigurationStatus"}
+      }
+    },
+    "SummaryMetricConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
+    },
+    "SummaryMetricQueries":{
+      "type":"list",
+      "member":{"shape":"SummaryMetricQuery"}
+    },
+    "SummaryMetricQuery":{
+      "type":"structure",
+      "members":{
+        "QueryId":{"shape":"MetricQueryId"},
+        "MetricName":{"shape":"MetricName"},
+        "Dimensions":{"shape":"Dimensions"},
+        "AggregationPeriod":{"shape":"AggregationPeriod"},
+        "StartTimestamp":{"shape":"MetricQueryStartTimestamp"},
+        "EndTimestamp":{"shape":"MetricQueryEndTimestamp"}
+      }
+    },
+    "SummaryMetricQueryResult":{
+      "type":"structure",
+      "members":{
+        "QueryId":{"shape":"MetricQueryId"},
+        "QueryStatus":{"shape":"MetricQueryStatus"},
+        "Error":{"shape":"MetricQueryError"},
+        "MetricName":{"shape":"MetricName"},
+        "Dimensions":{"shape":"Dimensions"},
+        "AggregationPeriod":{"shape":"AggregationPeriod"},
+        "StartTimestamp":{"shape":"MetricQueryStartTimestamp"},
+        "EndTimestamp":{"shape":"MetricQueryEndTimestamp"},
+        "Timestamps":{"shape":"MetricQueryTimestamps"},
+        "Values":{"shape":"MetricQueryValues"},
+        "Unit":{"shape":"MetricUnit"}
+      }
+    },
+    "SummaryMetricQueryResults":{
+      "type":"list",
+      "member":{"shape":"SummaryMetricQueryResult"}
     },
     "SupportedRfRegion":{
       "type":"string",
@@ -6256,6 +6526,17 @@
       }
     },
     "UpdateLogLevelsByResourceTypesResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateMetricConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "SummaryMetric":{"shape":"SummaryMetricConfiguration"}
+      }
+    },
+    "UpdateMetricConfigurationResponse":{
       "type":"structure",
       "members":{
       }

@@ -220,7 +220,8 @@
         {"shape":"EntityAlreadyExistsException"},
         {"shape":"LimitExceededException"},
         {"shape":"ConcurrentModificationException"},
-        {"shape":"ServiceFailureException"}
+        {"shape":"ServiceFailureException"},
+        {"shape":"OpenIdIdpCommunicationErrorException"}
       ]
     },
     "CreatePolicy":{
@@ -822,10 +823,7 @@
       "output":{
         "shape":"GetAccessKeyLastUsedResponse",
         "resultWrapper":"GetAccessKeyLastUsedResult"
-      },
-      "errors":[
-        {"shape":"NoSuchEntityException"}
-      ]
+      }
     },
     "GetAccountAuthorizationDetails":{
       "name":"GetAccountAuthorizationDetails",
@@ -977,6 +975,22 @@
       "output":{
         "shape":"GetLoginProfileResponse",
         "resultWrapper":"GetLoginProfileResult"
+      },
+      "errors":[
+        {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "GetMFADevice":{
+      "name":"GetMFADevice",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetMFADeviceRequest"},
+      "output":{
+        "shape":"GetMFADeviceResponse",
+        "resultWrapper":"GetMFADeviceResult"
       },
       "errors":[
         {"shape":"NoSuchEntityException"},
@@ -2606,6 +2620,23 @@
       "type":"blob",
       "sensitive":true
     },
+    "CertificationKeyType":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\u0020-\\u00FF]+"
+    },
+    "CertificationMapType":{
+      "type":"map",
+      "key":{"shape":"CertificationKeyType"},
+      "value":{"shape":"CertificationValueType"}
+    },
+    "CertificationValueType":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[\\u0020-\\u00FF]+"
+    },
     "ChangePasswordRequest":{
       "type":"structure",
       "required":[
@@ -2746,10 +2777,7 @@
     },
     "CreateOpenIDConnectProviderRequest":{
       "type":"structure",
-      "required":[
-        "Url",
-        "ThumbprintList"
-      ],
+      "required":["Url"],
       "members":{
         "Url":{"shape":"OpenIDConnectProviderUrlType"},
         "ClientIDList":{"shape":"clientIDListType"},
@@ -3527,6 +3555,24 @@
       "required":["LoginProfile"],
       "members":{
         "LoginProfile":{"shape":"LoginProfile"}
+      }
+    },
+    "GetMFADeviceRequest":{
+      "type":"structure",
+      "required":["SerialNumber"],
+      "members":{
+        "SerialNumber":{"shape":"serialNumberType"},
+        "UserName":{"shape":"userNameType"}
+      }
+    },
+    "GetMFADeviceResponse":{
+      "type":"structure",
+      "required":["SerialNumber"],
+      "members":{
+        "UserName":{"shape":"userNameType"},
+        "SerialNumber":{"shape":"serialNumberType"},
+        "EnableDate":{"shape":"dateType"},
+        "Certifications":{"shape":"CertificationMapType"}
       }
     },
     "GetOpenIDConnectProviderRequest":{
@@ -4626,6 +4672,18 @@
       "type":"string",
       "max":255,
       "min":1
+    },
+    "OpenIdIdpCommunicationErrorException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"openIdIdpCommunicationErrorExceptionMessage"}
+      },
+      "error":{
+        "code":"OpenIdIdpCommunicationError",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "OrganizationsDecisionDetail":{
       "type":"structure",
@@ -6050,6 +6108,7 @@
       "min":6
     },
     "noSuchEntityMessage":{"type":"string"},
+    "openIdIdpCommunicationErrorExceptionMessage":{"type":"string"},
     "organizationsEntityPathType":{
       "type":"string",
       "max":427,

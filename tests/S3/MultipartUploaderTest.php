@@ -317,20 +317,115 @@ class MultipartUploaderTest extends TestCase
         $uploader->upload();
     }
 
-    public function testFailedUploadPrintsPartialProgressBar()
+    /**
+     * @dataProvider testMultipartSuccessStreams
+     */
+    public function testUploaderAddsFlexibleChecksums($stream, $size)
     {
-        $partialBar = [ "Transfer initiated...\n|                    | 0.0%\n",
-                        "|==                  | 12.5%\n",
-                        "|=====               | 25.0%\n"];
-        $this->expectOutputString("{$partialBar[0]}{$partialBar[1]}{$partialBar[2]}");
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('s3');
+        $uploadOptions = [
+            'bucket'          => 'foo',
+            'key'             => 'bar',
+            'add_content_md5' => true,
+            'params'          => [
+                'RequestPayer'  => 'test',
+                'ChecksumAlgorithm' => 'Sha256'
+            ],
+            'before_initiate' => function($command) {
+                $this->assertSame('test', $command['RequestPayer']);
+                $this->assertSame('Sha256', $command['ChecksumAlgorithm']);
+            },
+            'before_upload'   => function($command) use ($size) {
+                $this->assertLessThan($size, $command['ContentLength']);
+                $this->assertSame('test', $command['RequestPayer']);
+                $this->assertSame('Sha256', $command['ChecksumAlgorithm']);
+            },
+            'before_complete' => function($command) {
+                $this->assertSame('test', $command['RequestPayer']);
+                $this->assertSame('Sha256', $command['ChecksumAlgorithm']);
+            }
+        ];
+        $url = 'http://foo.s3.amazonaws.com/bar';
 
-        $this->expectExceptionMessage("An exception occurred while uploading parts to a multipart upload");
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'baz', 'ChecksumSHA256' => 'xyz']),
+            new Result(['ETag' => 'A', 'ChecksumSHA256' => 'xyz']),
+            new Result(['ETag' => 'B', 'ChecksumSHA256' => 'xyz']),
+            new Result(['ETag' => 'C', 'ChecksumSHA256' => 'xyz']),
+            new Result(['Location' => $url, 'ChecksumSHA256' => 'xyz'])
+        ]);
+
+        $uploader = new MultipartUploader($client, $stream, $uploadOptions);
+        $result = $uploader->upload();
+
+        $this->assertTrue($uploader->getState()->isCompleted());
+        $this->assertSame('xyz', $result['ChecksumSHA256']);
+        $this->assertSame($url, $result['ObjectURL']);
+    }
+
+    public function testUploadPrintsProgress()
+    {
+        $progressBar = [
+            "Transfer initiated...\n|                    | 0.0%\n",
+            "|==                  | 12.5%\n",
+            "|=====               | 25.0%\n",
+            "|=======             | 37.5%\n",
+            "|==========          | 50.0%\n",
+            "|============        | 62.5%\n",
+            "|===============     | 75.0%\n",
+            "|=================   | 87.5%\n",
+            "|====================| 100.0%\nTransfer complete!\n"
+        ];
+        $client = $this->getTestClient('s3');
+        $uploadOptions = [
+            'bucket'          => 'foo',
+            'key'             => 'bar',
+            'display_progress' => true
+        ];
+        $this->expectOutputString(implode("", $progressBar));
+        $url = 'http://foo.s3.amazonaws.com/bar';
+
+        $size = 12 * self::MB;
+        $data = str_repeat('.', $size);
+        $filename = sys_get_temp_dir() . '/' . self::FILENAME;
+        file_put_contents($filename, $data);
+        $stream = Psr7\Utils::streamFor(fopen($filename, 'r'));
+
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'baz']),
+            new Result(['ETag' => 'A']),
+            new Result(['ETag' => 'B']),
+            new Result(['ETag' => 'C']),
+            new Result(['Location' => $url])
+        ]);
+
+        $uploader = new MultipartUploader($client, $stream, $uploadOptions);
+        $result = $uploader->upload();
+
+        $this->assertTrue($uploader->getState()->isCompleted());
+        $this->assertSame($url, $result['ObjectURL']);
+    }
+
+    public function testFailedUploadPrintsPartialProgress()
+    {
+        $partialBar = [
+            "Transfer initiated...\n|                    | 0.0%\n",
+            "|==                  | 12.5%\n",
+            "|=====               | 25.0%\n"
+        ];
+        $this->expectOutputString(implode("", $partialBar));
+
+        $this->expectExceptionMessage(
+            "An exception occurred while uploading parts to a multipart upload"
+        );
         $this->expectException(\Aws\S3\Exception\S3MultipartUploadException::class);
         $counter = 0;
 
         $httpHandler = function ($request, array $options) use (&$counter) {
             if ($counter < 4) {
-                $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><OperationNameResponse><UploadId>baz</UploadId></OperationNameResponse>";
+                $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" .
+                     "<OperationNameResponse><UploadId>baz</UploadId></OperationNameResponse>";
             } else {
                 $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n\n";
             }
@@ -356,7 +451,7 @@ class MultipartUploaderTest extends TestCase
             [
                 'bucket' => 'test-bucket',
                 'key' => 'test-key',
-                'track_upload' => true
+                'display_progress' => true
             ]
         );
         $uploader->upload();

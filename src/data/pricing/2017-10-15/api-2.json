@@ -23,10 +23,11 @@
       "input":{"shape":"DescribeServicesRequest"},
       "output":{"shape":"DescribeServicesResponse"},
       "errors":[
-        {"shape":"InternalErrorException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"NotFoundException"},
         {"shape":"InvalidNextTokenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ExpiredNextTokenException"}
       ]
     },
@@ -39,10 +40,11 @@
       "input":{"shape":"GetAttributeValuesRequest"},
       "output":{"shape":"GetAttributeValuesResponse"},
       "errors":[
-        {"shape":"InternalErrorException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"NotFoundException"},
         {"shape":"InvalidNextTokenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ExpiredNextTokenException"}
       ]
     },
@@ -55,10 +57,12 @@
       "input":{"shape":"GetPriceListFileUrlRequest"},
       "output":{"shape":"GetPriceListFileUrlResponse"},
       "errors":[
-        {"shape":"InternalErrorException"},
         {"shape":"InvalidParameterException"},
         {"shape":"NotFoundException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetProducts":{
@@ -70,10 +74,11 @@
       "input":{"shape":"GetProductsRequest"},
       "output":{"shape":"GetProductsResponse"},
       "errors":[
-        {"shape":"InternalErrorException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"NotFoundException"},
         {"shape":"InvalidNextTokenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ExpiredNextTokenException"}
       ]
     },
@@ -86,12 +91,14 @@
       "input":{"shape":"ListPriceListsRequest"},
       "output":{"shape":"ListPriceListsResponse"},
       "errors":[
-        {"shape":"InternalErrorException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"NotFoundException"},
         {"shape":"InvalidNextTokenException"},
-        {"shape":"ExpiredNextTokenException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ExpiredNextTokenException"}
       ]
     }
   },
@@ -119,12 +126,13 @@
     },
     "BoxedInteger":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
     "CurrencyCode":{
       "type":"string",
-      "pattern":"^[A-Z]{3}$"
+      "pattern":"[A-Z]{3}"
     },
     "DescribeServicesRequest":{
       "type":"structure",
@@ -132,10 +140,7 @@
         "ServiceCode":{"shape":"String"},
         "FormatVersion":{"shape":"String"},
         "NextToken":{"shape":"String"},
-        "MaxResults":{
-          "shape":"BoxedInteger",
-          "box":true
-        }
+        "MaxResults":{"shape":"BoxedInteger"}
       }
     },
     "DescribeServicesResponse":{
@@ -194,10 +199,7 @@
         "ServiceCode":{"shape":"String"},
         "AttributeName":{"shape":"String"},
         "NextToken":{"shape":"String"},
-        "MaxResults":{
-          "shape":"BoxedInteger",
-          "box":true
-        }
+        "MaxResults":{"shape":"BoxedInteger"}
       }
     },
     "GetAttributeValuesResponse":{
@@ -232,10 +234,7 @@
         "Filters":{"shape":"Filters"},
         "FormatVersion":{"shape":"String"},
         "NextToken":{"shape":"String"},
-        "MaxResults":{
-          "shape":"BoxedInteger",
-          "box":true
-        }
+        "MaxResults":{"shape":"BoxedInteger"}
       }
     },
     "GetProductsResponse":{
@@ -251,7 +250,9 @@
       "members":{
         "Message":{"shape":"errorMessage"}
       },
-      "exception":true
+      "exception":true,
+      "fault":true,
+      "retryable":{"throttling":false}
     },
     "InvalidNextTokenException":{
       "type":"structure",
@@ -292,6 +293,7 @@
     },
     "MaxResults":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
@@ -315,13 +317,12 @@
       "type":"string",
       "max":2048,
       "min":18,
-      "pattern":"^arn:.+:pricing::.*:price-list/.{1,255}/.{1,32}/[A-Z]{3}/[0-9]{14}/[^/]*$"
+      "pattern":"arn:[A-Za-z0-9][-.A-Za-z0-9]{0,62}:pricing:::price-list/[A-Za-z0-9+_/.-]{1,1023}"
     },
-    "PriceListJsonItem":{"type":"string"},
     "PriceListJsonItems":{
       "type":"list",
       "member":{
-        "shape":"PriceListJsonItem",
+        "shape":"SynthesizedJsonPriceListJsonItem",
         "jsonvalue":true
       }
     },
@@ -333,6 +334,13 @@
       "type":"string",
       "max":255,
       "min":1
+    },
+    "ResourceNotFoundException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"errorMessage"}
+      },
+      "exception":true
     },
     "Service":{
       "type":"structure",
@@ -352,6 +360,15 @@
       "member":{"shape":"Service"}
     },
     "String":{"type":"string"},
+    "SynthesizedJsonPriceListJsonItem":{"type":"string"},
+    "ThrottlingException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"errorMessage"}
+      },
+      "exception":true,
+      "retryable":{"throttling":true}
+    },
     "errorMessage":{"type":"string"}
   }
 }

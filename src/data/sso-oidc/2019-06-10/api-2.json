@@ -5,11 +5,12 @@
     "endpointPrefix":"oidc",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"SSO OIDC",
     "serviceFullName":"AWS SSO OIDC",
     "serviceId":"SSO OIDC",
     "signatureVersion":"v4",
-    "signingName":"awsssooidc",
+    "signingName":"sso-oauth",
     "uid":"sso-oidc-2019-06-10"
   },
   "operations":{
@@ -36,6 +37,29 @@
       ],
       "authtype":"none"
     },
+    "CreateTokenWithIAM":{
+      "name":"CreateTokenWithIAM",
+      "http":{
+        "method":"POST",
+        "requestUri":"/token?aws_iam=t"
+      },
+      "input":{"shape":"CreateTokenWithIAMRequest"},
+      "output":{"shape":"CreateTokenWithIAMResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidClientException"},
+        {"shape":"InvalidGrantException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"UnsupportedGrantTypeException"},
+        {"shape":"InvalidScopeException"},
+        {"shape":"AuthorizationPendingException"},
+        {"shape":"SlowDownException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ExpiredTokenException"},
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRequestRegionException"}
+      ]
+    },
     "RegisterClient":{
       "name":"RegisterClient",
       "http":{
@@ -48,7 +72,9 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidScopeException"},
         {"shape":"InvalidClientMetadataException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRedirectUriException"},
+        {"shape":"UnsupportedGrantTypeException"}
       ],
       "authtype":"none"
     },
@@ -80,7 +106,15 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
-    "AccessToken":{"type":"string"},
+    "AccessToken":{
+      "type":"string",
+      "sensitive":true
+    },
+    "ArnType":{"type":"string"},
+    "Assertion":{
+      "type":"string",
+      "sensitive":true
+    },
     "AuthCode":{"type":"string"},
     "AuthorizationPendingException":{
       "type":"structure",
@@ -93,8 +127,15 @@
     },
     "ClientId":{"type":"string"},
     "ClientName":{"type":"string"},
-    "ClientSecret":{"type":"string"},
+    "ClientSecret":{
+      "type":"string",
+      "sensitive":true
+    },
     "ClientType":{"type":"string"},
+    "CodeVerifier":{
+      "type":"string",
+      "sensitive":true
+    },
     "CreateTokenRequest":{
       "type":"structure",
       "required":[
@@ -110,7 +151,8 @@
         "code":{"shape":"AuthCode"},
         "refreshToken":{"shape":"RefreshToken"},
         "scope":{"shape":"Scopes"},
-        "redirectUri":{"shape":"URI"}
+        "redirectUri":{"shape":"URI"},
+        "codeVerifier":{"shape":"CodeVerifier"}
       }
     },
     "CreateTokenResponse":{
@@ -121,6 +163,38 @@
         "expiresIn":{"shape":"ExpirationInSeconds"},
         "refreshToken":{"shape":"RefreshToken"},
         "idToken":{"shape":"IdToken"}
+      }
+    },
+    "CreateTokenWithIAMRequest":{
+      "type":"structure",
+      "required":[
+        "clientId",
+        "grantType"
+      ],
+      "members":{
+        "clientId":{"shape":"ClientId"},
+        "grantType":{"shape":"GrantType"},
+        "code":{"shape":"AuthCode"},
+        "refreshToken":{"shape":"RefreshToken"},
+        "assertion":{"shape":"Assertion"},
+        "scope":{"shape":"Scopes"},
+        "redirectUri":{"shape":"URI"},
+        "subjectToken":{"shape":"SubjectToken"},
+        "subjectTokenType":{"shape":"TokenTypeURI"},
+        "requestedTokenType":{"shape":"TokenTypeURI"},
+        "codeVerifier":{"shape":"CodeVerifier"}
+      }
+    },
+    "CreateTokenWithIAMResponse":{
+      "type":"structure",
+      "members":{
+        "accessToken":{"shape":"AccessToken"},
+        "tokenType":{"shape":"TokenType"},
+        "expiresIn":{"shape":"ExpirationInSeconds"},
+        "refreshToken":{"shape":"RefreshToken"},
+        "idToken":{"shape":"IdToken"},
+        "issuedTokenType":{"shape":"TokenTypeURI"},
+        "scope":{"shape":"Scopes"}
       }
     },
     "DeviceCode":{"type":"string"},
@@ -137,7 +211,14 @@
       "exception":true
     },
     "GrantType":{"type":"string"},
-    "IdToken":{"type":"string"},
+    "GrantTypes":{
+      "type":"list",
+      "member":{"shape":"GrantType"}
+    },
+    "IdToken":{
+      "type":"string",
+      "sensitive":true
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -176,11 +257,31 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "InvalidRedirectUriException":{
+      "type":"structure",
+      "members":{
+        "error":{"shape":"Error"},
+        "error_description":{"shape":"ErrorDescription"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "InvalidRequestException":{
       "type":"structure",
       "members":{
         "error":{"shape":"Error"},
         "error_description":{"shape":"ErrorDescription"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "InvalidRequestRegionException":{
+      "type":"structure",
+      "members":{
+        "error":{"shape":"Error"},
+        "error_description":{"shape":"ErrorDescription"},
+        "endpoint":{"shape":"Location"},
+        "region":{"shape":"Region"}
       },
       "error":{"httpStatusCode":400},
       "exception":true
@@ -194,8 +295,17 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "Location":{"type":"string"},
     "LongTimeStampType":{"type":"long"},
-    "RefreshToken":{"type":"string"},
+    "RedirectUris":{
+      "type":"list",
+      "member":{"shape":"URI"}
+    },
+    "RefreshToken":{
+      "type":"string",
+      "sensitive":true
+    },
+    "Region":{"type":"string"},
     "RegisterClientRequest":{
       "type":"structure",
       "required":[
@@ -205,7 +315,11 @@
       "members":{
         "clientName":{"shape":"ClientName"},
         "clientType":{"shape":"ClientType"},
-        "scopes":{"shape":"Scopes"}
+        "scopes":{"shape":"Scopes"},
+        "redirectUris":{"shape":"RedirectUris"},
+        "grantTypes":{"shape":"GrantTypes"},
+        "issuerUrl":{"shape":"URI"},
+        "entitledApplicationArn":{"shape":"ArnType"}
       }
     },
     "RegisterClientResponse":{
@@ -257,7 +371,12 @@
         "interval":{"shape":"IntervalInSeconds"}
       }
     },
+    "SubjectToken":{
+      "type":"string",
+      "sensitive":true
+    },
     "TokenType":{"type":"string"},
+    "TokenTypeURI":{"type":"string"},
     "URI":{"type":"string"},
     "UnauthorizedClientException":{
       "type":"structure",

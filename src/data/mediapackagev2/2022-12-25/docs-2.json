@@ -33,6 +33,12 @@
       "refs": {
       }
     },
+    "AdMarkerDash": {
+      "base": null,
+      "refs": {
+        "ScteDash$AdMarkerDash": "<p>Choose how ad markers are included in the packaged content. If you include ad markers in the content stream in your upstream encoders, then you need to inform MediaPackage what to do with the ad markers in the output.</p> <p>Value description:</p> <ul> <li> <p> <code>Binary</code> - The SCTE-35 marker is expressed as a hex-string (Base64 string) rather than full XML.</p> </li> <li> <p> <code>XML</code> - The SCTE marker is expressed fully in XML.</p> </li> </ul>"
+      }
+    },
     "AdMarkerHls": {
       "base": null,
       "refs": {
@@ -119,6 +125,43 @@
       "refs": {
       }
     },
+    "CreateDashManifestConfiguration": {
+      "base": "<p>Create a DASH manifest configuration.</p>",
+      "refs": {
+        "CreateDashManifests$member": null
+      }
+    },
+    "CreateDashManifestConfigurationManifestWindowSecondsInteger": {
+      "base": null,
+      "refs": {
+        "CreateDashManifestConfiguration$ManifestWindowSeconds": "<p>The total duration (in seconds) of the manifest's content.</p>"
+      }
+    },
+    "CreateDashManifestConfigurationMinBufferTimeSecondsInteger": {
+      "base": null,
+      "refs": {
+        "CreateDashManifestConfiguration$MinBufferTimeSeconds": "<p>Minimum amount of content (in seconds) that a player must keep available in the buffer.</p>"
+      }
+    },
+    "CreateDashManifestConfigurationMinUpdatePeriodSecondsInteger": {
+      "base": null,
+      "refs": {
+        "CreateDashManifestConfiguration$MinUpdatePeriodSeconds": "<p>Minimum amount of time (in seconds) that the player should wait before requesting updates to the manifest.</p>"
+      }
+    },
+    "CreateDashManifestConfigurationSuggestedPresentationDelaySecondsInteger": {
+      "base": null,
+      "refs": {
+        "CreateDashManifestConfiguration$SuggestedPresentationDelaySeconds": "<p>The amount of time (in seconds) that the player should be from the end of the manifest.</p>"
+      }
+    },
+    "CreateDashManifests": {
+      "base": null,
+      "refs": {
+        "CreateOriginEndpointRequest$DashManifests": "<p>A DASH manifest configuration.</p>",
+        "UpdateOriginEndpointRequest$DashManifests": "<p>A DASH manifest configuration.</p>"
+      }
+    },
     "CreateHlsManifestConfiguration": {
       "base": "<p>Create an HTTP live streaming (HLS) manifest configuration.</p>",
       "refs": {
@@ -183,6 +226,52 @@
     "CreateOriginEndpointResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "DashDrmSignaling": {
+      "base": null,
+      "refs": {
+        "CreateDashManifestConfiguration$DrmSignaling": "<p>Determines how the DASH manifest signals the DRM content.</p>",
+        "GetDashManifestConfiguration$DrmSignaling": "<p>Determines how the DASH manifest signals the DRM content.</p>"
+      }
+    },
+    "DashPeriodTrigger": {
+      "base": null,
+      "refs": {
+        "DashPeriodTriggers$member": null
+      }
+    },
+    "DashPeriodTriggers": {
+      "base": null,
+      "refs": {
+        "CreateDashManifestConfiguration$PeriodTriggers": "<p>A list of triggers that controls when AWS Elemental MediaPackage separates the MPEG-DASH manifest into multiple periods. Type <code>ADS</code> to indicate that AWS Elemental MediaPackage must create periods in the output manifest that correspond to SCTE-35 ad markers in the input source. Leave this value empty to indicate that the manifest is contained all in one period. For more information about periods in the DASH manifest, see <a href=\"https://docs.aws.amazon.com/mediapackage/latest/userguide/multi-period.html\">Multi-period DASH in AWS Elemental MediaPackage</a>.</p>",
+        "GetDashManifestConfiguration$PeriodTriggers": "<p>A list of triggers that controls when AWS Elemental MediaPackage separates the MPEG-DASH manifest into multiple periods. Leave this value empty to indicate that the manifest is contained all in one period. For more information about periods in the DASH manifest, see <a href=\"https://docs.aws.amazon.com/mediapackage/latest/userguide/multi-period.html\">Multi-period DASH in AWS Elemental MediaPackage</a>.</p>"
+      }
+    },
+    "DashSegmentTemplateFormat": {
+      "base": null,
+      "refs": {
+        "CreateDashManifestConfiguration$SegmentTemplateFormat": "<p>Determines the type of variable used in the <code>media</code> URL of the <code>SegmentTemplate</code> tag in the manifest. Also specifies if segment timeline information is included in <code>SegmentTimeline</code> or <code>SegmentTemplate</code>.</p> <p>Value description:</p> <ul> <li> <p> <code>NUMBER_WITH_TIMELINE</code> - The <code>$Number$</code> variable is used in the <code>media</code> URL. The value of this variable is the sequential number of the segment. A full <code>SegmentTimeline</code> object is presented in each <code>SegmentTemplate</code>.</p> </li> </ul>",
+        "GetDashManifestConfiguration$SegmentTemplateFormat": "<p>Determines the type of variable used in the <code>media</code> URL of the <code>SegmentTemplate</code> tag in the manifest. Also specifies if segment timeline information is included in <code>SegmentTimeline</code> or <code>SegmentTemplate</code>.</p> <p>Value description:</p> <ul> <li> <p> <code>NUMBER_WITH_TIMELINE</code> - The <code>$Number$</code> variable is used in the <code>media</code> URL. The value of this variable is the sequential number of the segment. A full <code>SegmentTimeline</code> object is presented in each <code>SegmentTemplate</code>.</p> </li> </ul>"
+      }
+    },
+    "DashUtcTiming": {
+      "base": "<p>Determines the type of UTC timing included in the DASH Media Presentation Description (MPD).</p>",
+      "refs": {
+        "CreateDashManifestConfiguration$UtcTiming": "<p>Determines the type of UTC timing included in the DASH Media Presentation Description (MPD).</p>",
+        "GetDashManifestConfiguration$UtcTiming": "<p>Determines the type of UTC timing included in the DASH Media Presentation Description (MPD).</p>"
+      }
+    },
+    "DashUtcTimingMode": {
+      "base": null,
+      "refs": {
+        "DashUtcTiming$TimingMode": "<p>The UTC timing mode.</p>"
+      }
+    },
+    "DashUtcTimingTimingSourceString": {
+      "base": null,
+      "refs": {
+        "DashUtcTiming$TimingSource": "<p>The the method that the player uses to synchronize to coordinated universal time (UTC) wall clock time.</p>"
       }
     },
     "DeleteChannelGroupRequest": {
@@ -271,6 +360,69 @@
         "Encryption$EncryptionMethod": "<p>The encryption method to use.</p>"
       }
     },
+    "EndpointErrorCondition": {
+      "base": null,
+      "refs": {
+        "EndpointErrorConditions$member": null
+      }
+    },
+    "EndpointErrorConditions": {
+      "base": null,
+      "refs": {
+        "ForceEndpointErrorConfiguration$EndpointErrorConditions": "<p>The failover conditions for the endpoint. The options are:</p> <ul> <li> <p> <code>STALE_MANIFEST</code> - The manifest stalled and there are no new segments or parts.</p> </li> <li> <p> <code>INCOMPLETE_MANIFEST</code> - There is a gap in the manifest.</p> </li> <li> <p> <code>MISSING_DRM_KEY</code> - Key rotation is enabled but we're unable to fetch the key for the current key period.</p> </li> <li> <p> <code>SLATE_INPUT</code> - The segments which contain slate content are considered to be missing content.</p> </li> </ul>"
+      }
+    },
+    "EntityTag": {
+      "base": null,
+      "refs": {
+        "CreateChannelGroupResponse$ETag": "<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>",
+        "CreateChannelResponse$ETag": "<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>",
+        "CreateOriginEndpointResponse$ETag": "<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>",
+        "GetChannelGroupResponse$ETag": "<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>",
+        "GetChannelResponse$ETag": "<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>",
+        "GetOriginEndpointResponse$ETag": "<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>",
+        "UpdateChannelGroupRequest$ETag": "<p>The expected current Entity Tag (ETag) for the resource. If the specified ETag does not match the resource's current entity tag, the update request will be rejected.</p>",
+        "UpdateChannelGroupResponse$ETag": "<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>",
+        "UpdateChannelRequest$ETag": "<p>The expected current Entity Tag (ETag) for the resource. If the specified ETag does not match the resource's current entity tag, the update request will be rejected.</p>",
+        "UpdateChannelResponse$ETag": "<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>",
+        "UpdateOriginEndpointRequest$ETag": "<p>The expected current Entity Tag (ETag) for the resource. If the specified ETag does not match the resource's current entity tag, the update request will be rejected.</p>",
+        "UpdateOriginEndpointResponse$ETag": "<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>"
+      }
+    },
+    "FilterConfiguration": {
+      "base": "<p>Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest. </p>",
+      "refs": {
+        "CreateDashManifestConfiguration$FilterConfiguration": null,
+        "CreateHlsManifestConfiguration$FilterConfiguration": null,
+        "CreateLowLatencyHlsManifestConfiguration$FilterConfiguration": null,
+        "GetDashManifestConfiguration$FilterConfiguration": null,
+        "GetHlsManifestConfiguration$FilterConfiguration": null,
+        "GetLowLatencyHlsManifestConfiguration$FilterConfiguration": null
+      }
+    },
+    "FilterConfigurationManifestFilterString": {
+      "base": null,
+      "refs": {
+        "FilterConfiguration$ManifestFilter": "<p>Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL.</p>"
+      }
+    },
+    "FilterConfigurationTimeDelaySecondsInteger": {
+      "base": null,
+      "refs": {
+        "FilterConfiguration$TimeDelaySeconds": "<p>Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.</p>"
+      }
+    },
+    "ForceEndpointErrorConfiguration": {
+      "base": "<p>The failover settings for the endpoint.</p>",
+      "refs": {
+        "CreateOriginEndpointRequest$ForceEndpointErrorConfiguration": "<p>The failover settings for the endpoint.</p>",
+        "CreateOriginEndpointResponse$ForceEndpointErrorConfiguration": "<p>The failover settings for the endpoint.</p>",
+        "GetOriginEndpointResponse$ForceEndpointErrorConfiguration": "<p>The failover settings for the endpoint.</p>",
+        "OriginEndpointListConfiguration$ForceEndpointErrorConfiguration": "<p>The failover settings for the endpoint.</p>",
+        "UpdateOriginEndpointRequest$ForceEndpointErrorConfiguration": "<p>The failover settings for the endpoint.</p>",
+        "UpdateOriginEndpointResponse$ForceEndpointErrorConfiguration": "<p>The failover settings for the endpoint.</p>"
+      }
+    },
     "GetChannelGroupRequest": {
       "base": null,
       "refs": {
@@ -299,6 +451,20 @@
     "GetChannelResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "GetDashManifestConfiguration": {
+      "base": "<p>Retrieve the DASH manifest configuration.</p>",
+      "refs": {
+        "GetDashManifests$member": null
+      }
+    },
+    "GetDashManifests": {
+      "base": null,
+      "refs": {
+        "CreateOriginEndpointResponse$DashManifests": "<p>A DASH manifest configuration.</p>",
+        "GetOriginEndpointResponse$DashManifests": "<p>A DASH manifest configuration.</p>",
+        "UpdateOriginEndpointResponse$DashManifests": "<p>A DASH manifest configuration.</p>"
       }
     },
     "GetHlsManifestConfiguration": {
@@ -371,10 +537,24 @@
         "UpdateChannelResponse$IngestEndpoints": null
       }
     },
+    "InputType": {
+      "base": null,
+      "refs": {
+        "ChannelListConfiguration$InputType": "<p>The input type will be an immutable field which will be used to define whether the channel will allow CMAF ingest or HLS ingest. If unprovided, it will default to HLS to preserve current behavior.</p> <p>The allowed values are:</p> <ul> <li> <p> <code>HLS</code> - The HLS streaming specification (which defines M3U8 manifests and TS segments).</p> </li> <li> <p> <code>CMAF</code> - The DASH-IF CMAF Ingest specification (which defines CMAF segments with optional DASH manifests).</p> </li> </ul>",
+        "CreateChannelRequest$InputType": "<p>The input type will be an immutable field which will be used to define whether the channel will allow CMAF ingest or HLS ingest. If unprovided, it will default to HLS to preserve current behavior.</p> <p>The allowed values are:</p> <ul> <li> <p> <code>HLS</code> - The HLS streaming specification (which defines M3U8 manifests and TS segments).</p> </li> <li> <p> <code>CMAF</code> - The DASH-IF CMAF Ingest specification (which defines CMAF segments with optional DASH manifests).</p> </li> </ul>",
+        "CreateChannelResponse$InputType": "<p>The input type will be an immutable field which will be used to define whether the channel will allow CMAF ingest or HLS ingest. If unprovided, it will default to HLS to preserve current behavior.</p> <p>The allowed values are:</p> <ul> <li> <p> <code>HLS</code> - The HLS streaming specification (which defines M3U8 manifests and TS segments).</p> </li> <li> <p> <code>CMAF</code> - The DASH-IF CMAF Ingest specification (which defines CMAF segments with optional DASH manifests).</p> </li> </ul>",
+        "GetChannelResponse$InputType": "<p>The input type will be an immutable field which will be used to define whether the channel will allow CMAF ingest or HLS ingest. If unprovided, it will default to HLS to preserve current behavior.</p> <p>The allowed values are:</p> <ul> <li> <p> <code>HLS</code> - The HLS streaming specification (which defines M3U8 manifests and TS segments).</p> </li> <li> <p> <code>CMAF</code> - The DASH-IF CMAF Ingest specification (which defines CMAF segments with optional DASH manifests).</p> </li> </ul>",
+        "UpdateChannelResponse$InputType": "<p>The input type will be an immutable field which will be used to define whether the channel will allow CMAF ingest or HLS ingest. If unprovided, it will default to HLS to preserve current behavior.</p> <p>The allowed values are:</p> <ul> <li> <p> <code>HLS</code> - The HLS streaming specification (which defines M3U8 manifests and TS segments).</p> </li> <li> <p> <code>CMAF</code> - The DASH-IF CMAF Ingest specification (which defines CMAF segments with optional DASH manifests).</p> </li> </ul>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
         "CreateOriginEndpointResponse$StartoverWindowSeconds": "<p>The size of the window (in seconds) to create a window of the live stream that's available for on-demand viewing. Viewers can start-over or catch-up on content that falls within the window.</p>",
+        "GetDashManifestConfiguration$ManifestWindowSeconds": "<p>The total duration (in seconds) of the manifest's content.</p>",
+        "GetDashManifestConfiguration$MinUpdatePeriodSeconds": "<p>Minimum amount of time (in seconds) that the player should wait before requesting updates to the manifest.</p>",
+        "GetDashManifestConfiguration$MinBufferTimeSeconds": "<p>Minimum amount of content (in seconds) that a player must keep available in the buffer.</p>",
+        "GetDashManifestConfiguration$SuggestedPresentationDelaySeconds": "<p>The amount of time (in seconds) that the player should be from the end of the manifest.</p>",
         "GetHlsManifestConfiguration$ManifestWindowSeconds": "<p>The total duration (in seconds) of the manifest's content.</p>",
         "GetHlsManifestConfiguration$ProgramDateTimeIntervalSeconds": "<p>Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. ID3Timed metadata messages generate every 5 seconds whenever the content is ingested.</p> <p>Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.</p>",
         "GetLowLatencyHlsManifestConfiguration$ManifestWindowSeconds": "<p>The total duration (in seconds) of the manifest's content.</p>",
@@ -406,6 +586,18 @@
     "ListChannelsResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "ListDashManifestConfiguration": {
+      "base": "<p>List the DASH manifest configuration.</p>",
+      "refs": {
+        "ListDashManifests$member": null
+      }
+    },
+    "ListDashManifests": {
+      "base": null,
+      "refs": {
+        "OriginEndpointListConfiguration$DashManifests": "<p>A DASH manifest configuration.</p>"
       }
     },
     "ListHlsManifestConfiguration": {
@@ -463,6 +655,7 @@
     "ManifestName": {
       "base": null,
       "refs": {
+        "CreateDashManifestConfiguration$ManifestName": "<p>A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint.</p>",
         "CreateHlsManifestConfiguration$ManifestName": "<p>A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.</p>",
         "CreateHlsManifestConfiguration$ChildManifestName": "<p>A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index, with an added suffix to distinguish it from the manifest name. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.</p>",
         "CreateLowLatencyHlsManifestConfiguration$ManifestName": "<p>A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.</p>",
@@ -484,6 +677,8 @@
     "PolicyText": {
       "base": null,
       "refs": {
+        "GetChannelPolicyResponse$Policy": "<p>The policy assigned to the channel.</p>",
+        "GetOriginEndpointPolicyResponse$Policy": "<p>The policy assigned to the origin endpoint.</p>",
         "PutChannelPolicyRequest$Policy": "<p>The policy to attach to the specified channel.</p>",
         "PutOriginEndpointPolicyRequest$Policy": "<p>The policy to attach to the specified origin endpoint.</p>"
       }
@@ -523,14 +718,22 @@
     "ResourceDescription": {
       "base": null,
       "refs": {
+        "ChannelGroupListConfiguration$Description": "<p>Any descriptive information that you want to add to the channel group for future identification purposes.</p>",
+        "ChannelListConfiguration$Description": "<p>Any descriptive information that you want to add to the channel for future identification purposes.</p>",
         "CreateChannelGroupRequest$Description": "<p>Enter any descriptive text that helps you to identify the channel group.</p>",
+        "CreateChannelGroupResponse$Description": "<p>The description for your channel group.</p>",
         "CreateChannelRequest$Description": "<p>Enter any descriptive text that helps you to identify the channel.</p>",
+        "CreateChannelResponse$Description": "<p>The description for your channel.</p>",
         "CreateOriginEndpointRequest$Description": "<p>Enter any descriptive text that helps you to identify the origin endpoint.</p>",
         "CreateOriginEndpointResponse$Description": "<p>The description for your origin endpoint.</p>",
+        "GetChannelGroupResponse$Description": "<p>The description for your channel group.</p>",
+        "GetChannelResponse$Description": "<p>The description for your channel.</p>",
         "GetOriginEndpointResponse$Description": "<p>The description for your origin endpoint.</p>",
         "OriginEndpointListConfiguration$Description": "<p>Any descriptive information that you want to add to the origin endpoint for future identification purposes.</p>",
         "UpdateChannelGroupRequest$Description": "<p>Any descriptive information that you want to add to the channel group for future identification purposes.</p>",
+        "UpdateChannelGroupResponse$Description": "<p>The description for your channel group.</p>",
         "UpdateChannelRequest$Description": "<p>Any descriptive information that you want to add to the channel for future identification purposes.</p>",
+        "UpdateChannelResponse$Description": "<p>The description for your channel.</p>",
         "UpdateOriginEndpointRequest$Description": "<p>Any descriptive information that you want to add to the origin endpoint for future identification purposes.</p>",
         "UpdateOriginEndpointResponse$Description": "<p>The description of the origin endpoint.</p>"
       }
@@ -563,6 +766,7 @@
         "GetChannelPolicyRequest$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group. </p>",
         "GetChannelRequest$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
         "GetChannelRequest$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group. </p>",
+        "GetDashManifestConfiguration$ManifestName": "<p>A short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. </p>",
         "GetHlsManifestConfiguration$ManifestName": "<p>A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.</p>",
         "GetHlsManifestConfiguration$ChildManifestName": "<p>A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default child manifest name, index_1. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.</p>",
         "GetLowLatencyHlsManifestConfiguration$ManifestName": "<p>A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.</p>",
@@ -570,6 +774,9 @@
         "GetOriginEndpointPolicyRequest$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
         "GetOriginEndpointPolicyRequest$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group. </p>",
         "GetOriginEndpointPolicyRequest$OriginEndpointName": "<p>The name that describes the origin endpoint. The name is the primary identifier for the origin endpoint, and and must be unique for your account in the AWS Region and channel. </p>",
+        "GetOriginEndpointPolicyResponse$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
+        "GetOriginEndpointPolicyResponse$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.</p>",
+        "GetOriginEndpointPolicyResponse$OriginEndpointName": "<p>The name that describes the origin endpoint. The name is the primary identifier for the origin endpoint, and and must be unique for your account in the AWS Region and channel.</p>",
         "GetOriginEndpointRequest$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
         "GetOriginEndpointRequest$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group. </p>",
         "GetOriginEndpointRequest$OriginEndpointName": "<p>The name that describes the origin endpoint. The name is the primary identifier for the origin endpoint, and and must be unique for your account in the AWS Region and channel. </p>",
@@ -577,6 +784,7 @@
         "GetOriginEndpointResponse$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.</p>",
         "GetOriginEndpointResponse$OriginEndpointName": "<p>The name that describes the origin endpoint. The name is the primary identifier for the origin endpoint, and and must be unique for your account in the AWS Region and channel.</p>",
         "ListChannelsRequest$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
+        "ListDashManifestConfiguration$ManifestName": "<p>A short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. </p>",
         "ListHlsManifestConfiguration$ManifestName": "<p>A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.</p>",
         "ListHlsManifestConfiguration$ChildManifestName": "<p>A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default child manifest name, index_1. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.</p>",
         "ListLowLatencyHlsManifestConfiguration$ManifestName": "<p>A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.</p>",
@@ -617,6 +825,13 @@
       "base": "<p>The SCTE configuration.</p>",
       "refs": {
         "Segment$Scte": "<p>The SCTE configuration options in the segment settings.</p>"
+      }
+    },
+    "ScteDash": {
+      "base": "<p>The SCTE configuration.</p>",
+      "refs": {
+        "CreateDashManifestConfiguration$ScteDash": "<p>The SCTE configuration.</p>",
+        "GetDashManifestConfiguration$ScteDash": "<p>The SCTE configuration.</p>"
       }
     },
     "ScteFilter": {
@@ -703,38 +918,28 @@
         "AccessDeniedException$Message": null,
         "ChannelGroupListConfiguration$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
         "ChannelGroupListConfiguration$Arn": "<p>The Amazon Resource Name (ARN) associated with the resource.</p>",
-        "ChannelGroupListConfiguration$Description": "<p>Any descriptive information that you want to add to the channel group for future identification purposes.</p>",
         "ChannelListConfiguration$Arn": "<p>The Amazon Resource Name (ARN) associated with the resource.</p>",
         "ChannelListConfiguration$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group. </p>",
         "ChannelListConfiguration$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
-        "ChannelListConfiguration$Description": "<p>Any descriptive information that you want to add to the channel for future identification purposes.</p>",
         "ConflictException$Message": null,
         "CreateChannelGroupResponse$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
         "CreateChannelGroupResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the resource.</p>",
         "CreateChannelGroupResponse$EgressDomain": "<p>The output domain where the source stream should be sent. Integrate the egress domain with a downstream CDN (such as Amazon CloudFront) or playback device.</p>",
-        "CreateChannelGroupResponse$Description": "<p>The description for your channel group.</p>",
         "CreateChannelResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the resource.</p>",
         "CreateChannelResponse$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.</p>",
         "CreateChannelResponse$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
-        "CreateChannelResponse$Description": "<p>The description for your channel.</p>",
         "CreateOriginEndpointResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the resource.</p>",
         "GetChannelGroupResponse$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
         "GetChannelGroupResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the resource.</p>",
         "GetChannelGroupResponse$EgressDomain": "<p>The output domain where the source stream should be sent. Integrate the domain with a downstream CDN (such as Amazon CloudFront) or playback device.</p>",
-        "GetChannelGroupResponse$Description": "<p>The description for your channel group.</p>",
         "GetChannelPolicyResponse$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
         "GetChannelPolicyResponse$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.</p>",
-        "GetChannelPolicyResponse$Policy": "<p>The policy assigned to the channel.</p>",
         "GetChannelResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the resource.</p>",
         "GetChannelResponse$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.</p>",
         "GetChannelResponse$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
-        "GetChannelResponse$Description": "<p>The description for your channel.</p>",
+        "GetDashManifestConfiguration$Url": "<p>The egress domain URL for stream delivery from MediaPackage.</p>",
         "GetHlsManifestConfiguration$Url": "<p>The egress domain URL for stream delivery from MediaPackage.</p>",
         "GetLowLatencyHlsManifestConfiguration$Url": "<p>The egress domain URL for stream delivery from MediaPackage.</p>",
-        "GetOriginEndpointPolicyResponse$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
-        "GetOriginEndpointPolicyResponse$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.</p>",
-        "GetOriginEndpointPolicyResponse$OriginEndpointName": "<p>The name that describes the origin endpoint. The name is the primary identifier for the origin endpoint, and and must be unique for your account in the AWS Region and channel.</p>",
-        "GetOriginEndpointPolicyResponse$Policy": "<p>The policy assigned to the origin endpoint.</p>",
         "GetOriginEndpointResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the resource.</p>",
         "IngestEndpoint$Id": "<p>The system-generated unique identifier for the IngestEndpoint.</p>",
         "IngestEndpoint$Url": "<p>The ingest domain URL where the source stream should be sent.</p>",
@@ -743,6 +948,7 @@
         "ListChannelGroupsResponse$NextToken": "<p>The pagination token from the GET list request. Use the token to fetch the next page of results.</p>",
         "ListChannelsRequest$NextToken": "<p>The pagination token from the GET list request. Use the token to fetch the next page of results.</p>",
         "ListChannelsResponse$NextToken": "<p>The pagination token from the GET list request.</p>",
+        "ListDashManifestConfiguration$Url": "<p>The egress domain URL for stream delivery from MediaPackage.</p>",
         "ListHlsManifestConfiguration$Url": "<p>The egress domain URL for stream delivery from MediaPackage.</p>",
         "ListLowLatencyHlsManifestConfiguration$Url": "<p>The egress domain URL for stream delivery from MediaPackage.</p>",
         "ListOriginEndpointsRequest$NextToken": "<p>The pagination token from the GET list request. Use the token to fetch the next page of results.</p>",
@@ -754,11 +960,9 @@
         "UpdateChannelGroupResponse$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
         "UpdateChannelGroupResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the resource.</p>",
         "UpdateChannelGroupResponse$EgressDomain": "<p>The output domain where the source stream is sent. Integrate the domain with a downstream CDN (such as Amazon CloudFront) or playback device.</p>",
-        "UpdateChannelGroupResponse$Description": "<p>The description for your channel group.</p>",
         "UpdateChannelResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the resource.</p>",
         "UpdateChannelResponse$ChannelName": "<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.</p>",
         "UpdateChannelResponse$ChannelGroupName": "<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>",
-        "UpdateChannelResponse$Description": "<p>The description for your channel.</p>",
         "UpdateOriginEndpointResponse$Arn": "<p>The ARN associated with the resource.</p>",
         "ValidationException$Message": null
       }
@@ -832,6 +1036,8 @@
         "CreateChannelResponse$ModifiedAt": "<p>The date and time the channel was modified.</p>",
         "CreateOriginEndpointResponse$CreatedAt": "<p>The date and time the origin endpoint was created.</p>",
         "CreateOriginEndpointResponse$ModifiedAt": "<p>The date and time the origin endpoint was modified.</p>",
+        "FilterConfiguration$Start": "<p>Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.</p>",
+        "FilterConfiguration$End": "<p>Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.</p>",
         "GetChannelGroupResponse$CreatedAt": "<p>The date and time the channel group was created.</p>",
         "GetChannelGroupResponse$ModifiedAt": "<p>The date and time the channel group was modified.</p>",
         "GetChannelResponse$CreatedAt": "<p>The date and time the channel was created.</p>",

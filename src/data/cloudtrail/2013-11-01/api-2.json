@@ -5,12 +5,14 @@
     "endpointPrefix":"cloudtrail",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"CloudTrail",
     "serviceFullName":"AWS CloudTrail",
     "serviceId":"CloudTrail",
     "signatureVersion":"v4",
     "targetPrefix":"com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101",
-    "uid":"cloudtrail-2013-11-01"
+    "uid":"cloudtrail-2013-11-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddTags":{
@@ -138,6 +140,7 @@
         {"shape":"TrailNotProvidedException"},
         {"shape":"TagsLimitExceededException"},
         {"shape":"InvalidParameterCombinationException"},
+        {"shape":"InvalidParameterException"},
         {"shape":"KmsKeyNotFoundException"},
         {"shape":"KmsKeyDisabledException"},
         {"shape":"KmsException"},
@@ -154,7 +157,8 @@
         {"shape":"OrganizationNotInAllFeaturesModeException"},
         {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"CloudTrailInvalidClientTokenIdException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -193,7 +197,9 @@
         {"shape":"NotOrganizationMasterAccountException"},
         {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"ChannelExistsForEDSException"},
-        {"shape":"InsufficientDependencyServiceAccessPermissionException"}
+        {"shape":"InsufficientDependencyServiceAccessPermissionException"},
+        {"shape":"ConflictException"},
+        {"shape":"EventDataStoreFederationEnabledException"}
       ]
     },
     "DeleteResourcePolicy":{
@@ -227,6 +233,7 @@
         {"shape":"InvalidTrailNameException"},
         {"shape":"CloudTrailARNInvalidException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InvalidHomeRegionException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
@@ -291,9 +298,61 @@
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"InvalidTrailNameException"},
+        {"shape":"CloudTrailARNInvalidException"},
         {"shape":"NoManagementAccountSLRExistsException"}
       ],
       "idempotent":true
+    },
+    "DisableFederation":{
+      "name":"DisableFederation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableFederationRequest"},
+      "output":{"shape":"DisableFederationResponse"},
+      "errors":[
+        {"shape":"EventDataStoreARNInvalidException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InactiveEventDataStoreException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"CloudTrailAccessNotEnabledException"},
+        {"shape":"InsufficientDependencyServiceAccessPermissionException"},
+        {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
+        {"shape":"OrganizationsNotInUseException"},
+        {"shape":"OrganizationNotInAllFeaturesModeException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "EnableFederation":{
+      "name":"EnableFederation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableFederationRequest"},
+      "output":{"shape":"EnableFederationResponse"},
+      "errors":[
+        {"shape":"EventDataStoreARNInvalidException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InactiveEventDataStoreException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"CloudTrailAccessNotEnabledException"},
+        {"shape":"InsufficientDependencyServiceAccessPermissionException"},
+        {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
+        {"shape":"OrganizationsNotInUseException"},
+        {"shape":"OrganizationNotInAllFeaturesModeException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"EventDataStoreFederationEnabledException"}
+      ]
     },
     "GetChannel":{
       "name":"GetChannel",
@@ -371,13 +430,16 @@
       "input":{"shape":"GetInsightSelectorsRequest"},
       "output":{"shape":"GetInsightSelectorsResponse"},
       "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidParameterCombinationException"},
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
         {"shape":"CloudTrailARNInvalidException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"InsightNotEnabledException"},
-        {"shape":"NoManagementAccountSLRExistsException"}
+        {"shape":"NoManagementAccountSLRExistsException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -498,7 +560,8 @@
       "errors":[
         {"shape":"InvalidNextTokenException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"UnsupportedOperationException"}
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"InvalidParameterException"}
       ],
       "idempotent":true
     },
@@ -513,6 +576,21 @@
       "errors":[
         {"shape":"EventDataStoreARNInvalidException"},
         {"shape":"InvalidNextTokenException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
+    },
+    "ListInsightsMetricData":{
+      "name":"ListInsightsMetricData",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListInsightsMetricDataRequest"},
+      "output":{"shape":"ListInsightsMetricDataResponse"},
+      "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"UnsupportedOperationException"}
@@ -630,6 +708,7 @@
         {"shape":"InvalidHomeRegionException"},
         {"shape":"InvalidEventSelectorsException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"NotOrganizationMasterAccountException"},
@@ -647,6 +726,8 @@
       "input":{"shape":"PutInsightSelectorsRequest"},
       "output":{"shape":"PutInsightSelectorsResponse"},
       "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidParameterCombinationException"},
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
         {"shape":"CloudTrailARNInvalidException"},
@@ -659,7 +740,8 @@
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"NotOrganizationMasterAccountException"},
-        {"shape":"NoManagementAccountSLRExistsException"}
+        {"shape":"NoManagementAccountSLRExistsException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -813,6 +895,7 @@
       "errors":[
         {"shape":"CloudTrailARNInvalidException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"TrailNotFoundException"},
         {"shape":"InvalidTrailNameException"},
         {"shape":"InvalidHomeRegionException"},
@@ -899,6 +982,7 @@
         {"shape":"InvalidTrailNameException"},
         {"shape":"CloudTrailARNInvalidException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InvalidHomeRegionException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
@@ -939,9 +1023,11 @@
       "input":{"shape":"UpdateEventDataStoreRequest"},
       "output":{"shape":"UpdateEventDataStoreResponse"},
       "errors":[
+        {"shape":"EventDataStoreAlreadyExistsException"},
         {"shape":"EventDataStoreARNInvalidException"},
         {"shape":"EventDataStoreNotFoundException"},
         {"shape":"InvalidEventSelectorsException"},
+        {"shape":"InvalidInsightSelectorsException"},
         {"shape":"EventDataStoreHasOngoingImportException"},
         {"shape":"InactiveEventDataStoreException"},
         {"shape":"InvalidParameterException"},
@@ -983,6 +1069,7 @@
         {"shape":"InvalidEventSelectorsException"},
         {"shape":"CloudTrailARNInvalidException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InvalidParameterCombinationException"},
         {"shape":"InvalidHomeRegionException"},
         {"shape":"KmsKeyNotFoundException"},
@@ -1006,6 +1093,12 @@
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "AccountHasOngoingImportException":{
       "type":"structure",
       "members":{
@@ -1081,6 +1174,13 @@
       "type":"list",
       "member":{"shape":"AdvancedFieldSelector"},
       "min":1
+    },
+    "BillingMode":{
+      "type":"string",
+      "enum":[
+        "EXTENDABLE_RETENTION_PRICING",
+        "FIXED_RETENTION_PRICING"
+      ]
     },
     "Boolean":{"type":"boolean"},
     "ByteBuffer":{"type":"blob"},
@@ -1190,6 +1290,12 @@
       },
       "exception":true
     },
+    "ConcurrentModificationException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1232,7 +1338,8 @@
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
         "TagsList":{"shape":"TagsList"},
         "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"},
-        "StartIngestion":{"shape":"Boolean"}
+        "StartIngestion":{"shape":"Boolean"},
+        "BillingMode":{"shape":"BillingMode"}
       }
     },
     "CreateEventDataStoreResponse":{
@@ -1249,7 +1356,8 @@
         "TagsList":{"shape":"TagsList"},
         "CreatedTimestamp":{"shape":"Date"},
         "UpdatedTimestamp":{"shape":"Date"},
-        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"},
+        "BillingMode":{"shape":"BillingMode"}
       }
     },
     "CreateTrailRequest":{
@@ -1397,14 +1505,14 @@
     },
     "DescribeQueryRequest":{
       "type":"structure",
-      "required":["QueryId"],
       "members":{
         "EventDataStore":{
           "shape":"EventDataStoreArn",
           "deprecated":true,
           "deprecatedMessage":"EventDataStore is no longer required by DescribeQueryRequest"
         },
-        "QueryId":{"shape":"UUID"}
+        "QueryId":{"shape":"UUID"},
+        "QueryAlias":{"shape":"QueryAlias"}
       }
     },
     "DescribeQueryResponse":{
@@ -1455,6 +1563,45 @@
       "member":{"shape":"Destination"},
       "max":200,
       "min":1
+    },
+    "DisableFederationRequest":{
+      "type":"structure",
+      "required":["EventDataStore"],
+      "members":{
+        "EventDataStore":{"shape":"EventDataStoreArn"}
+      }
+    },
+    "DisableFederationResponse":{
+      "type":"structure",
+      "members":{
+        "EventDataStoreArn":{"shape":"EventDataStoreArn"},
+        "FederationStatus":{"shape":"FederationStatus"}
+      }
+    },
+    "Double":{"type":"double"},
+    "EnableFederationRequest":{
+      "type":"structure",
+      "required":[
+        "EventDataStore",
+        "FederationRoleArn"
+      ],
+      "members":{
+        "EventDataStore":{"shape":"EventDataStoreArn"},
+        "FederationRoleArn":{"shape":"FederationRoleArn"}
+      }
+    },
+    "EnableFederationResponse":{
+      "type":"structure",
+      "members":{
+        "EventDataStoreArn":{"shape":"EventDataStoreArn"},
+        "FederationStatus":{"shape":"FederationStatus"},
+        "FederationRoleArn":{"shape":"FederationRoleArn"}
+      }
+    },
+    "ErrorCode":{
+      "type":"string",
+      "max":128,
+      "pattern":"^[\\w\\d\\s_.,\\-:\\[\\]]+$"
     },
     "ErrorMessage":{
       "type":"string",
@@ -1545,6 +1692,12 @@
       "min":3,
       "pattern":"^[a-zA-Z0-9._/\\-:]+$"
     },
+    "EventDataStoreFederationEnabledException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "EventDataStoreHasOngoingImportException":{
       "type":"structure",
       "members":{
@@ -1596,6 +1749,11 @@
       "type":"list",
       "member":{"shape":"EventDataStore"}
     },
+    "EventName":{
+      "type":"string",
+      "max":128,
+      "pattern":"^[A-Za-z0-9_]+$"
+    },
     "EventSelector":{
       "type":"structure",
       "members":{
@@ -1609,6 +1767,11 @@
       "type":"list",
       "member":{"shape":"EventSelector"}
     },
+    "EventSource":{
+      "type":"string",
+      "max":256,
+      "pattern":"^[a-z0-9_-]+\\.amazonaws\\.com$"
+    },
     "EventsList":{
       "type":"list",
       "member":{"shape":"Event"}
@@ -1616,6 +1779,21 @@
     "ExcludeManagementEventSources":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "FederationRoleArn":{
+      "type":"string",
+      "max":125,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9._/\\-:@=\\+,\\.]+$"
+    },
+    "FederationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLING",
+        "ENABLED",
+        "DISABLING",
+        "DISABLED"
+      ]
     },
     "GetChannelRequest":{
       "type":"structure",
@@ -1655,7 +1833,11 @@
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
         "CreatedTimestamp":{"shape":"Date"},
         "UpdatedTimestamp":{"shape":"Date"},
-        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"},
+        "BillingMode":{"shape":"BillingMode"},
+        "FederationStatus":{"shape":"FederationStatus"},
+        "FederationRoleArn":{"shape":"FederationRoleArn"},
+        "PartitionKeys":{"shape":"PartitionKeyList"}
       }
     },
     "GetEventSelectorsRequest":{
@@ -1696,16 +1878,18 @@
     },
     "GetInsightSelectorsRequest":{
       "type":"structure",
-      "required":["TrailName"],
       "members":{
-        "TrailName":{"shape":"String"}
+        "TrailName":{"shape":"String"},
+        "EventDataStore":{"shape":"EventDataStoreArn"}
       }
     },
     "GetInsightSelectorsResponse":{
       "type":"structure",
       "members":{
         "TrailARN":{"shape":"String"},
-        "InsightSelectors":{"shape":"InsightSelectors"}
+        "InsightSelectors":{"shape":"InsightSelectors"},
+        "EventDataStoreArn":{"shape":"EventDataStoreArn"},
+        "InsightsDestination":{"shape":"EventDataStoreArn"}
       }
     },
     "GetQueryResultsRequest":{
@@ -1907,6 +2091,32 @@
         "ApiCallRateInsight",
         "ApiErrorRateInsight"
       ]
+    },
+    "InsightsMetricDataType":{
+      "type":"string",
+      "enum":[
+        "FillWithZeros",
+        "NonZeroData"
+      ]
+    },
+    "InsightsMetricMaxResults":{
+      "type":"integer",
+      "max":21600,
+      "min":1
+    },
+    "InsightsMetricNextToken":{
+      "type":"string",
+      "max":5000,
+      "min":1
+    },
+    "InsightsMetricPeriod":{
+      "type":"integer",
+      "max":3600,
+      "min":60
+    },
+    "InsightsMetricValues":{
+      "type":"list",
+      "member":{"shape":"Double"}
     },
     "InsufficientDependencyServiceAccessPermissionException":{
       "type":"structure",
@@ -2188,6 +2398,38 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListInsightsMetricDataRequest":{
+      "type":"structure",
+      "required":[
+        "EventSource",
+        "EventName",
+        "InsightType"
+      ],
+      "members":{
+        "EventSource":{"shape":"EventSource"},
+        "EventName":{"shape":"EventName"},
+        "InsightType":{"shape":"InsightType"},
+        "ErrorCode":{"shape":"ErrorCode"},
+        "StartTime":{"shape":"Date"},
+        "EndTime":{"shape":"Date"},
+        "Period":{"shape":"InsightsMetricPeriod"},
+        "DataType":{"shape":"InsightsMetricDataType"},
+        "MaxResults":{"shape":"InsightsMetricMaxResults"},
+        "NextToken":{"shape":"InsightsMetricNextToken"}
+      }
+    },
+    "ListInsightsMetricDataResponse":{
+      "type":"structure",
+      "members":{
+        "EventSource":{"shape":"EventSource"},
+        "EventName":{"shape":"EventName"},
+        "InsightType":{"shape":"InsightType"},
+        "ErrorCode":{"shape":"ErrorCode"},
+        "Timestamps":{"shape":"Timestamps"},
+        "Values":{"shape":"InsightsMetricValues"},
+        "NextToken":{"shape":"InsightsMetricNextToken"}
+      }
+    },
     "ListPublicKeysRequest":{
       "type":"structure",
       "members":{
@@ -2389,6 +2631,34 @@
       "min":4,
       "pattern":".*"
     },
+    "PartitionKey":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Type"
+      ],
+      "members":{
+        "Name":{"shape":"PartitionKeyName"},
+        "Type":{"shape":"PartitionKeyType"}
+      }
+    },
+    "PartitionKeyList":{
+      "type":"list",
+      "member":{"shape":"PartitionKey"},
+      "max":2
+    },
+    "PartitionKeyName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
+    "PartitionKeyType":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
     "PublicKey":{
       "type":"structure",
       "members":{
@@ -2421,20 +2691,21 @@
     },
     "PutInsightSelectorsRequest":{
       "type":"structure",
-      "required":[
-        "TrailName",
-        "InsightSelectors"
-      ],
+      "required":["InsightSelectors"],
       "members":{
         "TrailName":{"shape":"String"},
-        "InsightSelectors":{"shape":"InsightSelectors"}
+        "InsightSelectors":{"shape":"InsightSelectors"},
+        "EventDataStore":{"shape":"EventDataStoreArn"},
+        "InsightsDestination":{"shape":"EventDataStoreArn"}
       }
     },
     "PutInsightSelectorsResponse":{
       "type":"structure",
       "members":{
         "TrailARN":{"shape":"String"},
-        "InsightSelectors":{"shape":"InsightSelectors"}
+        "InsightSelectors":{"shape":"InsightSelectors"},
+        "EventDataStoreArn":{"shape":"EventDataStoreArn"},
+        "InsightsDestination":{"shape":"EventDataStoreArn"}
       }
     },
     "PutResourcePolicyRequest":{
@@ -2467,11 +2738,29 @@
         "CreationTime":{"shape":"Date"}
       }
     },
+    "QueryAlias":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z][a-zA-Z0-9._\\-]*$"
+    },
     "QueryIdNotFoundException":{
       "type":"structure",
       "members":{
       },
       "exception":true
+    },
+    "QueryParameter":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":".*"
+    },
+    "QueryParameters":{
+      "type":"list",
+      "member":{"shape":"QueryParameter"},
+      "max":10,
+      "min":1
     },
     "QueryResultColumn":{
       "type":"map",
@@ -2646,12 +2935,13 @@
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
         "CreatedTimestamp":{"shape":"Date"},
         "UpdatedTimestamp":{"shape":"Date"},
-        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"},
+        "BillingMode":{"shape":"BillingMode"}
       }
     },
     "RetentionPeriod":{
       "type":"integer",
-      "max":2557,
+      "max":3653,
       "min":7
     },
     "S3BucketDoesNotExistException":{
@@ -2747,10 +3037,11 @@
     },
     "StartQueryRequest":{
       "type":"structure",
-      "required":["QueryStatement"],
       "members":{
         "QueryStatement":{"shape":"QueryStatement"},
-        "DeliveryS3Uri":{"shape":"DeliveryS3Uri"}
+        "DeliveryS3Uri":{"shape":"DeliveryS3Uri"},
+        "QueryAlias":{"shape":"QueryAlias"},
+        "QueryParameters":{"shape":"QueryParameters"}
       }
     },
     "StartQueryResponse":{
@@ -2835,6 +3126,16 @@
       "max":200
     },
     "TerminationProtectionEnabled":{"type":"boolean"},
+    "ThrottlingException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "Timestamps":{
+      "type":"list",
+      "member":{"shape":"Date"}
+    },
     "Trail":{
       "type":"structure",
       "members":{
@@ -2938,7 +3239,8 @@
         "OrganizationEnabled":{"shape":"Boolean"},
         "RetentionPeriod":{"shape":"RetentionPeriod"},
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
-        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"},
+        "BillingMode":{"shape":"BillingMode"}
       }
     },
     "UpdateEventDataStoreResponse":{
@@ -2954,7 +3256,10 @@
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
         "CreatedTimestamp":{"shape":"Date"},
         "UpdatedTimestamp":{"shape":"Date"},
-        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"}
+        "KmsKeyId":{"shape":"EventDataStoreKmsKeyId"},
+        "BillingMode":{"shape":"BillingMode"},
+        "FederationStatus":{"shape":"FederationStatus"},
+        "FederationRoleArn":{"shape":"FederationRoleArn"}
       }
     },
     "UpdateTrailRequest":{

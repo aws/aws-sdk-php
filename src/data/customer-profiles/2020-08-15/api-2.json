@@ -5,12 +5,14 @@
     "endpointPrefix":"profile",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Customer Profiles",
     "serviceFullName":"Amazon Connect Customer Profiles",
     "serviceId":"Customer Profiles",
     "signatureVersion":"v4",
     "signingName":"profile",
-    "uid":"customer-profiles-2020-08-15"
+    "uid":"customer-profiles-2020-08-15",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddProfileKey":{
@@ -254,6 +256,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DetectProfileObjectType":{
+      "name":"DetectProfileObjectType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/detect/object-types"
+      },
+      "input":{"shape":"DetectProfileObjectTypeRequest"},
+      "output":{"shape":"DetectProfileObjectTypeResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetAutoMergingPreview":{
       "name":"GetAutoMergingPreview",
       "http":{
@@ -410,6 +428,22 @@
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetSimilarProfiles":{
+      "name":"GetSimilarProfiles",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/matches"
+      },
+      "input":{"shape":"GetSimilarProfilesRequest"},
+      "output":{"shape":"GetSimilarProfilesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
@@ -598,6 +632,22 @@
       },
       "input":{"shape":"ListProfileObjectsRequest"},
       "output":{"shape":"ListProfileObjectsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListRuleBasedMatches":{
+      "name":"ListRuleBasedMatches",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/profiles/ruleBasedMatches"
+      },
+      "input":{"shape":"ListRuleBasedMatchesRequest"},
+      "output":{"shape":"ListRuleBasedMatchesResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"AccessDeniedException"},
@@ -857,7 +907,14 @@
         "Province":{"shape":"string1To255"},
         "Country":{"shape":"string1To255"},
         "PostalCode":{"shape":"string1To255"}
-      }
+      },
+      "sensitive":true
+    },
+    "AddressList":{
+      "type":"list",
+      "member":{"shape":"string1To255"},
+      "max":4,
+      "min":1
     },
     "AppflowIntegration":{
       "type":"structure",
@@ -924,7 +981,8 @@
       "members":{
         "Attributes":{"shape":"AttributeList"},
         "Expression":{"shape":"string1To255"}
-      }
+      },
+      "sensitive":true
     },
     "AttributeItem":{
       "type":"structure",
@@ -939,15 +997,33 @@
       "max":2,
       "min":1
     },
+    "AttributeMatchingModel":{
+      "type":"string",
+      "enum":[
+        "ONE_TO_ONE",
+        "MANY_TO_MANY"
+      ]
+    },
     "AttributeSourceIdMap":{
       "type":"map",
       "key":{"shape":"string1To255"},
       "value":{"shape":"uuid"}
     },
+    "AttributeTypesSelector":{
+      "type":"structure",
+      "required":["AttributeMatchingModel"],
+      "members":{
+        "AttributeMatchingModel":{"shape":"AttributeMatchingModel"},
+        "Address":{"shape":"AddressList"},
+        "PhoneNumber":{"shape":"PhoneNumberList"},
+        "EmailAddress":{"shape":"EmailList"}
+      }
+    },
     "Attributes":{
       "type":"map",
       "key":{"shape":"string1To255"},
-      "value":{"shape":"string1To255"}
+      "value":{"shape":"string1To255"},
+      "sensitive":true
     },
     "AutoMerging":{
       "type":"structure",
@@ -995,7 +1071,8 @@
     },
     "CalculatedAttributeDefinitionsList":{
       "type":"list",
-      "member":{"shape":"ListCalculatedAttributeDefinitionItem"}
+      "member":{"shape":"ListCalculatedAttributeDefinitionItem"},
+      "sensitive":true
     },
     "CalculatedAttributesForProfileList":{
       "type":"list",
@@ -1007,7 +1084,8 @@
         "Range":{"shape":"Range"},
         "ObjectCount":{"shape":"ObjectCount"},
         "Threshold":{"shape":"Threshold"}
-      }
+      },
+      "sensitive":true
     },
     "ConflictResolution":{
       "type":"structure",
@@ -1066,7 +1144,7 @@
           "locationName":"CalculatedAttributeName"
         },
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "AttributeDetails":{"shape":"AttributeDetails"},
         "Conditions":{"shape":"Conditions"},
         "Statistic":{"shape":"Statistic"},
@@ -1078,7 +1156,7 @@
       "members":{
         "CalculatedAttributeName":{"shape":"typeName"},
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "AttributeDetails":{"shape":"AttributeDetails"},
         "Conditions":{"shape":"Conditions"},
         "Statistic":{"shape":"Statistic"},
@@ -1103,6 +1181,7 @@
         "DefaultEncryptionKey":{"shape":"encryptionKey"},
         "DeadLetterQueueUrl":{"shape":"sqsQueueUrl"},
         "Matching":{"shape":"MatchingRequest"},
+        "RuleBasedMatching":{"shape":"RuleBasedMatchingRequest"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1120,6 +1199,7 @@
         "DefaultEncryptionKey":{"shape":"encryptionKey"},
         "DeadLetterQueueUrl":{"shape":"sqsQueueUrl"},
         "Matching":{"shape":"MatchingResponse"},
+        "RuleBasedMatching":{"shape":"RuleBasedMatchingResponse"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
@@ -1197,29 +1277,29 @@
           "location":"uri",
           "locationName":"DomainName"
         },
-        "AccountNumber":{"shape":"string1To255"},
-        "AdditionalInformation":{"shape":"string1To1000"},
+        "AccountNumber":{"shape":"sensitiveString1To255"},
+        "AdditionalInformation":{"shape":"sensitiveString1To1000"},
         "PartyType":{"shape":"PartyType"},
-        "BusinessName":{"shape":"string1To255"},
-        "FirstName":{"shape":"string1To255"},
-        "MiddleName":{"shape":"string1To255"},
-        "LastName":{"shape":"string1To255"},
-        "BirthDate":{"shape":"string1To255"},
+        "BusinessName":{"shape":"sensitiveString1To255"},
+        "FirstName":{"shape":"sensitiveString1To255"},
+        "MiddleName":{"shape":"sensitiveString1To255"},
+        "LastName":{"shape":"sensitiveString1To255"},
+        "BirthDate":{"shape":"sensitiveString1To255"},
         "Gender":{"shape":"Gender"},
-        "PhoneNumber":{"shape":"string1To255"},
-        "MobilePhoneNumber":{"shape":"string1To255"},
-        "HomePhoneNumber":{"shape":"string1To255"},
-        "BusinessPhoneNumber":{"shape":"string1To255"},
-        "EmailAddress":{"shape":"string1To255"},
-        "PersonalEmailAddress":{"shape":"string1To255"},
-        "BusinessEmailAddress":{"shape":"string1To255"},
+        "PhoneNumber":{"shape":"sensitiveString1To255"},
+        "MobilePhoneNumber":{"shape":"sensitiveString1To255"},
+        "HomePhoneNumber":{"shape":"sensitiveString1To255"},
+        "BusinessPhoneNumber":{"shape":"sensitiveString1To255"},
+        "EmailAddress":{"shape":"sensitiveString1To255"},
+        "PersonalEmailAddress":{"shape":"sensitiveString1To255"},
+        "BusinessEmailAddress":{"shape":"sensitiveString1To255"},
         "Address":{"shape":"Address"},
         "ShippingAddress":{"shape":"Address"},
         "MailingAddress":{"shape":"Address"},
         "BillingAddress":{"shape":"Address"},
         "Attributes":{"shape":"Attributes"},
-        "PartyTypeString":{"shape":"string1To255"},
-        "GenderString":{"shape":"string1To255"}
+        "PartyTypeString":{"shape":"sensitiveString1To255"},
+        "GenderString":{"shape":"sensitiveString1To255"}
       }
     },
     "CreateProfileResponse":{
@@ -1468,6 +1548,39 @@
         "UnhealthySince":{"shape":"timestamp"}
       }
     },
+    "DetectProfileObjectTypeRequest":{
+      "type":"structure",
+      "required":[
+        "Objects",
+        "DomainName"
+      ],
+      "members":{
+        "Objects":{"shape":"Objects"},
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        }
+      }
+    },
+    "DetectProfileObjectTypeResponse":{
+      "type":"structure",
+      "members":{
+        "DetectedProfileObjectTypes":{"shape":"DetectedProfileObjectTypes"}
+      }
+    },
+    "DetectedProfileObjectType":{
+      "type":"structure",
+      "members":{
+        "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
+        "Fields":{"shape":"FieldMap"},
+        "Keys":{"shape":"KeyMap"}
+      }
+    },
+    "DetectedProfileObjectTypes":{
+      "type":"list",
+      "member":{"shape":"DetectedProfileObjectType"}
+    },
     "DomainList":{
       "type":"list",
       "member":{"shape":"ListDomainItem"}
@@ -1486,6 +1599,12 @@
       "type":"double",
       "max":1.0,
       "min":0.0
+    },
+    "EmailList":{
+      "type":"list",
+      "member":{"shape":"string1To255"},
+      "max":3,
+      "min":1
     },
     "EventStreamDestinationDetails":{
       "type":"structure",
@@ -1561,7 +1680,8 @@
     "FieldMap":{
       "type":"map",
       "key":{"shape":"name"},
-      "value":{"shape":"ObjectTypeField"}
+      "value":{"shape":"ObjectTypeField"},
+      "sensitive":true
     },
     "FieldNameList":{
       "type":"list",
@@ -1609,7 +1729,8 @@
         "SourceFlowConfig":{"shape":"SourceFlowConfig"},
         "Tasks":{"shape":"Tasks"},
         "TriggerConfig":{"shape":"TriggerConfig"}
-      }
+      },
+      "sensitive":true
     },
     "FlowDescription":{
       "type":"string",
@@ -1635,7 +1756,8 @@
         "MALE",
         "FEMALE",
         "UNSPECIFIED"
-      ]
+      ],
+      "sensitive":true
     },
     "GetAutoMergingPreviewRequest":{
       "type":"structure",
@@ -1689,7 +1811,7 @@
       "members":{
         "CalculatedAttributeName":{"shape":"typeName"},
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Statistic":{"shape":"Statistic"},
@@ -1757,6 +1879,7 @@
         "DeadLetterQueueUrl":{"shape":"sqsQueueUrl"},
         "Stats":{"shape":"DomainStats"},
         "Matching":{"shape":"MatchingResponse"},
+        "RuleBasedMatching":{"shape":"RuleBasedMatchingResponse"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
@@ -1927,12 +2050,14 @@
       ],
       "members":{
         "ObjectTypeName":{"shape":"typeName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "TemplateId":{"shape":"name"},
         "ExpirationDays":{"shape":"expirationDaysInteger"},
         "EncryptionKey":{"shape":"encryptionKey"},
         "AllowProfileCreation":{"shape":"boolean"},
         "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
+        "MaxAvailableProfileObjectCount":{"shape":"minSize0"},
+        "MaxProfileObjectCount":{"shape":"minSize1"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"},
         "CreatedAt":{"shape":"timestamp"},
@@ -1961,6 +2086,46 @@
         "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"}
+      }
+    },
+    "GetSimilarProfilesRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "MatchType",
+        "SearchKey",
+        "SearchValue"
+      ],
+      "members":{
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "MatchType":{"shape":"MatchType"},
+        "SearchKey":{"shape":"string1To255"},
+        "SearchValue":{"shape":"string1To255"}
+      }
+    },
+    "GetSimilarProfilesResponse":{
+      "type":"structure",
+      "members":{
+        "ProfileIds":{"shape":"ProfileIdList"},
+        "MatchId":{"shape":"string1To255"},
+        "MatchType":{"shape":"MatchType"},
+        "RuleLevel":{"shape":"RuleLevel"},
+        "ConfidenceScore":{"shape":"Double"},
+        "NextToken":{"shape":"token"}
       }
     },
     "GetWorkflowRequest":{
@@ -2127,7 +2292,8 @@
     "KeyMap":{
       "type":"map",
       "key":{"shape":"name"},
-      "value":{"shape":"ObjectTypeKeyList"}
+      "value":{"shape":"ObjectTypeKeyList"},
+      "sensitive":true
     },
     "KmsArn":{
       "type":"string",
@@ -2169,7 +2335,7 @@
       "members":{
         "CalculatedAttributeName":{"shape":"typeName"},
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
@@ -2404,6 +2570,8 @@
         "Description":{"shape":"text"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
+        "MaxProfileObjectCount":{"shape":"minSize1"},
+        "MaxAvailableProfileObjectCount":{"shape":"minSize0"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -2508,6 +2676,34 @@
         "NextToken":{"shape":"token"}
       }
     },
+    "ListRuleBasedMatchesRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        }
+      }
+    },
+    "ListRuleBasedMatchesResponse":{
+      "type":"structure",
+      "members":{
+        "MatchIds":{"shape":"MatchIdList"},
+        "NextToken":{"shape":"token"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -2604,6 +2800,10 @@
         "Object":{"shape":"Object"}
       }
     },
+    "MatchIdList":{
+      "type":"list",
+      "member":{"shape":"string1To255"}
+    },
     "MatchItem":{
       "type":"structure",
       "members":{
@@ -2611,6 +2811,13 @@
         "ProfileIds":{"shape":"ProfileIdList"},
         "ConfidenceScore":{"shape":"Double"}
       }
+    },
+    "MatchType":{
+      "type":"string",
+      "enum":[
+        "RULE_BASED_MATCHING",
+        "ML_BASED_MATCHING"
+      ]
     },
     "MatchesList":{
       "type":"list",
@@ -2646,6 +2853,35 @@
         "AutoMerging":{"shape":"AutoMerging"},
         "ExportingConfig":{"shape":"ExportingConfig"}
       }
+    },
+    "MatchingRule":{
+      "type":"structure",
+      "required":["Rule"],
+      "members":{
+        "Rule":{"shape":"MatchingRuleAttributeList"}
+      }
+    },
+    "MatchingRuleAttributeList":{
+      "type":"list",
+      "member":{"shape":"string1To255"},
+      "max":15,
+      "min":1
+    },
+    "MatchingRules":{
+      "type":"list",
+      "member":{"shape":"MatchingRule"},
+      "max":15,
+      "min":1
+    },
+    "MaxAllowedRuleLevelForMatching":{
+      "type":"integer",
+      "max":15,
+      "min":1
+    },
+    "MaxAllowedRuleLevelForMerging":{
+      "type":"integer",
+      "max":15,
+      "min":1
     },
     "MergeProfilesRequest":{
       "type":"structure",
@@ -2716,6 +2952,13 @@
       "key":{"shape":"string1To255"},
       "value":{"shape":"typeName"}
     },
+    "Objects":{
+      "type":"list",
+      "member":{"shape":"stringifiedJson"},
+      "max":5,
+      "min":1,
+      "sensitive":true
+    },
     "Operator":{
       "type":"string",
       "enum":[
@@ -2751,36 +2994,43 @@
         "INDIVIDUAL",
         "BUSINESS",
         "OTHER"
-      ]
+      ],
+      "sensitive":true
+    },
+    "PhoneNumberList":{
+      "type":"list",
+      "member":{"shape":"string1To255"},
+      "max":4,
+      "min":1
     },
     "Profile":{
       "type":"structure",
       "members":{
         "ProfileId":{"shape":"uuid"},
-        "AccountNumber":{"shape":"string1To255"},
-        "AdditionalInformation":{"shape":"string1To1000"},
+        "AccountNumber":{"shape":"sensitiveString1To255"},
+        "AdditionalInformation":{"shape":"sensitiveString1To1000"},
         "PartyType":{"shape":"PartyType"},
-        "BusinessName":{"shape":"string1To255"},
-        "FirstName":{"shape":"string1To255"},
-        "MiddleName":{"shape":"string1To255"},
-        "LastName":{"shape":"string1To255"},
-        "BirthDate":{"shape":"string1To255"},
+        "BusinessName":{"shape":"sensitiveString1To255"},
+        "FirstName":{"shape":"sensitiveString1To255"},
+        "MiddleName":{"shape":"sensitiveString1To255"},
+        "LastName":{"shape":"sensitiveString1To255"},
+        "BirthDate":{"shape":"sensitiveString1To255"},
         "Gender":{"shape":"Gender"},
-        "PhoneNumber":{"shape":"string1To255"},
-        "MobilePhoneNumber":{"shape":"string1To255"},
-        "HomePhoneNumber":{"shape":"string1To255"},
-        "BusinessPhoneNumber":{"shape":"string1To255"},
-        "EmailAddress":{"shape":"string1To255"},
-        "PersonalEmailAddress":{"shape":"string1To255"},
-        "BusinessEmailAddress":{"shape":"string1To255"},
+        "PhoneNumber":{"shape":"sensitiveString1To255"},
+        "MobilePhoneNumber":{"shape":"sensitiveString1To255"},
+        "HomePhoneNumber":{"shape":"sensitiveString1To255"},
+        "BusinessPhoneNumber":{"shape":"sensitiveString1To255"},
+        "EmailAddress":{"shape":"sensitiveString1To255"},
+        "PersonalEmailAddress":{"shape":"sensitiveString1To255"},
+        "BusinessEmailAddress":{"shape":"sensitiveString1To255"},
         "Address":{"shape":"Address"},
         "ShippingAddress":{"shape":"Address"},
         "MailingAddress":{"shape":"Address"},
         "BillingAddress":{"shape":"Address"},
         "Attributes":{"shape":"Attributes"},
         "FoundByItems":{"shape":"foundByList"},
-        "PartyTypeString":{"shape":"string1To255"},
-        "GenderString":{"shape":"string1To255"}
+        "PartyTypeString":{"shape":"sensitiveString1To255"},
+        "GenderString":{"shape":"sensitiveString1To255"}
       }
     },
     "ProfileIdList":{
@@ -2803,7 +3053,8 @@
     },
     "ProfileObjectTypeList":{
       "type":"list",
-      "member":{"shape":"ListProfileObjectTypeItem"}
+      "member":{"shape":"ListProfileObjectTypeItem"},
+      "sensitive":true
     },
     "ProfileObjectTypeTemplateList":{
       "type":"list",
@@ -2891,12 +3142,13 @@
           "location":"uri",
           "locationName":"ObjectTypeName"
         },
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "TemplateId":{"shape":"name"},
         "ExpirationDays":{"shape":"expirationDaysInteger"},
         "EncryptionKey":{"shape":"encryptionKey"},
         "AllowProfileCreation":{"shape":"boolean"},
         "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
+        "MaxProfileObjectCount":{"shape":"minSize1"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"},
         "Tags":{"shape":"TagMap"}
@@ -2910,12 +3162,14 @@
       ],
       "members":{
         "ObjectTypeName":{"shape":"typeName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "TemplateId":{"shape":"name"},
         "ExpirationDays":{"shape":"expirationDaysInteger"},
         "EncryptionKey":{"shape":"encryptionKey"},
         "AllowProfileCreation":{"shape":"boolean"},
         "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
+        "MaxProfileObjectCount":{"shape":"minSize1"},
+        "MaxAvailableProfileObjectCount":{"shape":"minSize0"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"},
         "CreatedAt":{"shape":"timestamp"},
@@ -2946,6 +3200,45 @@
       "type":"string",
       "max":512,
       "pattern":"arn:aws:iam:.*:[0-9]+:.*"
+    },
+    "RuleBasedMatchingRequest":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"optionalBoolean"},
+        "MatchingRules":{"shape":"MatchingRules"},
+        "MaxAllowedRuleLevelForMerging":{"shape":"MaxAllowedRuleLevelForMerging"},
+        "MaxAllowedRuleLevelForMatching":{"shape":"MaxAllowedRuleLevelForMatching"},
+        "AttributeTypesSelector":{"shape":"AttributeTypesSelector"},
+        "ConflictResolution":{"shape":"ConflictResolution"},
+        "ExportingConfig":{"shape":"ExportingConfig"}
+      }
+    },
+    "RuleBasedMatchingResponse":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"optionalBoolean"},
+        "MatchingRules":{"shape":"MatchingRules"},
+        "Status":{"shape":"RuleBasedMatchingStatus"},
+        "MaxAllowedRuleLevelForMerging":{"shape":"MaxAllowedRuleLevelForMerging"},
+        "MaxAllowedRuleLevelForMatching":{"shape":"MaxAllowedRuleLevelForMatching"},
+        "AttributeTypesSelector":{"shape":"AttributeTypesSelector"},
+        "ConflictResolution":{"shape":"ConflictResolution"},
+        "ExportingConfig":{"shape":"ExportingConfig"}
+      }
+    },
+    "RuleBasedMatchingStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "ACTIVE"
+      ]
+    },
+    "RuleLevel":{
+      "type":"integer",
+      "max":15,
+      "min":1
     },
     "S3ConnectorOperator":{
       "type":"string",
@@ -3190,7 +3483,8 @@
         "MAXIMUM",
         "AVERAGE",
         "MAX_OCCURRENCE"
-      ]
+      ],
+      "sensitive":true
     },
     "Status":{
       "type":"string",
@@ -3374,12 +3668,14 @@
         "Province":{"shape":"string0To255"},
         "Country":{"shape":"string0To255"},
         "PostalCode":{"shape":"string0To255"}
-      }
+      },
+      "sensitive":true
     },
     "UpdateAttributes":{
       "type":"map",
       "key":{"shape":"string1To255"},
-      "value":{"shape":"string0To255"}
+      "value":{"shape":"string0To255"},
+      "sensitive":true
     },
     "UpdateCalculatedAttributeDefinitionRequest":{
       "type":"structure",
@@ -3399,7 +3695,7 @@
           "locationName":"CalculatedAttributeName"
         },
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "Conditions":{"shape":"Conditions"}
       }
     },
@@ -3408,7 +3704,7 @@
       "members":{
         "CalculatedAttributeName":{"shape":"typeName"},
         "DisplayName":{"shape":"displayName"},
-        "Description":{"shape":"text"},
+        "Description":{"shape":"sensitiveText"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Statistic":{"shape":"Statistic"},
@@ -3430,6 +3726,7 @@
         "DefaultEncryptionKey":{"shape":"encryptionKey"},
         "DeadLetterQueueUrl":{"shape":"sqsQueueUrl"},
         "Matching":{"shape":"MatchingRequest"},
+        "RuleBasedMatching":{"shape":"RuleBasedMatchingRequest"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -3446,6 +3743,7 @@
         "DefaultEncryptionKey":{"shape":"encryptionKey"},
         "DeadLetterQueueUrl":{"shape":"sqsQueueUrl"},
         "Matching":{"shape":"MatchingResponse"},
+        "RuleBasedMatching":{"shape":"RuleBasedMatchingResponse"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
@@ -3464,29 +3762,29 @@
           "locationName":"DomainName"
         },
         "ProfileId":{"shape":"uuid"},
-        "AdditionalInformation":{"shape":"string0To1000"},
-        "AccountNumber":{"shape":"string0To255"},
+        "AdditionalInformation":{"shape":"sensitiveString0To1000"},
+        "AccountNumber":{"shape":"sensitiveString0To255"},
         "PartyType":{"shape":"PartyType"},
-        "BusinessName":{"shape":"string0To255"},
-        "FirstName":{"shape":"string0To255"},
-        "MiddleName":{"shape":"string0To255"},
-        "LastName":{"shape":"string0To255"},
-        "BirthDate":{"shape":"string0To255"},
+        "BusinessName":{"shape":"sensitiveString0To255"},
+        "FirstName":{"shape":"sensitiveString0To255"},
+        "MiddleName":{"shape":"sensitiveString0To255"},
+        "LastName":{"shape":"sensitiveString0To255"},
+        "BirthDate":{"shape":"sensitiveString0To255"},
         "Gender":{"shape":"Gender"},
-        "PhoneNumber":{"shape":"string0To255"},
-        "MobilePhoneNumber":{"shape":"string0To255"},
-        "HomePhoneNumber":{"shape":"string0To255"},
-        "BusinessPhoneNumber":{"shape":"string0To255"},
-        "EmailAddress":{"shape":"string0To255"},
-        "PersonalEmailAddress":{"shape":"string0To255"},
-        "BusinessEmailAddress":{"shape":"string0To255"},
+        "PhoneNumber":{"shape":"sensitiveString0To255"},
+        "MobilePhoneNumber":{"shape":"sensitiveString0To255"},
+        "HomePhoneNumber":{"shape":"sensitiveString0To255"},
+        "BusinessPhoneNumber":{"shape":"sensitiveString0To255"},
+        "EmailAddress":{"shape":"sensitiveString0To255"},
+        "PersonalEmailAddress":{"shape":"sensitiveString0To255"},
+        "BusinessEmailAddress":{"shape":"sensitiveString0To255"},
         "Address":{"shape":"UpdateAddress"},
         "ShippingAddress":{"shape":"UpdateAddress"},
         "MailingAddress":{"shape":"UpdateAddress"},
         "BillingAddress":{"shape":"UpdateAddress"},
         "Attributes":{"shape":"UpdateAttributes"},
-        "PartyTypeString":{"shape":"string0To255"},
-        "GenderString":{"shape":"string0To255"}
+        "PartyTypeString":{"shape":"sensitiveString0To255"},
+        "GenderString":{"shape":"sensitiveString0To255"}
       }
     },
     "UpdateProfileResponse":{
@@ -3610,6 +3908,14 @@
       "min":1
     },
     "message":{"type":"string"},
+    "minSize0":{
+      "type":"integer",
+      "min":0
+    },
+    "minSize1":{
+      "type":"integer",
+      "min":1
+    },
     "optionalBoolean":{"type":"boolean"},
     "requestValueList":{
       "type":"list",
@@ -3633,14 +3939,39 @@
       "min":1,
       "pattern":".*"
     },
+    "sensitiveString0To1000":{
+      "type":"string",
+      "max":1000,
+      "min":0,
+      "sensitive":true
+    },
+    "sensitiveString0To255":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "sensitive":true
+    },
+    "sensitiveString1To1000":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "sensitive":true
+    },
+    "sensitiveString1To255":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "sensitive":true
+    },
+    "sensitiveText":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "sensitive":true
+    },
     "sqsQueueUrl":{
       "type":"string",
       "max":255,
-      "min":0
-    },
-    "string0To1000":{
-      "type":"string",
-      "max":1000,
       "min":0
     },
     "string0To255":{
@@ -3666,7 +3997,8 @@
     "stringifiedJson":{
       "type":"string",
       "max":256000,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "text":{
       "type":"string",

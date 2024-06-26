@@ -184,6 +184,64 @@
       ],
       "idempotent":true
     },
+    "DeleteField":{
+      "name":"DeleteField",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{domainId}/fields/{fieldId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteFieldRequest"},
+      "output":{"shape":"DeleteFieldResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteLayout":{
+      "name":"DeleteLayout",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{domainId}/layouts/{layoutId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteLayoutRequest"},
+      "output":{"shape":"DeleteLayoutResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteTemplate":{
+      "name":"DeleteTemplate",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{domainId}/templates/{templateId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteTemplateRequest"},
+      "output":{"shape":"DeleteTemplateResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "GetCase":{
       "name":"GetCase",
       "http":{
@@ -193,6 +251,23 @@
       },
       "input":{"shape":"GetCaseRequest"},
       "output":{"shape":"GetCaseResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetCaseAuditEvents":{
+      "name":"GetCaseAuditEvents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{domainId}/cases/{caseId}/audit-history",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCaseAuditEventsRequest"},
+      "output":{"shape":"GetCaseAuditEventsResponse"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -571,6 +646,85 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "AuditEvent":{
+      "type":"structure",
+      "required":[
+        "eventId",
+        "fields",
+        "performedTime",
+        "type"
+      ],
+      "members":{
+        "eventId":{"shape":"AuditEventId"},
+        "fields":{"shape":"AuditEventFieldList"},
+        "performedBy":{"shape":"AuditEventPerformedBy"},
+        "performedTime":{"shape":"AuditEventDateTime"},
+        "relatedItemType":{"shape":"RelatedItemType"},
+        "type":{"shape":"AuditEventType"}
+      }
+    },
+    "AuditEventDateTime":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
+    "AuditEventField":{
+      "type":"structure",
+      "required":[
+        "eventFieldId",
+        "newValue"
+      ],
+      "members":{
+        "eventFieldId":{"shape":"AuditEventFieldId"},
+        "newValue":{"shape":"AuditEventFieldValueUnion"},
+        "oldValue":{"shape":"AuditEventFieldValueUnion"}
+      }
+    },
+    "AuditEventFieldId":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "AuditEventFieldList":{
+      "type":"list",
+      "member":{"shape":"AuditEventField"}
+    },
+    "AuditEventFieldValueUnion":{
+      "type":"structure",
+      "members":{
+        "booleanValue":{"shape":"Boolean"},
+        "doubleValue":{"shape":"Double"},
+        "emptyValue":{"shape":"EmptyFieldValue"},
+        "stringValue":{"shape":"AuditEventFieldValueUnionStringValueString"},
+        "userArnValue":{"shape":"String"}
+      },
+      "union":true
+    },
+    "AuditEventFieldValueUnionStringValueString":{
+      "type":"string",
+      "max":500,
+      "min":0
+    },
+    "AuditEventId":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "AuditEventPerformedBy":{
+      "type":"structure",
+      "required":["iamPrincipalArn"],
+      "members":{
+        "iamPrincipalArn":{"shape":"IamPrincipalArn"},
+        "user":{"shape":"UserUnion"}
+      }
+    },
+    "AuditEventType":{
+      "type":"string",
+      "enum":[
+        "Case.Created",
+        "Case.Updated",
+        "RelatedItem.Created"
+      ]
+    },
     "BasicLayout":{
       "type":"structure",
       "members":{
@@ -680,7 +834,7 @@
     "CaseEventIncludedDataFieldsList":{
       "type":"list",
       "member":{"shape":"FieldIdentifier"},
-      "max":50,
+      "max":200,
       "min":0
     },
     "CaseFilter":{
@@ -688,11 +842,18 @@
       "members":{
         "andAll":{"shape":"CaseFilterAndAllList"},
         "field":{"shape":"FieldFilter"},
-        "not":{"shape":"CaseFilter"}
+        "not":{"shape":"CaseFilter"},
+        "orAll":{"shape":"CaseFilterOrAllList"}
       },
       "union":true
     },
     "CaseFilterAndAllList":{
+      "type":"list",
+      "member":{"shape":"CaseFilter"},
+      "max":10,
+      "min":0
+    },
+    "CaseFilterOrAllList":{
       "type":"list",
       "member":{"shape":"CaseFilter"},
       "max":10,
@@ -721,7 +882,7 @@
     },
     "CommentBody":{
       "type":"string",
-      "max":1000,
+      "max":3000,
       "min":1
     },
     "CommentBodyTextType":{
@@ -816,6 +977,7 @@
           "locationName":"domainId"
         },
         "fields":{"shape":"CreateCaseRequestFieldsList"},
+        "performedBy":{"shape":"UserUnion"},
         "templateId":{"shape":"TemplateId"}
       }
     },
@@ -938,6 +1100,7 @@
           "location":"uri",
           "locationName":"domainId"
         },
+        "performedBy":{"shape":"UserUnion"},
         "type":{"shape":"RelatedItemType"}
       }
     },
@@ -1002,6 +1165,79 @@
       "members":{
       }
     },
+    "DeleteFieldRequest":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "fieldId"
+      ],
+      "members":{
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "fieldId":{
+          "shape":"FieldId",
+          "location":"uri",
+          "locationName":"fieldId"
+        }
+      }
+    },
+    "DeleteFieldResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteLayoutRequest":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "layoutId"
+      ],
+      "members":{
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "layoutId":{
+          "shape":"LayoutId",
+          "location":"uri",
+          "locationName":"layoutId"
+        }
+      }
+    },
+    "DeleteLayoutResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "templateId"
+      ],
+      "members":{
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "templateId":{
+          "shape":"TemplateId",
+          "location":"uri",
+          "locationName":"templateId"
+        }
+      }
+    },
+    "DeleteTemplateResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "Deleted":{"type":"boolean"},
     "DomainArn":{
       "type":"string",
       "max":500,
@@ -1046,6 +1282,11 @@
     "Double":{
       "type":"double",
       "box":true
+    },
+    "EmptyFieldValue":{
+      "type":"structure",
+      "members":{
+      }
     },
     "EventBridgeConfiguration":{
       "type":"structure",
@@ -1214,7 +1455,8 @@
         "Boolean",
         "DateTime",
         "SingleSelect",
-        "Url"
+        "Url",
+        "User"
       ]
     },
     "FieldValue":{
@@ -1233,13 +1475,74 @@
       "members":{
         "booleanValue":{"shape":"Boolean"},
         "doubleValue":{"shape":"Double"},
-        "stringValue":{"shape":"FieldValueUnionStringValueString"}
+        "emptyValue":{"shape":"EmptyFieldValue"},
+        "stringValue":{"shape":"FieldValueUnionStringValueString"},
+        "userArnValue":{"shape":"String"}
       },
       "union":true
     },
     "FieldValueUnionStringValueString":{
       "type":"string",
+      "max":1500,
+      "min":0
+    },
+    "FileArn":{
+      "type":"string",
       "max":500,
+      "min":1
+    },
+    "FileContent":{
+      "type":"structure",
+      "required":["fileArn"],
+      "members":{
+        "fileArn":{"shape":"FileArn"}
+      }
+    },
+    "FileFilter":{
+      "type":"structure",
+      "members":{
+        "fileArn":{"shape":"FileArn"}
+      }
+    },
+    "GetCaseAuditEventsRequest":{
+      "type":"structure",
+      "required":[
+        "caseId",
+        "domainId"
+      ],
+      "members":{
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
+        },
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "maxResults":{"shape":"GetCaseAuditEventsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetCaseAuditEventsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":25,
+      "min":1
+    },
+    "GetCaseAuditEventsResponse":{
+      "type":"structure",
+      "required":["auditEvents"],
+      "members":{
+        "auditEvents":{"shape":"GetCaseAuditEventsResponseAuditEventsList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetCaseAuditEventsResponseAuditEventsList":{
+      "type":"list",
+      "member":{"shape":"AuditEvent"},
+      "max":25,
       "min":0
     },
     "GetCaseEventConfigurationRequest":{
@@ -1346,9 +1649,12 @@
         "type"
       ],
       "members":{
+        "createdTime":{"shape":"CreatedTime"},
+        "deleted":{"shape":"Deleted"},
         "description":{"shape":"FieldDescription"},
         "fieldArn":{"shape":"FieldArn"},
         "fieldId":{"shape":"FieldId"},
+        "lastModifiedTime":{"shape":"LastModifiedTime"},
         "name":{"shape":"FieldName"},
         "namespace":{"shape":"FieldNamespace"},
         "tags":{"shape":"Tags"},
@@ -1384,6 +1690,9 @@
       ],
       "members":{
         "content":{"shape":"LayoutContent"},
+        "createdTime":{"shape":"CreatedTime"},
+        "deleted":{"shape":"Deleted"},
+        "lastModifiedTime":{"shape":"LastModifiedTime"},
         "layoutArn":{"shape":"LayoutArn"},
         "layoutId":{"shape":"LayoutId"},
         "name":{"shape":"LayoutName"},
@@ -1418,7 +1727,10 @@
         "templateId"
       ],
       "members":{
+        "createdTime":{"shape":"CreatedTime"},
+        "deleted":{"shape":"Deleted"},
         "description":{"shape":"TemplateDescription"},
+        "lastModifiedTime":{"shape":"LastModifiedTime"},
         "layoutConfiguration":{"shape":"LayoutConfiguration"},
         "name":{"shape":"TemplateName"},
         "requiredFields":{"shape":"RequiredFieldList"},
@@ -1427,6 +1739,11 @@
         "templateArn":{"shape":"TemplateArn"},
         "templateId":{"shape":"TemplateId"}
       }
+    },
+    "IamPrincipalArn":{
+      "type":"string",
+      "max":500,
+      "min":1
     },
     "Integer":{
       "type":"integer",
@@ -1447,6 +1764,10 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "LastModifiedTime":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
     },
     "LayoutArn":{
       "type":"string",
@@ -1776,7 +2097,8 @@
       "type":"structure",
       "members":{
         "comment":{"shape":"CommentContent"},
-        "contact":{"shape":"ContactContent"}
+        "contact":{"shape":"ContactContent"},
+        "file":{"shape":"FileContent"}
       },
       "union":true
     },
@@ -1796,7 +2118,8 @@
       "type":"structure",
       "members":{
         "comment":{"shape":"CommentContent"},
-        "contact":{"shape":"Contact"}
+        "contact":{"shape":"Contact"},
+        "file":{"shape":"FileContent"}
       },
       "union":true
     },
@@ -1804,14 +2127,16 @@
       "type":"string",
       "enum":[
         "Contact",
-        "Comment"
+        "Comment",
+        "File"
       ]
     },
     "RelatedItemTypeFilter":{
       "type":"structure",
       "members":{
         "comment":{"shape":"CommentFilter"},
-        "contact":{"shape":"ContactFilter"}
+        "contact":{"shape":"ContactFilter"},
+        "file":{"shape":"FileFilter"}
       },
       "union":true
     },
@@ -1973,6 +2298,7 @@
       "members":{
         "associationTime":{"shape":"AssociationTime"},
         "content":{"shape":"RelatedItemContent"},
+        "performedBy":{"shape":"UserUnion"},
         "relatedItemId":{"shape":"RelatedItemId"},
         "tags":{"shape":"Tags"},
         "type":{"shape":"RelatedItemType"}
@@ -2152,7 +2478,8 @@
           "location":"uri",
           "locationName":"domainId"
         },
-        "fields":{"shape":"UpdateCaseRequestFieldsList"}
+        "fields":{"shape":"UpdateCaseRequestFieldsList"},
+        "performedBy":{"shape":"UserUnion"}
       }
     },
     "UpdateCaseRequestFieldsList":{
@@ -2246,6 +2573,18 @@
       "type":"structure",
       "members":{
       }
+    },
+    "UserArn":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "UserUnion":{
+      "type":"structure",
+      "members":{
+        "userArn":{"shape":"UserArn"}
+      },
+      "union":true
     },
     "ValidationException":{
       "type":"structure",

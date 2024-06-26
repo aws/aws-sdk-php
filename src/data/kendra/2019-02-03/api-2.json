@@ -876,6 +876,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "Retrieve":{
+      "name":"Retrieve",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RetrieveRequest"},
+      "output":{"shape":"RetrieveResult"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StartDataSourceSyncJob":{
       "name":"StartDataSourceSyncJob",
       "http":{
@@ -1522,6 +1540,25 @@
       "max":100,
       "min":1
     },
+    "CollapseConfiguration":{
+      "type":"structure",
+      "required":["DocumentAttributeKey"],
+      "members":{
+        "DocumentAttributeKey":{"shape":"DocumentAttributeKey"},
+        "SortingConfigurations":{"shape":"SortingConfigurationList"},
+        "MissingAttributeKeyStrategy":{"shape":"MissingAttributeKeyStrategy"},
+        "Expand":{"shape":"Boolean"},
+        "ExpandConfiguration":{"shape":"ExpandConfiguration"}
+      }
+    },
+    "CollapsedResultDetail":{
+      "type":"structure",
+      "required":["DocumentAttribute"],
+      "members":{
+        "DocumentAttribute":{"shape":"DocumentAttribute"},
+        "ExpandedResults":{"shape":"ExpandedResultList"}
+      }
+    },
     "ColumnConfiguration":{
       "type":"structure",
       "required":[
@@ -1783,6 +1820,7 @@
         "SecretArn":{"shape":"SecretArn"}
       }
     },
+    "Content":{"type":"string"},
     "ContentSourceConfiguration":{
       "type":"structure",
       "members":{
@@ -2070,7 +2108,11 @@
         "QuipConfiguration":{"shape":"QuipConfiguration"},
         "JiraConfiguration":{"shape":"JiraConfiguration"},
         "GitHubConfiguration":{"shape":"GitHubConfiguration"},
-        "AlfrescoConfiguration":{"shape":"AlfrescoConfiguration"},
+        "AlfrescoConfiguration":{
+          "shape":"AlfrescoConfiguration",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated AlfrescoConfiguration in favor of TemplateConfiguration"
+        },
         "TemplateConfiguration":{"shape":"TemplateConfiguration"}
       }
     },
@@ -2118,12 +2160,12 @@
     "DataSourceInclusionsExclusionsStrings":{
       "type":"list",
       "member":{"shape":"DataSourceInclusionsExclusionsStringsMember"},
-      "max":100,
+      "max":250,
       "min":0
     },
     "DataSourceInclusionsExclusionsStringsMember":{
       "type":"string",
-      "max":150,
+      "max":300,
       "min":1
     },
     "DataSourceName":{
@@ -2901,6 +2943,7 @@
       "type":"list",
       "member":{"shape":"Status"}
     },
+    "DocumentTitle":{"type":"string"},
     "DocumentsMetadataConfiguration":{
       "type":"structure",
       "members":{
@@ -3028,6 +3071,28 @@
       "member":{"shape":"UserAccount"},
       "max":100,
       "min":0
+    },
+    "ExpandConfiguration":{
+      "type":"structure",
+      "members":{
+        "MaxResultItemsToExpand":{"shape":"Integer"},
+        "MaxExpandedResultsPerItem":{"shape":"Integer"}
+      }
+    },
+    "ExpandedResultItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"ResultId"},
+        "DocumentId":{"shape":"DocumentId"},
+        "DocumentTitle":{"shape":"TextWithHighlights"},
+        "DocumentExcerpt":{"shape":"TextWithHighlights"},
+        "DocumentURI":{"shape":"Url"},
+        "DocumentAttributes":{"shape":"DocumentAttributeList"}
+      }
+    },
+    "ExpandedResultList":{
+      "type":"list",
+      "member":{"shape":"ExpandedResultItem"}
     },
     "ExperienceConfiguration":{
       "type":"structure",
@@ -4155,6 +4220,14 @@
       "max":10000,
       "min":1
     },
+    "MissingAttributeKeyStrategy":{
+      "type":"string",
+      "enum":[
+        "IGNORE",
+        "COLLAPSE",
+        "EXPAND"
+      ]
+    },
     "Mode":{
       "type":"string",
       "enum":[
@@ -4385,9 +4458,11 @@
         "PageNumber":{"shape":"Integer"},
         "PageSize":{"shape":"Integer"},
         "SortingConfiguration":{"shape":"SortingConfiguration"},
+        "SortingConfigurations":{"shape":"SortingConfigurationList"},
         "UserContext":{"shape":"UserContext"},
         "VisitorId":{"shape":"VisitorId"},
-        "SpellCorrectionConfiguration":{"shape":"SpellCorrectionConfiguration"}
+        "SpellCorrectionConfiguration":{"shape":"SpellCorrectionConfiguration"},
+        "CollapseConfiguration":{"shape":"CollapseConfiguration"}
       }
     },
     "QueryResult":{
@@ -4423,7 +4498,8 @@
         "DocumentAttributes":{"shape":"DocumentAttributeList"},
         "ScoreAttributes":{"shape":"ScoreAttributes"},
         "FeedbackToken":{"shape":"FeedbackToken"},
-        "TableExcerpt":{"shape":"TableExcerpt"}
+        "TableExcerpt":{"shape":"TableExcerpt"},
+        "CollapsedResultDetail":{"shape":"CollapsedResultDetail"}
       }
     },
     "QueryResultItemList":{
@@ -4488,11 +4564,7 @@
         "UPDATING"
       ]
     },
-    "QueryText":{
-      "type":"string",
-      "max":1000,
-      "min":1
-    },
+    "QueryText":{"type":"string"},
     "QueryTextList":{
       "type":"list",
       "member":{"shape":"QueryText"},
@@ -4601,6 +4673,46 @@
       "type":"string",
       "max":73,
       "min":1
+    },
+    "RetrieveRequest":{
+      "type":"structure",
+      "required":[
+        "IndexId",
+        "QueryText"
+      ],
+      "members":{
+        "IndexId":{"shape":"IndexId"},
+        "QueryText":{"shape":"QueryText"},
+        "AttributeFilter":{"shape":"AttributeFilter"},
+        "RequestedDocumentAttributes":{"shape":"DocumentAttributeKeyList"},
+        "DocumentRelevanceOverrideConfigurations":{"shape":"DocumentRelevanceOverrideConfigurationList"},
+        "PageNumber":{"shape":"Integer"},
+        "PageSize":{"shape":"Integer"},
+        "UserContext":{"shape":"UserContext"}
+      }
+    },
+    "RetrieveResult":{
+      "type":"structure",
+      "members":{
+        "QueryId":{"shape":"QueryId"},
+        "ResultItems":{"shape":"RetrieveResultItemList"}
+      }
+    },
+    "RetrieveResultItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"ResultId"},
+        "DocumentId":{"shape":"DocumentId"},
+        "DocumentTitle":{"shape":"DocumentTitle"},
+        "Content":{"shape":"Content"},
+        "DocumentURI":{"shape":"Url"},
+        "DocumentAttributes":{"shape":"DocumentAttributeList"},
+        "ScoreAttributes":{"shape":"ScoreAttributes"}
+      }
+    },
+    "RetrieveResultItemList":{
+      "type":"list",
+      "member":{"shape":"RetrieveResultItem"}
     },
     "RoleArn":{
       "type":"string",
@@ -5095,6 +5207,11 @@
         "DocumentAttributeKey":{"shape":"DocumentAttributeKey"},
         "SortOrder":{"shape":"SortOrder"}
       }
+    },
+    "SortingConfigurationList":{
+      "type":"list",
+      "member":{"shape":"SortingConfiguration"},
+      "min":1
     },
     "SourceDocument":{
       "type":"structure",

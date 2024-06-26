@@ -929,6 +929,24 @@
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"InvalidDBInstanceStateFault"}
       ]
+    },
+    "SwitchoverGlobalCluster":{
+      "name":"SwitchoverGlobalCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SwitchoverGlobalClusterMessage"},
+      "output":{
+        "shape":"SwitchoverGlobalClusterResult",
+        "resultWrapper":"SwitchoverGlobalClusterResult"
+      },
+      "errors":[
+        {"shape":"GlobalClusterNotFoundFault"},
+        {"shape":"InvalidGlobalClusterStateFault"},
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"InvalidDBClusterStateFault"}
+      ]
     }
   },
   "shapes":{
@@ -1027,6 +1045,10 @@
     },
     "Boolean":{"type":"boolean"},
     "BooleanOptional":{"type":"boolean"},
+    "CACertificateIdentifiersList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "Certificate":{
       "type":"structure",
       "members":{
@@ -1038,6 +1060,13 @@
         "CertificateArn":{"shape":"String"}
       },
       "wrapper":true
+    },
+    "CertificateDetails":{
+      "type":"structure",
+      "members":{
+        "CAIdentifier":{"shape":"String"},
+        "ValidTill":{"shape":"TStamp"}
+      }
     },
     "CertificateList":{
       "type":"list",
@@ -1138,7 +1167,8 @@
         "PreSignedUrl":{"shape":"String"},
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
         "DeletionProtection":{"shape":"BooleanOptional"},
-        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"}
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
+        "StorageType":{"shape":"String"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -1205,7 +1235,8 @@
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
         "PromotionTier":{"shape":"IntegerOptional"},
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
-        "PerformanceInsightsKMSKeyId":{"shape":"String"}
+        "PerformanceInsightsKMSKeyId":{"shape":"String"},
+        "CACertificateIdentifier":{"shape":"String"}
       }
     },
     "CreateDBInstanceResult":{
@@ -1309,7 +1340,8 @@
         "CloneGroupId":{"shape":"String"},
         "ClusterCreateTime":{"shape":"TStamp"},
         "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "DeletionProtection":{"shape":"Boolean"}
+        "DeletionProtection":{"shape":"Boolean"},
+        "StorageType":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -1458,7 +1490,8 @@
         "StorageEncrypted":{"shape":"Boolean"},
         "KmsKeyId":{"shape":"String"},
         "DBClusterSnapshotArn":{"shape":"String"},
-        "SourceDBClusterSnapshotArn":{"shape":"String"}
+        "SourceDBClusterSnapshotArn":{"shape":"String"},
+        "StorageType":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -1530,7 +1563,9 @@
         "DBEngineVersionDescription":{"shape":"String"},
         "ValidUpgradeTarget":{"shape":"ValidUpgradeTargetList"},
         "ExportableLogTypes":{"shape":"LogTypeList"},
-        "SupportsLogExportsToCloudwatchLogs":{"shape":"Boolean"}
+        "SupportsLogExportsToCloudwatchLogs":{"shape":"Boolean"},
+        "SupportedCACertificateIdentifiers":{"shape":"CACertificateIdentifiersList"},
+        "SupportsCertificateRotationWithoutRestart":{"shape":"BooleanOptional"}
       }
     },
     "DBEngineVersionList":{
@@ -1576,7 +1611,10 @@
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
         "PromotionTier":{"shape":"IntegerOptional"},
         "DBInstanceArn":{"shape":"String"},
-        "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"}
+        "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"},
+        "CertificateDetails":{"shape":"CertificateDetails"},
+        "PerformanceInsightsEnabled":{"shape":"BooleanOptional"},
+        "PerformanceInsightsKMSKeyId":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2511,7 +2549,9 @@
         "PreferredMaintenanceWindow":{"shape":"String"},
         "CloudwatchLogsExportConfiguration":{"shape":"CloudwatchLogsExportConfiguration"},
         "EngineVersion":{"shape":"String"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "AllowMajorVersionUpgrade":{"shape":"Boolean"},
+        "DeletionProtection":{"shape":"BooleanOptional"},
+        "StorageType":{"shape":"String"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -2564,7 +2604,8 @@
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
         "PromotionTier":{"shape":"IntegerOptional"},
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
-        "PerformanceInsightsKMSKeyId":{"shape":"String"}
+        "PerformanceInsightsKMSKeyId":{"shape":"String"},
+        "CertificateRotationRestart":{"shape":"BooleanOptional"}
       }
     },
     "ModifyDBInstanceResult":{
@@ -2631,7 +2672,8 @@
         "DBInstanceClass":{"shape":"String"},
         "LicenseModel":{"shape":"String"},
         "AvailabilityZones":{"shape":"AvailabilityZoneList"},
-        "Vpc":{"shape":"Boolean"}
+        "Vpc":{"shape":"Boolean"},
+        "StorageType":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2847,7 +2889,8 @@
         "KmsKeyId":{"shape":"String"},
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
         "DeletionProtection":{"shape":"BooleanOptional"},
-        "DBClusterParameterGroupName":{"shape":"String"}
+        "DBClusterParameterGroupName":{"shape":"String"},
+        "StorageType":{"shape":"String"}
       }
     },
     "RestoreDBClusterFromSnapshotResult":{
@@ -2874,7 +2917,8 @@
         "Tags":{"shape":"TagList"},
         "KmsKeyId":{"shape":"String"},
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "DeletionProtection":{"shape":"BooleanOptional"},
+        "StorageType":{"shape":"String"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{
@@ -3081,6 +3125,23 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SwitchoverGlobalClusterMessage":{
+      "type":"structure",
+      "required":[
+        "GlobalClusterIdentifier",
+        "TargetDbClusterIdentifier"
+      ],
+      "members":{
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
+        "TargetDbClusterIdentifier":{"shape":"String"}
+      }
+    },
+    "SwitchoverGlobalClusterResult":{
+      "type":"structure",
+      "members":{
+        "GlobalCluster":{"shape":"GlobalCluster"}
+      }
     },
     "TStamp":{"type":"timestamp"},
     "Tag":{

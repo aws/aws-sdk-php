@@ -73,8 +73,7 @@ class UploadStateTest extends TestCase
 
     public function testEmptyUploadStateOutputWithConfigFalse()
     {
-        $state = new UploadState([]);
-        $state->displayProgress = false;
+        $state = new UploadState([], ['display_progress' => false]);
         $state->getDisplayProgress(13);
         $this->expectOutputString('');
     }
@@ -87,8 +86,7 @@ class UploadStateTest extends TestCase
         $totalUploaded,
         $progressBar
     ) {
-        $state = new UploadState([]);
-        $state->displayProgress = true;
+        $state = new UploadState([], ['display_progress' => true]);
         $state->setProgressThresholds($totalSize);
         $state->getDisplayProgress($totalUploaded);
 
@@ -126,48 +124,50 @@ class UploadStateTest extends TestCase
             [
                 100000,
                 50000,
-                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}{$progressBar[4]}"
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}"
             ],
             [
                 100000,
                 62499,
-                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}{$progressBar[4]}"
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}"
             ],
             [
                 100000,
                 62500,
-                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}{$progressBar[4]}" .
-                "{$progressBar[5]}"
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}"
             ],
             [
                 100000,
                 74999,
-                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}{$progressBar[4]}" .
-                "{$progressBar[5]}"
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}"
             ],
             [
                 100000,
                 75000,
-                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}{$progressBar[4]}" .
-                "{$progressBar[5]}{$progressBar[6]}"
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}{$progressBar[6]}"
             ],
             [
                 100000,
                 87499,
-                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}{$progressBar[4]}" .
-                "{$progressBar[5]}{$progressBar[6]}"
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}{$progressBar[6]}"
             ],
             [
                 100000,
                 87500,
-                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}{$progressBar[4]}" .
-                "{$progressBar[5]}{$progressBar[6]}{$progressBar[7]}"
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}{$progressBar[6]}{$progressBar[7]}"
             ],
             [
                 100000,
                 99999,
-                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}{$progressBar[4]}" .
-                "{$progressBar[5]}{$progressBar[6]}{$progressBar[7]}"
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}{$progressBar[6]}{$progressBar[7]}"
             ],
             [100000, 100000, implode($progressBar)]
         ];

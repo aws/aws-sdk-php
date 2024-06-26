@@ -179,6 +179,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceConflictException"},
         {"shape":"ResourceInUseException"}
       ]
     },
@@ -582,7 +583,8 @@
         {"shape":"KMSNotFoundException"},
         {"shape":"InvalidRuntimeException"},
         {"shape":"ResourceConflictException"},
-        {"shape":"ResourceNotReadyException"}
+        {"shape":"ResourceNotReadyException"},
+        {"shape":"RecursiveInvocationException"}
       ]
     },
     "InvokeAsync":{
@@ -640,7 +642,8 @@
         {"shape":"KMSNotFoundException"},
         {"shape":"InvalidRuntimeException"},
         {"shape":"ResourceConflictException"},
-        {"shape":"ResourceNotReadyException"}
+        {"shape":"ResourceNotReadyException"},
+        {"shape":"RecursiveInvocationException"}
       ]
     },
     "ListAliases":{
@@ -1302,6 +1305,17 @@
         "ConsumerGroupId":{"shape":"URI"}
       }
     },
+    "ApplicationLogLevel":{
+      "type":"string",
+      "enum":[
+        "TRACE",
+        "DEBUG",
+        "INFO",
+        "WARN",
+        "ERROR",
+        "FATAL"
+      ]
+    },
     "Architecture":{
       "type":"string",
       "enum":[
@@ -1532,7 +1546,8 @@
         "CodeSigningConfigArn":{"shape":"CodeSigningConfigArn"},
         "Architectures":{"shape":"ArchitecturesList"},
         "EphemeralStorage":{"shape":"EphemeralStorage"},
-        "SnapStart":{"shape":"SnapStart"}
+        "SnapStart":{"shape":"SnapStart"},
+        "LoggingConfig":{"shape":"LoggingConfig"}
       }
     },
     "CreateFunctionUrlConfigRequest":{
@@ -2069,7 +2084,8 @@
         "Architectures":{"shape":"ArchitecturesList"},
         "EphemeralStorage":{"shape":"EphemeralStorage"},
         "SnapStart":{"shape":"SnapStartResponse"},
-        "RuntimeVersionConfig":{"shape":"RuntimeVersionConfig"}
+        "RuntimeVersionConfig":{"shape":"RuntimeVersionConfig"},
+        "LoggingConfig":{"shape":"LoggingConfig"}
       }
     },
     "FunctionEventInvokeConfig":{
@@ -3296,12 +3312,34 @@
       "max":160,
       "pattern":"^/mnt/[a-zA-Z0-9-_.]+$"
     },
+    "LogFormat":{
+      "type":"string",
+      "enum":[
+        "JSON",
+        "Text"
+      ]
+    },
+    "LogGroup":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
     "LogType":{
       "type":"string",
       "enum":[
         "None",
         "Tail"
       ]
+    },
+    "LoggingConfig":{
+      "type":"structure",
+      "members":{
+        "LogFormat":{"shape":"LogFormat"},
+        "ApplicationLogLevel":{"shape":"ApplicationLogLevel"},
+        "SystemLogLevel":{"shape":"SystemLogLevel"},
+        "LogGroup":{"shape":"LogGroup"}
+      }
     },
     "Long":{"type":"long"},
     "MasterRegion":{
@@ -3398,6 +3436,7 @@
       "type":"integer",
       "min":0
     },
+    "NullableBoolean":{"type":"boolean"},
     "OnFailure":{
       "type":"structure",
       "members":{
@@ -3694,6 +3733,15 @@
       "max":1,
       "min":1
     },
+    "RecursiveInvocationException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "Message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "RemoveLayerVersionPermissionRequest":{
       "type":"structure",
       "required":[
@@ -3841,6 +3889,7 @@
         "dotnetcore2.1",
         "dotnetcore3.1",
         "dotnet6",
+        "dotnet8",
         "nodejs4.3-edge",
         "go1.x",
         "ruby2.5",
@@ -3850,7 +3899,13 @@
         "nodejs18.x",
         "python3.10",
         "java17",
-        "ruby3.2"
+        "ruby3.2",
+        "ruby3.3",
+        "python3.11",
+        "nodejs20.x",
+        "provided.al2023",
+        "python3.12",
+        "java21"
       ]
     },
     "RuntimeVersionArn":{
@@ -4082,6 +4137,14 @@
       "type":"list",
       "member":{"shape":"SubnetId"},
       "max":16
+    },
+    "SystemLogLevel":{
+      "type":"string",
+      "enum":[
+        "DEBUG",
+        "INFO",
+        "WARN"
+      ]
     },
     "TagKey":{"type":"string"},
     "TagKeyList":{
@@ -4329,7 +4392,8 @@
         "FileSystemConfigs":{"shape":"FileSystemConfigList"},
         "ImageConfig":{"shape":"ImageConfig"},
         "EphemeralStorage":{"shape":"EphemeralStorage"},
-        "SnapStart":{"shape":"SnapStart"}
+        "SnapStart":{"shape":"SnapStart"},
+        "LoggingConfig":{"shape":"LoggingConfig"}
       }
     },
     "UpdateFunctionEventInvokeConfigRequest":{
@@ -4407,7 +4471,8 @@
       "type":"structure",
       "members":{
         "SubnetIds":{"shape":"SubnetIds"},
-        "SecurityGroupIds":{"shape":"SecurityGroupIds"}
+        "SecurityGroupIds":{"shape":"SecurityGroupIds"},
+        "Ipv6AllowedForDualStack":{"shape":"NullableBoolean"}
       }
     },
     "VpcConfigResponse":{
@@ -4415,7 +4480,8 @@
       "members":{
         "SubnetIds":{"shape":"SubnetIds"},
         "SecurityGroupIds":{"shape":"SecurityGroupIds"},
-        "VpcId":{"shape":"VpcId"}
+        "VpcId":{"shape":"VpcId"},
+        "Ipv6AllowedForDualStack":{"shape":"NullableBoolean"}
       }
     },
     "VpcId":{"type":"string"},

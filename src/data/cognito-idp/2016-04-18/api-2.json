@@ -5,11 +5,13 @@
     "endpointPrefix":"cognito-idp",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon Cognito Identity Provider",
     "serviceId":"Cognito Identity Provider",
     "signatureVersion":"v4",
     "targetPrefix":"AWSCognitoIdentityProviderService",
-    "uid":"cognito-idp-2016-04-18"
+    "uid":"cognito-idp-2016-04-18",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddCustomAttributes":{
@@ -543,7 +545,9 @@
         {"shape":"InternalErrorException"},
         {"shape":"SoftwareTokenMFANotFoundException"},
         {"shape":"ForbiddenException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "ChangePassword":{
       "name":"ChangePassword",
@@ -566,7 +570,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "ConfirmDevice":{
       "name":"ConfirmDevice",
@@ -590,7 +595,9 @@
         {"shape":"UserNotConfirmedException"},
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "ConfirmForgotPassword":{
       "name":"ConfirmForgotPassword",
@@ -618,7 +625,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "ConfirmSignUp":{
       "name":"ConfirmSignUp",
@@ -645,7 +653,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "CreateGroup":{
       "name":"CreateGroup",
@@ -838,7 +847,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "DeleteUserAttributes":{
       "name":"DeleteUserAttributes",
@@ -859,7 +869,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "DeleteUserPool":{
       "name":"DeleteUserPool",
@@ -1039,7 +1050,9 @@
         {"shape":"UserNotConfirmedException"},
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "ForgotPassword":{
       "name":"ForgotPassword",
@@ -1066,7 +1079,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "GetCSVHeader":{
       "name":"GetCSVHeader",
@@ -1103,7 +1117,9 @@
         {"shape":"UserNotConfirmedException"},
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "GetGroup":{
       "name":"GetGroup",
@@ -1135,6 +1151,22 @@
         {"shape":"NotAuthorizedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalErrorException"}
+      ]
+    },
+    "GetLogDeliveryConfiguration":{
+      "name":"GetLogDeliveryConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetLogDeliveryConfigurationRequest"},
+      "output":{"shape":"GetLogDeliveryConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetSigningCertificate":{
@@ -1186,7 +1218,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "GetUserAttributeVerificationCode":{
       "name":"GetUserAttributeVerificationCode",
@@ -1215,7 +1248,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "GetUserPoolMfaConfig":{
       "name":"GetUserPoolMfaConfig",
@@ -1250,7 +1284,9 @@
         {"shape":"UserNotConfirmedException"},
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "InitiateAuth":{
       "name":"InitiateAuth",
@@ -1277,7 +1313,8 @@
         {"shape":"InvalidSmsRoleTrustRelationshipException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "ListDevices":{
       "name":"ListDevices",
@@ -1298,7 +1335,9 @@
         {"shape":"UserNotConfirmedException"},
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "ListGroups":{
       "name":"ListGroups",
@@ -1468,7 +1507,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "RespondToAuthChallenge":{
       "name":"RespondToAuthChallenge",
@@ -1501,7 +1541,8 @@
         {"shape":"SoftwareTokenMFANotFoundException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "RevokeToken":{
       "name":"RevokeToken",
@@ -1519,6 +1560,24 @@
         {"shape":"UnsupportedOperationException"},
         {"shape":"UnsupportedTokenTypeException"},
         {"shape":"ForbiddenException"}
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
+    },
+    "SetLogDeliveryConfiguration":{
+      "name":"SetLogDeliveryConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SetLogDeliveryConfigurationRequest"},
+      "output":{"shape":"SetLogDeliveryConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "SetRiskConfiguration":{
@@ -1573,7 +1632,9 @@
         {"shape":"UserNotConfirmedException"},
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "SetUserPoolMfaConfig":{
       "name":"SetUserPoolMfaConfig",
@@ -1586,6 +1647,7 @@
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"ConcurrentModificationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidSmsRoleAccessPolicyException"},
         {"shape":"InvalidSmsRoleTrustRelationshipException"},
@@ -1611,7 +1673,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "SignUp":{
       "name":"SignUp",
@@ -1632,13 +1695,15 @@
         {"shape":"UsernameExistsException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalErrorException"},
+        {"shape":"LimitExceededException"},
         {"shape":"InvalidSmsRoleAccessPolicyException"},
         {"shape":"InvalidSmsRoleTrustRelationshipException"},
         {"shape":"InvalidEmailRoleAccessPolicyException"},
         {"shape":"CodeDeliveryFailureException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "StartUserImportJob":{
       "name":"StartUserImportJob",
@@ -1722,7 +1787,9 @@
         {"shape":"UserNotFoundException"},
         {"shape":"UserPoolAddOnNotEnabledException"},
         {"shape":"InternalErrorException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "UpdateDeviceStatus":{
       "name":"UpdateDeviceStatus",
@@ -1743,7 +1810,9 @@
         {"shape":"UserNotConfirmedException"},
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "UpdateGroup":{
       "name":"UpdateGroup",
@@ -1824,7 +1893,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "UpdateUserPool":{
       "name":"UpdateUserPool",
@@ -1906,7 +1976,9 @@
         {"shape":"SoftwareTokenMFANotFoundException"},
         {"shape":"CodeMismatchException"},
         {"shape":"ForbiddenException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "VerifyUserAttribute":{
       "name":"VerifyUserAttribute",
@@ -1931,11 +2003,16 @@
         {"shape":"AliasExistsException"},
         {"shape":"ForbiddenException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     }
   },
   "shapes":{
-    "AWSAccountIdType":{"type":"string"},
+    "AWSAccountIdType":{
+      "type":"string",
+      "max":12,
+      "pattern":"[0-9]+"
+    },
     "AccessTokenValidityType":{
       "type":"integer",
       "max":86400,
@@ -2663,7 +2740,11 @@
       "max":200
     },
     "BooleanType":{"type":"boolean"},
-    "CSSType":{"type":"string"},
+    "CSSType":{
+      "type":"string",
+      "max":131072,
+      "min":0
+    },
     "CSSVersionType":{"type":"string"},
     "CallbackURLsListType":{
       "type":"list",
@@ -2719,7 +2800,8 @@
     "ChallengeResponsesType":{
       "type":"map",
       "key":{"shape":"StringType"},
-      "value":{"shape":"StringType"}
+      "value":{"shape":"StringType"},
+      "sensitive":true
     },
     "ChangePasswordRequest":{
       "type":"structure",
@@ -2772,6 +2854,12 @@
       "min":1,
       "pattern":"[\\w+]+",
       "sensitive":true
+    },
+    "CloudWatchLogsConfigurationType":{
+      "type":"structure",
+      "members":{
+        "LogGroupArn":{"shape":"ArnType"}
+      }
     },
     "CodeDeliveryDetailsListType":{
       "type":"list",
@@ -2952,7 +3040,7 @@
       ],
       "members":{
         "UserPoolId":{"shape":"UserPoolIdType"},
-        "ProviderName":{"shape":"ProviderNameTypeV1"},
+        "ProviderName":{"shape":"ProviderNameTypeV2"},
         "ProviderType":{"shape":"IdentityProviderTypeType"},
         "ProviderDetails":{"shape":"ProviderDetailsType"},
         "AttributeMapping":{"shape":"AttributeMappingType"},
@@ -3583,6 +3671,10 @@
         "CompromisedCredentialsDetected":{"shape":"WrappedBooleanType"}
       }
     },
+    "EventSourceName":{
+      "type":"string",
+      "enum":["userNotification"]
+    },
     "EventType":{
       "type":"string",
       "enum":[
@@ -3724,6 +3816,19 @@
       "required":["IdentityProvider"],
       "members":{
         "IdentityProvider":{"shape":"IdentityProviderType"}
+      }
+    },
+    "GetLogDeliveryConfigurationRequest":{
+      "type":"structure",
+      "required":["UserPoolId"],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"}
+      }
+    },
+    "GetLogDeliveryConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "LogDeliveryConfiguration":{"shape":"LogDeliveryConfigurationType"}
       }
     },
     "GetSigningCertificateRequest":{
@@ -3905,7 +4010,11 @@
       "max":50,
       "min":0
     },
-    "ImageFileType":{"type":"blob"},
+    "ImageFileType":{
+      "type":"blob",
+      "max":131072,
+      "min":0
+    },
     "ImageUrlType":{"type":"string"},
     "InitiateAuthRequest":{
       "type":"structure",
@@ -4009,6 +4118,7 @@
         "VerifyAuthChallengeResponse":{"shape":"ArnType"},
         "PreTokenGeneration":{"shape":"ArnType"},
         "UserMigration":{"shape":"ArnType"},
+        "PreTokenGenerationConfig":{"shape":"PreTokenGenerationVersionConfigType"},
         "CustomSMSSender":{"shape":"CustomSMSLambdaVersionConfigType"},
         "CustomEmailSender":{"shape":"CustomEmailLambdaVersionConfigType"},
         "KMSKeyID":{"shape":"ArnType"}
@@ -4202,6 +4312,39 @@
         "PaginationToken":{"shape":"SearchPaginationTokenType"}
       }
     },
+    "LogConfigurationListType":{
+      "type":"list",
+      "member":{"shape":"LogConfigurationType"},
+      "max":1,
+      "min":0
+    },
+    "LogConfigurationType":{
+      "type":"structure",
+      "required":[
+        "LogLevel",
+        "EventSource"
+      ],
+      "members":{
+        "LogLevel":{"shape":"LogLevel"},
+        "EventSource":{"shape":"EventSourceName"},
+        "CloudWatchLogsConfiguration":{"shape":"CloudWatchLogsConfigurationType"}
+      }
+    },
+    "LogDeliveryConfigurationType":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "LogConfigurations"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "LogConfigurations":{"shape":"LogConfigurationListType"}
+      }
+    },
+    "LogLevel":{
+      "type":"string",
+      "enum":["ERROR"]
+    },
     "LogoutURLsListType":{
       "type":"list",
       "member":{"shape":"RedirectUrlType"},
@@ -4301,6 +4444,7 @@
     },
     "PaginationKey":{
       "type":"string",
+      "max":131072,
       "min":1,
       "pattern":"[\\S]+"
     },
@@ -4348,6 +4492,24 @@
       "max":2048,
       "min":0
     },
+    "PreTokenGenerationLambdaVersionType":{
+      "type":"string",
+      "enum":[
+        "V1_0",
+        "V2_0"
+      ]
+    },
+    "PreTokenGenerationVersionConfigType":{
+      "type":"structure",
+      "required":[
+        "LambdaVersion",
+        "LambdaArn"
+      ],
+      "members":{
+        "LambdaVersion":{"shape":"PreTokenGenerationLambdaVersionType"},
+        "LambdaArn":{"shape":"ArnType"}
+      }
+    },
     "PrecedenceType":{
       "type":"integer",
       "min":0
@@ -4389,13 +4551,13 @@
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+"
+      "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\p{Z}]+"
     },
-    "ProviderNameTypeV1":{
+    "ProviderNameTypeV2":{
       "type":"string",
       "max":32,
-      "min":3,
-      "pattern":"[^_][\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}][^_]+"
+      "min":1,
+      "pattern":"[^_\\p{Z}][\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}][^_\\p{Z}]+"
     },
     "ProviderUserIdentifierType":{
       "type":"structure",
@@ -4707,7 +4869,25 @@
     "SessionType":{
       "type":"string",
       "max":2048,
-      "min":20
+      "min":20,
+      "sensitive":true
+    },
+    "SetLogDeliveryConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "LogConfigurations"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "LogConfigurations":{"shape":"LogConfigurationListType"}
+      }
+    },
+    "SetLogDeliveryConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "LogDeliveryConfiguration":{"shape":"LogDeliveryConfigurationType"}
+      }
     },
     "SetRiskConfigurationRequest":{
       "type":"structure",
@@ -4861,7 +5041,8 @@
       "type":"string",
       "max":6,
       "min":6,
-      "pattern":"[0-9]+"
+      "pattern":"[0-9]+",
+      "sensitive":true
     },
     "SoftwareTokenMfaConfigType":{
       "type":"structure",
@@ -4924,7 +5105,11 @@
         "MaxLength":{"shape":"StringType"}
       }
     },
-    "StringType":{"type":"string"},
+    "StringType":{
+      "type":"string",
+      "max":131072,
+      "min":0
+    },
     "SupportedIdentityProvidersListType":{
       "type":"list",
       "member":{"shape":"ProviderNameType"}
@@ -5282,7 +5467,8 @@
       "members":{
         "IpAddress":{"shape":"StringType"},
         "EncodedData":{"shape":"StringType"}
-      }
+      },
+      "sensitive":true
     },
     "UserFilterType":{
       "type":"string",
@@ -5434,7 +5620,11 @@
         "Id":{"shape":"UserPoolIdType"},
         "Name":{"shape":"UserPoolNameType"},
         "LambdaConfig":{"shape":"LambdaConfigType"},
-        "Status":{"shape":"StatusType"},
+        "Status":{
+          "shape":"StatusType",
+          "deprecated":true,
+          "deprecatedMessage":"This property is no longer available."
+        },
         "LastModifiedDate":{"shape":"DateType"},
         "CreationDate":{"shape":"DateType"}
       }
@@ -5493,7 +5683,11 @@
         "Policies":{"shape":"UserPoolPolicyType"},
         "DeletionProtection":{"shape":"DeletionProtectionType"},
         "LambdaConfig":{"shape":"LambdaConfigType"},
-        "Status":{"shape":"StatusType"},
+        "Status":{
+          "shape":"StatusType",
+          "deprecated":true,
+          "deprecatedMessage":"This property is no longer available."
+        },
         "LastModifiedDate":{"shape":"DateType"},
         "CreationDate":{"shape":"DateType"},
         "SchemaAttributes":{"shape":"SchemaAttributesListType"},
@@ -5532,7 +5726,8 @@
         "COMPROMISED",
         "UNKNOWN",
         "RESET_REQUIRED",
-        "FORCE_CHANGE_PASSWORD"
+        "FORCE_CHANGE_PASSWORD",
+        "EXTERNAL_PROVIDER"
       ]
     },
     "UserType":{

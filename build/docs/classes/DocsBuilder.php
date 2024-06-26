@@ -157,8 +157,8 @@ class DocsBuilder
             krsort($versions);
             $service = reset($versions);
             $servicesTable .= "<tr><td><a href=\"{$service->serviceLink}\">{$service->title}</a></td>";
-            $servicesTable .= "<td><a href=\"{$service->clientLink}\">{$service->client}</a></td>";
-            $servicesTable .= "<td><ul class=\"list-unstyled\">";
+            $servicesTable .= "<td><a title=\"{$service->client}\" href=\"{$service->clientLink}\">{$service->client}</a></td>";
+            $servicesTable .= "<td class=\"nowrap\"><ul>";
             $latest = count($versions) > 1 ? ' (latest)' : '';
             foreach ($versions as $sv) {
                 $servicesTable .= "<li><a href=\"{$sv->serviceLink}\">{$sv->version} {$latest}</a></li>";
@@ -223,7 +223,7 @@ EOT;
     private function updateIssues()
     {
         $text = '';
-        foreach ($this->issues as $level=>$levelIssues) {
+        foreach ($this->issues as $level => $levelIssues) {
             foreach ($levelIssues as $serviceName => $versions) {
                 foreach ($versions as $serviceVersion => $messages) {
                     foreach (array_keys($messages) as $message) {
@@ -250,7 +250,7 @@ EOT;
     {
         $html = new HtmlDocument;
         $html->open('div', 'page-header');
-        $html->elem('h1', null, "$service->title <small>{$service->version}</small>");
+        $html->elem('h1', 'phpdocumentor-content__title', "$service->title <small>{$service->version}</small>");
         $html->close();
         $metadata = <<<EOT
 <dd><strong>Client:</strong> <a href="{$service->clientLink}">{$service->client}</a></dd>
@@ -268,16 +268,16 @@ EOT;
         $html->elem('h2', null, 'Operation Summary');
         $desc = <<<EOT
 Each of the following operations can be created from a client using
-<code>\$client-&gt;getCommand('CommandName')</code>, where "CommandName" is the
+<code class="phpdocumentor-code">\$client-&gt;getCommand('CommandName')</code>, where "CommandName" is the
 name of one of the following operations. Note: a command is a value that
 encapsulates an operation and the parameters used to create an HTTP request.
 EOT;
         $html->elem('p', null, $desc);
         $desc = <<<EOT
 You can also create and send a command immediately using the magic methods
-available on a client object: <code>\$client-&gt;commandName(/* parameters */)</code>.
+available on a client object: <code class="phpdocumentor-code">\$client-&gt;commandName(/* parameters */)</code>.
 You can send the command asynchronously (returning a promise) by appending the
-word "Async" to the operation name: <code>\$client-&gt;commandNameAsync(/* parameters */)</code>.
+word "Async" to the operation name: <code class="phpdocumentor-code">\$client-&gt;commandNameAsync(/* parameters */)</code>.
 EOT;
         $html->elem('p', null, $desc);
         $html->append($this->createHtmlForToc($service, $service->api->getOperations()));
@@ -285,6 +285,7 @@ EOT;
         $this->createHtmlForPaginators($html, $service->api);
         $this->createHtmlForWaiters($html, $service->api);
 
+        $html->open('section', 'phpdocumentor-methods');
         $html->section(2, 'Operations');
         foreach ($service->api->getOperations() as $opName => $operation) {
             $html->append($this->createHtmlForOperation(
@@ -294,7 +295,9 @@ EOT;
                 isset($examples[$opName]) ? $examples[$opName] : []
             ));
         }
+        $html->close(); //close operations section
 
+        $html->open('section');
         $html->section(2, 'Shapes');
         $map = $service->api->getShapeMap();
         $keys = array_keys($service->api['shapes']);
@@ -305,18 +308,23 @@ EOT;
             if ($shape['type'] == 'structure'
                 && !isset($this->skipMembers[$shape])
             ) {
+                $html->open('article', 'phpdocumentor-element');
                 $html->section(3, $name, 'shape', 'method-title');
                 $html->append($this->renderShape($service->docs, $shape));
+                $html->close();
             }
         }
+        $html->close();
 
-        $this->writeThemeFile($service->serviceLink, $html->render());
+        $this->writeThemeFile(
+            $service->serviceLink,
+            "<section><article class=\"phpdocumentor-element\">{$html->render()}</article></section>");
     }
 
     private function createHtmlForToc(Service $service, array $operations)
     {
         $html = new HtmlDocument();
-        $html->open('ul', 'methods-summary');
+        $html->open('dl', 'phpdocumentor-table-of-contents');
         foreach ($operations as $opName => $operation) {
             $item = '<a class="method-summary-link" href="#' . $html->slug($opName)
                 . '"><strong>' . "{$opName}</strong> ( array \$params = [] )</a>";
@@ -326,10 +334,10 @@ EOT;
                 $shortened = strpos($shortened, '.') === false
                     ? $shortened
                     : substr($shortened, 0, strpos($shortened, '.') + 1);
-                $item .= '<div class="summary-info"><p>' . $shortened . '</p></div>';
+                $item .= '<dd>' . $shortened . '</dd>';
             }
 
-            $html->elem('li', null, $item);
+            $html->elem('dt', 'phpdocumentor-table-of-contents__entry -method -public', $item);
         }
         $html->close();
 
@@ -341,7 +349,8 @@ EOT;
         $name = str_replace('.html', '', $name);
         $name .= '.html';
         fwrite(STDOUT, "Writing file: {$name}.\n");
-        $html = str_replace('{{ contents }}', $contents, $this->template);
+        $updatedTemplate = str_replace('index.html#top', $name . '#top', $this->template);
+        $html = str_replace('{{ contents }}', $contents, $updatedTemplate);
         return (bool) file_put_contents("{$this->outputDir}/{$name}", $html);
     }
 
@@ -382,30 +391,30 @@ EOT;
             $html = '<h2>Supported API Versions</h2>';
             $html .= <<<EOT
 <p>This class uses a <em>service description model</em> that is associated at
-runtime based on the <code>version</code> option given when constructing the
-client. The <code>version</code> option will determine which API operations,
+runtime based on the <code class="phpdocumentor-code">version</code> option given when constructing the
+client. The <code class="phpdocumentor-code">version</code> option will determine which API operations,
 waiters, and paginators are available for a client. Creating a command or a
 specific API operation can be done using magic methods (e.g.,
-<code>\$client->commandName(/** parameters */)</code>, or using the
-<code>$\client->getCommand</code> method of the client.</p>
+<code class="phpdocumentor-code">\$client->commandName(/** parameters */)</code>, or using the
+<code class="phpdocumentor-code">\$client->getCommand</code> method of the client.</p>
 EOT;
 
-            $html .= '<div class="api-version-list element-summary"><ul>';
+            $html .= '<article class="api-version-list element-summary article-container"><ul>';
             $latest = count($versions) > 1 ? ' (latest)' : '';
             foreach ($versions as $sv) {
                 $html .= "<li>";
-                $html .= "<p><a href=\"{$sv->serviceLink}\">{$sv->version} {$latest}</a></p>";
-                $html .= "<ul class=\"container-fluid\">";
+                $html .= "<p><a href=\"{$sv->serviceLink}\"><strong>{$sv->version} {$latest}</strong></a></p>";
+                $html .= "<ul class='supported-api-versions-methods my-container'>";
                 foreach (array_keys($sv->api->getOperations()) as $operation) {
-                    $html .= "<div class=\"col-xs-12 col-md-6 col-lg-4\">";
-                    $html .= "<a href=\"{$sv->serviceLink}#" . strtolower($operation) ."\">$operation</a>";
-                    $html .= "</div>";
+                    $html .= "<li class='my-col-full my-col-half my-col-third'>";
+                    $html .= "<a href=\"{$sv->serviceLink}#" . strtolower($operation) . "\" style='white-space: nowrap;'>$operation</a>";
+                    $html .= "</li>";
                 }
                 $html .= "</ul>";
                 $html .= "</li>";
                 $latest = '';
             }
-            $html .= '</ul></div>';
+            $html .= '</ul></article>';
             $this->replaceInner($service->clientLink, $html, '<!-- api -->');
         }
     }
@@ -438,7 +447,7 @@ EOT;
                         foreach ($outputShapes as $outputShape) {
                             $outputExample->addShape($outputShape);
                         }
-                        $html->elem('pre', null, htmlentities($outputExample->getCode()));
+                        $html->elem('pre', 'phpdocumentor-code', htmlentities($outputExample->getCode()));
 
                         // Add member details
                         $html->append($this->renderShape($service->docs, $shape));
@@ -478,22 +487,15 @@ EOHTML;
     {
         fwrite(STDOUT, "Updating search index\n");
 
-        $broker = new Broker(new Broker\Backend\Memory());
-        foreach ($this->sources as $sourceFile) {
-            $broker->processFile($sourceFile);
-        }
-        $index = array_merge(
-            $this->getServiceAutocompleteIndex($services),
-            $this->getClassAutocompleteIndex($broker),
-            $this->getFunctionAutocompleteIndex($broker)
-        );
-        $jsonIndex = json_encode($this->utf8Encode($index));
-        $js = <<<EOJS
-var AWS = AWS || {};
-AWS.searchIndex = $jsonIndex;
-EOJS;
+        $serviceIndex = $this->getServiceAutocompleteIndex($services);
+        $jsonIndex = json_encode($this->utf8Encode($serviceIndex));
+        $jsonIndex = ',' . substr($jsonIndex, 1, -1);
 
-        file_put_contents("{$this->outputDir}/searchIndex.js", $js);
+        $currentSearchIndex = file_get_contents("{$this->outputDir}/js/searchIndex.js");
+        $insertPosition = strrpos($currentSearchIndex, ']');
+        $updatedIndex = substr_replace($currentSearchIndex, $jsonIndex, $insertPosition, 0);
+
+        file_put_contents("{$this->outputDir}/js/searchIndex.js", $updatedIndex);
     }
 
     private function utf8Encode($mixed)
@@ -520,11 +522,13 @@ EOJS;
         // Add operations from latest version of each service to autocomplete index
         foreach ($services as $service) {
             foreach ($service->api->getOperations() as $operation => $def) {
+                $summary = $service->docs->getOperationDocs($operation);
+
                 $autoComplete []= [
-                    'name' => $service->namespace . '::' . lcfirst($operation),
-                    'match' => $operation,
-                    'link' => $service->serviceLink . '#' . strtolower($operation),
-                    'description' => strip_tags($service->docs->getOperationDocs($operation)),
+                    'fqsen' => $service->namespace . '::' . lcfirst($operation),
+                    'name' => $operation,
+                    'url' => $service->serviceLink . '#' . strtolower($operation),
+                    'summary' => $summary ? strip_tags($summary) : null
                 ];
             }
         }
@@ -560,7 +564,7 @@ EOJS;
             $methods = array_filter($methods, function (ReflectionMethod $method) use ($methodsToSkip) {
                 $name = $method->getName();
                 return !in_array($name, $methodsToSkip)
-                    && $name{0} !== '_';
+                    && $name[0] !== '_';
             });
 
             foreach ($methods as $method) {
@@ -658,29 +662,27 @@ This client supports the following waiters:
 EOT;
 
         $html->section(2, 'Waiters');
-        $html->open('div', 'element-summary');
-            $html->elem('p', null, $desc);
-            $html->open('table', 'table table-condensed');
-                $html->open('thead');
+        $html->elem('p', 'phpdocumentor-summary', $desc);
+        $html->open('table', 'table-responsive table-striped');
+            $html->open('thead');
+                $html->open('tr');
+                    $html->elem('th', null, 'Waiter name');
+                    $html->elem('th', null, 'API Operation');
+                    $html->elem('th', null, 'Delay');
+                    $html->elem('th', null, 'Max Attempts');
+                $html->close();
+            $html->close();
+            $html->open('tbody');
+                foreach ($waiters as $name => $config) {
                     $html->open('tr');
-                        $html->elem('th', null, 'Waiter name');
-                        $html->elem('th', null, 'API Operation');
-                        $html->elem('th', null, 'Delay');
-                        $html->elem('th', null, 'Max Attempts');
+                        $html->elem('td', null, $name);
+                        $html->elem('td', null, '<a href="#'
+                            . strtolower($config['operation'])
+                            . '">' . $config['operation'] . '</a>');
+                        $html->elem('td', null, $config['delay']);
+                        $html->elem('td', null, $config['maxAttempts']);
                     $html->close();
-                $html->close();
-                $html->open('tbody');
-                    foreach ($waiters as $name => $config) {
-                        $html->open('tr');
-                            $html->elem('td', null, $name);
-                            $html->elem('td', null, '<a href="#'
-                                . strtolower($config['operation'])
-                                . '">' . $config['operation'] . '</a>');
-                            $html->elem('td', null, $config['delay']);
-                            $html->elem('td', null, $config['maxAttempts']);
-                        $html->close();
-                    }
-                $html->close();
+                }
             $html->close();
         $html->close();
     }
@@ -703,23 +705,21 @@ the following paginators:
 EOT;
 
         $html->section(2, 'Paginators');
-        $html->open('div', 'element-summary');
-            $html->elem('p', null, $desc);
-            $html->open('ul');
-                foreach ($paginators as $name => $config) {
-                    $html->open('li');
-                        $attr = ['href' => '#' . strtolower($name)];
-                        $html->elem('a', $attr, $name);
-                    $html->close();
-                }
-            $html->close();
+        $html->elem('p', 'phpdocumentor-summary', $desc);
+        $html->open('dl');
+            foreach ($paginators as $name => $config) {
+                $html->open('dt', 'phpdocumentor-table-of-contents__entry');
+                    $attr = ['href' => '#' . strtolower($name), 'aria-label' => strtolower($name)];
+                    $html->elem('a', $attr, '<strong>' . $name . '</strong>');
+                $html->close();
+            }
         $html->close();
     }
 
     private function createHtmlForOperation(Service $service, $name, Operation $operation, $examples)
     {
         $html = new HtmlDocument;
-        $html->open('div', 'operation-container');
+        $html->open('article', 'phpdocumentor-element -method -public');
 
         // Name
         $html->section(
@@ -733,14 +733,14 @@ EOT;
         // Code
         $html->elem(
             'pre',
-            'opcode',
-            '$result = $client-&gt;<code>' . lcfirst($name) . '</code>([/* ... */]);' . "\n"
-            . '$promise = $client-&gt;<code>' . lcfirst($name) . 'Async</code>([/* ... */]);' . "\n"
+            'phpdocumentor-code',
+            '$result = $client-&gt;<code class=\"phpdocumentor-code\">' . lcfirst($name) . '</code>([/* ... */]);' . "\n"
+            . '$promise = $client-&gt;<code class=\"phpdocumentor-code\">' . lcfirst($name) . 'Async</code>([/* ... */]);' . "\n"
         );
 
         // Description
         if ($description = $service->docs->getOperationDocs($name)) {
-            $html->elem('div', 'operation-docs', $description);
+            $html->elem('p', 'phpdocumentor-summary', $description);
         }
 
         // Parameters
@@ -757,7 +757,7 @@ EOT;
 
         $html
             ->elem('h4', null, 'Parameter Syntax')
-            ->elem('pre', null, htmlentities($inputExample->getCode()))
+            ->elem('pre', 'phpdocumentor-code', htmlentities($inputExample->getCode()))
             ->elem('h4', null, 'Parameter Details')
             ->append($this->renderShape($service->docs, $input, false));
 
@@ -765,7 +765,7 @@ EOT;
         $html->elem('h4', null, 'Result Syntax');
 
         if (!count($output->getMembers())) {
-            $html->elem('pre', null, '[]');
+            $html->elem('pre', 'phpdocumentor-code', '[]');
             $html->elem('h4', null, 'Result Details');
             $html->elem('div', 'alert alert-info', 'The results for this operation are always empty.');
         } else {
@@ -783,7 +783,7 @@ EOT;
                     $eventStreamExample->addShape($shape);
                 }
             }
-            $html->elem('pre', null, htmlentities($outputExample->getCode()))
+            $html->elem('pre', 'phpdocumentor-code', htmlentities($outputExample->getCode()))
                 ->elem('h4', null, 'Result Details')
                 ->append($this->renderShape($service->docs, $output, false));
             if ($eventStreamExample) {
@@ -793,8 +793,8 @@ generate and check the top-level field to determine which type of event it is.
 EOT;
 
                 $html->elem('h5', null, 'Using an EventParsingIterator')
-                    ->elem('p', null, $desc)
-                    ->elem('pre', null, htmlentities($eventStreamExample->getCode()));
+                    ->elem('p', 'phpdocumentor-summary', $desc)
+                    ->elem('pre', 'phpdocumentor-code', htmlentities($eventStreamExample->getCode()));
             }
         }
 
@@ -802,24 +802,23 @@ EOT;
         $html->elem('h4', null, 'Errors');
         $errors = $operation->getErrors();
         if (!$errors) {
-            $html->elem('p', null, 'There are no errors described for this operation.');
+            $html->elem('p', 'phpdocumentor-summary', 'There are no errors described for this operation.');
         } else {
-            $html->open('ul');
+            $html->open('dl');
             foreach ($errors as $error) {
                 $desc = $service->docs->getErrorDocs($error->getName())
                     ?: 'This error does not currently have a description.';
                 $html
-                    ->open('li')
-                        ->open('p')
+                    ->open('dt')
                             ->elem(
                                 'a',
                                 [
                                     'href' => $service->exceptionLink . '#shape-'
-                                        . strtolower($error->getName())
+                                        . strtolower($error->getName()),
+                                    'aria-label' => strtolower($error->getName())
                                 ],
-                                $error['name'] . ': ')
-                            ->elem('p', null, $desc)
-                        ->close()
+                                '<strong>' . $error['name'] . ': ' . '</strong>')
+                            ->elem('dd', 'phpdocumentor-summary', $desc)
                     ->close();
             }
             $html->close();
@@ -833,19 +832,21 @@ EOT;
                 $exampleNumber = $number + 1;
                 $exampleId = $this->exampleSlug($name, $exampleNumber);
                 $html->open('h5', ['id' => $exampleId]);
-                $html->elem('span', null, 'Example ' . $exampleNumber . ': ' . $example['title']);
-                $html->elem('a', ['href' => '#' . $exampleId], $html->glyph('link'));
+                $html->elem('span', null, 'Example ' . $exampleNumber . ': ' . $example['title'] ?? '');
+                $html->elem('a', ['href' => '#' . $exampleId, 'aria-label' => 'example link'], $html->glyph('link'));
                 $html->close();
-                $html->elem('p', null, $example['description']);
-                $comments = $example['comments'];
-                $html->elem('pre', null, $generator->generateInput(
+                if (isset($example['description'])) {
+                    $html->elem('p', 'phpdocumentor-summary', $example['description']);
+                }
+                $comments = $example['comments'] ?? [];
+                $html->elem('pre', 'phpdocumentor-code', $generator->generateInput(
                     $name, 
                     isset($example['input']) ? $example['input'] : [], 
                     isset($comments['input']) ? $comments['input'] : []
                 ));
                 if (isset($example['output'])) {
-                    $html->elem('p', null, 'Result syntax:');
-                    $html->elem('pre', null, $generator->generateOutput(
+                    $html->elem('p', 'phpdocumentor-summary', 'Result syntax:');
+                    $html->elem('pre', 'phpdocumentor-code', $generator->generateOutput(
                         $name, 
                         $example['output'], 
                         isset($comments['output'])
@@ -918,7 +919,7 @@ EOT;
         ksort($members);
         foreach ($members as $name => $member) {
             $html->open('dt', 'param-def');
-            $html->elem('span', 'term', $name);
+            $html->elem('strong', 'term', $name);
             $html->close();
             $html->open('dd', 'param-def');
             $required = !empty($shape['required'])
@@ -950,11 +951,11 @@ EOT;
             $typeDesc = $this->getPrimitivePhpType($member);
         }
 
-        $html->open('div', 'param-attributes')->open('ul');
+        $html->open('div', 'param-attributes')->open('dl');
         if ($required) {
-            $html->elem('li', 'required', 'Required: Yes');
+            $html->elem('dt', 'required', '<dd><strong>Required</strong>: <em>Yes</em></dd>');
         }
-        $html->elem('li', '', 'Type: ' . $typeDesc);
+        $html->elem('dt', null, '<dd><strong>Type:</strong> ' . "<em>{$typeDesc}</em></dd>");
         $html->close();
         $html->close();
 
@@ -1044,7 +1045,7 @@ EOT;
 
     private function memberLink($name)
     {
-        return '<a href="#' . $this->memberSlug($name) . '">' . $name . '</a>';
+        return '<a href="#' . $this->memberSlug($name) . '" aria-label="' . $name . '">' . $name . '</a>';
     }
 
     private function updateSitemap()

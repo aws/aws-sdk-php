@@ -12,8 +12,9 @@ class UploadState
     const CREATED = 0;
     const INITIATED = 1;
     const COMPLETED = 2;
+    const PROGRESS_THRESHOLD_SIZE = 8;
 
-    protected $progressBar = [
+    private $progressBar = [
         "Transfer initiated...\n|                    | 0.0%\n",
         "|==                  | 12.5%\n",
         "|=====               | 25.0%\n",
@@ -41,14 +42,20 @@ class UploadState
     private $progressThresholds = [];
 
     /** @var boolean Determines status for tracking the upload */
-    public $displayProgress = false;
+    private $displayProgress = false;
 
     /**
      * @param array $id Params used to identity the upload.
      */
-    public function __construct(array $id)
+    public function __construct(array $id, array $config = [])
     {
         $this->id = $id;
+
+        if (isset($config['display_progress'])
+            && is_bool($config['display_progress'])
+        ) {
+            $this->displayProgress = $config['display_progress'];
+        }
     }
 
     /**
@@ -102,7 +109,7 @@ class UploadState
      *
      * @return array
      */
-    public function setProgressThresholds($totalSize)
+    public function setProgressThresholds($totalSize): array
     {
         if(!is_numeric($totalSize)) {
             throw new \InvalidArgumentException(
@@ -111,9 +118,12 @@ class UploadState
         }
 
         $this->progressThresholds[0] = 0;
-        for ($i=1;$i<=8;$i++) {
-            $this->progressThresholds []= round($totalSize*($i/8));
+        for ($i = 1; $i <= self::PROGRESS_THRESHOLD_SIZE; $i++) {
+            $this->progressThresholds[] = round(
+                $totalSize * ($i / self::PROGRESS_THRESHOLD_SIZE)
+            );
         }
+
         return $this->progressThresholds;
     }
 
@@ -122,7 +132,7 @@ class UploadState
      *
      * @param $totalUploaded numeric Size of upload so far.
      */
-    public function getDisplayProgress($totalUploaded)
+    public function getDisplayProgress($totalUploaded): void
     {
         if (!is_numeric($totalUploaded)) {
             throw new \InvalidArgumentException(
@@ -132,7 +142,8 @@ class UploadState
 
         if ($this->displayProgress) {
             while (!empty($this->progressBar)
-                && $totalUploaded >= $this->progressThresholds[0]) {
+                && $totalUploaded >= $this->progressThresholds[0]
+            ) {
                 echo array_shift($this->progressBar);
                 array_shift($this->progressThresholds);
             }

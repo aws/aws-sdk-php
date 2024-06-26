@@ -5,6 +5,7 @@
     "endpointPrefix":"datasync",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"DataSync",
     "serviceFullName":"AWS DataSync",
     "serviceId":"DataSync",
@@ -49,6 +50,19 @@
       },
       "input":{"shape":"CreateAgentRequest"},
       "output":{"shape":"CreateAgentResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalException"}
+      ]
+    },
+    "CreateLocationAzureBlob":{
+      "name":"CreateLocationAzureBlob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateLocationAzureBlobRequest"},
+      "output":{"shape":"CreateLocationAzureBlobResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InternalException"}
@@ -262,6 +276,19 @@
         {"shape":"InternalException"}
       ],
       "endpoint":{"hostPrefix":"discovery-"}
+    },
+    "DescribeLocationAzureBlob":{
+      "name":"DescribeLocationAzureBlob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeLocationAzureBlobRequest"},
+      "output":{"shape":"DescribeLocationAzureBlobResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalException"}
+      ]
     },
     "DescribeLocationEfs":{
       "name":"DescribeLocationEfs",
@@ -676,6 +703,19 @@
       ],
       "endpoint":{"hostPrefix":"discovery-"}
     },
+    "UpdateLocationAzureBlob":{
+      "name":"UpdateLocationAzureBlob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLocationAzureBlobRequest"},
+      "output":{"shape":"UpdateLocationAzureBlobResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalException"}
+      ]
+    },
     "UpdateLocationHdfs":{
       "name":"UpdateLocationHdfs",
       "http":{
@@ -825,7 +865,8 @@
       "members":{
         "AgentArn":{"shape":"AgentArn"},
         "Name":{"shape":"TagValue"},
-        "Status":{"shape":"AgentStatus"}
+        "Status":{"shape":"AgentStatus"},
+        "Platform":{"shape":"Platform"}
       }
     },
     "AgentStatus":{
@@ -835,12 +876,58 @@
         "OFFLINE"
       ]
     },
+    "AgentVersion":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\s+=._:@/-]+$"
+    },
     "Atime":{
       "type":"string",
       "enum":[
         "NONE",
         "BEST_EFFORT"
       ]
+    },
+    "AzureAccessTier":{
+      "type":"string",
+      "enum":[
+        "HOT",
+        "COOL",
+        "ARCHIVE"
+      ]
+    },
+    "AzureBlobAuthenticationType":{
+      "type":"string",
+      "enum":["SAS"]
+    },
+    "AzureBlobContainerUrl":{
+      "type":"string",
+      "max":325,
+      "pattern":"^https:\\/\\/[A-Za-z0-9]((\\.|-+)?[A-Za-z0-9]){0,252}\\/[a-z0-9](-?[a-z0-9]){2,62}$"
+    },
+    "AzureBlobSasConfiguration":{
+      "type":"structure",
+      "required":["Token"],
+      "members":{
+        "Token":{"shape":"AzureBlobSasToken"}
+      }
+    },
+    "AzureBlobSasToken":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^.+$",
+      "sensitive":true
+    },
+    "AzureBlobSubdirectory":{
+      "type":"string",
+      "max":1024,
+      "pattern":"^[\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{P}\\p{C}]*$"
+    },
+    "AzureBlobType":{
+      "type":"string",
+      "enum":["BLOCK"]
     },
     "BytesPerSecond":{
       "type":"long",
@@ -863,7 +950,8 @@
       "members":{
         "Used":{"shape":"NonNegativeLong"},
         "Provisioned":{"shape":"NonNegativeLong"},
-        "LogicalUsed":{"shape":"NonNegativeLong"}
+        "LogicalUsed":{"shape":"NonNegativeLong"},
+        "ClusterCloudStorageUsed":{"shape":"NonNegativeLong"}
       }
     },
     "CollectionDurationMinutes":{
@@ -887,6 +975,30 @@
       "type":"structure",
       "members":{
         "AgentArn":{"shape":"AgentArn"}
+      }
+    },
+    "CreateLocationAzureBlobRequest":{
+      "type":"structure",
+      "required":[
+        "ContainerUrl",
+        "AuthenticationType",
+        "AgentArns"
+      ],
+      "members":{
+        "ContainerUrl":{"shape":"AzureBlobContainerUrl"},
+        "AuthenticationType":{"shape":"AzureBlobAuthenticationType"},
+        "SasConfiguration":{"shape":"AzureBlobSasConfiguration"},
+        "BlobType":{"shape":"AzureBlobType"},
+        "AccessTier":{"shape":"AzureAccessTier"},
+        "Subdirectory":{"shape":"AzureBlobSubdirectory"},
+        "AgentArns":{"shape":"AgentArnList"},
+        "Tags":{"shape":"InputTagList"}
+      }
+    },
+    "CreateLocationAzureBlobResponse":{
+      "type":"structure",
+      "members":{
+        "LocationArn":{"shape":"LocationArn"}
       }
     },
     "CreateLocationEfsRequest":{
@@ -1134,7 +1246,9 @@
         "Excludes":{"shape":"FilterList"},
         "Schedule":{"shape":"TaskSchedule"},
         "Tags":{"shape":"InputTagList"},
-        "Includes":{"shape":"FilterList"}
+        "Includes":{"shape":"FilterList"},
+        "ManifestConfig":{"shape":"ManifestConfig"},
+        "TaskReportConfig":{"shape":"TaskReportConfig"}
       }
     },
     "CreateTaskResponse":{
@@ -1206,7 +1320,8 @@
         "LastConnectionTime":{"shape":"Time"},
         "CreationTime":{"shape":"Time"},
         "EndpointType":{"shape":"EndpointType"},
-        "PrivateLinkConfig":{"shape":"PrivateLinkConfig"}
+        "PrivateLinkConfig":{"shape":"PrivateLinkConfig"},
+        "Platform":{"shape":"Platform"}
       }
     },
     "DescribeDiscoveryJobRequest":{
@@ -1225,6 +1340,25 @@
         "Status":{"shape":"DiscoveryJobStatus"},
         "JobStartTime":{"shape":"DiscoveryTime"},
         "JobEndTime":{"shape":"DiscoveryTime"}
+      }
+    },
+    "DescribeLocationAzureBlobRequest":{
+      "type":"structure",
+      "required":["LocationArn"],
+      "members":{
+        "LocationArn":{"shape":"LocationArn"}
+      }
+    },
+    "DescribeLocationAzureBlobResponse":{
+      "type":"structure",
+      "members":{
+        "LocationArn":{"shape":"LocationArn"},
+        "LocationUri":{"shape":"LocationUri"},
+        "AuthenticationType":{"shape":"AzureBlobAuthenticationType"},
+        "BlobType":{"shape":"AzureBlobType"},
+        "AccessTier":{"shape":"AzureAccessTier"},
+        "AgentArns":{"shape":"AgentArnList"},
+        "CreationTime":{"shape":"Time"}
       }
     },
     "DescribeLocationEfsRequest":{
@@ -1497,14 +1631,21 @@
         "Options":{"shape":"Options"},
         "Excludes":{"shape":"FilterList"},
         "Includes":{"shape":"FilterList"},
+        "ManifestConfig":{"shape":"ManifestConfig"},
         "StartTime":{"shape":"Time"},
         "EstimatedFilesToTransfer":{"shape":"long"},
         "EstimatedBytesToTransfer":{"shape":"long"},
         "FilesTransferred":{"shape":"long"},
         "BytesWritten":{"shape":"long"},
         "BytesTransferred":{"shape":"long"},
+        "BytesCompressed":{"shape":"long"},
         "Result":{"shape":"TaskExecutionResultDetail"},
-        "BytesCompressed":{"shape":"long"}
+        "TaskReportConfig":{"shape":"TaskReportConfig"},
+        "FilesDeleted":{"shape":"long"},
+        "FilesSkipped":{"shape":"long"},
+        "FilesVerified":{"shape":"long"},
+        "ReportResult":{"shape":"ReportResult"},
+        "EstimatedFilesToDelete":{"shape":"long"}
       }
     },
     "DescribeTaskRequest":{
@@ -1532,7 +1673,10 @@
         "ErrorCode":{"shape":"string"},
         "ErrorDetail":{"shape":"string"},
         "CreationTime":{"shape":"Time"},
-        "Includes":{"shape":"FilterList"}
+        "Includes":{"shape":"FilterList"},
+        "ManifestConfig":{"shape":"ManifestConfig"},
+        "TaskReportConfig":{"shape":"TaskReportConfig"},
+        "ScheduleDetails":{"shape":"TaskScheduleDetails"}
       }
     },
     "DestinationNetworkInterfaceArns":{
@@ -2116,6 +2260,22 @@
         "TRANSFER"
       ]
     },
+    "ManifestAction":{
+      "type":"string",
+      "enum":["TRANSFER"]
+    },
+    "ManifestConfig":{
+      "type":"structure",
+      "members":{
+        "Action":{"shape":"ManifestAction"},
+        "Format":{"shape":"ManifestFormat"},
+        "Source":{"shape":"SourceManifestConfig"}
+      }
+    },
+    "ManifestFormat":{
+      "type":"string",
+      "enum":["CSV"]
+    },
     "MaxP95Performance":{
       "type":"structure",
       "members":{
@@ -2166,7 +2326,9 @@
         "ClusterBlockStorageUsed":{"shape":"NonNegativeLong"},
         "ClusterBlockStorageLogicalUsed":{"shape":"NonNegativeLong"},
         "Recommendations":{"shape":"Recommendations"},
-        "RecommendationStatus":{"shape":"RecommendationStatus"}
+        "RecommendationStatus":{"shape":"RecommendationStatus"},
+        "LunCount":{"shape":"NonNegativeLong"},
+        "ClusterCloudStorageUsed":{"shape":"NonNegativeLong"}
       }
     },
     "NetAppONTAPClusters":{
@@ -2188,7 +2350,8 @@
         "Recommendations":{"shape":"Recommendations"},
         "NfsExportedVolumes":{"shape":"NonNegativeLong"},
         "RecommendationStatus":{"shape":"RecommendationStatus"},
-        "TotalSnapshotCapacityUsed":{"shape":"NonNegativeLong"}
+        "TotalSnapshotCapacityUsed":{"shape":"NonNegativeLong"},
+        "LunCount":{"shape":"NonNegativeLong"}
       }
     },
     "NetAppONTAPSVMs":{
@@ -2211,7 +2374,8 @@
         "SnapshotCapacityUsed":{"shape":"NonNegativeLong"},
         "MaxP95Performance":{"shape":"MaxP95Performance"},
         "Recommendations":{"shape":"Recommendations"},
-        "RecommendationStatus":{"shape":"RecommendationStatus"}
+        "RecommendationStatus":{"shape":"RecommendationStatus"},
+        "LunCount":{"shape":"NonNegativeLong"}
       }
     },
     "NetAppONTAPVolumes":{
@@ -2261,8 +2425,8 @@
     "ObjectStorageAccessKey":{
       "type":"string",
       "max":200,
-      "min":1,
-      "pattern":"^.+$"
+      "min":0,
+      "pattern":"^.*$"
     },
     "ObjectStorageBucketName":{
       "type":"string",
@@ -2277,8 +2441,8 @@
     "ObjectStorageSecretKey":{
       "type":"string",
       "max":200,
-      "min":1,
-      "pattern":"^.+$",
+      "min":0,
+      "pattern":"^.*$",
       "sensitive":true
     },
     "ObjectStorageServerPort":{
@@ -2298,6 +2462,13 @@
       "type":"string",
       "enum":[
         "PRESERVE",
+        "NONE"
+      ]
+    },
+    "ObjectVersionIds":{
+      "type":"string",
+      "enum":[
+        "INCLUDE",
         "NONE"
       ]
     },
@@ -2383,6 +2554,12 @@
         "SUCCESS",
         "ERROR"
       ]
+    },
+    "Platform":{
+      "type":"structure",
+      "members":{
+        "Version":{"shape":"AgentVersion"}
+      }
     },
     "PosixPermissions":{
       "type":"string",
@@ -2481,6 +2658,61 @@
       "members":{
       }
     },
+    "ReportDestination":{
+      "type":"structure",
+      "members":{
+        "S3":{"shape":"ReportDestinationS3"}
+      }
+    },
+    "ReportDestinationS3":{
+      "type":"structure",
+      "required":[
+        "S3BucketArn",
+        "BucketAccessRoleArn"
+      ],
+      "members":{
+        "Subdirectory":{"shape":"S3Subdirectory"},
+        "S3BucketArn":{"shape":"S3BucketArn"},
+        "BucketAccessRoleArn":{"shape":"IamRoleArn"}
+      }
+    },
+    "ReportLevel":{
+      "type":"string",
+      "enum":[
+        "ERRORS_ONLY",
+        "SUCCESSES_AND_ERRORS"
+      ]
+    },
+    "ReportOutputType":{
+      "type":"string",
+      "enum":[
+        "SUMMARY_ONLY",
+        "STANDARD"
+      ]
+    },
+    "ReportOverride":{
+      "type":"structure",
+      "members":{
+        "ReportLevel":{"shape":"ReportLevel"}
+      }
+    },
+    "ReportOverrides":{
+      "type":"structure",
+      "members":{
+        "Transferred":{"shape":"ReportOverride"},
+        "Verified":{"shape":"ReportOverride"},
+        "Deleted":{"shape":"ReportOverride"},
+        "Skipped":{"shape":"ReportOverride"}
+      }
+    },
+    "ReportResult":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"PhaseStatus"},
+        "ErrorCode":{"shape":"string"},
+        "ErrorDetail":{"shape":"string"}
+      }
+    },
     "ResourceDetails":{
       "type":"structure",
       "members":{
@@ -2526,6 +2758,26 @@
         "BucketAccessRoleArn":{"shape":"IamRoleArn"}
       }
     },
+    "S3ManifestConfig":{
+      "type":"structure",
+      "required":[
+        "ManifestObjectPath",
+        "BucketAccessRoleArn",
+        "S3BucketArn"
+      ],
+      "members":{
+        "ManifestObjectPath":{"shape":"S3Subdirectory"},
+        "BucketAccessRoleArn":{"shape":"IamRoleArn"},
+        "S3BucketArn":{"shape":"S3BucketArn"},
+        "ManifestObjectVersionId":{"shape":"S3ObjectVersionId"}
+      }
+    },
+    "S3ObjectVersionId":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^.+$"
+    },
     "S3StorageClass":{
       "type":"string",
       "enum":[
@@ -2544,10 +2796,29 @@
       "max":4096,
       "pattern":"^[a-zA-Z0-9_\\-\\+\\./\\(\\)\\p{Zs}]*$"
     },
+    "ScheduleDisabledBy":{
+      "type":"string",
+      "enum":[
+        "USER",
+        "SERVICE"
+      ]
+    },
+    "ScheduleDisabledReason":{
+      "type":"string",
+      "max":8192,
+      "pattern":"^[\\w\\s.,'?!:;\\/=|<>()-]*$"
+    },
     "ScheduleExpressionCron":{
       "type":"string",
       "max":256,
       "pattern":"^[a-zA-Z0-9\\ \\_\\*\\?\\,\\|\\^\\-\\/\\#\\s\\(\\)\\+]*$"
+    },
+    "ScheduleStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "SecretsManagerArn":{
       "type":"string",
@@ -2604,6 +2875,13 @@
         "SMB2_0"
       ]
     },
+    "SourceManifestConfig":{
+      "type":"structure",
+      "required":["S3"],
+      "members":{
+        "S3":{"shape":"S3ManifestConfig"}
+      }
+    },
     "SourceNetworkInterfaceArns":{
       "type":"list",
       "member":{"shape":"NetworkInterfaceArn"}
@@ -2639,6 +2917,8 @@
         "OverrideOptions":{"shape":"Options"},
         "Includes":{"shape":"FilterList"},
         "Excludes":{"shape":"FilterList"},
+        "ManifestConfig":{"shape":"ManifestConfig"},
+        "TaskReportConfig":{"shape":"TaskReportConfig"},
         "Tags":{"shape":"InputTagList"}
       }
     },
@@ -2728,7 +3008,7 @@
     "TagValue":{
       "type":"string",
       "max":256,
-      "min":1,
+      "min":0,
       "pattern":"^[a-zA-Z0-9\\s+=._:@/-]+$"
     },
     "TaggableResourceArn":{
@@ -2775,6 +3055,7 @@
       "type":"string",
       "enum":[
         "QUEUED",
+        "CANCELLING",
         "LAUNCHING",
         "PREPARING",
         "TRANSFERRING",
@@ -2826,11 +3107,30 @@
         "DISABLED"
       ]
     },
+    "TaskReportConfig":{
+      "type":"structure",
+      "members":{
+        "Destination":{"shape":"ReportDestination"},
+        "OutputType":{"shape":"ReportOutputType"},
+        "ReportLevel":{"shape":"ReportLevel"},
+        "ObjectVersionIds":{"shape":"ObjectVersionIds"},
+        "Overrides":{"shape":"ReportOverrides"}
+      }
+    },
     "TaskSchedule":{
       "type":"structure",
       "required":["ScheduleExpression"],
       "members":{
-        "ScheduleExpression":{"shape":"ScheduleExpressionCron"}
+        "ScheduleExpression":{"shape":"ScheduleExpressionCron"},
+        "Status":{"shape":"ScheduleStatus"}
+      }
+    },
+    "TaskScheduleDetails":{
+      "type":"structure",
+      "members":{
+        "StatusUpdateTime":{"shape":"Time"},
+        "DisabledReason":{"shape":"ScheduleDisabledReason"},
+        "DisabledBy":{"shape":"ScheduleDisabledBy"}
       }
     },
     "TaskStatus":{
@@ -2911,6 +3211,24 @@
       }
     },
     "UpdateDiscoveryJobResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateLocationAzureBlobRequest":{
+      "type":"structure",
+      "required":["LocationArn"],
+      "members":{
+        "LocationArn":{"shape":"LocationArn"},
+        "Subdirectory":{"shape":"AzureBlobSubdirectory"},
+        "AuthenticationType":{"shape":"AzureBlobAuthenticationType"},
+        "SasConfiguration":{"shape":"AzureBlobSasConfiguration"},
+        "BlobType":{"shape":"AzureBlobType"},
+        "AccessTier":{"shape":"AzureAccessTier"},
+        "AgentArns":{"shape":"AgentArnList"}
+      }
+    },
+    "UpdateLocationAzureBlobResponse":{
       "type":"structure",
       "members":{
       }
@@ -3034,7 +3352,9 @@
         "Schedule":{"shape":"TaskSchedule"},
         "Name":{"shape":"TagValue"},
         "CloudWatchLogGroupArn":{"shape":"LogGroupArn"},
-        "Includes":{"shape":"FilterList"}
+        "Includes":{"shape":"FilterList"},
+        "ManifestConfig":{"shape":"ManifestConfig"},
+        "TaskReportConfig":{"shape":"TaskReportConfig"}
       }
     },
     "UpdateTaskResponse":{

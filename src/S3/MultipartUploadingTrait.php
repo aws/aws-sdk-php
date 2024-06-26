@@ -53,15 +53,19 @@ trait MultipartUploadingTrait
 
     protected function handleResult(CommandInterface $command, ResultInterface $result)
     {
-        $this->getState()->markPartAsUploaded($command['PartNumber'], [
-            'PartNumber' => $command['PartNumber'],
-            'ETag'       => $this->extractETag($result),
-        ]);
+        $partData = [];
+        $partData['PartNumber'] = $command['PartNumber'];
+        $partData['ETag'] = $this->extractETag($result);
+        if (isset($command['ChecksumAlgorithm'])) {
+            $checksumMemberName = 'Checksum' . strtoupper($command['ChecksumAlgorithm']);
+            $partData[$checksumMemberName] = $result[$checksumMemberName];
+        }
+        $this->getState()->markPartAsUploaded($command['PartNumber'], $partData);
 
         // Updates counter for uploaded bytes.
         $this->uploadedBytes += $command["ContentLength"];
         // Sends uploaded bytes to progress tracker if getDisplayProgress set
-        if ($this->getState()->displayProgress) {
+        if ($this->displayProgress) {
             $this->getState()->getDisplayProgress($this->uploadedBytes);
         }
     }

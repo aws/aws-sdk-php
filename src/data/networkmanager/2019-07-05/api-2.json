@@ -5,12 +5,14 @@
     "endpointPrefix":"networkmanager",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"NetworkManager",
     "serviceFullName":"AWS Network Manager",
     "serviceId":"NetworkManager",
     "signatureVersion":"v4",
     "signingName":"networkmanager",
-    "uid":"networkmanager-2019-07-05"
+    "uid":"networkmanager-2019-07-05",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptAttachment":{
@@ -1594,11 +1596,42 @@
         "ResourceArn":{"shape":"ResourceArn"},
         "AttachmentPolicyRuleNumber":{"shape":"Integer"},
         "SegmentName":{"shape":"ConstrainedString"},
+        "NetworkFunctionGroupName":{"shape":"NetworkFunctionGroupName"},
         "Tags":{"shape":"TagList"},
         "ProposedSegmentChange":{"shape":"ProposedSegmentChange"},
+        "ProposedNetworkFunctionGroupChange":{"shape":"ProposedNetworkFunctionGroupChange"},
         "CreatedAt":{"shape":"DateTime"},
-        "UpdatedAt":{"shape":"DateTime"}
+        "UpdatedAt":{"shape":"DateTime"},
+        "LastModificationErrors":{"shape":"AttachmentErrorList"}
       }
+    },
+    "AttachmentError":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"AttachmentErrorCode"},
+        "Message":{"shape":"ServerSideString"},
+        "ResourceArn":{"shape":"ResourceArn"},
+        "RequestId":{"shape":"ServerSideString"}
+      }
+    },
+    "AttachmentErrorCode":{
+      "type":"string",
+      "enum":[
+        "VPC_NOT_FOUND",
+        "SUBNET_NOT_FOUND",
+        "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE",
+        "SUBNET_NO_FREE_ADDRESSES",
+        "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE",
+        "SUBNET_NO_IPV6_CIDRS",
+        "VPN_CONNECTION_NOT_FOUND",
+        "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+      ]
+    },
+    "AttachmentErrorList":{
+      "type":"list",
+      "member":{"shape":"AttachmentError"},
+      "max":20,
+      "min":0
     },
     "AttachmentId":{
       "type":"string",
@@ -1679,6 +1712,7 @@
       "type":"string",
       "enum":[
         "CORE_NETWORK_SEGMENT",
+        "NETWORK_FUNCTION_GROUP",
         "CORE_NETWORK_EDGE",
         "ATTACHMENT_MAPPING",
         "ATTACHMENT_ROUTE_PROPAGATION",
@@ -1734,7 +1768,9 @@
         "State":{"shape":"ConnectPeerState"},
         "CreatedAt":{"shape":"DateTime"},
         "Configuration":{"shape":"ConnectPeerConfiguration"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "SubnetArn":{"shape":"SubnetArn"},
+        "LastModificationErrors":{"shape":"ConnectPeerErrorList"}
       }
     },
     "ConnectPeerAssociation":{
@@ -1783,6 +1819,32 @@
         "BgpConfigurations":{"shape":"ConnectPeerBgpConfigurationList"}
       }
     },
+    "ConnectPeerError":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"ConnectPeerErrorCode"},
+        "Message":{"shape":"ServerSideString"},
+        "ResourceArn":{"shape":"ResourceArn"},
+        "RequestId":{"shape":"ServerSideString"}
+      }
+    },
+    "ConnectPeerErrorCode":{
+      "type":"string",
+      "enum":[
+        "EDGE_LOCATION_NO_FREE_IPS",
+        "EDGE_LOCATION_PEER_DUPLICATE",
+        "SUBNET_NOT_FOUND",
+        "IP_OUTSIDE_SUBNET_CIDR_RANGE",
+        "INVALID_INSIDE_CIDR_BLOCK",
+        "NO_ASSOCIATED_CIDR_BLOCK"
+      ]
+    },
+    "ConnectPeerErrorList":{
+      "type":"list",
+      "member":{"shape":"ConnectPeerError"},
+      "max":20,
+      "min":0
+    },
     "ConnectPeerId":{
       "type":"string",
       "max":50,
@@ -1811,7 +1873,8 @@
         "EdgeLocation":{"shape":"ExternalRegionCode"},
         "ConnectPeerState":{"shape":"ConnectPeerState"},
         "CreatedAt":{"shape":"DateTime"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "SubnetArn":{"shape":"SubnetArn"}
       }
     },
     "ConnectPeerSummaryList":{
@@ -1905,6 +1968,7 @@
         "CreatedAt":{"shape":"DateTime"},
         "State":{"shape":"CoreNetworkState"},
         "Segments":{"shape":"CoreNetworkSegmentList"},
+        "NetworkFunctionGroups":{"shape":"CoreNetworkNetworkFunctionGroupList"},
         "Edges":{"shape":"CoreNetworkEdgeList"},
         "Tags":{"shape":"TagList"}
       }
@@ -1946,6 +2010,7 @@
       "members":{
         "EdgeLocation":{"shape":"ExternalRegionCode"},
         "SegmentName":{"shape":"ConstrainedString"},
+        "NetworkFunctionGroupName":{"shape":"ConstrainedString"},
         "AttachmentId":{"shape":"AttachmentId"},
         "Cidr":{"shape":"ConstrainedString"}
       }
@@ -1958,12 +2023,14 @@
       "type":"structure",
       "members":{
         "SegmentName":{"shape":"ConstrainedString"},
+        "NetworkFunctionGroupName":{"shape":"ConstrainedString"},
         "EdgeLocations":{"shape":"ExternalRegionCodeList"},
         "Asn":{"shape":"Long"},
         "Cidr":{"shape":"ConstrainedString"},
         "DestinationIdentifier":{"shape":"ConstrainedString"},
         "InsideCidrBlocks":{"shape":"ConstrainedStringList"},
-        "SharedSegments":{"shape":"ConstrainedStringList"}
+        "SharedSegments":{"shape":"ConstrainedStringList"},
+        "ServiceInsertionActions":{"shape":"ServiceInsertionActionList"}
       }
     },
     "CoreNetworkEdge":{
@@ -1983,6 +2050,26 @@
       "max":50,
       "min":0,
       "pattern":"^core-network-([0-9a-f]{8,17})$"
+    },
+    "CoreNetworkNetworkFunctionGroup":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ConstrainedString"},
+        "EdgeLocations":{"shape":"ExternalRegionCodeList"},
+        "Segments":{"shape":"ServiceInsertionSegments"}
+      }
+    },
+    "CoreNetworkNetworkFunctionGroupIdentifier":{
+      "type":"structure",
+      "members":{
+        "CoreNetworkId":{"shape":"CoreNetworkId"},
+        "NetworkFunctionGroupName":{"shape":"ConstrainedString"},
+        "EdgeLocation":{"shape":"ExternalRegionCode"}
+      }
+    },
+    "CoreNetworkNetworkFunctionGroupList":{
+      "type":"list",
+      "member":{"shape":"CoreNetworkNetworkFunctionGroup"}
     },
     "CoreNetworkPolicy":{
       "type":"structure",
@@ -2129,8 +2216,7 @@
       "type":"structure",
       "required":[
         "ConnectAttachmentId",
-        "PeerAddress",
-        "InsideCidrBlocks"
+        "PeerAddress"
       ],
       "members":{
         "ConnectAttachmentId":{"shape":"AttachmentId"},
@@ -2142,7 +2228,8 @@
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "SubnetArn":{"shape":"SubnetArn"}
       }
     },
     "CreateConnectPeerResponse":{
@@ -2840,6 +2927,21 @@
       "members":{
         "TransitGatewayConnectPeerAssociation":{"shape":"TransitGatewayConnectPeerAssociation"}
       }
+    },
+    "EdgeOverride":{
+      "type":"structure",
+      "members":{
+        "EdgeSets":{"shape":"EdgeSetList"},
+        "UseEdge":{"shape":"ConstrainedString"}
+      }
+    },
+    "EdgeSet":{
+      "type":"list",
+      "member":{"shape":"ConstrainedString"}
+    },
+    "EdgeSetList":{
+      "type":"list",
+      "member":{"shape":"EdgeSet"}
     },
     "ExceptionContextKey":{"type":"string"},
     "ExceptionContextMap":{
@@ -4080,6 +4182,20 @@
       "max":500,
       "min":1
     },
+    "NetworkFunctionGroup":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ConstrainedString"}
+      }
+    },
+    "NetworkFunctionGroupList":{
+      "type":"list",
+      "member":{"shape":"NetworkFunctionGroup"}
+    },
+    "NetworkFunctionGroupName":{
+      "type":"string",
+      "pattern":"[\\s\\S]*"
+    },
     "NetworkResource":{
       "type":"structure",
       "members":{
@@ -4143,6 +4259,7 @@
         "CoreNetworkAttachmentId":{"shape":"AttachmentId"},
         "TransitGatewayAttachmentId":{"shape":"TransitGatewayAttachmentId"},
         "SegmentName":{"shape":"ConstrainedString"},
+        "NetworkFunctionGroupName":{"shape":"ConstrainedString"},
         "EdgeLocation":{"shape":"ExternalRegionCode"},
         "ResourceType":{"shape":"ConstrainedString"},
         "ResourceId":{"shape":"ConstrainedString"}
@@ -4224,8 +4341,36 @@
         "EdgeLocation":{"shape":"ExternalRegionCode"},
         "ResourceArn":{"shape":"ResourceArn"},
         "Tags":{"shape":"TagList"},
-        "CreatedAt":{"shape":"DateTime"}
+        "CreatedAt":{"shape":"DateTime"},
+        "LastModificationErrors":{"shape":"PeeringErrorList"}
       }
+    },
+    "PeeringError":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"PeeringErrorCode"},
+        "Message":{"shape":"ServerSideString"},
+        "ResourceArn":{"shape":"ResourceArn"},
+        "RequestId":{"shape":"ServerSideString"},
+        "MissingPermissionsContext":{"shape":"PermissionsErrorContext"}
+      }
+    },
+    "PeeringErrorCode":{
+      "type":"string",
+      "enum":[
+        "TRANSIT_GATEWAY_NOT_FOUND",
+        "TRANSIT_GATEWAY_PEERS_LIMIT_EXCEEDED",
+        "MISSING_PERMISSIONS",
+        "INTERNAL_ERROR",
+        "EDGE_LOCATION_PEER_DUPLICATE",
+        "INVALID_TRANSIT_GATEWAY_STATE"
+      ]
+    },
+    "PeeringErrorList":{
+      "type":"list",
+      "member":{"shape":"PeeringError"},
+      "max":20,
+      "min":0
     },
     "PeeringId":{
       "type":"string",
@@ -4249,6 +4394,20 @@
     "PeeringType":{
       "type":"string",
       "enum":["TRANSIT_GATEWAY"]
+    },
+    "PermissionsErrorContext":{
+      "type":"structure",
+      "members":{
+        "MissingPermission":{"shape":"ServerSideString"}
+      }
+    },
+    "ProposedNetworkFunctionGroupChange":{
+      "type":"structure",
+      "members":{
+        "Tags":{"shape":"TagList"},
+        "AttachmentPolicyRuleNumber":{"shape":"Integer"},
+        "NetworkFunctionGroupName":{"shape":"ConstrainedString"}
+      }
     },
     "ProposedSegmentChange":{
       "type":"structure",
@@ -4523,14 +4682,16 @@
       "type":"structure",
       "members":{
         "TransitGatewayRouteTableArn":{"shape":"TransitGatewayRouteTableArn"},
-        "CoreNetworkSegmentEdge":{"shape":"CoreNetworkSegmentEdgeIdentifier"}
+        "CoreNetworkSegmentEdge":{"shape":"CoreNetworkSegmentEdgeIdentifier"},
+        "CoreNetworkNetworkFunctionGroup":{"shape":"CoreNetworkNetworkFunctionGroupIdentifier"}
       }
     },
     "RouteTableType":{
       "type":"string",
       "enum":[
         "TRANSIT_GATEWAY_ROUTE_TABLE",
-        "CORE_NETWORK_SEGMENT"
+        "CORE_NETWORK_SEGMENT",
+        "NETWORK_FUNCTION_GROUP"
       ]
     },
     "RouteType":{
@@ -4549,11 +4710,45 @@
       "max":50,
       "min":0
     },
+    "SegmentActionServiceInsertion":{
+      "type":"string",
+      "enum":[
+        "send-via",
+        "send-to"
+      ]
+    },
+    "SendViaMode":{
+      "type":"string",
+      "enum":[
+        "dual-hop",
+        "single-hop"
+      ]
+    },
     "ServerSideString":{
       "type":"string",
       "max":10000000,
       "min":0,
       "pattern":"[\\s\\S]*"
+    },
+    "ServiceInsertionAction":{
+      "type":"structure",
+      "members":{
+        "Action":{"shape":"SegmentActionServiceInsertion"},
+        "Mode":{"shape":"SendViaMode"},
+        "WhenSentTo":{"shape":"WhenSentTo"},
+        "Via":{"shape":"Via"}
+      }
+    },
+    "ServiceInsertionActionList":{
+      "type":"list",
+      "member":{"shape":"ServiceInsertionAction"}
+    },
+    "ServiceInsertionSegments":{
+      "type":"structure",
+      "members":{
+        "SendVia":{"shape":"ConstrainedStringList"},
+        "SendTo":{"shape":"ConstrainedStringList"}
+      }
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -4844,7 +5039,10 @@
     },
     "TunnelProtocol":{
       "type":"string",
-      "enum":["GRE"]
+      "enum":[
+        "GRE",
+        "NO_ENCAP"
+      ]
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -5106,6 +5304,13 @@
         "Other"
       ]
     },
+    "Via":{
+      "type":"structure",
+      "members":{
+        "NetworkFunctionGroups":{"shape":"NetworkFunctionGroupList"},
+        "WithEdgeOverrides":{"shape":"WithEdgeOverridesList"}
+      }
+    },
     "VpcArn":{
       "type":"string",
       "max":500,
@@ -5132,6 +5337,20 @@
       "max":500,
       "min":0,
       "pattern":"^arn:[^:]{1,63}:ec2:[^:]{0,63}:[^:]{0,63}:vpn-connection\\/vpn-[0-9a-f]{8,17}$"
+    },
+    "WhenSentTo":{
+      "type":"structure",
+      "members":{
+        "WhenSentToSegmentsList":{"shape":"WhenSentToSegmentsList"}
+      }
+    },
+    "WhenSentToSegmentsList":{
+      "type":"list",
+      "member":{"shape":"ConstrainedString"}
+    },
+    "WithEdgeOverridesList":{
+      "type":"list",
+      "member":{"shape":"EdgeOverride"}
     }
   }
 }

@@ -99,7 +99,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateAssessment":{
@@ -115,7 +116,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateAssessmentFramework":{
@@ -414,6 +416,21 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "GetEvidenceFileUploadUrl":{
+      "name":"GetEvidenceFileUploadUrl",
+      "http":{
+        "method":"GET",
+        "requestUri":"/evidenceFileUploadUrl"
+      },
+      "input":{"shape":"GetEvidenceFileUploadUrlRequest"},
+      "output":{"shape":"GetEvidenceFileUploadUrlResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetEvidenceFolder":{
@@ -789,7 +806,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateAssessmentControl":{
@@ -925,7 +943,10 @@
     },
     "AWSAccounts":{
       "type":"list",
-      "member":{"shape":"AWSAccount"}
+      "member":{"shape":"AWSAccount"},
+      "max":200,
+      "min":1,
+      "sensitive":true
     },
     "AWSService":{
       "type":"structure",
@@ -988,12 +1009,14 @@
     "ActionPlanInstructions":{
       "type":"string",
       "max":1000,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
     },
     "ActionPlanTitle":{
       "type":"string",
       "max":300,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
     },
     "Assessment":{
       "type":"structure",
@@ -1043,7 +1066,8 @@
     "AssessmentDescription":{
       "type":"string",
       "max":1000,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
     },
     "AssessmentEvidenceFolder":{
       "type":"structure",
@@ -1085,7 +1109,8 @@
         "arn":{"shape":"AuditManagerArn"},
         "metadata":{"shape":"FrameworkMetadata"},
         "controlSets":{"shape":"AssessmentControlSets"}
-      }
+      },
+      "sensitive":true
     },
     "AssessmentFrameworkDescription":{
       "type":"string",
@@ -1166,7 +1191,8 @@
       "type":"string",
       "max":300,
       "min":1,
-      "pattern":"^[^\\\\]*$"
+      "pattern":"^[^\\\\]*$",
+      "sensitive":true
     },
     "AssessmentReport":{
       "type":"structure",
@@ -1185,7 +1211,8 @@
     "AssessmentReportDescription":{
       "type":"string",
       "max":1000,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
     },
     "AssessmentReportDestinationType":{
       "type":"string",
@@ -1235,7 +1262,8 @@
       "members":{
         "destinationType":{"shape":"AssessmentReportDestinationType"},
         "destination":{"shape":"S3Url"}
-      }
+      },
+      "sensitive":true
     },
     "AssessmentReportsMetadata":{
       "type":"list",
@@ -1308,7 +1336,8 @@
     },
     "BatchCreateDelegationByAssessmentErrors":{
       "type":"list",
-      "member":{"shape":"BatchCreateDelegationByAssessmentError"}
+      "member":{"shape":"BatchCreateDelegationByAssessmentError"},
+      "sensitive":true
     },
     "BatchCreateDelegationByAssessmentRequest":{
       "type":"structure",
@@ -1342,7 +1371,8 @@
     },
     "BatchDeleteDelegationByAssessmentErrors":{
       "type":"list",
-      "member":{"shape":"BatchDeleteDelegationByAssessmentError"}
+      "member":{"shape":"BatchDeleteDelegationByAssessmentError"},
+      "sensitive":true
     },
     "BatchDeleteDelegationByAssessmentRequest":{
       "type":"structure",
@@ -1458,7 +1488,8 @@
     "ComplianceType":{
       "type":"string",
       "max":100,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
     },
     "Control":{
       "type":"structure",
@@ -1477,8 +1508,15 @@
         "lastUpdatedAt":{"shape":"Timestamp"},
         "createdBy":{"shape":"CreatedBy"},
         "lastUpdatedBy":{"shape":"LastUpdatedBy"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "state":{"shape":"ControlState"}
       }
+    },
+    "ControlCatalogId":{
+      "type":"string",
+      "max":2048,
+      "min":13,
+      "pattern":"^arn:.*:controlcatalog:.*|UNCATEGORIZED"
     },
     "ControlComment":{
       "type":"structure",
@@ -1491,7 +1529,8 @@
     "ControlCommentBody":{
       "type":"string",
       "max":500,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
     },
     "ControlComments":{
       "type":"list",
@@ -1500,13 +1539,20 @@
     "ControlDescription":{
       "type":"string",
       "max":1000,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
+    },
+    "ControlDomainId":{
+      "type":"string",
+      "max":2048,
+      "min":13,
+      "pattern":"^arn:.*:controlcatalog:.*:.*:domain/.*|UNCATEGORIZED|^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
     },
     "ControlDomainInsights":{
       "type":"structure",
       "members":{
-        "name":{"shape":"NonEmptyString"},
-        "id":{"shape":"UUID"},
+        "name":{"shape":"String"},
+        "id":{"shape":"ControlDomainId"},
         "controlsCountByNoncompliantEvidence":{"shape":"NullableInteger"},
         "totalControlsCount":{"shape":"NullableInteger"},
         "evidenceInsights":{"shape":"EvidenceInsights"},
@@ -1528,8 +1574,8 @@
     "ControlInsightsMetadataByAssessmentItem":{
       "type":"structure",
       "members":{
-        "name":{"shape":"NonEmptyString"},
-        "id":{"shape":"UUID"},
+        "name":{"shape":"String"},
+        "id":{"shape":"ControlDomainId"},
         "evidenceInsights":{"shape":"EvidenceInsights"},
         "controlSetName":{"shape":"NonEmptyString"},
         "lastUpdated":{"shape":"Timestamp"}
@@ -1538,8 +1584,8 @@
     "ControlInsightsMetadataItem":{
       "type":"structure",
       "members":{
-        "name":{"shape":"NonEmptyString"},
-        "id":{"shape":"UUID"},
+        "name":{"shape":"String"},
+        "id":{"shape":"ControlDomainId"},
         "evidenceInsights":{"shape":"EvidenceInsights"},
         "lastUpdated":{"shape":"Timestamp"}
       }
@@ -1623,7 +1669,8 @@
     "ControlSets":{
       "type":"list",
       "member":{"shape":"ControlSet"},
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "ControlSetsCount":{"type":"integer"},
     "ControlSources":{
@@ -1631,6 +1678,13 @@
       "max":100,
       "min":1,
       "pattern":"^[a-zA-Z_0-9-\\s.,]+$"
+    },
+    "ControlState":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "END_OF_SUPPORT"
+      ]
     },
     "ControlStatus":{
       "type":"string",
@@ -1644,7 +1698,8 @@
       "type":"string",
       "enum":[
         "Standard",
-        "Custom"
+        "Custom",
+        "Core"
       ]
     },
     "Controls":{
@@ -1798,13 +1853,32 @@
       "type":"list",
       "member":{"shape":"CreateDelegationRequest"},
       "max":50,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "CreatedBy":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[a-zA-Z0-9\\s-_()\\[\\]]+$"
+      "pattern":"^[a-zA-Z0-9\\s-_()\\[\\]]+$",
+      "sensitive":true
+    },
+    "DataSourceType":{
+      "type":"string",
+      "enum":[
+        "AWS_Cloudtrail",
+        "AWS_Config",
+        "AWS_Security_Hub",
+        "AWS_API_Call",
+        "MANUAL"
+      ]
+    },
+    "DefaultExportDestination":{
+      "type":"structure",
+      "members":{
+        "destinationType":{"shape":"ExportDestinationType"},
+        "destination":{"shape":"S3Url"}
+      }
     },
     "Delegation":{
       "type":"structure",
@@ -1820,12 +1894,14 @@
         "controlSetId":{"shape":"ControlSetId"},
         "comment":{"shape":"DelegationComment"},
         "createdBy":{"shape":"CreatedBy"}
-      }
+      },
+      "sensitive":true
     },
     "DelegationComment":{
       "type":"string",
       "max":350,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
     },
     "DelegationIds":{
       "type":"list",
@@ -2016,7 +2092,8 @@
       "type":"string",
       "max":320,
       "min":1,
-      "pattern":"^.*@.*$"
+      "pattern":"^.*@.*$",
+      "sensitive":true
     },
     "ErrorCode":{
       "type":"string",
@@ -2116,6 +2193,10 @@
     "EvidenceSources":{
       "type":"list",
       "member":{"shape":"NonEmptyString"}
+    },
+    "ExportDestinationType":{
+      "type":"string",
+      "enum":["S3"]
     },
     "Filename":{
       "type":"string",
@@ -2369,6 +2450,25 @@
         "evidence":{"shape":"EvidenceList"},
         "nextToken":{"shape":"Token"}
       }
+    },
+    "GetEvidenceFileUploadUrlRequest":{
+      "type":"structure",
+      "required":["fileName"],
+      "members":{
+        "fileName":{
+          "shape":"ManualEvidenceLocalFileName",
+          "location":"querystring",
+          "locationName":"fileName"
+        }
+      }
+    },
+    "GetEvidenceFileUploadUrlResponse":{
+      "type":"structure",
+      "members":{
+        "evidenceFileName":{"shape":"NonEmptyString"},
+        "uploadUrl":{"shape":"NonEmptyString"}
+      },
+      "sensitive":true
     },
     "GetEvidenceFolderRequest":{
       "type":"structure",
@@ -2624,13 +2724,17 @@
     },
     "KeywordInputType":{
       "type":"string",
-      "enum":["SELECT_FROM_LIST"]
+      "enum":[
+        "SELECT_FROM_LIST",
+        "UPLOAD_FILE",
+        "INPUT_TEXT"
+      ]
     },
     "KeywordValue":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[a-zA-Z_0-9-\\s().]+$"
+      "pattern":"^[a-zA-Z_0-9-\\s().:\\/]+$"
     },
     "Keywords":{
       "type":"list",
@@ -2646,7 +2750,8 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[a-zA-Z0-9\\s-_()\\[\\]]+$"
+      "pattern":"^[a-zA-Z0-9\\s-_()\\[\\]]+$",
+      "sensitive":true
     },
     "ListAssessmentControlInsightsByControlDomainRequest":{
       "type":"structure",
@@ -2656,7 +2761,7 @@
       ],
       "members":{
         "controlDomainId":{
-          "shape":"UUID",
+          "shape":"ControlDomainId",
           "location":"querystring",
           "locationName":"controlDomainId"
         },
@@ -2848,7 +2953,7 @@
       "required":["controlDomainId"],
       "members":{
         "controlDomainId":{
-          "shape":"UUID",
+          "shape":"ControlDomainId",
           "location":"querystring",
           "locationName":"controlDomainId"
         },
@@ -2889,6 +2994,11 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"maxResults"
+        },
+        "controlCatalogId":{
+          "shape":"ControlCatalogId",
+          "location":"querystring",
+          "locationName":"controlCatalogId"
         }
       }
     },
@@ -2904,7 +3014,7 @@
       "required":["source"],
       "members":{
         "source":{
-          "shape":"SourceType",
+          "shape":"DataSourceType",
           "location":"querystring",
           "locationName":"source"
         },
@@ -2969,7 +3079,9 @@
     "ManualEvidence":{
       "type":"structure",
       "members":{
-        "s3ResourcePath":{"shape":"S3Url"}
+        "s3ResourcePath":{"shape":"S3Url"},
+        "textResponse":{"shape":"ManualEvidenceTextResponse"},
+        "evidenceFileName":{"shape":"ManualEvidenceLocalFileName"}
       }
     },
     "ManualEvidenceList":{
@@ -2977,6 +3089,20 @@
       "member":{"shape":"ManualEvidence"},
       "max":50,
       "min":1
+    },
+    "ManualEvidenceLocalFileName":{
+      "type":"string",
+      "max":300,
+      "min":1,
+      "pattern":"[^\\/]*",
+      "sensitive":true
+    },
+    "ManualEvidenceTextResponse":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
     },
     "MaxResults":{
       "type":"integer",
@@ -3101,7 +3227,8 @@
     },
     "Roles":{
       "type":"list",
-      "member":{"shape":"Role"}
+      "member":{"shape":"Role"},
+      "sensitive":true
     },
     "S3Url":{
       "type":"string",
@@ -3113,14 +3240,20 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-_\\(\\)\\[\\]]+$"
+      "pattern":"^[a-zA-Z0-9-_\\(\\)\\[\\]]+$",
+      "sensitive":true
     },
     "Scope":{
       "type":"structure",
       "members":{
         "awsAccounts":{"shape":"AWSAccounts"},
-        "awsServices":{"shape":"AWSServices"}
-      }
+        "awsServices":{
+          "shape":"AWSServices",
+          "deprecated":true,
+          "deprecatedMessage":"You can't specify services in scope when creating/updating an assessment. If you use the parameter to specify one or more AWS services, Audit Manager ignores the input. Instead the value of the parameter will show as empty indicating that the services are defined and managed by Audit Manager."
+        }
+      },
+      "sensitive":true
     },
     "ServiceMetadata":{
       "type":"structure",
@@ -3153,7 +3286,8 @@
         "DEFAULT_ASSESSMENT_REPORTS_DESTINATION",
         "DEFAULT_PROCESS_OWNERS",
         "EVIDENCE_FINDER_ENABLEMENT",
-        "DEREGISTRATION_POLICY"
+        "DEREGISTRATION_POLICY",
+        "DEFAULT_EXPORT_DESTINATION"
       ]
     },
     "Settings":{
@@ -3165,7 +3299,8 @@
         "defaultProcessOwners":{"shape":"Roles"},
         "kmsKey":{"shape":"KmsKey"},
         "evidenceFinderEnablement":{"shape":"EvidenceFinderEnablement"},
-        "deregistrationPolicy":{"shape":"DeregistrationPolicy"}
+        "deregistrationPolicy":{"shape":"DeregistrationPolicy"},
+        "defaultExportDestination":{"shape":"DefaultExportDestination"}
       }
     },
     "ShareRequestAction":{
@@ -3229,7 +3364,7 @@
     },
     "SourceName":{
       "type":"string",
-      "max":100,
+      "max":300,
       "min":1
     },
     "SourceSetUpOption":{
@@ -3246,7 +3381,9 @@
         "AWS_Config",
         "AWS_Security_Hub",
         "AWS_API_Call",
-        "MANUAL"
+        "MANUAL",
+        "Common_Control",
+        "Core_Control"
       ]
     },
     "StartAssessmentFrameworkShareRequest":{
@@ -3327,7 +3464,8 @@
     "TestingInformation":{
       "type":"string",
       "max":1000,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
     },
     "ThrottlingException":{
       "type":"structure",
@@ -3335,7 +3473,7 @@
       "members":{
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{"httpStatusCode":429},
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
@@ -3354,7 +3492,8 @@
     "TroubleshootingText":{
       "type":"string",
       "max":1000,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[\\w\\W\\s\\S]*$",
+      "sensitive":true
     },
     "URL":{
       "type":"structure",
@@ -3601,7 +3740,8 @@
         "defaultProcessOwners":{"shape":"Roles"},
         "kmsKey":{"shape":"KmsKey"},
         "evidenceFinderEnabled":{"shape":"Boolean"},
-        "deregistrationPolicy":{"shape":"DeregistrationPolicy"}
+        "deregistrationPolicy":{"shape":"DeregistrationPolicy"},
+        "defaultExportDestination":{"shape":"DefaultExportDestination"}
       }
     },
     "UpdateSettingsResponse":{
@@ -3620,7 +3760,8 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-_()\\s\\+=,.@]+$"
+      "pattern":"^[a-zA-Z0-9-_()\\s\\+=,.@]+$",
+      "sensitive":true
     },
     "ValidateAssessmentReportIntegrityRequest":{
       "type":"structure",

@@ -4,10 +4,12 @@
     "apiVersion":"2016-06-10",
     "endpointPrefix":"polly",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Polly",
     "serviceId":"Polly",
     "signatureVersion":"v4",
-    "uid":"polly-2016-06-10"
+    "uid":"polly-2016-06-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DeleteLexicon":{
@@ -220,7 +222,9 @@
       "type":"string",
       "enum":[
         "standard",
-        "neural"
+        "neural",
+        "long-form",
+        "generative"
       ]
     },
     "EngineList":{
@@ -382,7 +386,9 @@
         "yue-CN",
         "ar-AE",
         "fi-FI",
-        "en-IE"
+        "en-IE",
+        "nl-BE",
+        "fr-BE"
       ]
     },
     "LanguageCodeList":{
@@ -589,7 +595,7 @@
     "Size":{"type":"integer"},
     "SnsTopicArn":{
       "type":"string",
-      "pattern":"^arn:aws(-(cn|iso(-b)?|us-gov))?:sns:[a-z0-9_-]{1,50}:\\d{12}:[a-zA-Z0-9_-]{1,256}$"
+      "pattern":"^arn:aws(-(cn|iso(-b)?|us-gov))?:sns:[a-z0-9_-]{1,50}:\\d{12}:[a-zA-Z0-9_-]{1,251}([a-zA-Z0-9_-]{0,5}|\\.fifo)$"
     },
     "SpeechMarkType":{
       "type":"string",
@@ -860,7 +866,13 @@
         "Kazuha",
         "Tomoko",
         "Niamh",
-        "Sofie"
+        "Sofie",
+        "Lisa",
+        "Isabelle",
+        "Zayd",
+        "Danielle",
+        "Gregory",
+        "Burcu"
       ]
     },
     "VoiceList":{
