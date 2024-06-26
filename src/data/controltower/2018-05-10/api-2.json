@@ -10,7 +10,8 @@
     "serviceId":"ControlTower",
     "signatureVersion":"v4",
     "signingName":"controltower",
-    "uid":"controltower-2018-05-10"
+    "uid":"controltower-2018-05-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateLandingZone":{
@@ -308,6 +309,22 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListLandingZoneOperations":{
+      "name":"ListLandingZoneOperations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-landingzone-operations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListLandingZoneOperationsInput"},
+      "output":{"shape":"ListLandingZoneOperationsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListLandingZones":{
@@ -1107,10 +1124,18 @@
       "type":"structure",
       "members":{
         "endTime":{"shape":"Timestamp"},
+        "operationIdentifier":{"shape":"OperationIdentifier"},
         "operationType":{"shape":"LandingZoneOperationType"},
         "startTime":{"shape":"Timestamp"},
         "status":{"shape":"LandingZoneOperationStatus"},
         "statusMessage":{"shape":"String"}
+      }
+    },
+    "LandingZoneOperationFilter":{
+      "type":"structure",
+      "members":{
+        "statuses":{"shape":"LandingZoneOperationStatuses"},
+        "types":{"shape":"LandingZoneOperationTypes"}
       }
     },
     "LandingZoneOperationStatus":{
@@ -1121,6 +1146,20 @@
         "IN_PROGRESS"
       ]
     },
+    "LandingZoneOperationStatuses":{
+      "type":"list",
+      "member":{"shape":"LandingZoneOperationStatus"},
+      "max":1,
+      "min":1
+    },
+    "LandingZoneOperationSummary":{
+      "type":"structure",
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"},
+        "operationType":{"shape":"LandingZoneOperationType"},
+        "status":{"shape":"LandingZoneOperationStatus"}
+      }
+    },
     "LandingZoneOperationType":{
       "type":"string",
       "enum":[
@@ -1129,6 +1168,16 @@
         "UPDATE",
         "RESET"
       ]
+    },
+    "LandingZoneOperationTypes":{
+      "type":"list",
+      "member":{"shape":"LandingZoneOperationType"},
+      "max":1,
+      "min":1
+    },
+    "LandingZoneOperations":{
+      "type":"list",
+      "member":{"shape":"LandingZoneOperationSummary"}
     },
     "LandingZoneStatus":{
       "type":"string",
@@ -1237,6 +1286,28 @@
       "required":["enabledControls"],
       "members":{
         "enabledControls":{"shape":"EnabledControls"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListLandingZoneOperationsInput":{
+      "type":"structure",
+      "members":{
+        "filter":{"shape":"LandingZoneOperationFilter"},
+        "maxResults":{"shape":"ListLandingZoneOperationsMaxResults"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListLandingZoneOperationsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListLandingZoneOperationsOutput":{
+      "type":"structure",
+      "required":["landingZoneOperations"],
+      "members":{
+        "landingZoneOperations":{"shape":"LandingZoneOperations"},
         "nextToken":{"shape":"String"}
       }
     },
