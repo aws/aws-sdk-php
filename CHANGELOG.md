@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.315.1 - 2024-06-27
 
 * `Aws\ElastiCache` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
 * `Aws\ChimeSDKMediaPipelines` - Added Amazon Transcribe multi language identification to Chime SDK call analytics. Enabling customers sending single stream audio to generate call recordings using Chime SDK call analytics
