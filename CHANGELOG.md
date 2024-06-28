@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.315.2 - 2024-06-28
 
 * `Aws\Glue` - Added AttributesToGet parameter to Glue GetDatabases, allowing caller to limit output to include only the database name.
 * `Aws\CloudHSMV2` - Added 3 new APIs to support backup sharing: GetResourcePolicy, PutResourcePolicy, and DeleteResourcePolicy. Added BackupArn to the output of the DescribeBackups API. Added support for BackupArn in the CreateCluster API.
