@@ -288,7 +288,7 @@ EOT;
 
     public function testEnsuresIniFileIsValid()
     {
-        $this->expectExceptionMessage("Invalid credentials file:");
+        $this->expectExceptionMessage("'default' not found in config or credentials files");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/credentials', "wef \n=\nwef");
@@ -477,7 +477,7 @@ EOT;
 
     public function testEnsuresProcessCredentialIsPresent()
     {
-        $this->expectExceptionMessage("No credential_process present in INI profile");
+        $this->expectExceptionMessage("No credential_process present in config or credentials files with profile");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
@@ -991,7 +991,7 @@ EOT;
 
     public function testEnsuresSourceProfileHasCredentials()
     {
-        $this->expectExceptionMessage("No credentials present in INI profile 'default'");
+        $this->expectExceptionMessage("No credentials present in config or credentials files with profile 'default'");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
         $ini = <<<EOT
@@ -1344,7 +1344,7 @@ EOT;
 
     public function testSsoProfileProviderBadFile()
     {
-        $this->expectExceptionMessage("Cannot read credentials from");
+        $this->expectExceptionMessage("Profile default does not exist in config or credentials files.");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
 
@@ -1491,6 +1491,56 @@ EOT;
             $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertIsInt($creds->getExpiration());
+            $this->assertFalse($creds->isExpired());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+            unlink($dir . '/config');
+        }
+    }
+    public function testAssumeRoleInCredentialsFromSourceInConfigSeparateFiles()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = credentialSecret
+aws_session_token = sessionToken
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        $config = <<<EOT
+[profile assume]
+source_profile = default
+role_arn = arn:aws:iam::012345678910:role/role_name
+EOT;
+        file_put_contents($dir . '/config', $config);
+        putenv('HOME=' . dirname($dir));
+        // putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG=1');
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'credentialSecret',
+                'SessionToken'    => null,
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+        $sts = $this->getTestClient('Sts');
+        $this->addMockResults($sts, [
+            new Result($result)
+        ]);
+        try {
+            $config = [
+                'stsClient' => $sts
+            ];
+            $creds = call_user_func(CredentialProvider::ini(
+                'assume',
+                $dir . '/config',
+                $config
+            ))->wait();
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('credentialSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {
             throw $e;
@@ -1872,7 +1922,8 @@ EOT;
 
         $credsForCache = new Credentials('foo', 'bar', 'baz', PHP_INT_MAX);
         foreach ($cacheable as $provider) {
-            $this->clearEnv();
+            $dir = $this->clearEnv();
+            putenv('HOME=' . dirname($dir));
 
             if ($provider == 'ecs') putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
             $cache = new LruArrayCache;
@@ -1961,7 +2012,7 @@ EOT;
     {
         $dir = $this->clearEnv();
         $configIni = <<<EOT
-[profile default]
+[default]
 credential_process = echo '{"AccessKeyId":"configFoo","SecretAccessKey":"baz", "Version":1}'
 EOT;
 
@@ -1973,6 +2024,22 @@ EOT;
         $this->assertSame('configFoo', $creds->getAccessKeyId());
     }
 
+    public function testProcessCredentialConfigDefaultChainProfile()
+    {
+        $dir = $this->clearEnv();
+        $configIni = <<<EOT
+[profile assume]
+credential_process = echo '{"AccessKeyId":"configFoo","SecretAccessKey":"baz", "Version":1}'
+EOT;
+
+        file_put_contents($dir . '/config', $configIni);
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_PROFILE=assume');
+        $provider = CredentialProvider::defaultProvider();
+        $creds = $provider()->wait();
+        unlink($dir . '/config');
+        $this->assertSame('configFoo', $creds->getAccessKeyId());
+    }
     /**
      * @dataProvider shouldUseEcsProvider
      *
