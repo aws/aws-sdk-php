@@ -8,6 +8,7 @@ use Aws\Exception\CredentialsException;
 use Aws\Handler\GuzzleV6\GuzzleHandler;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Promise;
@@ -317,6 +318,38 @@ class EcsCredentialProviderTest extends TestCase
         $baseClient = new Client(['handler' => $stack]);
 
         return new GuzzleHandler($baseClient);
+    }
+
+    public function testResolveCredentialsWithAccountId()
+    {
+        $expiration = time() + 1000;
+        $testHandler = function (RequestInterface $_) use ($expiration) {
+            $jsonResponse = <<<EOF
+{
+    "AccessKeyId": "foo",
+    "SecretAccessKey": "foo",
+    "Token": "bazz",
+    "Expiration": "@$expiration",
+    "AccountId": "123456789012"
+}
+EOF;
+            return Promise\Create::promiseFor(new Response(200, [], $jsonResponse));
+        };
+        $provider = new EcsCredentialProvider([
+            'client' => $testHandler
+        ]);
+        try {
+            /** @var Credentials $credentials */
+            $credentials = $provider()->wait();
+            $this->assertSame('foo', $credentials->getAccessKeyId());
+            $this->assertSame('foo', $credentials->getSecretKey());
+            $this->assertSame('bazz', $credentials->getSecurityToken());
+            $this->assertSame($expiration, $credentials->getExpiration());
+            $this->assertSame('123456789012', $credentials->getAccountId());
+        } catch (GuzzleException $e) {
+            self::fail($e->getMessage());
+        }
+
     }
 
     /**
