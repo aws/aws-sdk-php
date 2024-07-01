@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.315.3 - 2024-07-01
 
 * `Aws\PaymentCryptographyData` - Adding support for dynamic keys for encrypt, decrypt, re-encrypt and translate pin functions. With this change, customers can use one-time TR-31 keys directly in dataplane operations without the need to first import them into the service.
 * `Aws\DocDB` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
