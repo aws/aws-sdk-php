@@ -66,6 +66,38 @@ EOT;
         return $dir;
     }
 
+    private function clearEnvExceptServer()
+    {
+        putenv(CredentialProvider::ENV_KEY . '=');
+        putenv(CredentialProvider::ENV_SECRET . '=');
+        putenv(CredentialProvider::ENV_PROFILE . '=');
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI');
+        putenv('AWS_CONTAINER_CREDENTIALS_FULL_URI');
+        putenv('AWS_CONTAINER_AUTHORIZATION_TOKEN');
+        putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG');
+        putenv('AWS_WEB_IDENTITY_TOKEN_FILE');
+        putenv('AWS_ROLE_ARN');
+        putenv('AWS_ROLE_SESSION_NAME');
+        putenv('AWS_SHARED_CREDENTIALS_FILE');
+
+        unset($_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI']);
+        unset($_SERVER['AWS_CONTAINER_CREDENTIALS_FULL_URI']);
+        unset($_SERVER['AWS_CONTAINER_AUTHORIZATION_TOKEN']);
+        unset($_SERVER['AWS_SDK_LOAD_NONDEFAULT_CONFIG']);
+        unset($_SERVER['AWS_WEB_IDENTITY_TOKEN_FILE']);
+        unset($_SERVER['AWS_ROLE_ARN']);
+        unset($_SERVER['AWS_ROLE_SESSION_NAME']);
+        unset($_SERVER['AWS_SHARED_CREDENTIALS_FILE']);
+
+        $dir = sys_get_temp_dir() . '/.aws';
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        return $dir;
+    }
+
     public function set_up()
     {
         $this->home = getenv('HOME');
@@ -167,6 +199,20 @@ EOT;
         putenv(CredentialProvider::ENV_KEY . '=abc');
         putenv(CredentialProvider::ENV_SECRET . '=123');
         putenv(CredentialProvider::ENV_SESSION . '=456');
+        $creds = call_user_func(CredentialProvider::env())->wait();
+        $this->assertSame('abc', $creds->getAccessKeyId());
+        $this->assertSame('123', $creds->getSecretKey());
+        $this->assertSame('456', $creds->getSecurityToken());
+    }
+
+    /**
+     * @server ENV_KEY=abc
+     * @server ENV_SECRET=123
+     * @server ENV_SESSION=456
+     */
+    public function testCreatesFromServerVariables()
+    {
+        $this->clearEnvExceptServer();
         $creds = call_user_func(CredentialProvider::env())->wait();
         $this->assertSame('abc', $creds->getAccessKeyId());
         $this->assertSame('123', $creds->getSecretKey());
