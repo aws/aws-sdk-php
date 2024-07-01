@@ -289,11 +289,11 @@ class CredentialProvider
     {
         return function () {
             // Use credentials from environment variables, if available
-            $key = getenv(self::ENV_KEY) ?: $_SERVER[self::ENV_KEY];
-            $secret = getenv(self::ENV_SECRET) ?: $_SERVER[self::ENV_SECRET];
+            $key = getenv(self::ENV_KEY) ?: $_SERVER[self::ENV_KEY] ?? false;
+            $secret = getenv(self::ENV_SECRET) ?: $_SERVER[self::ENV_SECRET] ?? false;
             if ($key && $secret) {
                 return Promise\Create::promiseFor(
-                    new Credentials($key, $secret, getenv(self::ENV_SESSION) ?: NULL)
+                    new Credentials($key, $secret, getenv(self::ENV_SESSION) ?: $_SERVER[self::ENV_SESSION] ?? NULL)
                 );
             }
 
