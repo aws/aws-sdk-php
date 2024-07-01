@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\EndpointV2;
 
+use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Middleware;
@@ -52,10 +53,11 @@ class EndpointV2SerializerTraitTest extends TestCase
      */
     public function testThrowsExceptionForInvalidAuthScheme()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(UnresolvedAuthSchemeException::class);
         $this->expectExceptionMessage(
            'This operation requests `sigvfoo`, `sigvbar`, `sigvbaz` auth schemes,'
-           . ' but the client only supports `sigv4`, `sigv4a`, `none`, `bearer`.'
+           . ' but the client currently supports `sigv4`, `sigv4a`, `none`, `bearer`,'
+           . ' `sigv4-s3express`.'
         );
 
         $rulesetPath = __DIR__ . '/invalid-rules/invalid-scheme.json';

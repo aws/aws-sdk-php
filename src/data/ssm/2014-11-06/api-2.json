@@ -5,12 +5,14 @@
     "endpointPrefix":"ssm",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Amazon SSM",
     "serviceFullName":"Amazon Simple Systems Manager (SSM)",
     "serviceId":"SSM",
     "signatureVersion":"v4",
     "targetPrefix":"AmazonSSM",
-    "uid":"ssm-2014-11-06"
+    "uid":"ssm-2014-11-06",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddTagsToResource":{
@@ -42,7 +44,8 @@
         {"shape":"OpsItemNotFoundException"},
         {"shape":"OpsItemLimitExceededException"},
         {"shape":"OpsItemInvalidParameterException"},
-        {"shape":"OpsItemRelatedItemAlreadyExistsException"}
+        {"shape":"OpsItemRelatedItemAlreadyExistsException"},
+        {"shape":"OpsItemConflictException"}
       ]
     },
     "CancelCommand":{
@@ -299,6 +302,19 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "DeleteOpsItem":{
+      "name":"DeleteOpsItem",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteOpsItemRequest"},
+      "output":{"shape":"DeleteOpsItemResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"OpsItemInvalidParameterException"}
+      ]
+    },
     "DeleteOpsMetadata":{
       "name":"DeleteOpsMetadata",
       "http":{
@@ -376,7 +392,10 @@
       "errors":[
         {"shape":"InternalServerError"},
         {"shape":"ResourcePolicyInvalidParameterException"},
-        {"shape":"ResourcePolicyConflictException"}
+        {"shape":"ResourcePolicyConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"MalformedResourcePolicyDocumentException"},
+        {"shape":"ResourcePolicyNotFoundException"}
       ]
     },
     "DeregisterManagedInstance":{
@@ -665,6 +684,24 @@
         {"shape":"InvalidNextToken"}
       ]
     },
+    "DescribeInstanceProperties":{
+      "name":"DescribeInstanceProperties",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeInstancePropertiesRequest"},
+      "output":{"shape":"DescribeInstancePropertiesResult"},
+      "errors":[
+        {"shape":"InvalidNextToken"},
+        {"shape":"InvalidFilterKey"},
+        {"shape":"InvalidInstanceId"},
+        {"shape":"InvalidActivationId"},
+        {"shape":"InvalidInstancePropertyFilterValue"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidDocument"}
+      ]
+    },
     "DescribeInventoryDeletions":{
       "name":"DescribeInventoryDeletions",
       "http":{
@@ -883,7 +920,8 @@
         {"shape":"InternalServerError"},
         {"shape":"OpsItemRelatedItemAssociationNotFoundException"},
         {"shape":"OpsItemNotFoundException"},
-        {"shape":"OpsItemInvalidParameterException"}
+        {"shape":"OpsItemInvalidParameterException"},
+        {"shape":"OpsItemConflictException"}
       ]
     },
     "GetAutomationExecution":{
@@ -1220,7 +1258,8 @@
       "output":{"shape":"GetResourcePoliciesResponse"},
       "errors":[
         {"shape":"InternalServerError"},
-        {"shape":"ResourcePolicyInvalidParameterException"}
+        {"shape":"ResourcePolicyInvalidParameterException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetServiceSetting":{
@@ -1578,7 +1617,10 @@
         {"shape":"InternalServerError"},
         {"shape":"ResourcePolicyInvalidParameterException"},
         {"shape":"ResourcePolicyLimitExceededException"},
-        {"shape":"ResourcePolicyConflictException"}
+        {"shape":"ResourcePolicyConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"MalformedResourcePolicyDocumentException"},
+        {"shape":"ResourcePolicyNotFoundException"}
       ]
     },
     "RegisterDefaultPatchBaseline":{
@@ -1983,7 +2025,8 @@
         {"shape":"OpsItemAlreadyExistsException"},
         {"shape":"OpsItemLimitExceededException"},
         {"shape":"OpsItemInvalidParameterException"},
-        {"shape":"OpsItemAccessDeniedException"}
+        {"shape":"OpsItemAccessDeniedException"},
+        {"shape":"OpsItemConflictException"}
       ]
     },
     "UpdateOpsMetadata":{
@@ -2191,6 +2234,10 @@
       "max":360,
       "min":0
     },
+    "Architecture":{
+      "type":"string",
+      "max":120
+    },
     "AssociateOpsItemRelatedItemRequest":{
       "type":"structure",
       "required":[
@@ -2233,6 +2280,10 @@
         "AssociationName":{"shape":"AssociationName"},
         "ScheduleOffset":{
           "shape":"ScheduleOffset",
+          "box":true
+        },
+        "Duration":{
+          "shape":"Duration",
           "box":true
         },
         "TargetMaps":{
@@ -2286,6 +2337,10 @@
         "TargetLocations":{"shape":"TargetLocations"},
         "ScheduleOffset":{
           "shape":"ScheduleOffset",
+          "box":true
+        },
+        "Duration":{
+          "shape":"Duration",
           "box":true
         },
         "TargetMaps":{
@@ -2558,6 +2613,10 @@
           "shape":"ScheduleOffset",
           "box":true
         },
+        "Duration":{
+          "shape":"Duration",
+          "box":true
+        },
         "TargetMaps":{
           "shape":"TargetMaps",
           "box":true
@@ -2723,7 +2782,8 @@
         "Runbooks":{"shape":"Runbooks"},
         "OpsItemId":{"shape":"String"},
         "AssociationId":{"shape":"String"},
-        "ChangeRequestName":{"shape":"ChangeRequestName"}
+        "ChangeRequestName":{"shape":"ChangeRequestName"},
+        "Variables":{"shape":"AutomationParameterMap"}
       }
     },
     "AutomationExecutionFilter":{
@@ -2849,7 +2909,8 @@
         "ChangeCalendarOverrideApproved",
         "ChangeCalendarOverrideRejected",
         "CompletedWithSuccess",
-        "CompletedWithFailure"
+        "CompletedWithFailure",
+        "Exited"
       ]
     },
     "AutomationParameterKey":{
@@ -3374,8 +3435,8 @@
     "ConnectionStatus":{
       "type":"string",
       "enum":[
-        "Connected",
-        "NotConnected"
+        "connected",
+        "notconnected"
       ]
     },
     "ContentLength":{"type":"long"},
@@ -3438,6 +3499,10 @@
           "shape":"ScheduleOffset",
           "box":true
         },
+        "Duration":{
+          "shape":"Duration",
+          "box":true
+        },
         "TargetMaps":{
           "shape":"TargetMaps",
           "box":true
@@ -3474,6 +3539,10 @@
         "TargetLocations":{"shape":"TargetLocations"},
         "ScheduleOffset":{
           "shape":"ScheduleOffset",
+          "box":true
+        },
+        "Duration":{
+          "shape":"Duration",
           "box":true
         },
         "TargetMaps":{
@@ -3736,6 +3805,18 @@
       "type":"structure",
       "members":{
         "WindowId":{"shape":"MaintenanceWindowId"}
+      }
+    },
+    "DeleteOpsItemRequest":{
+      "type":"structure",
+      "required":["OpsItemId"],
+      "members":{
+        "OpsItemId":{"shape":"OpsItemId"}
+      }
+    },
+    "DeleteOpsItemResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeleteOpsMetadataRequest":{
@@ -4221,6 +4302,31 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "DescribeInstancePropertiesMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":5
+    },
+    "DescribeInstancePropertiesRequest":{
+      "type":"structure",
+      "members":{
+        "InstancePropertyFilterList":{"shape":"InstancePropertyFilterList"},
+        "FiltersWithOperator":{"shape":"InstancePropertyStringFilterList"},
+        "MaxResults":{
+          "shape":"DescribeInstancePropertiesMaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeInstancePropertiesResult":{
+      "type":"structure",
+      "members":{
+        "InstanceProperties":{"shape":"InstanceProperties"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "DescribeInventoryDeletionsRequest":{
       "type":"structure",
       "members":{
@@ -4429,7 +4535,11 @@
           "shape":"MaxResults",
           "box":true
         },
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "Shared":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "DescribeParametersResult":{
@@ -4973,6 +5083,12 @@
       "members":{
       },
       "exception":true
+    },
+    "Duration":{
+      "type":"integer",
+      "box":true,
+      "max":24,
+      "min":1
     },
     "EffectiveInstanceAssociationMaxResults":{
       "type":"integer",
@@ -5633,7 +5749,8 @@
     "IPAddress":{
       "type":"string",
       "max":46,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "ISO8601String":{"type":"string"},
     "IamRole":{
@@ -5838,6 +5955,10 @@
       "member":{"shape":"InstanceInformationStringFilter"},
       "min":0
     },
+    "InstanceName":{
+      "type":"string",
+      "max":255
+    },
     "InstancePatchState":{
       "type":"structure",
       "required":[
@@ -5941,9 +6062,133 @@
       "max":5,
       "min":1
     },
+    "InstanceProperties":{
+      "type":"list",
+      "member":{"shape":"InstanceProperty"}
+    },
+    "InstanceProperty":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"InstanceName"},
+        "InstanceId":{"shape":"InstanceId"},
+        "InstanceType":{"shape":"InstanceType"},
+        "InstanceRole":{"shape":"InstanceRole"},
+        "KeyName":{"shape":"KeyName"},
+        "InstanceState":{"shape":"InstanceState"},
+        "Architecture":{"shape":"Architecture"},
+        "IPAddress":{"shape":"IPAddress"},
+        "LaunchTime":{"shape":"DateTime"},
+        "PingStatus":{"shape":"PingStatus"},
+        "LastPingDateTime":{"shape":"DateTime"},
+        "AgentVersion":{"shape":"Version"},
+        "PlatformType":{"shape":"PlatformType"},
+        "PlatformName":{"shape":"PlatformName"},
+        "PlatformVersion":{"shape":"PlatformVersion"},
+        "ActivationId":{"shape":"ActivationId"},
+        "IamRole":{"shape":"IamRole"},
+        "RegistrationDate":{"shape":"DateTime"},
+        "ResourceType":{"shape":"String"},
+        "ComputerName":{"shape":"ComputerName"},
+        "AssociationStatus":{"shape":"StatusName"},
+        "LastAssociationExecutionDate":{"shape":"DateTime"},
+        "LastSuccessfulAssociationExecutionDate":{"shape":"DateTime"},
+        "AssociationOverview":{"shape":"InstanceAggregatedAssociationOverview"},
+        "SourceId":{"shape":"SourceId"},
+        "SourceType":{"shape":"SourceType"}
+      }
+    },
+    "InstancePropertyFilter":{
+      "type":"structure",
+      "required":[
+        "key",
+        "valueSet"
+      ],
+      "members":{
+        "key":{"shape":"InstancePropertyFilterKey"},
+        "valueSet":{"shape":"InstancePropertyFilterValueSet"}
+      }
+    },
+    "InstancePropertyFilterKey":{
+      "type":"string",
+      "enum":[
+        "InstanceIds",
+        "AgentVersion",
+        "PingStatus",
+        "PlatformTypes",
+        "DocumentName",
+        "ActivationIds",
+        "IamRole",
+        "ResourceType",
+        "AssociationStatus"
+      ]
+    },
+    "InstancePropertyFilterList":{
+      "type":"list",
+      "member":{"shape":"InstancePropertyFilter"},
+      "max":40,
+      "min":1
+    },
+    "InstancePropertyFilterOperator":{
+      "type":"string",
+      "enum":[
+        "Equal",
+        "NotEqual",
+        "BeginWith",
+        "LessThan",
+        "GreaterThan"
+      ]
+    },
+    "InstancePropertyFilterValue":{
+      "type":"string",
+      "max":100000,
+      "min":1,
+      "pattern":"^.{1,100000}$"
+    },
+    "InstancePropertyFilterValueSet":{
+      "type":"list",
+      "member":{"shape":"InstancePropertyFilterValue"},
+      "max":40,
+      "min":1
+    },
+    "InstancePropertyStringFilter":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Values"
+      ],
+      "members":{
+        "Key":{"shape":"InstancePropertyStringFilterKey"},
+        "Values":{"shape":"InstancePropertyFilterValueSet"},
+        "Operator":{"shape":"InstancePropertyFilterOperator"}
+      }
+    },
+    "InstancePropertyStringFilterKey":{
+      "type":"string",
+      "max":100000,
+      "min":1,
+      "pattern":"^.{1,100000}$"
+    },
+    "InstancePropertyStringFilterList":{
+      "type":"list",
+      "member":{"shape":"InstancePropertyStringFilter"},
+      "max":40,
+      "min":1
+    },
+    "InstanceRole":{
+      "type":"string",
+      "max":120
+    },
+    "InstanceState":{
+      "type":"string",
+      "max":120
+    },
     "InstanceTagName":{
       "type":"string",
       "max":255
+    },
+    "InstanceType":{
+      "type":"string",
+      "max":120
     },
     "InstancesCount":{"type":"integer"},
     "Integer":{"type":"integer"},
@@ -6115,6 +6360,13 @@
       "exception":true
     },
     "InvalidInstanceInformationFilterValue":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "InvalidInstancePropertyFilterValue":{
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
@@ -6598,6 +6850,10 @@
     "KeyList":{
       "type":"list",
       "member":{"shape":"TagKey"}
+    },
+    "KeyName":{
+      "type":"string",
+      "max":255
     },
     "LabelParameterVersionRequest":{
       "type":"structure",
@@ -7374,6 +7630,13 @@
       "type":"list",
       "member":{"shape":"MaintenanceWindowIdentityForTarget"}
     },
+    "MalformedResourcePolicyDocumentException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "ManagedInstanceId":{
       "type":"string",
       "max":124,
@@ -7723,6 +7986,13 @@
       "max":64,
       "min":1,
       "pattern":"^(?!\\s*$).+"
+    },
+    "OpsItemConflictException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
     },
     "OpsItemDataKey":{
       "type":"string",
@@ -8338,6 +8608,7 @@
       "type":"structure",
       "members":{
         "Name":{"shape":"PSParameterName"},
+        "ARN":{"shape":"String"},
         "Type":{"shape":"ParameterType"},
         "KeyId":{"shape":"ParameterKeyId"},
         "LastModifiedDate":{"shape":"DateTime"},
@@ -8493,6 +8764,19 @@
       "member":{"shape":"ParametersFilterValue"},
       "max":50,
       "min":1
+    },
+    "ParentStepDetails":{
+      "type":"structure",
+      "members":{
+        "StepExecutionId":{"shape":"String"},
+        "StepName":{"shape":"String"},
+        "Action":{"shape":"AutomationActionName"},
+        "Iteration":{
+          "shape":"Integer",
+          "box":true
+        },
+        "IteratorValue":{"shape":"String"}
+      }
     },
     "Patch":{
       "type":"structure",
@@ -8904,6 +9188,10 @@
         "Inactive"
       ]
     },
+    "PlatformName":{
+      "type":"string",
+      "max":120
+    },
     "PlatformType":{
       "type":"string",
       "enum":[
@@ -8916,6 +9204,10 @@
       "type":"list",
       "member":{"shape":"PlatformType"}
     },
+    "PlatformVersion":{
+      "type":"string",
+      "max":120
+    },
     "PoliciesLimitExceededException":{
       "type":"structure",
       "members":{
@@ -8925,7 +9217,7 @@
     },
     "Policy":{
       "type":"string",
-      "pattern":"\\S+"
+      "pattern":"^(?!\\s*$).+"
     },
     "PolicyHash":{"type":"string"},
     "PolicyId":{"type":"string"},
@@ -9484,6 +9776,13 @@
       },
       "exception":true
     },
+    "ResourceNotFoundException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "ResourcePolicyConflictException":{
       "type":"structure",
       "members":{
@@ -9513,6 +9812,13 @@
       "max":50,
       "min":1
     },
+    "ResourcePolicyNotFoundException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "ResourcePolicyParameterNamesList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -9521,7 +9827,6 @@
       "type":"string",
       "enum":[
         "ManagedInstance",
-        "Document",
         "EC2Instance"
       ]
     },
@@ -10101,7 +10406,8 @@
           "shape":"TargetLocation",
           "box":true
         },
-        "TriggeredAlarms":{"shape":"AlarmStateInformationList"}
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"},
+        "ParentStepDetails":{"shape":"ParentStepDetails"}
       }
     },
     "StepExecutionFilter":{
@@ -10123,7 +10429,10 @@
         "StepExecutionStatus",
         "StepExecutionId",
         "StepName",
-        "Action"
+        "Action",
+        "ParentStepExecutionId",
+        "ParentStepIteration",
+        "ParentStepIteratorValue"
       ]
     },
     "StepExecutionFilterList":{
@@ -10464,6 +10773,10 @@
         "TargetLocations":{"shape":"TargetLocations"},
         "ScheduleOffset":{
           "shape":"ScheduleOffset",
+          "box":true
+        },
+        "Duration":{
+          "shape":"Duration",
           "box":true
         },
         "TargetMaps":{

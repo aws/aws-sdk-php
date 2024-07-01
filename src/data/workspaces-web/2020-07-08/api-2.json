@@ -83,7 +83,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -430,7 +431,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -448,7 +450,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -466,7 +469,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -484,7 +488,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -502,7 +507,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -520,7 +526,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -974,6 +981,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"}
       ],
@@ -1252,9 +1260,11 @@
       "type":"structure",
       "required":["browserSettingsArn"],
       "members":{
+        "additionalEncryptionContext":{"shape":"EncryptionContextMap"},
         "associatedPortalArns":{"shape":"ArnList"},
         "browserPolicy":{"shape":"BrowserPolicy"},
-        "browserSettingsArn":{"shape":"ARN"}
+        "browserSettingsArn":{"shape":"ARN"},
+        "customerManagedKey":{"shape":"keyArn"}
       }
     },
     "BrowserSettingsList":{
@@ -1263,6 +1273,7 @@
     },
     "BrowserSettingsSummary":{
       "type":"structure",
+      "required":["browserSettingsArn"],
       "members":{
         "browserSettingsArn":{"shape":"ARN"}
       }
@@ -1335,6 +1346,50 @@
       },
       "exception":true
     },
+    "CookieDomain":{
+      "type":"string",
+      "max":253,
+      "min":0,
+      "pattern":"^(\\.?)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)*[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$",
+      "sensitive":true
+    },
+    "CookieName":{
+      "type":"string",
+      "max":4096,
+      "min":0,
+      "sensitive":true
+    },
+    "CookiePath":{
+      "type":"string",
+      "max":2000,
+      "min":0,
+      "pattern":"^/(\\S)*$",
+      "sensitive":true
+    },
+    "CookieSpecification":{
+      "type":"structure",
+      "required":["domain"],
+      "members":{
+        "domain":{"shape":"CookieDomain"},
+        "name":{"shape":"CookieName"},
+        "path":{"shape":"CookiePath"}
+      }
+    },
+    "CookieSpecifications":{
+      "type":"list",
+      "member":{"shape":"CookieSpecification"},
+      "max":10,
+      "min":0
+    },
+    "CookieSynchronizationConfiguration":{
+      "type":"structure",
+      "required":["allowlist"],
+      "members":{
+        "allowlist":{"shape":"CookieSpecifications"},
+        "blocklist":{"shape":"CookieSpecifications"}
+      },
+      "sensitive":true
+    },
     "CreateBrowserSettingsRequest":{
       "type":"structure",
       "required":["browserPolicy"],
@@ -1372,14 +1427,15 @@
         "identityProviderDetails":{"shape":"IdentityProviderDetails"},
         "identityProviderName":{"shape":"IdentityProviderName"},
         "identityProviderType":{"shape":"IdentityProviderType"},
-        "portalArn":{"shape":"ARN"}
+        "portalArn":{"shape":"ARN"},
+        "tags":{"shape":"TagList"}
       }
     },
     "CreateIdentityProviderResponse":{
       "type":"structure",
       "required":["identityProviderArn"],
       "members":{
-        "identityProviderArn":{"shape":"ARN"}
+        "identityProviderArn":{"shape":"SubresourceARN"}
       }
     },
     "CreateIpAccessSettingsRequest":{
@@ -1441,6 +1497,8 @@
         },
         "customerManagedKey":{"shape":"keyArn"},
         "displayName":{"shape":"DisplayName"},
+        "instanceType":{"shape":"InstanceType"},
+        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"},
         "tags":{"shape":"TagList"}
       }
     },
@@ -1503,11 +1561,15 @@
         "uploadAllowed"
       ],
       "members":{
+        "additionalEncryptionContext":{"shape":"EncryptionContextMap"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
+        "cookieSynchronizationConfiguration":{"shape":"CookieSynchronizationConfiguration"},
         "copyAllowed":{"shape":"EnabledType"},
+        "customerManagedKey":{"shape":"keyArn"},
+        "deepLinkAllowed":{"shape":"EnabledType"},
         "disconnectTimeoutInMinutes":{"shape":"DisconnectTimeoutInMinutes"},
         "downloadAllowed":{"shape":"EnabledType"},
         "idleDisconnectTimeoutInMinutes":{"shape":"IdleDisconnectTimeoutInMinutes"},
@@ -1545,7 +1607,7 @@
       "required":["identityProviderArn"],
       "members":{
         "identityProviderArn":{
-          "shape":"ARN",
+          "shape":"SubresourceARN",
           "location":"uri",
           "locationName":"identityProviderArn"
         }
@@ -1804,7 +1866,7 @@
       "required":["identityProviderArn"],
       "members":{
         "identityProviderArn":{
-          "shape":"ARN",
+          "shape":"SubresourceARN",
           "location":"uri",
           "locationName":"identityProviderArn"
         }
@@ -1907,6 +1969,7 @@
     },
     "GetTrustStoreCertificateResponse":{
       "type":"structure",
+      "required":["trustStoreArn"],
       "members":{
         "certificate":{"shape":"Certificate"},
         "trustStoreArn":{"shape":"ARN"}
@@ -1967,7 +2030,7 @@
       "type":"structure",
       "required":["identityProviderArn"],
       "members":{
-        "identityProviderArn":{"shape":"ARN"},
+        "identityProviderArn":{"shape":"SubresourceARN"},
         "identityProviderDetails":{"shape":"IdentityProviderDetails"},
         "identityProviderName":{"shape":"IdentityProviderName"},
         "identityProviderType":{"shape":"IdentityProviderType"}
@@ -1992,8 +2055,9 @@
     },
     "IdentityProviderSummary":{
       "type":"structure",
+      "required":["identityProviderArn"],
       "members":{
-        "identityProviderArn":{"shape":"ARN"},
+        "identityProviderArn":{"shape":"SubresourceARN"},
         "identityProviderName":{"shape":"IdentityProviderName"},
         "identityProviderType":{"shape":"IdentityProviderType"}
       }
@@ -2015,6 +2079,14 @@
       "max":60,
       "min":0
     },
+    "InstanceType":{
+      "type":"string",
+      "enum":[
+        "standard.regular",
+        "standard.large",
+        "standard.xlarge"
+      ]
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -2033,8 +2105,10 @@
       "type":"structure",
       "required":["ipAccessSettingsArn"],
       "members":{
+        "additionalEncryptionContext":{"shape":"EncryptionContextMap"},
         "associatedPortalArns":{"shape":"ArnList"},
         "creationDate":{"shape":"Timestamp"},
+        "customerManagedKey":{"shape":"keyArn"},
         "description":{"shape":"Description"},
         "displayName":{"shape":"DisplayName"},
         "ipAccessSettingsArn":{"shape":"ARN"},
@@ -2047,6 +2121,7 @@
     },
     "IpAccessSettingsSummary":{
       "type":"structure",
+      "required":["ipAccessSettingsArn"],
       "members":{
         "creationDate":{"shape":"Timestamp"},
         "description":{"shape":"Description"},
@@ -2236,6 +2311,7 @@
     },
     "ListTrustStoreCertificatesResponse":{
       "type":"structure",
+      "required":["trustStoreArn"],
       "members":{
         "certificateList":{"shape":"CertificateSummaryList"},
         "nextToken":{"shape":"PaginationToken"},
@@ -2308,6 +2384,12 @@
         "userSettings":{"shape":"UserSettingsList"}
       }
     },
+    "MaxConcurrentSessions":{
+      "type":"integer",
+      "box":true,
+      "max":5000,
+      "min":1
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -2330,6 +2412,7 @@
     },
     "NetworkSettingsSummary":{
       "type":"structure",
+      "required":["networkSettingsArn"],
       "members":{
         "networkSettingsArn":{"shape":"ARN"},
         "vpcId":{"shape":"VpcId"}
@@ -2343,13 +2426,18 @@
     },
     "Portal":{
       "type":"structure",
+      "required":["portalArn"],
       "members":{
+        "additionalEncryptionContext":{"shape":"EncryptionContextMap"},
         "authenticationType":{"shape":"AuthenticationType"},
         "browserSettingsArn":{"shape":"ARN"},
         "browserType":{"shape":"BrowserType"},
         "creationDate":{"shape":"Timestamp"},
+        "customerManagedKey":{"shape":"keyArn"},
         "displayName":{"shape":"DisplayName"},
+        "instanceType":{"shape":"InstanceType"},
         "ipAccessSettingsArn":{"shape":"ARN"},
+        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"},
         "networkSettingsArn":{"shape":"ARN"},
         "portalArn":{"shape":"ARN"},
         "portalEndpoint":{"shape":"PortalEndpoint"},
@@ -2381,13 +2469,16 @@
     },
     "PortalSummary":{
       "type":"structure",
+      "required":["portalArn"],
       "members":{
         "authenticationType":{"shape":"AuthenticationType"},
         "browserSettingsArn":{"shape":"ARN"},
         "browserType":{"shape":"BrowserType"},
         "creationDate":{"shape":"Timestamp"},
         "displayName":{"shape":"DisplayName"},
+        "instanceType":{"shape":"InstanceType"},
         "ipAccessSettingsArn":{"shape":"ARN"},
+        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"},
         "networkSettingsArn":{"shape":"ARN"},
         "portalArn":{"shape":"ARN"},
         "portalEndpoint":{"shape":"PortalEndpoint"},
@@ -2476,6 +2567,12 @@
       "member":{"shape":"SubnetId"},
       "max":3,
       "min":2
+    },
+    "SubresourceARN":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:[\\w+=\\/,.@-]+:[a-zA-Z0-9\\-]+:[a-zA-Z0-9\\-]*:[a-zA-Z0-9]{1,12}:[a-zA-Z]+(\\/[a-fA-F0-9\\-]{36}){2,}$"
     },
     "Tag":{
       "type":"structure",
@@ -2573,6 +2670,7 @@
     },
     "TrustStore":{
       "type":"structure",
+      "required":["trustStoreArn"],
       "members":{
         "associatedPortalArns":{"shape":"ArnList"},
         "trustStoreArn":{"shape":"ARN"}
@@ -2644,7 +2742,7 @@
           "idempotencyToken":true
         },
         "identityProviderArn":{
-          "shape":"ARN",
+          "shape":"SubresourceARN",
           "location":"uri",
           "locationName":"identityProviderArn"
         },
@@ -2716,6 +2814,8 @@
       "members":{
         "authenticationType":{"shape":"AuthenticationType"},
         "displayName":{"shape":"DisplayName"},
+        "instanceType":{"shape":"InstanceType"},
+        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"},
         "portalArn":{
           "shape":"ARN",
           "location":"uri",
@@ -2784,7 +2884,9 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
+        "cookieSynchronizationConfiguration":{"shape":"CookieSynchronizationConfiguration"},
         "copyAllowed":{"shape":"EnabledType"},
+        "deepLinkAllowed":{"shape":"EnabledType"},
         "disconnectTimeoutInMinutes":{"shape":"DisconnectTimeoutInMinutes"},
         "downloadAllowed":{"shape":"EnabledType"},
         "idleDisconnectTimeoutInMinutes":{"shape":"IdleDisconnectTimeoutInMinutes"},
@@ -2820,6 +2922,7 @@
     },
     "UserAccessLoggingSettingsSummary":{
       "type":"structure",
+      "required":["userAccessLoggingSettingsArn"],
       "members":{
         "kinesisStreamArn":{"shape":"KinesisStreamArn"},
         "userAccessLoggingSettingsArn":{"shape":"ARN"}
@@ -2829,8 +2932,12 @@
       "type":"structure",
       "required":["userSettingsArn"],
       "members":{
+        "additionalEncryptionContext":{"shape":"EncryptionContextMap"},
         "associatedPortalArns":{"shape":"ArnList"},
+        "cookieSynchronizationConfiguration":{"shape":"CookieSynchronizationConfiguration"},
         "copyAllowed":{"shape":"EnabledType"},
+        "customerManagedKey":{"shape":"keyArn"},
+        "deepLinkAllowed":{"shape":"EnabledType"},
         "disconnectTimeoutInMinutes":{"shape":"DisconnectTimeoutInMinutes"},
         "downloadAllowed":{"shape":"EnabledType"},
         "idleDisconnectTimeoutInMinutes":{"shape":"IdleDisconnectTimeoutInMinutes"},
@@ -2846,8 +2953,11 @@
     },
     "UserSettingsSummary":{
       "type":"structure",
+      "required":["userSettingsArn"],
       "members":{
+        "cookieSynchronizationConfiguration":{"shape":"CookieSynchronizationConfiguration"},
         "copyAllowed":{"shape":"EnabledType"},
+        "deepLinkAllowed":{"shape":"EnabledType"},
         "disconnectTimeoutInMinutes":{"shape":"DisconnectTimeoutInMinutes"},
         "downloadAllowed":{"shape":"EnabledType"},
         "idleDisconnectTimeoutInMinutes":{"shape":"IdleDisconnectTimeoutInMinutes"},

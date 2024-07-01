@@ -5,11 +5,13 @@
     "endpointPrefix":"lightsail",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon Lightsail",
     "serviceId":"Lightsail",
     "signatureVersion":"v4",
     "targetPrefix":"Lightsail_20161128",
-    "uid":"lightsail-2016-11-28"
+    "uid":"lightsail-2016-11-28",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AllocateStaticIp":{
@@ -2153,6 +2155,22 @@
         {"shape":"UnauthenticatedException"}
       ]
     },
+    "GetSetupHistory":{
+      "name":"GetSetupHistory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetSetupHistoryRequest"},
+      "output":{"shape":"GetSetupHistoryResult"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ServiceException"},
+        {"shape":"UnauthenticatedException"}
+      ]
+    },
     "GetStaticIp":{
       "name":"GetStaticIp",
       "http":{
@@ -2426,6 +2444,22 @@
       },
       "input":{"shape":"SetResourceAccessForBucketRequest"},
       "output":{"shape":"SetResourceAccessForBucketResult"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ServiceException"},
+        {"shape":"UnauthenticatedException"}
+      ]
+    },
+    "SetupInstanceHttps":{
+      "name":"SetupInstanceHttps",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SetupInstanceHttpsRequest"},
+      "output":{"shape":"SetupInstanceHttpsResult"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidInputException"},
@@ -3252,7 +3286,8 @@
         "ramSizeInGb":{"shape":"float"},
         "transferPerMonthInGb":{"shape":"integer"},
         "supportedPlatforms":{"shape":"InstancePlatformList"},
-        "supportedAppCategories":{"shape":"AppCategoryList"}
+        "supportedAppCategories":{"shape":"AppCategoryList"},
+        "publicIpv4AddressCount":{"shape":"integer"}
       }
     },
     "BundleList":{
@@ -3324,6 +3359,10 @@
       ]
     },
     "CertificateName":{"type":"string"},
+    "CertificateProvider":{
+      "type":"string",
+      "enum":["LetsEncrypt"]
+    },
     "CertificateStatus":{
       "type":"string",
       "enum":[
@@ -3962,7 +4001,9 @@
         "cacheBehaviors":{"shape":"CacheBehaviorList"},
         "bundleId":{"shape":"string"},
         "ipAddressType":{"shape":"IpAddressType"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "certificateName":{"shape":"ResourceName"},
+        "viewerMinimumTlsProtocolVersion":{"shape":"ViewerMinimumTlsProtocolVersionEnum"}
       }
     },
     "CreateDistributionResult":{
@@ -4833,6 +4874,13 @@
       }
     },
     "EligibleToRenew":{"type":"string"},
+    "EmailAddress":{
+      "type":"string",
+      "max":254,
+      "min":6,
+      "pattern":"^[\\w!#$%&.'*+\\/=?^_\\x60{|}~\\-]{1,64}@[a-zA-Z0-9\\-]{1,63}(\\.[a-zA-Z0-9\\-]{1,63}){0,8}(\\.[a-zA-Z]{2,63})$",
+      "sensitive":true
+    },
     "EnableAddOnRequest":{
       "type":"structure",
       "required":[
@@ -5874,6 +5922,21 @@
         "nextPageToken":{"shape":"string"}
       }
     },
+    "GetSetupHistoryRequest":{
+      "type":"structure",
+      "required":["resourceName"],
+      "members":{
+        "resourceName":{"shape":"ResourceName"},
+        "pageToken":{"shape":"SetupHistoryPageToken"}
+      }
+    },
+    "GetSetupHistoryResult":{
+      "type":"structure",
+      "members":{
+        "setupHistory":{"shape":"setupHistoryList"},
+        "nextPageToken":{"shape":"SetupHistoryPageToken"}
+      }
+    },
     "GetStaticIpRequest":{
       "type":"structure",
       "required":["staticIpName"],
@@ -5999,7 +6062,8 @@
       "members":{
         "name":{"shape":"ResourceName"},
         "regionName":{"shape":"RegionName"},
-        "protocolPolicy":{"shape":"OriginProtocolPolicyEnum"}
+        "protocolPolicy":{"shape":"OriginProtocolPolicyEnum"},
+        "responseTimeout":{"shape":"integer"}
       }
     },
     "Instance":{
@@ -6035,6 +6099,7 @@
         "certKey":{"shape":"string"},
         "expiresAt":{"shape":"IsoDate"},
         "ipAddress":{"shape":"IpAddress"},
+        "ipv6Addresses":{"shape":"Ipv6AddressList"},
         "password":{"shape":"string"},
         "passwordData":{"shape":"PasswordData"},
         "privateKey":{"shape":"string"},
@@ -6272,7 +6337,8 @@
       "type":"string",
       "enum":[
         "dualstack",
-        "ipv4"
+        "ipv4",
+        "ipv6"
       ]
     },
     "Ipv6Address":{
@@ -6336,7 +6402,8 @@
         "cacheBehaviors":{"shape":"CacheBehaviorList"},
         "ableToUpdateBundle":{"shape":"boolean"},
         "ipAddressType":{"shape":"IpAddressType"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "viewerMinimumTlsProtocolVersion":{"shape":"string"}
       }
     },
     "LoadBalancer":{
@@ -6722,7 +6789,8 @@
         "tcp",
         "all",
         "udp",
-        "icmp"
+        "icmp",
+        "icmpv6"
       ]
     },
     "NonEmptyString":{
@@ -6885,7 +6953,8 @@
         "SetResourceAccessForBucket",
         "UpdateInstanceMetadataOptions",
         "StartGUISession",
-        "StopGUISession"
+        "StopGUISession",
+        "SetupInstanceHttps"
       ]
     },
     "Origin":{
@@ -6894,7 +6963,8 @@
         "name":{"shape":"ResourceName"},
         "resourceType":{"shape":"ResourceType"},
         "regionName":{"shape":"RegionName"},
-        "protocolPolicy":{"shape":"OriginProtocolPolicyEnum"}
+        "protocolPolicy":{"shape":"OriginProtocolPolicyEnum"},
+        "responseTimeout":{"shape":"integer"}
       }
     },
     "OriginProtocolPolicyEnum":{
@@ -7530,7 +7600,8 @@
       "members":{
         "resourceType":{"shape":"ResourceType"},
         "resourceName":{"shape":"ResourceName"},
-        "ipAddressType":{"shape":"IpAddressType"}
+        "ipAddressType":{"shape":"IpAddressType"},
+        "acceptBundleUpdate":{"shape":"boolean"}
       }
     },
     "SetIpAddressTypeResult":{
@@ -7557,6 +7628,97 @@
       "members":{
         "operations":{"shape":"OperationList"}
       }
+    },
+    "SetupDomainName":{
+      "type":"string",
+      "max":253,
+      "min":4,
+      "pattern":"^[a-zA-Z0-9\\-]{1,63}(\\.[a-zA-Z0-9\\-]{1,63}){0,8}(\\.[a-zA-Z]{2,63})$"
+    },
+    "SetupDomainNameList":{
+      "type":"list",
+      "member":{"shape":"SetupDomainName"},
+      "max":10,
+      "min":1
+    },
+    "SetupExecutionDetails":{
+      "type":"structure",
+      "members":{
+        "command":{"shape":"string"},
+        "dateTime":{"shape":"IsoDate"},
+        "name":{"shape":"NonEmptyString"},
+        "status":{"shape":"SetupStatus"},
+        "standardError":{"shape":"string"},
+        "standardOutput":{"shape":"string"},
+        "version":{"shape":"string"}
+      }
+    },
+    "SetupExecutionDetailsList":{
+      "type":"list",
+      "member":{"shape":"SetupExecutionDetails"}
+    },
+    "SetupHistory":{
+      "type":"structure",
+      "members":{
+        "operationId":{"shape":"NonEmptyString"},
+        "request":{"shape":"SetupRequest"},
+        "resource":{"shape":"SetupHistoryResource"},
+        "executionDetails":{"shape":"SetupExecutionDetailsList"},
+        "status":{"shape":"SetupStatus"}
+      }
+    },
+    "SetupHistoryPageToken":{
+      "type":"string",
+      "max":40,
+      "min":24,
+      "pattern":"^[A-Za-z0-9+/=]+$"
+    },
+    "SetupHistoryResource":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"ResourceName"},
+        "arn":{"shape":"NonEmptyString"},
+        "createdAt":{"shape":"IsoDate"},
+        "location":{"shape":"ResourceLocation"},
+        "resourceType":{"shape":"ResourceType"}
+      }
+    },
+    "SetupInstanceHttpsRequest":{
+      "type":"structure",
+      "required":[
+        "instanceName",
+        "emailAddress",
+        "domainNames",
+        "certificateProvider"
+      ],
+      "members":{
+        "instanceName":{"shape":"ResourceName"},
+        "emailAddress":{"shape":"EmailAddress"},
+        "domainNames":{"shape":"SetupDomainNameList"},
+        "certificateProvider":{"shape":"CertificateProvider"}
+      }
+    },
+    "SetupInstanceHttpsResult":{
+      "type":"structure",
+      "members":{
+        "operations":{"shape":"OperationList"}
+      }
+    },
+    "SetupRequest":{
+      "type":"structure",
+      "members":{
+        "instanceName":{"shape":"ResourceName"},
+        "domainNames":{"shape":"SetupDomainNameList"},
+        "certificateProvider":{"shape":"CertificateProvider"}
+      }
+    },
+    "SetupStatus":{
+      "type":"string",
+      "enum":[
+        "succeeded",
+        "failed",
+        "inProgress"
+      ]
     },
     "StartGUISessionRequest":{
       "type":"structure",
@@ -7884,7 +8046,10 @@
         "defaultCacheBehavior":{"shape":"CacheBehavior"},
         "cacheBehaviorSettings":{"shape":"CacheSettings"},
         "cacheBehaviors":{"shape":"CacheBehaviorList"},
-        "isEnabled":{"shape":"boolean"}
+        "isEnabled":{"shape":"boolean"},
+        "viewerMinimumTlsProtocolVersion":{"shape":"ViewerMinimumTlsProtocolVersionEnum"},
+        "certificateName":{"shape":"ResourceName"},
+        "useDefaultCertificate":{"shape":"boolean"}
       }
     },
     "UpdateDistributionResult":{
@@ -7976,7 +8141,8 @@
         "disableBackupRetention":{"shape":"boolean"},
         "publiclyAccessible":{"shape":"boolean"},
         "applyImmediately":{"shape":"boolean"},
-        "caCertificateIdentifier":{"shape":"string"}
+        "caCertificateIdentifier":{"shape":"string"},
+        "relationalDatabaseBlueprintId":{"shape":"string"}
       }
     },
     "UpdateRelationalDatabaseResult":{
@@ -7985,11 +8151,24 @@
         "operations":{"shape":"OperationList"}
       }
     },
+    "ViewerMinimumTlsProtocolVersionEnum":{
+      "type":"string",
+      "enum":[
+        "TLSv1.1_2016",
+        "TLSv1.2_2018",
+        "TLSv1.2_2019",
+        "TLSv1.2_2021"
+      ]
+    },
     "boolean":{"type":"boolean"},
     "double":{"type":"double"},
     "float":{"type":"float"},
     "integer":{"type":"integer"},
     "long":{"type":"long"},
+    "setupHistoryList":{
+      "type":"list",
+      "member":{"shape":"SetupHistory"}
+    },
     "string":{"type":"string"},
     "timestamp":{"type":"timestamp"}
   }

@@ -4,6 +4,7 @@
   "operations": {
     "CreateProfile": "<p>Creates a <i>profile</i>, a list of the roles that Roles Anywhere service is trusted to assume. You use profiles to intersect permissions with IAM managed policies.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:CreateProfile</code>. </p>",
     "CreateTrustAnchor": "<p>Creates a trust anchor to establish trust between IAM Roles Anywhere and your certificate authority (CA). You can define a trust anchor as a reference to an Private Certificate Authority (Private CA) or by uploading a CA certificate. Your Amazon Web Services workloads can authenticate with the trust anchor using certificates issued by the CA in exchange for temporary Amazon Web Services credentials.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:CreateTrustAnchor</code>. </p>",
+    "DeleteAttributeMapping": "<p>Delete an entry from the attribute mapping rules enforced by a given profile.</p>",
     "DeleteCrl": "<p>Deletes a certificate revocation list (CRL).</p> <p> <b>Required permissions: </b> <code>rolesanywhere:DeleteCrl</code>. </p>",
     "DeleteProfile": "<p>Deletes a profile.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:DeleteProfile</code>. </p>",
     "DeleteTrustAnchor": "<p>Deletes a trust anchor.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:DeleteTrustAnchor</code>. </p>",
@@ -17,12 +18,13 @@
     "GetProfile": "<p>Gets a profile.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:GetProfile</code>. </p>",
     "GetSubject": "<p>Gets a <i>subject</i>, which associates a certificate identity with authentication attempts. The subject stores auditing information such as the status of the last authentication attempt, the certificate data used in the attempt, and the last time the associated identity attempted authentication. </p> <p> <b>Required permissions: </b> <code>rolesanywhere:GetSubject</code>. </p>",
     "GetTrustAnchor": "<p>Gets a trust anchor.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:GetTrustAnchor</code>. </p>",
-    "ImportCrl": "<p>Imports the certificate revocation list (CRL). A CRL is a list of certificates that have been revoked by the issuing certificate Authority (CA). IAM Roles Anywhere validates against the CRL before issuing credentials. </p> <p> <b>Required permissions: </b> <code>rolesanywhere:ImportCrl</code>. </p>",
+    "ImportCrl": "<p>Imports the certificate revocation list (CRL). A CRL is a list of certificates that have been revoked by the issuing certificate Authority (CA).In order to be properly imported, a CRL must be in PEM format. IAM Roles Anywhere validates against the CRL before issuing credentials. </p> <p> <b>Required permissions: </b> <code>rolesanywhere:ImportCrl</code>. </p>",
     "ListCrls": "<p>Lists all certificate revocation lists (CRL) in the authenticated account and Amazon Web Services Region.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:ListCrls</code>. </p>",
     "ListProfiles": "<p>Lists all profiles in the authenticated account and Amazon Web Services Region.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:ListProfiles</code>. </p>",
     "ListSubjects": "<p>Lists the subjects in the authenticated account and Amazon Web Services Region.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:ListSubjects</code>. </p>",
     "ListTagsForResource": "<p>Lists the tags attached to the resource.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:ListTagsForResource</code>. </p>",
     "ListTrustAnchors": "<p>Lists the trust anchors in the authenticated account and Amazon Web Services Region.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:ListTrustAnchors</code>. </p>",
+    "PutAttributeMapping": "<p>Put an entry in the attribute mapping rules that will be enforced by a given profile. A mapping specifies a certificate field and one or more specifiers that have contextual meanings.</p>",
     "PutNotificationSettings": "<p>Attaches a list of <i>notification settings</i> to a trust anchor.</p> <p>A notification setting includes information such as event name, threshold, status of the notification setting, and the channel to notify.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:PutNotificationSettings</code>. </p>",
     "ResetNotificationSettings": "<p>Resets the <i>custom notification setting</i> to IAM Roles Anywhere default setting. </p> <p> <b>Required permissions: </b> <code>rolesanywhere:ResetNotificationSettings</code>. </p>",
     "TagResource": "<p>Attaches tags to a resource.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:TagResource</code>. </p>",
@@ -43,6 +45,18 @@
         "ListTagsForResourceRequest$resourceArn": "<p>The ARN of the resource.</p>",
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource.</p>",
         "UntagResourceRequest$resourceArn": "<p>The ARN of the resource.</p>"
+      }
+    },
+    "AttributeMapping": {
+      "base": "<p>A mapping applied to the authenticating end-entity certificate.</p>",
+      "refs": {
+        "AttributeMappings$member": null
+      }
+    },
+    "AttributeMappings": {
+      "base": null,
+      "refs": {
+        "ProfileDetail$attributeMappings": "<p>A mapping applied to the authenticating end-entity certificate.</p>"
       }
     },
     "Blob": {
@@ -71,6 +85,14 @@
         "TrustAnchorDetail$enabled": "<p>Indicates whether the trust anchor is enabled.</p>"
       }
     },
+    "CertificateField": {
+      "base": null,
+      "refs": {
+        "AttributeMapping$certificateField": "<p>Fields (x509Subject, x509Issuer and x509SAN) within X.509 certificates.</p>",
+        "DeleteAttributeMappingRequest$certificateField": "<p>Fields (x509Subject, x509Issuer and x509SAN) within X.509 certificates.</p>",
+        "PutAttributeMappingRequest$certificateField": "<p>Fields (x509Subject, x509Issuer and x509SAN) within X.509 certificates.</p>"
+      }
+    },
     "CreateProfileRequest": {
       "base": null,
       "refs": {
@@ -79,7 +101,7 @@
     "CreateProfileRequestDurationSecondsInteger": {
       "base": null,
       "refs": {
-        "CreateProfileRequest$durationSeconds": "<p> The number of seconds the vended session credentials are valid for. </p>"
+        "CreateProfileRequest$durationSeconds": "<p> Used to determine how long sessions vended using this profile are valid for. See the <code>Expiration</code> section of the <a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication-create-session.html#credentials-object\">CreateSession API documentation</a> page for more details. In requests, if this value is not provided, the default value will be 3600. </p>"
       }
     },
     "CreateTrustAnchorRequest": {
@@ -115,6 +137,16 @@
       "base": null,
       "refs": {
         "ListCrlsResponse$crls": "<p>A list of certificate revocation lists (CRL). </p>"
+      }
+    },
+    "DeleteAttributeMappingRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAttributeMappingResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "ImportCrlRequest": {
@@ -162,7 +194,7 @@
       "base": null,
       "refs": {
         "ListRequest$pageSize": "<p>The number of resources in the paginated list. </p>",
-        "ProfileDetail$durationSeconds": "<p> The number of seconds the vended session credentials are valid for. </p>"
+        "ProfileDetail$durationSeconds": "<p> Used to determine how long sessions vended using this profile are valid for. See the <code>Expiration</code> section of the <a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication-create-session.html#credentials-object\">CreateSession API documentation</a> page for more details. In requests, if this value is not provided, the default value will be 3600. </p>"
       }
     },
     "ListCrlsResponse": {
@@ -218,6 +250,25 @@
       "base": null,
       "refs": {
         "ManagedPolicyList$member": null
+      }
+    },
+    "MappingRule": {
+      "base": "<p>A single mapping entry for each supported specifier or sub-field.</p>",
+      "refs": {
+        "MappingRules$member": null
+      }
+    },
+    "MappingRuleSpecifierString": {
+      "base": null,
+      "refs": {
+        "MappingRule$specifier": "<p>Specifier within a certificate field, such as CN, OU, or UID from the Subject field.</p>"
+      }
+    },
+    "MappingRules": {
+      "base": null,
+      "refs": {
+        "AttributeMapping$mappingRules": "<p>A list of mapping entries for every supported specifier or sub-field.</p>",
+        "PutAttributeMappingRequest$mappingRules": "<p>A list of mapping entries for every supported specifier or sub-field.</p>"
       }
     },
     "NotificationChannel": {
@@ -300,8 +351,10 @@
     "ProfileDetail": {
       "base": "<p>The state of the profile after a read or write operation.</p>",
       "refs": {
+        "DeleteAttributeMappingResponse$profile": "<p>The state of the profile after a read or write operation.</p>",
         "ProfileDetailResponse$profile": "<p>The state of the profile after a read or write operation.</p>",
-        "ProfileDetails$member": null
+        "ProfileDetails$member": null,
+        "PutAttributeMappingResponse$profile": "<p>The state of the profile after a read or write operation.</p>"
       }
     },
     "ProfileDetailResponse": {
@@ -313,6 +366,16 @@
       "base": null,
       "refs": {
         "ListProfilesResponse$profiles": "<p>A list of profiles.</p>"
+      }
+    },
+    "PutAttributeMappingRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutAttributeMappingResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "PutNotificationSettingsRequest": {
@@ -407,6 +470,12 @@
         "SourceData$x509CertificateData": "<p>The PEM-encoded data for the certificate anchor. Included for trust anchors of type <code>CERTIFICATE_BUNDLE</code>. </p>"
       }
     },
+    "SpecifierList": {
+      "base": null,
+      "refs": {
+        "DeleteAttributeMappingRequest$specifiers": "<p>A list of specifiers of a certificate field; for example, CN, OU, UID from a Subject.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -426,6 +495,7 @@
         "ProfileDetail$sessionPolicy": "<p>A session policy that applies to the trust boundary of the vended session credentials. </p>",
         "ResourceNotFoundException$message": null,
         "SourceData$acmPcaArn": "<p> The root certificate of the Private Certificate Authority specified by this ARN is used in trust validation for temporary credential requests. Included for trust anchors of type <code>AWS_ACM_PCA</code>. </p>",
+        "SpecifierList$member": null,
         "SubjectDetail$subjectArn": "<p>The ARN of the resource.</p>",
         "SubjectDetail$x509Subject": "<p>The x509 principal identifier of the authenticating certificate.</p>",
         "SubjectSummary$subjectArn": "<p>The ARN of the resource.</p>",
@@ -588,7 +658,7 @@
     "UpdateProfileRequestDurationSecondsInteger": {
       "base": null,
       "refs": {
-        "UpdateProfileRequest$durationSeconds": "<p> The number of seconds the vended session credentials are valid for. </p>"
+        "UpdateProfileRequest$durationSeconds": "<p> Used to determine how long sessions vended using this profile are valid for. See the <code>Expiration</code> section of the <a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication-create-session.html#credentials-object\">CreateSession API documentation</a> page for more details. In requests, if this value is not provided, the default value will be 3600. </p>"
       }
     },
     "UpdateProfileRequestSessionPolicyString": {
@@ -606,7 +676,9 @@
       "base": null,
       "refs": {
         "CrlDetail$crlId": "<p>The unique identifier of the certificate revocation list (CRL).</p>",
+        "DeleteAttributeMappingRequest$profileId": "<p>The unique identifier of the profile.</p>",
         "ProfileDetail$profileId": "<p>The unique identifier of the profile.</p>",
+        "PutAttributeMappingRequest$profileId": "<p>The unique identifier of the profile.</p>",
         "PutNotificationSettingsRequest$trustAnchorId": "<p>The unique identifier of the trust anchor.</p>",
         "ResetNotificationSettingsRequest$trustAnchorId": "<p>The unique identifier of the trust anchor.</p>",
         "ScalarCrlRequest$crlId": "<p>The unique identifier of the certificate revocation list (CRL).</p>",

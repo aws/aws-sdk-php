@@ -31,8 +31,27 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
+    },
+    "AcceptShare":{
+      "name":"AcceptShare",
+      "http":{
+        "method":"POST",
+        "requestUri":"/share/{shareId}",
+        "responseCode":200
+      },
+      "input":{"shape":"AcceptShareRequest"},
+      "output":{"shape":"AcceptShareResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "endpoint":{"hostPrefix":"analytics-"}
     },
     "BatchDeleteReadSet":{
       "name":"BatchDeleteReadSet",
@@ -51,7 +70,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"},
       "idempotent":true
     },
@@ -71,7 +89,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"},
       "idempotent":true
     },
@@ -93,7 +110,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "CancelVariantImportJob":{
@@ -112,7 +128,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"},
       "idempotent":true
     },
@@ -135,7 +150,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"storage-"}
     },
     "CreateAnnotationStore":{
@@ -156,7 +170,26 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
+      "endpoint":{"hostPrefix":"analytics-"}
+    },
+    "CreateAnnotationStoreVersion":{
+      "name":"CreateAnnotationStoreVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/annotationStore/{name}/version",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateAnnotationStoreVersionRequest"},
+      "output":{"shape":"CreateAnnotationStoreVersionResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "CreateMultipartReadSetUpload":{
@@ -178,7 +211,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "CreateReferenceStore":{
@@ -198,7 +230,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "CreateRunGroup":{
@@ -220,7 +251,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "CreateSequenceStore":{
@@ -240,8 +270,27 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
+    },
+    "CreateShare":{
+      "name":"CreateShare",
+      "http":{
+        "method":"POST",
+        "requestUri":"/share",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateShareRequest"},
+      "output":{"shape":"CreateShareResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "endpoint":{"hostPrefix":"analytics-"}
     },
     "CreateVariantStore":{
       "name":"CreateVariantStore",
@@ -261,7 +310,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "CreateWorkflow":{
@@ -283,7 +331,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "DeleteAnnotationStore":{
@@ -303,7 +350,26 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
+      "endpoint":{"hostPrefix":"analytics-"},
+      "idempotent":true
+    },
+    "DeleteAnnotationStoreVersions":{
+      "name":"DeleteAnnotationStoreVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/annotationStore/{name}/versions/delete",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteAnnotationStoreVersionsRequest"},
+      "output":{"shape":"DeleteAnnotationStoreVersionsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
       "endpoint":{"hostPrefix":"analytics-"},
       "idempotent":true
     },
@@ -325,7 +391,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"},
       "idempotent":true
     },
@@ -347,7 +412,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"},
       "idempotent":true
     },
@@ -369,7 +433,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"},
       "idempotent":true
     },
@@ -391,7 +454,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"},
       "idempotent":true
     },
@@ -413,8 +475,28 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"},
+      "idempotent":true
+    },
+    "DeleteShare":{
+      "name":"DeleteShare",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/share/{shareId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteShareRequest"},
+      "output":{"shape":"DeleteShareResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "endpoint":{"hostPrefix":"analytics-"},
       "idempotent":true
     },
     "DeleteVariantStore":{
@@ -434,7 +516,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"},
       "idempotent":true
     },
@@ -456,7 +537,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"},
       "idempotent":true
     },
@@ -476,7 +556,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "GetAnnotationStore":{
@@ -495,7 +574,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
+      "endpoint":{"hostPrefix":"analytics-"}
+    },
+    "GetAnnotationStoreVersion":{
+      "name":"GetAnnotationStoreVersion",
+      "http":{
+        "method":"GET",
+        "requestUri":"/annotationStore/{name}/version/{versionName}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAnnotationStoreVersionRequest"},
+      "output":{"shape":"GetAnnotationStoreVersionResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "GetReadSet":{
@@ -517,7 +613,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"storage-"}
     },
     "GetReadSetActivationJob":{
@@ -537,7 +632,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "GetReadSetExportJob":{
@@ -557,7 +651,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "GetReadSetImportJob":{
@@ -577,7 +670,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "GetReadSetMetadata":{
@@ -597,7 +689,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "GetReference":{
@@ -618,7 +709,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"storage-"}
     },
     "GetReferenceImportJob":{
@@ -638,7 +728,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "GetReferenceMetadata":{
@@ -658,7 +747,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "GetReferenceStore":{
@@ -678,7 +766,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "GetRun":{
@@ -700,7 +787,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "GetRunGroup":{
@@ -722,7 +808,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "GetRunTask":{
@@ -744,7 +829,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "GetSequenceStore":{
@@ -764,8 +848,27 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
+    },
+    "GetShare":{
+      "name":"GetShare",
+      "http":{
+        "method":"GET",
+        "requestUri":"/share/{shareId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetShareRequest"},
+      "output":{"shape":"GetShareResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "endpoint":{"hostPrefix":"analytics-"}
     },
     "GetVariantImportJob":{
       "name":"GetVariantImportJob",
@@ -783,7 +886,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "GetVariantStore":{
@@ -802,7 +904,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "GetWorkflow":{
@@ -824,7 +925,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "ListAnnotationImportJobs":{
@@ -843,7 +943,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
+      "endpoint":{"hostPrefix":"analytics-"}
+    },
+    "ListAnnotationStoreVersions":{
+      "name":"ListAnnotationStoreVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/annotationStore/{name}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAnnotationStoreVersionsRequest"},
+      "output":{"shape":"ListAnnotationStoreVersionsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "ListAnnotationStores":{
@@ -862,7 +979,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "ListMultipartReadSetUploads":{
@@ -884,7 +1000,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "ListReadSetActivationJobs":{
@@ -904,7 +1019,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "ListReadSetExportJobs":{
@@ -924,7 +1038,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "ListReadSetImportJobs":{
@@ -944,7 +1057,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "ListReadSetUploadParts":{
@@ -966,7 +1078,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "ListReadSets":{
@@ -986,7 +1097,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "ListReferenceImportJobs":{
@@ -1006,7 +1116,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "ListReferenceStores":{
@@ -1025,7 +1134,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "ListReferences":{
@@ -1045,7 +1153,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "ListRunGroups":{
@@ -1067,7 +1174,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "ListRunTasks":{
@@ -1089,7 +1195,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "ListRuns":{
@@ -1111,7 +1216,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "ListSequenceStores":{
@@ -1130,8 +1234,27 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
+    },
+    "ListShares":{
+      "name":"ListShares",
+      "http":{
+        "method":"POST",
+        "requestUri":"/shares",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSharesRequest"},
+      "output":{"shape":"ListSharesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "endpoint":{"hostPrefix":"analytics-"}
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -1152,7 +1275,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"tags-"}
     },
     "ListVariantImportJobs":{
@@ -1171,7 +1293,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "ListVariantStores":{
@@ -1190,7 +1311,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "ListWorkflows":{
@@ -1212,7 +1332,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "StartAnnotationImportJob":{
@@ -1232,7 +1351,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "StartReadSetActivationJob":{
@@ -1253,7 +1371,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "StartReadSetExportJob":{
@@ -1274,7 +1391,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "StartReadSetImportJob":{
@@ -1295,7 +1411,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "StartReferenceImportJob":{
@@ -1316,7 +1431,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"control-storage-"}
     },
     "StartRun":{
@@ -1338,7 +1452,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "StartVariantImportJob":{
@@ -1358,7 +1471,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "TagResource":{
@@ -1380,7 +1492,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"tags-"}
     },
     "UntagResource":{
@@ -1402,7 +1513,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"tags-"},
       "idempotent":true
     },
@@ -1422,7 +1532,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
+      "endpoint":{"hostPrefix":"analytics-"}
+    },
+    "UpdateAnnotationStoreVersion":{
+      "name":"UpdateAnnotationStoreVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/annotationStore/{name}/version/{versionName}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAnnotationStoreVersionRequest"},
+      "output":{"shape":"UpdateAnnotationStoreVersionResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "UpdateRunGroup":{
@@ -1443,7 +1570,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "UpdateVariantStore":{
@@ -1462,7 +1588,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"analytics-"}
     },
     "UpdateWorkflow":{
@@ -1483,7 +1608,6 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4",
       "endpoint":{"hostPrefix":"workflows-"}
     },
     "UploadReadSetPart":{
@@ -1539,6 +1663,23 @@
       "enum":["GPU"],
       "max":64,
       "min":1
+    },
+    "AcceptShareRequest":{
+      "type":"structure",
+      "required":["shareId"],
+      "members":{
+        "shareId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"shareId"
+        }
+      }
+    },
+    "AcceptShareResponse":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"ShareStatus"}
+      }
     },
     "AccessDeniedException":{
       "type":"structure",
@@ -1651,6 +1792,7 @@
       "required":[
         "id",
         "destinationName",
+        "versionName",
         "roleArn",
         "status",
         "creationTime",
@@ -1659,6 +1801,7 @@
       "members":{
         "id":{"shape":"String"},
         "destinationName":{"shape":"String"},
+        "versionName":{"shape":"VersionName"},
         "roleArn":{"shape":"Arn"},
         "status":{"shape":"JobStatus"},
         "creationTime":{"shape":"CreationTime"},
@@ -1695,7 +1838,7 @@
         "storeArn":{"shape":"Arn"},
         "name":{"shape":"String"},
         "storeFormat":{"shape":"StoreFormat"},
-        "description":{"shape":"StoreDescription"},
+        "description":{"shape":"Description"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"CreationTime"},
         "updateTime":{"shape":"UpdateTime"},
@@ -1706,6 +1849,39 @@
     "AnnotationStoreItems":{
       "type":"list",
       "member":{"shape":"AnnotationStoreItem"}
+    },
+    "AnnotationStoreVersionItem":{
+      "type":"structure",
+      "required":[
+        "storeId",
+        "id",
+        "status",
+        "versionArn",
+        "name",
+        "versionName",
+        "description",
+        "creationTime",
+        "updateTime",
+        "statusMessage",
+        "versionSizeBytes"
+      ],
+      "members":{
+        "storeId":{"shape":"ResourceId"},
+        "id":{"shape":"ResourceId"},
+        "status":{"shape":"VersionStatus"},
+        "versionArn":{"shape":"Arn"},
+        "name":{"shape":"StoreName"},
+        "versionName":{"shape":"VersionName"},
+        "description":{"shape":"Description"},
+        "creationTime":{"shape":"CreationTime"},
+        "updateTime":{"shape":"UpdateTime"},
+        "statusMessage":{"shape":"StatusMessage"},
+        "versionSizeBytes":{"shape":"Long"}
+      }
+    },
+    "AnnotationStoreVersionItems":{
+      "type":"list",
+      "member":{"shape":"AnnotationStoreVersionItem"}
     },
     "AnnotationType":{
       "type":"string",
@@ -1724,6 +1900,12 @@
       "max":2048,
       "min":20,
       "pattern":"arn:([^: ]*):([^: ]*):([^: ]*):([0-9]{12}):([^: ]*)"
+    },
+    "ArnList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":10,
+      "min":1
     },
     "BatchDeleteReadSetRequest":{
       "type":"structure",
@@ -1847,8 +2029,14 @@
       "members":{
         "partNumber":{"shape":"CompleteReadSetUploadPartListItemPartNumberInteger"},
         "partSource":{"shape":"ReadSetPartSource"},
-        "checksum":{"shape":"String"}
+        "checksum":{"shape":"CompleteReadSetUploadPartListItemChecksumString"}
       }
+    },
+    "CompleteReadSetUploadPartListItemChecksumString":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "CompleteReadSetUploadPartListItemPartNumberInteger":{
       "type":"integer",
@@ -1877,17 +2065,14 @@
       "required":["storeFormat"],
       "members":{
         "reference":{"shape":"ReferenceItem"},
-        "name":{"shape":"CreateAnnotationStoreRequestNameString"},
-        "description":{"shape":"StoreDescription"},
+        "name":{"shape":"StoreName"},
+        "description":{"shape":"Description"},
         "tags":{"shape":"TagMap"},
+        "versionName":{"shape":"VersionName"},
         "sseConfig":{"shape":"SseConfig"},
         "storeFormat":{"shape":"StoreFormat"},
         "storeOptions":{"shape":"StoreOptions"}
       }
-    },
-    "CreateAnnotationStoreRequestNameString":{
-      "type":"string",
-      "pattern":"([a-z]){1}([a-z0-9_]){2,254}"
     },
     "CreateAnnotationStoreResponse":{
       "type":"structure",
@@ -1895,6 +2080,7 @@
         "id",
         "status",
         "name",
+        "versionName",
         "creationTime"
       ],
       "members":{
@@ -1904,6 +2090,45 @@
         "storeOptions":{"shape":"StoreOptions"},
         "status":{"shape":"StoreStatus"},
         "name":{"shape":"String"},
+        "versionName":{"shape":"VersionName"},
+        "creationTime":{"shape":"CreationTime"}
+      }
+    },
+    "CreateAnnotationStoreVersionRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "versionName"
+      ],
+      "members":{
+        "name":{
+          "shape":"StoreName",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "versionName":{"shape":"VersionName"},
+        "description":{"shape":"Description"},
+        "versionOptions":{"shape":"VersionOptions"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateAnnotationStoreVersionResponse":{
+      "type":"structure",
+      "required":[
+        "id",
+        "versionName",
+        "storeId",
+        "name",
+        "status",
+        "creationTime"
+      ],
+      "members":{
+        "id":{"shape":"ResourceId"},
+        "versionName":{"shape":"VersionName"},
+        "storeId":{"shape":"ResourceId"},
+        "versionOptions":{"shape":"VersionOptions"},
+        "name":{"shape":"StoreName"},
+        "status":{"shape":"VersionStatus"},
         "creationTime":{"shape":"CreationTime"}
       }
     },
@@ -1914,7 +2139,6 @@
         "sourceFileType",
         "subjectId",
         "sampleId",
-        "referenceArn",
         "name"
       ],
       "members":{
@@ -2043,7 +2267,8 @@
         "sseConfig":{"shape":"SseConfig"},
         "tags":{"shape":"TagMap"},
         "clientToken":{"shape":"ClientToken"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
     },
     "CreateSequenceStoreResponse":{
@@ -2060,7 +2285,28 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
+      }
+    },
+    "CreateShareRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "principalSubscriber"
+      ],
+      "members":{
+        "resourceArn":{"shape":"String"},
+        "principalSubscriber":{"shape":"String"},
+        "shareName":{"shape":"ShareName"}
+      }
+    },
+    "CreateShareResponse":{
+      "type":"structure",
+      "members":{
+        "shareId":{"shape":"String"},
+        "status":{"shape":"ShareStatus"},
+        "shareName":{"shape":"ShareName"}
       }
     },
     "CreateVariantStoreRequest":{
@@ -2068,15 +2314,11 @@
       "required":["reference"],
       "members":{
         "reference":{"shape":"ReferenceItem"},
-        "name":{"shape":"CreateVariantStoreRequestNameString"},
-        "description":{"shape":"StoreDescription"},
+        "name":{"shape":"StoreName"},
+        "description":{"shape":"Description"},
         "tags":{"shape":"TagMap"},
         "sseConfig":{"shape":"SseConfig"}
       }
-    },
-    "CreateVariantStoreRequestNameString":{
-      "type":"string",
-      "pattern":"([a-z]){1}([a-z0-9_]){2,254}"
     },
     "CreateVariantStoreResponse":{
       "type":"structure",
@@ -2133,6 +2375,13 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "CreationType":{
+      "type":"string",
+      "enum":[
+        "IMPORT",
+        "UPLOAD"
+      ]
+    },
     "DeleteAnnotationStoreRequest":{
       "type":"structure",
       "required":["name"],
@@ -2154,6 +2403,32 @@
       "required":["status"],
       "members":{
         "status":{"shape":"StoreStatus"}
+      }
+    },
+    "DeleteAnnotationStoreVersionsRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "versions"
+      ],
+      "members":{
+        "name":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "versions":{"shape":"VersionList"},
+        "force":{
+          "shape":"PrimitiveBoolean",
+          "location":"querystring",
+          "locationName":"force"
+        }
+      }
+    },
+    "DeleteAnnotationStoreVersionsResponse":{
+      "type":"structure",
+      "members":{
+        "errors":{"shape":"VersionDeleteErrorList"}
       }
     },
     "DeleteReferenceRequest":{
@@ -2234,6 +2509,23 @@
       "members":{
       }
     },
+    "DeleteShareRequest":{
+      "type":"structure",
+      "required":["shareId"],
+      "members":{
+        "shareId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"shareId"
+        }
+      }
+    },
+    "DeleteShareResponse":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"ShareStatus"}
+      }
+    },
     "DeleteVariantStoreRequest":{
       "type":"structure",
       "required":["name"],
@@ -2268,6 +2560,41 @@
         }
       }
     },
+    "Description":{
+      "type":"string",
+      "max":500,
+      "min":0
+    },
+    "ETag":{
+      "type":"structure",
+      "members":{
+        "algorithm":{"shape":"ETagAlgorithm"},
+        "source1":{"shape":"String"},
+        "source2":{"shape":"String"}
+      }
+    },
+    "ETagAlgorithm":{
+      "type":"string",
+      "enum":[
+        "FASTQ_MD5up",
+        "BAM_MD5up",
+        "CRAM_MD5up",
+        "FASTQ_SHA256up",
+        "BAM_SHA256up",
+        "CRAM_SHA256up",
+        "FASTQ_SHA512up",
+        "BAM_SHA512up",
+        "CRAM_SHA512up"
+      ]
+    },
+    "ETagAlgorithmFamily":{
+      "type":"string",
+      "enum":[
+        "MD5up",
+        "SHA256up",
+        "SHA512up"
+      ]
+    },
     "Encoding":{
       "type":"string",
       "max":20,
@@ -2276,6 +2603,10 @@
     "EncryptionType":{
       "type":"string",
       "enum":["KMS"]
+    },
+    "EngineLogStream":{
+      "type":"string",
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "EscapeChar":{
       "type":"string",
@@ -2347,7 +2678,8 @@
       "members":{
         "totalParts":{"shape":"FileInformationTotalPartsInteger"},
         "partSize":{"shape":"FileInformationPartSizeLong"},
-        "contentLength":{"shape":"FileInformationContentLengthLong"}
+        "contentLength":{"shape":"FileInformationContentLengthLong"},
+        "s3Access":{"shape":"ReadSetS3Access"}
       }
     },
     "FileInformationContentLengthLong":{
@@ -2373,8 +2705,17 @@
       "enum":[
         "FASTQ",
         "BAM",
-        "CRAM"
+        "CRAM",
+        "UBAM"
       ]
+    },
+    "Filter":{
+      "type":"structure",
+      "members":{
+        "resourceArns":{"shape":"ArnList"},
+        "status":{"shape":"StatusList"},
+        "type":{"shape":"TypeList"}
+      }
     },
     "FormatOptions":{
       "type":"structure",
@@ -2427,6 +2768,7 @@
       "required":[
         "id",
         "destinationName",
+        "versionName",
         "roleArn",
         "status",
         "statusMessage",
@@ -2440,6 +2782,7 @@
       "members":{
         "id":{"shape":"ResourceId"},
         "destinationName":{"shape":"StoreName"},
+        "versionName":{"shape":"VersionName"},
         "roleArn":{"shape":"Arn"},
         "status":{"shape":"JobStatus"},
         "statusMessage":{"shape":"JobStatusMsg"},
@@ -2477,7 +2820,8 @@
         "updateTime",
         "tags",
         "statusMessage",
-        "storeSizeBytes"
+        "storeSizeBytes",
+        "numVersions"
       ],
       "members":{
         "id":{"shape":"ResourceId"},
@@ -2485,7 +2829,7 @@
         "status":{"shape":"StoreStatus"},
         "storeArn":{"shape":"Arn"},
         "name":{"shape":"String"},
-        "description":{"shape":"StoreDescription"},
+        "description":{"shape":"Description"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"CreationTime"},
         "updateTime":{"shape":"UpdateTime"},
@@ -2493,7 +2837,59 @@
         "storeOptions":{"shape":"StoreOptions"},
         "storeFormat":{"shape":"StoreFormat"},
         "statusMessage":{"shape":"StatusMessage"},
-        "storeSizeBytes":{"shape":"Long"}
+        "storeSizeBytes":{"shape":"Long"},
+        "numVersions":{"shape":"Integer"}
+      }
+    },
+    "GetAnnotationStoreVersionRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "versionName"
+      ],
+      "members":{
+        "name":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "versionName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"versionName"
+        }
+      }
+    },
+    "GetAnnotationStoreVersionResponse":{
+      "type":"structure",
+      "required":[
+        "storeId",
+        "id",
+        "status",
+        "versionArn",
+        "name",
+        "versionName",
+        "description",
+        "creationTime",
+        "updateTime",
+        "tags",
+        "statusMessage",
+        "versionSizeBytes"
+      ],
+      "members":{
+        "storeId":{"shape":"ResourceId"},
+        "id":{"shape":"ResourceId"},
+        "status":{"shape":"VersionStatus"},
+        "versionArn":{"shape":"Arn"},
+        "name":{"shape":"StoreName"},
+        "versionName":{"shape":"VersionName"},
+        "description":{"shape":"Description"},
+        "creationTime":{"shape":"CreationTime"},
+        "updateTime":{"shape":"UpdateTime"},
+        "tags":{"shape":"TagMap"},
+        "versionOptions":{"shape":"VersionOptions"},
+        "statusMessage":{"shape":"StatusMessage"},
+        "versionSizeBytes":{"shape":"Long"}
       }
     },
     "GetReadSetActivationJobRequest":{
@@ -2655,7 +3051,9 @@
         "sequenceInformation":{"shape":"SequenceInformation"},
         "referenceArn":{"shape":"ReferenceArn"},
         "files":{"shape":"ReadSetFiles"},
-        "statusMessage":{"shape":"ReadSetStatusMessage"}
+        "statusMessage":{"shape":"ReadSetStatusMessage"},
+        "creationType":{"shape":"CreationType"},
+        "etag":{"shape":"ETag"}
       }
     },
     "GetReadSetRequest":{
@@ -2949,7 +3347,14 @@
         "stopTime":{"shape":"RunTimestamp"},
         "statusMessage":{"shape":"RunStatusMessage"},
         "tags":{"shape":"TagMap"},
-        "accelerators":{"shape":"Accelerators"}
+        "accelerators":{"shape":"Accelerators"},
+        "retentionMode":{"shape":"RunRetentionMode"},
+        "failureReason":{"shape":"RunFailureReason"},
+        "logLocation":{"shape":"RunLogLocation"},
+        "uuid":{"shape":"RunUuid"},
+        "runOutputUri":{"shape":"RunOutputUri"},
+        "storageType":{"shape":"StorageType"},
+        "workflowOwnerId":{"shape":"WorkflowOwnerId"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -2996,7 +3401,9 @@
         "stopTime":{"shape":"TaskTimestamp"},
         "statusMessage":{"shape":"TaskStatusMessage"},
         "logStream":{"shape":"TaskLogStream"},
-        "gpus":{"shape":"GetRunTaskResponseGpusInteger"}
+        "gpus":{"shape":"GetRunTaskResponseGpusInteger"},
+        "instanceType":{"shape":"TaskInstanceType"},
+        "failureReason":{"shape":"TaskFailureReason"}
       }
     },
     "GetRunTaskResponseCpusInteger":{
@@ -3039,7 +3446,26 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "s3Access":{"shape":"SequenceStoreS3Access"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
+      }
+    },
+    "GetShareRequest":{
+      "type":"structure",
+      "required":["shareId"],
+      "members":{
+        "shareId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"shareId"
+        }
+      }
+    },
+    "GetShareResponse":{
+      "type":"structure",
+      "members":{
+        "share":{"shape":"ShareDetails"}
       }
     },
     "GetVariantImportRequest":{
@@ -3113,7 +3539,7 @@
         "status":{"shape":"StoreStatus"},
         "storeArn":{"shape":"Arn"},
         "name":{"shape":"String"},
-        "description":{"shape":"StoreDescription"},
+        "description":{"shape":"Description"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"CreationTime"},
         "updateTime":{"shape":"UpdateTime"},
@@ -3140,6 +3566,11 @@
           "shape":"WorkflowExportList",
           "location":"querystring",
           "locationName":"export"
+        },
+        "workflowOwnerId":{
+          "shape":"WorkflowOwnerId",
+          "location":"querystring",
+          "locationName":"workflowOwnerId"
         }
       }
     },
@@ -3281,6 +3712,10 @@
       "type":"list",
       "member":{"shape":"ImportReferenceSourceItem"}
     },
+    "Integer":{
+      "type":"integer",
+      "box":true
+    },
     "InternalServerException":{
       "type":"structure",
       "required":["message"],
@@ -3360,6 +3795,52 @@
       "type":"structure",
       "members":{
         "annotationImportJobs":{"shape":"AnnotationImportJobItems"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListAnnotationStoreVersionsFilter":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"VersionStatus"}
+      }
+    },
+    "ListAnnotationStoreVersionsRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "maxResults":{
+          "shape":"ListAnnotationStoreVersionsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"ListAnnotationStoreVersionsRequestNextTokenString",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "filter":{"shape":"ListAnnotationStoreVersionsFilter"}
+      }
+    },
+    "ListAnnotationStoreVersionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListAnnotationStoreVersionsRequestNextTokenString":{
+      "type":"string",
+      "max":10000,
+      "min":1
+    },
+    "ListAnnotationStoreVersionsResponse":{
+      "type":"structure",
+      "members":{
+        "annotationStoreVersions":{"shape":"AnnotationStoreVersionItems"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -3876,6 +4357,32 @@
         "sequenceStores":{"shape":"SequenceStoreDetailList"}
       }
     },
+    "ListSharesRequest":{
+      "type":"structure",
+      "required":["resourceOwner"],
+      "members":{
+        "resourceOwner":{"shape":"ResourceOwner"},
+        "filter":{"shape":"Filter"},
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"Integer",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListSharesResponse":{
+      "type":"structure",
+      "required":["shares"],
+      "members":{
+        "shares":{"shape":"ShareDetailsList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -4217,12 +4724,13 @@
       "members":{
         "name":{"shape":"ReadSetName"},
         "status":{"shape":"ReadSetStatus"},
-        "referenceArn":{"shape":"ReferenceArn"},
+        "referenceArn":{"shape":"ReferenceArnFilter"},
         "createdAfter":{"shape":"SyntheticTimestamp_date_time"},
         "createdBefore":{"shape":"SyntheticTimestamp_date_time"},
         "sampleId":{"shape":"SampleId"},
         "subjectId":{"shape":"SubjectId"},
-        "generatedFrom":{"shape":"GeneratedFrom"}
+        "generatedFrom":{"shape":"GeneratedFrom"},
+        "creationType":{"shape":"CreationType"}
       }
     },
     "ReadSetId":{
@@ -4285,7 +4793,9 @@
         "fileType":{"shape":"FileType"},
         "sequenceInformation":{"shape":"SequenceInformation"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "statusMessage":{"shape":"ReadSetStatusMessage"}
+        "statusMessage":{"shape":"ReadSetStatusMessage"},
+        "creationType":{"shape":"CreationType"},
+        "etag":{"shape":"ETag"}
       }
     },
     "ReadSetName":{
@@ -4305,6 +4815,12 @@
       "type":"blob",
       "requiresLength":true,
       "streaming":true
+    },
+    "ReadSetS3Access":{
+      "type":"structure",
+      "members":{
+        "s3Uri":{"shape":"S3Uri"}
+      }
     },
     "ReadSetStatus":{
       "type":"string",
@@ -4373,6 +4889,12 @@
       "max":127,
       "min":1,
       "pattern":"arn:.+"
+    },
+    "ReferenceArnFilter":{
+      "type":"string",
+      "max":127,
+      "min":0,
+      "pattern":"$|^arn:.+"
     },
     "ReferenceDescription":{
       "type":"string",
@@ -4566,6 +5088,13 @@
       },
       "exception":true
     },
+    "ResourceOwner":{
+      "type":"string",
+      "enum":[
+        "SELF",
+        "OTHER"
+      ]
+    },
     "RoleArn":{
       "type":"string",
       "max":2048,
@@ -4589,6 +5118,12 @@
       "member":{"shape":"RunExport"},
       "max":32,
       "min":0
+    },
+    "RunFailureReason":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "RunGroupArn":{
       "type":"string",
@@ -4688,7 +5223,8 @@
         "storageCapacity":{"shape":"RunListItemStorageCapacityInteger"},
         "creationTime":{"shape":"RunTimestamp"},
         "startTime":{"shape":"RunTimestamp"},
-        "stopTime":{"shape":"RunTimestamp"}
+        "stopTime":{"shape":"RunTimestamp"},
+        "storageType":{"shape":"StorageType"}
       }
     },
     "RunListItemPriorityInteger":{
@@ -4720,6 +5256,17 @@
       "max":64,
       "min":1
     },
+    "RunLogLocation":{
+      "type":"structure",
+      "members":{
+        "engineLogStream":{"shape":"EngineLogStream"},
+        "runLogStream":{"shape":"RunLogStream"}
+      }
+    },
+    "RunLogStream":{
+      "type":"string",
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
     "RunName":{
       "type":"string",
       "max":128,
@@ -4728,7 +5275,7 @@
     },
     "RunOutputUri":{
       "type":"string",
-      "max":128,
+      "max":750,
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
@@ -4760,6 +5307,15 @@
       "type":"map",
       "key":{"shape":"RunResourceDigestKey"},
       "value":{"shape":"RunResourceDigest"}
+    },
+    "RunRetentionMode":{
+      "type":"string",
+      "enum":[
+        "RETAIN",
+        "REMOVE"
+      ],
+      "max":64,
+      "min":1
     },
     "RunRoleArn":{
       "type":"string",
@@ -4794,6 +5350,18 @@
     "RunTimestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "RunUuid":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "S3AccessPointArn":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"arn:[^:]*:s3:[^:]*:[^:]*:accesspoint/.*"
     },
     "S3Destination":{
       "type":"string",
@@ -4871,7 +5439,8 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"}
+        "fallbackLocation":{"shape":"S3Destination"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
     },
     "SequenceStoreDetailList":{
@@ -4898,6 +5467,13 @@
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
+    "SequenceStoreS3Access":{
+      "type":"structure",
+      "members":{
+        "s3Uri":{"shape":"S3Uri"},
+        "s3AccessPointArn":{"shape":"S3AccessPointArn"}
+      }
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":["message"],
@@ -4909,6 +5485,50 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ShareDetails":{
+      "type":"structure",
+      "members":{
+        "shareId":{"shape":"String"},
+        "resourceArn":{"shape":"String"},
+        "resourceId":{"shape":"String"},
+        "principalSubscriber":{"shape":"String"},
+        "ownerId":{"shape":"String"},
+        "status":{"shape":"ShareStatus"},
+        "statusMessage":{"shape":"StatusMessage"},
+        "shareName":{"shape":"ShareName"},
+        "creationTime":{"shape":"CreationTime"},
+        "updateTime":{"shape":"UpdateTime"}
+      }
+    },
+    "ShareDetailsList":{
+      "type":"list",
+      "member":{"shape":"ShareDetails"}
+    },
+    "ShareName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "ShareResourceType":{
+      "type":"string",
+      "enum":[
+        "VARIANT_STORE",
+        "ANNOTATION_STORE",
+        "WORKFLOW"
+      ]
+    },
+    "ShareStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "ACTIVATING",
+        "ACTIVE",
+        "DELETING",
+        "DELETED",
+        "FAILED"
+      ]
     },
     "SourceFiles":{
       "type":"structure",
@@ -4943,6 +5563,7 @@
         "destinationName":{"shape":"StoreName"},
         "roleArn":{"shape":"Arn"},
         "items":{"shape":"AnnotationImportItemSources"},
+        "versionName":{"shape":"VersionName"},
         "formatOptions":{"shape":"FormatOptions"},
         "runLeftNormalization":{"shape":"RunLeftNormalization"},
         "annotationFields":{"shape":"AnnotationFieldMap"}
@@ -5089,8 +5710,7 @@
         "sourceFiles",
         "sourceFileType",
         "subjectId",
-        "sampleId",
-        "referenceArn"
+        "sampleId"
       ],
       "members":{
         "sourceFiles":{"shape":"SourceFiles"},
@@ -5180,7 +5800,10 @@
         "requestId":{
           "shape":"RunRequestId",
           "idempotencyToken":true
-        }
+        },
+        "retentionMode":{"shape":"RunRetentionMode"},
+        "storageType":{"shape":"StorageType"},
+        "workflowOwnerId":{"shape":"WorkflowOwnerId"}
       }
     },
     "StartRunRequestPriorityInteger":{
@@ -5201,7 +5824,9 @@
         "arn":{"shape":"RunArn"},
         "id":{"shape":"RunId"},
         "status":{"shape":"RunStatus"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "uuid":{"shape":"RunUuid"},
+        "runOutputUri":{"shape":"RunOutputUri"}
       }
     },
     "StartVariantImportRequest":{
@@ -5226,15 +5851,25 @@
         "jobId":{"shape":"ResourceId"}
       }
     },
+    "StatusList":{
+      "type":"list",
+      "member":{"shape":"ShareStatus"},
+      "max":10,
+      "min":1
+    },
     "StatusMessage":{
       "type":"string",
       "max":1000,
       "min":0
     },
-    "StoreDescription":{
+    "StorageType":{
       "type":"string",
-      "max":500,
-      "min":0
+      "enum":[
+        "STATIC",
+        "DYNAMIC"
+      ],
+      "max":64,
+      "min":1
     },
     "StoreFormat":{
       "type":"string",
@@ -5332,11 +5967,21 @@
       "max":256,
       "min":0
     },
+    "TaskFailureReason":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
     "TaskId":{
       "type":"string",
       "max":18,
       "min":1,
       "pattern":"[0-9]+"
+    },
+    "TaskInstanceType":{
+      "type":"string",
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "TaskList":{
       "type":"list",
@@ -5353,7 +5998,8 @@
         "creationTime":{"shape":"TaskTimestamp"},
         "startTime":{"shape":"TaskTimestamp"},
         "stopTime":{"shape":"TaskTimestamp"},
-        "gpus":{"shape":"TaskListItemGpusInteger"}
+        "gpus":{"shape":"TaskListItemGpusInteger"},
+        "instanceType":{"shape":"TaskInstanceType"}
       }
     },
     "TaskListItemCpusInteger":{
@@ -5441,6 +6087,26 @@
       "max":5000,
       "min":1
     },
+    "TsvVersionOptions":{
+      "type":"structure",
+      "members":{
+        "annotationType":{"shape":"AnnotationType"},
+        "formatToHeader":{"shape":"FormatToHeader"},
+        "schema":{"shape":"TsvVersionOptionsSchemaList"}
+      }
+    },
+    "TsvVersionOptionsSchemaList":{
+      "type":"list",
+      "member":{"shape":"SchemaItem"},
+      "max":5000,
+      "min":1
+    },
+    "TypeList":{
+      "type":"list",
+      "member":{"shape":"ShareResourceType"},
+      "max":10,
+      "min":1
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -5474,7 +6140,7 @@
           "location":"uri",
           "locationName":"name"
         },
-        "description":{"shape":"StoreDescription"}
+        "description":{"shape":"Description"}
       }
     },
     "UpdateAnnotationStoreResponse":{
@@ -5493,11 +6159,54 @@
         "reference":{"shape":"ReferenceItem"},
         "status":{"shape":"StoreStatus"},
         "name":{"shape":"String"},
-        "description":{"shape":"StoreDescription"},
+        "description":{"shape":"Description"},
         "creationTime":{"shape":"CreationTime"},
         "updateTime":{"shape":"UpdateTime"},
         "storeOptions":{"shape":"StoreOptions"},
         "storeFormat":{"shape":"StoreFormat"}
+      }
+    },
+    "UpdateAnnotationStoreVersionRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "versionName"
+      ],
+      "members":{
+        "name":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "versionName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"versionName"
+        },
+        "description":{"shape":"Description"}
+      }
+    },
+    "UpdateAnnotationStoreVersionResponse":{
+      "type":"structure",
+      "required":[
+        "storeId",
+        "id",
+        "status",
+        "name",
+        "versionName",
+        "description",
+        "creationTime",
+        "updateTime"
+      ],
+      "members":{
+        "storeId":{"shape":"ResourceId"},
+        "id":{"shape":"ResourceId"},
+        "status":{"shape":"VersionStatus"},
+        "name":{"shape":"StoreName"},
+        "versionName":{"shape":"VersionName"},
+        "description":{"shape":"Description"},
+        "creationTime":{"shape":"CreationTime"},
+        "updateTime":{"shape":"UpdateTime"}
       }
     },
     "UpdateRunGroupRequest":{
@@ -5553,7 +6262,7 @@
           "location":"uri",
           "locationName":"name"
         },
-        "description":{"shape":"StoreDescription"}
+        "description":{"shape":"Description"}
       }
     },
     "UpdateVariantStoreResponse":{
@@ -5572,7 +6281,7 @@
         "reference":{"shape":"ReferenceItem"},
         "status":{"shape":"StoreStatus"},
         "name":{"shape":"String"},
-        "description":{"shape":"StoreDescription"},
+        "description":{"shape":"Description"},
         "creationTime":{"shape":"CreationTime"},
         "updateTime":{"shape":"UpdateTime"}
       }
@@ -5731,7 +6440,7 @@
         "status":{"shape":"StoreStatus"},
         "storeArn":{"shape":"Arn"},
         "name":{"shape":"String"},
-        "description":{"shape":"StoreDescription"},
+        "description":{"shape":"Description"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"CreationTime"},
         "updateTime":{"shape":"UpdateTime"},
@@ -5749,6 +6458,50 @@
         "ignoreQualField":{"shape":"Boolean"},
         "ignoreFilterField":{"shape":"Boolean"}
       }
+    },
+    "VersionDeleteError":{
+      "type":"structure",
+      "required":[
+        "versionName",
+        "message"
+      ],
+      "members":{
+        "versionName":{"shape":"VersionName"},
+        "message":{"shape":"String"}
+      }
+    },
+    "VersionDeleteErrorList":{
+      "type":"list",
+      "member":{"shape":"VersionDeleteError"}
+    },
+    "VersionList":{
+      "type":"list",
+      "member":{"shape":"VersionName"},
+      "max":10,
+      "min":1
+    },
+    "VersionName":{
+      "type":"string",
+      "max":255,
+      "min":3,
+      "pattern":"([a-z]){1}([a-z0-9_]){2,254}"
+    },
+    "VersionOptions":{
+      "type":"structure",
+      "members":{
+        "tsvVersionOptions":{"shape":"TsvVersionOptions"}
+      },
+      "union":true
+    },
+    "VersionStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "UPDATING",
+        "DELETING",
+        "ACTIVE",
+        "FAILED"
+      ]
     },
     "WorkflowArn":{
       "type":"string",
@@ -5850,6 +6603,10 @@
       "max":128,
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "WorkflowOwnerId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
     },
     "WorkflowParameter":{
       "type":"structure",

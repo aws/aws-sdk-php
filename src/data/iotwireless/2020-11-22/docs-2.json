@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>AWS IoT Wireless provides bi-directional communication between internet-connected wireless devices and the AWS Cloud. To onboard both LoRaWAN and Sidewalk devices to AWS IoT, use the IoT Wireless API. These wireless devices use the Low Power Wide Area Networking (LPWAN) communication protocol to communicate with AWS IoT.</p> <p>Using the API, you can perform create, read, update, and delete operations for your wireless devices, gateways, destinations, and profiles. After onboarding your devices, you can use the API operations to set log levels and monitor your devices with CloudWatch.</p> <p>You can also use the API operations to create multicast groups and schedule a multicast session for sending a downlink message to devices in the group. By using Firmware Updates Over-The-Air (FUOTA) API operations, you can create a FUOTA task and schedule a session to update the firmware of individual devices or an entire group of devices in a multicast group.</p>",
+  "service": "<p>AWS IoT Wireless provides bi-directional communication between internet-connected wireless devices and the AWS Cloud. To onboard both LoRaWAN and Sidewalk devices to AWS IoT, use the IoT Wireless API. These wireless devices use the Low Power Wide Area Networking (LPWAN) communication protocol to communicate with AWS IoT.</p> <p>Using the API, you can perform create, read, update, and delete operations for your wireless devices, gateways, destinations, and profiles. After onboarding your devices, you can use the API operations to set log levels and monitor your devices with CloudWatch.</p> <p>You can also use the API operations to create multicast groups and schedule a multicast session for sending a downlink message to devices in the group. By using Firmware Updates Over-The-Air (FUOTA) API operations, you can create a FUOTA task and schedule a session to update the firmware of individual devices or an entire group of devices in a multicast group.</p> <p>To connect to the AWS IoT Wireless Service, use the Service endpoints as described in <a href=\"https://docs.aws.amazon.com/general/latest/gr/iot-lorawan.html#iot-wireless_region\">IoT Wireless Service endpoints</a> in the <i>AWS General Reference</i>.</p>",
   "operations": {
     "AssociateAwsAccountWithPartnerAccount": "<p>Associates a partner account with your AWS account.</p>",
     "AssociateMulticastGroupWithFuotaTask": "<p>Associate a multicast group with a FUOTA task.</p>",
@@ -17,7 +17,7 @@
     "CreateNetworkAnalyzerConfiguration": "<p>Creates a new network analyzer configuration.</p>",
     "CreateServiceProfile": "<p>Creates a new service profile.</p>",
     "CreateWirelessDevice": "<p>Provisions a wireless device.</p>",
-    "CreateWirelessGateway": "<p>Provisions a wireless gateway.</p>",
+    "CreateWirelessGateway": "<p>Provisions a wireless gateway.</p> <note> <p>When provisioning a wireless gateway, you might run into duplication errors for the following reasons.</p> <ul> <li> <p>If you specify a <code>GatewayEui</code> value that already exists.</p> </li> <li> <p>If you used a <code>ClientRequestToken</code> with the same parameters within the last 10 minutes.</p> </li> </ul> <p>To avoid this error, make sure that you use unique identifiers and parameters for each request within the specified time period.</p> </note>",
     "CreateWirelessGatewayTask": "<p>Creates a task for a wireless gateway.</p>",
     "CreateWirelessGatewayTaskDefinition": "<p>Creates a gateway task definition.</p>",
     "DeleteDestination": "<p>Deletes a destination.</p>",
@@ -29,7 +29,7 @@
     "DeleteServiceProfile": "<p>Deletes a service profile.</p>",
     "DeleteWirelessDevice": "<p>Deletes a wireless device.</p>",
     "DeleteWirelessDeviceImportTask": "<p>Delete an import task.</p>",
-    "DeleteWirelessGateway": "<p>Deletes a wireless gateway.</p>",
+    "DeleteWirelessGateway": "<p>Deletes a wireless gateway.</p> <note> <p>When deleting a wireless gateway, you might run into duplication errors for the following reasons.</p> <ul> <li> <p>If you specify a <code>GatewayEui</code> value that already exists.</p> </li> <li> <p>If you used a <code>ClientRequestToken</code> with the same parameters within the last 10 minutes.</p> </li> </ul> <p>To avoid this error, make sure that you use unique identifiers and parameters for each request within the specified time period.</p> </note>",
     "DeleteWirelessGatewayTask": "<p>Deletes a wireless gateway task.</p>",
     "DeleteWirelessGatewayTaskDefinition": "<p>Deletes a wireless gateway task definition. Deleting this task definition does not affect tasks that are currently in progress.</p>",
     "DeregisterWirelessDevice": "<p>Deregister a wireless device from AWS IoT Wireless.</p>",
@@ -45,6 +45,8 @@
     "GetEventConfigurationByResourceTypes": "<p>Get the event configuration based on resource types.</p>",
     "GetFuotaTask": "<p>Gets information about a FUOTA task.</p>",
     "GetLogLevelsByResourceTypes": "<p>Returns current default log levels or log levels by resource types. Based on resource types, log levels can be for wireless device log options or wireless gateway log options.</p>",
+    "GetMetricConfiguration": "<p>Get the metric configuration status for this AWS account.</p>",
+    "GetMetrics": "<p>Get the summary metrics for this AWS account.</p>",
     "GetMulticastGroup": "<p>Gets information about a multicast group.</p>",
     "GetMulticastGroupSession": "<p>Gets information about a multicast group session.</p>",
     "GetNetworkAnalyzerConfiguration": "<p>Get network analyzer configuration.</p>",
@@ -102,6 +104,7 @@
     "UpdateEventConfigurationByResourceTypes": "<p>Update the event configuration based on resource types.</p>",
     "UpdateFuotaTask": "<p>Updates properties of a FUOTA task.</p>",
     "UpdateLogLevelsByResourceTypes": "<p>Set default log level, or log levels by resource types. This can be for wireless device log options or wireless gateways log options and is used to control the log messages that'll be displayed in CloudWatch.</p>",
+    "UpdateMetricConfiguration": "<p>Update the summary metric configuration.</p>",
     "UpdateMulticastGroup": "<p>Updates properties of a multicast group session.</p>",
     "UpdateNetworkAnalyzerConfiguration": "<p>Update network analyzer configuration.</p>",
     "UpdatePartnerAccount": "<p>Updates properties of a partner account.</p>",
@@ -155,6 +158,13 @@
         "LoRaWANServiceProfile$AddGwMetadata": "<p>The AddGWMetaData value.</p>"
       }
     },
+    "AggregationPeriod": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQuery$AggregationPeriod": "<p>The aggregation period of the summary metric.</p>",
+        "SummaryMetricQueryResult$AggregationPeriod": "<p>The aggregation period of the metric.</p>"
+      }
+    },
     "AmazonId": {
       "base": "<p>The Sidewalk Amazon ID.</p>",
       "refs": {
@@ -182,7 +192,7 @@
     "AppEui": {
       "base": null,
       "refs": {
-        "OtaaV1_0_x$AppEui": "<p>The AppEUI value.</p>"
+        "OtaaV1_0_x$AppEui": "<p>The AppEUI value. You specify this value when using LoRaWAN versions v1.0.2 or v1.0.3.</p>"
       }
     },
     "AppKey": {
@@ -312,6 +322,12 @@
       "refs": {
         "CreateWirelessGatewayTaskDefinitionRequest$AutoCreateTasks": "<p>Whether to automatically create tasks using this task definition for all gateways with the specified current version. If <code>false</code>, the task must me created by calling <code>CreateWirelessGatewayTask</code>.</p>",
         "GetWirelessGatewayTaskDefinitionResponse$AutoCreateTasks": "<p>Whether to automatically create tasks using this task definition for all gateways with the specified current version. If <code>false</code>, the task must me created by calling <code>CreateWirelessGatewayTask</code>.</p>"
+      }
+    },
+    "Avg": {
+      "base": null,
+      "refs": {
+        "MetricQueryValue$Avg": "<p>The average of the values of all data points collected during the aggregation period.</p>"
       }
     },
     "BCCH": {
@@ -481,18 +497,18 @@
       }
     },
     "ClientRequestToken": {
-      "base": "<p>Each resource must have a unique client request token. If you try to create a new resource with the same token as a resource that already exists, an exception occurs. If you omit this value, AWS SDKs will automatically generate a unique client request.</p>",
+      "base": "<p>Each resource must have a unique client request token. The client token is used to implement idempotency. It ensures that the request completes no more than one time. If you retry a request with the same token and the same parameters, the request will complete successfully. However, if you try to create a new resource using the same token but different parameters, an HTTP 409 conflict occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. For more information about idempotency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a>.</p>",
       "refs": {
-        "AssociateAwsAccountWithPartnerAccountRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. If you try to create a new resource with the same token as a resource that already exists, an exception occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. </p>",
-        "CreateDestinationRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. If you try to create a new resource with the same token as a resource that already exists, an exception occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. </p>",
-        "CreateDeviceProfileRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. If you try to create a new resource with the same token as a resource that already exists, an exception occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. </p>",
+        "AssociateAwsAccountWithPartnerAccountRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. The client token is used to implement idempotency. It ensures that the request completes no more than one time. If you retry a request with the same token and the same parameters, the request will complete successfully. However, if you try to create a new resource using the same token but different parameters, an HTTP 409 conflict occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. For more information about idempotency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a>.</p>",
+        "CreateDestinationRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. The client token is used to implement idempotency. It ensures that the request completes no more than one time. If you retry a request with the same token and the same parameters, the request will complete successfully. However, if you try to create a new resource using the same token but different parameters, an HTTP 409 conflict occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. For more information about idempotency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a>.</p>",
+        "CreateDeviceProfileRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. The client token is used to implement idempotency. It ensures that the request completes no more than one time. If you retry a request with the same token and the same parameters, the request will complete successfully. However, if you try to create a new resource using the same token but different parameters, an HTTP 409 conflict occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. For more information about idempotency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a>.</p>",
         "CreateFuotaTaskRequest$ClientRequestToken": null,
-        "CreateMulticastGroupRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. If you try to create a new resource with the same token as a resource that already exists, an exception occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. </p>",
+        "CreateMulticastGroupRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. The client token is used to implement idempotency. It ensures that the request completes no more than one time. If you retry a request with the same token and the same parameters, the request will complete successfully. However, if you try to create a new resource using the same token but different parameters, an HTTP 409 conflict occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. For more information about idempotency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a>.</p>",
         "CreateNetworkAnalyzerConfigurationRequest$ClientRequestToken": null,
-        "CreateServiceProfileRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. If you try to create a new resource with the same token as a resource that already exists, an exception occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. </p>",
-        "CreateWirelessDeviceRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. If you try to create a new resource with the same token as a resource that already exists, an exception occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. </p>",
-        "CreateWirelessGatewayRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. If you try to create a new resource with the same token as a resource that already exists, an exception occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. </p>",
-        "CreateWirelessGatewayTaskDefinitionRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. If you try to create a new resource with the same token as a resource that already exists, an exception occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. </p>",
+        "CreateServiceProfileRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. The client token is used to implement idempotency. It ensures that the request completes no more than one time. If you retry a request with the same token and the same parameters, the request will complete successfully. However, if you try to create a new resource using the same token but different parameters, an HTTP 409 conflict occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. For more information about idempotency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a>.</p>",
+        "CreateWirelessDeviceRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. The client token is used to implement idempotency. It ensures that the request completes no more than one time. If you retry a request with the same token and the same parameters, the request will complete successfully. However, if you try to create a new resource using the same token but different parameters, an HTTP 409 conflict occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. For more information about idempotency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a>.</p>",
+        "CreateWirelessGatewayRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. The client token is used to implement idempotency. It ensures that the request completes no more than one time. If you retry a request with the same token and the same parameters, the request will complete successfully. However, if you try to create a new resource using the same token but different parameters, an HTTP 409 conflict occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. For more information about idempotency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a>.</p>",
+        "CreateWirelessGatewayTaskDefinitionRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. The client token is used to implement idempotency. It ensures that the request completes no more than one time. If you retry a request with the same token and the same parameters, the request will complete successfully. However, if you try to create a new resource using the same token but different parameters, an HTTP 409 conflict occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. For more information about idempotency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a>.</p>",
         "StartSingleWirelessDeviceImportTaskRequest$ClientRequestToken": null,
         "StartWirelessDeviceImportTaskRequest$ClientRequestToken": null
       }
@@ -1001,6 +1017,31 @@
         "DakCertificateMetadata$DeviceTypeId": "<p>The device type ID that's used for prototyping applications.</p>"
       }
     },
+    "Dimension": {
+      "base": "<p>The required list of dimensions for the metric.</p>",
+      "refs": {
+        "Dimensions$member": null
+      }
+    },
+    "DimensionName": {
+      "base": null,
+      "refs": {
+        "Dimension$name": "<p>The name of the dimension.</p>"
+      }
+    },
+    "DimensionValue": {
+      "base": null,
+      "refs": {
+        "Dimension$value": "<p>The dimension's value.</p>"
+      }
+    },
+    "Dimensions": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQuery$Dimensions": "<p>The dimensions of the summary metric.</p>",
+        "SummaryMetricQueryResult$Dimensions": "<p>The dimensions of the metric.</p>"
+      }
+    },
     "DisassociateAwsAccountFromPartnerAccountRequest": {
       "base": null,
       "refs": {
@@ -1071,6 +1112,12 @@
       "refs": {
       }
     },
+    "DlAllowed": {
+      "base": null,
+      "refs": {
+        "LoRaWANPublicGatewayMetadata$DlAllowed": "<p>Boolean that indicates whether downlink is allowed using the network.</p>"
+      }
+    },
     "DlBucketSize": {
       "base": null,
       "refs": {
@@ -1112,7 +1159,9 @@
       "base": null,
       "refs": {
         "LoRaWANGatewayMetadata$Snr": "<p>The SNR value.</p>",
-        "LoRaWANGatewayMetadata$Rssi": "<p>The RSSI value.</p>"
+        "LoRaWANGatewayMetadata$Rssi": "<p>The RSSI value.</p>",
+        "LoRaWANPublicGatewayMetadata$Rssi": "<p>The RSSI (received signal strength indicator) value.</p>",
+        "LoRaWANPublicGatewayMetadata$Snr": "<p>The SNR (signal to noise ratio) value.</p>"
       }
     },
     "DownlinkFrequency": {
@@ -1440,7 +1489,7 @@
     "GeoJsonPayload": {
       "base": null,
       "refs": {
-        "GetPositionEstimateResponse$GeoJsonPayload": "<p>The position information of the resource, displayed as a JSON payload. The payload uses the GeoJSON format, which a format that's used to encode geographic data structures. For more information, see <a href=\"https://geojson.org/\">GeoJSON</a>.</p>",
+        "GetPositionEstimateResponse$GeoJsonPayload": "<p>The position information of the resource, displayed as a JSON payload. The payload is of type blob and uses the <a href=\"https://geojson.org/\">GeoJSON</a> format, which a format that's used to encode geographic data structures. A sample payload contains the timestamp information, the WGS84 coordinates of the location, and the accuracy and confidence level. For more information and examples, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/location-resolve-console.html\">Resolve device location (console)</a>.</p>",
         "GetResourcePositionResponse$GeoJsonPayload": "<p>The position information of the resource, displayed as a JSON payload. The payload uses the GeoJSON format, which a format that's used to encode geographic data structures. For more information, see <a href=\"https://geojson.org/\">GeoJSON</a>.</p>",
         "UpdateResourcePositionRequest$GeoJsonPayload": "<p>The position information of the resource, displayed as a JSON payload. The payload uses the GeoJSON format, which a format that's used to encode geographic data structures. For more information, see <a href=\"https://geojson.org/\">GeoJSON</a>.</p>"
       }
@@ -1498,6 +1547,26 @@
       }
     },
     "GetLogLevelsByResourceTypesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMetricConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMetricConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMetricsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMetricsResponse": {
       "base": null,
       "refs": {
       }
@@ -1798,6 +1867,12 @@
         "WirelessGatewayStatistics$LastUplinkReceivedAt": "<p>The date and time when the most recent uplink was received.</p> <note> <p>This value is only valid for 3 months.</p> </note>"
       }
     },
+    "Id": {
+      "base": null,
+      "refs": {
+        "LoRaWANPublicGatewayMetadata$Id": "<p>The ID of the gateways that are operated by the network provider.</p>"
+      }
+    },
     "Identifier": {
       "base": null,
       "refs": {
@@ -1910,6 +1985,7 @@
       "base": null,
       "refs": {
         "JoinEuiRange$member": null,
+        "OtaaV1_0_x$JoinEui": "<p>The JoinEUI value. You specify this value instead of the AppEUI when using LoRaWAN version v1.0.4.</p>",
         "OtaaV1_1$JoinEui": "<p>The JoinEUI value.</p>"
       }
     },
@@ -2257,6 +2333,18 @@
         "StartMulticastGroupSessionRequest$LoRaWAN": null
       }
     },
+    "LoRaWANPublicGatewayMetadata": {
+      "base": "<p>LoRaWAN public gateway metadata.</p>",
+      "refs": {
+        "LoRaWANPublicGatewayMetadataList$member": null
+      }
+    },
+    "LoRaWANPublicGatewayMetadataList": {
+      "base": null,
+      "refs": {
+        "LoRaWANDeviceMetadata$PublicGateways": "<p>Information about the LoRaWAN public network accessed by the device.</p>"
+      }
+    },
     "LoRaWANSendDataToDevice": {
       "base": "<p>LoRaWAN router info.</p>",
       "refs": {
@@ -2374,6 +2462,12 @@
         "LoRaWANDeviceProfile$MacVersion": "<p>The MAC version (such as OTAA 1.1 or OTAA 1.0.3) to use with this device profile.</p>"
       }
     },
+    "Max": {
+      "base": null,
+      "refs": {
+        "MetricQueryValue$Max": "<p>The maximum of the values of all the data points collected during the aggregation period.</p>"
+      }
+    },
     "MaxAllowedSignature": {
       "base": null,
       "refs": {
@@ -2383,7 +2477,7 @@
     "MaxDutyCycle": {
       "base": null,
       "refs": {
-        "LoRaWANDeviceProfile$MaxDutyCycle": "<p>The MaxDutyCycle value.</p>"
+        "LoRaWANDeviceProfile$MaxDutyCycle": "<p>The MaxDutyCycle value. It ranges from 0 to 15.</p>"
       }
     },
     "MaxEirp": {
@@ -2460,6 +2554,82 @@
         "SidewalkSendDataToDevice$MessageType": null
       }
     },
+    "MetricName": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQuery$MetricName": "<p>The name of the metric.</p>",
+        "SummaryMetricQueryResult$MetricName": "<p>The name of the summary metric query result.</p>"
+      }
+    },
+    "MetricQueryEndTimestamp": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQuery$EndTimestamp": "<p>The end timestamp for the summary metric query.</p>",
+        "SummaryMetricQueryResult$EndTimestamp": "<p>The end timestamp for the summary metric query.</p>"
+      }
+    },
+    "MetricQueryError": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQueryResult$Error": "<p>The error message for the summary metric query result.</p>"
+      }
+    },
+    "MetricQueryId": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQuery$QueryId": "<p>The id of the summary metric query.</p>",
+        "SummaryMetricQueryResult$QueryId": "<p>The ID of the summary metric results query operation.</p>"
+      }
+    },
+    "MetricQueryStartTimestamp": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQuery$StartTimestamp": "<p>The start timestamp for the summary metric query.</p>",
+        "SummaryMetricQueryResult$StartTimestamp": "<p>The start timestamp for the summary metric query.</p>"
+      }
+    },
+    "MetricQueryStatus": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQueryResult$QueryStatus": "<p>The status of the summary metric query result.</p>"
+      }
+    },
+    "MetricQueryTimestamp": {
+      "base": null,
+      "refs": {
+        "MetricQueryTimestamps$member": null
+      }
+    },
+    "MetricQueryTimestamps": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQueryResult$Timestamps": "<p>The timestamp of each aggregation result.</p>"
+      }
+    },
+    "MetricQueryValue": {
+      "base": "<p>The aggregated values of the metric.</p>",
+      "refs": {
+        "MetricQueryValues$member": null
+      }
+    },
+    "MetricQueryValues": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQueryResult$Values": "<p>The list of aggregated summary metric query results.</p>"
+      }
+    },
+    "MetricUnit": {
+      "base": null,
+      "refs": {
+        "SummaryMetricQueryResult$Unit": "<p>The units of measurement to be used for interpreting the aggregation result.</p>"
+      }
+    },
+    "Min": {
+      "base": null,
+      "refs": {
+        "MetricQueryValue$Min": "<p>The minimum of the values of all data points collected during the aggregation period.</p>"
+      }
+    },
     "MinGwDiversity": {
       "base": null,
       "refs": {
@@ -2479,7 +2649,7 @@
       }
     },
     "MulticastFrameInfo": {
-      "base": "<p> <code>FrameInfo</code> of your multicast group resources for the trace content. Use FrameInfo to debug the multicast communication between your LoRaWAN end devices and the network server.</p>",
+      "base": "<p> <code>FrameInfo</code> of your multicast group resources for the trace content. Use FrameInfo to debug the multicast communication between your multicast groups and the network server.</p>",
       "refs": {
         "TraceContent$MulticastFrameInfo": null
       }
@@ -2624,7 +2794,7 @@
         "CreateNetworkAnalyzerConfigurationRequest$MulticastGroups": "<p>Multicast Group resources to add to the network analyzer configruation. Provide the <code>MulticastGroupId</code> of the resource to add in the input array.</p>",
         "GetNetworkAnalyzerConfigurationResponse$MulticastGroups": "<p>List of multicast group resources that have been added to the network analyzer configuration.</p>",
         "UpdateNetworkAnalyzerConfigurationRequest$MulticastGroupsToAdd": "<p>Multicast group resources to add to the network analyzer configuration. Provide the <code>MulticastGroupId</code> of the resource to add in the input array.</p>",
-        "UpdateNetworkAnalyzerConfigurationRequest$MulticastGroupsToRemove": "<p>Multicast group resources to remove from the network analyzer configuration. Provide the <code>MulticastGroupId</code> of the resource to remove in the input array.</p>"
+        "UpdateNetworkAnalyzerConfigurationRequest$MulticastGroupsToRemove": "<p>Multicast group resources to remove from the network analyzer configuration. Provide the <code>MulticastGroupId</code> of the resources to remove in the input array.</p>"
       }
     },
     "NetworkId": {
@@ -2729,6 +2899,12 @@
       "base": "<p>OTAA device object for v1.1</p>",
       "refs": {
         "LoRaWANDevice$OtaaV1_1": "<p>OTAA device object for v1.1 for create APIs</p>"
+      }
+    },
+    "P90": {
+      "base": null,
+      "refs": {
+        "MetricQueryValue$P90": "<p>The 90th percentile of the values of all data points collected during the aggregation period.</p>"
       }
     },
     "PCI": {
@@ -2960,6 +3136,12 @@
         "SidewalkDevice$PrivateKeys": "<p>The Sidewalk device private keys that will be used for onboarding the device.</p>"
       }
     },
+    "ProviderNetId": {
+      "base": null,
+      "refs": {
+        "LoRaWANPublicGatewayMetadata$ProviderNetId": "<p>The ID of the LoRaWAN public network provider.</p>"
+      }
+    },
     "ProximityEventConfiguration": {
       "base": "<p>Proximity event configuration object for enabling and disabling relevant topics.</p>",
       "refs": {
@@ -3137,7 +3319,8 @@
       "refs": {
         "LoRaWANDeviceProfile$RfRegion": "<p>The frequency band (RFRegion) value.</p>",
         "LoRaWANFuotaTaskGetInfo$RfRegion": null,
-        "LoRaWANGateway$RfRegion": "<p>The frequency band (RFRegion) value.</p>"
+        "LoRaWANGateway$RfRegion": "<p>The frequency band (RFRegion) value.</p>",
+        "LoRaWANPublicGatewayMetadata$RfRegion": null
       }
     },
     "Role": {
@@ -3507,6 +3690,12 @@
         "WirelessDeviceImportTask$StatusReason": "<p>The reason that provides additional information about the import task status.</p>"
       }
     },
+    "Std": {
+      "base": null,
+      "refs": {
+        "MetricQueryValue$Std": "<p>The standard deviation of the values of all data points collected during the aggregation period.</p>"
+      }
+    },
     "SubBand": {
       "base": "<p>A subset of supported frequency channels in a certain RFRegion.</p>",
       "refs": {
@@ -3517,6 +3706,49 @@
       "base": "<p>A list of integer indicating which sub bands are supported by LoRa gateway.</p>",
       "refs": {
         "LoRaWANGateway$SubBands": null
+      }
+    },
+    "Sum": {
+      "base": null,
+      "refs": {
+        "MetricQueryValue$Sum": "<p>The sum of the values of all data points collected during the aggregation period.</p>"
+      }
+    },
+    "SummaryMetricConfiguration": {
+      "base": "<p>The configuration of summary metrics.</p>",
+      "refs": {
+        "GetMetricConfigurationResponse$SummaryMetric": "<p>The configuration status of the AWS account for summary metric aggregation.</p>",
+        "UpdateMetricConfigurationRequest$SummaryMetric": "<p>The value to be used to set summary metric configuration.</p>"
+      }
+    },
+    "SummaryMetricConfigurationStatus": {
+      "base": null,
+      "refs": {
+        "SummaryMetricConfiguration$Status": "<p>The status of the configuration of summary metrics.</p>"
+      }
+    },
+    "SummaryMetricQueries": {
+      "base": null,
+      "refs": {
+        "GetMetricsRequest$SummaryMetricQueries": "<p>The list of queries to retrieve the summary metrics.</p>"
+      }
+    },
+    "SummaryMetricQuery": {
+      "base": "<p>The summary metric query object.</p>",
+      "refs": {
+        "SummaryMetricQueries$member": null
+      }
+    },
+    "SummaryMetricQueryResult": {
+      "base": "<p>The result of the summary metrics aggregation operation.</p>",
+      "refs": {
+        "SummaryMetricQueryResults$member": null
+      }
+    },
+    "SummaryMetricQueryResults": {
+      "base": null,
+      "refs": {
+        "GetMetricsResponse$SummaryMetricQueryResults": "<p>The list of summary metrics that were retrieved.</p>"
       }
     },
     "SupportedRfRegion": {
@@ -3698,7 +3930,7 @@
       }
     },
     "TraceContent": {
-      "base": "<p>Trace content for your wireless gateway and wireless device resources.</p>",
+      "base": "<p>Trace content for your wireless devices, gateways, and multicast groups.</p>",
       "refs": {
         "CreateNetworkAnalyzerConfigurationRequest$TraceContent": null,
         "GetNetworkAnalyzerConfigurationResponse$TraceContent": null,
@@ -3821,6 +4053,16 @@
       }
     },
     "UpdateLogLevelsByResourceTypesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateMetricConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateMetricConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -4080,7 +4322,7 @@
       "base": null,
       "refs": {
         "CreateNetworkAnalyzerConfigurationRequest$WirelessDevices": "<p>Wireless device resources to add to the network analyzer configuration. Provide the <code>WirelessDeviceId</code> of the resource to add in the input array.</p>",
-        "GetNetworkAnalyzerConfigurationResponse$WirelessDevices": "<p>List of wireless gateway resources that have been added to the network analyzer configuration.</p>",
+        "GetNetworkAnalyzerConfigurationResponse$WirelessDevices": "<p>List of wireless device resources that have been added to the network analyzer configuration.</p>",
         "UpdateNetworkAnalyzerConfigurationRequest$WirelessDevicesToAdd": "<p>Wireless device resources to add to the network analyzer configuration. Provide the <code>WirelessDeviceId</code> of the resource to add in the input array.</p>",
         "UpdateNetworkAnalyzerConfigurationRequest$WirelessDevicesToRemove": "<p>Wireless device resources to remove from the network analyzer configuration. Provide the <code>WirelessDeviceId</code> of the resources to remove in the input array.</p>"
       }

@@ -4,11 +4,13 @@
     "apiVersion":"2012-12-01",
     "endpointPrefix":"redshift",
     "protocol":"query",
+    "protocols":["query"],
     "serviceFullName":"Amazon Redshift",
     "serviceId":"Redshift",
     "signatureVersion":"v4",
     "uid":"redshift-2012-12-01",
-    "xmlNamespace":"http://redshift.amazonaws.com/doc/2012-12-01/"
+    "xmlNamespace":"http://redshift.amazonaws.com/doc/2012-12-01/",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptReservedNodeExchange":{
@@ -46,7 +48,8 @@
       "errors":[
         {"shape":"PartnerNotFoundFault"},
         {"shape":"ClusterNotFoundFault"},
-        {"shape":"UnauthorizedPartnerIntegrationFault"}
+        {"shape":"UnauthorizedPartnerIntegrationFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "AssociateDataShareConsumer":{
@@ -200,6 +203,7 @@
         "resultWrapper":"CopyClusterSnapshotResult"
       },
       "errors":[
+        {"shape":"ClusterNotFoundFault"},
         {"shape":"ClusterSnapshotAlreadyExistsFault"},
         {"shape":"ClusterSnapshotNotFoundFault"},
         {"shape":"InvalidClusterSnapshotStateFault"},
@@ -257,7 +261,10 @@
         {"shape":"DependentServiceRequestThrottlingFault"},
         {"shape":"InvalidClusterTrackFault"},
         {"shape":"SnapshotScheduleNotFoundFault"},
-        {"shape":"InvalidRetentionPeriodFault"}
+        {"shape":"InvalidRetentionPeriodFault"},
+        {"shape":"Ipv6CidrBlockNotFoundFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"RedshiftIdcApplicationNotExistsFault"}
       ]
     },
     "CreateClusterParameterGroup":{
@@ -441,6 +448,25 @@
         {"shape":"InvalidTagFault"}
       ]
     },
+    "CreateRedshiftIdcApplication":{
+      "name":"CreateRedshiftIdcApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateRedshiftIdcApplicationMessage"},
+      "output":{
+        "shape":"CreateRedshiftIdcApplicationResult",
+        "resultWrapper":"CreateRedshiftIdcApplicationResult"
+      },
+      "errors":[
+        {"shape":"RedshiftIdcApplicationAlreadyExistsFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"DependentServiceAccessDeniedFault"},
+        {"shape":"RedshiftIdcApplicationQuotaExceededFault"}
+      ]
+    },
     "CreateScheduledAction":{
       "name":"CreateScheduledAction",
       "http":{
@@ -453,12 +479,14 @@
         "resultWrapper":"CreateScheduledActionResult"
       },
       "errors":[
+        {"shape":"ClusterNotFoundFault"},
         {"shape":"ScheduledActionAlreadyExistsFault"},
         {"shape":"ScheduledActionQuotaExceededFault"},
         {"shape":"ScheduledActionTypeUnsupportedFault"},
         {"shape":"InvalidScheduleFault"},
         {"shape":"InvalidScheduledActionFault"},
-        {"shape":"UnauthorizedOperation"}
+        {"shape":"UnauthorizedOperation"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "CreateSnapshotCopyGrant":{
@@ -649,7 +677,8 @@
       "errors":[
         {"shape":"UnsupportedOperationFault"},
         {"shape":"ClusterNotFoundFault"},
-        {"shape":"CustomCnameAssociationFault"}
+        {"shape":"CustomCnameAssociationFault"},
+        {"shape":"CustomDomainAssociationNotFoundFault"}
       ]
     },
     "DeleteEndpointAccess":{
@@ -721,7 +750,34 @@
       "errors":[
         {"shape":"PartnerNotFoundFault"},
         {"shape":"ClusterNotFoundFault"},
-        {"shape":"UnauthorizedPartnerIntegrationFault"}
+        {"shape":"UnauthorizedPartnerIntegrationFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
+    "DeleteRedshiftIdcApplication":{
+      "name":"DeleteRedshiftIdcApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteRedshiftIdcApplicationMessage"},
+      "errors":[
+        {"shape":"RedshiftIdcApplicationNotExistsFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"DependentServiceAccessDeniedFault"}
+      ]
+    },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourcePolicyMessage"},
+      "errors":[
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "DeleteScheduledAction":{
@@ -1131,6 +1187,23 @@
         {"shape":"InvalidTagFault"}
       ]
     },
+    "DescribeInboundIntegrations":{
+      "name":"DescribeInboundIntegrations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeInboundIntegrationsMessage"},
+      "output":{
+        "shape":"InboundIntegrationsMessage",
+        "resultWrapper":"DescribeInboundIntegrationsResult"
+      },
+      "errors":[
+        {"shape":"IntegrationNotFoundFault"},
+        {"shape":"InvalidNamespaceFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
     "DescribeLoggingStatus":{
       "name":"DescribeLoggingStatus",
       "http":{
@@ -1143,7 +1216,8 @@
         "resultWrapper":"DescribeLoggingStatusResult"
       },
       "errors":[
-        {"shape":"ClusterNotFoundFault"}
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "DescribeNodeConfigurationOptions":{
@@ -1190,7 +1264,26 @@
       },
       "errors":[
         {"shape":"ClusterNotFoundFault"},
-        {"shape":"UnauthorizedPartnerIntegrationFault"}
+        {"shape":"UnauthorizedPartnerIntegrationFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
+    "DescribeRedshiftIdcApplications":{
+      "name":"DescribeRedshiftIdcApplications",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeRedshiftIdcApplicationsMessage"},
+      "output":{
+        "shape":"DescribeRedshiftIdcApplicationsResult",
+        "resultWrapper":"DescribeRedshiftIdcApplicationsResult"
+      },
+      "errors":[
+        {"shape":"RedshiftIdcApplicationNotExistsFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"DependentServiceAccessDeniedFault"}
       ]
     },
     "DescribeReservedNodeExchangeStatus":{
@@ -1256,7 +1349,8 @@
       },
       "errors":[
         {"shape":"ClusterNotFoundFault"},
-        {"shape":"ResizeNotFoundFault"}
+        {"shape":"ResizeNotFoundFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "DescribeScheduledActions":{
@@ -1375,7 +1469,8 @@
       },
       "errors":[
         {"shape":"ClusterNotFoundFault"},
-        {"shape":"InvalidClusterStateFault"}
+        {"shape":"InvalidClusterStateFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "DisableSnapshotCopy":{
@@ -1393,7 +1488,8 @@
         {"shape":"ClusterNotFoundFault"},
         {"shape":"SnapshotCopyAlreadyDisabledFault"},
         {"shape":"InvalidClusterStateFault"},
-        {"shape":"UnauthorizedOperation"}
+        {"shape":"UnauthorizedOperation"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "DisassociateDataShareConsumer":{
@@ -1429,7 +1525,8 @@
         {"shape":"InsufficientS3BucketPolicyFault"},
         {"shape":"InvalidS3KeyPrefixFault"},
         {"shape":"InvalidS3BucketNameFault"},
-        {"shape":"InvalidClusterStateFault"}
+        {"shape":"InvalidClusterStateFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "EnableSnapshotCopy":{
@@ -1455,6 +1552,24 @@
         {"shape":"LimitExceededFault"},
         {"shape":"DependentServiceRequestThrottlingFault"},
         {"shape":"InvalidRetentionPeriodFault"}
+      ]
+    },
+    "FailoverPrimaryCompute":{
+      "name":"FailoverPrimaryCompute",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"FailoverPrimaryComputeInputMessage"},
+      "output":{
+        "shape":"FailoverPrimaryComputeResult",
+        "resultWrapper":"FailoverPrimaryComputeResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"UnauthorizedOperation"},
+        {"shape":"InvalidClusterStateFault"}
       ]
     },
     "GetClusterCredentials":{
@@ -1531,6 +1646,39 @@
         {"shape":"DependentServiceUnavailableFault"}
       ]
     },
+    "GetResourcePolicy":{
+      "name":"GetResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourcePolicyMessage"},
+      "output":{
+        "shape":"GetResourcePolicyResult",
+        "resultWrapper":"GetResourcePolicyResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"InvalidPolicyFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
+    "ListRecommendations":{
+      "name":"ListRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListRecommendationsMessage"},
+      "output":{
+        "shape":"ListRecommendationsResult",
+        "resultWrapper":"ListRecommendationsResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
     "ModifyAquaConfiguration":{
       "name":"ModifyAquaConfiguration",
       "http":{
@@ -1597,7 +1745,8 @@
         {"shape":"InvalidClusterTrackFault"},
         {"shape":"InvalidRetentionPeriodFault"},
         {"shape":"UnsupportedOperationFault"},
-        {"shape":"CustomCnameAssociationFault"}
+        {"shape":"CustomCnameAssociationFault"},
+        {"shape":"Ipv6CidrBlockNotFoundFault"}
       ]
     },
     "ModifyClusterDbRevision":{
@@ -1614,7 +1763,8 @@
       "errors":[
         {"shape":"ClusterNotFoundFault"},
         {"shape":"ClusterOnLatestRevisionFault"},
-        {"shape":"InvalidClusterStateFault"}
+        {"shape":"InvalidClusterStateFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "ModifyClusterIamRoles":{
@@ -1729,7 +1879,8 @@
       "errors":[
         {"shape":"UnsupportedOperationFault"},
         {"shape":"ClusterNotFoundFault"},
-        {"shape":"CustomCnameAssociationFault"}
+        {"shape":"CustomCnameAssociationFault"},
+        {"shape":"CustomDomainAssociationNotFoundFault"}
       ]
     },
     "ModifyEndpointAccess":{
@@ -1775,6 +1926,24 @@
         {"shape":"InvalidSubscriptionStateFault"}
       ]
     },
+    "ModifyRedshiftIdcApplication":{
+      "name":"ModifyRedshiftIdcApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyRedshiftIdcApplicationMessage"},
+      "output":{
+        "shape":"ModifyRedshiftIdcApplicationResult",
+        "resultWrapper":"ModifyRedshiftIdcApplicationResult"
+      },
+      "errors":[
+        {"shape":"RedshiftIdcApplicationNotExistsFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"DependentServiceAccessDeniedFault"}
+      ]
+    },
     "ModifyScheduledAction":{
       "name":"ModifyScheduledAction",
       "http":{
@@ -1787,11 +1956,13 @@
         "resultWrapper":"ModifyScheduledActionResult"
       },
       "errors":[
+        {"shape":"ClusterNotFoundFault"},
         {"shape":"ScheduledActionNotFoundFault"},
         {"shape":"ScheduledActionTypeUnsupportedFault"},
         {"shape":"InvalidScheduleFault"},
         {"shape":"InvalidScheduledActionFault"},
-        {"shape":"UnauthorizedOperation"}
+        {"shape":"UnauthorizedOperation"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "ModifySnapshotCopyRetentionPeriod":{
@@ -1860,7 +2031,8 @@
       },
       "errors":[
         {"shape":"ClusterNotFoundFault"},
-        {"shape":"InvalidClusterStateFault"}
+        {"shape":"InvalidClusterStateFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "PurchaseReservedNodeOffering":{
@@ -1878,6 +2050,24 @@
         {"shape":"ReservedNodeOfferingNotFoundFault"},
         {"shape":"ReservedNodeAlreadyExistsFault"},
         {"shape":"ReservedNodeQuotaExceededFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutResourcePolicyMessage"},
+      "output":{
+        "shape":"PutResourcePolicyResult",
+        "resultWrapper":"PutResourcePolicyResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"InvalidPolicyFault"},
+        {"shape":"ConflictPolicyUpdateFault"},
         {"shape":"UnsupportedOperationFault"}
       ]
     },
@@ -2000,7 +2190,8 @@
         {"shape":"ReservedNodeOfferingNotFoundFault"},
         {"shape":"DependentServiceUnavailableFault"},
         {"shape":"ReservedNodeAlreadyExistsFault"},
-        {"shape":"UnsupportedOperationFault"}
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"Ipv6CidrBlockNotFoundFault"}
       ]
     },
     "RestoreTableFromClusterSnapshot":{
@@ -2038,7 +2229,8 @@
       "errors":[
         {"shape":"ClusterNotFoundFault"},
         {"shape":"InvalidClusterStateFault"},
-        {"shape":"InsufficientClusterCapacityFault"}
+        {"shape":"InsufficientClusterCapacityFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "RevokeClusterSecurityGroupIngress":{
@@ -2111,7 +2303,8 @@
       "errors":[
         {"shape":"ClusterNotFoundFault"},
         {"shape":"InvalidClusterStateFault"},
-        {"shape":"DependentServiceRequestThrottlingFault"}
+        {"shape":"DependentServiceRequestThrottlingFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "UpdatePartnerStatus":{
@@ -2128,7 +2321,8 @@
       "errors":[
         {"shape":"PartnerNotFoundFault"},
         {"shape":"ClusterNotFoundFault"},
-        {"shape":"UnauthorizedPartnerIntegrationFault"}
+        {"shape":"UnauthorizedPartnerIntegrationFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     }
   },
@@ -2237,7 +2431,8 @@
         "DataShareArn":{"shape":"String"},
         "AssociateEntireAccount":{"shape":"BooleanOptional"},
         "ConsumerArn":{"shape":"String"},
-        "ConsumerRegion":{"shape":"String"}
+        "ConsumerRegion":{"shape":"String"},
+        "AllowWrites":{"shape":"BooleanOptional"}
       }
     },
     "AssociatedClusterList":{
@@ -2403,7 +2598,8 @@
       ],
       "members":{
         "DataShareArn":{"shape":"String"},
-        "ConsumerIdentifier":{"shape":"String"}
+        "ConsumerIdentifier":{"shape":"String"},
+        "AllowWrites":{"shape":"BooleanOptional"}
       }
     },
     "AuthorizeEndpointAccessMessage":{
@@ -2430,6 +2626,21 @@
       "members":{
         "Snapshot":{"shape":"Snapshot"}
       }
+    },
+    "AuthorizedAudienceList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "AuthorizedTokenIssuer":{
+      "type":"structure",
+      "members":{
+        "TrustedTokenIssuerArn":{"shape":"String"},
+        "AuthorizedAudiencesList":{"shape":"AuthorizedAudienceList"}
+      }
+    },
+    "AuthorizedTokenIssuerList":{
+      "type":"list",
+      "member":{"shape":"AuthorizedTokenIssuer"}
     },
     "AvailabilityZone":{
       "type":"structure",
@@ -2603,7 +2814,12 @@
         "ReservedNodeExchangeStatus":{"shape":"ReservedNodeExchangeStatus"},
         "CustomDomainName":{"shape":"String"},
         "CustomDomainCertificateArn":{"shape":"String"},
-        "CustomDomainCertificateExpiryDate":{"shape":"TStamp"}
+        "CustomDomainCertificateExpiryDate":{"shape":"TStamp"},
+        "MasterPasswordSecretArn":{"shape":"String"},
+        "MasterPasswordSecretKmsKeyId":{"shape":"String"},
+        "IpAddressType":{"shape":"String"},
+        "MultiAZ":{"shape":"String"},
+        "MultiAZSecondary":{"shape":"SecondaryClusterInfo"}
       },
       "wrapper":true
     },
@@ -2951,7 +3167,8 @@
         "VpcId":{"shape":"String"},
         "SubnetGroupStatus":{"shape":"String"},
         "Subnets":{"shape":"SubnetList"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "SupportedClusterIpAddressTypes":{"shape":"ValueStringList"}
       },
       "wrapper":true
     },
@@ -3042,6 +3259,17 @@
         "Clusters":{"shape":"ClusterList"}
       }
     },
+    "ConflictPolicyUpdateFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"ConflictPolicyUpdateFault",
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "CopyClusterSnapshotMessage":{
       "type":"structure",
       "required":[
@@ -3095,8 +3323,7 @@
       "required":[
         "ClusterIdentifier",
         "NodeType",
-        "MasterUsername",
-        "MasterUserPassword"
+        "MasterUsername"
       ],
       "members":{
         "DBName":{"shape":"String"},
@@ -3104,7 +3331,7 @@
         "ClusterType":{"shape":"String"},
         "NodeType":{"shape":"String"},
         "MasterUsername":{"shape":"String"},
-        "MasterUserPassword":{"shape":"String"},
+        "MasterUserPassword":{"shape":"SensitiveString"},
         "ClusterSecurityGroups":{"shape":"ClusterSecurityGroupNameList"},
         "VpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
         "ClusterSubnetGroupName":{"shape":"String"},
@@ -3132,7 +3359,12 @@
         "AvailabilityZoneRelocation":{"shape":"BooleanOptional"},
         "AquaConfigurationStatus":{"shape":"AquaConfigurationStatus"},
         "DefaultIamRoleArn":{"shape":"String"},
-        "LoadSampleData":{"shape":"String"}
+        "LoadSampleData":{"shape":"String"},
+        "ManageMasterPassword":{"shape":"BooleanOptional"},
+        "MasterPasswordSecretKmsKeyId":{"shape":"String"},
+        "IpAddressType":{"shape":"String"},
+        "MultiAZ":{"shape":"BooleanOptional"},
+        "RedshiftIdcApplicationArn":{"shape":"String"}
       }
     },
     "CreateClusterParameterGroupMessage":{
@@ -3317,6 +3549,30 @@
         "HsmConfiguration":{"shape":"HsmConfiguration"}
       }
     },
+    "CreateRedshiftIdcApplicationMessage":{
+      "type":"structure",
+      "required":[
+        "IdcInstanceArn",
+        "RedshiftIdcApplicationName",
+        "IdcDisplayName",
+        "IamRoleArn"
+      ],
+      "members":{
+        "IdcInstanceArn":{"shape":"String"},
+        "RedshiftIdcApplicationName":{"shape":"RedshiftIdcApplicationName"},
+        "IdentityNamespace":{"shape":"IdentityNamespaceString"},
+        "IdcDisplayName":{"shape":"IdcDisplayNameString"},
+        "IamRoleArn":{"shape":"String"},
+        "AuthorizedTokenIssuerList":{"shape":"AuthorizedTokenIssuerList"},
+        "ServiceIntegrations":{"shape":"ServiceIntegrationList"}
+      }
+    },
+    "CreateRedshiftIdcApplicationResult":{
+      "type":"structure",
+      "members":{
+        "RedshiftIdcApplication":{"shape":"RedshiftIdcApplication"}
+      }
+    },
     "CreateScheduledActionMessage":{
       "type":"structure",
       "required":[
@@ -3430,7 +3686,7 @@
       "type":"string",
       "max":253,
       "min":1,
-      "pattern":"^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}$"
+      "pattern":"^(((?!-)[A-Za-z0-9-]{0,62}[A-Za-z0-9])\\.)+((?!-)[A-Za-z0-9-]{1,62}[A-Za-z0-9])$"
     },
     "CustomerStorageMessage":{
       "type":"structure",
@@ -3456,7 +3712,9 @@
         "Status":{"shape":"DataShareStatus"},
         "ConsumerRegion":{"shape":"String"},
         "CreatedDate":{"shape":"TStamp"},
-        "StatusChangeDate":{"shape":"TStamp"}
+        "StatusChangeDate":{"shape":"TStamp"},
+        "ProducerAllowedWrites":{"shape":"BooleanOptional"},
+        "ConsumerAcceptedWrites":{"shape":"BooleanOptional"}
       }
     },
     "DataShareAssociationList":{
@@ -3621,9 +3879,13 @@
     },
     "DeleteCustomDomainAssociationMessage":{
       "type":"structure",
-      "required":["ClusterIdentifier"],
+      "required":[
+        "ClusterIdentifier",
+        "CustomDomainName"
+      ],
       "members":{
-        "ClusterIdentifier":{"shape":"String"}
+        "ClusterIdentifier":{"shape":"String"},
+        "CustomDomainName":{"shape":"CustomDomainNameString"}
       }
     },
     "DeleteEndpointAccessMessage":{
@@ -3652,6 +3914,20 @@
       "required":["HsmConfigurationIdentifier"],
       "members":{
         "HsmConfigurationIdentifier":{"shape":"String"}
+      }
+    },
+    "DeleteRedshiftIdcApplicationMessage":{
+      "type":"structure",
+      "required":["RedshiftIdcApplicationArn"],
+      "members":{
+        "RedshiftIdcApplicationArn":{"shape":"String"}
+      }
+    },
+    "DeleteResourcePolicyMessage":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"String"}
       }
     },
     "DeleteScheduledActionMessage":{
@@ -3692,6 +3968,17 @@
       "members":{
         "UsageLimitId":{"shape":"String"}
       }
+    },
+    "DependentServiceAccessDeniedFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"DependentServiceAccessDenied",
+        "httpStatusCode":403,
+        "senderFault":true
+      },
+      "exception":true
     },
     "DependentServiceRequestThrottlingFault":{
       "type":"structure",
@@ -3966,6 +4253,15 @@
         "TagValues":{"shape":"TagValueList"}
       }
     },
+    "DescribeInboundIntegrationsMessage":{
+      "type":"structure",
+      "members":{
+        "IntegrationArn":{"shape":"String"},
+        "TargetArn":{"shape":"String"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
     "DescribeLoggingStatusMessage":{
       "type":"structure",
       "required":["ClusterIdentifier"],
@@ -4016,6 +4312,21 @@
       "type":"structure",
       "members":{
         "PartnerIntegrationInfoList":{"shape":"PartnerIntegrationInfoList"}
+      }
+    },
+    "DescribeRedshiftIdcApplicationsMessage":{
+      "type":"structure",
+      "members":{
+        "RedshiftIdcApplicationArn":{"shape":"String"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeRedshiftIdcApplicationsResult":{
+      "type":"structure",
+      "members":{
+        "RedshiftIdcApplications":{"shape":"RedshiftIdcApplicationList"},
+        "Marker":{"shape":"String"}
       }
     },
     "DescribeReservedNodeExchangeStatusInputMessage":{
@@ -4472,6 +4783,19 @@
         "Events":{"shape":"EventList"}
       }
     },
+    "FailoverPrimaryComputeInputMessage":{
+      "type":"structure",
+      "required":["ClusterIdentifier"],
+      "members":{
+        "ClusterIdentifier":{"shape":"String"}
+      }
+    },
+    "FailoverPrimaryComputeResult":{
+      "type":"structure",
+      "members":{
+        "Cluster":{"shape":"Cluster"}
+      }
+    },
     "GetClusterCredentialsMessage":{
       "type":"structure",
       "required":["DbUser"],
@@ -4526,6 +4850,19 @@
       "members":{
         "Marker":{"shape":"String"},
         "ReservedNodeOfferings":{"shape":"ReservedNodeOfferingList"}
+      }
+    },
+    "GetResourcePolicyMessage":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"String"}
+      }
+    },
+    "GetResourcePolicyResult":{
+      "type":"structure",
+      "members":{
+        "ResourcePolicy":{"shape":"ResourcePolicy"}
       }
     },
     "HsmClientCertificate":{
@@ -4672,6 +5009,26 @@
         "locationName":"IamRoleArn"
       }
     },
+    "IdcDisplayNameString":{
+      "type":"string",
+      "max":127,
+      "min":1,
+      "pattern":"[\\w+=,.@-]+"
+    },
+    "IdentityNamespaceString":{
+      "type":"string",
+      "max":127,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_+.#@$-]+$"
+    },
+    "ImpactRankingType":{
+      "type":"string",
+      "enum":[
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
+    },
     "ImportTablesCompleted":{
       "type":"list",
       "member":{"shape":"String"}
@@ -4694,6 +5051,31 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "InboundIntegration":{
+      "type":"structure",
+      "members":{
+        "IntegrationArn":{"shape":"String"},
+        "SourceArn":{"shape":"String"},
+        "TargetArn":{"shape":"String"},
+        "Status":{"shape":"ZeroETLIntegrationStatus"},
+        "Errors":{"shape":"IntegrationErrorList"},
+        "CreateTime":{"shape":"TStamp"}
+      }
+    },
+    "InboundIntegrationList":{
+      "type":"list",
+      "member":{
+        "shape":"InboundIntegration",
+        "locationName":"InboundIntegration"
+      }
+    },
+    "InboundIntegrationsMessage":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String"},
+        "InboundIntegrations":{"shape":"InboundIntegrationList"}
+      }
     },
     "IncompatibleOrderableOptions":{
       "type":"structure",
@@ -4730,6 +5112,32 @@
     },
     "Integer":{"type":"integer"},
     "IntegerOptional":{"type":"integer"},
+    "IntegrationError":{
+      "type":"structure",
+      "required":["ErrorCode"],
+      "members":{
+        "ErrorCode":{"shape":"String"},
+        "ErrorMessage":{"shape":"String"}
+      }
+    },
+    "IntegrationErrorList":{
+      "type":"list",
+      "member":{
+        "shape":"IntegrationError",
+        "locationName":"IntegrationError"
+      }
+    },
+    "IntegrationNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"IntegrationNotFoundFault",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "InvalidAuthenticationProfileRequestFault":{
       "type":"structure",
       "members":{
@@ -4906,6 +5314,17 @@
       },
       "exception":true
     },
+    "InvalidPolicyFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InvalidPolicyFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "InvalidReservedNodeStateFault":{
       "type":"structure",
       "members":{
@@ -5060,6 +5479,35 @@
       },
       "exception":true
     },
+    "Ipv6CidrBlockNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"Ipv6CidrBlockNotFoundFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "LakeFormationQuery":{
+      "type":"structure",
+      "required":["Authorization"],
+      "members":{
+        "Authorization":{"shape":"ServiceAuthorization"}
+      }
+    },
+    "LakeFormationScopeUnion":{
+      "type":"structure",
+      "members":{
+        "LakeFormationQuery":{"shape":"LakeFormationQuery"}
+      },
+      "union":true
+    },
+    "LakeFormationServiceIntegrations":{
+      "type":"list",
+      "member":{"shape":"LakeFormationScopeUnion"}
+    },
     "LimitExceededFault":{
       "type":"structure",
       "members":{
@@ -5070,6 +5518,22 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ListRecommendationsMessage":{
+      "type":"structure",
+      "members":{
+        "ClusterIdentifier":{"shape":"String"},
+        "NamespaceArn":{"shape":"String"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "ListRecommendationsResult":{
+      "type":"structure",
+      "members":{
+        "Recommendations":{"shape":"RecommendationList"},
+        "Marker":{"shape":"String"}
+      }
     },
     "LogDestinationType":{
       "type":"string",
@@ -5205,7 +5669,7 @@
         "NumberOfNodes":{"shape":"IntegerOptional"},
         "ClusterSecurityGroups":{"shape":"ClusterSecurityGroupNameList"},
         "VpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
-        "MasterUserPassword":{"shape":"String"},
+        "MasterUserPassword":{"shape":"SensitiveString"},
         "ClusterParameterGroupName":{"shape":"String"},
         "AutomatedSnapshotRetentionPeriod":{"shape":"IntegerOptional"},
         "ManualSnapshotRetentionPeriod":{"shape":"IntegerOptional"},
@@ -5223,7 +5687,11 @@
         "KmsKeyId":{"shape":"String"},
         "AvailabilityZoneRelocation":{"shape":"BooleanOptional"},
         "AvailabilityZone":{"shape":"String"},
-        "Port":{"shape":"IntegerOptional"}
+        "Port":{"shape":"IntegerOptional"},
+        "ManageMasterPassword":{"shape":"BooleanOptional"},
+        "MasterPasswordSecretKmsKeyId":{"shape":"String"},
+        "IpAddressType":{"shape":"String"},
+        "MultiAZ":{"shape":"BooleanOptional"}
       }
     },
     "ModifyClusterParameterGroupMessage":{
@@ -5287,7 +5755,11 @@
     },
     "ModifyCustomDomainAssociationMessage":{
       "type":"structure",
-      "required":["ClusterIdentifier"],
+      "required":[
+        "CustomDomainName",
+        "CustomDomainCertificateArn",
+        "ClusterIdentifier"
+      ],
       "members":{
         "CustomDomainName":{"shape":"CustomDomainNameString"},
         "CustomDomainCertificateArn":{"shape":"CustomDomainCertificateArnString"},
@@ -5328,6 +5800,24 @@
       "type":"structure",
       "members":{
         "EventSubscription":{"shape":"EventSubscription"}
+      }
+    },
+    "ModifyRedshiftIdcApplicationMessage":{
+      "type":"structure",
+      "required":["RedshiftIdcApplicationArn"],
+      "members":{
+        "RedshiftIdcApplicationArn":{"shape":"String"},
+        "IdentityNamespace":{"shape":"IdentityNamespaceString"},
+        "IamRoleArn":{"shape":"String"},
+        "IdcDisplayName":{"shape":"IdcDisplayNameString"},
+        "AuthorizedTokenIssuerList":{"shape":"AuthorizedTokenIssuerList"},
+        "ServiceIntegrations":{"shape":"ServiceIntegrationList"}
+      }
+    },
+    "ModifyRedshiftIdcApplicationResult":{
+      "type":"structure",
+      "members":{
+        "RedshiftIdcApplication":{"shape":"RedshiftIdcApplication"}
       }
     },
     "ModifyScheduledActionMessage":{
@@ -5388,7 +5878,8 @@
         "NetworkInterfaceId":{"shape":"String"},
         "SubnetId":{"shape":"String"},
         "PrivateIpAddress":{"shape":"String"},
-        "AvailabilityZone":{"shape":"String"}
+        "AvailabilityZone":{"shape":"String"},
+        "Ipv6Address":{"shape":"String"}
       }
     },
     "NetworkInterfaceList":{
@@ -5647,7 +6138,7 @@
     "PendingModifiedValues":{
       "type":"structure",
       "members":{
-        "MasterUserPassword":{"shape":"String"},
+        "MasterUserPassword":{"shape":"SensitiveString"},
         "NodeType":{"shape":"String"},
         "NumberOfNodes":{"shape":"IntegerOptional"},
         "ClusterType":{"shape":"String"},
@@ -5674,6 +6165,23 @@
         "ReservedNode":{"shape":"ReservedNode"}
       }
     },
+    "PutResourcePolicyMessage":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Policy"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"String"},
+        "Policy":{"shape":"String"}
+      }
+    },
+    "PutResourcePolicyResult":{
+      "type":"structure",
+      "members":{
+        "ResourcePolicy":{"shape":"ResourcePolicy"}
+      }
+    },
     "RebootClusterMessage":{
       "type":"structure",
       "required":["ClusterIdentifier"],
@@ -5686,6 +6194,53 @@
       "members":{
         "Cluster":{"shape":"Cluster"}
       }
+    },
+    "Recommendation":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"String"},
+        "ClusterIdentifier":{"shape":"String"},
+        "NamespaceArn":{"shape":"String"},
+        "CreatedAt":{"shape":"TStamp"},
+        "RecommendationType":{"shape":"String"},
+        "Title":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Observation":{"shape":"String"},
+        "ImpactRanking":{"shape":"ImpactRankingType"},
+        "RecommendationText":{"shape":"String"},
+        "RecommendedActions":{"shape":"RecommendedActionList"},
+        "ReferenceLinks":{"shape":"ReferenceLinkList"}
+      }
+    },
+    "RecommendationList":{
+      "type":"list",
+      "member":{
+        "shape":"Recommendation",
+        "locationName":"Recommendation"
+      }
+    },
+    "RecommendedAction":{
+      "type":"structure",
+      "members":{
+        "Text":{"shape":"String"},
+        "Database":{"shape":"String"},
+        "Command":{"shape":"String"},
+        "Type":{"shape":"RecommendedActionType"}
+      }
+    },
+    "RecommendedActionList":{
+      "type":"list",
+      "member":{
+        "shape":"RecommendedAction",
+        "locationName":"RecommendedAction"
+      }
+    },
+    "RecommendedActionType":{
+      "type":"string",
+      "enum":[
+        "SQL",
+        "CLI"
+      ]
     },
     "RecurringCharge":{
       "type":"structure",
@@ -5700,6 +6255,79 @@
       "member":{
         "shape":"RecurringCharge",
         "locationName":"RecurringCharge"
+      }
+    },
+    "RedshiftIdcApplication":{
+      "type":"structure",
+      "members":{
+        "IdcInstanceArn":{"shape":"String"},
+        "RedshiftIdcApplicationName":{"shape":"RedshiftIdcApplicationName"},
+        "RedshiftIdcApplicationArn":{"shape":"String"},
+        "IdentityNamespace":{"shape":"IdentityNamespaceString"},
+        "IdcDisplayName":{"shape":"IdcDisplayNameString"},
+        "IamRoleArn":{"shape":"String"},
+        "IdcManagedApplicationArn":{"shape":"String"},
+        "IdcOnboardStatus":{"shape":"String"},
+        "AuthorizedTokenIssuerList":{"shape":"AuthorizedTokenIssuerList"},
+        "ServiceIntegrations":{"shape":"ServiceIntegrationList"}
+      },
+      "wrapper":true
+    },
+    "RedshiftIdcApplicationAlreadyExistsFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"RedshiftIdcApplicationAlreadyExists",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "RedshiftIdcApplicationList":{
+      "type":"list",
+      "member":{"shape":"RedshiftIdcApplication"}
+    },
+    "RedshiftIdcApplicationName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-z][a-z0-9]*(-[a-z0-9]+)*"
+    },
+    "RedshiftIdcApplicationNotExistsFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"RedshiftIdcApplicationNotExists",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "RedshiftIdcApplicationQuotaExceededFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"RedshiftIdcApplicationQuotaExceeded",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "ReferenceLink":{
+      "type":"structure",
+      "members":{
+        "Text":{"shape":"String"},
+        "Link":{"shape":"String"}
+      }
+    },
+    "ReferenceLinkList":{
+      "type":"list",
+      "member":{
+        "shape":"ReferenceLink",
+        "locationName":"ReferenceLink"
       }
     },
     "RejectDataShareMessage":{
@@ -5978,6 +6606,13 @@
       },
       "exception":true
     },
+    "ResourcePolicy":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"String"},
+        "Policy":{"shape":"String"}
+      }
+    },
     "RestorableNodeTypeList":{
       "type":"list",
       "member":{
@@ -6021,7 +6656,11 @@
         "DefaultIamRoleArn":{"shape":"String"},
         "ReservedNodeId":{"shape":"String"},
         "TargetReservedNodeOfferingId":{"shape":"String"},
-        "Encrypted":{"shape":"BooleanOptional"}
+        "Encrypted":{"shape":"BooleanOptional"},
+        "ManageMasterPassword":{"shape":"BooleanOptional"},
+        "MasterPasswordSecretKmsKeyId":{"shape":"String"},
+        "IpAddressType":{"shape":"String"},
+        "MultiAZ":{"shape":"BooleanOptional"}
       }
     },
     "RestoreFromClusterSnapshotResult":{
@@ -6343,9 +6982,34 @@
         "locationName":"SnapshotTime"
       }
     },
+    "SecondaryClusterInfo":{
+      "type":"structure",
+      "members":{
+        "AvailabilityZone":{"shape":"String"},
+        "ClusterNodes":{"shape":"ClusterNodesList"}
+      }
+    },
     "SensitiveString":{
       "type":"string",
       "sensitive":true
+    },
+    "ServiceAuthorization":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
+    },
+    "ServiceIntegrationList":{
+      "type":"list",
+      "member":{"shape":"ServiceIntegrationsUnion"}
+    },
+    "ServiceIntegrationsUnion":{
+      "type":"structure",
+      "members":{
+        "LakeFormation":{"shape":"LakeFormationServiceIntegrations"}
+      },
+      "union":true
     },
     "Snapshot":{
       "type":"structure",
@@ -6383,7 +7047,10 @@
         "MaintenanceTrackName":{"shape":"String"},
         "ManualSnapshotRetentionPeriod":{"shape":"IntegerOptional"},
         "ManualSnapshotRemainingDays":{"shape":"IntegerOptional"},
-        "SnapshotRetentionStartTime":{"shape":"TStamp"}
+        "SnapshotRetentionStartTime":{"shape":"TStamp"},
+        "MasterPasswordSecretArn":{"shape":"String"},
+        "MasterPasswordSecretKmsKeyId":{"shape":"String"},
+        "SnapshotArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -7095,6 +7762,18 @@
         "shape":"VpcSecurityGroupMembership",
         "locationName":"VpcSecurityGroup"
       }
+    },
+    "ZeroETLIntegrationStatus":{
+      "type":"string",
+      "enum":[
+        "creating",
+        "active",
+        "modifying",
+        "failed",
+        "deleting",
+        "syncing",
+        "needs_attention"
+      ]
     }
   }
 }

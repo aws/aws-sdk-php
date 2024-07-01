@@ -5,6 +5,7 @@
     "endpointPrefix":"appsync",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"AWSAppSync",
     "serviceFullName":"AWS AppSync",
     "serviceId":"AppSync",
@@ -139,7 +140,8 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InternalFailureException"}
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "CreateGraphqlApi":{
@@ -266,7 +268,8 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InternalFailureException"}
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "DeleteGraphqlApi":{
@@ -457,6 +460,20 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "GetDataSourceIntrospection":{
+      "name":"GetDataSourceIntrospection",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/datasources/introspections/{introspectionId}"
+      },
+      "input":{"shape":"GetDataSourceIntrospectionRequest"},
+      "output":{"shape":"GetDataSourceIntrospectionResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "GetDomainName":{
       "name":"GetDomainName",
       "http":{
@@ -494,6 +511,22 @@
       },
       "input":{"shape":"GetGraphqlApiRequest"},
       "output":{"shape":"GetGraphqlApiResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetGraphqlApiEnvironmentVariables":{
+      "name":"GetGraphqlApiEnvironmentVariables",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/apis/{apiId}/environmentVariables"
+      },
+      "input":{"shape":"GetGraphqlApiEnvironmentVariablesRequest"},
+      "output":{"shape":"GetGraphqlApiEnvironmentVariablesResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"NotFoundException"},
@@ -744,6 +777,38 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "PutGraphqlApiEnvironmentVariables":{
+      "name":"PutGraphqlApiEnvironmentVariables",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/apis/{apiId}/environmentVariables"
+      },
+      "input":{"shape":"PutGraphqlApiEnvironmentVariablesRequest"},
+      "output":{"shape":"PutGraphqlApiEnvironmentVariablesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StartDataSourceIntrospection":{
+      "name":"StartDataSourceIntrospection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/datasources/introspections"
+      },
+      "input":{"shape":"StartDataSourceIntrospectionRequest"},
+      "output":{"shape":"StartDataSourceIntrospectionResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "StartSchemaCreation":{
       "name":"StartSchemaCreation",
       "http":{
@@ -887,7 +952,8 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InternalFailureException"}
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "UpdateGraphqlApi":{
@@ -995,7 +1061,8 @@
         "transitEncryptionEnabled":{"shape":"Boolean"},
         "atRestEncryptionEnabled":{"shape":"Boolean"},
         "type":{"shape":"ApiCacheType"},
-        "status":{"shape":"ApiCacheStatus"}
+        "status":{"shape":"ApiCacheStatus"},
+        "healthMetricsConfig":{"shape":"CacheHealthMetricsConfig"}
       }
     },
     "ApiCacheStatus":{
@@ -1210,6 +1277,13 @@
     "Blob":{"type":"blob"},
     "Boolean":{"type":"boolean"},
     "BooleanValue":{"type":"boolean"},
+    "CacheHealthMetricsConfig":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "CachingConfig":{
       "type":"structure",
       "required":["ttl"],
@@ -1316,7 +1390,8 @@
         "transitEncryptionEnabled":{"shape":"Boolean"},
         "atRestEncryptionEnabled":{"shape":"Boolean"},
         "apiCachingBehavior":{"shape":"ApiCachingBehavior"},
-        "type":{"shape":"ApiCacheType"}
+        "type":{"shape":"ApiCacheType"},
+        "healthMetricsConfig":{"shape":"CacheHealthMetricsConfig"}
       }
     },
     "CreateApiCacheResponse":{
@@ -1367,7 +1442,8 @@
         "openSearchServiceConfig":{"shape":"OpenSearchServiceDataSourceConfig"},
         "httpConfig":{"shape":"HttpDataSourceConfig"},
         "relationalDatabaseConfig":{"shape":"RelationalDatabaseDataSourceConfig"},
-        "eventBridgeConfig":{"shape":"EventBridgeDataSourceConfig"}
+        "eventBridgeConfig":{"shape":"EventBridgeDataSourceConfig"},
+        "metricsConfig":{"shape":"DataSourceLevelMetricsConfig"}
       }
     },
     "CreateDataSourceResponse":{
@@ -1444,7 +1520,11 @@
         "visibility":{"shape":"GraphQLApiVisibility"},
         "apiType":{"shape":"GraphQLApiType"},
         "mergedApiExecutionRoleArn":{"shape":"String"},
-        "ownerContact":{"shape":"String"}
+        "ownerContact":{"shape":"String"},
+        "introspectionConfig":{"shape":"GraphQLApiIntrospectionConfig"},
+        "queryDepthLimit":{"shape":"QueryDepthLimit"},
+        "resolverCountLimit":{"shape":"ResolverCountLimit"},
+        "enhancedMetricsConfig":{"shape":"EnhancedMetricsConfig"}
       }
     },
     "CreateGraphqlApiResponse":{
@@ -1481,7 +1561,8 @@
         "cachingConfig":{"shape":"CachingConfig"},
         "maxBatchSize":{"shape":"MaxBatchSize"},
         "runtime":{"shape":"AppSyncRuntime"},
-        "code":{"shape":"Code"}
+        "code":{"shape":"Code"},
+        "metricsConfig":{"shape":"ResolverLevelMetricsConfig"}
       }
     },
     "CreateResolverResponse":{
@@ -1527,8 +1608,92 @@
         "openSearchServiceConfig":{"shape":"OpenSearchServiceDataSourceConfig"},
         "httpConfig":{"shape":"HttpDataSourceConfig"},
         "relationalDatabaseConfig":{"shape":"RelationalDatabaseDataSourceConfig"},
-        "eventBridgeConfig":{"shape":"EventBridgeDataSourceConfig"}
+        "eventBridgeConfig":{"shape":"EventBridgeDataSourceConfig"},
+        "metricsConfig":{"shape":"DataSourceLevelMetricsConfig"}
       }
+    },
+    "DataSourceIntrospectionModel":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "fields":{"shape":"DataSourceIntrospectionModelFields"},
+        "primaryKey":{"shape":"DataSourceIntrospectionModelIndex"},
+        "indexes":{"shape":"DataSourceIntrospectionModelIndexes"},
+        "sdl":{"shape":"String"}
+      }
+    },
+    "DataSourceIntrospectionModelField":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "type":{"shape":"DataSourceIntrospectionModelFieldType"},
+        "length":{"shape":"Long"}
+      }
+    },
+    "DataSourceIntrospectionModelFieldType":{
+      "type":"structure",
+      "members":{
+        "kind":{"shape":"String"},
+        "name":{"shape":"String"},
+        "type":{"shape":"DataSourceIntrospectionModelFieldType"},
+        "values":{"shape":"DataSourceIntrospectionModelFieldTypeValues"}
+      }
+    },
+    "DataSourceIntrospectionModelFieldTypeValues":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "DataSourceIntrospectionModelFields":{
+      "type":"list",
+      "member":{"shape":"DataSourceIntrospectionModelField"}
+    },
+    "DataSourceIntrospectionModelIndex":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "fields":{"shape":"DataSourceIntrospectionModelIndexFields"}
+      }
+    },
+    "DataSourceIntrospectionModelIndexFields":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "DataSourceIntrospectionModelIndexes":{
+      "type":"list",
+      "member":{"shape":"DataSourceIntrospectionModelIndex"}
+    },
+    "DataSourceIntrospectionModels":{
+      "type":"list",
+      "member":{"shape":"DataSourceIntrospectionModel"}
+    },
+    "DataSourceIntrospectionResult":{
+      "type":"structure",
+      "members":{
+        "models":{"shape":"DataSourceIntrospectionModels"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DataSourceIntrospectionStatus":{
+      "type":"string",
+      "enum":[
+        "PROCESSING",
+        "FAILED",
+        "SUCCESS"
+      ]
+    },
+    "DataSourceLevelMetricsBehavior":{
+      "type":"string",
+      "enum":[
+        "FULL_REQUEST_DATA_SOURCE_METRICS",
+        "PER_DATA_SOURCE_METRICS"
+      ]
+    },
+    "DataSourceLevelMetricsConfig":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "DataSourceType":{
       "type":"string",
@@ -1854,6 +2019,37 @@
         "awsRegion":{"shape":"String"}
       }
     },
+    "EnhancedMetricsConfig":{
+      "type":"structure",
+      "required":[
+        "resolverLevelMetricsBehavior",
+        "dataSourceLevelMetricsBehavior",
+        "operationLevelMetricsConfig"
+      ],
+      "members":{
+        "resolverLevelMetricsBehavior":{"shape":"ResolverLevelMetricsBehavior"},
+        "dataSourceLevelMetricsBehavior":{"shape":"DataSourceLevelMetricsBehavior"},
+        "operationLevelMetricsConfig":{"shape":"OperationLevelMetricsConfig"}
+      }
+    },
+    "EnvironmentVariableKey":{
+      "type":"string",
+      "max":64,
+      "min":2,
+      "pattern":"^[A-Za-z]+\\w*$"
+    },
+    "EnvironmentVariableMap":{
+      "type":"map",
+      "key":{"shape":"EnvironmentVariableKey"},
+      "value":{"shape":"EnvironmentVariableValue"},
+      "max":50,
+      "min":0
+    },
+    "EnvironmentVariableValue":{
+      "type":"string",
+      "max":512,
+      "min":0
+    },
     "ErrorDetail":{
       "type":"structure",
       "members":{
@@ -2005,6 +2201,41 @@
         "apiCache":{"shape":"ApiCache"}
       }
     },
+    "GetDataSourceIntrospectionRequest":{
+      "type":"structure",
+      "required":["introspectionId"],
+      "members":{
+        "introspectionId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"introspectionId"
+        },
+        "includeModelsSDL":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeModelsSDL"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "GetDataSourceIntrospectionResponse":{
+      "type":"structure",
+      "members":{
+        "introspectionId":{"shape":"String"},
+        "introspectionStatus":{"shape":"DataSourceIntrospectionStatus"},
+        "introspectionStatusDetail":{"shape":"String"},
+        "introspectionResult":{"shape":"DataSourceIntrospectionResult"}
+      }
+    },
     "GetDataSourceRequest":{
       "type":"structure",
       "required":[
@@ -2070,6 +2301,23 @@
       "type":"structure",
       "members":{
         "functionConfiguration":{"shape":"FunctionConfiguration"}
+      }
+    },
+    "GetGraphqlApiEnvironmentVariablesRequest":{
+      "type":"structure",
+      "required":["apiId"],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        }
+      }
+    },
+    "GetGraphqlApiEnvironmentVariablesResponse":{
+      "type":"structure",
+      "members":{
+        "environmentVariables":{"shape":"EnvironmentVariableMap"}
       }
     },
     "GetGraphqlApiRequest":{
@@ -2225,6 +2473,13 @@
         "type":{"shape":"Type"}
       }
     },
+    "GraphQLApiIntrospectionConfig":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "GraphQLApiType":{
       "type":"string",
       "enum":[
@@ -2268,7 +2523,11 @@
         "apiType":{"shape":"GraphQLApiType"},
         "mergedApiExecutionRoleArn":{"shape":"String"},
         "owner":{"shape":"String"},
-        "ownerContact":{"shape":"String"}
+        "ownerContact":{"shape":"String"},
+        "introspectionConfig":{"shape":"GraphQLApiIntrospectionConfig"},
+        "queryDepthLimit":{"shape":"QueryDepthLimit"},
+        "resolverCountLimit":{"shape":"ResolverCountLimit"},
+        "enhancedMetricsConfig":{"shape":"EnhancedMetricsConfig"}
       }
     },
     "GraphqlApis":{
@@ -2728,6 +2987,13 @@
         "awsRegion":{"shape":"String"}
       }
     },
+    "OperationLevelMetricsConfig":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "OutputType":{
       "type":"string",
       "enum":[
@@ -2753,6 +3019,62 @@
       "members":{
         "functions":{"shape":"FunctionsIds"}
       }
+    },
+    "PutGraphqlApiEnvironmentVariablesRequest":{
+      "type":"structure",
+      "required":[
+        "apiId",
+        "environmentVariables"
+      ],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        },
+        "environmentVariables":{"shape":"EnvironmentVariableMap"}
+      }
+    },
+    "PutGraphqlApiEnvironmentVariablesResponse":{
+      "type":"structure",
+      "members":{
+        "environmentVariables":{"shape":"EnvironmentVariableMap"}
+      }
+    },
+    "QueryDepthLimit":{
+      "type":"integer",
+      "max":75,
+      "min":0
+    },
+    "RdsDataApiConfig":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "secretArn",
+        "databaseName"
+      ],
+      "members":{
+        "resourceArn":{"shape":"RdsDataApiConfigResourceArn"},
+        "secretArn":{"shape":"RdsDataApiConfigSecretArn"},
+        "databaseName":{"shape":"RdsDataApiConfigDatabaseName"}
+      }
+    },
+    "RdsDataApiConfigDatabaseName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "RdsDataApiConfigResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:[a-z-]*:rds:[a-z0-9-]*:\\d{12}:cluster:[0-9A-Za-z_/-]*$"
+    },
+    "RdsDataApiConfigSecretArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:[a-z-]*:secretsmanager:[a-z0-9-]*:\\d{12}:secret:[0-9A-Za-z_/+=.@!-]*$"
     },
     "RdsHttpEndpointConfig":{
       "type":"structure",
@@ -2790,14 +3112,34 @@
         "cachingConfig":{"shape":"CachingConfig"},
         "maxBatchSize":{"shape":"MaxBatchSize"},
         "runtime":{"shape":"AppSyncRuntime"},
-        "code":{"shape":"Code"}
+        "code":{"shape":"Code"},
+        "metricsConfig":{"shape":"ResolverLevelMetricsConfig"}
       }
+    },
+    "ResolverCountLimit":{
+      "type":"integer",
+      "max":10000,
+      "min":0
     },
     "ResolverKind":{
       "type":"string",
       "enum":[
         "UNIT",
         "PIPELINE"
+      ]
+    },
+    "ResolverLevelMetricsBehavior":{
+      "type":"string",
+      "enum":[
+        "FULL_REQUEST_RESOLVER_METRICS",
+        "PER_RESOLVER_METRICS"
+      ]
+    },
+    "ResolverLevelMetricsConfig":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
       ]
     },
     "Resolvers":{
@@ -2881,6 +3223,20 @@
     "SourceApiAssociationSummaryList":{
       "type":"list",
       "member":{"shape":"SourceApiAssociationSummary"}
+    },
+    "StartDataSourceIntrospectionRequest":{
+      "type":"structure",
+      "members":{
+        "rdsDataApiConfig":{"shape":"RdsDataApiConfig"}
+      }
+    },
+    "StartDataSourceIntrospectionResponse":{
+      "type":"structure",
+      "members":{
+        "introspectionId":{"shape":"String"},
+        "introspectionStatus":{"shape":"DataSourceIntrospectionStatus"},
+        "introspectionStatusDetail":{"shape":"String"}
+      }
     },
     "StartSchemaCreationRequest":{
       "type":"structure",
@@ -3061,7 +3417,8 @@
         },
         "ttl":{"shape":"Long"},
         "apiCachingBehavior":{"shape":"ApiCachingBehavior"},
-        "type":{"shape":"ApiCacheType"}
+        "type":{"shape":"ApiCacheType"},
+        "healthMetricsConfig":{"shape":"CacheHealthMetricsConfig"}
       }
     },
     "UpdateApiCacheResponse":{
@@ -3124,7 +3481,8 @@
         "openSearchServiceConfig":{"shape":"OpenSearchServiceDataSourceConfig"},
         "httpConfig":{"shape":"HttpDataSourceConfig"},
         "relationalDatabaseConfig":{"shape":"RelationalDatabaseDataSourceConfig"},
-        "eventBridgeConfig":{"shape":"EventBridgeDataSourceConfig"}
+        "eventBridgeConfig":{"shape":"EventBridgeDataSourceConfig"},
+        "metricsConfig":{"shape":"DataSourceLevelMetricsConfig"}
       }
     },
     "UpdateDataSourceResponse":{
@@ -3192,7 +3550,8 @@
       "type":"structure",
       "required":[
         "apiId",
-        "name"
+        "name",
+        "authenticationType"
       ],
       "members":{
         "apiId":{
@@ -3209,7 +3568,11 @@
         "xrayEnabled":{"shape":"Boolean"},
         "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"},
         "mergedApiExecutionRoleArn":{"shape":"String"},
-        "ownerContact":{"shape":"String"}
+        "ownerContact":{"shape":"String"},
+        "introspectionConfig":{"shape":"GraphQLApiIntrospectionConfig"},
+        "queryDepthLimit":{"shape":"QueryDepthLimit"},
+        "resolverCountLimit":{"shape":"ResolverCountLimit"},
+        "enhancedMetricsConfig":{"shape":"EnhancedMetricsConfig"}
       }
     },
     "UpdateGraphqlApiResponse":{
@@ -3250,7 +3613,8 @@
         "cachingConfig":{"shape":"CachingConfig"},
         "maxBatchSize":{"shape":"MaxBatchSize"},
         "runtime":{"shape":"AppSyncRuntime"},
-        "code":{"shape":"Code"}
+        "code":{"shape":"Code"},
+        "metricsConfig":{"shape":"ResolverLevelMetricsConfig"}
       }
     },
     "UpdateResolverResponse":{

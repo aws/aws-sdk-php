@@ -134,6 +134,42 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "CreateReviewTemplate":{
+      "name":"CreateReviewTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/reviewTemplates"
+      },
+      "input":{"shape":"CreateReviewTemplateInput"},
+      "output":{"shape":"CreateReviewTemplateOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "CreateTemplateShare":{
+      "name":"CreateTemplateShare",
+      "http":{
+        "method":"POST",
+        "requestUri":"/templates/shares/{TemplateArn}"
+      },
+      "input":{"shape":"CreateTemplateShareInput"},
+      "output":{"shape":"CreateTemplateShareOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateWorkload":{
       "name":"CreateWorkload",
       "http":{
@@ -225,6 +261,38 @@
         "requestUri":"/profiles/{ProfileArn}/shares/{ShareId}"
       },
       "input":{"shape":"DeleteProfileShareInput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteReviewTemplate":{
+      "name":"DeleteReviewTemplate",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/reviewTemplates/{TemplateArn}"
+      },
+      "input":{"shape":"DeleteReviewTemplateInput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteTemplateShare":{
+      "name":"DeleteTemplateShare",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/templates/shares/{TemplateArn}/{ShareId}"
+      },
+      "input":{"shape":"DeleteTemplateShareInput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -346,6 +414,20 @@
         {"shape":"ConflictException"}
       ]
     },
+    "GetGlobalSettings":{
+      "name":"GetGlobalSettings",
+      "http":{
+        "method":"GET",
+        "requestUri":"/global-settings"
+      },
+      "output":{"shape":"GetGlobalSettingsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetLens":{
       "name":"GetLens",
       "http":{
@@ -450,6 +532,54 @@
       },
       "input":{"shape":"GetProfileTemplateInput"},
       "output":{"shape":"GetProfileTemplateOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetReviewTemplate":{
+      "name":"GetReviewTemplate",
+      "http":{
+        "method":"GET",
+        "requestUri":"/reviewTemplates/{TemplateArn}"
+      },
+      "input":{"shape":"GetReviewTemplateInput"},
+      "output":{"shape":"GetReviewTemplateOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetReviewTemplateAnswer":{
+      "name":"GetReviewTemplateAnswer",
+      "http":{
+        "method":"GET",
+        "requestUri":"/reviewTemplates/{TemplateArn}/lensReviews/{LensAlias}/answers/{QuestionId}"
+      },
+      "input":{"shape":"GetReviewTemplateAnswerInput"},
+      "output":{"shape":"GetReviewTemplateAnswerOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetReviewTemplateLensReview":{
+      "name":"GetReviewTemplateLensReview",
+      "http":{
+        "method":"GET",
+        "requestUri":"/reviewTemplates/{TemplateArn}/lensReviews/{LensAlias}"
+      },
+      "input":{"shape":"GetReviewTemplateLensReviewInput"},
+      "output":{"shape":"GetReviewTemplateLensReviewOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
@@ -680,6 +810,37 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListReviewTemplateAnswers":{
+      "name":"ListReviewTemplateAnswers",
+      "http":{
+        "method":"GET",
+        "requestUri":"/reviewTemplates/{TemplateArn}/lensReviews/{LensAlias}/answers"
+      },
+      "input":{"shape":"ListReviewTemplateAnswersInput"},
+      "output":{"shape":"ListReviewTemplateAnswersOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListReviewTemplates":{
+      "name":"ListReviewTemplates",
+      "http":{
+        "method":"GET",
+        "requestUri":"/reviewTemplates"
+      },
+      "input":{"shape":"ListReviewTemplatesInput"},
+      "output":{"shape":"ListReviewTemplatesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListShareInvitations":{
       "name":"ListShareInvitations",
       "http":{
@@ -706,6 +867,22 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListTemplateShares":{
+      "name":"ListTemplateShares",
+      "http":{
+        "method":"GET",
+        "requestUri":"/templates/shares/{TemplateArn}"
+      },
+      "input":{"shape":"ListTemplateSharesInput"},
+      "output":{"shape":"ListTemplateSharesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListWorkloadShares":{
@@ -797,6 +974,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "UpdateIntegration":{
+      "name":"UpdateIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workloads/{WorkloadId}/updateIntegration"
+      },
+      "input":{"shape":"UpdateIntegrationInput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "UpdateLensReview":{
       "name":"UpdateLensReview",
       "http":{
@@ -822,6 +1015,57 @@
       },
       "input":{"shape":"UpdateProfileInput"},
       "output":{"shape":"UpdateProfileOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UpdateReviewTemplate":{
+      "name":"UpdateReviewTemplate",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/reviewTemplates/{TemplateArn}"
+      },
+      "input":{"shape":"UpdateReviewTemplateInput"},
+      "output":{"shape":"UpdateReviewTemplateOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UpdateReviewTemplateAnswer":{
+      "name":"UpdateReviewTemplateAnswer",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/reviewTemplates/{TemplateArn}/lensReviews/{LensAlias}/answers/{QuestionId}"
+      },
+      "input":{"shape":"UpdateReviewTemplateAnswerInput"},
+      "output":{"shape":"UpdateReviewTemplateAnswerOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UpdateReviewTemplateLensReview":{
+      "name":"UpdateReviewTemplateLensReview",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/reviewTemplates/{TemplateArn}/lensReviews/{LensAlias}"
+      },
+      "input":{"shape":"UpdateReviewTemplateLensReviewInput"},
+      "output":{"shape":"UpdateReviewTemplateLensReviewOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
@@ -895,7 +1139,8 @@
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "UpgradeProfileVersion":{
@@ -905,6 +1150,23 @@
         "requestUri":"/workloads/{WorkloadId}/profiles/{ProfileArn}/upgrade"
       },
       "input":{"shape":"UpgradeProfileVersionInput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
+    "UpgradeReviewTemplateLensReview":{
+      "name":"UpgradeReviewTemplateLensReview",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/reviewTemplates/{TemplateArn}/lensReviews/{LensAlias}/upgrade"
+      },
+      "input":{"shape":"UpgradeReviewTemplateLensReviewInput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
@@ -924,6 +1186,33 @@
       },
       "error":{"httpStatusCode":403},
       "exception":true
+    },
+    "AccountJiraConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "IssueManagementStatus":{"shape":"AccountJiraIssueManagementStatus"},
+        "IssueManagementType":{"shape":"IssueManagementType"},
+        "JiraProjectKey":{"shape":"JiraProjectKey"},
+        "IntegrationStatus":{"shape":"IntegrationStatusInput"}
+      }
+    },
+    "AccountJiraConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "IntegrationStatus":{"shape":"IntegrationStatus"},
+        "IssueManagementStatus":{"shape":"AccountJiraIssueManagementStatus"},
+        "IssueManagementType":{"shape":"IssueManagementType"},
+        "Subdomain":{"shape":"Subdomain"},
+        "JiraProjectKey":{"shape":"JiraProjectKey"},
+        "StatusMessage":{"shape":"StatusMessage"}
+      }
+    },
+    "AccountJiraIssueManagementStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "AccountSummary":{
       "type":"map",
@@ -964,7 +1253,8 @@
         "IsApplicable":{"shape":"IsApplicable"},
         "Risk":{"shape":"Risk"},
         "Notes":{"shape":"Notes"},
-        "Reason":{"shape":"AnswerReason"}
+        "Reason":{"shape":"AnswerReason"},
+        "JiraConfiguration":{"shape":"JiraConfiguration"}
       }
     },
     "AnswerReason":{
@@ -993,7 +1283,8 @@
         "IsApplicable":{"shape":"IsApplicable"},
         "Risk":{"shape":"Risk"},
         "Reason":{"shape":"AnswerReason"},
-        "QuestionType":{"shape":"QuestionType"}
+        "QuestionType":{"shape":"QuestionType"},
+        "JiraConfiguration":{"shape":"JiraConfiguration"}
       }
     },
     "ApplicationArn":{
@@ -1421,6 +1712,59 @@
         "ProfileArn":{"shape":"ProfileArn"}
       }
     },
+    "CreateReviewTemplateInput":{
+      "type":"structure",
+      "required":[
+        "TemplateName",
+        "Description",
+        "Lenses",
+        "ClientRequestToken"
+      ],
+      "members":{
+        "TemplateName":{"shape":"TemplateName"},
+        "Description":{"shape":"TemplateDescription"},
+        "Lenses":{"shape":"ReviewTemplateLenses"},
+        "Notes":{"shape":"Notes"},
+        "Tags":{"shape":"TagMap"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateReviewTemplateOutput":{
+      "type":"structure",
+      "members":{
+        "TemplateArn":{"shape":"TemplateArn"}
+      }
+    },
+    "CreateTemplateShareInput":{
+      "type":"structure",
+      "required":[
+        "TemplateArn",
+        "SharedWith",
+        "ClientRequestToken"
+      ],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        },
+        "SharedWith":{"shape":"SharedWith"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateTemplateShareOutput":{
+      "type":"structure",
+      "members":{
+        "TemplateArn":{"shape":"TemplateArn"},
+        "ShareId":{"shape":"ShareId"}
+      }
+    },
     "CreateWorkloadInput":{
       "type":"structure",
       "required":[
@@ -1451,7 +1795,9 @@
         "Tags":{"shape":"TagMap"},
         "DiscoveryConfig":{"shape":"WorkloadDiscoveryConfig"},
         "Applications":{"shape":"WorkloadApplications"},
-        "ProfileArns":{"shape":"WorkloadProfileArns"}
+        "ProfileArns":{"shape":"WorkloadProfileArns"},
+        "ReviewTemplateArns":{"shape":"ReviewTemplateArns"},
+        "JiraConfiguration":{"shape":"WorkloadJiraConfigurationInput"}
       }
     },
     "CreateWorkloadOutput":{
@@ -1586,6 +1932,52 @@
           "shape":"ProfileArn",
           "location":"uri",
           "locationName":"ProfileArn"
+        },
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"ClientRequestToken"
+        }
+      }
+    },
+    "DeleteReviewTemplateInput":{
+      "type":"structure",
+      "required":[
+        "TemplateArn",
+        "ClientRequestToken"
+      ],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        },
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"ClientRequestToken"
+        }
+      }
+    },
+    "DeleteTemplateShareInput":{
+      "type":"structure",
+      "required":[
+        "ShareId",
+        "TemplateArn",
+        "ClientRequestToken"
+      ],
+      "members":{
+        "ShareId":{
+          "shape":"ShareId",
+          "location":"uri",
+          "locationName":"ShareId"
+        },
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
         },
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
@@ -1800,6 +2192,14 @@
         "Base64String":{"shape":"Base64String"}
       }
     },
+    "GetGlobalSettingsOutput":{
+      "type":"structure",
+      "members":{
+        "OrganizationSharingStatus":{"shape":"OrganizationSharingStatus"},
+        "DiscoveryIntegrationStatus":{"shape":"DiscoveryIntegrationStatus"},
+        "JiraConfiguration":{"shape":"AccountJiraConfigurationOutput"}
+      }
+    },
     "GetLensInput":{
       "type":"structure",
       "required":["LensAlias"],
@@ -1977,6 +2377,82 @@
         "ProfileTemplate":{"shape":"ProfileTemplate"}
       }
     },
+    "GetReviewTemplateAnswerInput":{
+      "type":"structure",
+      "required":[
+        "TemplateArn",
+        "LensAlias",
+        "QuestionId"
+      ],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        },
+        "LensAlias":{
+          "shape":"LensAlias",
+          "location":"uri",
+          "locationName":"LensAlias"
+        },
+        "QuestionId":{
+          "shape":"QuestionId",
+          "location":"uri",
+          "locationName":"QuestionId"
+        }
+      }
+    },
+    "GetReviewTemplateAnswerOutput":{
+      "type":"structure",
+      "members":{
+        "TemplateArn":{"shape":"TemplateArn"},
+        "LensAlias":{"shape":"LensAlias"},
+        "Answer":{"shape":"ReviewTemplateAnswer"}
+      }
+    },
+    "GetReviewTemplateInput":{
+      "type":"structure",
+      "required":["TemplateArn"],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        }
+      }
+    },
+    "GetReviewTemplateLensReviewInput":{
+      "type":"structure",
+      "required":[
+        "TemplateArn",
+        "LensAlias"
+      ],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        },
+        "LensAlias":{
+          "shape":"LensAlias",
+          "location":"uri",
+          "locationName":"LensAlias"
+        }
+      }
+    },
+    "GetReviewTemplateLensReviewOutput":{
+      "type":"structure",
+      "members":{
+        "TemplateArn":{"shape":"TemplateArn"},
+        "LensReview":{"shape":"ReviewTemplateLensReview"}
+      }
+    },
+    "GetReviewTemplateOutput":{
+      "type":"structure",
+      "members":{
+        "ReviewTemplate":{"shape":"ReviewTemplate"}
+      }
+    },
     "GetWorkloadInput":{
       "type":"structure",
       "required":["WorkloadId"],
@@ -2047,10 +2523,26 @@
         "QuestionTitle":{"shape":"QuestionTitle"},
         "Risk":{"shape":"Risk"},
         "ImprovementPlanUrl":{"shape":"ImprovementPlanUrl"},
-        "ImprovementPlans":{"shape":"ChoiceImprovementPlans"}
+        "ImprovementPlans":{"shape":"ChoiceImprovementPlans"},
+        "JiraConfiguration":{"shape":"JiraConfiguration"}
       }
     },
     "IncludeSharedResources":{"type":"boolean"},
+    "IntegratingService":{
+      "type":"string",
+      "enum":["JIRA"]
+    },
+    "IntegrationStatus":{
+      "type":"string",
+      "enum":[
+        "CONFIGURED",
+        "NOT_CONFIGURED"
+      ]
+    },
+    "IntegrationStatusInput":{
+      "type":"string",
+      "enum":["NOT_CONFIGURED"]
+    },
     "InternalServerException":{
       "type":"structure",
       "required":["Message"],
@@ -2064,6 +2556,37 @@
     "IsApplicable":{"type":"boolean"},
     "IsMajorVersion":{"type":"boolean"},
     "IsReviewOwnerUpdateAcknowledged":{"type":"boolean"},
+    "IssueManagementType":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "MANUAL"
+      ]
+    },
+    "JiraConfiguration":{
+      "type":"structure",
+      "members":{
+        "JiraIssueUrl":{"shape":"JiraIssueUrl"},
+        "LastSyncedTime":{"shape":"Timestamp"}
+      }
+    },
+    "JiraIssueUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "JiraProjectKey":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^[A-Z][A-Z0-9_]*$"
+    },
+    "JiraSelectedQuestionConfiguration":{
+      "type":"structure",
+      "members":{
+        "SelectedPillars":{"shape":"SelectedPillars"}
+      }
+    },
     "Lens":{
       "type":"structure",
       "members":{
@@ -2128,6 +2651,7 @@
         "LensName":{"shape":"LensName"},
         "LensStatus":{"shape":"LensStatus"},
         "PillarReviewSummaries":{"shape":"PillarReviewSummaries"},
+        "JiraConfiguration":{"shape":"JiraSelectedQuestionConfiguration"},
         "UpdatedAt":{"shape":"Timestamp"},
         "Notes":{"shape":"Notes"},
         "RiskCounts":{"shape":"RiskCounts"},
@@ -2228,7 +2752,9 @@
         "LensAlias":{"shape":"LensAlias"},
         "LensArn":{"shape":"LensArn"},
         "CurrentLensVersion":{"shape":"LensVersion"},
-        "LatestLensVersion":{"shape":"LensVersion"}
+        "LatestLensVersion":{"shape":"LensVersion"},
+        "ResourceArn":{"shape":"ResourceArn"},
+        "ResourceName":{"shape":"WorkloadName"}
       }
     },
     "LensVersion":{
@@ -2556,7 +3082,8 @@
       "members":{
         "WorkloadId":{"shape":"WorkloadId"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"ListNotificationsMaxResults"}
+        "MaxResults":{"shape":"ListNotificationsMaxResults"},
+        "ResourceArn":{"shape":"ResourceArn"}
       }
     },
     "ListNotificationsMaxResults":{
@@ -2673,6 +3200,76 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListReviewTemplateAnswersInput":{
+      "type":"structure",
+      "required":[
+        "TemplateArn",
+        "LensAlias"
+      ],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        },
+        "LensAlias":{
+          "shape":"LensAlias",
+          "location":"uri",
+          "locationName":"LensAlias"
+        },
+        "PillarId":{
+          "shape":"PillarId",
+          "location":"querystring",
+          "locationName":"PillarId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"ListReviewTemplateAnswersMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "ListReviewTemplateAnswersMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
+    "ListReviewTemplateAnswersOutput":{
+      "type":"structure",
+      "members":{
+        "TemplateArn":{"shape":"TemplateArn"},
+        "LensAlias":{"shape":"LensAlias"},
+        "AnswerSummaries":{"shape":"ReviewTemplateAnswerSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListReviewTemplatesInput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        }
+      }
+    },
+    "ListReviewTemplatesOutput":{
+      "type":"structure",
+      "members":{
+        "ReviewTemplates":{"shape":"ReviewTemplates"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListShareInvitationsInput":{
       "type":"structure",
       "members":{
@@ -2705,6 +3302,11 @@
           "shape":"ProfileNamePrefix",
           "location":"querystring",
           "locationName":"ProfileNamePrefix"
+        },
+        "TemplateNamePrefix":{
+          "shape":"TemplateNamePrefix",
+          "location":"querystring",
+          "locationName":"TemplateNamePrefix"
         }
       }
     },
@@ -2735,6 +3337,50 @@
       "type":"structure",
       "members":{
         "Tags":{"shape":"TagMap"}
+      }
+    },
+    "ListTemplateSharesInput":{
+      "type":"structure",
+      "required":["TemplateArn"],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        },
+        "SharedWithPrefix":{
+          "shape":"SharedWithPrefix",
+          "location":"querystring",
+          "locationName":"SharedWithPrefix"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"ListTemplateSharesMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "Status":{
+          "shape":"ShareStatus",
+          "location":"querystring",
+          "locationName":"Status"
+        }
+      }
+    },
+    "ListTemplateSharesMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
+    "ListTemplateSharesOutput":{
+      "type":"structure",
+      "members":{
+        "TemplateArn":{"shape":"TemplateArn"},
+        "TemplateShareSummaries":{"shape":"TemplateShareSummaries"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListWorkloadSharesInput":{
@@ -2977,19 +3623,16 @@
     "ProfileDescription":{
       "type":"string",
       "max":100,
-      "min":3,
-      "pattern":"^[A-Za-z0-9-_.,:/()@!&?#+'’\\s]+$"
+      "min":3
     },
     "ProfileName":{
       "type":"string",
       "max":100,
-      "min":3,
-      "pattern":"^[A-Za-z0-9-_.,:/()@!&?#+'’\\s]+$"
+      "min":3
     },
     "ProfileNamePrefix":{
       "type":"string",
-      "max":100,
-      "pattern":"^[A-Za-z0-9-_.,:/()@!&?#+'’\\s]+$"
+      "max":100
     },
     "ProfileNotificationSummaries":{
       "type":"list",
@@ -3119,6 +3762,18 @@
       "min":1,
       "pattern":"^[A-Za-z0-9-]+$"
     },
+    "Question":{
+      "type":"string",
+      "enum":[
+        "UNANSWERED",
+        "ANSWERED"
+      ]
+    },
+    "QuestionCounts":{
+      "type":"map",
+      "key":{"shape":"Question"},
+      "value":{"shape":"Count"}
+    },
     "QuestionDescription":{
       "type":"string",
       "max":1024,
@@ -3180,6 +3835,12 @@
         "JSON"
       ]
     },
+    "ResourceArn":{
+      "type":"string",
+      "max":250,
+      "min":50,
+      "pattern":"arn:aws(-us-gov|-iso(-[a-z])?|-cn)?:wellarchitected:[a-z]{2}(-gov|-iso([a-z])?)?-[a-z]+-\\d:\\d{12}:(review-template)/[a-f0-9]{32}"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "required":[
@@ -3194,6 +3855,133 @@
       },
       "error":{"httpStatusCode":404},
       "exception":true
+    },
+    "ReviewTemplate":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"TemplateDescription"},
+        "Lenses":{"shape":"ReviewTemplateLenses"},
+        "Notes":{"shape":"Notes"},
+        "QuestionCounts":{"shape":"QuestionCounts"},
+        "Owner":{"shape":"AwsAccountId"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "TemplateArn":{"shape":"TemplateArn"},
+        "TemplateName":{"shape":"TemplateName"},
+        "Tags":{"shape":"TagMap"},
+        "UpdateStatus":{"shape":"ReviewTemplateUpdateStatus"},
+        "ShareInvitationId":{"shape":"ShareInvitationId"}
+      }
+    },
+    "ReviewTemplateAnswer":{
+      "type":"structure",
+      "members":{
+        "QuestionId":{"shape":"QuestionId"},
+        "PillarId":{"shape":"PillarId"},
+        "QuestionTitle":{"shape":"QuestionTitle"},
+        "QuestionDescription":{"shape":"QuestionDescription"},
+        "ImprovementPlanUrl":{"shape":"ImprovementPlanUrl"},
+        "HelpfulResourceUrl":{"shape":"HelpfulResourceUrl"},
+        "HelpfulResourceDisplayText":{"shape":"DisplayText"},
+        "Choices":{"shape":"Choices"},
+        "SelectedChoices":{"shape":"SelectedChoices"},
+        "ChoiceAnswers":{"shape":"ChoiceAnswers"},
+        "IsApplicable":{"shape":"IsApplicable"},
+        "AnswerStatus":{"shape":"ReviewTemplateAnswerStatus"},
+        "Notes":{"shape":"Notes"},
+        "Reason":{"shape":"AnswerReason"}
+      }
+    },
+    "ReviewTemplateAnswerStatus":{
+      "type":"string",
+      "enum":[
+        "UNANSWERED",
+        "ANSWERED"
+      ]
+    },
+    "ReviewTemplateAnswerSummaries":{
+      "type":"list",
+      "member":{"shape":"ReviewTemplateAnswerSummary"}
+    },
+    "ReviewTemplateAnswerSummary":{
+      "type":"structure",
+      "members":{
+        "QuestionId":{"shape":"QuestionId"},
+        "PillarId":{"shape":"PillarId"},
+        "QuestionTitle":{"shape":"QuestionTitle"},
+        "Choices":{"shape":"Choices"},
+        "SelectedChoices":{"shape":"SelectedChoices"},
+        "ChoiceAnswerSummaries":{"shape":"ChoiceAnswerSummaries"},
+        "IsApplicable":{"shape":"IsApplicable"},
+        "AnswerStatus":{"shape":"ReviewTemplateAnswerStatus"},
+        "Reason":{"shape":"AnswerReason"},
+        "QuestionType":{"shape":"QuestionType"}
+      }
+    },
+    "ReviewTemplateArns":{
+      "type":"list",
+      "member":{"shape":"TemplateArn"},
+      "max":1
+    },
+    "ReviewTemplateLensAliases":{
+      "type":"list",
+      "member":{"shape":"LensAlias"},
+      "max":10,
+      "min":1
+    },
+    "ReviewTemplateLensReview":{
+      "type":"structure",
+      "members":{
+        "LensAlias":{"shape":"LensAlias"},
+        "LensArn":{"shape":"LensArn"},
+        "LensVersion":{"shape":"LensVersion"},
+        "LensName":{"shape":"LensName"},
+        "LensStatus":{"shape":"LensStatus"},
+        "PillarReviewSummaries":{"shape":"ReviewTemplatePillarReviewSummaries"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "Notes":{"shape":"Notes"},
+        "QuestionCounts":{"shape":"QuestionCounts"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ReviewTemplateLenses":{
+      "type":"list",
+      "member":{"shape":"LensAlias"}
+    },
+    "ReviewTemplatePillarReviewSummaries":{
+      "type":"list",
+      "member":{"shape":"ReviewTemplatePillarReviewSummary"}
+    },
+    "ReviewTemplatePillarReviewSummary":{
+      "type":"structure",
+      "members":{
+        "PillarId":{"shape":"PillarId"},
+        "PillarName":{"shape":"PillarName"},
+        "Notes":{"shape":"Notes"},
+        "QuestionCounts":{"shape":"QuestionCounts"}
+      }
+    },
+    "ReviewTemplateSummary":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"TemplateDescription"},
+        "Lenses":{"shape":"ReviewTemplateLenses"},
+        "Owner":{"shape":"AwsAccountId"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "TemplateArn":{"shape":"TemplateArn"},
+        "TemplateName":{"shape":"TemplateName"},
+        "UpdateStatus":{"shape":"ReviewTemplateUpdateStatus"}
+      }
+    },
+    "ReviewTemplateUpdateStatus":{
+      "type":"string",
+      "enum":[
+        "CURRENT",
+        "LENS_NOT_CURRENT"
+      ]
+    },
+    "ReviewTemplates":{
+      "type":"list",
+      "member":{"shape":"ReviewTemplateSummary"}
     },
     "Risk":{
       "type":"string",
@@ -3218,9 +4006,25 @@
       "type":"list",
       "member":{"shape":"ChoiceId"}
     },
+    "SelectedPillar":{
+      "type":"structure",
+      "members":{
+        "PillarId":{"shape":"PillarId"},
+        "SelectedQuestionIds":{"shape":"SelectedQuestionIds"}
+      }
+    },
+    "SelectedPillars":{
+      "type":"list",
+      "member":{"shape":"SelectedPillar"}
+    },
     "SelectedProfileChoiceIds":{
       "type":"list",
       "member":{"shape":"ChoiceId"}
+    },
+    "SelectedQuestionId":{"type":"string"},
+    "SelectedQuestionIds":{
+      "type":"list",
+      "member":{"shape":"SelectedQuestionId"}
     },
     "ServiceCode":{"type":"string"},
     "ServiceQuotaExceededException":{
@@ -3252,7 +4056,8 @@
         "WorkloadId":{"shape":"WorkloadId"},
         "LensAlias":{"shape":"LensAlias"},
         "LensArn":{"shape":"LensArn"},
-        "ProfileArn":{"shape":"ProfileArn"}
+        "ProfileArn":{"shape":"ProfileArn"},
+        "TemplateArn":{"shape":"TemplateArn"}
       }
     },
     "ShareInvitationAction":{
@@ -3283,7 +4088,9 @@
         "LensName":{"shape":"LensName"},
         "LensArn":{"shape":"LensArn"},
         "ProfileName":{"shape":"ProfileName"},
-        "ProfileArn":{"shape":"ProfileArn"}
+        "ProfileArn":{"shape":"ProfileArn"},
+        "TemplateName":{"shape":"TemplateName"},
+        "TemplateArn":{"shape":"TemplateArn"}
       }
     },
     "ShareResourceType":{
@@ -3291,7 +4098,8 @@
       "enum":[
         "WORKLOAD",
         "LENS",
-        "PROFILE"
+        "PROFILE",
+        "TEMPLATE"
       ]
     },
     "ShareStatus":{
@@ -3319,6 +4127,11 @@
     "StatusMessage":{
       "type":"string",
       "max":512,
+      "min":1
+    },
+    "Subdomain":{
+      "type":"string",
+      "max":100,
       "min":1
     },
     "TagKey":{
@@ -3364,9 +4177,45 @@
       "max":256,
       "min":0
     },
+    "TemplateArn":{
+      "type":"string",
+      "max":250,
+      "min":50,
+      "pattern":"arn:aws(-us-gov|-iso(-[a-z])?|-cn)?:wellarchitected:[a-z]{2}(-gov|-iso([a-z])?)?-[a-z]+-\\d:\\d{12}:(review-template)/[a-f0-9]{32}"
+    },
+    "TemplateDescription":{
+      "type":"string",
+      "max":250,
+      "min":3,
+      "pattern":"^[A-Za-z0-9-_.,:/()@!&?#+'’\\s]+$"
+    },
+    "TemplateName":{
+      "type":"string",
+      "max":100,
+      "min":3,
+      "pattern":"^[A-Za-z0-9-_.,:/()@!&?#+'’\\s]+$"
+    },
+    "TemplateNamePrefix":{
+      "type":"string",
+      "max":100,
+      "pattern":"^[A-Za-z0-9-_.,:/()@!&?#+'’\\s]+$"
+    },
     "TemplateQuestions":{
       "type":"list",
       "member":{"shape":"ProfileTemplateQuestion"}
+    },
+    "TemplateShareSummaries":{
+      "type":"list",
+      "member":{"shape":"TemplateShareSummary"}
+    },
+    "TemplateShareSummary":{
+      "type":"structure",
+      "members":{
+        "ShareId":{"shape":"ShareId"},
+        "SharedWith":{"shape":"SharedWith"},
+        "Status":{"shape":"ShareStatus"},
+        "StatusMessage":{"shape":"StatusMessage"}
+      }
     },
     "ThrottlingException":{
       "type":"structure",
@@ -3454,7 +4303,28 @@
       "type":"structure",
       "members":{
         "OrganizationSharingStatus":{"shape":"OrganizationSharingStatus"},
-        "DiscoveryIntegrationStatus":{"shape":"DiscoveryIntegrationStatus"}
+        "DiscoveryIntegrationStatus":{"shape":"DiscoveryIntegrationStatus"},
+        "JiraConfiguration":{"shape":"AccountJiraConfigurationInput"}
+      }
+    },
+    "UpdateIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "WorkloadId",
+        "ClientRequestToken",
+        "IntegratingService"
+      ],
+      "members":{
+        "WorkloadId":{
+          "shape":"WorkloadId",
+          "location":"uri",
+          "locationName":"WorkloadId"
+        },
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "IntegratingService":{"shape":"IntegratingService"}
       }
     },
     "UpdateLensReviewInput":{
@@ -3475,7 +4345,8 @@
           "locationName":"LensAlias"
         },
         "LensNotes":{"shape":"Notes"},
-        "PillarNotes":{"shape":"PillarNotes"}
+        "PillarNotes":{"shape":"PillarNotes"},
+        "JiraConfiguration":{"shape":"JiraSelectedQuestionConfiguration"}
       }
     },
     "UpdateLensReviewOutput":{
@@ -3502,6 +4373,94 @@
       "type":"structure",
       "members":{
         "Profile":{"shape":"Profile"}
+      }
+    },
+    "UpdateReviewTemplateAnswerInput":{
+      "type":"structure",
+      "required":[
+        "TemplateArn",
+        "LensAlias",
+        "QuestionId"
+      ],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        },
+        "LensAlias":{
+          "shape":"LensAlias",
+          "location":"uri",
+          "locationName":"LensAlias"
+        },
+        "QuestionId":{
+          "shape":"QuestionId",
+          "location":"uri",
+          "locationName":"QuestionId"
+        },
+        "SelectedChoices":{"shape":"SelectedChoices"},
+        "ChoiceUpdates":{"shape":"ChoiceUpdates"},
+        "Notes":{"shape":"Notes"},
+        "IsApplicable":{"shape":"IsApplicable"},
+        "Reason":{"shape":"AnswerReason"}
+      }
+    },
+    "UpdateReviewTemplateAnswerOutput":{
+      "type":"structure",
+      "members":{
+        "TemplateArn":{"shape":"TemplateArn"},
+        "LensAlias":{"shape":"LensAlias"},
+        "Answer":{"shape":"ReviewTemplateAnswer"}
+      }
+    },
+    "UpdateReviewTemplateInput":{
+      "type":"structure",
+      "required":["TemplateArn"],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        },
+        "TemplateName":{"shape":"TemplateName"},
+        "Description":{"shape":"TemplateDescription"},
+        "Notes":{"shape":"Notes"},
+        "LensesToAssociate":{"shape":"ReviewTemplateLensAliases"},
+        "LensesToDisassociate":{"shape":"ReviewTemplateLensAliases"}
+      }
+    },
+    "UpdateReviewTemplateLensReviewInput":{
+      "type":"structure",
+      "required":[
+        "TemplateArn",
+        "LensAlias"
+      ],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        },
+        "LensAlias":{
+          "shape":"LensAlias",
+          "location":"uri",
+          "locationName":"LensAlias"
+        },
+        "LensNotes":{"shape":"Notes"},
+        "PillarNotes":{"shape":"PillarNotes"}
+      }
+    },
+    "UpdateReviewTemplateLensReviewOutput":{
+      "type":"structure",
+      "members":{
+        "TemplateArn":{"shape":"TemplateArn"},
+        "LensReview":{"shape":"ReviewTemplateLensReview"}
+      }
+    },
+    "UpdateReviewTemplateOutput":{
+      "type":"structure",
+      "members":{
+        "ReviewTemplate":{"shape":"ReviewTemplate"}
       }
     },
     "UpdateShareInvitationInput":{
@@ -3549,7 +4508,8 @@
         "Notes":{"shape":"Notes"},
         "ImprovementStatus":{"shape":"WorkloadImprovementStatus"},
         "DiscoveryConfig":{"shape":"WorkloadDiscoveryConfig"},
-        "Applications":{"shape":"WorkloadApplications"}
+        "Applications":{"shape":"WorkloadApplications"},
+        "JiraConfiguration":{"shape":"WorkloadJiraConfigurationInput"}
       }
     },
     "UpdateWorkloadOutput":{
@@ -3632,6 +4592,26 @@
         }
       }
     },
+    "UpgradeReviewTemplateLensReviewInput":{
+      "type":"structure",
+      "required":[
+        "TemplateArn",
+        "LensAlias"
+      ],
+      "members":{
+        "TemplateArn":{
+          "shape":"TemplateArn",
+          "location":"uri",
+          "locationName":"TemplateArn"
+        },
+        "LensAlias":{
+          "shape":"LensAlias",
+          "location":"uri",
+          "locationName":"LensAlias"
+        },
+        "ClientRequestToken":{"shape":"ClientRequestToken"}
+      }
+    },
     "Urls":{
       "type":"list",
       "member":{"shape":"ChoiceContent"}
@@ -3707,7 +4687,8 @@
         "DiscoveryConfig":{"shape":"WorkloadDiscoveryConfig"},
         "Applications":{"shape":"WorkloadApplications"},
         "Profiles":{"shape":"WorkloadProfiles"},
-        "PrioritizedRiskCounts":{"shape":"RiskCounts"}
+        "PrioritizedRiskCounts":{"shape":"RiskCounts"},
+        "JiraConfiguration":{"shape":"WorkloadJiraConfigurationOutput"}
       }
     },
     "WorkloadAccountIds":{
@@ -3773,6 +4754,31 @@
     "WorkloadIndustryType":{
       "type":"string",
       "max":100
+    },
+    "WorkloadIssueManagementStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "INHERIT"
+      ]
+    },
+    "WorkloadJiraConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "IssueManagementStatus":{"shape":"WorkloadIssueManagementStatus"},
+        "IssueManagementType":{"shape":"IssueManagementType"},
+        "JiraProjectKey":{"shape":"JiraProjectKey"}
+      }
+    },
+    "WorkloadJiraConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "IssueManagementStatus":{"shape":"WorkloadIssueManagementStatus"},
+        "IssueManagementType":{"shape":"IssueManagementType"},
+        "JiraProjectKey":{"shape":"JiraProjectKey"},
+        "StatusMessage":{"shape":"StatusMessage"}
+      }
     },
     "WorkloadLenses":{
       "type":"list",

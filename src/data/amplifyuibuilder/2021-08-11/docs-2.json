@@ -3,12 +3,12 @@
   "service": "<p>The Amplify UI Builder API provides a programmatic interface for creating and configuring user interface (UI) component libraries and themes for use in your Amplify applications. You can then connect these UI components to an application's backend Amazon Web Services resources.</p> <p>You can also use the Amplify Studio visual designer to create UI components and model data for an app. For more information, see <a href=\"https://docs.amplify.aws/console/adminui/intro\">Introduction</a> in the <i>Amplify Docs</i>.</p> <p>The Amplify Framework is a comprehensive set of SDKs, libraries, tools, and documentation for client app development. For more information, see the <a href=\"https://docs.amplify.aws/\">Amplify Framework</a>. For more information about deploying an Amplify application to Amazon Web Services, see the <a href=\"https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html\">Amplify User Guide</a>.</p>",
   "operations": {
     "CreateComponent": "<p>Creates a new component for an Amplify app.</p>",
-    "CreateForm": "<p>Creates a new form for an Amplify.</p>",
+    "CreateForm": "<p>Creates a new form for an Amplify app.</p>",
     "CreateTheme": "<p>Creates a theme to apply to the components in an Amplify app.</p>",
     "DeleteComponent": "<p>Deletes a component from an Amplify app.</p>",
     "DeleteForm": "<p>Deletes a form from an Amplify app.</p>",
     "DeleteTheme": "<p>Deletes a theme from an Amplify app.</p>",
-    "ExchangeCodeForToken": "<p>Exchanges an access code for a token.</p>",
+    "ExchangeCodeForToken": "<note> <p>This is for internal use.</p> </note> <p>Amplify uses this action to exchange an access code for a token.</p>",
     "ExportComponents": "<p>Exports component configurations to code that is ready to integrate into an Amplify app.</p>",
     "ExportForms": "<p>Exports form configurations to code that is ready to integrate into an Amplify app.</p>",
     "ExportThemes": "<p>Exports theme configurations to code that is ready to integrate into an Amplify app.</p>",
@@ -20,10 +20,13 @@
     "ListCodegenJobs": "<p>Retrieves a list of code generation jobs for a specified Amplify app and backend environment.</p>",
     "ListComponents": "<p>Retrieves a list of components for a specified Amplify app and backend environment.</p>",
     "ListForms": "<p>Retrieves a list of forms for a specified Amplify app and backend environment.</p>",
+    "ListTagsForResource": "<p>Returns a list of tags for a specified Amazon Resource Name (ARN).</p>",
     "ListThemes": "<p>Retrieves a list of themes for a specified Amplify app and backend environment.</p>",
     "PutMetadataFlag": "<p>Stores the metadata information about a feature on a form.</p>",
-    "RefreshToken": "<p>Refreshes a previously issued access token that might have expired.</p>",
-    "StartCodegenJob": "<p>Starts a code generation job for for a specified Amplify app and backend environment.</p>",
+    "RefreshToken": "<note> <p>This is for internal use.</p> </note> <p>Amplify uses this action to refresh a previously issued access token that might have expired.</p>",
+    "StartCodegenJob": "<p>Starts a code generation job for a specified Amplify app and backend environment.</p>",
+    "TagResource": "<p>Tags the resource with a tag key and value.</p>",
+    "UntagResource": "<p>Untags a resource with a specified Amazon Resource Name (ARN).</p>",
     "UpdateComponent": "<p>Updates an existing component.</p>",
     "UpdateForm": "<p>Updates an existing form.</p>",
     "UpdateTheme": "<p>Updates an existing theme.</p>"
@@ -33,6 +36,12 @@
       "base": "<p>Represents the event action configuration for an element of a <code>Component</code> or <code>ComponentChild</code>. Use for the workflow feature in Amplify Studio that allows you to bind events and actions to components. <code>ActionParameters</code> defines the action that is performed when an event occurs on the component.</p>",
       "refs": {
         "ComponentEvent$parameters": "<p>Describes information about the action.</p>"
+      }
+    },
+    "ApiConfiguration": {
+      "base": "<p>Describes the API configuration for a code generation job.</p>",
+      "refs": {
+        "ReactStartCodegenJobData$apiConfiguration": "<p>The API configuration for the code generation job.</p>"
       }
     },
     "AppId": {
@@ -54,6 +63,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CodegenDependency$isSemVer": "<p>Determines if the dependency package is using Semantic versioning. If set to true, it indicates that the dependency package uses Semantic versioning.</p>",
         "CodegenFeatureFlags$isRelationshipSupported": "<p>Specifes whether a code generation job supports data relationships.</p>",
         "CodegenFeatureFlags$isNonModelSupported": "<p>Specifies whether a code generation job supports non models.</p>",
         "CodegenGenericDataField$required": "<p>Specifies whether the generic data field is required.</p>",
@@ -76,6 +86,18 @@
         "ReactStartCodegenJobData$inlineSourceMap": "<p>Specifies whether the code generation job should render inline source maps.</p>",
         "SectionalElement$excluded": "<p>Excludes a sectional element that was generated by default for a specified data model.</p>",
         "StartCodegenJobData$autoGenerateForms": "<p>Specifies whether to autogenerate forms in the code generation job.</p>"
+      }
+    },
+    "CodegenDependencies": {
+      "base": null,
+      "refs": {
+        "CodegenJob$dependencies": "<p>Lists the dependency packages that may be required for the project code to run.</p>"
+      }
+    },
+    "CodegenDependency": {
+      "base": "<p>Dependency package that may be required for the project code to run.</p>",
+      "refs": {
+        "CodegenDependencies$member": null
       }
     },
     "CodegenFeatureFlags": {
@@ -185,7 +207,7 @@
       }
     },
     "CodegenJobRenderConfig": {
-      "base": "<p>Describes the configuration information for rendering the UI component associated the code generation job.</p>",
+      "base": "<p>Describes the configuration information for rendering the UI component associated with the code generation job.</p>",
       "refs": {
         "CodegenJob$renderConfig": null,
         "StartCodegenJobData$renderConfig": "<p>The code generation configuration for the codegen job.</p>"
@@ -450,6 +472,12 @@
     "CreateThemeResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "DataStoreRenderConfig": {
+      "base": "<p>Describes the DataStore configuration for an API for a code generation job.</p>",
+      "refs": {
+        "ApiConfiguration$dataStoreConfig": "<p>The configuration for an application using DataStore APIs.</p>"
       }
     },
     "DeleteComponentRequest": {
@@ -777,6 +805,12 @@
       "refs": {
       }
     },
+    "GraphQLRenderConfig": {
+      "base": "<p>Describes the GraphQL configuration for an API for a code generation job.</p>",
+      "refs": {
+        "ApiConfiguration$graphQLConfig": "<p>The configuration for an application using GraphQL APIs.</p>"
+      }
+    },
     "IdentifierList": {
       "base": null,
       "refs": {
@@ -846,12 +880,6 @@
       "refs": {
       }
     },
-    "ListComponentsLimit": {
-      "base": null,
-      "refs": {
-        "ListComponentsRequest$maxResults": "<p>The maximum number of components to retrieve.</p>"
-      }
-    },
     "ListComponentsRequest": {
       "base": null,
       "refs": {
@@ -862,10 +890,12 @@
       "refs": {
       }
     },
-    "ListFormsLimit": {
+    "ListEntityLimit": {
       "base": null,
       "refs": {
-        "ListFormsRequest$maxResults": "<p>The maximum number of forms to retrieve.</p>"
+        "ListComponentsRequest$maxResults": "<p>The maximum number of components to retrieve.</p>",
+        "ListFormsRequest$maxResults": "<p>The maximum number of forms to retrieve.</p>",
+        "ListThemesRequest$maxResults": "<p>The maximum number of theme results to return in the response.</p>"
       }
     },
     "ListFormsRequest": {
@@ -878,10 +908,14 @@
       "refs": {
       }
     },
-    "ListThemesLimit": {
+    "ListTagsForResourceRequest": {
       "base": null,
       "refs": {
-        "ListThemesRequest$maxResults": "<p>The maximum number of theme results to return in the response.</p>"
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "ListThemesRequest": {
@@ -898,6 +932,12 @@
       "base": "<p>Represents the state configuration when an action modifies a property of another element within the same component.</p>",
       "refs": {
         "ActionParameters$state": "<p>A key-value pair that specifies the state property name and its initial value.</p>"
+      }
+    },
+    "NoApiRenderConfig": {
+      "base": "<p>Describes the configuration for an application with no API being used.</p>",
+      "refs": {
+        "ApiConfiguration$noApiConfig": "<p>The configuration for an application with no API being used.</p>"
       }
     },
     "NumValues": {
@@ -936,6 +976,12 @@
     "PutMetadataFlagRequest": {
       "base": null,
       "refs": {
+      }
+    },
+    "ReactCodegenDependencies": {
+      "base": "<p>Indicates the dependency version of the project code to be generated by Amazon Web Services Amplify. The version of the generated code output is determined by the version number contained in <code>aws-amplify</code>.</p>",
+      "refs": {
+        "ReactStartCodegenJobData$dependencies": "<p>Lists the dependency packages that may be required for the project code to run.</p>"
       }
     },
     "ReactStartCodegenJobData": {
@@ -1059,6 +1105,9 @@
       "refs": {
         "ActionParameters$model": "<p>The name of the data model. Use when the action performs an operation on an Amplify DataStore model.</p>",
         "AssociatedFieldsList$member": null,
+        "CodegenDependency$name": "<p>Name of the dependency package.</p>",
+        "CodegenDependency$supportedVersion": "<p>Indicates the version of the supported dependency package.</p>",
+        "CodegenDependency$reason": "<p>Indicates the reason to include the dependency package in your project code.</p>",
         "CodegenGenericDataEnumValuesList$member": null,
         "CodegenGenericDataEnums$key": null,
         "CodegenGenericDataField$dataTypeValue": "<p>The value of the data type for the generic data field.</p>",
@@ -1194,6 +1243,11 @@
         "GetMetadataRequest$environmentName": "<p>The name of the backend environment that is part of the Amplify app.</p>",
         "GetThemeRequest$appId": "<p>The unique ID of the Amplify app.</p>",
         "GetThemeRequest$environmentName": "<p>The name of the backend environment that is part of the Amplify app.</p>",
+        "GraphQLRenderConfig$typesFilePath": "<p>The path to the GraphQL types file, relative to the component output directory.</p>",
+        "GraphQLRenderConfig$queriesFilePath": "<p>The path to the GraphQL queries file, relative to the component output directory.</p>",
+        "GraphQLRenderConfig$mutationsFilePath": "<p>The path to the GraphQL mutations file, relative to the component output directory.</p>",
+        "GraphQLRenderConfig$subscriptionsFilePath": "<p>The path to the GraphQL subscriptions file, relative to the component output directory.</p>",
+        "GraphQLRenderConfig$fragmentsFilePath": "<p>The path to the GraphQL fragments file, relative to the component output directory.</p>",
         "IdentifierList$member": null,
         "InternalServerException$message": null,
         "InvalidParameterException$message": null,
@@ -1208,6 +1262,7 @@
         "ListFormsRequest$environmentName": "<p>The name of the backend environment that is a part of the Amplify app.</p>",
         "ListFormsRequest$nextToken": "<p>The token to request the next page of results.</p>",
         "ListFormsResponse$nextToken": "<p>The pagination token that's included if more results are available.</p>",
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) to use to list tags.</p>",
         "ListThemesRequest$appId": "<p>The unique ID for the Amplify app.</p>",
         "ListThemesRequest$environmentName": "<p>The name of the backend environment that is a part of the Amplify app.</p>",
         "ListThemesRequest$nextToken": "<p>The token to request the next page of results.</p>",
@@ -1221,6 +1276,8 @@
         "PutMetadataFlagRequest$appId": "<p>The unique ID for the Amplify app.</p>",
         "PutMetadataFlagRequest$environmentName": "<p>The name of the backend environment that is part of the Amplify app.</p>",
         "PutMetadataFlagRequest$featureName": "<p>The name of the feature associated with the metadata.</p>",
+        "ReactCodegenDependencies$key": null,
+        "ReactCodegenDependencies$value": null,
         "RelatedModelFieldsList$member": null,
         "ResourceConflictException$message": null,
         "ResourceNotFoundException$message": null,
@@ -1233,6 +1290,7 @@
         "StartCodegenJobRequest$environmentName": "<p>The name of the backend environment that is a part of the Amplify app.</p>",
         "StartCodegenJobRequest$clientToken": "<p>The idempotency token used to ensure that the code generation job request completes only once.</p>",
         "StrValues$member": null,
+        "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) to use to tag a resource.</p>",
         "Theme$appId": "<p>The unique ID for the Amplify app associated with the theme.</p>",
         "Theme$environmentName": "<p>The name of the backend environment that is a part of the Amplify app.</p>",
         "ThemeSummary$appId": "<p>The unique ID for the app associated with the theme summary.</p>",
@@ -1241,6 +1299,7 @@
         "ThemeValues$key": "<p>The name of the property.</p>",
         "ThrottlingException$message": null,
         "UnauthorizedException$message": null,
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) to use to untag a resource.</p>",
         "UpdateComponentData$sourceId": "<p>The unique ID of the component in its original source system, such as Figma.</p>",
         "UpdateComponentData$schemaVersion": "<p>The schema version of the component when it was imported.</p>",
         "UpdateComponentRequest$appId": "<p>The unique ID for the Amplify app.</p>",
@@ -1271,7 +1330,24 @@
     "TagKey": {
       "base": null,
       "refs": {
+        "TagKeyList$member": null,
         "Tags$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>The tag keys to use to untag a resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "TagValue": {
@@ -1289,7 +1365,9 @@
         "CreateFormData$tags": "<p>One or more key-value pairs to use when tagging the form data.</p>",
         "CreateThemeData$tags": "<p>One or more key-value pairs to use when tagging the theme data.</p>",
         "Form$tags": "<p>One or more key-value pairs to use when tagging the form.</p>",
+        "ListTagsForResourceResponse$tags": "<p>A list of tag key value pairs for a specified Amazon Resource Name (ARN).</p>",
         "StartCodegenJobData$tags": "<p>One or more key-value pairs to use when tagging the code generation job data.</p>",
+        "TagResourceRequest$tags": "<p>A list of tag key value pairs for a specified Amazon Resource Name (ARN).</p>",
         "Theme$tags": "<p>One or more key-value pairs to use when tagging the theme.</p>"
       }
     },
@@ -1367,6 +1445,16 @@
     },
     "UnauthorizedException": {
       "base": "<p>You don't have permission to perform this operation.</p>",
+      "refs": {
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
       "refs": {
       }
     },

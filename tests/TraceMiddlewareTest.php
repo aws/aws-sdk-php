@@ -4,8 +4,10 @@ namespace Aws\Test;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Command;
+use Aws\EventBridge\EventBridgeClient;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
+use Aws\MockHandler;
 use Aws\Result;
 use Aws\TraceMiddleware;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -214,6 +216,27 @@ class TraceMiddlewareTest extends TestCase
         $this->assertStringNotContainsString("NestedSensitiveParameter was also redacted", $str);
         $this->assertStringContainsString("[SensitiveArray]", $str);
         $this->assertStringNotContainsString("SensitiveArray contents also redacted", $str);
+    }
+
+    public function testEmitsForMiddlewareThatDoesNotReturnRequest()
+    {
+
+        $str = '';
+        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $handler = new MockHandler();
+        $handler->append(new Result(['success']));
+        $client = new EventBridgeClient([
+            'region' => 'us-west-2',
+            'handler' => $handler,
+            'debug' => [
+                'logfn' => $logfn
+            ]
+
+        ]);
+        $result = $client->listRules();
+
+        $this->assertStringContainsString("Leaving step build, name 'endpoint-resolution'", $str);
+        $this->assertEquals('success', $result[0]);
     }
 
     public function authStringProvider()

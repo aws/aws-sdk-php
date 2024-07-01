@@ -5,6 +5,7 @@
     "endpointPrefix":"swf",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Amazon SWF",
     "serviceFullName":"Amazon Simple Workflow Service",
     "serviceId":"SWF",
@@ -62,6 +63,32 @@
       "output":{"shape":"PendingTaskCount"},
       "errors":[
         {"shape":"UnknownResourceFault"},
+        {"shape":"OperationNotPermittedFault"}
+      ]
+    },
+    "DeleteActivityType":{
+      "name":"DeleteActivityType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteActivityTypeInput"},
+      "errors":[
+        {"shape":"UnknownResourceFault"},
+        {"shape":"TypeNotDeprecatedFault"},
+        {"shape":"OperationNotPermittedFault"}
+      ]
+    },
+    "DeleteWorkflowType":{
+      "name":"DeleteWorkflowType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteWorkflowTypeInput"},
+      "errors":[
+        {"shape":"UnknownResourceFault"},
+        {"shape":"TypeNotDeprecatedFault"},
         {"shape":"OperationNotPermittedFault"}
       ]
     },
@@ -1044,7 +1071,9 @@
       "members":{
         "executionContext":{"shape":"Data"},
         "scheduledEventId":{"shape":"EventId"},
-        "startedEventId":{"shape":"EventId"}
+        "startedEventId":{"shape":"EventId"},
+        "taskList":{"shape":"TaskList"},
+        "taskListScheduleToStartTimeout":{"shape":"DurationInSecondsOptional"}
       }
     },
     "DecisionTaskScheduledEventAttributes":{
@@ -1053,7 +1082,8 @@
       "members":{
         "taskList":{"shape":"TaskList"},
         "taskPriority":{"shape":"TaskPriority"},
-        "startToCloseTimeout":{"shape":"DurationInSecondsOptional"}
+        "startToCloseTimeout":{"shape":"DurationInSecondsOptional"},
+        "scheduleToStartTimeout":{"shape":"DurationInSecondsOptional"}
       }
     },
     "DecisionTaskStartedEventAttributes":{
@@ -1079,7 +1109,10 @@
     },
     "DecisionTaskTimeoutType":{
       "type":"string",
-      "enum":["START_TO_CLOSE"]
+      "enum":[
+        "START_TO_CLOSE",
+        "SCHEDULE_TO_START"
+      ]
     },
     "DecisionType":{
       "type":"string",
@@ -1105,6 +1138,28 @@
         "message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "DeleteActivityTypeInput":{
+      "type":"structure",
+      "required":[
+        "domain",
+        "activityType"
+      ],
+      "members":{
+        "domain":{"shape":"DomainName"},
+        "activityType":{"shape":"ActivityType"}
+      }
+    },
+    "DeleteWorkflowTypeInput":{
+      "type":"structure",
+      "required":[
+        "domain",
+        "workflowType"
+      ],
+      "members":{
+        "domain":{"shape":"DomainName"},
+        "workflowType":{"shape":"WorkflowType"}
+      }
     },
     "DeprecateActivityTypeInput":{
       "type":"structure",
@@ -1969,7 +2024,9 @@
       "members":{
         "taskToken":{"shape":"TaskToken"},
         "decisions":{"shape":"DecisionList"},
-        "executionContext":{"shape":"Data"}
+        "executionContext":{"shape":"Data"},
+        "taskList":{"shape":"TaskList"},
+        "taskListScheduleToStartTimeout":{"shape":"DurationInSecondsOptional"}
       }
     },
     "ReverseOrder":{"type":"boolean"},
@@ -2408,6 +2465,13 @@
       "exception":true
     },
     "TypeDeprecatedFault":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "TypeNotDeprecatedFault":{
       "type":"structure",
       "members":{
         "message":{"shape":"ErrorMessage"}

@@ -30,6 +30,23 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "CreateCustomDomainAssociation":{
+      "name":"CreateCustomDomainAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCustomDomainAssociationRequest"},
+      "output":{"shape":"CreateCustomDomainAssociationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateEndpointAccess":{
       "name":"CreateEndpointAccess",
       "http":{
@@ -64,6 +81,22 @@
       ],
       "idempotent":true
     },
+    "CreateScheduledAction":{
+      "name":"CreateScheduledAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateScheduledActionRequest"},
+      "output":{"shape":"CreateScheduledActionResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "CreateSnapshot":{
       "name":"CreateSnapshot",
       "http":{
@@ -78,6 +111,24 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"TooManyTagsException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "CreateSnapshotCopyConfiguration":{
+      "name":"CreateSnapshotCopyConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSnapshotCopyConfigurationRequest"},
+      "output":{"shape":"CreateSnapshotCopyConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
@@ -116,6 +167,23 @@
         {"shape":"TooManyTagsException"}
       ],
       "idempotent":true
+    },
+    "DeleteCustomDomainAssociation":{
+      "name":"DeleteCustomDomainAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCustomDomainAssociationRequest"},
+      "output":{"shape":"DeleteCustomDomainAssociationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
     },
     "DeleteEndpointAccess":{
       "name":"DeleteEndpointAccess",
@@ -163,6 +231,21 @@
         {"shape":"ValidationException"}
       ]
     },
+    "DeleteScheduledAction":{
+      "name":"DeleteScheduledAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteScheduledActionRequest"},
+      "output":{"shape":"DeleteScheduledActionResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "DeleteSnapshot":{
       "name":"DeleteSnapshot",
       "http":{
@@ -176,6 +259,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteSnapshotCopyConfiguration":{
+      "name":"DeleteSnapshotCopyConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSnapshotCopyConfigurationRequest"},
+      "output":{"shape":"DeleteSnapshotCopyConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
       ],
       "idempotent":true
     },
@@ -223,6 +323,23 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "GetCustomDomainAssociation":{
+      "name":"GetCustomDomainAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCustomDomainAssociationRequest"},
+      "output":{"shape":"GetCustomDomainAssociationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetEndpointAccess":{
@@ -277,6 +394,20 @@
       },
       "input":{"shape":"GetResourcePolicyRequest"},
       "output":{"shape":"GetResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "GetScheduledAction":{
+      "name":"GetScheduledAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetScheduledActionRequest"},
+      "output":{"shape":"GetScheduledActionResponse"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -339,6 +470,22 @@
         {"shape":"ValidationException"}
       ]
     },
+    "ListCustomDomainAssociations":{
+      "name":"ListCustomDomainAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCustomDomainAssociationsRequest"},
+      "output":{"shape":"ListCustomDomainAssociationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidPaginationException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListEndpointAccess":{
       "name":"ListEndpointAccess",
       "http":{
@@ -377,6 +524,37 @@
       "output":{"shape":"ListRecoveryPointsResponse"},
       "errors":[
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "ListScheduledActions":{
+      "name":"ListScheduledActions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListScheduledActionsRequest"},
+      "output":{"shape":"ListScheduledActionsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidPaginationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "ListSnapshotCopyConfigurations":{
+      "name":"ListSnapshotCopyConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSnapshotCopyConfigurationsRequest"},
+      "output":{"shape":"ListSnapshotCopyConfigurationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidPaginationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -500,6 +678,21 @@
       ],
       "idempotent":true
     },
+    "RestoreTableFromRecoveryPoint":{
+      "name":"RestoreTableFromRecoveryPoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RestoreTableFromRecoveryPointRequest"},
+      "output":{"shape":"RestoreTableFromRecoveryPointResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "RestoreTableFromSnapshot":{
       "name":"RestoreTableFromSnapshot",
       "http":{
@@ -546,6 +739,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "UpdateCustomDomainAssociation":{
+      "name":"UpdateCustomDomainAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCustomDomainAssociationRequest"},
+      "output":{"shape":"UpdateCustomDomainAssociationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "UpdateEndpointAccess":{
       "name":"UpdateEndpointAccess",
       "http":{
@@ -577,6 +787,22 @@
         {"shape":"ValidationException"}
       ]
     },
+    "UpdateScheduledAction":{
+      "name":"UpdateScheduledAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateScheduledActionRequest"},
+      "output":{"shape":"UpdateScheduledActionResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "UpdateSnapshot":{
       "name":"UpdateSnapshot",
       "http":{
@@ -590,6 +816,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "UpdateSnapshotCopyConfiguration":{
+      "name":"UpdateSnapshotCopyConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateSnapshotCopyConfigurationRequest"},
+      "output":{"shape":"UpdateSnapshotCopyConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UpdateUsageLimit":{
@@ -642,6 +884,19 @@
       "max":1011,
       "min":1
     },
+    "Association":{
+      "type":"structure",
+      "members":{
+        "customDomainCertificateArn":{"shape":"CustomDomainCertificateArnString"},
+        "customDomainCertificateExpiryTime":{"shape":"SyntheticTimestamp_date_time"},
+        "customDomainName":{"shape":"CustomDomainName"},
+        "workgroupName":{"shape":"WorkgroupName"}
+      }
+    },
+    "AssociationList":{
+      "type":"list",
+      "member":{"shape":"Association"}
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -684,6 +939,28 @@
         "snapshot":{"shape":"Snapshot"}
       }
     },
+    "CreateCustomDomainAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "customDomainCertificateArn",
+        "customDomainName",
+        "workgroupName"
+      ],
+      "members":{
+        "customDomainCertificateArn":{"shape":"CustomDomainCertificateArnString"},
+        "customDomainName":{"shape":"CustomDomainName"},
+        "workgroupName":{"shape":"WorkgroupName"}
+      }
+    },
+    "CreateCustomDomainAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "customDomainCertificateArn":{"shape":"CustomDomainCertificateArnString"},
+        "customDomainCertificateExpiryTime":{"shape":"SyntheticTimestamp_date_time"},
+        "customDomainName":{"shape":"CustomDomainName"},
+        "workgroupName":{"shape":"WorkgroupName"}
+      }
+    },
     "CreateEndpointAccessRequest":{
       "type":"structure",
       "required":[
@@ -693,6 +970,7 @@
       ],
       "members":{
         "endpointName":{"shape":"String"},
+        "ownerAccount":{"shape":"OwnerAccount"},
         "subnetIds":{"shape":"SubnetIdList"},
         "vpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
         "workgroupName":{"shape":"String"}
@@ -708,6 +986,7 @@
       "type":"structure",
       "required":["namespaceName"],
       "members":{
+        "adminPasswordSecretKmsKeyId":{"shape":"KmsKeyId"},
         "adminUserPassword":{"shape":"DbPassword"},
         "adminUsername":{"shape":"DbUser"},
         "dbName":{"shape":"String"},
@@ -715,7 +994,9 @@
         "iamRoles":{"shape":"IamRoleArnList"},
         "kmsKeyId":{"shape":"String"},
         "logExports":{"shape":"LogExportList"},
+        "manageAdminPassword":{"shape":"Boolean"},
         "namespaceName":{"shape":"NamespaceName"},
+        "redshiftIdcApplicationArn":{"shape":"RedshiftIdcApplicationArn"},
         "tags":{"shape":"TagList"}
       }
     },
@@ -723,6 +1004,53 @@
       "type":"structure",
       "members":{
         "namespace":{"shape":"Namespace"}
+      }
+    },
+    "CreateScheduledActionRequest":{
+      "type":"structure",
+      "required":[
+        "namespaceName",
+        "roleArn",
+        "schedule",
+        "scheduledActionName",
+        "targetAction"
+      ],
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "endTime":{"shape":"Timestamp"},
+        "namespaceName":{"shape":"NamespaceName"},
+        "roleArn":{"shape":"IamRoleArn"},
+        "schedule":{"shape":"Schedule"},
+        "scheduledActionDescription":{"shape":"String"},
+        "scheduledActionName":{"shape":"ScheduledActionName"},
+        "startTime":{"shape":"Timestamp"},
+        "targetAction":{"shape":"TargetAction"}
+      }
+    },
+    "CreateScheduledActionResponse":{
+      "type":"structure",
+      "members":{
+        "scheduledAction":{"shape":"ScheduledActionResponse"}
+      }
+    },
+    "CreateSnapshotCopyConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "destinationRegion",
+        "namespaceName"
+      ],
+      "members":{
+        "destinationKmsKeyId":{"shape":"KmsKeyId"},
+        "destinationRegion":{"shape":"String"},
+        "namespaceName":{"shape":"NamespaceName"},
+        "snapshotRetentionPeriod":{"shape":"Integer"}
+      }
+    },
+    "CreateSnapshotCopyConfigurationResponse":{
+      "type":"structure",
+      "required":["snapshotCopyConfiguration"],
+      "members":{
+        "snapshotCopyConfiguration":{"shape":"SnapshotCopyConfiguration"}
       }
     },
     "CreateSnapshotRequest":{
@@ -742,6 +1070,19 @@
       "type":"structure",
       "members":{
         "snapshot":{"shape":"Snapshot"}
+      }
+    },
+    "CreateSnapshotScheduleActionParameters":{
+      "type":"structure",
+      "required":[
+        "namespaceName",
+        "snapshotNamePrefix"
+      ],
+      "members":{
+        "namespaceName":{"shape":"NamespaceName"},
+        "retentionPeriod":{"shape":"Integer"},
+        "snapshotNamePrefix":{"shape":"SnapshotNamePrefix"},
+        "tags":{"shape":"TagList"}
       }
     },
     "CreateUsageLimitRequest":{
@@ -775,6 +1116,7 @@
         "baseCapacity":{"shape":"Integer"},
         "configParameters":{"shape":"ConfigParameterList"},
         "enhancedVpcRouting":{"shape":"Boolean"},
+        "maxCapacity":{"shape":"Integer"},
         "namespaceName":{"shape":"NamespaceName"},
         "port":{"shape":"Integer"},
         "publiclyAccessible":{"shape":"Boolean"},
@@ -790,6 +1132,18 @@
         "workgroup":{"shape":"Workgroup"}
       }
     },
+    "CustomDomainCertificateArnString":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:[\\w+=/,.@-]+:acm:[\\w+=/,.@-]*:[0-9]+:[\\w+=,.@-]+(/[\\w+=,.@-]+)*"
+    },
+    "CustomDomainName":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"^(((?!-)[A-Za-z0-9-]{0,62}[A-Za-z0-9])\\.)+((?!-)[A-Za-z0-9-]{1,62}[A-Za-z0-9])$"
+    },
     "DbName":{"type":"string"},
     "DbPassword":{
       "type":"string",
@@ -798,6 +1152,22 @@
     "DbUser":{
       "type":"string",
       "sensitive":true
+    },
+    "DeleteCustomDomainAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "customDomainName",
+        "workgroupName"
+      ],
+      "members":{
+        "customDomainName":{"shape":"CustomDomainName"},
+        "workgroupName":{"shape":"WorkgroupName"}
+      }
+    },
+    "DeleteCustomDomainAssociationResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "DeleteEndpointAccessRequest":{
       "type":"structure",
@@ -838,6 +1208,33 @@
     "DeleteResourcePolicyResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "DeleteScheduledActionRequest":{
+      "type":"structure",
+      "required":["scheduledActionName"],
+      "members":{
+        "scheduledActionName":{"shape":"ScheduledActionName"}
+      }
+    },
+    "DeleteScheduledActionResponse":{
+      "type":"structure",
+      "members":{
+        "scheduledAction":{"shape":"ScheduledActionResponse"}
+      }
+    },
+    "DeleteSnapshotCopyConfigurationRequest":{
+      "type":"structure",
+      "required":["snapshotCopyConfigurationId"],
+      "members":{
+        "snapshotCopyConfigurationId":{"shape":"String"}
+      }
+    },
+    "DeleteSnapshotCopyConfigurationResponse":{
+      "type":"structure",
+      "required":["snapshotCopyConfiguration"],
+      "members":{
+        "snapshotCopyConfiguration":{"shape":"SnapshotCopyConfiguration"}
       }
     },
     "DeleteSnapshotRequest":{
@@ -913,8 +1310,8 @@
     },
     "GetCredentialsRequest":{
       "type":"structure",
-      "required":["workgroupName"],
       "members":{
+        "customDomainName":{"shape":"CustomDomainName"},
         "dbName":{"shape":"DbName"},
         "durationSeconds":{"shape":"Integer"},
         "workgroupName":{"shape":"WorkgroupName"}
@@ -927,6 +1324,26 @@
         "dbUser":{"shape":"DbUser"},
         "expiration":{"shape":"Timestamp"},
         "nextRefreshTime":{"shape":"Timestamp"}
+      }
+    },
+    "GetCustomDomainAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "customDomainName",
+        "workgroupName"
+      ],
+      "members":{
+        "customDomainName":{"shape":"CustomDomainName"},
+        "workgroupName":{"shape":"WorkgroupName"}
+      }
+    },
+    "GetCustomDomainAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "customDomainCertificateArn":{"shape":"CustomDomainCertificateArnString"},
+        "customDomainCertificateExpiryTime":{"shape":"SyntheticTimestamp_date_time"},
+        "customDomainName":{"shape":"CustomDomainName"},
+        "workgroupName":{"shape":"WorkgroupName"}
       }
     },
     "GetEndpointAccessRequest":{
@@ -980,6 +1397,19 @@
       "type":"structure",
       "members":{
         "resourcePolicy":{"shape":"ResourcePolicy"}
+      }
+    },
+    "GetScheduledActionRequest":{
+      "type":"structure",
+      "required":["scheduledActionName"],
+      "members":{
+        "scheduledActionName":{"shape":"ScheduledActionName"}
+      }
+    },
+    "GetScheduledActionResponse":{
+      "type":"structure",
+      "members":{
+        "scheduledAction":{"shape":"ScheduledActionResponse"}
       }
     },
     "GetSnapshotRequest":{
@@ -1073,6 +1503,31 @@
       "exception":true
     },
     "KmsKeyId":{"type":"string"},
+    "ListCustomDomainAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "customDomainCertificateArn":{"shape":"CustomDomainCertificateArnString"},
+        "customDomainName":{"shape":"CustomDomainName"},
+        "maxResults":{
+          "shape":"ListCustomDomainAssociationsRequestMaxResultsInteger",
+          "box":true
+        },
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListCustomDomainAssociationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListCustomDomainAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "associations":{"shape":"AssociationList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListEndpointAccessRequest":{
       "type":"structure",
       "members":{
@@ -1081,6 +1536,7 @@
           "box":true
         },
         "nextToken":{"shape":"String"},
+        "ownerAccount":{"shape":"OwnerAccount"},
         "vpcId":{"shape":"String"},
         "workgroupName":{"shape":"String"}
       }
@@ -1148,6 +1604,55 @@
       "members":{
         "nextToken":{"shape":"String"},
         "recoveryPoints":{"shape":"RecoveryPointList"}
+      }
+    },
+    "ListScheduledActionsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListScheduledActionsRequestMaxResultsInteger",
+          "box":true
+        },
+        "namespaceName":{"shape":"NamespaceName"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListScheduledActionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListScheduledActionsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "scheduledActions":{"shape":"ScheduledActionsList"}
+      }
+    },
+    "ListSnapshotCopyConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListSnapshotCopyConfigurationsRequestMaxResultsInteger",
+          "box":true
+        },
+        "namespaceName":{"shape":"NamespaceName"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListSnapshotCopyConfigurationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListSnapshotCopyConfigurationsResponse":{
+      "type":"structure",
+      "required":["snapshotCopyConfigurations"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "snapshotCopyConfigurations":{"shape":"SnapshotCopyConfigurations"}
       }
     },
     "ListSnapshotsRequest":{
@@ -1248,7 +1753,8 @@
           "shape":"ListWorkgroupsRequestMaxResultsInteger",
           "box":true
         },
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"String"},
+        "ownerAccount":{"shape":"OwnerAccount"}
       }
     },
     "ListWorkgroupsRequestMaxResultsInteger":{
@@ -1286,6 +1792,8 @@
     "Namespace":{
       "type":"structure",
       "members":{
+        "adminPasswordSecretArn":{"shape":"String"},
+        "adminPasswordSecretKmsKeyId":{"shape":"KmsKeyId"},
         "adminUsername":{"shape":"DbUser"},
         "creationDate":{"shape":"SyntheticTimestamp_date_time"},
         "dbName":{"shape":"String"},
@@ -1330,6 +1838,16 @@
       "type":"list",
       "member":{"shape":"NetworkInterface"}
     },
+    "NextInvocationsList":{
+      "type":"list",
+      "member":{"shape":"Timestamp"}
+    },
+    "OwnerAccount":{
+      "type":"string",
+      "max":12,
+      "min":1,
+      "pattern":"(\\d{12})"
+    },
     "PaginationToken":{
       "type":"string",
       "max":1024,
@@ -1368,6 +1886,11 @@
     "RecoveryPointList":{
       "type":"list",
       "member":{"shape":"RecoveryPoint"}
+    },
+    "RedshiftIdcApplicationArn":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1412,6 +1935,8 @@
         "workgroupName"
       ],
       "members":{
+        "adminPasswordSecretKmsKeyId":{"shape":"KmsKeyId"},
+        "manageAdminPassword":{"shape":"Boolean"},
         "namespaceName":{"shape":"NamespaceName"},
         "ownerAccount":{"shape":"String"},
         "snapshotArn":{"shape":"String"},
@@ -1425,6 +1950,35 @@
         "namespace":{"shape":"Namespace"},
         "ownerAccount":{"shape":"String"},
         "snapshotName":{"shape":"String"}
+      }
+    },
+    "RestoreTableFromRecoveryPointRequest":{
+      "type":"structure",
+      "required":[
+        "namespaceName",
+        "newTableName",
+        "recoveryPointId",
+        "sourceDatabaseName",
+        "sourceTableName",
+        "workgroupName"
+      ],
+      "members":{
+        "activateCaseSensitiveIdentifier":{"shape":"Boolean"},
+        "namespaceName":{"shape":"String"},
+        "newTableName":{"shape":"String"},
+        "recoveryPointId":{"shape":"String"},
+        "sourceDatabaseName":{"shape":"String"},
+        "sourceSchemaName":{"shape":"String"},
+        "sourceTableName":{"shape":"String"},
+        "targetDatabaseName":{"shape":"String"},
+        "targetSchemaName":{"shape":"String"},
+        "workgroupName":{"shape":"String"}
+      }
+    },
+    "RestoreTableFromRecoveryPointResponse":{
+      "type":"structure",
+      "members":{
+        "tableRestoreStatus":{"shape":"TableRestoreStatus"}
       }
     },
     "RestoreTableFromSnapshotRequest":{
@@ -1456,6 +2010,47 @@
         "tableRestoreStatus":{"shape":"TableRestoreStatus"}
       }
     },
+    "Schedule":{
+      "type":"structure",
+      "members":{
+        "at":{"shape":"Timestamp"},
+        "cron":{"shape":"String"}
+      },
+      "union":true
+    },
+    "ScheduledActionAssociation":{
+      "type":"structure",
+      "members":{
+        "namespaceName":{"shape":"NamespaceName"},
+        "scheduledActionName":{"shape":"ScheduledActionName"}
+      }
+    },
+    "ScheduledActionName":{
+      "type":"string",
+      "max":60,
+      "min":3,
+      "pattern":"^[a-z0-9-]+$"
+    },
+    "ScheduledActionResponse":{
+      "type":"structure",
+      "members":{
+        "endTime":{"shape":"Timestamp"},
+        "namespaceName":{"shape":"NamespaceName"},
+        "nextInvocations":{"shape":"NextInvocationsList"},
+        "roleArn":{"shape":"IamRoleArn"},
+        "schedule":{"shape":"Schedule"},
+        "scheduledActionDescription":{"shape":"String"},
+        "scheduledActionName":{"shape":"ScheduledActionName"},
+        "scheduledActionUuid":{"shape":"String"},
+        "startTime":{"shape":"Timestamp"},
+        "state":{"shape":"State"},
+        "targetAction":{"shape":"TargetAction"}
+      }
+    },
+    "ScheduledActionsList":{
+      "type":"list",
+      "member":{"shape":"ScheduledActionAssociation"}
+    },
     "SecurityGroupId":{"type":"string"},
     "SecurityGroupIdList":{
       "type":"list",
@@ -1475,6 +2070,8 @@
         "accountsWithProvisionedRestoreAccess":{"shape":"AccountIdList"},
         "accountsWithRestoreAccess":{"shape":"AccountIdList"},
         "actualIncrementalBackupSizeInMegaBytes":{"shape":"Double"},
+        "adminPasswordSecretArn":{"shape":"String"},
+        "adminPasswordSecretKmsKeyId":{"shape":"KmsKeyId"},
         "adminUsername":{"shape":"String"},
         "backupProgressInMegaBytes":{"shape":"Double"},
         "currentBackupRateInMegaBytesPerSecond":{"shape":"Double"},
@@ -1494,9 +2091,31 @@
         "totalBackupSizeInMegaBytes":{"shape":"Double"}
       }
     },
+    "SnapshotCopyConfiguration":{
+      "type":"structure",
+      "members":{
+        "destinationKmsKeyId":{"shape":"KmsKeyId"},
+        "destinationRegion":{"shape":"String"},
+        "namespaceName":{"shape":"NamespaceName"},
+        "snapshotCopyConfigurationArn":{"shape":"String"},
+        "snapshotCopyConfigurationId":{"shape":"String"},
+        "snapshotRetentionPeriod":{"shape":"Integer"}
+      }
+    },
+    "SnapshotCopyConfigurations":{
+      "type":"list",
+      "member":{"shape":"SnapshotCopyConfiguration"},
+      "max":100,
+      "min":1
+    },
     "SnapshotList":{
       "type":"list",
       "member":{"shape":"Snapshot"}
+    },
+    "SnapshotNamePrefix":{
+      "type":"string",
+      "max":235,
+      "min":1
     },
     "SnapshotStatus":{
       "type":"string",
@@ -1507,6 +2126,13 @@
         "CANCELLED",
         "FAILED",
         "COPYING"
+      ]
+    },
+    "State":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DISABLED"
       ]
     },
     "String":{"type":"string"},
@@ -1526,6 +2152,7 @@
         "namespaceName":{"shape":"String"},
         "newTableName":{"shape":"String"},
         "progressInMegaBytes":{"shape":"Long"},
+        "recoveryPointId":{"shape":"String"},
         "requestTime":{"shape":"Timestamp"},
         "snapshotName":{"shape":"String"},
         "sourceDatabaseName":{"shape":"String"},
@@ -1592,6 +2219,13 @@
       "max":256,
       "min":0
     },
+    "TargetAction":{
+      "type":"structure",
+      "members":{
+        "createSnapshot":{"shape":"CreateSnapshotScheduleActionParameters"}
+      },
+      "union":true
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -1626,6 +2260,28 @@
       "members":{
       }
     },
+    "UpdateCustomDomainAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "customDomainCertificateArn",
+        "customDomainName",
+        "workgroupName"
+      ],
+      "members":{
+        "customDomainCertificateArn":{"shape":"CustomDomainCertificateArnString"},
+        "customDomainName":{"shape":"CustomDomainName"},
+        "workgroupName":{"shape":"WorkgroupName"}
+      }
+    },
+    "UpdateCustomDomainAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "customDomainCertificateArn":{"shape":"CustomDomainCertificateArnString"},
+        "customDomainCertificateExpiryTime":{"shape":"SyntheticTimestamp_date_time"},
+        "customDomainName":{"shape":"CustomDomainName"},
+        "workgroupName":{"shape":"WorkgroupName"}
+      }
+    },
     "UpdateEndpointAccessRequest":{
       "type":"structure",
       "required":["endpointName"],
@@ -1644,12 +2300,14 @@
       "type":"structure",
       "required":["namespaceName"],
       "members":{
+        "adminPasswordSecretKmsKeyId":{"shape":"KmsKeyId"},
         "adminUserPassword":{"shape":"DbPassword"},
         "adminUsername":{"shape":"DbUser"},
         "defaultIamRoleArn":{"shape":"String"},
         "iamRoles":{"shape":"IamRoleArnList"},
         "kmsKeyId":{"shape":"String"},
         "logExports":{"shape":"LogExportList"},
+        "manageAdminPassword":{"shape":"Boolean"},
         "namespaceName":{"shape":"NamespaceName"}
       }
     },
@@ -1658,6 +2316,41 @@
       "required":["namespace"],
       "members":{
         "namespace":{"shape":"Namespace"}
+      }
+    },
+    "UpdateScheduledActionRequest":{
+      "type":"structure",
+      "required":["scheduledActionName"],
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "endTime":{"shape":"Timestamp"},
+        "roleArn":{"shape":"IamRoleArn"},
+        "schedule":{"shape":"Schedule"},
+        "scheduledActionDescription":{"shape":"String"},
+        "scheduledActionName":{"shape":"ScheduledActionName"},
+        "startTime":{"shape":"Timestamp"},
+        "targetAction":{"shape":"TargetAction"}
+      }
+    },
+    "UpdateScheduledActionResponse":{
+      "type":"structure",
+      "members":{
+        "scheduledAction":{"shape":"ScheduledActionResponse"}
+      }
+    },
+    "UpdateSnapshotCopyConfigurationRequest":{
+      "type":"structure",
+      "required":["snapshotCopyConfigurationId"],
+      "members":{
+        "snapshotCopyConfigurationId":{"shape":"String"},
+        "snapshotRetentionPeriod":{"shape":"Integer"}
+      }
+    },
+    "UpdateSnapshotCopyConfigurationResponse":{
+      "type":"structure",
+      "required":["snapshotCopyConfiguration"],
+      "members":{
+        "snapshotCopyConfiguration":{"shape":"SnapshotCopyConfiguration"}
       }
     },
     "UpdateSnapshotRequest":{
@@ -1696,6 +2389,7 @@
         "baseCapacity":{"shape":"Integer"},
         "configParameters":{"shape":"ConfigParameterList"},
         "enhancedVpcRouting":{"shape":"Boolean"},
+        "maxCapacity":{"shape":"Integer"},
         "port":{"shape":"Integer"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
@@ -1771,6 +2465,10 @@
       "type":"list",
       "member":{"shape":"VpcEndpoint"}
     },
+    "VpcIds":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "VpcSecurityGroupId":{"type":"string"},
     "VpcSecurityGroupIdList":{
       "type":"list",
@@ -1793,9 +2491,15 @@
         "baseCapacity":{"shape":"Integer"},
         "configParameters":{"shape":"ConfigParameterList"},
         "creationDate":{"shape":"SyntheticTimestamp_date_time"},
+        "crossAccountVpcs":{"shape":"VpcIds"},
+        "customDomainCertificateArn":{"shape":"CustomDomainCertificateArnString"},
+        "customDomainCertificateExpiryTime":{"shape":"SyntheticTimestamp_date_time"},
+        "customDomainName":{"shape":"CustomDomainName"},
         "endpoint":{"shape":"Endpoint"},
         "enhancedVpcRouting":{"shape":"Boolean"},
+        "maxCapacity":{"shape":"Integer"},
         "namespaceName":{"shape":"String"},
+        "patchVersion":{"shape":"String"},
         "port":{"shape":"Integer"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
@@ -1803,7 +2507,8 @@
         "subnetIds":{"shape":"SubnetIdList"},
         "workgroupArn":{"shape":"String"},
         "workgroupId":{"shape":"String"},
-        "workgroupName":{"shape":"WorkgroupName"}
+        "workgroupName":{"shape":"WorkgroupName"},
+        "workgroupVersion":{"shape":"String"}
       }
     },
     "WorkgroupList":{

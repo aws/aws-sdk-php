@@ -5,11 +5,13 @@
     "endpointPrefix":"route53domains",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon Route 53 Domains",
     "serviceId":"Route 53 Domains",
     "signatureVersion":"v4",
     "targetPrefix":"Route53Domains_v20140515",
-    "uid":"route53domains-2014-05-15"
+    "uid":"route53domains-2014-05-15",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptDomainTransferFromAnotherAwsAccount":{
@@ -505,7 +507,7 @@
       ],
       "members":{
         "DomainName":{"shape":"DomainName"},
-        "Password":{"shape":"String"}
+        "Password":{"shape":"Password"}
       }
     },
     "AcceptDomainTransferFromAnotherAwsAccountResponse":{
@@ -522,7 +524,8 @@
     },
     "AddressLine":{
       "type":"string",
-      "max":255
+      "max":255,
+      "sensitive":true
     },
     "AssociateDelegationSignerToDomainRequest":{
       "type":"structure",
@@ -594,12 +597,14 @@
     "CheckDomainTransferabilityResponse":{
       "type":"structure",
       "members":{
-        "Transferability":{"shape":"DomainTransferability"}
+        "Transferability":{"shape":"DomainTransferability"},
+        "Message":{"shape":"Message"}
       }
     },
     "City":{
       "type":"string",
-      "max":255
+      "max":255,
+      "sensitive":true
     },
     "Consent":{
       "type":"structure",
@@ -634,11 +639,13 @@
     },
     "ContactName":{
       "type":"string",
-      "max":255
+      "max":255,
+      "sensitive":true
     },
     "ContactNumber":{
       "type":"string",
-      "max":30
+      "max":30,
+      "sensitive":true
     },
     "ContactType":{
       "type":"string",
@@ -904,7 +911,8 @@
         "ZA",
         "ZM",
         "ZW"
-      ]
+      ],
+      "sensitive":true
     },
     "Currency":{
       "type":"string",
@@ -1034,7 +1042,9 @@
         "UNAVAILABLE_PREMIUM",
         "UNAVAILABLE_RESTRICTED",
         "RESERVED",
-        "DONT_KNOW"
+        "DONT_KNOW",
+        "INVALID_NAME_FOR_TLD",
+        "PENDING"
       ]
     },
     "DomainLimitExceeded":{
@@ -1106,6 +1116,7 @@
     "DuplicateRequest":{
       "type":"structure",
       "members":{
+        "requestId":{"shape":"RequestId"},
         "message":{"shape":"ErrorMessage"}
       },
       "exception":true
@@ -1117,7 +1128,8 @@
     },
     "Email":{
       "type":"string",
-      "max":254
+      "max":254,
+      "sensitive":true
     },
     "EnableDomainAutoRenewRequest":{
       "type":"structure",
@@ -1268,7 +1280,9 @@
         "Reseller":{"shape":"Reseller"},
         "DnsSec":{"shape":"DNSSec"},
         "StatusList":{"shape":"DomainStatusList"},
-        "DnssecKeys":{"shape":"DnssecKeyList"}
+        "DnssecKeys":{"shape":"DnssecKeyList"},
+        "BillingContact":{"shape":"ContactDetail"},
+        "BillingPrivacy":{"shape":"Boolean"}
       }
     },
     "GetDomainSuggestionsRequest":{
@@ -1419,6 +1433,7 @@
         "TagList":{"shape":"TagList"}
       }
     },
+    "Message":{"type":"string"},
     "Nameserver":{
       "type":"structure",
       "required":["Name"],
@@ -1495,13 +1510,15 @@
         "RENEW_DOMAIN",
         "PUSH_DOMAIN",
         "INTERNAL_TRANSFER_OUT_DOMAIN",
-        "INTERNAL_TRANSFER_IN_DOMAIN"
+        "INTERNAL_TRANSFER_IN_DOMAIN",
+        "RELEASE_TO_GANDI",
+        "TRANSFER_ON_RENEW"
       ]
     },
     "OperationTypeList":{
       "type":"list",
       "member":{"shape":"OperationType"},
-      "max":18
+      "max":20
     },
     "Operator":{
       "type":"string",
@@ -1518,6 +1535,10 @@
     "PageMaxItems":{
       "type":"integer",
       "max":100
+    },
+    "Password":{
+      "type":"string",
+      "sensitive":true
     },
     "Price":{"type":"double"},
     "PriceWithCurrency":{
@@ -1569,7 +1590,9 @@
         "TechContact":{"shape":"ContactDetail"},
         "PrivacyProtectAdminContact":{"shape":"Boolean"},
         "PrivacyProtectRegistrantContact":{"shape":"Boolean"},
-        "PrivacyProtectTechContact":{"shape":"Boolean"}
+        "PrivacyProtectTechContact":{"shape":"Boolean"},
+        "BillingContact":{"shape":"ContactDetail"},
+        "PrivacyProtectBillingContact":{"shape":"Boolean"}
       }
     },
     "RegisterDomainResponse":{
@@ -1613,6 +1636,7 @@
         "OperationId":{"shape":"OperationId"}
       }
     },
+    "RequestId":{"type":"string"},
     "Reseller":{"type":"string"},
     "ResendContactReachabilityEmailRequest":{
       "type":"structure",
@@ -1668,7 +1692,8 @@
     },
     "State":{
       "type":"string",
-      "max":255
+      "max":255,
+      "sensitive":true
     },
     "StatusFlag":{
       "type":"string",
@@ -1740,7 +1765,9 @@
         "TechContact":{"shape":"ContactDetail"},
         "PrivacyProtectAdminContact":{"shape":"Boolean"},
         "PrivacyProtectRegistrantContact":{"shape":"Boolean"},
-        "PrivacyProtectTechContact":{"shape":"Boolean"}
+        "PrivacyProtectTechContact":{"shape":"Boolean"},
+        "BillingContact":{"shape":"ContactDetail"},
+        "PrivacyProtectBillingContact":{"shape":"Boolean"}
       }
     },
     "TransferDomainResponse":{
@@ -1764,7 +1791,7 @@
       "type":"structure",
       "members":{
         "OperationId":{"shape":"OperationId"},
-        "Password":{"shape":"String"}
+        "Password":{"shape":"Password"}
       }
     },
     "Transferable":{
@@ -1792,7 +1819,8 @@
         "DomainName":{"shape":"DomainName"},
         "AdminPrivacy":{"shape":"Boolean"},
         "RegistrantPrivacy":{"shape":"Boolean"},
-        "TechPrivacy":{"shape":"Boolean"}
+        "TechPrivacy":{"shape":"Boolean"},
+        "BillingPrivacy":{"shape":"Boolean"}
       }
     },
     "UpdateDomainContactPrivacyResponse":{
@@ -1809,7 +1837,8 @@
         "AdminContact":{"shape":"ContactDetail"},
         "RegistrantContact":{"shape":"ContactDetail"},
         "TechContact":{"shape":"ContactDetail"},
-        "Consent":{"shape":"Consent"}
+        "Consent":{"shape":"Consent"},
+        "BillingContact":{"shape":"ContactDetail"}
       }
     },
     "UpdateDomainContactResponse":{
@@ -1881,7 +1910,8 @@
     },
     "ZipCode":{
       "type":"string",
-      "max":255
+      "max":255,
+      "sensitive":true
     }
   }
 }

@@ -68,6 +68,25 @@
       ],
       "idempotent":true
     },
+    "CreateSourceRepository":{
+      "name":"CreateSourceRepository",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/sourceRepositories/{name}",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateSourceRepositoryRequest"},
+      "output":{"shape":"CreateSourceRepositoryResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "CreateSourceRepositoryBranch":{
       "name":"CreateSourceRepositoryBranch",
       "http":{
@@ -125,6 +144,63 @@
       ],
       "idempotent":true
     },
+    "DeleteProject":{
+      "name":"DeleteProject",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteProjectRequest"},
+      "output":{"shape":"DeleteProjectResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteSourceRepository":{
+      "name":"DeleteSourceRepository",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/sourceRepositories/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteSourceRepositoryRequest"},
+      "output":{"shape":"DeleteSourceRepositoryResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteSpace":{
+      "name":"DeleteSpace",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/spaces/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteSpaceRequest"},
+      "output":{"shape":"DeleteSpaceResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "GetDevEnvironment":{
       "name":"GetDevEnvironment",
       "http":{
@@ -152,6 +228,24 @@
       },
       "input":{"shape":"GetProjectRequest"},
       "output":{"shape":"GetProjectResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetSourceRepository":{
+      "name":"GetSourceRepository",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/sourceRepositories/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSourceRepositoryRequest"},
+      "output":{"shape":"GetSourceRepositoryResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
@@ -233,6 +327,42 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetWorkflow":{
+      "name":"GetWorkflow",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/workflows/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetWorkflowRequest"},
+      "output":{"shape":"GetWorkflowResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetWorkflowRun":{
+      "name":"GetWorkflowRun",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/workflowRuns/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetWorkflowRunRequest"},
+      "output":{"shape":"GetWorkflowRunResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListAccessTokens":{
       "name":"ListAccessTokens",
       "http":{
@@ -273,7 +403,7 @@
       "name":"ListDevEnvironments",
       "http":{
         "method":"POST",
-        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/devEnvironments",
+        "requestUri":"/v1/spaces/{spaceName}/devEnvironments",
         "responseCode":200
       },
       "input":{"shape":"ListDevEnvironmentsRequest"},
@@ -377,6 +507,42 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListWorkflowRuns":{
+      "name":"ListWorkflowRuns",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/workflowRuns",
+        "responseCode":200
+      },
+      "input":{"shape":"ListWorkflowRunsRequest"},
+      "output":{"shape":"ListWorkflowRunsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListWorkflows":{
+      "name":"ListWorkflows",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/workflows",
+        "responseCode":200
+      },
+      "input":{"shape":"ListWorkflowsRequest"},
+      "output":{"shape":"ListWorkflowsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StartDevEnvironment":{
       "name":"StartDevEnvironment",
       "http":{
@@ -413,6 +579,25 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
       ]
+    },
+    "StartWorkflowRun":{
+      "name":"StartWorkflowRun",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{projectName}/workflowRuns",
+        "responseCode":200
+      },
+      "input":{"shape":"StartWorkflowRunRequest"},
+      "output":{"shape":"StartWorkflowRunResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "StopDevEnvironment":{
       "name":"StopDevEnvironment",
@@ -461,6 +646,44 @@
       },
       "input":{"shape":"UpdateDevEnvironmentRequest"},
       "output":{"shape":"UpdateDevEnvironmentResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateProject":{
+      "name":"UpdateProject",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v1/spaces/{spaceName}/projects/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateProjectRequest"},
+      "output":{"shape":"UpdateProjectResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateSpace":{
+      "name":"UpdateSpace",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v1/spaces/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateSpaceRequest"},
+      "output":{"shape":"UpdateSpaceResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
@@ -550,7 +773,8 @@
         "GT",
         "GE",
         "LT",
-        "LE"
+        "LE",
+        "BEGINS_WITH"
       ]
     },
     "ConflictException":{
@@ -613,7 +837,8 @@
         "ides":{"shape":"IdeConfigurationList"},
         "instanceType":{"shape":"InstanceType"},
         "inactivityTimeoutMinutes":{"shape":"InactivityTimeoutMinutes"},
-        "persistentStorage":{"shape":"PersistentStorageConfiguration"}
+        "persistentStorage":{"shape":"PersistentStorageConfiguration"},
+        "vpcConnectionName":{"shape":"NameString"}
       }
     },
     "CreateDevEnvironmentRequestAliasString":{
@@ -632,7 +857,8 @@
       "members":{
         "spaceName":{"shape":"NameString"},
         "projectName":{"shape":"NameString"},
-        "id":{"shape":"Uuid"}
+        "id":{"shape":"Uuid"},
+        "vpcConnectionName":{"shape":"NameString"}
       }
     },
     "CreateProjectRequest":{
@@ -702,6 +928,46 @@
         "headCommitId":{"shape":"String"}
       }
     },
+    "CreateSourceRepositoryRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "projectName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"projectName"
+        },
+        "name":{
+          "shape":"SourceRepositoryNameString",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "description":{"shape":"SourceRepositoryDescriptionString"}
+      }
+    },
+    "CreateSourceRepositoryResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "projectName":{"shape":"NameString"},
+        "name":{"shape":"SourceRepositoryNameString"},
+        "description":{"shape":"SourceRepositoryDescriptionString"}
+      }
+    },
     "DeleteAccessTokenRequest":{
       "type":"structure",
       "required":["id"],
@@ -754,6 +1020,94 @@
         "spaceName":{"shape":"NameString"},
         "projectName":{"shape":"NameString"},
         "id":{"shape":"Uuid"}
+      }
+    },
+    "DeleteProjectRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "name":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeleteProjectResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "name":{"shape":"NameString"},
+        "displayName":{"shape":"String"}
+      }
+    },
+    "DeleteSourceRepositoryRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "projectName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"projectName"
+        },
+        "name":{
+          "shape":"SourceRepositoryNameString",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeleteSourceRepositoryResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "projectName":{"shape":"NameString"},
+        "name":{"shape":"SourceRepositoryNameString"}
+      }
+    },
+    "DeleteSpaceRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeleteSpaceResponse":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"NameString"},
+        "displayName":{"shape":"String"}
       }
     },
     "DevEnvironmentAccessDetails":{
@@ -859,7 +1213,8 @@
         "ides":{"shape":"Ides"},
         "instanceType":{"shape":"InstanceType"},
         "inactivityTimeoutMinutes":{"shape":"InactivityTimeoutMinutes"},
-        "persistentStorage":{"shape":"PersistentStorage"}
+        "persistentStorage":{"shape":"PersistentStorage"},
+        "vpcConnectionName":{"shape":"NameString"}
       }
     },
     "DevEnvironmentSummaryAliasString":{
@@ -960,7 +1315,10 @@
     },
     "FilterKey":{
       "type":"string",
-      "enum":["hasAccessTo"]
+      "enum":[
+        "hasAccessTo",
+        "name"
+      ]
     },
     "Filters":{
       "type":"list",
@@ -1018,7 +1376,8 @@
         "ides":{"shape":"Ides"},
         "instanceType":{"shape":"InstanceType"},
         "inactivityTimeoutMinutes":{"shape":"InactivityTimeoutMinutes"},
-        "persistentStorage":{"shape":"PersistentStorage"}
+        "persistentStorage":{"shape":"PersistentStorage"},
+        "vpcConnectionName":{"shape":"NameString"}
       }
     },
     "GetDevEnvironmentResponseAliasString":{
@@ -1092,6 +1451,49 @@
         "https":{"shape":"String"}
       }
     },
+    "GetSourceRepositoryRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "projectName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"projectName"
+        },
+        "name":{
+          "shape":"SourceRepositoryNameString",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "GetSourceRepositoryResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "name",
+        "lastUpdatedTime",
+        "createdTime"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "projectName":{"shape":"NameString"},
+        "name":{"shape":"SourceRepositoryNameString"},
+        "description":{"shape":"SourceRepositoryDescriptionString"},
+        "lastUpdatedTime":{"shape":"Timestamp"},
+        "createdTime":{"shape":"Timestamp"}
+      }
+    },
     "GetSpaceRequest":{
       "type":"structure",
       "required":["name"],
@@ -1131,7 +1533,9 @@
       "type":"structure",
       "members":{
         "subscriptionType":{"shape":"String"},
-        "awsAccountName":{"shape":"NameString"}
+        "awsAccountName":{"shape":"NameString"},
+        "pendingSubscriptionType":{"shape":"String"},
+        "pendingSubscriptionStartTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "GetUserDetailsRequest":{
@@ -1158,7 +1562,7 @@
       "type":"string",
       "max":100,
       "min":3,
-      "pattern":"[a-zA-Z0-9]{3,100}"
+      "pattern":"[a-zA-Z0-9_.-]{3,100}"
     },
     "GetUserDetailsResponse":{
       "type":"structure",
@@ -1168,6 +1572,116 @@
         "displayName":{"shape":"String"},
         "primaryEmail":{"shape":"EmailAddress"},
         "version":{"shape":"String"}
+      }
+    },
+    "GetWorkflowRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "id",
+        "projectName"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "id":{
+          "shape":"Uuid",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "projectName":{
+          "shape":"GetWorkflowRequestProjectNameString",
+          "location":"uri",
+          "locationName":"projectName"
+        }
+      }
+    },
+    "GetWorkflowRequestProjectNameString":{
+      "type":"string",
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+(?:[-_\\.][a-zA-Z0-9]+)*"
+    },
+    "GetWorkflowResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "id",
+        "name",
+        "definition",
+        "createdTime",
+        "lastUpdatedTime",
+        "runMode",
+        "status"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "projectName":{"shape":"NameString"},
+        "id":{"shape":"Uuid"},
+        "name":{"shape":"String"},
+        "sourceRepositoryName":{"shape":"SourceRepositoryNameString"},
+        "sourceBranchName":{"shape":"SourceRepositoryBranchString"},
+        "definition":{"shape":"WorkflowDefinition"},
+        "createdTime":{"shape":"SyntheticTimestamp_date_time"},
+        "lastUpdatedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "runMode":{"shape":"WorkflowRunMode"},
+        "status":{"shape":"WorkflowStatus"}
+      }
+    },
+    "GetWorkflowRunRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "id",
+        "projectName"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "id":{
+          "shape":"Uuid",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "projectName":{
+          "shape":"GetWorkflowRunRequestProjectNameString",
+          "location":"uri",
+          "locationName":"projectName"
+        }
+      }
+    },
+    "GetWorkflowRunRequestProjectNameString":{
+      "type":"string",
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+(?:[-_\\.][a-zA-Z0-9]+)*"
+    },
+    "GetWorkflowRunResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "id",
+        "workflowId",
+        "status",
+        "startTime",
+        "lastUpdatedTime"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "projectName":{"shape":"NameString"},
+        "id":{"shape":"Uuid"},
+        "workflowId":{"shape":"Uuid"},
+        "status":{"shape":"WorkflowRunStatus"},
+        "statusReasons":{"shape":"WorkflowRunStatusReasons"},
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"},
+        "lastUpdatedTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "Ide":{
@@ -1303,21 +1817,14 @@
     },
     "ListDevEnvironmentsRequest":{
       "type":"structure",
-      "required":[
-        "spaceName",
-        "projectName"
-      ],
+      "required":["spaceName"],
       "members":{
         "spaceName":{
           "shape":"NameString",
           "location":"uri",
           "locationName":"spaceName"
         },
-        "projectName":{
-          "shape":"NameString",
-          "location":"uri",
-          "locationName":"projectName"
-        },
+        "projectName":{"shape":"NameString"},
         "filters":{"shape":"Filters"},
         "nextToken":{"shape":"ListDevEnvironmentsRequestNextTokenString"},
         "maxResults":{"shape":"ListDevEnvironmentsRequestMaxResultsInteger"}
@@ -1549,6 +2056,117 @@
         "items":{"shape":"SpaceSummaries"}
       }
     },
+    "ListWorkflowRunsRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "workflowId":{
+          "shape":"Uuid",
+          "location":"querystring",
+          "locationName":"workflowId"
+        },
+        "projectName":{
+          "shape":"ListWorkflowRunsRequestProjectNameString",
+          "location":"uri",
+          "locationName":"projectName"
+        },
+        "nextToken":{
+          "shape":"ListWorkflowRunsRequestNextTokenString",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListWorkflowRunsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "sortBy":{"shape":"WorkflowRunSortCriteriaList"}
+      }
+    },
+    "ListWorkflowRunsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "ListWorkflowRunsRequestNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ListWorkflowRunsRequestProjectNameString":{
+      "type":"string",
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+(?:[-_\\.][a-zA-Z0-9]+)*"
+    },
+    "ListWorkflowRunsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"String"},
+        "items":{"shape":"WorkflowRunSummaries"}
+      }
+    },
+    "ListWorkflowsRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"ListWorkflowsRequestSpaceNameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "projectName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"projectName"
+        },
+        "nextToken":{
+          "shape":"ListWorkflowsRequestNextTokenString",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListWorkflowsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "sortBy":{"shape":"WorkflowSortCriteriaList"}
+      }
+    },
+    "ListWorkflowsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListWorkflowsRequestNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ListWorkflowsRequestSpaceNameString":{
+      "type":"string",
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+(?:[-_\\.][a-zA-Z0-9]+)*"
+    },
+    "ListWorkflowsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"String"},
+        "items":{"shape":"WorkflowSummaries"}
+      }
+    },
     "NameString":{
       "type":"string",
       "max":63,
@@ -1707,6 +2325,12 @@
       "min":1,
       "pattern":"(?!.*[.]git$)[\\w\\-.]*"
     },
+    "SpaceDescription":{
+      "type":"string",
+      "max":200,
+      "min":0,
+      "pattern":"[a-zA-Z0-9]+(?:[-_a-zA-Z0-9.,;:/\\+=?&$%    ])*"
+    },
     "SpaceSummaries":{
       "type":"list",
       "member":{"shape":"SpaceSummary"}
@@ -1814,6 +2438,66 @@
       "type":"string",
       "max":96,
       "min":1
+    },
+    "StartWorkflowRunRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "workflowId"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"StartWorkflowRunRequestSpaceNameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "projectName":{
+          "shape":"StartWorkflowRunRequestProjectNameString",
+          "location":"uri",
+          "locationName":"projectName"
+        },
+        "workflowId":{
+          "shape":"Uuid",
+          "location":"querystring",
+          "locationName":"workflowId"
+        },
+        "clientToken":{
+          "shape":"StartWorkflowRunRequestClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartWorkflowRunRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+(?:[-_\\.][a-zA-Z0-9]+)*"
+    },
+    "StartWorkflowRunRequestProjectNameString":{
+      "type":"string",
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+(?:[-_\\.][a-zA-Z0-9]+)*"
+    },
+    "StartWorkflowRunRequestSpaceNameString":{
+      "type":"string",
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+(?:[-_\\.][a-zA-Z0-9]+)*"
+    },
+    "StartWorkflowRunResponse":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "projectName",
+        "id",
+        "workflowId"
+      ],
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "projectName":{"shape":"NameString"},
+        "id":{"shape":"Uuid"},
+        "workflowId":{"shape":"Uuid"}
+      }
     },
     "StatusReason":{
       "type":"string",
@@ -2002,6 +2686,55 @@
       "min":1,
       "pattern":"[a-zA-Z0-9]+(?:[-_\\.][a-zA-Z0-9]+)*"
     },
+    "UpdateProjectRequest":{
+      "type":"structure",
+      "required":[
+        "spaceName",
+        "name"
+      ],
+      "members":{
+        "spaceName":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"spaceName"
+        },
+        "name":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "description":{"shape":"ProjectDescription"}
+      }
+    },
+    "UpdateProjectResponse":{
+      "type":"structure",
+      "members":{
+        "spaceName":{"shape":"NameString"},
+        "name":{"shape":"NameString"},
+        "displayName":{"shape":"String"},
+        "description":{"shape":"String"}
+      }
+    },
+    "UpdateSpaceRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{
+          "shape":"NameString",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "description":{"shape":"SpaceDescription"}
+      }
+    },
+    "UpdateSpaceResponse":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"NameString"},
+        "displayName":{"shape":"String"},
+        "description":{"shape":"String"}
+      }
+    },
     "UserIdentity":{
       "type":"structure",
       "required":[
@@ -2049,6 +2782,136 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "WorkflowDefinition":{
+      "type":"structure",
+      "required":["path"],
+      "members":{
+        "path":{"shape":"String"}
+      }
+    },
+    "WorkflowDefinitionSummary":{
+      "type":"structure",
+      "required":["path"],
+      "members":{
+        "path":{"shape":"String"}
+      }
+    },
+    "WorkflowRunMode":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "PARALLEL",
+        "SUPERSEDED"
+      ]
+    },
+    "WorkflowRunSortCriteria":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "WorkflowRunSortCriteriaList":{
+      "type":"list",
+      "member":{"shape":"WorkflowRunSortCriteria"},
+      "max":1,
+      "min":0
+    },
+    "WorkflowRunStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "FAILED",
+        "STOPPED",
+        "SUPERSEDED",
+        "CANCELLED",
+        "NOT_RUN",
+        "VALIDATING",
+        "PROVISIONING",
+        "IN_PROGRESS",
+        "STOPPING",
+        "ABANDONED"
+      ]
+    },
+    "WorkflowRunStatusReason":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "WorkflowRunStatusReasons":{
+      "type":"list",
+      "member":{"shape":"WorkflowRunStatusReason"}
+    },
+    "WorkflowRunSummaries":{
+      "type":"list",
+      "member":{"shape":"WorkflowRunSummary"}
+    },
+    "WorkflowRunSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "workflowId",
+        "workflowName",
+        "status",
+        "startTime",
+        "lastUpdatedTime"
+      ],
+      "members":{
+        "id":{"shape":"Uuid"},
+        "workflowId":{"shape":"Uuid"},
+        "workflowName":{"shape":"String"},
+        "status":{"shape":"WorkflowRunStatus"},
+        "statusReasons":{"shape":"WorkflowRunStatusReasons"},
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"},
+        "lastUpdatedTime":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "WorkflowSortCriteria":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "WorkflowSortCriteriaList":{
+      "type":"list",
+      "member":{"shape":"WorkflowSortCriteria"},
+      "max":1,
+      "min":0
+    },
+    "WorkflowStatus":{
+      "type":"string",
+      "enum":[
+        "INVALID",
+        "ACTIVE"
+      ]
+    },
+    "WorkflowSummaries":{
+      "type":"list",
+      "member":{"shape":"WorkflowSummary"}
+    },
+    "WorkflowSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name",
+        "sourceRepositoryName",
+        "sourceBranchName",
+        "definition",
+        "createdTime",
+        "lastUpdatedTime",
+        "runMode",
+        "status"
+      ],
+      "members":{
+        "id":{"shape":"Uuid"},
+        "name":{"shape":"String"},
+        "sourceRepositoryName":{"shape":"SourceRepositoryNameString"},
+        "sourceBranchName":{"shape":"SourceRepositoryBranchString"},
+        "definition":{"shape":"WorkflowDefinitionSummary"},
+        "createdTime":{"shape":"SyntheticTimestamp_date_time"},
+        "lastUpdatedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "runMode":{"shape":"WorkflowRunMode"},
+        "status":{"shape":"WorkflowStatus"}
+      }
     }
   }
 }

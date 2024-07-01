@@ -22,12 +22,12 @@
       "input":{"shape":"CancelBatchJobExecutionRequest"},
       "output":{"shape":"CancelBatchJobExecutionResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "CreateApplication":{
@@ -40,12 +40,12 @@
       "input":{"shape":"CreateApplicationRequest"},
       "output":{"shape":"CreateApplicationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ],
       "idempotent":true
     },
@@ -59,13 +59,13 @@
       "input":{"shape":"CreateDataSetImportTaskRequest"},
       "output":{"shape":"CreateDataSetImportTaskResponse"},
       "errors":[
-        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ],
       "idempotent":true
     },
@@ -79,13 +79,13 @@
       "input":{"shape":"CreateDeploymentRequest"},
       "output":{"shape":"CreateDeploymentResponse"},
       "errors":[
-        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ],
       "idempotent":true
     },
@@ -99,12 +99,12 @@
       "input":{"shape":"CreateEnvironmentRequest"},
       "output":{"shape":"CreateEnvironmentResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ],
       "idempotent":true
     },
@@ -118,11 +118,11 @@
       "input":{"shape":"DeleteApplicationRequest"},
       "output":{"shape":"DeleteApplicationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ],
       "idempotent":true
     },
@@ -136,12 +136,12 @@
       "input":{"shape":"DeleteApplicationFromEnvironmentRequest"},
       "output":{"shape":"DeleteApplicationFromEnvironmentResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "DeleteEnvironment":{
@@ -154,11 +154,11 @@
       "input":{"shape":"DeleteEnvironmentRequest"},
       "output":{"shape":"DeleteEnvironmentResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ],
       "idempotent":true
     },
@@ -172,11 +172,11 @@
       "input":{"shape":"GetApplicationRequest"},
       "output":{"shape":"GetApplicationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "GetApplicationVersion":{
@@ -189,11 +189,11 @@
       "input":{"shape":"GetApplicationVersionRequest"},
       "output":{"shape":"GetApplicationVersionResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "GetBatchJobExecution":{
@@ -206,11 +206,11 @@
       "input":{"shape":"GetBatchJobExecutionRequest"},
       "output":{"shape":"GetBatchJobExecutionResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "GetDataSetDetails":{
@@ -223,11 +223,14 @@
       "input":{"shape":"GetDataSetDetailsRequest"},
       "output":{"shape":"GetDataSetDetailsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ExecutionTimeoutException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "GetDataSetImportTask":{
@@ -240,11 +243,11 @@
       "input":{"shape":"GetDataSetImportTaskRequest"},
       "output":{"shape":"GetDataSetImportTaskResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "GetDeployment":{
@@ -257,11 +260,11 @@
       "input":{"shape":"GetDeploymentRequest"},
       "output":{"shape":"GetDeploymentResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "GetEnvironment":{
@@ -274,11 +277,25 @@
       "input":{"shape":"GetEnvironmentRequest"},
       "output":{"shape":"GetEnvironmentResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetSignedBluinsightsUrl":{
+      "name":"GetSignedBluinsightsUrl",
+      "http":{
+        "method":"GET",
+        "requestUri":"/signed-bi-url",
+        "responseCode":200
+      },
+      "output":{"shape":"GetSignedBluinsightsUrlResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListApplicationVersions":{
@@ -291,11 +308,11 @@
       "input":{"shape":"ListApplicationVersionsRequest"},
       "output":{"shape":"ListApplicationVersionsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListApplications":{
@@ -308,10 +325,10 @@
       "input":{"shape":"ListApplicationsRequest"},
       "output":{"shape":"ListApplicationsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListBatchJobDefinitions":{
@@ -324,11 +341,11 @@
       "input":{"shape":"ListBatchJobDefinitionsRequest"},
       "output":{"shape":"ListBatchJobDefinitionsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListBatchJobExecutions":{
@@ -341,11 +358,29 @@
       "input":{"shape":"ListBatchJobExecutionsRequest"},
       "output":{"shape":"ListBatchJobExecutionsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListBatchJobRestartPoints":{
+      "name":"ListBatchJobRestartPoints",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{applicationId}/batch-job-executions/{executionId}/steps",
+        "responseCode":200
+      },
+      "input":{"shape":"ListBatchJobRestartPointsRequest"},
+      "output":{"shape":"ListBatchJobRestartPointsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListDataSetImportHistory":{
@@ -358,11 +393,11 @@
       "input":{"shape":"ListDataSetImportHistoryRequest"},
       "output":{"shape":"ListDataSetImportHistoryResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListDataSets":{
@@ -375,11 +410,14 @@
       "input":{"shape":"ListDataSetsRequest"},
       "output":{"shape":"ListDataSetsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ExecutionTimeoutException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListDeployments":{
@@ -392,11 +430,11 @@
       "input":{"shape":"ListDeploymentsRequest"},
       "output":{"shape":"ListDeploymentsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListEngineVersions":{
@@ -409,10 +447,10 @@
       "input":{"shape":"ListEngineVersionsRequest"},
       "output":{"shape":"ListEngineVersionsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListEnvironments":{
@@ -425,10 +463,10 @@
       "input":{"shape":"ListEnvironmentsRequest"},
       "output":{"shape":"ListEnvironmentsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListTagsForResource":{
@@ -441,11 +479,11 @@
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "StartApplication":{
@@ -458,12 +496,12 @@
       "input":{"shape":"StartApplicationRequest"},
       "output":{"shape":"StartApplicationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "StartBatchJob":{
@@ -476,12 +514,12 @@
       "input":{"shape":"StartBatchJobRequest"},
       "output":{"shape":"StartBatchJobResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "StopApplication":{
@@ -494,12 +532,12 @@
       "input":{"shape":"StopApplicationRequest"},
       "output":{"shape":"StopApplicationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "TagResource":{
@@ -512,12 +550,12 @@
       "input":{"shape":"TagResourceRequest"},
       "output":{"shape":"TagResourceResponse"},
       "errors":[
-        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "UntagResource":{
@@ -530,11 +568,11 @@
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "UpdateApplication":{
@@ -547,12 +585,12 @@
       "input":{"shape":"UpdateApplicationRequest"},
       "output":{"shape":"UpdateApplicationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "UpdateEnvironment":{
@@ -565,13 +603,13 @@
       "input":{"shape":"UpdateEnvironmentRequest"},
       "output":{"shape":"UpdateEnvironmentResponse"},
       "errors":[
-        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     }
   },
@@ -717,6 +755,7 @@
         "Cancelled",
         "Succeeded",
         "Failed",
+        "Purged",
         "Succeeded With Warning"
       ]
     },
@@ -749,6 +788,8 @@
       "type":"structure",
       "members":{
         "fileBatchJobIdentifier":{"shape":"FileBatchJobIdentifier"},
+        "restartBatchJobIdentifier":{"shape":"RestartBatchJobIdentifier"},
+        "s3BatchJobIdentifier":{"shape":"S3BatchJobIdentifier"},
         "scriptBatchJobIdentifier":{"shape":"ScriptBatchJobIdentifier"}
       },
       "union":true
@@ -760,6 +801,10 @@
       "max":500,
       "min":0
     },
+    "BatchJobStepList":{
+      "type":"list",
+      "member":{"shape":"JobStep"}
+    },
     "BatchJobType":{
       "type":"string",
       "enum":[
@@ -770,13 +815,13 @@
     },
     "BatchParamKey":{
       "type":"string",
-      "max":8,
+      "max":32,
       "min":1,
       "pattern":"^[A-Za-z][A-Za-z0-9]{1,7}$"
     },
     "BatchParamValue":{
       "type":"string",
-      "max":44,
+      "max":80,
       "min":0
     },
     "Boolean":{"type":"boolean"},
@@ -806,9 +851,7 @@
     },
     "CapacityValue":{
       "type":"integer",
-      "box":true,
-      "max":100,
-      "min":1
+      "box":true
     },
     "ConflictException":{
       "type":"structure",
@@ -1012,6 +1055,7 @@
       ],
       "members":{
         "status":{"shape":"DataSetTaskLifecycle"},
+        "statusReason":{"shape":"String"},
         "summary":{"shape":"DataSetImportSummary"},
         "taskId":{"shape":"Identifier"}
       }
@@ -1037,7 +1081,8 @@
       "enum":[
         "Creating",
         "Running",
-        "Completed"
+        "Completed",
+        "Failed"
       ]
     },
     "DataSetsSummaryList":{
@@ -1145,7 +1190,8 @@
       "enum":[
         "Deploying",
         "Succeeded",
-        "Failed"
+        "Failed",
+        "Updating Deployment"
       ]
     },
     "DeploymentList":{
@@ -1235,9 +1281,9 @@
       "enum":[
         "Creating",
         "Available",
+        "Updating",
         "Deleting",
-        "Failed",
-        "Updating"
+        "Failed"
       ]
     },
     "EnvironmentSummary":{
@@ -1266,6 +1312,17 @@
     "EnvironmentSummaryList":{
       "type":"list",
       "member":{"shape":"EnvironmentSummary"}
+    },
+    "ExecutionTimeoutException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":504},
+      "exception":true,
+      "fault":true,
+      "retryable":{"throttling":false}
     },
     "ExternalLocation":{
       "type":"structure",
@@ -1438,6 +1495,7 @@
         "executionId":{"shape":"Identifier"},
         "jobId":{"shape":"String100"},
         "jobName":{"shape":"String100"},
+        "jobStepRestartMarker":{"shape":"JobStepRestartMarker"},
         "jobType":{"shape":"BatchJobType"},
         "jobUser":{"shape":"String100"},
         "returnCode":{"shape":"String"},
@@ -1476,6 +1534,7 @@
         "creationTime":{"shape":"Timestamp"},
         "dataSetName":{"shape":"String200"},
         "dataSetOrg":{"shape":"DatasetDetailOrgAttributes"},
+        "fileSize":{"shape":"Long"},
         "lastReferencedTime":{"shape":"Timestamp"},
         "lastUpdatedTime":{"shape":"Timestamp"},
         "location":{"shape":"String2000"},
@@ -1606,6 +1665,13 @@
         "vpcId":{"shape":"String50"}
       }
     },
+    "GetSignedBluinsightsUrlResponse":{
+      "type":"structure",
+      "required":["signedBiUrl"],
+      "members":{
+        "signedBiUrl":{"shape":"String"}
+      }
+    },
     "HighAvailabilityConfig":{
       "type":"structure",
       "required":["desiredCapacity"],
@@ -1639,6 +1705,35 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "JobIdentifier":{
+      "type":"structure",
+      "members":{
+        "fileName":{"shape":"String"},
+        "scriptName":{"shape":"String"}
+      },
+      "union":true
+    },
+    "JobStep":{
+      "type":"structure",
+      "members":{
+        "procStepName":{"shape":"String"},
+        "procStepNumber":{"shape":"Integer"},
+        "stepCondCode":{"shape":"String"},
+        "stepName":{"shape":"String"},
+        "stepNumber":{"shape":"Integer"},
+        "stepRestartable":{"shape":"Boolean"}
+      }
+    },
+    "JobStepRestartMarker":{
+      "type":"structure",
+      "required":["fromStep"],
+      "members":{
+        "fromProcStep":{"shape":"String"},
+        "fromStep":{"shape":"String"},
+        "toProcStep":{"shape":"String"},
+        "toStep":{"shape":"String"}
+      }
     },
     "ListApplicationVersionsRequest":{
       "type":"structure",
@@ -1790,6 +1885,31 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListBatchJobRestartPointsRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "executionId"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "executionId":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"executionId"
+        }
+      }
+    },
+    "ListBatchJobRestartPointsResponse":{
+      "type":"structure",
+      "members":{
+        "batchJobSteps":{"shape":"BatchJobStepList"}
+      }
+    },
     "ListDataSetImportHistoryRequest":{
       "type":"structure",
       "required":["applicationId"],
@@ -1832,6 +1952,11 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"maxResults"
+        },
+        "nameFilter":{
+          "shape":"String200",
+          "location":"querystring",
+          "locationName":"nameFilter"
         },
         "nextToken":{
           "shape":"NextToken",
@@ -1981,6 +2106,10 @@
         "logType":{"shape":"String20"}
       }
     },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
     "MaintenanceSchedule":{
       "type":"structure",
       "members":{
@@ -1991,7 +2120,7 @@
     "MaxResults":{
       "type":"integer",
       "box":true,
-      "max":100,
+      "max":2000,
       "min":1
     },
     "NextToken":{
@@ -2089,6 +2218,29 @@
       },
       "exception":true
     },
+    "RestartBatchJobIdentifier":{
+      "type":"structure",
+      "required":[
+        "executionId",
+        "jobStepRestartMarker"
+      ],
+      "members":{
+        "executionId":{"shape":"Identifier"},
+        "jobStepRestartMarker":{"shape":"JobStepRestartMarker"}
+      }
+    },
+    "S3BatchJobIdentifier":{
+      "type":"structure",
+      "required":[
+        "bucket",
+        "identifier"
+      ],
+      "members":{
+        "bucket":{"shape":"String"},
+        "identifier":{"shape":"JobIdentifier"},
+        "keyPrefix":{"shape":"String"}
+      }
+    },
     "ScriptBatchJobDefinition":{
       "type":"structure",
       "required":["scriptName"],
@@ -2118,6 +2270,17 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ServiceUnavailableException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":503},
+      "exception":true,
+      "fault":true,
+      "retryable":{"throttling":false}
     },
     "StartApplicationRequest":{
       "type":"structure",
@@ -2346,6 +2509,7 @@
           "location":"uri",
           "locationName":"environmentId"
         },
+        "forceUpdate":{"shape":"Boolean"},
         "instanceType":{"shape":"String20"},
         "preferredMaintenanceWindow":{"shape":"String"}
       }
@@ -2391,6 +2555,8 @@
       "enum":[
         "unknownOperation",
         "cannotParse",
+        "featureNotAvailable",
+        "unsupportedEngineVersion",
         "fieldValidationFailed",
         "other"
       ]

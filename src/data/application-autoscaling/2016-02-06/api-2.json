@@ -5,12 +5,14 @@
     "endpointPrefix":"application-autoscaling",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Application Auto Scaling",
     "serviceId":"Application Auto Scaling",
     "signatureVersion":"v4",
     "signingName":"application-autoscaling",
     "targetPrefix":"AnyScaleFrontendService",
-    "uid":"application-autoscaling-2016-02-06"
+    "uid":"application-autoscaling-2016-02-06",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DeleteScalingPolicy":{
@@ -510,7 +512,9 @@
         "ElastiCacheDatabaseMemoryUsageCountedForEvictPercentage",
         "NeptuneReaderAverageCPUUtilization",
         "SageMakerVariantProvisionedConcurrencyUtilization",
-        "ElastiCacheDatabaseCapacityUsageCountedForEvictPercentage"
+        "ElastiCacheDatabaseCapacityUsageCountedForEvictPercentage",
+        "SageMakerInferenceComponentInvocationsPerCopy",
+        "WorkSpacesAverageUserSessionsCapacityUtilization"
       ]
     },
     "MetricUnit":{"type":"string"},
@@ -685,7 +689,9 @@
         "elasticache:replication-group:NodeGroups",
         "elasticache:replication-group:Replicas",
         "neptune:cluster:ReadReplicaCount",
-        "sagemaker:variant:DesiredProvisionedConcurrency"
+        "sagemaker:variant:DesiredProvisionedConcurrency",
+        "sagemaker:inference-component:DesiredCopyCount",
+        "workspaces:workspacespool:DesiredUserSessions"
       ]
     },
     "ScalableTarget":{
@@ -844,7 +850,8 @@
         "cassandra",
         "kafka",
         "elasticache",
-        "neptune"
+        "neptune",
+        "workspaces"
       ]
     },
     "StepAdjustment":{

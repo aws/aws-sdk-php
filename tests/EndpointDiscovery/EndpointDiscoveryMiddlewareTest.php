@@ -662,7 +662,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             'discoveryCooldown'
         );
         $reflection->setAccessible(true);
-        $reflection->setValue(0);
+        $reflection->setValue(null, 0);
         $callOrder = [];
         $handler = function (
             CommandInterface $cmd,
@@ -672,7 +672,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                 // On the second trip to DescribeEndpoints, can set discoveryCooldown
                 // back to 60, allowing failure to occur naturally on next pass
                 if (in_array('describe', $callOrder)) {
-                    $reflection->setValue(60);
+                    $reflection->setValue(null, 60);
                 }
                 $callOrder[] = 'describe';
                 return $this->generateSingleDescribeResult();

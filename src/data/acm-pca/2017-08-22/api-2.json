@@ -5,12 +5,14 @@
     "endpointPrefix":"acm-pca",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"ACM-PCA",
     "serviceFullName":"AWS Certificate Manager Private Certificate Authority",
     "serviceId":"ACM PCA",
     "signatureVersion":"v4",
     "targetPrefix":"ACMPrivateCA",
-    "uid":"acm-pca-2017-08-22"
+    "uid":"acm-pca-2017-08-22",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateCertificateAuthority":{
@@ -464,7 +466,7 @@
       "type":"string",
       "max":200,
       "min":5,
-      "pattern":"arn:[\\w+=/,.@-]+:[\\w+=/,.@-]+:[\\w+=/,.@-]*:[0-9]*:[\\w+=,.@-]+(/[\\w+=,.@-]+)*"
+      "pattern":"arn:[\\w+=/,.@-]+:acm-pca:[\\w+=/,.@-]*:[0-9]*:[\\w+=,.@-]+(/[\\w+=,.@-]+)*"
     },
     "AuditReportId":{
       "type":"string",
@@ -672,7 +674,18 @@
         },
         "CustomCname":{"shape":"CnameString"},
         "S3BucketName":{"shape":"S3BucketName3To255"},
-        "S3ObjectAcl":{"shape":"S3ObjectAcl"}
+        "S3ObjectAcl":{"shape":"S3ObjectAcl"},
+        "CrlDistributionPointExtensionConfiguration":{"shape":"CrlDistributionPointExtensionConfiguration"}
+      }
+    },
+    "CrlDistributionPointExtensionConfiguration":{
+      "type":"structure",
+      "required":["OmitExtension"],
+      "members":{
+        "OmitExtension":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "CsrBlob":{
@@ -702,7 +715,7 @@
     "CustomAttributeList":{
       "type":"list",
       "member":{"shape":"CustomAttribute"},
-      "max":30,
+      "max":150,
       "min":1
     },
     "CustomExtension":{
@@ -723,7 +736,7 @@
     "CustomExtensionList":{
       "type":"list",
       "member":{"shape":"CustomExtension"},
-      "max":20,
+      "max":150,
       "min":1
     },
     "CustomObjectIdentifier":{
@@ -861,7 +874,7 @@
     "GeneralNameList":{
       "type":"list",
       "member":{"shape":"GeneralName"},
-      "max":20,
+      "max":150,
       "min":1
     },
     "GetCertificateAuthorityCertificateRequest":{
@@ -1025,14 +1038,16 @@
         "RSA_2048",
         "RSA_4096",
         "EC_prime256v1",
-        "EC_secp384r1"
+        "EC_secp384r1",
+        "SM2"
       ]
     },
     "KeyStorageSecurityStandard":{
       "type":"string",
       "enum":[
         "FIPS_140_2_LEVEL_2_OR_HIGHER",
-        "FIPS_140_2_LEVEL_3_OR_HIGHER"
+        "FIPS_140_2_LEVEL_3_OR_HIGHER",
+        "CCPC_LEVEL_1_OR_HIGHER"
       ]
     },
     "KeyUsage":{
@@ -1131,7 +1146,7 @@
     },
     "NextToken":{
       "type":"string",
-      "max":500,
+      "max":43739,
       "min":1
     },
     "OcspConfiguration":{
@@ -1346,7 +1361,8 @@
         "SHA512WITHECDSA",
         "SHA256WITHRSA",
         "SHA384WITHRSA",
-        "SHA512WITHRSA"
+        "SHA512WITHRSA",
+        "SM3WITHSM2"
       ]
     },
     "String":{"type":"string"},

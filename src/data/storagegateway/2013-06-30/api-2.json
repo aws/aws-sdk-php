@@ -5,11 +5,13 @@
     "endpointPrefix":"storagegateway",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Storage Gateway",
     "serviceId":"Storage Gateway",
     "signatureVersion":"v4",
     "targetPrefix":"StorageGateway_20130630",
-    "uid":"storagegateway-2013-06-30"
+    "uid":"storagegateway-2013-06-30",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "ActivateGateway":{
@@ -1405,6 +1407,13 @@
       "max":10,
       "min":1
     },
+    "AutomaticUpdatePolicy":{
+      "type":"string",
+      "enum":[
+        "ALL_VERSIONS",
+        "EMERGENCY_VERSIONS_ONLY"
+      ]
+    },
     "AvailabilityMonitorTestStatus":{
       "type":"string",
       "enum":[
@@ -2106,7 +2115,8 @@
         "DeprecationDate":{"shape":"DeprecationDate"},
         "GatewayCapacity":{"shape":"GatewayCapacity"},
         "SupportedGatewayCapacities":{"shape":"SupportedGatewayCapacities"},
-        "HostEnvironmentId":{"shape":"HostEnvironmentId"}
+        "HostEnvironmentId":{"shape":"HostEnvironmentId"},
+        "SoftwareVersion":{"shape":"SoftwareVersion"}
       }
     },
     "DescribeMaintenanceStartTimeInput":{
@@ -2124,7 +2134,8 @@
         "MinuteOfHour":{"shape":"MinuteOfHour"},
         "DayOfWeek":{"shape":"DayOfWeek"},
         "DayOfMonth":{"shape":"DayOfMonth"},
-        "Timezone":{"shape":"GatewayTimezone"}
+        "Timezone":{"shape":"GatewayTimezone"},
+        "SoftwareUpdatePreferences":{"shape":"SoftwareUpdatePreferences"}
       }
     },
     "DescribeNFSFileSharesInput":{
@@ -2665,7 +2676,9 @@
         "Ec2InstanceId":{"shape":"Ec2InstanceId"},
         "Ec2InstanceRegion":{"shape":"Ec2InstanceRegion"},
         "HostEnvironment":{"shape":"HostEnvironment"},
-        "HostEnvironmentId":{"shape":"HostEnvironmentId"}
+        "HostEnvironmentId":{"shape":"HostEnvironmentId"},
+        "DeprecationDate":{"shape":"DeprecationDate"},
+        "SoftwareVersion":{"shape":"SoftwareVersion"}
       }
     },
     "GatewayName":{
@@ -2809,7 +2822,7 @@
       "type":"string",
       "max":2048,
       "min":7,
-      "pattern":"(^arn:(aws|aws-cn|aws-us-gov):kms:([a-zA-Z0-9-]+):([0-9]+):(key|alias)/(\\S+)$)|(^alias/(\\S+)$)"
+      "pattern":"(^arn:(aws(|-cn|-us-gov|-iso[A-Za-z0-9_-]*)):kms:([a-zA-Z0-9-]+):([0-9]+):(key|alias)/(\\S+)$)|(^alias/(\\S+)$)"
     },
     "LastSoftwareUpdate":{
       "type":"string",
@@ -3058,7 +3071,8 @@
         "Ipv4Address":{"shape":"string"},
         "MacAddress":{"shape":"string"},
         "Ipv6Address":{"shape":"string"}
-      }
+      },
+      "sensitive":true
     },
     "NetworkInterfaceId":{
       "type":"string",
@@ -3286,7 +3300,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov):iam::([0-9]+):role/(\\S+)$"
+      "pattern":"^arn:(aws(|-cn|-us-gov|-iso[A-Za-z0-9_-]*)):iam::([0-9]+):role/(\\S+)$"
     },
     "SMBFileShareInfo":{
       "type":"structure",
@@ -3344,7 +3358,8 @@
       "enum":[
         "ClientSpecified",
         "MandatorySigning",
-        "MandatoryEncryption"
+        "MandatoryEncryption",
+        "MandatoryEncryptionNoAes128"
       ]
     },
     "ServiceUnavailableError":{
@@ -3411,11 +3426,18 @@
       "type":"string",
       "pattern":"\\Asnap-([0-9A-Fa-f]{8}|[0-9A-Fa-f]{17})\\z"
     },
+    "SoftwareUpdatePreferences":{
+      "type":"structure",
+      "members":{
+        "AutomaticUpdatePolicy":{"shape":"AutomaticUpdatePolicy"}
+      }
+    },
     "SoftwareUpdatesEndDate":{
       "type":"string",
       "max":25,
       "min":1
     },
+    "SoftwareVersion":{"type":"string"},
     "Squash":{
       "type":"string",
       "max":15,
@@ -3538,7 +3560,7 @@
       "type":"string",
       "max":500,
       "min":50,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov):storagegateway:[a-z\\-0-9]+:[0-9]+:tape\\/[0-9A-Z]{5,16}$"
+      "pattern":"arn:(aws(|-cn|-us-gov|-iso[A-Za-z0-9_-]*)):storagegateway:[a-z\\-0-9]+:[0-9]+:tape\\/[0-9A-Z]{5,16}$"
     },
     "TapeARNs":{
       "type":"list",
@@ -3766,17 +3788,14 @@
     },
     "UpdateMaintenanceStartTimeInput":{
       "type":"structure",
-      "required":[
-        "GatewayARN",
-        "HourOfDay",
-        "MinuteOfHour"
-      ],
+      "required":["GatewayARN"],
       "members":{
         "GatewayARN":{"shape":"GatewayARN"},
         "HourOfDay":{"shape":"HourOfDay"},
         "MinuteOfHour":{"shape":"MinuteOfHour"},
         "DayOfWeek":{"shape":"DayOfWeek"},
-        "DayOfMonth":{"shape":"DayOfMonth"}
+        "DayOfMonth":{"shape":"DayOfMonth"},
+        "SoftwareUpdatePreferences":{"shape":"SoftwareUpdatePreferences"}
       }
     },
     "UpdateMaintenanceStartTimeOutput":{

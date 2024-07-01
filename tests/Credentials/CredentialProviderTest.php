@@ -933,7 +933,7 @@ EOT;
 
     public function testAssumeRoleInConfigFromCredentialsSourceEcsContainer()
     {
-        $this->expectExceptionMessage("Error retrieving credential from ECS");
+        $this->expectExceptionMessage("Error retrieving credentials from container metadata");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
 

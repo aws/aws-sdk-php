@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-12-25",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"mediapackagev2",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"mediapackagev2",
     "serviceFullName":"AWS Elemental MediaPackage v2",
     "serviceId":"MediaPackageV2",
@@ -276,7 +277,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListOriginEndpoints":{
@@ -443,6 +445,13 @@
       },
       "exception":true
     },
+    "AdMarkerDash":{
+      "type":"string",
+      "enum":[
+        "BINARY",
+        "XML"
+      ]
+    },
     "AdMarkerHls":{
       "type":"string",
       "enum":["DATERANGE"]
@@ -464,7 +473,7 @@
         "Arn":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
-        "Description":{"shape":"String"}
+        "Description":{"shape":"ResourceDescription"}
       }
     },
     "ChannelGroupsList":{
@@ -490,7 +499,8 @@
         "ChannelGroupName":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
-        "Description":{"shape":"String"}
+        "Description":{"shape":"ResourceDescription"},
+        "InputType":{"shape":"InputType"}
       }
     },
     "CmafEncryptionMethod":{
@@ -561,7 +571,8 @@
         "EgressDomain":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
-        "Description":{"shape":"String"},
+        "ETag":{"shape":"EntityTag"},
+        "Description":{"shape":"ResourceDescription"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -584,6 +595,7 @@
           "location":"header",
           "locationName":"x-amzn-client-token"
         },
+        "InputType":{"shape":"InputType"},
         "Description":{"shape":"ResourceDescription"},
         "Tags":{
           "shape":"TagMap",
@@ -606,10 +618,56 @@
         "ChannelGroupName":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
-        "Description":{"shape":"String"},
+        "Description":{"shape":"ResourceDescription"},
         "IngestEndpoints":{"shape":"IngestEndpointList"},
+        "InputType":{"shape":"InputType"},
+        "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
       }
+    },
+    "CreateDashManifestConfiguration":{
+      "type":"structure",
+      "required":["ManifestName"],
+      "members":{
+        "ManifestName":{"shape":"ManifestName"},
+        "ManifestWindowSeconds":{"shape":"CreateDashManifestConfigurationManifestWindowSecondsInteger"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "MinUpdatePeriodSeconds":{"shape":"CreateDashManifestConfigurationMinUpdatePeriodSecondsInteger"},
+        "MinBufferTimeSeconds":{"shape":"CreateDashManifestConfigurationMinBufferTimeSecondsInteger"},
+        "SuggestedPresentationDelaySeconds":{"shape":"CreateDashManifestConfigurationSuggestedPresentationDelaySecondsInteger"},
+        "SegmentTemplateFormat":{"shape":"DashSegmentTemplateFormat"},
+        "PeriodTriggers":{"shape":"DashPeriodTriggers"},
+        "ScteDash":{"shape":"ScteDash"},
+        "DrmSignaling":{"shape":"DashDrmSignaling"},
+        "UtcTiming":{"shape":"DashUtcTiming"}
+      }
+    },
+    "CreateDashManifestConfigurationManifestWindowSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":30
+    },
+    "CreateDashManifestConfigurationMinBufferTimeSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":3600,
+      "min":0
+    },
+    "CreateDashManifestConfigurationMinUpdatePeriodSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":3600,
+      "min":1
+    },
+    "CreateDashManifestConfigurationSuggestedPresentationDelaySecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":3600,
+      "min":0
+    },
+    "CreateDashManifests":{
+      "type":"list",
+      "member":{"shape":"CreateDashManifestConfiguration"}
     },
     "CreateHlsManifestConfiguration":{
       "type":"structure",
@@ -619,13 +677,13 @@
         "ChildManifestName":{"shape":"ManifestName"},
         "ScteHls":{"shape":"ScteHls"},
         "ManifestWindowSeconds":{"shape":"CreateHlsManifestConfigurationManifestWindowSecondsInteger"},
-        "ProgramDateTimeIntervalSeconds":{"shape":"CreateHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"}
+        "ProgramDateTimeIntervalSeconds":{"shape":"CreateHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"}
       }
     },
     "CreateHlsManifestConfigurationManifestWindowSecondsInteger":{
       "type":"integer",
       "box":true,
-      "max":900,
       "min":30
     },
     "CreateHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger":{
@@ -646,13 +704,13 @@
         "ChildManifestName":{"shape":"ManifestName"},
         "ScteHls":{"shape":"ScteHls"},
         "ManifestWindowSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger"},
-        "ProgramDateTimeIntervalSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"}
+        "ProgramDateTimeIntervalSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"}
       }
     },
     "CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger":{
       "type":"integer",
       "box":true,
-      "max":900,
       "min":30
     },
     "CreateLowLatencyHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger":{
@@ -697,6 +755,8 @@
         "StartoverWindowSeconds":{"shape":"CreateOriginEndpointRequestStartoverWindowSecondsInteger"},
         "HlsManifests":{"shape":"CreateHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"CreateLowLatencyHlsManifests"},
+        "DashManifests":{"shape":"CreateDashManifests"},
+        "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -731,8 +791,59 @@
         "StartoverWindowSeconds":{"shape":"Integer"},
         "HlsManifests":{"shape":"GetHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"GetLowLatencyHlsManifests"},
+        "DashManifests":{"shape":"GetDashManifests"},
+        "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
+        "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
       }
+    },
+    "DashDrmSignaling":{
+      "type":"string",
+      "enum":[
+        "INDIVIDUAL",
+        "REFERENCED"
+      ]
+    },
+    "DashPeriodTrigger":{
+      "type":"string",
+      "enum":[
+        "AVAILS",
+        "DRM_KEY_ROTATION",
+        "SOURCE_CHANGES",
+        "SOURCE_DISRUPTIONS",
+        "NONE"
+      ]
+    },
+    "DashPeriodTriggers":{
+      "type":"list",
+      "member":{"shape":"DashPeriodTrigger"},
+      "max":100,
+      "min":0
+    },
+    "DashSegmentTemplateFormat":{
+      "type":"string",
+      "enum":["NUMBER_WITH_TIMELINE"]
+    },
+    "DashUtcTiming":{
+      "type":"structure",
+      "members":{
+        "TimingMode":{"shape":"DashUtcTimingMode"},
+        "TimingSource":{"shape":"DashUtcTimingTimingSourceString"}
+      }
+    },
+    "DashUtcTimingMode":{
+      "type":"string",
+      "enum":[
+        "HTTP_HEAD",
+        "HTTP_ISO",
+        "HTTP_XSDATE",
+        "UTC_DIRECT"
+      ]
+    },
+    "DashUtcTimingTimingSourceString":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "DeleteChannelGroupRequest":{
       "type":"structure",
@@ -910,6 +1021,51 @@
         "CmafEncryptionMethod":{"shape":"CmafEncryptionMethod"}
       }
     },
+    "EndpointErrorCondition":{
+      "type":"string",
+      "enum":[
+        "STALE_MANIFEST",
+        "INCOMPLETE_MANIFEST",
+        "MISSING_DRM_KEY",
+        "SLATE_INPUT"
+      ]
+    },
+    "EndpointErrorConditions":{
+      "type":"list",
+      "member":{"shape":"EndpointErrorCondition"}
+    },
+    "EntityTag":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\S]+"
+    },
+    "FilterConfiguration":{
+      "type":"structure",
+      "members":{
+        "ManifestFilter":{"shape":"FilterConfigurationManifestFilterString"},
+        "Start":{"shape":"Timestamp"},
+        "End":{"shape":"Timestamp"},
+        "TimeDelaySeconds":{"shape":"FilterConfigurationTimeDelaySecondsInteger"}
+      }
+    },
+    "FilterConfigurationManifestFilterString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "FilterConfigurationTimeDelaySecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1209600,
+      "min":0
+    },
+    "ForceEndpointErrorConfiguration":{
+      "type":"structure",
+      "members":{
+        "EndpointErrorConditions":{"shape":"EndpointErrorConditions"}
+      }
+    },
     "GetChannelGroupRequest":{
       "type":"structure",
       "required":["ChannelGroupName"],
@@ -936,7 +1092,8 @@
         "EgressDomain":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
-        "Description":{"shape":"String"},
+        "Description":{"shape":"ResourceDescription"},
+        "ETag":{"shape":"EntityTag"},
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
@@ -972,7 +1129,7 @@
       "members":{
         "ChannelGroupName":{"shape":"String"},
         "ChannelName":{"shape":"String"},
-        "Policy":{"shape":"String"}
+        "Policy":{"shape":"PolicyText"}
       }
     },
     "GetChannelRequest":{
@@ -1009,10 +1166,37 @@
         "ChannelGroupName":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
-        "Description":{"shape":"String"},
+        "Description":{"shape":"ResourceDescription"},
         "IngestEndpoints":{"shape":"IngestEndpointList"},
+        "InputType":{"shape":"InputType"},
+        "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
       }
+    },
+    "GetDashManifestConfiguration":{
+      "type":"structure",
+      "required":[
+        "ManifestName",
+        "Url"
+      ],
+      "members":{
+        "ManifestName":{"shape":"ResourceName"},
+        "Url":{"shape":"String"},
+        "ManifestWindowSeconds":{"shape":"Integer"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "MinUpdatePeriodSeconds":{"shape":"Integer"},
+        "MinBufferTimeSeconds":{"shape":"Integer"},
+        "SuggestedPresentationDelaySeconds":{"shape":"Integer"},
+        "SegmentTemplateFormat":{"shape":"DashSegmentTemplateFormat"},
+        "PeriodTriggers":{"shape":"DashPeriodTriggers"},
+        "ScteDash":{"shape":"ScteDash"},
+        "DrmSignaling":{"shape":"DashDrmSignaling"},
+        "UtcTiming":{"shape":"DashUtcTiming"}
+      }
+    },
+    "GetDashManifests":{
+      "type":"list",
+      "member":{"shape":"GetDashManifestConfiguration"}
     },
     "GetHlsManifestConfiguration":{
       "type":"structure",
@@ -1026,7 +1210,8 @@
         "ChildManifestName":{"shape":"ResourceName"},
         "ManifestWindowSeconds":{"shape":"Integer"},
         "ProgramDateTimeIntervalSeconds":{"shape":"Integer"},
-        "ScteHls":{"shape":"ScteHls"}
+        "ScteHls":{"shape":"ScteHls"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"}
       }
     },
     "GetHlsManifests":{
@@ -1045,7 +1230,8 @@
         "ChildManifestName":{"shape":"ResourceName"},
         "ManifestWindowSeconds":{"shape":"Integer"},
         "ProgramDateTimeIntervalSeconds":{"shape":"Integer"},
-        "ScteHls":{"shape":"ScteHls"}
+        "ScteHls":{"shape":"ScteHls"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"}
       }
     },
     "GetLowLatencyHlsManifests":{
@@ -1086,10 +1272,10 @@
         "Policy"
       ],
       "members":{
-        "ChannelGroupName":{"shape":"String"},
-        "ChannelName":{"shape":"String"},
-        "OriginEndpointName":{"shape":"String"},
-        "Policy":{"shape":"String"}
+        "ChannelGroupName":{"shape":"ResourceName"},
+        "ChannelName":{"shape":"ResourceName"},
+        "OriginEndpointName":{"shape":"ResourceName"},
+        "Policy":{"shape":"PolicyText"}
       }
     },
     "GetOriginEndpointRequest":{
@@ -1142,6 +1328,9 @@
         "StartoverWindowSeconds":{"shape":"Integer"},
         "HlsManifests":{"shape":"GetHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"GetLowLatencyHlsManifests"},
+        "DashManifests":{"shape":"GetDashManifests"},
+        "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
+        "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1161,6 +1350,13 @@
     "IngestEndpointList":{
       "type":"list",
       "member":{"shape":"IngestEndpoint"}
+    },
+    "InputType":{
+      "type":"string",
+      "enum":[
+        "HLS",
+        "CMAF"
+      ]
     },
     "Integer":{
       "type":"integer",
@@ -1224,6 +1420,18 @@
         "Items":{"shape":"ChannelList"},
         "NextToken":{"shape":"String"}
       }
+    },
+    "ListDashManifestConfiguration":{
+      "type":"structure",
+      "required":["ManifestName"],
+      "members":{
+        "ManifestName":{"shape":"ResourceName"},
+        "Url":{"shape":"String"}
+      }
+    },
+    "ListDashManifests":{
+      "type":"list",
+      "member":{"shape":"ListDashManifestConfiguration"}
     },
     "ListHlsManifestConfiguration":{
       "type":"structure",
@@ -1338,7 +1546,9 @@
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
         "HlsManifests":{"shape":"ListHlsManifests"},
-        "LowLatencyHlsManifests":{"shape":"ListLowLatencyHlsManifests"}
+        "LowLatencyHlsManifests":{"shape":"ListLowLatencyHlsManifests"},
+        "DashManifests":{"shape":"ListDashManifests"},
+        "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"}
       }
     },
     "OriginEndpointsList":{
@@ -1468,6 +1678,12 @@
       "type":"structure",
       "members":{
         "ScteFilter":{"shape":"ScteFilterList"}
+      }
+    },
+    "ScteDash":{
+      "type":"structure",
+      "members":{
+        "AdMarkerDash":{"shape":"AdMarkerDash"}
       }
     },
     "ScteFilter":{
@@ -1648,6 +1864,11 @@
           "location":"uri",
           "locationName":"ChannelGroupName"
         },
+        "ETag":{
+          "shape":"EntityTag",
+          "location":"header",
+          "locationName":"x-amzn-update-if-match"
+        },
         "Description":{"shape":"ResourceDescription"}
       }
     },
@@ -1666,7 +1887,8 @@
         "EgressDomain":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
-        "Description":{"shape":"String"},
+        "Description":{"shape":"ResourceDescription"},
+        "ETag":{"shape":"EntityTag"},
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
@@ -1690,6 +1912,11 @@
           "location":"uri",
           "locationName":"ChannelName"
         },
+        "ETag":{
+          "shape":"EntityTag",
+          "location":"header",
+          "locationName":"x-amzn-update-if-match"
+        },
         "Description":{"shape":"ResourceDescription"}
       }
     },
@@ -1708,8 +1935,10 @@
         "ChannelGroupName":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
-        "Description":{"shape":"String"},
+        "Description":{"shape":"ResourceDescription"},
         "IngestEndpoints":{"shape":"IngestEndpointList"},
+        "InputType":{"shape":"InputType"},
+        "ETag":{"shape":"EntityTag"},
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
@@ -1745,7 +1974,14 @@
         "Description":{"shape":"ResourceDescription"},
         "StartoverWindowSeconds":{"shape":"UpdateOriginEndpointRequestStartoverWindowSecondsInteger"},
         "HlsManifests":{"shape":"CreateHlsManifests"},
-        "LowLatencyHlsManifests":{"shape":"CreateLowLatencyHlsManifests"}
+        "LowLatencyHlsManifests":{"shape":"CreateLowLatencyHlsManifests"},
+        "DashManifests":{"shape":"CreateDashManifests"},
+        "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
+        "ETag":{
+          "shape":"EntityTag",
+          "location":"header",
+          "locationName":"x-amzn-update-if-match"
+        }
       }
     },
     "UpdateOriginEndpointRequestStartoverWindowSecondsInteger":{
@@ -1779,10 +2015,13 @@
         "StartoverWindowSeconds":{"shape":"Integer"},
         "HlsManifests":{"shape":"GetHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"GetLowLatencyHlsManifests"},
+        "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
+        "ETag":{"shape":"EntityTag"},
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
-        }
+        },
+        "DashManifests":{"shape":"GetDashManifests"}
       }
     },
     "ValidationException":{
@@ -1809,6 +2048,7 @@
         "ENCRYPTION_CONTRACT_SHARED",
         "NUM_MANIFESTS_LOW",
         "NUM_MANIFESTS_HIGH",
+        "MANIFEST_DRM_SYSTEMS_INCOMPATIBLE",
         "DRM_SYSTEMS_ENCRYPTION_METHOD_INCOMPATIBLE",
         "ROLE_ARN_NOT_ASSUMABLE",
         "ROLE_ARN_LENGTH_OUT_OF_RANGE",
@@ -1829,7 +2069,19 @@
         "MEMBER_MIN_LENGTH",
         "MEMBER_MAX_LENGTH",
         "MEMBER_INVALID_ENUM_VALUE",
-        "MEMBER_DOES_NOT_MATCH_PATTERN"
+        "MEMBER_DOES_NOT_MATCH_PATTERN",
+        "INVALID_MANIFEST_FILTER",
+        "INVALID_TIME_DELAY_SECONDS",
+        "END_TIME_EARLIER_THAN_START_TIME",
+        "TS_CONTAINER_TYPE_WITH_DASH_MANIFEST",
+        "DIRECT_MODE_WITH_TIMING_SOURCE",
+        "NONE_MODE_WITH_TIMING_SOURCE",
+        "TIMING_SOURCE_MISSING",
+        "UPDATE_PERIOD_SMALLER_THAN_SEGMENT_DURATION",
+        "PERIOD_TRIGGERS_NONE_SPECIFIED_WITH_ADDITIONAL_VALUES",
+        "DRM_SIGNALING_MISMATCH_SEGMENT_ENCRYPTION_STATUS",
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_FORCE_ENDPOINT_ERROR_CONFIGURATION",
+        "SOURCE_DISRUPTIONS_ENABLED_INCORRECTLY"
       ]
     }
   }
