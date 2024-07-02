@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.315.4 - 2024-07-02
 
 * `Aws\S3` - Added response overrides to Head Object requests.
 * `Aws\FMS` - Increases Customer API's ManagedServiceData length
