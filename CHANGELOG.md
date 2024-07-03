@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkSpaces` - Fix create workspace bundle RootStorage/UserStorage to accept non null values
+* `Aws\DirectConnect` - This update includes documentation for support of new native 400 GBps ports for Direct Connect.
+* `Aws\Rekognition` - This release adds support for tagging projects and datasets with the CreateProject and CreateDataset APIs.
+* `Aws\Organizations` - Added a new reason under ConstraintViolationException in RegisterDelegatedAdministrator API to prevent registering suspended accounts as delegated administrator of a service.
+* `Aws\ApplicationAutoScaling` - Doc only update for Application Auto Scaling that fixes resource name.
+
 ## 3.315.4 - 2024-07-02
 
 * `Aws\S3` - Added response overrides to Head Object requests.
