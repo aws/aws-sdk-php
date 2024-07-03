@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.315.5 - 2024-07-03
 
 * `Aws\WorkSpaces` - Fix create workspace bundle RootStorage/UserStorage to accept non null values
 * `Aws\DirectConnect` - This update includes documentation for support of new native 400 GBps ports for Direct Connect.
