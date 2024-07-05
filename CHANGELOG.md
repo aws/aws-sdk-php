@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.315.6 - 2024-07-05
 
 * `Aws\ECR` - This release for Amazon ECR makes change to bring the SDK into sync with the API.
 * `Aws\PaymentCryptographyData` - Added further restrictions on logging of potentially sensitive inputs and outputs.
