@@ -2900,6 +2900,9 @@
                 },
                 "qAppsConfiguration": {
                     "shape": "QAppsConfiguration"
+                },
+                "personalizationConfiguration": {
+                    "shape": "PersonalizationConfiguration"
                 }
             }
         },
@@ -4127,6 +4130,9 @@
                 },
                 "qAppsConfiguration": {
                     "shape": "QAppsConfiguration"
+                },
+                "personalizationConfiguration": {
+                    "shape": "PersonalizationConfiguration"
                 }
             }
         },
@@ -5624,6 +5630,24 @@
             "type": "string",
             "sensitive": true
         },
+        "PersonalizationConfiguration": {
+            "type": "structure",
+            "required": [
+                "personalizationControlMode"
+            ],
+            "members": {
+                "personalizationControlMode": {
+                    "shape": "PersonalizationControlMode"
+                }
+            }
+        },
+        "PersonalizationControlMode": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
+            ]
+        },
         "Plugin": {
             "type": "structure",
             "members": {
@@ -6574,6 +6598,9 @@
                 },
                 "qAppsConfiguration": {
                     "shape": "QAppsConfiguration"
+                },
+                "personalizationConfiguration": {
+                    "shape": "PersonalizationConfiguration"
                 }
             }
         },

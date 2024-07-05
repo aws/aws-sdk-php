@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECR` - This release for Amazon ECR makes change to bring the SDK into sync with the API.
+* `Aws\PaymentCryptographyData` - Added further restrictions on logging of potentially sensitive inputs and outputs.
+* `Aws\QBusiness` - Add personalization to Q Applications. Customers can enable or disable personalization when creating or updating a Q application with the personalization configuration.
+* `Aws\ACM` - Documentation updates, including fixes for xml formatting, broken links, and ListCertificates description.
+
 ## 3.315.5 - 2024-07-03
 
 * `Aws\WorkSpaces` - Fix create workspace bundle RootStorage/UserStorage to accept non null values
