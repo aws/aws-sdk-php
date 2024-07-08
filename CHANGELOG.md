@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.316.0 - 2024-07-08
 
 * `Aws\ElasticBeanstalk` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
 * `Aws\CodeDeploy` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
