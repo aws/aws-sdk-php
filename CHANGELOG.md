@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.316.1 - 2024-07-09
 
 * `Aws\OpenSearchService` - This release adds support for enabling or disabling Natural Language Query Processing feature for Amazon OpenSearch Service domains, and provides visibility into the current state of the setup or tear-down.
 * `Aws\DataZone` - This release deprecates dataProductItem field from SearchInventoryResultItem, along with some unused DataProduct shapes
