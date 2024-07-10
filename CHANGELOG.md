@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.316.2 - 2024-07-10
 
 * `Aws\EC2` - Add parameters to enable provisioning IPAM BYOIPv4 space at a Local Zone Network Border Group level
 * `Aws\Batch` - This feature allows AWS Batch Jobs with EKS container orchestration type to be run as Multi-Node Parallel Jobs.
