@@ -12,6 +12,24 @@
     "uid":"bedrock-runtime-2023-09-30"
   },
   "operations":{
+    "ApplyGuardrail":{
+      "name":"ApplyGuardrail",
+      "http":{
+        "method":"POST",
+        "requestUri":"/guardrail/{guardrailIdentifier}/version/{guardrailVersion}/apply",
+        "responseCode":200
+      },
+      "input":{"shape":"ApplyGuardrailRequest"},
+      "output":{"shape":"ApplyGuardrailResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "Converse":{
       "name":"Converse",
       "http":{
@@ -111,6 +129,44 @@
     "AnyToolChoice":{
       "type":"structure",
       "members":{
+      }
+    },
+    "ApplyGuardrailRequest":{
+      "type":"structure",
+      "required":[
+        "guardrailIdentifier",
+        "guardrailVersion",
+        "source",
+        "content"
+      ],
+      "members":{
+        "guardrailIdentifier":{
+          "shape":"GuardrailIdentifier",
+          "location":"uri",
+          "locationName":"guardrailIdentifier"
+        },
+        "guardrailVersion":{
+          "shape":"GuardrailVersion",
+          "location":"uri",
+          "locationName":"guardrailVersion"
+        },
+        "source":{"shape":"GuardrailContentSource"},
+        "content":{"shape":"GuardrailContentBlockList"}
+      }
+    },
+    "ApplyGuardrailResponse":{
+      "type":"structure",
+      "required":[
+        "usage",
+        "action",
+        "outputs",
+        "assessments"
+      ],
+      "members":{
+        "usage":{"shape":"GuardrailUsage"},
+        "action":{"shape":"GuardrailAction"},
+        "outputs":{"shape":"GuardrailOutputContentList"},
+        "assessments":{"shape":"GuardrailAssessmentList"}
       }
     },
     "AutoToolChoice":{
@@ -399,13 +455,21 @@
       "type":"blob",
       "min":1
     },
+    "GuardrailAction":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "GUARDRAIL_INTERVENED"
+      ]
+    },
     "GuardrailAssessment":{
       "type":"structure",
       "members":{
         "topicPolicy":{"shape":"GuardrailTopicPolicyAssessment"},
         "contentPolicy":{"shape":"GuardrailContentPolicyAssessment"},
         "wordPolicy":{"shape":"GuardrailWordPolicyAssessment"},
-        "sensitiveInformationPolicy":{"shape":"GuardrailSensitiveInformationPolicyAssessment"}
+        "sensitiveInformationPolicy":{"shape":"GuardrailSensitiveInformationPolicyAssessment"},
+        "contextualGroundingPolicy":{"shape":"GuardrailContextualGroundingPolicyAssessment"}
       }
     },
     "GuardrailAssessmentList":{
@@ -433,6 +497,17 @@
         "guardrailVersion":{"shape":"GuardrailVersion"},
         "trace":{"shape":"GuardrailTrace"}
       }
+    },
+    "GuardrailContentBlock":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"GuardrailTextBlock"}
+      },
+      "union":true
+    },
+    "GuardrailContentBlockList":{
+      "type":"list",
+      "member":{"shape":"GuardrailContentBlock"}
     },
     "GuardrailContentFilter":{
       "type":"structure",
@@ -482,6 +557,84 @@
         "filters":{"shape":"GuardrailContentFilterList"}
       }
     },
+    "GuardrailContentPolicyUnitsProcessed":{
+      "type":"integer",
+      "box":true
+    },
+    "GuardrailContentQualifier":{
+      "type":"string",
+      "enum":[
+        "grounding_source",
+        "query",
+        "guard_content"
+      ]
+    },
+    "GuardrailContentQualifierList":{
+      "type":"list",
+      "member":{"shape":"GuardrailContentQualifier"}
+    },
+    "GuardrailContentSource":{
+      "type":"string",
+      "enum":[
+        "INPUT",
+        "OUTPUT"
+      ]
+    },
+    "GuardrailContextualGroundingFilter":{
+      "type":"structure",
+      "required":[
+        "type",
+        "threshold",
+        "score",
+        "action"
+      ],
+      "members":{
+        "type":{"shape":"GuardrailContextualGroundingFilterType"},
+        "threshold":{"shape":"GuardrailContextualGroundingFilterThresholdDouble"},
+        "score":{"shape":"GuardrailContextualGroundingFilterScoreDouble"},
+        "action":{"shape":"GuardrailContextualGroundingPolicyAction"}
+      }
+    },
+    "GuardrailContextualGroundingFilterScoreDouble":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0
+    },
+    "GuardrailContextualGroundingFilterThresholdDouble":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0
+    },
+    "GuardrailContextualGroundingFilterType":{
+      "type":"string",
+      "enum":[
+        "GROUNDING",
+        "RELEVANCE"
+      ]
+    },
+    "GuardrailContextualGroundingFilters":{
+      "type":"list",
+      "member":{"shape":"GuardrailContextualGroundingFilter"}
+    },
+    "GuardrailContextualGroundingPolicyAction":{
+      "type":"string",
+      "enum":[
+        "BLOCKED",
+        "NONE"
+      ]
+    },
+    "GuardrailContextualGroundingPolicyAssessment":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"GuardrailContextualGroundingFilters"}
+      }
+    },
+    "GuardrailContextualGroundingPolicyUnitsProcessed":{
+      "type":"integer",
+      "box":true
+    },
     "GuardrailConverseContentBlock":{
       "type":"structure",
       "members":{
@@ -489,11 +642,24 @@
       },
       "union":true
     },
+    "GuardrailConverseContentQualifier":{
+      "type":"string",
+      "enum":[
+        "grounding_source",
+        "query",
+        "guard_content"
+      ]
+    },
+    "GuardrailConverseContentQualifierList":{
+      "type":"list",
+      "member":{"shape":"GuardrailConverseContentQualifier"}
+    },
     "GuardrailConverseTextBlock":{
       "type":"structure",
       "required":["text"],
       "members":{
-        "text":{"shape":"String"}
+        "text":{"shape":"String"},
+        "qualifiers":{"shape":"GuardrailConverseContentQualifierList"}
       }
     },
     "GuardrailCustomWord":{
@@ -537,6 +703,16 @@
     "GuardrailManagedWordType":{
       "type":"string",
       "enum":["PROFANITY"]
+    },
+    "GuardrailOutputContent":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"GuardrailOutputText"}
+      }
+    },
+    "GuardrailOutputContentList":{
+      "type":"list",
+      "member":{"shape":"GuardrailOutputContent"}
     },
     "GuardrailOutputText":{"type":"string"},
     "GuardrailPiiEntityFilter":{
@@ -624,6 +800,14 @@
         "regexes":{"shape":"GuardrailRegexFilterList"}
       }
     },
+    "GuardrailSensitiveInformationPolicyFreeUnitsProcessed":{
+      "type":"integer",
+      "box":true
+    },
+    "GuardrailSensitiveInformationPolicyUnitsProcessed":{
+      "type":"integer",
+      "box":true
+    },
     "GuardrailStreamConfiguration":{
       "type":"structure",
       "required":[
@@ -643,6 +827,14 @@
         "sync",
         "async"
       ]
+    },
+    "GuardrailTextBlock":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "text":{"shape":"String"},
+        "qualifiers":{"shape":"GuardrailContentQualifierList"}
+      }
     },
     "GuardrailTopic":{
       "type":"structure",
@@ -672,6 +864,10 @@
         "topics":{"shape":"GuardrailTopicList"}
       }
     },
+    "GuardrailTopicPolicyUnitsProcessed":{
+      "type":"integer",
+      "box":true
+    },
     "GuardrailTopicType":{
       "type":"string",
       "enum":["DENY"]
@@ -689,6 +885,25 @@
         "modelOutput":{"shape":"ModelOutputs"},
         "inputAssessment":{"shape":"GuardrailAssessmentMap"},
         "outputAssessments":{"shape":"GuardrailAssessmentListMap"}
+      }
+    },
+    "GuardrailUsage":{
+      "type":"structure",
+      "required":[
+        "topicPolicyUnits",
+        "contentPolicyUnits",
+        "wordPolicyUnits",
+        "sensitiveInformationPolicyUnits",
+        "sensitiveInformationPolicyFreeUnits",
+        "contextualGroundingPolicyUnits"
+      ],
+      "members":{
+        "topicPolicyUnits":{"shape":"GuardrailTopicPolicyUnitsProcessed"},
+        "contentPolicyUnits":{"shape":"GuardrailContentPolicyUnitsProcessed"},
+        "wordPolicyUnits":{"shape":"GuardrailWordPolicyUnitsProcessed"},
+        "sensitiveInformationPolicyUnits":{"shape":"GuardrailSensitiveInformationPolicyUnitsProcessed"},
+        "sensitiveInformationPolicyFreeUnits":{"shape":"GuardrailSensitiveInformationPolicyFreeUnitsProcessed"},
+        "contextualGroundingPolicyUnits":{"shape":"GuardrailContextualGroundingPolicyUnitsProcessed"}
       }
     },
     "GuardrailVersion":{
@@ -709,6 +924,10 @@
         "customWords":{"shape":"GuardrailCustomWordList"},
         "managedWordLists":{"shape":"GuardrailManagedWordList"}
       }
+    },
+    "GuardrailWordPolicyUnitsProcessed":{
+      "type":"integer",
+      "box":true
     },
     "ImageBlock":{
       "type":"structure",

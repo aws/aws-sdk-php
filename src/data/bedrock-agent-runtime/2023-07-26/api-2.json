@@ -12,6 +12,49 @@
     "uid":"bedrock-agent-runtime-2023-07-26"
   },
   "operations":{
+    "DeleteAgentMemory":{
+      "name":"DeleteAgentMemory",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/agents/{agentId}/agentAliases/{agentAliasId}/memories",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteAgentMemoryRequest"},
+      "output":{"shape":"DeleteAgentMemoryResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"DependencyFailedException"},
+        {"shape":"BadGatewayException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "GetAgentMemory":{
+      "name":"GetAgentMemory",
+      "http":{
+        "method":"GET",
+        "requestUri":"/agents/{agentId}/agentAliases/{agentAliasId}/memories",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAgentMemoryRequest"},
+      "output":{"shape":"GetAgentMemoryResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"DependencyFailedException"},
+        {"shape":"BadGatewayException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "InvokeAgent":{
       "name":"InvokeAgent",
       "http":{
@@ -21,6 +64,27 @@
       },
       "input":{"shape":"InvokeAgentRequest"},
       "output":{"shape":"InvokeAgentResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"DependencyFailedException"},
+        {"shape":"BadGatewayException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
+    "InvokeFlow":{
+      "name":"InvokeFlow",
+      "http":{
+        "method":"POST",
+        "requestUri":"/flows/{flowIdentifier}/aliases/{flowAliasIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"InvokeFlowRequest"},
+      "output":{"shape":"InvokeFlowResponse"},
       "errors":[
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
@@ -93,7 +157,9 @@
       "members":{
         "actionGroupName":{"shape":"ActionGroupName"},
         "apiPath":{"shape":"ApiPath"},
+        "executionType":{"shape":"ExecutionType"},
         "function":{"shape":"Function"},
+        "invocationId":{"shape":"String"},
         "parameters":{"shape":"Parameters"},
         "requestBody":{"shape":"RequestBody"},
         "verb":{"shape":"Verb"}
@@ -242,6 +308,17 @@
         "identifier":{"shape":"Identifier"}
       }
     },
+    "ByteContentFile":{
+      "type":"structure",
+      "required":[
+        "data",
+        "mediaType"
+      ],
+      "members":{
+        "data":{"shape":"ByteContentBlob"},
+        "mediaType":{"shape":"MimeType"}
+      }
+    },
     "Citation":{
       "type":"structure",
       "members":{
@@ -252,6 +329,22 @@
     "Citations":{
       "type":"list",
       "member":{"shape":"Citation"}
+    },
+    "CodeInterpreterInvocationInput":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"String"},
+        "files":{"shape":"Files"}
+      }
+    },
+    "CodeInterpreterInvocationOutput":{
+      "type":"structure",
+      "members":{
+        "executionError":{"shape":"String"},
+        "executionOutput":{"shape":"String"},
+        "executionTimeout":{"shape":"Boolean"},
+        "files":{"shape":"Files"}
+      }
     },
     "ConflictException":{
       "type":"structure",
@@ -286,6 +379,39 @@
         "OVERRIDDEN"
       ]
     },
+    "DateTimestamp":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
+    "DeleteAgentMemoryRequest":{
+      "type":"structure",
+      "required":[
+        "agentAliasId",
+        "agentId"
+      ],
+      "members":{
+        "agentAliasId":{
+          "shape":"AgentAliasId",
+          "location":"uri",
+          "locationName":"agentAliasId"
+        },
+        "agentId":{
+          "shape":"AgentId",
+          "location":"uri",
+          "locationName":"agentId"
+        },
+        "memoryId":{
+          "shape":"MemoryId",
+          "location":"querystring",
+          "locationName":"memoryId"
+        }
+      }
+    },
+    "DeleteAgentMemoryResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DependencyFailedException":{
       "type":"structure",
       "members":{
@@ -298,9 +424,22 @@
       },
       "exception":true
     },
+    "Document":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
     "Double":{
       "type":"double",
       "box":true
+    },
+    "ExecutionType":{
+      "type":"string",
+      "enum":[
+        "LAMBDA",
+        "RETURN_CONTROL"
+      ]
     },
     "ExternalSource":{
       "type":"structure",
@@ -357,6 +496,46 @@
       },
       "sensitive":true
     },
+    "FileBody":{
+      "type":"blob",
+      "max":1000000,
+      "min":0,
+      "sensitive":true
+    },
+    "FilePart":{
+      "type":"structure",
+      "members":{
+        "files":{"shape":"OutputFiles"}
+      },
+      "event":true
+    },
+    "FileSource":{
+      "type":"structure",
+      "required":["sourceType"],
+      "members":{
+        "byteContent":{"shape":"ByteContentFile"},
+        "s3Location":{"shape":"S3ObjectFile"},
+        "sourceType":{"shape":"FileSourceType"}
+      }
+    },
+    "FileSourceType":{
+      "type":"string",
+      "enum":[
+        "S3",
+        "BYTE_CONTENT"
+      ]
+    },
+    "FileUseCase":{
+      "type":"string",
+      "enum":[
+        "CODE_INTERPRETER",
+        "CHAT"
+      ]
+    },
+    "Files":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "FilterAttribute":{
       "type":"structure",
       "required":[
@@ -388,6 +567,97 @@
     "FinalResponseString":{
       "type":"string",
       "sensitive":true
+    },
+    "FlowAliasIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10}/alias/[0-9a-zA-Z]{10})|(\\bTSTALIASID\\b|[0-9a-zA-Z]+)$"
+    },
+    "FlowCompletionEvent":{
+      "type":"structure",
+      "required":["completionReason"],
+      "members":{
+        "completionReason":{"shape":"FlowCompletionReason"}
+      },
+      "event":true,
+      "sensitive":true
+    },
+    "FlowCompletionReason":{
+      "type":"string",
+      "enum":["SUCCESS"]
+    },
+    "FlowIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10})|([0-9a-zA-Z]{10})$"
+    },
+    "FlowInput":{
+      "type":"structure",
+      "required":[
+        "content",
+        "nodeName",
+        "nodeOutputName"
+      ],
+      "members":{
+        "content":{"shape":"FlowInputContent"},
+        "nodeName":{"shape":"NodeName"},
+        "nodeOutputName":{"shape":"NodeOutputName"}
+      }
+    },
+    "FlowInputContent":{
+      "type":"structure",
+      "members":{
+        "document":{"shape":"Document"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "FlowInputs":{
+      "type":"list",
+      "member":{"shape":"FlowInput"},
+      "max":1,
+      "min":1
+    },
+    "FlowOutputContent":{
+      "type":"structure",
+      "members":{
+        "document":{"shape":"Document"}
+      },
+      "union":true
+    },
+    "FlowOutputEvent":{
+      "type":"structure",
+      "required":[
+        "content",
+        "nodeName",
+        "nodeType"
+      ],
+      "members":{
+        "content":{"shape":"FlowOutputContent"},
+        "nodeName":{"shape":"NodeName"},
+        "nodeType":{"shape":"NodeType"}
+      },
+      "event":true,
+      "sensitive":true
+    },
+    "FlowResponseStream":{
+      "type":"structure",
+      "members":{
+        "accessDeniedException":{"shape":"AccessDeniedException"},
+        "badGatewayException":{"shape":"BadGatewayException"},
+        "conflictException":{"shape":"ConflictException"},
+        "dependencyFailedException":{"shape":"DependencyFailedException"},
+        "flowCompletionEvent":{"shape":"FlowCompletionEvent"},
+        "flowOutputEvent":{"shape":"FlowOutputEvent"},
+        "internalServerException":{"shape":"InternalServerException"},
+        "resourceNotFoundException":{"shape":"ResourceNotFoundException"},
+        "serviceQuotaExceededException":{"shape":"ServiceQuotaExceededException"},
+        "throttlingException":{"shape":"ThrottlingException"},
+        "validationException":{"shape":"ValidationException"}
+      },
+      "eventstream":true
     },
     "Function":{
       "type":"string",
@@ -437,6 +707,54 @@
         "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
         "inferenceConfig":{"shape":"InferenceConfig"},
         "promptTemplate":{"shape":"PromptTemplate"}
+      }
+    },
+    "GetAgentMemoryRequest":{
+      "type":"structure",
+      "required":[
+        "agentAliasId",
+        "agentId",
+        "memoryId",
+        "memoryType"
+      ],
+      "members":{
+        "agentAliasId":{
+          "shape":"AgentAliasId",
+          "location":"uri",
+          "locationName":"agentAliasId"
+        },
+        "agentId":{
+          "shape":"AgentId",
+          "location":"uri",
+          "locationName":"agentId"
+        },
+        "maxItems":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxItems"
+        },
+        "memoryId":{
+          "shape":"MemoryId",
+          "location":"querystring",
+          "locationName":"memoryId"
+        },
+        "memoryType":{
+          "shape":"MemoryType",
+          "location":"querystring",
+          "locationName":"memoryType"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetAgentMemoryResponse":{
+      "type":"structure",
+      "members":{
+        "memoryContents":{"shape":"Memories"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "GuadrailAction":{
@@ -719,6 +1037,23 @@
         "topP":{"shape":"TopP"}
       }
     },
+    "InputFile":{
+      "type":"structure",
+      "required":[
+        "name",
+        "source",
+        "useCase"
+      ],
+      "members":{
+        "name":{"shape":"String"},
+        "source":{"shape":"FileSource"},
+        "useCase":{"shape":"FileUseCase"}
+      }
+    },
+    "InputFiles":{
+      "type":"list",
+      "member":{"shape":"InputFile"}
+    },
     "InputText":{
       "type":"string",
       "max":25000000,
@@ -742,6 +1077,7 @@
       "type":"structure",
       "members":{
         "actionGroupInvocationInput":{"shape":"ActionGroupInvocationInput"},
+        "codeInterpreterInvocationInput":{"shape":"CodeInterpreterInvocationInput"},
         "invocationType":{"shape":"InvocationType"},
         "knowledgeBaseLookupInput":{"shape":"KnowledgeBaseLookupInput"},
         "traceId":{"shape":"TraceId"}
@@ -775,7 +1111,8 @@
       "enum":[
         "ACTION_GROUP",
         "KNOWLEDGE_BASE",
-        "FINISH"
+        "FINISH",
+        "ACTION_GROUP_CODE_INTERPRETER"
       ]
     },
     "InvokeAgentRequest":{
@@ -799,6 +1136,7 @@
         "enableTrace":{"shape":"Boolean"},
         "endSession":{"shape":"Boolean"},
         "inputText":{"shape":"InputText"},
+        "memoryId":{"shape":"MemoryId"},
         "sessionId":{
           "shape":"SessionId",
           "location":"uri",
@@ -821,6 +1159,11 @@
           "location":"header",
           "locationName":"x-amzn-bedrock-agent-content-type"
         },
+        "memoryId":{
+          "shape":"MemoryId",
+          "location":"header",
+          "locationName":"x-amz-bedrock-agent-memory-id"
+        },
         "sessionId":{
           "shape":"SessionId",
           "location":"header",
@@ -829,11 +1172,56 @@
       },
       "payload":"completion"
     },
+    "InvokeFlowRequest":{
+      "type":"structure",
+      "required":[
+        "flowAliasIdentifier",
+        "flowIdentifier",
+        "inputs"
+      ],
+      "members":{
+        "flowAliasIdentifier":{
+          "shape":"FlowAliasIdentifier",
+          "location":"uri",
+          "locationName":"flowAliasIdentifier"
+        },
+        "flowIdentifier":{
+          "shape":"FlowIdentifier",
+          "location":"uri",
+          "locationName":"flowIdentifier"
+        },
+        "inputs":{"shape":"FlowInputs"}
+      }
+    },
+    "InvokeFlowResponse":{
+      "type":"structure",
+      "required":["responseStream"],
+      "members":{
+        "responseStream":{"shape":"FlowResponseStream"}
+      },
+      "payload":"responseStream"
+    },
     "KmsKeyArn":{
       "type":"string",
       "max":2048,
       "min":1,
       "pattern":"^arn:aws(|-cn|-us-gov):kms:[a-zA-Z0-9-]*:[0-9]{12}:key/[a-zA-Z0-9-]{36}$"
+    },
+    "KnowledgeBaseConfiguration":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "retrievalConfiguration"
+      ],
+      "members":{
+        "knowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "retrievalConfiguration":{"shape":"KnowledgeBaseRetrievalConfiguration"}
+      }
+    },
+    "KnowledgeBaseConfigurations":{
+      "type":"list",
+      "member":{"shape":"KnowledgeBaseConfiguration"},
+      "min":1
     },
     "KnowledgeBaseId":{
       "type":"string",
@@ -903,6 +1291,7 @@
         "generationConfiguration":{"shape":"GenerationConfiguration"},
         "knowledgeBaseId":{"shape":"KnowledgeBaseId"},
         "modelArn":{"shape":"BedrockModelArn"},
+        "orchestrationConfiguration":{"shape":"OrchestrationConfiguration"},
         "retrievalConfiguration":{"shape":"KnowledgeBaseRetrievalConfiguration"}
       }
     },
@@ -924,6 +1313,12 @@
       "min":1
     },
     "LambdaArn":{"type":"string"},
+    "MaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
     "MaxTokens":{
       "type":"integer",
       "box":true,
@@ -935,6 +1330,37 @@
       "box":true,
       "max":4096,
       "min":0
+    },
+    "Memories":{
+      "type":"list",
+      "member":{"shape":"Memory"}
+    },
+    "Memory":{
+      "type":"structure",
+      "members":{
+        "sessionSummary":{"shape":"MemorySessionSummary"}
+      },
+      "union":true
+    },
+    "MemoryId":{
+      "type":"string",
+      "max":100,
+      "min":2,
+      "pattern":"^[0-9a-zA-Z._:-]+$"
+    },
+    "MemorySessionSummary":{
+      "type":"structure",
+      "members":{
+        "memoryId":{"shape":"MemoryId"},
+        "sessionExpiryTime":{"shape":"DateTimestamp"},
+        "sessionId":{"shape":"SessionId"},
+        "sessionStartTime":{"shape":"DateTimestamp"},
+        "summaryText":{"shape":"SummaryText"}
+      }
+    },
+    "MemoryType":{
+      "type":"string",
+      "enum":["SESSION_SUMMARY"]
     },
     "MimeType":{"type":"string"},
     "ModelInvocationInput":{
@@ -956,6 +1382,26 @@
       "min":1,
       "pattern":"^\\S*$"
     },
+    "NodeName":{
+      "type":"string",
+      "pattern":"^[a-zA-Z]([_]?[0-9a-zA-Z]){0,99}$"
+    },
+    "NodeOutputName":{
+      "type":"string",
+      "pattern":"^[a-zA-Z]([_]?[0-9a-zA-Z]){0,99}$"
+    },
+    "NodeType":{
+      "type":"string",
+      "enum":[
+        "FlowInputNode",
+        "FlowOutputNode",
+        "LambdaFunctionNode",
+        "KnowledgeBaseNode",
+        "PromptNode",
+        "ConditionNode",
+        "LexNode"
+      ]
+    },
     "NonBlankString":{
       "type":"string",
       "pattern":"^[\\s\\S]*$"
@@ -964,6 +1410,7 @@
       "type":"structure",
       "members":{
         "actionGroupInvocationOutput":{"shape":"ActionGroupInvocationOutput"},
+        "codeInterpreterInvocationOutput":{"shape":"CodeInterpreterInvocationOutput"},
         "finalResponse":{"shape":"FinalResponse"},
         "knowledgeBaseLookupOutput":{"shape":"KnowledgeBaseLookupOutput"},
         "repromptResponse":{"shape":"RepromptResponse"},
@@ -971,6 +1418,13 @@
         "type":{"shape":"Type"}
       },
       "sensitive":true
+    },
+    "OrchestrationConfiguration":{
+      "type":"structure",
+      "required":["queryTransformationConfiguration"],
+      "members":{
+        "queryTransformationConfiguration":{"shape":"QueryTransformationConfiguration"}
+      }
     },
     "OrchestrationTrace":{
       "type":"structure",
@@ -982,6 +1436,21 @@
       },
       "sensitive":true,
       "union":true
+    },
+    "OutputFile":{
+      "type":"structure",
+      "members":{
+        "bytes":{"shape":"FileBody"},
+        "name":{"shape":"String"},
+        "type":{"shape":"MimeType"}
+      },
+      "sensitive":true
+    },
+    "OutputFiles":{
+      "type":"list",
+      "member":{"shape":"OutputFile"},
+      "max":5,
+      "min":0
     },
     "OutputString":{
       "type":"string",
@@ -1097,6 +1566,17 @@
         "properties":{"shape":"ParameterList"}
       }
     },
+    "QueryTransformationConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"QueryTransformationType"}
+      }
+    },
+    "QueryTransformationType":{
+      "type":"string",
+      "enum":["QUERY_DECOMPOSITION"]
+    },
     "RAGStopSequences":{
       "type":"list",
       "member":{"shape":"RAGStopSequencesMemberString"},
@@ -1165,6 +1645,7 @@
         "chunk":{"shape":"PayloadPart"},
         "conflictException":{"shape":"ConflictException"},
         "dependencyFailedException":{"shape":"DependencyFailedException"},
+        "files":{"shape":"FilePart"},
         "internalServerException":{"shape":"InternalServerException"},
         "resourceNotFoundException":{"shape":"ResourceNotFoundException"},
         "returnControl":{"shape":"ReturnControlPayload"},
@@ -1201,6 +1682,12 @@
       "max":5,
       "min":2
     },
+    "RetrievalResultConfluenceLocation":{
+      "type":"structure",
+      "members":{
+        "url":{"shape":"String"}
+      }
+    },
     "RetrievalResultContent":{
       "type":"structure",
       "required":["text"],
@@ -1213,14 +1700,24 @@
       "type":"structure",
       "required":["type"],
       "members":{
+        "confluenceLocation":{"shape":"RetrievalResultConfluenceLocation"},
         "s3Location":{"shape":"RetrievalResultS3Location"},
-        "type":{"shape":"RetrievalResultLocationType"}
+        "salesforceLocation":{"shape":"RetrievalResultSalesforceLocation"},
+        "sharePointLocation":{"shape":"RetrievalResultSharePointLocation"},
+        "type":{"shape":"RetrievalResultLocationType"},
+        "webLocation":{"shape":"RetrievalResultWebLocation"}
       },
       "sensitive":true
     },
     "RetrievalResultLocationType":{
       "type":"string",
-      "enum":["S3"]
+      "enum":[
+        "S3",
+        "WEB",
+        "CONFLUENCE",
+        "SALESFORCE",
+        "SHAREPOINT"
+      ]
     },
     "RetrievalResultMetadata":{
       "type":"map",
@@ -1244,6 +1741,24 @@
       "type":"structure",
       "members":{
         "uri":{"shape":"String"}
+      }
+    },
+    "RetrievalResultSalesforceLocation":{
+      "type":"structure",
+      "members":{
+        "url":{"shape":"String"}
+      }
+    },
+    "RetrievalResultSharePointLocation":{
+      "type":"structure",
+      "members":{
+        "url":{"shape":"String"}
+      }
+    },
+    "RetrievalResultWebLocation":{
+      "type":"structure",
+      "members":{
+        "url":{"shape":"String"}
       }
     },
     "RetrieveAndGenerateConfiguration":{
@@ -1372,6 +1887,13 @@
         "uri":{"shape":"S3Uri"}
       }
     },
+    "S3ObjectFile":{
+      "type":"structure",
+      "required":["uri"],
+      "members":{
+        "uri":{"shape":"S3Uri"}
+      }
+    },
     "S3Uri":{
       "type":"string",
       "max":1024,
@@ -1410,7 +1932,9 @@
     "SessionState":{
       "type":"structure",
       "members":{
+        "files":{"shape":"InputFiles"},
         "invocationId":{"shape":"String"},
+        "knowledgeBaseConfigurations":{"shape":"KnowledgeBaseConfigurations"},
         "promptSessionAttributes":{"shape":"PromptSessionAttributesMap"},
         "returnControlInvocationResults":{"shape":"ReturnControlInvocationResults"},
         "sessionAttributes":{"shape":"SessionAttributesMap"}
@@ -1449,6 +1973,11 @@
       "min":0
     },
     "String":{"type":"string"},
+    "SummaryText":{
+      "type":"string",
+      "max":25000000,
+      "min":0
+    },
     "Temperature":{
       "type":"float",
       "box":true,
