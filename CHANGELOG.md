@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SNS` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\GlobalAccelerator` - This feature adds exceptions to the Customer API to avoid throwing Internal Service errors
+* `Aws\AutoScaling` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\ACMPCA` - Minor refactoring of C2J model for AWS Private CA
+* `Aws\QuickSight` - Vega ally control options and Support for Reviewed Answers in Topics
+* `Aws\ARCZonalShift` - Adds the option to subscribe to get notifications when a zonal autoshift occurs in a region.
+* `Aws\Pinpoint` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\RDS` - Update path for CreateDBCluster resource identifier, and Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\CodeBuild` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\DynamoDB` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+
 ## 3.316.2 - 2024-07-10
 
 * `Aws\EC2` - Add parameters to enable provisioning IPAM BYOIPv4 space at a Local Zone Network Border Group level
