@@ -205,18 +205,19 @@ EOT;
         $this->assertSame('456', $creds->getSecurityToken());
     }
 
-    /**
-     * @server ENV_KEY=abc
-     * @server ENV_SECRET=123
-     * @server ENV_SESSION=456
-     */
-    public function testCreatesFromServerVariables()
+   public function testCreatesFromServerVariables()
     {
         $this->clearEnvExceptServer();
+        $_SERVER[CredentialProvider::ENV_KEY] = 'abc';
+        $_SERVER[CredentialProvider::ENV_SECRET] = '123';
+        $_SERVER[CredentialProvider::ENV_SESSION] = '456';
         $creds = call_user_func(CredentialProvider::env())->wait();
         $this->assertSame('abc', $creds->getAccessKeyId());
         $this->assertSame('123', $creds->getSecretKey());
         $this->assertSame('456', $creds->getSecurityToken());
+        unset($_SERVER[CredentialProvider::ENV_KEY]);
+        unset($_SERVER[CredentialProvider::ENV_SECRET]);
+        unset($_SERVER[CredentialProvider::ENV_SESSION]);
     }
 
     public function testCreatesFromEnvironmentVariablesNullToken()
