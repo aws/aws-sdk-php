@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.316.3 - 2024-07-12
 
 * `Aws\SNS` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
 * `Aws\GlobalAccelerator` - This feature adds exceptions to the Customer API to avoid throwing Internal Service errors
