@@ -2539,9 +2539,25 @@ EOXML;
     public function testExpiresRemainsTimestamp() {
         //S3 will be changing `Expires` type from `timestamp` to `string`
         // soon.  This test ensures backward compatibility
+        $apiProvider = static function () {
+            return [
+                'metadata' => [
+                    'signatureVersion' => 'v4',
+                    'protocol' => 'rest-xml'
+                ],
+                'shapes' => [
+                    'Expires' => [
+                        'type' => 'string'
+                    ],
+                ],
+            ];
+        };
+
         $s3Client = new S3Client([
-            'region' => 'us-west-2'
+            'region' => 'us-west-2',
+            'api_provider' => $apiProvider
         ]);
+
         $api = $s3Client->getApi();
         $expiresType = $api->getDefinition()['shapes']['Expires']['type'];
         $this->assertEquals('timestamp', $expiresType);

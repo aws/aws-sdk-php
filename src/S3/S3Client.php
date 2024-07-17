@@ -764,8 +764,11 @@ class S3Client extends AwsClient implements S3ClientInterface
     }
 
     /**
-     * Modifies API definition to remove `Bucket` from request URIs.
+     * If EndpointProviderV2 is used, removes `Bucket` from request URIs.
      * This is now handled by the endpoint ruleset.
+     *
+     * Additionally adds a synthetic shape `ExpiresString` and modifies
+     * `Expires` type to ensure it remains set to `timestamp`.
      *
      * @param array $args
      * @return void

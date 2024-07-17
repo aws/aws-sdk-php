@@ -1,14 +1,12 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Result;
 use Aws\S3\ExpiresParsingMiddleware;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
-use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
