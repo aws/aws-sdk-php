@@ -765,6 +765,16 @@ EOT
         $client->foo();
     }
 
+    public function testCallingEmitDeprecationWarningEmitsDeprecationWarning()
+    {
+        $this->expectDeprecation();
+        $this->expectDeprecationMessage(
+            "This method is deprecated. It will be removed in an upcoming release."
+        );
+        $client = $this->createClient();
+        $client::emitDeprecationWarning();
+    }
+
     private function createHttpsEndpointClient(array $service = [], array $config = [])
     {
         $apiProvider = function () use ($service) {
