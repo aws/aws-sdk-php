@@ -177,7 +177,7 @@ class AwsClient implements AwsClientInterface
      *   variable. Note: Specifying "profile" will cause the "credentials" key
      *   to be ignored.
      * - region: (string, required) Region to connect to. See
-     *   http://docs.aws.amazon.com/general/latest/gr/rande.html for a list of
+     *   https://docs.aws.amazon.com/general/latest/gr/rande.html for a list of
      *   available regions.
      * - retries: (int, Aws\Retry\ConfigurationInterface, Aws\CacheInterface,
      *   array, callable) Configures the retry mode and maximum number of

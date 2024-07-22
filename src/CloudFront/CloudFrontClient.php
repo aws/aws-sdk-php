@@ -255,7 +255,7 @@ class CloudFrontClient extends AwsClient
      * @return string Signed URL with authentication parameters
      * @throws \InvalidArgumentException if url, key_pair_id, or private_key
      *     were not specified.
-     * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithStreamingDistributions.html
+     * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html
      */
     public function getSignedUrl(array $options)
     {
@@ -298,7 +298,7 @@ class CloudFrontClient extends AwsClient
      * @return array Key => value pairs of signed cookies to set
      * @throws \InvalidArgumentException if url, key_pair_id, or private_key
      *     were not specified.
-     * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithStreamingDistributions.html
+     * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithStreamingDistributions.html
      */
     public function getSignedCookie(array $options)
     {

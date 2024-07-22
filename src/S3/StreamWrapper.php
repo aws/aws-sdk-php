@@ -252,7 +252,7 @@ class StreamWrapper
     /**
      * Provides information for is_dir, is_file, filesize, etc. Works on
      * buckets, keys, and prefixes.
-     * @link http://www.php.net/manual/en/streamwrapper.url-stat.php
+     * @link https://www.php.net/manual/en/streamwrapper.url-stat.php
      */
     public function url_stat($path, $flags)
     {
@@ -351,7 +351,7 @@ class StreamWrapper
      *                        STREAM_MKDIR_RECURSIVE.
      *
      * @return bool
-     * @link http://www.php.net/manual/en/streamwrapper.mkdir.php
+     * @link https://www.php.net/manual/en/streamwrapper.mkdir.php
      */
     public function mkdir($path, $mode, $options)
     {
@@ -404,7 +404,7 @@ class StreamWrapper
      * @param string $options Unused option variable
      *
      * @return bool true on success
-     * @see http://www.php.net/manual/en/function.opendir.php
+     * @see https://www.php.net/manual/en/function.opendir.php
      */
     public function dir_opendir($path, $options)
     {
@@ -484,7 +484,7 @@ class StreamWrapper
      *
      * @return string Should return a string representing the next filename, or
      *                false if there is no next file.
-     * @link http://www.php.net/manual/en/function.readdir.php
+     * @link https://www.php.net/manual/en/function.readdir.php
      */
     public function dir_readdir()
     {
@@ -538,7 +538,7 @@ class StreamWrapper
      * @param string $path_to   the new path to the file
      *
      * @return bool true if file was successfully renamed
-     * @link http://www.php.net/manual/en/function.rename.php
+     * @link https://www.php.net/manual/en/function.rename.php
      */
     public function rename($path_from, $path_to)
     {

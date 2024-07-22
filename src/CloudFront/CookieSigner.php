@@ -38,7 +38,7 @@ class CookieSigner
      *
      * @return array The authenticated cookie parameters
      * @throws \InvalidArgumentException if the URL provided is invalid
-     * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-signed-cookies.html
+     * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-signed-cookies.html
      */
     public function getSignedCookie($url = null, $expires = null, $policy = null)
     {

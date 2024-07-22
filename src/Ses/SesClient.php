@@ -161,7 +161,7 @@ class SesClient extends \Aws\AwsClient
      *
      * The SMTP username is the Access Key ID for the provided credentials.
      *
-     * @link http://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html#smtp-credentials-convert
+     * @link https://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html#smtp-credentials-convert
      *
      * @param CredentialsInterface $creds
      *

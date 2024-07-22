@@ -242,7 +242,7 @@ class TraceMiddlewareTest extends TestCase
     public function authStringProvider()
     {
         return [
-            // v4 signature example from http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-auth-using-authorization-header.html
+            // v4 signature example from https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-auth-using-authorization-header.html
             [
                 'AKIAIOSFODNN7EXAMPLE', // key
                 'fe5f80f77d5fa3beca038a248ff027d0445342fe2855ddc963176630326f1024', // signature
@@ -251,7 +251,7 @@ class TraceMiddlewareTest extends TestCase
                         'raw' => 'AWS4-HMAC-SHA256 Credential=AKIAIOSFODNN7EXAMPLE/20130524/us-east-1/s3/aws4_request, SignedHeaders=host;range;x-amz-date, Signature=fe5f80f77d5fa3beca038a248ff027d0445342fe2855ddc963176630326f1024',
                         'scrubbed' => 'AWS4-HMAC-SHA256 Credential=[KEY]/20130524/us-east-1/s3/aws4_request, SignedHeaders=host;range;x-amz-date, Signature=[SIGNATURE]',
                     ],
-                    'X-Amz-Security-Token' => [ // STS token example from http://docs.aws.amazon.com/STS/latest/APIReference/API_GetSessionToken.html
+                    'X-Amz-Security-Token' => [ // STS token example from https://docs.aws.amazon.com/STS/latest/APIReference/API_GetSessionToken.html
                         'raw' => 'AQoEXAMPLEH4aoAH0gNCAPyJxz4BlCFFxWNE1OPTgk5TthT+FvwqnKwRcOIfrRh3c/LTo6UDdyJwOOvEVPvLXCrrrUtdnniCEXAMPLE/IvU1dYUg2RVAJBanLiHb4IgRmpRV3zrkuWJOgQs8IZZaIv2BXIa2R4OlgkBN9bkUDNCJiBeb/AXlzBBko7b15fjrBs2+cTQtpZ3CYWFXG8C5zqx37wnOE49mRl/+OtkIKGO7fAE',
                         'scrubbed' => '[TOKEN]',
                     ],

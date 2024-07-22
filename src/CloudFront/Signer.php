@@ -74,7 +74,7 @@ class Signer
      *                                    resource and a expires
      * @throws \RuntimeException when generated signature is empty
      *
-     * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-signed-cookies.html
+     * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-signed-cookies.html
      */
     public function getSignature($resource = null, $expires = null, $policy = null)
     {

@@ -9,5 +9,5 @@ Feature: AWS CloudFormation
   Scenario: Handling errors
     When I attempt to call the "CreateStack" API with:
     | StackName   | fakestack                       |
-    | TemplateURL | http://s3.amazonaws.com/foo/bar |
+    | TemplateURL | https://s3.amazonaws.com/foo/bar |
     Then I expect the response error code to be "ValidationError"

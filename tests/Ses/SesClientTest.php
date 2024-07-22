@@ -13,7 +13,7 @@ class SesClientTest extends TestCase
             'AKIAIOSFODNN7EXAMPLE',
             'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
         );
-        // Created using sample code on: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html#smtp-credentials-convert
+        // Created using sample code on: https://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html#smtp-credentials-convert
         $expectedPassword = 'An60U4ZD3sd4fg+FvXUjayOipTt8LO4rUUmhpdX6ctDy';
 
         $this->assertSame(
@@ -28,7 +28,7 @@ class SesClientTest extends TestCase
             'AKIAIOSFODNN7EXAMPLE',
             'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
         );
-        // Created using sample code on: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html#smtp-credentials-convert
+        // Created using sample code on: https://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html#smtp-credentials-convert
         $expectedPassword = 'BMPPgbAHoFVbze1Ud0oA5uNdXRwUXUZ+qOwphGJbl/cS';
 
         $this->assertSame(

@@ -1,7 +1,7 @@
 # AWS SDK for PHP - Version 3
 
 [![Total Downloads](https://img.shields.io/packagist/dt/aws/aws-sdk-php.svg?style=flat)](https://packagist.org/packages/aws/aws-sdk-php)
-[![Apache 2 License](https://img.shields.io/packagist/l/aws/aws-sdk-php.svg?style=flat)](http://aws.amazon.com/apache-2-0/)
+[![Apache 2 License](https://img.shields.io/packagist/l/aws/aws-sdk-php.svg?style=flat)](https://aws.amazon.com/apache-2-0/)
 [![Gitter](https://badges.gitter.im/aws/aws-sdk-php.svg)](https://gitter.im/aws/aws-sdk-php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![codecov](https://codecov.io/gh/aws/aws-sdk-php/branch/master/graph/badge.svg)](https://codecov.io/gh/aws/aws-sdk-php)
 
@@ -86,7 +86,7 @@ try {
 
 Please use these community resources for getting help. We use the GitHub issues for tracking bugs and feature requests and have limited bandwidth to address them.
 
-* Ask a question on [StackOverflow](https://stackoverflow.com/) and tag it with [`aws-php-sdk`](http://stackoverflow.com/questions/tagged/aws-php-sdk)
+* Ask a question on [StackOverflow](https://stackoverflow.com/) and tag it with [`aws-php-sdk`](https://stackoverflow.com/questions/tagged/aws-php-sdk)
 * Come join the AWS SDK for PHP [gitter](https://gitter.im/aws/aws-sdk-php)
 * Open a support ticket with [AWS Support](https://console.aws.amazon.com/support/home/)
 * If it turns out that you may have found a bug, please [open an issue](https://github.com/aws/aws-sdk-php/issues/new/choose)
@@ -158,20 +158,20 @@ We work hard to provide a high-quality and useful SDK for our AWS services, and 
 * [Serverless LAMP stack guide][serverless-LAMP-stack-guide] - A guide to building and deploying a serverless PHP application
 * Other [AWS SDKs & Tools][aws-tools] (e.g., js, cli, ruby, python, java, etc.)
 
-[sdk-website]: http://aws.amazon.com/sdkforphp
+[sdk-website]: https://aws.amazon.com/sdk-for-php/
 [sdk-forum]: https://forums.aws.amazon.com/forum.jspa?forumID=80
 [sdk-issues]: https://github.com/aws/aws-sdk-php/issues
-[sdk-license]: http://aws.amazon.com/apache2.0/
+[sdk-license]: https://aws.amazon.com/apache-2-0/
 [sdk-blog]: https://aws.amazon.com/blogs/developer/category/php/
-[sdk-sample]: http://aws.amazon.com/developers/getting-started/php
+[sdk-sample]: https://aws.amazon.com/developers/getting-started/php
 
 [install-packagist]: https://packagist.org/packages/aws/aws-sdk-php
 [latest-release]: https://github.com/aws/aws-sdk-php/releases
 
-[docs-api]: http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html
-[docs-guide]: http://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/welcome.html
-[docs-api-v2]: http://docs.aws.amazon.com/aws-sdk-php/v2/api/index.html
-[docs-guide-v2]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/index.html
+[docs-api]: https://docs.aws.amazon.com/aws-sdk-php/v3/api/
+[docs-guide]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/welcome.html
+[docs-api-v2]: https://docs.aws.amazon.com/aws-sdk-php/v2/api/
+[docs-guide-v2]: https://docs.aws.amazon.com/aws-sdk-php/v2/guide/
 [docs-contribution]: https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md
 [docs-migration]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/getting-started_migration.html
 [docs-signup]: https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/
@@ -185,19 +185,19 @@ We work hard to provide a high-quality and useful SDK for our AWS services, and 
 [docs-wire-logging]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/faq.html#how-can-i-see-what-data-is-sent-over-the-wire
 [docs-ddbsh]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/service_dynamodb-session-handler.html
 [docs-services]: https://aws.amazon.com/products/
-[docs-rande]: http://docs.aws.amazon.com/general/latest/gr/rande.html
+[docs-rande]: https://docs.aws.amazon.com/general/latest/gr/rande.html
 [docs-streamwrapper]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-stream-wrapper.html
 [docs-s3-transfer]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-transfer.html
 [docs-s3-multipart]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-multipart-upload.html
 [docs-s3-encryption]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-encryption-client.html
 [docs-script-composer]: https://github.com/aws/aws-sdk-php/tree/master/src/Script/Composer
 
-[aws]: http://aws.amazon.com
-[aws-iam-credentials]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances
-[aws-tools]: http://aws.amazon.com/tools
-[guzzle-docs]: http://guzzlephp.org
-[composer]: http://getcomposer.org
-[packagist]: http://packagist.org
+[aws]: https://aws.amazon.com
+[aws-iam-credentials]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-iam.html#UsingIAMrolesWithAmazonEC2Instances
+[aws-tools]: https://aws.amazon.com/developer/tools/
+[guzzle-docs]: https://docs.guzzlephp.org/
+[composer]: https://getcomposer.org
+[packagist]: https://packagist.org
 [psr-7]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md
 [psr-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
 [psr-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md

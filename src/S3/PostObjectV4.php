@@ -10,8 +10,8 @@ use Aws\Api\TimestampShape as TimestampShape;
 /**
  * Encapsulates the logic for getting the data for an S3 object POST upload form
  *
- * @link http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPOST.html
- * @link http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
+ * @link https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPOST.html
+ * @link https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
  */
 class PostObjectV4
 {
@@ -26,7 +26,7 @@ class PostObjectV4
      * Constructs the PostObject.
      *
      * The options array accepts the following keys:
-     * @link http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html
+     * @link https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html
      *
      * @param S3ClientInterface $client     Client used with the POST object
      * @param string            $bucket     Bucket to use
