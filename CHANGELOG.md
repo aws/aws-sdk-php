@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.316.5 - 2024-07-22
 
 * `Aws\` - Updates CRT signing config region handling
 * `Aws\RedshiftServerless` - Adds dualstack support for Redshift Serverless workgroup.
