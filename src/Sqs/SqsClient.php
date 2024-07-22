@@ -103,7 +103,7 @@ class SqsClient extends AwsClient
      * @return string|null The md5 hash of the message attributes according to
      *                     the encoding scheme. Returns null when there are no
      *                     attributes.
-     * @link http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation
+     * @link https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation
      */
     private static function calculateMessageAttributesMd5($message)
     {

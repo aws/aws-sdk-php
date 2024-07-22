@@ -5724,7 +5724,7 @@
 * `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for specifying caption time delta in milliseconds and the ability to apply color range legalization to source content other than AVC video.
 * `Aws\MediaPackage` - When enabled, MediaPackage passes through digital video broadcasting (DVB) subtitles into the output.
 * `Aws\MediaPackageVod` - MediaPackage passes through digital video broadcasting (DVB) subtitles into the output.
-* `Aws\Panorama` - General availability for AWS Panorama. AWS SDK for Panorama includes APIs to manage your devices and nodes, and deploy computer vision applications to the edge. For more information, see the AWS Panorama documentation at http://docs.aws.amazon.com/panorama
+* `Aws\Panorama` - General availability for AWS Panorama. AWS SDK for Panorama includes APIs to manage your devices and nodes, and deploy computer vision applications to the edge. For more information, see the AWS Panorama documentation at https://docs.aws.amazon.com/panorama/
 * `Aws\SecurityHub` - Added support for cross-Region finding aggregation, which replicates findings from linked Regions to a single aggregation Region. Added operations to view, enable, update, and delete the finding aggregation.
 * `Aws\TranscribeStreamingService` - This release adds custom language support for streaming transcription.
 
@@ -12196,7 +12196,7 @@
 
 * `Aws\AutoScaling` - You can now use Auto Scaling with EC2 Launch Templates via the CreateAutoScalingGroup and UpdateAutoScalingGroup APIs.
 * `Aws\EC2` - Adds the following updates: 1. T2 Unlimited enables high CPU performance for any period of time whenever required 2. You are now able to create and launch EC2 m5 and h1 instances
-* `Aws\Lightsail` - This release adds support for load balancer and TLS/SSL certificate management. This set of APIs allows customers to create, manage, and scale secure load balanced applications on Lightsail infrastructure. To provide support for customers who manage their DNS on Lightsail, we've added the ability create an Alias A type record which can point to a load balancer DNS name via the CreateDomainEntry API http://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateDomainEntry.html.
+* `Aws\Lightsail` - This release adds support for load balancer and TLS/SSL certificate management. This set of APIs allows customers to create, manage, and scale secure load balanced applications on Lightsail infrastructure. To provide support for customers who manage their DNS on Lightsail, we've added the ability create an Alias A type record which can point to a load balancer DNS name via the CreateDomainEntry API https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateDomainEntry.html.
 * `Aws\ResourceGroups` - AWS Resource Groups lets you search and group AWS resources from multiple services based on their tags.
 * `Aws\SSM` - This release updates AWS Systems Manager APIs to enable executing automations at controlled rate, target resources in a resource groups and execute entire automation at once or single step at a time. It is now also possible to use YAML, in addition to JSON, when creating Systems Manager documents.
 * `Aws\WAF` - This release adds support for rule group and managed rule group. Rule group is a container of rules that customers can create, put rules in it and associate the rule group to a WebACL. All rules in a rule group will function identically as they would if each rule was individually associated to the WebACL. Managed rule group is a pre-configured rule group composed by our security partners and made available via the AWS Marketplace. Customers can subscribe to these managed rule groups, associate the managed rule group to their WebACL and start using them immediately to protect their resources.
@@ -12474,7 +12474,7 @@
 * `Aws\Greengrass` - Reset Deployments feature allows you to clean-up the cloud resource so you can delete the group. It also cleans up the core so that it goes back to the pre-deployment state.
 * `Aws\Greengrass` - AWS Greengrass is now available in the Asia Pacific (Tokyo) region, ap-northeast-1.
 * `Aws\LexRuntimeService` - Request attributes can be used to pass client specific information from the client to Amazon Lex as part of each request.
-* `Aws\RDS` - Introduces the --option-group-name parameter to the ModifyDBSnapshot CLI command. You can specify this parameter when you upgrade an Oracle DB snapshot. The same option group considerations apply when upgrading a DB snapshot as when upgrading a DB instance. For more information, see http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Oracle.html#USER_UpgradeDBInstance.Oracle.OGPG.OG
+* `Aws\RDS` - Introduces the --option-group-name parameter to the ModifyDBSnapshot CLI command. You can specify this parameter when you upgrade an Oracle DB snapshot. The same option group considerations apply when upgrading a DB snapshot as when upgrading a DB instance. For more information, see https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Oracle.html#USER_UpgradeDBInstance.Oracle.OGPG.OG
 
 ## 3.36.11 - 2017-09-19
 
@@ -12822,7 +12822,7 @@
 
 * `Aws\CloudDirectory` - Cloud Directory has launched support for Typed Links, enabling customers to create object-to-object relationships that are not hierarchical in nature. Typed Links enable customers to quickly query for data along these relationships. Customers can also enforce referential integrity using Typed Links, ensuring data in use is not inadvertently deleted.
 * `Aws\S3` - New example snippets for Amazon S3.
-* `Aws\S3` - S3 calls are now done with a host style URL by default. Options for path style on the client and command levels are available as `use_path_style_endpoint` and `@use_path_style_endpoint`, respectively. [More details on the differences between the styles can be found here.](http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html#access-bucket-intro)
+* `Aws\S3` - S3 calls are now done with a host style URL by default. Options for path style on the client and command levels are available as `use_path_style_endpoint` and `@use_path_style_endpoint`, respectively. [More details on the differences between the styles can be found here.](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html#access-bucket-intro)
 
 ## 3.28.4 - 2017-05-25
 
@@ -12842,7 +12842,7 @@
 ## 3.28.1 - 2017-05-22
 
 * `Aws\ResourceGroupsTaggingAPI` - You can now specify the number of resources returned per page in GetResources operation, as an optional parameter, to easily manage the list of resources returned by your queries.
-* `Aws\SQS` - MD5 Validation of `MessageAttributes` is now being performed on `ReceiveMessage` calls. SQS uses a custom encoding for generating the hash input, [details on that scheme are available here.](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#sqs-attrib-md5)
+* `Aws\SQS` - MD5 Validation of `MessageAttributes` is now being performed on `ReceiveMessage` calls. SQS uses a custom encoding for generating the hash input, [details on that scheme are available here.](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#sqs-attrib-md5)
 
 ## 3.28.0 - 2017-05-18
 
@@ -14285,26 +14285,26 @@ Migration Service**.
     * Asynchronous workflows can be created using _promises_ and _coroutines_.
     * Improved performance of concurrent/batched requests via _command pools_.
 * Decoupled HTTP layer.
-    * [Guzzle 6](http://guzzlephp.org) is used by default to send requests,
+    * [Guzzle 6](https://guzzlephp.org) is used by default to send requests,
       but Guzzle 5 is also supported out of the box.
     * The SDK can now work in environments where cURL is not available.
     * Custom HTTP handlers are also supported.
-* Follows the [PSR-4 and PSR-7 standards](http://php-fig.org).
+* Follows the [PSR-4 and PSR-7 standards](https://www.php-fig.org).
 * Middleware system for customizing service client behavior.
 * Flexible _paginators_ for iterating through paginated results.
 * Ability to query data from _result_ and _paginator_ objects with
-  [JMESPath](http://jmespath.org/).
+  [JMESPath](https://jmespath.org).
 * Easy debugging via the `'debug'` client configuration option.
 * Customizable retries via the `'retries'` client configuration option.
 * More flexibility in credential loading via _credential providers_.
-* Strictly follows the [SemVer](http://semver.org/) standard going forward.
+* Strictly follows the [SemVer](https://semver.org) standard going forward.
 * **For more details about what has changed, see the
-  [Migration Guide](http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/migration.html)**.
+  [Migration Guide](https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/getting-started_migration.html)**.
 
 ## 2.8.7 - 2015-05-26
 
 * `Aws\Efs` - Added support for the [Amazon Elastic File System (Amazon
-  EFS)](http://aws.amazon.com/efs/)
+  EFS)](https://aws.amazon.com/efs/)
 * Failing to parse an XML error response will now fail gracefully as a
   `PhpInternalXmlParseError` AWS error code.
 
@@ -14400,7 +14400,7 @@ for details about any changes you may need to make to your code for this upgrade
 ## 2.7.24 - 2015-03-24
 
 * `Aws\S3` - Added support for cross-region replication.
-* `Aws\S3` - Added support for ["Requester Pays" buckets](http://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html).
+* `Aws\S3` - Added support for ["Requester Pays" buckets](https://docs.aws.amazon.com/AmazonS3/latest/userguide/RequesterPaysBuckets.html).
 
 ## 2.7.23 - 2015-03-19
 
@@ -14706,7 +14706,7 @@ for details about any changes you may need to make to your code for this upgrade
 ## 2.6.6 - 2014-05-29
 
 * Added support for the [Desired Partition Count scaling
-  option](http://aws.amazon.com/releasenotes/2440176739861815) to the
+  option](https://aws.amazon.com/releasenotes/release-amazon-cloudsearch-on-2014-05-29/) to the
   CloudSearch client. Hebrew is also now a supported language.
 * Updated the STS service description to the latest version.
 * [Docs] Updated some of the documentation about credential profiles.
@@ -14768,23 +14768,23 @@ for details about any changes you may need to make to your code for this upgrade
 ## 2.6.0 - 2014-03-25
 
 * [BC] Updated the Amazon CloudSearch client to use the new 2013-01-01 API version (see [their release
-  notes](http://aws.amazon.com/releasenotes/6125075708216342)). This API version of CloudSearch is significantly
+  notes](https://aws.amazon.com/releasenotes/release-amazon-cloudsearch-on-2014-03-24/)). This API version of CloudSearch is significantly
   different than the previous one, and is not backwards compatible. See the
   [Upgrading Guide](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md) for more details.
 * Added support for the VPC peering features to the Amazon EC2 client.
 * Updated the Amazon EC2 client to use the new 2014-02-01 API version.
 * Added support for [resize progress data and the Cluster Revision Number
-  parameter](http://aws.amazon.com/releasenotes/0485739709714318) to the Amazon Redshift client.
+  parameter](https://aws.amazon.com/releasenotes/release-amazon-redshift-on-2014-03-21/) to the Amazon Redshift client.
 * Added the `ap-northeast-1`, `ap-southeast-2`, and `sa-east-1` regions to the Amazon CloudSearch client.
 
 ## 2.5.4 - 2014-03-20
 
-* Added support for [access logs](http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/access-log-collection.html)
+* Added support for [access logs](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/access-log-collection.html)
   to the Elastic Load Balancing client.
 * Updated the Elastic Load Balancing client to the latest API version.
 * Added support for the `AWS_SECRET_ACCESS_KEY` environment variables.
 * Updated the Amazon CloudFront client to use the 2014-01-31 API version. See [their release
-  notes](http://aws.amazon.com/releasenotes/1900016175520505).
+  notes](https://aws.amazon.com/releasenotes/release-amazon-cloudfront-on-2014-03-05/).
 * Updates the AWS OpsWorks client to the latest API version.
 * Amazon S3 Stream Wrapper now works correctly with pseudo folder keys created by the AWS Management Console.
 * Amazon S3 Stream Wrapper now implements `mkdir()` for nested folders similar to the AWS Management Console.
@@ -14825,10 +14825,10 @@ for details about any changes you may need to make to your code for this upgrade
 * Fixed the `downloadBucket` and `uploadDirectory` methods to support relative paths and better support
   Windows (see #207)
 * Fixed issue #195 in the Amazon S3 multipart upload helpers to properly support additional parameters (see #211)
-* [Docs] Expanded examples in the [API reference](http://docs.aws.amazon.com/aws-sdk-php/latest/index.html) by default
+* [Docs] Expanded examples in the [API reference](https://docs.aws.amazon.com/aws-sdk-php/latest/index.html) by default
   so they don't get overlooked
 * [Docs] Moved the API reference links in the [service-specific user guide
-  pages](http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html#service-specific-guides) to the bottom so
+  pages](https://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html#service-specific-guides) to the bottom so
   the page's content takes priority
 
 ## 2.5.1 - 2014-01-09
@@ -14837,9 +14837,9 @@ for details about any changes you may need to make to your code for this upgrade
 * Added support for creating launch configurations from existing Amazon EC2 instances to the Auto Scaling client
 * Added support for describing Auto Scaling account limits to the Auto Scaling client
 * Added better support for block device mappings to the Amazon AutoScaling client when creating launch configurations
-* Added support for [ranged inventory retrieval](http://docs.aws.amazon.com/amazonglacier/latest/dev/api-initiate-job-post.html#api-initiate-job-post-vault-inventory-list-filtering)
+* Added support for [ranged inventory retrieval](https://docs.aws.amazon.com/amazonglacier/latest/dev/api-initiate-job-post.html#api-initiate-job-post-vault-inventory-list-filtering)
   to the Amazon Glacier client
-* [Docs] Updated and added a lot of content in the [User Guide](http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html)
+* [Docs] Updated and added a lot of content in the [User Guide](https://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html)
 * Fixed a bug where the `KinesisClient::getShardIterator()` method was not working properly
 * Fixed an issue with Amazon SimpleDB where the 'Value' attribute was marked as required on DeleteAttribute and BatchDeleteAttributes
 * Fixed an issue with the Amazon S3 stream wrapper where empty place holder keys were being marked as files instead of directories
@@ -14848,12 +14848,12 @@ for details about any changes you may need to make to your code for this upgrade
 ## 2.5.0 - 2013-12-20
 
 * Added support for the new **China (Beijing) Region** to various services. This region is currently in limited preview.
-  Please see <http://www.amazonaws.cn> for more information
+  Please see <https://www.amazonaws.cn/en/> for more information
 * Added support for different audio compression schemes to the Elastic Transcoder client (includes AAC-LC, HE-AAC,
   and HE-AACv2)
 * Added support for preset and pipeline pagination to the Elastic Transcoder client. You can now view more than the
   first 50 presets and pipelines with their corresponding list operations
-* Added support for [geo restriction](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithDownloadDistributions.html#georestrictions)
+* Added support for [geo restriction](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html)
   to the Amazon CloudFront client
 * [SDK] Added Signature V4 support to the Amazon S3 and Amazon EC2 clients for the new China (Beijing) Region
 * [BC] Updated the AWS CloudTrail client to use their latest API changes due to early user feedback. Some parameters in
@@ -14906,9 +14906,9 @@ for details about any changes you may need to make to your code for this upgrade
 
 ## 2.4.9 - 2013-11-08
 
-* Added support for [cross-zone load balancing](http://aws.amazon.com/about-aws/whats-new/2013/11/06/elastic-load-balancing-adds-cross-zone-load-balancing/)
+* Added support for [cross-zone load balancing](https://aws.amazon.com/about-aws/whats-new/2013/11/06/elastic-load-balancing-adds-cross-zone-load-balancing/)
   to the Elastic Load Balancing client.
-* Added support for a [new gateway configuration](http://aws.amazon.com/about-aws/whats-new/2013/11/05/aws-storage-gateway-announces-gateway-virtual-tape-library/),
+* Added support for a [new gateway configuration](https://aws.amazon.com/about-aws/whats-new/2013/11/05/aws-storage-gateway-announces-gateway-virtual-tape-library/),
   Gateway-Virtual Tape Library, to the AWS Storage Gateway client.
 * Added support for stack policies to the the AWS CloudFormation client.
 * Fixed issue #176 where attempting to upload a direct to Amazon S3 using the `UploadBuilder` failed when using a custom
@@ -15149,11 +15149,11 @@ for details about any changes you may need to make to your code for this upgrade
 * Added support for **AWS Import/Export**
 * Added support for **AWS CloudFormation**
 * Added support for **Amazon CloudSearch**
-* Added support for [provisioned IOPS](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.ProvisionedIOPS.html)
+* Added support for [provisioned IOPS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.ProvisionedIOPS.html)
   to the the Amazon RDS client
-* Added support for promoting [read replicas](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html)
+* Added support for promoting [read replicas](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html)
   to the Amazon RDS client
-* Added support for [event notification subscriptions](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html)
+* Added support for [event notification subscriptions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html)
   to the Amazon RDS client
 * Added support for enabling\disabling DNS Hostnames and DNS Resolution in Amazon VPC to the Amazon EC2 client
 * Added support for enumerating account attributes to the Amazon EC2 client
@@ -15169,7 +15169,7 @@ for details about any changes you may need to make to your code for this upgrade
 * Added an easier way to disable operation parameter validation by setting `validation` to false when creating clients
 * Added the ability to disable the exponential backoff plugin
 * Added the ability to easily fetch the region name that a client is configured to use via `$client->getRegion()`
-* Added end-user guides available at http://docs.aws.amazon.com/aws-sdk-php/guide/latest/
+* Added end-user guides available at https://docs.aws.amazon.com/aws-sdk-php/guide/latest/
 * Fixed issue #48 where signing Amazon S3 requests with null or empty metadata resulted in a signature error
 * Fixed issue #29 where Amazon S3 was intermittently closing a connection
 * Updated the Amazon S3 client to parse the AcceptRanges header for HeadObject and GetObject output
@@ -15257,7 +15257,7 @@ for details about any changes you may need to make to your code for this upgrade
 
 ## 2.0.0 - 2012-11-02
 
-* Initial release of the AWS SDK for PHP Version 2. See <http://aws.amazon.com/sdkforphp2/> for more information.
+* Initial release of the AWS SDK for PHP Version 2. See <https://aws.amazon.com/sdkforphp2/> for more information.
 * Added support for **Amazon Simple Storage Service (Amazon S3)**
 * Added support for **Amazon DynamoDB**
 * Added support for **Amazon Glacier**

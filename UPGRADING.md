@@ -14,7 +14,7 @@ has not changed from Version 2 to Version 3, which should result in a fairly
 smooth migration.
 
 For details on how to migrate your code from Version 2 to Version 3, read the
-[Version 3 Migration Guide](http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/migration.html).
+[Version 3 Migration Guide](https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/getting-started_migration.html).
 
 Upgrade from 2.7 to 2.8
 -----------------------
@@ -78,8 +78,8 @@ control access to domain configuration actions, and user configurable scaling an
 features are reflected in the changes to the method and parameters of the CloudSearch client.
 
 For details about the new API and how to update your usage of CloudSearch, please consult the [Configuration API
-Reference for Amazon CloudSearch](http://docs.aws.amazon.com/cloudsearch/latest/developerguide/configuration-api.html)
-and the guide for [Migrating to the Amazon CloudSearch 2013-01-01 API](http://docs.aws.amazon.com/cloudsearch/latest/developerguide/migrating.html).
+Reference for Amazon CloudSearch](https://docs.aws.amazon.com/cloudsearch/latest/developerguide/configuration-api.html)
+and the guide for [Migrating to the Amazon CloudSearch 2013-01-01 API](https://docs.aws.amazon.com/cloudsearch/latest/developerguide/migrating.html).
 
 If you would like to continue using the older 2011-02-01 API, you can configure this when you instantiate the
 `CloudSearchClient`:
@@ -274,7 +274,7 @@ If you are using a config file with `Aws\Common\Aws`, then you can modify your f
 }
 ```
 
-The [SDK user guide](http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html) has a guide and examples for both
+The [SDK user guide](https://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html) has a guide and examples for both
 versions of the API.
 
 ### Guzzle 3.4.1

@@ -103,7 +103,7 @@ class ClientResolver
         'region' => [
             'type'     => 'value',
             'valid'    => ['string'],
-            'doc'      => 'Region to connect to. See http://docs.aws.amazon.com/general/latest/gr/rande.html for a list of available regions.',
+            'doc'      => 'Region to connect to. See https://docs.aws.amazon.com/general/latest/gr/rande.html for a list of available regions.',
             'fn'       => [__CLASS__, '_apply_region'],
             'default'  => [__CLASS__, '_default_region']
         ],
@@ -1291,7 +1291,7 @@ region: (string)
 
 A "region" configuration value is required for the "{$service}" service
 (e.g., "us-west-2"). A list of available public regions and endpoints can be
-found at http://docs.aws.amazon.com/general/latest/gr/rande.html.
+found at https://docs.aws.amazon.com/general/latest/gr/rande.html.
 EOT;
         throw new IAE($msg);
     }

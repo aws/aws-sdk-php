@@ -41,7 +41,7 @@ class PostObjectV4Test extends TestCase
     /**
      * Executes the SigV4 POST example from the S3 documentation.
      *
-     * @link http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
+     * @link https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
      */
     public function testSignsPostPolicy()
     {
@@ -148,7 +148,7 @@ class PostObjectV4Test extends TestCase
     /**
      * Executes the SigV4 POST example from the S3 documentation.
      *
-     * @link http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
+     * @link https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
      */
     public function testSignsPostPolicyWithSecurityToken()
     {

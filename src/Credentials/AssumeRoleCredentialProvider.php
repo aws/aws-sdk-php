@@ -8,7 +8,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * Credential provider that provides credentials via assuming a role
- * More Information, see: http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-sts-2011-06-15.html#assumerole
+ * More Information, see: https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-sts-2011-06-15.html#assumerole
  */
 class AssumeRoleCredentialProvider
 {

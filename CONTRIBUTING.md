@@ -150,12 +150,12 @@ category field should exist with the value set to an empty string `""`.
 
 [issues]: https://github.com/aws/aws-sdk-php/issues
 [pull-requests]: https://github.com/aws/aws-sdk-php/pulls
-[license]: http://aws.amazon.com/apache2.0/
+[license]: https://aws.amazon.com/apache-2-0/
 [cla]: https://github.com/aws/aws-cla/blob/master/amazon-single-contribution-license.txt
-[php-fig]: http://php-fig.org
-[cs-fixer]: http://cs.sensiolabs.org/
+[php-fig]: https://www.php-fig.org
+[cs-fixer]: https://cs.symfony.com
 [phpstan]: https://github.com/phpstan/phpstan
-[sphinx]: http://sphinx-doc.org/
-[restructuredtext]: http://sphinx-doc.org/rest.html
+[sphinx]: https://www.sphinx-doc.org/
+[restructuredtext]: https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html
 [docs-readme]: https://github.com/awsdocs/aws-php-developers-guide/blob/master/README.rst
 [markdown]: https://en.wikipedia.org/wiki/Markdown

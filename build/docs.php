@@ -48,7 +48,7 @@ $builder = new DocsBuilder(
     $apiProvider,
     $outputDir,
     $template,
-    'http://docs.aws.amazon.com/aws-sdk-php/v3/api/',
+    'https://docs.aws.amazon.com/aws-sdk-php/v3/api/',
     [],
     $sourceFiles,
     $issueLoggingEnabled

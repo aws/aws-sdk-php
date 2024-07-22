@@ -43,7 +43,7 @@ class UrlSigner
      *
      * @return string The file URL with authentication parameters
      * @throws \InvalidArgumentException if the URL provided is invalid
-     * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithStreamingDistributions.html
+     * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithStreamingDistributions.html
      */
     public function getSignedUrl($url, $expires = null, $policy = null)
     {

@@ -48,7 +48,7 @@ interface ResultInterface extends \ArrayAccess, \IteratorAggregate, \Countable
      * @param string $expression JMESPath expression to execute
      *
      * @return mixed Returns the result of the JMESPath expression.
-     * @link http://jmespath.readthedocs.org/en/latest/ JMESPath documentation
+     * @link https://jmespath.readthedocs.io/en/latest/ JMESPath documentation
      */
     public function search($expression);
 };

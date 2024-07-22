@@ -32,7 +32,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  *   for logging, adding custom request headers, etc.
  * - batch_size: The size of each delete batch. Defaults to 1000.
  *
- * @link http://docs.aws.amazon.com/AmazonS3/latest/API/multiobjectdeleteapi.html
+ * @link https://docs.aws.amazon.com/AmazonS3/latest/API/multiobjectdeleteapi.html
  */
 class BatchDelete implements PromisorInterface
 {

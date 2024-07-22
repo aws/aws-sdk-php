@@ -17,7 +17,7 @@ use Psr\Http\Message\RequestInterface;
 
 /**
  * Signature Version 4
- * @link http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
+ * @link https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
  */
 class SignatureV4 implements SignatureInterface
 {
