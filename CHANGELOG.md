@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataZone` - This release removes the deprecated dataProductItem field from Search API output.
+* `Aws\AppSync` - Adding support for paginators in AppSync list APIs
+* `Aws\Connect` - Added PostContactSummary segment type on ListRealTimeContactAnalysisSegmentsV2 API
+* `Aws\CleanRoomsML` - Adds SQL query as the source of seed audience for audience generation job.
+* `Aws\CleanRooms` - This release adds AWS Entity Resolution integration to associate ID namespaces & ID mapping workflow resources as part of ID namespace association and ID mapping table in AWS Clean Rooms. It also introduces a new ID_MAPPING_TABLE analysis rule to manage the protection on ID mapping table.
+* `Aws\EntityResolution` - Support First Party ID Mapping
+* `Aws\ConnectContactLens` - Added PostContactSummary segment type on ListRealTimeContactAnalysisSegments API
+
 ## 3.316.5 - 2024-07-22
 
 * `Aws\` - Updates CRT signing config region handling

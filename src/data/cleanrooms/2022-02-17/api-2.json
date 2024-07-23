@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-02-17",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"cleanrooms",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Clean Rooms Service",
     "serviceId":"CleanRooms",
     "signatureVersion":"v4",
@@ -176,6 +177,44 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "CreateIdMappingTable":{
+      "name":"CreateIdMappingTable",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memberships/{membershipIdentifier}/idmappingtables",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateIdMappingTableInput"},
+      "output":{"shape":"CreateIdMappingTableOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "CreateIdNamespaceAssociation":{
+      "name":"CreateIdNamespaceAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memberships/{membershipIdentifier}/idnamespaceassociations",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateIdNamespaceAssociationInput"},
+      "output":{"shape":"CreateIdNamespaceAssociationOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateMembership":{
       "name":"CreateMembership",
       "http":{
@@ -323,6 +362,42 @@
       ],
       "idempotent":true
     },
+    "DeleteIdMappingTable":{
+      "name":"DeleteIdMappingTable",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/memberships/{membershipIdentifier}/idmappingtables/{idMappingTableIdentifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteIdMappingTableInput"},
+      "output":{"shape":"DeleteIdMappingTableOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteIdNamespaceAssociation":{
+      "name":"DeleteIdNamespaceAssociation",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/memberships/{membershipIdentifier}/idnamespaceassociations/{idNamespaceAssociationIdentifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteIdNamespaceAssociationInput"},
+      "output":{"shape":"DeleteIdNamespaceAssociationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteMember":{
       "name":"DeleteMember",
       "http":{
@@ -446,6 +521,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetCollaborationIdNamespaceAssociation":{
+      "name":"GetCollaborationIdNamespaceAssociation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/collaborations/{collaborationIdentifier}/idnamespaceassociations/{idNamespaceAssociationIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCollaborationIdNamespaceAssociationInput"},
+      "output":{"shape":"GetCollaborationIdNamespaceAssociationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetCollaborationPrivacyBudgetTemplate":{
       "name":"GetCollaborationPrivacyBudgetTemplate",
       "http":{
@@ -523,6 +615,40 @@
       },
       "input":{"shape":"GetConfiguredTableAssociationInput"},
       "output":{"shape":"GetConfiguredTableAssociationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetIdMappingTable":{
+      "name":"GetIdMappingTable",
+      "http":{
+        "method":"GET",
+        "requestUri":"/memberships/{membershipIdentifier}/idmappingtables/{idMappingTableIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetIdMappingTableInput"},
+      "output":{"shape":"GetIdMappingTableOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetIdNamespaceAssociation":{
+      "name":"GetIdNamespaceAssociation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/memberships/{membershipIdentifier}/idnamespaceassociations/{idNamespaceAssociationIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetIdNamespaceAssociationInput"},
+      "output":{"shape":"GetIdNamespaceAssociationOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -667,6 +793,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListCollaborationIdNamespaceAssociations":{
+      "name":"ListCollaborationIdNamespaceAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/collaborations/{collaborationIdentifier}/idnamespaceassociations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCollaborationIdNamespaceAssociationsInput"},
+      "output":{"shape":"ListCollaborationIdNamespaceAssociationsOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListCollaborationPrivacyBudgetTemplates":{
       "name":"ListCollaborationPrivacyBudgetTemplates",
       "http":{
@@ -761,6 +904,40 @@
       "input":{"shape":"ListConfiguredTablesInput"},
       "output":{"shape":"ListConfiguredTablesOutput"},
       "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListIdMappingTables":{
+      "name":"ListIdMappingTables",
+      "http":{
+        "method":"GET",
+        "requestUri":"/memberships/{membershipIdentifier}/idmappingtables",
+        "responseCode":200
+      },
+      "input":{"shape":"ListIdMappingTablesInput"},
+      "output":{"shape":"ListIdMappingTablesOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListIdNamespaceAssociations":{
+      "name":"ListIdNamespaceAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/memberships/{membershipIdentifier}/idnamespaceassociations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListIdNamespaceAssociationsInput"},
+      "output":{"shape":"ListIdNamespaceAssociationsOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
@@ -880,6 +1057,24 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "PopulateIdMappingTable":{
+      "name":"PopulateIdMappingTable",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memberships/{membershipIdentifier}/idmappingtables/{idMappingTableIdentifier}/populate",
+        "responseCode":200
+      },
+      "input":{"shape":"PopulateIdMappingTableInput"},
+      "output":{"shape":"PopulateIdMappingTableOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "PreviewPrivacyImpact":{
@@ -1042,6 +1237,40 @@
       "output":{"shape":"UpdateConfiguredTableAssociationOutput"},
       "errors":[
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "UpdateIdMappingTable":{
+      "name":"UpdateIdMappingTable",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/memberships/{membershipIdentifier}/idmappingtables/{idMappingTableIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateIdMappingTableInput"},
+      "output":{"shape":"UpdateIdMappingTableOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "UpdateIdNamespaceAssociation":{
+      "name":"UpdateIdNamespaceAssociation",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/memberships/{membershipIdentifier}/idnamespaceassociations/{idNamespaceAssociationIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateIdNamespaceAssociationInput"},
+      "output":{"shape":"UpdateIdNamespaceAssociationOutput"},
+      "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -1287,6 +1516,24 @@
       "member":{"shape":"AccountId"},
       "min":0
     },
+    "AnalysisRuleIdMappingTable":{
+      "type":"structure",
+      "required":[
+        "joinColumns",
+        "queryConstraints"
+      ],
+      "members":{
+        "joinColumns":{"shape":"AnalysisRuleIdMappingTableJoinColumnsList"},
+        "queryConstraints":{"shape":"QueryConstraintList"},
+        "dimensionColumns":{"shape":"AnalysisRuleColumnList"}
+      }
+    },
+    "AnalysisRuleIdMappingTableJoinColumnsList":{
+      "type":"list",
+      "member":{"shape":"AnalysisRuleColumnName"},
+      "max":2,
+      "min":2
+    },
     "AnalysisRuleList":{
       "type":"structure",
       "required":[
@@ -1316,7 +1563,8 @@
       "members":{
         "list":{"shape":"AnalysisRuleList"},
         "aggregation":{"shape":"AnalysisRuleAggregation"},
-        "custom":{"shape":"AnalysisRuleCustom"}
+        "custom":{"shape":"AnalysisRuleCustom"},
+        "idMappingTable":{"shape":"AnalysisRuleIdMappingTable"}
       },
       "union":true
     },
@@ -1325,7 +1573,8 @@
       "enum":[
         "AGGREGATION",
         "LIST",
-        "CUSTOM"
+        "CUSTOM",
+        "ID_MAPPING_TABLE"
       ]
     },
     "AnalysisRuleTypeList":{
@@ -1785,6 +2034,67 @@
       "max":255,
       "min":1,
       "pattern":"(?!\\s*$)[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\t\\r\\n]*"
+    },
+    "CollaborationIdNamespaceAssociation":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "collaborationId",
+        "collaborationArn",
+        "name",
+        "creatorAccountId",
+        "createTime",
+        "updateTime",
+        "inputReferenceConfig",
+        "inputReferenceProperties"
+      ],
+      "members":{
+        "id":{"shape":"IdNamespaceAssociationIdentifier"},
+        "arn":{"shape":"IdNamespaceAssociationArn"},
+        "collaborationId":{"shape":"UUID"},
+        "collaborationArn":{"shape":"CollaborationArn"},
+        "name":{"shape":"GenericResourceName"},
+        "description":{"shape":"ResourceDescription"},
+        "creatorAccountId":{"shape":"AccountId"},
+        "createTime":{"shape":"Timestamp"},
+        "updateTime":{"shape":"Timestamp"},
+        "inputReferenceConfig":{"shape":"IdNamespaceAssociationInputReferenceConfig"},
+        "inputReferenceProperties":{"shape":"IdNamespaceAssociationInputReferenceProperties"},
+        "idMappingConfig":{"shape":"IdMappingConfig"}
+      }
+    },
+    "CollaborationIdNamespaceAssociationSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "createTime",
+        "id",
+        "updateTime",
+        "collaborationArn",
+        "collaborationId",
+        "creatorAccountId",
+        "inputReferenceConfig",
+        "name",
+        "inputReferenceProperties"
+      ],
+      "members":{
+        "arn":{"shape":"IdNamespaceAssociationArn"},
+        "createTime":{"shape":"Timestamp"},
+        "id":{"shape":"IdNamespaceAssociationIdentifier"},
+        "updateTime":{"shape":"Timestamp"},
+        "collaborationArn":{"shape":"CollaborationArn"},
+        "collaborationId":{"shape":"UUID"},
+        "creatorAccountId":{"shape":"AccountId"},
+        "inputReferenceConfig":{"shape":"IdNamespaceAssociationInputReferenceConfig"},
+        "name":{"shape":"GenericResourceName"},
+        "description":{"shape":"ResourceDescription"},
+        "inputReferenceProperties":{"shape":"IdNamespaceAssociationInputReferencePropertiesSummary"}
+      }
+    },
+    "CollaborationIdNamespaceAssociationSummaryList":{
+      "type":"list",
+      "member":{"shape":"CollaborationIdNamespaceAssociationSummary"}
     },
     "CollaborationIdentifier":{
       "type":"string",
@@ -2393,6 +2703,60 @@
         "configuredTable":{"shape":"ConfiguredTable"}
       }
     },
+    "CreateIdMappingTableInput":{
+      "type":"structure",
+      "required":[
+        "membershipIdentifier",
+        "name",
+        "inputReferenceConfig"
+      ],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "name":{"shape":"ResourceAlias"},
+        "description":{"shape":"ResourceDescription"},
+        "inputReferenceConfig":{"shape":"IdMappingTableInputReferenceConfig"},
+        "tags":{"shape":"TagMap"},
+        "kmsKeyArn":{"shape":"KMSKeyArn"}
+      }
+    },
+    "CreateIdMappingTableOutput":{
+      "type":"structure",
+      "required":["idMappingTable"],
+      "members":{
+        "idMappingTable":{"shape":"IdMappingTable"}
+      }
+    },
+    "CreateIdNamespaceAssociationInput":{
+      "type":"structure",
+      "required":[
+        "membershipIdentifier",
+        "inputReferenceConfig",
+        "name"
+      ],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "inputReferenceConfig":{"shape":"IdNamespaceAssociationInputReferenceConfig"},
+        "tags":{"shape":"TagMap"},
+        "name":{"shape":"GenericResourceName"},
+        "description":{"shape":"ResourceDescription"},
+        "idMappingConfig":{"shape":"IdMappingConfig"}
+      }
+    },
+    "CreateIdNamespaceAssociationOutput":{
+      "type":"structure",
+      "required":["idNamespaceAssociation"],
+      "members":{
+        "idNamespaceAssociation":{"shape":"IdNamespaceAssociation"}
+      }
+    },
     "CreateMembershipInput":{
       "type":"structure",
       "required":[
@@ -2580,6 +2944,54 @@
       }
     },
     "DeleteConfiguredTableOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteIdMappingTableInput":{
+      "type":"structure",
+      "required":[
+        "idMappingTableIdentifier",
+        "membershipIdentifier"
+      ],
+      "members":{
+        "idMappingTableIdentifier":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"idMappingTableIdentifier"
+        },
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        }
+      }
+    },
+    "DeleteIdMappingTableOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteIdNamespaceAssociationInput":{
+      "type":"structure",
+      "required":[
+        "idNamespaceAssociationIdentifier",
+        "membershipIdentifier"
+      ],
+      "members":{
+        "idNamespaceAssociationIdentifier":{
+          "shape":"IdNamespaceAssociationIdentifier",
+          "location":"uri",
+          "locationName":"idNamespaceAssociationIdentifier"
+        },
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        }
+      }
+    },
+    "DeleteIdNamespaceAssociationOutput":{
       "type":"structure",
       "members":{
       }
@@ -2824,6 +3236,12 @@
       "min":1,
       "pattern":"(?!\\s*$)[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\t]*"
     },
+    "Document":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
     "Double":{
       "type":"double",
       "box":true
@@ -2844,6 +3262,12 @@
     "Float":{
       "type":"float",
       "box":true
+    },
+    "GenericResourceName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"(?!\\s*$)[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\t]*"
     },
     "GetAnalysisTemplateInput":{
       "type":"structure",
@@ -2921,6 +3345,32 @@
       "required":["collaborationConfiguredAudienceModelAssociation"],
       "members":{
         "collaborationConfiguredAudienceModelAssociation":{"shape":"CollaborationConfiguredAudienceModelAssociation"}
+      }
+    },
+    "GetCollaborationIdNamespaceAssociationInput":{
+      "type":"structure",
+      "required":[
+        "collaborationIdentifier",
+        "idNamespaceAssociationIdentifier"
+      ],
+      "members":{
+        "collaborationIdentifier":{
+          "shape":"CollaborationIdentifier",
+          "location":"uri",
+          "locationName":"collaborationIdentifier"
+        },
+        "idNamespaceAssociationIdentifier":{
+          "shape":"IdNamespaceAssociationIdentifier",
+          "location":"uri",
+          "locationName":"idNamespaceAssociationIdentifier"
+        }
+      }
+    },
+    "GetCollaborationIdNamespaceAssociationOutput":{
+      "type":"structure",
+      "required":["collaborationIdNamespaceAssociation"],
+      "members":{
+        "collaborationIdNamespaceAssociation":{"shape":"CollaborationIdNamespaceAssociation"}
       }
     },
     "GetCollaborationInput":{
@@ -3061,6 +3511,58 @@
       "required":["configuredTable"],
       "members":{
         "configuredTable":{"shape":"ConfiguredTable"}
+      }
+    },
+    "GetIdMappingTableInput":{
+      "type":"structure",
+      "required":[
+        "idMappingTableIdentifier",
+        "membershipIdentifier"
+      ],
+      "members":{
+        "idMappingTableIdentifier":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"idMappingTableIdentifier"
+        },
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        }
+      }
+    },
+    "GetIdMappingTableOutput":{
+      "type":"structure",
+      "required":["idMappingTable"],
+      "members":{
+        "idMappingTable":{"shape":"IdMappingTable"}
+      }
+    },
+    "GetIdNamespaceAssociationInput":{
+      "type":"structure",
+      "required":[
+        "idNamespaceAssociationIdentifier",
+        "membershipIdentifier"
+      ],
+      "members":{
+        "idNamespaceAssociationIdentifier":{
+          "shape":"IdNamespaceAssociationIdentifier",
+          "location":"uri",
+          "locationName":"idNamespaceAssociationIdentifier"
+        },
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        }
+      }
+    },
+    "GetIdNamespaceAssociationOutput":{
+      "type":"structure",
+      "required":["idNamespaceAssociation"],
+      "members":{
+        "idNamespaceAssociation":{"shape":"IdNamespaceAssociation"}
       }
     },
     "GetMembershipInput":{
@@ -3214,6 +3716,253 @@
         "databaseName":{"shape":"GlueDatabaseName"}
       }
     },
+    "IdMappingConfig":{
+      "type":"structure",
+      "required":["allowUseAsDimensionColumn"],
+      "members":{
+        "allowUseAsDimensionColumn":{"shape":"Boolean"}
+      }
+    },
+    "IdMappingTable":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "inputReferenceConfig",
+        "membershipId",
+        "membershipArn",
+        "collaborationId",
+        "collaborationArn",
+        "name",
+        "createTime",
+        "updateTime",
+        "inputReferenceProperties"
+      ],
+      "members":{
+        "id":{"shape":"UUID"},
+        "arn":{"shape":"IdMappingTableArn"},
+        "inputReferenceConfig":{"shape":"IdMappingTableInputReferenceConfig"},
+        "membershipId":{"shape":"UUID"},
+        "membershipArn":{"shape":"MembershipArn"},
+        "collaborationId":{"shape":"UUID"},
+        "collaborationArn":{"shape":"CollaborationArn"},
+        "description":{"shape":"ResourceDescription"},
+        "name":{"shape":"ResourceAlias"},
+        "createTime":{"shape":"Timestamp"},
+        "updateTime":{"shape":"Timestamp"},
+        "inputReferenceProperties":{"shape":"IdMappingTableInputReferenceProperties"},
+        "kmsKeyArn":{"shape":"KMSKeyArn"}
+      }
+    },
+    "IdMappingTableArn":{
+      "type":"string",
+      "max":200,
+      "min":0,
+      "pattern":"arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/idmappingtable/[\\d\\w-]+"
+    },
+    "IdMappingTableInputReferenceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:.*:[0-9]+:(idmappingworkflow/.*)"
+    },
+    "IdMappingTableInputReferenceConfig":{
+      "type":"structure",
+      "required":[
+        "inputReferenceArn",
+        "manageResourcePolicies"
+      ],
+      "members":{
+        "inputReferenceArn":{"shape":"IdMappingTableInputReferenceArn"},
+        "manageResourcePolicies":{"shape":"Boolean"}
+      }
+    },
+    "IdMappingTableInputReferenceProperties":{
+      "type":"structure",
+      "required":["idMappingTableInputSource"],
+      "members":{
+        "idMappingTableInputSource":{"shape":"IdMappingTableInputSourceList"}
+      }
+    },
+    "IdMappingTableInputSource":{
+      "type":"structure",
+      "required":[
+        "idNamespaceAssociationId",
+        "type"
+      ],
+      "members":{
+        "idNamespaceAssociationId":{"shape":"String"},
+        "type":{"shape":"IdNamespaceType"}
+      }
+    },
+    "IdMappingTableInputSourceList":{
+      "type":"list",
+      "member":{"shape":"IdMappingTableInputSource"},
+      "max":2,
+      "min":2
+    },
+    "IdMappingTableSchemaTypeProperties":{
+      "type":"structure",
+      "required":["idMappingTableInputSource"],
+      "members":{
+        "idMappingTableInputSource":{"shape":"IdMappingTableInputSourceList"}
+      }
+    },
+    "IdMappingTableSummary":{
+      "type":"structure",
+      "required":[
+        "collaborationArn",
+        "collaborationId",
+        "membershipId",
+        "membershipArn",
+        "createTime",
+        "updateTime",
+        "id",
+        "arn",
+        "inputReferenceConfig",
+        "name"
+      ],
+      "members":{
+        "collaborationArn":{"shape":"CollaborationArn"},
+        "collaborationId":{"shape":"UUID"},
+        "membershipId":{"shape":"MembershipIdentifier"},
+        "membershipArn":{"shape":"MembershipArn"},
+        "createTime":{"shape":"Timestamp"},
+        "updateTime":{"shape":"Timestamp"},
+        "id":{"shape":"UUID"},
+        "arn":{"shape":"IdMappingTableArn"},
+        "description":{"shape":"ResourceDescription"},
+        "inputReferenceConfig":{"shape":"IdMappingTableInputReferenceConfig"},
+        "name":{"shape":"ResourceAlias"}
+      }
+    },
+    "IdMappingTableSummaryList":{
+      "type":"list",
+      "member":{"shape":"IdMappingTableSummary"}
+    },
+    "IdMappingWorkflowsSupported":{
+      "type":"list",
+      "member":{"shape":"Document"}
+    },
+    "IdNamespaceAssociation":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "membershipId",
+        "membershipArn",
+        "collaborationId",
+        "collaborationArn",
+        "name",
+        "createTime",
+        "updateTime",
+        "inputReferenceConfig",
+        "inputReferenceProperties"
+      ],
+      "members":{
+        "id":{"shape":"IdNamespaceAssociationIdentifier"},
+        "arn":{"shape":"IdNamespaceAssociationArn"},
+        "membershipId":{"shape":"UUID"},
+        "membershipArn":{"shape":"MembershipArn"},
+        "collaborationId":{"shape":"UUID"},
+        "collaborationArn":{"shape":"CollaborationArn"},
+        "name":{"shape":"GenericResourceName"},
+        "description":{"shape":"ResourceDescription"},
+        "createTime":{"shape":"Timestamp"},
+        "updateTime":{"shape":"Timestamp"},
+        "inputReferenceConfig":{"shape":"IdNamespaceAssociationInputReferenceConfig"},
+        "inputReferenceProperties":{"shape":"IdNamespaceAssociationInputReferenceProperties"},
+        "idMappingConfig":{"shape":"IdMappingConfig"}
+      }
+    },
+    "IdNamespaceAssociationArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/idnamespaceassociation/[\\d\\w-]+"
+    },
+    "IdNamespaceAssociationIdentifier":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "IdNamespaceAssociationInputReferenceArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws:entityresolution:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:idnamespace/[\\d\\w-]+"
+    },
+    "IdNamespaceAssociationInputReferenceConfig":{
+      "type":"structure",
+      "required":[
+        "inputReferenceArn",
+        "manageResourcePolicies"
+      ],
+      "members":{
+        "inputReferenceArn":{"shape":"IdNamespaceAssociationInputReferenceArn"},
+        "manageResourcePolicies":{"shape":"Boolean"}
+      }
+    },
+    "IdNamespaceAssociationInputReferenceProperties":{
+      "type":"structure",
+      "required":[
+        "idNamespaceType",
+        "idMappingWorkflowsSupported"
+      ],
+      "members":{
+        "idNamespaceType":{"shape":"IdNamespaceType"},
+        "idMappingWorkflowsSupported":{"shape":"IdMappingWorkflowsSupported"}
+      }
+    },
+    "IdNamespaceAssociationInputReferencePropertiesSummary":{
+      "type":"structure",
+      "required":["idNamespaceType"],
+      "members":{
+        "idNamespaceType":{"shape":"IdNamespaceType"}
+      }
+    },
+    "IdNamespaceAssociationSummary":{
+      "type":"structure",
+      "required":[
+        "membershipId",
+        "membershipArn",
+        "collaborationArn",
+        "collaborationId",
+        "createTime",
+        "updateTime",
+        "id",
+        "arn",
+        "inputReferenceConfig",
+        "name",
+        "inputReferenceProperties"
+      ],
+      "members":{
+        "membershipId":{"shape":"MembershipIdentifier"},
+        "membershipArn":{"shape":"MembershipArn"},
+        "collaborationArn":{"shape":"CollaborationArn"},
+        "collaborationId":{"shape":"UUID"},
+        "createTime":{"shape":"Timestamp"},
+        "updateTime":{"shape":"Timestamp"},
+        "id":{"shape":"UUID"},
+        "arn":{"shape":"IdNamespaceAssociationArn"},
+        "inputReferenceConfig":{"shape":"IdNamespaceAssociationInputReferenceConfig"},
+        "name":{"shape":"GenericResourceName"},
+        "description":{"shape":"ResourceDescription"},
+        "inputReferenceProperties":{"shape":"IdNamespaceAssociationInputReferencePropertiesSummary"}
+      }
+    },
+    "IdNamespaceAssociationSummaryList":{
+      "type":"list",
+      "member":{"shape":"IdNamespaceAssociationSummary"}
+    },
+    "IdNamespaceType":{
+      "type":"string",
+      "enum":[
+        "SOURCE",
+        "TARGET"
+      ]
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -3239,6 +3988,12 @@
     "JoinRequiredOption":{
       "type":"string",
       "enum":["QUERY_RUNNER"]
+    },
+    "KMSKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws:kms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:key/[a-zA-Z0-9-]+"
     },
     "KeyPrefix":{
       "type":"string",
@@ -3331,6 +4086,35 @@
       "members":{
         "collaborationConfiguredAudienceModelAssociationSummaries":{"shape":"CollaborationConfiguredAudienceModelAssociationSummaryList"},
         "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListCollaborationIdNamespaceAssociationsInput":{
+      "type":"structure",
+      "required":["collaborationIdentifier"],
+      "members":{
+        "collaborationIdentifier":{
+          "shape":"CollaborationIdentifier",
+          "location":"uri",
+          "locationName":"collaborationIdentifier"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListCollaborationIdNamespaceAssociationsOutput":{
+      "type":"structure",
+      "required":["collaborationIdNamespaceAssociationSummaries"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "collaborationIdNamespaceAssociationSummaries":{"shape":"CollaborationIdNamespaceAssociationSummaryList"}
       }
     },
     "ListCollaborationPrivacyBudgetTemplatesInput":{
@@ -3506,6 +4290,64 @@
       "members":{
         "configuredTableSummaries":{"shape":"ConfiguredTableSummaryList"},
         "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListIdMappingTablesInput":{
+      "type":"structure",
+      "required":["membershipIdentifier"],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListIdMappingTablesOutput":{
+      "type":"structure",
+      "required":["idMappingTableSummaries"],
+      "members":{
+        "idMappingTableSummaries":{"shape":"IdMappingTableSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListIdNamespaceAssociationsInput":{
+      "type":"structure",
+      "required":["membershipIdentifier"],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListIdNamespaceAssociationsOutput":{
+      "type":"structure",
+      "required":["idNamespaceAssociationSummaries"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "idNamespaceAssociationSummaries":{"shape":"IdNamespaceAssociationSummaryList"}
       }
     },
     "ListMembersInput":{
@@ -3967,6 +4809,32 @@
         "queryCompute":{"shape":"QueryComputePaymentConfig"}
       }
     },
+    "PopulateIdMappingTableInput":{
+      "type":"structure",
+      "required":[
+        "idMappingTableIdentifier",
+        "membershipIdentifier"
+      ],
+      "members":{
+        "idMappingTableIdentifier":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"idMappingTableIdentifier"
+        },
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        }
+      }
+    },
+    "PopulateIdMappingTableOutput":{
+      "type":"structure",
+      "required":["idMappingJobId"],
+      "members":{
+        "idMappingJobId":{"shape":"UUID"}
+      }
+    },
     "PreviewPrivacyImpactInput":{
       "type":"structure",
       "required":[
@@ -4254,7 +5122,7 @@
     },
     "ProtectedQuerySQLParametersQueryStringString":{
       "type":"string",
-      "max":90000,
+      "max":500000,
       "min":0
     },
     "ProtectedQuerySingleMemberOutput":{
@@ -4312,6 +5180,25 @@
       "required":["isResponsible"],
       "members":{
         "isResponsible":{"shape":"Boolean"}
+      }
+    },
+    "QueryConstraint":{
+      "type":"structure",
+      "members":{
+        "requireOverlap":{"shape":"QueryConstraintRequireOverlap"}
+      },
+      "union":true
+    },
+    "QueryConstraintList":{
+      "type":"list",
+      "member":{"shape":"QueryConstraint"},
+      "max":1,
+      "min":0
+    },
+    "QueryConstraintRequireOverlap":{
+      "type":"structure",
+      "members":{
+        "columns":{"shape":"AnalysisRuleColumnList"}
       }
     },
     "QueryTables":{
@@ -4432,7 +5319,8 @@
         "createTime":{"shape":"Timestamp"},
         "updateTime":{"shape":"Timestamp"},
         "type":{"shape":"SchemaType"},
-        "schemaStatusDetails":{"shape":"SchemaStatusDetailList"}
+        "schemaStatusDetails":{"shape":"SchemaStatusDetailList"},
+        "schemaTypeProperties":{"shape":"SchemaTypeProperties"}
       }
     },
     "SchemaAnalysisRuleList":{
@@ -4460,7 +5348,13 @@
     },
     "SchemaConfiguration":{
       "type":"string",
-      "enum":["DIFFERENTIAL_PRIVACY"]
+      "enum":[
+        "DIFFERENTIAL_PRIVACY",
+        "CUSTOM_ANALYSIS_NOT_ALLOWED",
+        "NO_MEMBER_ACCOUNT_ALLOWED_TO_PROVIDE_ANALYSIS",
+        "DIFFERENTIAL_PRIVACY_BUDGET_NOT_CONFIGURED",
+        "ID_MAPPING_TABLE_NOT_POPULATED"
+      ]
     },
     "SchemaConfigurationList":{
       "type":"list",
@@ -4510,7 +5404,8 @@
         "ANALYSIS_RULE_MISSING",
         "ANALYSIS_TEMPLATES_NOT_CONFIGURED",
         "ANALYSIS_PROVIDERS_NOT_CONFIGURED",
-        "DIFFERENTIAL_PRIVACY_POLICY_NOT_CONFIGURED"
+        "DIFFERENTIAL_PRIVACY_POLICY_NOT_CONFIGURED",
+        "ID_MAPPING_TABLE_NOT_POPULATED"
       ]
     },
     "SchemaStatusReasonList":{
@@ -4547,7 +5442,17 @@
     },
     "SchemaType":{
       "type":"string",
-      "enum":["TABLE"]
+      "enum":[
+        "TABLE",
+        "ID_MAPPING_TABLE"
+      ]
+    },
+    "SchemaTypeProperties":{
+      "type":"structure",
+      "members":{
+        "idMappingTable":{"shape":"IdMappingTableSchemaTypeProperties"}
+      },
+      "union":true
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -4854,6 +5759,63 @@
       "required":["configuredTable"],
       "members":{
         "configuredTable":{"shape":"ConfiguredTable"}
+      }
+    },
+    "UpdateIdMappingTableInput":{
+      "type":"structure",
+      "required":[
+        "idMappingTableIdentifier",
+        "membershipIdentifier"
+      ],
+      "members":{
+        "idMappingTableIdentifier":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"idMappingTableIdentifier"
+        },
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "description":{"shape":"ResourceDescription"},
+        "kmsKeyArn":{"shape":"KMSKeyArn"}
+      }
+    },
+    "UpdateIdMappingTableOutput":{
+      "type":"structure",
+      "required":["idMappingTable"],
+      "members":{
+        "idMappingTable":{"shape":"IdMappingTable"}
+      }
+    },
+    "UpdateIdNamespaceAssociationInput":{
+      "type":"structure",
+      "required":[
+        "idNamespaceAssociationIdentifier",
+        "membershipIdentifier"
+      ],
+      "members":{
+        "idNamespaceAssociationIdentifier":{
+          "shape":"IdNamespaceAssociationIdentifier",
+          "location":"uri",
+          "locationName":"idNamespaceAssociationIdentifier"
+        },
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "name":{"shape":"GenericResourceName"},
+        "description":{"shape":"ResourceDescription"},
+        "idMappingConfig":{"shape":"IdMappingConfig"}
+      }
+    },
+    "UpdateIdNamespaceAssociationOutput":{
+      "type":"structure",
+      "required":["idNamespaceAssociation"],
+      "members":{
+        "idNamespaceAssociation":{"shape":"IdNamespaceAssociation"}
       }
     },
     "UpdateMembershipInput":{
