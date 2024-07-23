@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.316.6 - 2024-07-23
 
 * `Aws\DataZone` - This release removes the deprecated dataProductItem field from Search API output.
 * `Aws\AppSync` - Adding support for paginators in AppSync list APIs
