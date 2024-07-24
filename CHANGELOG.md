@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.316.7 - 2024-07-24
 
 * `Aws\PinpointSMSVoiceV2` - Update for rebrand to AWS End User Messaging SMS and Voice.
 * `Aws\MedicalImaging` - CopyImageSet API adds copying selected instances between image sets, and overriding inconsistent metadata with a force parameter. UpdateImageSetMetadata API enables reverting to prior versions; updates to Study, Series, and SOP Instance UIDs; and updates to private elements, with a force parameter.
