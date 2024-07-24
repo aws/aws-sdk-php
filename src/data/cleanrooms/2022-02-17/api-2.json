@@ -177,6 +177,25 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "CreateConfiguredTableAssociationAnalysisRule":{
+      "name":"CreateConfiguredTableAssociationAnalysisRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memberships/{membershipIdentifier}/configuredTableAssociations/{configuredTableAssociationIdentifier}/analysisRule",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateConfiguredTableAssociationAnalysisRuleInput"},
+      "output":{"shape":"CreateConfiguredTableAssociationAnalysisRuleOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "CreateIdMappingTable":{
       "name":"CreateIdMappingTable",
       "http":{
@@ -352,6 +371,25 @@
       },
       "input":{"shape":"DeleteConfiguredTableAssociationInput"},
       "output":{"shape":"DeleteConfiguredTableAssociationOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteConfiguredTableAssociationAnalysisRule":{
+      "name":"DeleteConfiguredTableAssociationAnalysisRule",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/memberships/{membershipIdentifier}/configuredTableAssociations/{configuredTableAssociationIdentifier}/analysisRule/{analysisRuleType}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteConfiguredTableAssociationAnalysisRuleInput"},
+      "output":{"shape":"DeleteConfiguredTableAssociationAnalysisRuleOutput"},
       "errors":[
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
@@ -615,6 +653,23 @@
       },
       "input":{"shape":"GetConfiguredTableAssociationInput"},
       "output":{"shape":"GetConfiguredTableAssociationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetConfiguredTableAssociationAnalysisRule":{
+      "name":"GetConfiguredTableAssociationAnalysisRule",
+      "http":{
+        "method":"GET",
+        "requestUri":"/memberships/{membershipIdentifier}/configuredTableAssociations/{configuredTableAssociationIdentifier}/analysisRule/{analysisRuleType}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConfiguredTableAssociationAnalysisRuleInput"},
+      "output":{"shape":"GetConfiguredTableAssociationAnalysisRuleOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -1244,6 +1299,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "UpdateConfiguredTableAssociationAnalysisRule":{
+      "name":"UpdateConfiguredTableAssociationAnalysisRule",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/memberships/{membershipIdentifier}/configuredTableAssociations/{configuredTableAssociationIdentifier}/analysisRule/{analysisRuleType}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateConfiguredTableAssociationAnalysisRuleInput"},
+      "output":{"shape":"UpdateConfiguredTableAssociationAnalysisRuleOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateIdMappingTable":{
       "name":"UpdateIdMappingTable",
       "http":{
@@ -1357,6 +1430,20 @@
       "min":12,
       "pattern":"\\d+"
     },
+    "AdditionalAnalyses":{
+      "type":"string",
+      "enum":[
+        "ALLOWED",
+        "REQUIRED",
+        "NOT_ALLOWED"
+      ]
+    },
+    "AdditionalAnalysesResourceArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:([\\d]{12}|\\*):membership/[\\*\\d\\w-]+/configuredaudiencemodelassociation/[\\*\\d\\w-]+"
+    },
     "AggregateColumn":{
       "type":"structure",
       "required":[
@@ -1411,11 +1498,21 @@
       "type":"string",
       "enum":["COUNT_DISTINCT"]
     },
+    "AllowedAdditionalAnalyses":{
+      "type":"list",
+      "member":{"shape":"AdditionalAnalysesResourceArn"},
+      "max":25,
+      "min":0
+    },
     "AllowedColumnList":{
       "type":"list",
       "member":{"shape":"ColumnName"},
       "max":225,
       "min":1
+    },
+    "AllowedResultReceivers":{
+      "type":"list",
+      "member":{"shape":"AccountId"}
     },
     "AnalysisFormat":{
       "type":"string",
@@ -1479,7 +1576,8 @@
         "allowedJoinOperators":{"shape":"JoinOperatorsList"},
         "dimensionColumns":{"shape":"AnalysisRuleColumnList"},
         "scalarFunctions":{"shape":"ScalarFunctionsList"},
-        "outputConstraints":{"shape":"AggregationConstraints"}
+        "outputConstraints":{"shape":"AggregationConstraints"},
+        "additionalAnalyses":{"shape":"AdditionalAnalyses"}
       }
     },
     "AnalysisRuleAggregationAggregateColumnsList":{
@@ -1503,6 +1601,8 @@
       "members":{
         "allowedAnalyses":{"shape":"AnalysisRuleCustomAllowedAnalysesList"},
         "allowedAnalysisProviders":{"shape":"AnalysisRuleCustomAllowedAnalysisProvidersList"},
+        "additionalAnalyses":{"shape":"AdditionalAnalyses"},
+        "disallowedOutputColumns":{"shape":"AnalysisRuleColumnList"},
         "differentialPrivacy":{"shape":"DifferentialPrivacyConfiguration"}
       }
     },
@@ -1543,7 +1643,8 @@
       "members":{
         "joinColumns":{"shape":"AnalysisRuleListJoinColumnsList"},
         "allowedJoinOperators":{"shape":"JoinOperatorsList"},
-        "listColumns":{"shape":"AnalysisRuleColumnList"}
+        "listColumns":{"shape":"AnalysisRuleColumnList"},
+        "additionalAnalyses":{"shape":"AdditionalAnalyses"}
       }
     },
     "AnalysisRuleListJoinColumnsList":{
@@ -1726,6 +1827,13 @@
     "AnalysisTemplateValidationType":{
       "type":"string",
       "enum":["DIFFERENTIAL_PRIVACY"]
+    },
+    "AnalysisType":{
+      "type":"string",
+      "enum":[
+        "DIRECT_ANALYSIS",
+        "ADDITIONAL_ANALYSIS"
+      ]
     },
     "BatchGetCollaborationAnalysisTemplateError":{
       "type":"structure",
@@ -2256,6 +2364,13 @@
       "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\t]*"
     },
+    "ConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "directAnalysisConfigurationDetails":{"shape":"DirectAnalysisConfigurationDetails"}
+      },
+      "union":true
+    },
     "ConfiguredAudienceModelArn":{
       "type":"string",
       "max":2048,
@@ -2445,9 +2560,80 @@
         "roleArn":{"shape":"RoleArn"},
         "name":{"shape":"TableAlias"},
         "description":{"shape":"TableDescription"},
+        "analysisRuleTypes":{"shape":"ConfiguredTableAssociationAnalysisRuleTypeList"},
         "createTime":{"shape":"Timestamp"},
         "updateTime":{"shape":"Timestamp"}
       }
+    },
+    "ConfiguredTableAssociationAnalysisRule":{
+      "type":"structure",
+      "required":[
+        "membershipIdentifier",
+        "configuredTableAssociationId",
+        "configuredTableAssociationArn",
+        "policy",
+        "type",
+        "createTime",
+        "updateTime"
+      ],
+      "members":{
+        "membershipIdentifier":{"shape":"MembershipIdentifier"},
+        "configuredTableAssociationId":{"shape":"ConfiguredTableAssociationIdentifier"},
+        "configuredTableAssociationArn":{"shape":"ConfiguredTableAssociationArn"},
+        "policy":{"shape":"ConfiguredTableAssociationAnalysisRulePolicy"},
+        "type":{"shape":"ConfiguredTableAssociationAnalysisRuleType"},
+        "createTime":{"shape":"Timestamp"},
+        "updateTime":{"shape":"Timestamp"}
+      }
+    },
+    "ConfiguredTableAssociationAnalysisRuleAggregation":{
+      "type":"structure",
+      "members":{
+        "allowedResultReceivers":{"shape":"AllowedResultReceivers"},
+        "allowedAdditionalAnalyses":{"shape":"AllowedAdditionalAnalyses"}
+      }
+    },
+    "ConfiguredTableAssociationAnalysisRuleCustom":{
+      "type":"structure",
+      "members":{
+        "allowedResultReceivers":{"shape":"AllowedResultReceivers"},
+        "allowedAdditionalAnalyses":{"shape":"AllowedAdditionalAnalyses"}
+      }
+    },
+    "ConfiguredTableAssociationAnalysisRuleList":{
+      "type":"structure",
+      "members":{
+        "allowedResultReceivers":{"shape":"AllowedResultReceivers"},
+        "allowedAdditionalAnalyses":{"shape":"AllowedAdditionalAnalyses"}
+      }
+    },
+    "ConfiguredTableAssociationAnalysisRulePolicy":{
+      "type":"structure",
+      "members":{
+        "v1":{"shape":"ConfiguredTableAssociationAnalysisRulePolicyV1"}
+      },
+      "union":true
+    },
+    "ConfiguredTableAssociationAnalysisRulePolicyV1":{
+      "type":"structure",
+      "members":{
+        "list":{"shape":"ConfiguredTableAssociationAnalysisRuleList"},
+        "aggregation":{"shape":"ConfiguredTableAssociationAnalysisRuleAggregation"},
+        "custom":{"shape":"ConfiguredTableAssociationAnalysisRuleCustom"}
+      },
+      "union":true
+    },
+    "ConfiguredTableAssociationAnalysisRuleType":{
+      "type":"string",
+      "enum":[
+        "AGGREGATION",
+        "LIST",
+        "CUSTOM"
+      ]
+    },
+    "ConfiguredTableAssociationAnalysisRuleTypeList":{
+      "type":"list",
+      "member":{"shape":"ConfiguredTableAssociationAnalysisRuleType"}
     },
     "ConfiguredTableAssociationArn":{
       "type":"string",
@@ -2649,6 +2835,36 @@
       "required":["analysisRule"],
       "members":{
         "analysisRule":{"shape":"ConfiguredTableAnalysisRule"}
+      }
+    },
+    "CreateConfiguredTableAssociationAnalysisRuleInput":{
+      "type":"structure",
+      "required":[
+        "membershipIdentifier",
+        "configuredTableAssociationIdentifier",
+        "analysisRuleType",
+        "analysisRulePolicy"
+      ],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "configuredTableAssociationIdentifier":{
+          "shape":"ConfiguredTableAssociationIdentifier",
+          "location":"uri",
+          "locationName":"configuredTableAssociationIdentifier"
+        },
+        "analysisRuleType":{"shape":"ConfiguredTableAssociationAnalysisRuleType"},
+        "analysisRulePolicy":{"shape":"ConfiguredTableAssociationAnalysisRulePolicy"}
+      }
+    },
+    "CreateConfiguredTableAssociationAnalysisRuleOutput":{
+      "type":"structure",
+      "required":["analysisRule"],
+      "members":{
+        "analysisRule":{"shape":"ConfiguredTableAssociationAnalysisRule"}
       }
     },
     "CreateConfiguredTableAssociationInput":{
@@ -2904,6 +3120,36 @@
       }
     },
     "DeleteConfiguredTableAnalysisRuleOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteConfiguredTableAssociationAnalysisRuleInput":{
+      "type":"structure",
+      "required":[
+        "membershipIdentifier",
+        "configuredTableAssociationIdentifier",
+        "analysisRuleType"
+      ],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "configuredTableAssociationIdentifier":{
+          "shape":"ConfiguredTableAssociationIdentifier",
+          "location":"uri",
+          "locationName":"configuredTableAssociationIdentifier"
+        },
+        "analysisRuleType":{
+          "shape":"ConfiguredTableAssociationAnalysisRuleType",
+          "location":"uri",
+          "locationName":"analysisRuleType"
+        }
+      }
+    },
+    "DeleteConfiguredTableAssociationAnalysisRuleOutput":{
       "type":"structure",
       "members":{
       }
@@ -3230,6 +3476,12 @@
         "usersNoisePerQuery":{"shape":"UsersNoisePerQuery"}
       }
     },
+    "DirectAnalysisConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "receiverAccountIds":{"shape":"ReceiverAccountIds"}
+      }
+    },
     "DisplayName":{
       "type":"string",
       "max":100,
@@ -3467,6 +3719,38 @@
       "required":["analysisRule"],
       "members":{
         "analysisRule":{"shape":"ConfiguredTableAnalysisRule"}
+      }
+    },
+    "GetConfiguredTableAssociationAnalysisRuleInput":{
+      "type":"structure",
+      "required":[
+        "membershipIdentifier",
+        "configuredTableAssociationIdentifier",
+        "analysisRuleType"
+      ],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "configuredTableAssociationIdentifier":{
+          "shape":"ConfiguredTableAssociationIdentifier",
+          "location":"uri",
+          "locationName":"configuredTableAssociationIdentifier"
+        },
+        "analysisRuleType":{
+          "shape":"ConfiguredTableAssociationAnalysisRuleType",
+          "location":"uri",
+          "locationName":"analysisRuleType"
+        }
+      }
+    },
+    "GetConfiguredTableAssociationAnalysisRuleOutput":{
+      "type":"structure",
+      "required":["analysisRule"],
+      "members":{
+        "analysisRule":{"shape":"ConfiguredTableAssociationAnalysisRule"}
       }
     },
     "GetConfiguredTableAssociationInput":{
@@ -5053,6 +5337,13 @@
       "min":36,
       "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
+    "ProtectedQueryMemberOutputConfiguration":{
+      "type":"structure",
+      "required":["accountId"],
+      "members":{
+        "accountId":{"shape":"AccountId"}
+      }
+    },
     "ProtectedQueryMemberOutputList":{
       "type":"list",
       "member":{"shape":"ProtectedQuerySingleMemberOutput"}
@@ -5068,7 +5359,8 @@
     "ProtectedQueryOutputConfiguration":{
       "type":"structure",
       "members":{
-        "s3":{"shape":"ProtectedQueryS3OutputConfiguration"}
+        "s3":{"shape":"ProtectedQueryS3OutputConfiguration"},
+        "member":{"shape":"ProtectedQueryMemberOutputConfiguration"}
       },
       "union":true
     },
@@ -5157,14 +5449,16 @@
         "membershipId",
         "membershipArn",
         "createTime",
-        "status"
+        "status",
+        "receiverConfigurations"
       ],
       "members":{
         "id":{"shape":"UUID"},
         "membershipId":{"shape":"UUID"},
         "membershipArn":{"shape":"MembershipArn"},
         "createTime":{"shape":"Timestamp"},
-        "status":{"shape":"ProtectedQueryStatus"}
+        "status":{"shape":"ProtectedQueryStatus"},
+        "receiverConfigurations":{"shape":"ReceiverConfigurationsList"}
       }
     },
     "ProtectedQuerySummaryList":{
@@ -5204,6 +5498,22 @@
     "QueryTables":{
       "type":"list",
       "member":{"shape":"TableAlias"}
+    },
+    "ReceiverAccountIds":{
+      "type":"list",
+      "member":{"shape":"AccountId"}
+    },
+    "ReceiverConfiguration":{
+      "type":"structure",
+      "required":["analysisType"],
+      "members":{
+        "analysisType":{"shape":"AnalysisType"},
+        "configurationDetails":{"shape":"ConfigurationDetails"}
+      }
+    },
+    "ReceiverConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"ReceiverConfiguration"}
     },
     "ResourceAlias":{
       "type":"string",
@@ -5348,13 +5658,7 @@
     },
     "SchemaConfiguration":{
       "type":"string",
-      "enum":[
-        "DIFFERENTIAL_PRIVACY",
-        "CUSTOM_ANALYSIS_NOT_ALLOWED",
-        "NO_MEMBER_ACCOUNT_ALLOWED_TO_PROVIDE_ANALYSIS",
-        "DIFFERENTIAL_PRIVACY_BUDGET_NOT_CONFIGURED",
-        "ID_MAPPING_TABLE_NOT_POPULATED"
-      ]
+      "enum":["DIFFERENTIAL_PRIVACY"]
     },
     "SchemaConfigurationList":{
       "type":"list",
@@ -5375,12 +5679,16 @@
     },
     "SchemaStatusDetail":{
       "type":"structure",
-      "required":["status"],
+      "required":[
+        "status",
+        "analysisType"
+      ],
       "members":{
         "status":{"shape":"SchemaStatus"},
         "reasons":{"shape":"SchemaStatusReasonList"},
         "analysisRuleType":{"shape":"AnalysisRuleType"},
-        "configurations":{"shape":"SchemaConfigurationList"}
+        "configurations":{"shape":"SchemaConfigurationList"},
+        "analysisType":{"shape":"AnalysisType"}
       }
     },
     "SchemaStatusDetailList":{
@@ -5405,7 +5713,13 @@
         "ANALYSIS_TEMPLATES_NOT_CONFIGURED",
         "ANALYSIS_PROVIDERS_NOT_CONFIGURED",
         "DIFFERENTIAL_PRIVACY_POLICY_NOT_CONFIGURED",
-        "ID_MAPPING_TABLE_NOT_POPULATED"
+        "ID_MAPPING_TABLE_NOT_POPULATED",
+        "COLLABORATION_ANALYSIS_RULE_NOT_CONFIGURED",
+        "ADDITIONAL_ANALYSES_NOT_CONFIGURED",
+        "RESULT_RECEIVERS_NOT_CONFIGURED",
+        "ADDITIONAL_ANALYSES_NOT_ALLOWED",
+        "RESULT_RECEIVERS_NOT_ALLOWED",
+        "ANALYSIS_RULE_TYPES_NOT_COMPATIBLE"
       ]
     },
     "SchemaStatusReasonList":{
@@ -5711,6 +6025,40 @@
       "required":["analysisRule"],
       "members":{
         "analysisRule":{"shape":"ConfiguredTableAnalysisRule"}
+      }
+    },
+    "UpdateConfiguredTableAssociationAnalysisRuleInput":{
+      "type":"structure",
+      "required":[
+        "membershipIdentifier",
+        "configuredTableAssociationIdentifier",
+        "analysisRuleType",
+        "analysisRulePolicy"
+      ],
+      "members":{
+        "membershipIdentifier":{
+          "shape":"MembershipIdentifier",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "configuredTableAssociationIdentifier":{
+          "shape":"ConfiguredTableAssociationIdentifier",
+          "location":"uri",
+          "locationName":"configuredTableAssociationIdentifier"
+        },
+        "analysisRuleType":{
+          "shape":"ConfiguredTableAssociationAnalysisRuleType",
+          "location":"uri",
+          "locationName":"analysisRuleType"
+        },
+        "analysisRulePolicy":{"shape":"ConfiguredTableAssociationAnalysisRulePolicy"}
+      }
+    },
+    "UpdateConfiguredTableAssociationAnalysisRuleOutput":{
+      "type":"structure",
+      "required":["analysisRule"],
+      "members":{
+        "analysisRule":{"shape":"ConfiguredTableAssociationAnalysisRule"}
       }
     },
     "UpdateConfiguredTableAssociationInput":{
