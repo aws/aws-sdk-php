@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElasticLoadBalancingv2` - This release adds support for sharing trust stores across accounts and organizations through integration with AWS Resource Access Manager.
+* `Aws\ApplicationSignals` - CloudWatch Application Signals now supports application logs correlation with traces and operational health metrics of applications running on EC2 instances. Users can view the most relevant telemetry to troubleshoot application health anomalies such as spikes in latency, errors, and availability.
+* `Aws\ECR` - API and documentation updates for Amazon ECR, adding support for creating, updating, describing and deleting ECR Repository Creation Template.
+* `Aws\DataZone` - Introduces GetEnvironmentCredentials operation to SDK
+* `Aws\BedrockRuntime` - Provides ServiceUnavailableException error message
+* `Aws\SFN` - This release adds support to customer managed KMS key encryption in AWS Step Functions.
+* `Aws\EC2` - EC2 Fleet now supports using custom identifiers to reference Amazon Machine Images (AMI) in launch requests that are configured to choose from a diversified list of instance types.
+* `Aws\CodeCommit` - CreateRepository API now throws OperationNotAllowedException when the account has been restricted from creating a repository.
+* `Aws\EKS` - This release adds support for EKS cluster to manage extended support.
+* `Aws\ApplicationAutoScaling` - Application Auto Scaling is now more responsive to the changes in demand of your SageMaker Inference endpoints. To get started, create or update a Target Tracking policy based on High Resolution CloudWatch metrics.
+* `Aws\Outposts` - Adding default vCPU information to GetOutpostSupportedInstanceTypes and GetOutpostInstanceTypes responses
+* `Aws\NetworkFirewall` - You can now log events that are related to TLS inspection, in addition to the existing alert and flow logging.
+
 ## 3.316.7 - 2024-07-24
 
 * `Aws\PinpointSMSVoiceV2` - Update for rebrand to AWS End User Messaging SMS and Voice.

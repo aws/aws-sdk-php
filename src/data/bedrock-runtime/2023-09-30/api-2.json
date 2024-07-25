@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-09-30",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"bedrock-runtime",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Bedrock Runtime",
     "serviceId":"Bedrock Runtime",
     "signatureVersion":"v4",
@@ -45,6 +46,7 @@
         {"shape":"ThrottlingException"},
         {"shape":"ModelTimeoutException"},
         {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ValidationException"},
         {"shape":"ModelNotReadyException"},
         {"shape":"ModelErrorException"}
@@ -65,6 +67,7 @@
         {"shape":"ThrottlingException"},
         {"shape":"ModelTimeoutException"},
         {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ValidationException"},
         {"shape":"ModelNotReadyException"},
         {"shape":"ModelErrorException"}
@@ -85,6 +88,7 @@
         {"shape":"ThrottlingException"},
         {"shape":"ModelTimeoutException"},
         {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ValidationException"},
         {"shape":"ModelNotReadyException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -106,6 +110,7 @@
         {"shape":"ThrottlingException"},
         {"shape":"ModelTimeoutException"},
         {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ModelStreamErrorException"},
         {"shape":"ValidationException"},
         {"shape":"ModelNotReadyException"},
@@ -351,7 +356,8 @@
         "internalServerException":{"shape":"InternalServerException"},
         "modelStreamErrorException":{"shape":"ModelStreamErrorException"},
         "validationException":{"shape":"ValidationException"},
-        "throttlingException":{"shape":"ThrottlingException"}
+        "throttlingException":{"shape":"ThrottlingException"},
+        "serviceUnavailableException":{"shape":"ServiceUnavailableException"}
       },
       "eventstream":true
     },
@@ -1256,7 +1262,8 @@
         "modelStreamErrorException":{"shape":"ModelStreamErrorException"},
         "validationException":{"shape":"ValidationException"},
         "throttlingException":{"shape":"ThrottlingException"},
-        "modelTimeoutException":{"shape":"ModelTimeoutException"}
+        "modelTimeoutException":{"shape":"ModelTimeoutException"},
+        "serviceUnavailableException":{"shape":"ServiceUnavailableException"}
       },
       "eventstream":true
     },
@@ -1270,6 +1277,15 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ServiceUnavailableException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"NonBlankString"}
+      },
+      "error":{"httpStatusCode":503},
+      "exception":true,
+      "fault":true
     },
     "SpecificToolChoice":{
       "type":"structure",
