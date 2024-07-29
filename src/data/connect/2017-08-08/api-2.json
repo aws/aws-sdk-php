@@ -11,7 +11,8 @@
     "serviceId":"Connect",
     "signatureVersion":"v4",
     "signingName":"connect",
-    "uid":"connect-2017-08-08"
+    "uid":"connect-2017-08-08",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "ActivateEvaluationForm":{
@@ -1204,6 +1205,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DescribeAuthenticationProfile":{
+      "name":"DescribeAuthenticationProfile",
+      "http":{
+        "method":"GET",
+        "requestUri":"/authentication-profiles/{InstanceId}/{AuthenticationProfileId}"
+      },
+      "input":{"shape":"DescribeAuthenticationProfileRequest"},
+      "output":{"shape":"DescribeAuthenticationProfileResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "DescribeContact":{
       "name":"DescribeContact",
       "http":{
@@ -2028,6 +2045,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListAuthenticationProfiles":{
+      "name":"ListAuthenticationProfiles",
+      "http":{
+        "method":"GET",
+        "requestUri":"/authentication-profiles-summary/{InstanceId}"
+      },
+      "input":{"shape":"ListAuthenticationProfilesRequest"},
+      "output":{"shape":"ListAuthenticationProfilesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "ListBots":{
       "name":"ListBots",
       "http":{
@@ -2800,6 +2833,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "SearchAgentStatuses":{
+      "name":"SearchAgentStatuses",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-agent-statuses"
+      },
+      "input":{"shape":"SearchAgentStatusesRequest"},
+      "output":{"shape":"SearchAgentStatusesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "SearchAvailablePhoneNumbers":{
       "name":"SearchAvailablePhoneNumbers",
       "http":{
@@ -2984,6 +3033,22 @@
       },
       "input":{"shape":"SearchSecurityProfilesRequest"},
       "output":{"shape":"SearchSecurityProfilesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchUserHierarchyGroups":{
+      "name":"SearchUserHierarchyGroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-user-hierarchy-groups"
+      },
+      "input":{"shape":"SearchUserHierarchyGroupsRequest"},
+      "output":{"shape":"SearchUserHierarchyGroupsResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
@@ -3342,6 +3407,21 @@
         {"shape":"DuplicateResourceException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "UpdateAuthenticationProfile":{
+      "name":"UpdateAuthenticationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/authentication-profiles/{InstanceId}/{AuthenticationProfileId}"
+      },
+      "input":{"shape":"UpdateAuthenticationProfileRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
       ]
@@ -4079,6 +4159,12 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "AccessTokenDuration":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":10
+    },
     "ActionSummaries":{
       "type":"list",
       "member":{"shape":"ActionSummary"}
@@ -4193,6 +4279,14 @@
         "L5Ids":{"shape":"HierarchyGroupIdList"}
       }
     },
+    "AgentId":{
+      "type":"string",
+      "max":256
+    },
+    "AgentIds":{
+      "type":"list",
+      "member":{"shape":"AgentId"}
+    },
     "AgentInfo":{
       "type":"structure",
       "members":{
@@ -4252,6 +4346,10 @@
       "min":1
     },
     "AgentStatusId":{"type":"string"},
+    "AgentStatusList":{
+      "type":"list",
+      "member":{"shape":"AgentStatus"}
+    },
     "AgentStatusName":{
       "type":"string",
       "max":127,
@@ -4268,6 +4366,24 @@
         "StatusStartTimestamp":{"shape":"Timestamp"},
         "StatusArn":{"shape":"ARN"},
         "StatusName":{"shape":"AgentStatusName"}
+      }
+    },
+    "AgentStatusSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"AgentStatusSearchCriteria"}
+    },
+    "AgentStatusSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"AgentStatusSearchConditionList"},
+        "AndConditions":{"shape":"AgentStatusSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "AgentStatusSearchFilter":{
+      "type":"structure",
+      "members":{
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
       }
     },
     "AgentStatusState":{
@@ -4309,6 +4425,12 @@
       "type":"string",
       "max":100,
       "min":1
+    },
+    "AgentsCriteria":{
+      "type":"structure",
+      "members":{
+        "AgentIds":{"shape":"AgentIds"}
+      }
     },
     "AgentsMinOneMaxHundred":{
       "type":"list",
@@ -4792,7 +4914,8 @@
       "members":{
         "Name":{"shape":"PredefinedAttributeName"},
         "Value":{"shape":"ProficiencyValue"},
-        "ProficiencyLevel":{"shape":"ProficiencyLevel"},
+        "ProficiencyLevel":{"shape":"NullableProficiencyLevel"},
+        "MatchCriteria":{"shape":"MatchCriteria"},
         "ComparisonOperator":{"shape":"ComparisonOperator"}
       }
     },
@@ -4833,6 +4956,53 @@
       }
     },
     "AudioQualityScore":{"type":"float"},
+    "AuthenticationProfile":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AuthenticationProfileId"},
+        "Arn":{"shape":"ARN"},
+        "Name":{"shape":"AuthenticationProfileName"},
+        "Description":{"shape":"AuthenticationProfileDescription"},
+        "AllowedIps":{"shape":"IpCidrList"},
+        "BlockedIps":{"shape":"IpCidrList"},
+        "IsDefault":{"shape":"Boolean"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "PeriodicSessionDuration":{"shape":"AccessTokenDuration"},
+        "MaxSessionDuration":{"shape":"RefreshTokenDuration"}
+      }
+    },
+    "AuthenticationProfileDescription":{
+      "type":"string",
+      "max":250,
+      "min":1
+    },
+    "AuthenticationProfileId":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "AuthenticationProfileName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "AuthenticationProfileSummary":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AuthenticationProfileId"},
+        "Arn":{"shape":"ARN"},
+        "Name":{"shape":"AuthenticationProfileName"},
+        "IsDefault":{"shape":"Boolean"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
+    "AuthenticationProfileSummaryList":{
+      "type":"list",
+      "member":{"shape":"AuthenticationProfileSummary"}
+    },
     "AutoAccept":{"type":"boolean"},
     "AvailableNumberSummary":{
       "type":"structure",
@@ -5129,6 +5299,16 @@
       "type":"string",
       "max":500
     },
+    "CommonAttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"}
+      }
+    },
+    "CommonAttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"CommonAttributeAndCondition"}
+    },
     "CommonNameLength127":{
       "type":"string",
       "max":127,
@@ -5177,6 +5357,17 @@
       "type":"integer",
       "max":10,
       "min":1
+    },
+    "Condition":{
+      "type":"structure",
+      "members":{
+        "StringCondition":{"shape":"StringCondition"},
+        "NumberCondition":{"shape":"NumberCondition"}
+      }
+    },
+    "Conditions":{
+      "type":"list",
+      "member":{"shape":"Condition"}
     },
     "ConflictException":{
       "type":"structure",
@@ -5565,6 +5756,14 @@
       "type":"string",
       "max":255,
       "min":1
+    },
+    "ControlPlaneAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"CommonAttributeOrConditionList"},
+        "AndCondition":{"shape":"CommonAttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"}
+      }
     },
     "ControlPlaneTagFilter":{
       "type":"structure",
@@ -6998,6 +7197,31 @@
       "type":"structure",
       "members":{
         "AgentStatus":{"shape":"AgentStatus"}
+      }
+    },
+    "DescribeAuthenticationProfileRequest":{
+      "type":"structure",
+      "required":[
+        "AuthenticationProfileId",
+        "InstanceId"
+      ],
+      "members":{
+        "AuthenticationProfileId":{
+          "shape":"AuthenticationProfileId",
+          "location":"uri",
+          "locationName":"AuthenticationProfileId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        }
+      }
+    },
+    "DescribeAuthenticationProfileResponse":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfile":{"shape":"AuthenticationProfile"}
       }
     },
     "DescribeContactEvaluationRequest":{
@@ -9713,6 +9937,16 @@
       "type":"list",
       "member":{"shape":"InvisibleFieldInfo"}
     },
+    "IpCidr":{
+      "type":"string",
+      "max":50,
+      "min":2,
+      "pattern":"^[A-Za-z0-9:/]*$"
+    },
+    "IpCidrList":{
+      "type":"list",
+      "member":{"shape":"IpCidr"}
+    },
     "JoinToken":{
       "type":"string",
       "sensitive":true
@@ -9901,6 +10135,35 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListAuthenticationProfilesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAuthenticationProfilesResponse":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfileSummaryList":{"shape":"AuthenticationProfileSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListBotsRequest":{
       "type":"structure",
       "required":[
@@ -9936,6 +10199,13 @@
       "members":{
         "LexBots":{"shape":"LexBotConfigList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCondition":{
+      "type":"structure",
+      "members":{
+        "TargetListType":{"shape":"TargetListType"},
+        "Conditions":{"shape":"Conditions"}
       }
     },
     "ListContactEvaluationsRequest":{
@@ -11258,6 +11528,12 @@
       }
     },
     "Long":{"type":"long"},
+    "MatchCriteria":{
+      "type":"structure",
+      "members":{
+        "AgentsCriteria":{"shape":"AgentsCriteria"}
+      }
+    },
     "MaxResult10":{
       "type":"integer",
       "max":10,
@@ -11517,6 +11793,33 @@
       "members":{
         "UserTags":{"shape":"UserTagMap"},
         "UserIds":{"shape":"UserIdList"}
+      }
+    },
+    "NullableProficiencyLevel":{
+      "type":"float",
+      "max":5.0,
+      "min":1.0
+    },
+    "NullableProficiencyLimitValue":{"type":"integer"},
+    "NumberComparisonType":{
+      "type":"string",
+      "enum":[
+        "GREATER_OR_EQUAL",
+        "GREATER",
+        "LESSER_OR_EQUAL",
+        "LESSER",
+        "EQUAL",
+        "NOT_EQUAL",
+        "RANGE"
+      ]
+    },
+    "NumberCondition":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"String"},
+        "MinValue":{"shape":"NullableProficiencyLimitValue"},
+        "MaxValue":{"shape":"NullableProficiencyLimitValue"},
+        "ComparisonType":{"shape":"NumberComparisonType"}
       }
     },
     "NumberReference":{
@@ -12654,6 +12957,28 @@
       "max":5,
       "min":0
     },
+    "RealTimeContactAnalysisPostContactSummaryContent":{
+      "type":"string",
+      "max":1270,
+      "min":1
+    },
+    "RealTimeContactAnalysisPostContactSummaryFailureCode":{
+      "type":"string",
+      "enum":[
+        "QUOTA_EXCEEDED",
+        "INSUFFICIENT_CONVERSATION_CONTENT",
+        "FAILED_SAFETY_GUIDELINES",
+        "INVALID_ANALYSIS_CONFIGURATION",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "RealTimeContactAnalysisPostContactSummaryStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
     "RealTimeContactAnalysisSegmentAttachments":{
       "type":"structure",
       "required":[
@@ -12702,6 +13027,15 @@
         "IssuesDetected":{"shape":"RealTimeContactAnalysisIssuesDetected"}
       }
     },
+    "RealTimeContactAnalysisSegmentPostContactSummary":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Content":{"shape":"RealTimeContactAnalysisPostContactSummaryContent"},
+        "Status":{"shape":"RealTimeContactAnalysisPostContactSummaryStatus"},
+        "FailureCode":{"shape":"RealTimeContactAnalysisPostContactSummaryFailureCode"}
+      }
+    },
     "RealTimeContactAnalysisSegmentTranscript":{
       "type":"structure",
       "required":[
@@ -12730,13 +13064,14 @@
         "Categories",
         "Issues",
         "Event",
-        "Attachments"
+        "Attachments",
+        "PostContactSummary"
       ]
     },
     "RealTimeContactAnalysisSegmentTypes":{
       "type":"list",
       "member":{"shape":"RealTimeContactAnalysisSegmentType"},
-      "max":5
+      "max":6
     },
     "RealTimeContactAnalysisSentimentLabel":{
       "type":"string",
@@ -12817,7 +13152,8 @@
         "Categories":{"shape":"RealTimeContactAnalysisSegmentCategories"},
         "Issues":{"shape":"RealTimeContactAnalysisSegmentIssues"},
         "Event":{"shape":"RealTimeContactAnalysisSegmentEvent"},
-        "Attachments":{"shape":"RealTimeContactAnalysisSegmentAttachments"}
+        "Attachments":{"shape":"RealTimeContactAnalysisSegmentAttachments"},
+        "PostContactSummary":{"shape":"RealTimeContactAnalysisSegmentPostContactSummary"}
       },
       "union":true
     },
@@ -12889,6 +13225,12 @@
       "type":"string",
       "max":4096,
       "min":0
+    },
+    "RefreshTokenDuration":{
+      "type":"integer",
+      "box":true,
+      "max":720,
+      "min":360
     },
     "RegionName":{
       "type":"string",
@@ -13351,6 +13693,28 @@
       "min":1,
       "pattern":"s3://\\S+/.+|https://\\\\S+\\\\.s3\\\\.\\\\S+\\\\.amazonaws\\\\.com/\\\\S+"
     },
+    "SearchAgentStatusesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"AgentStatusSearchFilter"},
+        "SearchCriteria":{"shape":"AgentStatusSearchCriteria"}
+      }
+    },
+    "SearchAgentStatusesResponse":{
+      "type":"structure",
+      "members":{
+        "AgentStatuses":{"shape":"AgentStatusList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
     "SearchAvailablePhoneNumbersRequest":{
       "type":"structure",
       "required":[
@@ -13673,6 +14037,28 @@
       "member":{"shape":"SearchText"},
       "max":100,
       "min":0
+    },
+    "SearchUserHierarchyGroupsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"UserHierarchyGroupSearchFilter"},
+        "SearchCriteria":{"shape":"UserHierarchyGroupSearchCriteria"}
+      }
+    },
+    "SearchUserHierarchyGroupsResponse":{
+      "type":"structure",
+      "members":{
+        "UserHierarchyGroups":{"shape":"UserHierarchyGroupList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
     },
     "SearchUsersRequest":{
       "type":"structure",
@@ -14520,7 +14906,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"^(?!aws:)[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*$"
     },
     "TagKeyList":{
       "type":"list",
@@ -14595,6 +14981,10 @@
     "TagsList":{
       "type":"list",
       "member":{"shape":"TagSet"}
+    },
+    "TargetListType":{
+      "type":"string",
+      "enum":["PROFICIENCIES"]
     },
     "TaskActionDefinition":{
       "type":"structure",
@@ -15039,6 +15429,33 @@
           "box":true
         },
         "ResetOrderNumber":{"shape":"Boolean"}
+      }
+    },
+    "UpdateAuthenticationProfileRequest":{
+      "type":"structure",
+      "required":[
+        "AuthenticationProfileId",
+        "InstanceId"
+      ],
+      "members":{
+        "AuthenticationProfileId":{
+          "shape":"AuthenticationProfileId",
+          "location":"uri",
+          "locationName":"AuthenticationProfileId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Name":{"shape":"AuthenticationProfileName"},
+        "Description":{"shape":"AuthenticationProfileDescription"},
+        "AllowedIps":{"shape":"IpCidrList"},
+        "BlockedIps":{"shape":"IpCidrList"},
+        "PeriodicSessionDuration":{
+          "shape":"AccessTokenDuration",
+          "box":true
+        }
       }
     },
     "UpdateCaseActionDefinition":{
@@ -16243,6 +16660,28 @@
       "type":"list",
       "member":{"shape":"UserData"}
     },
+    "UserHierarchyGroupList":{
+      "type":"list",
+      "member":{"shape":"HierarchyGroup"}
+    },
+    "UserHierarchyGroupSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"UserHierarchyGroupSearchCriteria"}
+    },
+    "UserHierarchyGroupSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"UserHierarchyGroupSearchConditionList"},
+        "AndConditions":{"shape":"UserHierarchyGroupSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "UserHierarchyGroupSearchFilter":{
+      "type":"structure",
+      "members":{
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
+      }
+    },
     "UserId":{"type":"string"},
     "UserIdList":{
       "type":"list",
@@ -16343,6 +16782,7 @@
         "OrConditions":{"shape":"UserSearchConditionList"},
         "AndConditions":{"shape":"UserSearchConditionList"},
         "StringCondition":{"shape":"StringCondition"},
+        "ListCondition":{"shape":"ListCondition"},
         "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
       }
     },

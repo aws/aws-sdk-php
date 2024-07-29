@@ -8,6 +8,7 @@
     "CancelMetadataGenerationRun": "<p>Cancels the metadata generation run.</p>",
     "CancelSubscription": "<p>Cancels the subscription to the specified asset.</p>",
     "CreateAsset": "<p>Creates an asset in Amazon DataZone catalog.</p>",
+    "CreateAssetFilter": "<p>Creates a data asset filter.</p>",
     "CreateAssetRevision": "<p>Creates a revision of the asset.</p>",
     "CreateAssetType": "<p>Creates a custom asset type.</p>",
     "CreateDataSource": "<p>Creates an Amazon DataZone data source.</p>",
@@ -27,6 +28,7 @@
     "CreateSubscriptionTarget": "<p>Creates a subscription target in Amazon DataZone.</p>",
     "CreateUserProfile": "<p>Creates a user profile in Amazon DataZone.</p>",
     "DeleteAsset": "<p>Delets an asset in Amazon DataZone.</p>",
+    "DeleteAssetFilter": "<p>Deletes an asset filter.</p>",
     "DeleteAssetType": "<p>Deletes an asset type in Amazon DataZone.</p>",
     "DeleteDataSource": "<p>Deletes a data source in Amazon DataZone.</p>",
     "DeleteDomain": "<p>Deletes a Amazon DataZone domain.</p>",
@@ -46,6 +48,7 @@
     "DeleteTimeSeriesDataPoints": "<p>Deletes the specified time series form for the specified asset. </p>",
     "DisassociateEnvironmentRole": "<p>Disassociates the environment role in Amazon DataZone.</p>",
     "GetAsset": "<p>Gets an Amazon DataZone asset.</p>",
+    "GetAssetFilter": "<p>Gets an asset filter.</p>",
     "GetAssetType": "<p>Gets an Amazon DataZone asset type.</p>",
     "GetDataSource": "<p>Gets an Amazon DataZone data source.</p>",
     "GetDataSourceRun": "<p>Gets an Amazon DataZone data source run.</p>",
@@ -54,12 +57,14 @@
     "GetEnvironmentAction": "<p>Gets the specified environment action.</p>",
     "GetEnvironmentBlueprint": "<p>Gets an Amazon DataZone blueprint.</p>",
     "GetEnvironmentBlueprintConfiguration": "<p>Gets the blueprint configuration in Amazon DataZone.</p>",
+    "GetEnvironmentCredentials": "<p>Gets the credentials of an environment in Amazon DataZone.</p>",
     "GetEnvironmentProfile": "<p>Gets an evinronment profile in Amazon DataZone.</p>",
     "GetFormType": "<p>Gets a metadata form type in Amazon DataZone.</p>",
     "GetGlossary": "<p>Gets a business glossary in Amazon DataZone.</p>",
     "GetGlossaryTerm": "<p>Gets a business glossary term in Amazon DataZone.</p>",
     "GetGroupProfile": "<p>Gets a group profile in Amazon DataZone.</p>",
     "GetIamPortalLoginUrl": "<p>Gets the data portal URL for the specified Amazon DataZone domain.</p>",
+    "GetLineageNode": "<p>Gets the data lineage node.</p>",
     "GetListing": "<p>Gets a listing (a record of an asset at a given time).</p>",
     "GetMetadataGenerationRun": "<p>Gets a metadata generation run in Amazon DataZone.</p>",
     "GetProject": "<p>Gets a project in Amazon DataZone.</p>",
@@ -69,6 +74,7 @@
     "GetSubscriptionTarget": "<p>Gets the subscription target in Amazon DataZone.</p>",
     "GetTimeSeriesDataPoint": "<p>Gets the existing data point for the asset.</p>",
     "GetUserProfile": "<p>Gets a user profile in Amazon DataZone.</p>",
+    "ListAssetFilters": "<p>Lists asset filters.</p>",
     "ListAssetRevisions": "<p>Lists the revisions for the asset.</p>",
     "ListDataSourceRunActivities": "<p>Lists data source run activities.</p>",
     "ListDataSourceRuns": "<p>Lists data source runs in Amazon DataZone.</p>",
@@ -79,6 +85,7 @@
     "ListEnvironmentBlueprints": "<p>Lists blueprints in an Amazon DataZone environment.</p>",
     "ListEnvironmentProfiles": "<p>Lists Amazon DataZone environment profiles.</p>",
     "ListEnvironments": "<p>Lists Amazon DataZone environments.</p>",
+    "ListLineageNodeHistory": "<p>Lists the history of the specified data lineage node.</p>",
     "ListMetadataGenerationRuns": "<p>Lists all metadata generation runs.</p>",
     "ListNotifications": "<p>Lists all Amazon DataZone notifications.</p>",
     "ListProjectMemberships": "<p>Lists all members of the specified project.</p>",
@@ -89,6 +96,7 @@
     "ListSubscriptions": "<p>Lists subscriptions in Amazon DataZone.</p>",
     "ListTagsForResource": "<p>Lists tags for the specified resource in Amazon DataZone.</p>",
     "ListTimeSeriesDataPoints": "<p>Lists time series data points.</p>",
+    "PostLineageEvent": "<p>Posts a data lineage event.</p>",
     "PostTimeSeriesDataPoints": "<p>Posts time series data points to Amazon DataZone for the specified asset.</p>",
     "PutEnvironmentBlueprintConfiguration": "<p>Writes the configuration for the specified environment blueprint in Amazon DataZone.</p>",
     "RejectPredictions": "<p>Rejects automatically generated business-friendly metadata for your Amazon DataZone assets.</p>",
@@ -103,6 +111,7 @@
     "StartMetadataGenerationRun": "<p>Starts the metadata generation run.</p>",
     "TagResource": "<p>Tags a resource in Amazon DataZone.</p>",
     "UntagResource": "<p>Untags a resource in Amazon DataZone.</p>",
+    "UpdateAssetFilter": "<p>Updates an asset filter.</p>",
     "UpdateDataSource": "<p>Updates the specified data source in Amazon DataZone.</p>",
     "UpdateDomain": "<p>Updates a Amazon DataZone domain.</p>",
     "UpdateEnvironment": "<p>Updates the specified environment in Amazon DataZone.</p>",
@@ -207,20 +216,51 @@
         "UpdateSubscriptionTargetOutput$applicableAssetTypes": "<p>The applicable asset types to be updated as part of the <code>UpdateSubscriptionTarget</code> action.</p>"
       }
     },
+    "AssetFilterConfiguration": {
+      "base": "<p>The configuration details of the asset filter.</p>",
+      "refs": {
+        "CreateAssetFilterInput$configuration": "<p>The configuration of the asset filter.</p>",
+        "CreateAssetFilterOutput$configuration": "<p>The configuration of the asset filter.</p>",
+        "GetAssetFilterOutput$configuration": "<p>The configuration of the asset filter.</p>",
+        "UpdateAssetFilterInput$configuration": "<p>The configuration of the asset filter.</p>",
+        "UpdateAssetFilterOutput$configuration": "<p>The configuration of the asset filter.</p>"
+      }
+    },
+    "AssetFilterSummary": {
+      "base": "<p>The summary of the asset filter.</p>",
+      "refs": {
+        "AssetFilters$member": null
+      }
+    },
+    "AssetFilters": {
+      "base": null,
+      "refs": {
+        "ListAssetFiltersOutput$items": "<p>The results of the <code>ListAssetFilters</code> action.</p>"
+      }
+    },
     "AssetId": {
       "base": null,
       "refs": {
         "AcceptPredictionsOutput$assetId": "<p>The ID of the asset.</p>",
+        "AssetFilterSummary$assetId": "<p>The ID of the data asset.</p>",
         "AssetListing$assetId": "<p>The identifier of an asset published in an Amazon DataZone catalog. </p>",
         "AssetListingItem$entityId": "<p>The identifier of the inventory asset.</p>",
         "AssetRevision$id": "<p>The identifier of the inventory asset revision.</p>",
         "AssetTargetNameMap$assetId": "<p>The identifier of the inventory asset.</p>",
+        "CreateAssetFilterInput$assetIdentifier": "<p>The ID of the data asset.</p>",
+        "CreateAssetFilterOutput$assetId": "<p>The ID of the asset.</p>",
         "CreateAssetOutput$id": "<p>The unique identifier of the created asset.</p>",
         "CreateAssetRevisionOutput$id": "<p>The unique identifier of the asset revision.</p>",
+        "DeleteAssetFilterInput$assetIdentifier": "<p>The ID of the data asset.</p>",
+        "GetAssetFilterInput$assetIdentifier": "<p>The ID of the data asset.</p>",
+        "GetAssetFilterOutput$assetId": "<p>The ID of the data asset.</p>",
         "GetAssetOutput$id": "<p>The ID of the asset.</p>",
+        "ListAssetFiltersInput$assetIdentifier": "<p>The ID of the data asset.</p>",
         "RejectPredictionsOutput$assetId": "<p>The ID of the asset.</p>",
         "SubscribedAsset$assetId": "<p>The identifier of the asset for which the subscription grant is created.</p>",
         "SubscribedAssetListing$entityId": "<p>The identifier of the published asset for which the subscription grant is created.</p>",
+        "UpdateAssetFilterInput$assetIdentifier": "<p>The ID of the data asset.</p>",
+        "UpdateAssetFilterOutput$assetId": "<p>The ID of the data asset.</p>",
         "UpdateSubscriptionGrantStatusInput$assetIdentifier": "<p>The identifier of the asset the subscription grant status of which is to be updated.</p>"
       }
     },
@@ -434,6 +474,7 @@
         "RecommendationConfiguration$enableBusinessNameGeneration": "<p>Specifies whether automatic business name generation is to be enabled or not as part of the recommendation configuration.</p>",
         "RevokeSubscriptionInput$retainPermissions": "<p>Specifies whether permissions are retained when the subscription is revoked.</p>",
         "RevokeSubscriptionOutput$retainPermissions": "<p>Specifies whether permissions are retained when the subscription is revoked.</p>",
+        "RowFilterConfiguration$sensitive": "<p>Specifies whether the row filter is sensitive.</p>",
         "SearchTypesInput$managed": "<p>Specifies whether the search is managed.</p>",
         "SubscriptionSummary$retainPermissions": "<p>The retain permissions included in the subscription.</p>",
         "UpdateDataSourceInput$publishOnImport": "<p>The publish on import setting to be updated as part of the <code>UpdateDataSource</code> action.</p>",
@@ -484,6 +525,7 @@
         "CreateGlossaryTermInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateListingChangeSetInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "DeleteTimeSeriesDataPointsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
+        "PostLineageEventInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "PostTimeSeriesDataPointsInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "RejectPredictionsInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "StartMetadataGenerationRunInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
@@ -494,6 +536,22 @@
       "base": "<p>Part of the provisioning properties of the environment blueprint.</p>",
       "refs": {
         "ProvisioningProperties$cloudFormation": "<p>The cloud formation properties included as part of the provisioning properties of an environment blueprint.</p>"
+      }
+    },
+    "ColumnFilterConfiguration": {
+      "base": "<p>The column configuration of the asset filter.</p>",
+      "refs": {
+        "AssetFilterConfiguration$columnConfiguration": "<p>The column configuration of the asset filter.</p>"
+      }
+    },
+    "ColumnNameList": {
+      "base": null,
+      "refs": {
+        "AssetFilterSummary$effectiveColumnNames": "<p>The effective column names of the asset filter.</p>",
+        "ColumnFilterConfiguration$includedColumnNames": "<p>Specifies whether to include column names.</p>",
+        "CreateAssetFilterOutput$effectiveColumnNames": "<p>The column names in the asset filter.</p>",
+        "GetAssetFilterOutput$effectiveColumnNames": "<p>The column names of the asset filter.</p>",
+        "UpdateAssetFilterOutput$effectiveColumnNames": "<p>The column names of the asset filter.</p>"
       }
     },
     "ConfigurableActionParameter": {
@@ -522,6 +580,16 @@
     },
     "ConflictException": {
       "base": "<p>There is a conflict while performing this action.</p>",
+      "refs": {
+      }
+    },
+    "CreateAssetFilterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAssetFilterOutput": {
+      "base": null,
       "refs": {
       }
     },
@@ -731,6 +799,7 @@
       "base": null,
       "refs": {
         "AcceptSubscriptionRequestOutput$createdAt": "<p>The timestamp that specifies when the subscription request was accepted.</p>",
+        "AssetFilterSummary$createdAt": "<p>The timestamp at which the asset filter was created.</p>",
         "AssetItem$createdAt": "<p>The timestamp of when the Amazon DataZone inventory asset was created.</p>",
         "AssetItem$firstRevisionCreatedAt": "<p>The timestamp of when the first revision of the inventory asset was created.</p>",
         "AssetListing$createdAt": "<p>The timestamp of when an asset published in an Amazon DataZone catalog was created. </p>",
@@ -738,6 +807,7 @@
         "AssetRevision$createdAt": "<p>The timestamp of when an inventory asset revison was created.</p>",
         "AssetTypeItem$createdAt": "<p>The timestamp of when the asset type was created.</p>",
         "CancelSubscriptionOutput$createdAt": "<p>The timestamp that specifies when the request to cancel the subscription was created.</p>",
+        "CreateAssetFilterOutput$createdAt": "<p>The timestamp at which the asset filter was created.</p>",
         "CreateAssetOutput$createdAt": "<p>The timestamp of when the asset was created.</p>",
         "CreateAssetOutput$firstRevisionCreatedAt": "<p>The timestamp of when the first revision of the asset took place.</p>",
         "CreateAssetRevisionOutput$createdAt": "<p>The timestamp of when the asset revision occured.</p>",
@@ -746,10 +816,10 @@
         "CreateSubscriptionGrantOutput$createdAt": "<p>A timestamp of when the subscription grant is created.</p>",
         "CreateSubscriptionRequestOutput$createdAt": "<p>A timestamp of when the subscription request is created.</p>",
         "CreateSubscriptionTargetOutput$createdAt": "<p>The timestamp of when the subscription target was created.</p>",
-        "DataProductSummary$createdAt": "<p/>",
         "DeleteSubscriptionGrantOutput$createdAt": "<p>The timestamp of when the subscription grant that is deleted was created.</p>",
         "DomainSummary$createdAt": "<p>A timestamp of when a Amazon DataZone domain was created.</p>",
         "FormTypeData$createdAt": "<p>The timestamp of when the metadata form type was created.</p>",
+        "GetAssetFilterOutput$createdAt": "<p>The timestamp at which the asset filter was created.</p>",
         "GetAssetOutput$createdAt": "<p>The timestamp of when the asset was created.</p>",
         "GetAssetOutput$firstRevisionCreatedAt": "<p>The timestamp of when the first revision of the asset was created.</p>",
         "GetAssetTypeOutput$createdAt": "<p>The timestamp of when the asset type was created.</p>",
@@ -757,6 +827,7 @@
         "GetFormTypeOutput$createdAt": "<p>The timestamp of when this metadata form type was created.</p>",
         "GetGlossaryOutput$createdAt": "<p>The timestamp of when this business glossary was created.</p>",
         "GetGlossaryTermOutput$createdAt": "<p>The timestamp of when the business glossary term was created.</p>",
+        "GetLineageNodeOutput$createdAt": "<p>The timestamp at which the data lineage node was created.</p>",
         "GetListingOutput$createdAt": "<p>The timestamp of when the listing was created.</p>",
         "GetMetadataGenerationRunOutput$createdAt": "<p>The timestamp of when the metadata generation run was start.</p>",
         "GetSubscriptionGrantOutput$createdAt": "<p>The timestamp of when the subscription grant is created.</p>",
@@ -765,6 +836,8 @@
         "GetSubscriptionTargetOutput$createdAt": "<p>The timestamp of when the subscription target was created.</p>",
         "GlossaryItem$createdAt": "<p>The timestamp of when the glossary was created.</p>",
         "GlossaryTermItem$createdAt": "<p>The timestamp of when a business glossary term was created.</p>",
+        "LineageNodeSummary$createdAt": "<p>The timestamp at which the data lineage node was created.</p>",
+        "LineageNodeTypeItem$createdAt": "<p>The timestamp at which the data lineage node type was created.</p>",
         "MetadataGenerationRunItem$createdAt": "<p>The timestamp at which the metadata generation run was created.</p>",
         "RejectSubscriptionRequestOutput$createdAt": "<p>The timestamp of when the subscription request was rejected.</p>",
         "RevokeSubscriptionOutput$createdAt": "<p>The timestamp of when the subscription was revoked.</p>",
@@ -773,6 +846,7 @@
         "SubscriptionRequestSummary$createdAt": "<p>The timestamp of when a subscription request was created.</p>",
         "SubscriptionSummary$createdAt": "<p>The timestamp of when the subscription was created.</p>",
         "SubscriptionTargetSummary$createdAt": "<p>The timestamp of when the subscription target was created.</p>",
+        "UpdateAssetFilterOutput$createdAt": "<p>The timestamp at which the asset filter was created.</p>",
         "UpdateSubscriptionGrantStatusOutput$createdAt": "<p>The timestamp of when the subscription grant status was created.</p>",
         "UpdateSubscriptionRequestOutput$createdAt": "<p>The timestamp of when the subscription request was created.</p>",
         "UpdateSubscriptionTargetOutput$createdAt": "<p>The timestamp of when a subscription target was created.</p>"
@@ -797,7 +871,6 @@
         "CreateSubscriptionGrantOutput$createdBy": "<p>The Amazon DataZone user who created the subscription grant.</p>",
         "CreateSubscriptionRequestOutput$createdBy": "<p>The Amazon DataZone user who created the subscription request.</p>",
         "CreateSubscriptionTargetOutput$createdBy": "<p>The Amazon DataZone user who created the subscription target.</p>",
-        "DataProductSummary$createdBy": "<p/>",
         "DeleteSubscriptionGrantOutput$createdBy": "<p>The Amazon DataZone user who created the subscription grant that is deleted.</p>",
         "FormTypeData$createdBy": "<p>The Amazon DataZone user who created teh metadata form type.</p>",
         "GetAssetOutput$createdBy": "<p>The Amazon DataZone user who created the asset.</p>",
@@ -806,6 +879,7 @@
         "GetFormTypeOutput$createdBy": "<p>The Amazon DataZone user who created this metadata form type.</p>",
         "GetGlossaryOutput$createdBy": "<p>The Amazon DataZone user who created this business glossary.</p>",
         "GetGlossaryTermOutput$createdBy": "<p>The Amazon DataZone user who created the business glossary.</p>",
+        "GetLineageNodeOutput$createdBy": "<p>The user who created the data lineage node.</p>",
         "GetListingOutput$createdBy": "<p>The Amazon DataZone user who created the listing.</p>",
         "GetMetadataGenerationRunOutput$createdBy": "<p>The Amazon DataZone user who started the metadata generation run.</p>",
         "GetProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
@@ -815,6 +889,8 @@
         "GetSubscriptionTargetOutput$createdBy": "<p>The Amazon DataZone user who created the subscription target.</p>",
         "GlossaryItem$createdBy": "<p>The Amazon DataZone user who created the glossary.</p>",
         "GlossaryTermItem$createdBy": "<p>The Amazon DataZone user who created the business glossary.</p>",
+        "LineageNodeSummary$createdBy": "<p>The user who created the data lineage node.</p>",
+        "LineageNodeTypeItem$createdBy": "<p>The user who created the data lineage node type.</p>",
         "MetadataGenerationRunItem$createdBy": "<p>The user who created the metadata generation run.</p>",
         "ProjectSummary$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
         "RejectSubscriptionRequestOutput$createdBy": "<p>The timestamp of when the subscription request was rejected.</p>",
@@ -872,43 +948,6 @@
       "refs": {
         "TimeSeriesDataPointFormOutput$id": "<p>The ID of the time series data points form.</p>",
         "TimeSeriesDataPointSummaryFormOutput$id": "<p>The ID of the time series data points summary form.</p>"
-      }
-    },
-    "DataProductDescription": {
-      "base": null,
-      "refs": {
-        "DataProductSummary$description": "<p/>"
-      }
-    },
-    "DataProductId": {
-      "base": null,
-      "refs": {
-        "DataProductItem$itemId": "<p/>",
-        "DataProductSummary$id": "<p/>"
-      }
-    },
-    "DataProductItem": {
-      "base": "<p/>",
-      "refs": {
-        "DataProductItems$member": null
-      }
-    },
-    "DataProductItems": {
-      "base": null,
-      "refs": {
-        "DataProductSummary$dataProductItems": "<p/>"
-      }
-    },
-    "DataProductName": {
-      "base": null,
-      "refs": {
-        "DataProductSummary$name": "<p/>"
-      }
-    },
-    "DataProductSummary": {
-      "base": "<p/>",
-      "refs": {
-        "SearchInventoryResultItem$dataProductItem": "<p>The data product item included in the search results.</p>"
       }
     },
     "DataSourceConfigurationInput": {
@@ -1105,6 +1144,11 @@
         "RejectSubscriptionRequestOutput$decisionComment": "<p>The decision comment of the rejected subscription request.</p>",
         "SubscriptionRequestSummary$decisionComment": "<p>The decision comment of the subscription request.</p>",
         "UpdateSubscriptionRequestOutput$decisionComment": "<p>The decision comment of the <code>UpdateSubscriptionRequest</code> action.</p>"
+      }
+    },
+    "DeleteAssetFilterInput": {
+      "base": null,
+      "refs": {
       }
     },
     "DeleteAssetInput": {
@@ -1318,9 +1362,12 @@
     "Description": {
       "base": null,
       "refs": {
+        "AssetFilterSummary$description": "<p>The description of the asset filter.</p>",
         "AssetItem$description": "<p>The description of an Amazon DataZone inventory asset.</p>",
         "AssetListingItem$description": "<p>The description of an asset published in an Amazon DataZone catalog.</p>",
         "AssetTypeItem$description": "<p>The description of the asset type.</p>",
+        "CreateAssetFilterInput$description": "<p>The description of the asset filter.</p>",
+        "CreateAssetFilterOutput$description": "<p>The description of the asset filter.</p>",
         "CreateAssetInput$description": "<p>Asset description.</p>",
         "CreateAssetOutput$description": "<p>The description of the created asset.</p>",
         "CreateAssetRevisionInput$description": "<p>The revised description of the asset.</p>",
@@ -1343,6 +1390,7 @@
         "EnvironmentProfileSummary$description": "<p>The description of the environment profile.</p>",
         "EnvironmentSummary$description": "<p>The description of the environment.</p>",
         "FormTypeData$description": "<p>The description of the metadata form type.</p>",
+        "GetAssetFilterOutput$description": "<p>The description of the asset filter.</p>",
         "GetAssetOutput$description": "<p>The description of the Amazon DataZone asset.</p>",
         "GetAssetTypeOutput$description": "<p>The description of the asset type.</p>",
         "GetDataSourceOutput$description": "<p>The description of the data source.</p>",
@@ -1354,6 +1402,8 @@
         "GetProjectOutput$description": "<p>The description of the project.</p>",
         "ProjectSummary$description": "<p>The description of a project.</p>",
         "SubscribedListing$description": "<p>The description of the published asset for which the subscription grant is created.</p>",
+        "UpdateAssetFilterInput$description": "<p>The description of the asset filter.</p>",
+        "UpdateAssetFilterOutput$description": "<p>The description of the asset filter.</p>",
         "UpdateDataSourceInput$description": "<p>The description to be updated as part of the <code>UpdateDataSource</code> action.</p>",
         "UpdateDataSourceOutput$description": "<p>The description to be updated as part of the <code>UpdateDataSource</code> action.</p>",
         "UpdateEnvironmentOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
@@ -1399,6 +1449,7 @@
         "AcceptPredictionsOutput$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
         "AcceptSubscriptionRequestInput$domainIdentifier": "<p>The Amazon DataZone domain where the specified subscription request is being accepted.</p>",
         "AcceptSubscriptionRequestOutput$domainId": "<p>The unique identifier of the Amazon DataZone domain where the specified subscription request was accepted.</p>",
+        "AssetFilterSummary$domainId": "<p>The ID of the domain where the asset filter lives.</p>",
         "AssetItem$domainId": "<p>The identifier of the Amazon DataZone domain in which the inventory asset exists.</p>",
         "AssetRevision$domainId": "<p>The Amazon DataZone user who created the inventory asset.</p>",
         "AssetTypeItem$domainId": "<p>The identifier of the Amazon DataZone domain where the asset type exists.</p>",
@@ -1407,6 +1458,8 @@
         "CancelMetadataGenerationRunInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the metadata generation run is to be cancelled.</p>",
         "CancelSubscriptionInput$domainIdentifier": "<p>The unique identifier of the Amazon DataZone domain where the subscription request is being cancelled.</p>",
         "CancelSubscriptionOutput$domainId": "<p>The unique identifier of the Amazon DataZone domain where the subscription is being cancelled.</p>",
+        "CreateAssetFilterInput$domainIdentifier": "<p>The ID of the domain in which you want to create an asset filter.</p>",
+        "CreateAssetFilterOutput$domainId": "<p>The ID of the domain where the asset filter is created.</p>",
         "CreateAssetInput$domainIdentifier": "<p>Amazon DataZone domain where the asset is created.</p>",
         "CreateAssetOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the asset was created.</p>",
         "CreateAssetRevisionInput$domainIdentifier": "<p>The unique identifier of the domain where the asset is being revised.</p>",
@@ -1444,9 +1497,8 @@
         "CreateSubscriptionTargetOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the subscription target was created.</p>",
         "CreateUserProfileInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which a user profile is created.</p>",
         "CreateUserProfileOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a user profile is created.</p>",
-        "DataProductItem$domainId": "<p/>",
-        "DataProductSummary$domainId": "<p/>",
         "DataSourceSummary$domainId": "<p>The ID of the Amazon DataZone domain in which the data source exists.</p>",
+        "DeleteAssetFilterInput$domainIdentifier": "<p>The ID of the domain where you want to delete an asset filter.</p>",
         "DeleteAssetInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the asset is deleted.</p>",
         "DeleteAssetTypeInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the asset type is deleted.</p>",
         "DeleteDataSourceInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the data source is deleted.</p>",
@@ -1475,6 +1527,8 @@
         "EnvironmentSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which the environment exists.</p>",
         "FormTypeData$domainId": "<p>The identifier of the Amazon DataZone domain in which the form type exists.</p>",
         "FormTypeData$originDomainId": "<p>The identifier of the Amazon DataZone domain in which the form type was originally created.</p>",
+        "GetAssetFilterInput$domainIdentifier": "<p>The ID of the domain where you want to get an asset filter.</p>",
+        "GetAssetFilterOutput$domainId": "<p>The ID of the domain where you want to get an asset filter.</p>",
         "GetAssetInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain to which the asset belongs.</p>",
         "GetAssetOutput$domainId": "<p>The ID of the Amazon DataZone domain to which the asset belongs.</p>",
         "GetAssetTypeInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the asset type exists.</p>",
@@ -1491,6 +1545,7 @@
         "GetEnvironmentBlueprintConfigurationInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where this blueprint exists.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$domainId": "<p>The ID of the Amazon DataZone domain where this blueprint exists.</p>",
         "GetEnvironmentBlueprintInput$domainIdentifier": "<p>The identifier of the domain in which this blueprint exists.</p>",
+        "GetEnvironmentCredentialsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which this environment and its credentials exist.</p>",
         "GetEnvironmentInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where the environment exists.</p>",
         "GetEnvironmentOutput$domainId": "<p>The ID of the Amazon DataZone domain where the environment exists.</p>",
         "GetEnvironmentProfileInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which this environment profile exists.</p>",
@@ -1505,6 +1560,8 @@
         "GetGroupProfileInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which the group profile exists.</p>",
         "GetGroupProfileOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which the group profile exists.</p>",
         "GetIamPortalLoginUrlInput$domainIdentifier": "<p>the ID of the Amazon DataZone domain the data portal of which you want to get.</p>",
+        "GetLineageNodeInput$domainIdentifier": "<p>The ID of the domain in which you want to get the data lineage node.</p>",
+        "GetLineageNodeOutput$domainId": "<p>The ID of the domain where you're getting the data lineage node.</p>",
         "GetListingInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain.</p>",
         "GetListingOutput$domainId": "<p>The ID of the Amazon DataZone domain.</p>",
         "GetMetadataGenerationRunInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain the metadata generation run of which you want to get.</p>",
@@ -1526,6 +1583,9 @@
         "GlossaryItem$domainId": "<p>The identifier of the Amazon DataZone domain in which the business glossary exists.</p>",
         "GlossaryTermItem$domainId": "<p>The identifier of the Amazon DataZone domain in which the business glossary exists.</p>",
         "GroupProfileSummary$domainId": "<p>The ID of the Amazon DataZone domain of a group profile.</p>",
+        "LineageNodeSummary$domainId": "<p>The ID of the domain of the data lineage node.</p>",
+        "LineageNodeTypeItem$domainId": "<p>The ID of the domain where the data lineage node type lives.</p>",
+        "ListAssetFiltersInput$domainIdentifier": "<p>The ID of the domain where you want to list asset filters.</p>",
         "ListAssetRevisionsInput$domainIdentifier": "<p>The identifier of the domain.</p>",
         "ListDataSourceRunActivitiesInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which to list data source run activities.</p>",
         "ListDataSourceRunsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which to invoke the <code>ListDataSourceRuns</code> action.</p>",
@@ -1535,6 +1595,7 @@
         "ListEnvironmentBlueprintsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "ListEnvironmentProfilesInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "ListEnvironmentsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
+        "ListLineageNodeHistoryInput$domainIdentifier": "<p>The ID of the domain where you want to list the history of the specified data lineage node.</p>",
         "ListMetadataGenerationRunsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where you want to list metadata generation runs.</p>",
         "ListNotificationsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "ListProjectMembershipsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which you want to list project memberships.</p>",
@@ -1546,6 +1607,7 @@
         "ListTimeSeriesDataPointsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain that houses the assets for which you want to list time series data points.</p>",
         "MetadataGenerationRunItem$domainId": "<p>The ID of the Amazon DataZone domain in which the metadata generation run was created.</p>",
         "NotificationOutput$domainIdentifier": "<p>The identifier of a Amazon DataZone domain in which the notification exists.</p>",
+        "PostLineageEventInput$domainIdentifier": "<p>The ID of the domain where you want to post a data lineage event.</p>",
         "PostTimeSeriesDataPointsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which you want to post time series data points.</p>",
         "PostTimeSeriesDataPointsOutput$domainId": "<p>The ID of the Amazon DataZone domain in which you want to post time series data points.</p>",
         "ProjectSummary$domainId": "<p>The identifier of a Amazon DataZone domain where the project exists.</p>",
@@ -1570,6 +1632,8 @@
         "SubscriptionRequestSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription request exists.</p>",
         "SubscriptionSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription exists.</p>",
         "SubscriptionTargetSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which the subscription target exists.</p>",
+        "UpdateAssetFilterInput$domainIdentifier": "<p>The ID of the domain where you want to update an asset filter.</p>",
+        "UpdateAssetFilterOutput$domainId": "<p>The ID of the domain where the asset filter was created.</p>",
         "UpdateDataSourceInput$domainIdentifier": "<p>The identifier of the domain in which to update a data source.</p>",
         "UpdateDataSourceOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a data source is to be updated.</p>",
         "UpdateDomainInput$identifier": "<p>The ID of the Amazon Web Services domain that is to be updated.</p>",
@@ -1625,6 +1689,12 @@
       "base": "<p>A summary of a Amazon DataZone domain.</p>",
       "refs": {
         "DomainSummaries$member": null
+      }
+    },
+    "EdgeDirection": {
+      "base": null,
+      "refs": {
+        "ListLineageNodeHistoryInput$direction": "<p>The direction of the data lineage node refers to the lineage node having neighbors in that direction. For example, if direction is <code>UPSTREAM</code>, the <code>ListLineageNodeHistory</code> API responds with historical versions with upstream neighbors only.</p>"
       }
     },
     "EditedValue": {
@@ -1784,6 +1854,7 @@
         "GetDataSourceOutput$environmentId": "<p>The ID of the environment where this data source creates and publishes assets,</p>",
         "GetEnvironmentActionInput$environmentIdentifier": "<p>The environment ID of the environment action.</p>",
         "GetEnvironmentActionOutput$environmentId": "<p>The environment ID of the environment action.</p>",
+        "GetEnvironmentCredentialsInput$environmentIdentifier": "<p>The ID of the environment whose credentials this operation gets.</p>",
         "GetEnvironmentInput$identifier": "<p>The ID of the Amazon DataZone environment.</p>",
         "GetEnvironmentOutput$id": "<p>The ID of the environment.</p>",
         "GetSubscriptionTargetInput$environmentIdentifier": "<p>The ID of the environment associated with the subscription target.</p>",
@@ -1888,6 +1959,12 @@
         "EnvironmentSummaries$member": null
       }
     },
+    "EqualToExpression": {
+      "base": "<p>Specifies whether the value is equal to an expression.</p>",
+      "refs": {
+        "RowFilterExpression$equalTo": "<p>The 'equal to' clause of the row filter expression.</p>"
+      }
+    },
     "ErrorMessage": {
       "base": null,
       "refs": {
@@ -1966,11 +2043,43 @@
         "RelationalFilterConfiguration$filterExpressions": "<p>The filter expressions specified in the relational filter configuration for the data source.</p>"
       }
     },
+    "FilterId": {
+      "base": null,
+      "refs": {
+        "AssetFilterSummary$id": "<p>The ID of the asset filter.</p>",
+        "CreateAssetFilterOutput$id": "<p>The ID of the asset filter.</p>",
+        "DeleteAssetFilterInput$identifier": "<p>The ID of the asset filter that you want to delete.</p>",
+        "GetAssetFilterInput$identifier": "<p>The ID of the asset filter.</p>",
+        "GetAssetFilterOutput$id": "<p>The ID of the asset filter.</p>",
+        "UpdateAssetFilterInput$identifier": "<p>The ID of the asset filter.</p>",
+        "UpdateAssetFilterOutput$id": "<p>The ID of the asset filter.</p>"
+      }
+    },
     "FilterList": {
       "base": null,
       "refs": {
         "FilterClause$and": "<p>The 'and' search filter clause in Amazon DataZone.</p>",
         "FilterClause$or": "<p>The 'or' search filter clause in Amazon DataZone.</p>"
+      }
+    },
+    "FilterName": {
+      "base": null,
+      "refs": {
+        "AssetFilterSummary$name": "<p>The name of the asset filter.</p>",
+        "CreateAssetFilterInput$name": "<p>The name of the asset filter.</p>",
+        "CreateAssetFilterOutput$name": "<p>The name of the asset filter.</p>",
+        "GetAssetFilterOutput$name": "<p>The name of the asset filter.</p>",
+        "UpdateAssetFilterOutput$name": "<p>The name of the asset filter.</p>"
+      }
+    },
+    "FilterStatus": {
+      "base": null,
+      "refs": {
+        "AssetFilterSummary$status": "<p>The status of the asset filter.</p>",
+        "CreateAssetFilterOutput$status": "<p>The status of the asset filter.</p>",
+        "GetAssetFilterOutput$status": "<p>The status of the asset filter.</p>",
+        "ListAssetFiltersInput$status": "<p>The status of the asset filter.</p>",
+        "UpdateAssetFilterOutput$status": "<p>The status of the asset filter.</p>"
       }
     },
     "FilterValueString": {
@@ -2055,6 +2164,7 @@
         "GetAssetOutput$formsOutput": "<p>The metadata forms attached to the asset.</p>",
         "GetAssetOutput$readOnlyFormsOutput": "<p>The read-only metadata forms attached to the asset.</p>",
         "GetDataSourceOutput$assetFormsOutput": "<p>The metadata forms attached to the assets created by this data source.</p>",
+        "GetLineageNodeOutput$formsOutput": "<p>The metadata of the specified data lineage node.</p>",
         "UpdateDataSourceOutput$assetFormsOutput": "<p>The asset forms to be updated as part of the <code>UpdateDataSource</code> action.</p>"
       }
     },
@@ -2115,7 +2225,18 @@
       "refs": {
         "AssetTypeItem$formsOutput": "<p>The forms included in the details of the asset type.</p>",
         "CreateAssetTypeOutput$formsOutput": "<p>The metadata forms that are attached to the asset type.</p>",
-        "GetAssetTypeOutput$formsOutput": "<p>The metadata forms attached to the asset type.</p>"
+        "GetAssetTypeOutput$formsOutput": "<p>The metadata forms attached to the asset type.</p>",
+        "LineageNodeTypeItem$formsOutput": "<p>The forms output of the data lineage node type.</p>"
+      }
+    },
+    "GetAssetFilterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAssetFilterOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "GetAssetInput": {
@@ -2198,6 +2319,16 @@
       "refs": {
       }
     },
+    "GetEnvironmentCredentialsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetEnvironmentCredentialsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetEnvironmentInput": {
       "base": null,
       "refs": {
@@ -2264,6 +2395,16 @@
       }
     },
     "GetIamPortalLoginUrlOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetLineageNodeInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetLineageNodeOutput": {
       "base": null,
       "refs": {
       }
@@ -2483,7 +2624,6 @@
         "CreateEnvironmentOutput$glossaryTerms": "<p>The glossary terms that can be used in this Amazon DataZone environment.</p>",
         "CreateProjectInput$glossaryTerms": "<p>The glossary terms that can be used in this Amazon DataZone project.</p>",
         "CreateProjectOutput$glossaryTerms": "<p>The glossary terms that can be used in the project.</p>",
-        "DataProductSummary$glossaryTerms": "<p/>",
         "GetAssetOutput$glossaryTerms": "<p>The business glossary terms attached to the asset.</p>",
         "GetEnvironmentBlueprintOutput$glossaryTerms": "<p>The glossary terms attached to this Amazon DataZone blueprint.</p>",
         "GetEnvironmentOutput$glossaryTerms": "<p>The business glossary terms that can be used in this environment.</p>",
@@ -2550,6 +2690,18 @@
       "base": "<p>The details of a listing for which a subscription is to be granted.</p>",
       "refs": {
         "CreateSubscriptionGrantInput$grantedEntity": "<p>The entity to which the subscription is to be granted.</p>"
+      }
+    },
+    "GreaterThanExpression": {
+      "base": "<p>Specifies whether the value is greater than an expression.</p>",
+      "refs": {
+        "RowFilterExpression$greaterThan": "<p>The 'greater than' clause of the row filter expression.</p>"
+      }
+    },
+    "GreaterThanOrEqualToExpression": {
+      "base": "<p>Specifies whether the value is greater than or equal to an expression.</p>",
+      "refs": {
+        "RowFilterExpression$greaterThanOrEqualTo": "<p>The 'greater than or equal to' clause of the filter expression.</p>"
       }
     },
     "GroupDetails": {
@@ -2637,6 +2789,12 @@
         "GetFormTypeOutput$imports": "<p>The imports of the metadata form type.</p>"
       }
     },
+    "InExpression": {
+      "base": "<p>Specifies whether values are in the expression.</p>",
+      "refs": {
+        "RowFilterExpression$in": "<p>The 'in' clause of the row filter expression.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -2665,6 +2823,18 @@
         "SearchInput$searchScope": "<p>The scope of the search.</p>"
       }
     },
+    "IsNotNullExpression": {
+      "base": "<p>Specifies that the expression is not null.</p>",
+      "refs": {
+        "RowFilterExpression$isNotNull": "<p>The 'is not null' clause of the row filter expression.</p>"
+      }
+    },
+    "IsNullExpression": {
+      "base": "<p>Specifies that the expression is null.</p>",
+      "refs": {
+        "RowFilterExpression$isNull": "<p>The 'is null' clause of the row filter expression.</p>"
+      }
+    },
     "KmsKeyArn": {
       "base": null,
       "refs": {
@@ -2673,10 +2843,96 @@
         "GetDomainOutput$kmsKeyIdentifier": "<p>The identifier of the Amazon Web Services Key Management Service (KMS) key that is used to encrypt the Amazon DataZone domain, metadata, and reporting data. </p>"
       }
     },
+    "LakeFormationConfiguration": {
+      "base": "<p>The Lake Formation configuration of the Data Lake blueprint.</p>",
+      "refs": {
+        "ProvisioningConfiguration$lakeFormationConfiguration": "<p>The Lake Formation configuration of the Data Lake blueprint.</p>"
+      }
+    },
     "LastName": {
       "base": null,
       "refs": {
         "SsoUserProfileDetails$lastName": "<p>The last name included in the single sign-on details of the user profile.</p>"
+      }
+    },
+    "LessThanExpression": {
+      "base": "<p>Specifies that a value is less than an expression.</p>",
+      "refs": {
+        "RowFilterExpression$lessThan": "<p>The 'less than' clause of the row filter expression.</p>"
+      }
+    },
+    "LessThanOrEqualToExpression": {
+      "base": "<p>Specifies that a value is less than or equal to an expression.</p>",
+      "refs": {
+        "RowFilterExpression$lessThanOrEqualTo": "<p>The 'less than or equal to' clause of the row filter expression.</p>"
+      }
+    },
+    "LikeExpression": {
+      "base": "<p>Specifies that a value is like the expression.</p>",
+      "refs": {
+        "RowFilterExpression$like": "<p>The 'like' clause of the row filter expression.</p>"
+      }
+    },
+    "LineageEvent": {
+      "base": null,
+      "refs": {
+        "PostLineageEventInput$event": "<p>The data lineage event that you want to post. Only open-lineage run event are supported as events. </p>"
+      }
+    },
+    "LineageNodeId": {
+      "base": null,
+      "refs": {
+        "GetLineageNodeOutput$id": "<p>The ID of the data lineage node.</p>",
+        "LineageNodeReference$id": "<p>The ID of the data lineage node.</p>",
+        "LineageNodeSummary$id": "<p>The ID of the data lineage node.</p>"
+      }
+    },
+    "LineageNodeIdentifier": {
+      "base": null,
+      "refs": {
+        "GetLineageNodeInput$identifier": "<p>The ID of the data lineage node that you want to get.</p> <p>Both, a lineage node identifier generated by Amazon DataZone and a <code>sourceIdentifier</code> of the lineage node are supported. If <code>sourceIdentifier</code> is greater than 1800 characters, you can use lineage node identifier generated by Amazon DataZone to get the node details.</p>",
+        "ListLineageNodeHistoryInput$identifier": "<p>The ID of the data lineage node whose history you want to list.</p>"
+      }
+    },
+    "LineageNodeReference": {
+      "base": "<p>The reference details for the data lineage node.</p>",
+      "refs": {
+        "LineageNodeReferenceList$member": null
+      }
+    },
+    "LineageNodeReferenceList": {
+      "base": null,
+      "refs": {
+        "GetLineageNodeOutput$downstreamNodes": "<p>The downsteam nodes of the specified data lineage node.</p>",
+        "GetLineageNodeOutput$upstreamNodes": "<p>The upstream nodes of the specified data lineage node.</p>"
+      }
+    },
+    "LineageNodeSummaries": {
+      "base": null,
+      "refs": {
+        "ListLineageNodeHistoryOutput$nodes": "<p>The nodes returned by the ListLineageNodeHistory action.</p>"
+      }
+    },
+    "LineageNodeSummary": {
+      "base": "<p>The summary of the data lineage node.</p>",
+      "refs": {
+        "LineageNodeSummaries$member": null
+      }
+    },
+    "LineageNodeTypeItem": {
+      "base": "<p>The details of a data lineage node type.</p>",
+      "refs": {
+        "SearchTypesResultItem$lineageNodeTypeItem": "<p>The details of a data lineage node type.</p>"
+      }
+    },
+    "ListAssetFiltersInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAssetFiltersOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "ListAssetRevisionsInput": {
@@ -2781,6 +3037,16 @@
       }
     },
     "ListEnvironmentsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListLineageNodeHistoryInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListLineageNodeHistoryOutput": {
       "base": null,
       "refs": {
       }
@@ -2950,6 +3216,7 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "ListAssetFiltersInput$maxResults": "<p>The maximum number of asset filters to return in a single call to <code>ListAssetFilters</code>. When the number of asset filters to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListAssetFilters</code> to list the next set of asset filters.</p>",
         "ListAssetRevisionsInput$maxResults": "<p>The maximum number of revisions to return in a single call to <code>ListAssetRevisions</code>. When the number of revisions to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListAssetRevisions</code> to list the next set of revisions.</p>",
         "ListDataSourceRunActivitiesInput$maxResults": "<p>The maximum number of activities to return in a single call to <code>ListDataSourceRunActivities</code>. When the number of activities to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListDataSourceRunActivities</code> to list the next set of activities.</p>",
         "ListDataSourceRunsInput$maxResults": "<p>The maximum number of runs to return in a single call to <code>ListDataSourceRuns</code>. When the number of runs to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListDataSourceRuns</code> to list the next set of runs.</p>",
@@ -2959,6 +3226,7 @@
         "ListEnvironmentBlueprintsInput$maxResults": "<p>The maximum number of blueprints to return in a single call to <code>ListEnvironmentBlueprints</code>. When the number of blueprints to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListEnvironmentBlueprints</code> to list the next set of blueprints.</p>",
         "ListEnvironmentProfilesInput$maxResults": "<p>The maximum number of environment profiles to return in a single call to <code>ListEnvironmentProfiles</code>. When the number of environment profiles to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListEnvironmentProfiles</code> to list the next set of environment profiles.</p>",
         "ListEnvironmentsInput$maxResults": "<p>The maximum number of environments to return in a single call to <code>ListEnvironments</code>. When the number of environments to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListEnvironments</code> to list the next set of environments.</p>",
+        "ListLineageNodeHistoryInput$maxResults": "<p>The maximum number of history items to return in a single call to ListLineageNodeHistory. When the number of memberships to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListLineageNodeHistory to list the next set of items.</p>",
         "ListMetadataGenerationRunsInput$maxResults": "<p>The maximum number of metadata generation runs to return in a single call to ListMetadataGenerationRuns. When the number of metadata generation runs to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListMetadataGenerationRuns to list the next set of revisions.</p>",
         "ListNotificationsInput$maxResults": "<p>The maximum number of notifications to return in a single call to <code>ListNotifications</code>. When the number of notifications to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListNotifications</code> to list the next set of notifications.</p>",
         "ListProjectMembershipsInput$maxResults": "<p>The maximum number of memberships to return in a single call to <code>ListProjectMemberships</code>. When the number of memberships to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListProjectMemberships</code> to list the next set of memberships.</p>",
@@ -3084,6 +3352,24 @@
         "UpdateDataSourceOutput$name": "<p>The name to be updated as part of the <code>UpdateDataSource</code> action.</p>"
       }
     },
+    "NotEqualToExpression": {
+      "base": "<p>Specifies that a value is not equal to the expression.</p>",
+      "refs": {
+        "RowFilterExpression$notEqualTo": "<p>The 'no equal to' clause of the row filter expression.</p>"
+      }
+    },
+    "NotInExpression": {
+      "base": "<p>Specifies that a value is not in the expression.</p>",
+      "refs": {
+        "RowFilterExpression$notIn": "<p>The 'not in' clause of the row filter expression.</p>"
+      }
+    },
+    "NotLikeExpression": {
+      "base": "<p>Specifies that a value might be not like the expression.</p>",
+      "refs": {
+        "RowFilterExpression$notLike": "<p>The 'not like' clause of the row filter expression.</p>"
+      }
+    },
     "NotificationOutput": {
       "base": "<p>The details of a notification generated in Amazon DataZone.</p>",
       "refs": {
@@ -3130,6 +3416,8 @@
     "PaginationToken": {
       "base": null,
       "refs": {
+        "ListAssetFiltersInput$nextToken": "<p>When the number of asset filters is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of asset filters, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListAssetFilters</code> to list the next set of asset filters.</p>",
+        "ListAssetFiltersOutput$nextToken": "<p>When the number of asset filters is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of asset filters, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListAssetFilters</code> to list the next set of asset filters.</p>",
         "ListAssetRevisionsInput$nextToken": "<p>When the number of revisions is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of revisions, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListAssetRevisions</code> to list the next set of revisions.</p>",
         "ListAssetRevisionsOutput$nextToken": "<p>When the number of revisions is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of revisions, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListAssetRevisions</code> to list the next set of revisions.</p>",
         "ListDataSourceRunActivitiesInput$nextToken": "<p>When the number of activities is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of activities, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListDataSourceRunActivities</code> to list the next set of activities.</p>",
@@ -3150,6 +3438,8 @@
         "ListEnvironmentProfilesOutput$nextToken": "<p>When the number of environment profiles is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of environment profiles, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListEnvironmentProfiles</code> to list the next set of environment profiles.</p>",
         "ListEnvironmentsInput$nextToken": "<p>When the number of environments is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of environments, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListEnvironments</code> to list the next set of environments.</p>",
         "ListEnvironmentsOutput$nextToken": "<p>When the number of environments is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of environments, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListEnvironments</code> to list the next set of environments.</p>",
+        "ListLineageNodeHistoryInput$nextToken": "<p>When the number of history items is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of items, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListLineageNodeHistory to list the next set of items.</p>",
+        "ListLineageNodeHistoryOutput$nextToken": "<p>When the number of history items is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of items, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListLineageNodeHistory to list the next set of items.</p>",
         "ListMetadataGenerationRunsInput$nextToken": "<p>When the number of metadata generation runs is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of metadata generation runs, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListMetadataGenerationRuns to list the next set of revisions.</p>",
         "ListMetadataGenerationRunsOutput$nextToken": "<p>When the number of metadata generation runs is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of metadata generation runs, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListMetadataGenerationRuns to list the next set of revisions.</p>",
         "ListNotificationsInput$nextToken": "<p>When the number of notifications is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notifications, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotifications</code> to list the next set of notifications.</p>",
@@ -3178,6 +3468,16 @@
         "SearchTypesOutput$nextToken": "<p>When the number of results is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of results, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>SearchTypes</code> to list the next set of results.</p>",
         "SearchUserProfilesInput$nextToken": "<p>When the number of results is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of results, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>SearchUserProfiles</code> to list the next set of results.</p>",
         "SearchUserProfilesOutput$nextToken": "<p>When the number of results is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of results, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>SearchUserProfiles</code> to list the next set of results.</p>"
+      }
+    },
+    "PostLineageEventInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PostLineageEventOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "PostTimeSeriesDataPointsInput": {
@@ -3238,7 +3538,6 @@
         "CreateProjectMembershipInput$projectIdentifier": "<p>The ID of the project for which this project membership was created.</p>",
         "CreateProjectOutput$id": "<p>The ID of the Amazon DataZone project.</p>",
         "CreateSubscriptionTargetOutput$projectId": "<p>???</p>",
-        "DataProductSummary$owningProjectId": "<p/>",
         "DataSourceRunActivity$projectId": "<p>The project ID included in the data source run activity.</p>",
         "DataSourceRunSummary$projectId": "<p>The project ID of the data source run.</p>",
         "DeleteDataSourceOutput$projectId": "<p>The ID of the project in which this data source exists and from which it's deleted.</p>",
@@ -3333,6 +3632,21 @@
       "base": "<p>The details of a Amazon DataZone project.</p>",
       "refs": {
         "ProjectSummaries$member": null
+      }
+    },
+    "ProvisioningConfiguration": {
+      "base": "<p>The provisioning configuration of the blueprint.</p>",
+      "refs": {
+        "ProvisioningConfigurationList$member": null
+      }
+    },
+    "ProvisioningConfigurationList": {
+      "base": null,
+      "refs": {
+        "EnvironmentBlueprintConfigurationItem$provisioningConfigurations": "<p>The provisioning configuration of a blueprint.</p>",
+        "GetEnvironmentBlueprintConfigurationOutput$provisioningConfigurations": "<p>The provisioning configuration of a blueprint.</p>",
+        "PutEnvironmentBlueprintConfigurationInput$provisioningConfigurations": "<p>The provisioning configuration of a blueprint.</p>",
+        "PutEnvironmentBlueprintConfigurationOutput$provisioningConfigurations": "<p>The provisioning configuration of a blueprint.</p>"
       }
     },
     "ProvisioningProperties": {
@@ -3621,9 +3935,12 @@
         "GetAssetTypeOutput$revision": "<p>The revision of the asset type.</p>",
         "GetFormTypeInput$revision": "<p>The revision of this metadata form type.</p>",
         "GetFormTypeOutput$revision": "<p>The revision of the metadata form type.</p>",
+        "GetLineageNodeOutput$typeRevision": "<p>The revision type of the specified data lineage node.</p>",
         "GetListingInput$listingRevision": "<p>The revision of the listing.</p>",
         "GetListingOutput$listingRevision": "<p>The revision of a listing.</p>",
         "Import$revision": "<p>The revision of the import.</p>",
+        "LineageNodeSummary$typeRevision": "<p>The type of the revision of the data lineage node.</p>",
+        "LineageNodeTypeItem$revision": "<p>The revision of the data lineage node type.</p>",
         "ListingRevision$revision": "<p>The details of a revision of an asset published in a Amazon DataZone catalog.</p>",
         "ListingRevisionInput$revision": "<p>The details of a revision to be made to an asset published in a Amazon DataZone catalog.</p>",
         "MetadataGenerationRunTarget$revision": "<p>The revision of the asset for which metadata was generated.</p>",
@@ -3657,6 +3974,7 @@
         "GetDomainOutput$domainExecutionRole": "<p>The domain execution role with which the Amazon DataZone domain is created.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$manageAccessRoleArn": "<p>The ARN of the manage access role with which this blueprint is created.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$provisioningRoleArn": "<p>The ARN of the provisioning role with which this blueprint is created.</p>",
+        "LakeFormationConfiguration$locationRegistrationRole": "<p>The role that is used to manage read/write access to the chosen Amazon S3 bucket(s) for Data Lake using AWS Lake Formation hybrid access mode.</p>",
         "PutEnvironmentBlueprintConfigurationInput$manageAccessRoleArn": "<p>The ARN of the manage access role.</p>",
         "PutEnvironmentBlueprintConfigurationInput$provisioningRoleArn": "<p>The ARN of the provisioning role.</p>",
         "PutEnvironmentBlueprintConfigurationOutput$manageAccessRoleArn": "<p>The ARN of the manage access role.</p>",
@@ -3665,12 +3983,50 @@
         "UpdateDomainOutput$domainExecutionRole": "<p>The domain execution role to be updated as part of the <code>UpdateDomain</code> action.</p>"
       }
     },
+    "RowFilter": {
+      "base": "<p>The row filter.</p>",
+      "refs": {
+        "RowFilterConfiguration$rowFilter": "<p>The row filter.</p>",
+        "RowFilterList$member": null
+      }
+    },
+    "RowFilterConfiguration": {
+      "base": "<p>The row filter configuration details.</p>",
+      "refs": {
+        "AssetFilterConfiguration$rowConfiguration": "<p>The row configuration of the asset filter.</p>"
+      }
+    },
+    "RowFilterExpression": {
+      "base": "<p>The row filter expression.</p>",
+      "refs": {
+        "RowFilter$expression": "<p>The expression of the row filter.</p>"
+      }
+    },
+    "RowFilterList": {
+      "base": null,
+      "refs": {
+        "RowFilter$and": "<p>The 'and' clause of the row filter.</p>",
+        "RowFilter$or": "<p>The 'or' clause of the row filter.</p>"
+      }
+    },
     "RunStatisticsForAssets": {
       "base": "<p>The asset statistics from the data source run.</p>",
       "refs": {
         "DataSourceRunSummary$runStatisticsForAssets": null,
         "GetDataSourceRunOutput$runStatisticsForAssets": "<p>The asset statistics from this data source run.</p>",
         "StartDataSourceRunOutput$runStatisticsForAssets": "<p>Specifies run statistics for assets.</p>"
+      }
+    },
+    "S3Location": {
+      "base": null,
+      "refs": {
+        "S3LocationList$member": null
+      }
+    },
+    "S3LocationList": {
+      "base": null,
+      "refs": {
+        "LakeFormationConfiguration$locationRegistrationExcludeS3Locations": "<p>Specifies certain Amazon S3 locations if you do not want Amazon DataZone to automatically register them in hybrid mode. </p>"
       }
     },
     "ScheduleConfiguration": {
@@ -3903,6 +4259,7 @@
     "SortOrder": {
       "base": null,
       "refs": {
+        "ListLineageNodeHistoryInput$sortOrder": "<p>The order by which you want data lineage node history to be sorted.</p>",
         "ListProjectMembershipsInput$sortOrder": "<p>The sort order of the project memberships.</p>",
         "ListSubscriptionGrantsInput$sortOrder": "<p>Specifies the sort order of this action.</p>",
         "ListSubscriptionRequestsInput$sortOrder": "<p>Specifies the sort order for the results of this action.</p>",
@@ -3942,13 +4299,19 @@
       "refs": {
         "AcceptChoice$predictionTarget": "<p>Specifies the target (for example, a column name) where a prediction can be accepted.</p>",
         "AcceptSubscriptionRequestOutput$reviewerId": "<p>Specifes the ID of the Amazon DataZone user who reviewed the subscription request.</p>",
+        "AssetFilterSummary$effectiveRowFilter": "<p>The effective row filter of the asset filter.</p>",
+        "AssetFilterSummary$errorMessage": "<p>The error message that is displayed if the action does not succeed.</p>",
         "AssetTargetNameMap$targetName": "<p>The target name in the asset target name map.</p>",
         "AssociateEnvironmentRoleInput$environmentRoleArn": "<p>The ARN of the environment role.</p>",
         "AwsConsoleLinkParameters$uri": "<p>The URI of the console link specified as part of the environment action.</p>",
         "CloudFormationProperties$templateUrl": "<p>The template URL of the cloud formation provisioning properties of the environment blueprint.</p>",
+        "ColumnNameList$member": null,
         "ConfigurableActionParameter$key": "<p>The key of the configurable action parameter.</p>",
         "ConfigurableActionParameter$value": "<p>The value of the configurable action parameter.</p>",
         "ConfigurableEnvironmentAction$type": "<p>The type of a configurable action in a Amazon DataZone environment.</p>",
+        "CreateAssetFilterInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
+        "CreateAssetFilterOutput$effectiveRowFilter": "<p>The row filter in the asset filter.</p>",
+        "CreateAssetFilterOutput$errorMessage": "<p>The error message that is displayed if the asset filter is not created successfully.</p>",
         "CreateDataSourceInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateDataSourceInput$environmentIdentifier": "<p>The unique identifier of the Amazon DataZone environment to which the data source publishes assets. </p>",
         "CreateDataSourceInput$projectIdentifier": "<p>The identifier of the Amazon DataZone project in which you want to add this data source.</p>",
@@ -4006,8 +4369,12 @@
         "EnvironmentProfileSummary$createdBy": "<p>The Amazon DataZone user who created the environment profile.</p>",
         "EnvironmentSummary$createdBy": "<p>The Amazon DataZone user who created the environment.</p>",
         "EnvironmentSummary$provider": "<p>The provider of the environment.</p>",
+        "EqualToExpression$columnName": "<p>The name of the column.</p>",
+        "EqualToExpression$value": "<p>The value that might be equal to an expression.</p>",
         "FailureCause$message": "<p>The description of the error message.</p>",
         "FormOutput$content": "<p>The content of the metadata form.</p>",
+        "GetAssetFilterOutput$effectiveRowFilter": "<p>The row filter of the asset filter.</p>",
+        "GetAssetFilterOutput$errorMessage": "<p>The error message that is displayed if the action does not complete successfully.</p>",
         "GetDataSourceRunOutput$dataSourceConfigurationSnapshot": "<p>The configuration snapshot of the data source run.</p>",
         "GetDomainOutput$arn": "<p>The ARN of the specified Amazon DataZone domain.</p>",
         "GetDomainOutput$description": "<p>The description of the Amazon DataZone domain.</p>",
@@ -4017,17 +4384,43 @@
         "GetEnvironmentActionOutput$description": "<p>The description of the environment action.</p>",
         "GetEnvironmentActionOutput$name": "<p>The name of the environment action.</p>",
         "GetEnvironmentBlueprintOutput$provider": "<p>The provider of this Amazon DataZone blueprint.</p>",
+        "GetEnvironmentCredentialsOutput$accessKeyId": "<p>The access key ID of the environment.</p>",
+        "GetEnvironmentCredentialsOutput$secretAccessKey": "<p>The secret access key of the environment credentials.</p>",
+        "GetEnvironmentCredentialsOutput$sessionToken": "<p>The session token of the environment credentials.</p>",
         "GetEnvironmentOutput$createdBy": "<p>The Amazon DataZone user who created the environment.</p>",
         "GetEnvironmentOutput$provider": "<p>The provider of this Amazon DataZone environment.</p>",
         "GetEnvironmentProfileOutput$createdBy": "<p>The Amazon DataZone user who created this environment profile.</p>",
         "GetIamPortalLoginUrlOutput$authCodeUrl": "<p>The data portal URL of the specified Amazon DataZone domain.</p>",
         "GetIamPortalLoginUrlOutput$userProfileId": "<p>The ID of the user profile.</p>",
+        "GetLineageNodeOutput$description": "<p>The description of the data lineage node.</p>",
+        "GetLineageNodeOutput$name": "<p>The name of the data lineage node.</p>",
+        "GetLineageNodeOutput$sourceIdentifier": "<p>The source identifier of the data lineage node.</p>",
+        "GetLineageNodeOutput$typeName": "<p>The name of the type of the specified data lineage node.</p>",
         "GetSubscriptionRequestDetailsOutput$reviewerId": "<p>The identifier of the Amazon DataZone user who reviewed the subscription request.</p>",
         "GetSubscriptionTargetOutput$manageAccessRole": "<p>The manage access role with which the subscription target was created.</p>",
         "GetSubscriptionTargetOutput$provider": "<p>The provider of the subscription target.</p>",
         "GetSubscriptionTargetOutput$type": "<p>The type of the subscription target.</p>",
+        "GreaterThanExpression$columnName": "<p>The name of the column.</p>",
+        "GreaterThanExpression$value": "<p>The value that might be greater than an expression.</p>",
+        "GreaterThanOrEqualToExpression$columnName": "<p>The name of the column.</p>",
+        "GreaterThanOrEqualToExpression$value": "<p>The value that might be greater than or equal to an expression.</p>",
         "GroupDetails$groupId": "<p>The identifier of the group in Amazon DataZone.</p>",
         "IamUserProfileDetails$arn": "<p>The ARN of an IAM user profile in Amazon DataZone.</p>",
+        "InExpression$columnName": "<p>The name of the column.</p>",
+        "IsNotNullExpression$columnName": "<p>The name of the column.</p>",
+        "IsNullExpression$columnName": "<p>The name of the column.</p>",
+        "LessThanExpression$columnName": "<p>The name of the column.</p>",
+        "LessThanExpression$value": "<p>The value that might be less than the expression.</p>",
+        "LessThanOrEqualToExpression$columnName": "<p>The name of the column.</p>",
+        "LessThanOrEqualToExpression$value": "<p>The value that might be less than or equal to an expression.</p>",
+        "LikeExpression$columnName": "<p>The name of the column.</p>",
+        "LikeExpression$value": "<p>The value that might be like the expression.</p>",
+        "LineageNodeSummary$description": "<p>The description of the data lineage node.</p>",
+        "LineageNodeSummary$name": "<p>The name of the data lineage node.</p>",
+        "LineageNodeSummary$sourceIdentifier": "<p>The alternate ID of the data lineage node.</p>",
+        "LineageNodeSummary$typeName": "<p>The name of the type of the data lineage node.</p>",
+        "LineageNodeTypeItem$description": "<p>The description of the data lineage node type.</p>",
+        "LineageNodeTypeItem$name": "<p>The name of the data lineage node type.</p>",
         "ListDataSourcesInput$environmentIdentifier": "<p>The identifier of the environment in which to list the data sources.</p>",
         "ListDataSourcesInput$projectIdentifier": "<p>The identifier of the project in which to list data sources.</p>",
         "ListEnvironmentsInput$name": "<p>The name of the environment.</p>",
@@ -4040,6 +4433,11 @@
         "MetadataGenerationRunTarget$identifier": "<p>The ID of the metadata generation run's target.</p>",
         "MetadataMap$key": null,
         "MetadataMap$value": null,
+        "NotEqualToExpression$columnName": "<p>The name of the column.</p>",
+        "NotEqualToExpression$value": "<p>The value that might not be equal to the expression.</p>",
+        "NotInExpression$columnName": "<p>The name of the column.</p>",
+        "NotLikeExpression$columnName": "<p>The name of the column.</p>",
+        "NotLikeExpression$value": "<p>The value that might not be like the expression.</p>",
         "NotificationResource$id": "<p>The ID of the resource mentioned in a notification.</p>",
         "NotificationResource$name": "<p>The name of the resource mentioned in a notification.</p>",
         "NotificationSubjects$member": null,
@@ -4057,6 +4455,7 @@
         "SelfGrantStatusDetail$failureCause": "<p>The reason for why the operation failed.</p>",
         "StartDataSourceRunInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "StartDataSourceRunOutput$dataSourceConfigurationSnapshot": "<p>The configuration snapshot of the data source that is being run.</p>",
+        "StringList$member": null,
         "SubscribedAsset$targetName": "<p>The target name of the asset for which the subscription grant is created.</p>",
         "SubscribedListing$ownerProjectName": "<p>The name of the project that owns the published asset for which the subscription grant is created.</p>",
         "SubscriptionRequestSummary$reviewerId": "<p>The identifier of the subscription request reviewer.</p>",
@@ -4067,6 +4466,9 @@
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource to be tagged in Amazon DataZone.</p>",
         "Topic$subject": "<p>The subject of the resource mentioned in a notification.</p>",
         "UntagResourceRequest$resourceArn": "<p>The ARN of the resource to be untagged in Amazon DataZone.</p>",
+        "UpdateAssetFilterInput$name": "<p>The name of the asset filter.</p>",
+        "UpdateAssetFilterOutput$effectiveRowFilter": "<p>The row filter of the asset filter.</p>",
+        "UpdateAssetFilterOutput$errorMessage": "<p>The error message that is displayed if the action is not completed successfully.</p>",
         "UpdateDomainInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "UpdateDomainInput$description": "<p>The description to be updated as part of the <code>UpdateDomain</code> action.</p>",
         "UpdateDomainInput$name": "<p>The name to be updated as part of the <code>UpdateDomain</code> action.</p>",
@@ -4091,6 +4493,13 @@
         "UpdateSubscriptionTargetOutput$provider": "<p>The provider to be updated as part of the <code>UpdateSubscriptionTarget</code> action.</p>",
         "UpdateSubscriptionTargetOutput$type": "<p>The type to be updated as part of the <code>UpdateSubscriptionTarget</code> action.</p>",
         "UserDetails$userId": "<p>The identifier of the Amazon DataZone user.</p>"
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "InExpression$values": "<p>The values that might be in the expression.</p>",
+        "NotInExpression$values": "<p>The value that might not be in the expression.</p>"
       }
     },
     "SubscribedAsset": {
@@ -4406,6 +4815,7 @@
         "GetEnvironmentBlueprintConfigurationOutput$updatedAt": "<p>The timestamp of when this blueprint was upated.</p>",
         "GetEnvironmentBlueprintOutput$createdAt": "<p>A timestamp of when this blueprint was created.</p>",
         "GetEnvironmentBlueprintOutput$updatedAt": "<p>The timestamp of when this blueprint was updated.</p>",
+        "GetEnvironmentCredentialsOutput$expiration": "<p>The expiration timestamp of the environment credentials.</p>",
         "GetEnvironmentOutput$createdAt": "<p>The timestamp of when the environment was created.</p>",
         "GetEnvironmentOutput$updatedAt": "<p>The timestamp of when this environment was updated.</p>",
         "GetEnvironmentProfileOutput$createdAt": "<p>The timestamp of when this environment profile was created.</p>",
@@ -4597,6 +5007,12 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "GetLineageNodeInput$eventTimestamp": "<p>The event time stamp for which you want to get the data lineage node.</p>",
+        "GetLineageNodeOutput$eventTimestamp": "<p>The timestamp of the event described in the data lineage node.</p>",
+        "LineageNodeReference$eventTimestamp": "<p>The event timestamp of the data lineage node.</p>",
+        "LineageNodeSummary$eventTimestamp": "<p>The event timestamp of the data lineage node.</p>",
+        "ListLineageNodeHistoryInput$eventTimestampGTE": "<p>Specifies whether the action is to return data lineage node history from the time after the event timestamp.</p>",
+        "ListLineageNodeHistoryInput$eventTimestampLTE": "<p>Specifies whether the action is to return data lineage node history from the time prior of the event timestamp.</p>",
         "ListNotificationsInput$afterTimestamp": "<p>The time after which you want to list notifications.</p>",
         "ListNotificationsInput$beforeTimestamp": "<p>The time before which you want to list notifications.</p>",
         "ListTimeSeriesDataPointsInput$endedAt": "<p>The timestamp at which the data points that you wanted to list ended.</p>",
@@ -4658,6 +5074,16 @@
       }
     },
     "UntagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAssetFilterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAssetFilterOutput": {
       "base": null,
       "refs": {
       }
@@ -4814,13 +5240,13 @@
         "CreateSubscriptionGrantOutput$updatedAt": "<p>A timestamp of when the subscription grant was updated.</p>",
         "CreateSubscriptionRequestOutput$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "CreateSubscriptionTargetOutput$updatedAt": "<p>The timestamp of when the subscription target was updated.</p>",
-        "DataProductSummary$updatedAt": "<p/>",
         "DeleteSubscriptionGrantOutput$updatedAt": "<p>The timestamp of when the subscription grant that is deleted was updated.</p>",
         "DomainSummary$lastUpdatedAt": "<p>A timestamp of when a Amazon DataZone domain was last updated.</p>",
         "GetAssetTypeOutput$updatedAt": "<p>The timestamp of when the asset type was updated.</p>",
         "GetDomainOutput$lastUpdatedAt": "<p>The timestamp of when the Amazon DataZone domain was last updated.</p>",
         "GetGlossaryOutput$updatedAt": "<p>The timestamp of when the business glossary was updated.</p>",
         "GetGlossaryTermOutput$updatedAt": "<p>The timestamp of when the business glossary term was updated.</p>",
+        "GetLineageNodeOutput$updatedAt": "<p>The timestamp at which the data lineage node was updated.</p>",
         "GetListingOutput$updatedAt": "<p>The timestamp of when the listing was updated.</p>",
         "GetSubscriptionGrantOutput$updatedAt": "<p>The timestamp of when the subscription grant was upated.</p>",
         "GetSubscriptionOutput$updatedAt": "<p>The timestamp of when the subscription was updated.</p>",
@@ -4828,6 +5254,8 @@
         "GetSubscriptionTargetOutput$updatedAt": "<p>The timestamp of when the subscription target was updated.</p>",
         "GlossaryItem$updatedAt": "<p>The timestamp of when the business glossary was updated.</p>",
         "GlossaryTermItem$updatedAt": "<p>The timestamp of when a business glossary term was updated.</p>",
+        "LineageNodeSummary$updatedAt": "<p>The timestamp at which the data lineage node was updated.</p>",
+        "LineageNodeTypeItem$updatedAt": "<p>The timestamp at which the data lineage node type was updated.</p>",
         "RejectSubscriptionRequestOutput$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "RevokeSubscriptionOutput$updatedAt": "<p>The timestamp of when the subscription was revoked.</p>",
         "SubscriptionGrantSummary$updatedAt": "<p>The timestampf of when the subscription grant was updated.</p>",
@@ -4851,11 +5279,11 @@
         "CreateSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",
         "CreateSubscriptionRequestOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
         "CreateSubscriptionTargetOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription target.</p>",
-        "DataProductSummary$updatedBy": "<p/>",
         "DeleteSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant that is deleted.</p>",
         "GetAssetTypeOutput$updatedBy": "<p>The Amazon DataZone user that updated the asset type.</p>",
         "GetGlossaryOutput$updatedBy": "<p>The Amazon DataZone user who updated the business glossary.</p>",
         "GetGlossaryTermOutput$updatedBy": "<p>The Amazon DataZone user who updated the business glossary term.</p>",
+        "GetLineageNodeOutput$updatedBy": "<p>The user who updated the data lineage node.</p>",
         "GetListingOutput$updatedBy": "<p>The Amazon DataZone user who updated the listing.</p>",
         "GetSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",
         "GetSubscriptionOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription.</p>",
@@ -4863,6 +5291,8 @@
         "GetSubscriptionTargetOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription target.</p>",
         "GlossaryItem$updatedBy": "<p>The Amazon DataZone user who updated the business glossary.</p>",
         "GlossaryTermItem$updatedBy": "<p>The Amazon DataZone user who updated the business glossary term.</p>",
+        "LineageNodeSummary$updatedBy": "<p>The user who updated the data lineage node.</p>",
+        "LineageNodeTypeItem$updatedBy": "<p>The user who updated the data lineage node type.</p>",
         "RejectSubscriptionRequestOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
         "RevokeSubscriptionOutput$updatedBy": "<p>The Amazon DataZone user who revoked the subscription.</p>",
         "SubscriptionGrantSummary$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",

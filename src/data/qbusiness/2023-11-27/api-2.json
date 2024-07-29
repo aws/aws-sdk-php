@@ -2,6 +2,9 @@
     "version": "2.0",
     "metadata": {
         "apiVersion": "2023-11-27",
+        "auth": [
+            "aws.auth#sigv4"
+        ],
         "endpointPrefix": "qbusiness",
         "protocol": "rest-json",
         "protocolSettings": {
@@ -2894,6 +2897,12 @@
                 },
                 "attachmentsConfiguration": {
                     "shape": "AttachmentsConfiguration"
+                },
+                "qAppsConfiguration": {
+                    "shape": "QAppsConfiguration"
+                },
+                "personalizationConfiguration": {
+                    "shape": "PersonalizationConfiguration"
                 }
             }
         },
@@ -4118,6 +4127,12 @@
                 },
                 "attachmentsConfiguration": {
                     "shape": "AppliedAttachmentsConfiguration"
+                },
+                "qAppsConfiguration": {
+                    "shape": "QAppsConfiguration"
+                },
+                "personalizationConfiguration": {
+                    "shape": "PersonalizationConfiguration"
                 }
             }
         },
@@ -5615,6 +5630,24 @@
             "type": "string",
             "sensitive": true
         },
+        "PersonalizationConfiguration": {
+            "type": "structure",
+            "required": [
+                "personalizationControlMode"
+            ],
+            "members": {
+                "personalizationControlMode": {
+                    "shape": "PersonalizationControlMode"
+                }
+            }
+        },
+        "PersonalizationControlMode": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
+            ]
+        },
         "Plugin": {
             "type": "structure",
             "members": {
@@ -5853,6 +5886,24 @@
         "PutGroupResponse": {
             "type": "structure",
             "members": []
+        },
+        "QAppsConfiguration": {
+            "type": "structure",
+            "required": [
+                "qAppsControlMode"
+            ],
+            "members": {
+                "qAppsControlMode": {
+                    "shape": "QAppsControlMode"
+                }
+            }
+        },
+        "QAppsControlMode": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
+            ]
         },
         "ReadAccessType": {
             "type": "string",
@@ -6544,6 +6595,12 @@
                 },
                 "attachmentsConfiguration": {
                     "shape": "AttachmentsConfiguration"
+                },
+                "qAppsConfiguration": {
+                    "shape": "QAppsConfiguration"
+                },
+                "personalizationConfiguration": {
+                    "shape": "PersonalizationConfiguration"
                 }
             }
         },

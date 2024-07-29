@@ -33,7 +33,7 @@ class HtmlDocument
     {
         $anchor = $this->slug($anchorPrefix . '-' . $text);
         $ariaLabel = empty($label) ? null : 'aria-label="Go to ' . $label . '"';
-        $link = ' <a ' . $ariaLabel . ' href="#' . $anchor . '" class="anchor-link">' . $this->glyph('link') . '</a>';
+        $link = ' <a ' . $ariaLabel . ' href="#' . $anchor . '" class="anchor-link"' . ' aria-label="' . $anchor . ' link">' . $this->glyph('link') . '</a>';
         $attrs = ['id' => $anchor];
         if ($class) {
             $attrs['class'] = $class;

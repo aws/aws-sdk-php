@@ -28,8 +28,8 @@ class Credentials extends AwsCredentialIdentity implements
      */
     public function __construct($key, $secret, $token = null, $expires = null, $accountId = null)
     {
-        $this->key = trim($key);
-        $this->secret = trim($secret);
+        $this->key = trim((string) $key);
+        $this->secret = trim((string) $secret);
         $this->token = $token;
         $this->expires = $expires;
         $this->accountId = $accountId;

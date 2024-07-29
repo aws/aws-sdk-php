@@ -709,7 +709,7 @@ EOT;
         $html->open('dl');
             foreach ($paginators as $name => $config) {
                 $html->open('dt', 'phpdocumentor-table-of-contents__entry');
-                    $attr = ['href' => '#' . strtolower($name)];
+                    $attr = ['href' => '#' . strtolower($name), 'aria-label' => strtolower($name)];
                     $html->elem('a', $attr, '<strong>' . $name . '</strong>');
                 $html->close();
             }
@@ -814,10 +814,11 @@ EOT;
                                 'a',
                                 [
                                     'href' => $service->exceptionLink . '#shape-'
-                                        . strtolower($error->getName())
+                                        . strtolower($error->getName()),
+                                    'aria-label' => strtolower($error->getName())
                                 ],
                                 '<strong>' . $error['name'] . ': ' . '</strong>')
-                            ->elem('p', 'phpdocumentor-summary', $desc)
+                            ->elem('dd', 'phpdocumentor-summary', $desc)
                     ->close();
             }
             $html->close();
@@ -832,7 +833,7 @@ EOT;
                 $exampleId = $this->exampleSlug($name, $exampleNumber);
                 $html->open('h5', ['id' => $exampleId]);
                 $html->elem('span', null, 'Example ' . $exampleNumber . ': ' . $example['title'] ?? '');
-                $html->elem('a', ['href' => '#' . $exampleId], $html->glyph('link'));
+                $html->elem('a', ['href' => '#' . $exampleId, 'aria-label' => 'example link'], $html->glyph('link'));
                 $html->close();
                 if (isset($example['description'])) {
                     $html->elem('p', 'phpdocumentor-summary', $example['description']);
@@ -952,9 +953,9 @@ EOT;
 
         $html->open('div', 'param-attributes')->open('dl');
         if ($required) {
-            $html->elem('dt', 'required', '<strong>Required</strong>: <em>Yes</em>');
+            $html->elem('dt', 'required', '<dd><strong>Required</strong>: <em>Yes</em></dd>');
         }
-        $html->elem('dt', null, '<strong>Type:</strong> ' . "<em>{$typeDesc}</em>");
+        $html->elem('dt', null, '<dd><strong>Type:</strong> ' . "<em>{$typeDesc}</em></dd>");
         $html->close();
         $html->close();
 
@@ -1044,7 +1045,7 @@ EOT;
 
     private function memberLink($name)
     {
-        return '<a href="#' . $this->memberSlug($name) . '">' . $name . '</a>';
+        return '<a href="#' . $this->memberSlug($name) . '" aria-label="' . $name . '">' . $name . '</a>';
     }
 
     private function updateSitemap()
