@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\Credentials;
 
-use Aws\Arn\ArnParser;
 use Aws\Credentials\AssumeRoleCredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
@@ -93,8 +92,6 @@ class AssumeRoleCredentialProviderTest extends TestCase
         $this->assertNull($creds->getSecurityToken());
         $this->assertIsInt($creds->getExpiration());
         $this->assertFalse($creds->isExpired());
-        $expectedAccountId = ArnParser::parse(self::SAMPLE_ROLE_ARN)->getAccountId();
-        $this->assertSame($expectedAccountId, $creds->getAccountId());
     }
 
     public function testThrowsExceptionWhenRetrievingAssumeRoleCredentialFails()

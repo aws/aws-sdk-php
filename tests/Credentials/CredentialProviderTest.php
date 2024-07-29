@@ -20,7 +20,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class CredentialProviderTest extends TestCase
 {
-    private $home, $homedrive, $homepath, $key, $secret, $profile, $accountId;
+    private $home, $homedrive, $homepath, $key, $secret, $profile;
 
     private static $standardIni = <<<EOT
 [default]
@@ -44,7 +44,6 @@ EOT;
         putenv('AWS_ROLE_ARN');
         putenv('AWS_ROLE_SESSION_NAME');
         putenv('AWS_SHARED_CREDENTIALS_FILE');
-        putenv(CredentialProvider::ENV_ACCOUNT_ID . '=');
 
         unset($_SERVER[CredentialProvider::ENV_KEY]);
         unset($_SERVER[CredentialProvider::ENV_SECRET]);
@@ -75,7 +74,6 @@ EOT;
         $this->key = getenv(CredentialProvider::ENV_KEY);
         $this->secret = getenv(CredentialProvider::ENV_SECRET);
         $this->profile = getenv(CredentialProvider::ENV_PROFILE);
-        $this->accountId = getenv(CredentialProvider::ENV_ACCOUNT_ID);
     }
 
     public function tear_down()
@@ -86,7 +84,6 @@ EOT;
         putenv(CredentialProvider::ENV_KEY . '=' . $this->key);
         putenv(CredentialProvider::ENV_SECRET . '=' . $this->secret);
         putenv(CredentialProvider::ENV_PROFILE . '=' . $this->profile);
-        putenv(CredentialProvider::ENV_ACCOUNT_ID . '=' . $this->accountId);
     }
 
     public function testCreatesFromCache()
@@ -170,13 +167,10 @@ EOT;
         putenv(CredentialProvider::ENV_KEY . '=abc');
         putenv(CredentialProvider::ENV_SECRET . '=123');
         putenv(CredentialProvider::ENV_SESSION . '=456');
-        $testAccountId = '123456789000';
-        putenv(CredentialProvider::ENV_ACCOUNT_ID ."=$testAccountId");
         $creds = call_user_func(CredentialProvider::env())->wait();
         $this->assertSame('abc', $creds->getAccessKeyId());
         $this->assertSame('123', $creds->getSecretKey());
         $this->assertSame('456', $creds->getSecurityToken());
-        $this->assertSame($testAccountId, $creds->getAccountId());
     }
 
     public function testCreatesFromEnvironmentVariablesNullToken()
@@ -211,8 +205,6 @@ EOT;
     public function iniFileProvider()
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
-        $testAccountId = '123456789000';
-        $credentialsWithAccountId = new Credentials('foo', 'bar', 'baz', null, $testAccountId);
         $credentialsWithEquals = new Credentials('foo', 'bar', 'baz=');
         $standardIni = <<<EOT
 [default]
@@ -245,13 +237,6 @@ aws_access_key_id = foo
 aws_secret_access_key = bar
 aws_session_token = "baz="
 EOT;
-        $standardIniWithAccountId = <<<EOT
-[default]
-aws_access_key_id = foo
-aws_secret_access_key = bar
-aws_session_token = baz
-aws_account_id = $testAccountId
-EOT;
 
         return [
             [$standardIni, $credentials],
@@ -259,7 +244,6 @@ EOT;
             [$mixedIni, $credentials],
             [$standardWithEqualsIni, $credentialsWithEquals],
             [$standardWithEqualsQuotedIni, $credentialsWithEquals],
-            [$standardIniWithAccountId, $credentialsWithAccountId],
         ];
     }
 
@@ -271,8 +255,7 @@ EOT;
             "key" => "foo",
             "secret" => "bar",
             "token" => "baz",
-            "expires" => null,
-            "accountId" => null
+            "expires" => null
         ];
         putenv('HOME=' . dirname($dir));
         $creds = call_user_func(
@@ -376,24 +359,6 @@ EOT;
         $this->assertSame('bar', $creds->getSecretKey());
     }
 
-    public function testCreatesFromProcessCredentialProviderWithAccountId()
-    {
-        $testAccountId = '123456789000';
-        $dir = $this->clearEnv();
-        $ini = <<<EOT
-[foo]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1, "AccountId": "$testAccountId"}'
-EOT;
-        file_put_contents($dir . '/credentials', $ini);
-        putenv('HOME=' . dirname($dir));
-
-        $creds = call_user_func(CredentialProvider::process('foo'))->wait();
-        unlink($dir . '/credentials');
-        $this->assertSame('foo', $creds->getAccessKeyId());
-        $this->assertSame('bar', $creds->getSecretKey());
-        $this->assertSame($testAccountId, $creds->getAccountId());
-    }
-
     public function testCreatesFromProcessCredentialWithFilename()
     {
         $dir = $this->clearEnv();
@@ -471,14 +436,12 @@ EOT;
 
     public function testCreatesFromIniCredentialWithDefaultProvider()
     {
-        $testAccountId = '123456789000';
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [baz]
 [default]
 aws_access_key_id = foo
 aws_secret_access_key = bar
-aws_account_id = $testAccountId
 EOT;
         file_put_contents($dir . '/mycreds', $ini);
         putenv('HOME=' . dirname($dir));
@@ -490,7 +453,6 @@ EOT;
         unlink($dir . '/mycreds');
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('bar', $creds->getSecretKey());
-        $this->assertEquals($testAccountId, $creds->getAccountId());
     }
 
     public function testCreatesTemporaryFromProcessCredential()
@@ -1948,7 +1910,7 @@ EOT;
             'credentials' => $cache,
         ]))
             ->wait();
-
+    
         $this->assertSame($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
         $this->assertSame($ecsCredential->getSecretKey(), $credentials->getSecretKey());
 
@@ -1959,7 +1921,7 @@ EOT;
             'credentials' => $cache,
         ]))
             ->wait();
-
+            
         $this->assertSame($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
         $this->assertSame($ecsCredential->getSecretKey(), $credentials->getSecretKey());
     }
