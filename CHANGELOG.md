@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.316.9 - 2024-07-29
 
 * `Aws\ElastiCache` - Renaming full service name as it appears in developer documentation.
 * `Aws\MemoryDB` - Renaming full service name as it appears in developer documentation.
