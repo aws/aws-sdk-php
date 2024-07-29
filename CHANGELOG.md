@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElastiCache` - Renaming full service name as it appears in developer documentation.
+* `Aws\MemoryDB` - Renaming full service name as it appears in developer documentation.
+
 ## 3.316.8 - 2024-07-25
 
 * `Aws\ElasticLoadBalancingv2` - This release adds support for sharing trust stores across accounts and organizations through integration with AWS Resource Access Manager.
