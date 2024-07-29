@@ -170,7 +170,7 @@ EOT;
         putenv(CredentialProvider::ENV_KEY . '=abc');
         putenv(CredentialProvider::ENV_SECRET . '=123');
         putenv(CredentialProvider::ENV_SESSION . '=456');
-        $testAccountId = '123456789012';
+        $testAccountId = '123456789000';
         putenv(CredentialProvider::ENV_ACCOUNT_ID ."=$testAccountId");
         $creds = call_user_func(CredentialProvider::env())->wait();
         $this->assertSame('abc', $creds->getAccessKeyId());
@@ -211,7 +211,7 @@ EOT;
     public function iniFileProvider()
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
-        $testAccountId = '123456789012';
+        $testAccountId = '123456789000';
         $credentialsWithAccountId = new Credentials('foo', 'bar', 'baz', null, $testAccountId);
         $credentialsWithEquals = new Credentials('foo', 'bar', 'baz=');
         $standardIni = <<<EOT
@@ -378,7 +378,7 @@ EOT;
 
     public function testCreatesFromProcessCredentialProviderWithAccountId()
     {
-        $testAccountId = '123456789012';
+        $testAccountId = '123456789000';
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [foo]
@@ -471,7 +471,7 @@ EOT;
 
     public function testCreatesFromIniCredentialWithDefaultProvider()
     {
-        $testAccountId = '123456789012';
+        $testAccountId = '123456789000';
         $dir = $this->clearEnv();
         $ini = <<<EOT
 [baz]
