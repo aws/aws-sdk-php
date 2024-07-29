@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Sts;
 
-use Aws\Arn\ArnParser;
 use Aws\AwsClient;
 use Aws\CacheInterface;
 use Aws\Credentials\Credentials;
@@ -76,26 +75,15 @@ class StsClient extends AwsClient
             throw new \InvalidArgumentException('Result contains no credentials');
         }
 
-        $accountId = null;
-        if ($result->hasKey('AssumedRoleUser')) {
-            $parsedArn = ArnParser::parse($result->get('AssumedRoleUser')['Arn']);
-            $accountId = $parsedArn->getAccountId();
-        } elseif ($result->hasKey('FederatedUser')) {
-            $parsedArn = ArnParser::parse($result->get('FederatedUser')['Arn']);
-            $accountId = $parsedArn->getAccountId();
-        }
-
-        $credentials = $result['Credentials'];
-        $expiration = isset($credentials['Expiration']) && $credentials['Expiration'] instanceof \DateTimeInterface
-            ? (int) $credentials['Expiration']->format('U')
-            : null;
+        $c = $result['Credentials'];
 
         return new Credentials(
-            $credentials['AccessKeyId'],
-            $credentials['SecretAccessKey'],
-            isset($credentials['SessionToken']) ? $credentials['SessionToken'] : null,
-            $expiration,
-            $accountId
+            $c['AccessKeyId'],
+            $c['SecretAccessKey'],
+            isset($c['SessionToken']) ? $c['SessionToken'] : null,
+            isset($c['Expiration']) && $c['Expiration'] instanceof \DateTimeInterface
+                ? (int) $c['Expiration']->format('U')
+                : null
         );
     }
 

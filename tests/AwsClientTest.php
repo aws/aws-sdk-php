@@ -544,7 +544,6 @@ class AwsClientTest extends TestCase
             'AWS::UseFIPS' => false,
             'AWS::UseDualStack' => false,
             'AWS::STS::UseGlobalEndpoint' => true,
-            'AWS::Auth::AccountIdEndpointMode' => 'preferred',
         ];
         $builtIns = $client->getClientBuiltIns();
         $this->assertEquals(
@@ -565,7 +564,6 @@ class AwsClientTest extends TestCase
             'UseFIPS' => false,
             'UseDualStack' => false,
             'UseGlobalEndpoint' => true,
-            'AccountIdEndpointMode' => 'preferred'
         ];
         $providerArgs = $client->getEndpointProviderArgs();
         $this->assertEquals(
@@ -949,27 +947,5 @@ EOT
             'error_parser' => function () {},
             'version'      => 'latest'
         ]);
-    }
-
-    public function testClientDefaultsAccountIdEndpointModeBuiltInsToPreferred()
-    {
-        $client = new S3Client([
-            'region' => 'us-east-1'
-        ]);
-        $builtIns = $client->getClientBuiltIns();
-
-        self::assertEquals('preferred', $builtIns['AWS::Auth::AccountIdEndpointMode']);
-    }
-
-    public function testClientParameterOverridesDefaultAccountIdEndpointModeBuiltIns()
-    {
-        $expectedAccountIdEndpointMode = 'required';
-        $client = new S3Client([
-            'region' => 'us-east-1',
-            'account_id_endpoint_mode' => $expectedAccountIdEndpointMode
-        ]);
-        $builtIns = $client->getClientBuiltIns();
-
-        self::assertEquals($expectedAccountIdEndpointMode, $builtIns['AWS::Auth::AccountIdEndpointMode']);
     }
 }

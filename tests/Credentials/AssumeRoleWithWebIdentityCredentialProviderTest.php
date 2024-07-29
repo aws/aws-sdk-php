@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\Credentials;
 
-use Aws\Arn\ArnParser;
 use Aws\Command;
 use Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider;
 use Aws\Credentials\Credentials;
@@ -77,10 +76,6 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
                 'SessionToken'    => 'baz',
                 'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
             ],
-            'AssumedRoleUser' => [
-                'AssumedRoleId' => 'test_user_621903f1f21f5.01530789',
-                'Arn' => self::SAMPLE_ROLE_ARN
-            ]
         ];
 
         $tokenPath = $dir . '/my-token.jwt';
@@ -107,8 +102,6 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
             $this->assertSame('baz', $creds->getSecurityToken());
             $this->assertIsInt($creds->getExpiration());
             $this->assertFalse($creds->isExpired());
-            $expectedAccountId = ArnParser::parse(self::SAMPLE_ROLE_ARN)->getAccountId();
-            $this->assertSame($expectedAccountId, $creds->getAccountId());
         } catch (\Error $e) {
             throw $e;
         } finally {
