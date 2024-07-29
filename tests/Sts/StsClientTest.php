@@ -104,7 +104,7 @@ class StsClientTest extends TestCase
     {
         $result = new Result([
             'AssumedRoleUser' => [
-                'Arn' => 'arn:aws:iam::123456789012:user/test-user-1'
+                'Arn' => 'arn:aws:iam::123456789000:user/test-user-1'
             ],
             'Credentials' => [
                 'AccessKeyId' => 'foo',
@@ -123,7 +123,7 @@ class StsClientTest extends TestCase
         $this->assertSame('foo', $credentials->getAccessKeyId());
         $this->assertSame('bar', $credentials->getSecretKey());
         $this->assertSame('baz', $credentials->getSecurityToken());
-        $this->assertSame('123456789012', $credentials->getAccountId());
+        $this->assertSame('123456789000', $credentials->getAccountId());
         $this->assertIsInt($credentials->getExpiration());
         $this->assertFalse($credentials->isExpired());
     }
@@ -132,7 +132,7 @@ class StsClientTest extends TestCase
     {
         $result = new Result([
             'FederatedUser' => [
-                'Arn' => 'arn:aws:iam::123456789012:user/test-user-1'
+                'Arn' => 'arn:aws:iam::123456789000:user/test-user-1'
             ],
             'Credentials' => [
                 'AccessKeyId' => 'foo',
@@ -151,7 +151,7 @@ class StsClientTest extends TestCase
         $this->assertSame('foo', $credentials->getAccessKeyId());
         $this->assertSame('bar', $credentials->getSecretKey());
         $this->assertSame('baz', $credentials->getSecurityToken());
-        $this->assertSame('123456789012', $credentials->getAccountId());
+        $this->assertSame('123456789000', $credentials->getAccountId());
         $this->assertIsInt($credentials->getExpiration());
         $this->assertFalse($credentials->isExpired());
     }
