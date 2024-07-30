@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.316.10 - 2024-07-30
 
 * `Aws\AppStream` - Added support for Red Hat Enterprise Linux 8 on Amazon AppStream 2.0
 * `Aws\AutoScaling` - Increase the length limit for VPCZoneIdentifier from 2047 to 5000
