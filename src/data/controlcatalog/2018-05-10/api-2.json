@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"controlcatalog",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Control Catalog",
     "serviceId":"ControlCatalog",
     "signatureVersion":"v4",
@@ -12,6 +13,23 @@
     "uid":"controlcatalog-2018-05-10"
   },
   "operations":{
+    "GetControl":{
+      "name":"GetControl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-control",
+        "responseCode":200
+      },
+      "input":{"shape":"GetControlRequest"},
+      "output":{"shape":"GetControlResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListCommonControls":{
       "name":"ListCommonControls",
       "http":{
@@ -21,6 +39,22 @@
       },
       "input":{"shape":"ListCommonControlsRequest"},
       "output":{"shape":"ListCommonControlsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListControls":{
+      "name":"ListControls",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-controls",
+        "responseCode":200
+      },
+      "input":{"shape":"ListControlsRequest"},
+      "output":{"shape":"ListControlsResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
@@ -91,7 +125,7 @@
       "type":"string",
       "max":2048,
       "min":41,
-      "pattern":"^arn:(aws(?:[-a-z]*)?):controlcatalog:::common-control/[0-9a-z]+$"
+      "pattern":"arn:(aws(?:[-a-z]*)?):controlcatalog:::common-control/[0-9a-z]+"
     },
     "CommonControlFilter":{
       "type":"structure",
@@ -103,32 +137,74 @@
       "type":"structure",
       "required":[
         "Arn",
-        "CreateTime",
+        "Name",
         "Description",
         "Domain",
-        "LastUpdateTime",
-        "Name",
-        "Objective"
+        "Objective",
+        "CreateTime",
+        "LastUpdateTime"
       ],
       "members":{
         "Arn":{"shape":"CommonControlArn"},
-        "CreateTime":{"shape":"Timestamp"},
+        "Name":{"shape":"String"},
         "Description":{"shape":"String"},
         "Domain":{"shape":"AssociatedDomainSummary"},
-        "LastUpdateTime":{"shape":"Timestamp"},
-        "Name":{"shape":"String"},
-        "Objective":{"shape":"AssociatedObjectiveSummary"}
+        "Objective":{"shape":"AssociatedObjectiveSummary"},
+        "CreateTime":{"shape":"Timestamp"},
+        "LastUpdateTime":{"shape":"Timestamp"}
       }
     },
     "CommonControlSummaryList":{
       "type":"list",
       "member":{"shape":"CommonControlSummary"}
     },
+    "ControlArn":{
+      "type":"string",
+      "max":2048,
+      "min":34,
+      "pattern":"arn:(aws(?:[-a-z]*)?):(controlcatalog|controltower):[a-zA-Z0-9-]*::control/[0-9a-zA-Z_\\-]+"
+    },
+    "ControlBehavior":{
+      "type":"string",
+      "enum":[
+        "PREVENTIVE",
+        "PROACTIVE",
+        "DETECTIVE"
+      ]
+    },
+    "ControlScope":{
+      "type":"string",
+      "enum":[
+        "GLOBAL",
+        "REGIONAL"
+      ]
+    },
+    "ControlSummary":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Name",
+        "Description"
+      ],
+      "members":{
+        "Arn":{"shape":"ControlArn"},
+        "Name":{"shape":"String"},
+        "Description":{"shape":"String"}
+      }
+    },
+    "Controls":{
+      "type":"list",
+      "member":{"shape":"ControlSummary"}
+    },
+    "DeployableRegions":{
+      "type":"list",
+      "member":{"shape":"RegionCode"}
+    },
     "DomainArn":{
       "type":"string",
       "max":2048,
       "min":33,
-      "pattern":"^arn:(aws(?:[-a-z]*)?):controlcatalog:::domain/[0-9a-z]+$"
+      "pattern":"arn:(aws(?:[-a-z]*)?):controlcatalog:::domain/[0-9a-z]+"
     },
     "DomainResourceFilter":{
       "type":"structure",
@@ -144,22 +220,46 @@
       "type":"structure",
       "required":[
         "Arn",
-        "CreateTime",
+        "Name",
         "Description",
-        "LastUpdateTime",
-        "Name"
+        "CreateTime",
+        "LastUpdateTime"
       ],
       "members":{
         "Arn":{"shape":"DomainArn"},
-        "CreateTime":{"shape":"Timestamp"},
+        "Name":{"shape":"String"},
         "Description":{"shape":"String"},
-        "LastUpdateTime":{"shape":"Timestamp"},
-        "Name":{"shape":"String"}
+        "CreateTime":{"shape":"Timestamp"},
+        "LastUpdateTime":{"shape":"Timestamp"}
       }
     },
     "DomainSummaryList":{
       "type":"list",
       "member":{"shape":"DomainSummary"}
+    },
+    "GetControlRequest":{
+      "type":"structure",
+      "required":["ControlArn"],
+      "members":{
+        "ControlArn":{"shape":"ControlArn"}
+      }
+    },
+    "GetControlResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Name",
+        "Description",
+        "Behavior",
+        "RegionConfiguration"
+      ],
+      "members":{
+        "Arn":{"shape":"ControlArn"},
+        "Name":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Behavior":{"shape":"ControlBehavior"},
+        "RegionConfiguration":{"shape":"RegionConfiguration"}
+      }
     },
     "InternalServerException":{
       "type":"structure",
@@ -174,7 +274,6 @@
     "ListCommonControlsRequest":{
       "type":"structure",
       "members":{
-        "CommonControlFilter":{"shape":"CommonControlFilter"},
         "MaxResults":{
           "shape":"MaxListCommonControlsResults",
           "location":"querystring",
@@ -184,7 +283,8 @@
           "shape":"PaginationToken",
           "location":"querystring",
           "locationName":"nextToken"
-        }
+        },
+        "CommonControlFilter":{"shape":"CommonControlFilter"}
       }
     },
     "ListCommonControlsResponse":{
@@ -192,6 +292,29 @@
       "required":["CommonControls"],
       "members":{
         "CommonControls":{"shape":"CommonControlSummaryList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListControlsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxListControlsResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListControlsResponse":{
+      "type":"structure",
+      "required":["Controls"],
+      "members":{
+        "Controls":{"shape":"Controls"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -238,11 +361,17 @@
       "type":"structure",
       "required":["Objectives"],
       "members":{
-        "NextToken":{"shape":"PaginationToken"},
-        "Objectives":{"shape":"ObjectiveSummaryList"}
+        "Objectives":{"shape":"ObjectiveSummaryList"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
     "MaxListCommonControlsResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "MaxListControlsResults":{
       "type":"integer",
       "box":true,
       "max":100,
@@ -264,7 +393,7 @@
       "type":"string",
       "max":2048,
       "min":36,
-      "pattern":"^arn:(aws(?:[-a-z]*)?):controlcatalog:::objective/[0-9a-z]+$"
+      "pattern":"arn:(aws(?:[-a-z]*)?):controlcatalog:::objective/[0-9a-z]+"
     },
     "ObjectiveFilter":{
       "type":"structure",
@@ -286,19 +415,19 @@
       "type":"structure",
       "required":[
         "Arn",
-        "CreateTime",
+        "Name",
         "Description",
         "Domain",
-        "LastUpdateTime",
-        "Name"
+        "CreateTime",
+        "LastUpdateTime"
       ],
       "members":{
         "Arn":{"shape":"ObjectiveArn"},
-        "CreateTime":{"shape":"Timestamp"},
+        "Name":{"shape":"String"},
         "Description":{"shape":"String"},
         "Domain":{"shape":"AssociatedDomainSummary"},
-        "LastUpdateTime":{"shape":"Timestamp"},
-        "Name":{"shape":"String"}
+        "CreateTime":{"shape":"Timestamp"},
+        "LastUpdateTime":{"shape":"Timestamp"}
       }
     },
     "ObjectiveSummaryList":{
@@ -309,6 +438,29 @@
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "RegionCode":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9-]{1,128}"
+    },
+    "RegionConfiguration":{
+      "type":"structure",
+      "required":["Scope"],
+      "members":{
+        "Scope":{"shape":"ControlScope"},
+        "DeployableRegions":{"shape":"DeployableRegions"}
+      }
+    },
+    "ResourceNotFoundException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
     },
     "String":{"type":"string"},
     "ThrottlingException":{

@@ -632,6 +632,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSSMContacts(array $args = [])
  * @method \Aws\SSMIncidents\SSMIncidentsClient createSSMIncidents(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSSMIncidents(array $args = [])
+ * @method \Aws\SSMQuickSetup\SSMQuickSetupClient createSSMQuickSetup(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSSMQuickSetup(array $args = [])
  * @method \Aws\SSO\SSOClient createSSO(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSSO(array $args = [])
  * @method \Aws\SSOAdmin\SSOAdminClient createSSOAdmin(array $args = [])

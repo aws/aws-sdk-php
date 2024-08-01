@@ -2,7 +2,9 @@
   "version": "2.0",
   "service": "<p>Welcome to the Amazon Web Services Control Catalog API reference. This guide is for developers who need detailed information about how to programmatically identify and filter the common controls and related metadata that are available to Amazon Web Services customers. This API reference provides descriptions, syntax, and usage examples for each of the actions and data types that are supported by Amazon Web Services Control Catalog. </p> <p>Use the following links to get started with the Amazon Web Services Control Catalog API:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/controlcatalog/latest/APIReference/API_Operations.html\">Actions</a>: An alphabetical list of all Control Catalog API operations.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/controlcatalog/latest/APIReference/API_Types.html\">Data types</a>: An alphabetical list of all Control Catalog data types.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/controlcatalog/latest/APIReference/CommonParameters.html\">Common parameters</a>: Parameters that all operations can use.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/controlcatalog/latest/APIReference/CommonErrors.html\">Common errors</a>: Client and server errors that all operations can return.</p> </li> </ul>",
   "operations": {
+    "GetControl": "<p>Returns details about a specific control, most notably a list of Amazon Web Services Regions where this control is supported. Input a value for the <i>ControlArn</i> parameter, in ARN form. <code>GetControl</code> accepts <i>controltower</i> or <i>controlcatalog</i> control ARNs as input. Returns a <i>controlcatalog</i> ARN format.</p> <p>In the API response, controls that have the value <code>GLOBAL</code> in the <code>Scope</code> field do not show the <code>DeployableRegions</code> field, because it does not apply. Controls that have the value <code>REGIONAL</code> in the <code>Scope</code> field return a value for the <code>DeployableRegions</code> field, as shown in the example.</p>",
     "ListCommonControls": "<p>Returns a paginated list of common controls from the Amazon Web Services Control Catalog.</p> <p>You can apply an optional filter to see common controls that have a specific objective. If you don’t provide a filter, the operation returns all common controls. </p>",
+    "ListControls": "<p>Returns a paginated list of all available controls in the Amazon Web Services Control Catalog library. Allows you to discover available controls. The list of controls is given as structures of type <i>controlSummary</i>. The ARN is returned in the global <i>controlcatalog</i> format, as shown in the examples.</p>",
     "ListDomains": "<p>Returns a paginated list of domains from the Amazon Web Services Control Catalog.</p>",
     "ListObjectives": "<p>Returns a paginated list of objectives from the Amazon Web Services Control Catalog.</p> <p>You can apply an optional filter to see the objectives that belong to a specific domain. If you don’t provide a filter, the operation returns all objectives. </p>"
   },
@@ -49,6 +51,44 @@
         "ListCommonControlsResponse$CommonControls": "<p>The list of common controls that the <code>ListCommonControls</code> API returns.</p>"
       }
     },
+    "ControlArn": {
+      "base": null,
+      "refs": {
+        "ControlSummary$Arn": "<p>The Amazon Resource Name (ARN) of the control.</p>",
+        "GetControlRequest$ControlArn": "<p>The Amazon Resource Name (ARN) of the control. It has one of the following formats:</p> <p> <i>Global format</i> </p> <p> <code>arn:{PARTITION}:controlcatalog:::control/{CONTROL_CATALOG_OPAQUE_ID}</code> </p> <p> <i>Or Regional format</i> </p> <p> <code>arn:{PARTITION}:controltower:{REGION}::control/{CONTROL_TOWER_OPAQUE_ID}</code> </p> <p>Here is a more general pattern that covers Amazon Web Services Control Tower and Control Catalog ARNs:</p> <p> <code>^arn:(aws(?:[-a-z]*)?):(controlcatalog|controltower):[a-zA-Z0-9-]*::control/[0-9a-zA-Z_\\\\-]+$</code> </p>",
+        "GetControlResponse$Arn": "<p>The Amazon Resource Name (ARN) of the control.</p>"
+      }
+    },
+    "ControlBehavior": {
+      "base": null,
+      "refs": {
+        "GetControlResponse$Behavior": "<p>A term that identifies the control's functional behavior. One of <code>Preventive</code>, <code>Deteictive</code>, <code>Proactive</code> </p>"
+      }
+    },
+    "ControlScope": {
+      "base": null,
+      "refs": {
+        "RegionConfiguration$Scope": "<p>The coverage of the control, if deployed. Scope is an enumerated type, with value <code>Regional</code>, or <code>Global</code>. A control with Global scope is effective in all Amazon Web Services Regions, regardless of the Region from which it is enabled, or to which it is deployed. A control implemented by an SCP is usually Global in scope. A control with Regional scope has operations that are restricted specifically to the Region from which it is enabled and to which it is deployed. Controls implemented by Config rules and CloudFormation hooks usually are Regional in scope. Security Hub controls usually are Regional in scope.</p>"
+      }
+    },
+    "ControlSummary": {
+      "base": "<p>Overview of information about a control.</p>",
+      "refs": {
+        "Controls$member": null
+      }
+    },
+    "Controls": {
+      "base": null,
+      "refs": {
+        "ListControlsResponse$Controls": "<p>Returns a list of controls, given as structures of type <i>controlSummary</i>.</p>"
+      }
+    },
+    "DeployableRegions": {
+      "base": null,
+      "refs": {
+        "RegionConfiguration$DeployableRegions": "<p>Regions in which the control is available to be deployed.</p>"
+      }
+    },
     "DomainArn": {
       "base": null,
       "refs": {
@@ -81,6 +121,16 @@
         "ListDomainsResponse$Domains": "<p>The list of domains that the <code>ListDomains</code> API returns.</p>"
       }
     },
+    "GetControlRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetControlResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "InternalServerException": {
       "base": "<p>An internal service error occurred during the processing of your request. Try again later.</p>",
       "refs": {
@@ -92,6 +142,16 @@
       }
     },
     "ListCommonControlsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListControlsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListControlsResponse": {
       "base": null,
       "refs": {
       }
@@ -120,6 +180,12 @@
       "base": null,
       "refs": {
         "ListCommonControlsRequest$MaxResults": "<p>The maximum number of results on a page or for an API request call.</p>"
+      }
+    },
+    "MaxListControlsResults": {
+      "base": null,
+      "refs": {
+        "ListControlsRequest$MaxResults": "<p>The maximum number of results on a page or for an API request call.</p>"
       }
     },
     "MaxListDomainsResults": {
@@ -177,10 +243,29 @@
       "refs": {
         "ListCommonControlsRequest$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListCommonControlsResponse$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListControlsRequest$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListControlsResponse$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListDomainsRequest$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListDomainsResponse$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListObjectivesRequest$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListObjectivesResponse$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>"
+      }
+    },
+    "RegionCode": {
+      "base": null,
+      "refs": {
+        "DeployableRegions$member": null
+      }
+    },
+    "RegionConfiguration": {
+      "base": "<p>Returns information about the control, including the scope of the control, if enabled, and the Regions in which the control currently is available for deployment.</p> <p>If you are applying controls through an Amazon Web Services Control Tower landing zone environment, remember that the values returned in the <code>RegionConfiguration</code> API operation are not related to the governed Regions in your landing zone. For example, if you are governing Regions <code>A</code>,<code>B</code>,and <code>C</code> while the control is available in Regions <code>A</code>, <code>B</code>, C<code>,</code> and <code>D</code>, you'd see a response with <code>DeployableRegions</code> of <code>A</code>, <code>B</code>, <code>C</code>, and <code>D</code> for a control with <code>REGIONAL</code> scope, even though you may not intend to deploy the control in Region <code>D</code>, because you do not govern it through your landing zone.</p>",
+      "refs": {
+        "GetControlResponse$RegionConfiguration": null
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The requested resource does not exist.</p>",
+      "refs": {
       }
     },
     "String": {
@@ -189,13 +274,18 @@
         "AccessDeniedException$Message": null,
         "AssociatedDomainSummary$Name": "<p>The name of the related domain.</p>",
         "AssociatedObjectiveSummary$Name": "<p>The name of the related objective.</p>",
-        "CommonControlSummary$Description": "<p>The description of the common control.</p>",
         "CommonControlSummary$Name": "<p>The name of the common control.</p>",
-        "DomainSummary$Description": "<p>The description of the domain.</p>",
+        "CommonControlSummary$Description": "<p>The description of the common control.</p>",
+        "ControlSummary$Name": "<p>The display name of the control.</p>",
+        "ControlSummary$Description": "<p>A description of the control, as it may appear in the console. Describes the functionality of the control.</p>",
         "DomainSummary$Name": "<p>The name of the domain.</p>",
+        "DomainSummary$Description": "<p>The description of the domain.</p>",
+        "GetControlResponse$Name": "<p>The display name of the control.</p>",
+        "GetControlResponse$Description": "<p>A description of what the control does.</p>",
         "InternalServerException$Message": null,
-        "ObjectiveSummary$Description": "<p>The description of the objective.</p>",
         "ObjectiveSummary$Name": "<p>The name of the objective.</p>",
+        "ObjectiveSummary$Description": "<p>The description of the objective.</p>",
+        "ResourceNotFoundException$Message": null,
         "ThrottlingException$Message": null,
         "ValidationException$Message": null
       }

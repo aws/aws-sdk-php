@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-04-20",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"bedrock",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Bedrock",
     "serviceId":"Bedrock",
     "signatureVersion":"v4",
@@ -70,6 +71,23 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "CreateModelCopyJob":{
+      "name":"CreateModelCopyJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/model-copy-jobs",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateModelCopyJobRequest"},
+      "output":{"shape":"CreateModelCopyJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"TooManyTagsException"}
+      ],
+      "idempotent":true
     },
     "CreateModelCustomizationJob":{
       "name":"CreateModelCustomizationJob",
@@ -253,6 +271,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetModelCopyJob":{
+      "name":"GetModelCopyJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/model-copy-jobs/{jobArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetModelCopyJobRequest"},
+      "output":{"shape":"GetModelCopyJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetModelCustomizationJob":{
       "name":"GetModelCustomizationJob",
       "http":{
@@ -359,6 +394,23 @@
       },
       "input":{"shape":"ListGuardrailsRequest"},
       "output":{"shape":"ListGuardrailsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListModelCopyJobs":{
+      "name":"ListModelCopyJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/model-copy-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListModelCopyJobsRequest"},
+      "output":{"shape":"ListModelCopyJobsResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -556,6 +608,10 @@
       },
       "exception":true
     },
+    "AccountId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
+    },
     "AutomatedEvaluationConfig":{
       "type":"structure",
       "required":["datasetMetricConfigs"],
@@ -718,6 +774,30 @@
         "version":{"shape":"GuardrailNumericalVersion"}
       }
     },
+    "CreateModelCopyJobRequest":{
+      "type":"structure",
+      "required":[
+        "sourceModelArn",
+        "targetModelName"
+      ],
+      "members":{
+        "sourceModelArn":{"shape":"ModelArn"},
+        "targetModelName":{"shape":"CustomModelName"},
+        "modelKmsKeyId":{"shape":"KmsKeyId"},
+        "targetModelTags":{"shape":"TagList"},
+        "clientRequestToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateModelCopyJobResponse":{
+      "type":"structure",
+      "required":["jobArn"],
+      "members":{
+        "jobArn":{"shape":"ModelCopyJobArn"}
+      }
+    },
     "CreateModelCustomizationJobRequest":{
       "type":"structure",
       "required":[
@@ -792,7 +872,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"([0-9a-zA-Z][_-]?)+"
+      "pattern":"([0-9a-zA-Z][_-]?){1,63}"
     },
     "CustomModelSummary":{
       "type":"structure",
@@ -809,7 +889,8 @@
         "creationTime":{"shape":"Timestamp"},
         "baseModelArn":{"shape":"ModelArn"},
         "baseModelName":{"shape":"ModelName"},
-        "customizationType":{"shape":"CustomizationType"}
+        "customizationType":{"shape":"CustomizationType"},
+        "ownerAccountId":{"shape":"AccountId"}
       }
     },
     "CustomModelSummaryList":{
@@ -1331,6 +1412,41 @@
         "blockedInputMessaging":{"shape":"GuardrailBlockedMessaging"},
         "blockedOutputsMessaging":{"shape":"GuardrailBlockedMessaging"},
         "kmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
+    "GetModelCopyJobRequest":{
+      "type":"structure",
+      "required":["jobArn"],
+      "members":{
+        "jobArn":{
+          "shape":"ModelCopyJobArn",
+          "location":"uri",
+          "locationName":"jobArn"
+        }
+      }
+    },
+    "GetModelCopyJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "status",
+        "creationTime",
+        "targetModelArn",
+        "sourceAccountId",
+        "sourceModelArn"
+      ],
+      "members":{
+        "jobArn":{"shape":"ModelCopyJobArn"},
+        "status":{"shape":"ModelCopyJobStatus"},
+        "creationTime":{"shape":"Timestamp"},
+        "targetModelArn":{"shape":"CustomModelArn"},
+        "targetModelName":{"shape":"CustomModelName"},
+        "sourceAccountId":{"shape":"AccountId"},
+        "sourceModelArn":{"shape":"ModelArn"},
+        "targetModelKmsKeyArn":{"shape":"KmsKeyArn"},
+        "targetModelTags":{"shape":"TagList"},
+        "failureMessage":{"shape":"ErrorMessage"},
+        "sourceModelName":{"shape":"CustomModelName"}
       }
     },
     "GetModelCustomizationJobRequest":{
@@ -2135,6 +2251,11 @@
           "shape":"SortOrder",
           "location":"querystring",
           "locationName":"sortOrder"
+        },
+        "isOwned":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"isOwned"
         }
       }
     },
@@ -2254,6 +2375,68 @@
       "members":{
         "guardrails":{"shape":"GuardrailSummaries"},
         "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListModelCopyJobsRequest":{
+      "type":"structure",
+      "members":{
+        "creationTimeAfter":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"creationTimeAfter"
+        },
+        "creationTimeBefore":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"creationTimeBefore"
+        },
+        "statusEquals":{
+          "shape":"ModelCopyJobStatus",
+          "location":"querystring",
+          "locationName":"statusEquals"
+        },
+        "sourceAccountEquals":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"sourceAccountEquals"
+        },
+        "sourceModelArnEquals":{
+          "shape":"ModelArn",
+          "location":"querystring",
+          "locationName":"sourceModelArnEquals"
+        },
+        "targetModelNameContains":{
+          "shape":"CustomModelName",
+          "location":"querystring",
+          "locationName":"outputModelNameContains"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "sortBy":{
+          "shape":"SortJobsBy",
+          "location":"querystring",
+          "locationName":"sortBy"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        }
+      }
+    },
+    "ListModelCopyJobsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "modelCopyJobSummaries":{"shape":"ModelCopyJobSummaries"}
       }
     },
     "ListModelCustomizationJobsRequest":{
@@ -2408,6 +2591,48 @@
       "max":1011,
       "min":20,
       "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}))"
+    },
+    "ModelCopyJobArn":{
+      "type":"string",
+      "max":1011,
+      "min":0,
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:model-copy-job/[a-z0-9]{12}"
+    },
+    "ModelCopyJobStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Completed",
+        "Failed"
+      ]
+    },
+    "ModelCopyJobSummaries":{
+      "type":"list",
+      "member":{"shape":"ModelCopyJobSummary"}
+    },
+    "ModelCopyJobSummary":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "status",
+        "creationTime",
+        "targetModelArn",
+        "sourceAccountId",
+        "sourceModelArn"
+      ],
+      "members":{
+        "jobArn":{"shape":"ModelCopyJobArn"},
+        "status":{"shape":"ModelCopyJobStatus"},
+        "creationTime":{"shape":"Timestamp"},
+        "targetModelArn":{"shape":"CustomModelArn"},
+        "targetModelName":{"shape":"CustomModelName"},
+        "sourceAccountId":{"shape":"AccountId"},
+        "sourceModelArn":{"shape":"ModelArn"},
+        "targetModelKmsKeyArn":{"shape":"KmsKeyArn"},
+        "targetModelTags":{"shape":"TagList"},
+        "failureMessage":{"shape":"ErrorMessage"},
+        "sourceModelName":{"shape":"CustomModelName"}
+      }
     },
     "ModelCustomization":{
       "type":"string",
