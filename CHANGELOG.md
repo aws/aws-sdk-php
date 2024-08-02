@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.317.1 - 2024-08-02
 
 * `Aws\Api` - Fixes issue with parsing iso8601 timestamps with nanosecond precision in versions 8.0.9 and below.
 * `Aws\IVS` - updates cloudtrail event source for SDKs
