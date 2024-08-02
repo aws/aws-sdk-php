@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Fixes issue with parsing iso8601 timestamps with nanosecond precision in versions 8.0.9 and below.
+* `Aws\IVS` - updates cloudtrail event source for SDKs
+* `Aws\ResilienceHub` - Customers are presented with the grouping recommendations and can determine if the recommendations are accurate and apply to their case. This feature simplifies onboarding by organizing resources into appropriate AppComponents.
+* `Aws\WAFRegional` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\Kinesis` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\SSM` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\IVSRealTime` - updates cloudtrail event source for SDKs
+* `Aws\Route53` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\Glue` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\CloudWatch` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\ECS` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* `Aws\ivschat` - updates cloudtrail event source for SDKs
+
 ## 3.317.0 - 2024-08-01
 
 * `Aws\ControlTower` - Updated Control Tower service documentation for controlcatalog control ARN support with existing Control Tower public APIs
