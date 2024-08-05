@@ -191,6 +191,47 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "CreateDataProduct":{
+      "name":"CreateDataProduct",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/data-products",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateDataProductInput"},
+      "output":{"shape":"CreateDataProductOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "CreateDataProductRevision":{
+      "name":"CreateDataProductRevision",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/data-products/{identifier}/revisions",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateDataProductRevisionInput"},
+      "output":{"shape":"CreateDataProductRevisionOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "CreateDataSource":{
       "name":"CreateDataSource",
       "http":{
@@ -518,6 +559,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
       ],
@@ -560,6 +602,26 @@
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
       ]
+    },
+    "DeleteDataProduct":{
+      "name":"DeleteDataProduct",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/data-products/{identifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteDataProductInput"},
+      "output":{"shape":"DeleteDataProductOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
     },
     "DeleteDataSource":{
       "name":"DeleteDataSource",
@@ -931,6 +993,24 @@
       },
       "input":{"shape":"GetAssetTypeInput"},
       "output":{"shape":"GetAssetTypeOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "GetDataProduct":{
+      "name":"GetDataProduct",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/data-products/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDataProductInput"},
+      "output":{"shape":"GetDataProductOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -1405,6 +1485,24 @@
       },
       "input":{"shape":"ListAssetRevisionsInput"},
       "output":{"shape":"ListAssetRevisionsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "ListDataProductRevisions":{
+      "name":"ListDataProductRevisions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/data-products/{identifier}/revisions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDataProductRevisionsInput"},
+      "output":{"shape":"ListDataProductRevisionsOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -2542,6 +2640,18 @@
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{1,36}$"
     },
+    "AssetInDataProductListingItem":{
+      "type":"structure",
+      "members":{
+        "entityId":{"shape":"String"},
+        "entityRevision":{"shape":"String"},
+        "entityType":{"shape":"String"}
+      }
+    },
+    "AssetInDataProductListingItems":{
+      "type":"list",
+      "member":{"shape":"AssetInDataProductListingItem"}
+    },
     "AssetItem":{
       "type":"structure",
       "required":[
@@ -3129,6 +3239,114 @@
         "updatedBy":{"shape":"UpdatedBy"}
       }
     },
+    "CreateDataProductInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "name",
+        "owningProjectIdentifier"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "description":{"shape":"DataProductDescription"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "formsInput":{"shape":"FormInputList"},
+        "glossaryTerms":{"shape":"GlossaryTerms"},
+        "items":{"shape":"DataProductItems"},
+        "name":{"shape":"DataProductName"},
+        "owningProjectIdentifier":{"shape":"ProjectId"}
+      }
+    },
+    "CreateDataProductOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id",
+        "name",
+        "owningProjectId",
+        "revision",
+        "status"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"DataProductDescription"},
+        "domainId":{"shape":"DomainId"},
+        "firstRevisionCreatedAt":{"shape":"CreatedAt"},
+        "firstRevisionCreatedBy":{"shape":"CreatedBy"},
+        "formsOutput":{"shape":"FormOutputList"},
+        "glossaryTerms":{"shape":"GlossaryTerms"},
+        "id":{"shape":"DataProductId"},
+        "items":{"shape":"DataProductItems"},
+        "name":{"shape":"DataProductName"},
+        "owningProjectId":{"shape":"ProjectId"},
+        "revision":{"shape":"Revision"},
+        "status":{"shape":"DataProductStatus"}
+      }
+    },
+    "CreateDataProductRevisionInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier",
+        "name"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "description":{"shape":"DataProductDescription"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "formsInput":{"shape":"FormInputList"},
+        "glossaryTerms":{"shape":"GlossaryTerms"},
+        "identifier":{
+          "shape":"DataProductId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "items":{"shape":"DataProductItems"},
+        "name":{"shape":"DataProductName"}
+      }
+    },
+    "CreateDataProductRevisionOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id",
+        "name",
+        "owningProjectId",
+        "revision",
+        "status"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"DataProductDescription"},
+        "domainId":{"shape":"DomainId"},
+        "firstRevisionCreatedAt":{"shape":"CreatedAt"},
+        "firstRevisionCreatedBy":{"shape":"CreatedBy"},
+        "formsOutput":{"shape":"FormOutputList"},
+        "glossaryTerms":{"shape":"GlossaryTerms"},
+        "id":{"shape":"DataProductId"},
+        "items":{"shape":"DataProductItems"},
+        "name":{"shape":"DataProductName"},
+        "owningProjectId":{"shape":"ProjectId"},
+        "revision":{"shape":"Revision"},
+        "status":{"shape":"DataProductStatus"}
+      }
+    },
     "CreateDataSourceInput":{
       "type":"structure",
       "required":[
@@ -3673,7 +3891,11 @@
         "grantedEntity":{"shape":"GrantedEntity"},
         "id":{"shape":"SubscriptionGrantId"},
         "status":{"shape":"SubscriptionGrantOverallStatus"},
-        "subscriptionId":{"shape":"SubscriptionId"},
+        "subscriptionId":{
+          "shape":"SubscriptionId",
+          "deprecated":true,
+          "deprecatedMessage":"Multiple subscriptions can exist for a single grant"
+        },
         "subscriptionTargetId":{"shape":"SubscriptionTargetId"},
         "updatedAt":{"shape":"UpdatedAt"},
         "updatedBy":{"shape":"UpdatedBy"}
@@ -3890,6 +4112,123 @@
     "DataPointIdentifier":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{0,36}$"
+    },
+    "DataProductDescription":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "sensitive":true
+    },
+    "DataProductId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "DataProductItem":{
+      "type":"structure",
+      "required":[
+        "identifier",
+        "itemType"
+      ],
+      "members":{
+        "glossaryTerms":{"shape":"ItemGlossaryTerms"},
+        "identifier":{"shape":"EntityIdentifier"},
+        "itemType":{"shape":"DataProductItemType"},
+        "revision":{"shape":"Revision"}
+      }
+    },
+    "DataProductItemType":{
+      "type":"string",
+      "enum":["ASSET"]
+    },
+    "DataProductItems":{
+      "type":"list",
+      "member":{"shape":"DataProductItem"},
+      "min":1
+    },
+    "DataProductListing":{
+      "type":"structure",
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "dataProductId":{"shape":"DataProductId"},
+        "dataProductRevision":{"shape":"Revision"},
+        "forms":{"shape":"Forms"},
+        "glossaryTerms":{"shape":"DetailedGlossaryTerms"},
+        "items":{"shape":"ListingSummaries"},
+        "owningProjectId":{"shape":"ProjectId"}
+      }
+    },
+    "DataProductListingItem":{
+      "type":"structure",
+      "members":{
+        "additionalAttributes":{"shape":"DataProductListingItemAdditionalAttributes"},
+        "createdAt":{"shape":"CreatedAt"},
+        "description":{"shape":"Description"},
+        "entityId":{"shape":"DataProductId"},
+        "entityRevision":{"shape":"Revision"},
+        "glossaryTerms":{"shape":"DetailedGlossaryTerms"},
+        "items":{"shape":"ListingSummaryItems"},
+        "listingCreatedBy":{"shape":"CreatedBy"},
+        "listingId":{"shape":"ListingId"},
+        "listingRevision":{"shape":"Revision"},
+        "listingUpdatedBy":{"shape":"UpdatedBy"},
+        "name":{"shape":"DataProductName"},
+        "owningProjectId":{"shape":"ProjectId"}
+      }
+    },
+    "DataProductListingItemAdditionalAttributes":{
+      "type":"structure",
+      "members":{
+        "forms":{"shape":"Forms"}
+      }
+    },
+    "DataProductName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "sensitive":true
+    },
+    "DataProductResultItem":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id",
+        "name",
+        "owningProjectId"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"DataProductDescription"},
+        "domainId":{"shape":"DomainId"},
+        "firstRevisionCreatedAt":{"shape":"CreatedAt"},
+        "firstRevisionCreatedBy":{"shape":"CreatedBy"},
+        "glossaryTerms":{"shape":"GlossaryTerms"},
+        "id":{"shape":"DataProductId"},
+        "name":{"shape":"DataProductName"},
+        "owningProjectId":{"shape":"ProjectId"}
+      }
+    },
+    "DataProductRevision":{
+      "type":"structure",
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "domainId":{"shape":"DomainId"},
+        "id":{"shape":"DataProductId"},
+        "revision":{"shape":"Revision"}
+      }
+    },
+    "DataProductRevisions":{
+      "type":"list",
+      "member":{"shape":"DataProductRevision"}
+    },
+    "DataProductStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "CREATING",
+        "CREATE_FAILED"
+      ]
     },
     "DataSourceConfigurationInput":{
       "type":"structure",
@@ -4137,6 +4476,30 @@
       }
     },
     "DeleteAssetTypeOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteDataProductInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"DataProductId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "DeleteDataProductOutput":{
       "type":"structure",
       "members":{
       }
@@ -4510,7 +4873,11 @@
         "grantedEntity":{"shape":"GrantedEntity"},
         "id":{"shape":"SubscriptionGrantId"},
         "status":{"shape":"SubscriptionGrantOverallStatus"},
-        "subscriptionId":{"shape":"SubscriptionId"},
+        "subscriptionId":{
+          "shape":"SubscriptionId",
+          "deprecated":true,
+          "deprecatedMessage":"Multiple subscriptions can exist for a single grant"
+        },
         "subscriptionTargetId":{"shape":"SubscriptionTargetId"},
         "updatedAt":{"shape":"UpdatedAt"},
         "updatedBy":{"shape":"UpdatedBy"}
@@ -4785,7 +5152,10 @@
     },
     "EntityType":{
       "type":"string",
-      "enum":["ASSET"]
+      "enum":[
+        "ASSET",
+        "DATA_PRODUCT"
+      ]
     },
     "EnvironmentActionId":{
       "type":"string",
@@ -5371,6 +5741,57 @@
         "revision":{"shape":"Revision"},
         "updatedAt":{"shape":"UpdatedAt"},
         "updatedBy":{"shape":"UpdatedBy"}
+      }
+    },
+    "GetDataProductInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"DataProductId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "revision":{
+          "shape":"Revision",
+          "location":"querystring",
+          "locationName":"revision"
+        }
+      }
+    },
+    "GetDataProductOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id",
+        "name",
+        "owningProjectId",
+        "revision",
+        "status"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"DataProductDescription"},
+        "domainId":{"shape":"DomainId"},
+        "firstRevisionCreatedAt":{"shape":"CreatedAt"},
+        "firstRevisionCreatedBy":{"shape":"CreatedBy"},
+        "formsOutput":{"shape":"FormOutputList"},
+        "glossaryTerms":{"shape":"GlossaryTerms"},
+        "id":{"shape":"DataProductId"},
+        "items":{"shape":"DataProductItems"},
+        "name":{"shape":"DataProductName"},
+        "owningProjectId":{"shape":"ProjectId"},
+        "revision":{"shape":"Revision"},
+        "status":{"shape":"DataProductStatus"}
       }
     },
     "GetDataSourceInput":{
@@ -6138,7 +6559,11 @@
         "grantedEntity":{"shape":"GrantedEntity"},
         "id":{"shape":"SubscriptionGrantId"},
         "status":{"shape":"SubscriptionGrantOverallStatus"},
-        "subscriptionId":{"shape":"SubscriptionId"},
+        "subscriptionId":{
+          "shape":"SubscriptionId",
+          "deprecated":true,
+          "deprecatedMessage":"Multiple subscriptions can exist for a single grant"
+        },
         "subscriptionTargetId":{"shape":"SubscriptionTargetId"},
         "updatedAt":{"shape":"UpdatedAt"},
         "updatedBy":{"shape":"UpdatedBy"}
@@ -6673,7 +7098,8 @@
       "enum":[
         "ASSET",
         "GLOSSARY",
-        "GLOSSARY_TERM"
+        "GLOSSARY_TERM",
+        "DATA_PRODUCT"
       ]
     },
     "IsNotNullExpression":{
@@ -6689,6 +7115,12 @@
       "members":{
         "columnName":{"shape":"String"}
       }
+    },
+    "ItemGlossaryTerms":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermId"},
+      "max":2,
+      "min":1
     },
     "KmsKeyArn":{
       "type":"string",
@@ -6888,6 +7320,43 @@
       "type":"structure",
       "members":{
         "items":{"shape":"AssetRevisions"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListDataProductRevisionsInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"DataProductId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListDataProductRevisionsOutput":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"DataProductRevisions"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -7557,6 +8026,11 @@
           "location":"querystring",
           "locationName":"nextToken"
         },
+        "owningProjectId":{
+          "shape":"ProjectId",
+          "location":"querystring",
+          "locationName":"owningProjectId"
+        },
         "sortBy":{
           "shape":"SortKey",
           "location":"querystring",
@@ -7844,7 +8318,8 @@
     "ListingItem":{
       "type":"structure",
       "members":{
-        "assetListing":{"shape":"AssetListing"}
+        "assetListing":{"shape":"AssetListing"},
+        "dataProductListing":{"shape":"DataProductListing"}
       },
       "union":true
     },
@@ -7882,6 +8357,30 @@
         "ACTIVE",
         "INACTIVE"
       ]
+    },
+    "ListingSummaries":{
+      "type":"list",
+      "member":{"shape":"ListingSummary"}
+    },
+    "ListingSummary":{
+      "type":"structure",
+      "members":{
+        "glossaryTerms":{"shape":"DetailedGlossaryTerms"},
+        "listingId":{"shape":"ListingId"},
+        "listingRevision":{"shape":"Revision"}
+      }
+    },
+    "ListingSummaryItem":{
+      "type":"structure",
+      "members":{
+        "glossaryTerms":{"shape":"DetailedGlossaryTerms"},
+        "listingId":{"shape":"ListingId"},
+        "listingRevision":{"shape":"Revision"}
+      }
+    },
+    "ListingSummaryItems":{
+      "type":"list",
+      "member":{"shape":"ListingSummaryItem"}
     },
     "LongDescription":{
       "type":"string",
@@ -8809,6 +9308,7 @@
       "type":"structure",
       "members":{
         "assetItem":{"shape":"AssetItem"},
+        "dataProductItem":{"shape":"DataProductResultItem"},
         "glossaryItem":{"shape":"GlossaryItem"},
         "glossaryTermItem":{"shape":"GlossaryTermItem"}
       },
@@ -8866,7 +9366,8 @@
     "SearchResultItem":{
       "type":"structure",
       "members":{
-        "assetListing":{"shape":"AssetListingItem"}
+        "assetListing":{"shape":"AssetListingItem"},
+        "dataProductListing":{"shape":"DataProductListingItem"}
       },
       "union":true
     },
@@ -9220,7 +9721,8 @@
     "SubscribedListingItem":{
       "type":"structure",
       "members":{
-        "assetListing":{"shape":"SubscribedAssetListing"}
+        "assetListing":{"shape":"SubscribedAssetListing"},
+        "productListing":{"shape":"SubscribedProductListing"}
       },
       "union":true
     },
@@ -9243,6 +9745,17 @@
       "member":{"shape":"SubscribedPrincipalInput"},
       "max":1,
       "min":1
+    },
+    "SubscribedProductListing":{
+      "type":"structure",
+      "members":{
+        "assetListings":{"shape":"AssetInDataProductListingItems"},
+        "description":{"shape":"String"},
+        "entityId":{"shape":"AssetId"},
+        "entityRevision":{"shape":"Revision"},
+        "glossaryTerms":{"shape":"DetailedGlossaryTerms"},
+        "name":{"shape":"String"}
+      }
     },
     "SubscribedProject":{
       "type":"structure",
@@ -9306,7 +9819,11 @@
         "grantedEntity":{"shape":"GrantedEntity"},
         "id":{"shape":"SubscriptionGrantId"},
         "status":{"shape":"SubscriptionGrantOverallStatus"},
-        "subscriptionId":{"shape":"SubscriptionId"},
+        "subscriptionId":{
+          "shape":"SubscriptionId",
+          "deprecated":true,
+          "deprecatedMessage":"Multiple subscriptions can exist for a single grant"
+        },
         "subscriptionTargetId":{"shape":"SubscriptionTargetId"},
         "updatedAt":{"shape":"UpdatedAt"},
         "updatedBy":{"shape":"UpdatedBy"}
@@ -10300,7 +10817,11 @@
         "grantedEntity":{"shape":"GrantedEntity"},
         "id":{"shape":"SubscriptionGrantId"},
         "status":{"shape":"SubscriptionGrantOverallStatus"},
-        "subscriptionId":{"shape":"SubscriptionId"},
+        "subscriptionId":{
+          "shape":"SubscriptionId",
+          "deprecated":true,
+          "deprecatedMessage":"Multiple subscriptions can exist for a single grant"
+        },
         "subscriptionTargetId":{"shape":"SubscriptionTargetId"},
         "updatedAt":{"shape":"UpdatedAt"},
         "updatedBy":{"shape":"UpdatedBy"}

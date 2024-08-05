@@ -23,6 +23,7 @@
     "DescribeRegistry": "<p>Describes the settings for a registry. The replication configuration for a repository can be created or updated with the <a>PutReplicationConfiguration</a> API action.</p>",
     "DescribeRepositories": "<p>Describes image repositories in a registry.</p>",
     "DescribeRepositoryCreationTemplates": "<p>Returns details about the repository creation templates in a registry. The <code>prefixes</code> request parameter can be used to return the details for a specific repository creation template.</p>",
+    "GetAccountSetting": "<p>Retrieves the basic scan type version name.</p>",
     "GetAuthorizationToken": "<p>Retrieves an authorization token. An authorization token represents your IAM authentication credentials and can be used to access any Amazon ECR registry that your IAM principal has access to. The authorization token is valid for 12 hours.</p> <p>The <code>authorizationToken</code> returned is a base64 encoded string that can be decoded and used in a <code>docker login</code> command to authenticate to a registry. The CLI offers an <code>get-login-password</code> command that simplifies the login process. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/Registries.html#registry_auth\">Registry authentication</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
     "GetDownloadUrlForLayer": "<p>Retrieves the pre-signed Amazon S3 download URL corresponding to an image layer. You can only get URLs for image layers that are referenced in an image.</p> <p>When an image is pulled, the GetDownloadUrlForLayer API is called once per image layer that is not already cached.</p> <note> <p>This operation is used by the Amazon ECR proxy and is not generally used by customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p> </note>",
     "GetLifecyclePolicy": "<p>Retrieves the lifecycle policy for the specified repository.</p>",
@@ -33,6 +34,7 @@
     "InitiateLayerUpload": "<p>Notifies Amazon ECR that you intend to upload an image layer.</p> <p>When an image is pushed, the InitiateLayerUpload API is called once per image layer that has not already been uploaded. Whether or not an image layer has been uploaded is determined by the BatchCheckLayerAvailability API action.</p> <note> <p>This operation is used by the Amazon ECR proxy and is not generally used by customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p> </note>",
     "ListImages": "<p>Lists all the image IDs for the specified repository.</p> <p>You can filter images based on whether or not they are tagged by using the <code>tagStatus</code> filter and specifying either <code>TAGGED</code>, <code>UNTAGGED</code> or <code>ANY</code>. For example, you can filter your results to return only <code>UNTAGGED</code> images and then pipe that result to a <a>BatchDeleteImage</a> operation to delete them. Or, you can filter your results to return only <code>TAGGED</code> images to list all of the tags in your repository.</p>",
     "ListTagsForResource": "<p>List the tags for an Amazon ECR resource.</p>",
+    "PutAccountSetting": "<p>Allows you to change the basic scan type version by setting the <code>name</code> parameter to either <code>CLAIR</code> to <code>AWS_NATIVE</code>.</p>",
     "PutImage": "<p>Creates or updates the image manifest and tags associated with an image.</p> <p>When an image is pushed and all new image layers have been uploaded, the PutImage API is called once to create or update the image manifest and the tags associated with the image.</p> <note> <p>This operation is used by the Amazon ECR proxy and is not generally used by customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p> </note>",
     "PutImageScanningConfiguration": "<important> <p>The <code>PutImageScanningConfiguration</code> API is being deprecated, in favor of specifying the image scanning configuration at the registry level. For more information, see <a>PutRegistryScanningConfiguration</a>.</p> </important> <p>Updates the image scanning configuration for the specified repository.</p>",
     "PutImageTagMutability": "<p>Updates the image tag mutability settings for the specified repository. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-tag-mutability.html\">Image tag mutability</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
@@ -51,6 +53,23 @@
     "ValidatePullThroughCacheRule": "<p>Validates an existing pull through cache rule for an upstream registry that requires authentication. This will retrieve the contents of the Amazon Web Services Secrets Manager secret, verify the syntax, and then validate that authentication to the upstream registry is successful.</p>"
   },
   "shapes": {
+    "AccountSettingName": {
+      "base": null,
+      "refs": {
+        "GetAccountSettingRequest$name": "<p>Basic scan type version name. </p>",
+        "GetAccountSettingResponse$name": "<p>Retrieves the basic scan type version name.</p>",
+        "GetAccountSettingResponse$value": "<p>Retrieves the value that specifies what basic scan type is being used: <code>AWS_NATIVE</code> or <code>CLAIR</code>.</p>",
+        "PutAccountSettingRequest$name": "<p>Basic scan type version name. </p>",
+        "PutAccountSettingResponse$name": "<p>Retrieves the the basic scan type version name.</p>"
+      }
+    },
+    "AccountSettingValue": {
+      "base": null,
+      "refs": {
+        "PutAccountSettingRequest$value": "<p>Setting value that determines what basic scan type is being used: <code>AWS_NATIVE</code> or <code>CLAIR</code>.</p>",
+        "PutAccountSettingResponse$value": "<p>Retrieves the basic scan type value, either <code>AWS_NATIVE</code> or <code>-</code>.</p>"
+      }
+    },
     "Arch": {
       "base": null,
       "refs": {
@@ -245,9 +264,9 @@
     "CustomRoleArn": {
       "base": null,
       "refs": {
-        "CreateRepositoryCreationTemplateRequest$customRoleArn": "<p>The ARN of the role to be assumed by Amazon ECR. This role must be in the same account as the registry that you are configuring.</p>",
-        "RepositoryCreationTemplate$customRoleArn": "<p>The ARN of the role to be assumed by Amazon ECR.</p>",
-        "UpdateRepositoryCreationTemplateRequest$customRoleArn": "<p>The ARN of the role to be assumed by Amazon ECR. This role must be in the same account as the registry that you are configuring.</p>"
+        "CreateRepositoryCreationTemplateRequest$customRoleArn": "<p>The ARN of the role to be assumed by Amazon ECR. This role must be in the same account as the registry that you are configuring. Amazon ECR will assume your supplied role when the customRoleArn is specified. When this field isn't specified, Amazon ECR will use the service-linked role for the repository creation template.</p>",
+        "RepositoryCreationTemplate$customRoleArn": "<p>The ARN of the role to be assumed by Amazon ECR. Amazon ECR will assume your supplied role when the customRoleArn is specified. When this field isn't specified, Amazon ECR will use the service-linked role for the repository creation template.</p>",
+        "UpdateRepositoryCreationTemplateRequest$customRoleArn": "<p>The ARN of the role to be assumed by Amazon ECR. This role must be in the same account as the registry that you are configuring. Amazon ECR will assume your supplied role when the customRoleArn is specified. When this field isn't specified, Amazon ECR will use the service-linked role for the repository creation template.</p>"
       }
     },
     "CvssScore": {
@@ -576,6 +595,16 @@
       "refs": {
         "DeleteRepositoryRequest$force": "<p>If true, deleting the repository force deletes the contents of the repository. If false, the repository must be empty before attempting to delete it.</p>",
         "SetRepositoryPolicyRequest$force": "<p>If the policy you are attempting to set on a repository policy would prevent you from setting another policy in the future, you must force the <a>SetRepositoryPolicy</a> operation. This is intended to prevent accidental repository lock outs.</p>"
+      }
+    },
+    "GetAccountSettingRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAccountSettingResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "GetAuthorizationTokenRegistryIdList": {
@@ -1292,6 +1321,16 @@
       "refs": {
         "ImageDetail$imagePushedAt": "<p>The date and time, expressed in standard JavaScript date format, at which the current image was pushed to the repository. </p>",
         "LifecyclePolicyPreviewResult$imagePushedAt": "<p>The date and time, expressed in standard JavaScript date format, at which the current image was pushed to the repository.</p>"
+      }
+    },
+    "PutAccountSettingRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutAccountSettingResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "PutImageRequest": {

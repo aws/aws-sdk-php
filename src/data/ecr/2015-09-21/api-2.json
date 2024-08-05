@@ -346,6 +346,20 @@
         {"shape":"InvalidParameterException"}
       ]
     },
+    "GetAccountSetting":{
+      "name":"GetAccountSetting",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAccountSettingRequest"},
+      "output":{"shape":"GetAccountSettingResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "GetAuthorizationToken":{
       "name":"GetAuthorizationToken",
       "http":{
@@ -493,6 +507,21 @@
         {"shape":"InvalidParameterException"},
         {"shape":"RepositoryNotFoundException"},
         {"shape":"ServerException"}
+      ]
+    },
+    "PutAccountSetting":{
+      "name":"PutAccountSetting",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAccountSettingRequest"},
+      "output":{"shape":"PutAccountSettingResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "PutImage":{
@@ -751,6 +780,12 @@
     }
   },
   "shapes":{
+    "AccountSettingName":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "AccountSettingValue":{"type":"string"},
     "Arch":{"type":"string"},
     "Arn":{"type":"string"},
     "Attribute":{
@@ -1329,6 +1364,20 @@
       "value":{"shape":"SeverityCount"}
     },
     "ForceFlag":{"type":"boolean"},
+    "GetAccountSettingRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"AccountSettingName"}
+      }
+    },
+    "GetAccountSettingResponse":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"AccountSettingName"},
+        "value":{"shape":"AccountSettingName"}
+      }
+    },
     "GetAuthorizationTokenRegistryIdList":{
       "type":"list",
       "member":{"shape":"RegistryId"},
@@ -2014,6 +2063,24 @@
       "min":1
     },
     "PushTimestamp":{"type":"timestamp"},
+    "PutAccountSettingRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "value"
+      ],
+      "members":{
+        "name":{"shape":"AccountSettingName"},
+        "value":{"shape":"AccountSettingValue"}
+      }
+    },
+    "PutAccountSettingResponse":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"AccountSettingName"},
+        "value":{"shape":"AccountSettingValue"}
+      }
+    },
     "PutImageRequest":{
       "type":"structure",
       "required":[

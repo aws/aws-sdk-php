@@ -11,6 +11,8 @@
     "CreateAssetFilter": "<p>Creates a data asset filter.</p>",
     "CreateAssetRevision": "<p>Creates a revision of the asset.</p>",
     "CreateAssetType": "<p>Creates a custom asset type.</p>",
+    "CreateDataProduct": "<p>Creates a data product.</p>",
+    "CreateDataProductRevision": "<p>Creates a data product revision.</p>",
     "CreateDataSource": "<p>Creates an Amazon DataZone data source.</p>",
     "CreateDomain": "<p>Creates an Amazon DataZone domain.</p>",
     "CreateEnvironment": "<p>Create an Amazon DataZone environment.</p>",
@@ -27,9 +29,10 @@
     "CreateSubscriptionRequest": "<p>Creates a subscription request in Amazon DataZone.</p>",
     "CreateSubscriptionTarget": "<p>Creates a subscription target in Amazon DataZone.</p>",
     "CreateUserProfile": "<p>Creates a user profile in Amazon DataZone.</p>",
-    "DeleteAsset": "<p>Delets an asset in Amazon DataZone.</p>",
+    "DeleteAsset": "<p>Deletes an asset in Amazon DataZone.</p>",
     "DeleteAssetFilter": "<p>Deletes an asset filter.</p>",
     "DeleteAssetType": "<p>Deletes an asset type in Amazon DataZone.</p>",
+    "DeleteDataProduct": "<p>Deletes an data product in Amazon DataZone.</p>",
     "DeleteDataSource": "<p>Deletes a data source in Amazon DataZone.</p>",
     "DeleteDomain": "<p>Deletes a Amazon DataZone domain.</p>",
     "DeleteEnvironment": "<p>Deletes an environment in Amazon DataZone.</p>",
@@ -50,6 +53,7 @@
     "GetAsset": "<p>Gets an Amazon DataZone asset.</p>",
     "GetAssetFilter": "<p>Gets an asset filter.</p>",
     "GetAssetType": "<p>Gets an Amazon DataZone asset type.</p>",
+    "GetDataProduct": "<p>Gets the data product.</p>",
     "GetDataSource": "<p>Gets an Amazon DataZone data source.</p>",
     "GetDataSourceRun": "<p>Gets an Amazon DataZone data source run.</p>",
     "GetDomain": "<p>Gets an Amazon DataZone domain.</p>",
@@ -65,7 +69,7 @@
     "GetGroupProfile": "<p>Gets a group profile in Amazon DataZone.</p>",
     "GetIamPortalLoginUrl": "<p>Gets the data portal URL for the specified Amazon DataZone domain.</p>",
     "GetLineageNode": "<p>Gets the data lineage node.</p>",
-    "GetListing": "<p>Gets a listing (a record of an asset at a given time).</p>",
+    "GetListing": "<p>Gets a listing (a record of an asset at a given time). If you specify a listing version, only details that are specific to that version are returned.</p>",
     "GetMetadataGenerationRun": "<p>Gets a metadata generation run in Amazon DataZone.</p>",
     "GetProject": "<p>Gets a project in Amazon DataZone.</p>",
     "GetSubscription": "<p>Gets a subscription in Amazon DataZone.</p>",
@@ -76,6 +80,7 @@
     "GetUserProfile": "<p>Gets a user profile in Amazon DataZone.</p>",
     "ListAssetFilters": "<p>Lists asset filters.</p>",
     "ListAssetRevisions": "<p>Lists the revisions for the asset.</p>",
+    "ListDataProductRevisions": "<p>Lists data product revisions.</p>",
     "ListDataSourceRunActivities": "<p>Lists data source run activities.</p>",
     "ListDataSourceRuns": "<p>Lists data source runs in Amazon DataZone.</p>",
     "ListDataSources": "<p>Lists data sources in Amazon DataZone.</p>",
@@ -259,6 +264,7 @@
         "RejectPredictionsOutput$assetId": "<p>The ID of the asset.</p>",
         "SubscribedAsset$assetId": "<p>The identifier of the asset for which the subscription grant is created.</p>",
         "SubscribedAssetListing$entityId": "<p>The identifier of the published asset for which the subscription grant is created.</p>",
+        "SubscribedProductListing$entityId": "<p>The ID of the data product listing.</p>",
         "UpdateAssetFilterInput$assetIdentifier": "<p>The ID of the data asset.</p>",
         "UpdateAssetFilterOutput$assetId": "<p>The ID of the data asset.</p>",
         "UpdateSubscriptionGrantStatusInput$assetIdentifier": "<p>The identifier of the asset the subscription grant status of which is to be updated.</p>"
@@ -274,6 +280,18 @@
         "GetAssetInput$identifier": "<p>The ID of the Amazon DataZone asset.</p>",
         "ListAssetRevisionsInput$identifier": "<p>The identifier of the asset.</p>",
         "RejectPredictionsInput$identifier": "<p>The identifier of the prediction.</p>"
+      }
+    },
+    "AssetInDataProductListingItem": {
+      "base": "<p>The listing of the asset in a data product.</p>",
+      "refs": {
+        "AssetInDataProductListingItems$member": null
+      }
+    },
+    "AssetInDataProductListingItems": {
+      "base": null,
+      "refs": {
+        "SubscribedProductListing$assetListings": "<p>The data assets of the data product listing.</p>"
       }
     },
     "AssetItem": {
@@ -521,6 +539,8 @@
         "AcceptPredictionsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "CreateAssetInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateAssetRevisionInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
+        "CreateDataProductInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
+        "CreateDataProductRevisionInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateGlossaryInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateGlossaryTermInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateListingChangeSetInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
@@ -619,6 +639,26 @@
       }
     },
     "CreateAssetTypeOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDataProductInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDataProductOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDataProductRevisionInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDataProductRevisionOutput": {
       "base": null,
       "refs": {
       }
@@ -813,9 +853,18 @@
         "CreateAssetRevisionOutput$createdAt": "<p>The timestamp of when the asset revision occured.</p>",
         "CreateAssetRevisionOutput$firstRevisionCreatedAt": "<p>The timestamp of when the first asset revision occured.</p>",
         "CreateAssetTypeOutput$createdAt": "<p>The timestamp of when the asset type is to be created.</p>",
+        "CreateDataProductOutput$createdAt": "<p>The timestamp at which the data product was created.</p>",
+        "CreateDataProductOutput$firstRevisionCreatedAt": "<p>The timestamp at which the first revision of the data product was created.</p>",
+        "CreateDataProductRevisionOutput$createdAt": "<p>The timestamp at which the data product revision is created.</p>",
+        "CreateDataProductRevisionOutput$firstRevisionCreatedAt": "<p>The timestamp at which the first revision of the data product is created.</p>",
         "CreateSubscriptionGrantOutput$createdAt": "<p>A timestamp of when the subscription grant is created.</p>",
         "CreateSubscriptionRequestOutput$createdAt": "<p>A timestamp of when the subscription request is created.</p>",
         "CreateSubscriptionTargetOutput$createdAt": "<p>The timestamp of when the subscription target was created.</p>",
+        "DataProductListing$createdAt": "<p>The timestamp at which the data product listing was created.</p>",
+        "DataProductListingItem$createdAt": "<p>The timestamp at which the asset of the data product listing was created. </p>",
+        "DataProductResultItem$createdAt": "<p>The timestamp at which the data product was created.</p>",
+        "DataProductResultItem$firstRevisionCreatedAt": "<p>The timestamp at which first revision of the data product was created.</p>",
+        "DataProductRevision$createdAt": "<p>The timestamp at which the data product revision was created.</p>",
         "DeleteSubscriptionGrantOutput$createdAt": "<p>The timestamp of when the subscription grant that is deleted was created.</p>",
         "DomainSummary$createdAt": "<p>A timestamp of when a Amazon DataZone domain was created.</p>",
         "FormTypeData$createdAt": "<p>The timestamp of when the metadata form type was created.</p>",
@@ -823,6 +872,8 @@
         "GetAssetOutput$createdAt": "<p>The timestamp of when the asset was created.</p>",
         "GetAssetOutput$firstRevisionCreatedAt": "<p>The timestamp of when the first revision of the asset was created.</p>",
         "GetAssetTypeOutput$createdAt": "<p>The timestamp of when the asset type was created.</p>",
+        "GetDataProductOutput$createdAt": "<p>The timestamp at which the data product is created.</p>",
+        "GetDataProductOutput$firstRevisionCreatedAt": "<p>The timestamp at which the first revision of the data product is created.</p>",
         "GetDomainOutput$createdAt": "<p>The timestamp of when the Amazon DataZone domain was created.</p>",
         "GetFormTypeOutput$createdAt": "<p>The timestamp of when this metadata form type was created.</p>",
         "GetGlossaryOutput$createdAt": "<p>The timestamp of when this business glossary was created.</p>",
@@ -867,15 +918,25 @@
         "CreateAssetRevisionOutput$createdBy": "<p>The Amazon DataZone user who performed the asset revision.</p>",
         "CreateAssetRevisionOutput$firstRevisionCreatedBy": "<p>The Amazon DataZone user who performed the first asset revision.</p>",
         "CreateAssetTypeOutput$createdBy": "<p>The Amazon DataZone user who creates this custom asset type.</p>",
+        "CreateDataProductOutput$createdBy": "<p>The user who created the data product.</p>",
+        "CreateDataProductOutput$firstRevisionCreatedBy": "<p>The user who created the first revision of the data product.</p>",
+        "CreateDataProductRevisionOutput$createdBy": "<p>The user who created the data product revision.</p>",
+        "CreateDataProductRevisionOutput$firstRevisionCreatedBy": "<p>The user who created the first revision of the data product.</p>",
         "CreateProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
         "CreateSubscriptionGrantOutput$createdBy": "<p>The Amazon DataZone user who created the subscription grant.</p>",
         "CreateSubscriptionRequestOutput$createdBy": "<p>The Amazon DataZone user who created the subscription request.</p>",
         "CreateSubscriptionTargetOutput$createdBy": "<p>The Amazon DataZone user who created the subscription target.</p>",
+        "DataProductListingItem$listingCreatedBy": "<p>The timestamp at which the listing was created.</p>",
+        "DataProductResultItem$createdBy": "<p>The user who created the data product.</p>",
+        "DataProductResultItem$firstRevisionCreatedBy": "<p>The user who created the first revision of the data product.</p>",
+        "DataProductRevision$createdBy": "<p>The user who created the data product revision.</p>",
         "DeleteSubscriptionGrantOutput$createdBy": "<p>The Amazon DataZone user who created the subscription grant that is deleted.</p>",
         "FormTypeData$createdBy": "<p>The Amazon DataZone user who created teh metadata form type.</p>",
         "GetAssetOutput$createdBy": "<p>The Amazon DataZone user who created the asset.</p>",
         "GetAssetOutput$firstRevisionCreatedBy": "<p>The Amazon DataZone user who created the first revision of the asset.</p>",
         "GetAssetTypeOutput$createdBy": "<p>The Amazon DataZone user who created the asset type.</p>",
+        "GetDataProductOutput$createdBy": "<p>The user who created the data product.</p>",
+        "GetDataProductOutput$firstRevisionCreatedBy": "<p>The user who created the first revision of the data product.</p>",
         "GetFormTypeOutput$createdBy": "<p>The Amazon DataZone user who created this metadata form type.</p>",
         "GetGlossaryOutput$createdBy": "<p>The Amazon DataZone user who created this business glossary.</p>",
         "GetGlossaryTermOutput$createdBy": "<p>The Amazon DataZone user who created the business glossary.</p>",
@@ -948,6 +1009,111 @@
       "refs": {
         "TimeSeriesDataPointFormOutput$id": "<p>The ID of the time series data points form.</p>",
         "TimeSeriesDataPointSummaryFormOutput$id": "<p>The ID of the time series data points summary form.</p>"
+      }
+    },
+    "DataProductDescription": {
+      "base": null,
+      "refs": {
+        "CreateDataProductInput$description": "<p>The description of the data product.</p>",
+        "CreateDataProductOutput$description": "<p>The description of the data product.</p>",
+        "CreateDataProductRevisionInput$description": "<p>The description of the data product revision.</p>",
+        "CreateDataProductRevisionOutput$description": "<p>The description of the data product revision.</p>",
+        "DataProductResultItem$description": "<p>The description of the data product.</p>",
+        "GetDataProductOutput$description": "<p>The description of the data product.</p>"
+      }
+    },
+    "DataProductId": {
+      "base": null,
+      "refs": {
+        "CreateDataProductOutput$id": "<p>The ID of the data product.</p>",
+        "CreateDataProductRevisionInput$identifier": "<p>The ID of the data product revision.</p>",
+        "CreateDataProductRevisionOutput$id": "<p>The ID of the data product revision.</p>",
+        "DataProductListing$dataProductId": "<p>The ID of the data product listing.</p>",
+        "DataProductListingItem$entityId": "<p>The entity ID of the asset of the asset of the data product. </p>",
+        "DataProductResultItem$id": "<p>The ID of the data product.</p>",
+        "DataProductRevision$id": "<p>The ID of the data product revision.</p>",
+        "DeleteDataProductInput$identifier": "<p>The identifier of the data product that is deleted.</p>",
+        "GetDataProductInput$identifier": "<p>The ID of the data product.</p>",
+        "GetDataProductOutput$id": "<p>The ID of the data product.</p>",
+        "ListDataProductRevisionsInput$identifier": "<p>The ID of the data product revision.</p>"
+      }
+    },
+    "DataProductItem": {
+      "base": "<p>The data product.</p>",
+      "refs": {
+        "DataProductItems$member": null
+      }
+    },
+    "DataProductItemType": {
+      "base": null,
+      "refs": {
+        "DataProductItem$itemType": "<p>The type of the data product.</p>"
+      }
+    },
+    "DataProductItems": {
+      "base": null,
+      "refs": {
+        "CreateDataProductInput$items": "<p>The data assets of the data product.</p>",
+        "CreateDataProductOutput$items": "<p>The data assets of the data product.</p>",
+        "CreateDataProductRevisionInput$items": "<p>The data assets of the data product revision.</p>",
+        "CreateDataProductRevisionOutput$items": "<p>The data assets of the data product revision.</p>",
+        "GetDataProductOutput$items": "<p>The data assets of the data product.</p>"
+      }
+    },
+    "DataProductListing": {
+      "base": "<p>The data product listing.</p>",
+      "refs": {
+        "ListingItem$dataProductListing": "<p>The data product listing.</p>"
+      }
+    },
+    "DataProductListingItem": {
+      "base": "<p>The asset of the data product listing.</p>",
+      "refs": {
+        "SearchResultItem$dataProductListing": "<p>The data product listing.</p>"
+      }
+    },
+    "DataProductListingItemAdditionalAttributes": {
+      "base": "<p>The additional attributes of the asset of the data product. </p>",
+      "refs": {
+        "DataProductListingItem$additionalAttributes": "<p>The additional attributes of the asset of the data product.</p>"
+      }
+    },
+    "DataProductName": {
+      "base": null,
+      "refs": {
+        "CreateDataProductInput$name": "<p>The name of the data product.</p>",
+        "CreateDataProductOutput$name": "<p>The name of the data product.</p>",
+        "CreateDataProductRevisionInput$name": "<p>The name of the data product revision.</p>",
+        "CreateDataProductRevisionOutput$name": "<p>The name of the data product revision.</p>",
+        "DataProductListingItem$name": "<p>The name of the asset of the data product. </p>",
+        "DataProductResultItem$name": "<p>The name of the data product.</p>",
+        "GetDataProductOutput$name": "<p>The name of the data product.</p>"
+      }
+    },
+    "DataProductResultItem": {
+      "base": "<p>The data product.</p>",
+      "refs": {
+        "SearchInventoryResultItem$dataProductItem": "<p>The data product.</p>"
+      }
+    },
+    "DataProductRevision": {
+      "base": "<p>The data product revision.</p>",
+      "refs": {
+        "DataProductRevisions$member": null
+      }
+    },
+    "DataProductRevisions": {
+      "base": null,
+      "refs": {
+        "ListDataProductRevisionsOutput$items": "<p>The results of the <code>ListDataProductRevisions</code> action.</p>"
+      }
+    },
+    "DataProductStatus": {
+      "base": null,
+      "refs": {
+        "CreateDataProductOutput$status": "<p>The status of the data product.</p>",
+        "CreateDataProductRevisionOutput$status": "<p>The status of the data product revision.</p>",
+        "GetDataProductOutput$status": "<p>The status of the data product.</p>"
       }
     },
     "DataSourceConfigurationInput": {
@@ -1171,6 +1337,16 @@
       "refs": {
       }
     },
+    "DeleteDataProductInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteDataProductOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteDataSourceInput": {
       "base": null,
       "refs": {
@@ -1384,6 +1560,7 @@
         "CreateProjectInput$description": "<p>The description of the Amazon DataZone project.</p>",
         "CreateProjectOutput$description": "<p>The description of the project.</p>",
         "CustomParameter$description": "<p>The description of the parameter.</p>",
+        "DataProductListingItem$description": "<p>The description of the asset of the asset of the data product. </p>",
         "DataSourceRunActivity$technicalDescription": "<p>The technical description included in the data source run activity.</p>",
         "DeleteDataSourceOutput$description": "<p>The description of the data source that is deleted.</p>",
         "EnvironmentBlueprintSummary$description": "<p>The description of a blueprint.</p>",
@@ -1423,7 +1600,12 @@
       "refs": {
         "AssetListing$glossaryTerms": "<p>The glossary terms attached to an asset published in an Amazon DataZone catalog. </p>",
         "AssetListingItem$glossaryTerms": "<p>Glossary terms attached to the inventory asset.</p>",
-        "SubscribedAssetListing$glossaryTerms": "<p>The glossary terms attached to the published asset for which the subscription grant is created.</p>"
+        "DataProductListing$glossaryTerms": "<p>The glossary terms of the data product listing.</p>",
+        "DataProductListingItem$glossaryTerms": "<p>The glossary terms of the asset of the asset of the data product. </p>",
+        "ListingSummary$glossaryTerms": "<p>The glossary terms of the data product.</p>",
+        "ListingSummaryItem$glossaryTerms": "<p>The glossary terms of the data product listing.</p>",
+        "SubscribedAssetListing$glossaryTerms": "<p>The glossary terms attached to the published asset for which the subscription grant is created.</p>",
+        "SubscribedProductListing$glossaryTerms": "<p>The glossary terms of the data product listing.</p>"
       }
     },
     "DisassociateEnvironmentRoleInput": {
@@ -1467,6 +1649,10 @@
         "CreateAssetTypeInput$domainIdentifier": "<p>The unique identifier of the Amazon DataZone domain where the custom asset type is being created.</p>",
         "CreateAssetTypeOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the asset type was created.</p>",
         "CreateAssetTypeOutput$originDomainId": "<p>The ID of the Amazon DataZone domain where the asset type was originally created.</p>",
+        "CreateDataProductInput$domainIdentifier": "<p>The ID of the domain where the data product is created.</p>",
+        "CreateDataProductOutput$domainId": "<p>The ID of the domain where the data product lives.</p>",
+        "CreateDataProductRevisionInput$domainIdentifier": "<p>The ID of the domain where the data product revision is created.</p>",
+        "CreateDataProductRevisionOutput$domainId": "<p>The ID of the domain where data product revision is created.</p>",
         "CreateDataSourceInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where the data source is created.</p>",
         "CreateDataSourceOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the data source is created.</p>",
         "CreateDomainOutput$id": "<p>The identifier of the Amazon DataZone domain.</p>",
@@ -1497,10 +1683,13 @@
         "CreateSubscriptionTargetOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the subscription target was created.</p>",
         "CreateUserProfileInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which a user profile is created.</p>",
         "CreateUserProfileOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a user profile is created.</p>",
+        "DataProductResultItem$domainId": "<p>The ID of the domain where the data product lives.</p>",
+        "DataProductRevision$domainId": "<p>The ID of the domain where the data product revision lives.</p>",
         "DataSourceSummary$domainId": "<p>The ID of the Amazon DataZone domain in which the data source exists.</p>",
         "DeleteAssetFilterInput$domainIdentifier": "<p>The ID of the domain where you want to delete an asset filter.</p>",
         "DeleteAssetInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the asset is deleted.</p>",
         "DeleteAssetTypeInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the asset type is deleted.</p>",
+        "DeleteDataProductInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the data product is deleted.</p>",
         "DeleteDataSourceInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the data source is deleted.</p>",
         "DeleteDataSourceOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the data source is deleted.</p>",
         "DeleteDomainInput$identifier": "<p>The identifier of the Amazon Web Services domain that is to be deleted.</p>",
@@ -1534,6 +1723,8 @@
         "GetAssetTypeInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the asset type exists.</p>",
         "GetAssetTypeOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the asset type exists.</p>",
         "GetAssetTypeOutput$originDomainId": "<p>The ID of the Amazon DataZone domain in which the asset type was originally created.</p>",
+        "GetDataProductInput$domainIdentifier": "<p>The ID of the domain where the data product lives.</p>",
+        "GetDataProductOutput$domainId": "<p>The ID of the domain where the data product lives.</p>",
         "GetDataSourceInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the data source exists.</p>",
         "GetDataSourceOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the data source exists.</p>",
         "GetDataSourceRunInput$domainIdentifier": "<p>The ID of the domain in which this data source run was performed.</p>",
@@ -1587,6 +1778,7 @@
         "LineageNodeTypeItem$domainId": "<p>The ID of the domain where the data lineage node type lives.</p>",
         "ListAssetFiltersInput$domainIdentifier": "<p>The ID of the domain where you want to list asset filters.</p>",
         "ListAssetRevisionsInput$domainIdentifier": "<p>The identifier of the domain.</p>",
+        "ListDataProductRevisionsInput$domainIdentifier": "<p>The ID of the domain of the data product revisions that you want to list.</p>",
         "ListDataSourceRunActivitiesInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which to list data source run activities.</p>",
         "ListDataSourceRunsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which to invoke the <code>ListDataSourceRuns</code> action.</p>",
         "ListDataSourcesInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which to list the data sources.</p>",
@@ -1735,6 +1927,7 @@
       "base": null,
       "refs": {
         "CreateListingChangeSetInput$entityIdentifier": "<p>The ID of the asset.</p>",
+        "DataProductItem$identifier": "<p>The ID of the data product.</p>",
         "DeleteTimeSeriesDataPointsInput$entityIdentifier": "<p>The ID of the asset for which you want to delete a time series form.</p>",
         "GetTimeSeriesDataPointInput$entityIdentifier": "<p>The ID of the asset for which you want to get the data point.</p>",
         "ListTimeSeriesDataPointsInput$entityIdentifier": "<p>The ID of the asset for which you want to list data points.</p>",
@@ -2130,6 +2323,8 @@
       "refs": {
         "CreateAssetInput$formsInput": "<p>Metadata forms attached to the asset.</p>",
         "CreateAssetRevisionInput$formsInput": "<p>The metadata forms to be attached to the asset as part of asset revision.</p>",
+        "CreateDataProductInput$formsInput": "<p>The metadata forms of the data product.</p>",
+        "CreateDataProductRevisionInput$formsInput": "<p>The metadata forms of the data product revision.</p>",
         "CreateDataSourceInput$assetFormsInput": "<p>The metadata forms that are to be attached to the assets that this data source works with.</p>",
         "UpdateDataSourceInput$assetFormsInput": "<p>The asset forms to be updated as part of the <code>UpdateDataSource</code> action.</p>"
       }
@@ -2159,10 +2354,13 @@
         "CreateAssetOutput$readOnlyFormsOutput": "<p>The read-only metadata forms that are attached to the created asset.</p>",
         "CreateAssetRevisionOutput$formsOutput": "<p>The metadata forms that were attached to the asset as part of the asset revision.</p>",
         "CreateAssetRevisionOutput$readOnlyFormsOutput": "<p>The read-only metadata forms that were attached to the asset as part of the asset revision.</p>",
+        "CreateDataProductOutput$formsOutput": "<p>The metadata forms of the data product.</p>",
+        "CreateDataProductRevisionOutput$formsOutput": "<p>The metadata forms of the data product revision.</p>",
         "CreateDataSourceOutput$assetFormsOutput": "<p>The metadata forms attached to the assets that this data source creates.</p>",
         "DeleteDataSourceOutput$assetFormsOutput": "<p>The asset data forms associated with this data source.</p>",
         "GetAssetOutput$formsOutput": "<p>The metadata forms attached to the asset.</p>",
         "GetAssetOutput$readOnlyFormsOutput": "<p>The read-only metadata forms attached to the asset.</p>",
+        "GetDataProductOutput$formsOutput": "<p>The metadata forms of the data product.</p>",
         "GetDataSourceOutput$assetFormsOutput": "<p>The metadata forms attached to the assets created by this data source.</p>",
         "GetLineageNodeOutput$formsOutput": "<p>The metadata of the specified data lineage node.</p>",
         "UpdateDataSourceOutput$assetFormsOutput": "<p>The asset forms to be updated as part of the <code>UpdateDataSource</code> action.</p>"
@@ -2211,6 +2409,8 @@
       "refs": {
         "AssetListing$forms": "<p>The metadata forms attached to an asset published in an Amazon DataZone catalog. </p>",
         "AssetListingItemAdditionalAttributes$forms": "<p>The metadata forms that form additional attributes of the metadata asset.</p>",
+        "DataProductListing$forms": "<p>The metadata forms of the data product listing.</p>",
+        "DataProductListingItemAdditionalAttributes$forms": "<p>The metadata forms of the asset of the data product. </p>",
         "SubscribedAssetListing$forms": "<p>The forms attached to the published asset for which the subscription grant is created.</p>"
       }
     },
@@ -2255,6 +2455,16 @@
       }
     },
     "GetAssetTypeOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDataProductInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDataProductOutput": {
       "base": null,
       "refs": {
       }
@@ -2576,6 +2786,7 @@
         "GetGlossaryTermOutput$id": "<p>The ID of the business glossary term.</p>",
         "GlossaryTermItem$id": "<p>The identifier of the business glossary term.</p>",
         "GlossaryTerms$member": null,
+        "ItemGlossaryTerms$member": null,
         "TermRelationsClassifiesList$member": null,
         "TermRelationsIsAList$member": null,
         "UpdateGlossaryTermInput$glossaryIdentifier": "<p>The identifier of the business glossary in which a term is to be updated.</p>",
@@ -2620,11 +2831,17 @@
         "CreateAssetOutput$glossaryTerms": "<p>The glossary terms that are attached to the created asset.</p>",
         "CreateAssetRevisionInput$glossaryTerms": "<p>The glossary terms to be attached to the asset as part of asset revision.</p>",
         "CreateAssetRevisionOutput$glossaryTerms": "<p>The glossary terms that were attached to the asset as part of asset revision.</p>",
+        "CreateDataProductInput$glossaryTerms": "<p>The glossary terms of the data product.</p>",
+        "CreateDataProductOutput$glossaryTerms": "<p>The glossary terms of the data product.</p>",
+        "CreateDataProductRevisionInput$glossaryTerms": "<p>The glossary terms of the data product revision.</p>",
+        "CreateDataProductRevisionOutput$glossaryTerms": "<p>The glossary terms of the data product revision.</p>",
         "CreateEnvironmentInput$glossaryTerms": "<p>The glossary terms that can be used in this Amazon DataZone environment.</p>",
         "CreateEnvironmentOutput$glossaryTerms": "<p>The glossary terms that can be used in this Amazon DataZone environment.</p>",
         "CreateProjectInput$glossaryTerms": "<p>The glossary terms that can be used in this Amazon DataZone project.</p>",
         "CreateProjectOutput$glossaryTerms": "<p>The glossary terms that can be used in the project.</p>",
+        "DataProductResultItem$glossaryTerms": "<p>The glossary terms of the data product.</p>",
         "GetAssetOutput$glossaryTerms": "<p>The business glossary terms attached to the asset.</p>",
+        "GetDataProductOutput$glossaryTerms": "<p>The glossary terms of the data product.</p>",
         "GetEnvironmentBlueprintOutput$glossaryTerms": "<p>The glossary terms attached to this Amazon DataZone blueprint.</p>",
         "GetEnvironmentOutput$glossaryTerms": "<p>The business glossary terms that can be used in this environment.</p>",
         "GetProjectOutput$glossaryTerms": "<p>The business glossary terms that can be used in the project.</p>",
@@ -2835,6 +3052,12 @@
         "RowFilterExpression$isNull": "<p>The 'is null' clause of the row filter expression.</p>"
       }
     },
+    "ItemGlossaryTerms": {
+      "base": null,
+      "refs": {
+        "DataProductItem$glossaryTerms": "<p>The glossary terms of the data product.</p>"
+      }
+    },
     "KmsKeyArn": {
       "base": null,
       "refs": {
@@ -2941,6 +3164,16 @@
       }
     },
     "ListAssetRevisionsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDataProductRevisionsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDataProductRevisionsOutput": {
       "base": null,
       "refs": {
       }
@@ -3157,6 +3390,7 @@
         "AssetListingDetails$listingId": "<p>The identifier of an asset published in an Amazon DataZone catalog. </p>",
         "AssetListingItem$listingId": "<p>The identifier of the listing (asset published in Amazon DataZone catalog).</p>",
         "CreateListingChangeSetOutput$listingId": "<p>The ID of the listing (a record of an asset at a given time).</p>",
+        "DataProductListingItem$listingId": "<p>The ID of the listing.</p>",
         "DeleteListingInput$identifier": "<p>The ID of the listing to be deleted.</p>",
         "GetListingInput$identifier": "<p>The ID of the listing.</p>",
         "GetListingOutput$id": "<p>The ID of the listing.</p>",
@@ -3165,6 +3399,8 @@
         "ListSubscriptionsInput$subscribedListingId": "<p>The identifier of the subscribed listing for the subscriptions that you want to list.</p>",
         "ListingRevision$id": "<p>An identifier of a revision of an asset published in a Amazon DataZone catalog.</p>",
         "ListingRevisionInput$identifier": "<p>An identifier of revision to be made to an asset published in a Amazon DataZone catalog.</p>",
+        "ListingSummary$listingId": "<p>The ID of the data product listing.</p>",
+        "ListingSummaryItem$listingId": "<p>The ID of the data product listing.</p>",
         "SubscribedListing$id": "<p>The identifier of the published asset for which the subscription grant is created.</p>",
         "SubscribedListingInput$identifier": "<p>The identifier of the published asset for which the subscription grant is to be created.</p>"
       }
@@ -3202,6 +3438,30 @@
         "GetListingOutput$status": "<p>The status of the listing.</p>"
       }
     },
+    "ListingSummaries": {
+      "base": null,
+      "refs": {
+        "DataProductListing$items": "<p>The data assets of the data product listing.</p>"
+      }
+    },
+    "ListingSummary": {
+      "base": "<p>The summary of the listing of the data product.</p>",
+      "refs": {
+        "ListingSummaries$member": null
+      }
+    },
+    "ListingSummaryItem": {
+      "base": "<p>The results of the data product summary.</p>",
+      "refs": {
+        "ListingSummaryItems$member": null
+      }
+    },
+    "ListingSummaryItems": {
+      "base": null,
+      "refs": {
+        "DataProductListingItem$items": "<p>The data of the asset of the data product. </p>"
+      }
+    },
     "LongDescription": {
       "base": null,
       "refs": {
@@ -3218,6 +3478,7 @@
       "refs": {
         "ListAssetFiltersInput$maxResults": "<p>The maximum number of asset filters to return in a single call to <code>ListAssetFilters</code>. When the number of asset filters to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListAssetFilters</code> to list the next set of asset filters.</p>",
         "ListAssetRevisionsInput$maxResults": "<p>The maximum number of revisions to return in a single call to <code>ListAssetRevisions</code>. When the number of revisions to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListAssetRevisions</code> to list the next set of revisions.</p>",
+        "ListDataProductRevisionsInput$maxResults": "<p>The maximum number of asset filters to return in a single call to <code>ListDataProductRevisions</code>. When the number of data product revisions to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListDataProductRevisions</code> to list the next set of data product revisions.</p>",
         "ListDataSourceRunActivitiesInput$maxResults": "<p>The maximum number of activities to return in a single call to <code>ListDataSourceRunActivities</code>. When the number of activities to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListDataSourceRunActivities</code> to list the next set of activities.</p>",
         "ListDataSourceRunsInput$maxResults": "<p>The maximum number of runs to return in a single call to <code>ListDataSourceRuns</code>. When the number of runs to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListDataSourceRuns</code> to list the next set of runs.</p>",
         "ListDataSourcesInput$maxResults": "<p>The maximum number of data sources to return in a single call to <code>ListDataSources</code>. When the number of data sources to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListDataSources</code> to list the next set of data sources.</p>",
@@ -3420,6 +3681,8 @@
         "ListAssetFiltersOutput$nextToken": "<p>When the number of asset filters is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of asset filters, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListAssetFilters</code> to list the next set of asset filters.</p>",
         "ListAssetRevisionsInput$nextToken": "<p>When the number of revisions is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of revisions, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListAssetRevisions</code> to list the next set of revisions.</p>",
         "ListAssetRevisionsOutput$nextToken": "<p>When the number of revisions is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of revisions, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListAssetRevisions</code> to list the next set of revisions.</p>",
+        "ListDataProductRevisionsInput$nextToken": "<p>When the number of data product revisions is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of data product revisions, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListDataProductRevisions</code> to list the next set of data product revisions.</p>",
+        "ListDataProductRevisionsOutput$nextToken": "<p>When the number of data product revisions is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of data product revisions, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListDataProductRevisions</code> to list the next set of data product revisions.</p>",
         "ListDataSourceRunActivitiesInput$nextToken": "<p>When the number of activities is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of activities, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListDataSourceRunActivities</code> to list the next set of activities.</p>",
         "ListDataSourceRunActivitiesOutput$nextToken": "<p>When the number of activities is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of activities, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListDataSourceRunActivities</code> to list the next set of activities.</p>",
         "ListDataSourceRunsInput$nextToken": "<p>When the number of runs is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of runs, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListDataSourceRuns</code> to list the next set of runs.</p>",
@@ -3525,6 +3788,9 @@
         "CreateAssetTypeInput$owningProjectIdentifier": "<p>The identifier of the Amazon DataZone project that is to own the custom asset type.</p>",
         "CreateAssetTypeOutput$originProjectId": "<p>The ID of the Amazon DataZone project where the asset type was originally created.</p>",
         "CreateAssetTypeOutput$owningProjectId": "<p>The ID of the Amazon DataZone project that currently owns this asset type.</p>",
+        "CreateDataProductInput$owningProjectIdentifier": "<p>The ID of the owning project of the data product.</p>",
+        "CreateDataProductOutput$owningProjectId": "<p>The ID of the owning project of the data product.</p>",
+        "CreateDataProductRevisionOutput$owningProjectId": "<p>The ID of the owning project of the data product revision.</p>",
         "CreateDataSourceOutput$projectId": "<p>The ID of the Amazon DataZone project to which the data source is added.</p>",
         "CreateEnvironmentInput$projectIdentifier": "<p>The identifier of the Amazon DataZone project in which this environment is created.</p>",
         "CreateEnvironmentOutput$projectId": "<p>The ID of the Amazon DataZone project in which this environment is created.</p>",
@@ -3538,6 +3804,9 @@
         "CreateProjectMembershipInput$projectIdentifier": "<p>The ID of the project for which this project membership was created.</p>",
         "CreateProjectOutput$id": "<p>The ID of the Amazon DataZone project.</p>",
         "CreateSubscriptionTargetOutput$projectId": "<p>???</p>",
+        "DataProductListing$owningProjectId": "<p>The ID of the owning project of the data product listing.</p>",
+        "DataProductListingItem$owningProjectId": "<p>The ID of the owning project of the asset of the data product. </p>",
+        "DataProductResultItem$owningProjectId": "<p>The ID of the owning project of the data product.</p>",
         "DataSourceRunActivity$projectId": "<p>The project ID included in the data source run activity.</p>",
         "DataSourceRunSummary$projectId": "<p>The project ID of the data source run.</p>",
         "DeleteDataSourceOutput$projectId": "<p>The ID of the project in which this data source exists and from which it's deleted.</p>",
@@ -3550,6 +3819,7 @@
         "GetAssetOutput$owningProjectId": "<p>The ID of the project that owns the asset.</p>",
         "GetAssetTypeOutput$originProjectId": "<p>The ID of the Amazon DataZone project in which the asset type was originally created.</p>",
         "GetAssetTypeOutput$owningProjectId": "<p>The ID of the Amazon DataZone project that owns the asset type.</p>",
+        "GetDataProductOutput$owningProjectId": "<p>The ID of the owning project of the data product.</p>",
         "GetDataSourceOutput$projectId": "<p>The ID of the project where the data source creates and publishes assets.</p>",
         "GetDataSourceRunOutput$projectId": "<p>The ID of the project in which this data source run occured.</p>",
         "GetEnvironmentOutput$projectId": "<p>The ID of the Amazon DataZone project in which this environment is created.</p>",
@@ -3565,6 +3835,7 @@
         "ListEnvironmentProfilesInput$projectIdentifier": "<p>The identifier of the Amazon DataZone project.</p>",
         "ListEnvironmentsInput$projectIdentifier": "<p>The identifier of the Amazon DataZone project.</p>",
         "ListProjectMembershipsInput$projectIdentifier": "<p>The identifier of the project whose memberships you want to list.</p>",
+        "ListSubscriptionGrantsInput$owningProjectId": "<p>The ID of the owning project of the subscription grants.</p>",
         "ListSubscriptionRequestsInput$approverProjectId": "<p>The identifier of the subscription request approver's project.</p>",
         "ListSubscriptionRequestsInput$owningProjectId": "<p>The identifier of the project for the subscription requests.</p>",
         "ListSubscriptionsInput$approverProjectId": "<p>The identifier of the project for the subscription's approver.</p>",
@@ -3920,9 +4191,16 @@
         "CreateAssetRevisionOutput$revision": "<p>The revision of the asset.</p>",
         "CreateAssetRevisionOutput$typeRevision": "<p>The revision type of the asset.</p>",
         "CreateAssetTypeOutput$revision": "<p>The revision of the custom asset type.</p>",
+        "CreateDataProductOutput$revision": "<p>The revision of the data product.</p>",
+        "CreateDataProductRevisionOutput$revision": "<p>The revision of the data product revision.</p>",
         "CreateFormTypeOutput$revision": "<p>The revision of this Amazon DataZone metadata form type.</p>",
         "CreateListingChangeSetInput$entityRevision": "<p>The revision of an asset.</p>",
         "CreateListingChangeSetOutput$listingRevision": "<p>The revision of a listing.</p>",
+        "DataProductItem$revision": "<p>The revision of the data product.</p>",
+        "DataProductListing$dataProductRevision": "<p>The revision of the data product listing.</p>",
+        "DataProductListingItem$entityRevision": "<p>The revision of the asset of the asset of the data product. </p>",
+        "DataProductListingItem$listingRevision": "<p>The revision of the listing.</p>",
+        "DataProductRevision$revision": "<p>The data product revision.</p>",
         "FormEntryInput$typeRevision": "<p>The type revision of the form entry.</p>",
         "FormEntryOutput$typeRevision": "<p>The type revision of the form entry.</p>",
         "FormInput$typeRevision": "<p>The revision of the metadata form type.</p>",
@@ -3933,6 +4211,8 @@
         "GetAssetOutput$typeRevision": "<p>The revision of the asset type.</p>",
         "GetAssetTypeInput$revision": "<p>The revision of the asset type.</p>",
         "GetAssetTypeOutput$revision": "<p>The revision of the asset type.</p>",
+        "GetDataProductInput$revision": "<p>The revision of the data product.</p>",
+        "GetDataProductOutput$revision": "<p>The revision of the data product.</p>",
         "GetFormTypeInput$revision": "<p>The revision of this metadata form type.</p>",
         "GetFormTypeOutput$revision": "<p>The revision of the metadata form type.</p>",
         "GetLineageNodeOutput$typeRevision": "<p>The revision type of the specified data lineage node.</p>",
@@ -3943,12 +4223,15 @@
         "LineageNodeTypeItem$revision": "<p>The revision of the data lineage node type.</p>",
         "ListingRevision$revision": "<p>The details of a revision of an asset published in a Amazon DataZone catalog.</p>",
         "ListingRevisionInput$revision": "<p>The details of a revision to be made to an asset published in a Amazon DataZone catalog.</p>",
+        "ListingSummary$listingRevision": "<p>The revision of the data product listing.</p>",
+        "ListingSummaryItem$listingRevision": "<p>The revision of the data product listing.</p>",
         "MetadataGenerationRunTarget$revision": "<p>The revision of the asset for which metadata was generated.</p>",
         "RejectPredictionsInput$revision": "<p>The revision that is to be made to the asset.</p>",
         "RejectPredictionsOutput$assetRevision": "<p>The revision that is to be made to the asset.</p>",
         "SubscribedAsset$assetRevision": "<p>The revision of the asset for which the subscription grant is created.</p>",
         "SubscribedAssetListing$entityRevision": "<p>The revision of the published asset for which the subscription grant is created.</p>",
         "SubscribedListing$revision": "<p>The revision of the published asset for which the subscription grant is created.</p>",
+        "SubscribedProductListing$entityRevision": "<p>The revision of the data product listing.</p>",
         "TimeSeriesDataPointFormInput$typeRevision": "<p>The revision type of the time series data points form.</p>",
         "TimeSeriesDataPointFormOutput$typeRevision": "<p>The revision type of the time series data points form.</p>",
         "TimeSeriesDataPointSummaryFormOutput$typeRevision": "<p>The type revision of the time series data points summary form.</p>"
@@ -4301,6 +4584,9 @@
         "AcceptSubscriptionRequestOutput$reviewerId": "<p>Specifes the ID of the Amazon DataZone user who reviewed the subscription request.</p>",
         "AssetFilterSummary$effectiveRowFilter": "<p>The effective row filter of the asset filter.</p>",
         "AssetFilterSummary$errorMessage": "<p>The error message that is displayed if the action does not succeed.</p>",
+        "AssetInDataProductListingItem$entityId": "<p>The entity ID of the listing of the asset in a data product.</p>",
+        "AssetInDataProductListingItem$entityRevision": "<p>The entity revision of the listing of the asset in a data product.</p>",
+        "AssetInDataProductListingItem$entityType": "<p>The entity type of the listing of the asset in a data product.</p>",
         "AssetTargetNameMap$targetName": "<p>The target name in the asset target name map.</p>",
         "AssociateEnvironmentRoleInput$environmentRoleArn": "<p>The ARN of the environment role.</p>",
         "AwsConsoleLinkParameters$uri": "<p>The URI of the console link specified as part of the environment action.</p>",
@@ -4458,6 +4744,8 @@
         "StringList$member": null,
         "SubscribedAsset$targetName": "<p>The target name of the asset for which the subscription grant is created.</p>",
         "SubscribedListing$ownerProjectName": "<p>The name of the project that owns the published asset for which the subscription grant is created.</p>",
+        "SubscribedProductListing$description": "<p>The description of the data product listing.</p>",
+        "SubscribedProductListing$name": "<p>The name of the data product listing.</p>",
         "SubscriptionRequestSummary$reviewerId": "<p>The identifier of the subscription request reviewer.</p>",
         "SubscriptionTargetForm$content": "<p>The content of the subscription target configuration.</p>",
         "SubscriptionTargetSummary$manageAccessRole": "<p>The manage access role specified in the subscription target.</p>",
@@ -4584,6 +4872,12 @@
         "CreateSubscriptionRequestInput$subscribedPrincipals": "<p>The Amazon DataZone principals for whom the subscription request is created.</p>"
       }
     },
+    "SubscribedProductListing": {
+      "base": "<p>The data product listing.</p>",
+      "refs": {
+        "SubscribedListingItem$productListing": "<p>The data product listing.</p>"
+      }
+    },
     "SubscribedProject": {
       "base": "<p>The project that has the subscription grant.</p>",
       "refs": {
@@ -4651,7 +4945,7 @@
         "ListSubscriptionGrantsInput$subscriptionId": "<p>The identifier of the subscription.</p>",
         "RevokeSubscriptionInput$identifier": "<p>The identifier of the revoked subscription.</p>",
         "RevokeSubscriptionOutput$id": "<p>The identifier of the revoked subscription.</p>",
-        "SubscriptionGrantSummary$subscriptionId": "<p>The ID of the subscription grant.</p>",
+        "SubscriptionGrantSummary$subscriptionId": "<p>The ID of the subscription.</p>",
         "SubscriptionSummary$id": "<p>The identifier of the subscription.</p>",
         "UpdateSubscriptionGrantStatusOutput$subscriptionId": "<p>The identifier of the subscription.</p>"
       }
@@ -4683,7 +4977,7 @@
         "AcceptSubscriptionRequestOutput$status": "<p>Specifies the status of the subscription request.</p>",
         "CreateSubscriptionRequestOutput$status": "<p>The status of the subscription request.</p>",
         "GetSubscriptionRequestDetailsOutput$status": "<p>The status of the subscription request.</p>",
-        "ListSubscriptionRequestsInput$status": "<p>Specifies the status of the subscription requests.</p>",
+        "ListSubscriptionRequestsInput$status": "<p>Specifies the status of the subscription requests.</p> <note> <p>This is not a required parameter, but if not specified, by default, Amazon DataZone returns only <code>PENDING</code> subscription requests. </p> </note>",
         "RejectSubscriptionRequestOutput$status": "<p>The status of the subscription request.</p>",
         "SubscriptionRequestSummary$status": "<p>The status of the subscription request.</p>",
         "UpdateSubscriptionRequestOutput$status": "<p>The status of the subscription request.</p>"
@@ -4718,7 +5012,7 @@
       "refs": {
         "CancelSubscriptionOutput$status": "<p>The status of the request to cancel the subscription.</p>",
         "GetSubscriptionOutput$status": "<p>The status of the subscription.</p>",
-        "ListSubscriptionsInput$status": "<p>The status of the subscriptions that you want to list.</p>",
+        "ListSubscriptionsInput$status": "<p>The status of the subscriptions that you want to list.</p> <note> <p>This is not a required parameter, but if not provided, by default, Amazon DataZone returns only <code>APPROVED</code> subscriptions. </p> </note>",
         "RevokeSubscriptionOutput$status": "<p>The status of the revoked subscription.</p>",
         "SubscriptionSummary$status": "<p>The status of the subscription.</p>"
       }
@@ -5279,6 +5573,7 @@
         "CreateSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",
         "CreateSubscriptionRequestOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
         "CreateSubscriptionTargetOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription target.</p>",
+        "DataProductListingItem$listingUpdatedBy": "<p>The user who updated the listing.</p>",
         "DeleteSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant that is deleted.</p>",
         "GetAssetTypeOutput$updatedBy": "<p>The Amazon DataZone user that updated the asset type.</p>",
         "GetGlossaryOutput$updatedBy": "<p>The Amazon DataZone user who updated the business glossary.</p>",
