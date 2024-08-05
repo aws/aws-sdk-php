@@ -322,15 +322,16 @@ class EcsCredentialProviderTest extends TestCase
 
     public function testResolveCredentialsWithAccountId()
     {
+        $testAccountId = 'foo';
         $expiration = time() + 1000;
-        $testHandler = function (RequestInterface $_) use ($expiration) {
+        $testHandler = function (RequestInterface $_) use ($expiration, $testAccountId) {
             $jsonResponse = <<<EOF
 {
     "AccessKeyId": "foo",
     "SecretAccessKey": "foo",
     "Token": "bazz",
     "Expiration": "@$expiration",
-    "AccountId": "123456789012"
+    "AccountId": "$testAccountId"
 }
 EOF;
             return Promise\Create::promiseFor(new Response(200, [], $jsonResponse));
@@ -345,7 +346,7 @@ EOF;
             $this->assertSame('foo', $credentials->getSecretKey());
             $this->assertSame('bazz', $credentials->getSecurityToken());
             $this->assertSame($expiration, $credentials->getExpiration());
-            $this->assertSame('123456789012', $credentials->getAccountId());
+            $this->assertSame($testAccountId, $credentials->getAccountId());
         } catch (GuzzleException $e) {
             self::fail($e->getMessage());
         }

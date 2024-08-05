@@ -15,7 +15,7 @@ class CredentialsTest extends TestCase
     public function testHasGetters()
     {
         $exp = time() + 500;
-        $accountId = '123456789000';
+        $accountId = 'foo';
         $creds = new Credentials('foo', 'baz', 'tok', $exp, $accountId);
         $this->assertSame('foo', $creds->getAccessKeyId());
         $this->assertSame('baz', $creds->getSecretKey());
@@ -53,7 +53,7 @@ class CredentialsTest extends TestCase
             'expires' => null,
             'accountId' => null
         ], $actual);
-        $accountId = '123456789000';
+        $accountId = 'foo';
         $credentials = new Credentials('key-value', 'secret-value', 'token-value', 10, $accountId);
         $actual = unserialize(serialize($credentials))->toArray();
 

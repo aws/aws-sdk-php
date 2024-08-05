@@ -20,7 +20,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
 {
-    const SAMPLE_ROLE_ARN = 'arn:aws:iam::012345678910:role/role_name';
+    const SAMPLE_ROLE_ARN = 'arn:aws:iam::123456789012:role/role_name';
 
     use UsesServiceTrait;
 

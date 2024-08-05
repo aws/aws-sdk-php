@@ -1629,8 +1629,9 @@ class InstanceProfileProviderTest extends TestCase
 
     public function testResolveCredentialsWithAccountId()
     {
+        $testAccountId = 'foo';
         $expiration = time() + 1000;
-        $testHandler = function (RequestInterface $request) use ($expiration) {
+        $testHandler = function (RequestInterface $request) use ($expiration, $testAccountId) {
             if ($request->getMethod() === 'PUT' && $request->getUri()->getPath() === '/latest/api/token') {
                 return Promise\Create::promiseFor(new Response(200, [], Psr7\Utils::streamFor('')));
             } elseif ($request->getMethod() === 'GET') {
@@ -1645,7 +1646,7 @@ class InstanceProfileProviderTest extends TestCase
     "SecretAccessKey": "foo",
     "Token": "bazz",
     "Expiration": "@$expiration",
-    "AccountId": "123456789012"
+    "AccountId": "$testAccountId"
 }
 EOF;
                         return Promise\Create::promiseFor(
@@ -1671,6 +1672,6 @@ EOF;
         $this->assertSame('foo', $credentials->getSecretKey());
         $this->assertSame('bazz', $credentials->getSecurityToken());
         $this->assertSame($expiration, $credentials->getExpiration());
-        $this->assertSame('123456789012', $credentials->getAccountId());
+        $this->assertSame($testAccountId, $credentials->getAccountId());
     }
 }
