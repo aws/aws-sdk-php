@@ -133,7 +133,7 @@ class StsClientTest extends TestCase
     {
         $result = new Result([
             'FederatedUser' => [
-                'Arn' => 'arn:aws:iam::123456789000:user/test-user-1'
+                'Arn' => 'arn:aws:iam::foobar:user/test-user-1'
             ],
             'Credentials' => [
                 'AccessKeyId' => 'foo',
@@ -152,7 +152,7 @@ class StsClientTest extends TestCase
         $this->assertSame('foo', $credentials->getAccessKeyId());
         $this->assertSame('bar', $credentials->getSecretKey());
         $this->assertSame('baz', $credentials->getSecurityToken());
-        $this->assertSame('123456789000', $credentials->getAccountId());
+        $this->assertSame('foobar', $credentials->getAccountId());
         $this->assertIsInt($credentials->getExpiration());
         $this->assertFalse($credentials->isExpired());
     }
@@ -187,7 +187,7 @@ class StsClientTest extends TestCase
                 'response' => [
                     "AssumedRoleUser" => [
                         "AssumedRoleId" => "roleId",
-                        "Arn" => "arn:aws:sts::123456789012:assumed-role/assume-role-integration-test-role/Name"
+                        "Arn" => "arn:aws:sts::foobar:assumed-role/assume-role-integration-test-role/Name"
                     ],
                     "Credentials" => [
                         "AccessKeyId" => "foo",
@@ -196,7 +196,7 @@ class StsClientTest extends TestCase
                     ]
                 ],
                 'expected' => [
-                    "accountId" => "123456789012",
+                    "accountId" => "foobar",
                     "accessKeyId" => "foo",
                     "secretAccessKey" => "bar",
                     "sessionToken" => "baz"
@@ -245,7 +245,7 @@ class StsClientTest extends TestCase
                 'response' => [
                     "AssumedRoleUser" => [
                         "AssumedRoleId" => "roleId",
-                        "Arn" => "arn:aws:sts::123456789012:assumed-role/assume-role-integration-test-role/Name"
+                        "Arn" => "arn:aws:sts::foobar:assumed-role/assume-role-integration-test-role/Name"
                     ],
                     "Credentials" => [
                         "AccessKeyId" => "foo",
@@ -254,7 +254,7 @@ class StsClientTest extends TestCase
                     ]
                 ],
                 'expected' => [
-                    "accountId" => "123456789012",
+                    "accountId" => "foobar",
                     "accessKeyId" => "foo",
                     "secretAccessKey" => "bar",
                     "sessionToken" => "baz"
@@ -296,7 +296,7 @@ class StsClientTest extends TestCase
                 'response' => [
                     "AssumedRoleUser" => [
                         "AssumedRoleId" => "roleId",
-                        "Arn" => "arn:aws:sts::123456789012:assumed-role/assume-role-integration-test-role/Name"
+                        "Arn" => "arn:aws:sts::foobar:assumed-role/assume-role-integration-test-role/Name"
                     ],
                     "Credentials" => [
                         "AccessKeyId" => "foo",
@@ -305,7 +305,7 @@ class StsClientTest extends TestCase
                     ]
                 ],
                 'expected' => [
-                    "accountId" => "123456789012",
+                    "accountId" => "foobar",
                     "accessKeyId" => "foo",
                     "secretAccessKey" => "bar",
                     "sessionToken" => "baz"
@@ -352,7 +352,7 @@ class StsClientTest extends TestCase
                 'response' => [
                     "FederatedUser" => [
                         "FederatedUserId" => "roleId",
-                        "Arn" => "arn:aws:sts::123456789012:assumed-role/assume-role-integration-test-role/Name"
+                        "Arn" => "arn:aws:sts::foobar:assumed-role/assume-role-integration-test-role/Name"
                     ],
                     "Credentials" => [
                         "AccessKeyId" => "foo",
@@ -361,7 +361,7 @@ class StsClientTest extends TestCase
                     ]
                 ],
                 'expected' => [
-                    "accountId" => "123456789012",
+                    "accountId" => "foobar",
                     "accessKeyId" => "foo",
                     "secretAccessKey" => "bar",
                     "sessionToken" => "baz"
