@@ -1626,4 +1626,52 @@ class InstanceProfileProviderTest extends TestCase
             return Promise\Create::rejectionFor(['exception' => new \Exception('Unexpected error!')]);
         };
     }
+
+    public function testResolveCredentialsWithAccountId()
+    {
+        $testAccountId = 'foo';
+        $expiration = time() + 1000;
+        $testHandler = function (RequestInterface $request) use ($expiration, $testAccountId) {
+            if ($request->getMethod() === 'PUT' && $request->getUri()->getPath() === '/latest/api/token') {
+                return Promise\Create::promiseFor(new Response(200, [], Psr7\Utils::streamFor('')));
+            } elseif ($request->getMethod() === 'GET') {
+                switch ($request->getUri()->getPath()) {
+                    case '/latest/meta-data/iam/security-credentials/':
+                        return Promise\Create::promiseFor(new Response(200, [], Psr7\Utils::streamFor('MockProfile')));
+                    case '/latest/meta-data/iam/security-credentials/MockProfile':
+                        $jsonResponse = <<<EOF
+{
+    "Code": "Success",
+    "AccessKeyId": "foo",
+    "SecretAccessKey": "foo",
+    "Token": "bazz",
+    "Expiration": "@$expiration",
+    "AccountId": "$testAccountId"
+}
+EOF;
+                        return Promise\Create::promiseFor(
+                            new Response(
+                                200,
+                                [],
+                                Psr7\Utils::streamFor(
+                                    $jsonResponse
+                                )
+                            )
+                        );
+                }
+            }
+
+            return Promise\Create::rejectionFor(['exception' => new \Exception('Unexpected error!')]);
+        };
+        $provider = new InstanceProfileProvider([
+            'client' => $testHandler
+        ]);
+        /** @var Credentials $credentials */
+        $credentials = $provider()->wait();
+        $this->assertSame('foo', $credentials->getAccessKeyId());
+        $this->assertSame('foo', $credentials->getSecretKey());
+        $this->assertSame('bazz', $credentials->getSecurityToken());
+        $this->assertSame($expiration, $credentials->getExpiration());
+        $this->assertSame($testAccountId, $credentials->getAccountId());
+    }
 }

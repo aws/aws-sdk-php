@@ -2,6 +2,7 @@
 namespace Aws\Test\EndpointV2;
 
 use Aws\Auth\Exception\UnresolvedAuthSchemeException;
+use Aws\Credentials\Credentials;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\Ruleset\Ruleset;
@@ -10,6 +11,7 @@ use Aws\Exception\CommonRuntimeException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -160,12 +162,11 @@ class EndpointProviderV2Test extends TestCase
         }
     }
 
-    public function rulesetProtocolEndpointAndErrorCaseProvider()
+    public function rulesetProtocolEndpointAndErrorCaseProvider(): \Generator
     {
-        $protocolTestCases = [];
         $serviceList = \Aws\manifest();
 
-        forEach($serviceList as $service => $serviceValue) {
+       forEach($serviceList as $service => $serviceValue) {
             $testFile = EndpointDefinitionProvider::getEndpointTests($service, 'latest');
 
             foreach($testFile['testCases'] as $case) {
@@ -186,24 +187,38 @@ class EndpointProviderV2Test extends TestCase
                     }
 
                     $clientArgs = [
-                        'region' => $builtInParams['AWS::Region'],
-                        'endpoint' => isset($builtInParams['SDK::Endpoint']) ? $builtInParams['SDK::Endpoint'] : null,
-                        'use_fips_endpoint' => isset($builtInParams['AWS::UseFIPS']) ? $builtInParams['AWS::UseFIPS'] : null,
-                        'use_dual_stack_endpoint' => isset($builtInParams['AWS::UseDualStack']) ? $builtInParams['AWS::UseDualStack'] : null,
-                        's3_us_east_1_regional_endpoint' => isset($builtInParams['AWS::S3::UseGlobalEndpoint']) ? $builtInParams['AWS::S3::UseGlobalEndpoint'] === true ? 'legacy' : 'regional' : null,
-                        'sts_regional_endpoints' => isset($builtInParams['AWS::STS::UseGlobalEndpoint']) ? $builtInParams['AWS::STS::UseGlobalEndpoint'] === true ? 'legacy' : 'regional' : null,
-                        'use_accelerate_endpoint' => isset($builtInParams['AWS::S3::Accelerate']) ? $builtInParams['AWS::S3::Accelerate'] : null,
-                        'use_path_style_endpoint' => isset($builtInParams['AWS::S3::ForcePathStyle']) ? $builtInParams['AWS::S3::ForcePathStyle'] : null,
-                        'use_arn_region' => isset($useArnRegion) ? $useArnRegion : null,
-                        'disable_multiregion_access_points' => isset($builtInParams['AWS::S3::DisableMultiRegionAccessPoints']) ? $builtInParams['AWS::S3::DisableMultiRegionAccessPoints'] : null
+                        'region' => $builtInParams['AWS::Region'] ?? 'us-east-1',
+                        'endpoint' => $builtInParams['SDK::Endpoint'] ?? null,
+                        'use_fips_endpoint' => $builtInParams['AWS::UseFIPS'] ?? null,
+                        'use_dual_stack_endpoint' => $builtInParams['AWS::UseDualStack'] ?? null,
+                        's3_us_east_1_regional_endpoint' => isset($builtInParams['AWS::S3::UseGlobalEndpoint']) ? ($builtInParams['AWS::S3::UseGlobalEndpoint'] === true ? 'legacy' : 'regional') : null,
+                        'sts_regional_endpoints' => isset($builtInParams['AWS::STS::UseGlobalEndpoint']) ? ($builtInParams['AWS::STS::UseGlobalEndpoint'] === true ? 'legacy' : 'regional') : null,
+                        'use_accelerate_endpoint' => $builtInParams['AWS::S3::Accelerate'] ?? null,
+                        'use_path_style_endpoint' => $builtInParams['AWS::S3::ForcePathStyle'] ?? null,
+                        'use_arn_region' => $useArnRegion ?? null,
+                        'disable_multiregion_access_points' => $builtInParams['AWS::S3::DisableMultiRegionAccessPoints'] ?? null,
+                        'account_id_endpoint_mode' => $builtInParams['AWS::Auth::AccountIdEndpointMode'] ?? null
                     ];
-                    array_push($caseArgs, $clientArgs, $operationInput, $case['expect'], isset($case['expect']['error']));
-                    $protocolTestCases[] = $caseArgs;
-                }
+                    if (isset($builtInParams['AWS::Auth::AccountId'])) {
+                        $clientArgs['credentials'] = [
+                            'key' => 'foo',
+                            'secret' => 'foo',
+                            'token' => 'foo',
+                            'expires' => null,
+                            'accountId' => $builtInParams['AWS::Auth::AccountId']
+                        ];
+                    }
 
+                    yield [
+                        $service,
+                        $clientArgs,
+                        $operationInput,
+                        $case['expect'],
+                        isset($case['expect']['error'])
+                    ];
+                }
             }
         }
-        return $protocolTestCases;
     }
 
     /**
@@ -218,20 +233,17 @@ class EndpointProviderV2Test extends TestCase
         if ($errorCase) {
             $this->expectException(UnresolvedEndpointException::class);
             $this->expectExceptionMessage($expected['error']);
-            goto clientInstantiation;
+        } else {
+            //accounts for legacy global endpoint behavior
+            if (strpos($expected['endpoint']['url'], 's3.us-east-1.amazonaws.com') !== false
+                && $clientArgs['s3_us_east_1_regional_endpoint'] !== true
+            ) {
+                $this->markTestSkipped();
+            }
+            if ($service == 's3') {
+                $clientArgs['disable_express_session_auth'] = true;
+            }
         }
-
-        //accounts for legacy global endpoint behavior
-        if (strpos($expected['endpoint']['url'], 's3.us-east-1.amazonaws.com') !== false
-            && $clientArgs['s3_us_east_1_regional_endpoint'] !== true
-        ) {
-            $this->markTestSkipped();
-        }
-        if ($service == 's3') {
-            $clientArgs['disable_express_session_auth'] = true;
-        }
-
-        clientInstantiation:
 
         $client = $this->getTestClient($service, $clientArgs);
         $this->addMockResults($client, [[]]);
@@ -241,73 +253,70 @@ class EndpointProviderV2Test extends TestCase
         );
         $list = $client->getHandlerList();
 
-        if ($errorCase) {
-            goto resolveHandler;
-        }
+        if (!$errorCase) {
+            $list->appendSign(Middleware::tap(function($cmd, $req) use ($service, $expected) {
+                $expectedEndpoint = $expected['endpoint'];
+                $expectedUri = new Uri($expected['endpoint']['url']);
+                $this->assertStringContainsString(
+                    $expectedUri->getHost(),
+                    $req->getUri()->getHost()
+                );
 
-        $list->appendSign(Middleware::tap(function($cmd, $req) use ($service, $expected) {
-            $expectedEndpoint = $expected['endpoint'];
-            $expectedUri = new Uri($expected['endpoint']['url']);
-            $this->assertStringContainsString(
-                $expectedUri->getHost(),
-                $req->getUri()->getHost()
-            );
+                if (isset($expectedEndpoint['properties']['authSchemes'])) {
+                    $expectedAuthScheme = null;
+                    foreach ($expectedEndpoint['properties']['authSchemes'] as $authScheme) {
+                        // Skip sigv4a if awscrt extension is not loaded
+                        if ($authScheme['name'] === 'sigv4a' && !extension_loaded('awscrt')) {
+                            continue;
+                        }
 
-            if (isset($expectedEndpoint['properties']['authSchemes'])) {
-                $expectedAuthScheme = null;
-                foreach ($expectedEndpoint['properties']['authSchemes'] as $authScheme) {
-                    // Skip sigv4a if awscrt extension is not loaded
-                    if ($authScheme['name'] === 'sigv4a' && !extension_loaded('awscrt')) {
-                        continue;
+                        $expectedAuthScheme = $authScheme;
+                        break;
                     }
 
-                    $expectedAuthScheme = $authScheme;
-                    break;
-                }
-
-                if ($expectedAuthScheme) {
-                    if ((isset($expectedAuthScheme['disableDoubleEncoding'])
-                            && $expectedAuthScheme['disableDoubleEncoding'] === true)
-                        && $expectedAuthScheme['name'] !== 'sigv4a'
-                    ) {
-                        $expectedVersion = 's3v4';
-                    } else {
-                        $expectedVersion = str_replace('sig', '', $expectedAuthScheme['name']);
-                    }
-                    $this->assertEquals(
-                        $cmd['@context']['signature_version'],
-                        $expectedVersion
-                    );
-                    $this->assertEquals(
-                        $cmd['@context']['signing_service'],
-                        $expectedAuthScheme['signingName']
-                    );
-                    if (isset($cmd['@context']['signing_region'])) {
+                    if ($expectedAuthScheme) {
+                        if ((isset($expectedAuthScheme['disableDoubleEncoding'])
+                                && $expectedAuthScheme['disableDoubleEncoding'] === true)
+                            && $expectedAuthScheme['name'] !== 'sigv4a'
+                        ) {
+                            $expectedVersion = 's3v4';
+                        } else {
+                            $expectedVersion = str_replace('sig', '', $expectedAuthScheme['name']);
+                        }
                         $this->assertEquals(
-                            $cmd['@context']['signing_region'],
-                            $expectedAuthScheme['signingRegion']
+                            $cmd['@context']['signature_version'],
+                            $expectedVersion
                         );
-                    } elseif (isset($cmd['@context']['signing_region_set'])) {
                         $this->assertEquals(
-                            $cmd['@context']['signing_region_set'],
-                            $expectedAuthScheme['signingRegionSet']);
+                            $cmd['@context']['signing_service'],
+                            $expectedAuthScheme['signingName']
+                        );
+                        if (isset($cmd['@context']['signing_region'])) {
+                            $this->assertEquals(
+                                $cmd['@context']['signing_region'],
+                                $expectedAuthScheme['signingRegion']
+                            );
+                        } elseif (isset($cmd['@context']['signing_region_set'])) {
+                            $this->assertEquals(
+                                $cmd['@context']['signing_region_set'],
+                                $expectedAuthScheme['signingRegionSet']);
+                        }
                     }
                 }
-            }
-            if (isset($expectedEndpoint['headers'])) {
-                $expectedHeaders = $expectedEndpoint['headers'];
-                $returnedHeaders = $req->getHeaders();
+                if (isset($expectedEndpoint['headers'])) {
+                    $expectedHeaders = $expectedEndpoint['headers'];
+                    $returnedHeaders = $req->getHeaders();
 
-                foreach($expectedHeaders as $headerKey => $headerValue) {
-                    $this->assertArrayHasKey($headerKey, $returnedHeaders);
-                    $this->assertEquals(
-                        $headerValue[0],
-                        $returnedHeaders[$headerKey][0]
-                    );
+                    foreach($expectedHeaders as $headerKey => $headerValue) {
+                        $this->assertArrayHasKey($headerKey, $returnedHeaders);
+                        $this->assertEquals(
+                            $headerValue[0],
+                            $returnedHeaders[$headerKey][0]
+                        );
+                    }
                 }
-            }
-        }));
-        resolveHandler:
+            }));
+        }
 
         $handler = $list->resolve();
         try {
