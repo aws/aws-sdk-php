@@ -5,7 +5,7 @@
     "DeleteAgentMemory": "<p>Deletes memory from the specified memory identifier.</p>",
     "GetAgentMemory": "<p>Gets the sessions stored in the memory of the agent.</p>",
     "InvokeAgent": "<note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeAgent</code>.</p> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response is returned in the <code>bytes</code> field of the <code>chunk</code> object.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul>",
-    "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
+    "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
     "Retrieve": "<p>Queries a knowledge base and retrieves information from it.</p>",
     "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results. The response only cites sources that are relevant to the query.</p>"
   },
@@ -260,8 +260,8 @@
     "Document": {
       "base": null,
       "refs": {
-        "FlowInputContent$document": "<p>The input for the flow input node.</p>",
-        "FlowOutputContent$document": "<p>A name for the output of the flow.</p>"
+        "FlowInputContent$document": "<p>The input to send to the prompt flow input node.</p>",
+        "FlowOutputContent$document": "<p>The content in the output.</p>"
       }
     },
     "Double": {
@@ -420,7 +420,7 @@
       }
     },
     "FlowInput": {
-      "base": "<p>Contains information about an input into the flow and what to do with it.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_RequestSyntax\">InvokeFlow request</a> </p> </li> </ul>",
+      "base": "<p>Contains information about an input into the prompt flow and where to send it.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_RequestSyntax\">InvokeFlow request</a> </p> </li> </ul>",
       "refs": {
         "FlowInputs$member": null
       }
@@ -428,7 +428,7 @@
     "FlowInputContent": {
       "base": "<p>Contains information about an input into the flow.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_RequestSyntax\">InvokeFlow request</a> </p> </li> </ul>",
       "refs": {
-        "FlowInput$content": "<p>Contains information about an input into the flow.</p>"
+        "FlowInput$content": "<p>Contains information about an input into the prompt flow.</p>"
       }
     },
     "FlowInputs": {
@@ -438,13 +438,13 @@
       }
     },
     "FlowOutputContent": {
-      "base": "<p>Contains information about the output node.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_RequestSyntax\">InvokeFlow request</a> </p> </li> </ul>",
+      "base": "<p>Contains information about the content in an output from prompt flow invocation.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_RequestSyntax\">InvokeFlow request</a> </p> </li> </ul>",
       "refs": {
-        "FlowOutputEvent$content": "<p>The output of the node.</p>"
+        "FlowOutputEvent$content": "<p>The content in the output.</p>"
       }
     },
     "FlowOutputEvent": {
-      "base": "<p>Contains information about an output from flow invoction.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_ResponseSyntax\">InvokeFlow response</a> </p> </li> </ul>",
+      "base": "<p>Contains information about an output from prompt flow invoction.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_ResponseSyntax\">InvokeFlow response</a> </p> </li> </ul>",
       "refs": {
         "FlowResponseStream$flowOutputEvent": "<p>Contains information about an output from flow invocation.</p>"
       }
@@ -749,7 +749,9 @@
     "Integer": {
       "base": null,
       "refs": {
-        "ApiResult$httpStatusCode": "<p>http status code from API execution response (for example: 200, 400, 500).</p>"
+        "ApiResult$httpStatusCode": "<p>http status code from API execution response (for example: 200, 400, 500).</p>",
+        "Usage$inputTokens": "<p>Contains information about the input tokens from the foundation model usage.</p>",
+        "Usage$outputTokens": "<p>Contains information about the output tokens from the foundation model usage.</p>"
       }
     },
     "InternalServerException": {
@@ -961,6 +963,12 @@
         "GetAgentMemoryRequest$memoryType": "<p>The type of memory.</p>"
       }
     },
+    "Metadata": {
+      "base": "<p>Provides details of the foundation model.</p>",
+      "refs": {
+        "OrchestrationModelInvocationOutput$metadata": "<p>Contains information about the foundation model output.</p>"
+      }
+    },
     "MimeType": {
       "base": null,
       "refs": {
@@ -989,20 +997,20 @@
     "NodeName": {
       "base": null,
       "refs": {
-        "FlowInput$nodeName": "<p>A name for the input of the flow input node.</p>",
-        "FlowOutputEvent$nodeName": "<p>The name of the node to which input was provided.</p>"
+        "FlowInput$nodeName": "<p>The name of the flow input node that begins the prompt flow.</p>",
+        "FlowOutputEvent$nodeName": "<p>The name of the flow output node that the output is from.</p>"
       }
     },
     "NodeOutputName": {
       "base": null,
       "refs": {
-        "FlowInput$nodeOutputName": "<p>A name for the output of the flow input node.</p>"
+        "FlowInput$nodeOutputName": "<p>The name of the output from the flow input node that begins the prompt flow.</p>"
       }
     },
     "NodeType": {
       "base": null,
       "refs": {
-        "FlowOutputEvent$nodeType": "<p>The type of node to which input was provided.</p>"
+        "FlowOutputEvent$nodeType": "<p>The type of the node that the output is from.</p>"
       }
     },
     "NonBlankString": {
@@ -1031,6 +1039,12 @@
       "base": "<p>Settings for how the model processes the prompt prior to retrieval and generation.</p>",
       "refs": {
         "KnowledgeBaseRetrieveAndGenerateConfiguration$orchestrationConfiguration": "<p>Settings for how the model processes the prompt prior to retrieval and generation.</p>"
+      }
+    },
+    "OrchestrationModelInvocationOutput": {
+      "base": "<p>The foundation model output from the orchestration step.</p>",
+      "refs": {
+        "OrchestrationTrace$modelInvocationOutput": "<p>Contains information pertaining to the output from the foundation model that is being invoked.</p>"
       }
     },
     "OrchestrationTrace": {
@@ -1191,6 +1205,12 @@
       "refs": {
         "PreProcessingParsedResponse$rationale": "<p>The text returned by the parsing of the pre-processing step, explaining the steps that the agent plans to take in orchestration, if the user input is valid.</p>",
         "Rationale$text": "<p>The reasoning or thought process of the agent, based on the input.</p>"
+      }
+    },
+    "RawResponse": {
+      "base": "<p>Contains the raw output from the foundation model.</p>",
+      "refs": {
+        "OrchestrationModelInvocationOutput$rawResponse": "<p>Contains details of the raw response from the foundation model output.</p>"
       }
     },
     "RepromptResponse": {
@@ -1520,6 +1540,7 @@
         "Parameter$value": "<p>The value of the parameter.</p>",
         "PromptSessionAttributesMap$key": null,
         "PromptSessionAttributesMap$value": null,
+        "RawResponse$content": "<p>The foundation model's raw output content.</p>",
         "RepromptResponse$text": "<p>The text reprompting the input.</p>",
         "ResponseBody$key": null,
         "RetrievalResultConfluenceLocation$url": "<p>The Confluence host URL for the data source location.</p>",
@@ -1584,7 +1605,7 @@
     "TopP": {
       "base": null,
       "refs": {
-        "InferenceConfiguration$topP": "<p>While generating a response, the model determines the probability of the following token at each point of generation. The value that you set for <code>Top P</code> determines the number of most-likely candidates from which the model chooses the next token in the sequence. For example, if you set <code>topP</code> to 80, the model only selects the next token from the top 80% of the probability distribution of next tokens.</p>",
+        "InferenceConfiguration$topP": "<p>While generating a response, the model determines the probability of the following token at each point of generation. The value that you set for <code>Top P</code> determines the number of most-likely candidates from which the model chooses the next token in the sequence. For example, if you set <code>topP</code> to 0.8, the model only selects the next token from the top 80% of the probability distribution of next tokens.</p>",
         "TextInferenceConfig$topP": "<p> A probability distribution threshold which controls what the model considers for the set of possible next tokens. The model will only consider the top p% of the probability distribution when generating the next token. </p>"
       }
     },
@@ -1602,6 +1623,7 @@
         "InvocationInput$traceId": "<p>The unique identifier of the trace.</p>",
         "ModelInvocationInput$traceId": "<p>The unique identifier of the trace.</p>",
         "Observation$traceId": "<p>The unique identifier of the trace.</p>",
+        "OrchestrationModelInvocationOutput$traceId": "<p>The unique identifier of the trace.</p>",
         "PostProcessingModelInvocationOutput$traceId": "<p>The unique identifier of the trace.</p>",
         "PreProcessingModelInvocationOutput$traceId": "<p>The unique identifier of the trace.</p>",
         "Rationale$traceId": "<p>The unique identifier of the trace step.</p>"
@@ -1623,6 +1645,12 @@
       "base": null,
       "refs": {
         "Observation$type": "<p>Specifies what kind of information the agent returns in the observation. The following values are possible.</p> <ul> <li> <p> <code>ACTION_GROUP</code> – The agent returns the result of an action group.</p> </li> <li> <p> <code>KNOWLEDGE_BASE</code> – The agent returns information from a knowledge base.</p> </li> <li> <p> <code>FINISH</code> – The agent returns a final response to the user with no follow-up.</p> </li> <li> <p> <code>ASK_USER</code> – The agent asks the user a question.</p> </li> <li> <p> <code>REPROMPT</code> – The agent prompts the user again for the same information.</p> </li> </ul>"
+      }
+    },
+    "Usage": {
+      "base": "<p>Contains information of the usage of the foundation model.</p>",
+      "refs": {
+        "Metadata$usage": "<p>Contains details of the foundation model usage.</p>"
       }
     },
     "ValidationException": {

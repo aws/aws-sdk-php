@@ -7,7 +7,7 @@
     "ListEnrollmentStatuses": "<p>Retrieves the enrollment status for an account. It can also return the list of accounts that are enrolled under the organization.</p>",
     "ListRecommendationSummaries": "<p>Returns a concise representation of savings estimates for resources. Also returns de-duped savings across different types of recommendations.</p> <note> <p>The following filters are not supported for this API: <code>recommendationIds</code>, <code>resourceArns</code>, and <code>resourceIds</code>.</p> </note>",
     "ListRecommendations": "<p>Returns a list of recommendations.</p>",
-    "UpdateEnrollmentStatus": "<p>Updates the enrollment (opt in and opt out) status of an account to the Cost Optimization Hub service.</p> <p>If the account is a management account of an organization, this action can also be used to enroll member accounts of the organization.</p> <p>You must have the appropriate permissions to opt in to Cost Optimization Hub and to view its recommendations. When you opt in, Cost Optimization Hub automatically creates a service-linked role in your account to access its data.</p>",
+    "UpdateEnrollmentStatus": "<p>Updates the enrollment (opt in and opt out) status of an account to the Cost Optimization Hub service.</p> <p>If the account is a management account or delegated administrator of an organization, this action can also be used to enroll member accounts of the organization.</p> <p>You must have the appropriate permissions to opt in to Cost Optimization Hub and to view its recommendations. When you opt in, Cost Optimization Hub automatically creates a service-linked role in your account to access its data.</p>",
     "UpdatePreferences": "<p>Updates a set of preferences for an account in order to add account-specific preferences into the service. These preferences impact how the savings associated with recommendations are presented.</p>"
   },
   "shapes": {
@@ -70,13 +70,13 @@
         "Filter$rollbackPossible": "<p>Whether or not implementing the recommendation can be rolled back.</p>",
         "GetRecommendationResponse$restartNeeded": "<p>Whether or not implementing the recommendation requires a restart.</p>",
         "GetRecommendationResponse$rollbackPossible": "<p>Whether or not implementing the recommendation can be rolled back.</p>",
-        "ListEnrollmentStatusesResponse$includeMemberAccounts": "<p>The enrollment status of all member accounts in the organization if the account is the management account.</p>",
+        "ListEnrollmentStatusesResponse$includeMemberAccounts": "<p>The enrollment status of all member accounts in the organization if the account is the management account or delegated administrator.</p>",
         "OpenSearchReservedInstancesConfiguration$sizeFlexEligible": "<p>Determines whether the recommendation is size flexible.</p>",
         "RdsReservedInstancesConfiguration$sizeFlexEligible": "<p>Determines whether the recommendation is size flexible.</p>",
         "Recommendation$restartNeeded": "<p>Whether or not implementing the recommendation requires a restart.</p>",
         "Recommendation$rollbackPossible": "<p>Whether or not implementing the recommendation can be rolled back.</p>",
         "RedshiftReservedInstancesConfiguration$sizeFlexEligible": "<p>Determines whether the recommendation is size flexible.</p>",
-        "UpdateEnrollmentStatusRequest$includeMemberAccounts": "<p>Indicates whether to enroll member accounts of the organization if the account is the management account.</p>"
+        "UpdateEnrollmentStatusRequest$includeMemberAccounts": "<p>Indicates whether to enroll member accounts of the organization if the account is the management account or delegated administrator.</p>"
       }
     },
     "ComputeConfiguration": {
@@ -336,7 +336,7 @@
     "ListRecommendationSummariesRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListRecommendationSummariesRequest$maxResults": "<p>The maximum number of recommendations that are returned for the request.</p>"
+        "ListRecommendationSummariesRequest$maxResults": "<p>The maximum number of recommendations to be returned for the request.</p>"
       }
     },
     "ListRecommendationSummariesResponse": {
@@ -462,7 +462,7 @@
     "RecommendationSummariesList": {
       "base": null,
       "refs": {
-        "ListRecommendationSummariesResponse$items": "<p>List of all savings recommendations.</p>"
+        "ListRecommendationSummariesResponse$items": "<p>A list of all savings recommendations.</p>"
       }
     },
     "RecommendationSummary": {
@@ -736,6 +736,7 @@
         "SageMakerSavingsPlansConfiguration$paymentOption": "<p>The payment option for the commitment.</p>",
         "SageMakerSavingsPlansConfiguration$hourlyCommitment": "<p>The hourly commitment for the Savings Plans type.</p>",
         "StorageConfiguration$type": "<p>The storage type.</p>",
+        "SummaryMetricsResult$savingsPercentage": "<p>The savings percentage based on your Amazon Web Services spend over the past 30 days.</p> <note> <p>Savings percentage is only supported when filtering by Region, account ID, or tags.</p> </note>",
         "Tag$key": "<p>The key that's associated with the tag.</p>",
         "Tag$value": "<p>The value that's associated with the tag.</p>",
         "ThrottlingException$message": null,
@@ -747,6 +748,24 @@
         "ValidationException$message": null,
         "ValidationExceptionDetail$fieldName": "<p>The field name where the invalid entry was detected.</p>",
         "ValidationExceptionDetail$message": "<p>A message with the reason for the validation exception error.</p>"
+      }
+    },
+    "SummaryMetrics": {
+      "base": null,
+      "refs": {
+        "SummaryMetricsList$member": null
+      }
+    },
+    "SummaryMetricsList": {
+      "base": null,
+      "refs": {
+        "ListRecommendationSummariesRequest$metrics": "<p>Additional metrics to be returned for the request. The only valid value is <code>savingsPercentage</code>.</p>"
+      }
+    },
+    "SummaryMetricsResult": {
+      "base": "<p>The results or descriptions for the additional metrics, based on whether the metrics were or were not requested.</p>",
+      "refs": {
+        "ListRecommendationSummariesResponse$metrics": "<p>The results or descriptions for the additional metrics, based on whether the metrics were or were not requested.</p>"
       }
     },
     "Tag": {

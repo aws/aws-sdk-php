@@ -1362,6 +1362,13 @@
       "type":"string",
       "enum":["SESSION_SUMMARY"]
     },
+    "Metadata":{
+      "type":"structure",
+      "members":{
+        "usage":{"shape":"Usage"}
+      },
+      "sensitive":true
+    },
     "MimeType":{"type":"string"},
     "ModelInvocationInput":{
       "type":"structure",
@@ -1426,11 +1433,21 @@
         "queryTransformationConfiguration":{"shape":"QueryTransformationConfiguration"}
       }
     },
+    "OrchestrationModelInvocationOutput":{
+      "type":"structure",
+      "members":{
+        "metadata":{"shape":"Metadata"},
+        "rawResponse":{"shape":"RawResponse"},
+        "traceId":{"shape":"TraceId"}
+      },
+      "sensitive":true
+    },
     "OrchestrationTrace":{
       "type":"structure",
       "members":{
         "invocationInput":{"shape":"InvocationInput"},
         "modelInvocationInput":{"shape":"ModelInvocationInput"},
+        "modelInvocationOutput":{"shape":"OrchestrationModelInvocationOutput"},
         "observation":{"shape":"Observation"},
         "rationale":{"shape":"Rationale"}
       },
@@ -1598,6 +1615,13 @@
     },
     "RationaleString":{
       "type":"string",
+      "sensitive":true
+    },
+    "RawResponse":{
+      "type":"structure",
+      "members":{
+        "content":{"shape":"String"}
+      },
       "sensitive":true
     },
     "RepromptResponse":{
@@ -2072,6 +2096,14 @@
         "ASK_USER",
         "REPROMPT"
       ]
+    },
+    "Usage":{
+      "type":"structure",
+      "members":{
+        "inputTokens":{"shape":"Integer"},
+        "outputTokens":{"shape":"Integer"}
+      },
+      "sensitive":true
     },
     "ValidationException":{
       "type":"structure",

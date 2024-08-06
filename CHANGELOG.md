@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Endpoint` - Endpoint resolution based on a account id.
+* `Aws\CognitoIdentityProvider` - Advanced security feature updates to include password history and log export for Cognito user pools.
+* `Aws\CostOptimizationHub` - This release adds savings percentage support to the ListRecommendationSummaries API.
+* `Aws\BedrockAgentRuntime` - Introduce model invocation output traces for orchestration traces, which contain the model's raw response and usage.
+* `Aws\WorkSpaces` - Added support for BYOL_GRAPHICS_G4DN_WSP IngestionProcess
+
 ## 3.317.2 - 2024-08-05
 
 * `Aws\ECR` - Released two new APIs along with documentation updates. The GetAccountSetting API is used to view the current basic scan type version setting for your registry, while the PutAccountSetting API is used to update the basic scan type version for your registry.
