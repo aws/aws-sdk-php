@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.318.0 - 2024-08-06
 
 * `Aws\Endpoint` - Endpoint resolution based on a account id.
 * `Aws\CognitoIdentityProvider` - Advanced security feature updates to include password history and log export for Cognito user pools.
