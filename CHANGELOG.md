@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.319.0 - 2024-08-07
 
 * `Aws\S3` - Adds customization to output structures for `Expires` parsing which adds an additional shape `ExpiresString`
 * `Aws\Glue` - Introducing AWS Glue Data Quality anomaly detection, a new functionality that uses ML-based solutions to detect data anomalies users have not explicitly defined rules for.
