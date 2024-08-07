@@ -385,6 +385,7 @@
         {"shape":"ExpiredCodeException"},
         {"shape":"UnexpectedLambdaException"},
         {"shape":"InvalidPasswordException"},
+        {"shape":"PasswordHistoryPolicyViolationException"},
         {"shape":"UserLambdaValidationException"},
         {"shape":"InvalidLambdaResponseException"},
         {"shape":"TooManyRequestsException"},
@@ -433,7 +434,8 @@
         {"shape":"InternalErrorException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"InvalidPasswordException"}
+        {"shape":"InvalidPasswordException"},
+        {"shape":"PasswordHistoryPolicyViolationException"}
       ]
     },
     "AdminSetUserSettings":{
@@ -561,6 +563,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidPasswordException"},
+        {"shape":"PasswordHistoryPolicyViolationException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"LimitExceededException"},
@@ -613,6 +616,7 @@
         {"shape":"UserLambdaValidationException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidPasswordException"},
+        {"shape":"PasswordHistoryPolicyViolationException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"CodeMismatchException"},
         {"shape":"ExpiredCodeException"},
@@ -1527,6 +1531,7 @@
         {"shape":"UnexpectedLambdaException"},
         {"shape":"UserLambdaValidationException"},
         {"shape":"InvalidPasswordException"},
+        {"shape":"PasswordHistoryPolicyViolationException"},
         {"shape":"InvalidLambdaResponseException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InvalidUserPoolConfigurationException"},
@@ -3673,7 +3678,10 @@
     },
     "EventSourceName":{
       "type":"string",
-      "enum":["userNotification"]
+      "enum":[
+        "userNotification",
+        "userAuthEvents"
+      ]
     },
     "EventType":{
       "type":"string",
@@ -3715,6 +3723,12 @@
         "Valid",
         "Invalid"
       ]
+    },
+    "FirehoseConfigurationType":{
+      "type":"structure",
+      "members":{
+        "StreamArn":{"shape":"ArnType"}
+      }
     },
     "ForbiddenException":{
       "type":"structure",
@@ -4315,7 +4329,7 @@
     "LogConfigurationListType":{
       "type":"list",
       "member":{"shape":"LogConfigurationType"},
-      "max":1,
+      "max":2,
       "min":0
     },
     "LogConfigurationType":{
@@ -4327,7 +4341,9 @@
       "members":{
         "LogLevel":{"shape":"LogLevel"},
         "EventSource":{"shape":"EventSourceName"},
-        "CloudWatchLogsConfiguration":{"shape":"CloudWatchLogsConfigurationType"}
+        "CloudWatchLogsConfiguration":{"shape":"CloudWatchLogsConfigurationType"},
+        "S3Configuration":{"shape":"S3ConfigurationType"},
+        "FirehoseConfiguration":{"shape":"FirehoseConfigurationType"}
       }
     },
     "LogDeliveryConfigurationType":{
@@ -4343,7 +4359,10 @@
     },
     "LogLevel":{
       "type":"string",
-      "enum":["ERROR"]
+      "enum":[
+        "ERROR",
+        "INFO"
+      ]
     },
     "LogoutURLsListType":{
       "type":"list",
@@ -4453,6 +4472,18 @@
       "min":1,
       "pattern":"[\\S]+"
     },
+    "PasswordHistoryPolicyViolationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"MessageType"}
+      },
+      "exception":true
+    },
+    "PasswordHistorySizeType":{
+      "type":"integer",
+      "max":24,
+      "min":0
+    },
     "PasswordPolicyMinLengthType":{
       "type":"integer",
       "max":99,
@@ -4466,6 +4497,7 @@
         "RequireLowercase":{"shape":"BooleanType"},
         "RequireNumbers":{"shape":"BooleanType"},
         "RequireSymbols":{"shape":"BooleanType"},
+        "PasswordHistorySize":{"shape":"PasswordHistorySizeType"},
         "TemporaryPasswordValidityDays":{"shape":"TemporaryPasswordValidityDaysType"}
       }
     },
@@ -4780,11 +4812,23 @@
         "High"
       ]
     },
+    "S3ArnType":{
+      "type":"string",
+      "max":1024,
+      "min":3,
+      "pattern":"arn:[\\w+=/,.@-]+:[\\w+=/,.@-]+:::[\\w+=/,.@-]+(:[\\w+=/,.@-]+)?(:[\\w+=/,.@-]+)?"
+    },
     "S3BucketType":{
       "type":"string",
       "max":1024,
       "min":3,
       "pattern":"^[0-9A-Za-z\\.\\-_]*(?<!\\.)$"
+    },
+    "S3ConfigurationType":{
+      "type":"structure",
+      "members":{
+        "BucketArn":{"shape":"S3ArnType"}
+      }
     },
     "SESConfigurationSet":{
       "type":"string",

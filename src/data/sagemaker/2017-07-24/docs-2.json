@@ -897,6 +897,12 @@
         "AssociationSummaries$member": null
       }
     },
+    "AssumableRoleArns": {
+      "base": null,
+      "refs": {
+        "EmrSettings$AssumableRoleArns": "<p>An array of Amazon Resource Names (ARNs) of the IAM roles that the execution role of SageMaker can assume for performing operations or tasks related to Amazon EMR clusters or Amazon EMR Serverless applications. These roles define the permissions and access policies required when performing Amazon EMR-related operations, such as listing, connecting to, or terminating Amazon EMR clusters or Amazon EMR Serverless applications. They are typically used in cross-account access scenarios, where the Amazon EMR resources (clusters or serverless applications) are located in a different Amazon Web Services account than the SageMaker domain.</p>"
+      }
+    },
     "AsyncInferenceClientConfig": {
       "base": "<p>Configures the behavior of the client used by SageMaker to interact with the model container during asynchronous inference.</p>",
       "refs": {
@@ -5304,6 +5310,12 @@
         "DescribeUserProfileResponse$HomeEfsFileSystemUid": "<p>The ID of the user's profile in the Amazon Elastic File System volume.</p>"
       }
     },
+    "EmrSettings": {
+      "base": "<p>The configuration parameters that specify the IAM roles assumed by the execution role of SageMaker (assumable roles) and the cluster instances or job execution environments (execution roles or runtime roles) to manage and access resources required for running Amazon EMR clusters or Amazon EMR Serverless applications.</p>",
+      "refs": {
+        "JupyterLabAppSettings$EmrSettings": "<p>The configuration parameters that specify the IAM roles assumed by the execution role of SageMaker (assumable roles) and the cluster instances or job execution environments (execution roles or runtime roles) to manage and access resources required for running Amazon EMR clusters or Amazon EMR Serverless applications.</p>"
+      }
+    },
     "EnableCapture": {
       "base": null,
       "refs": {
@@ -5746,6 +5758,12 @@
       "refs": {
         "BatchTransformInput$ExcludeFeaturesAttribute": "<p>The attributes of the input data to exclude from the analysis.</p>",
         "EndpointInput$ExcludeFeaturesAttribute": "<p>The attributes of the input data to exclude from the analysis.</p>"
+      }
+    },
+    "ExecutionRoleArns": {
+      "base": null,
+      "refs": {
+        "EmrSettings$ExecutionRoleArns": "<p>An array of Amazon Resource Names (ARNs) of the IAM roles used by the Amazon EMR cluster instances or job execution environments to access other Amazon Web Services services and resources needed during the runtime of your Amazon EMR or Amazon EMR Serverless workloads, such as Amazon S3 for data access, Amazon CloudWatch for logging, or other Amazon Web Services services based on the particular workload requirements.</p>"
       }
     },
     "ExecutionRoleIdentityConfig": {
@@ -13443,6 +13461,7 @@
       "base": null,
       "refs": {
         "AlgorithmValidationSpecification$ValidationRole": "<p>The IAM roles that SageMaker uses to run the training jobs.</p>",
+        "AssumableRoleArns$member": null,
         "ClusterInstanceGroupDetails$ExecutionRole": "<p>The execution role for the instance group to assume.</p>",
         "ClusterInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the instance group.</p>",
         "CreateAutoMLJobRequest$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
@@ -13492,6 +13511,7 @@
         "DescribePipelineResponse$RoleArn": "<p>The Amazon Resource Name (ARN) that the pipeline uses to execute.</p>",
         "DescribeProcessingJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can assume to perform tasks on your behalf.</p>",
         "DescribeTrainingJobResponse$RoleArn": "<p>The Amazon Web Services Identity and Access Management (IAM) role configured for the training job. </p>",
+        "ExecutionRoleArns$member": null,
         "FeatureGroup$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM execution role used to create the feature group.</p>",
         "GenerativeAiSettings$AmazonBedrockRoleArn": "<p>The ARN of an Amazon Web Services IAM role that allows fine-tuning of large language models (LLMs) in Amazon Bedrock. The IAM role should have Amazon S3 read and write permissions, as well as a trust relationship that establishes <code>bedrock.amazonaws.com</code> as a service principal.</p>",
         "HyperParameterTrainingJobDefinition$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the training jobs that the tuning job launches.</p>",

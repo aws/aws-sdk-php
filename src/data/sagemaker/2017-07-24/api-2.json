@@ -4528,6 +4528,11 @@
         "CreatedBy":{"shape":"UserContext"}
       }
     },
+    "AssumableRoleArns":{
+      "type":"list",
+      "member":{"shape":"RoleArn"},
+      "max":5
+    },
     "AsyncInferenceClientConfig":{
       "type":"structure",
       "members":{
@@ -11544,6 +11549,13 @@
       "max":10,
       "pattern":"\\d+"
     },
+    "EmrSettings":{
+      "type":"structure",
+      "members":{
+        "AssumableRoleArns":{"shape":"AssumableRoleArns"},
+        "ExecutionRoleArns":{"shape":"ExecutionRoleArns"}
+      }
+    },
     "EnableCapture":{"type":"boolean"},
     "EnableInfraCheck":{"type":"boolean"},
     "EnableIotRoleAlias":{"type":"boolean"},
@@ -11831,6 +11843,11 @@
     "ExcludeFeaturesAttribute":{
       "type":"string",
       "max":100
+    },
+    "ExecutionRoleArns":{
+      "type":"list",
+      "member":{"shape":"RoleArn"},
+      "max":5
     },
     "ExecutionRoleIdentityConfig":{
       "type":"string",
@@ -14276,7 +14293,8 @@
         "DefaultResourceSpec":{"shape":"ResourceSpec"},
         "CustomImages":{"shape":"CustomImages"},
         "LifecycleConfigArns":{"shape":"LifecycleConfigArns"},
-        "CodeRepositories":{"shape":"CodeRepositories"}
+        "CodeRepositories":{"shape":"CodeRepositories"},
+        "EmrSettings":{"shape":"EmrSettings"}
       }
     },
     "JupyterServerAppSettings":{

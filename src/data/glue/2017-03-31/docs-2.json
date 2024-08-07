@@ -17,6 +17,7 @@
     "BatchGetTableOptimizer": "<p>Returns the configuration for the specified table optimizers.</p>",
     "BatchGetTriggers": "<p>Returns a list of resource metadata for a given list of trigger names. After calling the <code>ListTriggers</code> operation, you can call this operation to access the data to which you have been granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.</p>",
     "BatchGetWorkflows": "<p>Returns a list of resource metadata for a given list of workflow names. After calling the <code>ListWorkflows</code> operation, you can call this operation to access the data to which you have been granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.</p>",
+    "BatchPutDataQualityStatisticAnnotation": "<p>Annotate datapoints over time for a specific data quality statistic.</p>",
     "BatchStopJobRun": "<p>Stops one or more job runs for a specified job definition.</p>",
     "BatchUpdatePartition": "<p>Updates one or more partitions in a batch operation.</p>",
     "CancelDataQualityRuleRecommendationRun": "<p>Cancels the specified recommendation run that was being used to generate rules.</p>",
@@ -91,6 +92,8 @@
     "GetCrawlers": "<p>Retrieves metadata for all crawlers defined in the customer account.</p>",
     "GetCustomEntityType": "<p>Retrieves the details of a custom pattern by specifying its name.</p>",
     "GetDataCatalogEncryptionSettings": "<p>Retrieves the security configuration for a specified catalog.</p>",
+    "GetDataQualityModel": "<p>Retrieve the training status of the model along with more information (CompletedOn, StartedOn, FailureReason).</p>",
+    "GetDataQualityModelResult": "<p>Retrieve a statistic's predictions for a given Profile ID.</p>",
     "GetDataQualityResult": "<p>Retrieves the result of a data quality rule evaluation.</p>",
     "GetDataQualityRuleRecommendationRun": "<p>Gets the specified recommendation run that was used to generate rules.</p>",
     "GetDataQualityRuleset": "<p>Returns an existing ruleset by identifier or name.</p>",
@@ -153,6 +156,8 @@
     "ListDataQualityRuleRecommendationRuns": "<p>Lists the recommendation runs meeting the filter criteria.</p>",
     "ListDataQualityRulesetEvaluationRuns": "<p>Lists all the runs meeting the filter criteria, where a ruleset is evaluated against a data source.</p>",
     "ListDataQualityRulesets": "<p>Returns a paginated list of rulesets for the specified list of Glue tables.</p>",
+    "ListDataQualityStatisticAnnotations": "<p>Retrieve annotations for a data quality statistic.</p>",
+    "ListDataQualityStatistics": "<p>Retrieves a list of data quality statistics.</p>",
     "ListDevEndpoints": "<p>Retrieves the names of all <code>DevEndpoint</code> resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListJobs": "<p>Retrieves the names of all job resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListMLTransforms": "<p> Retrieves a sortable, filterable list of existing Glue machine learning transforms in this Amazon Web Services account, or the resources with the specified tag. This operation takes the optional <code>Tags</code> field, which you can use as a filter of the responses so that tagged resources can be retrieved as a group. If you choose to use tag filtering, only resources with the tags are retrieved. </p>",
@@ -166,6 +171,7 @@
     "ListUsageProfiles": "<p>List all the Glue usage profiles.</p>",
     "ListWorkflows": "<p>Lists names of workflows created in the account.</p>",
     "PutDataCatalogEncryptionSettings": "<p>Sets the security configuration for a specified catalog. After the configuration has been set, the specified encryption is applied to every catalog write thereafter.</p>",
+    "PutDataQualityProfileAnnotation": "<p>Annotate all datapoints for a Profile.</p>",
     "PutResourcePolicy": "<p>Sets the Data Catalog resource policy for access control.</p>",
     "PutSchemaVersionMetadata": "<p>Puts the metadata key value pair for a specified schema version ID. A maximum of 10 key value pairs will be allowed per schema version. They can be added over one or more calls.</p>",
     "PutWorkflowRunProperties": "<p>Puts the specified workflow run properties for the given workflow run. If a property already exists for the specified run, then it overrides the value otherwise adds the property to existing properties.</p>",
@@ -355,6 +361,24 @@
       "base": "<p>Specifies an Amazon Redshift target.</p>",
       "refs": {
         "CodeGenConfigurationNode$AmazonRedshiftTarget": "<p>Specifies a target that writes to a data target in Amazon Redshift.</p>"
+      }
+    },
+    "AnnotationError": {
+      "base": "<p>A failed annotation.</p>",
+      "refs": {
+        "AnnotationErrorList$member": null
+      }
+    },
+    "AnnotationErrorList": {
+      "base": null,
+      "refs": {
+        "BatchPutDataQualityStatisticAnnotationResponse$FailedInclusionAnnotations": "<p>A list of <code>AnnotationError</code>'s.</p>"
+      }
+    },
+    "AnnotationList": {
+      "base": null,
+      "refs": {
+        "ListDataQualityStatisticAnnotationsResponse$Annotations": "<p>A list of <code>StatisticAnnotation</code> applied to the Statistic</p>"
       }
     },
     "ApplyMapping": {
@@ -676,6 +700,16 @@
       }
     },
     "BatchGetWorkflowsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchPutDataQualityStatisticAnnotationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchPutDataQualityStatisticAnnotationResponse": {
       "base": null,
       "refs": {
       }
@@ -1369,7 +1403,8 @@
       "base": null,
       "refs": {
         "ColumnStatisticsTaskRun$ColumnNameList": "<p>A list of the column names. If none is supplied, all column names for the table will be used by default.</p>",
-        "StartColumnStatisticsTaskRunRequest$ColumnNameList": "<p>A list of the column names to generate statistics. If none is supplied, all column names for the table will be used by default.</p>"
+        "StartColumnStatisticsTaskRunRequest$ColumnNameList": "<p>A list of the column names to generate statistics. If none is supplied, all column names for the table will be used by default.</p>",
+        "StatisticSummary$ColumnsReferenced": "<p>The list of columns referenced by the statistic.</p>"
       }
     },
     "ColumnNameString": {
@@ -2351,6 +2386,12 @@
         "MetricBasedObservation$MetricValues": "<p>An object of type <code>DataQualityMetricValues</code> representing the analysis of the data quality metric value.</p>"
       }
     },
+    "DataQualityModelStatus": {
+      "base": null,
+      "refs": {
+        "GetDataQualityModelResponse$Status": "<p>The training status of the data quality model.</p>"
+      }
+    },
     "DataQualityObservation": {
       "base": "<p>Describes the observation generated after evaluating the rules and analyzers.</p>",
       "refs": {
@@ -2443,7 +2484,8 @@
         "DataQualityAnalyzerResult$Description": "<p>A description of the data quality analyzer.</p>",
         "DataQualityAnalyzerResult$EvaluationMessage": "<p>An evaluation message.</p>",
         "DataQualityRuleResult$Description": "<p>A description of the data quality rule.</p>",
-        "DataQualityRuleResult$EvaluationMessage": "<p>An evaluation message.</p>"
+        "DataQualityRuleResult$EvaluationMessage": "<p>An evaluation message.</p>",
+        "DataQualityRuleResult$EvaluatedRule": "<p>The evaluated rule.</p>"
       }
     },
     "DataQualityRuleResultStatus": {
@@ -2599,6 +2641,12 @@
       "base": null,
       "refs": {
         "ConditionExpression$Value": "<p>The value of the condition expression.</p>"
+      }
+    },
+    "DatapointInclusionAnnotation": {
+      "base": "<p>An Inclusion Annotation.</p>",
+      "refs": {
+        "InclusionAnnotationList$member": null
       }
     },
     "Datatype": {
@@ -2929,6 +2977,7 @@
     "DescriptionString": {
       "base": null,
       "refs": {
+        "AnnotationError$FailureReason": "<p>The reason why the annotation failed.</p>",
         "ColumnStatisticsTaskRun$ErrorMessage": "<p>The error message for the job.</p>",
         "Connection$Description": "<p>The description of the connection.</p>",
         "ConnectionInput$Description": "<p>The description of the connection.</p>",
@@ -2965,6 +3014,7 @@
         "SchemaListItem$Description": "<p>A description for the schema.</p>",
         "Session$ErrorMessage": "<p>The error message displayed during the session.</p>",
         "Session$Description": "<p>The description of the session.</p>",
+        "StatisticPropertiesMap$value": null,
         "Table$Description": "<p>A description of the table.</p>",
         "TableInput$Description": "<p>A description of the table.</p>",
         "Trigger$Description": "<p>A description of this trigger.</p>",
@@ -3989,6 +4039,26 @@
       "refs": {
       }
     },
+    "GetDataQualityModelRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDataQualityModelResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDataQualityModelResultRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDataQualityModelResultResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetDataQualityResultRequest": {
       "base": null,
       "refs": {
@@ -4705,6 +4775,9 @@
     "HashString": {
       "base": null,
       "refs": {
+        "AnnotationError$ProfileId": "<p>The Profile ID for the failed annotation.</p>",
+        "AnnotationError$StatisticId": "<p>The Statistic ID for the failed annotation.</p>",
+        "BatchPutDataQualityStatisticAnnotationRequest$ClientToken": "<p>Client Token.</p>",
         "CancelDataQualityRuleRecommendationRunRequest$RunId": "<p>The unique run identifier associated with this run.</p>",
         "CancelDataQualityRulesetEvaluationRunRequest$RunId": "<p>The unique run identifier associated with this run.</p>",
         "CancelMLTaskRunRequest$TransformId": "<p>The unique identifier of the machine learning transform.</p>",
@@ -4716,6 +4789,7 @@
         "CreateDataQualityRulesetRequest$ClientToken": "<p>Used for idempotency and is recommended to be set to a random ID (such as a UUID) to avoid creating or starting multiple instances of the same resource.</p>",
         "CreateMLTransformResponse$TransformId": "<p>A unique identifier that is generated for the transform.</p>",
         "DataQualityResult$ResultId": "<p>A unique result ID for the data quality result.</p>",
+        "DataQualityResult$ProfileId": "<p>The Profile ID for the data quality result.</p>",
         "DataQualityResult$JobRunId": "<p>The job run ID associated with the data quality result, if any.</p>",
         "DataQualityResult$RulesetEvaluationRunId": "<p>The unique run ID for the ruleset evaluation for this data quality result.</p>",
         "DataQualityResultDescription$ResultId": "<p>The unique result ID for this data quality result.</p>",
@@ -4726,14 +4800,22 @@
         "DataQualityRuleRecommendationRunDescription$RunId": "<p>The unique run identifier associated with this run.</p>",
         "DataQualityRulesetEvaluationRunDescription$RunId": "<p>The unique run identifier associated with this run.</p>",
         "DataQualityRulesetListDetails$RecommendationRunId": "<p>When a ruleset was created from a recommendation run, this run ID is generated to link the two together.</p>",
+        "DatapointInclusionAnnotation$ProfileId": "<p>The ID of the data quality profile the statistic belongs to.</p>",
+        "DatapointInclusionAnnotation$StatisticId": "<p>The Statistic ID.</p>",
         "DeleteMLTransformRequest$TransformId": "<p>The unique identifier of the transform to delete.</p>",
         "DeleteMLTransformResponse$TransformId": "<p>The unique identifier of the transform that was deleted.</p>",
         "DeleteResourcePolicyRequest$PolicyHashCondition": "<p>The hash value returned when this policy was set.</p>",
         "FindMatchesTaskRunProperties$JobId": "<p>The job ID for the Find Matches task run.</p>",
         "FindMatchesTaskRunProperties$JobRunId": "<p>The job run ID for the Find Matches task run.</p>",
         "GetColumnStatisticsTaskRunRequest$ColumnStatisticsTaskRunId": "<p>The identifier for the particular column statistics task run.</p>",
+        "GetDataQualityModelRequest$StatisticId": "<p>The Statistic ID.</p>",
+        "GetDataQualityModelRequest$ProfileId": "<p>The Profile ID.</p>",
+        "GetDataQualityModelResponse$FailureReason": "<p>The training failure reason.</p>",
+        "GetDataQualityModelResultRequest$StatisticId": "<p>The Statistic ID.</p>",
+        "GetDataQualityModelResultRequest$ProfileId": "<p>The Profile ID.</p>",
         "GetDataQualityResultRequest$ResultId": "<p>A unique result ID for the data quality result.</p>",
         "GetDataQualityResultResponse$ResultId": "<p>A unique result ID for the data quality result.</p>",
+        "GetDataQualityResultResponse$ProfileId": "<p>The Profile ID for the data quality result.</p>",
         "GetDataQualityResultResponse$JobRunId": "<p>The job run ID associated with the data quality result, if any.</p>",
         "GetDataQualityResultResponse$RulesetEvaluationRunId": "<p>The unique run ID associated with the ruleset evaluation.</p>",
         "GetDataQualityRuleRecommendationRunRequest$RunId": "<p>The unique run identifier associated with this run.</p>",
@@ -4751,11 +4833,19 @@
         "GetResourcePolicyResponse$PolicyHash": "<p>Contains the hash value associated with this policy.</p>",
         "GetUnfilteredTableMetadataResponse$QueryAuthorizationId": "<p>A cryptographically generated query identifier generated by Glue or Lake Formation.</p>",
         "GluePolicy$PolicyHash": "<p>Contains the hash value associated with this policy.</p>",
+        "ListDataQualityStatisticAnnotationsRequest$StatisticId": "<p>The Statistic ID.</p>",
+        "ListDataQualityStatisticAnnotationsRequest$ProfileId": "<p>The Profile ID.</p>",
+        "ListDataQualityStatisticsRequest$StatisticId": "<p>The Statistic ID.</p>",
+        "ListDataQualityStatisticsRequest$ProfileId": "<p>The Profile ID.</p>",
         "MLTransform$TransformId": "<p>The unique transform ID that is generated for the machine learning transform. The ID is guaranteed to be unique and does not change.</p>",
+        "MetricBasedObservation$StatisticId": "<p>The Statistic ID.</p>",
+        "PutDataQualityProfileAnnotationRequest$ProfileId": "<p>The ID of the data quality monitoring profile to annotate.</p>",
         "PutResourcePolicyRequest$PolicyHashCondition": "<p>The hash value returned when the previous policy was set using <code>PutResourcePolicy</code>. Its purpose is to prevent concurrent modifications of a policy. Do not use this parameter if no previous policy has been set.</p>",
         "PutResourcePolicyResponse$PolicyHash": "<p>A hash of the policy that has just been set. This must be included in a subsequent call that overwrites or updates this policy.</p>",
         "QuerySessionContext$QueryId": "<p>A unique identifier generated by the query engine for the query.</p>",
         "QuerySessionContext$QueryAuthorizationId": "<p>A cryptographically generated query identifier generated by Glue or Lake Formation.</p>",
+        "RunIdentifier$RunId": "<p>The Run ID.</p>",
+        "RunIdentifier$JobRunId": "<p>The Job Run ID.</p>",
         "StartColumnStatisticsTaskRunResponse$ColumnStatisticsTaskRunId": "<p>The identifier for the column statistics task run.</p>",
         "StartDataQualityRuleRecommendationRunRequest$ClientToken": "<p>Used for idempotency and is recommended to be set to a random ID (such as a UUID) to avoid creating or starting multiple instances of the same resource.</p>",
         "StartDataQualityRuleRecommendationRunResponse$RunId": "<p>The unique run identifier associated with this run.</p>",
@@ -4769,6 +4859,10 @@
         "StartMLEvaluationTaskRunResponse$TaskRunId": "<p>The unique identifier associated with this run.</p>",
         "StartMLLabelingSetGenerationTaskRunRequest$TransformId": "<p>The unique identifier of the machine learning transform.</p>",
         "StartMLLabelingSetGenerationTaskRunResponse$TaskRunId": "<p>The unique run identifier that is associated with this task run.</p>",
+        "StatisticAnnotation$ProfileId": "<p>The Profile ID.</p>",
+        "StatisticAnnotation$StatisticId": "<p>The Statistic ID.</p>",
+        "StatisticSummary$StatisticId": "<p>The Statistic ID.</p>",
+        "StatisticSummary$ProfileId": "<p>The Profile ID.</p>",
         "TaskRun$TransformId": "<p>The unique identifier for the transform.</p>",
         "TaskRun$TaskRunId": "<p>The unique identifier for this task run.</p>",
         "TransformIdList$member": null,
@@ -4887,6 +4981,21 @@
       "base": "<p>Specifies configuration properties for an importing labels task run.</p>",
       "refs": {
         "TaskRunProperties$ImportLabelsTaskRunProperties": "<p>The configuration properties for an importing labels task run.</p>"
+      }
+    },
+    "InclusionAnnotationList": {
+      "base": null,
+      "refs": {
+        "BatchPutDataQualityStatisticAnnotationRequest$InclusionAnnotations": "<p>A list of <code>DatapointInclusionAnnotation</code>'s.</p>"
+      }
+    },
+    "InclusionAnnotationValue": {
+      "base": null,
+      "refs": {
+        "DatapointInclusionAnnotation$InclusionAnnotation": "<p>The inclusion annotation value to apply to the statistic.</p>",
+        "PutDataQualityProfileAnnotationRequest$InclusionAnnotation": "<p>The inclusion annotation value to apply to the profile.</p>",
+        "StatisticModelResult$InclusionAnnotation": "<p>The inclusion annotation.</p>",
+        "TimestampedInclusionAnnotation$Value": "<p>The inclusion annotation value.</p>"
       }
     },
     "Integer": {
@@ -5365,6 +5474,26 @@
       }
     },
     "ListDataQualityRulesetsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDataQualityStatisticAnnotationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDataQualityStatisticAnnotationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDataQualityStatisticsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDataQualityStatisticsResponse": {
       "base": null,
       "refs": {
       }
@@ -5908,6 +6037,7 @@
         "CreateCustomEntityTypeRequest$RegexString": "<p>A regular expression string that is used for detecting sensitive data in a custom pattern.</p>",
         "CreateCustomEntityTypeResponse$Name": "<p>The name of the custom pattern you created.</p>",
         "CreateDataQualityRulesetRequest$Name": "<p>A unique name for the data quality ruleset.</p>",
+        "CreateDataQualityRulesetRequest$DataQualitySecurityConfiguration": "<p>The name of the security configuration created with the data quality encryption option.</p>",
         "CreateDataQualityRulesetResponse$Name": "<p>A unique name for the data quality ruleset.</p>",
         "CreateDevEndpointRequest$SecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used with this <code>DevEndpoint</code>.</p>",
         "CreateDevEndpointResponse$SecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure being used with this <code>DevEndpoint</code>.</p>",
@@ -6026,8 +6156,10 @@
         "GetDataQualityResultResponse$RulesetName": "<p>The name of the ruleset associated with the data quality result.</p>",
         "GetDataQualityResultResponse$JobName": "<p>The job name associated with the data quality result, if any.</p>",
         "GetDataQualityRuleRecommendationRunResponse$CreatedRulesetName": "<p>The name of the ruleset that was created by the run.</p>",
+        "GetDataQualityRuleRecommendationRunResponse$DataQualitySecurityConfiguration": "<p>The name of the security configuration created with the data quality encryption option.</p>",
         "GetDataQualityRulesetRequest$Name": "<p>The name of the ruleset.</p>",
         "GetDataQualityRulesetResponse$Name": "<p>The name of the ruleset.</p>",
+        "GetDataQualityRulesetResponse$DataQualitySecurityConfiguration": "<p>The name of the security configuration created with the data quality encryption option.</p>",
         "GetDatabaseRequest$Name": "<p>The name of the database to retrieve. For Hive compatibility, this should be all lowercase.</p>",
         "GetJobRequest$JobName": "<p>The name of the job definition to retrieve.</p>",
         "GetJobRunRequest$JobName": "<p>Name of the job definition being run.</p>",
@@ -6114,6 +6246,7 @@
         "PhysicalConnectionRequirements$AvailabilityZone": "<p>The connection's Availability Zone.</p>",
         "Predecessor$JobName": "<p>The name of the job definition used by the predecessor job run.</p>",
         "PutWorkflowRunPropertiesRequest$Name": "<p>Name of the workflow which was run.</p>",
+        "ReferenceDatasetsList$member": null,
         "ResumeWorkflowRunRequest$Name": "<p>The name of the workflow to resume.</p>",
         "RulesetNames$member": null,
         "RunStatementRequest$SessionId": "<p>The Session Id of the statement to be run.</p>",
@@ -6134,11 +6267,13 @@
         "StartCrawlerRequest$Name": "<p>Name of the crawler to start.</p>",
         "StartCrawlerScheduleRequest$CrawlerName": "<p>Name of the crawler to schedule.</p>",
         "StartDataQualityRuleRecommendationRunRequest$CreatedRulesetName": "<p>A name for the ruleset.</p>",
+        "StartDataQualityRuleRecommendationRunRequest$DataQualitySecurityConfiguration": "<p>The name of the security configuration created with the data quality encryption option.</p>",
         "StartJobRunRequest$JobName": "<p>The name of the job definition to use.</p>",
         "StartJobRunRequest$SecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used with this job run.</p>",
         "StartTriggerRequest$Name": "<p>The name of the trigger to start.</p>",
         "StartTriggerResponse$Name": "<p>The name of the trigger that was started.</p>",
         "StartWorkflowRunRequest$Name": "<p>The name of the workflow to start.</p>",
+        "StatisticPropertiesMap$key": null,
         "StopColumnStatisticsTaskRunRequest$TableName": "<p>The name of the table.</p>",
         "StopCrawlerRequest$Name": "<p>Name of the crawler to stop.</p>",
         "StopCrawlerScheduleRequest$CrawlerName": "<p>Name of the crawler whose schedule state to set.</p>",
@@ -6500,6 +6635,10 @@
         "Session$ExecutionTime": "<p>The total time the session ran for.</p>",
         "Session$DPUSeconds": "<p>The DPUs consumed by the session (formula: ExecutionTime * MaxCapacity).</p>",
         "StartJobRunRequest$MaxCapacity": "<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\"> Glue pricing page</a>.</p> <p>For Glue version 2.0+ jobs, you cannot specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p> <p>Do not set <code>MaxCapacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
+        "StatisticModelResult$LowerBound": "<p>The lower bound.</p>",
+        "StatisticModelResult$UpperBound": "<p>The upper bound.</p>",
+        "StatisticModelResult$PredictedValue": "<p>The predicted value.</p>",
+        "StatisticModelResult$ActualValue": "<p>The actual value.</p>",
         "UpdateMLTransformRequest$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>. </p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>"
       }
     },
@@ -6822,6 +6961,8 @@
         "ListDataQualityRuleRecommendationRunsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListDataQualityRulesetEvaluationRunsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListDataQualityRulesetsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListDataQualityStatisticAnnotationsRequest$MaxResults": "<p>The maximum number of results to return in this request.</p>",
+        "ListDataQualityStatisticsRequest$MaxResults": "<p>The maximum number of results to return in this request.</p>",
         "ListDevEndpointsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListJobsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListMLTransformsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
@@ -6846,6 +6987,10 @@
         "ListDataQualityRulesetEvaluationRunsResponse$NextToken": "<p>A pagination token, if more results are available.</p>",
         "ListDataQualityRulesetsRequest$NextToken": "<p>A paginated token to offset the results.</p>",
         "ListDataQualityRulesetsResponse$NextToken": "<p>A pagination token, if more results are available.</p>",
+        "ListDataQualityStatisticAnnotationsRequest$NextToken": "<p>A pagination token to retrieve the next set of results.</p>",
+        "ListDataQualityStatisticAnnotationsResponse$NextToken": "<p>A pagination token to retrieve the next set of results.</p>",
+        "ListDataQualityStatisticsRequest$NextToken": "<p>A pagination token to request the next page of results.</p>",
+        "ListDataQualityStatisticsResponse$NextToken": "<p>A pagination token to request the next page of results.</p>",
         "ListMLTransformsRequest$NextToken": "<p>A continuation token, if this is a continuation request.</p>",
         "ListMLTransformsResponse$NextToken": "<p>A continuation token, if the returned list does not contain the last metric available.</p>"
       }
@@ -7179,6 +7324,16 @@
       "refs": {
       }
     },
+    "PutDataQualityProfileAnnotationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutDataQualityProfileAnnotationResponse": {
+      "base": "<p>Left blank.</p>",
+      "refs": {
+      }
+    },
     "PutResourcePolicyRequest": {
       "base": null,
       "refs": {
@@ -7329,6 +7484,12 @@
       "base": "<p>Specifies a target that uses Amazon Redshift.</p>",
       "refs": {
         "CodeGenConfigurationNode$RedshiftTarget": "<p>Specifies a target that uses Amazon Redshift.</p>"
+      }
+    },
+    "ReferenceDatasetsList": {
+      "base": null,
+      "refs": {
+        "StatisticSummary$ReferencedDatasets": "<p>The list of datasets referenced by the statistic.</p>"
       }
     },
     "RegisterSchemaVersionInput": {
@@ -7511,6 +7672,12 @@
         "JobBookmarkEntry$PreviousRunId": "<p>The unique run identifier associated with the previous job run.</p>",
         "JobBookmarkEntry$RunId": "<p>The run ID number.</p>",
         "ResetJobBookmarkRequest$RunId": "<p>The unique run identifier associated with this job run.</p>"
+      }
+    },
+    "RunIdentifier": {
+      "base": "<p>A run identifier.</p>",
+      "refs": {
+        "StatisticSummary$RunIdentifier": "<p>The Run Identifier</p>"
       }
     },
     "RunMetrics": {
@@ -8328,6 +8495,54 @@
         "StatementOutput$Status": "<p>The status of the code execution output.</p>"
       }
     },
+    "StatisticAnnotation": {
+      "base": "<p>A Statistic Annotation.</p>",
+      "refs": {
+        "AnnotationList$member": null
+      }
+    },
+    "StatisticEvaluationLevel": {
+      "base": null,
+      "refs": {
+        "StatisticSummary$EvaluationLevel": "<p>The evaluation level of the statistic. Possible values: <code>Dataset</code>, <code>Column</code>, <code>Multicolumn</code>.</p>"
+      }
+    },
+    "StatisticModelResult": {
+      "base": "<p>The statistic model result.</p>",
+      "refs": {
+        "StatisticModelResults$member": null
+      }
+    },
+    "StatisticModelResults": {
+      "base": null,
+      "refs": {
+        "GetDataQualityModelResultResponse$Model": "<p>A list of <code>StatisticModelResult</code> </p>"
+      }
+    },
+    "StatisticNameString": {
+      "base": null,
+      "refs": {
+        "StatisticSummary$StatisticName": "<p>The name of the statistic.</p>"
+      }
+    },
+    "StatisticPropertiesMap": {
+      "base": null,
+      "refs": {
+        "StatisticSummary$StatisticProperties": "<p>A <code>StatisticPropertiesMap</code>, which contains a <code>NameString</code> and <code>DescriptionString</code> </p>"
+      }
+    },
+    "StatisticSummary": {
+      "base": "<p>Summary information about a statistic.</p>",
+      "refs": {
+        "StatisticSummaryList$member": null
+      }
+    },
+    "StatisticSummaryList": {
+      "base": "<p>A list of <code>StatisticSummary</code>.</p>",
+      "refs": {
+        "ListDataQualityStatisticsResponse$Statistics": "<p>A <code>StatisticSummaryList</code>.</p>"
+      }
+    },
     "StopColumnStatisticsTaskRunRequest": {
       "base": null,
       "refs": {
@@ -8757,6 +8972,9 @@
         "Database$CreateTime": "<p>The time at which the metadata database was created in the catalog.</p>",
         "DateColumnStatisticsData$MinimumValue": "<p>The lowest value in the column.</p>",
         "DateColumnStatisticsData$MaximumValue": "<p>The highest value in the column.</p>",
+        "GetDataQualityModelResponse$StartedOn": "<p>The timestamp when the data quality model training started.</p>",
+        "GetDataQualityModelResponse$CompletedOn": "<p>The timestamp when the data quality model training completed.</p>",
+        "GetDataQualityModelResultResponse$CompletedOn": "<p>The timestamp when the data quality model training completed.</p>",
         "GetDataQualityResultResponse$StartedOn": "<p>The date and time when the run for this data quality result started.</p>",
         "GetDataQualityResultResponse$CompletedOn": "<p>The date and time when the run for this data quality result was completed.</p>",
         "GetDataQualityRuleRecommendationRunResponse$StartedOn": "<p>The date and time when this run started.</p>",
@@ -8792,6 +9010,9 @@
         "PartitionInput$LastAccessTime": "<p>The last time at which the partition was accessed.</p>",
         "PartitionInput$LastAnalyzedTime": "<p>The last time at which column statistics were computed for this partition.</p>",
         "QuerySessionContext$QueryStartTime": "<p>A timestamp provided by the query engine for when the query started.</p>",
+        "StatisticAnnotation$StatisticRecordedOn": "<p>The timestamp when the annotated statistic was recorded.</p>",
+        "StatisticModelResult$Date": "<p>The date.</p>",
+        "StatisticSummary$RecordedOn": "<p>The timestamp when the statistic was recorded.</p>",
         "Table$CreateTime": "<p>The time when the table definition was created in the Data Catalog.</p>",
         "Table$UpdateTime": "<p>The last time that the table was updated.</p>",
         "Table$LastAccessTime": "<p>The last time that the table was accessed. This is usually taken from HDFS, and might not be reliable.</p>",
@@ -8803,6 +9024,9 @@
         "TaskRun$CompletedOn": "<p>The last point in time that the requested task run was completed.</p>",
         "TaskRunFilterCriteria$StartedBefore": "<p>Filter on task runs started before this date.</p>",
         "TaskRunFilterCriteria$StartedAfter": "<p>Filter on task runs started after this date.</p>",
+        "TimestampFilter$RecordedBefore": "<p>The timestamp before which statistics should be included in the results.</p>",
+        "TimestampFilter$RecordedAfter": "<p>The timestamp after which statistics should be included in the results.</p>",
+        "TimestampedInclusionAnnotation$LastModifiedOn": "<p>The timestamp when the inclusion annotation was last modified.</p>",
         "TransformFilterCriteria$CreatedBefore": "<p>The time and date before which the transforms were created.</p>",
         "TransformFilterCriteria$CreatedAfter": "<p>The time and date after which the transforms were created.</p>",
         "TransformFilterCriteria$LastModifiedBefore": "<p>Filter on transforms last modified before this date.</p>",
@@ -8810,6 +9034,13 @@
         "UserDefinedFunction$CreateTime": "<p>The time at which the function was created.</p>",
         "XMLClassifier$CreationTime": "<p>The time that this classifier was registered.</p>",
         "XMLClassifier$LastUpdated": "<p>The time that this classifier was last updated.</p>"
+      }
+    },
+    "TimestampFilter": {
+      "base": "<p>A timestamp filter.</p>",
+      "refs": {
+        "ListDataQualityStatisticAnnotationsRequest$TimestampFilter": "<p>A timestamp filter.</p>",
+        "ListDataQualityStatisticsRequest$TimestampFilter": "<p>A timestamp filter.</p>"
       }
     },
     "TimestampValue": {
@@ -8842,6 +9073,13 @@
         "Workflow$LastModifiedOn": "<p>The date and time when the workflow was last modified.</p>",
         "WorkflowRun$StartedOn": "<p>The date and time when the workflow run was started.</p>",
         "WorkflowRun$CompletedOn": "<p>The date and time when the workflow run completed.</p>"
+      }
+    },
+    "TimestampedInclusionAnnotation": {
+      "base": "<p>A timestamped inclusion annotation.</p>",
+      "refs": {
+        "StatisticAnnotation$InclusionAnnotation": "<p>The inclusion annotation applied to the statistic.</p>",
+        "StatisticSummary$InclusionAnnotation": "<p>The inclusion annotation for the statistic.</p>"
       }
     },
     "Token": {
@@ -9726,6 +9964,12 @@
         "BatchGetTableOptimizerEntry$databaseName": "<p>The name of the database in the catalog in which the table resides.</p>",
         "BatchGetTableOptimizerError$databaseName": "<p>The name of the database in the catalog in which the table resides.</p>",
         "BatchTableOptimizer$databaseName": "<p>The name of the database in the catalog in which the table resides.</p>"
+      }
+    },
+    "double": {
+      "base": null,
+      "refs": {
+        "StatisticSummary$DoubleValue": "<p>The value of the statistic.</p>"
       }
     },
     "tableNameString": {

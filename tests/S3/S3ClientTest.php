@@ -1,9 +1,7 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\Api\ApiProvider;
-use Aws\Api\Service;
-use Aws\Api\Shape;
+use Aws\Api\DateTimeResult;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -2376,6 +2374,86 @@ EOXML;
         }
 
         putenv('AWS_REGION=');
+    }
+
+    public function testExpiresStringInResult()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'http_handler' => function (RequestInterface $request) {
+                return Promise\Create::promiseFor(new Response(
+                    200,
+                    ['expires' => '1989-08-05']
+                ));
+            },
+        ]);
+        $result = $client->headObject(['Bucket' => 'foo', 'Key' => 'bar']);
+        $this->assertInstanceOf(DateTimeResult::class, $result['Expires']);
+        $this->assertEquals('1989-08-05', $result['ExpiresString']);
+    }
+
+    public function testEmitsWarningWhenExpiresUnparseable()
+    {
+        $this->expectWarning();
+        $this->expectWarningMessage(
+            "Failed to parse the `expires` header as a timestamp due to "
+            . " an invalid timestamp format.\nPlease refer to `ExpiresString` "
+            . "for the unparsed string format of this header.\n"
+        );
+
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'http_handler' => function (RequestInterface $request) {
+                return Promise\Create::promiseFor(new Response(
+                    200,
+                    ['expires' => 'this-is-not-a-timestamp']
+                ));
+            },
+        ]);
+
+        $client->headObject(['Bucket' => 'foo', 'Key' => 'bar']);
+    }
+
+    public function testExpiresRemainsTimestamp() {
+        //S3 will be changing `Expires` type from `timestamp` to `string`
+        // soon.  This test ensures backward compatibility
+        $apiProvider = static function () {
+            return [
+                'metadata' => [
+                    'signatureVersion' => 'v4',
+                    'protocol' => 'rest-xml'
+                ],
+                'shapes' => [
+                    'Expires' => [
+                        'type' => 'string'
+                    ],
+                ],
+            ];
+        };
+
+        $s3Client = new S3Client([
+            'region' => 'us-west-2',
+            'api_provider' => $apiProvider
+        ]);
+
+        $api = $s3Client->getApi();
+        $expiresType = $api->getDefinition()['shapes']['Expires']['type'];
+        $this->assertEquals('timestamp', $expiresType);
+    }
+
+    public function testBucketNotModifiedWithLegacyEndpointProvider()
+    {
+        $client = new S3Client([
+            'region' => 'us-west-2',
+            'endpoint_provider' => PartitionEndpointProvider::defaultProvider()
+        ]);
+
+        $operations = $client->getApi()->getDefinition()['operations'];
+        $this->assertEquals('/{Bucket}', $operations['ListObjects']['http']['requestUri']);
+        $this->assertEquals(
+            '/{Bucket}?versions',
+            $operations['ListObjectVersions']['http']['requestUri']
+        );
     }
 
     public function builtinRegionProvider()

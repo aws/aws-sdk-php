@@ -10,9 +10,27 @@
     "serviceId":"resiliencehub",
     "signatureVersion":"v4",
     "signingName":"resiliencehub",
-    "uid":"resiliencehub-2020-04-30"
+    "uid":"resiliencehub-2020-04-30",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "AcceptResourceGroupingRecommendations":{
+      "name":"AcceptResourceGroupingRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accept-resource-grouping-recommendations",
+        "responseCode":200
+      },
+      "input":{"shape":"AcceptResourceGroupingRecommendationsRequest"},
+      "output":{"shape":"AcceptResourceGroupingRecommendationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "AddDraftAppVersionResourceMappings":{
       "name":"AddDraftAppVersionResourceMappings",
       "http":{
@@ -26,6 +44,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
@@ -421,6 +440,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "DescribeResourceGroupingRecommendationTask":{
+      "name":"DescribeResourceGroupingRecommendationTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/describe-resource-grouping-recommendation-task",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeResourceGroupingRecommendationTaskRequest"},
+      "output":{"shape":"DescribeResourceGroupingRecommendationTaskResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ImportResourcesToDraftAppVersion":{
       "name":"ImportResourcesToDraftAppVersion",
       "http":{
@@ -675,6 +711,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListResourceGroupingRecommendations":{
+      "name":"ListResourceGroupingRecommendations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/list-resource-grouping-recommendations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListResourceGroupingRecommendationsRequest"},
+      "output":{"shape":"ListResourceGroupingRecommendationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListSopRecommendations":{
       "name":"ListSopRecommendations",
       "http":{
@@ -799,6 +852,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "RejectResourceGroupingRecommendations":{
+      "name":"RejectResourceGroupingRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/reject-resource-grouping-recommendations",
+        "responseCode":200
+      },
+      "input":{"shape":"RejectResourceGroupingRecommendationsRequest"},
+      "output":{"shape":"RejectResourceGroupingRecommendationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "RemoveDraftAppVersionResourceMappings":{
       "name":"RemoveDraftAppVersionResourceMappings",
       "http":{
@@ -849,6 +919,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StartResourceGroupingRecommendationTask":{
+      "name":"StartResourceGroupingRecommendationTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/start-resource-grouping-recommendation-task",
+        "responseCode":200
+      },
+      "input":{"shape":"StartResourceGroupingRecommendationTaskRequest"},
+      "output":{"shape":"StartResourceGroupingRecommendationTaskResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
@@ -981,6 +1069,41 @@
     }
   },
   "shapes":{
+    "AcceptGroupingRecommendationEntries":{
+      "type":"list",
+      "member":{"shape":"AcceptGroupingRecommendationEntry"},
+      "max":30,
+      "min":1
+    },
+    "AcceptGroupingRecommendationEntry":{
+      "type":"structure",
+      "required":["groupingRecommendationId"],
+      "members":{
+        "groupingRecommendationId":{"shape":"String255"}
+      }
+    },
+    "AcceptResourceGroupingRecommendationsRequest":{
+      "type":"structure",
+      "required":[
+        "appArn",
+        "entries"
+      ],
+      "members":{
+        "appArn":{"shape":"Arn"},
+        "entries":{"shape":"AcceptGroupingRecommendationEntries"}
+      }
+    },
+    "AcceptResourceGroupingRecommendationsResponse":{
+      "type":"structure",
+      "required":[
+        "appArn",
+        "failedEntries"
+      ],
+      "members":{
+        "appArn":{"shape":"Arn"},
+        "failedEntries":{"shape":"FailedGroupingRecommendationEntries"}
+      }
+    },
     "AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -1124,6 +1247,7 @@
         "resiliencyScore":{"shape":"ResiliencyScore"},
         "resourceErrorsDetails":{"shape":"ResourceErrorsDetails"},
         "startTime":{"shape":"TimeStamp"},
+        "summary":{"shape":"AssessmentSummary"},
         "tags":{"shape":"TagMap"},
         "versionName":{"shape":"EntityVersion"}
       }
@@ -1168,7 +1292,9 @@
         "PolicyBreached",
         "PolicyMet",
         "NotAssessed",
-        "ChangesDetected"
+        "ChangesDetected",
+        "NotApplicable",
+        "MissingPolicy"
       ]
     },
     "AppComponent":{
@@ -1179,8 +1305,8 @@
       ],
       "members":{
         "additionalInfo":{"shape":"AdditionalInfoMap"},
-        "id":{"shape":"String255"},
-        "name":{"shape":"String255"},
+        "id":{"shape":"EntityName255"},
+        "name":{"shape":"EntityName255"},
         "type":{"shape":"String255"}
       }
     },
@@ -1300,6 +1426,18 @@
         "System"
       ]
     },
+    "AssessmentRiskRecommendation":{
+      "type":"structure",
+      "members":{
+        "appComponents":{"shape":"AppComponentNameList"},
+        "recommendation":{"shape":"String255"},
+        "risk":{"shape":"String255"}
+      }
+    },
+    "AssessmentRiskRecommendationList":{
+      "type":"list",
+      "member":{"shape":"AssessmentRiskRecommendation"}
+    },
     "AssessmentStatus":{
       "type":"string",
       "enum":[
@@ -1314,6 +1452,13 @@
       "member":{"shape":"AssessmentStatus"},
       "max":10,
       "min":1
+    },
+    "AssessmentSummary":{
+      "type":"structure",
+      "members":{
+        "riskRecommendations":{"shape":"AssessmentRiskRecommendationList"},
+        "summary":{"shape":"String500"}
+      }
     },
     "AwsRegion":{
       "type":"string",
@@ -1411,7 +1556,9 @@
       "type":"string",
       "enum":[
         "PolicyBreached",
-        "PolicyMet"
+        "PolicyMet",
+        "NotApplicable",
+        "MissingPolicy"
       ]
     },
     "ComponentCompliancesList":{
@@ -2017,6 +2164,26 @@
         "policy":{"shape":"ResiliencyPolicy"}
       }
     },
+    "DescribeResourceGroupingRecommendationTaskRequest":{
+      "type":"structure",
+      "required":["appArn"],
+      "members":{
+        "appArn":{"shape":"Arn"},
+        "groupingId":{"shape":"String255"}
+      }
+    },
+    "DescribeResourceGroupingRecommendationTaskResponse":{
+      "type":"structure",
+      "required":[
+        "groupingId",
+        "status"
+      ],
+      "members":{
+        "errorMessage":{"shape":"String500"},
+        "groupingId":{"shape":"String255"},
+        "status":{"shape":"ResourcesGroupingRecGenStatusType"}
+      }
+    },
     "DifferenceType":{
       "type":"string",
       "enum":[
@@ -2130,6 +2297,10 @@
       "type":"string",
       "pattern":"^[A-Za-z0-9][A-Za-z0-9_\\-]{1,59}$"
     },
+    "EntityName255":{
+      "type":"string",
+      "pattern":"^[A-Za-z0-9][A-Za-z0-9_\\-]{0,254}$"
+    },
     "EntityNameList":{
       "type":"list",
       "member":{"shape":"EntityName"}
@@ -2185,6 +2356,21 @@
         "ComplexityOfImplementation"
       ]
     },
+    "FailedGroupingRecommendationEntries":{
+      "type":"list",
+      "member":{"shape":"FailedGroupingRecommendationEntry"}
+    },
+    "FailedGroupingRecommendationEntry":{
+      "type":"structure",
+      "required":[
+        "errorMessage",
+        "groupingRecommendationId"
+      ],
+      "members":{
+        "errorMessage":{"shape":"ErrorMessage"},
+        "groupingRecommendationId":{"shape":"String255"}
+      }
+    },
     "FailurePolicy":{
       "type":"structure",
       "required":[
@@ -2195,6 +2381,92 @@
         "rpoInSecs":{"shape":"Seconds"},
         "rtoInSecs":{"shape":"Seconds"}
       }
+    },
+    "GroupingAppComponent":{
+      "type":"structure",
+      "required":[
+        "appComponentId",
+        "appComponentName",
+        "appComponentType"
+      ],
+      "members":{
+        "appComponentId":{"shape":"EntityName255"},
+        "appComponentName":{"shape":"EntityName255"},
+        "appComponentType":{"shape":"String255"}
+      }
+    },
+    "GroupingRecommendation":{
+      "type":"structure",
+      "required":[
+        "confidenceLevel",
+        "creationTime",
+        "groupingAppComponent",
+        "groupingRecommendationId",
+        "recommendationReasons",
+        "resources",
+        "score",
+        "status"
+      ],
+      "members":{
+        "confidenceLevel":{"shape":"GroupingRecommendationConfidenceLevel"},
+        "creationTime":{"shape":"TimeStamp"},
+        "groupingAppComponent":{"shape":"GroupingAppComponent"},
+        "groupingRecommendationId":{"shape":"String255"},
+        "recommendationReasons":{"shape":"String255List"},
+        "rejectionReason":{"shape":"GroupingRecommendationRejectionReason"},
+        "resources":{"shape":"GroupingResourceList"},
+        "score":{"shape":"Double"},
+        "status":{"shape":"GroupingRecommendationStatusType"}
+      }
+    },
+    "GroupingRecommendationConfidenceLevel":{
+      "type":"string",
+      "enum":[
+        "High",
+        "Medium"
+      ]
+    },
+    "GroupingRecommendationList":{
+      "type":"list",
+      "member":{"shape":"GroupingRecommendation"}
+    },
+    "GroupingRecommendationRejectionReason":{
+      "type":"string",
+      "enum":[
+        "DistinctBusinessPurpose",
+        "SeparateDataConcern",
+        "DistinctUserGroupHandling",
+        "Other"
+      ]
+    },
+    "GroupingRecommendationStatusType":{
+      "type":"string",
+      "enum":[
+        "Accepted",
+        "Rejected",
+        "PendingDecision"
+      ]
+    },
+    "GroupingResource":{
+      "type":"structure",
+      "required":[
+        "logicalResourceId",
+        "physicalResourceId",
+        "resourceName",
+        "resourceType",
+        "sourceAppComponentIds"
+      ],
+      "members":{
+        "logicalResourceId":{"shape":"LogicalResourceId"},
+        "physicalResourceId":{"shape":"PhysicalResourceId"},
+        "resourceName":{"shape":"String255"},
+        "resourceType":{"shape":"String255"},
+        "sourceAppComponentIds":{"shape":"String255List"}
+      }
+    },
+    "GroupingResourceList":{
+      "type":"list",
+      "member":{"shape":"GroupingResource"}
     },
     "HaArchitecture":{
       "type":"string",
@@ -2635,6 +2907,34 @@
         "resiliencyPolicies":{"shape":"ResiliencyPolicies"}
       }
     },
+    "ListResourceGroupingRecommendationsRequest":{
+      "type":"structure",
+      "members":{
+        "appArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"appArn"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListResourceGroupingRecommendationsResponse":{
+      "type":"structure",
+      "required":["groupingRecommendations"],
+      "members":{
+        "groupingRecommendations":{"shape":"GroupingRecommendationList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListSopRecommendationsRequest":{
       "type":"structure",
       "required":["assessmentArn"],
@@ -2866,7 +3166,8 @@
       "enum":[
         "BreachedUnattainable",
         "BreachedCanMeet",
-        "MetCanImprove"
+        "MetCanImprove",
+        "MissingPolicy"
       ]
     },
     "RecommendationDisruptionCompliance":{
@@ -2955,6 +3256,42 @@
       "member":{"shape":"RecommendationTemplateStatus"},
       "max":4,
       "min":1
+    },
+    "RejectGroupingRecommendationEntries":{
+      "type":"list",
+      "member":{"shape":"RejectGroupingRecommendationEntry"},
+      "max":30,
+      "min":1
+    },
+    "RejectGroupingRecommendationEntry":{
+      "type":"structure",
+      "required":["groupingRecommendationId"],
+      "members":{
+        "groupingRecommendationId":{"shape":"String255"},
+        "rejectionReason":{"shape":"GroupingRecommendationRejectionReason"}
+      }
+    },
+    "RejectResourceGroupingRecommendationsRequest":{
+      "type":"structure",
+      "required":[
+        "appArn",
+        "entries"
+      ],
+      "members":{
+        "appArn":{"shape":"Arn"},
+        "entries":{"shape":"RejectGroupingRecommendationEntries"}
+      }
+    },
+    "RejectResourceGroupingRecommendationsResponse":{
+      "type":"structure",
+      "required":[
+        "appArn",
+        "failedEntries"
+      ],
+      "members":{
+        "appArn":{"shape":"Arn"},
+        "failedEntries":{"shape":"FailedGroupingRecommendationEntries"}
+      }
     },
     "RemoveDraftAppVersionResourceMappingsRequest":{
       "type":"structure",
@@ -3191,6 +3528,15 @@
       "type":"string",
       "pattern":".*"
     },
+    "ResourcesGroupingRecGenStatusType":{
+      "type":"string",
+      "enum":[
+        "Pending",
+        "InProgress",
+        "Failed",
+        "Success"
+      ]
+    },
     "RetryAfterSeconds":{
       "type":"integer",
       "box":true
@@ -3292,6 +3638,27 @@
       "required":["assessment"],
       "members":{
         "assessment":{"shape":"AppAssessment"}
+      }
+    },
+    "StartResourceGroupingRecommendationTaskRequest":{
+      "type":"structure",
+      "required":["appArn"],
+      "members":{
+        "appArn":{"shape":"Arn"}
+      }
+    },
+    "StartResourceGroupingRecommendationTaskResponse":{
+      "type":"structure",
+      "required":[
+        "appArn",
+        "groupingId",
+        "status"
+      ],
+      "members":{
+        "appArn":{"shape":"Arn"},
+        "errorMessage":{"shape":"String500"},
+        "groupingId":{"shape":"String255"},
+        "status":{"shape":"ResourcesGroupingRecGenStatusType"}
       }
     },
     "String1024":{
