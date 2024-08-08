@@ -11064,7 +11064,8 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "Tier":{"shape":"IpamTier"}
+        "Tier":{"shape":"IpamTier"},
+        "EnablePrivateGua":{"shape":"Boolean"}
       }
     },
     "CreateIpamResourceDiscoveryRequest":{
@@ -29281,6 +29282,14 @@
         "locationName":"item"
       }
     },
+    "IpSource":{
+      "type":"string",
+      "enum":[
+        "amazon",
+        "byoip",
+        "none"
+      ]
+    },
     "Ipam":{
       "type":"structure",
       "members":{
@@ -29347,6 +29356,10 @@
         "Tier":{
           "shape":"IpamTier",
           "locationName":"tier"
+        },
+        "EnablePrivateGua":{
+          "shape":"Boolean",
+          "locationName":"enablePrivateGua"
         }
       }
     },
@@ -29586,6 +29599,10 @@
         "ResourceCidr":{
           "shape":"String",
           "locationName":"resourceCidr"
+        },
+        "IpSource":{
+          "shape":"IpamResourceCidrIpSource",
+          "locationName":"ipSource"
         },
         "ResourceType":{
           "shape":"IpamResourceType",
@@ -30214,6 +30231,14 @@
         }
       }
     },
+    "IpamResourceCidrIpSource":{
+      "type":"string",
+      "enum":[
+        "amazon",
+        "byoip",
+        "none"
+      ]
+    },
     "IpamResourceCidrSet":{
       "type":"list",
       "member":{
@@ -30549,6 +30574,13 @@
       }
     },
     "Ipv6Address":{"type":"string"},
+    "Ipv6AddressAttribute":{
+      "type":"string",
+      "enum":[
+        "public",
+        "private"
+      ]
+    },
     "Ipv6AddressList":{
       "type":"list",
       "member":{
@@ -33421,7 +33453,8 @@
           "shape":"RemoveIpamOperatingRegionSet",
           "locationName":"RemoveOperatingRegion"
         },
-        "Tier":{"shape":"IpamTier"}
+        "Tier":{"shape":"IpamTier"},
+        "EnablePrivateGua":{"shape":"Boolean"}
       }
     },
     "ModifyIpamResourceCidrRequest":{
@@ -42779,6 +42812,14 @@
         "Ipv6CidrBlockState":{
           "shape":"SubnetCidrBlockState",
           "locationName":"ipv6CidrBlockState"
+        },
+        "Ipv6AddressAttribute":{
+          "shape":"Ipv6AddressAttribute",
+          "locationName":"ipv6AddressAttribute"
+        },
+        "IpSource":{
+          "shape":"IpSource",
+          "locationName":"ipSource"
         }
       }
     },
@@ -47125,6 +47166,14 @@
         "Ipv6Pool":{
           "shape":"String",
           "locationName":"ipv6Pool"
+        },
+        "Ipv6AddressAttribute":{
+          "shape":"Ipv6AddressAttribute",
+          "locationName":"ipv6AddressAttribute"
+        },
+        "IpSource":{
+          "shape":"IpSource",
+          "locationName":"ipSource"
         }
       }
     },

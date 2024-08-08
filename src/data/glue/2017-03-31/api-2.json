@@ -3818,6 +3818,7 @@
       "members":{
         "Name":{"shape":"NodeName"},
         "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
         "Database":{"shape":"EnclosedInStringProperty"},
         "Table":{"shape":"EnclosedInStringProperty"}
       }
@@ -5223,7 +5224,11 @@
         "KAFKA_SASL_GSSAPI_KRB5_CONF",
         "KAFKA_SASL_GSSAPI_SERVICE",
         "KAFKA_SASL_GSSAPI_PRINCIPAL",
-        "ROLE_ARN"
+        "ROLE_ARN",
+        "REGION",
+        "WORKGROUP_NAME",
+        "CLUSTER_IDENTIFIER",
+        "DATABASE"
       ]
     },
     "ConnectionStatus":{
@@ -5244,7 +5249,9 @@
         "NETWORK",
         "MARKETPLACE",
         "CUSTOM",
-        "SALESFORCE"
+        "SALESFORCE",
+        "VIEW_VALIDATION_REDSHIFT",
+        "VIEW_VALIDATION_ATHENA"
       ]
     },
     "ConnectionsList":{
@@ -8665,7 +8672,8 @@
         "DatabaseName":{"shape":"NameString"},
         "Name":{"shape":"NameString"},
         "TransactionId":{"shape":"TransactionIdString"},
-        "QueryAsOfTime":{"shape":"Timestamp"}
+        "QueryAsOfTime":{"shape":"Timestamp"},
+        "IncludeStatusDetails":{"shape":"BooleanNullable"}
       }
     },
     "GetTableResponse":{
@@ -8728,7 +8736,8 @@
         "NextToken":{"shape":"Token"},
         "MaxResults":{"shape":"CatalogGetterPageSize"},
         "TransactionId":{"shape":"TransactionIdString"},
-        "QueryAsOfTime":{"shape":"Timestamp"}
+        "QueryAsOfTime":{"shape":"Timestamp"},
+        "IncludeStatusDetails":{"shape":"BooleanNullable"}
       }
     },
     "GetTablesResponse":{
@@ -11528,6 +11537,13 @@
         "JobBookmarkEntry":{"shape":"JobBookmarkEntry"}
       }
     },
+    "ResourceAction":{
+      "type":"string",
+      "enum":[
+        "UPDATE",
+        "CREATE"
+      ]
+    },
     "ResourceNotReadyException":{
       "type":"structure",
       "members":{
@@ -11548,6 +11564,16 @@
         "FOREIGN",
         "ALL",
         "FEDERATED"
+      ]
+    },
+    "ResourceState":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "IN_PROGRESS",
+        "SUCCESS",
+        "STOPPED",
+        "FAILED"
       ]
     },
     "ResourceType":{
@@ -12165,7 +12191,8 @@
         "SearchText":{"shape":"ValueString"},
         "SortCriteria":{"shape":"SortCriteria"},
         "MaxResults":{"shape":"PageSize"},
-        "ResourceShareType":{"shape":"ResourceShareType"}
+        "ResourceShareType":{"shape":"ResourceShareType"},
+        "IncludeStatusDetails":{"shape":"BooleanNullable"}
       }
     },
     "SearchTablesResponse":{
@@ -12870,6 +12897,13 @@
       "type":"list",
       "member":{"shape":"StatisticSummary"}
     },
+    "StatusDetails":{
+      "type":"structure",
+      "members":{
+        "RequestedChange":{"shape":"Table"},
+        "ViewValidations":{"shape":"ViewValidationList"}
+      }
+    },
     "StopColumnStatisticsTaskRunRequest":{
       "type":"structure",
       "required":[
@@ -13031,7 +13065,8 @@
         "VersionId":{"shape":"VersionString"},
         "FederatedTable":{"shape":"FederatedTable"},
         "ViewDefinition":{"shape":"ViewDefinition"},
-        "IsMultiDialectView":{"shape":"NullableBoolean"}
+        "IsMultiDialectView":{"shape":"NullableBoolean"},
+        "Status":{"shape":"TableStatus"}
       }
     },
     "TableError":{
@@ -13126,6 +13161,19 @@
       "type":"string",
       "max":128,
       "min":0
+    },
+    "TableStatus":{
+      "type":"structure",
+      "members":{
+        "RequestedBy":{"shape":"NameString"},
+        "UpdatedBy":{"shape":"NameString"},
+        "RequestTime":{"shape":"Timestamp"},
+        "UpdateTime":{"shape":"Timestamp"},
+        "Action":{"shape":"ResourceAction"},
+        "State":{"shape":"ResourceState"},
+        "Error":{"shape":"ErrorDetail"},
+        "Details":{"shape":"StatusDetails"}
+      }
     },
     "TableTypeString":{
       "type":"string",
@@ -14240,6 +14288,21 @@
         "ADD_OR_REPLACE",
         "DROP"
       ]
+    },
+    "ViewValidation":{
+      "type":"structure",
+      "members":{
+        "Dialect":{"shape":"ViewDialect"},
+        "DialectVersion":{"shape":"ViewDialectVersionString"},
+        "ViewValidationText":{"shape":"ViewTextString"},
+        "UpdateTime":{"shape":"Timestamp"},
+        "State":{"shape":"ResourceState"},
+        "Error":{"shape":"ErrorDetail"}
+      }
+    },
+    "ViewValidationList":{
+      "type":"list",
+      "member":{"shape":"ViewValidation"}
     },
     "WorkerType":{
       "type":"string",

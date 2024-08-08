@@ -2575,6 +2575,19 @@
       "members":{
       }
     },
+    "AdvancedSecurityAdditionalFlowsType":{
+      "type":"structure",
+      "members":{
+        "CustomAuthMode":{"shape":"AdvancedSecurityEnabledModeType"}
+      }
+    },
+    "AdvancedSecurityEnabledModeType":{
+      "type":"string",
+      "enum":[
+        "AUDIT",
+        "ENFORCED"
+      ]
+    },
     "AdvancedSecurityModeType":{
       "type":"string",
       "enum":[
@@ -5610,7 +5623,8 @@
       "type":"structure",
       "required":["AdvancedSecurityMode"],
       "members":{
-        "AdvancedSecurityMode":{"shape":"AdvancedSecurityModeType"}
+        "AdvancedSecurityMode":{"shape":"AdvancedSecurityModeType"},
+        "AdvancedSecurityAdditionalFlows":{"shape":"AdvancedSecurityAdditionalFlowsType"}
       }
     },
     "UserPoolClientDescription":{
