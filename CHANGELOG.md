@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.319.1 - 2024-08-08
 
 * `Aws\Glue` - This release adds support to retrieve the validation status when creating or updating Glue Data Catalog Views. Also added is support for BasicCatalogTarget partition keys.
 * `Aws\Connect` - This release fixes a regression in number of access control tags that are allowed to be added to a security profile in Amazon Connect. You can now add up to four access control tags on a single security profile.
