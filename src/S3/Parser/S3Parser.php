@@ -95,7 +95,7 @@ final class S3Parser extends AbstractParser
     {
         // This error parsing should be just for 200 error responses and operations where its output shape
         // does not have a streaming member.
-        if (200 !== $response->getStatusCode() || $this->hasStreamingTrait($command->getName())) {
+        if (200 !== $response->getStatusCode() || !$this->shouldBeConsidered200Error($command->getName())) {
             return;
         }
 
@@ -131,23 +131,25 @@ final class S3Parser extends AbstractParser
     }
 
     /**
-     * Checks if a specific operation has a streaming trait.
+     * Checks if a specific operation should be considered
+     * a s3 200 error. Operations where any of its output members
+     * has a streaming or httpPayload trait should be not considered.
      *
      * @param $commandName
      *
      * @return bool
      */
-    private function hasStreamingTrait($commandName): bool
+    private function shouldBeConsidered200Error($commandName): bool
     {
         $operation = $this->api->getOperation($commandName);
         $output = $operation->getOutput();
         foreach ($output->getMembers() as $_ => $memberProps) {
             if (!empty($memberProps['eventstream']) || !empty($memberProps['streaming'])) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     /**
