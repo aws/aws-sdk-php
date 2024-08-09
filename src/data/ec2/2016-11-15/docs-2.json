@@ -2075,6 +2075,7 @@
         "CreateIpamPoolRequest$AutoImport": "<p>If selected, IPAM will continuously look for resources within the CIDR range of this pool and automatically import them as allocations into your IPAM. The CIDRs that will be allocated for these resources must not already be allocated to other resources in order for the import to succeed. IPAM will import a CIDR regardless of its compliance with the pool's allocation rules, so a resource might be imported and subsequently marked as noncompliant. If IPAM discovers multiple CIDRs that overlap, IPAM will import the largest CIDR only. If IPAM discovers multiple CIDRs with matching CIDRs, IPAM will randomly import one of them only. </p> <p>A locale must be set on the pool for this feature to work.</p>",
         "CreateIpamPoolRequest$PubliclyAdvertisable": "<p>Determines if the pool is publicly advertisable. This option is not available for pools with AddressFamily set to <code>ipv4</code>.</p>",
         "CreateIpamRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateIpamRequest$EnablePrivateGua": "<p>Enable this option to use your own GUA ranges as private IPv6 addresses. This option is disabled by default.</p>",
         "CreateIpamResourceDiscoveryRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateIpamScopeRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateKeyPairRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2583,6 +2584,7 @@
         "InstanceRequirementsRequest$RequireHibernateSupport": "<p>Indicates whether instance types must support hibernation for On-Demand Instances.</p> <p>This parameter is not supported for <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetSpotPlacementScores.html\">GetSpotPlacementScores</a>.</p> <p>Default: <code>false</code> </p>",
         "InstanceSpecification$ExcludeBootVolume": "<p>Excludes the root volume from being snapshotted.</p>",
         "InstanceTagNotificationAttribute$IncludeAllTagsOfInstance": "<p>Indicates wheter all tag keys in the current Region are registered to appear in scheduled event notifications. <code>true</code> indicates that all tag keys in the current Region are registered.</p>",
+        "Ipam$EnablePrivateGua": "<p>Enable this option to use your own GUA ranges as private IPv6 addresses. This option is disabled by default.</p>",
         "IpamPool$AutoImport": "<p>If selected, IPAM will continuously look for resources within the CIDR range of this pool and automatically import them as allocations into your IPAM. The CIDRs that will be allocated for these resources must not already be allocated to other resources in order for the import to succeed. IPAM will import a CIDR regardless of its compliance with the pool's allocation rules, so a resource might be imported and subsequently marked as noncompliant. If IPAM discovers multiple CIDRs that overlap, IPAM will import the largest CIDR only. If IPAM discovers multiple CIDRs with matching CIDRs, IPAM will randomly import one of them only. </p> <p>A locale must be set on the pool for this feature to work.</p>",
         "IpamPool$PubliclyAdvertisable": "<p>Determines if a pool is publicly advertisable. This option is not available for pools with AddressFamily set to <code>ipv4</code>.</p>",
         "IpamResourceDiscovery$IsDefault": "<p>Defines if the resource discovery is the default. The default resource discovery is the resource discovery automatically created when you create an IPAM.</p>",
@@ -2652,6 +2654,7 @@
         "ModifyIpamPoolRequest$AutoImport": "<p>If true, IPAM will continuously look for resources within the CIDR range of this pool and automatically import them as allocations into your IPAM. The CIDRs that will be allocated for these resources must not already be allocated to other resources in order for the import to succeed. IPAM will import a CIDR regardless of its compliance with the pool's allocation rules, so a resource might be imported and subsequently marked as noncompliant. If IPAM discovers multiple CIDRs that overlap, IPAM will import the largest CIDR only. If IPAM discovers multiple CIDRs with matching CIDRs, IPAM will randomly import one of them only. </p> <p>A locale must be set on the pool for this feature to work.</p>",
         "ModifyIpamPoolRequest$ClearAllocationDefaultNetmaskLength": "<p>Clear the default netmask length allocation rule for this pool.</p>",
         "ModifyIpamRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ModifyIpamRequest$EnablePrivateGua": "<p>Enable this option to use your own GUA ranges as private IPv6 addresses. This option is disabled by default.</p>",
         "ModifyIpamResourceCidrRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyIpamResourceCidrRequest$Monitored": "<p>Determines if the resource is monitored by IPAM. If a resource is monitored, the resource is discovered by IPAM and you can view details about the resource’s CIDR.</p>",
         "ModifyIpamResourceDiscoveryRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -12424,7 +12427,7 @@
         "PortRange$To": "<p>The last port in the range.</p>",
         "PricingDetail$Count": "<p>The number of reservations available for the price.</p>",
         "ProvisionIpamPoolCidrRequest$NetmaskLength": "<p>The netmask length of the CIDR you'd like to provision to a pool. Can be used for provisioning Amazon-provided IPv6 CIDRs to top-level pools and for provisioning CIDRs to pools with source pools. Cannot be used to provision BYOIP CIDRs to top-level pools. Either \"NetmaskLength\" or \"Cidr\" is required.</p>",
-        "ProvisionPublicIpv4PoolCidrRequest$NetmaskLength": "<p>The netmask length of the CIDR you would like to allocate to the public IPv4 pool.</p>",
+        "ProvisionPublicIpv4PoolCidrRequest$NetmaskLength": "<p>The netmask length of the CIDR you would like to allocate to the public IPv4 pool. The least specific netmask length you can define is 24.</p>",
         "PublicIpv4Pool$TotalAddressCount": "<p>The total number of addresses.</p>",
         "PublicIpv4Pool$TotalAvailableAddressCount": "<p>The total number of available addresses.</p>",
         "PublicIpv4PoolRange$AddressCount": "<p>The number of addresses in the range.</p>",
@@ -12689,6 +12692,13 @@
       "base": null,
       "refs": {
         "StaleIpPermission$IpRanges": "<p>The IP ranges. Not applicable for stale security group rules.</p>"
+      }
+    },
+    "IpSource": {
+      "base": null,
+      "refs": {
+        "SubnetIpv6CidrBlockAssociation$IpSource": "<p>The source that allocated the IP address space. <code>byoip</code> or <code>amazon</code> indicates public IP address space allocated by Amazon or space that you have allocated with Bring your own IP (BYOIP). <code>none</code> indicates private space.</p>",
+        "VpcIpv6CidrBlockAssociation$IpSource": "<p>The source that allocated the IP address space. <code>byoip</code> or <code>amazon</code> indicates public IP address space allocated by Amazon or space that you have allocated with Bring your own IP (BYOIP). <code>none</code> indicates private space.</p>"
       }
     },
     "Ipam": {
@@ -13111,6 +13121,12 @@
         "ModifyIpamResourceCidrResult$IpamResourceCidr": "<p>The CIDR of the resource.</p>"
       }
     },
+    "IpamResourceCidrIpSource": {
+      "base": null,
+      "refs": {
+        "IpamDiscoveredResourceCidr$IpSource": "<p>The source that allocated the IP address space. <code>byoip</code> or <code>amazon</code> indicates public IP address space allocated by Amazon or space that you have allocated with Bring your own IP (BYOIP). <code>none</code> indicates private space.</p>"
+      }
+    },
     "IpamResourceCidrSet": {
       "base": null,
       "refs": {
@@ -13336,6 +13352,13 @@
       "base": null,
       "refs": {
         "ScheduledInstancesIpv6Address$Ipv6Address": "<p>The IPv6 address.</p>"
+      }
+    },
+    "Ipv6AddressAttribute": {
+      "base": null,
+      "refs": {
+        "SubnetIpv6CidrBlockAssociation$Ipv6AddressAttribute": "<p>Public IPv6 addresses are those advertised on the internet from Amazon Web Services. Private IP addresses are not and cannot be advertised on the internet from Amazon Web Services.</p>",
+        "VpcIpv6CidrBlockAssociation$Ipv6AddressAttribute": "<p>Public IPv6 addresses are those advertised on the internet from Amazon Web Services. Private IP addresses are not and cannot be advertised on the internet from Amazon Web Services.</p>"
       }
     },
     "Ipv6AddressList": {

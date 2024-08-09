@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## 3.319.1 - 2024-08-08
+
+* `Aws\Glue` - This release adds support to retrieve the validation status when creating or updating Glue Data Catalog Views. Also added is support for BasicCatalogTarget partition keys.
+* `Aws\Connect` - This release fixes a regression in number of access control tags that are allowed to be added to a security profile in Amazon Connect. You can now add up to four access control tags on a single security profile.
+* `Aws\CognitoIdentityProvider` - Added support for threat protection for custom authentication in Amazon Cognito user pools.
+* `Aws\EC2` - Launch of private IPv6 addressing for VPCs and Subnets. VPC IPAM supports the planning and monitoring of private IPv6 usage.
+
+## 3.319.0 - 2024-08-07
+
+* `Aws\S3` - Adds customization to output structures for `Expires` parsing which adds an additional shape `ExpiresString`
+* `Aws\Glue` - Introducing AWS Glue Data Quality anomaly detection, a new functionality that uses ML-based solutions to detect data anomalies users have not explicitly defined rules for.
+* `Aws\AppIntegrationsService` - Updated CreateDataIntegration and CreateDataIntegrationAssociation API to support bulk data export from Amazon Connect Customer Profiles to the customer S3 bucket.
+
+## 3.318.0 - 2024-08-06
+
+* `Aws\Endpoint` - Endpoint resolution based on a account id.
+* `Aws\CognitoIdentityProvider` - Advanced security feature updates to include password history and log export for Cognito user pools.
+* `Aws\CostOptimizationHub` - This release adds savings percentage support to the ListRecommendationSummaries API.
+* `Aws\BedrockAgentRuntime` - Introduce model invocation output traces for orchestration traces, which contain the model's raw response and usage.
+* `Aws\WorkSpaces` - Added support for BYOL_GRAPHICS_G4DN_WSP IngestionProcess
+
 ## 3.317.2 - 2024-08-05
 
 * `Aws\ECR` - Released two new APIs along with documentation updates. The GetAccountSetting API is used to view the current basic scan type version setting for your registry, while the PutAccountSetting API is used to update the basic scan type version for your registry.

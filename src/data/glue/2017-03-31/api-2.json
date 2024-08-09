@@ -235,6 +235,21 @@
         {"shape":"InvalidInputException"}
       ]
     },
+    "BatchPutDataQualityStatisticAnnotation":{
+      "name":"BatchPutDataQualityStatisticAnnotation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchPutDataQualityStatisticAnnotationRequest"},
+      "output":{"shape":"BatchPutDataQualityStatisticAnnotationResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNumberLimitExceededException"}
+      ]
+    },
     "BatchStopJobRun":{
       "name":"BatchStopJobRun",
       "http":{
@@ -1385,6 +1400,36 @@
         {"shape":"OperationTimeoutException"}
       ]
     },
+    "GetDataQualityModel":{
+      "name":"GetDataQualityModel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDataQualityModelRequest"},
+      "output":{"shape":"GetDataQualityModelResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "GetDataQualityModelResult":{
+      "name":"GetDataQualityModelResult",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDataQualityModelResultRequest"},
+      "output":{"shape":"GetDataQualityModelResultResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "GetDataQualityResult":{
       "name":"GetDataQualityResult",
       "http":{
@@ -2338,6 +2383,33 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "ListDataQualityStatisticAnnotations":{
+      "name":"ListDataQualityStatisticAnnotations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDataQualityStatisticAnnotationsRequest"},
+      "output":{"shape":"ListDataQualityStatisticAnnotationsResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListDataQualityStatistics":{
+      "name":"ListDataQualityStatistics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDataQualityStatisticsRequest"},
+      "output":{"shape":"ListDataQualityStatisticsResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "ListDevEndpoints":{
       "name":"ListDevEndpoints",
       "http":{
@@ -2530,6 +2602,20 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "PutDataQualityProfileAnnotation":{
+      "name":"PutDataQualityProfileAnnotation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutDataQualityProfileAnnotationRequest"},
+      "output":{"shape":"PutDataQualityProfileAnnotationResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "PutResourcePolicy":{
@@ -3582,6 +3668,22 @@
         "Inputs":{"shape":"OneInput"}
       }
     },
+    "AnnotationError":{
+      "type":"structure",
+      "members":{
+        "ProfileId":{"shape":"HashString"},
+        "StatisticId":{"shape":"HashString"},
+        "FailureReason":{"shape":"DescriptionString"}
+      }
+    },
+    "AnnotationErrorList":{
+      "type":"list",
+      "member":{"shape":"AnnotationError"}
+    },
+    "AnnotationList":{
+      "type":"list",
+      "member":{"shape":"StatisticAnnotation"}
+    },
     "ApplyMapping":{
       "type":"structure",
       "required":[
@@ -3716,6 +3818,7 @@
       "members":{
         "Name":{"shape":"NodeName"},
         "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
         "Database":{"shape":"EnclosedInStringProperty"},
         "Table":{"shape":"EnclosedInStringProperty"}
       }
@@ -4020,6 +4123,20 @@
       "members":{
         "Workflows":{"shape":"Workflows"},
         "MissingWorkflows":{"shape":"WorkflowNames"}
+      }
+    },
+    "BatchPutDataQualityStatisticAnnotationRequest":{
+      "type":"structure",
+      "required":["InclusionAnnotations"],
+      "members":{
+        "InclusionAnnotations":{"shape":"InclusionAnnotationList"},
+        "ClientToken":{"shape":"HashString"}
+      }
+    },
+    "BatchPutDataQualityStatisticAnnotationResponse":{
+      "type":"structure",
+      "members":{
+        "FailedInclusionAnnotations":{"shape":"AnnotationErrorList"}
       }
     },
     "BatchSize":{
@@ -5107,7 +5224,11 @@
         "KAFKA_SASL_GSSAPI_KRB5_CONF",
         "KAFKA_SASL_GSSAPI_SERVICE",
         "KAFKA_SASL_GSSAPI_PRINCIPAL",
-        "ROLE_ARN"
+        "ROLE_ARN",
+        "REGION",
+        "WORKGROUP_NAME",
+        "CLUSTER_IDENTIFIER",
+        "DATABASE"
       ]
     },
     "ConnectionStatus":{
@@ -5128,7 +5249,9 @@
         "NETWORK",
         "MARKETPLACE",
         "CUSTOM",
-        "SALESFORCE"
+        "SALESFORCE",
+        "VIEW_VALIDATION_REDSHIFT",
+        "VIEW_VALIDATION_ATHENA"
       ]
     },
     "ConnectionsList":{
@@ -5491,6 +5614,7 @@
         "Ruleset":{"shape":"DataQualityRulesetString"},
         "Tags":{"shape":"TagsMap"},
         "TargetTable":{"shape":"DataQualityTargetTable"},
+        "DataQualitySecurityConfiguration":{"shape":"NameString"},
         "ClientToken":{"shape":"HashString"}
       }
     },
@@ -6168,6 +6292,14 @@
         "UpperLimit":{"shape":"NullableDouble"}
       }
     },
+    "DataQualityModelStatus":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
     "DataQualityObservation":{
       "type":"structure",
       "members":{
@@ -6179,7 +6311,8 @@
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*",
+      "sensitive":true
     },
     "DataQualityObservations":{
       "type":"list",
@@ -6191,6 +6324,7 @@
       "type":"structure",
       "members":{
         "ResultId":{"shape":"HashString"},
+        "ProfileId":{"shape":"HashString"},
         "Score":{"shape":"GenericBoundedDouble"},
         "DataSource":{"shape":"DataSource"},
         "RulesetName":{"shape":"NameString"},
@@ -6274,14 +6408,16 @@
         "Description":{"shape":"DataQualityRuleResultDescription"},
         "EvaluationMessage":{"shape":"DataQualityRuleResultDescription"},
         "Result":{"shape":"DataQualityRuleResultStatus"},
-        "EvaluatedMetrics":{"shape":"EvaluatedMetricsMap"}
+        "EvaluatedMetrics":{"shape":"EvaluatedMetricsMap"},
+        "EvaluatedRule":{"shape":"DataQualityRuleResultDescription"}
       }
     },
     "DataQualityRuleResultDescription":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*",
+      "sensitive":true
     },
     "DataQualityRuleResultStatus":{
       "type":"string",
@@ -6434,6 +6570,14 @@
     "DatabrewConditionValue":{
       "type":"string",
       "max":1024
+    },
+    "DatapointInclusionAnnotation":{
+      "type":"structure",
+      "members":{
+        "ProfileId":{"shape":"HashString"},
+        "StatisticId":{"shape":"HashString"},
+        "InclusionAnnotation":{"shape":"InclusionAnnotationValue"}
+      }
     },
     "Datatype":{
       "type":"structure",
@@ -7261,7 +7405,8 @@
     "EvaluatedMetricsMap":{
       "type":"map",
       "key":{"shape":"NameString"},
-      "value":{"shape":"NullableDouble"}
+      "value":{"shape":"NullableDouble"},
+      "sensitive":true
     },
     "EvaluationMetrics":{
       "type":"structure",
@@ -7818,6 +7963,41 @@
         "DataCatalogEncryptionSettings":{"shape":"DataCatalogEncryptionSettings"}
       }
     },
+    "GetDataQualityModelRequest":{
+      "type":"structure",
+      "required":["ProfileId"],
+      "members":{
+        "StatisticId":{"shape":"HashString"},
+        "ProfileId":{"shape":"HashString"}
+      }
+    },
+    "GetDataQualityModelResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"DataQualityModelStatus"},
+        "StartedOn":{"shape":"Timestamp"},
+        "CompletedOn":{"shape":"Timestamp"},
+        "FailureReason":{"shape":"HashString"}
+      }
+    },
+    "GetDataQualityModelResultRequest":{
+      "type":"structure",
+      "required":[
+        "StatisticId",
+        "ProfileId"
+      ],
+      "members":{
+        "StatisticId":{"shape":"HashString"},
+        "ProfileId":{"shape":"HashString"}
+      }
+    },
+    "GetDataQualityModelResultResponse":{
+      "type":"structure",
+      "members":{
+        "CompletedOn":{"shape":"Timestamp"},
+        "Model":{"shape":"StatisticModelResults"}
+      }
+    },
     "GetDataQualityResultRequest":{
       "type":"structure",
       "required":["ResultId"],
@@ -7829,6 +8009,7 @@
       "type":"structure",
       "members":{
         "ResultId":{"shape":"HashString"},
+        "ProfileId":{"shape":"HashString"},
         "Score":{"shape":"GenericBoundedDouble"},
         "DataSource":{"shape":"DataSource"},
         "RulesetName":{"shape":"NameString"},
@@ -7865,7 +8046,8 @@
         "CompletedOn":{"shape":"Timestamp"},
         "ExecutionTime":{"shape":"ExecutionTime"},
         "RecommendedRuleset":{"shape":"DataQualityRulesetString"},
-        "CreatedRulesetName":{"shape":"NameString"}
+        "CreatedRulesetName":{"shape":"NameString"},
+        "DataQualitySecurityConfiguration":{"shape":"NameString"}
       }
     },
     "GetDataQualityRulesetEvaluationRunRequest":{
@@ -7911,7 +8093,8 @@
         "TargetTable":{"shape":"DataQualityTargetTable"},
         "CreatedOn":{"shape":"Timestamp"},
         "LastModifiedOn":{"shape":"Timestamp"},
-        "RecommendationRunId":{"shape":"HashString"}
+        "RecommendationRunId":{"shape":"HashString"},
+        "DataQualitySecurityConfiguration":{"shape":"NameString"}
       }
     },
     "GetDatabaseRequest":{
@@ -8489,7 +8672,8 @@
         "DatabaseName":{"shape":"NameString"},
         "Name":{"shape":"NameString"},
         "TransactionId":{"shape":"TransactionIdString"},
-        "QueryAsOfTime":{"shape":"Timestamp"}
+        "QueryAsOfTime":{"shape":"Timestamp"},
+        "IncludeStatusDetails":{"shape":"BooleanNullable"}
       }
     },
     "GetTableResponse":{
@@ -8552,7 +8736,8 @@
         "NextToken":{"shape":"Token"},
         "MaxResults":{"shape":"CatalogGetterPageSize"},
         "TransactionId":{"shape":"TransactionIdString"},
-        "QueryAsOfTime":{"shape":"Timestamp"}
+        "QueryAsOfTime":{"shape":"Timestamp"},
+        "IncludeStatusDetails":{"shape":"BooleanNullable"}
       }
     },
     "GetTablesResponse":{
@@ -9081,6 +9266,17 @@
         "InputS3Path":{"shape":"UriString"},
         "Replace":{"shape":"ReplaceBoolean"}
       }
+    },
+    "InclusionAnnotationList":{
+      "type":"list",
+      "member":{"shape":"DatapointInclusionAnnotation"}
+    },
+    "InclusionAnnotationValue":{
+      "type":"string",
+      "enum":[
+        "INCLUDE",
+        "EXCLUDE"
+      ]
     },
     "Integer":{"type":"integer"},
     "IntegerFlag":{
@@ -9771,6 +9967,40 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListDataQualityStatisticAnnotationsRequest":{
+      "type":"structure",
+      "members":{
+        "StatisticId":{"shape":"HashString"},
+        "ProfileId":{"shape":"HashString"},
+        "TimestampFilter":{"shape":"TimestampFilter"},
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListDataQualityStatisticAnnotationsResponse":{
+      "type":"structure",
+      "members":{
+        "Annotations":{"shape":"AnnotationList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListDataQualityStatisticsRequest":{
+      "type":"structure",
+      "members":{
+        "StatisticId":{"shape":"HashString"},
+        "ProfileId":{"shape":"HashString"},
+        "TimestampFilter":{"shape":"TimestampFilter"},
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListDataQualityStatisticsResponse":{
+      "type":"structure",
+      "members":{
+        "Statistics":{"shape":"StatisticSummaryList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListDevEndpointsRequest":{
       "type":"structure",
       "members":{
@@ -10213,6 +10443,7 @@
       "type":"structure",
       "members":{
         "MetricName":{"shape":"NameString"},
+        "StatisticId":{"shape":"HashString"},
         "MetricValues":{"shape":"DataQualityMetricValues"},
         "NewRules":{"shape":"NewRules"}
       }
@@ -10961,6 +11192,22 @@
       "members":{
       }
     },
+    "PutDataQualityProfileAnnotationRequest":{
+      "type":"structure",
+      "required":[
+        "ProfileId",
+        "InclusionAnnotation"
+      ],
+      "members":{
+        "ProfileId":{"shape":"HashString"},
+        "InclusionAnnotation":{"shape":"InclusionAnnotationValue"}
+      }
+    },
+    "PutDataQualityProfileAnnotationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "PutResourcePolicyRequest":{
       "type":"structure",
       "required":["PolicyInJson"],
@@ -11172,6 +11419,10 @@
         "UpsertRedshiftOptions":{"shape":"UpsertRedshiftTargetOptions"}
       }
     },
+    "ReferenceDatasetsList":{
+      "type":"list",
+      "member":{"shape":"NameString"}
+    },
     "RegisterSchemaVersionInput":{
       "type":"structure",
       "required":[
@@ -11286,6 +11537,13 @@
         "JobBookmarkEntry":{"shape":"JobBookmarkEntry"}
       }
     },
+    "ResourceAction":{
+      "type":"string",
+      "enum":[
+        "UPDATE",
+        "CREATE"
+      ]
+    },
     "ResourceNotReadyException":{
       "type":"structure",
       "members":{
@@ -11306,6 +11564,16 @@
         "FOREIGN",
         "ALL",
         "FEDERATED"
+      ]
+    },
+    "ResourceState":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "IN_PROGRESS",
+        "SUCCESS",
+        "STOPPED",
+        "FAILED"
       ]
     },
     "ResourceType":{
@@ -11363,6 +11631,13 @@
       "min":1
     },
     "RunId":{"type":"string"},
+    "RunIdentifier":{
+      "type":"structure",
+      "members":{
+        "RunId":{"shape":"HashString"},
+        "JobRunId":{"shape":"HashString"}
+      }
+    },
     "RunMetrics":{
       "type":"structure",
       "members":{
@@ -11916,7 +12191,8 @@
         "SearchText":{"shape":"ValueString"},
         "SortCriteria":{"shape":"SortCriteria"},
         "MaxResults":{"shape":"PageSize"},
-        "ResourceShareType":{"shape":"ResourceShareType"}
+        "ResourceShareType":{"shape":"ResourceShareType"},
+        "IncludeStatusDetails":{"shape":"BooleanNullable"}
       }
     },
     "SearchTablesResponse":{
@@ -12344,6 +12620,7 @@
         "NumberOfWorkers":{"shape":"NullableInteger"},
         "Timeout":{"shape":"Timeout"},
         "CreatedRulesetName":{"shape":"NameString"},
+        "DataQualitySecurityConfiguration":{"shape":"NameString"},
         "ClientToken":{"shape":"HashString"}
       }
     },
@@ -12556,6 +12833,77 @@
         "ERROR"
       ]
     },
+    "StatisticAnnotation":{
+      "type":"structure",
+      "members":{
+        "ProfileId":{"shape":"HashString"},
+        "StatisticId":{"shape":"HashString"},
+        "StatisticRecordedOn":{"shape":"Timestamp"},
+        "InclusionAnnotation":{"shape":"TimestampedInclusionAnnotation"}
+      }
+    },
+    "StatisticEvaluationLevel":{
+      "type":"string",
+      "enum":[
+        "Dataset",
+        "Column",
+        "Multicolumn"
+      ]
+    },
+    "StatisticModelResult":{
+      "type":"structure",
+      "members":{
+        "LowerBound":{"shape":"NullableDouble"},
+        "UpperBound":{"shape":"NullableDouble"},
+        "PredictedValue":{"shape":"NullableDouble"},
+        "ActualValue":{"shape":"NullableDouble"},
+        "Date":{"shape":"Timestamp"},
+        "InclusionAnnotation":{"shape":"InclusionAnnotationValue"}
+      }
+    },
+    "StatisticModelResults":{
+      "type":"list",
+      "member":{"shape":"StatisticModelResult"}
+    },
+    "StatisticNameString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Z][A-Za-z\\.]+"
+    },
+    "StatisticPropertiesMap":{
+      "type":"map",
+      "key":{"shape":"NameString"},
+      "value":{"shape":"DescriptionString"},
+      "sensitive":true
+    },
+    "StatisticSummary":{
+      "type":"structure",
+      "members":{
+        "StatisticId":{"shape":"HashString"},
+        "ProfileId":{"shape":"HashString"},
+        "RunIdentifier":{"shape":"RunIdentifier"},
+        "StatisticName":{"shape":"StatisticNameString"},
+        "DoubleValue":{"shape":"double"},
+        "EvaluationLevel":{"shape":"StatisticEvaluationLevel"},
+        "ColumnsReferenced":{"shape":"ColumnNameList"},
+        "ReferencedDatasets":{"shape":"ReferenceDatasetsList"},
+        "StatisticProperties":{"shape":"StatisticPropertiesMap"},
+        "RecordedOn":{"shape":"Timestamp"},
+        "InclusionAnnotation":{"shape":"TimestampedInclusionAnnotation"}
+      }
+    },
+    "StatisticSummaryList":{
+      "type":"list",
+      "member":{"shape":"StatisticSummary"}
+    },
+    "StatusDetails":{
+      "type":"structure",
+      "members":{
+        "RequestedChange":{"shape":"Table"},
+        "ViewValidations":{"shape":"ViewValidationList"}
+      }
+    },
     "StopColumnStatisticsTaskRunRequest":{
       "type":"structure",
       "required":[
@@ -12717,7 +13065,8 @@
         "VersionId":{"shape":"VersionString"},
         "FederatedTable":{"shape":"FederatedTable"},
         "ViewDefinition":{"shape":"ViewDefinition"},
-        "IsMultiDialectView":{"shape":"NullableBoolean"}
+        "IsMultiDialectView":{"shape":"NullableBoolean"},
+        "Status":{"shape":"TableStatus"}
       }
     },
     "TableError":{
@@ -12812,6 +13161,19 @@
       "type":"string",
       "max":128,
       "min":0
+    },
+    "TableStatus":{
+      "type":"structure",
+      "members":{
+        "RequestedBy":{"shape":"NameString"},
+        "UpdatedBy":{"shape":"NameString"},
+        "RequestTime":{"shape":"Timestamp"},
+        "UpdateTime":{"shape":"Timestamp"},
+        "Action":{"shape":"ResourceAction"},
+        "State":{"shape":"ResourceState"},
+        "Error":{"shape":"ErrorDetail"},
+        "Details":{"shape":"StatusDetails"}
+      }
     },
     "TableTypeString":{
       "type":"string",
@@ -12977,7 +13339,21 @@
       "min":1
     },
     "Timestamp":{"type":"timestamp"},
+    "TimestampFilter":{
+      "type":"structure",
+      "members":{
+        "RecordedBefore":{"shape":"Timestamp"},
+        "RecordedAfter":{"shape":"Timestamp"}
+      }
+    },
     "TimestampValue":{"type":"timestamp"},
+    "TimestampedInclusionAnnotation":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"InclusionAnnotationValue"},
+        "LastModifiedOn":{"shape":"Timestamp"}
+      }
+    },
     "Token":{"type":"string"},
     "TokenUrl":{
       "type":"string",
@@ -13913,6 +14289,21 @@
         "DROP"
       ]
     },
+    "ViewValidation":{
+      "type":"structure",
+      "members":{
+        "Dialect":{"shape":"ViewDialect"},
+        "DialectVersion":{"shape":"ViewDialectVersionString"},
+        "ViewValidationText":{"shape":"ViewTextString"},
+        "UpdateTime":{"shape":"Timestamp"},
+        "State":{"shape":"ResourceState"},
+        "Error":{"shape":"ErrorDetail"}
+      }
+    },
+    "ViewValidationList":{
+      "type":"list",
+      "member":{"shape":"ViewValidation"}
+    },
     "WorkerType":{
       "type":"string",
       "enum":[
@@ -14027,6 +14418,7 @@
       "type":"string",
       "min":1
     },
+    "double":{"type":"double"},
     "tableNameString":{
       "type":"string",
       "min":1
