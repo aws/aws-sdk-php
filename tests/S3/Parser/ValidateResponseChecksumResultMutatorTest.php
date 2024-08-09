@@ -4,7 +4,10 @@ namespace Aws\Test\S3\Parser;
 
 use Aws\Api\ApiProvider;
 use Aws\AwsClientInterface;
+use Aws\Command;
+use Aws\HandlerList;
 use Aws\Result;
+use Aws\S3\Exception\S3Exception;
 use Aws\S3\Parser\ValidateResponseChecksumResultMutator;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Response;
@@ -20,27 +23,44 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
 
     /**
      * @dataProvider checksumCasesDataProvider
-     * @param $responseAlgorithms
-     * @param $checksumHeadersReturned
-     * @param $expectedChecksum
-
+     * @param array $responseAlgorithms
+     * @param array $checksumHeadersReturned
+     * @param string $expectedChecksum
+     *
      * @return void
      */
     public function testValidatesChoosesRightChecksum(
-        $responseAlgorithms, $checksumHeadersReturned, $expectedChecksum
+        array $responseAlgorithms,
+        array $checksumHeadersReturned,
+        ?string $expectedChecksumAlgorithm
     ) {
-        $mutator = $this->getValidateResponseChecksumMutator();
+        $s3Client = $this->getTestS3ClientWithResponseAlgorithms(
+            'GetObject',
+            $responseAlgorithms
+        );
+        $mutator = new ValidateResponseChecksumResultMutator($s3Client->getApi());
+        $result = new Result();
+        $command = new Command(
+            'GetObject',
+            [
+                'ChecksumMode' => 'enabled'
+            ],
+            new HandlerList()
+        );
         $response = new Response(200, [], "response body");
         foreach ($checksumHeadersReturned as $header) {
-            $response = $response->withAddedHeader('x-amz-checksum-' . $header, "abc");
+            $response = $response->withAddedHeader(
+                'x-amz-checksum-' . $header[0],
+                $header[1]
+            );
         }
 
-        $chosenChecksum = $mutator->chooseChecksumHeaderToValidate(
-            $responseAlgorithms,
-            $response
-        );
+        $result = $mutator($result, $command, $response);
 
-        $this->assertEquals($expectedChecksum, $chosenChecksum);
+        $this->assertEquals(
+            $expectedChecksumAlgorithm,
+            $result['ChecksumValidated']
+        );
     }
 
     /**
@@ -52,60 +72,113 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
     public function checksumCasesDataProvider(): array
     {
         return [
-            [['crc32', 'crc32c'], [], null],
-            [['sha256', 'crc32'], ['sha256'], "sha256"],
-            [['crc32', 'crc32c'], ["sha256", "crc32"], "crc32"],
-            [['crc32', 'crc32c'], ['crc64'], null],
+            [
+                ['CRC32', 'CRC32C'],
+                [],
+                null
+            ],
+            [
+                ['SHA256', 'CRC32'],
+                [
+                    ['sha256', 'E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0=']
+                ],
+                "SHA256"
+            ],
+            [
+                ['CRC32', 'CRC32C'],
+                [
+                    ["sha256", 'E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0='],
+                    ['crc32', 'DIt2Ng==']
+                ],
+                "CRC32"
+            ],
+            [
+                ['CRC32', 'CRC32C'],
+                [
+                    ['crc64', '']
+                ],
+                null
+            ],
         ];
     }
 
     public function testValidatesChecksumFailsOnBadValue() {
-        $mutator = $this->getValidateResponseChecksumMutator();
-        $response = new Response(200, [], "response body");
-        $response = $response->withAddedHeader('x-amz-checksum-sha256', "abc");
-        $chosenChecksum = $mutator->validateChecksum(
-            ['sha256'],
-            $response
+        $this->expectException(S3Exception::class);
+        $this->expectExceptionMessage(
+            'Calculated response checksum did not match the expected value'
         );
-
-        $this->assertEquals("FAILED", $chosenChecksum['status']);
+        $mutator = $this->getValidateResponseChecksumMutator();
+        $result = new Result();
+        $command = new Command(
+            'GetObject',
+            [
+                'ChecksumMode' => 'enabled'
+            ],
+            new HandlerList()
+        );
+        $response = new Response(200, [], "response body");
+        $response = $response->withAddedHeader(
+            'x-amz-checksum-sha256',
+            "abc"
+        );
+        $mutator($result, $command, $response);
     }
 
     public function testValidatesChecksumSucceeds() {
         $mutator = $this->getValidateResponseChecksumMutator();
         $expectedValue = "E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0=";
-        $response = new Response(200, [], "response body");
-        $response = $response->withAddedHeader('x-amz-checksum-sha256', $expectedValue);
-
-        $chosenChecksum = $mutator->validateChecksum(
-            ['sha256'],
-            $response
+        $expectedAlgorithm = "SHA256";
+        $result = new Result();
+        $command = new Command(
+            'GetObject',
+            [
+                'ChecksumMode' => 'enabled'
+            ],
+            new HandlerList()
         );
+        $response = new Response(200, [], "response body");
+        $response = $response->withAddedHeader(
+            'x-amz-checksum-sha256',
+            $expectedValue
+        );
+        $result = $mutator($result, $command, $response);
 
-        $this->assertEquals("SUCCEEDED", $chosenChecksum['status']);
-        $this->assertEquals("sha256", $chosenChecksum['checksum']);
-        $this->assertEquals($expectedValue, $chosenChecksum['checksumHeaderValue']);
+        $this->assertEquals($expectedAlgorithm, $result['ChecksumValidated']);
+
     }
 
     public function testValidatesChecksumSkipsValidation() {
         $mutator = $this->getValidateResponseChecksumMutator();
-        $response = new Response(200, [], "response body");
-        $chosenChecksum = $mutator->validateChecksum(
-            [],
-            $response
+        $result = new Result();
+        $command = new Command(
+            'GetObject',
+            [
+                'ChecksumMode' => 'enabled'
+            ],
+            new HandlerList()
         );
+        $response = new Response(200, [], "response body");
+        $result = $mutator($result, $command, $response);
 
-        $this->assertEquals("SKIPPED", $chosenChecksum['status']);
+        $this->assertEmpty($result['ChecksumValidated']);
     }
 
     public function testSkipsGetObjectReturnsFullMultipart() {
-        $s3 = $this->getTestS3Client();
-        $mutator = new ValidateResponseChecksumResultMutator($s3->getApi());
-        $command = $s3->getCommand("GetObject", ["ChecksumMode" => "enabled"]);
         $expectedValue = "E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbK-1034";
+        $mutator = $this->getValidateResponseChecksumMutator();
+        $result = new Result();
+        $command = new Command(
+            'GetObject',
+            [
+                'ChecksumMode' => 'enabled'
+            ],
+            new HandlerList()
+        );
         $response = new Response(200, [], "response body");
-        $response = $response->withAddedHeader('x-amz-checksum-sha256', $expectedValue);
-        $result = new Result([]);
+        $response = $response->withAddedHeader(
+            'x-amz-checksum-sha256',
+            $expectedValue
+        );
         $mutator($result, $command, $response);
 
         //if it reached here, it didn't throw the error
@@ -113,16 +186,23 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
     }
 
     public function testValidatesSha256() {
-        $s3 = $this->getTestS3Client();
-        $mutator = new ValidateResponseChecksumResultMutator($s3->getApi());
-        $command = $s3->getCommand("GetObject", ["ChecksumMode" => "enabled"]);
         $expectedValue = "E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0=";
+        $mutator = $this->getValidateResponseChecksumMutator();
+        $result = new Result();
+        $command = new Command(
+            'GetObject',
+            [
+                'ChecksumMode' => 'enabled'
+            ],
+            new HandlerList()
+        );
         $response = new Response(200, [], "response body");
-        $response = $response->withAddedHeader('x-amz-checksum-sha256', $expectedValue);
-        $result = new Result([]);
+        $response = $response->withAddedHeader(
+            'x-amz-checksum-sha256',
+            $expectedValue
+        );
         $result = $mutator($result, $command, $response);
-
-        //if it reached here, it didn't throw the error
+        // if it reached here, it didn't throw the error
         self::assertSame("SHA256", $result['ChecksumValidated']);
     }
 
@@ -132,9 +212,12 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
      *
      * @return ValidateResponseChecksumResultMutator
      */
-    private function getValidateResponseChecksumMutator(): ValidateResponseChecksumResultMutator
+    private function getValidateResponseChecksumMutator(
+    ): ValidateResponseChecksumResultMutator
     {
-        return new ValidateResponseChecksumResultMutator($this->getTestS3Client()->getApi());
+        return new ValidateResponseChecksumResultMutator(
+            $this->getTestS3Client()->getApi()
+        );
     }
 
     /**
@@ -150,5 +233,32 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
             's3',
             ['api_provider' => ApiProvider::filesystem(__DIR__ . '/../fixtures')]
         );
+    }
+
+    /**
+     * Returns an instance of S3 client, and it alters the api
+     * definition to use the provided response algorithms at the
+     * command specified.
+     *
+     * @param string $commandName
+     * @param array $responseAlgorithms
+     *
+     * @see \Aws\Test\UsesServiceTrait::getTestClient() for more information.
+     *
+     * @return AwsClientInterface
+     */
+    private function getTestS3ClientWithResponseAlgorithms(
+        string $commandName,
+        array $responseAlgorithms
+    ): AwsClientInterface {
+        // Get the client and alter the api definition
+        $s3Client = $this->getTestS3Client();
+        $clientDefinition = $s3Client->getApi()->getDefinition();
+        $httpChecksum = $clientDefinition['operations'][$commandName]['httpChecksum'];
+        $httpChecksum['responseAlgorithms'] = $responseAlgorithms;
+        $clientDefinition['operations'][$commandName]['httpChecksum'] = $httpChecksum;
+        $s3Client->getApi()->setDefinition($clientDefinition);
+
+        return $s3Client;
     }
 }

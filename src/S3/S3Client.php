@@ -956,8 +956,14 @@ class S3Client extends AwsClient implements S3ClientInterface
             $args['api'],
             $args['exception_class']
         );
-        $s3Parser->addS3ResultMutator('get-bucket-location', new GetBucketLocationResultMutator());
-        $s3Parser->addS3ResultMutator('validate-response-checksum', new ValidateResponseChecksumResultMutator($args['api']));
+        $s3Parser->addS3ResultMutator(
+            'get-bucket-location',
+            new GetBucketLocationResultMutator()
+        );
+        $s3Parser->addS3ResultMutator(
+            'validate-response-checksum',
+            new ValidateResponseChecksumResultMutator($args['api'])
+        );
         $args['parser'] = $s3Parser;
     }
 

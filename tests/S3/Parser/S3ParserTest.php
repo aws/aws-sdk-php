@@ -37,7 +37,9 @@ EOXML;
     public function testHandle200Errors(string $operation)
     {
         $this->expectException(AwsException::class);
-        $this->expectExceptionMessage('We encountered an internal error. Please try again.');
+        $this->expectExceptionMessage(
+            'We encountered an internal error. Please try again.'
+        );
         $s3Parser = $this->getS3Parser();
         $command = new Command($operation, [], new HandlerList());
         $response = new Response(
@@ -166,7 +168,11 @@ EOXML;
             $parser($command, $response);
         } catch (AwsException $e) {
             $this->assertTrue($e->isConnectionError());
-            $this->assertEquals("Error parsing response for ListBuckets: AWS parsing error: Error parsing XML: String could not be parsed as XML", $e->getMessage());
+            $errorMessage = [
+                'Error parsing response for ListBuckets: ',
+                'AWS parsing error: Error parsing XML: String could not be parsed as XML'
+            ];
+            $this->assertEquals(join('', $errorMessage), $e->getMessage());
         }
     }
 
@@ -176,29 +182,36 @@ EOXML;
         $testValue = 'TestValue';
         $s3MutatorName = 's3.test-mutator';
         $s3Parser = $this->getS3Parser();
-        $s3Parser->addS3ResultMutator($s3MutatorName, new class($testField, $testValue) implements S3ResultMutator
-        {
-            /**
-             * @var string $testField
-             */
-            private $testField;
-            /**
-             * @var string $testValue
-             */
-            private $testValue;
-            public function __construct($testField, $testValue)
+        $s3Parser->addS3ResultMutator(
+            $s3MutatorName,
+            new class($testField, $testValue) implements S3ResultMutator
             {
-                $this->testField = $testField;
-                $this->testValue = $testValue;
-            }
+                /**
+                 * @var string $testField
+                 */
+                private $testField;
+                /**
+                 * @var string $testValue
+                 */
+                private $testValue;
+                public function __construct($testField, $testValue)
+                {
+                    $this->testField = $testField;
+                    $this->testValue = $testValue;
+                }
 
-            public function __invoke(ResultInterface $result, CommandInterface $command, ResponseInterface $response): ResultInterface
-            {
-                $result[$this->testField] = $this->testValue;
+                public function __invoke(
+                    ResultInterface $result,
+                    CommandInterface $command,
+                    ResponseInterface $response
+                ): ResultInterface
+                {
+                    $result[$this->testField] = $this->testValue;
 
-                return $result;
+                    return $result;
+                }
             }
-        });
+        );
         $mutators = $s3Parser->getS3ResultMutators();
         $command = new Command('ListBuckets', [], new HandlerList());
         $response = new Response();
@@ -212,14 +225,20 @@ EOXML;
     {
         $s3Parser = $this->getS3Parser();
         $s3MutatorName = 's3.test-mutator';
-        $s3Parser->addS3ResultMutator($s3MutatorName, new class implements S3ResultMutator
-        {
-
-            public function __invoke(ResultInterface $result, CommandInterface $command, ResponseInterface $response): ResultInterface
+        $s3Parser->addS3ResultMutator(
+            $s3MutatorName,
+            new class implements S3ResultMutator
             {
-                return $result;
+                public function __invoke(
+                    ResultInterface $result,
+                    CommandInterface $command,
+                    ResponseInterface $response
+                ): ResultInterface
+                {
+                    return $result;
+                }
             }
-        });
+        );
         $mutators = $s3Parser->getS3ResultMutators();
         $this->assertTrue(isset($mutators[$s3MutatorName]));
         $s3Parser->removeS3ResultMutator($s3MutatorName);
