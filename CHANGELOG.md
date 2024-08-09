@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This release supports adding RoutingCriteria via UpdateContactRoutingData public API.
+* `Aws\CognitoIdentityProvider` - Fixed a description of AdvancedSecurityAdditionalFlows in Amazon Cognito user pool configuration.
+* `Aws\SSM` - Systems Manager doc-only updates for August 2024.
+
 ## 3.319.1 - 2024-08-08
 
 * `Aws\Glue` - This release adds support to retrieve the validation status when creating or updating Glue Data Catalog Views. Also added is support for BasicCatalogTarget partition keys.

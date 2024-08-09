@@ -13412,6 +13412,29 @@
         "Index":{"shape":"Index"}
       }
     },
+    "RoutingCriteriaInput":{
+      "type":"structure",
+      "members":{
+        "Steps":{"shape":"RoutingCriteriaInputSteps"}
+      }
+    },
+    "RoutingCriteriaInputStep":{
+      "type":"structure",
+      "members":{
+        "Expiry":{"shape":"RoutingCriteriaInputStepExpiry"},
+        "Expression":{"shape":"Expression"}
+      }
+    },
+    "RoutingCriteriaInputStepExpiry":{
+      "type":"structure",
+      "members":{
+        "DurationInSeconds":{"shape":"DurationInSeconds"}
+      }
+    },
+    "RoutingCriteriaInputSteps":{
+      "type":"list",
+      "member":{"shape":"RoutingCriteriaInputStep"}
+    },
     "RoutingCriteriaStepStatus":{
       "type":"string",
       "enum":[
@@ -15692,7 +15715,8 @@
           "locationName":"ContactId"
         },
         "QueueTimeAdjustmentSeconds":{"shape":"QueueTimeAdjustmentSeconds"},
-        "QueuePriority":{"shape":"QueuePriority"}
+        "QueuePriority":{"shape":"QueuePriority"},
+        "RoutingCriteria":{"shape":"RoutingCriteriaInput"}
       }
     },
     "UpdateContactRoutingDataResponse":{
