@@ -493,6 +493,7 @@
         "filter":{"shape":"Filter"},
         "groupBy":{"shape":"String"},
         "maxResults":{"shape":"ListRecommendationSummariesRequestMaxResultsInteger"},
+        "metrics":{"shape":"SummaryMetricsList"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -509,6 +510,7 @@
         "items":{"shape":"RecommendationSummariesList"},
         "groupBy":{"shape":"String"},
         "currencyCode":{"shape":"String"},
+        "metrics":{"shape":"SummaryMetricsResult"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -879,6 +881,22 @@
       }
     },
     "String":{"type":"string"},
+    "SummaryMetrics":{
+      "type":"string",
+      "enum":["SavingsPercentage"]
+    },
+    "SummaryMetricsList":{
+      "type":"list",
+      "member":{"shape":"SummaryMetrics"},
+      "max":100,
+      "min":1
+    },
+    "SummaryMetricsResult":{
+      "type":"structure",
+      "members":{
+        "savingsPercentage":{"shape":"String"}
+      }
+    },
     "Tag":{
       "type":"structure",
       "members":{

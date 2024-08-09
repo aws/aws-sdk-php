@@ -2833,6 +2833,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "SearchAgentStatuses":{
+      "name":"SearchAgentStatuses",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-agent-statuses"
+      },
+      "input":{"shape":"SearchAgentStatusesRequest"},
+      "output":{"shape":"SearchAgentStatusesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "SearchAvailablePhoneNumbers":{
       "name":"SearchAvailablePhoneNumbers",
       "http":{
@@ -3017,6 +3033,22 @@
       },
       "input":{"shape":"SearchSecurityProfilesRequest"},
       "output":{"shape":"SearchSecurityProfilesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchUserHierarchyGroups":{
+      "name":"SearchUserHierarchyGroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-user-hierarchy-groups"
+      },
+      "input":{"shape":"SearchUserHierarchyGroupsRequest"},
+      "output":{"shape":"SearchUserHierarchyGroupsResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
@@ -4314,6 +4346,10 @@
       "min":1
     },
     "AgentStatusId":{"type":"string"},
+    "AgentStatusList":{
+      "type":"list",
+      "member":{"shape":"AgentStatus"}
+    },
     "AgentStatusName":{
       "type":"string",
       "max":127,
@@ -4330,6 +4366,24 @@
         "StatusStartTimestamp":{"shape":"Timestamp"},
         "StatusArn":{"shape":"ARN"},
         "StatusName":{"shape":"AgentStatusName"}
+      }
+    },
+    "AgentStatusSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"AgentStatusSearchCriteria"}
+    },
+    "AgentStatusSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"AgentStatusSearchConditionList"},
+        "AndConditions":{"shape":"AgentStatusSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "AgentStatusSearchFilter":{
+      "type":"structure",
+      "members":{
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
       }
     },
     "AgentStatusState":{
@@ -4393,7 +4447,7 @@
       "type":"map",
       "key":{"shape":"SecurityProfilePolicyKey"},
       "value":{"shape":"SecurityProfilePolicyValue"},
-      "max":2
+      "max":4
     },
     "AllowedCapabilities":{
       "type":"structure",
@@ -5245,6 +5299,16 @@
       "type":"string",
       "max":500
     },
+    "CommonAttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"}
+      }
+    },
+    "CommonAttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"CommonAttributeAndCondition"}
+    },
     "CommonNameLength127":{
       "type":"string",
       "max":127,
@@ -5293,6 +5357,17 @@
       "type":"integer",
       "max":10,
       "min":1
+    },
+    "Condition":{
+      "type":"structure",
+      "members":{
+        "StringCondition":{"shape":"StringCondition"},
+        "NumberCondition":{"shape":"NumberCondition"}
+      }
+    },
+    "Conditions":{
+      "type":"list",
+      "member":{"shape":"Condition"}
     },
     "ConflictException":{
       "type":"structure",
@@ -5681,6 +5756,14 @@
       "type":"string",
       "max":255,
       "min":1
+    },
+    "ControlPlaneAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"CommonAttributeOrConditionList"},
+        "AndCondition":{"shape":"CommonAttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"}
+      }
     },
     "ControlPlaneTagFilter":{
       "type":"structure",
@@ -10118,6 +10201,13 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListCondition":{
+      "type":"structure",
+      "members":{
+        "TargetListType":{"shape":"TargetListType"},
+        "Conditions":{"shape":"Conditions"}
+      }
+    },
     "ListContactEvaluationsRequest":{
       "type":"structure",
       "required":[
@@ -11710,6 +11800,28 @@
       "max":5.0,
       "min":1.0
     },
+    "NullableProficiencyLimitValue":{"type":"integer"},
+    "NumberComparisonType":{
+      "type":"string",
+      "enum":[
+        "GREATER_OR_EQUAL",
+        "GREATER",
+        "LESSER_OR_EQUAL",
+        "LESSER",
+        "EQUAL",
+        "NOT_EQUAL",
+        "RANGE"
+      ]
+    },
+    "NumberCondition":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"String"},
+        "MinValue":{"shape":"NullableProficiencyLimitValue"},
+        "MaxValue":{"shape":"NullableProficiencyLimitValue"},
+        "ComparisonType":{"shape":"NumberComparisonType"}
+      }
+    },
     "NumberReference":{
       "type":"structure",
       "members":{
@@ -12845,6 +12957,28 @@
       "max":5,
       "min":0
     },
+    "RealTimeContactAnalysisPostContactSummaryContent":{
+      "type":"string",
+      "max":1270,
+      "min":1
+    },
+    "RealTimeContactAnalysisPostContactSummaryFailureCode":{
+      "type":"string",
+      "enum":[
+        "QUOTA_EXCEEDED",
+        "INSUFFICIENT_CONVERSATION_CONTENT",
+        "FAILED_SAFETY_GUIDELINES",
+        "INVALID_ANALYSIS_CONFIGURATION",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "RealTimeContactAnalysisPostContactSummaryStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
     "RealTimeContactAnalysisSegmentAttachments":{
       "type":"structure",
       "required":[
@@ -12893,6 +13027,15 @@
         "IssuesDetected":{"shape":"RealTimeContactAnalysisIssuesDetected"}
       }
     },
+    "RealTimeContactAnalysisSegmentPostContactSummary":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Content":{"shape":"RealTimeContactAnalysisPostContactSummaryContent"},
+        "Status":{"shape":"RealTimeContactAnalysisPostContactSummaryStatus"},
+        "FailureCode":{"shape":"RealTimeContactAnalysisPostContactSummaryFailureCode"}
+      }
+    },
     "RealTimeContactAnalysisSegmentTranscript":{
       "type":"structure",
       "required":[
@@ -12921,13 +13064,14 @@
         "Categories",
         "Issues",
         "Event",
-        "Attachments"
+        "Attachments",
+        "PostContactSummary"
       ]
     },
     "RealTimeContactAnalysisSegmentTypes":{
       "type":"list",
       "member":{"shape":"RealTimeContactAnalysisSegmentType"},
-      "max":5
+      "max":6
     },
     "RealTimeContactAnalysisSentimentLabel":{
       "type":"string",
@@ -13008,7 +13152,8 @@
         "Categories":{"shape":"RealTimeContactAnalysisSegmentCategories"},
         "Issues":{"shape":"RealTimeContactAnalysisSegmentIssues"},
         "Event":{"shape":"RealTimeContactAnalysisSegmentEvent"},
-        "Attachments":{"shape":"RealTimeContactAnalysisSegmentAttachments"}
+        "Attachments":{"shape":"RealTimeContactAnalysisSegmentAttachments"},
+        "PostContactSummary":{"shape":"RealTimeContactAnalysisSegmentPostContactSummary"}
       },
       "union":true
     },
@@ -13548,6 +13693,28 @@
       "min":1,
       "pattern":"s3://\\S+/.+|https://\\\\S+\\\\.s3\\\\.\\\\S+\\\\.amazonaws\\\\.com/\\\\S+"
     },
+    "SearchAgentStatusesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"AgentStatusSearchFilter"},
+        "SearchCriteria":{"shape":"AgentStatusSearchCriteria"}
+      }
+    },
+    "SearchAgentStatusesResponse":{
+      "type":"structure",
+      "members":{
+        "AgentStatuses":{"shape":"AgentStatusList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
     "SearchAvailablePhoneNumbersRequest":{
       "type":"structure",
       "required":[
@@ -13870,6 +14037,28 @@
       "member":{"shape":"SearchText"},
       "max":100,
       "min":0
+    },
+    "SearchUserHierarchyGroupsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"UserHierarchyGroupSearchFilter"},
+        "SearchCriteria":{"shape":"UserHierarchyGroupSearchCriteria"}
+      }
+    },
+    "SearchUserHierarchyGroupsResponse":{
+      "type":"structure",
+      "members":{
+        "UserHierarchyGroups":{"shape":"UserHierarchyGroupList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
     },
     "SearchUsersRequest":{
       "type":"structure",
@@ -14717,7 +14906,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"^(?!aws:)[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*$"
     },
     "TagKeyList":{
       "type":"list",
@@ -14792,6 +14981,10 @@
     "TagsList":{
       "type":"list",
       "member":{"shape":"TagSet"}
+    },
+    "TargetListType":{
+      "type":"string",
+      "enum":["PROFICIENCIES"]
     },
     "TaskActionDefinition":{
       "type":"structure",
@@ -16467,6 +16660,28 @@
       "type":"list",
       "member":{"shape":"UserData"}
     },
+    "UserHierarchyGroupList":{
+      "type":"list",
+      "member":{"shape":"HierarchyGroup"}
+    },
+    "UserHierarchyGroupSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"UserHierarchyGroupSearchCriteria"}
+    },
+    "UserHierarchyGroupSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"UserHierarchyGroupSearchConditionList"},
+        "AndConditions":{"shape":"UserHierarchyGroupSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "UserHierarchyGroupSearchFilter":{
+      "type":"structure",
+      "members":{
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
+      }
+    },
     "UserId":{"type":"string"},
     "UserIdList":{
       "type":"list",
@@ -16567,6 +16782,7 @@
         "OrConditions":{"shape":"UserSearchConditionList"},
         "AndConditions":{"shape":"UserSearchConditionList"},
         "StringCondition":{"shape":"StringCondition"},
+        "ListCondition":{"shape":"ListCondition"},
         "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
       }
     },

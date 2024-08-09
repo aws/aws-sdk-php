@@ -496,8 +496,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHubRefactorSpaces(array $args = [])
  * @method \Aws\MigrationHubStrategyRecommendations\MigrationHubStrategyRecommendationsClient createMigrationHubStrategyRecommendations(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHubStrategyRecommendations(array $args = [])
- * @method \Aws\Mobile\MobileClient createMobile(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionMobile(array $args = [])
  * @method \Aws\Neptune\NeptuneClient createNeptune(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNeptune(array $args = [])
  * @method \Aws\NeptuneGraph\NeptuneGraphClient createNeptuneGraph(array $args = [])
@@ -568,6 +566,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPrometheusService(array $args = [])
  * @method \Aws\Proton\ProtonClient createProton(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionProton(array $args = [])
+ * @method \Aws\QApps\QAppsClient createQApps(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionQApps(array $args = [])
  * @method \Aws\QBusiness\QBusinessClient createQBusiness(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionQBusiness(array $args = [])
  * @method \Aws\QConnect\QConnectClient createQConnect(array $args = [])
@@ -632,6 +632,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSSMContacts(array $args = [])
  * @method \Aws\SSMIncidents\SSMIncidentsClient createSSMIncidents(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSSMIncidents(array $args = [])
+ * @method \Aws\SSMQuickSetup\SSMQuickSetupClient createSSMQuickSetup(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSSMQuickSetup(array $args = [])
  * @method \Aws\SSO\SSOClient createSSO(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSSO(array $args = [])
  * @method \Aws\SSOAdmin\SSOAdminClient createSSOAdmin(array $args = [])
@@ -775,7 +777,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.315.6';
+    const VERSION = '3.319.1';
 
     /** @var array Arguments for creating clients */
     private $args;

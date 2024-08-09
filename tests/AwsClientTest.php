@@ -544,6 +544,7 @@ class AwsClientTest extends TestCase
             'AWS::UseFIPS' => false,
             'AWS::UseDualStack' => false,
             'AWS::STS::UseGlobalEndpoint' => true,
+            'AWS::Auth::AccountIdEndpointMode' => 'preferred',
         ];
         $builtIns = $client->getClientBuiltIns();
         $this->assertEquals(
@@ -564,6 +565,7 @@ class AwsClientTest extends TestCase
             'UseFIPS' => false,
             'UseDualStack' => false,
             'UseGlobalEndpoint' => true,
+            'AccountIdEndpointMode' => 'preferred'
         ];
         $providerArgs = $client->getEndpointProviderArgs();
         $this->assertEquals(
@@ -765,6 +767,7 @@ EOT
         $client->foo();
     }
 
+
     public function testCallingEmitDeprecationWarningEmitsDeprecationWarning()
     {
         $this->expectDeprecation();
@@ -773,6 +776,136 @@ EOT
         );
         $client = $this->createClient();
         $client::emitDeprecationWarning();
+    }
+
+    /**
+     * @dataProvider signingRegionSetProvider
+     * @runInSeparateProcess
+     */
+    public function testSigningRegionSetResolution(
+        $command,
+        $env,
+        $ini,
+        $clientSetting,
+        $expected
+    ){
+        if (!extension_loaded('awscrt')) {
+            $this->markTestSkipped();
+        }
+
+        if ($env) {
+            putenv('AWS_SIGV4A_SIGNING_REGION_SET=' . $env);
+        }
+
+        if ($ini) {
+            $dir = sys_get_temp_dir() . '/.aws';
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+            file_put_contents($dir . '/config', $ini);
+            $home = getenv('HOME');
+            putenv('HOME=' . dirname($dir));
+        }
+
+        $client = $this->createClient(
+            [
+                'metadata' => [
+                    'signatureVersion' => 'v4a',
+                ],
+                'operations' => [
+                    'Foo' => [
+                        'http' => ['method' => 'POST'],
+                    ],
+                ],
+            ],
+            [
+                'handler' => function (
+                    CommandInterface $command,
+                    RequestInterface $request
+                ) use ($expected) {
+                    $this->assertEquals($expected, $request->getHeaderLine('x-amz-region-set'));
+                    return new Result;
+                },
+                'signature_version' => 'v4a',
+                'region' => 'us-west-2',
+                'sigv4a_signing_region_set' => $clientSetting ?? null
+            ]
+        );
+
+        $client->foo([
+            '@context' => [
+                'signing_region_set' => $command ?? null
+            ]
+        ]);
+
+        if ($ini) {
+            unlink($dir . '/config');
+            putenv("HOME=$home");
+        }
+
+        putenv('AWS_SIGV4A_SIGNING_REGION_SET=');
+    }
+
+    public function signingRegionSetProvider()
+    {
+        return [
+            [null, null, null, null, 'us-west-2'],
+            [['*'], null, null, null, '*'],
+            [null, '*', null, null, '*'],
+            [
+                null,
+                null,
+                <<<EOT
+[default]
+sigv4a_signing_region_set = *
+EOT
+                ,
+                null,
+                '*'
+            ],
+            [
+                null, null, null, '*', '*'
+            ],
+            [null, 'us-west-2', null, null, 'us-west-2'],
+            [
+                null,
+                null,
+                <<<EOT
+[default]
+sigv4a_signing_region_set = us-west-2
+EOT
+                ,
+                null,
+                'us-west-2'
+            ],
+            [null, null, null, 'us-west-2', 'us-west-2'],
+            [null, '*', null, 'us-west-2', 'us-west-2'],
+            [
+                null,
+                null,
+                <<<EOT
+[default]
+sigv4a_signing_region_set = *
+EOT
+                ,
+                'us-west-2',
+                'us-west-2'
+            ],
+            [['us-west-2', 'us-east-1'], null, null, null, 'us-west-2, us-east-1'],
+            [null, "us-west-2, us-east-1", null , null, 'us-west-2, us-east-1'],
+            [
+                null,
+                null,
+                <<<EOT
+[default]
+sigv4a_signing_region_set = us-west-2, us-east-1
+EOT
+                ,
+                null,
+                'us-west-2, us-east-1'
+            ],
+            [null, null, null, 'us-west-2, us-east-1', 'us-west-2, us-east-1']
+        ];
     }
 
     private function createHttpsEndpointClient(array $service = [], array $config = [])
@@ -826,5 +959,27 @@ EOT
             'error_parser' => function () {},
             'version'      => 'latest'
         ]);
+    }
+
+    public function testClientDefaultsAccountIdEndpointModeBuiltInsToPreferred()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-1'
+        ]);
+        $builtIns = $client->getClientBuiltIns();
+
+        self::assertEquals('preferred', $builtIns['AWS::Auth::AccountIdEndpointMode']);
+    }
+
+    public function testClientParameterOverridesDefaultAccountIdEndpointModeBuiltIns()
+    {
+        $expectedAccountIdEndpointMode = 'required';
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'account_id_endpoint_mode' => $expectedAccountIdEndpointMode
+        ]);
+        $builtIns = $client->getClientBuiltIns();
+
+        self::assertEquals($expectedAccountIdEndpointMode, $builtIns['AWS::Auth::AccountIdEndpointMode']);
     }
 }

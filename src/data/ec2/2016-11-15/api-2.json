@@ -694,6 +694,15 @@
       "input":{"shape":"CreateIpamRequest"},
       "output":{"shape":"CreateIpamResult"}
     },
+    "CreateIpamExternalResourceVerificationToken":{
+      "name":"CreateIpamExternalResourceVerificationToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIpamExternalResourceVerificationTokenRequest"},
+      "output":{"shape":"CreateIpamExternalResourceVerificationTokenResult"}
+    },
     "CreateIpamPool":{
       "name":"CreateIpamPool",
       "http":{
@@ -1371,6 +1380,15 @@
       },
       "input":{"shape":"DeleteIpamRequest"},
       "output":{"shape":"DeleteIpamResult"}
+    },
+    "DeleteIpamExternalResourceVerificationToken":{
+      "name":"DeleteIpamExternalResourceVerificationToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIpamExternalResourceVerificationTokenRequest"},
+      "output":{"shape":"DeleteIpamExternalResourceVerificationTokenResult"}
     },
     "DeleteIpamPool":{
       "name":"DeleteIpamPool",
@@ -2470,6 +2488,15 @@
       },
       "input":{"shape":"DescribeIpamByoasnRequest"},
       "output":{"shape":"DescribeIpamByoasnResult"}
+    },
+    "DescribeIpamExternalResourceVerificationTokens":{
+      "name":"DescribeIpamExternalResourceVerificationTokens",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIpamExternalResourceVerificationTokensRequest"},
+      "output":{"shape":"DescribeIpamExternalResourceVerificationTokensResult"}
     },
     "DescribeIpamPools":{
       "name":"DescribeIpamPools",
@@ -10951,6 +10978,31 @@
         }
       }
     },
+    "CreateIpamExternalResourceVerificationTokenRequest":{
+      "type":"structure",
+      "required":["IpamId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamId":{"shape":"IpamId"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateIpamExternalResourceVerificationTokenResult":{
+      "type":"structure",
+      "members":{
+        "IpamExternalResourceVerificationToken":{
+          "shape":"IpamExternalResourceVerificationToken",
+          "locationName":"ipamExternalResourceVerificationToken"
+        }
+      }
+    },
     "CreateIpamPoolRequest":{
       "type":"structure",
       "required":[
@@ -11012,7 +11064,8 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "Tier":{"shape":"IpamTier"}
+        "Tier":{"shape":"IpamTier"},
+        "EnablePrivateGua":{"shape":"Boolean"}
       }
     },
     "CreateIpamResourceDiscoveryRequest":{
@@ -11619,7 +11672,8 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
-        }
+        },
+        "NetworkBorderGroup":{"shape":"String"}
       }
     },
     "CreatePublicIpv4PoolResult":{
@@ -13474,6 +13528,23 @@
         }
       }
     },
+    "DeleteIpamExternalResourceVerificationTokenRequest":{
+      "type":"structure",
+      "required":["IpamExternalResourceVerificationTokenId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamExternalResourceVerificationTokenId":{"shape":"IpamExternalResourceVerificationTokenId"}
+      }
+    },
+    "DeleteIpamExternalResourceVerificationTokenResult":{
+      "type":"structure",
+      "members":{
+        "IpamExternalResourceVerificationToken":{
+          "shape":"IpamExternalResourceVerificationToken",
+          "locationName":"ipamExternalResourceVerificationToken"
+        }
+      }
+    },
     "DeleteIpamPoolRequest":{
       "type":"structure",
       "required":["IpamPoolId"],
@@ -13926,7 +13997,8 @@
       "required":["PoolId"],
       "members":{
         "DryRun":{"shape":"Boolean"},
-        "PoolId":{"shape":"Ipv4PoolEc2Id"}
+        "PoolId":{"shape":"Ipv4PoolEc2Id"},
+        "NetworkBorderGroup":{"shape":"String"}
       }
     },
     "DeletePublicIpv4PoolResult":{
@@ -16618,6 +16690,35 @@
         "NextToken":{
           "shape":"String",
           "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeIpamExternalResourceVerificationTokensRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "IpamExternalResourceVerificationTokenIds":{
+          "shape":"ValueStringList",
+          "locationName":"IpamExternalResourceVerificationTokenId"
+        }
+      }
+    },
+    "DescribeIpamExternalResourceVerificationTokensResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "IpamExternalResourceVerificationTokens":{
+          "shape":"IpamExternalResourceVerificationTokenSet",
+          "locationName":"ipamExternalResourceVerificationTokenSet"
         }
       }
     },
@@ -29181,6 +29282,14 @@
         "locationName":"item"
       }
     },
+    "IpSource":{
+      "type":"string",
+      "enum":[
+        "amazon",
+        "byoip",
+        "none"
+      ]
+    },
     "Ipam":{
       "type":"structure",
       "members":{
@@ -29247,6 +29356,10 @@
         "Tier":{
           "shape":"IpamTier",
           "locationName":"tier"
+        },
+        "EnablePrivateGua":{
+          "shape":"Boolean",
+          "locationName":"enablePrivateGua"
         }
       }
     },
@@ -29487,6 +29600,10 @@
           "shape":"String",
           "locationName":"resourceCidr"
         },
+        "IpSource":{
+          "shape":"IpamResourceCidrIpSource",
+          "locationName":"ipSource"
+        },
         "ResourceType":{
           "shape":"IpamResourceType",
           "locationName":"resourceType"
@@ -29503,9 +29620,17 @@
           "shape":"String",
           "locationName":"vpcId"
         },
+        "NetworkInterfaceAttachmentStatus":{
+          "shape":"IpamNetworkInterfaceAttachmentStatus",
+          "locationName":"networkInterfaceAttachmentStatus"
+        },
         "SampleTime":{
           "shape":"MillisecondDateTime",
           "locationName":"sampleTime"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
         }
       }
     },
@@ -29537,6 +29662,74 @@
         }
       }
     },
+    "IpamExternalResourceVerificationToken":{
+      "type":"structure",
+      "members":{
+        "IpamExternalResourceVerificationTokenId":{
+          "shape":"IpamExternalResourceVerificationTokenId",
+          "locationName":"ipamExternalResourceVerificationTokenId"
+        },
+        "IpamExternalResourceVerificationTokenArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamExternalResourceVerificationTokenArn"
+        },
+        "IpamId":{
+          "shape":"IpamId",
+          "locationName":"ipamId"
+        },
+        "IpamArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamArn"
+        },
+        "IpamRegion":{
+          "shape":"String",
+          "locationName":"ipamRegion"
+        },
+        "TokenValue":{
+          "shape":"String",
+          "locationName":"tokenValue"
+        },
+        "TokenName":{
+          "shape":"String",
+          "locationName":"tokenName"
+        },
+        "NotAfter":{
+          "shape":"MillisecondDateTime",
+          "locationName":"notAfter"
+        },
+        "Status":{
+          "shape":"TokenState",
+          "locationName":"status"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        },
+        "State":{
+          "shape":"IpamExternalResourceVerificationTokenState",
+          "locationName":"state"
+        }
+      }
+    },
+    "IpamExternalResourceVerificationTokenId":{"type":"string"},
+    "IpamExternalResourceVerificationTokenSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamExternalResourceVerificationToken",
+        "locationName":"item"
+      }
+    },
+    "IpamExternalResourceVerificationTokenState":{
+      "type":"string",
+      "enum":[
+        "create-in-progress",
+        "create-complete",
+        "create-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "delete-failed"
+      ]
+    },
     "IpamId":{"type":"string"},
     "IpamManagementState":{
       "type":"string",
@@ -29555,6 +29748,13 @@
       "type":"integer",
       "max":128,
       "min":0
+    },
+    "IpamNetworkInterfaceAttachmentStatus":{
+      "type":"string",
+      "enum":[
+        "available",
+        "in-use"
+      ]
     },
     "IpamOperatingRegion":{
       "type":"structure",
@@ -30024,8 +30224,20 @@
         "VpcId":{
           "shape":"String",
           "locationName":"vpcId"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
         }
       }
+    },
+    "IpamResourceCidrIpSource":{
+      "type":"string",
+      "enum":[
+        "amazon",
+        "byoip",
+        "none"
+      ]
     },
     "IpamResourceCidrSet":{
       "type":"list",
@@ -30362,6 +30574,13 @@
       }
     },
     "Ipv6Address":{"type":"string"},
+    "Ipv6AddressAttribute":{
+      "type":"string",
+      "enum":[
+        "public",
+        "private"
+      ]
+    },
     "Ipv6AddressList":{
       "type":"list",
       "member":{
@@ -33234,7 +33453,8 @@
           "shape":"RemoveIpamOperatingRegionSet",
           "locationName":"RemoveOperatingRegion"
         },
-        "Tier":{"shape":"IpamTier"}
+        "Tier":{"shape":"IpamTier"},
+        "EnablePrivateGua":{"shape":"Boolean"}
       }
     },
     "ModifyIpamResourceCidrRequest":{
@@ -37032,7 +37252,9 @@
         "ClientToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "VerificationMethod":{"shape":"VerificationMethod"},
+        "IpamExternalResourceVerificationTokenId":{"shape":"IpamExternalResourceVerificationTokenId"}
       }
     },
     "ProvisionIpamPoolCidrResult":{
@@ -37055,7 +37277,8 @@
         "DryRun":{"shape":"Boolean"},
         "IpamPoolId":{"shape":"IpamPoolId"},
         "PoolId":{"shape":"Ipv4PoolEc2Id"},
-        "NetmaskLength":{"shape":"Integer"}
+        "NetmaskLength":{"shape":"Integer"},
+        "NetworkBorderGroup":{"shape":"String"}
       }
     },
     "ProvisionPublicIpv4PoolCidrResult":{
@@ -39194,10 +39417,10 @@
         "verified-access-trust-provider",
         "vpn-connection-device-type",
         "vpc-block-public-access-exclusion",
-        "vpc-encryption-control",
         "ipam-resource-discovery",
         "ipam-resource-discovery-association",
-        "instance-connect-endpoint"
+        "instance-connect-endpoint",
+        "ipam-external-resource-verification-token"
       ]
     },
     "ResponseError":{
@@ -42589,6 +42812,14 @@
         "Ipv6CidrBlockState":{
           "shape":"SubnetCidrBlockState",
           "locationName":"ipv6CidrBlockState"
+        },
+        "Ipv6AddressAttribute":{
+          "shape":"Ipv6AddressAttribute",
+          "locationName":"ipv6AddressAttribute"
+        },
+        "IpSource":{
+          "shape":"IpSource",
+          "locationName":"ipSource"
         }
       }
     },
@@ -43074,6 +43305,13 @@
         "permanent-restore-in-progress",
         "permanent-restore-completed",
         "permanent-restore-failed"
+      ]
+    },
+    "TokenState":{
+      "type":"string",
+      "enum":[
+        "valid",
+        "expired"
       ]
     },
     "TotalLocalStorageGB":{
@@ -45462,6 +45700,13 @@
         "locationName":"item"
       }
     },
+    "VerificationMethod":{
+      "type":"string",
+      "enum":[
+        "remarks-x509",
+        "dns-token"
+      ]
+    },
     "VerifiedAccessEndpoint":{
       "type":"structure",
       "members":{
@@ -46921,6 +47166,14 @@
         "Ipv6Pool":{
           "shape":"String",
           "locationName":"ipv6Pool"
+        },
+        "Ipv6AddressAttribute":{
+          "shape":"Ipv6AddressAttribute",
+          "locationName":"ipv6AddressAttribute"
+        },
+        "IpSource":{
+          "shape":"IpSource",
+          "locationName":"ipSource"
         }
       }
     },

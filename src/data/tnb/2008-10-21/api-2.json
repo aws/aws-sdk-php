@@ -5,11 +5,13 @@
     "endpointPrefix":"tnb",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Telco Network Builder",
     "serviceId":"tnb",
     "signatureVersion":"v4",
     "signingName":"tnb",
-    "uid":"tnb-2008-10-21"
+    "uid":"tnb-2008-10-21",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CancelSolNetworkOperation":{
@@ -987,7 +989,10 @@
       ],
       "members":{
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "lastModified":{"shape":"SyntheticTimestamp_date_time"}
+        "instantiateMetadata":{"shape":"InstantiateMetadata"},
+        "lastModified":{"shape":"SyntheticTimestamp_date_time"},
+        "modifyVnfInfoMetadata":{"shape":"ModifyVnfInfoMetadata"},
+        "updateNsMetadata":{"shape":"UpdateNsMetadata"}
       }
     },
     "GetSolNetworkOperationOutput":{
@@ -1002,7 +1007,8 @@
         "nsInstanceId":{"shape":"NsInstanceId"},
         "operationState":{"shape":"NsLcmOperationState"},
         "tags":{"shape":"TagMap"},
-        "tasks":{"shape":"GetSolNetworkOperationTasksList"}
+        "tasks":{"shape":"GetSolNetworkOperationTasksList"},
+        "updateType":{"shape":"UpdateSolNetworkType"}
       }
     },
     "GetSolNetworkOperationTaskDetails":{
@@ -1148,6 +1154,14 @@
         "cluster":{"shape":"String"},
         "helmChart":{"shape":"String"},
         "nodeGroup":{"shape":"String"}
+      }
+    },
+    "InstantiateMetadata":{
+      "type":"structure",
+      "required":["nsdInfoId"],
+      "members":{
+        "additionalParamsForNs":{"shape":"Document"},
+        "nsdInfoId":{"shape":"NsdInfoId"}
       }
     },
     "InstantiateSolNetworkInstanceInput":{
@@ -1413,7 +1427,8 @@
         "lcmOperationType":{"shape":"LcmOperationType"},
         "metadata":{"shape":"ListSolNetworkOperationsMetadata"},
         "nsInstanceId":{"shape":"NsInstanceId"},
-        "operationState":{"shape":"NsLcmOperationState"}
+        "operationState":{"shape":"NsLcmOperationState"},
+        "updateType":{"shape":"UpdateSolNetworkType"}
       }
     },
     "ListSolNetworkOperationsInput":{
@@ -1428,6 +1443,11 @@
           "shape":"PaginationToken",
           "location":"querystring",
           "locationName":"nextpage_opaque_marker"
+        },
+        "nsInstanceId":{
+          "shape":"NsInstanceId",
+          "location":"querystring",
+          "locationName":"nsInstanceId"
         }
       }
     },
@@ -1445,7 +1465,9 @@
       ],
       "members":{
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "lastModified":{"shape":"SyntheticTimestamp_date_time"}
+        "lastModified":{"shape":"SyntheticTimestamp_date_time"},
+        "nsdInfoId":{"shape":"NsdInfoId"},
+        "vnfInstanceId":{"shape":"VnfInstanceId"}
       }
     },
     "ListSolNetworkOperationsOutput":{
@@ -1546,6 +1568,17 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "ModifyVnfInfoMetadata":{
+      "type":"structure",
+      "required":[
+        "vnfConfigurableProperties",
+        "vnfInstanceId"
+      ],
+      "members":{
+        "vnfConfigurableProperties":{"shape":"Document"},
+        "vnfInstanceId":{"shape":"VnfInstanceId"}
+      }
+    },
     "NetworkArtifactMeta":{
       "type":"structure",
       "members":{
@@ -1583,10 +1616,13 @@
       "enum":[
         "INSTANTIATED",
         "NOT_INSTANTIATED",
+        "UPDATED",
         "IMPAIRED",
+        "UPDATE_FAILED",
         "STOPPED",
         "DELETED",
         "INSTANTIATE_IN_PROGRESS",
+        "INTENT_TO_UPDATE_IN_PROGRESS",
         "UPDATE_IN_PROGRESS",
         "TERMINATE_IN_PROGRESS"
       ]
@@ -1669,7 +1705,7 @@
           "location":"header",
           "locationName":"Content-Type"
         },
-        "file":{"shape":"Blob"},
+        "file":{"shape":"SensitiveBlob"},
         "vnfPkgId":{
           "shape":"VnfPkgId",
           "location":"uri",
@@ -1715,7 +1751,7 @@
           "location":"header",
           "locationName":"Content-Type"
         },
-        "file":{"shape":"Blob"},
+        "file":{"shape":"SensitiveBlob"},
         "nsdInfoId":{
           "shape":"NsdInfoId",
           "location":"uri",
@@ -1762,6 +1798,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SensitiveBlob":{
+      "type":"blob",
+      "sensitive":true
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -1906,6 +1946,14 @@
       "members":{
       }
     },
+    "UpdateNsMetadata":{
+      "type":"structure",
+      "required":["nsdInfoId"],
+      "members":{
+        "additionalParamsForNs":{"shape":"Document"},
+        "nsdInfoId":{"shape":"NsdInfoId"}
+      }
+    },
     "UpdateSolFunctionPackageInput":{
       "type":"structure",
       "required":[
@@ -1942,6 +1990,7 @@
           "locationName":"nsInstanceId"
         },
         "tags":{"shape":"TagMap"},
+        "updateNs":{"shape":"UpdateSolNetworkServiceData"},
         "updateType":{"shape":"UpdateSolNetworkType"}
       }
     },
@@ -1985,9 +2034,20 @@
         "nsdOperationalState":{"shape":"NsdOperationalState"}
       }
     },
+    "UpdateSolNetworkServiceData":{
+      "type":"structure",
+      "required":["nsdInfoId"],
+      "members":{
+        "additionalParamsForNs":{"shape":"Document"},
+        "nsdInfoId":{"shape":"NsdInfoId"}
+      }
+    },
     "UpdateSolNetworkType":{
       "type":"string",
-      "enum":["MODIFY_VNF_INFORMATION"]
+      "enum":[
+        "MODIFY_VNF_INFORMATION",
+        "UPDATE_NS"
+      ]
     },
     "UsageState":{
       "type":"string",
@@ -2008,7 +2068,7 @@
           "location":"header",
           "locationName":"Content-Type"
         },
-        "file":{"shape":"Blob"},
+        "file":{"shape":"SensitiveBlob"},
         "vnfPkgId":{
           "shape":"VnfPkgId",
           "location":"uri",
@@ -2054,7 +2114,7 @@
           "location":"header",
           "locationName":"Content-Type"
         },
-        "file":{"shape":"Blob"},
+        "file":{"shape":"SensitiveBlob"},
         "nsdInfoId":{
           "shape":"NsdInfoId",
           "location":"uri",
