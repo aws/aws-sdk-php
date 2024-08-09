@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.319.2 - 2024-08-09
 
 * `Aws\Connect` - This release supports adding RoutingCriteria via UpdateContactRoutingData public API.
 * `Aws\CognitoIdentityProvider` - Fixed a description of AdvancedSecurityAdditionalFlows in Amazon Cognito user pool configuration.
