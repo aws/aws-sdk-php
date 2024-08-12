@@ -514,6 +514,15 @@
       "input":{"shape":"CreateCapacityReservationRequest"},
       "output":{"shape":"CreateCapacityReservationResult"}
     },
+    "CreateCapacityReservationBySplitting":{
+      "name":"CreateCapacityReservationBySplitting",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCapacityReservationBySplittingRequest"},
+      "output":{"shape":"CreateCapacityReservationBySplittingResult"}
+    },
     "CreateCapacityReservationFleet":{
       "name":"CreateCapacityReservationFleet",
       "http":{
@@ -4991,6 +5000,15 @@
       },
       "input":{"shape":"MoveByoipCidrToIpamRequest"},
       "output":{"shape":"MoveByoipCidrToIpamResult"}
+    },
+    "MoveCapacityReservationInstances":{
+      "name":"MoveCapacityReservationInstances",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"MoveCapacityReservationInstancesRequest"},
+      "output":{"shape":"MoveCapacityReservationInstancesResult"}
     },
     "ProvisionByoipCidr":{
       "name":"ProvisionByoipCidr",
@@ -10252,6 +10270,43 @@
         "CoreCount":{"shape":"Integer"},
         "ThreadsPerCore":{"shape":"Integer"},
         "AmdSevSnp":{"shape":"AmdSevSnpSpecification"}
+      }
+    },
+    "CreateCapacityReservationBySplittingRequest":{
+      "type":"structure",
+      "required":[
+        "SourceCapacityReservationId",
+        "InstanceCount"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "SourceCapacityReservationId":{"shape":"CapacityReservationId"},
+        "InstanceCount":{"shape":"Integer"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreateCapacityReservationBySplittingResult":{
+      "type":"structure",
+      "members":{
+        "SourceCapacityReservation":{
+          "shape":"CapacityReservation",
+          "locationName":"sourceCapacityReservation"
+        },
+        "DestinationCapacityReservation":{
+          "shape":"CapacityReservation",
+          "locationName":"destinationCapacityReservation"
+        },
+        "InstanceCount":{
+          "shape":"Integer",
+          "locationName":"instanceCount"
+        }
       }
     },
     "CreateCapacityReservationFleetRequest":{
@@ -32904,7 +32959,8 @@
         "EndDateType":{"shape":"EndDateType"},
         "Accept":{"shape":"Boolean"},
         "DryRun":{"shape":"Boolean"},
-        "AdditionalInfo":{"shape":"String"}
+        "AdditionalInfo":{"shape":"String"},
+        "InstanceMatchCriteria":{"shape":"InstanceMatchCriteria"}
       }
     },
     "ModifyCapacityReservationResult":{
@@ -34679,6 +34735,41 @@
         "ByoipCidr":{
           "shape":"ByoipCidr",
           "locationName":"byoipCidr"
+        }
+      }
+    },
+    "MoveCapacityReservationInstancesRequest":{
+      "type":"structure",
+      "required":[
+        "SourceCapacityReservationId",
+        "DestinationCapacityReservationId",
+        "InstanceCount"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "SourceCapacityReservationId":{"shape":"CapacityReservationId"},
+        "DestinationCapacityReservationId":{"shape":"CapacityReservationId"},
+        "InstanceCount":{"shape":"Integer"}
+      }
+    },
+    "MoveCapacityReservationInstancesResult":{
+      "type":"structure",
+      "members":{
+        "SourceCapacityReservation":{
+          "shape":"CapacityReservation",
+          "locationName":"sourceCapacityReservation"
+        },
+        "DestinationCapacityReservation":{
+          "shape":"CapacityReservation",
+          "locationName":"destinationCapacityReservation"
+        },
+        "InstanceCount":{
+          "shape":"Integer",
+          "locationName":"instanceCount"
         }
       }
     },

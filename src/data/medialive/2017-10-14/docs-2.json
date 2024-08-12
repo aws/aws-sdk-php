@@ -2623,7 +2623,8 @@
     "MultiplexProgramPacketIdentifiersMap": {
       "base": "Packet identifiers map for a given Multiplex program.",
       "refs": {
-        "MultiplexProgram$PacketIdentifiersMap": "The packet identifier map for this multiplex program."
+        "MultiplexProgram$PacketIdentifiersMap": "The packet identifier map for this multiplex program.",
+        "MultiplexPacketIdentifiersMapping$member": null
       }
     },
     "MultiplexProgramPipelineDetail": {
@@ -3882,7 +3883,10 @@
         "CloudWatchAlarmTemplateGroupSummary$TemplateCount": "The number of templates in a group.",
         "EventBridgeRuleTemplateGroupSummary$TemplateCount": "The number of templates in a group.",
         "SrtCallerSource$MinimumLatency": "The preferred latency (in milliseconds) for implementing packet loss and recovery. Packet recovery is a key feature of SRT.",
-        "SrtCallerSourceRequest$MinimumLatency": "The preferred latency (in milliseconds) for implementing packet loss and recovery. Packet recovery is a key feature of SRT. Obtain this value from the operator at the upstream system."
+        "SrtCallerSourceRequest$MinimumLatency": "The preferred latency (in milliseconds) for implementing packet loss and recovery. Packet recovery is a key feature of SRT. Obtain this value from the operator at the upstream system.",
+        "MultiplexProgramPacketIdentifiersMap$AribCaptionsPid": null,
+        "MultiplexProgramPacketIdentifiersMap$EcmPid": null,
+        "MultiplexProgramPacketIdentifiersMap$Smpte2038Pid": null
       }
     },
     "__integerMin0": {
@@ -4667,7 +4671,8 @@
         "MultiplexProgramPacketIdentifiersMap$AudioPids": null,
         "MultiplexProgramPacketIdentifiersMap$DvbSubPids": null,
         "MultiplexProgramPacketIdentifiersMap$KlvDataPids": null,
-        "MultiplexProgramPacketIdentifiersMap$Scte27Pids": null
+        "MultiplexProgramPacketIdentifiersMap$Scte27Pids": null,
+        "MultiplexProgramPacketIdentifiersMap$DvbTeletextPids": null
       }
     },
     "__listOf__string": {
@@ -6035,6 +6040,12 @@
       "base": null,
       "refs": {
         "SrtSettingsRequest$SrtCallerSources": null
+      }
+    },
+    "MultiplexPacketIdentifiersMapping": {
+      "base": null,
+      "refs": {
+        "UpdateMultiplex$PacketIdentifiersMapping": null
       }
     }
   },

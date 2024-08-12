@@ -4779,6 +4779,12 @@
         "validation"
       ]
     },
+    "AutoMLComputeConfig":{
+      "type":"structure",
+      "members":{
+        "EmrServerlessComputeConfig":{"shape":"EmrServerlessComputeConfig"}
+      }
+    },
     "AutoMLContainerDefinition":{
       "type":"structure",
       "required":[
@@ -5430,7 +5436,8 @@
         "IdentityProviderOAuthSettings":{"shape":"IdentityProviderOAuthSettings"},
         "DirectDeploySettings":{"shape":"DirectDeploySettings"},
         "KendraSettings":{"shape":"KendraSettings"},
-        "GenerativeAiSettings":{"shape":"GenerativeAiSettings"}
+        "GenerativeAiSettings":{"shape":"GenerativeAiSettings"},
+        "EmrServerlessSettings":{"shape":"EmrServerlessSettings"}
       }
     },
     "CapacitySize":{
@@ -6751,7 +6758,8 @@
         "SecurityConfig":{"shape":"AutoMLSecurityConfig"},
         "AutoMLJobObjective":{"shape":"AutoMLJobObjective"},
         "ModelDeployConfig":{"shape":"ModelDeployConfig"},
-        "DataSplitConfig":{"shape":"AutoMLDataSplitConfig"}
+        "DataSplitConfig":{"shape":"AutoMLDataSplitConfig"},
+        "AutoMLComputeConfig":{"shape":"AutoMLComputeConfig"}
       }
     },
     "CreateAutoMLJobV2Response":{
@@ -9202,7 +9210,8 @@
         "ModelDeployConfig":{"shape":"ModelDeployConfig"},
         "ModelDeployResult":{"shape":"ModelDeployResult"},
         "DataSplitConfig":{"shape":"AutoMLDataSplitConfig"},
-        "SecurityConfig":{"shape":"AutoMLSecurityConfig"}
+        "SecurityConfig":{"shape":"AutoMLSecurityConfig"},
+        "AutoMLComputeConfig":{"shape":"AutoMLComputeConfig"}
       }
     },
     "DescribeClusterNodeRequest":{
@@ -11548,6 +11557,20 @@
       "type":"string",
       "max":10,
       "pattern":"\\d+"
+    },
+    "EmrServerlessComputeConfig":{
+      "type":"structure",
+      "required":["ExecutionRoleARN"],
+      "members":{
+        "ExecutionRoleARN":{"shape":"RoleArn"}
+      }
+    },
+    "EmrServerlessSettings":{
+      "type":"structure",
+      "members":{
+        "ExecutionRoleArn":{"shape":"RoleArn"},
+        "Status":{"shape":"FeatureStatus"}
+      }
     },
     "EmrSettings":{
       "type":"structure",
@@ -16629,7 +16652,8 @@
         "JumpStart",
         "InferenceRecommender",
         "Endpoints",
-        "Projects"
+        "Projects",
+        "InferenceOptimization"
       ]
     },
     "MlflowVersion":{
@@ -19344,7 +19368,6 @@
       "type":"structure",
       "required":[
         "S3Uri",
-        "LocalPath",
         "S3UploadMode"
       ],
       "members":{

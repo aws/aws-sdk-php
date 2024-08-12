@@ -11715,6 +11715,22 @@
         "VideoPid": {
           "shape": "__integer",
           "locationName": "videoPid"
+        },
+        "AribCaptionsPid": {
+          "shape": "__integer",
+          "locationName": "aribCaptionsPid"
+        },
+        "DvbTeletextPids": {
+          "shape": "__listOf__integer",
+          "locationName": "dvbTeletextPids"
+        },
+        "EcmPid": {
+          "shape": "__integer",
+          "locationName": "ecmPid"
+        },
+        "Smpte2038Pid": {
+          "shape": "__integer",
+          "locationName": "smpte2038Pid"
         }
       }
     },
@@ -14789,6 +14805,10 @@
         "Name": {
           "shape": "__string",
           "locationName": "name"
+        },
+        "PacketIdentifiersMapping": {
+          "shape": "MultiplexPacketIdentifiersMapping",
+          "locationName": "packetIdentifiersMapping"
         }
       }
     },
@@ -14857,6 +14877,10 @@
         "Name": {
           "shape": "__string",
           "locationName": "name"
+        },
+        "PacketIdentifiersMapping": {
+          "shape": "MultiplexPacketIdentifiersMapping",
+          "locationName": "packetIdentifiersMapping"
         }
       },
       "required": [
@@ -20131,6 +20155,15 @@
       "type": "list",
       "member": {
         "shape": "SrtCallerSourceRequest"
+      }
+    },
+    "MultiplexPacketIdentifiersMapping": {
+      "type": "map",
+      "key": {
+        "shape": "__string"
+      },
+      "value": {
+        "shape": "MultiplexProgramPacketIdentifiersMap"
       }
     }
   }
