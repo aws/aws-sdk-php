@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.319.3 - 2024-08-12
 
 * `Aws\GroundStation` - Updating documentation for OEMEphemeris to link to AWS Ground Station User Guide
 * `Aws\ComputeOptimizer` - Doc only update for Compute Optimizer that fixes several customer-reported issues relating to ECS finding classifications
