@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.319.4 - 2024-08-13
 
 * `Aws\S3` - Expands handling of errors contained within 200 responses.
 * `Aws\FIS` - This release adds support for additional error information on experiment failure. It adds the error code, location, and account id on relevant failures to the GetExperiment and ListExperiment API responses.
