@@ -311,6 +311,23 @@
         {"shape":"InvalidParameterCombinationException"}
       ]
     },
+    "CreateThemeForStack":{
+      "name":"CreateThemeForStack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateThemeForStackRequest"},
+      "output":{"shape":"CreateThemeForStackResult"},
+      "errors":[
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccountStatusException"},
+        {"shape":"OperationNotPermittedException"}
+      ]
+    },
     "CreateUpdatedImage":{
       "name":"CreateUpdatedImage",
       "http":{
@@ -503,6 +520,20 @@
         {"shape":"ConcurrentModificationException"}
       ]
     },
+    "DeleteThemeForStack":{
+      "name":"DeleteThemeForStack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteThemeForStackRequest"},
+      "output":{"shape":"DeleteThemeForStackResult"},
+      "errors":[
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotPermittedException"}
+      ]
+    },
     "DeleteUsageReportSubscription":{
       "name":"DeleteUsageReportSubscription",
       "http":{
@@ -690,6 +721,19 @@
       "output":{"shape":"DescribeStacksResult"},
       "errors":[
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DescribeThemeForStack":{
+      "name":"DescribeThemeForStack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeThemeForStackRequest"},
+      "output":{"shape":"DescribeThemeForStackResult"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotPermittedException"}
       ]
     },
     "DescribeUsageReportSubscriptions":{
@@ -1109,6 +1153,23 @@
         {"shape":"IncompatibleImageException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"ConcurrentModificationException"}
+      ]
+    },
+    "UpdateThemeForStack":{
+      "name":"UpdateThemeForStack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateThemeForStackRequest"},
+      "output":{"shape":"UpdateThemeForStackResult"},
+      "errors":[
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccountStatusException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"OperationNotPermittedException"}
       ]
     }
   },
@@ -1799,6 +1860,30 @@
         "Expires":{"shape":"Timestamp"}
       }
     },
+    "CreateThemeForStackRequest":{
+      "type":"structure",
+      "required":[
+        "StackName",
+        "TitleText",
+        "ThemeStyling",
+        "OrganizationLogoS3Location",
+        "FaviconS3Location"
+      ],
+      "members":{
+        "StackName":{"shape":"Name"},
+        "FooterLinks":{"shape":"ThemeFooterLinks"},
+        "TitleText":{"shape":"ThemeTitleText"},
+        "ThemeStyling":{"shape":"ThemeStyling"},
+        "OrganizationLogoS3Location":{"shape":"S3Location"},
+        "FaviconS3Location":{"shape":"S3Location"}
+      }
+    },
+    "CreateThemeForStackResult":{
+      "type":"structure",
+      "members":{
+        "Theme":{"shape":"Theme"}
+      }
+    },
     "CreateUpdatedImageRequest":{
       "type":"structure",
       "required":[
@@ -1978,6 +2063,18 @@
       }
     },
     "DeleteStackResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteThemeForStackRequest":{
+      "type":"structure",
+      "required":["StackName"],
+      "members":{
+        "StackName":{"shape":"Name"}
+      }
+    },
+    "DeleteThemeForStackResult":{
       "type":"structure",
       "members":{
       }
@@ -2224,6 +2321,19 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "DescribeThemeForStackRequest":{
+      "type":"structure",
+      "required":["StackName"],
+      "members":{
+        "StackName":{"shape":"Name"}
+      }
+    },
+    "DescribeThemeForStackResult":{
+      "type":"structure",
+      "members":{
+        "Theme":{"shape":"Theme"}
+      }
+    },
     "DescribeUsageReportSubscriptionsRequest":{
       "type":"structure",
       "members":{
@@ -2397,6 +2507,13 @@
       "type":"list",
       "member":{"shape":"Domain"},
       "max":50
+    },
+    "DynamicAppProvidersEnabled":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "EmbedHostDomain":{
       "type":"string",
@@ -2656,7 +2773,11 @@
         "PublicBaseImageReleasedDate":{"shape":"Timestamp"},
         "AppstreamAgentVersion":{"shape":"AppstreamAgentVersion"},
         "ImagePermissions":{"shape":"ImagePermissions"},
-        "ImageErrors":{"shape":"ResourceErrors"}
+        "ImageErrors":{"shape":"ResourceErrors"},
+        "LatestAppstreamAgentVersion":{"shape":"LatestAppstreamAgentVersion"},
+        "SupportedInstanceFamilies":{"shape":"StringList"},
+        "DynamicAppProvidersEnabled":{"shape":"DynamicAppProvidersEnabled"},
+        "ImageSharedWithOthers":{"shape":"ImageSharedWithOthers"}
       }
     },
     "ImageBuilder":{
@@ -2680,7 +2801,8 @@
         "NetworkAccessConfiguration":{"shape":"NetworkAccessConfiguration"},
         "ImageBuilderErrors":{"shape":"ResourceErrors"},
         "AppstreamAgentVersion":{"shape":"AppstreamAgentVersion"},
-        "AccessEndpoints":{"shape":"AccessEndpointList"}
+        "AccessEndpoints":{"shape":"AccessEndpointList"},
+        "LatestAppstreamAgentVersion":{"shape":"LatestAppstreamAgentVersion"}
       }
     },
     "ImageBuilderList":{
@@ -2727,6 +2849,13 @@
         "allowFleet":{"shape":"BooleanObject"},
         "allowImageBuilder":{"shape":"BooleanObject"}
       }
+    },
+    "ImageSharedWithOthers":{
+      "type":"string",
+      "enum":[
+        "TRUE",
+        "FALSE"
+      ]
     },
     "ImageState":{
       "type":"string",
@@ -2794,6 +2923,13 @@
     "LastReportGenerationExecutionErrors":{
       "type":"list",
       "member":{"shape":"LastReportGenerationExecutionError"}
+    },
+    "LatestAppstreamAgentVersion":{
+      "type":"string",
+      "enum":[
+        "TRUE",
+        "FALSE"
+      ]
     },
     "LimitExceededException":{
       "type":"structure",
@@ -3351,6 +3487,71 @@
       "max":50,
       "min":1
     },
+    "Theme":{
+      "type":"structure",
+      "members":{
+        "StackName":{"shape":"Name"},
+        "State":{"shape":"ThemeState"},
+        "ThemeTitleText":{"shape":"ThemeTitleText"},
+        "ThemeStyling":{"shape":"ThemeStyling"},
+        "ThemeFooterLinks":{"shape":"ThemeFooterLinks"},
+        "ThemeOrganizationLogoURL":{"shape":"String"},
+        "ThemeFaviconURL":{"shape":"String"},
+        "CreatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "ThemeAttribute":{
+      "type":"string",
+      "enum":["FOOTER_LINKS"]
+    },
+    "ThemeAttributes":{
+      "type":"list",
+      "member":{"shape":"ThemeAttribute"}
+    },
+    "ThemeFooterLink":{
+      "type":"structure",
+      "members":{
+        "DisplayName":{"shape":"ThemeFooterLinkDisplayName"},
+        "FooterLinkURL":{"shape":"ThemeFooterLinkURL"}
+      }
+    },
+    "ThemeFooterLinkDisplayName":{
+      "type":"string",
+      "max":300,
+      "min":1,
+      "pattern":"^[-@./#&+\\w\\s]*$"
+    },
+    "ThemeFooterLinkURL":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
+    "ThemeFooterLinks":{
+      "type":"list",
+      "member":{"shape":"ThemeFooterLink"}
+    },
+    "ThemeState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "ThemeStyling":{
+      "type":"string",
+      "enum":[
+        "LIGHT_BLUE",
+        "BLUE",
+        "PINK",
+        "RED"
+      ]
+    },
+    "ThemeTitleText":{
+      "type":"string",
+      "max":300,
+      "min":1,
+      "pattern":"^[-@./#&+\\w\\s]*$"
+    },
     "Timestamp":{"type":"timestamp"},
     "UntagResourceRequest":{
       "type":"structure",
@@ -3527,6 +3728,26 @@
       "type":"structure",
       "members":{
         "Stack":{"shape":"Stack"}
+      }
+    },
+    "UpdateThemeForStackRequest":{
+      "type":"structure",
+      "required":["StackName"],
+      "members":{
+        "StackName":{"shape":"Name"},
+        "FooterLinks":{"shape":"ThemeFooterLinks"},
+        "TitleText":{"shape":"ThemeTitleText"},
+        "ThemeStyling":{"shape":"ThemeStyling"},
+        "OrganizationLogoS3Location":{"shape":"S3Location"},
+        "FaviconS3Location":{"shape":"S3Location"},
+        "State":{"shape":"ThemeState"},
+        "AttributesToDelete":{"shape":"ThemeAttributes"}
+      }
+    },
+    "UpdateThemeForStackResult":{
+      "type":"structure",
+      "members":{
+        "Theme":{"shape":"Theme"}
       }
     },
     "UsageReportExecutionErrorCode":{

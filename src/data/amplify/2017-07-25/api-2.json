@@ -11,7 +11,8 @@
     "serviceId":"Amplify",
     "signatureVersion":"v4",
     "signingName":"amplify",
-    "uid":"amplify-2017-07-25"
+    "uid":"amplify-2017-07-25",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateApp":{
@@ -638,7 +639,8 @@
         "enableAutoBranchCreation":{"shape":"EnableAutoBranchCreation"},
         "autoBranchCreationPatterns":{"shape":"AutoBranchCreationPatterns"},
         "autoBranchCreationConfig":{"shape":"AutoBranchCreationConfig"},
-        "repositoryCloneMethod":{"shape":"RepositoryCloneMethod"}
+        "repositoryCloneMethod":{"shape":"RepositoryCloneMethod"},
+        "cacheConfig":{"shape":"CacheConfig"}
       }
     },
     "AppArn":{
@@ -858,6 +860,20 @@
       "pattern":"(?s).+",
       "sensitive":true
     },
+    "CacheConfig":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"CacheConfigType"}
+      }
+    },
+    "CacheConfigType":{
+      "type":"string",
+      "enum":[
+        "AMPLIFY_MANAGED",
+        "AMPLIFY_MANAGED_NO_COOKIES"
+      ]
+    },
     "Certificate":{
       "type":"structure",
       "required":["type"],
@@ -933,7 +949,8 @@
         "customHeaders":{"shape":"CustomHeaders"},
         "enableAutoBranchCreation":{"shape":"EnableAutoBranchCreation"},
         "autoBranchCreationPatterns":{"shape":"AutoBranchCreationPatterns"},
-        "autoBranchCreationConfig":{"shape":"AutoBranchCreationConfig"}
+        "autoBranchCreationConfig":{"shape":"AutoBranchCreationConfig"},
+        "cacheConfig":{"shape":"CacheConfig"}
       }
     },
     "CreateAppResult":{
@@ -2384,7 +2401,8 @@
         "autoBranchCreationConfig":{"shape":"AutoBranchCreationConfig"},
         "repository":{"shape":"Repository"},
         "oauthToken":{"shape":"OauthToken"},
-        "accessToken":{"shape":"AccessToken"}
+        "accessToken":{"shape":"AccessToken"},
+        "cacheConfig":{"shape":"CacheConfig"}
       }
     },
     "UpdateAppResult":{

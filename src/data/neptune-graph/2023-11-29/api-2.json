@@ -603,6 +603,10 @@
       "min":1,
       "pattern":"arn:.+"
     },
+    "BlankNodeHandling":{
+      "type":"string",
+      "enum":["convertToIri"]
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -764,6 +768,7 @@
         "failOnError":{"shape":"Boolean"},
         "source":{"shape":"String"},
         "format":{"shape":"Format"},
+        "blankNodeHandling":{"shape":"BlankNodeHandling"},
         "roleArn":{"shape":"RoleArn"}
       }
     },
@@ -995,7 +1000,8 @@
       "type":"string",
       "enum":[
         "CSV",
-        "OPEN_CYPHER"
+        "OPEN_CYPHER",
+        "NTRIPLES"
       ]
     },
     "GetGraphInput":{
@@ -1837,6 +1843,7 @@
         "failOnError":{"shape":"Boolean"},
         "source":{"shape":"String"},
         "format":{"shape":"Format"},
+        "blankNodeHandling":{"shape":"BlankNodeHandling"},
         "graphIdentifier":{
           "shape":"GraphIdentifier",
           "location":"uri",

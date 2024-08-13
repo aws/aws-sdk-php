@@ -8737,7 +8737,8 @@
         "MaxResults":{"shape":"CatalogGetterPageSize"},
         "TransactionId":{"shape":"TransactionIdString"},
         "QueryAsOfTime":{"shape":"Timestamp"},
-        "IncludeStatusDetails":{"shape":"BooleanNullable"}
+        "IncludeStatusDetails":{"shape":"BooleanNullable"},
+        "AttributesToGet":{"shape":"TableAttributesList"}
       }
     },
     "GetTablesResponse":{
@@ -13068,6 +13069,17 @@
         "IsMultiDialectView":{"shape":"NullableBoolean"},
         "Status":{"shape":"TableStatus"}
       }
+    },
+    "TableAttributes":{
+      "type":"string",
+      "enum":[
+        "NAME",
+        "TABLE_TYPE"
+      ]
+    },
+    "TableAttributesList":{
+      "type":"list",
+      "member":{"shape":"TableAttributes"}
     },
     "TableError":{
       "type":"structure",
