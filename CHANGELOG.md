@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds notice for the upcoming deprecation of PHP versions 8.0.x and below.
+* `Aws\CodeBuild` - AWS CodeBuild now supports using Secrets Manager to store git credentials and using multiple source credentials in a single project.
+
 ## 3.319.4 - 2024-08-13
 
 * `Aws\S3` - Expands handling of errors contained within 200 responses.

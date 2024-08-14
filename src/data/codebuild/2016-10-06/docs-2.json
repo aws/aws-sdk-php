@@ -25,7 +25,7 @@
     "DescribeTestCases": "<p> Returns a list of details about test cases for a report. </p>",
     "GetReportGroupTrend": "<p>Analyzes and accumulates test report values for the specified test reports.</p>",
     "GetResourcePolicy": "<p> Gets a resource policy that is identified by its resource ARN. </p>",
-    "ImportSourceCredentials": "<p> Imports the source repository credentials for an CodeBuild project that has its source code stored in a GitHub, GitHub Enterprise, or Bitbucket repository. </p>",
+    "ImportSourceCredentials": "<p> Imports the source repository credentials for an CodeBuild project that has its source code stored in a GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, or Bitbucket repository. </p>",
     "InvalidateProjectCache": "<p>Resets the cache for a project.</p>",
     "ListBuildBatches": "<p>Retrieves the identifiers of your build batches in the current region.</p>",
     "ListBuildBatchesForProject": "<p>Retrieves the identifiers of the build batches for a specific project.</p>",
@@ -81,8 +81,8 @@
     "AuthType": {
       "base": null,
       "refs": {
-        "ImportSourceCredentialsInput$authType": "<p> The type of authentication used to connect to a GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, or Bitbucket repository. An OAUTH connection is not supported by the API and must be created using the CodeBuild console. Note that CODECONNECTIONS is only valid for GitLab and GitLab Self Managed.</p>",
-        "SourceCredentialsInfo$authType": "<p> The type of authentication used by the credentials. Valid options are OAUTH, BASIC_AUTH, PERSONAL_ACCESS_TOKEN, or CODECONNECTIONS. </p>"
+        "ImportSourceCredentialsInput$authType": "<p> The type of authentication used to connect to a GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, or Bitbucket repository. An OAUTH connection is not supported by the API and must be created using the CodeBuild console.</p>",
+        "SourceCredentialsInfo$authType": "<p> The type of authentication used by the credentials. Valid options are OAUTH, BASIC_AUTH, PERSONAL_ACCESS_TOKEN, CODECONNECTIONS, or SECRETS_MANAGER. </p>"
       }
     },
     "BatchDeleteBuildsInput": {
@@ -1617,7 +1617,7 @@
     "SensitiveNonEmptyString": {
       "base": null,
       "refs": {
-        "ImportSourceCredentialsInput$token": "<p> For GitHub or GitHub Enterprise, this is the personal access token. For Bitbucket, this is either the access token or the app password. For the <code>authType</code> CODECONNECTIONS, this is the <code>connectionArn</code>.</p>"
+        "ImportSourceCredentialsInput$token": "<p> For GitHub or GitHub Enterprise, this is the personal access token. For Bitbucket, this is either the access token or the app password. For the <code>authType</code> CODECONNECTIONS, this is the <code>connectionArn</code>. For the <code>authType</code> SECRETS_MANAGER, this is the <code>secretArn</code>.</p>"
       }
     },
     "SensitiveString": {
@@ -1658,9 +1658,9 @@
       }
     },
     "SourceAuth": {
-      "base": "<p>Information about the authorization settings for CodeBuild to access the source code to be built.</p> <p>This information is for the CodeBuild console's use only. Your code should not get or set this information directly.</p>",
+      "base": "<p>Information about the authorization settings for CodeBuild to access the source code to be built.</p>",
       "refs": {
-        "ProjectSource$auth": "<p>Information about the authorization settings for CodeBuild to access the source code to be built.</p> <p>This information is for the CodeBuild console's use only. Your code should not get or set this information directly.</p>",
+        "ProjectSource$auth": "<p>Information about the authorization settings for CodeBuild to access the source code to be built.</p>",
         "StartBuildBatchInput$sourceAuthOverride": "<p>A <code>SourceAuth</code> object that overrides the one defined in the batch build project. This override applies only if the build project's source is BitBucket or GitHub.</p>",
         "StartBuildInput$sourceAuthOverride": "<p>An authorization type for this build that overrides the one defined in the build project. This override applies only if the build project's source is BitBucket, GitHub, GitLab, or GitLab Self Managed.</p>"
       }
@@ -1668,7 +1668,7 @@
     "SourceAuthType": {
       "base": null,
       "refs": {
-        "SourceAuth$type": "<p>The authorization type to use. Valid options are OAUTH or CODECONNECTIONS.</p>"
+        "SourceAuth$type": "<p>The authorization type to use. Valid options are OAUTH, CODECONNECTIONS, or SECRETS_MANAGER.</p>"
       }
     },
     "SourceCredentialsInfo": {
@@ -1840,7 +1840,7 @@
         "ScopeConfiguration$name": "<p>The name of either the enterprise or organization that will send webhook events to CodeBuild, depending on if the webhook is a global or organization webhook respectively.</p>",
         "ScopeConfiguration$domain": "<p>The domain of the GitHub Enterprise organization. Note that this parameter is only required if your project's source type is GITHUB_ENTERPRISE</p>",
         "SourceAuth$resource": "<p>The resource value that applies to the specified authorization type.</p>",
-        "SourceCredentialsInfo$resource": "<p>The connection ARN if your serverType type is GITLAB or GITLAB_SELF_MANAGED and your authType is CODECONNECTIONS.</p>",
+        "SourceCredentialsInfo$resource": "<p>The connection ARN if your authType is CODECONNECTIONS or SECRETS_MANAGER.</p>",
         "StartBuildBatchInput$sourceVersion": "<p>The version of the batch build input to be built, for this build only. If not specified, the latest version is used. If specified, the contents depends on the source provider:</p> <dl> <dt>CodeCommit</dt> <dd> <p>The commit ID, branch, or Git tag to use.</p> </dd> <dt>GitHub</dt> <dd> <p>The commit ID, pull request ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a pull request ID is specified, it must use the format <code>pr/pull-request-ID</code> (for example <code>pr/25</code>). If a branch name is specified, the branch's HEAD commit ID is used. If not specified, the default branch's HEAD commit ID is used.</p> </dd> <dt>Bitbucket</dt> <dd> <p>The commit ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a branch name is specified, the branch's HEAD commit ID is used. If not specified, the default branch's HEAD commit ID is used.</p> </dd> <dt>Amazon S3</dt> <dd> <p>The version ID of the object that represents the build input ZIP file to use.</p> </dd> </dl> <p>If <code>sourceVersion</code> is specified at the project level, then this <code>sourceVersion</code> (at the build level) takes precedence. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/sample-source-version.html\">Source Version Sample with CodeBuild</a> in the <i>CodeBuild User Guide</i>. </p>",
         "StartBuildBatchInput$sourceLocationOverride": "<p>A location that overrides, for this batch build, the source location defined in the batch build project.</p>",
         "StartBuildBatchInput$buildspecOverride": "<p>A buildspec file declaration that overrides, for this build only, the latest one already defined in the build project.</p> <p>If this value is set, it can be either an inline buildspec definition, the path to an alternate buildspec file relative to the value of the built-in <code>CODEBUILD_SRC_DIR</code> environment variable, or the path to an S3 bucket. The bucket must be in the same Amazon Web Services Region as the build project. Specify the buildspec file using its ARN (for example, <code>arn:aws:s3:::my-codebuild-sample2/buildspec.yml</code>). If this value is not provided or is set to an empty string, the source code must contain a buildspec file in its root directory. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html#build-spec-ref-name-storage\">Buildspec File Name and Storage Location</a>. </p>",
