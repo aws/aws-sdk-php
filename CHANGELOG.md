@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.320.1 - 2024-08-15
 
 * `Aws\` - Add missing PHPDoc annotation for Doctrine Cache implementations.
 * `Aws\ECS` - This release introduces a new ContainerDefinition configuration to support the customer-managed keys for ECS container restart feature.
