@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Add missing PHPDoc annotation for Doctrine Cache implementations.
+* `Aws\ECS` - This release introduces a new ContainerDefinition configuration to support the customer-managed keys for ECS container restart feature.
+* `Aws\IAM` - Make the LastUsedDate field in the GetAccessKeyLastUsed response optional. This may break customers who only call the API for access keys with a valid LastUsedDate. This fixes a deserialization issue for access keys without a LastUsedDate, because the field was marked as required but could be null.
+* `Aws\DocDB` - This release adds Global Cluster Failover capability which enables you to change your global cluster's primary AWS region, the region that serves writes, during a regional outage. Performing a failover action preserves your Global Cluster setup.
+* `Aws\S3` - Amazon Simple Storage Service / Features : Adds support for pagination in the S3 ListBuckets API.
+
 ## 3.320.0 - 2024-08-14
 
 * `Aws\` - Adds notice for the upcoming deprecation of PHP versions 8.0.x and below.

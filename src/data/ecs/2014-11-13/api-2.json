@@ -1276,6 +1276,7 @@
         "links":{"shape":"StringList"},
         "portMappings":{"shape":"PortMappingList"},
         "essential":{"shape":"BoxedBoolean"},
+        "restartPolicy":{"shape":"ContainerRestartPolicy"},
         "entryPoint":{"shape":"StringList"},
         "command":{"shape":"StringList"},
         "environment":{"shape":"EnvironmentVariables"},
@@ -1399,6 +1400,15 @@
     "ContainerOverrides":{
       "type":"list",
       "member":{"shape":"ContainerOverride"}
+    },
+    "ContainerRestartPolicy":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"},
+        "ignoredExitCodes":{"shape":"IntegerList"},
+        "restartAttemptPeriod":{"shape":"BoxedInteger"}
+      }
     },
     "ContainerStateChange":{
       "type":"structure",
@@ -2230,6 +2240,10 @@
       "enum":["CONTAINER_RUNTIME"]
     },
     "Integer":{"type":"integer"},
+    "IntegerList":{
+      "type":"list",
+      "member":{"shape":"BoxedInteger"}
+    },
     "InvalidParameterException":{
       "type":"structure",
       "members":{
