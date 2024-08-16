@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.320.2 - 2024-08-16
 
 * `Aws\SageMaker` - Introduce Endpoint and EndpointConfig Arns in sagemaker:ListPipelineExecutionSteps API response
 * `Aws\QuickSight` - Amazon QuickSight launches Customer Managed Key (CMK) encryption for Data Source metadata
