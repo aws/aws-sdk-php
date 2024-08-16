@@ -5398,6 +5398,7 @@
         "DescribeEndpointOutput$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
         "DescribeInferenceComponentOutput$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint that hosts the inference component.</p>",
         "Endpoint$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
+        "EndpointStepMetadata$Arn": "<p>The Amazon Resource Name (ARN) of the endpoint in the step.</p>",
         "EndpointSummary$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
         "InferenceComponentSummary$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint that hosts the inference component.</p>",
         "ModelDashboardEndpoint$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
@@ -5410,6 +5411,7 @@
       "refs": {
         "CreateEndpointConfigOutput$EndpointConfigArn": "<p>The Amazon Resource Name (ARN) of the endpoint configuration. </p>",
         "DescribeEndpointConfigOutput$EndpointConfigArn": "<p>The Amazon Resource Name (ARN) of the endpoint configuration.</p>",
+        "EndpointConfigStepMetadata$Arn": "<p>The Amazon Resource Name (ARN) of the endpoint configuration used in the step.</p>",
         "EndpointConfigSummary$EndpointConfigArn": "<p>The Amazon Resource Name (ARN) of the endpoint configuration.</p>"
       }
     },
@@ -5439,6 +5441,12 @@
       "base": null,
       "refs": {
         "ListEndpointConfigsInput$SortBy": "<p>The field to sort results by. The default is <code>CreationTime</code>.</p>"
+      }
+    },
+    "EndpointConfigStepMetadata": {
+      "base": "<p>Metadata for an endpoint configuration step.</p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$EndpointConfig": "<p>The endpoint configuration used to create an endpoint during this step execution.</p>"
       }
     },
     "EndpointConfigSummary": {
@@ -5566,6 +5574,12 @@
         "EndpointSummary$EndpointStatus": "<p>The status of the endpoint.</p> <ul> <li> <p> <code>OutOfService</code>: Endpoint is not available to take incoming requests.</p> </li> <li> <p> <code>Creating</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> is executing.</p> </li> <li> <p> <code>Updating</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpoint.html\">UpdateEndpoint</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> is executing.</p> </li> <li> <p> <code>SystemUpdating</code>: Endpoint is undergoing maintenance and cannot be updated or deleted or re-scaled until it has completed. This maintenance operation does not change any customer-specified values such as VPC config, KMS encryption, model, instance type, or instance count.</p> </li> <li> <p> <code>RollingBack</code>: Endpoint fails to scale up or down or change its variant weight and is in the process of rolling back to its previous configuration. Once the rollback completes, endpoint returns to an <code>InService</code> status. This transitional status only applies to an endpoint that has autoscaling enabled and is undergoing variant weight or capacity changes as part of an <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> call or when the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> operation is called explicitly.</p> </li> <li> <p> <code>InService</code>: Endpoint is available to process incoming requests.</p> </li> <li> <p> <code>Deleting</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html\">DeleteEndpoint</a> is executing.</p> </li> <li> <p> <code>Failed</code>: Endpoint could not be created, updated, or re-scaled. Use <code>DescribeEndpointOutput$FailureReason</code> for information about the failure. <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html\">DeleteEndpoint</a> is the only operation that can be performed on a failed endpoint.</p> </li> </ul> <p>To get a list of endpoints with a specified status, use the <code>StatusEquals</code> filter with a call to <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListEndpoints.html\">ListEndpoints</a>.</p>",
         "ListEndpointsInput$StatusEquals": "<p> A filter that returns only endpoints with the specified status.</p>",
         "ModelDashboardEndpoint$EndpointStatus": "<p>The endpoint status.</p>"
+      }
+    },
+    "EndpointStepMetadata": {
+      "base": "<p>Metadata for an endpoint step.</p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$Endpoint": "<p>The endpoint that was invoked during this step execution.</p>"
       }
     },
     "EndpointSummary": {

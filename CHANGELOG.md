@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - Introduce Endpoint and EndpointConfig Arns in sagemaker:ListPipelineExecutionSteps API response
+* `Aws\QuickSight` - Amazon QuickSight launches Customer Managed Key (CMK) encryption for Data Source metadata
+* `Aws\Batch` - Improvements of integration between AWS Batch and EC2.
+* `Aws\SESv2` - Marking use case description field of account details as deprecated.
+* `Aws\Inspector2` - Update the correct format of key and values for resource tags
+
 ## 3.320.1 - 2024-08-15
 
 * `Aws\` - Add missing PHPDoc annotation for Doctrine Cache implementations.

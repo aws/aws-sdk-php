@@ -176,6 +176,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceExistsException"},
         {"shape":"ThrottlingException"},
+        {"shape":"CustomerManagedKeyUnavailableException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -2731,6 +2732,7 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"CustomerManagedKeyUnavailableException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -6929,6 +6931,15 @@
         "IncludeNullValue":{"shape":"BooleanObject"},
         "CustomValues":{"shape":"CustomParameterValues"}
       }
+    },
+    "CustomerManagedKeyUnavailableException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"},
+        "RequestId":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
     },
     "Dashboard":{
       "type":"structure",

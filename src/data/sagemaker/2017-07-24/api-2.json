@@ -11655,6 +11655,12 @@
         "CreationTime"
       ]
     },
+    "EndpointConfigStepMetadata":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"EndpointConfigArn"}
+      }
+    },
     "EndpointConfigSummary":{
       "type":"structure",
       "required":[
@@ -11784,6 +11790,12 @@
         "Failed",
         "UpdateRollbackFailed"
       ]
+    },
+    "EndpointStepMetadata":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"EndpointArn"}
+      }
     },
     "EndpointSummary":{
       "type":"structure",
@@ -18982,7 +18994,9 @@
         "QualityCheck":{"shape":"QualityCheckStepMetadata"},
         "ClarifyCheck":{"shape":"ClarifyCheckStepMetadata"},
         "Fail":{"shape":"FailStepMetadata"},
-        "AutoMLJob":{"shape":"AutoMLJobStepMetadata"}
+        "AutoMLJob":{"shape":"AutoMLJobStepMetadata"},
+        "Endpoint":{"shape":"EndpointStepMetadata"},
+        "EndpointConfig":{"shape":"EndpointConfigStepMetadata"}
       }
     },
     "PipelineExecutionSummary":{
