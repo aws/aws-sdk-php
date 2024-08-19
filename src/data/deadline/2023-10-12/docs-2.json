@@ -16,7 +16,7 @@
     "CreateBudget": "<p>Creates a budget to set spending thresholds for your rendering activity.</p>",
     "CreateFarm": "<p>Creates a farm to allow space for queues and fleets. Farms are the space where the components of your renders gather and are pieced together in the cloud. Farms contain budgets and allow you to enforce permissions. Deadline Cloud farms are a useful container for large projects.</p>",
     "CreateFleet": "<p>Creates a fleet. Fleets gather information relating to compute, or capacity, for renders within your farms. You can choose to manage your own capacity or opt to have fleets fully managed by Deadline Cloud.</p>",
-    "CreateJob": "<p>Creates a job. A job is a render submission submitted by a user. It contains specific job properties outlined as steps and tasks.</p>",
+    "CreateJob": "<p>Creates a job. A job is a set of instructions that AWS Deadline Cloud uses to schedule and run work on available workers. For more information, see <a href=\"https://docs.aws.amazon.com/deadline-cloud/latest/userguide/deadline-cloud-jobs.html\">Deadline Cloud jobs</a>.</p>",
     "CreateLicenseEndpoint": "<p>Creates a license endpoint to integrate your various licensed software used for rendering on Deadline Cloud.</p>",
     "CreateMonitor": "<p>Creates an Amazon Web Services Deadline Cloud monitor that you can use to view your farms, queues, and fleets. After you submit a job, you can track the progress of the tasks and steps that make up the job, and then download the job's results. </p>",
     "CreateQueue": "<p>Creates a queue to coordinate the order in which jobs run on a farm. A queue can also specify where to pull resources and indicate where to output completed jobs.</p>",
@@ -30,7 +30,7 @@
     "DeleteLicenseEndpoint": "<p>Deletes a license endpoint.</p>",
     "DeleteMeteredProduct": "<p>Deletes a metered product.</p>",
     "DeleteMonitor": "<p>Removes a Deadline Cloud monitor. After you delete a monitor, you can create a new one and attach farms to the monitor.</p>",
-    "DeleteQueue": "<p>Deletes a queue.</p>",
+    "DeleteQueue": "<p>Deletes a queue.</p> <important> <p>You can't recover the jobs in a queue if you delete the queue. Deleting the queue also deletes the jobs in that queue.</p> </important>",
     "DeleteQueueEnvironment": "<p>Deletes a queue environment.</p>",
     "DeleteQueueFleetAssociation": "<p>Deletes a queue-fleet association.</p>",
     "DeleteStorageProfile": "<p>Deletes a storage profile.</p>",
@@ -87,13 +87,13 @@
     "SearchSteps": "<p>Searches for steps.</p>",
     "SearchTasks": "<p>Searches for tasks.</p>",
     "SearchWorkers": "<p>Searches for workers.</p>",
-    "StartSessionsStatisticsAggregation": "<p>Starts an asynchronous request for getting aggregated statistics about queues and farms. Get the statistics using the <code>GetSessionsStatisticsAggregation</code> operation. Statistics are available for 1 hour after you call the <code>StartSessionsStatisticsAggregation</code> operation.</p>",
+    "StartSessionsStatisticsAggregation": "<p>Starts an asynchronous request for getting aggregated statistics about queues and farms. Get the statistics using the <code>GetSessionsStatisticsAggregation</code> operation. You can only have one running aggregation for your Deadline Cloud farm. Call the <code>GetSessionsStatisticsAggregation</code> operation and check the <code>status</code> field to see if an aggregation is running. Statistics are available for 1 hour after you call the <code>StartSessionsStatisticsAggregation</code> operation.</p>",
     "TagResource": "<p>Tags a resource using the resource's ARN and desired tags.</p>",
     "UntagResource": "<p>Removes a tag from a resource using the resource's ARN and tag to remove.</p>",
     "UpdateBudget": "<p>Updates a budget that sets spending thresholds for rendering activity.</p>",
     "UpdateFarm": "<p>Updates a farm.</p>",
     "UpdateFleet": "<p>Updates a fleet.</p>",
-    "UpdateJob": "<p>Updates a job.</p>",
+    "UpdateJob": "<p>Updates a job. </p> <p>When you change the status of the job to <code>ARCHIVED</code>, the job can't be scheduled or archived.</p> <important> <p>An archived jobs and its steps and tasks are deleted after 120 days. The job can't be recovered.</p> </important>",
     "UpdateMonitor": "<p>Modifies the settings for a Deadline Cloud monitor. You can modify one or all of the settings when you call <code>UpdateMonitor</code>.</p>",
     "UpdateQueue": "<p>Updates a queue.</p>",
     "UpdateQueueEnvironment": "<p>Updates the queue environment.</p>",
@@ -602,7 +602,7 @@
     "CreateJobTargetTaskRunStatus": {
       "base": null,
       "refs": {
-        "CreateJobRequest$targetTaskRunStatus": "<p>The initial status of the job's tasks when they are created. Tasks that are created with a <code>SUSPENDED</code> status will not run until you update their status.</p>"
+        "CreateJobRequest$targetTaskRunStatus": "<p>The initial job status when it is created. Jobs that are created with a <code>SUSPENDED</code> status will not run until manually requeued.</p>"
       }
     },
     "CreateLicenseEndpointRequest": {
@@ -926,21 +926,21 @@
     "Description": {
       "base": null,
       "refs": {
-        "BudgetActionToAdd$description": "<p>A description for the budget action to add.</p>",
-        "BudgetSummary$description": "<p>The description of the budget summary.</p>",
-        "CreateBudgetRequest$description": "<p>The description of the budget.</p>",
-        "CreateFarmRequest$description": "<p>The description of the farm.</p>",
-        "CreateFleetRequest$description": "<p>The description of the fleet.</p>",
-        "CreateQueueRequest$description": "<p>The description of the queue.</p>",
-        "GetBudgetResponse$description": "<p>The description of the budget.</p>",
-        "GetFarmResponse$description": "<p>The description of the farm.</p>",
-        "GetFleetResponse$description": "<p>The description of the fleet.</p>",
-        "GetQueueResponse$description": "<p>The description of the queue.</p>",
-        "ResponseBudgetAction$description": "<p>The budget action description.</p>",
-        "UpdateBudgetRequest$description": "<p>The description of the budget to update.</p>",
-        "UpdateFarmRequest$description": "<p>The description of the farm to update.</p>",
-        "UpdateFleetRequest$description": "<p>The description of the fleet to update.</p>",
-        "UpdateQueueRequest$description": "<p>The description of the queue to update.</p>"
+        "BudgetActionToAdd$description": "<p>A description for the budget action to add.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "BudgetSummary$description": "<p>The description of the budget summary.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateBudgetRequest$description": "<p>The description of the budget.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateFarmRequest$description": "<p>The description of the farm.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateFleetRequest$description": "<p>The description of the fleet.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateQueueRequest$description": "<p>The description of the queue.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetBudgetResponse$description": "<p>The description of the budget.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetFarmResponse$description": "<p>The description of the farm.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetFleetResponse$description": "<p>The description of the fleet.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetQueueResponse$description": "<p>The description of the queue.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "ResponseBudgetAction$description": "<p>The budget action description.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateBudgetRequest$description": "<p>The description of the budget to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateFarmRequest$description": "<p>The description of the farm to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateFleetRequest$description": "<p>The description of the fleet to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateQueueRequest$description": "<p>The description of the queue to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>"
       }
     },
     "DesiredWorkerStatus": {
@@ -1005,12 +1005,12 @@
     "Double": {
       "base": null,
       "refs": {
-        "Stats$avg": "<p>The average of the usage statistics.</p>",
-        "Stats$max": "<p>The maximum among the usage statistics.</p>",
         "Stats$min": "<p>The minimum of the usage statistics.</p>",
+        "Stats$max": "<p>The maximum among the usage statistics.</p>",
+        "Stats$avg": "<p>The average of the usage statistics.</p>",
         "Stats$sum": "<p>The sum of the usage statistics.</p>",
-        "StepAmountCapability$max": "<p>The maximum amount.</p>",
         "StepAmountCapability$min": "<p>The minimum amount.</p>",
+        "StepAmountCapability$max": "<p>The maximum amount.</p>",
         "StepAmountCapability$value": "<p>The amount value.</p>"
       }
     },
@@ -1439,8 +1439,8 @@
       "base": null,
       "refs": {
         "ConsumedUsages$approximateDollarUsage": "<p>The amount of the budget consumed.</p>",
-        "FleetAmountCapability$max": "<p>The maximum amount of the fleet worker capability.</p>",
         "FleetAmountCapability$min": "<p>The minimum amount of fleet worker capability.</p>",
+        "FleetAmountCapability$max": "<p>The maximum amount of the fleet worker capability.</p>",
         "WorkerAmountCapability$value": "<p>The value of the worker amount capability.</p>"
       }
     },
@@ -1711,7 +1711,7 @@
         "ListFarmsRequest$principalId": "<p>The principal ID of the member to list on the farm.</p>",
         "ListFleetsRequest$principalId": "<p>The principal ID of the members to include in the fleet.</p>",
         "ListJobsRequest$principalId": "<p>The principal ID of the members on the jobs.</p>",
-        "ListQueuesRequest$principalId": "<p>The principal ID. This filter is only valid when using Nimble Studio credentials and should match the user ID in the credentials of the caller.</p>",
+        "ListQueuesRequest$principalId": "<p>The principal IDs to include in the list of queues.</p>",
         "QueueMember$principalId": "<p>The principal ID of the queue member.</p>"
       }
     },
@@ -1753,10 +1753,10 @@
     "Integer": {
       "base": null,
       "refs": {
-        "DependencyCounts$consumersResolved": "<p>The number of consumers resolved.</p>",
-        "DependencyCounts$consumersUnresolved": "<p>The number of unresolved consumers.</p>",
         "DependencyCounts$dependenciesResolved": "<p>The number of resolved dependencies.</p>",
         "DependencyCounts$dependenciesUnresolved": "<p>The number of unresolved dependencies.</p>",
+        "DependencyCounts$consumersResolved": "<p>The number of consumers resolved.</p>",
+        "DependencyCounts$consumersUnresolved": "<p>The number of unresolved consumers.</p>",
         "Ec2EbsVolume$sizeGiB": "<p>The EBS volume size in GiB.</p>",
         "FleetSummary$targetWorkerCount": "<p>The target number of workers in a fleet.</p>",
         "FleetSummary$workerCount": "<p>The number of workers in the fleet summary.</p>",
@@ -1840,7 +1840,7 @@
     "JobDescription": {
       "base": null,
       "refs": {
-        "GetJobResponse$description": "<p>The description of the job.</p>"
+        "GetJobResponse$description": "<p>The description of the job.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>"
       }
     },
     "JobDetailsEntity": {
@@ -1939,7 +1939,7 @@
     "JobLifecycleStatus": {
       "base": null,
       "refs": {
-        "GetJobResponse$lifecycleStatus": "<p>The life cycle status for the job.</p>",
+        "GetJobResponse$lifecycleStatus": "<p>The life cycle status for the job. </p>",
         "JobSearchSummary$lifecycleStatus": "<p>The life cycle status.</p>",
         "JobSummary$lifecycleStatus": "<p>The life cycle status.</p>"
       }
@@ -1983,7 +1983,7 @@
     "JobPriority": {
       "base": null,
       "refs": {
-        "CreateJobRequest$priority": "<p>The priority of the job on a scale of 1 to 100. The highest priority is 1.</p>",
+        "CreateJobRequest$priority": "<p>The priority of the job on a scale of 0 to 100. The highest priority (first scheduled) is 100. When two jobs have the same priority, the oldest job is scheduled first.</p>",
         "GetJobResponse$priority": "<p>The job priority.</p>",
         "JobSearchSummary$priority": "<p>The job priority.</p>",
         "JobSummary$priority": "<p>The job priority.</p>",
@@ -2094,8 +2094,8 @@
     "ListAttributeCapabilityValue": {
       "base": null,
       "refs": {
-        "StepAttributeCapability$allOf": "<p>Requires all of the step attribute values.</p>",
-        "StepAttributeCapability$anyOf": "<p>Requires any of the step attributes in a given list.</p>"
+        "StepAttributeCapability$anyOf": "<p>Requires any of the step attributes in a given list.</p>",
+        "StepAttributeCapability$allOf": "<p>Requires all of the step attribute values.</p>"
       }
     },
     "ListAvailableMeteredProductsRequest": {
@@ -2489,7 +2489,7 @@
     "MaxRetriesPerTask": {
       "base": null,
       "refs": {
-        "CreateJobRequest$maxRetriesPerTask": "<p>The maximum number of retries for a job.</p>",
+        "CreateJobRequest$maxRetriesPerTask": "<p>The maximum number of retries for each task.</p>",
         "GetJobResponse$maxRetriesPerTask": "<p>The maximum number of retries per failed tasks.</p>",
         "JobSearchSummary$maxRetriesPerTask": "<p>The maximum number of retries for a job.</p>",
         "JobSummary$maxRetriesPerTask": "<p>The maximum number of retries for a job.</p>",
@@ -2512,8 +2512,8 @@
     "MemoryAmountMiB": {
       "base": null,
       "refs": {
-        "MemoryMiBRange$max": "<p>The maximum amount of memory (in MiB).</p>",
-        "MemoryMiBRange$min": "<p>The minimum amount of memory (in MiB).</p>"
+        "MemoryMiBRange$min": "<p>The minimum amount of memory (in MiB).</p>",
+        "MemoryMiBRange$max": "<p>The maximum amount of memory (in MiB).</p>"
       }
     },
     "MemoryMiBRange": {
@@ -2547,25 +2547,25 @@
     "MinOneMaxTenThousand": {
       "base": null,
       "refs": {
-        "VCpuCountRange$max": "<p>The maximum amount of vCPU.</p>",
-        "VCpuCountRange$min": "<p>The minimum amount of vCPU.</p>"
+        "VCpuCountRange$min": "<p>The minimum amount of vCPU.</p>",
+        "VCpuCountRange$max": "<p>The maximum amount of vCPU.</p>"
       }
     },
     "MinZeroMaxInteger": {
       "base": null,
       "refs": {
-        "AcceleratorCountRange$max": "<p>The maximum GPU for the accelerator.</p>",
         "AcceleratorCountRange$min": "<p>The minimum GPU for the accelerator.</p>",
-        "AcceleratorTotalMemoryMiBRange$max": "<p>The maximum amount of memory to use for the accelerator, measured in MiB.</p>",
+        "AcceleratorCountRange$max": "<p>The maximum GPU for the accelerator.</p>",
         "AcceleratorTotalMemoryMiBRange$min": "<p>The minimum amount of memory to use for the accelerator, measured in MiB.</p>",
-        "CreateFleetRequest$maxWorkerCount": "<p>The maximum number of workers for the fleet.</p>",
+        "AcceleratorTotalMemoryMiBRange$max": "<p>The maximum amount of memory to use for the accelerator, measured in MiB.</p>",
         "CreateFleetRequest$minWorkerCount": "<p>The minimum number of workers for the fleet.</p>",
-        "FleetSummary$maxWorkerCount": "<p>The maximum number of workers specified in the fleet.</p>",
+        "CreateFleetRequest$maxWorkerCount": "<p>The maximum number of workers for the fleet.</p>",
         "FleetSummary$minWorkerCount": "<p>The minimum number of workers in the fleet.</p>",
-        "GetFleetResponse$maxWorkerCount": "<p>The maximum number of workers specified in the fleet.</p>",
+        "FleetSummary$maxWorkerCount": "<p>The maximum number of workers specified in the fleet.</p>",
         "GetFleetResponse$minWorkerCount": "<p>The minimum number of workers specified in the fleet.</p>",
-        "UpdateFleetRequest$maxWorkerCount": "<p>The maximum number of workers in the fleet.</p>",
-        "UpdateFleetRequest$minWorkerCount": "<p>The minimum number of workers in the fleet.</p>"
+        "GetFleetResponse$maxWorkerCount": "<p>The maximum number of workers specified in the fleet.</p>",
+        "UpdateFleetRequest$minWorkerCount": "<p>The minimum number of workers in the fleet.</p>",
+        "UpdateFleetRequest$maxWorkerCount": "<p>The maximum number of workers in the fleet.</p>"
       }
     },
     "MonitorId": {
@@ -2898,32 +2898,32 @@
     "ResourceName": {
       "base": null,
       "refs": {
-        "BudgetSummary$displayName": "<p>The display name of the budget summary to update.</p>",
-        "CreateBudgetRequest$displayName": "<p>The display name of the budget.</p>",
-        "CreateFarmRequest$displayName": "<p>The display name of the farm.</p>",
-        "CreateFleetRequest$displayName": "<p>The display name of the fleet.</p>",
-        "CreateMonitorRequest$displayName": "<p>The name that you give the monitor that is displayed in the Deadline Cloud console.</p>",
-        "CreateQueueRequest$displayName": "<p>The display name of the queue.</p>",
-        "CreateStorageProfileRequest$displayName": "<p>The display name of the storage profile.</p>",
-        "FarmSummary$displayName": "<p>The display name of the farm.</p>",
-        "FleetSummary$displayName": "<p>The display name of the fleet summary to update.</p>",
-        "GetBudgetResponse$displayName": "<p>The display name of the budget.</p>",
-        "GetFarmResponse$displayName": "<p>The display name of the farm.</p>",
-        "GetFleetResponse$displayName": "<p>The display name of the fleet.</p>",
-        "GetMonitorResponse$displayName": "<p>The name used to identify the monitor on the Deadline Cloud console.</p>",
-        "GetQueueResponse$displayName": "<p>The display name of the queue.</p>",
-        "GetStorageProfileForQueueResponse$displayName": "<p>The display name of the storage profile connected to a queue.</p>",
-        "GetStorageProfileResponse$displayName": "<p>The display name of the storage profile.</p>",
-        "ListFleetsRequest$displayName": "<p>The display names of a list of fleets.</p>",
-        "MonitorSummary$displayName": "<p>The name of the monitor that displays on the Deadline Cloud console.</p>",
-        "QueueSummary$displayName": "<p>The display name of the queue summary to update.</p>",
-        "StorageProfileSummary$displayName": "<p>The display name of the storage profile summary to update.</p>",
-        "UpdateBudgetRequest$displayName": "<p>The display name of the budget to update.</p>",
-        "UpdateFarmRequest$displayName": "<p>The display name of the farm to update.</p>",
-        "UpdateFleetRequest$displayName": "<p>The display name of the fleet to update.</p>",
-        "UpdateMonitorRequest$displayName": "<p>The new value to use for the monitor's display name.</p>",
-        "UpdateQueueRequest$displayName": "<p>The display name of the queue to update.</p>",
-        "UpdateStorageProfileRequest$displayName": "<p>The display name of the storage profile to update.</p>"
+        "BudgetSummary$displayName": "<p>The display name of the budget summary to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateBudgetRequest$displayName": "<p>The display name of the budget.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateFarmRequest$displayName": "<p>The display name of the farm.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateFleetRequest$displayName": "<p>The display name of the fleet.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateMonitorRequest$displayName": "<p>The name that you give the monitor that is displayed in the Deadline Cloud console.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateQueueRequest$displayName": "<p>The display name of the queue.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateStorageProfileRequest$displayName": "<p>The display name of the storage profile.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "FarmSummary$displayName": "<p>The display name of the farm.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "FleetSummary$displayName": "<p>The display name of the fleet summary to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetBudgetResponse$displayName": "<p>The display name of the budget.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetFarmResponse$displayName": "<p>The display name of the farm.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetFleetResponse$displayName": "<p>The display name of the fleet.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetMonitorResponse$displayName": "<p>The name used to identify the monitor on the Deadline Cloud console.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetQueueResponse$displayName": "<p>The display name of the queue.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetStorageProfileForQueueResponse$displayName": "<p>The display name of the storage profile connected to a queue.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetStorageProfileResponse$displayName": "<p>The display name of the storage profile.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "ListFleetsRequest$displayName": "<p>The display names of a list of fleets.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "MonitorSummary$displayName": "<p>The name of the monitor that displays on the Deadline Cloud console.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "QueueSummary$displayName": "<p>The display name of the queue summary to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "StorageProfileSummary$displayName": "<p>The display name of the storage profile summary to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateBudgetRequest$displayName": "<p>The display name of the budget to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateFarmRequest$displayName": "<p>The display name of the farm to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateFleetRequest$displayName": "<p>The display name of the fleet to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateMonitorRequest$displayName": "<p>The new value to use for the monitor's display name.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateQueueRequest$displayName": "<p>The display name of the queue to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateStorageProfileRequest$displayName": "<p>The display name of the storage profile to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>"
       }
     },
     "ResourceNotFoundException": {
@@ -3300,7 +3300,7 @@
     "SessionsStatisticsAggregationStatus": {
       "base": null,
       "refs": {
-        "GetSessionsStatisticsAggregationResponse$status": "<p>The status of the aggregated results.</p>"
+        "GetSessionsStatisticsAggregationResponse$status": "<p>The status of the aggregated results. An aggregation may fail or time out if the results are too large. If this happens, you can call the <code>StartSessionsStatisticsAggregation</code> operation after you reduce the aggregation time frame, reduce the number of queues or fleets in the aggregation, or increase the period length.</p> <p>If you call the <code>StartSessionsStatisticsAggregation </code> operation when the status is <code>IN_PROGRESS</code>, you will receive a <code>ThrottlingException</code>.</p>"
       }
     },
     "SessionsStatisticsResources": {
@@ -3440,7 +3440,7 @@
     "StepDescription": {
       "base": null,
       "refs": {
-        "GetStepResponse$description": "<p>The description of the step.</p>"
+        "GetStepResponse$description": "<p>The description of the step.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>"
       }
     },
     "StepDetailsEntity": {
@@ -3692,16 +3692,16 @@
         "LogParameters$value": null,
         "ParameterFilterExpression$name": "<p>The name of the parameter to filter on.</p>",
         "ParameterSortExpression$name": "<p>The parameter name to sort by.</p>",
-        "PathMappingRule$destinationPath": "<p>The destination path.</p>",
         "PathMappingRule$sourcePath": "<p>The source path.</p>",
+        "PathMappingRule$destinationPath": "<p>The destination path.</p>",
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that couldn't be found.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of the resource that couldn't be found.</p>",
         "ServiceQuotaExceededException$message": null,
-        "ServiceQuotaExceededException$quotaCode": "<p>Identifies the quota that has been exceeded.</p>",
-        "ServiceQuotaExceededException$resourceId": "<p>The identifier of the affected resource.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>The type of the affected resource</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>Identifies the service that exceeded the quota.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>Identifies the quota that has been exceeded.</p>",
+        "ServiceQuotaExceededException$resourceId": "<p>The identifier of the affected resource.</p>",
         "StepDetailsEntity$schemaVersion": "<p>The schema version for a step template.</p>",
         "StepDetailsError$message": "<p>The error message detailing the error's cause.</p>",
         "StepSearchSummary$lifecycleStatusMessage": "<p>The life cycle status message.</p>",
@@ -3713,13 +3713,13 @@
         "Tags$value": null,
         "TaskParameters$key": null,
         "ThrottlingException$message": null,
-        "ThrottlingException$quotaCode": "<p>Identifies the quota that is being throttled.</p>",
         "ThrottlingException$serviceCode": "<p>Identifies the service that is being throttled.</p>",
+        "ThrottlingException$quotaCode": "<p>Identifies the quota that is being throttled.</p>",
         "UntagResourceRequest$resourceArn": "<p>The ARN of the resource to remove the tag from.</p>",
         "UserJobsFirst$userIdentityId": "<p>The user's ID.</p>",
         "ValidationException$message": null,
-        "ValidationExceptionField$message": "<p>The error message for the validation exception.</p>",
-        "ValidationExceptionField$name": "<p>The name of the validation exception.</p>"
+        "ValidationExceptionField$name": "<p>The name of the validation exception.</p>",
+        "ValidationExceptionField$message": "<p>The error message for the validation exception.</p>"
       }
     },
     "StringFilter": {
@@ -3773,12 +3773,12 @@
       "refs": {
         "AwsCredentials$expiration": "<p>The expiration date and time of the IAM credentials.</p>",
         "DateTimeFilterExpression$dateTime": "<p>The date and time.</p>",
-        "StartSessionsStatisticsAggregationRequest$endTime": "<p>The Linux timestamp of the date and time that the statistics end.</p>",
         "StartSessionsStatisticsAggregationRequest$startTime": "<p>The Linux timestamp of the date and time that the statistics start.</p>",
-        "Statistics$aggregationEndTime": "<p>The end time for the aggregation.</p>",
+        "StartSessionsStatisticsAggregationRequest$endTime": "<p>The Linux timestamp of the date and time that the statistics end.</p>",
         "Statistics$aggregationStartTime": "<p>The start time for the aggregation.</p>",
-        "UpdatedSessionActionInfo$endedAt": "<p>The date and time the resource ended running.</p>",
+        "Statistics$aggregationEndTime": "<p>The end time for the aggregation.</p>",
         "UpdatedSessionActionInfo$startedAt": "<p>The date and time the resource started running.</p>",
+        "UpdatedSessionActionInfo$endedAt": "<p>The date and time the resource ended running.</p>",
         "UpdatedSessionActionInfo$updatedAt": "<p>The updated time.</p>"
       }
     },
@@ -3859,7 +3859,7 @@
         "GetJobResponse$taskRunStatus": "<p>The task run status for the job.</p>",
         "GetStepResponse$taskRunStatus": "<p>The task run status for the job.</p>",
         "GetTaskResponse$runStatus": "<p>The run status for the task.</p>",
-        "JobSearchSummary$taskRunStatus": "<p>task run status for the job.</p> <ul> <li> <p> <code>PENDING</code>–pending and waiting for resources.</p> </li> <li> <p> <code>READY</code>–ready to be processed.</p> </li> <li> <p> <code>ASSIGNED</code>–assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code>–scheduled to be run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code>–being interrupted.</p> </li> <li> <p> <code>RUNNING</code>–running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code>–the task is suspended.</p> </li> <li> <p> <code>CANCELED</code>–the task has been canceled.</p> </li> <li> <p> <code>FAILED</code>–the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code>–the task has succeeded.</p> </li> </ul>",
+        "JobSearchSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code>–pending and waiting for resources.</p> </li> <li> <p> <code>READY</code>–ready to be processed.</p> </li> <li> <p> <code>ASSIGNED</code>–assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code>–scheduled to be run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code>–being interrupted.</p> </li> <li> <p> <code>RUNNING</code>–running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code>–the task is suspended.</p> </li> <li> <p> <code>CANCELED</code>–the task has been canceled.</p> </li> <li> <p> <code>FAILED</code>–the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code>–the task has succeeded.</p> </li> </ul>",
         "JobSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code>–pending and waiting for resources.</p> </li> <li> <p> <code>READY</code>–ready to be processed.</p> </li> <li> <p> <code>ASSIGNED</code>–assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code>–scheduled to be run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code>–being interrupted.</p> </li> <li> <p> <code>RUNNING</code>–running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code>–the task is suspended.</p> </li> <li> <p> <code>CANCELED</code>–the task has been canceled.</p> </li> <li> <p> <code>FAILED</code>–the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code>–the task has succeeded.</p> </li> </ul>",
         "StepSearchSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code>–pending and waiting for resources.</p> </li> <li> <p> <code>READY</code>–ready to be processed.</p> </li> <li> <p> <code>ASSIGNED</code>–assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code>–scheduled to be run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code>–being interrupted.</p> </li> <li> <p> <code>RUNNING</code>–running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code>–the task is suspended.</p> </li> <li> <p> <code>CANCELED</code>–the task has been canceled.</p> </li> <li> <p> <code>FAILED</code>–the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code>–the task has succeeded.</p> </li> </ul>",
         "StepSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code>–pending and waiting for resources.</p> </li> <li> <p> <code>READY</code>–ready to process.</p> </li> <li> <p> <code>ASSIGNED</code>–assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code>–scheduled to run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code>–being interrupted.</p> </li> <li> <p> <code>RUNNING</code>–running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code>–the task is suspended.</p> </li> <li> <p> <code>CANCELED</code>–the task has been canceled.</p> </li> <li> <p> <code>FAILED</code>–the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code>–the task has succeeded.</p> </li> </ul>",
@@ -3990,7 +3990,7 @@
     "UpdateJobLifecycleStatus": {
       "base": null,
       "refs": {
-        "UpdateJobRequest$lifecycleStatus": "<p>The status of a job in its lifecycle.</p>"
+        "UpdateJobRequest$lifecycleStatus": "<p>The status of a job in its lifecycle. When you change the status of the job to <code>ARCHIVED</code>, the job can't be scheduled or archived.</p> <important> <p>An archived jobs and its steps and tasks are deleted after 120 days. The job can't be recovered.</p> </important>"
       }
     },
     "UpdateJobRequest": {
@@ -4121,8 +4121,8 @@
         "BudgetSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "FarmSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "FleetSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
-        "GetBudgetResponse$queueStoppedAt": "<p>The date and time the queue stopped.</p>",
         "GetBudgetResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "GetBudgetResponse$queueStoppedAt": "<p>The date and time the queue stopped.</p>",
         "GetFarmResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetFleetResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetJobResponse$updatedAt": "<p>The date and time the resource was updated.</p>",

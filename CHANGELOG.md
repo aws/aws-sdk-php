@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lambda` - Release Lambda FunctionRecursiveConfig, enabling customers to turn recursive loop detection on or off on individual functions. This release adds two new APIs, GetFunctionRecursionConfig and PutFunctionRecursionConfig.
+* `Aws\SsmSap` - Add new attributes to the outputs of GetApplication and GetDatabase APIs.
+* `Aws\Bedrock` - Amazon Bedrock Batch Inference/ Model Invocation is a feature which allows customers to asynchronously run inference on a large set of records/files stored in S3.
+* `Aws\Deadline` - This release adds additional search fields and provides sorting by multiple fields.
+* `Aws\CodeBuild` - AWS CodeBuild now supports creating fleets with macOS platform for running builds.
+
 ## 3.320.2 - 2024-08-16
 
 * `Aws\SageMaker` - Introduce Endpoint and EndpointConfig Arns in sagemaker:ListPipelineExecutionSteps API response

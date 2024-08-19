@@ -45,6 +45,12 @@
         "RegisterApplicationOutput$Application": "<p>The application registered with AWS Systems Manager for SAP.</p>"
       }
     },
+    "ApplicationArnList": {
+      "base": null,
+      "refs": {
+        "Application$AssociatedApplicationArns": "<p>The Amazon Resource Names of the associated AWS Systems Manager for SAP applications.</p>"
+      }
+    },
     "ApplicationCredential": {
       "base": "<p>The credentials of your SAP application.</p>",
       "refs": {
@@ -165,6 +171,12 @@
       "base": "<p>The SAP component of your application.</p>",
       "refs": {
         "GetComponentOutput$Component": "<p>The component of an application registered with AWS Systems Manager for SAP.</p>"
+      }
+    },
+    "ComponentArnList": {
+      "base": null,
+      "refs": {
+        "Database$ConnectedComponentArns": "<p>The Amazon Resource Names of the connected AWS Systems Manager for SAP components.</p>"
       }
     },
     "ComponentId": {
@@ -701,8 +713,10 @@
       "base": null,
       "refs": {
         "Application$Arn": "<p>The Amazon Resource Name (ARN) of the application.</p>",
+        "ApplicationArnList$member": null,
         "ApplicationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the application.</p>",
         "Component$Arn": "<p>The Amazon Resource Name (ARN) of the component.</p>",
+        "ComponentArnList$member": null,
         "ComponentSummary$Arn": "<p>The Amazon Resource Name (ARN) of the component summary.</p>",
         "Database$Arn": "<p>The Amazon Resource Name (ARN) of the database.</p>",
         "DatabaseConnection$DatabaseArn": "<p>The Amazon Resource Name of the connected SAP HANA database.</p>",

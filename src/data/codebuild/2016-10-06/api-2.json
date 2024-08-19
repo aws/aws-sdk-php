@@ -1130,6 +1130,7 @@
         "scalingConfiguration":{"shape":"ScalingConfigurationInput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
+        "imageId":{"shape":"NonEmptyString"},
         "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
       }
@@ -1409,7 +1410,8 @@
         "ARM_CONTAINER",
         "WINDOWS_SERVER_2019_CONTAINER",
         "LINUX_LAMBDA_CONTAINER",
-        "ARM_LAMBDA_CONTAINER"
+        "ARM_LAMBDA_CONTAINER",
+        "MAC_ARM"
       ]
     },
     "EnvironmentVariable":{
@@ -1474,6 +1476,7 @@
         "scalingConfiguration":{"shape":"ScalingConfigurationOutput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
+        "imageId":{"shape":"NonEmptyString"},
         "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
       }
@@ -1493,7 +1496,9 @@
       "enum":[
         "CREATE_FAILED",
         "UPDATE_FAILED",
-        "ACTION_REQUIRED"
+        "ACTION_REQUIRED",
+        "PENDING_DELETION",
+        "INSUFFICIENT_CAPACITY"
       ]
     },
     "FleetName":{
@@ -2745,6 +2750,7 @@
         "scalingConfiguration":{"shape":"ScalingConfigurationInput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
+        "imageId":{"shape":"NonEmptyString"},
         "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
       }

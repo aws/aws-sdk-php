@@ -4,10 +4,12 @@
     "apiVersion":"2015-03-31",
     "endpointPrefix":"lambda",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Lambda",
     "serviceId":"Lambda",
     "signatureVersion":"v4",
-    "uid":"lambda-2015-03-31"
+    "uid":"lambda-2015-03-31",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddLayerVersionPermission":{
@@ -431,6 +433,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "GetFunctionRecursionConfig":{
+      "name":"GetFunctionRecursionConfig",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2024-08-31/functions/{FunctionName}/recursion-config",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFunctionRecursionConfigRequest"},
+      "output":{"shape":"GetFunctionRecursionConfigResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"}
       ]
     },
     "GetFunctionUrlConfig":{
@@ -918,6 +936,23 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceConflictException"}
+      ]
+    },
+    "PutFunctionRecursionConfig":{
+      "name":"PutFunctionRecursionConfig",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2024-08-31/functions/{FunctionName}/recursion-config",
+        "responseCode":200
+      },
+      "input":{"shape":"PutFunctionRecursionConfigRequest"},
+      "output":{"shape":"PutFunctionRecursionConfigResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"}
       ]
     },
     "PutProvisionedConcurrencyConfig":{
@@ -2298,6 +2333,23 @@
         }
       }
     },
+    "GetFunctionRecursionConfigRequest":{
+      "type":"structure",
+      "required":["FunctionName"],
+      "members":{
+        "FunctionName":{
+          "shape":"UnqualifiedFunctionName",
+          "location":"uri",
+          "locationName":"FunctionName"
+        }
+      }
+    },
+    "GetFunctionRecursionConfigResponse":{
+      "type":"structure",
+      "members":{
+        "RecursiveLoop":{"shape":"RecursiveLoop"}
+      }
+    },
     "GetFunctionRequest":{
       "type":"structure",
       "required":["FunctionName"],
@@ -3650,6 +3702,27 @@
         "DestinationConfig":{"shape":"DestinationConfig"}
       }
     },
+    "PutFunctionRecursionConfigRequest":{
+      "type":"structure",
+      "required":[
+        "FunctionName",
+        "RecursiveLoop"
+      ],
+      "members":{
+        "FunctionName":{
+          "shape":"UnqualifiedFunctionName",
+          "location":"uri",
+          "locationName":"FunctionName"
+        },
+        "RecursiveLoop":{"shape":"RecursiveLoop"}
+      }
+    },
+    "PutFunctionRecursionConfigResponse":{
+      "type":"structure",
+      "members":{
+        "RecursiveLoop":{"shape":"RecursiveLoop"}
+      }
+    },
     "PutProvisionedConcurrencyConfigRequest":{
       "type":"structure",
       "required":[
@@ -3741,6 +3814,13 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "RecursiveLoop":{
+      "type":"string",
+      "enum":[
+        "Allow",
+        "Terminate"
+      ]
     },
     "RemoveLayerVersionPermissionRequest":{
       "type":"structure",
@@ -4244,6 +4324,12 @@
       "max":200,
       "min":1,
       "pattern":"[a-zA-Z0-9-\\/*:_+=.@-]*"
+    },
+    "UnqualifiedFunctionName":{
+      "type":"string",
+      "max":140,
+      "min":1,
+      "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)"
     },
     "UnreservedConcurrentExecutions":{
       "type":"integer",

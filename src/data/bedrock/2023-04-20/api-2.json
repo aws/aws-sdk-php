@@ -110,6 +110,26 @@
       ],
       "idempotent":true
     },
+    "CreateModelInvocationJob":{
+      "name":"CreateModelInvocationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/model-invocation-job",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateModelInvocationJobRequest"},
+      "output":{"shape":"CreateModelInvocationJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "CreateProvisionedModelThroughput":{
       "name":"CreateProvisionedModelThroughput",
       "http":{
@@ -305,6 +325,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetModelInvocationJob":{
+      "name":"GetModelInvocationJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/model-invocation-job/{jobIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetModelInvocationJobRequest"},
+      "output":{"shape":"GetModelInvocationJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetModelInvocationLoggingConfiguration":{
       "name":"GetModelInvocationLoggingConfiguration",
       "http":{
@@ -435,6 +472,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListModelInvocationJobs":{
+      "name":"ListModelInvocationJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/model-invocation-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListModelInvocationJobsRequest"},
+      "output":{"shape":"ListModelInvocationJobsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListProvisionedModelThroughputs":{
       "name":"ListProvisionedModelThroughputs",
       "http":{
@@ -521,6 +574,24 @@
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true
+    },
+    "StopModelInvocationJob":{
+      "name":"StopModelInvocationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/model-invocation-job/{jobIdentifier}/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopModelInvocationJobRequest"},
+      "output":{"shape":"StopModelInvocationJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
     },
     "TagResource":{
       "name":"TagResource",
@@ -834,6 +905,36 @@
       "required":["jobArn"],
       "members":{
         "jobArn":{"shape":"ModelCustomizationJobArn"}
+      }
+    },
+    "CreateModelInvocationJobRequest":{
+      "type":"structure",
+      "required":[
+        "jobName",
+        "roleArn",
+        "modelId",
+        "inputDataConfig",
+        "outputDataConfig"
+      ],
+      "members":{
+        "jobName":{"shape":"ModelInvocationJobName"},
+        "roleArn":{"shape":"RoleArn"},
+        "clientRequestToken":{
+          "shape":"ModelInvocationIdempotencyToken",
+          "idempotencyToken":true
+        },
+        "modelId":{"shape":"ModelId"},
+        "inputDataConfig":{"shape":"ModelInvocationJobInputDataConfig"},
+        "outputDataConfig":{"shape":"ModelInvocationJobOutputDataConfig"},
+        "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateModelInvocationJobResponse":{
+      "type":"structure",
+      "required":["jobArn"],
+      "members":{
+        "jobArn":{"shape":"ModelInvocationJobArn"}
       }
     },
     "CreateProvisionedModelThroughputRequest":{
@@ -1496,6 +1597,44 @@
         "trainingMetrics":{"shape":"TrainingMetrics"},
         "validationMetrics":{"shape":"ValidationMetrics"},
         "vpcConfig":{"shape":"VpcConfig"}
+      }
+    },
+    "GetModelInvocationJobRequest":{
+      "type":"structure",
+      "required":["jobIdentifier"],
+      "members":{
+        "jobIdentifier":{
+          "shape":"ModelInvocationJobIdentifier",
+          "location":"uri",
+          "locationName":"jobIdentifier"
+        }
+      }
+    },
+    "GetModelInvocationJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "modelId",
+        "roleArn",
+        "submitTime",
+        "inputDataConfig",
+        "outputDataConfig"
+      ],
+      "members":{
+        "jobArn":{"shape":"ModelInvocationJobArn"},
+        "jobName":{"shape":"ModelInvocationJobName"},
+        "modelId":{"shape":"ModelId"},
+        "clientRequestToken":{"shape":"ModelInvocationIdempotencyToken"},
+        "roleArn":{"shape":"RoleArn"},
+        "status":{"shape":"ModelInvocationJobStatus"},
+        "message":{"shape":"Message"},
+        "submitTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "inputDataConfig":{"shape":"ModelInvocationJobInputDataConfig"},
+        "outputDataConfig":{"shape":"ModelInvocationJobOutputDataConfig"},
+        "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
+        "jobExpirationTime":{"shape":"Timestamp"}
       }
     },
     "GetModelInvocationLoggingConfigurationRequest":{
@@ -2491,6 +2630,58 @@
         "modelCustomizationJobSummaries":{"shape":"ModelCustomizationJobSummaries"}
       }
     },
+    "ListModelInvocationJobsRequest":{
+      "type":"structure",
+      "members":{
+        "submitTimeAfter":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"submitTimeAfter"
+        },
+        "submitTimeBefore":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"submitTimeBefore"
+        },
+        "statusEquals":{
+          "shape":"ModelInvocationJobStatus",
+          "location":"querystring",
+          "locationName":"statusEquals"
+        },
+        "nameContains":{
+          "shape":"ModelInvocationJobName",
+          "location":"querystring",
+          "locationName":"nameContains"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "sortBy":{
+          "shape":"SortJobsBy",
+          "location":"querystring",
+          "locationName":"sortBy"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        }
+      }
+    },
+    "ListModelInvocationJobsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "invocationJobSummaries":{"shape":"ModelInvocationJobSummaries"}
+      }
+    },
     "ListProvisionedModelThroughputsRequest":{
       "type":"structure",
       "members":{
@@ -2581,6 +2772,12 @@
       "box":true,
       "max":1000,
       "min":1
+    },
+    "Message":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "sensitive":true
     },
     "MetricFloat":{
       "type":"float",
@@ -2698,11 +2895,124 @@
       "type":"list",
       "member":{"shape":"ModelCustomization"}
     },
+    "ModelId":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-:]{1,63}/[a-z0-9]{12}$)|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}$)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})|(([0-9a-zA-Z][_-]?)+)"
+    },
     "ModelIdentifier":{
       "type":"string",
       "max":2048,
       "min":1,
       "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}(([:][a-z0-9-]{1,63}){0,2})?/[a-z0-9]{12})|(:foundation-model/([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})))|(([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2}))|(([0-9a-zA-Z][_-]?)+)"
+    },
+    "ModelInvocationIdempotencyToken":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]{1,256}(-*[a-zA-Z0-9]){0,256}"
+    },
+    "ModelInvocationJobArn":{
+      "type":"string",
+      "max":1011,
+      "min":0,
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:model-invocation-job/[a-z0-9]{12})"
+    },
+    "ModelInvocationJobIdentifier":{
+      "type":"string",
+      "max":1011,
+      "min":0,
+      "pattern":"((arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:model-invocation-job/)?[a-z0-9]{12})"
+    },
+    "ModelInvocationJobInputDataConfig":{
+      "type":"structure",
+      "members":{
+        "s3InputDataConfig":{"shape":"ModelInvocationJobS3InputDataConfig"}
+      },
+      "union":true
+    },
+    "ModelInvocationJobName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]{1,63}(-*[a-zA-Z0-9\\+\\-\\.]){0,63}"
+    },
+    "ModelInvocationJobOutputDataConfig":{
+      "type":"structure",
+      "members":{
+        "s3OutputDataConfig":{"shape":"ModelInvocationJobS3OutputDataConfig"}
+      },
+      "union":true
+    },
+    "ModelInvocationJobS3InputDataConfig":{
+      "type":"structure",
+      "required":["s3Uri"],
+      "members":{
+        "s3InputFormat":{"shape":"S3InputFormat"},
+        "s3Uri":{"shape":"S3Uri"}
+      }
+    },
+    "ModelInvocationJobS3OutputDataConfig":{
+      "type":"structure",
+      "required":["s3Uri"],
+      "members":{
+        "s3Uri":{"shape":"S3Uri"},
+        "s3EncryptionKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "ModelInvocationJobStatus":{
+      "type":"string",
+      "enum":[
+        "Submitted",
+        "InProgress",
+        "Completed",
+        "Failed",
+        "Stopping",
+        "Stopped",
+        "PartiallyCompleted",
+        "Expired",
+        "Validating",
+        "Scheduled"
+      ]
+    },
+    "ModelInvocationJobSummaries":{
+      "type":"list",
+      "member":{"shape":"ModelInvocationJobSummary"}
+    },
+    "ModelInvocationJobSummary":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "jobName",
+        "modelId",
+        "roleArn",
+        "submitTime",
+        "inputDataConfig",
+        "outputDataConfig"
+      ],
+      "members":{
+        "jobArn":{"shape":"ModelInvocationJobArn"},
+        "jobName":{"shape":"ModelInvocationJobName"},
+        "modelId":{"shape":"ModelId"},
+        "clientRequestToken":{"shape":"ModelInvocationIdempotencyToken"},
+        "roleArn":{"shape":"RoleArn"},
+        "status":{"shape":"ModelInvocationJobStatus"},
+        "message":{"shape":"Message"},
+        "submitTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "inputDataConfig":{"shape":"ModelInvocationJobInputDataConfig"},
+        "outputDataConfig":{"shape":"ModelInvocationJobOutputDataConfig"},
+        "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
+        "jobExpirationTime":{"shape":"Timestamp"}
+      }
+    },
+    "ModelInvocationJobTimeoutDurationInHours":{
+      "type":"integer",
+      "box":true,
+      "max":168,
+      "min":24
     },
     "ModelModality":{
       "type":"string",
@@ -2841,6 +3151,10 @@
         "keyPrefix":{"shape":"KeyPrefix"}
       }
     },
+    "S3InputFormat":{
+      "type":"string",
+      "enum":["JSONL"]
+    },
     "S3Uri":{
       "type":"string",
       "max":1024,
@@ -2927,6 +3241,22 @@
       "members":{
       }
     },
+    "StopModelInvocationJobRequest":{
+      "type":"structure",
+      "required":["jobIdentifier"],
+      "members":{
+        "jobIdentifier":{
+          "shape":"ModelInvocationJobIdentifier",
+          "location":"uri",
+          "locationName":"jobIdentifier"
+        }
+      }
+    },
+    "StopModelInvocationJobResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "String":{"type":"string"},
     "SubnetId":{
       "type":"string",
@@ -2995,7 +3325,7 @@
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":".*(^[a-zA-Z0-9][a-zA-Z0-9\\-]*$)|(^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:([0-9]{12}|)((:(fine-tuning-job|model-customization-job|custom-model)/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12})$)|(:provisioned-model/[a-z0-9]{12}$)|(:guardrail/[a-z0-9]+$)|(:evaluation-job/[a-z0-9]{12}$))).*"
+      "pattern":".*(^[a-zA-Z0-9][a-zA-Z0-9\\-]*$)|(^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:([0-9]{12}|)((:(fine-tuning-job|model-customization-job|custom-model)/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12})$)|(:guardrail/[a-z0-9]+$)|(:(provisioned-model|model-invocation-job|model-evaluation-job|evaluation-job|model-import-job|imported-model)/[a-z0-9]{12}$))).*"
     },
     "ThrottlingException":{
       "type":"structure",
