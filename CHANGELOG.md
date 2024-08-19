@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.320.3 - 2024-08-19
 
 * `Aws\Lambda` - Release Lambda FunctionRecursiveConfig, enabling customers to turn recursive loop detection on or off on individual functions. This release adds two new APIs, GetFunctionRecursionConfig and PutFunctionRecursionConfig.
 * `Aws\SsmSap` - Add new attributes to the outputs of GetApplication and GetDatabase APIs.
