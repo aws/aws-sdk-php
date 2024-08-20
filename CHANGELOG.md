@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Amazon Simple Storage Service / Features : Add support for conditional writes for PutObject and CompleteMultipartUpload APIs.
+* `Aws\ECS` - Documentation only release to address various tickets
+* `Aws\OpenSearchServerless` - Added FailureCode and FailureMessage to BatchGetCollectionResponse for BatchGetVPCEResponse for non-Active Collection and VPCE.
+
 ## 3.320.3 - 2024-08-19
 
 * `Aws\Lambda` - Release Lambda FunctionRecursiveConfig, enabling customers to turn recursive loop detection on or off on individual functions. This release adds two new APIs, GetFunctionRecursionConfig and PutFunctionRecursionConfig.
