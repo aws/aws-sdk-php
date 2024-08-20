@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.320.4 - 2024-08-20
 
 * `Aws\S3` - Amazon Simple Storage Service / Features : Add support for conditional writes for PutObject and CompleteMultipartUpload APIs.
 * `Aws\ECS` - Documentation only release to address various tickets
