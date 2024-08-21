@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.320.5 - 2024-08-21
 
 * `Aws\Codestar` - Removes Codestar service.
 * `Aws\EC2` - DescribeInstanceStatus now returns health information on EBS volumes attached to Nitro instances
