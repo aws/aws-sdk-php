@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Codestar` - Removes Codestar service.
+* `Aws\EC2` - DescribeInstanceStatus now returns health information on EBS volumes attached to Nitro instances
+* `Aws\Lambda` - Release FilterCriteria encryption for Lambda EventSourceMapping, enabling customers to encrypt their filter criteria using a customer-owned KMS key.
+* `Aws\SecurityHub` - Security Hub documentation and definition updates
+* `Aws\Glue` - Add optional field JobRunQueuingEnabled to CreateJob and UpdateJob APIs.
+* `Aws\EntityResolution` - Increase the mapping attributes in Schema to 35.
+* `Aws\SES` - Enable email receiving customers to provide SES with access to their S3 buckets via an IAM role for "Deliver to S3 Action"
+
 ## 3.320.4 - 2024-08-20
 
 * `Aws\S3` - Amazon Simple Storage Service / Features : Add support for conditional writes for PutObject and CompleteMultipartUpload APIs.

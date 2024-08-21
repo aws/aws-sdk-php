@@ -5710,6 +5710,7 @@
       "members":{
         "Name":{"shape":"NameString"},
         "JobMode":{"shape":"JobMode"},
+        "JobRunQueuingEnabled":{"shape":"NullableBoolean"},
         "Description":{"shape":"DescriptionString"},
         "LogUri":{"shape":"UriString"},
         "Role":{"shape":"RoleString"},
@@ -9451,6 +9452,7 @@
       "members":{
         "Name":{"shape":"NameString"},
         "JobMode":{"shape":"JobMode"},
+        "JobRunQueuingEnabled":{"shape":"NullableBoolean"},
         "Description":{"shape":"DescriptionString"},
         "LogUri":{"shape":"UriString"},
         "Role":{"shape":"RoleString"},
@@ -9548,6 +9550,7 @@
         "TriggerName":{"shape":"NameString"},
         "JobName":{"shape":"NameString"},
         "JobMode":{"shape":"JobMode"},
+        "JobRunQueuingEnabled":{"shape":"NullableBoolean"},
         "StartedOn":{"shape":"TimestampValue"},
         "LastModifiedOn":{"shape":"TimestampValue"},
         "CompletedOn":{"shape":"TimestampValue"},
@@ -9572,7 +9575,8 @@
         "DPUSeconds":{"shape":"NullableDouble"},
         "ExecutionClass":{"shape":"ExecutionClass"},
         "MaintenanceWindow":{"shape":"MaintenanceWindow"},
-        "ProfileName":{"shape":"NameString"}
+        "ProfileName":{"shape":"NameString"},
+        "StateDetail":{"shape":"OrchestrationMessageString"}
       }
     },
     "JobRunList":{
@@ -9598,6 +9602,7 @@
       "type":"structure",
       "members":{
         "JobMode":{"shape":"JobMode"},
+        "JobRunQueuingEnabled":{"shape":"NullableBoolean"},
         "Description":{"shape":"DescriptionString"},
         "LogUri":{"shape":"UriString"},
         "Role":{"shape":"RoleString"},
@@ -10766,6 +10771,10 @@
       "max":1024,
       "min":1,
       "pattern":"arn:aws[^:]*:iam::[0-9]*:role/.+"
+    },
+    "OrchestrationMessageString":{
+      "type":"string",
+      "max":400000
     },
     "OrchestrationNameString":{
       "type":"string",
@@ -12695,6 +12704,7 @@
       "required":["JobName"],
       "members":{
         "JobName":{"shape":"NameString"},
+        "JobRunQueuingEnabled":{"shape":"NullableBoolean"},
         "JobRunId":{"shape":"IdString"},
         "Arguments":{"shape":"GenericMap"},
         "AllocatedCapacity":{

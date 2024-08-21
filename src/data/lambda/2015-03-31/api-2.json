@@ -1548,7 +1548,8 @@
         "AmazonManagedKafkaEventSourceConfig":{"shape":"AmazonManagedKafkaEventSourceConfig"},
         "SelfManagedKafkaEventSourceConfig":{"shape":"SelfManagedKafkaEventSourceConfig"},
         "ScalingConfig":{"shape":"ScalingConfig"},
-        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"}
+        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
+        "KMSKeyArn":{"shape":"KMSKeyArn"}
       }
     },
     "CreateFunctionRequest":{
@@ -1990,7 +1991,9 @@
         "AmazonManagedKafkaEventSourceConfig":{"shape":"AmazonManagedKafkaEventSourceConfig"},
         "SelfManagedKafkaEventSourceConfig":{"shape":"SelfManagedKafkaEventSourceConfig"},
         "ScalingConfig":{"shape":"ScalingConfig"},
-        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"}
+        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
+        "KMSKeyArn":{"shape":"KMSKeyArn"},
+        "FilterCriteriaError":{"shape":"FilterCriteriaError"}
       }
     },
     "EventSourceMappingsList":{
@@ -2043,6 +2046,25 @@
       "members":{
         "Filters":{"shape":"FilterList"}
       }
+    },
+    "FilterCriteriaError":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"FilterCriteriaErrorCode"},
+        "Message":{"shape":"FilterCriteriaErrorMessage"}
+      }
+    },
+    "FilterCriteriaErrorCode":{
+      "type":"string",
+      "max":50,
+      "min":10,
+      "pattern":"[A-Za-z]+Exception"
+    },
+    "FilterCriteriaErrorMessage":{
+      "type":"string",
+      "max":2048,
+      "min":10,
+      "pattern":".*"
     },
     "FilterList":{
       "type":"list",
@@ -4430,7 +4452,8 @@
         "TumblingWindowInSeconds":{"shape":"TumblingWindowInSeconds"},
         "FunctionResponseTypes":{"shape":"FunctionResponseTypeList"},
         "ScalingConfig":{"shape":"ScalingConfig"},
-        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"}
+        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
+        "KMSKeyArn":{"shape":"KMSKeyArn"}
       }
     },
     "UpdateFunctionCodeRequest":{
