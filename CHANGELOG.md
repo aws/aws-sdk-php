@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.320.6 - 2024-08-22
 
 * `Aws\Waiter` - Updates waiter error matching logic for boolean valuesq
 * `Aws\Bedrock` - Amazon Bedrock Evaluation BatchDeleteEvaluationJob API allows customers to delete evaluation jobs under terminated evaluation job statuses - Stopped, Failed, or Completed. Customers can submit a batch of 25 evaluation jobs to be deleted at once.
