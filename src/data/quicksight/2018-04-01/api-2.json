@@ -3370,7 +3370,8 @@
         "FilterGroups":{"shape":"FilterGroupList"},
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
         "AnalysisDefaults":{"shape":"AnalysisDefaults"},
-        "Options":{"shape":"AssetOptions"}
+        "Options":{"shape":"AssetOptions"},
+        "QueryExecutionOptions":{"shape":"QueryExecutionOptions"}
       }
     },
     "AnalysisError":{
@@ -3492,7 +3493,32 @@
       "type":"structure",
       "required":["InitialDashboardId"],
       "members":{
-        "InitialDashboardId":{"shape":"ShortRestrictiveResourceId"}
+        "InitialDashboardId":{"shape":"ShortRestrictiveResourceId"},
+        "EnabledFeatures":{"shape":"AnonymousUserDashboardEmbeddingConfigurationEnabledFeatures"},
+        "DisabledFeatures":{"shape":"AnonymousUserDashboardEmbeddingConfigurationDisabledFeatures"},
+        "FeatureConfigurations":{"shape":"AnonymousUserDashboardFeatureConfigurations"}
+      }
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationDisabledFeature":{
+      "type":"string",
+      "enum":["SHARED_VIEW"]
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationDisabledFeatures":{
+      "type":"list",
+      "member":{"shape":"AnonymousUserDashboardEmbeddingConfigurationDisabledFeature"}
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationEnabledFeature":{
+      "type":"string",
+      "enum":["SHARED_VIEW"]
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationEnabledFeatures":{
+      "type":"list",
+      "member":{"shape":"AnonymousUserDashboardEmbeddingConfigurationEnabledFeature"}
+    },
+    "AnonymousUserDashboardFeatureConfigurations":{
+      "type":"structure",
+      "members":{
+        "SharedView":{"shape":"SharedViewConfigurations"}
       }
     },
     "AnonymousUserDashboardVisualEmbeddingConfiguration":{
@@ -16064,6 +16090,19 @@
       "max":256,
       "min":1
     },
+    "QueryExecutionMode":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "MANUAL"
+      ]
+    },
+    "QueryExecutionOptions":{
+      "type":"structure",
+      "members":{
+        "QueryExecutionMode":{"shape":"QueryExecutionMode"}
+      }
+    },
     "QueueInfo":{
       "type":"structure",
       "required":[
@@ -16452,7 +16491,8 @@
     "RegisteredUserConsoleFeatureConfigurations":{
       "type":"structure",
       "members":{
-        "StatePersistence":{"shape":"StatePersistenceConfigurations"}
+        "StatePersistence":{"shape":"StatePersistenceConfigurations"},
+        "SharedView":{"shape":"SharedViewConfigurations"}
       }
     },
     "RegisteredUserDashboardEmbeddingConfiguration":{
@@ -16467,6 +16507,7 @@
       "type":"structure",
       "members":{
         "StatePersistence":{"shape":"StatePersistenceConfigurations"},
+        "SharedView":{"shape":"SharedViewConfigurations"},
         "Bookmarks":{"shape":"BookmarksConfigurations"}
       }
     },
@@ -17519,6 +17560,13 @@
       "required":["BackgroundColor"],
       "members":{
         "BackgroundColor":{"shape":"ConditionalFormattingColor"}
+      }
+    },
+    "SharedViewConfigurations":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"}
       }
     },
     "SharingModel":{
@@ -18912,7 +18960,8 @@
         "FilterGroups":{"shape":"FilterGroupList"},
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
         "AnalysisDefaults":{"shape":"AnalysisDefaults"},
-        "Options":{"shape":"AssetOptions"}
+        "Options":{"shape":"AssetOptions"},
+        "QueryExecutionOptions":{"shape":"QueryExecutionOptions"}
       }
     },
     "TemplateVersionSummary":{

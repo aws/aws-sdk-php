@@ -11,7 +11,8 @@
     "serviceId":"Inspector2",
     "signatureVersion":"v4",
     "signingName":"inspector2",
-    "uid":"inspector2-2020-06-08"
+    "uid":"inspector2-2020-06-08",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateMember":{
@@ -1033,6 +1034,8 @@
       "type":"structure",
       "members":{
         "accountId":{"shape":"AccountId"},
+        "exploitAvailableCount":{"shape":"Long"},
+        "fixAvailableCount":{"shape":"Long"},
         "severityCounts":{"shape":"SeverityCounts"}
       }
     },
@@ -2892,7 +2895,9 @@
         "EVENTBRIDGE_THROTTLED",
         "RESOURCE_SCAN_NOT_DISABLED",
         "DISASSOCIATE_ALL_MEMBERS",
-        "ACCOUNT_IS_ISOLATED"
+        "ACCOUNT_IS_ISOLATED",
+        "EC2_SSM_RESOURCE_DATA_SYNC_LIMIT_EXCEEDED",
+        "EC2_SSM_ASSOCIATION_VERSION_LIMIT_EXCEEDED"
       ]
     },
     "ErrorMessage":{"type":"string"},
@@ -3241,6 +3246,8 @@
       "type":"structure",
       "members":{
         "accountId":{"shape":"AccountId"},
+        "exploitAvailableCount":{"shape":"Long"},
+        "fixAvailableCount":{"shape":"Long"},
         "severityCounts":{"shape":"SeverityCounts"}
       }
     },
@@ -4796,7 +4803,9 @@
         "DEEP_INSPECTION_PACKAGE_COLLECTION_LIMIT_EXCEEDED",
         "DEEP_INSPECTION_DAILY_SSM_INVENTORY_LIMIT_EXCEEDED",
         "DEEP_INSPECTION_COLLECTION_TIME_LIMIT_EXCEEDED",
-        "DEEP_INSPECTION_NO_INVENTORY"
+        "DEEP_INSPECTION_NO_INVENTORY",
+        "AGENTLESS_INSTANCE_STORAGE_LIMIT_EXCEEDED",
+        "AGENTLESS_INSTANCE_COLLECTION_TIME_LIMIT_EXCEEDED"
       ]
     },
     "ScanType":{

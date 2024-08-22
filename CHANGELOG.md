@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Waiter` - Updates waiter error matching logic for boolean valuesq
+* `Aws\Bedrock` - Amazon Bedrock Evaluation BatchDeleteEvaluationJob API allows customers to delete evaluation jobs under terminated evaluation job statuses - Stopped, Failed, or Completed. Customers can submit a batch of 25 evaluation jobs to be deleted at once.
+* `Aws\QuickSight` - Explicit query for authors and dashboard viewing sharing for embedded users
+* `Aws\Inspector2` - Add enums for Agentless scan statuses and EC2 enablement error states
+* `Aws\AutoScaling` - Amazon EC2 Auto Scaling now provides EBS health check to manage EC2 instance replacement
+* `Aws\EMRContainers` - Correct endpoint for FIPS is configured for US Gov Regions.
+* `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Malaysia) Region (ap-southeast-5) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+
 ## 3.320.5 - 2024-08-21
 
 * `Aws\Codestar` - Removes Codestar service.

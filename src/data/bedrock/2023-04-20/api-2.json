@@ -13,6 +13,24 @@
     "uid":"bedrock-2023-04-20"
   },
   "operations":{
+    "BatchDeleteEvaluationJob":{
+      "name":"BatchDeleteEvaluationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/evaluation-jobs/batch-delete",
+        "responseCode":202
+      },
+      "input":{"shape":"BatchDeleteEvaluationJobRequest"},
+      "output":{"shape":"BatchDeleteEvaluationJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateEvaluationJob":{
       "name":"CreateEvaluationJob",
       "http":{
@@ -110,6 +128,27 @@
       ],
       "idempotent":true
     },
+    "CreateModelImportJob":{
+      "name":"CreateModelImportJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/model-import-jobs",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateModelImportJobRequest"},
+      "output":{"shape":"CreateModelImportJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "CreateModelInvocationJob":{
       "name":"CreateModelInvocationJob",
       "http":{
@@ -178,6 +217,25 @@
       },
       "input":{"shape":"DeleteGuardrailRequest"},
       "output":{"shape":"DeleteGuardrailResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteImportedModel":{
+      "name":"DeleteImportedModel",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/imported-models/{modelIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteImportedModelRequest"},
+      "output":{"shape":"DeleteImportedModelResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -291,6 +349,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetImportedModel":{
+      "name":"GetImportedModel",
+      "http":{
+        "method":"GET",
+        "requestUri":"/imported-models/{modelIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetImportedModelRequest"},
+      "output":{"shape":"GetImportedModelResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetModelCopyJob":{
       "name":"GetModelCopyJob",
       "http":{
@@ -317,6 +392,23 @@
       },
       "input":{"shape":"GetModelCustomizationJobRequest"},
       "output":{"shape":"GetModelCustomizationJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetModelImportJob":{
+      "name":"GetModelImportJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/model-import-jobs/{jobIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetModelImportJobRequest"},
+      "output":{"shape":"GetModelImportJobResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -439,6 +531,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListImportedModels":{
+      "name":"ListImportedModels",
+      "http":{
+        "method":"GET",
+        "requestUri":"/imported-models",
+        "responseCode":200
+      },
+      "input":{"shape":"ListImportedModelsRequest"},
+      "output":{"shape":"ListImportedModelsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListModelCopyJobs":{
       "name":"ListModelCopyJobs",
       "http":{
@@ -465,6 +573,22 @@
       },
       "input":{"shape":"ListModelCustomizationJobsRequest"},
       "output":{"shape":"ListModelCustomizationJobsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListModelImportJobs":{
+      "name":"ListModelImportJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/model-import-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListModelImportJobsRequest"},
+      "output":{"shape":"ListModelImportJobsResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
@@ -696,6 +820,57 @@
       "min":1,
       "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})|(([0-9a-zA-Z][_-]?)+)"
     },
+    "BatchDeleteEvaluationJobError":{
+      "type":"structure",
+      "required":[
+        "jobIdentifier",
+        "code"
+      ],
+      "members":{
+        "jobIdentifier":{"shape":"EvaluationJobIdentifier"},
+        "code":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "BatchDeleteEvaluationJobErrors":{
+      "type":"list",
+      "member":{"shape":"BatchDeleteEvaluationJobError"},
+      "max":25,
+      "min":0
+    },
+    "BatchDeleteEvaluationJobItem":{
+      "type":"structure",
+      "required":[
+        "jobIdentifier",
+        "jobStatus"
+      ],
+      "members":{
+        "jobIdentifier":{"shape":"EvaluationJobIdentifier"},
+        "jobStatus":{"shape":"EvaluationJobStatus"}
+      }
+    },
+    "BatchDeleteEvaluationJobItems":{
+      "type":"list",
+      "member":{"shape":"BatchDeleteEvaluationJobItem"}
+    },
+    "BatchDeleteEvaluationJobRequest":{
+      "type":"structure",
+      "required":["jobIdentifiers"],
+      "members":{
+        "jobIdentifiers":{"shape":"EvaluationJobIdentifiers"}
+      }
+    },
+    "BatchDeleteEvaluationJobResponse":{
+      "type":"structure",
+      "required":[
+        "errors",
+        "evaluationJobs"
+      ],
+      "members":{
+        "errors":{"shape":"BatchDeleteEvaluationJobErrors"},
+        "evaluationJobs":{"shape":"BatchDeleteEvaluationJobItems"}
+      }
+    },
     "BedrockModelId":{
       "type":"string",
       "max":140,
@@ -907,6 +1082,33 @@
         "jobArn":{"shape":"ModelCustomizationJobArn"}
       }
     },
+    "CreateModelImportJobRequest":{
+      "type":"structure",
+      "required":[
+        "jobName",
+        "importedModelName",
+        "roleArn",
+        "modelDataSource"
+      ],
+      "members":{
+        "jobName":{"shape":"JobName"},
+        "importedModelName":{"shape":"ImportedModelName"},
+        "roleArn":{"shape":"RoleArn"},
+        "modelDataSource":{"shape":"ModelDataSource"},
+        "jobTags":{"shape":"TagList"},
+        "importedModelTags":{"shape":"TagList"},
+        "clientRequestToken":{"shape":"IdempotencyToken"},
+        "vpcConfig":{"shape":"VpcConfig"},
+        "importedModelKmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "CreateModelImportJobResponse":{
+      "type":"structure",
+      "required":["jobArn"],
+      "members":{
+        "jobArn":{"shape":"ModelImportJobArn"}
+      }
+    },
     "CreateModelInvocationJobRequest":{
       "type":"structure",
       "required":[
@@ -1042,6 +1244,22 @@
       "members":{
       }
     },
+    "DeleteImportedModelRequest":{
+      "type":"structure",
+      "required":["modelIdentifier"],
+      "members":{
+        "modelIdentifier":{
+          "shape":"ImportedModelIdentifier",
+          "location":"uri",
+          "locationName":"modelIdentifier"
+        }
+      }
+    },
+    "DeleteImportedModelResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteModelInvocationLoggingConfigurationRequest":{
       "type":"structure",
       "members":{
@@ -1166,6 +1384,12 @@
       "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:evaluation-job/[a-z0-9]{12})",
       "sensitive":true
     },
+    "EvaluationJobIdentifiers":{
+      "type":"list",
+      "member":{"shape":"EvaluationJobIdentifier"},
+      "max":25,
+      "min":1
+    },
     "EvaluationJobName":{
       "type":"string",
       "max":63,
@@ -1179,7 +1403,8 @@
         "Completed",
         "Failed",
         "Stopping",
-        "Stopped"
+        "Stopped",
+        "Deleting"
       ]
     },
     "EvaluationJobType":{
@@ -1515,6 +1740,30 @@
         "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
+    "GetImportedModelRequest":{
+      "type":"structure",
+      "required":["modelIdentifier"],
+      "members":{
+        "modelIdentifier":{
+          "shape":"ImportedModelIdentifier",
+          "location":"uri",
+          "locationName":"modelIdentifier"
+        }
+      }
+    },
+    "GetImportedModelResponse":{
+      "type":"structure",
+      "members":{
+        "modelArn":{"shape":"ImportedModelArn"},
+        "modelName":{"shape":"ImportedModelName"},
+        "jobName":{"shape":"JobName"},
+        "jobArn":{"shape":"ModelImportJobArn"},
+        "modelDataSource":{"shape":"ModelDataSource"},
+        "creationTime":{"shape":"Timestamp"},
+        "modelArchitecture":{"shape":"String"},
+        "modelKmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
     "GetModelCopyJobRequest":{
       "type":"structure",
       "required":["jobArn"],
@@ -1597,6 +1846,35 @@
         "trainingMetrics":{"shape":"TrainingMetrics"},
         "validationMetrics":{"shape":"ValidationMetrics"},
         "vpcConfig":{"shape":"VpcConfig"}
+      }
+    },
+    "GetModelImportJobRequest":{
+      "type":"structure",
+      "required":["jobIdentifier"],
+      "members":{
+        "jobIdentifier":{
+          "shape":"ModelImportJobIdentifier",
+          "location":"uri",
+          "locationName":"jobIdentifier"
+        }
+      }
+    },
+    "GetModelImportJobResponse":{
+      "type":"structure",
+      "members":{
+        "jobArn":{"shape":"ModelImportJobArn"},
+        "jobName":{"shape":"JobName"},
+        "importedModelName":{"shape":"ImportedModelName"},
+        "importedModelArn":{"shape":"ImportedModelArn"},
+        "roleArn":{"shape":"RoleArn"},
+        "modelDataSource":{"shape":"ModelDataSource"},
+        "status":{"shape":"ModelImportJobStatus"},
+        "failureMessage":{"shape":"ErrorMessage"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "vpcConfig":{"shape":"VpcConfig"},
+        "importedModelKmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetModelInvocationJobRequest":{
@@ -2300,6 +2578,41 @@
       "min":1,
       "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
+    "ImportedModelArn":{
+      "type":"string",
+      "max":1011,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:imported-model/[a-z0-9]{12}"
+    },
+    "ImportedModelIdentifier":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:imported-model/[a-z0-9]{12})|(([0-9a-zA-Z][_-]?)+)"
+    },
+    "ImportedModelName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"([0-9a-zA-Z][_-]?)+"
+    },
+    "ImportedModelSummary":{
+      "type":"structure",
+      "required":[
+        "modelArn",
+        "modelName",
+        "creationTime"
+      ],
+      "members":{
+        "modelArn":{"shape":"ImportedModelArn"},
+        "modelName":{"shape":"ImportedModelName"},
+        "creationTime":{"shape":"Timestamp"}
+      }
+    },
+    "ImportedModelSummaryList":{
+      "type":"list",
+      "member":{"shape":"ImportedModelSummary"}
+    },
     "InferenceType":{
       "type":"string",
       "enum":[
@@ -2341,7 +2654,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:aws(-[^:]+)?:kms:[a-zA-Z0-9-]*:[0-9]{12}:((key/[a-zA-Z0-9-]{36})|(alias/[a-zA-Z0-9-_/]+))"
+      "pattern":"(arn:aws(-[^:]+)?:kms:[a-zA-Z0-9-]*:[0-9]{12}:((key/[a-zA-Z0-9-]{36})|(alias/[a-zA-Z0-9-_/]+)))|([a-zA-Z0-9-]{36})|(alias/[a-zA-Z0-9-_/]+)"
     },
     "ListCustomModelsRequest":{
       "type":"structure",
@@ -2516,6 +2829,53 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListImportedModelsRequest":{
+      "type":"structure",
+      "members":{
+        "creationTimeBefore":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"creationTimeBefore"
+        },
+        "creationTimeAfter":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"creationTimeAfter"
+        },
+        "nameContains":{
+          "shape":"ImportedModelName",
+          "location":"querystring",
+          "locationName":"nameContains"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "sortBy":{
+          "shape":"SortModelsBy",
+          "location":"querystring",
+          "locationName":"sortBy"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        }
+      }
+    },
+    "ListImportedModelsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "modelSummaries":{"shape":"ImportedModelSummaryList"}
+      }
+    },
     "ListModelCopyJobsRequest":{
       "type":"structure",
       "members":{
@@ -2628,6 +2988,58 @@
       "members":{
         "nextToken":{"shape":"PaginationToken"},
         "modelCustomizationJobSummaries":{"shape":"ModelCustomizationJobSummaries"}
+      }
+    },
+    "ListModelImportJobsRequest":{
+      "type":"structure",
+      "members":{
+        "creationTimeAfter":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"creationTimeAfter"
+        },
+        "creationTimeBefore":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"creationTimeBefore"
+        },
+        "statusEquals":{
+          "shape":"ModelImportJobStatus",
+          "location":"querystring",
+          "locationName":"statusEquals"
+        },
+        "nameContains":{
+          "shape":"JobName",
+          "location":"querystring",
+          "locationName":"nameContains"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "sortBy":{
+          "shape":"SortJobsBy",
+          "location":"querystring",
+          "locationName":"sortBy"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        }
+      }
+    },
+    "ListModelImportJobsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "modelImportJobSummaries":{"shape":"ModelImportJobSummaries"}
       }
     },
     "ListModelInvocationJobsRequest":{
@@ -2895,6 +3307,13 @@
       "type":"list",
       "member":{"shape":"ModelCustomization"}
     },
+    "ModelDataSource":{
+      "type":"structure",
+      "members":{
+        "s3DataSource":{"shape":"S3DataSource"}
+      },
+      "union":true
+    },
     "ModelId":{
       "type":"string",
       "max":2048,
@@ -2906,6 +3325,49 @@
       "max":2048,
       "min":1,
       "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}(([:][a-z0-9-]{1,63}){0,2})?/[a-z0-9]{12})|(:foundation-model/([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})))|(([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2}))|(([0-9a-zA-Z][_-]?)+)"
+    },
+    "ModelImportJobArn":{
+      "type":"string",
+      "max":1011,
+      "min":0,
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:model-import-job/[a-z0-9]{12}"
+    },
+    "ModelImportJobIdentifier":{
+      "type":"string",
+      "max":1011,
+      "min":0,
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:model-import-job/[a-z0-9]{12})|([a-zA-Z0-9](-*[a-zA-Z0-9\\+\\-\\.])*)"
+    },
+    "ModelImportJobStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Completed",
+        "Failed"
+      ]
+    },
+    "ModelImportJobSummaries":{
+      "type":"list",
+      "member":{"shape":"ModelImportJobSummary"}
+    },
+    "ModelImportJobSummary":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "jobName",
+        "status",
+        "creationTime"
+      ],
+      "members":{
+        "jobArn":{"shape":"ModelImportJobArn"},
+        "jobName":{"shape":"JobName"},
+        "status":{"shape":"ModelImportJobStatus"},
+        "lastModifiedTime":{"shape":"Timestamp"},
+        "creationTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "importedModelArn":{"shape":"ImportedModelArn"},
+        "importedModelName":{"shape":"ImportedModelName"}
+      }
     },
     "ModelInvocationIdempotencyToken":{
       "type":"string",
@@ -3151,6 +3613,13 @@
         "keyPrefix":{"shape":"KeyPrefix"}
       }
     },
+    "S3DataSource":{
+      "type":"structure",
+      "required":["s3Uri"],
+      "members":{
+        "s3Uri":{"shape":"S3Uri"}
+      }
+    },
     "S3InputFormat":{
       "type":"string",
       "enum":["JSONL"]
@@ -3159,7 +3628,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](/.*)?"
+      "pattern":"s3://[a-z0-9][-.a-z0-9]{1,61}(?:/[-!_*'().a-z0-9A-Z]+(?:/[-!_*'().a-z0-9A-Z]+)*)?/?"
     },
     "SageMakerFlowDefinitionArn":{
       "type":"string",

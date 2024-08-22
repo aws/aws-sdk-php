@@ -484,6 +484,36 @@
         "AnonymousUserEmbeddingExperienceConfiguration$Dashboard": "<p>The type of embedding experience. In this case, Amazon QuickSight dashboards.</p>"
       }
     },
+    "AnonymousUserDashboardEmbeddingConfigurationDisabledFeature": {
+      "base": null,
+      "refs": {
+        "AnonymousUserDashboardEmbeddingConfigurationDisabledFeatures$member": null
+      }
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationDisabledFeatures": {
+      "base": null,
+      "refs": {
+        "AnonymousUserDashboardEmbeddingConfiguration$DisabledFeatures": "<p>A list of all disabled features of a specified anonymous dashboard.</p>"
+      }
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationEnabledFeature": {
+      "base": null,
+      "refs": {
+        "AnonymousUserDashboardEmbeddingConfigurationEnabledFeatures$member": null
+      }
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationEnabledFeatures": {
+      "base": null,
+      "refs": {
+        "AnonymousUserDashboardEmbeddingConfiguration$EnabledFeatures": "<p>A list of all enabled features of a specified anonymous dashboard.</p>"
+      }
+    },
+    "AnonymousUserDashboardFeatureConfigurations": {
+      "base": "<p>The feature configuration for an embedded dashboard.</p>",
+      "refs": {
+        "AnonymousUserDashboardEmbeddingConfiguration$FeatureConfigurations": "<p>The feature configuration for an embedded dashboard.</p>"
+      }
+    },
     "AnonymousUserDashboardVisualEmbeddingConfiguration": {
       "base": "<p>The experience that you are embedding. You can use this object to generate a url that embeds a visual into your application.</p>",
       "refs": {
@@ -1989,6 +2019,7 @@
         "NumericRangeFilter$IncludeMaximum": "<p>Determines whether the maximum value in the filter value range should be included in the filtered results.</p>",
         "RedshiftIAMParameters$AutoCreateDatabaseUser": "<p>Automatically creates a database user. If your database doesn't have a <code>DatabaseUser</code>, set this parameter to <code>True</code>. If there is no <code>DatabaseUser</code>, Amazon QuickSight can't connect to your cluster. The <code>RoleArn</code> that you use for this operation must grant access to <code>redshift:CreateClusterUser</code> to successfully create the user.</p>",
         "RegisteredCustomerManagedKey$DefaultKey": "<p>Indicates whether a <code>RegisteredCustomerManagedKey</code> is set as the default key for encryption and decryption use.</p>",
+        "SharedViewConfigurations$Enabled": "<p>The shared view settings of an embedded dashboard.</p>",
         "SignupResponse$IAMUser": "<p>A Boolean that is <code>TRUE</code> if the Amazon QuickSight uses IAM as an authentication method.</p>",
         "SslProperties$DisableSsl": "<p>A Boolean option to control whether SSL should be disabled.</p>",
         "StartAssetBundleExportJobRequest$IncludeAllDependencies": "<p>A Boolean that determines whether all dependencies of each resource ARN are recursively exported with the job. For example, say you provided a Dashboard ARN to the <code>ResourceArns</code> parameter. If you set <code>IncludeAllDependencies</code> to <code>TRUE</code>, any theme, dataset, and data source resource that is a dependency of the dashboard is also exported.</p>",
@@ -8988,6 +9019,19 @@
         "TwitterParameters$Query": "<p>Twitter query string.</p>"
       }
     },
+    "QueryExecutionMode": {
+      "base": null,
+      "refs": {
+        "QueryExecutionOptions$QueryExecutionMode": "<p>A structure that describes the query execution mode.</p>"
+      }
+    },
+    "QueryExecutionOptions": {
+      "base": "<p>A structure that describes the query execution options.</p>",
+      "refs": {
+        "AnalysisDefinition$QueryExecutionOptions": null,
+        "TemplateVersionDefinition$QueryExecutionOptions": null
+      }
+    },
     "QueueInfo": {
       "base": "<p>Information about a queued dataset SPICE ingestion.</p>",
       "refs": {
@@ -10181,6 +10225,14 @@
       "base": "<p>The shape conditional formatting of a filled map visual.</p>",
       "refs": {
         "FilledMapShapeConditionalFormatting$Format": "<p>The conditional formatting that determines the background color of a filled map's shape.</p>"
+      }
+    },
+    "SharedViewConfigurations": {
+      "base": "<p>The shared view settings of an embedded dashboard.</p>",
+      "refs": {
+        "AnonymousUserDashboardFeatureConfigurations$SharedView": "<p>The shared view settings of an embedded dashboard.</p>",
+        "RegisteredUserConsoleFeatureConfigurations$SharedView": "<p>The shared view settings of an embedded dashboard.</p>",
+        "RegisteredUserDashboardFeatureConfigurations$SharedView": "<p>The shared view settings of an embedded dashboard.</p>"
       }
     },
     "SharingModel": {
