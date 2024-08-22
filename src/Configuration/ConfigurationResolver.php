@@ -2,6 +2,8 @@
 
 namespace Aws\Configuration;
 
+use function Aws\getenv;
+
 class ConfigurationResolver
 {
     const ENV_PROFILE = 'AWS_PROFILE';

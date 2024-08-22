@@ -5,6 +5,8 @@ use Aws\Exception\TokenException;
 use Aws\SSOOIDC\SSOOIDCClient;
 use GuzzleHttp\Promise;
 
+use function Aws\getenv;
+
 /**
  * Token that comes from the SSO provider
  */

@@ -11,6 +11,8 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
 
+use function Aws\getenv;
+
 /**
  * Credential provider that provides credentials from the EC2 metadata service.
  */
