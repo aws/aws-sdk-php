@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SupplyChain` - Update API documentation to clarify the event SLA as well as the data model expectations
+* `Aws\BedrockAgent` - Releasing the support for Action User Confirmation.
+* `Aws\QBusiness` - Amazon QBusiness: Enable support for SAML and OIDC federation through AWS IAM Identity Provider integration.
+* `Aws\CodeBuild` - Added support for the MAC_ARM environment type for CodeBuild fleets.
+* `Aws\BedrockAgentRuntime` - Releasing the support for Action User Confirmation.
+* `Aws\Organizations` - Releasing minor partitional endpoint updates.
+
 ## 3.320.6 - 2024-08-22
 
 * `Aws\Waiter` - Updates waiter error matching logic for boolean valuesq

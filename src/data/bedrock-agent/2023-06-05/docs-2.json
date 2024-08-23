@@ -22,7 +22,7 @@
     "DeleteFlowAlias": "<p>Deletes an alias of a flow.</p>",
     "DeleteFlowVersion": "<p>Deletes a version of a flow.</p>",
     "DeleteKnowledgeBase": "<p>Deletes a knowledge base. Before deleting a knowledge base, you should disassociate the knowledge base from any agents that it is associated with by making a <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_DisassociateAgentKnowledgeBase.html\">DisassociateAgentKnowledgeBase</a> request.</p>",
-    "DeletePrompt": "<p>Deletes a prompt or a prompt version from the Prompt management tool. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-delete.html\">Delete prompts from the Prompt management tool</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-delete.html\">Delete a version of a prompt from the Prompt management tool</a> in the Amazon Bedrock User Guide.</p>",
+    "DeletePrompt": "<p>Deletes a prompt or a version of it, depending on whether you include the <code>promptVersion</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-delete.html\">Delete prompts from the Prompt management tool</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-delete.html\">Delete a version of a prompt from the Prompt management tool</a> in the Amazon Bedrock User Guide.</p>",
     "DisassociateAgentKnowledgeBase": "<p>Disassociates a knowledge base from an agent.</p>",
     "GetAgent": "<p>Gets information about an agent.</p>",
     "GetAgentActionGroup": "<p>Gets information about an action group for an agent.</p>",
@@ -35,7 +35,7 @@
     "GetFlowVersion": "<p>Retrieves information about a version of a flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "GetIngestionJob": "<p>Gets information about a ingestion job, in which a data source is added to a knowledge base.</p>",
     "GetKnowledgeBase": "<p>Gets information about a knoweldge base.</p>",
-    "GetPrompt": "<p>Retrieves information about a prompt or a version of it. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-view.html\">View information about prompts using Prompt management</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-view.html\">View information about a version of your prompt</a> in the Amazon Bedrock User Guide.</p>",
+    "GetPrompt": "<p>Retrieves information about the working draft (<code>DRAFT</code> version) of a prompt or a version of it, depending on whether you include the <code>promptVersion</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-view.html\">View information about prompts using Prompt management</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-view.html\">View information about a version of your prompt</a> in the Amazon Bedrock User Guide.</p>",
     "ListAgentActionGroups": "<p>Lists the action groups for an agent and information about each one.</p>",
     "ListAgentAliases": "<p>Lists the aliases of an agent and information about each one.</p>",
     "ListAgentKnowledgeBases": "<p>Lists knowledge bases associated with an agent and information about each one.</p>",
@@ -47,7 +47,7 @@
     "ListFlows": "<p>Returns a list of flows and information about each flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-manage.html\">Manage a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "ListIngestionJobs": "<p>Lists the ingestion jobs for a data source and information about each of them.</p>",
     "ListKnowledgeBases": "<p>Lists the knowledge bases in an account and information about each of them.</p>",
-    "ListPrompts": "<p>Returns a list of prompts from the Prompt management tool and information about each prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-view.html\">View information about prompts using Prompt management</a> in the Amazon Bedrock User Guide.</p>",
+    "ListPrompts": "<p>Returns either information about the working draft (<code>DRAFT</code> version) of each prompt in an account, or information about of all versions of a prompt, depending on whether you include the <code>promptIdentifier</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-view.html\">View information about prompts using Prompt management</a> in the Amazon Bedrock User Guide.</p>",
     "ListTagsForResource": "<p>List all the tags for the resource you specify.</p>",
     "PrepareAgent": "<p>Creates a <code>DRAFT</code> version of the agent that can be used for internal testing.</p>",
     "PrepareFlow": "<p>Prepares the <code>DRAFT</code> version of a flow so that it can be invoked. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
@@ -569,7 +569,7 @@
     "DataDeletionPolicy": {
       "base": null,
       "refs": {
-        "CreateDataSourceRequest$dataDeletionPolicy": "<p>The data deletion policy for the data source.</p> <p>You can set the data deletion policy to:</p> <ul> <li> <p>DELETE: Deletes all underlying data belonging to the data source from the vector store upon deletion of a knowledge base or data source resource. Note that the vector store itself is not deleted, only the underlying data. This flag is ignored if an Amazon Web Services account is deleted.</p> </li> <li> <p>RETAIN: Retains all underlying data in your vector store upon deletion of a knowledge base or data source resource.</p> </li> </ul>",
+        "CreateDataSourceRequest$dataDeletionPolicy": "<p>The data deletion policy for the data source.</p> <p>You can set the data deletion policy to:</p> <ul> <li> <p>DELETE: Deletes all data from your data source that’s converted into vector embeddings upon deletion of a knowledge base or data source resource. Note that the <b>vector store itself is not deleted</b>, only the data. This flag is ignored if an Amazon Web Services account is deleted.</p> </li> <li> <p>RETAIN: Retains all data from your data source that’s converted into vector embeddings upon deletion of a knowledge base or data source resource. Note that the <b>vector store itself is not deleted</b> if you delete a knowledge base or data source resource.</p> </li> </ul>",
         "DataSource$dataDeletionPolicy": "<p>The data deletion policy for the data source.</p>",
         "UpdateDataSourceRequest$dataDeletionPolicy": "<p>The data deletion policy for the data source that you want to update.</p>"
       }
@@ -655,9 +655,9 @@
         "FlowAliasSummary$updatedAt": "<p>The time at which the alias was last updated.</p>",
         "FlowSummary$createdAt": "<p>The time at which the flow was created.</p>",
         "FlowSummary$updatedAt": "<p>The time at which the flow was last updated.</p>",
-        "FlowVersionSummary$createdAt": "<p>The time at the flow version was created.</p>",
+        "FlowVersionSummary$createdAt": "<p>The time at the version was created.</p>",
         "GetFlowAliasResponse$createdAt": "<p>The time at which the flow was created.</p>",
-        "GetFlowAliasResponse$updatedAt": "<p>The time at which the flow alias was last updated.</p>",
+        "GetFlowAliasResponse$updatedAt": "<p>The time at which the alias was last updated.</p>",
         "GetFlowResponse$createdAt": "<p>The time at which the flow was created.</p>",
         "GetFlowResponse$updatedAt": "<p>The time at which the flow was last updated.</p>",
         "GetFlowVersionResponse$createdAt": "<p>The time at which the flow was created.</p>",
@@ -674,7 +674,7 @@
         "PromptSummary$createdAt": "<p>The time at which the prompt was created.</p>",
         "PromptSummary$updatedAt": "<p>The time at which the prompt was last updated.</p>",
         "UpdateFlowAliasResponse$createdAt": "<p>The time at which the flow was created.</p>",
-        "UpdateFlowAliasResponse$updatedAt": "<p>The time at which the flow alias was last updated.</p>",
+        "UpdateFlowAliasResponse$updatedAt": "<p>The time at which the alias was last updated.</p>",
         "UpdateFlowResponse$createdAt": "<p>The time at which the flow was created.</p>",
         "UpdateFlowResponse$updatedAt": "<p>The time at which the flow was last updated.</p>",
         "UpdatePromptResponse$createdAt": "<p>The time at which the prompt was created.</p>",
@@ -816,7 +816,7 @@
         "UpdateAgentKnowledgeBaseRequest$description": "<p>Specifies a new description for the knowledge base associated with an agent.</p>",
         "UpdateAgentRequest$description": "<p>Specifies a new description of the agent.</p>",
         "UpdateDataSourceRequest$description": "<p>Specifies a new description for the data source.</p>",
-        "UpdateFlowAliasRequest$description": "<p>A description for the flow alias.</p>",
+        "UpdateFlowAliasRequest$description": "<p>A description for the alias.</p>",
         "UpdateFlowAliasResponse$description": "<p>The description of the flow.</p>",
         "UpdateKnowledgeBaseRequest$description": "<p>Specifies a new description for the knowledge base.</p>"
       }
@@ -941,7 +941,7 @@
       "base": null,
       "refs": {
         "CreateFlowAliasResponse$arn": "<p>The Amazon Resource Name (ARN) of the alias.</p>",
-        "FlowAliasSummary$arn": "<p>The Amazon Resource Name (ARN) of the flow alias.</p>",
+        "FlowAliasSummary$arn": "<p>The Amazon Resource Name (ARN) of the alias.</p>",
         "GetFlowAliasResponse$arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
         "UpdateFlowAliasResponse$arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>"
       }
@@ -984,7 +984,7 @@
     "FlowAliasSummaries": {
       "base": null,
       "refs": {
-        "ListFlowAliasesResponse$flowAliasSummaries": "<p>A list, each member of which contains information about a flow alias.</p>"
+        "ListFlowAliasesResponse$flowAliasSummaries": "<p>A list, each member of which contains information about an alias.</p>"
       }
     },
     "FlowAliasSummary": {
@@ -1090,7 +1090,7 @@
         "CreateFlowRequest$description": "<p>A description for the flow.</p>",
         "CreateFlowResponse$description": "<p>The description of the flow.</p>",
         "CreateFlowVersionRequest$description": "<p>A description of the version of the flow.</p>",
-        "CreateFlowVersionResponse$description": "<p>The description of the flow version.</p>",
+        "CreateFlowVersionResponse$description": "<p>The description of the version.</p>",
         "FlowSummary$description": "<p>A description of the flow.</p>",
         "GetFlowResponse$description": "<p>The description of the flow.</p>",
         "GetFlowVersionResponse$description": "<p>The description of the flow.</p>",
@@ -1152,10 +1152,10 @@
       "refs": {
         "CreateFlowRequest$name": "<p>A name for the flow.</p>",
         "CreateFlowResponse$name": "<p>The name of the flow.</p>",
-        "CreateFlowVersionResponse$name": "<p>The name of the flow version.</p>",
+        "CreateFlowVersionResponse$name": "<p>The name of the version.</p>",
         "FlowSummary$name": "<p>The name of the flow.</p>",
         "GetFlowResponse$name": "<p>The name of the flow.</p>",
-        "GetFlowVersionResponse$name": "<p>The name of the flow version.</p>",
+        "GetFlowVersionResponse$name": "<p>The name of the version.</p>",
         "UpdateFlowRequest$name": "<p>A name for the flow.</p>",
         "UpdateFlowResponse$name": "<p>The name of the flow.</p>"
       }
@@ -1293,7 +1293,7 @@
       }
     },
     "FlowVersionSummary": {
-      "base": "<p>Contains information about the flow version.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ListFlowVersions.html#API_agent_ListFlowVersions_ResponseSyntax\">ListFlowVersions response</a> </p> </li> </ul>",
+      "base": "<p>Contains information about a version of a flow.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ListFlowVersions.html#API_agent_ListFlowVersions_ResponseSyntax\">ListFlowVersions response</a> </p> </li> </ul>",
       "refs": {
         "FlowVersionSummaries$member": null
       }
@@ -2094,7 +2094,7 @@
         "DataSourceSummary$name": "<p>The name of the data source.</p>",
         "FlowAliasSummary$name": "<p>The name of the alias.</p>",
         "Function$name": "<p>A name for the function.</p>",
-        "GetFlowAliasResponse$name": "<p>The name of the flow alias.</p>",
+        "GetFlowAliasResponse$name": "<p>The name of the alias.</p>",
         "KnowledgeBase$name": "<p>The name of the knowledge base.</p>",
         "KnowledgeBaseSummary$name": "<p>The name of the knowledge base.</p>",
         "ParameterMap$key": null,
@@ -2102,8 +2102,8 @@
         "UpdateAgentAliasRequest$agentAliasName": "<p>Specifies a new name for the alias.</p>",
         "UpdateAgentRequest$agentName": "<p>Specifies a new name for the agent.</p>",
         "UpdateDataSourceRequest$name": "<p>Specifies a new name for the data source.</p>",
-        "UpdateFlowAliasRequest$name": "<p>The name of the flow alias.</p>",
-        "UpdateFlowAliasResponse$name": "<p>The name of the flow alias.</p>",
+        "UpdateFlowAliasRequest$name": "<p>The name of the alias.</p>",
+        "UpdateFlowAliasResponse$name": "<p>The name of the alias.</p>",
         "UpdateKnowledgeBaseRequest$name": "<p>Specifies a new name for the knowledge base.</p>"
       }
     },
@@ -2160,7 +2160,7 @@
         "DeleteAgentVersionResponse$agentVersion": "<p>The version that was deleted.</p>",
         "DeleteFlowVersionRequest$flowVersion": "<p>The version of the flow that you want to delete.</p>",
         "DeleteFlowVersionResponse$version": "<p>The version of the flow being deleted.</p>",
-        "DeletePromptRequest$promptVersion": "<p>The version of the prompt to delete.</p>",
+        "DeletePromptRequest$promptVersion": "<p>The version of the prompt to delete. To delete the prompt, omit this field.</p>",
         "DeletePromptResponse$version": "<p>The version of the prompt that was deleted.</p>",
         "FlowVersionSummary$version": "<p>The version of the flow.</p>",
         "GetAgentVersionRequest$agentVersion": "<p>The version of the agent.</p>",
@@ -2325,9 +2325,9 @@
       "refs": {
         "CreatePromptResponse$arn": "<p>The Amazon Resource Name (ARN) of the prompt.</p>",
         "CreatePromptVersionResponse$arn": "<p>The Amazon Resource Name (ARN) of the version of the prompt.</p>",
-        "GetPromptResponse$arn": "<p>The Amazon Resource Name (ARN) of the prompt.</p>",
+        "GetPromptResponse$arn": "<p>The Amazon Resource Name (ARN) of the prompt or the prompt version (if you specified a version in the request).</p>",
         "PromptFlowNodeResourceConfiguration$promptArn": "<p>The Amazon Resource Name (ARN) of the prompt from Prompt management.</p>",
-        "PromptSummary$arn": "<p>The Amazon Resource Name (ARN) of the prompt.</p>",
+        "PromptSummary$arn": "<p>The Amazon Resource Name (ARN) of the prompt or the prompt version (if you specified a version in the request).</p>",
         "UpdatePromptResponse$arn": "<p>The Amazon Resource Name (ARN) of the prompt.</p>"
       }
     },
@@ -2349,7 +2349,7 @@
         "CreatePromptRequest$description": "<p>A description for the prompt.</p>",
         "CreatePromptResponse$description": "<p>The description of the prompt.</p>",
         "CreatePromptVersionRequest$description": "<p>A description for the version of the prompt.</p>",
-        "CreatePromptVersionResponse$description": "<p>A description for the prompt version.</p>",
+        "CreatePromptVersionResponse$description": "<p>A description for the version.</p>",
         "GetPromptResponse$description": "<p>The descriptino of the prompt.</p>",
         "PromptSummary$description": "<p>The description of the prompt.</p>",
         "UpdatePromptRequest$description": "<p>A description for the prompt.</p>",
@@ -2397,7 +2397,7 @@
         "CreatePromptVersionRequest$promptIdentifier": "<p>The unique identifier of the prompt that you want to create a version of.</p>",
         "DeletePromptRequest$promptIdentifier": "<p>The unique identifier of the prompt.</p>",
         "GetPromptRequest$promptIdentifier": "<p>The unique identifier of the prompt.</p>",
-        "ListPromptsRequest$promptIdentifier": "<p>The unique identifier of the prompt.</p>",
+        "ListPromptsRequest$promptIdentifier": "<p>The unique identifier of the prompt for whose versions you want to return information. Omit this field to list information about all prompts in an account.</p>",
         "UpdatePromptRequest$promptIdentifier": "<p>The unique identifier of the prompt.</p>"
       }
     },
@@ -2444,7 +2444,7 @@
       "refs": {
         "CreatePromptRequest$name": "<p>A name for the prompt.</p>",
         "CreatePromptResponse$name": "<p>The name of the prompt.</p>",
-        "CreatePromptVersionResponse$name": "<p>The name of the prompt version.</p>",
+        "CreatePromptVersionResponse$name": "<p>The name of the prompt.</p>",
         "GetPromptResponse$name": "<p>The name of the prompt.</p>",
         "PromptSummary$name": "<p>The name of the prompt.</p>",
         "UpdatePromptRequest$name": "<p>A name for the prompt.</p>",
@@ -2600,6 +2600,12 @@
         "RedisEnterpriseCloudConfiguration$vectorIndexName": "<p>The name of the vector index.</p>"
       }
     },
+    "RequireConfirmation": {
+      "base": "<p>ENUM to check if action requires user confirmation</p>",
+      "refs": {
+        "Function$requireConfirmation": "<p>Contains information if user confirmation is required to invoke the function.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
       "refs": {
@@ -2706,12 +2712,12 @@
     "SecretArn": {
       "base": null,
       "refs": {
-        "ConfluenceSourceConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name of an Secrets Manager secret that stores your authentication credentials for your SharePoint site/sites. For more information on the key-value pairs that must be included in your secret, depending on your authentication type, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/confluence-data-source-connector.html#configuration-confluence-connector\">Confluence connection configuration</a>.</p>",
+        "ConfluenceSourceConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name of an Secrets Manager secret that stores your authentication credentials for your Confluence instance URL. For more information on the key-value pairs that must be included in your secret, depending on your authentication type, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/confluence-data-source-connector.html#configuration-confluence-connector\">Confluence connection configuration</a>.</p>",
         "MongoDbAtlasConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that contains user credentials for your MongoDB Atlas cluster.</p>",
         "PineconeConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Pinecone API key.</p>",
         "RdsConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Amazon RDS database.</p>",
         "RedisEnterpriseCloudConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Redis Enterprise Cloud database.</p>",
-        "SalesforceSourceConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name of an Secrets Manager secret that stores your authentication credentials for your SharePoint site/sites. For more information on the key-value pairs that must be included in your secret, depending on your authentication type, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/salesforce-data-source-connector.html#configuration-salesforce-connector\">Salesforce connection configuration</a>.</p>",
+        "SalesforceSourceConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name of an Secrets Manager secret that stores your authentication credentials for your Salesforce instance URL. For more information on the key-value pairs that must be included in your secret, depending on your authentication type, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/salesforce-data-source-connector.html#configuration-salesforce-connector\">Salesforce connection configuration</a>.</p>",
         "SharePointSourceConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name of an Secrets Manager secret that stores your authentication credentials for your SharePoint site/sites. For more information on the key-value pairs that must be included in your secret, depending on your authentication type, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sharepoint-data-source-connector.html#configuration-sharepoint-connector\">SharePoint connection configuration</a>.</p>"
       }
     },
@@ -3157,7 +3163,7 @@
         "FlowAliasRoutingConfigurationListItem$flowVersion": "<p>The version that the alias maps to.</p>",
         "GetAgentActionGroupRequest$agentVersion": "<p>The version of the agent that the action group belongs to.</p>",
         "GetAgentKnowledgeBaseRequest$agentVersion": "<p>The version of the agent with which the knowledge base is associated.</p>",
-        "GetPromptRequest$promptVersion": "<p>The version of the prompt about which you want to retrieve information.</p>",
+        "GetPromptRequest$promptVersion": "<p>The version of the prompt about which you want to retrieve information. Omit this field to return information about the working draft of the prompt.</p>",
         "GetPromptResponse$version": "<p>The version of the prompt.</p>",
         "ListAgentActionGroupsRequest$agentVersion": "<p>The version of the agent.</p>",
         "ListAgentKnowledgeBasesRequest$agentVersion": "<p>The version of the agent for which to return information about knowledge bases associated with it.</p>",

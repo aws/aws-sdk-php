@@ -2963,7 +2963,8 @@
       "members":{
         "description":{"shape":"FunctionDescription"},
         "name":{"shape":"Name"},
-        "parameters":{"shape":"ParameterMap"}
+        "parameters":{"shape":"ParameterMap"},
+        "requireConfirmation":{"shape":"RequireConfirmation"}
       }
     },
     "FunctionDescription":{
@@ -4664,6 +4665,13 @@
       "max":2048,
       "min":0,
       "pattern":"^.*$"
+    },
+    "RequireConfirmation":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "ResourceNotFoundException":{
       "type":"structure",

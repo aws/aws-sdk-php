@@ -4,7 +4,7 @@
   "operations": {
     "CreateBillOfMaterialsImportJob": "<p>CreateBillOfMaterialsImportJob creates an import job for the Product Bill Of Materials (BOM) entity. For information on the product_bom entity, see the AWS Supply Chain User Guide.</p> <p>The CSV file must be located in an Amazon S3 location accessible to AWS Supply Chain. It is recommended to use the same Amazon S3 bucket created during your AWS Supply Chain instance creation.</p>",
     "GetBillOfMaterialsImportJob": "<p>Get status and details of a BillOfMaterialsImportJob.</p>",
-    "SendDataIntegrationEvent": "<p>Send transactional data events with real-time data for analysis or monitoring.</p>"
+    "SendDataIntegrationEvent": "<p>Send the transactional data payload for the event with real-time data for analysis or monitoring. The real-time data events are stored in an Amazon Web Services service before being processed and stored in data lake. New data events are synced with data lake at 5 PM GMT everyday. The updated transactional data is available in data lake after ingestion.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -56,7 +56,7 @@
     "DataIntegrationEventData": {
       "base": null,
       "refs": {
-        "SendDataIntegrationEventRequest$data": "<p>The data payload of the event.</p>"
+        "SendDataIntegrationEventRequest$data": "<p>The data payload of the event. For more information on the data schema to use, see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">Data entities supported in AWS Supply Chain </a>.</p>"
       }
     },
     "DataIntegrationEventGroupId": {
