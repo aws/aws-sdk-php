@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.320.7 - 2024-08-23
 
 * `Aws\SupplyChain` - Update API documentation to clarify the event SLA as well as the data model expectations
 * `Aws\BedrockAgent` - Releasing the support for Action User Confirmation.
