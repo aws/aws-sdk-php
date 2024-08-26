@@ -2631,13 +2631,48 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "DescribeWorkspaceDirectoriesFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "Name":{"shape":"DescribeWorkspaceDirectoriesFilterName"},
+        "Values":{"shape":"DescribeWorkspaceDirectoriesFilterValues"}
+      }
+    },
+    "DescribeWorkspaceDirectoriesFilterList":{
+      "type":"list",
+      "member":{"shape":"DescribeWorkspaceDirectoriesFilter"},
+      "max":25,
+      "min":1
+    },
+    "DescribeWorkspaceDirectoriesFilterName":{
+      "type":"string",
+      "enum":[
+        "USER_IDENTITY_TYPE",
+        "WORKSPACE_TYPE"
+      ]
+    },
+    "DescribeWorkspaceDirectoriesFilterValue":{
+      "type":"string",
+      "pattern":"^[0-9a-zA-Z\\*\\.\\\\/\\?-_]{0,64}$"
+    },
+    "DescribeWorkspaceDirectoriesFilterValues":{
+      "type":"list",
+      "member":{"shape":"DescribeWorkspaceDirectoriesFilterValue"},
+      "max":25,
+      "min":1
+    },
     "DescribeWorkspaceDirectoriesRequest":{
       "type":"structure",
       "members":{
         "DirectoryIds":{"shape":"DirectoryIdList"},
         "WorkspaceDirectoryNames":{"shape":"WorkspaceDirectoryNameList"},
         "Limit":{"shape":"Limit"},
-        "NextToken":{"shape":"PaginationToken"}
+        "NextToken":{"shape":"PaginationToken"},
+        "Filters":{"shape":"DescribeWorkspaceDirectoriesFilterList"}
       }
     },
     "DescribeWorkspaceDirectoriesResult":{
@@ -2968,6 +3003,13 @@
         "AccountLink":{"shape":"AccountLink"}
       }
     },
+    "IDCConfig":{
+      "type":"structure",
+      "members":{
+        "InstanceArn":{"shape":"ARN"},
+        "ApplicationArn":{"shape":"ARN"}
+      }
+    },
     "IdleDisconnectTimeoutInSeconds":{
       "type":"integer",
       "max":36000,
@@ -3233,6 +3275,17 @@
     "MaximumLength":{
       "type":"integer",
       "min":0
+    },
+    "MicrosoftEntraConfig":{
+      "type":"structure",
+      "members":{
+        "TenantId":{"shape":"MicrosoftEntraConfigTenantId"},
+        "ApplicationConfigSecretArn":{"shape":"SecretsManagerArn"}
+      }
+    },
+    "MicrosoftEntraConfigTenantId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9-]{1,100}$"
     },
     "MigrateWorkspaceRequest":{
       "type":"structure",
@@ -3597,6 +3650,8 @@
         "WorkspaceDirectoryName":{"shape":"WorkspaceDirectoryName"},
         "WorkspaceDirectoryDescription":{"shape":"WorkspaceDirectoryDescription"},
         "UserIdentityType":{"shape":"UserIdentityType"},
+        "IdcInstanceArn":{"shape":"ARN"},
+        "MicrosoftEntraConfig":{"shape":"MicrosoftEntraConfig"},
         "WorkspaceType":{"shape":"WorkspaceType"},
         "ActiveDirectoryConfig":{"shape":"ActiveDirectoryConfig"}
       }
@@ -4214,7 +4269,8 @@
       "type":"string",
       "enum":[
         "CUSTOMER_MANAGED",
-        "AWS_DIRECTORY_SERVICE"
+        "AWS_DIRECTORY_SERVICE",
+        "AWS_IAM_IDENTITY_CENTER"
       ]
     },
     "UserName":{
@@ -4453,10 +4509,12 @@
         "SelfservicePermissions":{"shape":"SelfservicePermissions"},
         "SamlProperties":{"shape":"SamlProperties"},
         "CertificateBasedAuthProperties":{"shape":"CertificateBasedAuthProperties"},
+        "MicrosoftEntraConfig":{"shape":"MicrosoftEntraConfig"},
         "WorkspaceDirectoryName":{"shape":"WorkspaceDirectoryName"},
         "WorkspaceDirectoryDescription":{"shape":"WorkspaceDirectoryDescription"},
         "UserIdentityType":{"shape":"UserIdentityType"},
         "WorkspaceType":{"shape":"WorkspaceType"},
+        "IDCConfig":{"shape":"IDCConfig"},
         "ActiveDirectoryConfig":{"shape":"ActiveDirectoryConfig"},
         "StreamingProperties":{"shape":"StreamingProperties"},
         "ErrorMessage":{"shape":"Description"}
@@ -4491,7 +4549,8 @@
       "enum":[
         "SIMPLE_AD",
         "AD_CONNECTOR",
-        "CUSTOMER_MANAGED"
+        "CUSTOMER_MANAGED",
+        "AWS_IAM_IDENTITY_CENTER"
       ]
     },
     "WorkspaceErrorCode":{"type":"string"},

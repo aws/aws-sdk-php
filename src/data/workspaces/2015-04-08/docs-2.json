@@ -96,6 +96,9 @@
       "base": null,
       "refs": {
         "DefaultWorkspaceCreationProperties$InstanceIamRoleArn": "<p>Indicates the IAM role ARN of the instance.</p>",
+        "IDCConfig$InstanceArn": "<p>The Amazon Resource Name (ARN) of the identity center instance.</p>",
+        "IDCConfig$ApplicationArn": "<p>The Amazon Resource Name (ARN) of the application.</p>",
+        "RegisterWorkspaceDirectoryRequest$IdcInstanceArn": "<p>The Amazon Resource Name (ARN) of the identity center instance.</p>",
         "WorkspaceCreationProperties$InstanceIamRoleArn": "<p>Indicates the IAM role ARN of the instance.</p>",
         "WorkspaceDirectory$IamRoleId": "<p>The identifier of the IAM role. This is the role that allows Amazon WorkSpaces to make calls to other services, such as Amazon EC2, on your behalf.</p>",
         "WorkspacesPool$PoolArn": "<p>The Amazon Resource Name (ARN) for the pool.</p>"
@@ -1204,6 +1207,36 @@
       "refs": {
       }
     },
+    "DescribeWorkspaceDirectoriesFilter": {
+      "base": "<p>Describes the filter conditions for the WorkSpaces to return.</p>",
+      "refs": {
+        "DescribeWorkspaceDirectoriesFilterList$member": null
+      }
+    },
+    "DescribeWorkspaceDirectoriesFilterList": {
+      "base": null,
+      "refs": {
+        "DescribeWorkspaceDirectoriesRequest$Filters": "<p>The filter condition for the WorkSpaces.</p>"
+      }
+    },
+    "DescribeWorkspaceDirectoriesFilterName": {
+      "base": null,
+      "refs": {
+        "DescribeWorkspaceDirectoriesFilter$Name": "<p>The name of the WorkSpaces to filter.</p>"
+      }
+    },
+    "DescribeWorkspaceDirectoriesFilterValue": {
+      "base": null,
+      "refs": {
+        "DescribeWorkspaceDirectoriesFilterValues$member": null
+      }
+    },
+    "DescribeWorkspaceDirectoriesFilterValues": {
+      "base": null,
+      "refs": {
+        "DescribeWorkspaceDirectoriesFilter$Values": "<p>The values for filtering WorkSpaces</p>"
+      }
+    },
     "DescribeWorkspaceDirectoriesRequest": {
       "base": null,
       "refs": {
@@ -1575,6 +1608,12 @@
       "refs": {
       }
     },
+    "IDCConfig": {
+      "base": "<p>Specifies the configurations of the identity center.</p>",
+      "refs": {
+        "WorkspaceDirectory$IDCConfig": "<p>Specifies details about identity center configurations.</p>"
+      }
+    },
     "IdleDisconnectTimeoutInSeconds": {
       "base": null,
       "refs": {
@@ -1867,6 +1906,19 @@
       "base": null,
       "refs": {
         "UserSetting$MaximumLength": "<p>Indicates the maximum character length for the specified user setting.</p>"
+      }
+    },
+    "MicrosoftEntraConfig": {
+      "base": "<p>Specifies the configurations of the Microsoft Entra.</p>",
+      "refs": {
+        "RegisterWorkspaceDirectoryRequest$MicrosoftEntraConfig": "<p>The details about Microsoft Entra config.</p>",
+        "WorkspaceDirectory$MicrosoftEntraConfig": "<p>Specifies details about Microsoft Entra configurations.</p>"
+      }
+    },
+    "MicrosoftEntraConfigTenantId": {
+      "base": null,
+      "refs": {
+        "MicrosoftEntraConfig$TenantId": "<p>The identifier of the tenant.</p>"
       }
     },
     "MigrateWorkspaceRequest": {
@@ -2358,7 +2410,8 @@
     "SecretsManagerArn": {
       "base": null,
       "refs": {
-        "ActiveDirectoryConfig$ServiceAccountSecretArn": "<p>Indicates the secret ARN on the service account.</p>"
+        "ActiveDirectoryConfig$ServiceAccountSecretArn": "<p>Indicates the secret ARN on the service account.</p>",
+        "MicrosoftEntraConfig$ApplicationConfigSecretArn": "<p>The Amazon Resource Name (ARN) of the application config.</p>"
       }
     },
     "SecurityGroupId": {

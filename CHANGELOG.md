@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EndpointV2` - Adds support for `StringArray` endpoint parameters and `operationContextParams`
+* `Aws\WorkSpaces` - This release adds support for creating and managing directories that use AWS IAM Identity Center as user identity source. Such directories can be used to create non-Active Directory domain joined WorkSpaces Personal.Updated RegisterWorkspaceDirectory and DescribeWorkspaceDirectories APIs.
+* `Aws\IoTSiteWise` - AWS IoT SiteWise now supports versioning for asset models. It enables users to retrieve active version of their asset model and perform asset model writes with optimistic lock.
+
 ## 3.320.7 - 2024-08-23
 
 * `Aws\SupplyChain` - Update API documentation to clarify the event SLA as well as the data model expectations
