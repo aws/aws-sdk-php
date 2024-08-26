@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.320.8 - 2024-08-26
 
 * `Aws\EndpointV2` - Adds support for `StringArray` endpoint parameters and `operationContextParams`
 * `Aws\WorkSpaces` - This release adds support for creating and managing directories that use AWS IAM Identity Center as user identity source. Such directories can be used to create non-Active Directory domain joined WorkSpaces Personal.Updated RegisterWorkspaceDirectory and DescribeWorkspaceDirectories APIs.
