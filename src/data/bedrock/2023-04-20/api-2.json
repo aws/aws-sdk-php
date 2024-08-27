@@ -366,6 +366,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetInferenceProfile":{
+      "name":"GetInferenceProfile",
+      "http":{
+        "method":"GET",
+        "requestUri":"/inference-profiles/{inferenceProfileIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetInferenceProfileRequest"},
+      "output":{"shape":"GetInferenceProfileResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetModelCopyJob":{
       "name":"GetModelCopyJob",
       "http":{
@@ -540,6 +557,22 @@
       },
       "input":{"shape":"ListImportedModelsRequest"},
       "output":{"shape":"ListImportedModelsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListInferenceProfiles":{
+      "name":"ListInferenceProfiles",
+      "http":{
+        "method":"GET",
+        "requestUri":"/inference-profiles",
+        "responseCode":200
+      },
+      "input":{"shape":"ListInferenceProfilesRequest"},
+      "output":{"shape":"ListInferenceProfilesResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
@@ -1764,6 +1797,39 @@
         "modelKmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
+    "GetInferenceProfileRequest":{
+      "type":"structure",
+      "required":["inferenceProfileIdentifier"],
+      "members":{
+        "inferenceProfileIdentifier":{
+          "shape":"InferenceProfileIdentifier",
+          "location":"uri",
+          "locationName":"inferenceProfileIdentifier"
+        }
+      }
+    },
+    "GetInferenceProfileResponse":{
+      "type":"structure",
+      "required":[
+        "inferenceProfileName",
+        "models",
+        "inferenceProfileArn",
+        "inferenceProfileId",
+        "status",
+        "type"
+      ],
+      "members":{
+        "inferenceProfileName":{"shape":"InferenceProfileName"},
+        "models":{"shape":"InferenceProfileModels"},
+        "description":{"shape":"InferenceProfileDescription"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "inferenceProfileArn":{"shape":"InferenceProfileArn"},
+        "inferenceProfileId":{"shape":"InferenceProfileId"},
+        "status":{"shape":"InferenceProfileStatus"},
+        "type":{"shape":"InferenceProfileType"}
+      }
+    },
     "GetModelCopyJobRequest":{
       "type":"structure",
       "required":["jobArn"],
@@ -2613,6 +2679,82 @@
       "type":"list",
       "member":{"shape":"ImportedModelSummary"}
     },
+    "InferenceProfileArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{0,20}):(|[0-9]{12}):inference-profile/[a-zA-Z0-9-:.]+"
+    },
+    "InferenceProfileDescription":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":".+"
+    },
+    "InferenceProfileId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-:.]+"
+    },
+    "InferenceProfileIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{0,20}):(|[0-9]{12}):inference-profile/)?[a-zA-Z0-9-:.]+"
+    },
+    "InferenceProfileModel":{
+      "type":"structure",
+      "members":{
+        "modelArn":{"shape":"FoundationModelArn"}
+      }
+    },
+    "InferenceProfileModels":{
+      "type":"list",
+      "member":{"shape":"InferenceProfileModel"},
+      "max":5,
+      "min":1
+    },
+    "InferenceProfileName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"([0-9a-zA-Z][ _-]?)+"
+    },
+    "InferenceProfileStatus":{
+      "type":"string",
+      "enum":["ACTIVE"]
+    },
+    "InferenceProfileSummaries":{
+      "type":"list",
+      "member":{"shape":"InferenceProfileSummary"}
+    },
+    "InferenceProfileSummary":{
+      "type":"structure",
+      "required":[
+        "inferenceProfileName",
+        "models",
+        "inferenceProfileArn",
+        "inferenceProfileId",
+        "status",
+        "type"
+      ],
+      "members":{
+        "inferenceProfileName":{"shape":"InferenceProfileName"},
+        "models":{"shape":"InferenceProfileModels"},
+        "description":{"shape":"InferenceProfileDescription"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "inferenceProfileArn":{"shape":"InferenceProfileArn"},
+        "inferenceProfileId":{"shape":"InferenceProfileId"},
+        "status":{"shape":"InferenceProfileStatus"},
+        "type":{"shape":"InferenceProfileType"}
+      }
+    },
+    "InferenceProfileType":{
+      "type":"string",
+      "enum":["SYSTEM_DEFINED"]
+    },
     "InferenceType":{
       "type":"string",
       "enum":[
@@ -2874,6 +3016,28 @@
       "members":{
         "nextToken":{"shape":"PaginationToken"},
         "modelSummaries":{"shape":"ImportedModelSummaryList"}
+      }
+    },
+    "ListInferenceProfilesRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListInferenceProfilesResponse":{
+      "type":"structure",
+      "members":{
+        "inferenceProfileSummaries":{"shape":"InferenceProfileSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListModelCopyJobsRequest":{

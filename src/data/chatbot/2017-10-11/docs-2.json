@@ -1,154 +1,154 @@
 {
   "version": "2.0",
-  "service": "AWS Chatbot API",
+  "service": "<p>The <i>AWS Chatbot API Reference</i> provides descriptions, API request parameters, and the XML response for each of the AWS Chatbot API actions.</p> <p>AWS Chatbot APIs are currently available in the following Regions:</p> <ul> <li> <p>US East (Ohio) - <code>us-east-2</code> </p> </li> <li> <p>US West (Oregon) - <code>us-west-2</code> </p> </li> <li> <p>Asia Pacific (Singapore) - <code>ap-southeast-1</code> </p> </li> <li> <p>Europe (Ireland) - <code>eu-west-1</code> </p> </li> </ul> <p>The AWS Chatbot console can only be used in US East (Ohio). Your configuration data however, is stored in each of the relevant available Regions.</p> <note> <p>Your AWS CloudTrail events are logged in whatever Region you call from, not US East (N. Virginia) by default.</p> </note>",
   "operations": {
-    "CreateChimeWebhookConfiguration": "Creates Chime Webhook Configuration",
-    "CreateMicrosoftTeamsChannelConfiguration": "Creates MS Teams Channel Configuration",
-    "CreateSlackChannelConfiguration": "Creates Slack Channel Configuration",
-    "DeleteChimeWebhookConfiguration": "Deletes a Chime Webhook Configuration",
-    "DeleteMicrosoftTeamsChannelConfiguration": "Deletes MS Teams Channel Configuration",
-    "DeleteMicrosoftTeamsConfiguredTeam": "Deletes the Microsoft Teams team authorization allowing for channels to be configured in that Microsoft Teams team. Note that the Microsoft Teams team must have no channels configured to remove it.",
-    "DeleteMicrosoftTeamsUserIdentity": "Deletes a Teams user identity",
-    "DeleteSlackChannelConfiguration": "Deletes Slack Channel Configuration",
-    "DeleteSlackUserIdentity": "Deletes a Slack user identity",
-    "DeleteSlackWorkspaceAuthorization": "Deletes the Slack workspace authorization that allows channels to be configured in that workspace. This requires all configured channels in the workspace to be deleted.",
-    "DescribeChimeWebhookConfigurations": "Lists Chime Webhook Configurations optionally filtered by ChatConfigurationArn",
-    "DescribeSlackChannelConfigurations": "Lists Slack Channel Configurations optionally filtered by ChatConfigurationArn",
-    "DescribeSlackUserIdentities": "Lists all Slack user identities with a mapped role.",
-    "DescribeSlackWorkspaces": "Lists all authorized Slack Workspaces for AWS Account",
-    "GetAccountPreferences": "Get Chatbot account level preferences",
-    "GetMicrosoftTeamsChannelConfiguration": "Get a single MS Teams Channel Configurations",
-    "ListMicrosoftTeamsChannelConfigurations": "Lists MS Teams Channel Configurations optionally filtered by TeamId",
-    "ListMicrosoftTeamsConfiguredTeams": "Lists all authorized MS teams for AWS Account",
-    "ListMicrosoftTeamsUserIdentities": "Lists all Microsoft Teams user identities with a mapped role.",
-    "ListTagsForResource": "Retrieves the list of tags applied to a configuration.",
-    "TagResource": "Applies the supplied tags to a configuration.",
-    "UntagResource": "Removes the supplied tags from a configuration",
-    "UpdateAccountPreferences": "Update Chatbot account level preferences",
-    "UpdateChimeWebhookConfiguration": "Updates a Chime Webhook Configuration",
-    "UpdateMicrosoftTeamsChannelConfiguration": "Updates MS Teams Channel Configuration",
-    "UpdateSlackChannelConfiguration": "Updates Slack Channel Configuration"
+    "CreateChimeWebhookConfiguration": "<p>Creates an AWS Chatbot configuration for Amazon Chime.</p>",
+    "CreateMicrosoftTeamsChannelConfiguration": "<p>Creates an AWS Chatbot configuration for Microsoft Teams.</p>",
+    "CreateSlackChannelConfiguration": "<p>Creates an AWS Chatbot confugration for Slack.</p>",
+    "DeleteChimeWebhookConfiguration": "<p>Deletes a Amazon Chime webhook configuration for AWS Chatbot.</p>",
+    "DeleteMicrosoftTeamsChannelConfiguration": "<p>Deletes a Microsoft Teams channel configuration for AWS Chatbot</p>",
+    "DeleteMicrosoftTeamsConfiguredTeam": "<p>Deletes the Microsoft Teams team authorization allowing for channels to be configured in that Microsoft Teams team. Note that the Microsoft Teams team must have no channels configured to remove it. </p>",
+    "DeleteMicrosoftTeamsUserIdentity": "<p>Identifes a user level permission for a channel configuration.</p>",
+    "DeleteSlackChannelConfiguration": "<p>Deletes a Slack channel configuration for AWS Chatbot</p>",
+    "DeleteSlackUserIdentity": "<p>Deletes a user level permission for a Slack channel configuration.</p>",
+    "DeleteSlackWorkspaceAuthorization": "<p>Deletes the Slack workspace authorization that allows channels to be configured in that workspace. This requires all configured channels in the workspace to be deleted. </p>",
+    "DescribeChimeWebhookConfigurations": "<p>Lists Amazon Chime webhook configurations optionally filtered by ChatConfigurationArn</p>",
+    "DescribeSlackChannelConfigurations": "<p>Lists Slack channel configurations optionally filtered by ChatConfigurationArn</p>",
+    "DescribeSlackUserIdentities": "<p>Lists all Slack user identities with a mapped role.</p>",
+    "DescribeSlackWorkspaces": "<p>List all authorized Slack workspaces connected to the AWS Account onboarded with AWS Chatbot.</p>",
+    "GetAccountPreferences": "<p>Returns AWS Chatbot account preferences.</p>",
+    "GetMicrosoftTeamsChannelConfiguration": "<p>Returns a Microsoft Teams channel configuration in an AWS account.</p>",
+    "ListMicrosoftTeamsChannelConfigurations": "<p>Lists all AWS Chatbot Microsoft Teams channel configurations in an AWS account.</p>",
+    "ListMicrosoftTeamsConfiguredTeams": "<p>Lists all authorized Microsoft Teams for an AWS Account</p>",
+    "ListMicrosoftTeamsUserIdentities": "<p>A list all Microsoft Teams user identities with a mapped role.</p>",
+    "ListTagsForResource": "<p>Lists all of the tags associated with the Amazon Resource Name (ARN) that you specify. The resource can be a user, server, or role.</p>",
+    "TagResource": "<p>Attaches a key-value pair to a resource, as identified by its Amazon Resource Name (ARN). Resources are users, servers, roles, and other entities.</p>",
+    "UntagResource": "<p>Detaches a key-value pair from a resource, as identified by its Amazon Resource Name (ARN). Resources are users, servers, roles, and other entities.</p>",
+    "UpdateAccountPreferences": "<p>Updates AWS Chatbot account preferences.</p>",
+    "UpdateChimeWebhookConfiguration": "<p>Updates a Amazon Chime webhook configuration.</p>",
+    "UpdateMicrosoftTeamsChannelConfiguration": "<p>Updates an Microsoft Teams channel configuration.</p>",
+    "UpdateSlackChannelConfiguration": "<p>Updates a Slack channel configuration.</p>"
   },
   "shapes": {
     "AccountPreferences": {
-      "base": "Preferences which apply for AWS Chatbot usage in the calling AWS account.",
+      "base": "<p>Preferences related to AWS Chatbot usage in the calling AWS account.</p>",
       "refs": {
-        "GetAccountPreferencesResult$AccountPreferences": "Preferences which apply for AWS Chatbot usage in the calling AWS account.",
-        "UpdateAccountPreferencesResult$AccountPreferences": "Preferences which apply for AWS Chatbot usage in the calling AWS account."
+        "GetAccountPreferencesResult$AccountPreferences": "<p>The preferences related to AWS Chatbot usage in the calling AWS account.</p>",
+        "UpdateAccountPreferencesResult$AccountPreferences": "<p>Preferences related to AWS Chatbot usage in the calling AWS account.</p>"
       }
     },
     "AmazonResourceName": {
       "base": null,
       "refs": {
-        "ListTagsForResourceRequest$ResourceARN": "The ARN of the configuration.",
-        "TagResourceRequest$ResourceARN": "The ARN of the configuration.",
-        "UntagResourceRequest$ResourceARN": "The ARN of the configuration."
+        "ListTagsForResourceRequest$ResourceARN": "<p>The ARN you specified to list the tags of.</p>",
+        "TagResourceRequest$ResourceARN": "<p>The ARN of the configuration.</p>",
+        "UntagResourceRequest$ResourceARN": "<p>The value of the resource that will have the tag removed. An Amazon Resource Name (ARN) is an identifier for a specific AWS resource, such as a server, user, or role.</p>"
       }
     },
     "Arn": {
       "base": null,
       "refs": {
-        "ChimeWebhookConfiguration$IamRoleArn": "The ARN of the IAM role that defines the permissions for AWS Chatbot. This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot.",
-        "CreateChimeWebhookConfigurationRequest$IamRoleArn": "This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot.",
-        "CreateSlackChannelConfigurationRequest$IamRoleArn": "The ARN of the IAM role that defines the permissions for AWS Chatbot. This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot.",
-        "CreateTeamsChannelConfigurationRequest$IamRoleArn": "The ARN of the IAM role that defines the permissions for AWS Chatbot. This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot.",
-        "SlackChannelConfiguration$IamRoleArn": "The ARN of the IAM role that defines the permissions for AWS Chatbot. This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot.",
-        "SlackUserIdentity$IamRoleArn": "The ARN of the IAM role that defines the permissions for AWS Chatbot. This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot.",
+        "ChimeWebhookConfiguration$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "CreateChimeWebhookConfigurationRequest$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "CreateSlackChannelConfigurationRequest$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "CreateTeamsChannelConfigurationRequest$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "SlackChannelConfiguration$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "SlackUserIdentity$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
         "SnsTopicArnList$member": null,
-        "TeamsChannelConfiguration$IamRoleArn": "The ARN of the IAM role that defines the permissions for AWS Chatbot. This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot.",
-        "TeamsUserIdentity$IamRoleArn": "The ARN of the IAM role that defines the permissions for AWS Chatbot. This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot.",
-        "UpdateChimeWebhookConfigurationRequest$IamRoleArn": "The ARN of the IAM role that defines the permissions for AWS Chatbot. This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot.",
-        "UpdateSlackChannelConfigurationRequest$IamRoleArn": "The ARN of the IAM role that defines the permissions for AWS Chatbot. This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot.",
-        "UpdateTeamsChannelConfigurationRequest$IamRoleArn": "The ARN of the IAM role that defines the permissions for AWS Chatbot. This is a user-defined role that AWS Chatbot will assume. This is not the service-linked role. For more information, see IAM Policies for AWS Chatbot."
+        "TeamsChannelConfiguration$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "TeamsUserIdentity$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "UpdateChimeWebhookConfigurationRequest$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "UpdateSlackChannelConfigurationRequest$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "UpdateTeamsChannelConfigurationRequest$IamRoleArn": "<p>A user-defined role that AWS Chatbot assumes. This is not the service-linked role.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chatbot-iam-policies.html\">IAM policies for AWS Chatbot</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>"
       }
     },
     "AwsUserIdentity": {
       "base": null,
       "refs": {
-        "SlackUserIdentity$AwsUserIdentity": "The AWS user identity ARN used to associate a Slack User Identity with an IAM Role.",
-        "TeamsUserIdentity$AwsUserIdentity": "The AWS user identity ARN used to associate a Microsoft Teams User Identity with an IAM Role."
+        "SlackUserIdentity$AwsUserIdentity": "<p>The AWS user identity ARN used to associate a Slack user ID with an IAM Role.</p>",
+        "TeamsUserIdentity$AwsUserIdentity": "<p>The AWS user identity ARN used to associate a Microsoft Teams user Identity with an IAM Role.</p>"
       }
     },
     "BooleanAccountPreference": {
       "base": null,
       "refs": {
-        "AccountPreferences$UserAuthorizationRequired": "Enables use of a user role requirement in your chat configuration.",
-        "AccountPreferences$TrainingDataCollectionEnabled": "Turns on training data collection. This helps improve the AWS Chatbot experience by allowing AWS Chatbot to store and use your customer information, such as AWS Chatbot configurations, notifications, user inputs, AWS Chatbot generated responses, and interaction data. This data helps us to continuously improve and develop Artificial Intelligence (AI) technologies. Your data is not shared with any third parties and is protected using sophisticated controls to prevent unauthorized access and misuse. AWS Chatbot does not store or use interactions in chat channels with Amazon Q for training AWS Chatbot’s AI technologies.",
-        "CreateSlackChannelConfigurationRequest$UserAuthorizationRequired": "Enables use of a user role requirement in your chat configuration.",
-        "CreateTeamsChannelConfigurationRequest$UserAuthorizationRequired": "Enables use of a user role requirement in your chat configuration.",
-        "SlackChannelConfiguration$UserAuthorizationRequired": "Enables use of a user role requirement in your chat configuration.",
-        "TeamsChannelConfiguration$UserAuthorizationRequired": "Enables use of a user role requirement in your chat configuration.",
-        "UpdateAccountPreferencesRequest$UserAuthorizationRequired": "Enables use of a user role requirement in your chat configuration.",
-        "UpdateAccountPreferencesRequest$TrainingDataCollectionEnabled": "Turns on training data collection. This helps improve the AWS Chatbot experience by allowing AWS Chatbot to store and use your customer information, such as AWS Chatbot configurations, notifications, user inputs, AWS Chatbot generated responses, and interaction data. This data helps us to continuously improve and develop Artificial Intelligence (AI) technologies. Your data is not shared with any third parties and is protected using sophisticated controls to prevent unauthorized access and misuse. AWS Chatbot does not store or use interactions in chat channels with Amazon Q for training AWS Chatbot’s AI technologies.",
-        "UpdateSlackChannelConfigurationRequest$UserAuthorizationRequired": "Enables use of a user role requirement in your chat configuration.",
-        "UpdateTeamsChannelConfigurationRequest$UserAuthorizationRequired": "Enables use of a user role requirement in your chat configuration."
+        "AccountPreferences$UserAuthorizationRequired": "<p>Enables use of a user role requirement in your chat configuration.</p>",
+        "AccountPreferences$TrainingDataCollectionEnabled": "<p>Turns on training data collection.</p> <p>This helps improve the AWS Chatbot experience by allowing AWS Chatbot to store and use your customer information, such as AWS Chatbot configurations, notifications, user inputs, AWS Chatbot generated responses, and interaction data. This data helps us to continuously improve and develop Artificial Intelligence (AI) technologies. Your data is not shared with any third parties and is protected using sophisticated controls to prevent unauthorized access and misuse. AWS Chatbot does not store or use interactions in chat channels with Amazon Q for training AI technologies for AWS Chatbot. </p>",
+        "CreateSlackChannelConfigurationRequest$UserAuthorizationRequired": "<p>Enables use of a user role requirement in your chat configuration.</p>",
+        "CreateTeamsChannelConfigurationRequest$UserAuthorizationRequired": "<p>Enables use of a user role requirement in your chat configuration.</p>",
+        "SlackChannelConfiguration$UserAuthorizationRequired": "<p>Enables use of a user role requirement in your chat configuration.</p>",
+        "TeamsChannelConfiguration$UserAuthorizationRequired": "<p>Enables use of a user role requirement in your chat configuration.</p>",
+        "UpdateAccountPreferencesRequest$UserAuthorizationRequired": "<p>Enables use of a user role requirement in your chat configuration.</p>",
+        "UpdateAccountPreferencesRequest$TrainingDataCollectionEnabled": "<p>Turns on training data collection.</p> <p>This helps improve the AWS Chatbot experience by allowing AWS Chatbot to store and use your customer information, such as AWS Chatbot configurations, notifications, user inputs, AWS Chatbot generated responses, and interaction data. This data helps us to continuously improve and develop Artificial Intelligence (AI) technologies. Your data is not shared with any third parties and is protected using sophisticated controls to prevent unauthorized access and misuse. AWS Chatbot does not store or use interactions in chat channels with Amazon Q for training AI technologies for AWS Chatbot. </p>",
+        "UpdateSlackChannelConfigurationRequest$UserAuthorizationRequired": "<p>Enables use of a user role requirement in your chat configuration.</p>",
+        "UpdateTeamsChannelConfigurationRequest$UserAuthorizationRequired": "<p>Enables use of a user role requirement in your chat configuration.</p>"
       }
     },
     "ChatConfigurationArn": {
       "base": null,
       "refs": {
-        "ChimeWebhookConfiguration$ChatConfigurationArn": "The ARN of the ChimeWebhookConfiguration.",
-        "DeleteChimeWebhookConfigurationRequest$ChatConfigurationArn": "The ARN of the ChimeWebhookConfiguration to delete.",
-        "DeleteMicrosoftTeamsUserIdentityRequest$ChatConfigurationArn": "The ARN of the MicrosoftTeamsChannelConfiguration associated with the user identity to delete.",
-        "DeleteSlackChannelConfigurationRequest$ChatConfigurationArn": "The ARN of the SlackChannelConfiguration to delete.",
-        "DeleteSlackUserIdentityRequest$ChatConfigurationArn": "The ARN of the SlackChannelConfiguration associated with the user identity to delete.",
-        "DeleteTeamsChannelConfigurationRequest$ChatConfigurationArn": "The ARN of the MicrosoftTeamsChannelConfiguration to delete.",
-        "DescribeChimeWebhookConfigurationsRequest$ChatConfigurationArn": "An optional ARN of a ChimeWebhookConfiguration to describe.",
-        "DescribeSlackChannelConfigurationsRequest$ChatConfigurationArn": "An optional ARN of a SlackChannelConfiguration to describe.",
-        "DescribeSlackUserIdentitiesRequest$ChatConfigurationArn": "The ARN of the SlackChannelConfiguration associated with the user identities to describe.",
-        "GetTeamsChannelConfigurationRequest$ChatConfigurationArn": "The ARN of the MicrosoftTeamsChannelConfiguration to retrieve.",
-        "ListMicrosoftTeamsUserIdentitiesRequest$ChatConfigurationArn": "The ARN of the MicrosoftTeamsChannelConfiguration associated with the user identities to list.",
-        "SlackChannelConfiguration$ChatConfigurationArn": "The ARN of the SlackChannelConfiguration.",
-        "SlackUserIdentity$ChatConfigurationArn": "The ARN of the SlackChannelConfiguration associated with the user identity.",
-        "TeamsChannelConfiguration$ChatConfigurationArn": "The ARN of the MicrosoftTeamsChannelConfiguration.",
-        "TeamsUserIdentity$ChatConfigurationArn": "The ARN of the MicrosoftTeamsChannelConfiguration associated with the user identity.",
-        "UpdateChimeWebhookConfigurationRequest$ChatConfigurationArn": "The ARN of the ChimeWebhookConfiguration to update.",
-        "UpdateSlackChannelConfigurationRequest$ChatConfigurationArn": "The ARN of the SlackChannelConfiguration to update.",
-        "UpdateTeamsChannelConfigurationRequest$ChatConfigurationArn": "The ARN of the MicrosoftTeamsChannelConfiguration to update."
+        "ChimeWebhookConfiguration$ChatConfigurationArn": "<p>The Amazon Resource Number (ARN) of the ChimeWebhookConfiguration.</p>",
+        "DeleteChimeWebhookConfigurationRequest$ChatConfigurationArn": "<p>The Amazon Resource Name (ARN) of the ChimeWebhookConfiguration to delete.</p>",
+        "DeleteMicrosoftTeamsUserIdentityRequest$ChatConfigurationArn": "<p>The ARN of the MicrosoftTeamsChannelConfiguration associated with the user identity to delete.</p>",
+        "DeleteSlackChannelConfigurationRequest$ChatConfigurationArn": "<p>The Amazon Resource Name (ARN) of the SlackChannelConfiguration to delete.</p>",
+        "DeleteSlackUserIdentityRequest$ChatConfigurationArn": "<p>The ARN of the SlackChannelConfiguration associated with the user identity to delete.</p>",
+        "DeleteTeamsChannelConfigurationRequest$ChatConfigurationArn": "<p>The Amazon Resource Name (ARN) of the MicrosoftTeamsChannelConfiguration associated with the user identity to delete.</p>",
+        "DescribeChimeWebhookConfigurationsRequest$ChatConfigurationArn": "<p>An optional Amazon Resource Number (ARN) of a ChimeWebhookConfiguration to describe.</p>",
+        "DescribeSlackChannelConfigurationsRequest$ChatConfigurationArn": "<p>An optional Amazon Resource Number (ARN) of a SlackChannelConfiguration to describe.</p>",
+        "DescribeSlackUserIdentitiesRequest$ChatConfigurationArn": "<p>The Amazon Resource Number (ARN) of the SlackChannelConfiguration associated with the user identities to describe.</p>",
+        "GetTeamsChannelConfigurationRequest$ChatConfigurationArn": "<p>The Amazon Resource Number (ARN) of the MicrosoftTeamsChannelConfiguration to retrieve.</p>",
+        "ListMicrosoftTeamsUserIdentitiesRequest$ChatConfigurationArn": "<p>The Amazon Resource Number (ARN) of the MicrosoftTeamsChannelConfiguration associated with the user identities to list.</p>",
+        "SlackChannelConfiguration$ChatConfigurationArn": "<p>The Amazon Resource Number (ARN) of the SlackChannelConfiguration.</p>",
+        "SlackUserIdentity$ChatConfigurationArn": "<p>The Amazon Resource Number (ARN) of the SlackChannelConfiguration associated with the user identity to delete.</p>",
+        "TeamsChannelConfiguration$ChatConfigurationArn": "<p>The Amazon Resource Name (ARN) of the MicrosoftTeamsChannelConfiguration associated with the user identity to delete.</p>",
+        "TeamsUserIdentity$ChatConfigurationArn": "<p>The Amazon Resource Name (ARN) of the MicrosoftTeamsChannelConfiguration associated with the user identity to delete.</p>",
+        "UpdateChimeWebhookConfigurationRequest$ChatConfigurationArn": "<p>The Amazon Resource Number (ARN) of the ChimeWebhookConfiguration to update.</p>",
+        "UpdateSlackChannelConfigurationRequest$ChatConfigurationArn": "<p>The Amazon Resource Number (ARN) of the SlackChannelConfiguration to update.</p>",
+        "UpdateTeamsChannelConfigurationRequest$ChatConfigurationArn": "<p>The Amazon Resource Number (ARN) of the TeamsChannelConfiguration to update.</p>"
       }
     },
     "ChimeWebhookConfiguration": {
-      "base": "An AWS Chatbot configuration for Amazon Chime.",
+      "base": "<p>An AWS Chatbot configuration for Amazon Chime.</p>",
       "refs": {
         "ChimeWebhookConfigurationList$member": null,
-        "CreateChimeWebhookConfigurationResult$WebhookConfiguration": "Chime webhook configuration.",
-        "UpdateChimeWebhookConfigurationResult$WebhookConfiguration": "Chime webhook configuration."
+        "CreateChimeWebhookConfigurationResult$WebhookConfiguration": "<p>An Amazon Chime webhook configuration.</p>",
+        "UpdateChimeWebhookConfigurationResult$WebhookConfiguration": "<p>A Amazon Chime webhook configuration.</p>"
       }
     },
     "ChimeWebhookConfigurationList": {
       "base": null,
       "refs": {
-        "DescribeChimeWebhookConfigurationsResult$WebhookConfigurations": "A list of Chime webhooks associated with the account."
+        "DescribeChimeWebhookConfigurationsResult$WebhookConfigurations": "<p>A list of Amazon Chime webhooks associated with the account.</p>"
       }
     },
     "ChimeWebhookDescription": {
       "base": null,
       "refs": {
-        "ChimeWebhookConfiguration$WebhookDescription": "Description of the webhook. Recommend using the convention `RoomName/WebhookName`. See Chime setup tutorial for more details: https://docs.aws.amazon.com/chatbot/latest/adminguide/chime-setup.html.",
-        "CreateChimeWebhookConfigurationRequest$WebhookDescription": "Description of the webhook. Recommend using the convention `RoomName/WebhookName`. See Chime setup tutorial for more details: https://docs.aws.amazon.com/chatbot/latest/adminguide/chime-setup.html.",
-        "UpdateChimeWebhookConfigurationRequest$WebhookDescription": "Description of the webhook. Recommend using the convention `RoomName/WebhookName`. See Chime setup tutorial for more details: https://docs.aws.amazon.com/chatbot/latest/adminguide/chime-setup.html."
+        "ChimeWebhookConfiguration$WebhookDescription": "<p>A description of the webhook. We recommend using the convention <code>RoomName/WebhookName</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chime-setup.html\">Tutorial: Get started with Amazon Chime</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "CreateChimeWebhookConfigurationRequest$WebhookDescription": "<p>A description of the webhook. We recommend using the convention <code>RoomName/WebhookName</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chime-setup.html\">Tutorial: Get started with Amazon Chime</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "UpdateChimeWebhookConfigurationRequest$WebhookDescription": "<p>A description of the webhook. We recommend using the convention <code>RoomName/WebhookName</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/chime-setup.html\">Tutorial: Get started with Amazon Chime</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>"
       }
     },
     "ChimeWebhookUrl": {
       "base": null,
       "refs": {
-        "CreateChimeWebhookConfigurationRequest$WebhookUrl": "URL for the Chime webhook.",
-        "UpdateChimeWebhookConfigurationRequest$WebhookUrl": "URL for the Chime webhook."
+        "CreateChimeWebhookConfigurationRequest$WebhookUrl": "<p>The URL for the Amazon Chime webhook.</p>",
+        "UpdateChimeWebhookConfigurationRequest$WebhookUrl": "<p>The URL for the Amazon Chime webhook.</p>"
       }
     },
     "ConfigurationName": {
       "base": null,
       "refs": {
-        "ChimeWebhookConfiguration$ConfigurationName": "The name of the configuration.",
-        "CreateChimeWebhookConfigurationRequest$ConfigurationName": "The name of the configuration.",
-        "CreateSlackChannelConfigurationRequest$ConfigurationName": "The name of the configuration.",
-        "CreateTeamsChannelConfigurationRequest$ConfigurationName": "The name of the configuration.",
-        "SlackChannelConfiguration$ConfigurationName": "The name of the configuration.",
-        "TeamsChannelConfiguration$ConfigurationName": "The name of the configuration."
+        "ChimeWebhookConfiguration$ConfigurationName": "<p>The name of the configuration.</p>",
+        "CreateChimeWebhookConfigurationRequest$ConfigurationName": "<p>The name of the configuration.</p>",
+        "CreateSlackChannelConfigurationRequest$ConfigurationName": "<p>The name of the configuration.</p>",
+        "CreateTeamsChannelConfigurationRequest$ConfigurationName": "<p>The name of the configuration.</p>",
+        "SlackChannelConfiguration$ConfigurationName": "<p>The name of the configuration.</p>",
+        "TeamsChannelConfiguration$ConfigurationName": "<p>The name of the configuration.</p>"
       }
     },
     "ConfiguredTeam": {
-      "base": "A Microsoft Teams team that has been authorized with AWS Chatbot.",
+      "base": "<p>A Microsoft Teams team that is authorized with AWS Chatbot.</p>",
       "refs": {
         "ConfiguredTeamsList$member": null
       }
@@ -156,16 +156,16 @@
     "ConfiguredTeamsList": {
       "base": null,
       "refs": {
-        "ListMicrosoftTeamsConfiguredTeamsResult$ConfiguredTeams": "A list of teams in Microsoft Teams that have been configured with AWS Chatbot."
+        "ListMicrosoftTeamsConfiguredTeamsResult$ConfiguredTeams": "<p>A list of teams in Microsoft Teams that are configured with AWS Chatbot.</p>"
       }
     },
     "ConflictException": {
-      "base": "There was an issue processing your request.",
+      "base": "<p>There was an issue processing your request.</p>",
       "refs": {
       }
     },
     "CreateChimeWebhookConfigurationException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -180,7 +180,7 @@
       }
     },
     "CreateSlackChannelConfigurationException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -195,7 +195,7 @@
       }
     },
     "CreateTeamsChannelConfigurationException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -212,19 +212,19 @@
     "CustomerCwLogLevel": {
       "base": null,
       "refs": {
-        "ChimeWebhookConfiguration$LoggingLevel": "Specifies the logging level for this configuration. This property affects the log entries pushed to Amazon CloudWatch Logs.Logging levels include ERROR, INFO, or NONE.",
-        "CreateChimeWebhookConfigurationRequest$LoggingLevel": "Logging levels include ERROR, INFO, or NONE.",
-        "CreateSlackChannelConfigurationRequest$LoggingLevel": "Logging levels include ERROR, INFO, or NONE.",
-        "CreateTeamsChannelConfigurationRequest$LoggingLevel": "Logging levels include ERROR, INFO, or NONE.",
-        "SlackChannelConfiguration$LoggingLevel": "Logging levels include ERROR, INFO, or NONE.",
-        "TeamsChannelConfiguration$LoggingLevel": "Logging levels include ERROR, INFO, or NONE.",
-        "UpdateChimeWebhookConfigurationRequest$LoggingLevel": "Logging levels include ERROR, INFO, or NONE.",
-        "UpdateSlackChannelConfigurationRequest$LoggingLevel": "Logging levels include ERROR, INFO, or NONE.",
-        "UpdateTeamsChannelConfigurationRequest$LoggingLevel": "Logging levels include ERROR, INFO, or NONE."
+        "ChimeWebhookConfiguration$LoggingLevel": "<p>Logging levels include <code>ERROR</code>, <code>INFO</code>, or <code>NONE</code>.</p>",
+        "CreateChimeWebhookConfigurationRequest$LoggingLevel": "<p>Logging levels include <code>ERROR</code>, <code>INFO</code>, or <code>NONE</code>.</p>",
+        "CreateSlackChannelConfigurationRequest$LoggingLevel": "<p>Logging levels include <code>ERROR</code>, <code>INFO</code>, or <code>NONE</code>.</p>",
+        "CreateTeamsChannelConfigurationRequest$LoggingLevel": "<p>Logging levels include <code>ERROR</code>, <code>INFO</code>, or <code>NONE</code>.</p>",
+        "SlackChannelConfiguration$LoggingLevel": "<p>Logging levels include <code>ERROR</code>, <code>INFO</code>, or <code>NONE</code>.</p>",
+        "TeamsChannelConfiguration$LoggingLevel": "<p>Logging levels include <code>ERROR</code>, <code>INFO</code>, or <code>NONE</code>.</p>",
+        "UpdateChimeWebhookConfigurationRequest$LoggingLevel": "<p>Logging levels include <code>ERROR</code>, <code>INFO</code>, or <code>NONE</code>.</p>",
+        "UpdateSlackChannelConfigurationRequest$LoggingLevel": "<p>Logging levels include <code>ERROR</code>, <code>INFO</code>, or <code>NONE</code>.</p>",
+        "UpdateTeamsChannelConfigurationRequest$LoggingLevel": "<p>Logging levels include <code>ERROR</code>, <code>INFO</code>, or <code>NONE</code>.</p>"
       }
     },
     "DeleteChimeWebhookConfigurationException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -239,7 +239,7 @@
       }
     },
     "DeleteMicrosoftTeamsUserIdentityException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -254,7 +254,7 @@
       }
     },
     "DeleteSlackChannelConfigurationException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -269,7 +269,7 @@
       }
     },
     "DeleteSlackUserIdentityException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -284,7 +284,7 @@
       }
     },
     "DeleteSlackWorkspaceAuthorizationFault": {
-      "base": "There was an issue deleting your Slack workspace.",
+      "base": "<p>There was an issue deleting your Slack workspace.</p>",
       "refs": {
       }
     },
@@ -299,7 +299,7 @@
       }
     },
     "DeleteTeamsChannelConfigurationException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -314,7 +314,7 @@
       }
     },
     "DeleteTeamsConfiguredTeamException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -329,7 +329,7 @@
       }
     },
     "DescribeChimeWebhookConfigurationsException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -344,7 +344,7 @@
       }
     },
     "DescribeSlackChannelConfigurationsException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -359,7 +359,7 @@
       }
     },
     "DescribeSlackUserIdentitiesException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -374,7 +374,7 @@
       }
     },
     "DescribeSlackWorkspacesException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -388,8 +388,44 @@
       "refs": {
       }
     },
+    "ErrorMessage": {
+      "base": null,
+      "refs": {
+        "ConflictException$message": null,
+        "CreateChimeWebhookConfigurationException$Message": null,
+        "CreateSlackChannelConfigurationException$Message": null,
+        "CreateTeamsChannelConfigurationException$Message": null,
+        "DeleteChimeWebhookConfigurationException$Message": null,
+        "DeleteMicrosoftTeamsUserIdentityException$Message": null,
+        "DeleteSlackChannelConfigurationException$Message": null,
+        "DeleteSlackUserIdentityException$Message": null,
+        "DeleteSlackWorkspaceAuthorizationFault$Message": null,
+        "DeleteTeamsChannelConfigurationException$Message": null,
+        "DeleteTeamsConfiguredTeamException$Message": null,
+        "DescribeChimeWebhookConfigurationsException$Message": null,
+        "DescribeSlackChannelConfigurationsException$Message": null,
+        "DescribeSlackUserIdentitiesException$Message": null,
+        "DescribeSlackWorkspacesException$Message": null,
+        "GetAccountPreferencesException$Message": null,
+        "GetTeamsChannelConfigurationException$Message": null,
+        "InternalServiceError$Message": null,
+        "InvalidParameterException$message": null,
+        "InvalidRequestException$message": null,
+        "LimitExceededException$message": null,
+        "ListMicrosoftTeamsConfiguredTeamsException$Message": null,
+        "ListMicrosoftTeamsUserIdentitiesException$Message": null,
+        "ListTeamsChannelConfigurationsException$Message": null,
+        "ResourceNotFoundException$Message": null,
+        "ServiceUnavailableException$message": null,
+        "TooManyTagsException$message": null,
+        "UpdateAccountPreferencesException$Message": null,
+        "UpdateChimeWebhookConfigurationException$Message": null,
+        "UpdateSlackChannelConfigurationException$Message": null,
+        "UpdateTeamsChannelConfigurationException$Message": null
+      }
+    },
     "GetAccountPreferencesException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -404,7 +440,7 @@
       }
     },
     "GetTeamsChannelConfigurationException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -427,36 +463,36 @@
     "GuardrailPolicyArnList": {
       "base": null,
       "refs": {
-        "CreateSlackChannelConfigurationRequest$GuardrailPolicyArns": "The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed 'AdministratorAccess' policy is applied by default if this is not set.",
-        "CreateTeamsChannelConfigurationRequest$GuardrailPolicyArns": "The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed 'AdministratorAccess' policy is applied by default if this is not set.",
-        "SlackChannelConfiguration$GuardrailPolicyArns": "The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed 'AdministratorAccess' policy is applied by default if this is not set.",
-        "TeamsChannelConfiguration$GuardrailPolicyArns": "The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed 'AdministratorAccess' policy is applied by default if this is not set.",
-        "UpdateSlackChannelConfigurationRequest$GuardrailPolicyArns": "The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed 'AdministratorAccess' policy is applied by default if this is not set.",
-        "UpdateTeamsChannelConfigurationRequest$GuardrailPolicyArns": "The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed 'AdministratorAccess' policy is applied by default if this is not set."
+        "CreateSlackChannelConfigurationRequest$GuardrailPolicyArns": "<p>The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed <code>AdministratorAccess</code> policy is applied by default if this is not set. </p>",
+        "CreateTeamsChannelConfigurationRequest$GuardrailPolicyArns": "<p>The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed <code>AdministratorAccess</code> policy is applied by default if this is not set. </p>",
+        "SlackChannelConfiguration$GuardrailPolicyArns": "<p>The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed <code>AdministratorAccess</code> policy is applied by default if this is not set. </p>",
+        "TeamsChannelConfiguration$GuardrailPolicyArns": "<p>The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed <code>AdministratorAccess</code> policy is applied by default if this is not set. </p>",
+        "UpdateSlackChannelConfigurationRequest$GuardrailPolicyArns": "<p>The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed <code>AdministratorAccess</code> policy is applied by default if this is not set. </p>",
+        "UpdateTeamsChannelConfigurationRequest$GuardrailPolicyArns": "<p>The list of IAM policy ARNs that are applied as channel guardrails. The AWS managed <code>AdministratorAccess</code> policy is applied by default if this is not set. </p>"
       }
     },
     "InternalServiceError": {
-      "base": "Customer/consumer-facing internal service exception. https://w.amazon.com/index.php/AWS/API_Standards/Exceptions#InternalServiceError",
+      "base": "<p>Unexpected error during processing of request.</p>",
       "refs": {
       }
     },
     "InvalidParameterException": {
-      "base": "Your request input doesn't meet the constraints that AWS Chatbot requires.",
+      "base": "<p>Your request input doesn't meet the constraints required by AWS Chatbot.</p>",
       "refs": {
       }
     },
     "InvalidRequestException": {
-      "base": "Your request input doesn't meet the constraints that AWS Chatbot requires.",
+      "base": "<p>Your request input doesn't meet the constraints required by AWS Chatbot.</p>",
       "refs": {
       }
     },
     "LimitExceededException": {
-      "base": "You have exceeded a service limit for AWS Chatbot.",
+      "base": "<p>You have exceeded a service limit for AWS Chatbot.</p>",
       "refs": {
       }
     },
     "ListMicrosoftTeamsConfiguredTeamsException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -471,7 +507,7 @@
       }
     },
     "ListMicrosoftTeamsUserIdentitiesException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -496,7 +532,7 @@
       }
     },
     "ListTeamsChannelConfigurationsException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -513,113 +549,113 @@
     "MaxResults": {
       "base": null,
       "refs": {
-        "DescribeChimeWebhookConfigurationsRequest$MaxResults": "The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.",
-        "DescribeSlackChannelConfigurationsRequest$MaxResults": "The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.",
-        "DescribeSlackUserIdentitiesRequest$MaxResults": "The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.",
-        "DescribeSlackWorkspacesRequest$MaxResults": "The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.",
-        "ListMicrosoftTeamsConfiguredTeamsRequest$MaxResults": "The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.",
-        "ListMicrosoftTeamsUserIdentitiesRequest$MaxResults": "The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.",
-        "ListTeamsChannelConfigurationsRequest$MaxResults": "The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved."
+        "DescribeChimeWebhookConfigurationsRequest$MaxResults": "<p>The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved. </p>",
+        "DescribeSlackChannelConfigurationsRequest$MaxResults": "<p>The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved. </p>",
+        "DescribeSlackUserIdentitiesRequest$MaxResults": "<p>The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved. </p>",
+        "DescribeSlackWorkspacesRequest$MaxResults": "<p>The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved. </p>",
+        "ListMicrosoftTeamsConfiguredTeamsRequest$MaxResults": "<p>The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.</p>",
+        "ListMicrosoftTeamsUserIdentitiesRequest$MaxResults": "<p>The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved. </p>",
+        "ListTeamsChannelConfigurationsRequest$MaxResults": "<p>The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.</p>"
       }
     },
     "PaginationToken": {
       "base": null,
       "refs": {
-        "DescribeChimeWebhookConfigurationsRequest$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "DescribeChimeWebhookConfigurationsResult$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "DescribeSlackChannelConfigurationsRequest$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "DescribeSlackChannelConfigurationsResult$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "DescribeSlackUserIdentitiesRequest$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "DescribeSlackUserIdentitiesResult$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "DescribeSlackWorkspacesRequest$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "DescribeSlackWorkspacesResult$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "ListMicrosoftTeamsConfiguredTeamsRequest$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "ListMicrosoftTeamsConfiguredTeamsResult$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "ListMicrosoftTeamsUserIdentitiesRequest$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "ListMicrosoftTeamsUserIdentitiesResult$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "ListTeamsChannelConfigurationsRequest$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.",
-        "ListTeamsChannelConfigurationsResult$NextToken": "An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults."
+        "DescribeChimeWebhookConfigurationsRequest$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults. </p>",
+        "DescribeChimeWebhookConfigurationsResult$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults. </p>",
+        "DescribeSlackChannelConfigurationsRequest$NextToken": "<p> An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults. </p>",
+        "DescribeSlackChannelConfigurationsResult$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults. </p>",
+        "DescribeSlackUserIdentitiesRequest$NextToken": "<p> An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults. </p>",
+        "DescribeSlackUserIdentitiesResult$NextToken": "<p> An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults. </p>",
+        "DescribeSlackWorkspacesRequest$NextToken": "<p> An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults. </p>",
+        "DescribeSlackWorkspacesResult$NextToken": "<p> An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults. </p>",
+        "ListMicrosoftTeamsConfiguredTeamsRequest$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.</p>",
+        "ListMicrosoftTeamsConfiguredTeamsResult$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.</p>",
+        "ListMicrosoftTeamsUserIdentitiesRequest$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults. </p>",
+        "ListMicrosoftTeamsUserIdentitiesResult$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults. </p>",
+        "ListTeamsChannelConfigurationsRequest$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.</p>",
+        "ListTeamsChannelConfigurationsResult$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.</p>"
       }
     },
     "ResourceNotFoundException": {
-      "base": "We were not able to find the resource for your request.",
+      "base": "<p>We were unable to find the resource for your request</p>",
       "refs": {
       }
     },
     "ServiceUnavailableException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
     "SlackChannelConfiguration": {
-      "base": "An AWS Chatbot configuration for Slack.",
+      "base": "<p>An AWS Chatbot configuration for Slack.</p>",
       "refs": {
-        "CreateSlackChannelConfigurationResult$ChannelConfiguration": "The configuration for a Slack channel configured with AWS Chatbot.",
+        "CreateSlackChannelConfigurationResult$ChannelConfiguration": "<p>The configuration for a Slack channel configured with AWS Chatbot.</p>",
         "SlackChannelConfigurationList$member": null,
-        "UpdateSlackChannelConfigurationResult$ChannelConfiguration": "The configuration for a Slack channel configured with AWS Chatbot."
+        "UpdateSlackChannelConfigurationResult$ChannelConfiguration": "<p>The configuration for a Slack channel configured with AWS Chatbot.</p>"
       }
     },
     "SlackChannelConfigurationList": {
       "base": null,
       "refs": {
-        "DescribeSlackChannelConfigurationsResult$SlackChannelConfigurations": "A list of Slack channel configurations."
+        "DescribeSlackChannelConfigurationsResult$SlackChannelConfigurations": "<p>A list of Slack channel configurations.</p>"
       }
     },
     "SlackChannelDisplayName": {
       "base": null,
       "refs": {
-        "CreateSlackChannelConfigurationRequest$SlackChannelName": "The name of the Slack Channel.",
-        "SlackChannelConfiguration$SlackChannelName": "The name of the Slack Channel.",
-        "UpdateSlackChannelConfigurationRequest$SlackChannelName": "The name of the Slack Channel."
+        "CreateSlackChannelConfigurationRequest$SlackChannelName": "<p>The name of the Slack channel.</p>",
+        "SlackChannelConfiguration$SlackChannelName": "<p>The name of the Slack channel.</p>",
+        "UpdateSlackChannelConfigurationRequest$SlackChannelName": "<p>The name of the Slack channel.</p>"
       }
     },
     "SlackChannelId": {
       "base": null,
       "refs": {
-        "CreateSlackChannelConfigurationRequest$SlackChannelId": "The ID of the Slack channel. To get the ID, open Slack, right click on the channel name in the left pane, then choose Copy Link. The channel ID is the 9-character string at the end of the URL. For example, ABCBBLZZZ.",
-        "SlackChannelConfiguration$SlackChannelId": "The ID of the Slack channel. To get the ID, open Slack, right click on the channel name in the left pane, then choose Copy Link. The channel ID is the 9-character string at the end of the URL. For example, ABCBBLZZZ.",
-        "UpdateSlackChannelConfigurationRequest$SlackChannelId": "The ID of the Slack channel. To get the ID, open Slack, right click on the channel name in the left pane, then choose Copy Link. The channel ID is the 9-character string at the end of the URL. For example, ABCBBLZZZ."
+        "CreateSlackChannelConfigurationRequest$SlackChannelId": "<p>The ID of the Slack channel.</p> <p>To get this ID, open Slack, right click on the channel name in the left pane, then choose Copy Link. The channel ID is the 9-character string at the end of the URL. For example, ABCBBLZZZ. </p>",
+        "SlackChannelConfiguration$SlackChannelId": "<p>The ID of the Slack channel.</p> <p>To get this ID, open Slack, right click on the channel name in the left pane, then choose Copy Link. The channel ID is the 9-character string at the end of the URL. For example, ABCBBLZZZ. </p>",
+        "UpdateSlackChannelConfigurationRequest$SlackChannelId": "<p>The ID of the Slack channel.</p> <p>To get this ID, open Slack, right click on the channel name in the left pane, then choose Copy Link. The channel ID is the 9-character string at the end of the URL. For example, ABCBBLZZZ. </p>"
       }
     },
     "SlackTeamId": {
       "base": null,
       "refs": {
-        "CreateSlackChannelConfigurationRequest$SlackTeamId": "The ID of the Slack workspace authorized with AWS Chatbot.",
-        "DeleteSlackUserIdentityRequest$SlackTeamId": "The ID of the Slack workspace authorized with AWS Chatbot.",
-        "DeleteSlackWorkspaceAuthorizationRequest$SlackTeamId": "The ID of the Slack workspace authorized with AWS Chatbot.",
-        "SlackChannelConfiguration$SlackTeamId": "The ID of the Slack workspace authorized with AWS Chatbot.",
-        "SlackUserIdentity$SlackTeamId": "The ID of the Slack workspace authorized with AWS Chatbot.",
-        "SlackWorkspace$SlackTeamId": "The ID of the Slack workspace authorized with AWS Chatbot."
+        "CreateSlackChannelConfigurationRequest$SlackTeamId": "<p>The ID of the Slack workspace authorized with AWS Chatbot.</p>",
+        "DeleteSlackUserIdentityRequest$SlackTeamId": "<p>The ID of the Slack workspace authorized with AWS Chatbot.</p>",
+        "DeleteSlackWorkspaceAuthorizationRequest$SlackTeamId": "<p>The ID of the Slack workspace authorized with AWS Chatbot.</p>",
+        "SlackChannelConfiguration$SlackTeamId": "<p>The ID of the Slack workspace authorized with Amazon Chime.</p>",
+        "SlackUserIdentity$SlackTeamId": "<p>The ID of the Slack workspace authorized with AWS Chatbot.</p>",
+        "SlackWorkspace$SlackTeamId": "<p>The ID of the Slack workspace authorized with AWS Chatbot.</p>"
       }
     },
     "SlackTeamName": {
       "base": null,
       "refs": {
-        "SlackChannelConfiguration$SlackTeamName": "Name of the Slack Workspace.",
-        "SlackWorkspace$SlackTeamName": "Name of the Slack Workspace."
+        "SlackChannelConfiguration$SlackTeamName": "<p>Name of the Slack workspace.</p>",
+        "SlackWorkspace$SlackTeamName": "<p>The name of the Slack workspace.</p>"
       }
     },
     "SlackUserId": {
       "base": null,
       "refs": {
-        "DeleteSlackUserIdentityRequest$SlackUserId": "The ID of the user in Slack.",
-        "SlackUserIdentity$SlackUserId": "The ID of the user in Slack."
+        "DeleteSlackUserIdentityRequest$SlackUserId": "<p>The ID of the user in Slack</p>",
+        "SlackUserIdentity$SlackUserId": "<p>The ID of the user in Slack</p>"
       }
     },
     "SlackUserIdentitiesList": {
       "base": null,
       "refs": {
-        "DescribeSlackUserIdentitiesResult$SlackUserIdentities": "A list of Slack User Identities."
+        "DescribeSlackUserIdentitiesResult$SlackUserIdentities": "<p>A list of Slack User Identities.</p>"
       }
     },
     "SlackUserIdentity": {
-      "base": "Identifes a User level permission for a channel configuration.",
+      "base": "<p>Identifes a user level permission for a channel configuration. </p>",
       "refs": {
         "SlackUserIdentitiesList$member": null
       }
     },
     "SlackWorkspace": {
-      "base": "A Slack Workspace.",
+      "base": "<p>A Slack workspace. </p>",
       "refs": {
         "SlackWorkspacesList$member": null
       }
@@ -627,31 +663,25 @@
     "SlackWorkspacesList": {
       "base": null,
       "refs": {
-        "DescribeSlackWorkspacesResult$SlackWorkspaces": "A list of Slack Workspaces registered with AWS Chatbot."
+        "DescribeSlackWorkspacesResult$SlackWorkspaces": "<p>A list of Slack workspaces registered with AWS Chatbot.</p>"
       }
     },
     "SnsTopicArnList": {
       "base": null,
       "refs": {
-        "ChimeWebhookConfiguration$SnsTopicArns": "The ARNs of the SNS topics that deliver notifications to AWS Chatbot.",
-        "CreateChimeWebhookConfigurationRequest$SnsTopicArns": "The ARNs of the SNS topics that deliver notifications to AWS Chatbot.",
-        "CreateSlackChannelConfigurationRequest$SnsTopicArns": "The ARNs of the SNS topics that deliver notifications to AWS Chatbot.",
-        "CreateTeamsChannelConfigurationRequest$SnsTopicArns": "The ARNs of the SNS topics that deliver notifications to AWS Chatbot.",
-        "SlackChannelConfiguration$SnsTopicArns": "The ARNs of the SNS topics that deliver notifications to AWS Chatbot.",
-        "TeamsChannelConfiguration$SnsTopicArns": "The ARNs of the SNS topics that deliver notifications to AWS Chatbot.",
-        "UpdateChimeWebhookConfigurationRequest$SnsTopicArns": "The ARNs of the SNS topics that deliver notifications to AWS Chatbot.",
-        "UpdateSlackChannelConfigurationRequest$SnsTopicArns": "The ARNs of the SNS topics that deliver notifications to AWS Chatbot.",
-        "UpdateTeamsChannelConfigurationRequest$SnsTopicArns": "The ARNs of the SNS topics that deliver notifications to AWS Chatbot."
-      }
-    },
-    "String": {
-      "base": null,
-      "refs": {
-        "TeamsChannelConfiguration$TeamName": "The name of the Microsoft Teams Team."
+        "ChimeWebhookConfiguration$SnsTopicArns": "<p>The Amazon Resource Names (ARNs) of the SNS topics that deliver notifications to AWS Chatbot.</p>",
+        "CreateChimeWebhookConfigurationRequest$SnsTopicArns": "<p>The Amazon Resource Names (ARNs) of the SNS topics that deliver notifications to AWS Chatbot.</p>",
+        "CreateSlackChannelConfigurationRequest$SnsTopicArns": "<p>The Amazon Resource Names (ARNs) of the SNS topics that deliver notifications to AWS Chatbot.</p>",
+        "CreateTeamsChannelConfigurationRequest$SnsTopicArns": "<p>The Amazon Resource Names (ARNs) of the SNS topics that deliver notifications to AWS Chatbot.</p>",
+        "SlackChannelConfiguration$SnsTopicArns": "<p>The ARNs of the SNS topics that deliver notifications to AWS Chatbot.</p>",
+        "TeamsChannelConfiguration$SnsTopicArns": "<p>The Amazon Resource Names (ARNs) of the SNS topics that deliver notifications to AWS Chatbot.</p>",
+        "UpdateChimeWebhookConfigurationRequest$SnsTopicArns": "<p>The ARNs of the SNS topics that deliver notifications to AWS Chatbot.</p>",
+        "UpdateSlackChannelConfigurationRequest$SnsTopicArns": "<p>The Amazon Resource Names (ARNs) of the SNS topics that deliver notifications to AWS Chatbot.</p>",
+        "UpdateTeamsChannelConfigurationRequest$SnsTopicArns": "<p>The Amazon Resource Names (ARNs) of the SNS topics that deliver notifications to AWS Chatbot.</p>"
       }
     },
     "Tag": {
-      "base": "A tag applied to the configuration.",
+      "base": "<p>A key-value pair. A tag consists of a tag key and a tag value. Tag keys and tag values are both required, but tag values can be empty (null) strings.</p> <important> <p>Do not include confidential or sensitive information in this field. </p> </important> <p>For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/allocation-tag-restrictions.html\">User-Defined Tag Restrictions</a> in the <i>AWS Billing and Cost Management User Guide</i>.</p>",
       "refs": {
         "TagList$member": null,
         "Tags$member": null
@@ -660,21 +690,21 @@
     "TagKey": {
       "base": null,
       "refs": {
-        "Tag$TagKey": "The tag key.",
+        "Tag$TagKey": "<p>The key of the tag.</p>",
         "TagKeyList$member": null
       }
     },
     "TagKeyList": {
       "base": null,
       "refs": {
-        "UntagResourceRequest$TagKeys": "A list of tag keys to remove from the configuration."
+        "UntagResourceRequest$TagKeys": "<p>TagKeys are key-value pairs assigned to ARNs that can be used to group and search for resources by type. This metadata can be attached to resources for any purpose.</p>"
       }
     },
     "TagList": {
       "base": null,
       "refs": {
-        "ListTagsForResourceResponse$Tags": "A list of tags applied to the configuration.",
-        "TagResourceRequest$Tags": "A list of tags to apply to the configuration."
+        "ListTagsForResourceResponse$Tags": "<p>Key-value pairs that are assigned to a resource, usually for the purpose of grouping and searching for items. Tags are metadata that you define.</p>",
+        "TagResourceRequest$Tags": "<p>A list of tags to apply to the configuration.</p>"
       }
     },
     "TagResourceRequest": {
@@ -690,91 +720,92 @@
     "TagValue": {
       "base": null,
       "refs": {
-        "Tag$TagValue": "The tag value."
+        "Tag$TagValue": "<p>The value of the tag.</p>"
       }
     },
     "Tags": {
       "base": null,
       "refs": {
-        "ChimeWebhookConfiguration$Tags": "A list of tags applied to the configuration.",
-        "CreateChimeWebhookConfigurationRequest$Tags": "A list of tags to apply to the configuration.",
-        "CreateSlackChannelConfigurationRequest$Tags": "A list of tags to apply to the configuration.",
-        "CreateTeamsChannelConfigurationRequest$Tags": "A list of tags to apply to the configuration.",
-        "SlackChannelConfiguration$Tags": "A list of tags applied to the configuration.",
-        "TeamsChannelConfiguration$Tags": "A list of tags applied to the configuration."
+        "ChimeWebhookConfiguration$Tags": "<p>A map of tags assigned to a resource. A tag is a string-to-string map of key-value pairs.</p>",
+        "CreateChimeWebhookConfigurationRequest$Tags": "<p>A map of tags assigned to a resource. A tag is a string-to-string map of key-value pairs.</p>",
+        "CreateSlackChannelConfigurationRequest$Tags": "<p>A map of tags assigned to a resource. A tag is a string-to-string map of key-value pairs.</p>",
+        "CreateTeamsChannelConfigurationRequest$Tags": "<p>A map of tags assigned to a resource. A tag is a string-to-string map of key-value pairs.</p>",
+        "SlackChannelConfiguration$Tags": "<p>A map of tags assigned to a resource. A tag is a string-to-string map of key-value pairs.</p>",
+        "TeamsChannelConfiguration$Tags": "<p>A map of tags assigned to a resource. A tag is a string-to-string map of key-value pairs.</p>"
       }
     },
     "TeamChannelConfigurationsList": {
       "base": null,
       "refs": {
-        "ListTeamsChannelConfigurationsResult$TeamChannelConfigurations": "A list of AWS Chatbot channel configurations for Microsoft Teams."
+        "ListTeamsChannelConfigurationsResult$TeamChannelConfigurations": "<p>A list of AWS Chatbot channel configurations for Microsoft Teams.</p>"
       }
     },
     "TeamName": {
       "base": null,
       "refs": {
-        "CreateTeamsChannelConfigurationRequest$TeamName": "The name of the Microsoft Teams Team."
+        "CreateTeamsChannelConfigurationRequest$TeamName": "<p>The name of the Microsoft Teams Team.</p>",
+        "TeamsChannelConfiguration$TeamName": "<p>The name of the Microsoft Teams Team.</p>"
       }
     },
     "TeamsChannelConfiguration": {
-      "base": "An AWS Chatbot configuration for Microsoft Teams.",
+      "base": "<p>An AWS Chatbot configuration for Microsoft Teams.</p>",
       "refs": {
-        "CreateTeamsChannelConfigurationResult$ChannelConfiguration": "The configuration for a Microsoft Teams channel configured with AWS Chatbot.",
-        "GetTeamsChannelConfigurationResult$ChannelConfiguration": "The configuration for a Microsoft Teams channel configured with AWS Chatbot.",
+        "CreateTeamsChannelConfigurationResult$ChannelConfiguration": "<p>The configuration for a Microsoft Teams channel configured with AWS Chatbot.</p>",
+        "GetTeamsChannelConfigurationResult$ChannelConfiguration": "<p>The configuration for a Microsoft Teams channel configured with AWS Chatbot.</p>",
         "TeamChannelConfigurationsList$member": null,
-        "UpdateTeamsChannelConfigurationResult$ChannelConfiguration": "The configuration for a Microsoft Teams channel configured with AWS Chatbot."
+        "UpdateTeamsChannelConfigurationResult$ChannelConfiguration": "<p>The configuration for a Microsoft Teams channel configured with AWS Chatbot.</p>"
       }
     },
     "TeamsChannelId": {
       "base": null,
       "refs": {
-        "CreateTeamsChannelConfigurationRequest$ChannelId": "The ID of the Microsoft Teams channel.",
-        "TeamsChannelConfiguration$ChannelId": "The ID of the Microsoft Teams channel.",
-        "TeamsUserIdentity$TeamsChannelId": "The ID of the Microsoft Teams channel.",
-        "UpdateTeamsChannelConfigurationRequest$ChannelId": "The ID of the Microsoft Teams channel."
+        "CreateTeamsChannelConfigurationRequest$ChannelId": "<p>The ID of the Microsoft Teams channel.</p>",
+        "TeamsChannelConfiguration$ChannelId": "<p>The ID of the Microsoft Teams channel.</p>",
+        "TeamsUserIdentity$TeamsChannelId": "<p>The ID of the Microsoft Teams channel.</p>",
+        "UpdateTeamsChannelConfigurationRequest$ChannelId": "<p>The ID of the Microsoft Teams channel.</p>"
       }
     },
     "TeamsChannelName": {
       "base": null,
       "refs": {
-        "CreateTeamsChannelConfigurationRequest$ChannelName": "The name of the Microsoft Teams channel.",
-        "TeamsChannelConfiguration$ChannelName": "The name of the Microsoft Teams channel.",
-        "UpdateTeamsChannelConfigurationRequest$ChannelName": "The name of the Microsoft Teams channel."
+        "CreateTeamsChannelConfigurationRequest$ChannelName": "<p>The name of the Microsoft Teams channel.</p>",
+        "TeamsChannelConfiguration$ChannelName": "<p>The name of the Microsoft Teams channel.</p>",
+        "UpdateTeamsChannelConfigurationRequest$ChannelName": "<p>The name of the Microsoft Teams channel.</p>"
       }
     },
     "TeamsUserIdentitiesList": {
       "base": null,
       "refs": {
-        "ListMicrosoftTeamsUserIdentitiesResult$TeamsUserIdentities": "User level permissions associated to a channel configuration."
+        "ListMicrosoftTeamsUserIdentitiesResult$TeamsUserIdentities": "<p>User level permissions associated to a channel configuration.</p>"
       }
     },
     "TeamsUserIdentity": {
-      "base": "Identifes a user level permission for a channel configuration.",
+      "base": "<p>Identifes a user level permission for a channel configuration.</p>",
       "refs": {
         "TeamsUserIdentitiesList$member": null
       }
     },
     "TooManyTagsException": {
-      "base": "The supplied list of tags contains too many tags.",
+      "base": "<p>The supplied list of tags contains too many tags.</p>",
       "refs": {
       }
     },
     "UUID": {
       "base": null,
       "refs": {
-        "ConfiguredTeam$TenantId": "The ID of the Microsoft Teams tenant.",
-        "ConfiguredTeam$TeamId": "The ID of the Microsoft Team authorized with AWS Chatbot. To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more details, see steps 1-4 in Get started with Microsoft Teams in the AWS Chatbot Administrator Guide.",
-        "ConfiguredTeam$TeamName": "The name of the Microsoft Teams Team.",
-        "CreateTeamsChannelConfigurationRequest$TeamId": "The ID of the Microsoft Team authorized with AWS Chatbot. To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more details, see steps 1-4 in Get started with Microsoft Teams in the AWS Chatbot Administrator Guide.",
-        "CreateTeamsChannelConfigurationRequest$TenantId": "The ID of the Microsoft Teams tenant.",
-        "DeleteMicrosoftTeamsUserIdentityRequest$UserId": "Id from Microsoft Teams for user.",
-        "DeleteTeamsConfiguredTeamRequest$TeamId": "The ID of the Microsoft Team authorized with AWS Chatbot. To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more details, see steps 1-4 in Get started with Microsoft Teams in the AWS Chatbot Administrator Guide.",
-        "ListTeamsChannelConfigurationsRequest$TeamId": "The ID of the Microsoft Team authorized with AWS Chatbot. To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more details, see steps 1-4 in Get started with Microsoft Teams in the AWS Chatbot Administrator Guide.",
-        "TeamsChannelConfiguration$TeamId": "The ID of the Microsoft Team authorized with AWS Chatbot. To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more details, see steps 1-4 in Get started with Microsoft Teams in the AWS Chatbot Administrator Guide.",
-        "TeamsChannelConfiguration$TenantId": "The ID of the Microsoft Teams tenant.",
-        "TeamsUserIdentity$TeamId": "The ID of the Microsoft Team authorized with AWS Chatbot. To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more details, see steps 1-4 in Get started with Microsoft Teams in the AWS Chatbot Administrator Guide.",
-        "TeamsUserIdentity$UserId": "Id from Microsoft Teams for user.",
-        "TeamsUserIdentity$TeamsTenantId": "The ID of the Microsoft Teams tenant."
+        "ConfiguredTeam$TenantId": "<p>The ID of the Microsoft Teams tenant.</p>",
+        "ConfiguredTeam$TeamId": "<p> The ID of the Microsoft Teams authorized with AWS Chatbot.</p> <p>To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/teams-setup.html#teams-client-setup\">Step 1: Configure a Microsoft Teams client</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "ConfiguredTeam$TeamName": "<p>The name of the Microsoft Teams Team.</p>",
+        "CreateTeamsChannelConfigurationRequest$TeamId": "<p> The ID of the Microsoft Teams authorized with AWS Chatbot.</p> <p>To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/teams-setup.html#teams-client-setup\">Step 1: Configure a Microsoft Teams client</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "CreateTeamsChannelConfigurationRequest$TenantId": "<p>The ID of the Microsoft Teams tenant.</p>",
+        "DeleteMicrosoftTeamsUserIdentityRequest$UserId": "<p>The Microsoft Teams user ID.</p>",
+        "DeleteTeamsConfiguredTeamRequest$TeamId": "<p>The ID of the Microsoft Teams team authorized with AWS Chatbot.</p> <p>To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/teams-setup.html#teams-client-setup\">Step 1: Configure a Microsoft Teams client</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "ListTeamsChannelConfigurationsRequest$TeamId": "<p> The ID of the Microsoft Teams authorized with AWS Chatbot.</p> <p>To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/teams-setup.html#teams-client-setup\">Step 1: Configure a Microsoft Teams client</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "TeamsChannelConfiguration$TeamId": "<p> The ID of the Microsoft Teams authorized with AWS Chatbot.</p> <p>To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/teams-setup.html#teams-client-setup\">Step 1: Configure a Microsoft Teams client</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "TeamsChannelConfiguration$TenantId": "<p>The ID of the Microsoft Teams tenant.</p>",
+        "TeamsUserIdentity$TeamId": "<p> The ID of the Microsoft Teams authorized with AWS Chatbot.</p> <p>To get the team ID, you must perform the initial authorization flow with Microsoft Teams in the AWS Chatbot console. Then you can copy and paste the team ID from the console. For more information, see <a href=\"https://docs.aws.amazon.com/chatbot/latest/adminguide/teams-setup.html#teams-client-setup\">Step 1: Configure a Microsoft Teams client</a> in the <i> AWS Chatbot Administrator Guide</i>. </p>",
+        "TeamsUserIdentity$UserId": "<p>The Microsoft Teams user ID.</p>",
+        "TeamsUserIdentity$TeamsTenantId": "<p>The ID of the Microsoft Teams tenant.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -788,7 +819,7 @@
       }
     },
     "UpdateAccountPreferencesException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -803,7 +834,7 @@
       }
     },
     "UpdateChimeWebhookConfigurationException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -818,7 +849,7 @@
       }
     },
     "UpdateSlackChannelConfigurationException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },
@@ -833,7 +864,7 @@
       }
     },
     "UpdateTeamsChannelConfigurationException": {
-      "base": "We can’t process your request right now because of a server issue. Try again later.",
+      "base": "<p>We can’t process your request right now because of a server issue. Try again later.</p>",
       "refs": {
       }
     },

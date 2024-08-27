@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Updates PHP runtime deprecation notice to `E_USER_DEPRECATION`
+* `Aws\Omics` - Adds data provenance to import jobs from read sets and references
+* `Aws\Bedrock` - Amazon Bedrock SDK updates for Inference Profile.
+* `Aws\BedrockRuntime` - Amazon Bedrock SDK updates for Inference Profile.
+* `Aws\Polly` - Amazon Polly adds 2 new voices: Jitka (cs-CZ) and Sabrina (de-CH).
+* `Aws\Chatbot` - Update documentation to be consistent with the API docs
+
 ## 3.320.8 - 2024-08-26
 
 * `Aws\EndpointV2` - Adds support for `StringArray` endpoint parameters and `operationContextParams`

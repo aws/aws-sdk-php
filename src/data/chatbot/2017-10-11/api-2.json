@@ -2,13 +2,14 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2017-10-11",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"chatbot",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"AWS Chatbot",
     "serviceId":"chatbot",
     "signatureVersion":"v4",
+    "signingName":"chatbot",
     "uid":"chatbot-2017-10-11"
   },
   "operations":{
@@ -23,10 +24,10 @@
       "output":{"shape":"CreateChimeWebhookConfigurationResult"},
       "errors":[
         {"shape":"InvalidParameterException"},
-        {"shape":"LimitExceededException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"CreateChimeWebhookConfigurationException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"CreateChimeWebhookConfigurationException"}
       ]
     },
     "CreateMicrosoftTeamsChannelConfiguration":{
@@ -40,10 +41,10 @@
       "output":{"shape":"CreateTeamsChannelConfigurationResult"},
       "errors":[
         {"shape":"InvalidParameterException"},
-        {"shape":"LimitExceededException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"CreateTeamsChannelConfigurationException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"CreateTeamsChannelConfigurationException"}
       ]
     },
     "CreateSlackChannelConfiguration":{
@@ -57,10 +58,10 @@
       "output":{"shape":"CreateSlackChannelConfigurationResult"},
       "errors":[
         {"shape":"InvalidParameterException"},
-        {"shape":"LimitExceededException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"CreateSlackChannelConfigurationException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"CreateSlackChannelConfigurationException"}
       ]
     },
     "DeleteChimeWebhookConfiguration":{
@@ -73,9 +74,9 @@
       "input":{"shape":"DeleteChimeWebhookConfigurationRequest"},
       "output":{"shape":"DeleteChimeWebhookConfigurationResult"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"DeleteChimeWebhookConfigurationException"}
       ]
     },
@@ -89,9 +90,9 @@
       "input":{"shape":"DeleteTeamsChannelConfigurationRequest"},
       "output":{"shape":"DeleteTeamsChannelConfigurationResult"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"DeleteTeamsChannelConfigurationException"}
       ]
     },
@@ -134,10 +135,10 @@
       "input":{"shape":"DeleteSlackChannelConfigurationRequest"},
       "output":{"shape":"DeleteSlackChannelConfigurationResult"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"DeleteSlackChannelConfigurationException"}
+        {"shape":"DeleteSlackChannelConfigurationException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DeleteSlackUserIdentity":{
@@ -151,8 +152,8 @@
       "output":{"shape":"DeleteSlackUserIdentityResult"},
       "errors":[
         {"shape":"InvalidParameterException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"DeleteSlackUserIdentityException"}
+        {"shape":"DeleteSlackUserIdentityException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DeleteSlackWorkspaceAuthorization":{
@@ -179,9 +180,9 @@
       "input":{"shape":"DescribeChimeWebhookConfigurationsRequest"},
       "output":{"shape":"DescribeChimeWebhookConfigurationsResult"},
       "errors":[
-        {"shape":"DescribeChimeWebhookConfigurationsException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"DescribeChimeWebhookConfigurationsException"}
       ]
     },
     "DescribeSlackChannelConfigurations":{
@@ -194,9 +195,9 @@
       "input":{"shape":"DescribeSlackChannelConfigurationsRequest"},
       "output":{"shape":"DescribeSlackChannelConfigurationsResult"},
       "errors":[
-        {"shape":"DescribeSlackChannelConfigurationsException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"DescribeSlackChannelConfigurationsException"}
       ]
     },
     "DescribeSlackUserIdentities":{
@@ -224,9 +225,9 @@
       "input":{"shape":"DescribeSlackWorkspacesRequest"},
       "output":{"shape":"DescribeSlackWorkspacesResult"},
       "errors":[
+        {"shape":"InvalidParameterException"},
         {"shape":"DescribeSlackWorkspacesException"},
-        {"shape":"InvalidRequestException"},
-        {"shape":"InvalidParameterException"}
+        {"shape":"InvalidRequestException"}
       ]
     },
     "GetAccountPreferences":{
@@ -239,8 +240,8 @@
       "input":{"shape":"GetAccountPreferencesRequest"},
       "output":{"shape":"GetAccountPreferencesResult"},
       "errors":[
-        {"shape":"GetAccountPreferencesException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"GetAccountPreferencesException"}
       ]
     },
     "GetMicrosoftTeamsChannelConfiguration":{
@@ -253,9 +254,9 @@
       "input":{"shape":"GetTeamsChannelConfigurationRequest"},
       "output":{"shape":"GetTeamsChannelConfigurationResult"},
       "errors":[
-        {"shape":"GetTeamsChannelConfigurationException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"GetTeamsChannelConfigurationException"}
       ]
     },
     "ListMicrosoftTeamsChannelConfigurations":{
@@ -268,8 +269,8 @@
       "input":{"shape":"ListTeamsChannelConfigurationsRequest"},
       "output":{"shape":"ListTeamsChannelConfigurationsResult"},
       "errors":[
-        {"shape":"ListTeamsChannelConfigurationsException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"ListTeamsChannelConfigurationsException"},
         {"shape":"InvalidRequestException"}
       ]
     },
@@ -283,9 +284,9 @@
       "input":{"shape":"ListMicrosoftTeamsConfiguredTeamsRequest"},
       "output":{"shape":"ListMicrosoftTeamsConfiguredTeamsResult"},
       "errors":[
-        {"shape":"ListMicrosoftTeamsConfiguredTeamsException"},
+        {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"InvalidParameterException"}
+        {"shape":"ListMicrosoftTeamsConfiguredTeamsException"}
       ]
     },
     "ListMicrosoftTeamsUserIdentities":{
@@ -298,9 +299,9 @@
       "input":{"shape":"ListMicrosoftTeamsUserIdentitiesRequest"},
       "output":{"shape":"ListMicrosoftTeamsUserIdentitiesResult"},
       "errors":[
-        {"shape":"ListMicrosoftTeamsUserIdentitiesException"},
+        {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"InvalidParameterException"}
+        {"shape":"ListMicrosoftTeamsUserIdentitiesException"}
       ]
     },
     "ListTagsForResource":{
@@ -313,9 +314,9 @@
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
-        {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceError"}
       ]
     },
     "TagResource":{
@@ -328,9 +329,9 @@
       "input":{"shape":"TagResourceRequest"},
       "output":{"shape":"TagResourceResponse"},
       "errors":[
-        {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceError"},
         {"shape":"TooManyTagsException"}
       ]
     },
@@ -344,9 +345,9 @@
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
-        {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceError"}
       ]
     },
     "UpdateAccountPreferences":{
@@ -359,9 +360,9 @@
       "input":{"shape":"UpdateAccountPreferencesRequest"},
       "output":{"shape":"UpdateAccountPreferencesResult"},
       "errors":[
-        {"shape":"UpdateAccountPreferencesException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"UpdateAccountPreferencesException"}
       ]
     },
     "UpdateChimeWebhookConfiguration":{
@@ -374,10 +375,10 @@
       "input":{"shape":"UpdateChimeWebhookConfigurationRequest"},
       "output":{"shape":"UpdateChimeWebhookConfigurationResult"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"UpdateChimeWebhookConfigurationException"}
+        {"shape":"UpdateChimeWebhookConfigurationException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "UpdateMicrosoftTeamsChannelConfiguration":{
@@ -390,9 +391,9 @@
       "input":{"shape":"UpdateTeamsChannelConfigurationRequest"},
       "output":{"shape":"UpdateTeamsChannelConfigurationResult"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"UpdateTeamsChannelConfigurationException"}
       ]
     },
@@ -406,9 +407,9 @@
       "input":{"shape":"UpdateSlackChannelConfigurationRequest"},
       "output":{"shape":"UpdateSlackChannelConfigurationResult"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"UpdateSlackChannelConfigurationException"}
       ]
     }
@@ -425,26 +426,29 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^arn:aws:(wheatley|chatbot):[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$"
+      "pattern":"arn:aws:(wheatley|chatbot):[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}"
     },
     "Arn":{
       "type":"string",
       "max":1224,
       "min":12,
-      "pattern":"^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$"
+      "pattern":"arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}"
     },
     "AwsUserIdentity":{
       "type":"string",
       "max":1101,
       "min":15,
-      "pattern":"^arn:aws:(iam|sts)::[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$"
+      "pattern":"arn:aws:(iam|sts)::[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}"
     },
-    "BooleanAccountPreference":{"type":"boolean"},
+    "BooleanAccountPreference":{
+      "type":"boolean",
+      "box":true
+    },
     "ChatConfigurationArn":{
       "type":"string",
       "max":1169,
       "min":19,
-      "pattern":"^arn:aws:(wheatley|chatbot):[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$"
+      "pattern":"arn:aws:(wheatley|chatbot):[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}"
     },
     "ChimeWebhookConfiguration":{
       "type":"structure",
@@ -471,19 +475,21 @@
     "ChimeWebhookDescription":{
       "type":"string",
       "max":255,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "ChimeWebhookUrl":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^https://hooks\\.chime\\.aws/incomingwebhooks/[A-Za-z0-9\\-]+?\\?token=[A-Za-z0-9\\-]+$"
+      "pattern":"https://hooks\\.chime\\.aws/incomingwebhooks/[A-Za-z0-9\\-]+?\\?token=[A-Za-z0-9\\-]+",
+      "sensitive":true
     },
     "ConfigurationName":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[A-Za-z0-9-_]+$"
+      "pattern":"[A-Za-z0-9-_]+"
     },
     "ConfiguredTeam":{
       "type":"structure",
@@ -494,10 +500,7 @@
       "members":{
         "TenantId":{"shape":"UUID"},
         "TeamId":{"shape":"UUID"},
-        "TeamName":{
-          "shape":"UUID",
-          "box":true
-        }
+        "TeamName":{"shape":"UUID"}
       }
     },
     "ConfiguredTeamsList":{
@@ -507,13 +510,18 @@
     "ConflictException":{
       "type":"structure",
       "members":{
+        "message":{"shape":"ErrorMessage"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "CreateChimeWebhookConfigurationException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -547,6 +555,7 @@
     "CreateSlackChannelConfigurationException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -582,6 +591,7 @@
     "CreateTeamsChannelConfigurationException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -621,11 +631,12 @@
       "type":"string",
       "max":5,
       "min":4,
-      "pattern":"^(ERROR|INFO|NONE)$"
+      "pattern":"(ERROR|INFO|NONE)"
     },
     "DeleteChimeWebhookConfigurationException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -646,6 +657,7 @@
     "DeleteMicrosoftTeamsUserIdentityException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -670,6 +682,7 @@
     "DeleteSlackChannelConfigurationException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -690,6 +703,7 @@
     "DeleteSlackUserIdentityException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -716,6 +730,7 @@
     "DeleteSlackWorkspaceAuthorizationFault":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -736,6 +751,7 @@
     "DeleteTeamsChannelConfigurationException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -756,6 +772,7 @@
     "DeleteTeamsConfiguredTeamException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -776,6 +793,7 @@
     "DescribeChimeWebhookConfigurationsException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -784,18 +802,9 @@
     "DescribeChimeWebhookConfigurationsRequest":{
       "type":"structure",
       "members":{
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        },
-        "NextToken":{
-          "shape":"PaginationToken",
-          "box":true
-        },
-        "ChatConfigurationArn":{
-          "shape":"ChatConfigurationArn",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"PaginationToken"},
+        "ChatConfigurationArn":{"shape":"ChatConfigurationArn"}
       }
     },
     "DescribeChimeWebhookConfigurationsResult":{
@@ -808,6 +817,7 @@
     "DescribeSlackChannelConfigurationsException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -816,18 +826,9 @@
     "DescribeSlackChannelConfigurationsRequest":{
       "type":"structure",
       "members":{
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        },
-        "NextToken":{
-          "shape":"PaginationToken",
-          "box":true
-        },
-        "ChatConfigurationArn":{
-          "shape":"ChatConfigurationArn",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"PaginationToken"},
+        "ChatConfigurationArn":{"shape":"ChatConfigurationArn"}
       }
     },
     "DescribeSlackChannelConfigurationsResult":{
@@ -840,6 +841,7 @@
     "DescribeSlackUserIdentitiesException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -863,6 +865,7 @@
     "DescribeSlackWorkspacesException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -882,9 +885,11 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "ErrorMessage":{"type":"string"},
     "GetAccountPreferencesException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -904,6 +909,7 @@
     "GetTeamsChannelConfigurationException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -926,7 +932,7 @@
       "type":"string",
       "max":1163,
       "min":11,
-      "pattern":"^(^$|(?!.*\\/aws-service-role\\/.*)arn:aws:iam:[A-Za-z0-9_\\/.-]{0,63}:[A-Za-z0-9_\\/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_\\/+=,@.-]{0,1023})$"
+      "pattern":"(^$|(?!.*\\/aws-service-role\\/.*)arn:aws:iam:[A-Za-z0-9_\\/.-]{0,63}:[A-Za-z0-9_\\/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_\\/+=,@.-]{0,1023})"
     },
     "GuardrailPolicyArnList":{
       "type":"list",
@@ -935,34 +941,49 @@
     "InternalServiceError":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "InvalidParameterException":{
       "type":"structure",
       "members":{
+        "message":{"shape":"ErrorMessage"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidRequestException":{
       "type":"structure",
       "members":{
+        "message":{"shape":"ErrorMessage"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "LimitExceededException":{
       "type":"structure",
       "members":{
+        "message":{"shape":"ErrorMessage"}
       },
-      "error":{"httpStatusCode":403},
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "ListMicrosoftTeamsConfiguredTeamsException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -985,6 +1006,7 @@
     "ListMicrosoftTeamsUserIdentitiesException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -1021,6 +1043,7 @@
     "ListTeamsChannelConfigurationsException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -1029,18 +1052,9 @@
     "ListTeamsChannelConfigurationsRequest":{
       "type":"structure",
       "members":{
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        },
-        "NextToken":{
-          "shape":"PaginationToken",
-          "box":true
-        },
-        "TeamId":{
-          "shape":"UUID",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"PaginationToken"},
+        "TeamId":{"shape":"UUID"}
       }
     },
     "ListTeamsChannelConfigurationsResult":{
@@ -1052,6 +1066,7 @@
     },
     "MaxResults":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
@@ -1059,20 +1074,28 @@
       "type":"string",
       "max":1276,
       "min":1,
-      "pattern":"^[a-zA-Z0-9=\\/+_.\\-,#:\\\\\"{}]{4,1276}$"
+      "pattern":"[a-zA-Z0-9=\\/+_.\\-,#:\\\\\"{}]{4,1276}"
     },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "ServiceUnavailableException":{
       "type":"structure",
       "members":{
+        "message":{"shape":"ErrorMessage"}
       },
-      "error":{"httpStatusCode":429},
+      "error":{
+        "httpStatusCode":429,
+        "senderFault":true
+      },
       "exception":true
     },
     "SlackChannelConfiguration":{
@@ -1093,10 +1116,7 @@
         "SlackChannelName":{"shape":"SlackChannelDisplayName"},
         "ChatConfigurationArn":{"shape":"ChatConfigurationArn"},
         "IamRoleArn":{"shape":"Arn"},
-        "SnsTopicArns":{
-          "shape":"SnsTopicArnList",
-          "box":true
-        },
+        "SnsTopicArns":{"shape":"SnsTopicArnList"},
         "ConfigurationName":{"shape":"ConfigurationName"},
         "LoggingLevel":{"shape":"CustomerCwLogLevel"},
         "GuardrailPolicyArns":{"shape":"GuardrailPolicyArnList"},
@@ -1111,19 +1131,20 @@
     "SlackChannelDisplayName":{
       "type":"string",
       "max":255,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "SlackChannelId":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[A-Za-z0-9]+$"
+      "pattern":"[A-Za-z0-9]+"
     },
     "SlackTeamId":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[0-9A-Z]{1,255}$"
+      "pattern":"[0-9A-Z]{1,255}"
     },
     "SlackTeamName":{
       "type":"string",
@@ -1134,7 +1155,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^(.*)$"
+      "pattern":"(.*)"
     },
     "SlackUserIdentitiesList":{
       "type":"list",
@@ -1175,7 +1196,6 @@
       "type":"list",
       "member":{"shape":"Arn"}
     },
-    "String":{"type":"string"},
     "Tag":{
       "type":"structure",
       "required":[
@@ -1223,7 +1243,7 @@
     "TagValue":{
       "type":"string",
       "max":256,
-      "min":1
+      "min":0
     },
     "Tags":{
       "type":"list",
@@ -1237,7 +1257,8 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^(.*)$"
+      "pattern":"(.*)",
+      "sensitive":true
     },
     "TeamsChannelConfiguration":{
       "type":"structure",
@@ -1253,14 +1274,11 @@
         "ChannelId":{"shape":"TeamsChannelId"},
         "ChannelName":{"shape":"TeamsChannelName"},
         "TeamId":{"shape":"UUID"},
-        "TeamName":{"shape":"String"},
+        "TeamName":{"shape":"TeamName"},
         "TenantId":{"shape":"UUID"},
         "ChatConfigurationArn":{"shape":"ChatConfigurationArn"},
         "IamRoleArn":{"shape":"Arn"},
-        "SnsTopicArns":{
-          "shape":"SnsTopicArnList",
-          "box":true
-        },
+        "SnsTopicArns":{"shape":"SnsTopicArnList"},
         "ConfigurationName":{"shape":"ConfigurationName"},
         "LoggingLevel":{"shape":"CustomerCwLogLevel"},
         "GuardrailPolicyArns":{"shape":"GuardrailPolicyArnList"},
@@ -1272,13 +1290,14 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^([a-zA-Z0-9-_=+\\/.,])*%3[aA]([a-zA-Z0-9-_=+\\/.,])*%40([a-zA-Z0-9-_=+\\/.,])*$"
+      "pattern":"([a-zA-Z0-9-_=+\\/.,])*%3[aA]([a-zA-Z0-9-_=+\\/.,])*%40([a-zA-Z0-9-_=+\\/.,])*"
     },
     "TeamsChannelName":{
       "type":"string",
       "max":1000,
       "min":1,
-      "pattern":"^(.*)$"
+      "pattern":"(.*)",
+      "sensitive":true
     },
     "TeamsUserIdentitiesList":{
       "type":"list",
@@ -1304,15 +1323,19 @@
     "TooManyTagsException":{
       "type":"structure",
       "members":{
+        "message":{"shape":"ErrorMessage"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "UUID":{
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}$"
+      "pattern":"[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}"
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -1333,6 +1356,7 @@
     "UpdateAccountPreferencesException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -1354,6 +1378,7 @@
     "UpdateChimeWebhookConfigurationException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -1380,6 +1405,7 @@
     "UpdateSlackChannelConfigurationException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
@@ -1411,6 +1437,7 @@
     "UpdateTeamsChannelConfigurationException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":500},
       "exception":true,
