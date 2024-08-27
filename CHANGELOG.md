@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.320.9 - 2024-08-27
 
 * `Aws\` - Updates PHP runtime deprecation notice to `E_USER_DEPRECATION`
 * `Aws\Omics` - Adds data provenance to import jobs from read sets and references
