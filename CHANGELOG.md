@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.0 - 2024-08-28
 
 * `Aws\DataZone` - Update regex to include dot character to be consistent with IAM role creation in the authorized principal field for create and update subscription target.
 * `Aws\DeviceFarm` - This release removed support for Calabash, UI Automation, Built-in Explorer, remote access record, remote access replay, and web performance profile framework in ScheduleRun API.
