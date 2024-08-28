@@ -526,6 +526,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionOrganizations(array $args = [])
  * @method \Aws\Outposts\OutpostsClient createOutposts(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOutposts(array $args = [])
+ * @method \Aws\PCS\PCSClient createPCS(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPCS(array $args = [])
  * @method \Aws\PI\PIClient createPI(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPI(array $args = [])
  * @method \Aws\Panorama\PanoramaClient createPanorama(array $args = [])
