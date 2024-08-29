@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.1 - 2024-08-29
 
 * `Aws\BedrockRuntime` - Add support for imported-model in invokeModel and InvokeModelWithResponseStream.
 * `Aws\QuickSight` - Increased Character Limit for Dataset Calculation Field expressions
