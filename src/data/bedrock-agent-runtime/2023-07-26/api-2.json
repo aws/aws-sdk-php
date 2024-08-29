@@ -5,11 +5,13 @@
     "endpointPrefix":"bedrock-agent-runtime",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Agents for Amazon Bedrock Runtime",
     "serviceId":"Bedrock Agent Runtime",
     "signatureVersion":"v4",
     "signingName":"bedrock",
-    "uid":"bedrock-agent-runtime-2023-07-26"
+    "uid":"bedrock-agent-runtime-2023-07-26",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DeleteAgentMemory":{
@@ -1722,7 +1724,6 @@
     "RetrievalFilterList":{
       "type":"list",
       "member":{"shape":"RetrievalFilter"},
-      "max":5,
       "min":2
     },
     "RetrievalResultConfluenceLocation":{
