@@ -1852,6 +1852,59 @@
       "type":"string",
       "max":256
     },
+    "Entity":{
+      "type":"structure",
+      "members":{
+        "keyAttributes":{"shape":"EntityKeyAttributes"},
+        "attributes":{"shape":"EntityAttributes"}
+      }
+    },
+    "EntityAttributes":{
+      "type":"map",
+      "key":{"shape":"EntityAttributesKey"},
+      "value":{"shape":"EntityAttributesValue"},
+      "max":10,
+      "min":0
+    },
+    "EntityAttributesKey":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "EntityAttributesValue":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "EntityKeyAttributes":{
+      "type":"map",
+      "key":{"shape":"EntityKeyAttributesKey"},
+      "value":{"shape":"EntityKeyAttributesValue"},
+      "max":3,
+      "min":2
+    },
+    "EntityKeyAttributesKey":{
+      "type":"string",
+      "max":32,
+      "min":1
+    },
+    "EntityKeyAttributesValue":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "EntityRejectionErrorType":{
+      "type":"string",
+      "enum":[
+        "InvalidEntity",
+        "InvalidTypeValue",
+        "InvalidKeyAttributes",
+        "InvalidAttributes",
+        "EntitySizeTooLarge",
+        "UnsupportedLogGroupType",
+        "MissingRequiredFields"
+      ]
+    },
     "Enumerations":{
       "type":"map",
       "key":{"shape":"TokenString"},
@@ -2767,14 +2820,16 @@
         "logGroupName":{"shape":"LogGroupName"},
         "logStreamName":{"shape":"LogStreamName"},
         "logEvents":{"shape":"InputLogEvents"},
-        "sequenceToken":{"shape":"SequenceToken"}
+        "sequenceToken":{"shape":"SequenceToken"},
+        "entity":{"shape":"Entity"}
       }
     },
     "PutLogEventsResponse":{
       "type":"structure",
       "members":{
         "nextSequenceToken":{"shape":"SequenceToken"},
-        "rejectedLogEventsInfo":{"shape":"RejectedLogEventsInfo"}
+        "rejectedLogEventsInfo":{"shape":"RejectedLogEventsInfo"},
+        "rejectedEntityInfo":{"shape":"RejectedEntityInfo"}
       }
     },
     "PutMetricFilterRequest":{
@@ -2947,6 +3002,13 @@
       "type":"string",
       "max":10000,
       "min":0
+    },
+    "RejectedEntityInfo":{
+      "type":"structure",
+      "required":["errorType"],
+      "members":{
+        "errorType":{"shape":"EntityRejectionErrorType"}
+      }
     },
     "RejectedLogEventsInfo":{
       "type":"structure",

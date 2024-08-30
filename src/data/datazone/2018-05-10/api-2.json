@@ -52,6 +52,47 @@
       ],
       "idempotent":true
     },
+    "AddEntityOwner":{
+      "name":"AddEntityOwner",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/addOwner",
+        "responseCode":201
+      },
+      "input":{"shape":"AddEntityOwnerInput"},
+      "output":{"shape":"AddEntityOwnerOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "AddPolicyGrant":{
+      "name":"AddPolicyGrant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/policies/managed/{entityType}/{entityIdentifier}/addGrant",
+        "responseCode":201
+      },
+      "input":{"shape":"AddPolicyGrantInput"},
+      "output":{"shape":"AddPolicyGrantOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "AssociateEnvironmentRole":{
       "name":"AssociateEnvironmentRole",
       "http":{
@@ -265,6 +306,26 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "CreateDomainUnit":{
+      "name":"CreateDomainUnit",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/domain-units",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateDomainUnitInput"},
+      "output":{"shape":"CreateDomainUnitOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -653,6 +714,26 @@
       },
       "input":{"shape":"DeleteDomainInput"},
       "output":{"shape":"DeleteDomainOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteDomainUnit":{
+      "name":"DeleteDomainUnit",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/domain-units/{identifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteDomainUnitInput"},
+      "output":{"shape":"DeleteDomainUnitOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -1075,6 +1156,24 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "GetDomainUnit":{
+      "name":"GetDomainUnit",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/domain-units/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDomainUnitInput"},
+      "output":{"shape":"GetDomainUnitOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
       ]
@@ -1572,6 +1671,23 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "ListDomainUnitsForParent":{
+      "name":"ListDomainUnitsForParent",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/domain-units",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDomainUnitsForParentInput"},
+      "output":{"shape":"ListDomainUnitsForParentOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "ListDomains":{
       "name":"ListDomains",
       "http":{
@@ -1588,6 +1704,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "ListEntityOwners":{
+      "name":"ListEntityOwners",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/owners",
+        "responseCode":200
+      },
+      "input":{"shape":"ListEntityOwnersInput"},
+      "output":{"shape":"ListEntityOwnersOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
       ]
@@ -1727,6 +1860,23 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "ListPolicyGrants":{
+      "name":"ListPolicyGrants",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/policies/managed/{entityType}/{entityIdentifier}/grants",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPolicyGrantsInput"},
+      "output":{"shape":"ListPolicyGrantsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -1978,6 +2128,43 @@
       ],
       "idempotent":true
     },
+    "RemoveEntityOwner":{
+      "name":"RemoveEntityOwner",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/removeOwner",
+        "responseCode":204
+      },
+      "input":{"shape":"RemoveEntityOwnerInput"},
+      "output":{"shape":"RemoveEntityOwnerOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "RemovePolicyGrant":{
+      "name":"RemovePolicyGrant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/policies/managed/{entityType}/{entityIdentifier}/removeGrant",
+        "responseCode":204
+      },
+      "input":{"shape":"RemovePolicyGrantInput"},
+      "output":{"shape":"RemovePolicyGrantOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "RevokeSubscription":{
       "name":"RevokeSubscription",
       "http":{
@@ -2219,6 +2406,26 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateDomainUnit":{
+      "name":"UpdateDomainUnit",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/domains/{domainIdentifier}/domain-units/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateDomainUnitInput"},
+      "output":{"shape":"UpdateDomainUnitOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
@@ -2594,6 +2801,98 @@
         "awsConsoleLink":{"shape":"AwsConsoleLinkParameters"}
       },
       "union":true
+    },
+    "AddEntityOwnerInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "owner"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"DataZoneEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "owner":{"shape":"OwnerProperties"}
+      }
+    },
+    "AddEntityOwnerOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "AddPolicyGrantInput":{
+      "type":"structure",
+      "required":[
+        "detail",
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "policyType",
+        "principal"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "detail":{"shape":"PolicyGrantDetail"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"TargetEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "policyType":{"shape":"ManagedPolicyType"},
+        "principal":{"shape":"PolicyGrantPrincipal"}
+      }
+    },
+    "AddPolicyGrantOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "AddToProjectMemberPoolPolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "includeChildDomainUnits":{"shape":"Boolean"}
+      }
+    },
+    "AllDomainUnitsGrantFilter":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "AllUsersGrantFilter":{
+      "type":"structure",
+      "members":{
+      }
     },
     "ApplicableAssetTypes":{
       "type":"list",
@@ -3239,6 +3538,12 @@
         "updatedBy":{"shape":"UpdatedBy"}
       }
     },
+    "CreateAssetTypePolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "includeChildDomainUnits":{"shape":"Boolean"}
+      }
+    },
     "CreateDataProductInput":{
       "type":"structure",
       "required":[
@@ -3441,9 +3746,59 @@
         "kmsKeyIdentifier":{"shape":"KmsKeyArn"},
         "name":{"shape":"String"},
         "portalUrl":{"shape":"String"},
+        "rootDomainUnitId":{"shape":"DomainUnitId"},
         "singleSignOn":{"shape":"SingleSignOn"},
         "status":{"shape":"DomainStatus"},
         "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateDomainUnitInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "name",
+        "parentDomainUnitIdentifier"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "description":{"shape":"DomainUnitDescription"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "name":{"shape":"DomainUnitName"},
+        "parentDomainUnitIdentifier":{"shape":"DomainUnitId"}
+      }
+    },
+    "CreateDomainUnitOutput":{
+      "type":"structure",
+      "required":[
+        "ancestorDomainUnitIds",
+        "domainId",
+        "id",
+        "name",
+        "owners"
+      ],
+      "members":{
+        "ancestorDomainUnitIds":{"shape":"DomainUnitIds"},
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"DomainUnitDescription"},
+        "domainId":{"shape":"DomainId"},
+        "id":{"shape":"DomainUnitId"},
+        "name":{"shape":"DomainUnitName"},
+        "owners":{"shape":"DomainUnitOwners"},
+        "parentDomainUnitId":{"shape":"DomainUnitId"}
+      }
+    },
+    "CreateDomainUnitPolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "includeChildDomainUnits":{"shape":"Boolean"}
       }
     },
     "CreateEnvironmentActionInput":{
@@ -3593,6 +3948,12 @@
         "userParameters":{"shape":"CustomParameterList"}
       }
     },
+    "CreateEnvironmentProfilePolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "domainUnitId":{"shape":"DomainUnitId"}
+      }
+    },
     "CreateFormTypeInput":{
       "type":"structure",
       "required":[
@@ -3629,6 +3990,12 @@
         "originProjectId":{"shape":"ProjectId"},
         "owningProjectId":{"shape":"ProjectId"},
         "revision":{"shape":"Revision"}
+      }
+    },
+    "CreateFormTypePolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "includeChildDomainUnits":{"shape":"Boolean"}
       }
     },
     "CreateGlossaryInput":{
@@ -3669,6 +4036,12 @@
         "name":{"shape":"GlossaryName"},
         "owningProjectId":{"shape":"ProjectId"},
         "status":{"shape":"GlossaryStatus"}
+      }
+    },
+    "CreateGlossaryPolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "includeChildDomainUnits":{"shape":"Boolean"}
       }
     },
     "CreateGlossaryTermInput":{
@@ -3794,6 +4167,7 @@
           "location":"uri",
           "locationName":"domainIdentifier"
         },
+        "domainUnitId":{"shape":"DomainUnitId"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "name":{"shape":"ProjectName"}
       }
@@ -3839,12 +4213,19 @@
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
+        "domainUnitId":{"shape":"DomainUnitId"},
         "failureReasons":{"shape":"FailureReasons"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"ProjectId"},
         "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "name":{"shape":"ProjectName"},
         "projectStatus":{"shape":"ProjectStatus"}
+      }
+    },
+    "CreateProjectPolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "includeChildDomainUnits":{"shape":"Boolean"}
       }
     },
     "CreateSubscriptionGrantInput":{
@@ -4397,6 +4778,10 @@
       "max":256,
       "min":1
     },
+    "DataZoneEntityType":{
+      "type":"string",
+      "enum":["DOMAIN_UNIT"]
+    },
     "DateTime":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -4594,6 +4979,30 @@
       "required":["status"],
       "members":{
         "status":{"shape":"DomainStatus"}
+      }
+    },
+    "DeleteDomainUnitInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"DomainUnitId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "DeleteDomainUnitOutput":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeleteEnvironmentActionInput":{
@@ -5117,6 +5526,101 @@
         "status":{"shape":"DomainStatus"}
       }
     },
+    "DomainUnitDescription":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "sensitive":true
+    },
+    "DomainUnitDesignation":{
+      "type":"string",
+      "enum":["OWNER"]
+    },
+    "DomainUnitFilterForProject":{
+      "type":"structure",
+      "required":["domainUnit"],
+      "members":{
+        "domainUnit":{"shape":"DomainUnitId"},
+        "includeChildDomainUnits":{
+          "shape":"Boolean",
+          "box":true
+        }
+      }
+    },
+    "DomainUnitGrantFilter":{
+      "type":"structure",
+      "members":{
+        "allDomainUnitsGrantFilter":{"shape":"AllDomainUnitsGrantFilter"}
+      },
+      "union":true
+    },
+    "DomainUnitGroupProperties":{
+      "type":"structure",
+      "members":{
+        "groupId":{"shape":"String"}
+      }
+    },
+    "DomainUnitId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-z0-9_\\-]+$"
+    },
+    "DomainUnitIds":{
+      "type":"list",
+      "member":{"shape":"DomainUnitId"}
+    },
+    "DomainUnitName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[\\w -]+$",
+      "sensitive":true
+    },
+    "DomainUnitOwnerProperties":{
+      "type":"structure",
+      "members":{
+        "group":{"shape":"DomainUnitGroupProperties"},
+        "user":{"shape":"DomainUnitUserProperties"}
+      },
+      "union":true
+    },
+    "DomainUnitOwners":{
+      "type":"list",
+      "member":{"shape":"DomainUnitOwnerProperties"},
+      "max":20,
+      "min":0
+    },
+    "DomainUnitPolicyGrantPrincipal":{
+      "type":"structure",
+      "required":["domainUnitDesignation"],
+      "members":{
+        "domainUnitDesignation":{"shape":"DomainUnitDesignation"},
+        "domainUnitGrantFilter":{"shape":"DomainUnitGrantFilter"},
+        "domainUnitIdentifier":{"shape":"DomainUnitId"}
+      }
+    },
+    "DomainUnitSummaries":{
+      "type":"list",
+      "member":{"shape":"DomainUnitSummary"}
+    },
+    "DomainUnitSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name"
+      ],
+      "members":{
+        "id":{"shape":"DomainUnitId"},
+        "name":{"shape":"String"}
+      }
+    },
+    "DomainUnitUserProperties":{
+      "type":"structure",
+      "members":{
+        "userId":{"shape":"String"}
+      }
+    },
     "EdgeDirection":{
       "type":"string",
       "enum":[
@@ -5149,6 +5653,10 @@
     "EntityIdentifier":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "EntityOwners":{
+      "type":"list",
+      "member":{"shape":"OwnerPropertiesOutput"}
     },
     "EntityType":{
       "type":"string",
@@ -5922,9 +6430,50 @@
         "lastUpdatedAt":{"shape":"UpdatedAt"},
         "name":{"shape":"String"},
         "portalUrl":{"shape":"String"},
+        "rootDomainUnitId":{"shape":"DomainUnitId"},
         "singleSignOn":{"shape":"SingleSignOn"},
         "status":{"shape":"DomainStatus"},
         "tags":{"shape":"Tags"}
+      }
+    },
+    "GetDomainUnitInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"DomainUnitId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetDomainUnitOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id",
+        "name",
+        "owners"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"DomainUnitDescription"},
+        "domainId":{"shape":"DomainId"},
+        "id":{"shape":"DomainUnitId"},
+        "lastUpdatedAt":{"shape":"UpdatedAt"},
+        "lastUpdatedBy":{"shape":"UpdatedBy"},
+        "name":{"shape":"DomainUnitName"},
+        "owners":{"shape":"DomainUnitOwners"},
+        "parentDomainUnitId":{"shape":"DomainUnitId"}
       }
     },
     "GetEnvironmentActionInput":{
@@ -6512,6 +7061,7 @@
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
+        "domainUnitId":{"shape":"DomainUnitId"},
         "failureReasons":{"shape":"FailureReasons"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"ProjectId"},
@@ -6998,11 +7548,18 @@
     },
     "GroupIdentifier":{
       "type":"string",
-      "pattern":"(^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$|[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r  ]+)"
+      "pattern":"(^([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$|[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r  ]+)"
+    },
+    "GroupPolicyGrantPrincipal":{
+      "type":"structure",
+      "members":{
+        "groupIdentifier":{"shape":"GroupIdentifier"}
+      },
+      "union":true
     },
     "GroupProfileId":{
       "type":"string",
-      "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      "pattern":"^([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$"
     },
     "GroupProfileName":{
       "type":"string",
@@ -7501,6 +8058,43 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListDomainUnitsForParentInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "parentDomainUnitIdentifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "maxResults":{
+          "shape":"MaxResultsForListDomains",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "parentDomainUnitIdentifier":{
+          "shape":"DomainUnitId",
+          "location":"querystring",
+          "locationName":"parentDomainUnitIdentifier"
+        }
+      }
+    },
+    "ListDomainUnitsForParentOutput":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"DomainUnitSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListDomainsInput":{
       "type":"structure",
       "members":{
@@ -7527,6 +8121,49 @@
       "members":{
         "items":{"shape":"DomainSummaries"},
         "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListEntityOwnersInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"DataZoneEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "maxResults":{
+          "shape":"MaxResultsForListDomains",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListEntityOwnersOutput":{
+      "type":"structure",
+      "required":["owners"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "owners":{"shape":"EntityOwners"}
       }
     },
     "ListEnvironmentActionSummaries":{
@@ -7910,6 +8547,55 @@
       "members":{
         "nextToken":{"shape":"PaginationToken"},
         "notifications":{"shape":"NotificationsList"}
+      }
+    },
+    "ListPolicyGrantsInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "policyType"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"TargetEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "maxResults":{
+          "shape":"MaxResultsForListDomains",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "policyType":{
+          "shape":"ManagedPolicyType",
+          "location":"querystring",
+          "locationName":"policyType"
+        }
+      }
+    },
+    "ListPolicyGrantsOutput":{
+      "type":"structure",
+      "required":["grantList"],
+      "members":{
+        "grantList":{"shape":"PolicyGrantList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListProjectMembershipsInput":{
@@ -8388,6 +9074,22 @@
       "min":0,
       "sensitive":true
     },
+    "ManagedPolicyType":{
+      "type":"string",
+      "enum":[
+        "CREATE_DOMAIN_UNIT",
+        "OVERRIDE_DOMAIN_UNIT_OWNERS",
+        "ADD_TO_PROJECT_MEMBER_POOL",
+        "OVERRIDE_PROJECT_OWNERS",
+        "CREATE_GLOSSARY",
+        "CREATE_FORM_TYPE",
+        "CREATE_ASSET_TYPE",
+        "CREATE_PROJECT",
+        "CREATE_ENVIRONMENT_PROFILE",
+        "DELEGATE_CREATE_ENVIRONMENT_PROFILE",
+        "CREATE_ENVIRONMENT"
+      ]
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -8598,10 +9300,104 @@
       "type":"list",
       "member":{"shape":"NotificationOutput"}
     },
+    "OverrideDomainUnitOwnersPolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "includeChildDomainUnits":{"shape":"Boolean"}
+      }
+    },
+    "OverrideProjectOwnersPolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "includeChildDomainUnits":{"shape":"Boolean"}
+      }
+    },
+    "OwnerGroupProperties":{
+      "type":"structure",
+      "required":["groupIdentifier"],
+      "members":{
+        "groupIdentifier":{"shape":"GroupIdentifier"}
+      }
+    },
+    "OwnerGroupPropertiesOutput":{
+      "type":"structure",
+      "members":{
+        "groupId":{"shape":"String"}
+      }
+    },
+    "OwnerProperties":{
+      "type":"structure",
+      "members":{
+        "group":{"shape":"OwnerGroupProperties"},
+        "user":{"shape":"OwnerUserProperties"}
+      },
+      "union":true
+    },
+    "OwnerPropertiesOutput":{
+      "type":"structure",
+      "members":{
+        "group":{"shape":"OwnerGroupPropertiesOutput"},
+        "user":{"shape":"OwnerUserPropertiesOutput"}
+      },
+      "union":true
+    },
+    "OwnerUserProperties":{
+      "type":"structure",
+      "required":["userIdentifier"],
+      "members":{
+        "userIdentifier":{"shape":"UserIdentifier"}
+      }
+    },
+    "OwnerUserPropertiesOutput":{
+      "type":"structure",
+      "members":{
+        "userId":{"shape":"String"}
+      }
+    },
     "PaginationToken":{
       "type":"string",
       "max":8192,
       "min":1
+    },
+    "PolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "addToProjectMemberPool":{"shape":"AddToProjectMemberPoolPolicyGrantDetail"},
+        "createAssetType":{"shape":"CreateAssetTypePolicyGrantDetail"},
+        "createDomainUnit":{"shape":"CreateDomainUnitPolicyGrantDetail"},
+        "createEnvironment":{"shape":"Unit"},
+        "createEnvironmentProfile":{"shape":"CreateEnvironmentProfilePolicyGrantDetail"},
+        "createFormType":{"shape":"CreateFormTypePolicyGrantDetail"},
+        "createGlossary":{"shape":"CreateGlossaryPolicyGrantDetail"},
+        "createProject":{"shape":"CreateProjectPolicyGrantDetail"},
+        "delegateCreateEnvironmentProfile":{"shape":"Unit"},
+        "overrideDomainUnitOwners":{"shape":"OverrideDomainUnitOwnersPolicyGrantDetail"},
+        "overrideProjectOwners":{"shape":"OverrideProjectOwnersPolicyGrantDetail"}
+      },
+      "union":true
+    },
+    "PolicyGrantList":{
+      "type":"list",
+      "member":{"shape":"PolicyGrantMember"}
+    },
+    "PolicyGrantMember":{
+      "type":"structure",
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "detail":{"shape":"PolicyGrantDetail"},
+        "principal":{"shape":"PolicyGrantPrincipal"}
+      }
+    },
+    "PolicyGrantPrincipal":{
+      "type":"structure",
+      "members":{
+        "domainUnit":{"shape":"DomainUnitPolicyGrantPrincipal"},
+        "group":{"shape":"GroupPolicyGrantPrincipal"},
+        "project":{"shape":"ProjectPolicyGrantPrincipal"},
+        "user":{"shape":"UserPolicyGrantPrincipal"}
+      },
+      "union":true
     },
     "PostLineageEventInput":{
       "type":"structure",
@@ -8687,6 +9483,20 @@
         "message":{"shape":"String"}
       }
     },
+    "ProjectDesignation":{
+      "type":"string",
+      "enum":[
+        "OWNER",
+        "CONTRIBUTOR"
+      ]
+    },
+    "ProjectGrantFilter":{
+      "type":"structure",
+      "members":{
+        "domainUnitFilter":{"shape":"DomainUnitFilterForProject"}
+      },
+      "union":true
+    },
     "ProjectId":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{1,36}$"
@@ -8713,6 +9523,15 @@
       "pattern":"^[\\w -]+$",
       "sensitive":true
     },
+    "ProjectPolicyGrantPrincipal":{
+      "type":"structure",
+      "required":["projectDesignation"],
+      "members":{
+        "projectDesignation":{"shape":"ProjectDesignation"},
+        "projectGrantFilter":{"shape":"ProjectGrantFilter"},
+        "projectIdentifier":{"shape":"ProjectId"}
+      }
+    },
     "ProjectStatus":{
       "type":"string",
       "enum":[
@@ -8738,6 +9557,7 @@
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
+        "domainUnitId":{"shape":"DomainUnitId"},
         "failureReasons":{"shape":"FailureReasons"},
         "id":{"shape":"ProjectId"},
         "name":{"shape":"ProjectName"},
@@ -9083,6 +9903,80 @@
     "RelationalFilterConfigurations":{
       "type":"list",
       "member":{"shape":"RelationalFilterConfiguration"}
+    },
+    "RemoveEntityOwnerInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "owner"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"DataZoneEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "owner":{"shape":"OwnerProperties"}
+      }
+    },
+    "RemoveEntityOwnerOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "RemovePolicyGrantInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "policyType",
+        "principal"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"TargetEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "policyType":{"shape":"ManagedPolicyType"},
+        "principal":{"shape":"PolicyGrantPrincipal"}
+      }
+    },
+    "RemovePolicyGrantOutput":{
+      "type":"structure",
+      "members":{
+      }
     },
     "RequestReason":{
       "type":"string",
@@ -10040,6 +10934,14 @@
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"}
     },
+    "TargetEntityType":{
+      "type":"string",
+      "enum":[
+        "DOMAIN_UNIT",
+        "ENVIRONMENT_BLUEPRINT_CONFIGURATION",
+        "ENVIRONMENT_PROFILE"
+      ]
+    },
     "TaskId":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{1,36}$"
@@ -10288,6 +11190,11 @@
       },
       "exception":true
     },
+    "Unit":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -10455,7 +11362,50 @@
         "id":{"shape":"DomainId"},
         "lastUpdatedAt":{"shape":"UpdatedAt"},
         "name":{"shape":"String"},
+        "rootDomainUnitId":{"shape":"DomainUnitId"},
         "singleSignOn":{"shape":"SingleSignOn"}
+      }
+    },
+    "UpdateDomainUnitInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "description":{"shape":"DomainUnitDescription"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"DomainUnitId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "name":{"shape":"DomainUnitName"}
+      }
+    },
+    "UpdateDomainUnitOutput":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "id",
+        "name",
+        "owners"
+      ],
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"DomainUnitDescription"},
+        "domainId":{"shape":"DomainId"},
+        "id":{"shape":"DomainUnitId"},
+        "lastUpdatedAt":{"shape":"UpdatedAt"},
+        "lastUpdatedBy":{"shape":"UpdatedBy"},
+        "name":{"shape":"DomainUnitName"},
+        "owners":{"shape":"DomainUnitOwners"},
+        "parentDomainUnitId":{"shape":"DomainUnitId"}
       }
     },
     "UpdateEnvironmentActionInput":{
@@ -10760,6 +11710,7 @@
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
+        "domainUnitId":{"shape":"DomainUnitId"},
         "failureReasons":{"shape":"FailureReasons"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"ProjectId"},
@@ -11011,7 +11962,15 @@
     },
     "UserIdentifier":{
       "type":"string",
-      "pattern":"(^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$|^[a-zA-Z_0-9+=,.@-]+$|^arn:aws:iam::\\d{12}:.+$)"
+      "pattern":"(^([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$|^[a-zA-Z_0-9+=,.@-]+$|^arn:aws:iam::\\d{12}:.+$)"
+    },
+    "UserPolicyGrantPrincipal":{
+      "type":"structure",
+      "members":{
+        "allUsersGrantFilter":{"shape":"AllUsersGrantFilter"},
+        "userIdentifier":{"shape":"UserIdentifier"}
+      },
+      "union":true
     },
     "UserProfileDetails":{
       "type":"structure",
@@ -11023,7 +11982,7 @@
     },
     "UserProfileId":{
       "type":"string",
-      "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      "pattern":"^([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$"
     },
     "UserProfileName":{
       "type":"string",
