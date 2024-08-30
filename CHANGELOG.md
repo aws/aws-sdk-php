@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.2 - 2024-08-30
 
 * `Aws\DataZone` - Amazon DataZone now adds new governance capabilities of Domain Units for organization within your Data Domains, and Authorization Policies for tighter controls.
 * `Aws\CloudWatchLogs` - This release introduces a new optional parameter: Entity, in PutLogEvents request
