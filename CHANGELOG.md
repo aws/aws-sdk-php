@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.3 - 2024-09-03
 
 * `Aws\Connect` - Release ReplicaConfiguration as part of DescribeInstance
 * `Aws\TimestreamInfluxDB` - Timestream for InfluxDB now supports compute scaling and deployment type conversion. This release adds the DbInstanceType and DeploymentType parameters to the UpdateDbInstance API.
