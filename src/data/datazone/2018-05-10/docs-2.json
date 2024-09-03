@@ -199,6 +199,18 @@
         "AcceptSubscriptionRequestOutput$subscribedPrincipals": "<p>Specifies the Amazon DataZone users who are subscribed to the asset specified in the subscription request.</p>"
       }
     },
+    "AcceptedAssetScope": {
+      "base": "<p>The accepted asset scope.</p>",
+      "refs": {
+        "AcceptedAssetScopes$member": null
+      }
+    },
+    "AcceptedAssetScopes": {
+      "base": null,
+      "refs": {
+        "AcceptSubscriptionRequestInput$assetScopes": "<p>The asset scopes of the accept subscription request.</p>"
+      }
+    },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {
@@ -296,10 +308,12 @@
       "base": null,
       "refs": {
         "AcceptPredictionsOutput$assetId": "<p>The ID of the asset.</p>",
+        "AcceptedAssetScope$assetId": "<p>The asset ID of the accepted asset scope.</p>",
         "AssetFilterSummary$assetId": "<p>The ID of the data asset.</p>",
         "AssetListing$assetId": "<p>The identifier of an asset published in an Amazon DataZone catalog. </p>",
         "AssetListingItem$entityId": "<p>The identifier of the inventory asset.</p>",
         "AssetRevision$id": "<p>The identifier of the inventory asset revision.</p>",
+        "AssetScope$assetId": "<p>The asset ID of the asset scope.</p>",
         "AssetTargetNameMap$assetId": "<p>The identifier of the inventory asset.</p>",
         "CreateAssetFilterInput$assetIdentifier": "<p>The ID of the data asset.</p>",
         "CreateAssetFilterOutput$assetId": "<p>The ID of the asset.</p>",
@@ -403,6 +417,13 @@
       "base": null,
       "refs": {
         "ListAssetRevisionsOutput$items": "<p>The results of the <code>ListAssetRevisions</code> action.</p>"
+      }
+    },
+    "AssetScope": {
+      "base": "<p>The asset scope.</p>",
+      "refs": {
+        "SubscribedAsset$assetScope": "<p>The asset scope of the subscribed asset.</p>",
+        "SubscribedAssetListing$assetScope": "<p>The asset scope of the subscribed asset listing.</p>"
       }
     },
     "AssetTargetNameMap": {
@@ -2514,10 +2535,18 @@
         "AssetFilterSummary$id": "<p>The ID of the asset filter.</p>",
         "CreateAssetFilterOutput$id": "<p>The ID of the asset filter.</p>",
         "DeleteAssetFilterInput$identifier": "<p>The ID of the asset filter that you want to delete.</p>",
+        "FilterIds$member": null,
         "GetAssetFilterInput$identifier": "<p>The ID of the asset filter.</p>",
         "GetAssetFilterOutput$id": "<p>The ID of the asset filter.</p>",
         "UpdateAssetFilterInput$identifier": "<p>The ID of the asset filter.</p>",
         "UpdateAssetFilterOutput$id": "<p>The ID of the asset filter.</p>"
+      }
+    },
+    "FilterIds": {
+      "base": null,
+      "refs": {
+        "AcceptedAssetScope$filterIds": "<p>The filter IDs of the accepted asset scope.</p>",
+        "AssetScope$filterIds": "<p>The filter IDs of the asset scope.</p>"
       }
     },
     "FilterList": {
@@ -5041,6 +5070,8 @@
         "AssetInDataProductListingItem$entityId": "<p>The entity ID of the listing of the asset in a data product.</p>",
         "AssetInDataProductListingItem$entityRevision": "<p>The entity revision of the listing of the asset in a data product.</p>",
         "AssetInDataProductListingItem$entityType": "<p>The entity type of the listing of the asset in a data product.</p>",
+        "AssetScope$errorMessage": "<p>The error message of the asset scope.</p>",
+        "AssetScope$status": "<p>The status of the asset scope.</p>",
         "AssetTargetNameMap$targetName": "<p>The target name in the asset target name map.</p>",
         "AssociateEnvironmentRoleInput$environmentRoleArn": "<p>The ARN of the environment role.</p>",
         "AwsConsoleLinkParameters$uri": "<p>The URI of the console link specified as part of the environment action.</p>",

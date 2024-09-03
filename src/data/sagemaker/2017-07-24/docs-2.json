@@ -1399,6 +1399,12 @@
         "ListCandidatesForAutoMLJobRequest$SortOrder": "<p>The sort order for the results. The default is <code>Ascending</code>.</p>"
       }
     },
+    "AutoMountHomeEFS": {
+      "base": null,
+      "refs": {
+        "UserSettings$AutoMountHomeEFS": "<p>Indicates whether auto-mounting of an EFS volume is supported for the user profile. The <code>DefaultAsDomain</code> value is only supported for user profiles. Do not use the <code>DefaultAsDomain</code> value when setting this parameter for a domain.</p>"
+      }
+    },
     "AutoParameter": {
       "base": "<p>The name and an example value of the hyperparameter that you want to use in Autotune. If Automatic model tuning (AMT) determines that your hyperparameter is eligible for Autotune, an optimal hyperparameter range is selected for you.</p>",
       "refs": {
@@ -5755,7 +5761,7 @@
       "base": null,
       "refs": {
         "AutoMLContainerDefinition$Environment": "<p>The environment variables to set in the container. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ContainerDefinition.html\"> ContainerDefinition</a>.</p>",
-        "ContainerDefinition$Environment": "<p>The environment variables to set in the Docker container.</p> <p>The maximum length of each key and value in the <code>Environment</code> map is 1024 bytes. The maximum length of all keys and values in the map, combined, is 32 KB. If you pass multiple containers to a <code>CreateModel</code> request, then the maximum length of all of their maps, combined, is also 32 KB.</p>",
+        "ContainerDefinition$Environment": "<p>The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables.</p> <p>The maximum length of each key and value in the <code>Environment</code> map is 1024 bytes. The maximum length of all keys and values in the map, combined, is 32 KB. If you pass multiple containers to a <code>CreateModel</code> request, then the maximum length of all of their maps, combined, is also 32 KB.</p>",
         "InferenceComponentContainerSpecification$Environment": "<p>The environment variables to set in the Docker container. Each key and value in the Environment string-to-string map can have length of up to 1024. We support up to 16 entries in the map.</p>",
         "InferenceComponentContainerSpecificationSummary$Environment": "<p>The environment variables to set in the Docker container.</p>",
         "ModelPackageContainerDefinition$Environment": "<p>The environment variables to set in the Docker container. Each key and value in the <code>Environment</code> string to string map can have length of up to 1024. We support up to 16 entries in the map.</p>",
@@ -16084,7 +16090,7 @@
     "TransformEnvironmentMap": {
       "base": null,
       "refs": {
-        "CreateTransformJobRequest$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>",
+        "CreateTransformJobRequest$Environment": "<p>The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables. We support up to 16 key and values entries in the map.</p>",
         "DescribeTransformJobResponse$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>",
         "TransformJob$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>",
         "TransformJobDefinition$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>"

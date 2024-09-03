@@ -2726,6 +2726,7 @@
         "identifier"
       ],
       "members":{
+        "assetScopes":{"shape":"AcceptedAssetScopes"},
         "decisionComment":{"shape":"DecisionComment"},
         "domainIdentifier":{
           "shape":"DomainId",
@@ -2778,6 +2779,21 @@
       "member":{"shape":"SubscribedPrincipal"},
       "max":1,
       "min":1
+    },
+    "AcceptedAssetScope":{
+      "type":"structure",
+      "required":[
+        "assetId",
+        "filterIds"
+      ],
+      "members":{
+        "assetId":{"shape":"AssetId"},
+        "filterIds":{"shape":"FilterIds"}
+      }
+    },
+    "AcceptedAssetScopes":{
+      "type":"list",
+      "member":{"shape":"AcceptedAssetScope"}
     },
     "AccessDeniedException":{
       "type":"structure",
@@ -3054,6 +3070,20 @@
     "AssetRevisions":{
       "type":"list",
       "member":{"shape":"AssetRevision"}
+    },
+    "AssetScope":{
+      "type":"structure",
+      "required":[
+        "assetId",
+        "filterIds",
+        "status"
+      ],
+      "members":{
+        "assetId":{"shape":"AssetId"},
+        "errorMessage":{"shape":"String"},
+        "filterIds":{"shape":"FilterIds"},
+        "status":{"shape":"String"}
+      }
     },
     "AssetTargetNameMap":{
       "type":"structure",
@@ -5938,6 +5968,10 @@
     "FilterId":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "FilterIds":{
+      "type":"list",
+      "member":{"shape":"FilterId"}
     },
     "FilterList":{
       "type":"list",
@@ -10559,6 +10593,7 @@
       "members":{
         "assetId":{"shape":"AssetId"},
         "assetRevision":{"shape":"Revision"},
+        "assetScope":{"shape":"AssetScope"},
         "failureCause":{"shape":"FailureCause"},
         "failureTimestamp":{"shape":"Timestamp"},
         "grantedTimestamp":{"shape":"Timestamp"},
@@ -10569,6 +10604,7 @@
     "SubscribedAssetListing":{
       "type":"structure",
       "members":{
+        "assetScope":{"shape":"AssetScope"},
         "entityId":{"shape":"AssetId"},
         "entityRevision":{"shape":"Revision"},
         "entityType":{"shape":"TypeName"},

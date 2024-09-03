@@ -7425,7 +7425,8 @@
     "DescribeInstanceResponse":{
       "type":"structure",
       "members":{
-        "Instance":{"shape":"Instance"}
+        "Instance":{"shape":"Instance"},
+        "ReplicationConfiguration":{"shape":"ReplicationConfiguration"}
       }
     },
     "DescribeInstanceStorageConfigRequest":{
@@ -9322,6 +9323,11 @@
         "AgentConfig":{"shape":"AgentConfig"}
       }
     },
+    "GlobalSignInEndpoint":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "Grouping":{
       "type":"string",
       "enum":[
@@ -9753,6 +9759,17 @@
       "max":250,
       "min":1,
       "pattern":"^(arn:(aws|aws-us-gov):connect:[a-z]{2}-[a-z]+-[0-9]{1}:[0-9]{1,20}:instance/)?[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
+    "InstanceReplicationStatus":{
+      "type":"string",
+      "enum":[
+        "INSTANCE_REPLICATION_COMPLETE",
+        "INSTANCE_REPLICATION_IN_PROGRESS",
+        "INSTANCE_REPLICATION_FAILED",
+        "INSTANCE_REPLICA_DELETING",
+        "INSTANCE_REPLICATION_DELETION_FAILED",
+        "RESOURCE_REPLICATION_NOT_STARTED"
+      ]
     },
     "InstanceStatus":{
       "type":"string",
@@ -13287,6 +13304,33 @@
         "Id":{"shape":"InstanceId"},
         "Arn":{"shape":"ARN"}
       }
+    },
+    "ReplicationConfiguration":{
+      "type":"structure",
+      "members":{
+        "ReplicationStatusSummaryList":{"shape":"ReplicationStatusSummaryList"},
+        "SourceRegion":{"shape":"AwsRegion"},
+        "GlobalSignInEndpoint":{"shape":"GlobalSignInEndpoint"}
+      }
+    },
+    "ReplicationStatusReason":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ReplicationStatusSummary":{
+      "type":"structure",
+      "members":{
+        "Region":{"shape":"AwsRegion"},
+        "ReplicationStatus":{"shape":"InstanceReplicationStatus"},
+        "ReplicationStatusReason":{"shape":"ReplicationStatusReason"}
+      }
+    },
+    "ReplicationStatusSummaryList":{
+      "type":"list",
+      "member":{"shape":"ReplicationStatusSummary"},
+      "max":11,
+      "min":0
     },
     "RequestIdentifier":{
       "type":"string",
