@@ -4453,6 +4453,39 @@
       "min":0,
       "sensitive":true
     },
+    "PromptMetadataEntry":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"PromptMetadataKey"},
+        "value":{"shape":"PromptMetadataValue"}
+      },
+      "sensitive":true
+    },
+    "PromptMetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\s._:/=+@-]*$",
+      "sensitive":true
+    },
+    "PromptMetadataList":{
+      "type":"list",
+      "member":{"shape":"PromptMetadataEntry"},
+      "max":50,
+      "min":0,
+      "sensitive":true
+    },
+    "PromptMetadataValue":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"^[a-zA-Z0-9\\s._:/=+@-]*$",
+      "sensitive":true
+    },
     "PromptModelIdentifier":{
       "type":"string",
       "max":2048,
@@ -4543,6 +4576,7 @@
       ],
       "members":{
         "inferenceConfiguration":{"shape":"PromptInferenceConfiguration"},
+        "metadata":{"shape":"PromptMetadataList"},
         "modelId":{"shape":"PromptModelIdentifier"},
         "name":{"shape":"PromptVariantName"},
         "templateConfiguration":{"shape":"PromptTemplateConfiguration"},

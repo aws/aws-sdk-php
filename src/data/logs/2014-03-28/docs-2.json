@@ -25,6 +25,7 @@
     "DeleteRetentionPolicy": "<p>Deletes the specified retention policy.</p> <p>Log events do not expire if they belong to log groups without a retention policy.</p>",
     "DeleteSubscriptionFilter": "<p>Deletes the specified subscription filter.</p>",
     "DescribeAccountPolicies": "<p>Returns a list of all CloudWatch Logs account policies in the account.</p>",
+    "DescribeConfigurationTemplates": "<p>Use this operation to return the valid and default values that are used when creating delivery sources, delivery destinations, and deliveries. For more information about deliveries, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html\">CreateDelivery</a>.</p>",
     "DescribeDeliveries": "<p>Retrieves a list of the deliveries that have been created in the account.</p> <p>A <i>delivery</i> is a connection between a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html\"> <i>delivery source</i> </a> and a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html\"> <i>delivery destination</i> </a>.</p> <p>A delivery source represents an Amazon Web Services resource that sends logs to an logs delivery destination. The destination can be CloudWatch Logs, Amazon S3, or Firehose. Only some Amazon Web Services services support being configured as a delivery source. These services are listed in <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html\">Enable logging from Amazon Web Services services.</a> </p>",
     "DescribeDeliveryDestinations": "<p>Retrieves a list of the delivery destinations that have been created in the account.</p>",
     "DescribeDeliverySources": "<p>Retrieves a list of the delivery sources that have been created in the account.</p>",
@@ -75,6 +76,7 @@
     "UntagLogGroup": "<important> <p>The UntagLogGroup operation is on the path to deprecation. We recommend that you use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_UntagResource.html\">UntagResource</a> instead.</p> </important> <p>Removes the specified tags from the specified log group.</p> <p>To list the tags for a log group, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_ListTagsForResource.html\">ListTagsForResource</a>. To add tags, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_TagResource.html\">TagResource</a>.</p> <p>CloudWatch Logs doesn’t support IAM policies that prevent users from assigning specified tags to log groups using the <code>aws:Resource/<i>key-name</i> </code> or <code>aws:TagKeys</code> condition keys. </p>",
     "UntagResource": "<p>Removes one or more tags from the specified resource.</p>",
     "UpdateAnomaly": "<p>Use this operation to <i>suppress</i> anomaly detection for a specified anomaly or pattern. If you suppress an anomaly, CloudWatch Logs won’t report new occurrences of that anomaly and won't update that anomaly with new data. If you suppress a pattern, CloudWatch Logs won’t report any anomalies related to that pattern.</p> <p>You must specify either <code>anomalyId</code> or <code>patternId</code>, but you can't specify both parameters in the same operation.</p> <p>If you have previously used this operation to suppress detection of a pattern or anomaly, you can use it again to cause CloudWatch Logs to end the suppression. To do this, use this operation and specify the anomaly or pattern to stop suppressing, and omit the <code>suppressionType</code> and <code>suppressionPeriod</code> parameters.</p>",
+    "UpdateDeliveryConfiguration": "<p>Use this operation to update the configuration of a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_Delivery.html\">delivery</a> to change either the S3 path pattern or the format of the delivered logs. You can't use this operation to change the source or destination of the delivery.</p>",
     "UpdateLogAnomalyDetector": "<p>Updates an existing log anomaly detector.</p>"
   },
   "shapes": {
@@ -122,6 +124,24 @@
       "refs": {
         "AccountPolicy$policyDocument": "<p>The policy document for this account policy.</p> <p>The JSON specified in <code>policyDocument</code> can be up to 30,720 characters.</p>",
         "PutAccountPolicyRequest$policyDocument": "<p>Specify the policy, in JSON.</p> <p> <b>Data protection policy</b> </p> <p>A data protection policy must include two JSON blocks:</p> <ul> <li> <p>The first block must include both a <code>DataIdentifer</code> array and an <code>Operation</code> property with an <code>Audit</code> action. The <code>DataIdentifer</code> array lists the types of sensitive data that you want to mask. For more information about the available options, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data-types.html\">Types of data that you can mask</a>.</p> <p>The <code>Operation</code> property with an <code>Audit</code> action is required to find the sensitive data terms. This <code>Audit</code> action must contain a <code>FindingsDestination</code> object. You can optionally use that <code>FindingsDestination</code> object to list one or more destinations to send audit findings to. If you specify destinations such as log groups, Firehose streams, and S3 buckets, they must already exist.</p> </li> <li> <p>The second block must include both a <code>DataIdentifer</code> array and an <code>Operation</code> property with an <code>Deidentify</code> action. The <code>DataIdentifer</code> array must exactly match the <code>DataIdentifer</code> array in the first block of the policy.</p> <p>The <code>Operation</code> property with the <code>Deidentify</code> action is what actually masks the data, and it must contain the <code> \"MaskConfig\": {}</code> object. The <code> \"MaskConfig\": {}</code> object must be empty.</p> </li> </ul> <p>For an example data protection policy, see the <b>Examples</b> section on this page.</p> <important> <p>The contents of the two <code>DataIdentifer</code> arrays must match exactly.</p> </important> <p>In addition to the two JSON blocks, the <code>policyDocument</code> can also include <code>Name</code>, <code>Description</code>, and <code>Version</code> fields. The <code>Name</code> is different than the operation's <code>policyName</code> parameter, and is used as a dimension when CloudWatch Logs reports audit findings metrics to CloudWatch.</p> <p>The JSON specified in <code>policyDocument</code> can be up to 30,720 characters long.</p> <p> <b>Subscription filter policy</b> </p> <p>A subscription filter policy can include the following attributes in a JSON block:</p> <ul> <li> <p> <b>DestinationArn</b> The ARN of the destination to deliver log events to. Supported destinations are:</p> <ul> <li> <p>An Kinesis Data Streams data stream in the same account as the subscription policy, for same-account delivery.</p> </li> <li> <p>An Firehose data stream in the same account as the subscription policy, for same-account delivery.</p> </li> <li> <p>A Lambda function in the same account as the subscription policy, for same-account delivery.</p> </li> <li> <p>A logical destination in a different account created with <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html\">PutDestination</a>, for cross-account delivery. Kinesis Data Streams and Firehose are supported as logical destinations.</p> </li> </ul> </li> <li> <p> <b>RoleArn</b> The ARN of an IAM role that grants CloudWatch Logs permissions to deliver ingested log events to the destination stream. You don't need to provide the ARN when you are working with a logical destination for cross-account delivery.</p> </li> <li> <p> <b>FilterPattern</b> A filter pattern for subscribing to a filtered stream of log events.</p> </li> <li> <p> <b>Distribution</b> The method used to distribute log data to the destination. By default, log data is grouped by log stream, but the grouping can be set to <code>Random</code> for a more even distribution. This property is only applicable when the destination is an Kinesis Data Streams data stream.</p> </li> </ul>"
+      }
+    },
+    "AllowedActionForAllowVendedLogsDeliveryForResource": {
+      "base": null,
+      "refs": {
+        "ConfigurationTemplate$allowedActionForAllowVendedLogsDeliveryForResource": "<p>The action permissions that a caller needs to have to be able to successfully create a delivery source on the desired resource type when calling <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html\">PutDeliverySource</a>.</p>"
+      }
+    },
+    "AllowedFieldDelimiters": {
+      "base": null,
+      "refs": {
+        "ConfigurationTemplate$allowedFieldDelimiters": "<p>The valid values that a caller can use as field delimiters when calling <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html\">CreateDelivery</a> or <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_UpdateDeliveryConfiguration.html\">UpdateDeliveryConfiguration</a> on a delivery that delivers in <code>Plain</code>, <code>W3C</code>, or <code>Raw</code> format.</p>"
+      }
+    },
+    "AllowedFields": {
+      "base": null,
+      "refs": {
+        "ConfigurationTemplate$allowedFields": "<p>The allowed fields that a caller can use in the <code>recordFields</code> parameter of a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html\">CreateDelivery</a> or <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_UpdateDeliveryConfiguration.html\">UpdateDeliveryConfiguration</a> operation.</p>"
       }
     },
     "AmazonResourceName": {
@@ -222,6 +242,8 @@
         "Anomaly$suppressed": "<p>Indicates whether this anomaly is currently suppressed. To suppress an anomaly, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_UpdateAnomaly.html\">UpdateAnomaly</a>.</p>",
         "Anomaly$isPatternLevelSuppression": "<p>If this anomaly is suppressed, this field is <code>true</code> if the suppression is because the pattern is suppressed. If <code>false</code>, then only this particular anomaly is suppressed.</p>",
         "PatternToken$isDynamic": "<p>Specifies whether this is a dynamic token.</p>",
+        "RecordField$mandatory": "<p>If this is <code>true</code>, the record field must be present in the <code>recordFields</code> parameter provided to a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html\">CreateDelivery</a> or <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_UpdateDeliveryConfiguration.html\">UpdateDeliveryConfiguration</a> operation.</p>",
+        "S3DeliveryConfiguration$enableHiveCompatiblePath": "<p>This parameter causes the S3 objects that contain delivered logs to use a prefix structure that allows for integration with Apache Hive.</p>",
         "UpdateLogAnomalyDetectorRequest$enabled": "<p>Use this parameter to pause or restart the anomaly detector. </p>"
       }
     },
@@ -234,6 +256,24 @@
       "base": null,
       "refs": {
         "PutQueryDefinitionRequest$clientToken": "<p>Used as an idempotency token, to avoid returning an exception if the service receives the same request twice because of a network error.</p>"
+      }
+    },
+    "ConfigurationTemplate": {
+      "base": "<p>A structure containing information about the deafult settings and available settings that you can use to configure a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_Delivery.html\">delivery</a> or a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DeliveryDestination.html\">delivery destination</a>.</p>",
+      "refs": {
+        "ConfigurationTemplates$member": null
+      }
+    },
+    "ConfigurationTemplateDeliveryConfigValues": {
+      "base": "<p>This structure contains the default values that are used for each configuration parameter when you use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html\">CreateDelivery</a> to create a deliver under the current service type, resource type, and log type.</p>",
+      "refs": {
+        "ConfigurationTemplate$defaultDeliveryConfigValues": "<p>A mapping that displays the default value of each property within a delivery’s configuration, if it is not specified in the request.</p>"
+      }
+    },
+    "ConfigurationTemplates": {
+      "base": null,
+      "refs": {
+        "DescribeConfigurationTemplatesResponse$configurationTemplates": "<p>An array of objects, where each object describes one configuration template that matches the filters that you specified in the request.</p>"
       }
     },
     "ConflictException": {
@@ -450,8 +490,16 @@
     "DeliveryDestinationType": {
       "base": null,
       "refs": {
+        "ConfigurationTemplate$deliveryDestinationType": "<p>A string specifying which destination type this configuration template applies to.</p>",
         "Delivery$deliveryDestinationType": "<p>Displays whether the delivery destination associated with this delivery is CloudWatch Logs, Amazon S3, or Firehose.</p>",
-        "DeliveryDestination$deliveryDestinationType": "<p>Displays whether this delivery destination is CloudWatch Logs, Amazon S3, or Firehose.</p>"
+        "DeliveryDestination$deliveryDestinationType": "<p>Displays whether this delivery destination is CloudWatch Logs, Amazon S3, or Firehose.</p>",
+        "DeliveryDestinationTypes$member": null
+      }
+    },
+    "DeliveryDestinationTypes": {
+      "base": null,
+      "refs": {
+        "DescribeConfigurationTemplatesRequest$deliveryDestinationTypes": "<p>Use this parameter to filter the response to include only the configuration templates that apply to the delivery destination types that you specify here.</p>"
       }
     },
     "DeliveryDestinations": {
@@ -465,7 +513,8 @@
       "refs": {
         "DeleteDeliveryRequest$id": "<p>The unique ID of the delivery to delete. You can find the ID of a delivery with the <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeDeliveries.html\">DescribeDeliveries</a> operation.</p>",
         "Delivery$id": "<p>The unique ID that identifies this delivery in your account.</p>",
-        "GetDeliveryRequest$id": "<p>The ID of the delivery that you want to retrieve.</p>"
+        "GetDeliveryRequest$id": "<p>The ID of the delivery that you want to retrieve.</p>",
+        "UpdateDeliveryConfigurationRequest$id": "<p>The ID of the delivery to be updated by this request.</p>"
       }
     },
     "DeliverySource": {
@@ -493,6 +542,12 @@
         "DescribeDeliverySourcesResponse$deliverySources": "<p>An array of structures. Each structure contains information about one delivery source in the account.</p>"
       }
     },
+    "DeliverySuffixPath": {
+      "base": null,
+      "refs": {
+        "S3DeliveryConfiguration$suffixPath": "<p>This string allows re-configuring the S3 object prefix to contain either static or variable sections. The valid variables to use in the suffix path will vary by each log source. See ConfigurationTemplate$allowedSuffixPathFields for more info on what values are supported in the suffix path for each log source.</p>"
+      }
+    },
     "Descending": {
       "base": null,
       "refs": {
@@ -505,6 +560,16 @@
       }
     },
     "DescribeAccountPoliciesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeConfigurationTemplatesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeConfigurationTemplatesResponse": {
       "base": null,
       "refs": {
       }
@@ -562,6 +627,7 @@
     "DescribeLimit": {
       "base": null,
       "refs": {
+        "DescribeConfigurationTemplatesRequest$limit": "<p>Use this parameter to limit the number of configuration templates that are returned in the response.</p>",
         "DescribeDeliveriesRequest$limit": "<p>Optionally specify the maximum number of deliveries to return in the response.</p>",
         "DescribeDeliveryDestinationsRequest$limit": "<p>Optionally specify the maximum number of delivery destinations to return in the response.</p>",
         "DescribeDeliverySourcesRequest$limit": "<p>Optionally specify the maximum number of delivery sources to return in the response.</p>",
@@ -737,15 +803,15 @@
       }
     },
     "Entity": {
-      "base": "<p>Reserved for future use.</p>",
+      "base": "<p>Reserved for internal use.</p>",
       "refs": {
-        "PutLogEventsRequest$entity": "<p>Reserved for future use.</p>"
+        "PutLogEventsRequest$entity": "<p>Reserved for internal use.</p>"
       }
     },
     "EntityAttributes": {
       "base": null,
       "refs": {
-        "Entity$attributes": "<p>Reserved for future use.</p>"
+        "Entity$attributes": "<p>Reserved for internal use.</p>"
       }
     },
     "EntityAttributesKey": {
@@ -763,7 +829,7 @@
     "EntityKeyAttributes": {
       "base": null,
       "refs": {
-        "Entity$keyAttributes": "<p>Reserved for future use.</p>"
+        "Entity$keyAttributes": "<p>Reserved for internal use.</p>"
       }
     },
     "EntityKeyAttributesKey": {
@@ -781,7 +847,7 @@
     "EntityRejectionErrorType": {
       "base": null,
       "refs": {
-        "RejectedEntityInfo$errorType": "<p>Reserved for future use.</p>"
+        "RejectedEntityInfo$errorType": "<p>Reserved for internal use.</p>"
       }
     },
     "Enumerations": {
@@ -923,6 +989,23 @@
         "LogGroupField$name": "<p>The name of a log field.</p>",
         "LogRecord$key": null,
         "ResultField$field": "<p>The log event field.</p>"
+      }
+    },
+    "FieldDelimiter": {
+      "base": null,
+      "refs": {
+        "AllowedFieldDelimiters$member": null,
+        "ConfigurationTemplateDeliveryConfigValues$fieldDelimiter": "<p>The default field delimiter that is used in a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html\">CreateDelivery</a> operation when the field delimiter is not specified in that operation. The field delimiter is used only when the final output delivery is in <code>Plain</code>, <code>W3C</code>, or <code>Raw</code> format.</p>",
+        "CreateDeliveryRequest$fieldDelimiter": "<p>The field delimiter to use between record fields when the final output format of a delivery is in <code>Plain</code>, <code>W3C</code>, or <code>Raw</code> format.</p>",
+        "Delivery$fieldDelimiter": "<p>The field delimiter that is used between record fields when the final output format of a delivery is in <code>Plain</code>, <code>W3C</code>, or <code>Raw</code> format.</p>",
+        "UpdateDeliveryConfigurationRequest$fieldDelimiter": "<p>The field delimiter to use between record fields when the final output format of a delivery is in <code>Plain</code>, <code>W3C</code>, or <code>Raw</code> format.</p>"
+      }
+    },
+    "FieldHeader": {
+      "base": null,
+      "refs": {
+        "RecordField$name": "<p>The name to use when specifying this record field in a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html\">CreateDelivery</a> or <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_UpdateDeliveryConfiguration.html\">UpdateDeliveryConfiguration</a> operation. </p>",
+        "RecordFields$member": null
       }
     },
     "FilterCount": {
@@ -1458,8 +1541,16 @@
     "LogType": {
       "base": null,
       "refs": {
+        "ConfigurationTemplate$logType": "<p>A string specifying which log type this configuration template applies to.</p>",
         "DeliverySource$logType": "<p>The type of log that the source is sending. For valid values for this parameter, see the documentation for the source service.</p>",
+        "LogTypes$member": null,
         "PutDeliverySourceRequest$logType": "<p>Defines the type of log that the source is sending.</p> <ul> <li> <p>For Amazon Bedrock, the valid value is <code>APPLICATION_LOGS</code>.</p> </li> <li> <p>For Amazon CodeWhisperer, the valid value is <code>EVENT_LOGS</code>.</p> </li> <li> <p>For IAM Identity Center, the valid value is <code>ERROR_LOGS</code>.</p> </li> <li> <p>For Amazon WorkMail, the valid values are <code>ACCESS_CONTROL_LOGS</code>, <code>AUTHENTICATION_LOGS</code>, <code>WORKMAIL_AVAILABILITY_PROVIDER_LOGS</code>, and <code>WORKMAIL_MAILBOX_ACCESS_LOGS</code>.</p> </li> </ul>"
+      }
+    },
+    "LogTypes": {
+      "base": null,
+      "refs": {
+        "DescribeConfigurationTemplatesRequest$logTypes": "<p>Use this parameter to filter the response to include only the configuration templates that apply to the log types that you specify here.</p>"
       }
     },
     "MalformedQueryException": {
@@ -1536,6 +1627,8 @@
     "NextToken": {
       "base": "<p>The token for the next set of items to return. The token expires after 24 hours.</p>",
       "refs": {
+        "DescribeConfigurationTemplatesRequest$nextToken": null,
+        "DescribeConfigurationTemplatesResponse$nextToken": null,
         "DescribeDeliveriesRequest$nextToken": null,
         "DescribeDeliveriesResponse$nextToken": null,
         "DescribeDeliveryDestinationsRequest$nextToken": null,
@@ -1586,7 +1679,14 @@
       "base": null,
       "refs": {
         "DeliveryDestination$outputFormat": "<p>The format of the logs that are sent to this delivery destination. </p>",
+        "OutputFormats$member": null,
         "PutDeliveryDestinationRequest$outputFormat": "<p>The format for the logs that this delivery destination will receive.</p>"
+      }
+    },
+    "OutputFormats": {
+      "base": null,
+      "refs": {
+        "ConfigurationTemplate$allowedOutputFormats": "<p>The list of delivery destination output formats that are supported by this log source.</p>"
       }
     },
     "OutputLogEvent": {
@@ -1893,10 +1993,26 @@
         "StartQueryRequest$queryString": "<p>The query string to use. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html\">CloudWatch Logs Insights Query Syntax</a>.</p>"
       }
     },
-    "RejectedEntityInfo": {
-      "base": "<p>Reserved for future use.</p>",
+    "RecordField": {
+      "base": "<p>A structure that represents a valid record field header and whether it is mandatory.</p>",
       "refs": {
-        "PutLogEventsResponse$rejectedEntityInfo": "<p>Reserved for future use.</p>"
+        "AllowedFields$member": null
+      }
+    },
+    "RecordFields": {
+      "base": null,
+      "refs": {
+        "ConfigurationTemplate$allowedSuffixPathFields": "<p>The list of variable fields that can be used in the suffix path of a delivery that delivers to an S3 bucket.</p>",
+        "ConfigurationTemplateDeliveryConfigValues$recordFields": "<p>The default record fields that will be delivered when a list of record fields is not provided in a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html\">CreateDelivery</a> operation.</p>",
+        "CreateDeliveryRequest$recordFields": "<p>The list of record fields to be delivered to the destination, in order. If the delivery’s log source has mandatory fields, they must be included in this list.</p>",
+        "Delivery$recordFields": "<p>The record fields used in this delivery.</p>",
+        "UpdateDeliveryConfigurationRequest$recordFields": "<p>The list of record fields to be delivered to the destination, in order. If the delivery’s log source has mandatory fields, they must be included in this list.</p>"
+      }
+    },
+    "RejectedEntityInfo": {
+      "base": "<p>Reserved for internal use.</p>",
+      "refs": {
+        "PutLogEventsResponse$rejectedEntityInfo": "<p>Reserved for internal use.</p>"
       }
     },
     "RejectedLogEventsInfo": {
@@ -1947,6 +2063,19 @@
         "ResourcePolicies$member": null
       }
     },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "ConfigurationTemplate$resourceType": "<p>A string specifying which resource type this configuration template applies to.</p>",
+        "ResourceTypes$member": null
+      }
+    },
+    "ResourceTypes": {
+      "base": null,
+      "refs": {
+        "DescribeConfigurationTemplatesRequest$resourceTypes": "<p>Use this parameter to filter the response to include only the configuration templates that apply to the resource types that you specify here.</p>"
+      }
+    },
     "ResultField": {
       "base": "<p>Contains one field from one log event returned by a CloudWatch Logs Insights query, along with the value of that field.</p> <p>For more information about the fields that are generated by CloudWatch logs, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData-discoverable-fields.html\">Supported Logs and Discovered Fields</a>.</p>",
       "refs": {
@@ -1966,6 +2095,15 @@
         "PutDestinationRequest$roleArn": "<p>The ARN of an IAM role that grants CloudWatch Logs permissions to call the Amazon Kinesis <code>PutRecord</code> operation on the destination stream.</p>",
         "PutSubscriptionFilterRequest$roleArn": "<p>The ARN of an IAM role that grants CloudWatch Logs permissions to deliver ingested log events to the destination stream. You don't need to provide the ARN when you are working with a logical destination for cross-account delivery.</p>",
         "SubscriptionFilter$roleArn": "<p/>"
+      }
+    },
+    "S3DeliveryConfiguration": {
+      "base": "<p>This structure contains delivery configurations that apply only when the delivery destination resource is an S3 bucket.</p>",
+      "refs": {
+        "ConfigurationTemplateDeliveryConfigValues$s3DeliveryConfiguration": "<p>The delivery parameters that are used when you create a delivery to a delivery destination that is an S3 Bucket.</p>",
+        "CreateDeliveryRequest$s3DeliveryConfiguration": "<p>This structure contains parameters that are valid only when the delivery’s delivery destination is an S3 bucket.</p>",
+        "Delivery$s3DeliveryConfiguration": "<p>This structure contains delivery configurations that apply only when the delivery destination resource is an S3 bucket.</p>",
+        "UpdateDeliveryConfigurationRequest$s3DeliveryConfiguration": "<p>This structure contains parameters that are valid only when the delivery’s delivery destination is an S3 bucket.</p>"
       }
     },
     "Scope": {
@@ -2007,7 +2145,9 @@
     "Service": {
       "base": null,
       "refs": {
-        "DeliverySource$service": "<p>The Amazon Web Services service that is sending logs.</p>"
+        "ConfigurationTemplate$service": "<p>A string specifying which service this configuration template applies to. For more information about supported services see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html\">Enable logging from Amazon Web Services services.</a>.</p>",
+        "DeliverySource$service": "<p>The Amazon Web Services service that is sending logs.</p>",
+        "DescribeConfigurationTemplatesRequest$service": "<p>Use this parameter to filter the response to include only the configuration templates that apply to the Amazon Web Services service that you specify here.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -2333,6 +2473,16 @@
       }
     },
     "UpdateAnomalyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateDeliveryConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateDeliveryConfigurationResponse": {
       "base": null,
       "refs": {
       }

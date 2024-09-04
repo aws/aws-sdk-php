@@ -131,6 +131,19 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetSafetyLever":{
+      "name":"GetSafetyLever",
+      "http":{
+        "method":"GET",
+        "requestUri":"/safetyLevers/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSafetyLeverRequest"},
+      "output":{"shape":"GetSafetyLeverResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetTargetAccountConfiguration":{
       "name":"GetTargetAccountConfiguration",
       "http":{
@@ -326,6 +339,21 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
+    "UpdateSafetyLeverState":{
+      "name":"UpdateSafetyLeverState",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/safetyLevers/{id}/state",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateSafetyLeverStateRequest"},
+      "output":{"shape":"UpdateSafetyLeverStateResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "UpdateTargetAccountConfiguration":{
@@ -814,7 +842,8 @@
         "completed",
         "stopping",
         "stopped",
-        "failed"
+        "failed",
+        "cancelled"
       ]
     },
     "ExperimentStatusReason":{
@@ -1249,6 +1278,23 @@
         "experimentTemplate":{"shape":"ExperimentTemplate"}
       }
     },
+    "GetSafetyLeverRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"SafetyLeverId",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "GetSafetyLeverResponse":{
+      "type":"structure",
+      "members":{
+        "safetyLever":{"shape":"SafetyLever"}
+      }
+    },
     "GetTargetAccountConfigurationRequest":{
       "type":"structure",
       "required":[
@@ -1578,6 +1624,42 @@
       "min":1,
       "pattern":"[\\s\\S]+"
     },
+    "SafetyLever":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"SafetyLeverId"},
+        "arn":{"shape":"ResourceArn"},
+        "state":{"shape":"SafetyLeverState"}
+      }
+    },
+    "SafetyLeverId":{
+      "type":"string",
+      "max":64,
+      "pattern":"[\\S]+"
+    },
+    "SafetyLeverState":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"SafetyLeverStatus"},
+        "reason":{"shape":"SafetyLeverStatusReason"}
+      }
+    },
+    "SafetyLeverStatus":{
+      "type":"string",
+      "enum":[
+        "disengaged",
+        "engaged",
+        "engaging"
+      ]
+    },
+    "SafetyLeverStatusInput":{
+      "type":"string",
+      "enum":[
+        "disengaged",
+        "engaged"
+      ]
+    },
+    "SafetyLeverStatusReason":{"type":"string"},
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -1897,6 +1979,38 @@
       "type":"map",
       "key":{"shape":"ExperimentTemplateTargetName"},
       "value":{"shape":"UpdateExperimentTemplateTargetInput"}
+    },
+    "UpdateSafetyLeverStateInput":{
+      "type":"structure",
+      "required":[
+        "status",
+        "reason"
+      ],
+      "members":{
+        "status":{"shape":"SafetyLeverStatusInput"},
+        "reason":{"shape":"SafetyLeverStatusReason"}
+      }
+    },
+    "UpdateSafetyLeverStateRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "state"
+      ],
+      "members":{
+        "id":{
+          "shape":"SafetyLeverId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "state":{"shape":"UpdateSafetyLeverStateInput"}
+      }
+    },
+    "UpdateSafetyLeverStateResponse":{
+      "type":"structure",
+      "members":{
+        "safetyLever":{"shape":"SafetyLever"}
+      }
     },
     "UpdateTargetAccountConfigurationRequest":{
       "type":"structure",

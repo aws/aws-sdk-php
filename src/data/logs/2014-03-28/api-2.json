@@ -352,6 +352,21 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DescribeConfigurationTemplates":{
+      "name":"DescribeConfigurationTemplates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeConfigurationTemplatesRequest"},
+      "output":{"shape":"DescribeConfigurationTemplatesResponse"},
+      "errors":[
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DescribeDeliveries":{
       "name":"DescribeDeliveries",
       "http":{
@@ -1080,6 +1095,23 @@
         {"shape":"OperationAbortedException"}
       ]
     },
+    "UpdateDeliveryConfiguration":{
+      "name":"UpdateDeliveryConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateDeliveryConfigurationRequest"},
+      "output":{"shape":"UpdateDeliveryConfigurationResponse"},
+      "errors":[
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "UpdateLogAnomalyDetector":{
       "name":"UpdateLogAnomalyDetector",
       "http":{
@@ -1135,6 +1167,15 @@
       }
     },
     "AccountPolicyDocument":{"type":"string"},
+    "AllowedActionForAllowVendedLogsDeliveryForResource":{"type":"string"},
+    "AllowedFieldDelimiters":{
+      "type":"list",
+      "member":{"shape":"FieldDelimiter"}
+    },
+    "AllowedFields":{
+      "type":"list",
+      "member":{"shape":"RecordField"}
+    },
     "AmazonResourceName":{
       "type":"string",
       "max":1011,
@@ -1253,6 +1294,33 @@
       "min":36,
       "pattern":"\\S{36,128}"
     },
+    "ConfigurationTemplate":{
+      "type":"structure",
+      "members":{
+        "service":{"shape":"Service"},
+        "logType":{"shape":"LogType"},
+        "resourceType":{"shape":"ResourceType"},
+        "deliveryDestinationType":{"shape":"DeliveryDestinationType"},
+        "defaultDeliveryConfigValues":{"shape":"ConfigurationTemplateDeliveryConfigValues"},
+        "allowedFields":{"shape":"AllowedFields"},
+        "allowedOutputFormats":{"shape":"OutputFormats"},
+        "allowedActionForAllowVendedLogsDeliveryForResource":{"shape":"AllowedActionForAllowVendedLogsDeliveryForResource"},
+        "allowedFieldDelimiters":{"shape":"AllowedFieldDelimiters"},
+        "allowedSuffixPathFields":{"shape":"RecordFields"}
+      }
+    },
+    "ConfigurationTemplateDeliveryConfigValues":{
+      "type":"structure",
+      "members":{
+        "recordFields":{"shape":"RecordFields"},
+        "fieldDelimiter":{"shape":"FieldDelimiter"},
+        "s3DeliveryConfiguration":{"shape":"S3DeliveryConfiguration"}
+      }
+    },
+    "ConfigurationTemplates":{
+      "type":"list",
+      "member":{"shape":"ConfigurationTemplate"}
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1269,6 +1337,9 @@
       "members":{
         "deliverySourceName":{"shape":"DeliverySourceName"},
         "deliveryDestinationArn":{"shape":"Arn"},
+        "recordFields":{"shape":"RecordFields"},
+        "fieldDelimiter":{"shape":"FieldDelimiter"},
+        "s3DeliveryConfiguration":{"shape":"S3DeliveryConfiguration"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1499,6 +1570,9 @@
         "deliverySourceName":{"shape":"DeliverySourceName"},
         "deliveryDestinationArn":{"shape":"Arn"},
         "deliveryDestinationType":{"shape":"DeliveryDestinationType"},
+        "recordFields":{"shape":"RecordFields"},
+        "fieldDelimiter":{"shape":"FieldDelimiter"},
+        "s3DeliveryConfiguration":{"shape":"S3DeliveryConfiguration"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1539,6 +1613,12 @@
         "FH"
       ]
     },
+    "DeliveryDestinationTypes":{
+      "type":"list",
+      "member":{"shape":"DeliveryDestinationType"},
+      "max":3,
+      "min":1
+    },
     "DeliveryDestinations":{
       "type":"list",
       "member":{"shape":"DeliveryDestination"}
@@ -1570,6 +1650,11 @@
       "type":"list",
       "member":{"shape":"DeliverySource"}
     },
+    "DeliverySuffixPath":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "Descending":{"type":"boolean"},
     "DescribeAccountPoliciesRequest":{
       "type":"structure",
@@ -1584,6 +1669,24 @@
       "type":"structure",
       "members":{
         "accountPolicies":{"shape":"AccountPolicies"}
+      }
+    },
+    "DescribeConfigurationTemplatesRequest":{
+      "type":"structure",
+      "members":{
+        "service":{"shape":"Service"},
+        "logTypes":{"shape":"LogTypes"},
+        "resourceTypes":{"shape":"ResourceTypes"},
+        "deliveryDestinationTypes":{"shape":"DeliveryDestinationTypes"},
+        "nextToken":{"shape":"NextToken"},
+        "limit":{"shape":"DescribeLimit"}
+      }
+    },
+    "DescribeConfigurationTemplatesResponse":{
+      "type":"structure",
+      "members":{
+        "configurationTemplates":{"shape":"ConfigurationTemplates"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "DescribeDeliveriesRequest":{
@@ -2002,6 +2105,16 @@
       "value":{"shape":"Value"}
     },
     "Field":{"type":"string"},
+    "FieldDelimiter":{
+      "type":"string",
+      "max":5,
+      "min":0
+    },
+    "FieldHeader":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "FilterCount":{"type":"integer"},
     "FilterLogEventsRequest":{
       "type":"structure",
@@ -2518,6 +2631,12 @@
       "min":1,
       "pattern":"[\\w]*"
     },
+    "LogTypes":{
+      "type":"list",
+      "member":{"shape":"LogType"},
+      "max":10,
+      "min":1
+    },
     "MalformedQueryException":{
       "type":"structure",
       "members":{
@@ -2614,6 +2733,10 @@
         "raw",
         "parquet"
       ]
+    },
+    "OutputFormats":{
+      "type":"list",
+      "member":{"shape":"OutputFormat"}
     },
     "OutputLogEvent":{
       "type":"structure",
@@ -3003,6 +3126,19 @@
       "max":10000,
       "min":0
     },
+    "RecordField":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"FieldHeader"},
+        "mandatory":{"shape":"Boolean"}
+      }
+    },
+    "RecordFields":{
+      "type":"list",
+      "member":{"shape":"FieldHeader"},
+      "max":128,
+      "min":0
+    },
     "RejectedEntityInfo":{
       "type":"structure",
       "required":["errorType"],
@@ -3057,6 +3193,18 @@
         "lastUpdatedTime":{"shape":"Timestamp"}
       }
     },
+    "ResourceType":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\w-_]*"
+    },
+    "ResourceTypes":{
+      "type":"list",
+      "member":{"shape":"ResourceType"},
+      "max":10,
+      "min":1
+    },
     "ResultField":{
       "type":"structure",
       "members":{
@@ -3071,6 +3219,16 @@
     "RoleArn":{
       "type":"string",
       "min":1
+    },
+    "S3DeliveryConfiguration":{
+      "type":"structure",
+      "members":{
+        "suffixPath":{"shape":"DeliverySuffixPath"},
+        "enableHiveCompatiblePath":{
+          "shape":"Boolean",
+          "box":true
+        }
+      }
     },
     "Scope":{
       "type":"string",
@@ -3096,7 +3254,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"[\\w]*"
+      "pattern":"[\\w_-]*"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -3438,6 +3596,21 @@
         "anomalyDetectorArn":{"shape":"AnomalyDetectorArn"},
         "suppressionType":{"shape":"SuppressionType"},
         "suppressionPeriod":{"shape":"SuppressionPeriod"}
+      }
+    },
+    "UpdateDeliveryConfigurationRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"DeliveryId"},
+        "recordFields":{"shape":"RecordFields"},
+        "fieldDelimiter":{"shape":"FieldDelimiter"},
+        "s3DeliveryConfiguration":{"shape":"S3DeliveryConfiguration"}
+      }
+    },
+    "UpdateDeliveryConfigurationResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "UpdateLogAnomalyDetectorRequest":{

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\finspace` - Updates Finspace documentation for smaller instances.
+* `Aws\BedrockAgent` - Add support for user metadata inside PromptVariant.
+* `Aws\AppSync` - Adds new logging levels (INFO and DEBUG) for additional log output control
+* `Aws\FIS` - This release adds safety levers, a new mechanism to stop all running experiments and prevent new experiments from starting.
+* `Aws\S3Control` - Amazon Simple Storage Service /S3 Access Grants / Features : This release launches new Access Grants API - ListCallerAccessGrants.
+* `Aws\CloudWatchLogs` - Update to support new APIs for delivery of logs from AWS services.
+
 ## 3.321.3 - 2024-09-03
 
 * `Aws\Connect` - Release ReplicaConfiguration as part of DescribeInstance
