@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.4 - 2024-09-04
 
 * `Aws\finspace` - Updates Finspace documentation for smaller instances.
 * `Aws\BedrockAgent` - Add support for user metadata inside PromptVariant.
