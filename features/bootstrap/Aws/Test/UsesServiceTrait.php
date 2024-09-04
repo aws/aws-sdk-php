@@ -67,8 +67,8 @@ trait UsesServiceTrait
     private function addMockResults(
         AwsClientInterface $client,
         array $results,
-        callable $onFulfilled = null,
-        callable $onRejected = null
+        ?callable $onFulfilled = null,
+        ?callable $onRejected = null
     ) {
         foreach ($results as &$res) {
             if (is_array($res)) {

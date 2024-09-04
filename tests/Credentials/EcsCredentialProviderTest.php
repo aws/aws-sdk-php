@@ -215,7 +215,7 @@ class EcsCredentialProviderTest extends TestCase
         ];
     }
 
-    private function getTestCreds($result, Response $more = null)
+    private function getTestCreds($result, ?Response $more = null)
     {
         $responses = [];
         $responses[] = new Response(200, [], Psr7\Utils::streamFor(json_encode($result)));
@@ -237,7 +237,7 @@ class EcsCredentialProviderTest extends TestCase
         return $provider();
     }
 
-    private function resolveCredentials($result, Response $more = null)
+    private function resolveCredentials($result, ?Response $more = null)
     {
         $responses = [];
         $responses[] = new Response(200, [], Psr7\Utils::streamFor(json_encode($result)));
