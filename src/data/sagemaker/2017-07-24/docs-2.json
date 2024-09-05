@@ -674,6 +674,13 @@
         "ResourceSpec$InstanceType": "<p>The instance type that the image version runs on.</p> <note> <p> <b>JupyterServer apps</b> only support the <code>system</code> value.</p> <p>For <b>KernelGateway apps</b>, the <code>system</code> value is translated to <code>ml.t3.medium</code>. KernelGateway apps also support all other values for available instance types.</p> </note>"
       }
     },
+    "AppLifecycleManagement": {
+      "base": "<p>Settings that are used to configure and manage the lifecycle of Amazon SageMaker Studio applications.</p>",
+      "refs": {
+        "CodeEditorAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of CodeEditor applications.</p> <p/>",
+        "JupyterLabAppSettings$AppLifecycleManagement": "<p>Indicates whether idle shutdown is activated for JupyterLab applications.</p>"
+      }
+    },
     "AppList": {
       "base": null,
       "refs": {
@@ -7277,6 +7284,13 @@
         "HyperbandStrategyConfig$MinResource": "<p>The minimum number of resources (such as epochs) that can be used by a training job launched by a hyperparameter tuning job. If the value for <code>MinResource</code> has not been reached, the training job is not stopped by <code>Hyperband</code>.</p>"
       }
     },
+    "IAMRoleArn": {
+      "base": null,
+      "refs": {
+        "ClusterInstanceGroupDetails$ExecutionRole": "<p>The execution role for the instance group to assume.</p>",
+        "ClusterInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the instance group.</p>"
+      }
+    },
     "IamIdentity": {
       "base": "<p>The IAM Identity details associated with the user. These details are associated with model package groups, model packages and project entities only.</p>",
       "refs": {
@@ -7311,6 +7325,21 @@
       "base": null,
       "refs": {
         "CanvasAppSettings$IdentityProviderOAuthSettings": "<p>The settings for connecting to an external data source with OAuth.</p>"
+      }
+    },
+    "IdleSettings": {
+      "base": "<p>Settings related to idle shutdown of Studio applications.</p>",
+      "refs": {
+        "AppLifecycleManagement$IdleSettings": "<p>Settings related to idle shutdown of Studio applications.</p>"
+      }
+    },
+    "IdleTimeoutInMinutes": {
+      "base": null,
+      "refs": {
+        "IdleSettings$IdleTimeoutInMinutes": "<p>The time that SageMaker waits after the application becomes idle before shutting it down.</p>",
+        "IdleSettings$MinIdleTimeoutInMinutes": "<p>The minimum value in minutes that custom idle shutdown can be set to by the user.</p>",
+        "IdleSettings$MaxIdleTimeoutInMinutes": "<p>The maximum value in minutes that custom idle shutdown can be set to by the user.</p>",
+        "SpaceIdleSettings$IdleTimeoutInMinutes": "<p>The time that SageMaker waits after the application becomes idle before shutting it down.</p>"
       }
     },
     "Image": {
@@ -8445,6 +8474,12 @@
         "JupyterLabAppSettings$LifecycleConfigArns": "<p>The Amazon Resource Name (ARN) of the lifecycle configurations attached to the user profile or domain. To remove a lifecycle config, you must set <code>LifecycleConfigArns</code> to an empty list.</p>",
         "JupyterServerAppSettings$LifecycleConfigArns": "<p> The Amazon Resource Name (ARN) of the Lifecycle Configurations attached to the JupyterServerApp. If you use this parameter, the <code>DefaultResourceSpec</code> parameter is also required.</p> <note> <p>To remove a Lifecycle Config, you must set <code>LifecycleConfigArns</code> to an empty list.</p> </note>",
         "KernelGatewayAppSettings$LifecycleConfigArns": "<p> The Amazon Resource Name (ARN) of the Lifecycle Configurations attached to the the user profile or domain.</p> <note> <p>To remove a Lifecycle Config, you must set <code>LifecycleConfigArns</code> to an empty list.</p> </note>"
+      }
+    },
+    "LifecycleManagement": {
+      "base": null,
+      "refs": {
+        "IdleSettings$LifecycleManagement": "<p>Indicates whether idle shutdown is activated for the application type.</p>"
       }
     },
     "LineageEntityParameters": {
@@ -13502,8 +13537,6 @@
       "refs": {
         "AlgorithmValidationSpecification$ValidationRole": "<p>The IAM roles that SageMaker uses to run the training jobs.</p>",
         "AssumableRoleArns$member": null,
-        "ClusterInstanceGroupDetails$ExecutionRole": "<p>The execution role for the instance group to assume.</p>",
-        "ClusterInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the instance group.</p>",
         "CreateAutoMLJobRequest$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
         "CreateAutoMLJobV2Request$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
         "CreateCompilationJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that enables Amazon SageMaker to perform tasks on your behalf. </p> <p>During model compilation, Amazon SageMaker needs your permission to:</p> <ul> <li> <p>Read input data from an S3 bucket</p> </li> <li> <p>Write model artifacts to an S3 bucket</p> </li> <li> <p>Write logs to Amazon CloudWatch Logs</p> </li> <li> <p>Publish metrics to Amazon CloudWatch</p> </li> </ul> <p>You grant permissions for all of these tasks to an IAM role. To pass this role to Amazon SageMaker, the caller of this API must have the <code>iam:PassRole</code> permission. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html\">Amazon SageMaker Roles.</a> </p>",
@@ -14303,6 +14336,13 @@
         "ListContextsRequest$SourceUri": "<p>A filter that returns only contexts with the specified source URI.</p>"
       }
     },
+    "SpaceAppLifecycleManagement": {
+      "base": "<p>Settings that are used to configure and manage the lifecycle of Amazon SageMaker Studio applications in a space.</p>",
+      "refs": {
+        "SpaceCodeEditorAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of CodeEditor applications in a space.</p>",
+        "SpaceJupyterLabAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of JupyterLab applications in a space.</p>"
+      }
+    },
     "SpaceArn": {
       "base": null,
       "refs": {
@@ -14329,6 +14369,12 @@
         "DefaultEbsStorageSettings$DefaultEbsVolumeSizeInGb": "<p>The default size of the EBS storage volume for a space.</p>",
         "DefaultEbsStorageSettings$MaximumEbsVolumeSizeInGb": "<p>The maximum size of the EBS storage volume for a space.</p>",
         "EbsStorageSettings$EbsVolumeSizeInGb": "<p>The size of an EBS storage volume for a space.</p>"
+      }
+    },
+    "SpaceIdleSettings": {
+      "base": "<p>Settings related to idle shutdown of Studio applications in a space.</p>",
+      "refs": {
+        "SpaceAppLifecycleManagement$IdleSettings": "<p>Settings related to idle shutdown of Studio applications.</p>"
       }
     },
     "SpaceJupyterLabAppSettings": {

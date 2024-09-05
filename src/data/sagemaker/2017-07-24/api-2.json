@@ -4331,6 +4331,12 @@
         "ml.r6id.32xlarge"
       ]
     },
+    "AppLifecycleManagement":{
+      "type":"structure",
+      "members":{
+        "IdleSettings":{"shape":"IdleSettings"}
+      }
+    },
     "AppList":{
       "type":"list",
       "member":{"shape":"AppDetails"}
@@ -5924,7 +5930,7 @@
         "InstanceGroupName":{"shape":"ClusterInstanceGroupName"},
         "InstanceType":{"shape":"ClusterInstanceType"},
         "LifeCycleConfig":{"shape":"ClusterLifeCycleConfig"},
-        "ExecutionRole":{"shape":"RoleArn"},
+        "ExecutionRole":{"shape":"IAMRoleArn"},
         "ThreadsPerCore":{"shape":"ClusterThreadsPerCore"},
         "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"}
       }
@@ -5953,7 +5959,7 @@
         "InstanceGroupName":{"shape":"ClusterInstanceGroupName"},
         "InstanceType":{"shape":"ClusterInstanceType"},
         "LifeCycleConfig":{"shape":"ClusterLifeCycleConfig"},
-        "ExecutionRole":{"shape":"RoleArn"},
+        "ExecutionRole":{"shape":"IAMRoleArn"},
         "ThreadsPerCore":{"shape":"ClusterThreadsPerCore"},
         "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"}
       }
@@ -6182,7 +6188,8 @@
       "members":{
         "DefaultResourceSpec":{"shape":"ResourceSpec"},
         "CustomImages":{"shape":"CustomImages"},
-        "LifecycleConfigArns":{"shape":"LifecycleConfigArns"}
+        "LifecycleConfigArns":{"shape":"LifecycleConfigArns"},
+        "AppLifecycleManagement":{"shape":"AppLifecycleManagement"}
       }
     },
     "CodeRepositories":{
@@ -13365,6 +13372,12 @@
       "type":"integer",
       "min":1
     },
+    "IAMRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\-]*:iam::\\d{12}:role/[\\w+=,.@-]{1,64}$"
+    },
     "IamIdentity":{
       "type":"structure",
       "members":{
@@ -13397,6 +13410,20 @@
       "type":"list",
       "member":{"shape":"IdentityProviderOAuthSetting"},
       "max":20
+    },
+    "IdleSettings":{
+      "type":"structure",
+      "members":{
+        "LifecycleManagement":{"shape":"LifecycleManagement"},
+        "IdleTimeoutInMinutes":{"shape":"IdleTimeoutInMinutes"},
+        "MinIdleTimeoutInMinutes":{"shape":"IdleTimeoutInMinutes"},
+        "MaxIdleTimeoutInMinutes":{"shape":"IdleTimeoutInMinutes"}
+      }
+    },
+    "IdleTimeoutInMinutes":{
+      "type":"integer",
+      "max":525600,
+      "min":60
     },
     "Image":{
       "type":"structure",
@@ -14337,6 +14364,7 @@
         "CustomImages":{"shape":"CustomImages"},
         "LifecycleConfigArns":{"shape":"LifecycleConfigArns"},
         "CodeRepositories":{"shape":"CodeRepositories"},
+        "AppLifecycleManagement":{"shape":"AppLifecycleManagement"},
         "EmrSettings":{"shape":"EmrSettings"}
       }
     },
@@ -14625,6 +14653,13 @@
     "LifecycleConfigArns":{
       "type":"list",
       "member":{"shape":"StudioLifecycleConfigArn"}
+    },
+    "LifecycleManagement":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "LineageEntityParameters":{
       "type":"map",
@@ -21451,6 +21486,12 @@
       "min":1,
       "pattern":".*"
     },
+    "SpaceAppLifecycleManagement":{
+      "type":"structure",
+      "members":{
+        "IdleSettings":{"shape":"SpaceIdleSettings"}
+      }
+    },
     "SpaceArn":{
       "type":"string",
       "max":256,
@@ -21459,7 +21500,8 @@
     "SpaceCodeEditorAppSettings":{
       "type":"structure",
       "members":{
-        "DefaultResourceSpec":{"shape":"ResourceSpec"}
+        "DefaultResourceSpec":{"shape":"ResourceSpec"},
+        "AppLifecycleManagement":{"shape":"SpaceAppLifecycleManagement"}
       }
     },
     "SpaceDetails":{
@@ -21481,11 +21523,18 @@
       "max":16384,
       "min":5
     },
+    "SpaceIdleSettings":{
+      "type":"structure",
+      "members":{
+        "IdleTimeoutInMinutes":{"shape":"IdleTimeoutInMinutes"}
+      }
+    },
     "SpaceJupyterLabAppSettings":{
       "type":"structure",
       "members":{
         "DefaultResourceSpec":{"shape":"ResourceSpec"},
-        "CodeRepositories":{"shape":"CodeRepositories"}
+        "CodeRepositories":{"shape":"CodeRepositories"},
+        "AppLifecycleManagement":{"shape":"SpaceAppLifecycleManagement"}
       }
     },
     "SpaceList":{

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Fixes issue with unserializing cached credentials without newly added `accountId` property
+* `Aws\ApplicationSignals` - Amazon CloudWatch Application Signals now supports creating Service Level Objectives using a new calculation type. Users can now create SLOs which are configured with request-based SLIs to help meet their specific business requirements.
+* `Aws\CodePipeline` - Updates to add recent notes to APIs and to replace example S3 bucket names globally.
+* `Aws\Connect` - Amazon Connect Custom Vocabulary now supports Catalan (Spain), Danish (Denmark), Dutch (Netherlands), Finnish (Finland), Indonesian (Indonesia), Malay (Malaysia), Norwegian Bokmal (Norway), Polish (Poland), Swedish (Sweden), and Tagalog/Filipino (Philippines).
+* `Aws\SageMaker` - Amazon SageMaker now supports idle shutdown of JupyterLab and CodeEditor applications on SageMaker Studio.
+* `Aws\KinesisAnalyticsV2` - Support for Flink 1.20 in Managed Service for Apache Flink
+* `Aws\GameLift` - Amazon GameLift provides additional events for tracking the fleet creation process.
+
 ## 3.321.4 - 2024-09-04
 
 * `Aws\finspace` - Updates Finspace documentation for smaller instances.
