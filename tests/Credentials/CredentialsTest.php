@@ -71,4 +71,23 @@ class CredentialsTest extends TestCase
         $credentials = new Credentials('key-value', 'secret-value');
         $this->assertInstanceOf(AwsCredentialIdentity::class, $credentials);
     }
+
+    public function testCanUnserializeWithoutAccountId()
+    {
+        $oldSerializedData = json_encode([
+            'key'     => 'test-key',
+            'secret'  => 'test-secret',
+            'token'   => 'test-token',
+            'expires' => time() + 3600
+        ]);
+
+        $credentials = new Credentials('foo', 'bar');
+        $credentials->unserialize($oldSerializedData);
+
+        $this->assertEquals('test-key', $credentials->getAccessKeyId());
+        $this->assertEquals('test-secret', $credentials->getSecretKey());
+        $this->assertEquals('test-token', $credentials->getSecurityToken());
+        $this->assertNotNull($credentials->getExpiration());
+        $this->assertNull($credentials->getAccountId());
+    }
 }
