@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.5 - 2024-09-05
 
 * `Aws\Credentials` - Fixes issue with unserializing cached credentials without newly added `accountId` property
 * `Aws\ApplicationSignals` - Amazon CloudWatch Application Signals now supports creating Service Level Objectives using a new calculation type. Users can now create SLOs which are configured with request-based SLIs to help meet their specific business requirements.
