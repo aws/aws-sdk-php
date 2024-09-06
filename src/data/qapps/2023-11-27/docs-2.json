@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>The Amazon Q Apps feature capability within Amazon Q Business allows web experience users to create lightweight, purpose-built AI apps to fulfill specific tasks from within their web experience. For example, users can create an Q Appthat exclusively generates marketing-related content to improve your marketing team's productivity or a Q App for marketing content-generation like writing customer emails and creating promotional content using a certain style of voice, tone, and branding. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/purpose-built-qapps.html\">Amazon Q App</a> in the <i>Amazon Q Business User Guide</i>. </p>",
+  "service": "<p>The Amazon Q Apps feature capability within Amazon Q Business allows web experience users to create lightweight, purpose-built AI apps to fulfill specific tasks from within their web experience. For example, users can create a Q App that exclusively generates marketing-related content to improve your marketing team's productivity or a Q App for writing customer emails and creating promotional content using a certain style of voice, tone, and branding. For more information on the capabilities, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/deploy-experience-iam-role.html#q-apps-actions\">Amazon Q Apps capabilities</a> in the <i>Amazon Q Business User Guide</i>. </p> <p>For an overview of the Amazon Q App APIs, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_Operations_QApps.html\">Overview of Amazon Q Apps API operations</a>.</p> <p>For information about the IAM access control permissions you need to use the Amazon Q Apps API, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/deploy-experience-iam-role.html\"> IAM role for the Amazon Q Business web experience including Amazon Q Apps</a> in the <i>Amazon Q Business User Guide</i>.</p>",
   "operations": {
     "AssociateLibraryItemReview": "<p>Associates a rating or review for a library item with the user submitting the request. This increments the rating count for the specified library item.</p>",
     "AssociateQAppWithUser": "<p>This operation creates a link between the user's identity calling the operation and a specific Q App. This is useful to mark the Q App as a <i>favorite</i> for the user if the user doesn't own the Amazon Q App so they can still run it and see it in their inventory of Q Apps.</p>",
@@ -22,7 +22,8 @@
     "StopQAppSession": "<p>Stops an active session for an Amazon Q App.This deletes all data related to the session and makes it invalid for future uses. The results of the session will be persisted as part of the conversation.</p>",
     "TagResource": "<p>Associates tags with an Amazon Q Apps resource.</p>",
     "UntagResource": "<p>Disassociates tags from an Amazon Q Apps resource.</p>",
-    "UpdateLibraryItem": "<p>Updates the metadata and status of a library item for an Amazon Q App.</p>",
+    "UpdateLibraryItem": "<p>Updates the library item for an Amazon Q App.</p>",
+    "UpdateLibraryItemMetadata": "<p>Updates the verification status of a library item for an Amazon Q App.</p>",
     "UpdateQApp": "<p>Updates an existing Amazon Q App, allowing modifications to its title, description, and definition.</p>",
     "UpdateQAppSession": "<p>Updates the session for a given Q App <code>sessionId</code>. This is only valid when at least one card of the session is in the <code>WAITING</code> state. Data for each <code>WAITING</code> card can be provided as input. If inputs are not provided, the call will be accepted but session will not move forward. Inputs for cards that are not in the <code>WAITING</code> status will be ignored.</p>"
   },
@@ -128,12 +129,18 @@
       "base": null,
       "refs": {
         "AppDefinition$canEdit": "<p>A flag indicating whether the Q App's definition can be edited by the user.</p>",
+        "CreateLibraryItemOutput$isVerified": "<p>Indicates whether the library item has been verified.</p>",
         "FileUploadCard$allowOverride": "<p>A flag indicating if the user can override the default file for the upload card.</p>",
         "FileUploadCardInput$allowOverride": "<p>A flag indicating if the user can override the default file for the upload card.</p>",
         "GetLibraryItemOutput$isRatedByUser": "<p>Whether the current user has rated the library item.</p>",
+        "GetLibraryItemOutput$isVerified": "<p>Indicates whether the library item has been verified.</p>",
         "LibraryItemMember$isRatedByUser": "<p>Whether the current user has rated the library item.</p>",
+        "LibraryItemMember$isVerified": "<p>Indicates whether the library item has been verified.</p>",
+        "UpdateLibraryItemMetadataInput$isVerified": "<p>The verification status of the library item</p>",
         "UpdateLibraryItemOutput$isRatedByUser": "<p>Whether the current user has rated the library item.</p>",
-        "UserAppItem$canEdit": "<p>A flag indicating whether the user can edit the Q App.</p>"
+        "UpdateLibraryItemOutput$isVerified": "<p>Indicates whether the library item has been verified.</p>",
+        "UserAppItem$canEdit": "<p>A flag indicating whether the user can edit the Q App.</p>",
+        "UserAppItem$isVerified": "<p>Indicates whether the Q App has been verified.</p>"
       }
     },
     "Card": {
@@ -460,6 +467,7 @@
         "StartQAppSessionInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "StopQAppSessionInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "UpdateLibraryItemInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
+        "UpdateLibraryItemMetadataInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "UpdateQAppInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "UpdateQAppSessionInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>"
       }
@@ -886,6 +894,7 @@
         "TextInputCard$id": "<p>The unique identifier of the text input card.</p>",
         "TextInputCardInput$id": "<p>The unique identifier of the text input card.</p>",
         "UpdateLibraryItemInput$libraryItemId": "<p>The unique identifier of the library item to update.</p>",
+        "UpdateLibraryItemMetadataInput$libraryItemId": "<p>The unique identifier of the updated library item.</p>",
         "UpdateLibraryItemOutput$libraryItemId": "<p>The unique identifier of the updated library item.</p>",
         "UpdateLibraryItemOutput$appId": "<p>The unique identifier of the Q App associated with the library item.</p>",
         "UpdateQAppInput$appId": "<p>The unique identifier of the Q App to update.</p>",
@@ -910,6 +919,11 @@
       }
     },
     "UpdateLibraryItemInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateLibraryItemMetadataInput": {
       "base": null,
       "refs": {
       }

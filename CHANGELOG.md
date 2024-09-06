@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QApps` - Adds UpdateLibraryItemMetadata api to change status of app for admin verification feature and returns isVerified field in any api returning the app or library item.
+
 ## 3.321.5 - 2024-09-05
 
 * `Aws\Credentials` - Fixes issue with unserializing cached credentials without newly added `accountId` property
