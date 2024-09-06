@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.6 - 2024-09-06
 
 * `Aws\QApps` - Adds UpdateLibraryItemMetadata api to change status of app for admin verification feature and returns isVerified field in any api returning the app or library item.
 
