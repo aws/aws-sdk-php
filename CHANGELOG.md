@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.7 - 2024-09-09
 
 * `Aws\DynamoDB` - Doc-only update for DynamoDB. Added information about async behavior for TagResource and UntagResource APIs and updated the description of ResourceInUseException.
 * `Aws\SageMaker` - Amazon Sagemaker supports orchestrating SageMaker HyperPod clusters with Amazon EKS
