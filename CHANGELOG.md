@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Doc-only update for DynamoDB. Added information about async behavior for TagResource and UntagResource APIs and updated the description of ResourceInUseException.
+* `Aws\SageMaker` - Amazon Sagemaker supports orchestrating SageMaker HyperPod clusters with Amazon EKS
+* `Aws\IVSRealTime` - IVS Real-Time now offers customers the ability to broadcast to Stages using RTMP(S).
+* `Aws\SageMakerRuntime` - AWS SageMaker Runtime feature: Add sticky routing to support stateful inference models.
+* `Aws\Kafka` - Amazon MSK Replicator can now replicate data to identically named topics between MSK clusters within the same AWS Region or across different AWS Regions.
+* `Aws\ElasticLoadBalancingv2` - Add paginators for the ELBv2 DescribeListenerCertificates and DescribeRules APIs. Fix broken waiter for the ELBv2 DescribeLoadBalancers API.
+
 ## 3.321.6 - 2024-09-06
 
 * `Aws\QApps` - Adds UpdateLibraryItemMetadata api to change status of app for admin verification feature and returns isVerified field in any api returning the app or library item.

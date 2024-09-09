@@ -172,6 +172,12 @@
         "ResponseStream$ModelStreamError": "<p> An error occurred while streaming the response body. This error can have the following error codes:</p> <dl> <dt>ModelInvocationTimeExceeded</dt> <dd> <p>The model failed to finish sending the response within the timeout period allowed by Amazon SageMaker.</p> </dd> <dt>StreamBroken</dt> <dd> <p>The Transmission Control Protocol (TCP) connection between the client and the model was reset or closed.</p> </dd> </dl>"
       }
     },
+    "NewSessionResponseHeader": {
+      "base": null,
+      "refs": {
+        "InvokeEndpointOutput$NewSessionId": "<p>If you created a stateful session with your request, the ID and expiration time that the model assigns to that session.</p>"
+      }
+    },
     "PartBlob": {
       "base": null,
       "refs": {
@@ -199,6 +205,19 @@
     "ServiceUnavailable": {
       "base": "<p> The service is unavailable. Try your call again. </p>",
       "refs": {
+      }
+    },
+    "SessionIdHeader": {
+      "base": null,
+      "refs": {
+        "InvokeEndpointOutput$ClosedSessionId": "<p>If you closed a stateful session with your request, the ID of that session.</p>",
+        "InvokeEndpointWithResponseStreamInput$SessionId": "<p>The ID of a stateful session to handle your request.</p> <p>You can't create a stateful session by using the <code>InvokeEndpointWithResponseStream</code> action. Instead, you can create one by using the <code> <a>InvokeEndpoint</a> </code> action. In your request, you specify <code>NEW_SESSION</code> for the <code>SessionId</code> request parameter. The response to that request provides the session ID for the <code>NewSessionId</code> response parameter.</p>"
+      }
+    },
+    "SessionIdOrNewSessionConstantHeader": {
+      "base": null,
+      "refs": {
+        "InvokeEndpointInput$SessionId": "<p>Creates a stateful session or identifies an existing one. You can do one of the following:</p> <ul> <li> <p>Create a stateful session by specifying the value <code>NEW_SESSION</code>.</p> </li> <li> <p>Send your request to an existing stateful session by specifying the ID of that session.</p> </li> </ul> <p>With a stateful session, you can send multiple requests to a stateful model. When you create a session with a stateful model, the model must create the session ID and set the expiration time. The model must also provide that information in the response to your request. You can get the ID and timestamp from the <code>NewSessionId</code> response parameter. For any subsequent request where you specify that session ID, SageMaker routes the request to the same instance that supports the session.</p>"
       }
     },
     "StatusCode": {

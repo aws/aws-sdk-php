@@ -5930,9 +5930,10 @@
         "InstanceGroupName":{"shape":"ClusterInstanceGroupName"},
         "InstanceType":{"shape":"ClusterInstanceType"},
         "LifeCycleConfig":{"shape":"ClusterLifeCycleConfig"},
-        "ExecutionRole":{"shape":"IAMRoleArn"},
+        "ExecutionRole":{"shape":"RoleArn"},
         "ThreadsPerCore":{"shape":"ClusterThreadsPerCore"},
-        "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"}
+        "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"},
+        "OnStartDeepHealthChecks":{"shape":"OnStartDeepHealthChecks"}
       }
     },
     "ClusterInstanceGroupDetailsList":{
@@ -5959,9 +5960,10 @@
         "InstanceGroupName":{"shape":"ClusterInstanceGroupName"},
         "InstanceType":{"shape":"ClusterInstanceType"},
         "LifeCycleConfig":{"shape":"ClusterLifeCycleConfig"},
-        "ExecutionRole":{"shape":"IAMRoleArn"},
+        "ExecutionRole":{"shape":"RoleArn"},
         "ThreadsPerCore":{"shape":"ClusterThreadsPerCore"},
-        "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"}
+        "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"},
+        "OnStartDeepHealthChecks":{"shape":"OnStartDeepHealthChecks"}
       }
     },
     "ClusterInstanceGroupSpecifications":{
@@ -5984,7 +5986,8 @@
         "Failure",
         "Pending",
         "ShuttingDown",
-        "SystemUpdating"
+        "SystemUpdating",
+        "DeepHealthCheckInProgress"
       ]
     },
     "ClusterInstanceStatusDetails":{
@@ -6100,6 +6103,13 @@
       "min":1,
       "pattern":"^i-[a-f0-9]{8}(?:[a-f0-9]{9})?$"
     },
+    "ClusterNodeRecovery":{
+      "type":"string",
+      "enum":[
+        "Automatic",
+        "None"
+      ]
+    },
     "ClusterNodeSummaries":{
       "type":"list",
       "member":{"shape":"ClusterNodeSummary"}
@@ -6124,6 +6134,20 @@
     "ClusterNonNegativeInstanceCount":{
       "type":"integer",
       "min":0
+    },
+    "ClusterOrchestrator":{
+      "type":"structure",
+      "required":["Eks"],
+      "members":{
+        "Eks":{"shape":"ClusterOrchestratorEksConfig"}
+      }
+    },
+    "ClusterOrchestratorEksConfig":{
+      "type":"structure",
+      "required":["ClusterArn"],
+      "members":{
+        "ClusterArn":{"shape":"EksClusterArn"}
+      }
     },
     "ClusterPrivateDnsHostname":{
       "type":"string",
@@ -6794,7 +6818,9 @@
         "ClusterName":{"shape":"ClusterName"},
         "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"},
         "VpcConfig":{"shape":"VpcConfig"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "Orchestrator":{"shape":"ClusterOrchestrator"},
+        "NodeRecovery":{"shape":"ClusterNodeRecovery"}
       }
     },
     "CreateClusterResponse":{
@@ -8353,6 +8379,13 @@
       "max":20,
       "min":0
     },
+    "DeepHealthCheckType":{
+      "type":"string",
+      "enum":[
+        "InstanceStress",
+        "InstanceConnectivity"
+      ]
+    },
     "DefaultEbsStorageSettings":{
       "type":"structure",
       "required":[
@@ -9268,7 +9301,9 @@
         "CreationTime":{"shape":"Timestamp"},
         "FailureMessage":{"shape":"String"},
         "InstanceGroups":{"shape":"ClusterInstanceGroupDetailsList"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Orchestrator":{"shape":"ClusterOrchestrator"},
+        "NodeRecovery":{"shape":"ClusterNodeRecovery"}
       }
     },
     "DescribeCodeRepositoryInput":{
@@ -11573,6 +11608,12 @@
       "max":10,
       "pattern":"\\d+"
     },
+    "EksClusterArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\-]*:eks:[a-z0-9\\-]*:[0-9]{12}:cluster\\/[0-9A-Za-z][A-Za-z0-9\\-_]{0,99}$"
+    },
     "EmrServerlessComputeConfig":{
       "type":"structure",
       "required":["ExecutionRoleARN"],
@@ -13371,12 +13412,6 @@
     "HyperbandStrategyMinResource":{
       "type":"integer",
       "min":1
-    },
-    "IAMRoleArn":{
-      "type":"string",
-      "max":2048,
-      "min":20,
-      "pattern":"^arn:aws[a-z\\-]*:iam::\\d{12}:role/[\\w+=,.@-]{1,64}$"
     },
     "IamIdentity":{
       "type":"structure",
@@ -18474,6 +18509,12 @@
         "Groups":{"shape":"Groups"}
       }
     },
+    "OnStartDeepHealthChecks":{
+      "type":"list",
+      "member":{"shape":"DeepHealthCheckType"},
+      "max":2,
+      "min":1
+    },
     "OnlineStoreConfig":{
       "type":"structure",
       "members":{
@@ -23507,7 +23548,8 @@
       ],
       "members":{
         "ClusterName":{"shape":"ClusterNameOrArn"},
-        "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"}
+        "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"},
+        "NodeRecovery":{"shape":"ClusterNodeRecovery"}
       }
     },
     "UpdateClusterResponse":{

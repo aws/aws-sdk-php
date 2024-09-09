@@ -677,7 +677,7 @@
     "AppLifecycleManagement": {
       "base": "<p>Settings that are used to configure and manage the lifecycle of Amazon SageMaker Studio applications.</p>",
       "refs": {
-        "CodeEditorAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of CodeEditor applications.</p> <p/>",
+        "CodeEditorAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of CodeEditor applications.</p>",
         "JupyterLabAppSettings$AppLifecycleManagement": "<p>Indicates whether idle shutdown is activated for JupyterLab applications.</p>"
       }
     },
@@ -2227,6 +2227,14 @@
         "DescribeClusterNodeRequest$NodeId": "<p>The ID of the SageMaker HyperPod cluster node.</p>"
       }
     },
+    "ClusterNodeRecovery": {
+      "base": null,
+      "refs": {
+        "CreateClusterRequest$NodeRecovery": "<p>The node recovery mode for the SageMaker HyperPod cluster. When set to <code>Automatic</code>, SageMaker HyperPod will automatically reboot or replace faulty nodes when issues are detected. When set to <code>None</code>, cluster administrators will need to manually manage any faulty cluster instances.</p>",
+        "DescribeClusterResponse$NodeRecovery": "<p>The node recovery mode configured for the SageMaker HyperPod cluster.</p>",
+        "UpdateClusterRequest$NodeRecovery": "<p>The node recovery mode to be applied to the SageMaker HyperPod cluster.</p>"
+      }
+    },
     "ClusterNodeSummaries": {
       "base": null,
       "refs": {
@@ -2243,6 +2251,19 @@
       "base": null,
       "refs": {
         "ClusterInstanceGroupDetails$CurrentCount": "<p>The number of instances that are currently in the instance group of a SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "ClusterOrchestrator": {
+      "base": "<p>The type of orchestrator used for the SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "CreateClusterRequest$Orchestrator": "<p>The type of orchestrator to use for the SageMaker HyperPod cluster. Currently, the only supported value is <code>\"eks\"</code>, which is to use an Amazon Elastic Kubernetes Service (EKS) cluster as the orchestrator.</p>",
+        "DescribeClusterResponse$Orchestrator": "<p>The type of orchestrator used for the SageMaker HyperPod cluster. </p>"
+      }
+    },
+    "ClusterOrchestratorEksConfig": {
+      "base": "<p>The configuration settings for the Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ClusterOrchestrator$Eks": "<p>The Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>"
       }
     },
     "ClusterPrivateDnsHostname": {
@@ -3614,6 +3635,12 @@
       "refs": {
         "DescribeTrainingJobResponse$DebugRuleEvaluationStatuses": "<p>Evaluation status of Amazon SageMaker Debugger rules for debugging on a training job.</p>",
         "TrainingJob$DebugRuleEvaluationStatuses": "<p>Information about the evaluation status of the rules for the training job.</p>"
+      }
+    },
+    "DeepHealthCheckType": {
+      "base": null,
+      "refs": {
+        "OnStartDeepHealthChecks$member": null
       }
     },
     "DefaultEbsStorageSettings": {
@@ -5328,6 +5355,12 @@
       "refs": {
         "DescribeSpaceResponse$HomeEfsFileSystemUid": "<p>The ID of the space's profile in the Amazon EFS volume.</p>",
         "DescribeUserProfileResponse$HomeEfsFileSystemUid": "<p>The ID of the user's profile in the Amazon Elastic File System volume.</p>"
+      }
+    },
+    "EksClusterArn": {
+      "base": null,
+      "refs": {
+        "ClusterOrchestratorEksConfig$ClusterArn": "<p>The Amazon Resource Name (ARN) of the Amazon EKS cluster associated with the SageMaker HyperPod cluster.</p>"
       }
     },
     "EmrServerlessComputeConfig": {
@@ -7282,13 +7315,6 @@
       "base": null,
       "refs": {
         "HyperbandStrategyConfig$MinResource": "<p>The minimum number of resources (such as epochs) that can be used by a training job launched by a hyperparameter tuning job. If the value for <code>MinResource</code> has not been reached, the training job is not stopped by <code>Hyperband</code>.</p>"
-      }
-    },
-    "IAMRoleArn": {
-      "base": null,
-      "refs": {
-        "ClusterInstanceGroupDetails$ExecutionRole": "<p>The execution role for the instance group to assume.</p>",
-        "ClusterInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the instance group.</p>"
       }
     },
     "IamIdentity": {
@@ -11606,6 +11632,13 @@
         "MemberDefinition$OidcMemberDefinition": "<p>A list user groups that exist in your OIDC Identity Provider (IdP). One to ten groups can be used to create a single private work team. When you add a user group to the list of <code>Groups</code>, you can add that user group to one or more private work teams. If you add a user group to a private work team, all workers in that user group are added to the work team.</p>"
       }
     },
+    "OnStartDeepHealthChecks": {
+      "base": null,
+      "refs": {
+        "ClusterInstanceGroupDetails$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>",
+        "ClusterInstanceGroupSpecification$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>"
+      }
+    },
     "OnlineStoreConfig": {
       "base": "<p>Use this to specify the Amazon Web Services Key Management Service (KMS) Key ID, or <code>KMSKeyId</code>, for at rest data encryption. You can turn <code>OnlineStore</code> on or off by specifying the <code>EnableOnlineStore</code> flag at General Assembly.</p> <p>The default value is <code>False</code>.</p>",
       "refs": {
@@ -13537,6 +13570,8 @@
       "refs": {
         "AlgorithmValidationSpecification$ValidationRole": "<p>The IAM roles that SageMaker uses to run the training jobs.</p>",
         "AssumableRoleArns$member": null,
+        "ClusterInstanceGroupDetails$ExecutionRole": "<p>The execution role for the instance group to assume.</p>",
+        "ClusterInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the instance group.</p>",
         "CreateAutoMLJobRequest$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
         "CreateAutoMLJobV2Request$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
         "CreateCompilationJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that enables Amazon SageMaker to perform tasks on your behalf. </p> <p>During model compilation, Amazon SageMaker needs your permission to:</p> <ul> <li> <p>Read input data from an S3 bucket</p> </li> <li> <p>Write model artifacts to an S3 bucket</p> </li> <li> <p>Write logs to Amazon CloudWatch Logs</p> </li> <li> <p>Publish metrics to Amazon CloudWatch</p> </li> </ul> <p>You grant permissions for all of these tasks to an IAM role. To pass this role to Amazon SageMaker, the caller of this API must have the <code>iam:PassRole</code> permission. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html\">Amazon SageMaker Roles.</a> </p>",
