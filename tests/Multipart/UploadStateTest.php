@@ -2,7 +2,7 @@
 namespace Aws\Test\Multipart;
 
 use Aws\Multipart\UploadState;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\Multipart\UploadState
@@ -69,5 +69,160 @@ class UploadStateTest extends TestCase
         $this->assertArrayHasKey(1, $state->getUploadedParts());
         $this->assertTrue($newState->isInitiated());
         $this->assertArrayHasKey('foo', $newState->getId());
+    }
+
+    public function testEmptyUploadStateOutputWithConfigFalse()
+    {
+        $state = new UploadState([], ['display_progress' => false]);
+        $state->getDisplayProgress(13);
+        $this->expectOutputString('');
+    }
+
+    /**
+     * @dataProvider getDisplayProgressCases
+     */
+    public function testGetDisplayProgressPrintsProgress(
+        $totalSize,
+        $totalUploaded,
+        $progressBar
+    ) {
+        $state = new UploadState([], ['display_progress' => true]);
+        $state->setProgressThresholds($totalSize);
+        $state->getDisplayProgress($totalUploaded);
+
+        $this->expectOutputString($progressBar);
+    }
+
+    public function getDisplayProgressCases()
+    {
+        $progressBar = ["Transfer initiated...\n|                    | 0.0%\n",
+                        "|==                  | 12.5%\n",
+                        "|=====               | 25.0%\n",
+                        "|=======             | 37.5%\n",
+                        "|==========          | 50.0%\n",
+                        "|============        | 62.5%\n",
+                        "|===============     | 75.0%\n",
+                        "|=================   | 87.5%\n",
+                        "|====================| 100.0%\nTransfer complete!\n"];
+        return [
+            [100000, 0, $progressBar[0]],
+            [100000, 12499, $progressBar[0]],
+            [100000, 12500, "{$progressBar[0]}{$progressBar[1]}"],
+            [100000, 24999, "{$progressBar[0]}{$progressBar[1]}"],
+            [100000, 25000, "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}"],
+            [100000, 37499, "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}"],
+            [
+                100000,
+                37500,
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}"
+            ],
+            [
+                100000,
+                49999,
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}"
+            ],
+            [
+                100000,
+                50000,
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}"
+            ],
+            [
+                100000,
+                62499,
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}"
+            ],
+            [
+                100000,
+                62500,
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}"
+            ],
+            [
+                100000,
+                74999,
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}"
+            ],
+            [
+                100000,
+                75000,
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}{$progressBar[6]}"
+            ],
+            [
+                100000,
+                87499,
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}{$progressBar[6]}"
+            ],
+            [
+                100000,
+                87500,
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}{$progressBar[6]}{$progressBar[7]}"
+            ],
+            [
+                100000,
+                99999,
+                "{$progressBar[0]}{$progressBar[1]}{$progressBar[2]}{$progressBar[3]}" .
+                "{$progressBar[4]}{$progressBar[5]}{$progressBar[6]}{$progressBar[7]}"
+            ],
+            [100000, 100000, implode($progressBar)]
+        ];
+    }
+
+    /**
+     * @dataProvider getThresholdCases
+     */
+    public function testUploadThresholds($totalSize)
+    {
+        $state = new UploadState([]);
+        $threshold = $state->setProgressThresholds($totalSize);
+
+        $this->assertIsArray($threshold);
+        $this->assertCount(9, $threshold);
+    }
+
+    public function getThresholdCases()
+    {
+        return [
+            [0],
+            [100000],
+            [100001]
+        ];
+    }
+
+    /**
+     * @dataProvider getInvalidIntCases
+     */
+    public function testSetProgressThresholdsThrowsException($totalSize)
+    {
+        $state = new UploadState([]);
+        $this->expectExceptionMessage('The total size of the upload must be a number.');
+        $this->expectException(\InvalidArgumentException::class);
+
+        $state->setProgressThresholds($totalSize);
+    }
+
+    /**
+     * @dataProvider getInvalidIntCases
+     */
+    public function testDisplayProgressThrowsException($totalUploaded)
+    {
+        $state = new UploadState([]);
+        $this->expectExceptionMessage('The size of the bytes being uploaded must be a number.');
+        $this->expectException(\InvalidArgumentException::class);
+        $state->getDisplayProgress($totalUploaded);
+    }
+
+    public function getInvalidIntCases()
+    {
+        return [
+            [''],
+            [null],
+            ['aws']
+        ];
     }
 }

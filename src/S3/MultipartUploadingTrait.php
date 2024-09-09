@@ -7,6 +7,8 @@ use Aws\ResultInterface;
 
 trait MultipartUploadingTrait
 {
+    private $uploadedBytes = 0;
+
     /**
      * Creates an UploadState object for a multipart upload by querying the
      * service for the specified upload's information.
@@ -59,6 +61,13 @@ trait MultipartUploadingTrait
             $partData[$checksumMemberName] = $result[$checksumMemberName];
         }
         $this->getState()->markPartAsUploaded($command['PartNumber'], $partData);
+
+        // Updates counter for uploaded bytes.
+        $this->uploadedBytes += $command["ContentLength"];
+        // Sends uploaded bytes to progress tracker if getDisplayProgress set
+        if ($this->displayProgress) {
+            $this->getState()->getDisplayProgress($this->uploadedBytes);
+        }
     }
 
     abstract protected function extractETag(ResultInterface $result);
