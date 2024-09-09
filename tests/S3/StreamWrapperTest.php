@@ -1035,4 +1035,30 @@ class StreamWrapperTest extends TestCase
         $stream = fopen('s3://bucket/key', 'a');
         fwrite($stream, $content);
     }
+
+    public function testStreamSetOption()
+    {
+        $stream = fopen('s3://bucket/key', 'r');
+        $this->assertFalse(stream_set_option($stream, STREAM_OPTION_READ_TIMEOUT, 1));
+    }
+
+    public function testStreamMetadata()
+    {
+        $stream = fopen('s3://bucket/key', 'r');
+        $this->assertFalse(stream_metadata($stream, STREAM_META_TOUCH, 1));
+    }
+
+    public function testStreamLock()
+    {
+        $stream = fopen('s3://bucket/key', 'r');
+        $this->assertFalse(flock($stream, LOCK_EX));
+        $this->assertFalse(flock($stream, LOCK_UN));
+        $this->assertFalse(flock($stream, LOCK_SH));
+    }
+
+    public function testStreamTruncate()
+    {
+        $stream = fopen('s3://bucket/key', 'r');
+        $this->assertFalse(ftruncate($stream, 1));
+    }
 }
