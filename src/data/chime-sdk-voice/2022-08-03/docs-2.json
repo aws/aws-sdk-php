@@ -208,7 +208,7 @@
         "GetVoiceToneAnalysisTaskRequest$IsCaller": "<p>Specifies whether the voice being analyzed is the caller (originator) or the callee (responder).</p>",
         "LoggingConfiguration$EnableSIPLogs": "<p>Boolean that enables sending SIP message logs to Amazon CloudWatch.</p>",
         "LoggingConfiguration$EnableMediaMetricLogs": "<p>Enables or disables media metrics logging.</p>",
-        "MediaInsightsConfiguration$Disabled": "<p>Denotes the configration as enabled or disabled.</p>",
+        "MediaInsightsConfiguration$Disabled": "<p>Denotes the configuration as enabled or disabled.</p>",
         "Origination$Disabled": "<p>When origination settings are disabled, inbound calls are not enabled for your Amazon Chime SDK Voice Connector. This parameter is not required, but you must specify this parameter or <code>Routes</code>.</p>",
         "Proxy$Disabled": "<p>When true, stops proxy sessions from being created on the specified Amazon Chime SDK Voice Connector.</p>",
         "PutVoiceConnectorProxyRequest$Disabled": "<p>When true, stops proxy sessions from being created on the specified Amazon Chime SDK Voice Connector.</p>",
@@ -1126,7 +1126,7 @@
         "GetSpeakerSearchTaskRequest$SpeakerSearchTaskId": "<p>The ID of the speaker search task.</p>",
         "GetVoiceProfileDomainRequest$VoiceProfileDomainId": "<p>The voice profile domain ID.</p>",
         "GetVoiceProfileRequest$VoiceProfileId": "<p>The voice profile ID.</p>",
-        "GetVoiceToneAnalysisTaskRequest$VoiceToneAnalysisTaskId": "<p>The ID of the voice tone anlysis task.</p>",
+        "GetVoiceToneAnalysisTaskRequest$VoiceToneAnalysisTaskId": "<p>The ID of the voice tone analysis task.</p>",
         "ListVoiceProfilesRequest$VoiceProfileDomainId": "<p>The ID of the voice profile domain.</p>",
         "SpeakerSearchDetails$VoiceprintGenerationStatus": "<p>The status of a voice print generation operation, <code>VoiceprintGenerationSuccess</code> or <code>VoiceprintGenerationFailure</code>..</p>",
         "SpeakerSearchResult$VoiceProfileId": "<p>The voice profile ID.</p>",
@@ -1619,7 +1619,7 @@
         "ValidateE911AddressRequest$StreetInfo": "<p>The address street information, such as <code>8th Avenue</code>.</p>",
         "ValidateE911AddressRequest$City": "<p>The address city, such as <code>Portland</code>.</p>",
         "ValidateE911AddressRequest$State": "<p>The address state, such as <code>ME</code>.</p>",
-        "ValidateE911AddressRequest$Country": "<p>The country in the address being validated.</p>",
+        "ValidateE911AddressRequest$Country": "<p>The country in the address being validated as two-letter country code in ISO 3166-1 alpha-2 format, such as <code>US</code>. For more information, see <a href=\"https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2\">ISO 3166-1 alpha-2</a> in Wikipedia.</p>",
         "ValidateE911AddressRequest$PostalCode": "<p>The dress postal code, such <code>04352</code>.</p>"
       }
     },
@@ -2108,7 +2108,7 @@
     "ValidationResult": {
       "base": null,
       "refs": {
-        "ValidateE911AddressResponse$ValidationResult": "<p>Number indicating the result of address validation. <code>0</code> means the address was perfect as-is and successfully validated. <code>1</code> means the address was corrected. <code>2</code> means the address sent was not close enough and was not validated.</p>"
+        "ValidateE911AddressResponse$ValidationResult": "<p>Number indicating the result of address validation.</p> <p>Each possible result is defined as follows:</p> <ul> <li> <p> <code>0</code> - Address validation succeeded.</p> </li> <li> <p> <code>1</code> - Address validation succeeded. The address was a close enough match and has been corrected as part of the address object.</p> </li> <li> <p> <code>2</code> - Address validation failed. You should re-submit the validation request with candidates from the <code>CandidateAddressList</code> result, if it's a close match.</p> </li> </ul>"
       }
     },
     "VoiceConnector": {

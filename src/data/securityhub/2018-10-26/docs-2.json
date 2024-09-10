@@ -170,7 +170,7 @@
     "ActionRemoteIpDetails": {
       "base": "<p>For <code>AwsApiAction</code>, <code>NetworkConnectionAction</code>, and <code>PortProbeAction</code>, <code>RemoteIpDetails</code> provides information about the remote IP address that was involved in the action.</p>",
       "refs": {
-        "AwsApiCallAction$RemoteIpDetails": "<p>Provided if <code>CallerType</code> is <code>remoteIp</code>. Provides information about the remote IP address that the API call originated from.</p>",
+        "AwsApiCallAction$RemoteIpDetails": "<p>Provided if <code>CallerType</code> is <code>remoteip</code>. Provides information about the remote IP address that the API call originated from.</p>",
         "NetworkConnectionAction$RemoteIpDetails": "<p>Information about the remote IP address that issued the network connection request.</p>",
         "PortProbeDetail$RemoteIpDetails": "<p>Provides information about the remote IP address that performed the scan.</p>"
       }
@@ -252,7 +252,7 @@
     "AssociatedStandardsList": {
       "base": null,
       "refs": {
-        "Compliance$AssociatedStandards": "<p>The enabled security standards in which a security control is currently enabled. </p>"
+        "Compliance$AssociatedStandards": "<p>Typically provides an array of enabled security standards in which a security control is currently enabled. </p>"
       }
     },
     "AssociationFilters": {
@@ -4749,7 +4749,7 @@
       }
     },
     "Compliance": {
-      "base": "<p>Contains finding details that are specific to control-based findings. Only returned for findings generated from controls.</p>",
+      "base": "<p>This object typically provides details about a control finding, such as applicable standards and the status of control checks. While finding providers can add custom content in <code>Compliance</code> object fields, they are typically used to review details of Security Hub control findings.</p>",
       "refs": {
         "AwsSecurityFinding$Compliance": "<p>This data type is exclusive to findings that are generated as the result of a check run against a specific rule in a supported security standard, such as CIS Amazon Web Services Foundations. Contains security standard-related finding details.</p>"
       }
@@ -4757,7 +4757,7 @@
     "ComplianceStatus": {
       "base": null,
       "refs": {
-        "Compliance$Status": "<p>The result of a standards check.</p> <p>The valid values for <code>Status</code> are as follows.</p> <ul> <li> <ul> <li> <p> <code>PASSED</code> - Standards check passed for all evaluated resources.</p> </li> <li> <p> <code>WARNING</code> - Some information is missing or this check is not supported for your configuration.</p> </li> <li> <p> <code>FAILED</code> - Standards check failed for at least one evaluated resource.</p> </li> <li> <p> <code>NOT_AVAILABLE</code> - Check could not be performed due to a service outage, API error, or because the result of the Config evaluation was <code>NOT_APPLICABLE</code>. If the Config evaluation result was <code>NOT_APPLICABLE</code> for a Security Hub control, Security Hub automatically archives the finding after 3 days.</p> </li> </ul> </li> </ul>"
+        "Compliance$Status": "<p>Typically summarizes the result of a control check.</p> <p>For Security Hub controls, valid values for <code>Status</code> are as follows.</p> <ul> <li> <ul> <li> <p> <code>PASSED</code> - Standards check passed for all evaluated resources.</p> </li> <li> <p> <code>WARNING</code> - Some information is missing or this check is not supported for your configuration.</p> </li> <li> <p> <code>FAILED</code> - Standards check failed for at least one evaluated resource.</p> </li> <li> <p> <code>NOT_AVAILABLE</code> - Check could not be performed due to a service outage, API error, or because the result of the Config evaluation was <code>NOT_APPLICABLE</code>. If the Config evaluation result was <code>NOT_APPLICABLE</code> for a Security Hub control, Security Hub automatically archives the finding after 3 days.</p> </li> </ul> </li> </ul>"
       }
     },
     "ConfigurationOptions": {
@@ -7658,7 +7658,7 @@
         "CloudWatchLogsLogGroupArnConfigDetails$Id": "<p> The ID for a DNS query logging configuration. </p>",
         "CodeVulnerabilitiesFilePath$FileName": "<p> The name of the file in which the code vulnerability is located. </p>",
         "CodeVulnerabilitiesFilePath$FilePath": "<p> The file path to the code in which the vulnerability is located. </p>",
-        "Compliance$SecurityControlId": "<p> The unique identifier of a control across standards. Values for this field typically consist of an Amazon Web Servicesservice and a number, such as APIGateway.5. </p>",
+        "Compliance$SecurityControlId": "<p> Typically provides the unique identifier of a control across standards. For Security Hub controls, this field consists of an Amazon Web Servicesservice and a unique number, such as <code>APIGateway.5</code>. </p>",
         "ConfigurationPolicyAssociationSummary$ConfigurationPolicyId": "<p> The universally unique identifier (UUID) of the configuration policy. </p>",
         "ConfigurationPolicyAssociationSummary$TargetId": "<p> The identifier of the target account, organizational unit, or the root. </p>",
         "ConfigurationPolicyAssociationSummary$AssociationStatusMessage": "<p> The explanation for a <code>FAILED</code> value for <code>AssociationStatus</code>. </p>",
@@ -8394,7 +8394,7 @@
     "RelatedRequirementsList": {
       "base": null,
       "refs": {
-        "Compliance$RelatedRequirements": "<p>For a control, the industry or regulatory framework requirements that are related to the control. The check for that control is aligned with these requirements.</p> <p>Array Members: Maximum number of 32 items.</p>",
+        "Compliance$RelatedRequirements": "<p>Typically provides the industry or regulatory framework requirements that are related to a control. The check for that control is aligned with these requirements.</p> <p>Array Members: Maximum number of 32 items.</p>",
         "StandardsControl$RelatedRequirements": "<p>The list of requirements that are related to this control.</p>",
         "StandardsControlAssociationDetail$RelatedRequirements": "<p> The requirement that underlies a control in the compliance framework related to the standard. </p>",
         "StandardsControlAssociationSummary$RelatedRequirements": "<p> The requirement that underlies this control in the compliance framework related to the standard. </p>"
@@ -8714,7 +8714,7 @@
     "SecurityControlParametersList": {
       "base": null,
       "refs": {
-        "Compliance$SecurityControlParameters": "<p> An object that includes security control parameter names and values. </p>"
+        "Compliance$SecurityControlParameters": "<p> Typically an object that includes security control parameter names and values. </p>"
       }
     },
     "SecurityControlProperty": {
@@ -9035,7 +9035,7 @@
     "StatusReasonsList": {
       "base": null,
       "refs": {
-        "Compliance$StatusReasons": "<p>For findings generated from controls, a list of reasons behind the value of <code>Status</code>. For the list of status reason codes and their meanings, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-results.html#securityhub-standards-results-asff\">Standards-related information in the ASFF</a> in the <i>Security Hub User Guide</i>. </p>"
+        "Compliance$StatusReasons": "<p>Typically used to provide a list of reasons for the value of <code>Status</code>.</p>"
       }
     },
     "StringConfigurationOptions": {
