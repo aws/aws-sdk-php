@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.8 - 2024-09-10
 
 * `Aws\CognitoIdentity` - This release adds sensitive trait to some required shapes.
 * `Aws\SecurityHub` - Documentation update for Security Hub
