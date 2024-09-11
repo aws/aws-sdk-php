@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.9 - 2024-09-11
 
 * `Aws\BedrockAgent` - Amazon Bedrock Knowledge Bases now supports using inference profiles to increase throughput and improve resilience.
 * `Aws\LexModelsV2` - Support new Polly voice engines in VoiceSettings: long-form and generative
