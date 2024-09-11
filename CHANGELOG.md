@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockAgent` - Amazon Bedrock Knowledge Bases now supports using inference profiles to increase throughput and improve resilience.
+* `Aws\LexModelsV2` - Support new Polly voice engines in VoiceSettings: long-form and generative
+* `Aws\MediaLive` - Adds AV1 Codec support, SRT ouputs, and MediaLive Anywhere support.
+* `Aws\ECR` - Added KMS_DSSE to EncryptionType
+* `Aws\GuardDuty` - Add support for new statistic types in GetFindingsStatistics.
+* `Aws\BedrockAgentRuntime` - Amazon Bedrock Knowledge Bases now supports using inference profiles to increase throughput and improve resilience.
+
 ## 3.321.8 - 2024-09-10
 
 * `Aws\CognitoIdentity` - This release adds sensitive trait to some required shapes.
