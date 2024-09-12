@@ -1546,6 +1546,12 @@
         "UpdateSourceControlFromJobRequest$CommitId": "<p>A commit ID for a commit in the remote repository.</p>"
       }
     },
+    "CompactionMetrics": {
+      "base": "<p>A structure that contains compaction metrics for the optimizer run.</p>",
+      "refs": {
+        "TableOptimizerRun$compactionMetrics": "<p>A <code>CompactionMetrics</code> object containing metrics for the optimizer run.</p>"
+      }
+    },
     "Comparator": {
       "base": null,
       "refs": {
@@ -4900,10 +4906,40 @@
         "EncryptionAtRest$CatalogEncryptionServiceRole": "<p>The role that Glue assumes to encrypt and decrypt the Data Catalog objects on the caller's behalf.</p>"
       }
     },
+    "IcebergCompactionMetrics": {
+      "base": "<p>Compaction metrics for Iceberg for the optimizer run.</p>",
+      "refs": {
+        "CompactionMetrics$IcebergMetrics": "<p>A structure containing the Iceberg compaction metrics for the optimizer run.</p>"
+      }
+    },
     "IcebergInput": {
       "base": "<p>A structure that defines an Apache Iceberg metadata table to create in the catalog.</p>",
       "refs": {
         "OpenTableFormatInput$IcebergInput": "<p>Specifies an <code>IcebergInput</code> structure that defines an Apache Iceberg metadata table.</p>"
+      }
+    },
+    "IcebergOrphanFileDeletionConfiguration": {
+      "base": "<p>The configuration for an Iceberg orphan file deletion optimizer.</p>",
+      "refs": {
+        "OrphanFileDeletionConfiguration$icebergConfiguration": "<p>The configuration for an Iceberg orphan file deletion optimizer.</p>"
+      }
+    },
+    "IcebergOrphanFileDeletionMetrics": {
+      "base": "<p>Orphan file deletion metrics for Iceberg for the optimizer run.</p>",
+      "refs": {
+        "OrphanFileDeletionMetrics$IcebergMetrics": "<p>A structure containing the Iceberg orphan file deletion metrics for the optimizer run.</p>"
+      }
+    },
+    "IcebergRetentionConfiguration": {
+      "base": "<p>The configuration for an Iceberg snapshot retention optimizer.</p>",
+      "refs": {
+        "RetentionConfiguration$icebergConfiguration": "<p>The configuration for an Iceberg snapshot retention optimizer.</p>"
+      }
+    },
+    "IcebergRetentionMetrics": {
+      "base": "<p>Snapshot retention metrics for Iceberg for the optimizer run.</p>",
+      "refs": {
+        "RetentionMetrics$IcebergMetrics": "<p>A structure containing the Iceberg retention metrics for the optimizer run.</p>"
       }
     },
     "IcebergTarget": {
@@ -5863,6 +5899,7 @@
         "FederationSourceException$Message": "<p>The message describing the problem.</p>",
         "FederationSourceRetryableException$Message": "<p>A message describing the problem.</p>",
         "GlueEncryptionException$Message": "<p>The message describing the problem.</p>",
+        "IcebergOrphanFileDeletionConfiguration$location": "<p>Specifies a directory in which to look for files (defaults to the table's location). You may choose a sub-directory rather than the top-level table location.</p>",
         "IdempotentParameterMismatchException$Message": "<p>A message describing the problem.</p>",
         "IllegalBlueprintStateException$Message": "<p>A message describing the problem.</p>",
         "IllegalSessionStateException$Message": "<p>A message describing the problem.</p>",
@@ -5885,6 +5922,7 @@
         "SchedulerRunningException$Message": "<p>A message describing the problem.</p>",
         "SchedulerTransitioningException$Message": "<p>A message describing the problem.</p>",
         "TableOptimizerRun$error": "<p>An error that occured during the optimizer run.</p>",
+        "ThrottlingException$Message": "<p>A message describing the problem.</p>",
         "ValidationException$Message": "<p>A message describing the problem.</p>",
         "VersionMismatchException$Message": "<p>A message describing the problem.</p>"
       }
@@ -6609,6 +6647,7 @@
         "GetWorkflowRequest$IncludeGraph": "<p>Specifies whether to include a graph when returning the workflow resource metadata.</p>",
         "GetWorkflowRunRequest$IncludeGraph": "<p>Specifies whether to include the workflow graph in response or not.</p>",
         "GetWorkflowRunsRequest$IncludeGraph": "<p>Specifies whether to include the workflow graph in response or not.</p>",
+        "IcebergRetentionConfiguration$cleanExpiredFiles": "<p>If set to false, snapshots are only deleted from table metadata, and the underlying data and metadata files are not deleted.</p>",
         "InvalidInputException$FromFederationSource": "<p>Indicates whether or not the exception relates to a federated source.</p>",
         "Job$JobRunQueuingEnabled": "<p>Specifies whether job run queuing is enabled for the job runs for this job.</p> <p>A value of true means job run queuing is enabled for the job runs. If false or not populated, the job runs will not be considered for queueing.</p> <p>If this field does not match the value set in the job run, then the value from the job run field will be used.</p>",
         "JobRun$JobRunQueuingEnabled": "<p>Specifies whether job run queuing is enabled for the job run.</p> <p>A value of true means job run queuing is enabled for the job run. If false or not populated, the job run will not be considered for queueing.</p>",
@@ -6617,7 +6656,7 @@
         "MongoDBTarget$ScanAll": "<p>Indicates whether to scan all the records, or to sample rows from the table. Scanning all the records can take a long time when the table is not a high throughput table.</p> <p>A value of <code>true</code> means to scan all records, while a value of <code>false</code> means to sample the records. If no value is specified, the value defaults to <code>true</code>.</p>",
         "StartJobRunRequest$JobRunQueuingEnabled": "<p>Specifies whether job run queuing is enabled for the job run.</p> <p>A value of true means job run queuing is enabled for the job run. If false or not populated, the job run will not be considered for queueing.</p>",
         "Table$IsMultiDialectView": "<p>Specifies whether the view supports the SQL dialects of one or more different query engines and can therefore be read by those engines.</p>",
-        "TableOptimizerConfiguration$enabled": "<p>Whether table optimization is enabled. </p>",
+        "TableOptimizerConfiguration$enabled": "<p>Whether table optimization is enabled.</p>",
         "UpdateCsvClassifierRequest$DisableValueTrimming": "<p>Specifies not to trim values before identifying the type of column values. The default value is true.</p>",
         "UpdateCsvClassifierRequest$AllowSingleColumn": "<p>Enables the processing of files that contain only one column.</p>",
         "UpdateCsvClassifierRequest$CustomDatatypeConfigured": "<p>Specifies the configuration of custom datatypes.</p>",
@@ -6672,6 +6711,9 @@
         "GetMLTransformResponse$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when this task runs.</p>",
         "GetMLTransformResponse$MaxRetries": "<p>The maximum number of times to retry a task for this transform after a task run fails.</p>",
         "HudiTarget$MaximumTraversalDepth": "<p>The maximum depth of Amazon S3 paths that the crawler can traverse to discover the Hudi metadata folder in your Amazon S3 path. Used to limit the crawler run time.</p>",
+        "IcebergOrphanFileDeletionConfiguration$orphanFileRetentionPeriodInDays": "<p>The number of days that orphan files should be retained before file deletion. If an input is not provided, the default value 3 will be used.</p>",
+        "IcebergRetentionConfiguration$snapshotRetentionPeriodInDays": "<p>The number of days to retain the Iceberg snapshots. If an input is not provided, the corresponding Iceberg table configuration field will be used or if not present, the default value 5 will be used.</p>",
+        "IcebergRetentionConfiguration$numberOfSnapshotsToRetain": "<p>The number of Iceberg snapshots to retain within the retention period. If an input is not provided, the corresponding Iceberg table configuration field will be used or if not present, the default value 1 will be used.</p>",
         "IcebergTarget$MaximumTraversalDepth": "<p>The maximum depth of Amazon S3 paths that the crawler can traverse to discover the Iceberg metadata folder in your Amazon S3 path. Used to limit the crawler run time.</p>",
         "Job$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p>",
         "JobRun$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p>",
@@ -6934,6 +6976,18 @@
       "base": null,
       "refs": {
         "StorageDescriptor$SortColumns": "<p>A list specifying the sort order of each bucket in the table.</p>"
+      }
+    },
+    "OrphanFileDeletionConfiguration": {
+      "base": "<p>The configuration for an orphan file deletion optimizer.</p>",
+      "refs": {
+        "TableOptimizerConfiguration$orphanFileDeletionConfiguration": "<p>The configuration for an orphan file deletion optimizer.</p>"
+      }
+    },
+    "OrphanFileDeletionMetrics": {
+      "base": "<p>A structure that contains orphan file deletion metrics for the optimizer run.</p>",
+      "refs": {
+        "TableOptimizerRun$orphanFileDeletionMetrics": "<p>An <code>OrphanFileDeletionMetrics</code> object containing metrics for the optimizer run.</p>"
       }
     },
     "OtherMetadataValueList": {
@@ -7649,6 +7703,18 @@
       "refs": {
       }
     },
+    "RetentionConfiguration": {
+      "base": "<p>The configuration for a snapshot retention optimizer.</p>",
+      "refs": {
+        "TableOptimizerConfiguration$retentionConfiguration": "<p>The configuration for a snapshot retention optimizer.</p>"
+      }
+    },
+    "RetentionMetrics": {
+      "base": "<p>A structure that contains retention metrics for the optimizer run.</p>",
+      "refs": {
+        "TableOptimizerRun$retentionMetrics": "<p>A <code>RetentionMetrics</code> object containing metrics for the optimizer run.</p>"
+      }
+    },
     "Role": {
       "base": null,
       "refs": {
@@ -7713,9 +7779,9 @@
       }
     },
     "RunMetrics": {
-      "base": "<p>Metrics for the optimizer run.</p>",
+      "base": "<p>Metrics for the optimizer run.</p> <p>This structure is deprecated. See the individual metric members for compaction, retention, and orphan file deletion.</p>",
       "refs": {
-        "TableOptimizerRun$metrics": "<p>A <code>RunMetrics</code> object containing metrics for the optimizer run.</p>"
+        "TableOptimizerRun$metrics": "<p>A <code>RunMetrics</code> object containing metrics for the optimizer run.</p> <p>This member is deprecated. See the individual metric members for compaction, retention, and orphan file deletion.</p>"
       }
     },
     "RunStatementRequest": {
@@ -8746,7 +8812,7 @@
     "TableOptimizer": {
       "base": "<p>Contains details about an optimizer associated with a table.</p>",
       "refs": {
-        "BatchTableOptimizer$tableOptimizer": "<p>A <code>TableOptimizer</code> object that contains details on the configuration and last run of a table optimzer.</p>",
+        "BatchTableOptimizer$tableOptimizer": "<p>A <code>TableOptimizer</code> object that contains details on the configuration and last run of a table optimizer.</p>",
         "GetTableOptimizerResponse$TableOptimizer": "<p>The optimizer associated with the specified table.</p>"
       }
     },
@@ -8793,7 +8859,7 @@
         "DeleteTableOptimizerRequest$Type": "<p>The type of table optimizer.</p>",
         "GetTableOptimizerRequest$Type": "<p>The type of table optimizer.</p>",
         "ListTableOptimizerRunsRequest$Type": "<p>The type of table optimizer. Currently, the only valid value is <code>compaction</code>.</p>",
-        "TableOptimizer$type": "<p>The type of table optimizer. Currently, the only valid value is <code>compaction</code>.</p>",
+        "TableOptimizer$type": "<p>The type of table optimizer. The valid values are:</p> <ul> <li> <p> <code>compaction</code>: for managing compaction with a table optimizer.</p> </li> <li> <p> <code>retention</code>: for managing the retention of snapshot with a table optimizer.</p> </li> <li> <p> <code>orphan_file_deletion</code>: for managing the deletion of orphan files with a table optimizer.</p> </li> </ul>",
         "UpdateTableOptimizerRequest$Type": "<p>The type of table optimizer. Currently, the only valid value is <code>compaction</code>.</p>"
       }
     },
@@ -8968,6 +9034,11 @@
       "refs": {
         "TaskRunFilterCriteria$TaskRunType": "<p>The type of task run.</p>",
         "TaskRunProperties$TaskType": "<p>The type of task run.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The throttling threshhold was exceeded.</p>",
+      "refs": {
       }
     },
     "Timeout": {
@@ -10045,6 +10116,33 @@
       "base": null,
       "refs": {
         "StatisticSummary$DoubleValue": "<p>The value of the statistic.</p>"
+      }
+    },
+    "dpuCounts": {
+      "base": null,
+      "refs": {
+        "IcebergCompactionMetrics$NumberOfDpus": "<p>The number of DPU hours consumed by the job.</p>",
+        "IcebergOrphanFileDeletionMetrics$NumberOfDpus": "<p>The number of DPU hours consumed by the job.</p>",
+        "IcebergRetentionMetrics$NumberOfDpus": "<p>The number of DPU hours consumed by the job.</p>"
+      }
+    },
+    "dpuDurationInHour": {
+      "base": null,
+      "refs": {
+        "IcebergCompactionMetrics$JobDurationInHour": "<p>The duration of the job in hours.</p>",
+        "IcebergOrphanFileDeletionMetrics$JobDurationInHour": "<p>The duration of the job in hours.</p>",
+        "IcebergRetentionMetrics$JobDurationInHour": "<p>The duration of the job in hours.</p>"
+      }
+    },
+    "metricCounts": {
+      "base": null,
+      "refs": {
+        "IcebergCompactionMetrics$NumberOfBytesCompacted": "<p>The number of bytes removed by the compaction job run.</p>",
+        "IcebergCompactionMetrics$NumberOfFilesCompacted": "<p>The number of files removed by the compaction job run.</p>",
+        "IcebergOrphanFileDeletionMetrics$NumberOfOrphanFilesDeleted": "<p>The number of orphan files deleted by the orphan file deletion job run.</p>",
+        "IcebergRetentionMetrics$NumberOfDataFilesDeleted": "<p>The number of data files deleted by the retention job run.</p>",
+        "IcebergRetentionMetrics$NumberOfManifestFilesDeleted": "<p>The number of manifest files deleted by the retention job run.</p>",
+        "IcebergRetentionMetrics$NumberOfManifestListsDeleted": "<p>The number of manifest lists deleted by the retention job run.</p>"
       }
     },
     "tableNameString": {

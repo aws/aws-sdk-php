@@ -1648,7 +1648,8 @@
         "InstanceFleetId":{"shape":"InstanceFleetId"},
         "TargetOnDemandCapacity":{"shape":"WholeNumber"},
         "TargetSpotCapacity":{"shape":"WholeNumber"},
-        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"},
+        "InstanceTypeConfigs":{"shape":"InstanceTypeConfigList"}
       }
     },
     "InstanceFleetProvisioningSpecifications":{
@@ -2521,9 +2522,10 @@
     },
     "OnDemandResizingSpecification":{
       "type":"structure",
-      "required":["TimeoutDurationMinutes"],
       "members":{
-        "TimeoutDurationMinutes":{"shape":"WholeNumber"}
+        "TimeoutDurationMinutes":{"shape":"WholeNumber"},
+        "AllocationStrategy":{"shape":"OnDemandProvisioningAllocationStrategy"},
+        "CapacityReservationOptions":{"shape":"OnDemandCapacityReservationOptions"}
       }
     },
     "OptionalArnType":{
@@ -2986,9 +2988,9 @@
     },
     "SpotResizingSpecification":{
       "type":"structure",
-      "required":["TimeoutDurationMinutes"],
       "members":{
-        "TimeoutDurationMinutes":{"shape":"WholeNumber"}
+        "TimeoutDurationMinutes":{"shape":"WholeNumber"},
+        "AllocationStrategy":{"shape":"SpotProvisioningAllocationStrategy"}
       }
     },
     "StartNotebookExecutionInput":{
