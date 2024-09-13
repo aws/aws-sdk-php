@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.11 - 2024-09-13
 
 * `Aws\Amplify` - Doc only update to Amplify to explain platform setting for Next.js 14 SSG only applications
 * `Aws\IVS` - Updates to all tags descriptions.
