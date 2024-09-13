@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Amplify` - Doc only update to Amplify to explain platform setting for Next.js 14 SSG only applications
+* `Aws\IVS` - Updates to all tags descriptions.
+* `Aws\ivschat` - Updates to all tags descriptions.
+
 ## 3.321.10 - 2024-09-12
 
 * `Aws\Glue` - AWS Glue is introducing two new optimizers for Apache Iceberg tables: snapshot retention and orphan file deletion. Customers can enable these optimizers and customize their configurations to perform daily maintenance tasks on their Iceberg tables based on their specific requirements.
