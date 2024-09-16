@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PcaConnectorScep` - This is a general availability (GA) release of Connector for SCEP, a feature of AWS Private CA. Connector for SCEP links your SCEP-enabled and mobile device management systems to AWS Private CA for digital signature installation and certificate management.
+* `Aws\RDS` - Launching Global Cluster tagging.
+* `Aws\Organizations` - Doc only update for AWS Organizations that fixes several customer-reported issues
+* `Aws\MediaLive` - Removing the ON_PREMISE enum from the input settings field.
+* `Aws\IoT` - This release adds additional enhancements to AWS IoT Device Management Software Package Catalog and Jobs. It also adds SBOM support in Software Package Version.
+* `Aws\Bedrock` - This feature adds cross account s3 bucket and VPC support to ModelInvocation jobs. To use a cross account bucket, pass in the accountId of the bucket to s3BucketOwner in the ModelInvocationJobInputDataConfig or ModelInvocationJobOutputDataConfig.
+
 ## 3.321.11 - 2024-09-13
 
 * `Aws\Amplify` - Doc only update to Amplify to explain platform setting for Next.js 14 SSG only applications

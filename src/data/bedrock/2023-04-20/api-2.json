@@ -1161,6 +1161,7 @@
         "modelId":{"shape":"ModelId"},
         "inputDataConfig":{"shape":"ModelInvocationJobInputDataConfig"},
         "outputDataConfig":{"shape":"ModelInvocationJobOutputDataConfig"},
+        "vpcConfig":{"shape":"VpcConfig"},
         "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
         "tags":{"shape":"TagList"}
       }
@@ -1977,6 +1978,7 @@
         "endTime":{"shape":"Timestamp"},
         "inputDataConfig":{"shape":"ModelInvocationJobInputDataConfig"},
         "outputDataConfig":{"shape":"ModelInvocationJobOutputDataConfig"},
+        "vpcConfig":{"shape":"VpcConfig"},
         "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
         "jobExpirationTime":{"shape":"Timestamp"}
       }
@@ -3576,7 +3578,8 @@
       "required":["s3Uri"],
       "members":{
         "s3InputFormat":{"shape":"S3InputFormat"},
-        "s3Uri":{"shape":"S3Uri"}
+        "s3Uri":{"shape":"S3Uri"},
+        "s3BucketOwner":{"shape":"AccountId"}
       }
     },
     "ModelInvocationJobS3OutputDataConfig":{
@@ -3584,7 +3587,8 @@
       "required":["s3Uri"],
       "members":{
         "s3Uri":{"shape":"S3Uri"},
-        "s3EncryptionKeyId":{"shape":"KmsKeyId"}
+        "s3EncryptionKeyId":{"shape":"KmsKeyId"},
+        "s3BucketOwner":{"shape":"AccountId"}
       }
     },
     "ModelInvocationJobStatus":{
@@ -3630,6 +3634,7 @@
         "endTime":{"shape":"Timestamp"},
         "inputDataConfig":{"shape":"ModelInvocationJobInputDataConfig"},
         "outputDataConfig":{"shape":"ModelInvocationJobOutputDataConfig"},
+        "vpcConfig":{"shape":"VpcConfig"},
         "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
         "jobExpirationTime":{"shape":"Timestamp"}
       }
