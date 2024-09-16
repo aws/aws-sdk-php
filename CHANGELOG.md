@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.12 - 2024-09-16
 
 * `Aws\PcaConnectorScep` - This is a general availability (GA) release of Connector for SCEP, a feature of AWS Private CA. Connector for SCEP links your SCEP-enabled and mobile device management systems to AWS Private CA for digital signature installation and certificate management.
 * `Aws\RDS` - Launching Global Cluster tagging.
