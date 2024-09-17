@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.321.13 - 2024-09-17
 
 * `Aws\SSM` - Support for additional levels of cross-account, cross-Region organizational units in Automation. Various documentation updates.
 * `Aws\ECS` - This is a documentation only release to address various tickets.
