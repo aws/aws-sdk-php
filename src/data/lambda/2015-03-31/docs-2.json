@@ -19,6 +19,7 @@
     "DeleteFunctionUrlConfig": "<p>Deletes a Lambda function URL. When you delete a function URL, you can't recover it. Creating a new function URL results in a different URL address.</p>",
     "DeleteLayerVersion": "<p>Deletes a version of an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html\">Lambda layer</a>. Deleted versions can no longer be viewed or added to functions. To avoid breaking functions, a copy of the version remains in Lambda until no functions refer to it.</p>",
     "DeleteProvisionedConcurrencyConfig": "<p>Deletes the provisioned concurrency configuration for a function.</p>",
+    "DeleteResourcePolicy": "<p>Deletes a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html\">resource-based policy</a> from a function.</p>",
     "GetAccountSettings": "<p>Retrieves details about your account's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/limits.html\">limits</a> and usage in an Amazon Web Services Region.</p>",
     "GetAlias": "<p>Returns details about a Lambda function <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html\">alias</a>.</p>",
     "GetCodeSigningConfig": "<p>Returns information about the specified code signing configuration.</p>",
@@ -35,6 +36,8 @@
     "GetLayerVersionPolicy": "<p>Returns the permission policy for a version of an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html\">Lambda layer</a>. For more information, see <a>AddLayerVersionPermission</a>.</p>",
     "GetPolicy": "<p>Returns the <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html\">resource-based IAM policy</a> for a function, version, or alias.</p>",
     "GetProvisionedConcurrencyConfig": "<p>Retrieves the provisioned concurrency configuration for a function's alias or version.</p>",
+    "GetPublicAccessBlockConfig": "<p>Retrieve the public-access settings for a function.</p>",
+    "GetResourcePolicy": "<p>Retrieves the <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html\">resource-based policy</a> attached to a function.</p>",
     "GetRuntimeManagementConfig": "<p>Retrieves the runtime management configuration for a function's version. If the runtime update mode is <b>Manual</b>, this includes the ARN of the runtime version and the runtime update mode. If the runtime update mode is <b>Auto</b> or <b>Function update</b>, this includes the runtime update mode and <code>null</code> is returned for the ARN. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html\">Runtime updates</a>.</p>",
     "Invoke": "<p>Invokes a Lambda function. You can invoke a function synchronously (and wait for the response), or asynchronously. By default, Lambda invokes your function synchronously (i.e. the<code>InvocationType</code> is <code>RequestResponse</code>). To invoke a function asynchronously, set <code>InvocationType</code> to <code>Event</code>. Lambda passes the <code>ClientContext</code> object to your function for synchronous invocations only.</p> <p>For <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-sync.html\">synchronous invocation</a>, details about the function response, including errors, are included in the response body and headers. For either invocation type, you can find more information in the <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions.html\">execution log</a> and <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html\">trace</a>.</p> <p>When an error occurs, your function may be invoked multiple times. Retry behavior varies by error type, client, event source, and invocation type. For example, if you invoke a function asynchronously and it returns an error, Lambda executes the function up to two more times. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-retries.html\">Error handling and automatic retries in Lambda</a>.</p> <p>For <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html\">asynchronous invocation</a>, Lambda adds events to a queue before sending them to your function. If your function does not have enough capacity to keep up with the queue, events may be lost. Occasionally, your function may receive the same event multiple times, even if no error occurs. To retain events that were not processed, configure your function with a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-dlq\">dead-letter queue</a>.</p> <p>The status code in the API response doesn't reflect function errors. Error codes are reserved for errors that prevent your function from executing, such as permissions errors, <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">quota</a> errors, or issues with your function's code and configuration. For example, Lambda returns <code>TooManyRequestsException</code> if running the function would cause you to exceed a concurrency limit at either the account level (<code>ConcurrentInvocationLimitExceeded</code>) or function level (<code>ReservedFunctionConcurrentInvocationLimitExceeded</code>).</p> <p>For functions with a long timeout, your client might disconnect during synchronous invocation while it waits for a response. Configure your HTTP client, SDK, firewall, proxy, or operating system to allow for long connections with timeout or keep-alive settings.</p> <p>This operation requires permission for the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awslambda.html\">lambda:InvokeFunction</a> action. For details on how to set up permissions for cross-account invocations, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html#permissions-resource-xaccountinvoke\">Granting function access to other accounts</a>.</p>",
     "InvokeAsync": "<important> <p>For asynchronous function invocation, use <a>Invoke</a>.</p> </important> <p>Invokes a function asynchronously.</p> <note> <p>If you do use the InvokeAsync action, note that it doesn't support the use of X-Ray active tracing. Trace ID is not propagated to the function, even if X-Ray active tracing is turned on.</p> </note>",
@@ -58,6 +61,8 @@
     "PutFunctionEventInvokeConfig": "<p>Configures options for <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html\">asynchronous invocation</a> on a function, version, or alias. If a configuration already exists for a function, version, or alias, this operation overwrites it. If you exclude any settings, they are removed. To set one option without affecting existing settings for other options, use <a>UpdateFunctionEventInvokeConfig</a>.</p> <p>By default, Lambda retries an asynchronous invocation twice if the function returns an error. It retains events in a queue for up to six hours. When an event fails all processing attempts or stays in the asynchronous invocation queue for too long, Lambda discards it. To retain discarded events, configure a dead-letter queue with <a>UpdateFunctionConfiguration</a>.</p> <p>To send an invocation record to a queue, topic, function, or event bus, specify a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-async-destinations\">destination</a>. You can configure separate destinations for successful invocations (on-success) and events that fail all processing attempts (on-failure). You can configure destinations in addition to or instead of a dead-letter queue.</p>",
     "PutFunctionRecursionConfig": "<p>Sets your function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-recursion.html\">recursive loop detection</a> configuration.</p> <p>When you configure a Lambda function to output to the same service or resource that invokes the function, it's possible to create an infinite recursive loop. For example, a Lambda function might write a message to an Amazon Simple Queue Service (Amazon SQS) queue, which then invokes the same function. This invocation causes the function to write another message to the queue, which in turn invokes the function again.</p> <p>Lambda can detect certain types of recursive loops shortly after they occur. When Lambda detects a recursive loop and your function's recursive loop detection configuration is set to <code>Terminate</code>, it stops your function being invoked and notifies you.</p>",
     "PutProvisionedConcurrencyConfig": "<p>Adds a provisioned concurrency configuration to a function's alias or version.</p>",
+    "PutPublicAccessBlockConfig": "<p>Configure your function's public-access settings.</p> <p>To control public access to a Lambda function, you can choose whether to allow the creation of <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html\">resource-based policies</a> that allow public access to that function. You can also block public access to a function, even if it has an existing resource-based policy that allows it.</p>",
+    "PutResourcePolicy": "<p>Adds a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html\">resource-based policy</a> to a function. You can use resource-based policies to grant access to other <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/permissions-function-cross-account.html\">Amazon Web Services accounts</a>, <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/permissions-function-organization.html\">organizations</a>, or <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/permissions-function-services.html\">services</a>. Resource-based policies apply to a single function, version, or alias.</p> <important> <p>Adding a resource-based policy using this API action replaces any existing policy you've previously created. This means that if you've previously added resource-based permissions to a function using the <a>AddPermission</a> action, those permissions will be overwritten by your new policy.</p> </important>",
     "PutRuntimeManagementConfig": "<p>Sets the runtime management configuration for a function's version. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html\">Runtime updates</a>.</p>",
     "RemoveLayerVersionPermission": "<p>Removes a statement from the permissions policy for a version of an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html\">Lambda layer</a>. For more information, see <a>AddLayerVersionPermission</a>.</p>",
     "RemovePermission": "<p>Revokes function-use permission from an Amazon Web Servicesservice or another Amazon Web Services account. You can get the ID of the statement from the output of <a>GetPolicy</a>.</p>",
@@ -478,6 +483,11 @@
       }
     },
     "DeleteProvisionedConcurrencyConfigRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteResourcePolicyRequest": {
       "base": null,
       "refs": {
       }
@@ -1038,6 +1048,26 @@
       }
     },
     "GetProvisionedConcurrencyConfigResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPublicAccessBlockConfigRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPublicAccessBlockConfigResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetResourcePolicyResponse": {
       "base": null,
       "refs": {
       }
@@ -1694,6 +1724,8 @@
     "NullableBoolean": {
       "base": null,
       "refs": {
+        "PublicAccessBlockConfig$BlockPublicPolicy": "<p>To block the creation of resource-based policies that would grant public access to your function, set <code>BlockPublicPolicy</code> to <code>true</code>. To allow the creation of resource-based policies that would grant public access to your function, set <code>BlockPublicPolicy</code> to <code>false</code>.</p>",
+        "PublicAccessBlockConfig$RestrictPublicResource": "<p>To block public access to your function, even if its resource-based policy allows it, set <code>RestrictPublicResource</code> to <code>true</code>. To allow public access to a function with a resource-based policy that permits it, set <code>RestrictPublicResource</code> to <code>false</code>.</p>",
         "VpcConfig$Ipv6AllowedForDualStack": "<p>Allows outbound IPv6 traffic on VPC functions that are connected to dual-stack subnets.</p>",
         "VpcConfigResponse$Ipv6AllowedForDualStack": "<p>Allows outbound IPv6 traffic on VPC functions that are connected to dual-stack subnets.</p>"
       }
@@ -1748,6 +1780,14 @@
       "refs": {
       }
     },
+    "PolicyResourceArn": {
+      "base": null,
+      "refs": {
+        "DeleteResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the function you want to delete the policy from. You can use either a qualified or an unqualified ARN, but the value you specify must be a complete ARN and wildcard characters are not accepted.</p>",
+        "GetResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the function you want to retrieve the policy for. You can use either a qualified or an unqualified ARN, but the value you specify must be a complete ARN and wildcard characters are not accepted.</p>",
+        "PutResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the function you want to add the policy to. You can use either a qualified or an unqualified ARN, but the value you specify must be a complete ARN and wildcard characters are not accepted.</p>"
+      }
+    },
     "PositiveInteger": {
       "base": null,
       "refs": {
@@ -1797,6 +1837,26 @@
         "GetProvisionedConcurrencyConfigResponse$Status": "<p>The status of the allocation process.</p>",
         "ProvisionedConcurrencyConfigListItem$Status": "<p>The status of the allocation process.</p>",
         "PutProvisionedConcurrencyConfigResponse$Status": "<p>The status of the allocation process.</p>"
+      }
+    },
+    "PublicAccessBlockConfig": {
+      "base": "<p>An object that defines the public-access settings for a function.</p>",
+      "refs": {
+        "GetPublicAccessBlockConfigResponse$PublicAccessBlockConfig": "<p>The public-access settings configured for the function you specified</p>",
+        "PutPublicAccessBlockConfigRequest$PublicAccessBlockConfig": "<p>An object defining the public-access settings you want to apply.</p> <p>To block the creation of resource-based policies that would grant public access to your function, set <code>BlockPublicPolicy</code> to <code>true</code>. To allow the creation of resource-based policies that would grant public access to your function, set <code>BlockPublicPolicy</code> to <code>false</code>.</p> <p>To block public access to your function, even if its resource-based policy allows it, set <code>RestrictPublicResource</code> to <code>true</code>. To allow public access to a function with a resource-based policy that permits it, set <code>RestrictPublicResource</code> to <code>false</code>.</p> <p>The default setting for both <code>BlockPublicPolicy</code> and <code>RestrictPublicResource</code> is <code>true</code>.</p>",
+        "PutPublicAccessBlockConfigResponse$PublicAccessBlockConfig": "<p>The public-access settings Lambda applied to your function.</p>"
+      }
+    },
+    "PublicAccessBlockResourceArn": {
+      "base": null,
+      "refs": {
+        "GetPublicAccessBlockConfigRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the function you want to retrieve public-access settings for.</p>",
+        "PutPublicAccessBlockConfigRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the function you want to configure public-access settings for. Public-access settings are applied at the function level, so you can't apply different settings to function versions or aliases.</p>"
+      }
+    },
+    "PublicPolicyException": {
+      "base": "<p>Lambda prevented your policy from being created because it would grant public access to your function. If you intended to create a public policy, use the <a>PutPublicAccessBlockConfig</a> API action to configure your function's public-access settings to allow public policies.</p>",
+      "refs": {
       }
     },
     "PublishLayerVersionRequest": {
@@ -1850,6 +1910,26 @@
       }
     },
     "PutProvisionedConcurrencyConfigResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutPublicAccessBlockConfigRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutPublicAccessBlockConfigResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutResourcePolicyResponse": {
       "base": null,
       "refs": {
       }
@@ -1961,10 +2041,27 @@
       "refs": {
       }
     },
+    "ResourcePolicy": {
+      "base": null,
+      "refs": {
+        "GetResourcePolicyResponse$Policy": "<p>The resource-based policy attached to the function you specified.</p>",
+        "PutResourcePolicyRequest$Policy": "<p>The JSON resource-based policy you want to add to your function.</p> <p>To learn more about creating resource-based policies for controlling access to Lambda, see <a href=\"https://docs.aws.amazon.com/\">Working with resource-based IAM policies in Lambda</a> in the <i>Lambda Developer Guide</i>.</p>",
+        "PutResourcePolicyResponse$Policy": "<p>The policy Lambda added to your function.</p>"
+      }
+    },
     "ResponseStreamingInvocationType": {
       "base": null,
       "refs": {
         "InvokeWithResponseStreamRequest$InvocationType": "<p>Use one of the following options:</p> <ul> <li> <p> <code>RequestResponse</code> (default) – Invoke the function synchronously. Keep the connection open until the function returns a response or times out. The API operation response includes the function response and additional data.</p> </li> <li> <p> <code>DryRun</code> – Validate parameter values and verify that the IAM user or role has permission to invoke the function.</p> </li> </ul>"
+      }
+    },
+    "RevisionId": {
+      "base": null,
+      "refs": {
+        "DeleteResourcePolicyRequest$RevisionId": "<p>Delete the existing policy only if its revision ID matches the string you specify. To find the revision ID of the policy currently attached to your function, use the <a>GetResourcePolicy</a> action.</p>",
+        "GetResourcePolicyResponse$RevisionId": "<p>The revision ID of the policy.</p>",
+        "PutResourcePolicyRequest$RevisionId": "<p>Replace the existing policy only if its revision ID matches the string you specify. To find the revision ID of the policy currently attached to your function, use the <a>GetResourcePolicy</a> action.</p>",
+        "PutResourcePolicyResponse$RevisionId": "<p>The revision ID of the policy Lambda added to your function.</p>"
       }
     },
     "RoleArn": {
@@ -2293,6 +2390,8 @@
         "ProvisionedConcurrencyConfigListItem$StatusReason": "<p>For failed allocations, the reason that provisioned concurrency could not be allocated.</p>",
         "ProvisionedConcurrencyConfigNotFoundException$Type": null,
         "ProvisionedConcurrencyConfigNotFoundException$message": null,
+        "PublicPolicyException$Type": "<p>The exception type.</p>",
+        "PublicPolicyException$Message": null,
         "PublishVersionRequest$CodeSha256": "<p>Only publish a version if the hash value matches the value that's specified. Use this option to avoid publishing a version if the function code has changed since you last updated it. You can get the hash for the version that you uploaded from the output of <a>UpdateFunctionCode</a>.</p>",
         "PublishVersionRequest$RevisionId": "<p>Only update the function if the revision ID matches the ID that's specified. Use this option to avoid publishing a version if the function configuration has changed since you last updated it.</p>",
         "PutProvisionedConcurrencyConfigResponse$StatusReason": "<p>For failed allocations, the reason that provisioned concurrency could not be allocated.</p>",

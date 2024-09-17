@@ -2777,6 +2777,7 @@
         "ProgressCounters":{"shape":"ProgressCounters"},
         "AlarmConfiguration":{"shape":"AlarmConfiguration"},
         "TriggeredAlarms":{"shape":"AlarmStateInformationList"},
+        "TargetLocationsURL":{"shape":"TargetLocationsURL"},
         "AutomationSubtype":{"shape":"AutomationSubtype"},
         "ScheduledTime":{"shape":"DateTime"},
         "Runbooks":{"shape":"Runbooks"},
@@ -2870,6 +2871,7 @@
         "AutomationType":{"shape":"AutomationType"},
         "AlarmConfiguration":{"shape":"AlarmConfiguration"},
         "TriggeredAlarms":{"shape":"AlarmStateInformationList"},
+        "TargetLocationsURL":{"shape":"TargetLocationsURL"},
         "AutomationSubtype":{"shape":"AutomationSubtype"},
         "ScheduledTime":{"shape":"DateTime"},
         "Runbooks":{"shape":"Runbooks"},
@@ -5107,6 +5109,18 @@
       "member":{"shape":"EffectivePatch"}
     },
     "ErrorCount":{"type":"integer"},
+    "ExcludeAccount":{
+      "type":"string",
+      "max":68,
+      "min":6,
+      "pattern":"^(ou-[a-z0-9]{4,32}-[a-z0-9]{8,32})|(\\d{12})$"
+    },
+    "ExcludeAccounts":{
+      "type":"list",
+      "member":{"shape":"ExcludeAccount"},
+      "max":5000,
+      "min":1
+    },
     "ExecutionMode":{
       "type":"string",
       "enum":[
@@ -10283,7 +10297,8 @@
           "box":true
         },
         "Tags":{"shape":"TagList"},
-        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "TargetLocationsURL":{"shape":"TargetLocationsURL"}
       }
     },
     "StartAutomationExecutionResult":{
@@ -10562,7 +10577,12 @@
         "TargetLocationAlarmConfiguration":{
           "shape":"AlarmConfiguration",
           "box":true
-        }
+        },
+        "IncludeChildOrganizationUnits":{"shape":"Boolean"},
+        "ExcludeAccounts":{"shape":"ExcludeAccounts"},
+        "Targets":{"shape":"Targets"},
+        "TargetsMaxConcurrency":{"shape":"MaxConcurrency"},
+        "TargetsMaxErrors":{"shape":"MaxErrors"}
       }
     },
     "TargetLocations":{
@@ -10570,6 +10590,10 @@
       "member":{"shape":"TargetLocation"},
       "max":100,
       "min":1
+    },
+    "TargetLocationsURL":{
+      "type":"string",
+      "pattern":"^https:\\/\\/[-a-zA-Z0-9@:%._\\+~#=]{1,253}\\.s3(\\.[a-z\\d-]{9,16})?\\.amazonaws\\.com\\/.{1,2000}"
     },
     "TargetMap":{
       "type":"map",
