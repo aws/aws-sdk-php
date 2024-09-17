@@ -94,6 +94,16 @@ class S3SignatureV4 extends SignatureV4
                 $this->getPresignedPayload($request)
             );
         }
+
+        //Payload is unknown, checksum will cause requests to fail.
+        if ($request->getMethod() === 'PUT') {
+            foreach($request->getHeaders() as $header => $value) {
+                if (strpos($header, 'x-amz-checksum') === 0) {
+                    $request = $request->withoutHeader($header);
+                }
+            }
+        }
+
         if (strpos($request->getUri()->getHost(), "accesspoint.s3-global")) {
             $request = $request->withHeader("x-amz-region-set", "*");
         }
