@@ -25,25 +25,40 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
      * @dataProvider checksumCasesDataProvider
      * @param array $responseAlgorithms
      * @param array $checksumHeadersReturned
-     * @param string $expectedChecksum
-     *
+     * @param string|null $expectedChecksumAlgorithm
+     * @param array $config
+     * @param string $operation
+     * @param string|null $checksumMode
      * @return void
      */
-    public function testValidatesChoosesRightChecksum(
+    public function testChecksumValidation(
         array $responseAlgorithms,
         array $checksumHeadersReturned,
-        ?string $expectedChecksumAlgorithm
+        ?string $expectedChecksumAlgorithm,
+        array $config,
+        string $operation,
+        ?string $checksumMode
     ) {
+        if (!empty($responseAlgorithms)
+            && $responseAlgorithms[0] === 'CRC32C'
+            && !extension_loaded('awscrt')
+        ) {
+            $this->markTestSkipped();
+        }
+
         $s3Client = $this->getTestS3ClientWithResponseAlgorithms(
-            'GetObject',
+            $operation,
             $responseAlgorithms
         );
-        $mutator = new ValidateResponseChecksumResultMutator($s3Client->getApi());
+        $mutator = new ValidateResponseChecksumResultMutator(
+            $s3Client->getApi(),
+            $config
+        );
         $result = new Result();
         $command = new Command(
-            'GetObject',
+            $operation,
             [
-                'ChecksumMode' => 'enabled'
+                'ChecksumMode' => $checksumMode
             ],
             new HandlerList()
         );
@@ -56,7 +71,6 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
         }
 
         $result = $mutator($result, $command, $response);
-
         $this->assertEquals(
             $expectedChecksumAlgorithm,
             $result['ChecksumValidated']
@@ -72,37 +86,119 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
     public function checksumCasesDataProvider(): array
     {
         return [
+            //Default, when_supported, no checksum headers, skips validation
             [
                 ['CRC32', 'CRC32C'],
                 [],
+                null,
+                [],
+                'GetObject',
                 null
             ],
+            //Default, when_supported, no modeled checksums, skips validation
+            [
+                [],
+                [],
+                null,
+                [],
+                'GetObject',
+                null
+            ],
+            //Default, when_supported with modeled checksums
             [
                 ['SHA256', 'CRC32'],
                 [
                     ['sha256', 'E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0=']
                 ],
-                "SHA256"
+                "SHA256",
+                [],
+                'GetObject',
+                null
             ],
+            //Default, when_supported with modeled checksums
             [
                 ['CRC32', 'CRC32C'],
                 [
                     ["sha256", 'E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0='],
                     ['crc32', 'DIt2Ng==']
                 ],
-                "CRC32"
+                "CRC32",
+                [],
+                'GetObject',
+                null
             ],
+            //Default, when_supported with modeled checksums
             [
                 ['CRC32', 'CRC32C'],
                 [
                     ['crc64', '']
                 ],
+                null,
+                [],
+                'GetObject',
                 null
+            ],
+            //Default, when_supported, with modeled checksums, CRC32C
+            [
+                ['CRC32C', 'CRC32'],
+                [
+                    ["crc32c", 'k2udew=='],
+                ],
+                "CRC32C",
+                [],
+                'GetObject',
+                null
+            ],
+            // when_required, with modeled checksums, with mode "enabled"
+            [
+                ['CRC32', 'CRC32C'],
+                [
+                    ["sha256", 'E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0='],
+                    ['crc32', 'DIt2Ng==']
+                ],
+                "CRC32",
+                ['response_checksum_validation' => 'when_required'],
+                'GetObject',
+                'enabled'
+            ],
+            // when_required, with modeled checksums, with mode "enabled"
+            [
+                ['SHA256', 'CRC32'],
+                [
+                    ['sha256', 'E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0=']
+                ],
+                "SHA256",
+                ['response_checksum_validation' => 'when_required'],
+                'GetObject',
+                'enabled'
+            ],
+            // when_required, with modeled checksums, with mode "enabled" CRC32C
+            [
+                ['CRC32C', 'CRC32'],
+                [
+                    ["crc32c", 'k2udew=='],
+                ],
+                "CRC32C",
+                ['response_checksum_validation' => 'when_required'],
+                'GetObject',
+                'enabled'
+            ],
+            // when_required, with modeled checksums, with mode unset, skips validation
+            [
+                ['CRC32'],
+                [
+                    ["crc32", ''],
+                ],
+                null,
+                ['response_checksum_validation' => 'when_required'],
+                'GetObject',
+                ''
             ],
         ];
     }
 
-    public function testValidatesChecksumFailsOnBadValue() {
+    public function testValidatesChecksumFailsOnBadValue()
+    {
         $this->expectException(S3Exception::class);
         $this->expectExceptionMessage(
             'Calculated response checksum did not match the expected value'
@@ -124,7 +220,8 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
         $mutator($result, $command, $response);
     }
 
-    public function testValidatesChecksumSucceeds() {
+    public function testValidatesChecksumSucceeds()
+    {
         $mutator = $this->getValidateResponseChecksumMutator();
         $expectedValue = "E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0=";
         $expectedAlgorithm = "SHA256";
@@ -147,7 +244,8 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
 
     }
 
-    public function testValidatesChecksumSkipsValidation() {
+    public function testValidatesChecksumSkipsValidation()
+    {
         $mutator = $this->getValidateResponseChecksumMutator();
         $result = new Result();
         $command = new Command(
@@ -163,7 +261,8 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
         $this->assertEmpty($result['ChecksumValidated']);
     }
 
-    public function testSkipsGetObjectReturnsFullMultipart() {
+    public function testSkipsGetObjectReturnsFullMultipart()
+    {
         $expectedValue = "E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbK-1034";
         $mutator = $this->getValidateResponseChecksumMutator();
         $result = new Result();
@@ -185,7 +284,8 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
         self::assertTrue(true);
     }
 
-    public function testValidatesSha256() {
+    public function testValidatesSha256()
+    {
         $expectedValue = "E6TOUbfBBDPqSyozecOzDgB3K9CZKCI6d7PbKBAYvo0=";
         $mutator = $this->getValidateResponseChecksumMutator();
         $result = new Result();
@@ -213,10 +313,11 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
      * @return ValidateResponseChecksumResultMutator
      */
     private function getValidateResponseChecksumMutator(
+        array $config = []
     ): ValidateResponseChecksumResultMutator
     {
         return new ValidateResponseChecksumResultMutator(
-            $this->getTestS3Client()->getApi()
+            $this->getTestS3Client()->getApi(), $config
         );
     }
 

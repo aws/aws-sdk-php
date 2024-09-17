@@ -54,10 +54,17 @@ trait MultipartUploadingTrait
         $partData = [];
         $partData['PartNumber'] = $command['PartNumber'];
         $partData['ETag'] = $this->extractETag($result);
+
+        $checksumResult = $this instanceof MultipartCopy
+            ? $result['CopyPartResult']
+            : $result;
         if (isset($command['ChecksumAlgorithm'])) {
             $checksumMemberName = 'Checksum' . strtoupper($command['ChecksumAlgorithm']);
-            $partData[$checksumMemberName] = $result[$checksumMemberName];
+            $partData[$checksumMemberName] = $checksumResult[$checksumMemberName];
+        } else {
+            $this->applyChecksumToResult($checksumResult, $partData);
         }
+
         $this->getState()->markPartAsUploaded($command['PartNumber'], $partData);
     }
 
@@ -112,6 +119,15 @@ trait MultipartUploadingTrait
         }
 
         return $params;
+    }
+
+    protected function applyChecksumToResult($result, array &$partData): void
+    {
+        foreach($result as $key => $value) {
+            if (!empty($value) && strpos($key, 'Checksum') === 0) {
+                $partData[$key] = $value;
+            }
+        }
     }
 
     /**

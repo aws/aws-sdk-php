@@ -10,7 +10,7 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class ObjectUploaderTest extends TestCase
 {
@@ -250,7 +250,6 @@ class ObjectUploaderTest extends TestCase
         );
         $uploadOptions = [
             'params'          => ['RequestPayer' => 'test'],
-            'add_content_md5' => true,
             'before_upload'   => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
@@ -283,20 +282,9 @@ class ObjectUploaderTest extends TestCase
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
-        $client->getHandlerList()->appendSign(
-            Middleware::tap(function ($cmd, $req) {
-                $name = $cmd->getName();
-                if ($name === 'UploadPart') {
-                    $this->assertTrue(
-                        $req->hasHeader('Content-MD5')
-                    );
-                }
-            })
-        );
         $uploadOptions = [
             'mup_threshold'   => self::MB * 4,
             'params'          => ['RequestPayer' => 'test'],
-            'add_content_md5' => true,
             'before_initiate' => function($command) {
                 $this->assertSame('test', $command['RequestPayer']);
             },
@@ -329,5 +317,21 @@ class ObjectUploaderTest extends TestCase
         $result = $uploader->upload();
 
         $this->assertSame($url, $result['ObjectURL']);
+    }
+
+    public function testAddContentMd5EmitsDeprecationNotice()
+    {
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
+        $client = $this->getTestClient('S3');
+        $this->addMockResults($client, [new Result()]);
+        $result = (new ObjectUploader(
+            $client,
+            'bucket',
+            'key',
+            $this->generateStream(1024 * 1024 * 1),
+            'private',
+            ['add_content_md5' => true]
+        ))->upload();
     }
 }

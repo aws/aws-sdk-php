@@ -146,7 +146,6 @@ class TransferTest extends TestCase
         $t = new Transfer($s3, $dir, 's3://foo/bar', [
             'mup_threshold' => 5248000,
             'debug' => $res,
-            'add_content_md5' => true
         ]);
 
         $t->transfer();
@@ -400,6 +399,40 @@ class TransferTest extends TestCase
         ]);
 
         $downloader->transfer();
+    }
+
+    public function testAddContentMd5EmitsDeprecationWarning()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, []);
+
+        $this->expectDeprecation();
+        $this->expectDeprecationMessage('S3 no longer supports MD5 checksums.');
+        $s3->getHandlerList()->appendSign(Middleware::tap(
+            function (CommandInterface $cmd, RequestInterface $req) {
+                $this->assertTrue(isset($command['x-amz-checksum-crc32']));
+            }
+        ));
+
+        $dir = sys_get_temp_dir() . '/unittest';
+        `rm -rf $dir`;
+        mkdir($dir);
+        $filename = $dir . '/foo.txt';
+        $f = fopen($filename, 'w+');
+        fwrite($f, 'foo');
+        fclose($f);
+
+        $res = fopen('php://temp', 'r+');
+        $t = new Transfer($s3, $dir, 's3://foo/bar', [
+            'debug' => $res,
+            'add_content_md5' => true
+        ]);
+
+        $t->transfer();
+        rewind($res);
+        $output = stream_get_contents($res);
+        $this->assertStringContainsString("Transferring $filename -> s3://foo/bar/foo.txt", $output);
+        `rm -rf $dir`;
     }
 
     private function mockResult(callable $fn)
