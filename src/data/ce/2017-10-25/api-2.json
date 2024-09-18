@@ -5,13 +5,15 @@
     "endpointPrefix":"ce",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"AWS Cost Explorer",
     "serviceFullName":"AWS Cost Explorer Service",
     "serviceId":"Cost Explorer",
     "signatureVersion":"v4",
     "signingName":"ce",
     "targetPrefix":"AWSInsightsIndexService",
-    "uid":"ce-2017-10-25"
+    "uid":"ce-2017-10-25",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateAnomalyMonitor":{
@@ -1272,6 +1274,13 @@
         "DiskWriteBytesPerSecond":{"shape":"GenericString"}
       }
     },
+    "DynamoDBCapacityDetails":{
+      "type":"structure",
+      "members":{
+        "CapacityUnits":{"shape":"GenericString"},
+        "Region":{"shape":"GenericString"}
+      }
+    },
     "EBSResourceUtilization":{
       "type":"structure",
       "members":{
@@ -2437,7 +2446,12 @@
         "EstimatedMonthlyOnDemandCost":{"shape":"GenericString"},
         "EstimatedReservationCostForLookbackPeriod":{"shape":"GenericString"},
         "UpfrontCost":{"shape":"GenericString"},
-        "RecurringStandardMonthlyCost":{"shape":"GenericString"}
+        "RecurringStandardMonthlyCost":{"shape":"GenericString"},
+        "ReservedCapacityDetails":{"shape":"ReservedCapacityDetails"},
+        "RecommendedNumberOfCapacityUnitsToPurchase":{"shape":"GenericString"},
+        "MinimumNumberOfCapacityUnitsUsedPerHour":{"shape":"GenericString"},
+        "MaximumNumberOfCapacityUnitsUsedPerHour":{"shape":"GenericString"},
+        "AverageNumberOfCapacityUnitsUsedPerHour":{"shape":"GenericString"}
       }
     },
     "ReservationPurchaseRecommendationDetails":{
@@ -2476,6 +2490,12 @@
     "ReservationUtilizationGroups":{
       "type":"list",
       "member":{"shape":"ReservationUtilizationGroup"}
+    },
+    "ReservedCapacityDetails":{
+      "type":"structure",
+      "members":{
+        "DynamoDBCapacityDetails":{"shape":"DynamoDBCapacityDetails"}
+      }
     },
     "ReservedHours":{"type":"string"},
     "ReservedNormalizedUnits":{"type":"string"},
