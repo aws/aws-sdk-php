@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.322.0 - 2024-09-18
 
 * `Aws\CostExplorer` - This release extends the GetReservationPurchaseRecommendation API to support recommendations for Amazon DynamoDB reservations.
 * `Aws\GuardDuty` - Add `launchType` and `sourceIPs` fields to GuardDuty findings.
