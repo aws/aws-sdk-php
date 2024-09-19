@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - Introduced support for G6e instance types on SageMaker Studio for JupyterLab and CodeEditor applications.
+* `Aws\QuickSight` - QuickSight: 1. Add new API - ListFoldersForResource. 2. Commit mode adds visibility configuration of Apply button on multi-select controls for authors.
+* `Aws\Lambda` - Tagging support for Lambda event source mapping, and code signing configuration resources.
+* `Aws\Glue` - This change is for releasing TestConnection api SDK model
+* `Aws\MediaConvert` - This release provides support for additional DRM configurations per SPEKE Version 2.0.
+* `Aws\MediaLive` - Adds Bandwidth Reduction Filtering for HD AVC and HEVC encodes, multiplex container settings.
+* `Aws\CodeConnections` - This release adds the PullRequestComment field to CreateSyncConfiguration API input, UpdateSyncConfiguration API input, GetSyncConfiguration API output and ListSyncConfiguration API output
+* `Aws\WorkSpacesWeb` - WorkSpaces Secure Browser now enables Administrators to view and manage end-user browsing sessions via Session Management APIs.
+
 ## 3.322.0 - 2024-09-18
 
 * `Aws\CostExplorer` - This release extends the GetReservationPurchaseRecommendation API to support recommendations for Amazon DynamoDB reservations.

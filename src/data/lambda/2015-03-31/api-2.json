@@ -47,7 +47,8 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"PolicyLengthExceededException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"PreconditionFailedException"}
+        {"shape":"PreconditionFailedException"},
+        {"shape":"PublicPolicyException"}
       ]
     },
     "CreateAlias":{
@@ -1104,7 +1105,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"PreconditionFailedException"}
+        {"shape":"PreconditionFailedException"},
+        {"shape":"PublicPolicyException"}
       ]
     },
     "TagResource":{
@@ -1598,7 +1600,8 @@
       "members":{
         "Description":{"shape":"Description"},
         "AllowedPublishers":{"shape":"AllowedPublishers"},
-        "CodeSigningPolicies":{"shape":"CodeSigningPolicies"}
+        "CodeSigningPolicies":{"shape":"CodeSigningPolicies"},
+        "Tags":{"shape":"Tags"}
       }
     },
     "CreateCodeSigningConfigResponse":{
@@ -1625,6 +1628,7 @@
         "MaximumRecordAgeInSeconds":{"shape":"MaximumRecordAgeInSeconds"},
         "BisectBatchOnFunctionError":{"shape":"BisectBatchOnFunctionError"},
         "MaximumRetryAttempts":{"shape":"MaximumRetryAttemptsEventSourceMapping"},
+        "Tags":{"shape":"Tags"},
         "TumblingWindowInSeconds":{"shape":"TumblingWindowInSeconds"},
         "Topics":{"shape":"Topics"},
         "Queues":{"shape":"Queues"},
@@ -2064,6 +2068,12 @@
       "max":10240,
       "min":512
     },
+    "EventSourceMappingArn":{
+      "type":"string",
+      "max":120,
+      "min":85,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:event-source-mapping:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+    },
     "EventSourceMappingConfiguration":{
       "type":"structure",
       "members":{
@@ -2095,7 +2105,8 @@
         "ScalingConfig":{"shape":"ScalingConfig"},
         "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
         "KMSKeyArn":{"shape":"KMSKeyArn"},
-        "FilterCriteriaError":{"shape":"FilterCriteriaError"}
+        "FilterCriteriaError":{"shape":"FilterCriteriaError"},
+        "EventSourceMappingArn":{"shape":"EventSourceMappingArn"}
       }
     },
     "EventSourceMappingsList":{
@@ -3478,7 +3489,7 @@
       "required":["Resource"],
       "members":{
         "Resource":{
-          "shape":"FunctionArn",
+          "shape":"TaggableResource",
           "location":"uri",
           "locationName":"ARN"
         }
@@ -4480,7 +4491,7 @@
       ],
       "members":{
         "Resource":{
-          "shape":"FunctionArn",
+          "shape":"TaggableResource",
           "location":"uri",
           "locationName":"ARN"
         },
@@ -4488,6 +4499,12 @@
       }
     },
     "TagValue":{"type":"string"},
+    "TaggableResource":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"arn:(aws[a-zA-Z-]*):lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:(function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?|code-signing-config:csc-[a-z0-9]{17}|event-source-mapping:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+    },
     "Tags":{
       "type":"map",
       "key":{"shape":"TagKey"},
@@ -4593,7 +4610,7 @@
       ],
       "members":{
         "Resource":{
-          "shape":"FunctionArn",
+          "shape":"TaggableResource",
           "location":"uri",
           "locationName":"ARN"
         },

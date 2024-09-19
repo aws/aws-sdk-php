@@ -3109,6 +3109,26 @@
         {"shape":"EntityNotFoundException"}
       ]
     },
+    "TestConnection":{
+      "name":"TestConnection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TestConnectionRequest"},
+      "output":{"shape":"TestConnectionResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"FederationSourceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "UntagResource":{
       "name":"UntagResource",
       "http":{
@@ -13452,6 +13472,30 @@
         "EXPORT_LABELS",
         "FIND_MATCHES"
       ]
+    },
+    "TestConnectionInput":{
+      "type":"structure",
+      "required":[
+        "ConnectionType",
+        "ConnectionProperties"
+      ],
+      "members":{
+        "ConnectionType":{"shape":"ConnectionType"},
+        "ConnectionProperties":{"shape":"ConnectionProperties"},
+        "AuthenticationConfiguration":{"shape":"AuthenticationConfigurationInput"}
+      }
+    },
+    "TestConnectionRequest":{
+      "type":"structure",
+      "members":{
+        "ConnectionName":{"shape":"NameString"},
+        "TestConnectionInput":{"shape":"TestConnectionInput"}
+      }
+    },
+    "TestConnectionResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "ThrottlingException":{
       "type":"structure",

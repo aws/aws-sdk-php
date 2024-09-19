@@ -219,6 +219,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listFolderMembersAsync(array $args = [])
  * @method \Aws\Result listFolders(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listFoldersAsync(array $args = [])
+ * @method \Aws\Result listFoldersForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listFoldersForResourceAsync(array $args = [])
  * @method \Aws\Result listGroupMemberships(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listGroupMembershipsAsync(array $args = [])
  * @method \Aws\Result listGroups(array $args = [])

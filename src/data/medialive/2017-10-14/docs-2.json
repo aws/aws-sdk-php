@@ -2267,13 +2267,15 @@
     "M2tsAbsentInputAudioBehavior": {
       "base": "M2ts Absent Input Audio Behavior",
       "refs": {
-        "M2tsSettings$AbsentInputAudioBehavior": "When set to drop, output audio streams will be removed from the program if the selected input audio stream is removed from the input. This allows the output audio configuration to dynamically change based on input configuration. If this is set to encodeSilence, all output audio streams will output encoded silence when not connected to an active input stream."
+        "M2tsSettings$AbsentInputAudioBehavior": "When set to drop, output audio streams will be removed from the program if the selected input audio stream is removed from the input. This allows the output audio configuration to dynamically change based on input configuration. If this is set to encodeSilence, all output audio streams will output encoded silence when not connected to an active input stream.",
+        "MultiplexM2tsSettings$AbsentInputAudioBehavior": "When set to drop, output audio streams will be removed from the program if the selected input audio stream is removed from the input. This allows the output audio configuration to dynamically change based on input configuration. If this is set to encodeSilence, all output audio streams will output encoded silence when not connected to an active input stream."
       }
     },
     "M2tsArib": {
       "base": "M2ts Arib",
       "refs": {
-        "M2tsSettings$Arib": "When set to enabled, uses ARIB-compliant field muxing and removes video descriptor."
+        "M2tsSettings$Arib": "When set to enabled, uses ARIB-compliant field muxing and removes video descriptor.",
+        "MultiplexM2tsSettings$Arib": "When set to enabled, uses ARIB-compliant field muxing and removes video descriptor."
       }
     },
     "M2tsAribCaptionsPidControl": {
@@ -2285,7 +2287,8 @@
     "M2tsAudioBufferModel": {
       "base": "M2ts Audio Buffer Model",
       "refs": {
-        "M2tsSettings$AudioBufferModel": "When set to dvb, uses DVB buffer model for Dolby Digital audio.  When set to atsc, the ATSC model is used."
+        "M2tsSettings$AudioBufferModel": "When set to dvb, uses DVB buffer model for Dolby Digital audio.  When set to atsc, the ATSC model is used.",
+        "MultiplexM2tsSettings$AudioBufferModel": "When set to dvb, uses DVB buffer model for Dolby Digital audio.  When set to atsc, the ATSC model is used."
       }
     },
     "M2tsAudioInterval": {
@@ -2297,7 +2300,8 @@
     "M2tsAudioStreamType": {
       "base": "M2ts Audio Stream Type",
       "refs": {
-        "M2tsSettings$AudioStreamType": "When set to atsc, uses stream type = 0x81 for AC3 and stream type = 0x87 for EAC3. When set to dvb, uses stream type = 0x06."
+        "M2tsSettings$AudioStreamType": "When set to atsc, uses stream type = 0x81 for AC3 and stream type = 0x87 for EAC3. When set to dvb, uses stream type = 0x06.",
+        "MultiplexM2tsSettings$AudioStreamType": "When set to atsc, uses stream type = 0x81 for AC3 and stream type = 0x87 for EAC3. When set to dvb, uses stream type = 0x06."
       }
     },
     "M2tsBufferModel": {
@@ -2309,13 +2313,15 @@
     "M2tsCcDescriptor": {
       "base": "M2ts Cc Descriptor",
       "refs": {
-        "M2tsSettings$CcDescriptor": "When set to enabled, generates captionServiceDescriptor in PMT."
+        "M2tsSettings$CcDescriptor": "When set to enabled, generates captionServiceDescriptor in PMT.",
+        "MultiplexM2tsSettings$CcDescriptor": "When set to enabled, generates captionServiceDescriptor in PMT."
       }
     },
     "M2tsEbifControl": {
       "base": "M2ts Ebif Control",
       "refs": {
-        "M2tsSettings$Ebif": "If set to passthrough, passes any EBIF data from the input source to this output."
+        "M2tsSettings$Ebif": "If set to passthrough, passes any EBIF data from the input source to this output.",
+        "MultiplexM2tsSettings$Ebif": "If set to passthrough, passes any EBIF data from the input source to this output."
       }
     },
     "M2tsEbpPlacement": {
@@ -2327,25 +2333,29 @@
     "M2tsEsRateInPes": {
       "base": "M2ts Es Rate In Pes",
       "refs": {
-        "M2tsSettings$EsRateInPes": "Include or exclude the ES Rate field in the PES header."
+        "M2tsSettings$EsRateInPes": "Include or exclude the ES Rate field in the PES header.",
+        "MultiplexM2tsSettings$EsRateInPes": "Include or exclude the ES Rate field in the PES header."
       }
     },
     "M2tsKlv": {
       "base": "M2ts Klv",
       "refs": {
-        "M2tsSettings$Klv": "If set to passthrough, passes any KLV data from the input source to this output."
+        "M2tsSettings$Klv": "If set to passthrough, passes any KLV data from the input source to this output.",
+        "MultiplexM2tsSettings$Klv": "If set to passthrough, passes any KLV data from the input source to this output."
       }
     },
     "M2tsNielsenId3Behavior": {
       "base": "M2ts Nielsen Id3 Behavior",
       "refs": {
-        "M2tsSettings$NielsenId3Behavior": "If set to passthrough, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3 tag will be inserted in the output."
+        "M2tsSettings$NielsenId3Behavior": "If set to passthrough, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3 tag will be inserted in the output.",
+        "MultiplexM2tsSettings$NielsenId3Behavior": "If set to passthrough, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3 tag will be inserted in the output."
       }
     },
     "M2tsPcrControl": {
       "base": "M2ts Pcr Control",
       "refs": {
-        "M2tsSettings$PcrControl": "When set to pcrEveryPesPacket, a Program Clock Reference value is inserted for every Packetized Elementary Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video or audio elementary stream."
+        "M2tsSettings$PcrControl": "When set to pcrEveryPesPacket, a Program Clock Reference value is inserted for every Packetized Elementary Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video or audio elementary stream.",
+        "MultiplexM2tsSettings$PcrControl": "When set to pcrEveryPesPacket, a Program Clock Reference value is inserted for every Packetized Elementary Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video or audio elementary stream."
       }
     },
     "M2tsRateMode": {
@@ -2357,7 +2367,8 @@
     "M2tsScte35Control": {
       "base": "M2ts Scte35 Control",
       "refs": {
-        "M2tsSettings$Scte35Control": "Optionally pass SCTE-35 signals from the input source to this output."
+        "M2tsSettings$Scte35Control": "Optionally pass SCTE-35 signals from the input source to this output.",
+        "MultiplexM2tsSettings$Scte35Control": "Optionally pass SCTE-35 signals from the input source to this output."
       }
     },
     "M2tsSegmentationMarkers": {
@@ -3838,7 +3849,8 @@
     "__doubleMin0Max5000": {
       "base": null,
       "refs": {
-        "M2tsSettings$Scte35PrerollPullupMilliseconds": "Defines the amount SCTE-35 preroll will be increased (in milliseconds) on the output. Preroll is the amount of time between the presence of a SCTE-35 indication in a transport stream and the PTS of the video frame it references. Zero means don't add pullup (it doesn't mean set the preroll to zero). Negative pullup is not supported, which means that you can't make the preroll shorter. Be aware that latency in the output will increase by the pullup amount."
+        "M2tsSettings$Scte35PrerollPullupMilliseconds": "Defines the amount SCTE-35 preroll will be increased (in milliseconds) on the output. Preroll is the amount of time between the presence of a SCTE-35 indication in a transport stream and the PTS of the video frame it references. Zero means don't add pullup (it doesn't mean set the preroll to zero). Negative pullup is not supported, which means that you can't make the preroll shorter. Be aware that latency in the output will increase by the pullup amount.",
+        "MultiplexM2tsSettings$Scte35PrerollPullupMilliseconds": "Defines the amount SCTE-35 preroll will be increased (in milliseconds) on the output. Preroll is the amount of time between the presence of a SCTE-35 indication in a transport stream and the PTS of the video frame it references. Zero means don't add pullup (it doesn't mean set the preroll to zero). Negative pullup is not supported, which means that you can't make the preroll shorter. Be aware that latency in the output will increase by the pullup amount."
       }
     },
     "__doubleMin1": {
@@ -3973,7 +3985,8 @@
         "StaticImageOutputActivateScheduleActionSettings$ImageX": "Placement of the left edge of the overlay relative to the left edge of the video frame, in pixels. 0 (the default) is the left edge of the frame. If the placement causes the overlay to extend beyond the right edge of the underlying video, then the overlay is cropped on the right.",
         "StaticImageOutputActivateScheduleActionSettings$ImageY": "Placement of the top edge of the overlay relative to the top edge of the video frame, in pixels. 0 (the default) is the top edge of the frame. If the placement causes the overlay to extend beyond the bottom edge of the underlying video, then the overlay is cropped on the bottom.",
         "StaticImageOutputDeactivateScheduleActionSettings$FadeOut": "The time in milliseconds for the image to fade out. Default is 0 (no fade-out).",
-        "UdpGroupSettings$TimedMetadataId3Period": "Timed Metadata interval in seconds."
+        "UdpGroupSettings$TimedMetadataId3Period": "Timed Metadata interval in seconds.",
+        "MultiplexM2tsSettings$AudioFramesPerPes": "The number of audio frames to insert for each PES packet."
       }
     },
     "__integerMin0Max10": {
@@ -4087,7 +4100,8 @@
       "base": null,
       "refs": {
         "M2tsSettings$PcrPeriod": "Maximum time in milliseconds between Program Clock Reference (PCRs) inserted into the transport stream.",
-        "M3u8Settings$PcrPeriod": "Maximum time in milliseconds between Program Clock References (PCRs) inserted into the transport stream."
+        "M3u8Settings$PcrPeriod": "Maximum time in milliseconds between Program Clock References (PCRs) inserted into the transport stream.",
+        "MultiplexM2tsSettings$PcrPeriod": "Maximum time in milliseconds between Program Clock Reference (PCRs) inserted into the transport stream."
       }
     },
     "__integerMin0Max600": {
@@ -6408,7 +6422,7 @@
       }
     },
     "InputNetworkLocation": {
-      "base": "With the introduction of MediaLive OnPrem, a MediaLive input can now exist in two different places: AWS or\ninside an on-premise datacenter. By default all inputs will continue to be AWS inputs.",
+      "base": "With the introduction of MediaLive Anywhere, a MediaLive input can now exist in two different places: AWS or\ninside an on-premises datacenter. By default all inputs will continue to be AWS inputs.",
       "refs": {
         "CreateInput$InputNetworkLocation": "The location of this input. AWS, for an input existing in the AWS Cloud, On-Prem for\nan input in a customer network.",
         "Input$InputNetworkLocation": "The location of this input. AWS, for an input existing in the AWS Cloud, On-Prem for\nan input in a customer network."
@@ -6805,6 +6819,37 @@
       "base": null,
       "refs": {
         "OutputDestination$SrtSettings": "SRT settings for an SRT output; one destination for each redundant encoder."
+      }
+    },
+    "BandwidthReductionFilterSettings": {
+      "base": "Bandwidth Reduction Filter Settings",
+      "refs": {
+        "H264FilterSettings$BandwidthReductionFilterSettings": null,
+        "H265FilterSettings$BandwidthReductionFilterSettings": null
+      }
+    },
+    "BandwidthReductionFilterStrength": {
+      "base": "Bandwidth Reduction Filter Strength",
+      "refs": {
+        "BandwidthReductionFilterSettings$Strength": "Enables the bandwidth reduction filter. The filter strengths range from 1 to 4. We recommend that you always\nenable this filter and use AUTO, to let MediaLive apply the optimum filtering for the context."
+      }
+    },
+    "BandwidthReductionPostFilterSharpening": {
+      "base": "Bandwidth Reduction Post Filter Sharpening",
+      "refs": {
+        "BandwidthReductionFilterSettings$PostFilterSharpening": "Configures the sharpening control, which is available when the bandwidth reduction filter is enabled. This\ncontrol sharpens edges and contours, which produces a specific artistic effect that you might want.\n\nWe recommend that you test each of the values (including DISABLED) to observe the sharpening effect on the\ncontent."
+      }
+    },
+    "MultiplexContainerSettings": {
+      "base": "Multiplex Container Settings",
+      "refs": {
+        "MultiplexOutputSettings$ContainerSettings": null
+      }
+    },
+    "MultiplexM2tsSettings": {
+      "base": "Multiplex M2ts Settings",
+      "refs": {
+        "MultiplexContainerSettings$MultiplexM2tsSettings": null
       }
     }
   },

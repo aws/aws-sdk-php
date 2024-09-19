@@ -8647,6 +8647,10 @@
         "TemporalFilterSettings": {
           "shape": "TemporalFilterSettings",
           "locationName": "temporalFilterSettings"
+        },
+        "BandwidthReductionFilterSettings": {
+          "shape": "BandwidthReductionFilterSettings",
+          "locationName": "bandwidthReductionFilterSettings"
         }
       }
     },
@@ -9032,6 +9036,10 @@
         "TemporalFilterSettings": {
           "shape": "TemporalFilterSettings",
           "locationName": "temporalFilterSettings"
+        },
+        "BandwidthReductionFilterSettings": {
+          "shape": "BandwidthReductionFilterSettings",
+          "locationName": "bandwidthReductionFilterSettings"
         }
       }
     },
@@ -12526,6 +12534,10 @@
         "Destination": {
           "shape": "OutputLocationRef",
           "locationName": "destination"
+        },
+        "ContainerSettings": {
+          "shape": "MultiplexContainerSettings",
+          "locationName": "containerSettings"
         }
       },
       "required": [
@@ -23487,6 +23499,108 @@
       "type": "list",
       "member": {
         "shape": "SrtOutputDestinationSettings"
+      }
+    },
+    "BandwidthReductionFilterSettings": {
+      "type": "structure",
+      "members": {
+        "PostFilterSharpening": {
+          "shape": "BandwidthReductionPostFilterSharpening",
+          "locationName": "postFilterSharpening"
+        },
+        "Strength": {
+          "shape": "BandwidthReductionFilterStrength",
+          "locationName": "strength"
+        }
+      }
+    },
+    "BandwidthReductionFilterStrength": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "STRENGTH_1",
+        "STRENGTH_2",
+        "STRENGTH_3",
+        "STRENGTH_4"
+      ]
+    },
+    "BandwidthReductionPostFilterSharpening": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "SHARPENING_1",
+        "SHARPENING_2",
+        "SHARPENING_3"
+      ]
+    },
+    "MultiplexContainerSettings": {
+      "type": "structure",
+      "members": {
+        "MultiplexM2tsSettings": {
+          "shape": "MultiplexM2tsSettings",
+          "locationName": "multiplexM2tsSettings"
+        }
+      }
+    },
+    "MultiplexM2tsSettings": {
+      "type": "structure",
+      "members": {
+        "AbsentInputAudioBehavior": {
+          "shape": "M2tsAbsentInputAudioBehavior",
+          "locationName": "absentInputAudioBehavior"
+        },
+        "Arib": {
+          "shape": "M2tsArib",
+          "locationName": "arib"
+        },
+        "AudioBufferModel": {
+          "shape": "M2tsAudioBufferModel",
+          "locationName": "audioBufferModel"
+        },
+        "AudioFramesPerPes": {
+          "shape": "__integerMin0",
+          "locationName": "audioFramesPerPes"
+        },
+        "AudioStreamType": {
+          "shape": "M2tsAudioStreamType",
+          "locationName": "audioStreamType"
+        },
+        "CcDescriptor": {
+          "shape": "M2tsCcDescriptor",
+          "locationName": "ccDescriptor"
+        },
+        "Ebif": {
+          "shape": "M2tsEbifControl",
+          "locationName": "ebif"
+        },
+        "EsRateInPes": {
+          "shape": "M2tsEsRateInPes",
+          "locationName": "esRateInPes"
+        },
+        "Klv": {
+          "shape": "M2tsKlv",
+          "locationName": "klv"
+        },
+        "NielsenId3Behavior": {
+          "shape": "M2tsNielsenId3Behavior",
+          "locationName": "nielsenId3Behavior"
+        },
+        "PcrControl": {
+          "shape": "M2tsPcrControl",
+          "locationName": "pcrControl"
+        },
+        "PcrPeriod": {
+          "shape": "__integerMin0Max500",
+          "locationName": "pcrPeriod"
+        },
+        "Scte35Control": {
+          "shape": "M2tsScte35Control",
+          "locationName": "scte35Control"
+        },
+        "Scte35PrerollPullupMilliseconds": {
+          "shape": "__doubleMin0Max5000",
+          "locationName": "scte35PrerollPullupMilliseconds"
+        }
       }
     }
   }

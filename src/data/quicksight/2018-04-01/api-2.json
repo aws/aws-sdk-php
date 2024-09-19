@@ -1901,6 +1901,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "ListFoldersForResource":{
+      "name":"ListFoldersForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/resource/{ResourceArn}/folders"
+      },
+      "input":{"shape":"ListFoldersForResourceRequest"},
+      "output":{"shape":"ListFoldersForResourceResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "ListGroupMemberships":{
       "name":"ListGroupMemberships",
       "http":{
@@ -5619,6 +5637,13 @@
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
       }
     },
+    "CommitMode":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "MANUAL"
+      ]
+    },
     "ComparativeOrder":{
       "type":"structure",
       "members":{
@@ -8063,7 +8088,8 @@
       "type":"structure",
       "members":{
         "Type":{"shape":"SheetControlDateTimePickerType"},
-        "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"}
+        "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "DefaultFilterControlConfiguration":{
@@ -8094,7 +8120,8 @@
       "members":{
         "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
-        "SelectableValues":{"shape":"FilterSelectableValues"}
+        "SelectableValues":{"shape":"FilterSelectableValues"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "DefaultFilterListControlOptions":{
@@ -8150,7 +8177,8 @@
     "DefaultRelativeDateTimeControlOptions":{
       "type":"structure",
       "members":{
-        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"}
+        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "DefaultSectionBasedLayoutConfiguration":{
@@ -11126,7 +11154,8 @@
         "Title":{"shape":"SheetControlTitle"},
         "SourceFilterId":{"shape":"ShortRestrictiveResourceId"},
         "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"},
-        "Type":{"shape":"SheetControlDateTimePickerType"}
+        "Type":{"shape":"SheetControlDateTimePickerType"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "FilterDropDownControl":{
@@ -11143,7 +11172,8 @@
         "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"FilterSelectableValues"},
-        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"}
+        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "FilterGroup":{
@@ -11246,7 +11276,8 @@
         "FilterControlId":{"shape":"ShortRestrictiveResourceId"},
         "Title":{"shape":"SheetControlTitle"},
         "SourceFilterId":{"shape":"ShortRestrictiveResourceId"},
-        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"}
+        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "FilterScopeConfiguration":{
@@ -11412,6 +11443,11 @@
         "SHARED",
         "RESTRICTED"
       ]
+    },
+    "FoldersForResourceArnList":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":20
     },
     "Font":{
       "type":"structure",
@@ -13618,6 +13654,48 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "ListFoldersForResourceRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ResourceArn"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ResourceArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"ResourceArn"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListFoldersForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "Folders":{"shape":"FoldersForResourceArnList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"}
+      }
+    },
     "ListFoldersRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -15374,7 +15452,8 @@
         "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"ParameterSelectableValues"},
-        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"}
+        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "ParameterListControl":{

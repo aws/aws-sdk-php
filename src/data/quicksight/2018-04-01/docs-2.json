@@ -109,6 +109,7 @@
     "ListDataSources": "<p>Lists data sources in current Amazon Web Services Region that belong to this Amazon Web Services account.</p>",
     "ListFolderMembers": "<p>List all assets (<code>DASHBOARD</code>, <code>ANALYSIS</code>, and <code>DATASET</code>) in a folder. </p>",
     "ListFolders": "<p>Lists all folders in an account.</p>",
+    "ListFoldersForResource": "<p>List all folders that a resource is a member of.</p>",
     "ListGroupMemberships": "<p>Lists member users in a group.</p>",
     "ListGroups": "<p>Lists all user groups in Amazon QuickSight. </p>",
     "ListIAMPolicyAssignments": "<p>Lists the IAM policy assignments in the current Amazon QuickSight account.</p>",
@@ -712,6 +713,7 @@
         "Folder$Arn": "<p>The Amazon Resource Name (ARN) for the folder.</p>",
         "FolderArnList$member": null,
         "FolderSummary$Arn": "<p>The Amazon Resource Name (ARN) of the folder.</p>",
+        "FoldersForResourceArnList$member": null,
         "GenerateEmbedUrlForAnonymousUserResponse$AnonymousUserArn": "<p>The Amazon Resource Name (ARN) to use for the anonymous Amazon QuickSight user.</p>",
         "GenerateEmbedUrlForRegisteredUserRequest$UserArn": "<p>The Amazon Resource Name for the registered user.</p>",
         "GetDashboardEmbedUrlRequest$UserArn": "<p>The Amazon QuickSight user's Amazon Resource Name (ARN), for use with <code>QUICKSIGHT</code> identity type. You can use this for any Amazon QuickSight users in your account (readers, authors, or admins) authenticated as one of the following:</p> <ul> <li> <p>Active Directory (AD) users or group members</p> </li> <li> <p>Invited nonfederated users</p> </li> <li> <p>IAM users and IAM role-based sessions authenticated through Federated Single Sign-On using SAML, OpenID Connect, or IAM federation.</p> </li> </ul> <p>Omit this parameter for users in the third group – IAM users and IAM role-based sessions.</p>",
@@ -720,6 +722,7 @@
         "GroupMember$Arn": "<p>The Amazon Resource Name (ARN) for the group member (user).</p>",
         "IAMPolicyAssignment$PolicyArn": "<p>The Amazon Resource Name (ARN) for the IAM policy.</p>",
         "Ingestion$Arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "ListFoldersForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) the resource whose folders you need to list.</p>",
         "ListTagsForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want a list of tags for.</p>",
         "ListTopicRefreshSchedulesResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "ListTopicReviewedAnswersResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
@@ -1622,6 +1625,7 @@
         "ListDataSetsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListDataSourcesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListFolderMembersRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
+        "ListFoldersForResourceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the resource.</p>",
         "ListFoldersRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "ListGroupMembershipsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
         "ListGroupsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
@@ -2714,6 +2718,18 @@
       "base": "<p>A combo chart.</p> <p>The <code>ComboChartVisual</code> includes stacked bar combo charts and clustered bar combo charts</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/combo-charts.html\">Using combo charts</a> in the <i>Amazon QuickSight User Guide</i>.</p>",
       "refs": {
         "Visual$ComboChartVisual": "<p>A combo chart.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/combo-charts.html\">Using combo charts</a> in the <i>Amazon QuickSight User Guide</i>.</p>"
+      }
+    },
+    "CommitMode": {
+      "base": null,
+      "refs": {
+        "DefaultDateTimePickerControlOptions$CommitMode": "<p>The visibility configuration of the Apply button on a <code>DateTimePickerControl</code>.</p>",
+        "DefaultFilterDropDownControlOptions$CommitMode": "<p>The visibility configuration of the Apply button on a <code>FilterDropDownControl</code>.</p>",
+        "DefaultRelativeDateTimeControlOptions$CommitMode": "<p>The visibility configuration of the Apply button on a <code>RelativeDateTimeControl</code>.</p>",
+        "FilterDateTimePickerControl$CommitMode": "<p>The visibility configurationof the Apply button on a <code>DateTimePickerControl</code>.</p>",
+        "FilterDropDownControl$CommitMode": "<p>The visibility configuration of the Apply button on a <code>FilterDropDownControl</code>.</p>",
+        "FilterRelativeDateTimeControl$CommitMode": "<p>The visibility configuration of the Apply button on a <code>FilterRelativeDateTimeControl</code>.</p>",
+        "ParameterDropDownControl$CommitMode": "<p>The visibility configuration of the Apply button on a <code>ParameterDropDownControl</code>.</p>"
       }
     },
     "ComparativeOrder": {
@@ -5731,6 +5747,12 @@
         "FolderSummary$FolderType": "<p>The type of folder.</p>"
       }
     },
+    "FoldersForResourceArnList": {
+      "base": null,
+      "refs": {
+        "ListFoldersForResourceResponse$Folders": "<p>A list that contains the Amazon Resource Names (ARNs) of all folders that the resource is a member of.</p>"
+      }
+    },
     "Font": {
       "base": "<p>Determines the font settings.</p>",
       "refs": {
@@ -7382,6 +7404,16 @@
       "refs": {
       }
     },
+    "ListFoldersForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFoldersForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListFoldersRequest": {
       "base": null,
       "refs": {
@@ -7766,6 +7798,7 @@
         "ListDataSetsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListDataSourcesRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListFolderMembersRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
+        "ListFoldersForResourceRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListFoldersRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListGroupMembershipsRequest$MaxResults": "<p>The maximum number of results to return from this request.</p>",
         "ListGroupsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
@@ -11161,6 +11194,7 @@
         "ListDataSetsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListDataSourcesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListFolderMembersResponse$Status": "<p>The HTTP status of the request.</p>",
+        "ListFoldersForResourceResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListFoldersResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListGroupMembershipsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListGroupsResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -11443,6 +11477,9 @@
         "ListFolderMembersRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListFolderMembersResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListFolderMembersResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListFoldersForResourceRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListFoldersForResourceResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListFoldersForResourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListFoldersRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListFoldersResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListFoldersResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
