@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.322.1 - 2024-09-19
 
 * `Aws\SageMaker` - Introduced support for G6e instance types on SageMaker Studio for JupyterLab and CodeEditor applications.
 * `Aws\QuickSight` - QuickSight: 1. Add new API - ListFoldersForResource. 2. Commit mode adds visibility configuration of Apply button on multi-select controls for authors.
