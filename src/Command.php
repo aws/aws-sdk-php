@@ -14,8 +14,11 @@ class Command implements CommandInterface
     /** @var HandlerList */
     private $handlerList;
 
-    /** @var Array */
+    /** @var array */
     private $authSchemes;
+
+    /** @var MetricsBuilder */
+    private $metricsBuilder;
 
     /**
      * Accepts an associative array of command options, including:
@@ -38,6 +41,7 @@ class Command implements CommandInterface
         if (!isset($this->data['@context'])) {
             $this->data['@context'] = [];
         }
+        $this->metricsBuilder = new MetricsBuilder();
     }
 
     public function __clone()
@@ -109,5 +113,16 @@ class Command implements CommandInterface
     public function get($name)
     {
         return $this[$name];
+    }
+
+    /**
+     * @inheridoc
+     * @internal
+     *
+     * @return MetricsBuilder
+     */
+    public function getMetricsBuilder(): MetricsBuilder
+    {
+        return $this->metricsBuilder;
     }
 }

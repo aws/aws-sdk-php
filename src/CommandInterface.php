@@ -39,4 +39,11 @@ interface CommandInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * @return HandlerList
      */
     public function getHandlerList();
+
+    /**
+     * Returns the metrics builder instance tied up to this command.
+     *
+     * @return MetricsBuilder
+     */
+    public function getMetricsBuilder();
 }

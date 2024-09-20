@@ -282,6 +282,11 @@ class AwsClient implements AwsClientInterface
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
         }
+        MetricsBuilder::appendMetricsCaptureMiddleware(
+            $this->getHandlerList(),
+            MetricsBuilder::RESOURCE_MODEL
+        );
+        $this->addUserAgentMiddleware($config);
     }
 
     public function getHandlerList()
@@ -439,6 +444,7 @@ class AwsClient implements AwsClientInterface
         $name = $this->config['signing_name'];
         $region = $this->config['signing_region'];
         $signingRegionSet = $this->signingRegionSet;
+        $handlerList = $this->getHandlerList();
 
         if (isset($args['signature_version'])
          || isset($this->config['configured_signature_version'])
@@ -457,7 +463,8 @@ class AwsClient implements AwsClientInterface
                 $region,
                 $signatureVersion,
                 $configuredSignatureVersion,
-                $signingRegionSet
+                $signingRegionSet,
+            $handlerList
         ) {
             if (!$configuredSignatureVersion) {
                 if (!empty($c['@context']['signing_region'])) {
@@ -492,6 +499,11 @@ class AwsClient implements AwsClientInterface
                 $region = $signingRegionSet
                     ?? $commandSigningRegionSet
                     ?? $region;
+
+                MetricsBuilder::appendMetricsCaptureMiddleware(
+                    $handlerList,
+                    MetricsBuilder::SIGV4A_SIGNING
+                );
             }
 
             return SignatureProvider::resolve($provider, $signatureVersion, $name, $region);
@@ -608,6 +620,14 @@ class AwsClient implements AwsClientInterface
                 $this->credentialProvider
             ),
             'endpoint-resolution'
+        );
+    }
+
+    private function addUserAgentMiddleware($args)
+    {
+        $this->getHandlerList()->prependSign(
+            UserAgentMiddleware::wrap($args),
+            'user-agent'
         );
     }
 
