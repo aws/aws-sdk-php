@@ -5,6 +5,7 @@ use Aws\Api\Operation;
 use Aws\Api\Service;
 use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\CommandInterface;
+use Aws\MetricsBuilder;
 use Closure;
 use GuzzleHttp\Promise\Promise;
 use function JmesPath\search;
@@ -98,8 +99,15 @@ class EndpointV2Middleware
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $providerArgs = $this->resolveArgs($commandArgs, $operation);
+        $this->hookAccountIdMetric(
+            $providerArgs[self::ACCOUNT_ID_PARAM] ?? null,
+            $command
+        );
         $endpoint = $this->endpointProvider->resolveEndpoint($providerArgs);
-
+        $this->hookAccountIdEndpointMetric(
+            $endpoint,
+            $command
+        );
         if (!empty($authSchemes = $endpoint->getProperty('authSchemes'))) {
             $this->applyAuthScheme(
                 $authSchemes,
@@ -393,5 +401,24 @@ class EndpointV2Middleware
         $identity = $identityProviderFn()->wait();
 
         return $identity->getAccountId();
+    }
+
+    private function hookAccountIdMetric($accountId, &$command)
+    {
+        if (!empty($accountId)) {
+            MetricsBuilder::fromCommand($command)->append(
+                MetricsBuilder::RESOLVED_ACCOUNT_ID
+            );
+        }
+    }
+
+    private function hookAccountIdEndpointMetric($endpoint, $command)
+    {
+        $regex = "/^(https?:\/\/\d{12}\.[^\s\/$.?#].\S*)$/";
+        if (preg_match($regex, $endpoint->getUrl())) {
+            MetricsBuilder::fromCommand($command)->append(
+                MetricsBuilder::ACCOUNT_ID_ENDPOINT
+            );
+        }
     }
 }
