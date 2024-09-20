@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Generate account endpoint for DynamoDB requests when the account ID is available
+* `Aws\SageMakerMetrics` - This release introduces support for the SageMaker Metrics BatchGetMetrics API.
+* `Aws\WorkSpaces` - Releasing new ErrorCodes for SysPrep failures during ImageImport and CreateImage process
+* `Aws\SageMaker` - Amazon SageMaker now supports using manifest files to specify the location of uncompressed model artifacts within Model Packages
+* `Aws\Neptune` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+
 ## 3.322.1 - 2024-09-19
 
 * `Aws\SageMaker` - Introduced support for G6e instance types on SageMaker Studio for JupyterLab and CodeEditor applications.
