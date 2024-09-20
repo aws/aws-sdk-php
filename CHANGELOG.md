@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.322.2 - 2024-09-20
 
 * `Aws\DynamoDB` - Generate account endpoint for DynamoDB requests when the account ID is available
 * `Aws\SageMakerMetrics` - This release introduces support for the SageMaker Metrics BatchGetMetrics API.
