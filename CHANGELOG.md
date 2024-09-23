@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.322.3 - 2024-09-23
 
 * `Aws\EMRServerless` - This release adds support for job concurrency and queuing configuration at Application level.
 * `Aws\RDS` - Support ComputeRedundancy parameter in ModifyDBShardGroup API. Add DBShardGroupArn in DBShardGroup API response. Remove InvalidMaxAcuFault from CreateDBShardGroup and ModifyDBShardGroup API. Both API will throw InvalidParameterValueException for invalid ACU configuration.
