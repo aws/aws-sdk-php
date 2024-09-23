@@ -3790,8 +3790,8 @@
       "type":"structure",
       "members":{
         "AuthenticationType":{"shape":"AuthenticationType"},
-        "SecretArn":{"shape":"SecretArn"},
-        "OAuth2Properties":{"shape":"OAuth2PropertiesInput"}
+        "OAuth2Properties":{"shape":"OAuth2PropertiesInput"},
+        "SecretArn":{"shape":"SecretArn"}
       }
     },
     "AuthenticationType":{
@@ -3806,7 +3806,8 @@
       "type":"string",
       "max":4096,
       "min":1,
-      "pattern":"\\S+"
+      "pattern":"\\S+",
+      "sensitive":true
     },
     "AuthorizationCodeProperties":{
       "type":"structure",
@@ -5170,6 +5171,7 @@
         "ConnectionType":{"shape":"ConnectionType"},
         "MatchCriteria":{"shape":"MatchCriteria"},
         "ConnectionProperties":{"shape":"ConnectionProperties"},
+        "AthenaProperties":{"shape":"PropertyMap"},
         "PhysicalConnectionRequirements":{"shape":"PhysicalConnectionRequirements"},
         "CreationTime":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"},
@@ -5193,6 +5195,7 @@
         "ConnectionType":{"shape":"ConnectionType"},
         "MatchCriteria":{"shape":"MatchCriteria"},
         "ConnectionProperties":{"shape":"ConnectionProperties"},
+        "AthenaProperties":{"shape":"PropertyMap"},
         "PhysicalConnectionRequirements":{"shape":"PhysicalConnectionRequirements"},
         "AuthenticationConfiguration":{"shape":"AuthenticationConfigurationInput"},
         "ValidateCredentials":{"shape":"Boolean"}
@@ -11269,6 +11272,16 @@
         "JobConfiguration":{"shape":"ConfigurationMap"}
       }
     },
+    "PropertyKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "PropertyMap":{
+      "type":"map",
+      "key":{"shape":"PropertyKey"},
+      "value":{"shape":"PropertyValue"}
+    },
     "PropertyPredicate":{
       "type":"structure",
       "members":{
@@ -11276,6 +11289,11 @@
         "Value":{"shape":"ValueString"},
         "Comparator":{"shape":"Comparator"}
       }
+    },
+    "PropertyValue":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "PublicKeysList":{
       "type":"list",

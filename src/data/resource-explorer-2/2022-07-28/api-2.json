@@ -5,11 +5,13 @@
     "endpointPrefix":"resource-explorer-2",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Resource Explorer",
     "serviceId":"Resource Explorer 2",
     "signatureVersion":"v4",
     "signingName":"resource-explorer-2",
-    "uid":"resource-explorer-2-2022-07-28"
+    "uid":"resource-explorer-2-2022-07-28",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateDefaultView":{
@@ -230,6 +232,24 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListResources":{
+      "name":"ListResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListResources",
+        "responseCode":200
+      },
+      "input":{"shape":"ListResourcesInput"},
+      "output":{"shape":"ListResourcesOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -721,6 +741,49 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListResourcesInput":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"SearchFilter"},
+        "MaxResults":{"shape":"ListResourcesInputMaxResultsInteger"},
+        "NextToken":{"shape":"ListResourcesInputNextTokenString"},
+        "ViewArn":{"shape":"ListResourcesInputViewArnString"}
+      }
+    },
+    "ListResourcesInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListResourcesInputNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ListResourcesInputViewArnString":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
+    "ListResourcesOutput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"ListResourcesOutputNextTokenString"},
+        "Resources":{"shape":"ResourceList"},
+        "ViewArn":{"shape":"ListResourcesOutputViewArnString"}
+      }
+    },
+    "ListResourcesOutputNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ListResourcesOutputViewArnString":{
+      "type":"string",
+      "max":1011,
+      "min":1
+    },
     "ListSupportedResourceTypesInput":{
       "type":"structure",
       "members":{
@@ -805,7 +868,7 @@
     },
     "QueryString":{
       "type":"string",
-      "max":1011,
+      "max":1280,
       "min":0,
       "sensitive":true
     },

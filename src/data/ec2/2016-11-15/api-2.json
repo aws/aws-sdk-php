@@ -13674,7 +13674,7 @@
     "DeleteKeyPairRequest":{
       "type":"structure",
       "members":{
-        "KeyName":{"shape":"KeyPairName"},
+        "KeyName":{"shape":"KeyPairNameWithResolver"},
         "KeyPairId":{"shape":"KeyPairId"},
         "DryRun":{
           "shape":"Boolean",
@@ -15124,11 +15124,7 @@
     },
     "DescribeCapacityBlockOfferingsRequest":{
       "type":"structure",
-      "required":[
-        "InstanceType",
-        "InstanceCount",
-        "CapacityDurationHours"
-      ],
+      "required":["CapacityDurationHours"],
       "members":{
         "DryRun":{"shape":"Boolean"},
         "InstanceType":{"shape":"String"},
@@ -22973,7 +22969,11 @@
     },
     "FleetCapacityReservationUsageStrategy":{
       "type":"string",
-      "enum":["use-capacity-reservations-first"]
+      "enum":[
+        "use-capacity-reservations-first",
+        "use-capacity-reservations-only",
+        "none"
+      ]
     },
     "FleetData":{
       "type":"structure",
@@ -28974,7 +28974,15 @@
         "r8g.48xlarge",
         "r8g.metal-24xl",
         "r8g.metal-48xl",
-        "mac2-m1ultra.metal"
+        "mac2-m1ultra.metal",
+        "g6e.xlarge",
+        "g6e.2xlarge",
+        "g6e.4xlarge",
+        "g6e.8xlarge",
+        "g6e.12xlarge",
+        "g6e.16xlarge",
+        "g6e.24xlarge",
+        "g6e.48xlarge"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -30926,6 +30934,7 @@
       }
     },
     "KeyPairName":{"type":"string"},
+    "KeyPairNameWithResolver":{"type":"string"},
     "KeyType":{
       "type":"string",
       "enum":[

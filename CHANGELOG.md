@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EMRServerless` - This release adds support for job concurrency and queuing configuration at Application level.
+* `Aws\RDS` - Support ComputeRedundancy parameter in ModifyDBShardGroup API. Add DBShardGroupArn in DBShardGroup API response. Remove InvalidMaxAcuFault from CreateDBShardGroup and ModifyDBShardGroup API. Both API will throw InvalidParameterValueException for invalid ACU configuration.
+* `Aws\BedrockAgent` - Amazon Bedrock Prompt Flows and Prompt Management now supports using inference profiles to increase throughput and improve resilience.
+* `Aws\Glue` - Added AthenaProperties parameter to Glue Connections, allowing Athena to store service specific properties on Glue Connections.
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway
+* `Aws\EC2` - Amazon EC2 G6e instances powered by NVIDIA L40S Tensor Core GPUs are the most cost-efficient GPU instances for deploying generative AI models and the highest performance GPU instances for spatial computing workloads.
+* `Aws\ResourceExplorer2` - AWS Resource Explorer released ListResources feature which allows customers to list all indexed AWS resources within a view.
+* `Aws\Athena` - List/Get/Update/Delete/CreateDataCatalog now integrate with AWS Glue connections. Users can create a Glue connection through Athena or use a Glue connection to define their Athena federated parameters.
+
 ## 3.322.2 - 2024-09-20
 
 * `Aws\DynamoDB` - Generate account endpoint for DynamoDB requests when the account ID is available

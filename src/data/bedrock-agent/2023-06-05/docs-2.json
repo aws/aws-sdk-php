@@ -1763,6 +1763,12 @@
         "KnowledgeBaseFlowNodeConfiguration$knowledgeBaseId": "<p>The unique identifier of the knowledge base to query.</p>"
       }
     },
+    "KnowledgeBaseModelIdentifier": {
+      "base": null,
+      "refs": {
+        "KnowledgeBaseFlowNodeConfiguration$modelId": "<p>The unique identifier of the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> to use to generate a response from the query results. Omit this field if you want to return the retrieved results as an array.</p>"
+      }
+    },
     "KnowledgeBaseRoleArn": {
       "base": null,
       "refs": {
@@ -1817,7 +1823,7 @@
       "refs": {
         "ActionGroupExecutor$lambda": "<p>The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action.</p>",
         "LambdaFunctionFlowNodeConfiguration$lambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function to invoke.</p>",
-        "PromptOverrideConfiguration$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the <code>promptConfigurations</code> must contain a <code>parserMode</code> value that is set to <code>OVERRIDDEN</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/lambda-parser.html\">Parser Lambda function in Agents for Amazon Bedrock</a>.</p>",
+        "PromptOverrideConfiguration$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the <code>promptConfigurations</code> must contain a <code>parserMode</code> value that is set to <code>OVERRIDDEN</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/lambda-parser.html\">Parser Lambda function in Amazon Bedrock Agents</a>.</p>",
         "TransformationLambdaConfiguration$lambdaArn": "<p>The function's ARN identifier.</p>"
       }
     },
@@ -2025,8 +2031,7 @@
       "refs": {
         "Agent$foundationModel": "<p>The foundation model used for orchestration by the agent.</p>",
         "AgentVersion$foundationModel": "<p>The foundation model that the version invokes.</p>",
-        "CreateAgentRequest$foundationModel": "<p>The foundation model to be used for orchestration by the agent you create.</p>",
-        "KnowledgeBaseFlowNodeConfiguration$modelId": "<p>The unique identifier of the model to use to generate a response from the query results. Omit this field if you want to return the retrieved results as an array.</p>",
+        "CreateAgentRequest$foundationModel": "<p>The Amazon Resource Name (ARN) of the foundation model to be used for orchestration by the agent you create.</p>",
         "UpdateAgentRequest$foundationModel": "<p>Specifies a new foundation model to be used for orchestration by the agent.</p>"
       }
     },
@@ -2453,8 +2458,8 @@
     "PromptModelIdentifier": {
       "base": null,
       "refs": {
-        "PromptFlowNodeInlineConfiguration$modelId": "<p>The unique identifier of the model to run inference with.</p>",
-        "PromptVariant$modelId": "<p>The unique identifier of the model with which to run inference on the prompt.</p>"
+        "PromptFlowNodeInlineConfiguration$modelId": "<p>The unique identifier of the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> to run inference with.</p>",
+        "PromptVariant$modelId": "<p>The unique identifier of the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> with which to run inference on the prompt.</p>"
       }
     },
     "PromptModelInferenceConfiguration": {
