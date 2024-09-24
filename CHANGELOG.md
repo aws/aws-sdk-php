@@ -255,7 +255,7 @@
 * `Aws\EKS` - Added support for new AL2023 GPU AMIs to the supported AMITypes.
 * `Aws\EC2` - This release adds new capabilities to manage On-Demand Capacity Reservations including the ability to split your reservation, move capacity between reservations, and modify the instance eligibility of your reservation.
 * `Aws\ConfigService` - Documentation update for the OrganizationConfigRuleName regex pattern.
-* `Aws\MediaLive` - AWS Elemental MediaLive now supports now supports editing the PID values for a Multiplex.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports editing the PID values for a Multiplex.
 
 ## 3.319.2 - 2024-08-09
 
