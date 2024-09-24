@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.322.4 - 2024-09-24
 
 * `Aws\Kinesis` - This release includes support to add tags when creating a stream
 * `Aws\PinpointSMSVoiceV2` - AWS End User Messaging SMS-Voice V2 has added support for resource policies. Use the three new APIs to create, view, edit, and delete resource policies.
