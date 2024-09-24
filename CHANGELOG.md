@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kinesis` - This release includes support to add tags when creating a stream
+* `Aws\PinpointSMSVoiceV2` - AWS End User Messaging SMS-Voice V2 has added support for resource policies. Use the three new APIs to create, view, edit, and delete resource policies.
+* `Aws\SageMaker` - Adding `HiddenInstanceTypes` and `HiddenSageMakerImageVersionAliases` attribute to SageMaker API
+* `Aws\Bedrock` - Add support for Cross Region Inference in Bedrock Model Evaluations.
+* `Aws\Budgets` - Releasing minor partitional endpoint updates
+
 ## 3.322.3 - 2024-09-23
 
 * `Aws\EMRServerless` - This release adds support for job concurrency and queuing configuration at Application level.

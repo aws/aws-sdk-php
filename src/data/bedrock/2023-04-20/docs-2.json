@@ -361,9 +361,9 @@
       }
     },
     "EvaluationBedrockModel": {
-      "base": "<p>Contains the ARN of the Amazon Bedrock models specified in your model evaluation job. Each Amazon Bedrock model supports different <code>inferenceParams</code>. To learn more about supported inference parameters for Amazon Bedrock models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters for foundation models</a>.</p> <p>The <code>inferenceParams</code> are specified using JSON. To successfully insert JSON as string make sure that all quotations are properly escaped. For example, <code>\"temperature\":\"0.25\"</code> key value pair would need to be formatted as <code>\\\"temperature\\\":\\\"0.25\\\"</code> to successfully accepted in the request.</p>",
+      "base": "<p>Contains the ARN of the Amazon Bedrock model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> specified in your model evaluation job. Each Amazon Bedrock model supports different <code>inferenceParams</code>. To learn more about supported inference parameters for Amazon Bedrock models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters for foundation models</a>.</p> <p>The <code>inferenceParams</code> are specified using JSON. To successfully insert JSON as string make sure that all quotations are properly escaped. For example, <code>\"temperature\":\"0.25\"</code> key value pair would need to be formatted as <code>\\\"temperature\\\":\\\"0.25\\\"</code> to successfully accepted in the request.</p>",
       "refs": {
-        "EvaluationModelConfig$bedrockModel": "<p>Defines the Amazon Bedrock model and inference parameters you want used.</p>"
+        "EvaluationModelConfig$bedrockModel": "<p>Defines the Amazon Bedrock model or inference profile and inference parameters you want used.</p>"
       }
     },
     "EvaluationConfig": {
@@ -407,7 +407,7 @@
     "EvaluationInferenceConfig": {
       "base": "<p>Used to define the models you want used in your model evaluation job. Automated model evaluation jobs support only a single model. In a human-based model evaluation job, your annotator can compare the responses for up to two different models.</p>",
       "refs": {
-        "CreateEvaluationJobRequest$inferenceConfig": "<p>Specify the models you want to use in your model evaluation job. Automatic model evaluation jobs support a single model, and model evaluation job that use human workers support two models.</p>",
+        "CreateEvaluationJobRequest$inferenceConfig": "<p>Specify the models you want to use in your model evaluation job. Automatic model evaluation jobs support a single model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>, and model evaluation job that use human workers support two models or inference profiles.</p>",
         "GetEvaluationJobResponse$inferenceConfig": "<p>Details about the models you specified in your model evaluation job.</p>"
       }
     },
@@ -501,7 +501,7 @@
     "EvaluationModelIdentifier": {
       "base": null,
       "refs": {
-        "EvaluationBedrockModel$modelIdentifier": "<p>The ARN of the Amazon Bedrock model specified.</p>",
+        "EvaluationBedrockModel$modelIdentifier": "<p>The ARN of the Amazon Bedrock model or inference profile specified.</p>",
         "EvaluationModelIdentifiers$member": null
       }
     },
