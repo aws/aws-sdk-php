@@ -234,6 +234,8 @@ use Psr\Http\Message\RequestInterface;
  */
 class S3Client extends AwsClient implements S3ClientInterface
 {
+    private const DIRECTORY_BUCKET_REGEX = '/^[a-zA-Z0-9_-]+--[a-z0-9]+-az\d+--x-s3'
+                                            .'(?!.*(?:-s3alias|--ol-s3|\.mrap))$/';
     use S3ClientTrait;
 
     /** @var array */
@@ -574,14 +576,20 @@ class S3Client extends AwsClient implements S3ClientInterface
         $region = $this->getRegion();
         return static function (callable $handler) use ($region) {
             return function (Command $command, $request = null) use ($handler, $region) {
-                if ($command->getName() === 'CreateBucket') {
+                if ($command->getName() === 'CreateBucket'
+                    && !self::isDirectoryBucket($command['Bucket'])
+                ) {
                     $locationConstraint = $command['CreateBucketConfiguration']['LocationConstraint']
                         ?? null;
 
                     if ($locationConstraint === 'us-east-1') {
                         unset($command['CreateBucketConfiguration']);
                     } elseif ('us-east-1' !== $region && empty($locationConstraint)) {
-                        $command['CreateBucketConfiguration'] = ['LocationConstraint' => $region];
+                        if (isset($command['CreateBucketConfiguration'])) {
+                            $command['CreateBucketConfiguration']['LocationConstraint'] = $region;
+                        } else {
+                            $command['CreateBucketConfiguration'] = ['LocationConstraint' => $region];
+                        }
                     }
                 }
 
@@ -856,6 +864,18 @@ class S3Client extends AwsClient implements S3ClientInterface
             }
         }
         $this->clientBuiltIns[$key] = $value;
+    }
+
+    /**
+     * Determines whether a bucket is a directory bucket.
+     * Only considers the availability zone/suffix format
+     *
+     * @param string $bucket
+     * @return bool
+     */
+    public static function isDirectoryBucket(string $bucket): bool
+    {
+        return preg_match(self::DIRECTORY_BUCKET_REGEX, $bucket) === 1;
     }
 
     /** @internal */
