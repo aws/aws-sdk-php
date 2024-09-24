@@ -163,20 +163,9 @@ class MultipartUploaderTest extends TestCase
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
-        $client->getHandlerList()->appendSign(
-            Middleware::tap(function ($cmd, $req) {
-                $name = $cmd->getName();
-                if ($name === 'UploadPart') {
-                    $this->assertTrue(
-                        $req->hasHeader('Content-MD5')
-                    );
-                }
-            })
-        );
         $uploadOptions = [
             'bucket'          => 'foo',
             'key'             => 'bar',
-            'add_content_md5' => true,
             'params'          => [
                 'RequestPayer'  => 'test',
                 'ContentLength' => $size
@@ -327,7 +316,6 @@ class MultipartUploaderTest extends TestCase
         $uploadOptions = [
             'bucket'          => 'foo',
             'key'             => 'bar',
-            'add_content_md5' => true,
             'params'          => [
                 'RequestPayer'  => 'test',
                 'ChecksumAlgorithm' => 'Sha256'
@@ -362,5 +350,26 @@ class MultipartUploaderTest extends TestCase
         $this->assertTrue($uploader->getState()->isCompleted());
         $this->assertSame('xyz', $result['ChecksumSHA256']);
         $this->assertSame($url, $result['ObjectURL']);
+    }
+
+    public function testAddContentMd5EmitsDeprecationNotice()
+    {
+        $this->expectDeprecation();
+        $this->expectDeprecationMessage('S3 no longer supports MD5 checksums.');
+        $data = str_repeat('.', 12 * self::MB);
+        $filename = sys_get_temp_dir() . '/' . self::FILENAME;
+        file_put_contents($filename, $data);
+        $source = Psr7\Utils::streamFor(fopen($filename, 'r'));
+        $client = $this->getTestClient('s3');
+        $options = ['bucket' => 'foo', 'key' => 'bar', 'add_content_md5' => true];
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'baz']),
+            new Result(['ETag' => 'A']),
+            new Result(['ETag' => 'B']),
+            new Result(['ETag' => 'C']),
+        ]);
+
+        $uploader = new MultipartUploader($client, $source, $options);
+        $result = $uploader->upload();
     }
 }
