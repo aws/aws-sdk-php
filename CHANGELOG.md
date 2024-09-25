@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Updates location constraint middleware to exclude directory buckets and retain original configuration.
+* `Aws\CloudTrail` - Doc-only update for CloudTrail network activity events release (in preview)
+* `Aws\EC2` - Updates to documentation for the transit gateway security group referencing feature.
+* `Aws\FSx` - Doc-only update to address Lustre S3 hard-coded names.
+
 ## 3.322.4 - 2024-09-24
 
 * `Aws\Kinesis` - This release includes support to add tags when creating a stream
