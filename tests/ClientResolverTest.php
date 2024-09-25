@@ -1677,4 +1677,23 @@ EOF;
             $conf['auth_scheme_resolver']
         );
     }
+
+    public function testEmitsDeprecationWarning()
+    {
+        if (PHP_VERSION_ID >= 80100) {
+            $this->markTestSkipped();
+        }
+
+        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=false');
+        $this->expectDeprecation();
+        $this->expectDeprecationMessage('This installation of the SDK is using PHP version');
+
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+
+        try {
+            $r->resolve(['service' => 'sqs', 'region' => 'x'], new HandlerList());
+        } finally {
+            putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
+        }
+    }
 }

@@ -684,7 +684,8 @@
         "OAUTH",
         "BASIC_AUTH",
         "PERSONAL_ACCESS_TOKEN",
-        "CODECONNECTIONS"
+        "CODECONNECTIONS",
+        "SECRETS_MANAGER"
       ]
     },
     "BatchDeleteBuildsInput":{
@@ -1129,6 +1130,7 @@
         "scalingConfiguration":{"shape":"ScalingConfigurationInput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
+        "imageId":{"shape":"NonEmptyString"},
         "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
       }
@@ -1408,7 +1410,8 @@
         "ARM_CONTAINER",
         "WINDOWS_SERVER_2019_CONTAINER",
         "LINUX_LAMBDA_CONTAINER",
-        "ARM_LAMBDA_CONTAINER"
+        "ARM_LAMBDA_CONTAINER",
+        "MAC_ARM"
       ]
     },
     "EnvironmentVariable":{
@@ -1473,6 +1476,7 @@
         "scalingConfiguration":{"shape":"ScalingConfigurationOutput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
+        "imageId":{"shape":"NonEmptyString"},
         "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
       }
@@ -1492,7 +1496,9 @@
       "enum":[
         "CREATE_FAILED",
         "UPDATE_FAILED",
-        "ACTION_REQUIRED"
+        "ACTION_REQUIRED",
+        "PENDING_DELETION",
+        "INSUFFICIENT_CAPACITY"
       ]
     },
     "FleetName":{
@@ -2505,7 +2511,8 @@
       "type":"string",
       "enum":[
         "OAUTH",
-        "CODECONNECTIONS"
+        "CODECONNECTIONS",
+        "SECRETS_MANAGER"
       ]
     },
     "SourceCredentialsInfo":{
@@ -2743,6 +2750,7 @@
         "scalingConfiguration":{"shape":"ScalingConfigurationInput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
+        "imageId":{"shape":"NonEmptyString"},
         "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
       }
@@ -2903,7 +2911,8 @@
       "type":"string",
       "enum":[
         "GITHUB_ORGANIZATION",
-        "GITHUB_GLOBAL"
+        "GITHUB_GLOBAL",
+        "GITLAB_GROUP"
       ]
     },
     "WrapperBoolean":{"type":"boolean"},

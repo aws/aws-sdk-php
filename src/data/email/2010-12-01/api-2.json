@@ -1918,6 +1918,12 @@
     "HeaderName":{"type":"string"},
     "HeaderValue":{"type":"string"},
     "HtmlPart":{"type":"string"},
+    "IAMRoleARN":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:[\\w-]+:iam::[0-9]+:role/[\\w-]+"
+    },
     "Identity":{"type":"string"},
     "IdentityDkimAttributes":{
       "type":"structure",
@@ -2600,7 +2606,8 @@
         "TopicArn":{"shape":"AmazonResourceName"},
         "BucketName":{"shape":"S3BucketName"},
         "ObjectKeyPrefix":{"shape":"S3KeyPrefix"},
-        "KmsKeyArn":{"shape":"AmazonResourceName"}
+        "KmsKeyArn":{"shape":"AmazonResourceName"},
+        "IamRoleArn":{"shape":"IAMRoleARN"}
       }
     },
     "S3BucketName":{"type":"string"},
@@ -2654,6 +2661,7 @@
       "required":[
         "Source",
         "Template",
+        "DefaultTemplateData",
         "Destinations"
       ],
       "members":{

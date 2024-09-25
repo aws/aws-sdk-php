@@ -35,6 +35,7 @@ use Aws\Exception\UnresolvedEndpointException;
 class S3ClientTest extends TestCase
 {
     use UsesServiceTrait;
+    const OPERATIONS_WITH_PARAMS_LOCATION = __DIR__ . '/fixtures/operations-with-params.json';
 
     public function testCanUseBucketEndpoint()
     {
@@ -635,25 +636,23 @@ class S3ClientTest extends TestCase
     }
 
     /**
-     * @dataProvider successErrorResponseProvider
+     * @dataProvider s3OperationsProvider
      *
-     * @param Response $failingSuccess
      * @param string   $operation
      * @param array    $payload
      * @param array    $retryOptions
      */
     public function testRetries200Errors(
-        Response $failingSuccess,
-        $operation,
+        string $operation,
         array $payload,
-        $retryOptions
+        array $retryOptions
     ) {
         $retries = $retryOptions['max_attempts'];
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
             'retries' => $retryOptions,
-            'http_handler' => function () use (&$retries, $failingSuccess) {
+            'http_handler' => function () use (&$retries) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response(
                         200,
@@ -662,7 +661,7 @@ class S3ClientTest extends TestCase
                     ));
                 }
 
-                return new FulfilledPromise($failingSuccess);
+                return new FulfilledPromise(new Response(200, [], $this->getErrorXml()));
             },
         ]);
 
@@ -671,166 +670,45 @@ class S3ClientTest extends TestCase
         $this->assertSame(0, $retries);
     }
 
-    public function successErrorResponseProvider()
+    /**
+     * This provider returns a set of s3 operations along with
+     * the required params, and a retry configuration.
+     *
+     * @return \Generator
+     */
+    public function s3OperationsProvider(): \Generator
     {
-        return [
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'copyObject',
-                [
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'legacy',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'copyObject',
-                [
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'standard',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'copyObject',
-                [
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'adaptive',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'uploadPartCopy',
-                [
-                    'PartNumber' => 1,
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'legacy',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'uploadPartCopy',
-                [
-                    'PartNumber' => 1,
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'standard',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'uploadPartCopy',
-                [
-                    'PartNumber' => 1,
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'adaptive',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'completeMultipartUpload',
-                [
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                ],
-                [
-                    'mode' => 'legacy',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'completeMultipartUpload',
-                [
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                ],
-                [
-                    'mode' => 'standard',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'completeMultipartUpload',
-                [
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                ],
-                [
-                    'mode' => 'adaptive',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getMalformedXml()),
-                'listObjects',
-                [
-                    'Bucket' => 'foo',
-                ],
-                [
-                    'mode' => 'legacy',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getMalformedXml()),
-                'listObjects',
-                [
-                    'Bucket' => 'foo',
-                ],
-                [
-                    'mode' => 'standard',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getMalformedXml()),
-                'listObjects',
-                [
-                    'Bucket' => 'foo',
-                ],
-                [
-                    'mode' => 'adaptive',
-                    'max_attempts' => 11
-                ],
-            ],
+        $operations = $this->loadOperations();
+        $retryModes = [
+            'legacy',
+            'standard',
+            'adaptive'
         ];
+
+        foreach ($operations as $operation) {
+            foreach ($retryModes as $retryMode) {
+                yield ($operation['operation'] . '/' . $retryMode) => [
+                    $operation['operation'],
+                    $operation['params'],
+                    [
+                        'mode' => $retryMode,
+                        'max_attempts' => 5
+                    ],
+                ];
+            }
+        }
+    }
+
+    /**
+     * Load a list of s3 operations along with the required params populated.
+     *
+     * @return array
+     */
+    private function loadOperations(): array
+    {
+        $jsonContent = file_get_contents(self::OPERATIONS_WITH_PARAMS_LOCATION);
+
+        return json_decode($jsonContent, true);
     }
 
     private function getErrorXml()
@@ -1716,7 +1594,7 @@ EOXML;
 
     public function testAppliesAmbiguousSuccessParsing()
     {
-        $this->expectExceptionMessage("An error connecting to the service occurred while performing the CopyObject operation");
+        $this->expectExceptionMessage("Error parsing response for CopyObject: AWS parsing error: Error parsing XML: String could not be parsed as XML");
         $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $httpHandler = function ($request, array $options) {
             return Promise\Create::promiseFor(
@@ -2584,5 +2462,33 @@ EOXML;
             ['us-east-1' , true],
             ['us-west-2', false]
         ];
+    }
+
+    /**
+     * This test makes sure that not parsable xml errors are retried.
+     * This handling is specified in the s3 parser implementation.
+     *
+     * @dataProvider clientRetrySettingsProvider
+     * @param array $retrySettings
+     *
+     * @return void
+     */
+    public function testS3RetriesOnNotParsableBody(array $retrySettings)
+    {
+        $retries = $retrySettings['max_attempts'];
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'version' => 'latest',
+            'retries' => $retrySettings,
+            'http_handler' => function (RequestInterface $req) use (&$retries) {
+                if (0 === --$retries) {
+                    return new Response(200, [], $this->getWellFormedXml());
+                }
+
+                return new Response(200, [], $this->getMalformedXml());
+            }
+        ]);
+        $client->listBuckets();
+        $this->assertEquals(0, $retries);
     }
 }

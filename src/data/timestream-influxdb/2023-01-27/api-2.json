@@ -219,7 +219,7 @@
       "type":"string",
       "max":64,
       "min":2,
-      "pattern":"[^_][^\"]*"
+      "pattern":"[^_\"][^\"]*"
     },
     "ConflictException":{
       "type":"structure",
@@ -620,7 +620,10 @@
       "max":100,
       "min":1
     },
-    "NextToken":{"type":"string"},
+    "NextToken":{
+      "type":"string",
+      "min":1
+    },
     "Organization":{
       "type":"string",
       "max":64,
@@ -702,7 +705,9 @@
         "MODIFYING",
         "UPDATING",
         "DELETED",
-        "FAILED"
+        "FAILED",
+        "UPDATING_DEPLOYMENT_TYPE",
+        "UPDATING_INSTANCE_TYPE"
       ]
     },
     "String":{"type":"string"},
@@ -767,7 +772,9 @@
       "members":{
         "identifier":{"shape":"DbInstanceIdentifier"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
-        "dbParameterGroupIdentifier":{"shape":"DbParameterGroupIdentifier"}
+        "dbParameterGroupIdentifier":{"shape":"DbParameterGroupIdentifier"},
+        "dbInstanceType":{"shape":"DbInstanceType"},
+        "deploymentType":{"shape":"DeploymentType"}
       }
     },
     "UpdateDbInstanceOutput":{

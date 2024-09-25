@@ -528,7 +528,6 @@
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"MaxDBShardGroupLimitReached"},
         {"shape":"InvalidDBClusterStateFault"},
-        {"shape":"InvalidMaxAcuFault"},
         {"shape":"UnsupportedDBEngineVersionFault"},
         {"shape":"InvalidVPCNetworkStateFault"}
       ]
@@ -2046,8 +2045,7 @@
       "errors":[
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"DBShardGroupAlreadyExistsFault"},
-        {"shape":"DBShardGroupNotFoundFault"},
-        {"shape":"InvalidMaxAcuFault"}
+        {"shape":"DBShardGroupNotFoundFault"}
       ]
     },
     "ModifyDBSnapshot":{
@@ -3954,7 +3952,8 @@
         "EngineLifecycleSupport":{"shape":"String"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "DatabaseName":{"shape":"String"},
-        "StorageEncrypted":{"shape":"BooleanOptional"}
+        "StorageEncrypted":{"shape":"BooleanOptional"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateGlobalClusterResult":{
@@ -5435,7 +5434,8 @@
         "ComputeRedundancy":{"shape":"IntegerOptional"},
         "Status":{"shape":"String"},
         "PubliclyAccessible":{"shape":"BooleanOptional"},
-        "Endpoint":{"shape":"String"}
+        "Endpoint":{"shape":"String"},
+        "DBShardGroupArn":{"shape":"String"}
       }
     },
     "DBShardGroupAlreadyExistsFault":{
@@ -6977,7 +6977,8 @@
         "StorageEncrypted":{"shape":"BooleanOptional"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "GlobalClusterMembers":{"shape":"GlobalClusterMemberList"},
-        "FailoverState":{"shape":"FailoverState"}
+        "FailoverState":{"shape":"FailoverState"},
+        "TagList":{"shape":"TagList"}
       },
       "wrapper":true
     },
@@ -7543,17 +7544,6 @@
       },
       "exception":true
     },
-    "InvalidMaxAcuFault":{
-      "type":"structure",
-      "members":{
-      },
-      "error":{
-        "code":"InvalidMaxAcu",
-        "httpStatusCode":400,
-        "senderFault":true
-      },
-      "exception":true
-    },
     "InvalidOptionGroupStateFault":{
       "type":"structure",
       "members":{
@@ -8068,7 +8058,8 @@
       "members":{
         "DBShardGroupIdentifier":{"shape":"DBShardGroupIdentifier"},
         "MaxACU":{"shape":"DoubleOptional"},
-        "MinACU":{"shape":"DoubleOptional"}
+        "MinACU":{"shape":"DoubleOptional"},
+        "ComputeRedundancy":{"shape":"IntegerOptional"}
       }
     },
     "ModifyDBSnapshotAttributeMessage":{

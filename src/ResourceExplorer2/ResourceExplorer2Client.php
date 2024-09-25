@@ -31,6 +31,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listIndexesAsync(array $args = [])
  * @method \Aws\Result listIndexesForMembers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listIndexesForMembersAsync(array $args = [])
+ * @method \Aws\Result listResources(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listResourcesAsync(array $args = [])
  * @method \Aws\Result listSupportedResourceTypes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSupportedResourceTypesAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])

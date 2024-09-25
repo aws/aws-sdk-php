@@ -514,6 +514,15 @@
       "input":{"shape":"CreateCapacityReservationRequest"},
       "output":{"shape":"CreateCapacityReservationResult"}
     },
+    "CreateCapacityReservationBySplitting":{
+      "name":"CreateCapacityReservationBySplitting",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCapacityReservationBySplittingRequest"},
+      "output":{"shape":"CreateCapacityReservationBySplittingResult"}
+    },
     "CreateCapacityReservationFleet":{
       "name":"CreateCapacityReservationFleet",
       "http":{
@@ -4992,6 +5001,15 @@
       "input":{"shape":"MoveByoipCidrToIpamRequest"},
       "output":{"shape":"MoveByoipCidrToIpamResult"}
     },
+    "MoveCapacityReservationInstances":{
+      "name":"MoveCapacityReservationInstances",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"MoveCapacityReservationInstancesRequest"},
+      "output":{"shape":"MoveCapacityReservationInstancesResult"}
+    },
     "ProvisionByoipCidr":{
       "name":"ProvisionByoipCidr",
       "http":{
@@ -6278,7 +6296,8 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
-        }
+        },
+        "IpamPoolId":{"shape":"IpamPoolId"}
       }
     },
     "AllocateAddressResult":{
@@ -10254,6 +10273,43 @@
         "AmdSevSnp":{"shape":"AmdSevSnpSpecification"}
       }
     },
+    "CreateCapacityReservationBySplittingRequest":{
+      "type":"structure",
+      "required":[
+        "SourceCapacityReservationId",
+        "InstanceCount"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "SourceCapacityReservationId":{"shape":"CapacityReservationId"},
+        "InstanceCount":{"shape":"Integer"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreateCapacityReservationBySplittingResult":{
+      "type":"structure",
+      "members":{
+        "SourceCapacityReservation":{
+          "shape":"CapacityReservation",
+          "locationName":"sourceCapacityReservation"
+        },
+        "DestinationCapacityReservation":{
+          "shape":"CapacityReservation",
+          "locationName":"destinationCapacityReservation"
+        },
+        "InstanceCount":{
+          "shape":"Integer",
+          "locationName":"instanceCount"
+        }
+      }
+    },
     "CreateCapacityReservationFleetRequest":{
       "type":"structure",
       "required":[
@@ -13618,7 +13674,7 @@
     "DeleteKeyPairRequest":{
       "type":"structure",
       "members":{
-        "KeyName":{"shape":"KeyPairName"},
+        "KeyName":{"shape":"KeyPairNameWithResolver"},
         "KeyPairId":{"shape":"KeyPairId"},
         "DryRun":{
           "shape":"Boolean",
@@ -15068,11 +15124,7 @@
     },
     "DescribeCapacityBlockOfferingsRequest":{
       "type":"structure",
-      "required":[
-        "InstanceType",
-        "InstanceCount",
-        "CapacityDurationHours"
-      ],
+      "required":["CapacityDurationHours"],
       "members":{
         "DryRun":{"shape":"Boolean"},
         "InstanceType":{"shape":"String"},
@@ -21089,6 +21141,43 @@
         "default"
       ]
     },
+    "EbsStatusDetails":{
+      "type":"structure",
+      "members":{
+        "ImpairedSince":{
+          "shape":"MillisecondDateTime",
+          "locationName":"impairedSince"
+        },
+        "Name":{
+          "shape":"StatusName",
+          "locationName":"name"
+        },
+        "Status":{
+          "shape":"StatusType",
+          "locationName":"status"
+        }
+      }
+    },
+    "EbsStatusDetailsList":{
+      "type":"list",
+      "member":{
+        "shape":"EbsStatusDetails",
+        "locationName":"item"
+      }
+    },
+    "EbsStatusSummary":{
+      "type":"structure",
+      "members":{
+        "Details":{
+          "shape":"EbsStatusDetailsList",
+          "locationName":"details"
+        },
+        "Status":{
+          "shape":"SummaryStatus",
+          "locationName":"status"
+        }
+      }
+    },
     "Ec2InstanceConnectEndpoint":{
       "type":"structure",
       "members":{
@@ -22880,7 +22969,11 @@
     },
     "FleetCapacityReservationUsageStrategy":{
       "type":"string",
-      "enum":["use-capacity-reservations-first"]
+      "enum":[
+        "use-capacity-reservations-first",
+        "use-capacity-reservations-only",
+        "none"
+      ]
     },
     "FleetData":{
       "type":"structure",
@@ -27894,6 +27987,10 @@
         "SystemStatus":{
           "shape":"InstanceStatusSummary",
           "locationName":"systemStatus"
+        },
+        "AttachedEbsStatus":{
+          "shape":"EbsStatusSummary",
+          "locationName":"attachedEbsStatus"
         }
       }
     },
@@ -28877,7 +28974,15 @@
         "r8g.48xlarge",
         "r8g.metal-24xl",
         "r8g.metal-48xl",
-        "mac2-m1ultra.metal"
+        "mac2-m1ultra.metal",
+        "g6e.xlarge",
+        "g6e.2xlarge",
+        "g6e.4xlarge",
+        "g6e.8xlarge",
+        "g6e.12xlarge",
+        "g6e.16xlarge",
+        "g6e.24xlarge",
+        "g6e.48xlarge"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -29936,7 +30041,8 @@
         "vpc",
         "ec2-public-ipv4-pool",
         "custom",
-        "subnet"
+        "subnet",
+        "eip"
       ]
     },
     "IpamPoolAllocationSet":{
@@ -30158,6 +30264,7 @@
         "service-managed-ip",
         "service-managed-byoip",
         "amazon-owned-eip",
+        "amazon-owned-contig",
         "byoip",
         "ec2-public-ip"
       ]
@@ -30827,6 +30934,7 @@
       }
     },
     "KeyPairName":{"type":"string"},
+    "KeyPairNameWithResolver":{"type":"string"},
     "KeyType":{
       "type":"string",
       "enum":[
@@ -32904,7 +33012,8 @@
         "EndDateType":{"shape":"EndDateType"},
         "Accept":{"shape":"Boolean"},
         "DryRun":{"shape":"Boolean"},
-        "AdditionalInfo":{"shape":"String"}
+        "AdditionalInfo":{"shape":"String"},
+        "InstanceMatchCriteria":{"shape":"InstanceMatchCriteria"}
       }
     },
     "ModifyCapacityReservationResult":{
@@ -34679,6 +34788,41 @@
         "ByoipCidr":{
           "shape":"ByoipCidr",
           "locationName":"byoipCidr"
+        }
+      }
+    },
+    "MoveCapacityReservationInstancesRequest":{
+      "type":"structure",
+      "required":[
+        "SourceCapacityReservationId",
+        "DestinationCapacityReservationId",
+        "InstanceCount"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "SourceCapacityReservationId":{"shape":"CapacityReservationId"},
+        "DestinationCapacityReservationId":{"shape":"CapacityReservationId"},
+        "InstanceCount":{"shape":"Integer"}
+      }
+    },
+    "MoveCapacityReservationInstancesResult":{
+      "type":"structure",
+      "members":{
+        "SourceCapacityReservation":{
+          "shape":"CapacityReservation",
+          "locationName":"sourceCapacityReservation"
+        },
+        "DestinationCapacityReservation":{
+          "shape":"CapacityReservation",
+          "locationName":"destinationCapacityReservation"
+        },
+        "InstanceCount":{
+          "shape":"Integer",
+          "locationName":"instanceCount"
         }
       }
     },

@@ -3997,7 +3997,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:algorithm/[\\S]{1,2048}$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:algorithm/[\\S]{1,2048}$"
     },
     "AlgorithmImage":{
       "type":"string",
@@ -4241,6 +4241,14 @@
         "ml.g6.16xlarge",
         "ml.g6.24xlarge",
         "ml.g6.48xlarge",
+        "ml.g6e.xlarge",
+        "ml.g6e.2xlarge",
+        "ml.g6e.4xlarge",
+        "ml.g6e.8xlarge",
+        "ml.g6e.12xlarge",
+        "ml.g6e.16xlarge",
+        "ml.g6e.24xlarge",
+        "ml.g6e.48xlarge",
         "ml.geospatial.interactive",
         "ml.p4d.24xlarge",
         "ml.p4de.24xlarge",
@@ -4330,6 +4338,12 @@
         "ml.r6id.24xlarge",
         "ml.r6id.32xlarge"
       ]
+    },
+    "AppLifecycleManagement":{
+      "type":"structure",
+      "members":{
+        "IdleSettings":{"shape":"IdleSettings"}
+      }
     },
     "AppList":{
       "type":"list",
@@ -4779,6 +4793,12 @@
         "validation"
       ]
     },
+    "AutoMLComputeConfig":{
+      "type":"structure",
+      "members":{
+        "EmrServerlessComputeConfig":{"shape":"EmrServerlessComputeConfig"}
+      }
+    },
     "AutoMLContainerDefinition":{
       "type":"structure",
       "required":[
@@ -5139,6 +5159,14 @@
         "Descending"
       ]
     },
+    "AutoMountHomeEFS":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled",
+        "DefaultAsDomain"
+      ]
+    },
     "AutoParameter":{
       "type":"structure",
       "required":[
@@ -5430,7 +5458,8 @@
         "IdentityProviderOAuthSettings":{"shape":"IdentityProviderOAuthSettings"},
         "DirectDeploySettings":{"shape":"DirectDeploySettings"},
         "KendraSettings":{"shape":"KendraSettings"},
-        "GenerativeAiSettings":{"shape":"GenerativeAiSettings"}
+        "GenerativeAiSettings":{"shape":"GenerativeAiSettings"},
+        "EmrServerlessSettings":{"shape":"EmrServerlessSettings"}
       }
     },
     "CapacitySize":{
@@ -5899,7 +5928,7 @@
     },
     "ClusterInstanceCount":{
       "type":"integer",
-      "min":1
+      "min":0
     },
     "ClusterInstanceGroupDetails":{
       "type":"structure",
@@ -5911,7 +5940,8 @@
         "LifeCycleConfig":{"shape":"ClusterLifeCycleConfig"},
         "ExecutionRole":{"shape":"RoleArn"},
         "ThreadsPerCore":{"shape":"ClusterThreadsPerCore"},
-        "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"}
+        "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"},
+        "OnStartDeepHealthChecks":{"shape":"OnStartDeepHealthChecks"}
       }
     },
     "ClusterInstanceGroupDetailsList":{
@@ -5940,13 +5970,14 @@
         "LifeCycleConfig":{"shape":"ClusterLifeCycleConfig"},
         "ExecutionRole":{"shape":"RoleArn"},
         "ThreadsPerCore":{"shape":"ClusterThreadsPerCore"},
-        "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"}
+        "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"},
+        "OnStartDeepHealthChecks":{"shape":"OnStartDeepHealthChecks"}
       }
     },
     "ClusterInstanceGroupSpecifications":{
       "type":"list",
       "member":{"shape":"ClusterInstanceGroupSpecification"},
-      "max":20,
+      "max":100,
       "min":1
     },
     "ClusterInstancePlacement":{
@@ -5963,7 +5994,8 @@
         "Failure",
         "Pending",
         "ShuttingDown",
-        "SystemUpdating"
+        "SystemUpdating",
+        "DeepHealthCheckInProgress"
       ]
     },
     "ClusterInstanceStatusDetails":{
@@ -6079,6 +6111,13 @@
       "min":1,
       "pattern":"^i-[a-f0-9]{8}(?:[a-f0-9]{9})?$"
     },
+    "ClusterNodeRecovery":{
+      "type":"string",
+      "enum":[
+        "Automatic",
+        "None"
+      ]
+    },
     "ClusterNodeSummaries":{
       "type":"list",
       "member":{"shape":"ClusterNodeSummary"}
@@ -6103,6 +6142,20 @@
     "ClusterNonNegativeInstanceCount":{
       "type":"integer",
       "min":0
+    },
+    "ClusterOrchestrator":{
+      "type":"structure",
+      "required":["Eks"],
+      "members":{
+        "Eks":{"shape":"ClusterOrchestratorEksConfig"}
+      }
+    },
+    "ClusterOrchestratorEksConfig":{
+      "type":"structure",
+      "required":["ClusterArn"],
+      "members":{
+        "ClusterArn":{"shape":"EksClusterArn"}
+      }
     },
     "ClusterPrivateDnsHostname":{
       "type":"string",
@@ -6167,7 +6220,8 @@
       "members":{
         "DefaultResourceSpec":{"shape":"ResourceSpec"},
         "CustomImages":{"shape":"CustomImages"},
-        "LifecycleConfigArns":{"shape":"LifecycleConfigArns"}
+        "LifecycleConfigArns":{"shape":"LifecycleConfigArns"},
+        "AppLifecycleManagement":{"shape":"AppLifecycleManagement"}
       }
     },
     "CodeRepositories":{
@@ -6186,7 +6240,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:code-repository/[\\S]{1,2048}$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:code-repository/[\\S]{1,2048}$"
     },
     "CodeRepositoryContains":{
       "type":"string",
@@ -6751,7 +6805,8 @@
         "SecurityConfig":{"shape":"AutoMLSecurityConfig"},
         "AutoMLJobObjective":{"shape":"AutoMLJobObjective"},
         "ModelDeployConfig":{"shape":"ModelDeployConfig"},
-        "DataSplitConfig":{"shape":"AutoMLDataSplitConfig"}
+        "DataSplitConfig":{"shape":"AutoMLDataSplitConfig"},
+        "AutoMLComputeConfig":{"shape":"AutoMLComputeConfig"}
       }
     },
     "CreateAutoMLJobV2Response":{
@@ -6771,7 +6826,9 @@
         "ClusterName":{"shape":"ClusterName"},
         "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"},
         "VpcConfig":{"shape":"VpcConfig"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "Orchestrator":{"shape":"ClusterOrchestrator"},
+        "NodeRecovery":{"shape":"ClusterNodeRecovery"}
       }
     },
     "CreateClusterResponse":{
@@ -8330,6 +8387,13 @@
       "max":20,
       "min":0
     },
+    "DeepHealthCheckType":{
+      "type":"string",
+      "enum":[
+        "InstanceStress",
+        "InstanceConnectivity"
+      ]
+    },
     "DefaultEbsStorageSettings":{
       "type":"structure",
       "required":[
@@ -9202,7 +9266,8 @@
         "ModelDeployConfig":{"shape":"ModelDeployConfig"},
         "ModelDeployResult":{"shape":"ModelDeployResult"},
         "DataSplitConfig":{"shape":"AutoMLDataSplitConfig"},
-        "SecurityConfig":{"shape":"AutoMLSecurityConfig"}
+        "SecurityConfig":{"shape":"AutoMLSecurityConfig"},
+        "AutoMLComputeConfig":{"shape":"AutoMLComputeConfig"}
       }
     },
     "DescribeClusterNodeRequest":{
@@ -9244,7 +9309,9 @@
         "CreationTime":{"shape":"Timestamp"},
         "FailureMessage":{"shape":"String"},
         "InstanceGroups":{"shape":"ClusterInstanceGroupDetailsList"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Orchestrator":{"shape":"ClusterOrchestrator"},
+        "NodeRecovery":{"shape":"ClusterNodeRecovery"}
       }
     },
     "DescribeCodeRepositoryInput":{
@@ -11549,6 +11616,26 @@
       "max":10,
       "pattern":"\\d+"
     },
+    "EksClusterArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\-]*:eks:[a-z0-9\\-]*:[0-9]{12}:cluster\\/[0-9A-Za-z][A-Za-z0-9\\-_]{0,99}$"
+    },
+    "EmrServerlessComputeConfig":{
+      "type":"structure",
+      "required":["ExecutionRoleARN"],
+      "members":{
+        "ExecutionRoleARN":{"shape":"RoleArn"}
+      }
+    },
+    "EmrServerlessSettings":{
+      "type":"structure",
+      "members":{
+        "ExecutionRoleArn":{"shape":"RoleArn"},
+        "Status":{"shape":"FeatureStatus"}
+      }
+    },
     "EmrSettings":{
       "type":"structure",
       "members":{
@@ -11631,6 +11718,12 @@
         "Name",
         "CreationTime"
       ]
+    },
+    "EndpointConfigStepMetadata":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"EndpointConfigArn"}
+      }
     },
     "EndpointConfigSummary":{
       "type":"structure",
@@ -11761,6 +11854,12 @@
         "Failed",
         "UpdateRollbackFailed"
       ]
+    },
+    "EndpointStepMetadata":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"EndpointArn"}
+      }
     },
     "EndpointSummary":{
       "type":"structure",
@@ -12622,9 +12721,25 @@
       "type":"list",
       "member":{"shape":"AppType"}
     },
+    "HiddenInstanceTypesList":{
+      "type":"list",
+      "member":{"shape":"AppInstanceType"}
+    },
     "HiddenMlToolsList":{
       "type":"list",
       "member":{"shape":"MlTools"}
+    },
+    "HiddenSageMakerImage":{
+      "type":"structure",
+      "members":{
+        "SageMakerImageName":{"shape":"SageMakerImageName"},
+        "VersionAliases":{"shape":"VersionAliasesList"}
+      }
+    },
+    "HiddenSageMakerImageVersionAliasesList":{
+      "type":"list",
+      "member":{"shape":"HiddenSageMakerImage"},
+      "max":5
     },
     "HolidayConfig":{
       "type":"list",
@@ -12901,12 +13016,10 @@
       "required":[
         "WorkteamArn",
         "UiConfig",
-        "PreHumanTaskLambdaArn",
         "TaskTitle",
         "TaskDescription",
         "NumberOfHumanWorkersPerDataObject",
-        "TaskTimeLimitInSeconds",
-        "AnnotationConsolidationConfig"
+        "TaskTimeLimitInSeconds"
       ],
       "members":{
         "WorkteamArn":{"shape":"WorkteamArn"},
@@ -13355,6 +13468,20 @@
       "member":{"shape":"IdentityProviderOAuthSetting"},
       "max":20
     },
+    "IdleSettings":{
+      "type":"structure",
+      "members":{
+        "LifecycleManagement":{"shape":"LifecycleManagement"},
+        "IdleTimeoutInMinutes":{"shape":"IdleTimeoutInMinutes"},
+        "MinIdleTimeoutInMinutes":{"shape":"IdleTimeoutInMinutes"},
+        "MaxIdleTimeoutInMinutes":{"shape":"IdleTimeoutInMinutes"}
+      }
+    },
+    "IdleTimeoutInMinutes":{
+      "type":"integer",
+      "max":525600,
+      "min":60
+    },
     "Image":{
       "type":"structure",
       "required":[
@@ -13378,7 +13505,7 @@
     "ImageArn":{
       "type":"string",
       "max":256,
-      "pattern":"^arn:aws(-[\\w]+)*:sagemaker:.+:[0-9]{12}:image/[a-z0-9]([-.]?[a-z0-9])*$"
+      "pattern":"^arn:aws(-[\\w]+)*:sagemaker:.+:[0-9]{12}:image/[a-zA-Z0-9]([-.]?[a-zA-Z0-9])*$"
     },
     "ImageBaseImage":{
       "type":"string",
@@ -13501,6 +13628,12 @@
       "max":128,
       "min":1,
       "pattern":"(^\\d+$)|(^\\d+.\\d+$)|(^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$)"
+    },
+    "ImageVersionAliasPattern":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
     },
     "ImageVersionArn":{
       "type":"string",
@@ -14294,6 +14427,7 @@
         "CustomImages":{"shape":"CustomImages"},
         "LifecycleConfigArns":{"shape":"LifecycleConfigArns"},
         "CodeRepositories":{"shape":"CodeRepositories"},
+        "AppLifecycleManagement":{"shape":"AppLifecycleManagement"},
         "EmrSettings":{"shape":"EmrSettings"}
       }
     },
@@ -14524,8 +14658,7 @@
         "LastModifiedTime",
         "LabelingJobStatus",
         "LabelCounters",
-        "WorkteamArn",
-        "PreHumanTaskLambdaArn"
+        "WorkteamArn"
       ],
       "members":{
         "LabelingJobName":{"shape":"LabelingJobName"},
@@ -14582,6 +14715,13 @@
     "LifecycleConfigArns":{
       "type":"list",
       "member":{"shape":"StudioLifecycleConfigArn"}
+    },
+    "LifecycleManagement":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "LineageEntityParameters":{
       "type":"map",
@@ -16629,7 +16769,9 @@
         "JumpStart",
         "InferenceRecommender",
         "Endpoints",
-        "Projects"
+        "Projects",
+        "InferenceOptimization",
+        "PerformanceEvaluation"
       ]
     },
     "MlflowVersion":{
@@ -17218,7 +17360,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package/[\\S]{1,2048}$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package/[\\S]{1,2048}$"
     },
     "ModelPackageArnList":{
       "type":"list",
@@ -17272,7 +17414,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package-group/[\\S]{1,2048}$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package-group/[\\S]{1,2048}$"
     },
     "ModelPackageGroupSortBy":{
       "type":"string",
@@ -18395,6 +18537,12 @@
         "Groups":{"shape":"Groups"}
       }
     },
+    "OnStartDeepHealthChecks":{
+      "type":"list",
+      "member":{"shape":"DeepHealthCheckType"},
+      "max":2,
+      "min":1
+    },
     "OnlineStoreConfig":{
       "type":"structure",
       "members":{
@@ -18958,7 +19106,9 @@
         "QualityCheck":{"shape":"QualityCheckStepMetadata"},
         "ClarifyCheck":{"shape":"ClarifyCheckStepMetadata"},
         "Fail":{"shape":"FailStepMetadata"},
-        "AutoMLJob":{"shape":"AutoMLJobStepMetadata"}
+        "AutoMLJob":{"shape":"AutoMLJobStepMetadata"},
+        "Endpoint":{"shape":"EndpointStepMetadata"},
+        "EndpointConfig":{"shape":"EndpointConfigStepMetadata"}
       }
     },
     "PipelineExecutionSummary":{
@@ -19344,7 +19494,6 @@
       "type":"structure",
       "required":[
         "S3Uri",
-        "LocalPath",
         "S3UploadMode"
       ],
       "members":{
@@ -19813,7 +19962,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:project/[\\S]{1,2048}$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:project/[\\S]{1,2048}$"
     },
     "ProjectEntityName":{
       "type":"string",
@@ -20825,7 +20974,8 @@
         "S3DataType":{"shape":"S3ModelDataType"},
         "CompressionType":{"shape":"ModelCompressionType"},
         "ModelAccessConfig":{"shape":"ModelAccessConfig"},
-        "HubAccessConfig":{"shape":"InferenceHubAccessConfig"}
+        "HubAccessConfig":{"shape":"InferenceHubAccessConfig"},
+        "ManifestS3Uri":{"shape":"S3ModelUri"}
       }
     },
     "S3ModelDataType":{
@@ -20864,6 +21014,10 @@
       "type":"string",
       "max":1024,
       "pattern":"^(https|s3)://([^/]+)/?(.*)$"
+    },
+    "SageMakerImageName":{
+      "type":"string",
+      "enum":["sagemaker_distribution"]
     },
     "SageMakerImageVersionAlias":{
       "type":"string",
@@ -21406,6 +21560,12 @@
       "min":1,
       "pattern":".*"
     },
+    "SpaceAppLifecycleManagement":{
+      "type":"structure",
+      "members":{
+        "IdleSettings":{"shape":"SpaceIdleSettings"}
+      }
+    },
     "SpaceArn":{
       "type":"string",
       "max":256,
@@ -21414,7 +21574,8 @@
     "SpaceCodeEditorAppSettings":{
       "type":"structure",
       "members":{
-        "DefaultResourceSpec":{"shape":"ResourceSpec"}
+        "DefaultResourceSpec":{"shape":"ResourceSpec"},
+        "AppLifecycleManagement":{"shape":"SpaceAppLifecycleManagement"}
       }
     },
     "SpaceDetails":{
@@ -21436,11 +21597,18 @@
       "max":16384,
       "min":5
     },
+    "SpaceIdleSettings":{
+      "type":"structure",
+      "members":{
+        "IdleTimeoutInMinutes":{"shape":"IdleTimeoutInMinutes"}
+      }
+    },
     "SpaceJupyterLabAppSettings":{
       "type":"structure",
       "members":{
         "DefaultResourceSpec":{"shape":"ResourceSpec"},
-        "CodeRepositories":{"shape":"CodeRepositories"}
+        "CodeRepositories":{"shape":"CodeRepositories"},
+        "AppLifecycleManagement":{"shape":"SpaceAppLifecycleManagement"}
       }
     },
     "SpaceList":{
@@ -21880,7 +22048,7 @@
     "StudioLifecycleConfigArn":{
       "type":"string",
       "max":256,
-      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:studio-lifecycle-config/.*"
+      "pattern":"^(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:studio-lifecycle-config/.*|None)$"
     },
     "StudioLifecycleConfigContent":{
       "type":"string",
@@ -21926,7 +22094,9 @@
       "type":"structure",
       "members":{
         "HiddenMlTools":{"shape":"HiddenMlToolsList"},
-        "HiddenAppTypes":{"shape":"HiddenAppTypesList"}
+        "HiddenAppTypes":{"shape":"HiddenAppTypesList"},
+        "HiddenInstanceTypes":{"shape":"HiddenInstanceTypesList"},
+        "HiddenSageMakerImageVersionAliases":{"shape":"HiddenSageMakerImageVersionAliasesList"}
       }
     },
     "SubnetId":{
@@ -23413,7 +23583,8 @@
       ],
       "members":{
         "ClusterName":{"shape":"ClusterNameOrArn"},
-        "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"}
+        "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"},
+        "NodeRecovery":{"shape":"ClusterNodeRecovery"}
       }
     },
     "UpdateClusterResponse":{
@@ -24099,7 +24270,8 @@
         "StudioWebPortal":{"shape":"StudioWebPortal"},
         "CustomPosixUserConfig":{"shape":"CustomPosixUserConfig"},
         "CustomFileSystemConfigs":{"shape":"CustomFileSystemConfigs"},
-        "StudioWebPortalSettings":{"shape":"StudioWebPortalSettings"}
+        "StudioWebPortalSettings":{"shape":"StudioWebPortalSettings"},
+        "AutoMountHomeEFS":{"shape":"AutoMountHomeEFS"}
       }
     },
     "UsersPerStep":{
@@ -24180,6 +24352,11 @@
         "TO_BE_ARCHIVED",
         "ARCHIVED"
       ]
+    },
+    "VersionAliasesList":{
+      "type":"list",
+      "member":{"shape":"ImageVersionAliasPattern"},
+      "max":20
     },
     "VersionId":{
       "type":"string",

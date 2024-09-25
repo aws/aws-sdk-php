@@ -771,6 +771,7 @@
         "method":"GET",
         "requestUri":"/"
       },
+      "input":{"shape":"ListBucketsRequest"},
       "output":{"shape":"ListBucketsOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTServiceGET.html",
       "alias":"GetService"
@@ -1855,6 +1856,11 @@
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
         },
+        "IfNoneMatch":{
+          "shape":"IfNoneMatch",
+          "location":"header",
+          "locationName":"If-None-Match"
+        },
         "SSECustomerAlgorithm":{
           "shape":"SSECustomerAlgorithm",
           "location":"header",
@@ -2545,6 +2551,26 @@
       "type":"structure",
       "required":["Credentials"],
       "members":{
+        "ServerSideEncryption":{
+          "shape":"ServerSideEncryption",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption"
+        },
+        "SSEKMSKeyId":{
+          "shape":"SSEKMSKeyId",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-aws-kms-key-id"
+        },
+        "SSEKMSEncryptionContext":{
+          "shape":"SSEKMSEncryptionContext",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-context"
+        },
+        "BucketKeyEnabled":{
+          "shape":"BucketKeyEnabled",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-bucket-key-enabled"
+        },
         "Credentials":{
           "shape":"SessionCredentials",
           "locationName":"Credentials"
@@ -2565,6 +2591,26 @@
           "contextParam":{"name":"Bucket"},
           "location":"uri",
           "locationName":"Bucket"
+        },
+        "ServerSideEncryption":{
+          "shape":"ServerSideEncryption",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption"
+        },
+        "SSEKMSKeyId":{
+          "shape":"SSEKMSKeyId",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-aws-kms-key-id"
+        },
+        "SSEKMSEncryptionContext":{
+          "shape":"SSEKMSEncryptionContext",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-context"
+        },
+        "BucketKeyEnabled":{
+          "shape":"BucketKeyEnabled",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-bucket-key-enabled"
         }
       }
     },
@@ -5390,7 +5436,23 @@
       "type":"structure",
       "members":{
         "Buckets":{"shape":"Buckets"},
-        "Owner":{"shape":"Owner"}
+        "Owner":{"shape":"Owner"},
+        "ContinuationToken":{"shape":"NextToken"}
+      }
+    },
+    "ListBucketsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxBuckets":{
+          "shape":"MaxBuckets",
+          "location":"querystring",
+          "locationName":"max-buckets"
+        },
+        "ContinuationToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"continuation-token"
+        }
       }
     },
     "ListDirectoryBucketsOutput":{
@@ -5881,6 +5943,12 @@
     "MaxAgeSeconds":{
       "type":"integer",
       "box":true
+    },
+    "MaxBuckets":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
     },
     "MaxDirectoryBuckets":{
       "type":"integer",
@@ -7537,6 +7605,11 @@
           "shape":"Expires",
           "location":"header",
           "locationName":"Expires"
+        },
+        "IfNoneMatch":{
+          "shape":"IfNoneMatch",
+          "location":"header",
+          "locationName":"If-None-Match"
         },
         "GrantFullControl":{
           "shape":"GrantFullControl",

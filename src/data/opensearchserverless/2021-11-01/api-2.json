@@ -5,12 +5,14 @@
     "endpointPrefix":"aoss",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"OpenSearch Service Serverless",
     "serviceId":"OpenSearchServerless",
     "signatureVersion":"v4",
     "signingName":"aoss",
     "targetPrefix":"OpenSearchServerless",
-    "uid":"opensearchserverless-2021-11-01"
+    "uid":"opensearchserverless-2021-11-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchGetCollection":{
@@ -687,6 +689,8 @@
         "createdDate":{"shape":"Long"},
         "dashboardEndpoint":{"shape":"String"},
         "description":{"shape":"String"},
+        "failureCode":{"shape":"String"},
+        "failureMessage":{"shape":"String"},
         "id":{"shape":"CollectionId"},
         "kmsKeyArn":{"shape":"String"},
         "lastModifiedDate":{"shape":"Long"},
@@ -1497,7 +1501,7 @@
     "Resource":{"type":"string"},
     "ResourceName":{
       "type":"string",
-      "pattern":"^index/[a-z][a-z0-9-]{3,32}/([a-z;0-9&$%][+.~=\\-_a-z;0-9&$%]*|\\*)$"
+      "pattern":"^index/[a-z][a-z0-9-]{3,32}/([a-z;0-9&$%][+.~=\\-_a-z;0-9&$%]*)$"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1915,6 +1919,8 @@
       "type":"structure",
       "members":{
         "createdDate":{"shape":"Long"},
+        "failureCode":{"shape":"String"},
+        "failureMessage":{"shape":"String"},
         "id":{"shape":"VpcEndpointId"},
         "name":{"shape":"VpcEndpointName"},
         "securityGroupIds":{"shape":"SecurityGroupIds"},

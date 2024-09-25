@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"ssm-sap",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"SsmSap",
     "serviceFullName":"AWS Systems Manager for SAP",
     "serviceId":"Ssm Sap",
@@ -358,8 +359,13 @@
         "DiscoveryStatus":{"shape":"ApplicationDiscoveryStatus"},
         "Components":{"shape":"ComponentIdList"},
         "LastUpdated":{"shape":"Timestamp"},
-        "StatusMessage":{"shape":"String"}
+        "StatusMessage":{"shape":"String"},
+        "AssociatedApplicationArns":{"shape":"ApplicationArnList"}
       }
+    },
+    "ApplicationArnList":{
+      "type":"list",
+      "member":{"shape":"SsmSapArn"}
     },
     "ApplicationCredential":{
       "type":"structure",
@@ -392,7 +398,9 @@
     },
     "ApplicationId":{
       "type":"string",
-      "pattern":"[\\w\\d]{1,50}"
+      "max":60,
+      "min":1,
+      "pattern":"[\\w\\d\\.-]+"
     },
     "ApplicationStatus":{
       "type":"string",
@@ -503,8 +511,14 @@
         "Arn":{"shape":"SsmSapArn"}
       }
     },
+    "ComponentArnList":{
+      "type":"list",
+      "member":{"shape":"SsmSapArn"}
+    },
     "ComponentId":{
       "type":"string",
+      "max":100,
+      "min":1,
       "pattern":"[\\w\\d-]+"
     },
     "ComponentIdList":{
@@ -582,7 +596,8 @@
         "Status":{"shape":"DatabaseStatus"},
         "PrimaryHost":{"shape":"String"},
         "SQLPort":{"shape":"Integer"},
-        "LastUpdated":{"shape":"Timestamp"}
+        "LastUpdated":{"shape":"Timestamp"},
+        "ConnectedComponentArns":{"shape":"ComponentArnList"}
       }
     },
     "DatabaseConnection":{
@@ -602,6 +617,8 @@
     },
     "DatabaseId":{
       "type":"string",
+      "max":300,
+      "min":1,
       "pattern":".*[\\w\\d]+"
     },
     "DatabaseIdList":{

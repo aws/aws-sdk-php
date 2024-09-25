@@ -604,6 +604,24 @@
         {"shape":"InvalidDBInstanceStateFault"}
       ]
     },
+    "FailoverGlobalCluster":{
+      "name":"FailoverGlobalCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"FailoverGlobalClusterMessage"},
+      "output":{
+        "shape":"FailoverGlobalClusterResult",
+        "resultWrapper":"FailoverGlobalClusterResult"
+      },
+      "errors":[
+        {"shape":"GlobalClusterNotFoundFault"},
+        {"shape":"InvalidGlobalClusterStateFault"},
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBClusterNotFoundFault"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -1357,6 +1375,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "DBClusterIdentifier":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z][0-9A-Za-z-:._]*"
     },
     "DBClusterList":{
       "type":"list",
@@ -2207,6 +2231,25 @@
       "type":"structure",
       "members":{
         "DBCluster":{"shape":"DBCluster"}
+      }
+    },
+    "FailoverGlobalClusterMessage":{
+      "type":"structure",
+      "required":[
+        "GlobalClusterIdentifier",
+        "TargetDbClusterIdentifier"
+      ],
+      "members":{
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
+        "TargetDbClusterIdentifier":{"shape":"DBClusterIdentifier"},
+        "AllowDataLoss":{"shape":"BooleanOptional"},
+        "Switchover":{"shape":"BooleanOptional"}
+      }
+    },
+    "FailoverGlobalClusterResult":{
+      "type":"structure",
+      "members":{
+        "GlobalCluster":{"shape":"GlobalCluster"}
       }
     },
     "Filter":{
@@ -3136,7 +3179,7 @@
       ],
       "members":{
         "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
-        "TargetDbClusterIdentifier":{"shape":"String"}
+        "TargetDbClusterIdentifier":{"shape":"DBClusterIdentifier"}
       }
     },
     "SwitchoverGlobalClusterResult":{

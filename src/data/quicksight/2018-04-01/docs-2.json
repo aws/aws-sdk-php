@@ -109,6 +109,7 @@
     "ListDataSources": "<p>Lists data sources in current Amazon Web Services Region that belong to this Amazon Web Services account.</p>",
     "ListFolderMembers": "<p>List all assets (<code>DASHBOARD</code>, <code>ANALYSIS</code>, and <code>DATASET</code>) in a folder. </p>",
     "ListFolders": "<p>Lists all folders in an account.</p>",
+    "ListFoldersForResource": "<p>List all folders that a resource is a member of.</p>",
     "ListGroupMemberships": "<p>Lists member users in a group.</p>",
     "ListGroups": "<p>Lists all user groups in Amazon QuickSight. </p>",
     "ListIAMPolicyAssignments": "<p>Lists the IAM policy assignments in the current Amazon QuickSight account.</p>",
@@ -484,6 +485,36 @@
         "AnonymousUserEmbeddingExperienceConfiguration$Dashboard": "<p>The type of embedding experience. In this case, Amazon QuickSight dashboards.</p>"
       }
     },
+    "AnonymousUserDashboardEmbeddingConfigurationDisabledFeature": {
+      "base": null,
+      "refs": {
+        "AnonymousUserDashboardEmbeddingConfigurationDisabledFeatures$member": null
+      }
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationDisabledFeatures": {
+      "base": null,
+      "refs": {
+        "AnonymousUserDashboardEmbeddingConfiguration$DisabledFeatures": "<p>A list of all disabled features of a specified anonymous dashboard.</p>"
+      }
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationEnabledFeature": {
+      "base": null,
+      "refs": {
+        "AnonymousUserDashboardEmbeddingConfigurationEnabledFeatures$member": null
+      }
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationEnabledFeatures": {
+      "base": null,
+      "refs": {
+        "AnonymousUserDashboardEmbeddingConfiguration$EnabledFeatures": "<p>A list of all enabled features of a specified anonymous dashboard.</p>"
+      }
+    },
+    "AnonymousUserDashboardFeatureConfigurations": {
+      "base": "<p>The feature configuration for an embedded dashboard.</p>",
+      "refs": {
+        "AnonymousUserDashboardEmbeddingConfiguration$FeatureConfigurations": "<p>The feature configuration for an embedded dashboard.</p>"
+      }
+    },
     "AnonymousUserDashboardVisualEmbeddingConfiguration": {
       "base": "<p>The experience that you are embedding. You can use this object to generate a url that embeds a visual into your application.</p>",
       "refs": {
@@ -682,6 +713,7 @@
         "Folder$Arn": "<p>The Amazon Resource Name (ARN) for the folder.</p>",
         "FolderArnList$member": null,
         "FolderSummary$Arn": "<p>The Amazon Resource Name (ARN) of the folder.</p>",
+        "FoldersForResourceArnList$member": null,
         "GenerateEmbedUrlForAnonymousUserResponse$AnonymousUserArn": "<p>The Amazon Resource Name (ARN) to use for the anonymous Amazon QuickSight user.</p>",
         "GenerateEmbedUrlForRegisteredUserRequest$UserArn": "<p>The Amazon Resource Name for the registered user.</p>",
         "GetDashboardEmbedUrlRequest$UserArn": "<p>The Amazon QuickSight user's Amazon Resource Name (ARN), for use with <code>QUICKSIGHT</code> identity type. You can use this for any Amazon QuickSight users in your account (readers, authors, or admins) authenticated as one of the following:</p> <ul> <li> <p>Active Directory (AD) users or group members</p> </li> <li> <p>Invited nonfederated users</p> </li> <li> <p>IAM users and IAM role-based sessions authenticated through Federated Single Sign-On using SAML, OpenID Connect, or IAM federation.</p> </li> </ul> <p>Omit this parameter for users in the third group – IAM users and IAM role-based sessions.</p>",
@@ -690,6 +722,7 @@
         "GroupMember$Arn": "<p>The Amazon Resource Name (ARN) for the group member (user).</p>",
         "IAMPolicyAssignment$PolicyArn": "<p>The Amazon Resource Name (ARN) for the IAM policy.</p>",
         "Ingestion$Arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "ListFoldersForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) the resource whose folders you need to list.</p>",
         "ListTagsForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want a list of tags for.</p>",
         "ListTopicRefreshSchedulesResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "ListTopicReviewedAnswersResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
@@ -1592,6 +1625,7 @@
         "ListDataSetsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListDataSourcesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListFolderMembersRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
+        "ListFoldersForResourceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the resource.</p>",
         "ListFoldersRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "ListGroupMembershipsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
         "ListGroupsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
@@ -1989,6 +2023,7 @@
         "NumericRangeFilter$IncludeMaximum": "<p>Determines whether the maximum value in the filter value range should be included in the filtered results.</p>",
         "RedshiftIAMParameters$AutoCreateDatabaseUser": "<p>Automatically creates a database user. If your database doesn't have a <code>DatabaseUser</code>, set this parameter to <code>True</code>. If there is no <code>DatabaseUser</code>, Amazon QuickSight can't connect to your cluster. The <code>RoleArn</code> that you use for this operation must grant access to <code>redshift:CreateClusterUser</code> to successfully create the user.</p>",
         "RegisteredCustomerManagedKey$DefaultKey": "<p>Indicates whether a <code>RegisteredCustomerManagedKey</code> is set as the default key for encryption and decryption use.</p>",
+        "SharedViewConfigurations$Enabled": "<p>The shared view settings of an embedded dashboard.</p>",
         "SignupResponse$IAMUser": "<p>A Boolean that is <code>TRUE</code> if the Amazon QuickSight uses IAM as an authentication method.</p>",
         "SslProperties$DisableSsl": "<p>A Boolean option to control whether SSL should be disabled.</p>",
         "StartAssetBundleExportJobRequest$IncludeAllDependencies": "<p>A Boolean that determines whether all dependencies of each resource ARN are recursively exported with the job. For example, say you provided a Dashboard ARN to the <code>ResourceArns</code> parameter. If you set <code>IncludeAllDependencies</code> to <code>TRUE</code>, any theme, dataset, and data source resource that is a dependency of the dashboard is also exported.</p>",
@@ -2685,6 +2720,18 @@
         "Visual$ComboChartVisual": "<p>A combo chart.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/combo-charts.html\">Using combo charts</a> in the <i>Amazon QuickSight User Guide</i>.</p>"
       }
     },
+    "CommitMode": {
+      "base": null,
+      "refs": {
+        "DefaultDateTimePickerControlOptions$CommitMode": "<p>The visibility configuration of the Apply button on a <code>DateTimePickerControl</code>.</p>",
+        "DefaultFilterDropDownControlOptions$CommitMode": "<p>The visibility configuration of the Apply button on a <code>FilterDropDownControl</code>.</p>",
+        "DefaultRelativeDateTimeControlOptions$CommitMode": "<p>The visibility configuration of the Apply button on a <code>RelativeDateTimeControl</code>.</p>",
+        "FilterDateTimePickerControl$CommitMode": "<p>The visibility configurationof the Apply button on a <code>DateTimePickerControl</code>.</p>",
+        "FilterDropDownControl$CommitMode": "<p>The visibility configuration of the Apply button on a <code>FilterDropDownControl</code>.</p>",
+        "FilterRelativeDateTimeControl$CommitMode": "<p>The visibility configuration of the Apply button on a <code>FilterRelativeDateTimeControl</code>.</p>",
+        "ParameterDropDownControl$CommitMode": "<p>The visibility configuration of the Apply button on a <code>ParameterDropDownControl</code>.</p>"
+      }
+    },
     "ComparativeOrder": {
       "base": "<p>A structure that represents a comparative order.</p>",
       "refs": {
@@ -3271,6 +3318,11 @@
         "DestinationParameterValueConfiguration$CustomValuesConfiguration": "<p>The configuration of custom values for destination parameter in <code>DestinationParameterValueConfiguration</code>.</p>"
       }
     },
+    "CustomerManagedKeyUnavailableException": {
+      "base": "<p>The customer managed key that is registered to your Amazon QuickSight account is unavailable.</p>",
+      "refs": {
+      }
+    },
     "Dashboard": {
       "base": "<p>Dashboard.</p>",
       "refs": {
@@ -3572,6 +3624,12 @@
       "refs": {
         "Analysis$DataSetArns": "<p>The ARNs of the datasets of the analysis.</p>",
         "DashboardVersion$DataSetArns": "<p>The Amazon Resource Numbers (ARNs) for the datasets that are associated with this version of the dashboard.</p>"
+      }
+    },
+    "DataSetCalculatedFieldExpression": {
+      "base": null,
+      "refs": {
+        "CalculatedColumn$Expression": "<p>An expression that defines the calculated column.</p>"
       }
     },
     "DataSetConfiguration": {
@@ -5195,7 +5253,6 @@
     "Expression": {
       "base": null,
       "refs": {
-        "CalculatedColumn$Expression": "<p>An expression that defines the calculated column.</p>",
         "CalculatedMeasureField$Expression": "<p>The expression in the table calculation.</p>",
         "ConditionalFormattingCustomIconCondition$Expression": "<p>The expression that determines the condition of the icon set.</p>",
         "ConditionalFormattingGradientColor$Expression": "<p>The expression that determines the formatting configuration for gradient color.</p>",
@@ -5688,6 +5745,12 @@
         "CreateFolderRequest$FolderType": "<p>The type of folder. By default, <code>folderType</code> is <code>SHARED</code>.</p>",
         "Folder$FolderType": "<p>The type of folder it is.</p>",
         "FolderSummary$FolderType": "<p>The type of folder.</p>"
+      }
+    },
+    "FoldersForResourceArnList": {
+      "base": null,
+      "refs": {
+        "ListFoldersForResourceResponse$Folders": "<p>A list that contains the Amazon Resource Names (ARNs) of all folders that the resource is a member of.</p>"
       }
     },
     "Font": {
@@ -7341,6 +7404,16 @@
       "refs": {
       }
     },
+    "ListFoldersForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFoldersForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListFoldersRequest": {
       "base": null,
       "refs": {
@@ -7725,6 +7798,7 @@
         "ListDataSetsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListDataSourcesRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListFolderMembersRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
+        "ListFoldersForResourceRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListFoldersRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListGroupMembershipsRequest$MaxResults": "<p>The maximum number of results to return from this request.</p>",
         "ListGroupsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
@@ -8983,6 +9057,19 @@
         "TwitterParameters$Query": "<p>Twitter query string.</p>"
       }
     },
+    "QueryExecutionMode": {
+      "base": null,
+      "refs": {
+        "QueryExecutionOptions$QueryExecutionMode": "<p>A structure that describes the query execution mode.</p>"
+      }
+    },
+    "QueryExecutionOptions": {
+      "base": "<p>A structure that describes the query execution options.</p>",
+      "refs": {
+        "AnalysisDefinition$QueryExecutionOptions": null,
+        "TemplateVersionDefinition$QueryExecutionOptions": null
+      }
+    },
     "QueueInfo": {
       "base": "<p>Information about a queued dataset SPICE ingestion.</p>",
       "refs": {
@@ -10178,6 +10265,14 @@
         "FilledMapShapeConditionalFormatting$Format": "<p>The conditional formatting that determines the background color of a filled map's shape.</p>"
       }
     },
+    "SharedViewConfigurations": {
+      "base": "<p>The shared view settings of an embedded dashboard.</p>",
+      "refs": {
+        "AnonymousUserDashboardFeatureConfigurations$SharedView": "<p>The shared view settings of an embedded dashboard.</p>",
+        "RegisteredUserConsoleFeatureConfigurations$SharedView": "<p>The shared view settings of an embedded dashboard.</p>",
+        "RegisteredUserDashboardFeatureConfigurations$SharedView": "<p>The shared view settings of an embedded dashboard.</p>"
+      }
+    },
     "SharingModel": {
       "base": null,
       "refs": {
@@ -11099,6 +11194,7 @@
         "ListDataSetsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListDataSourcesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListFolderMembersResponse$Status": "<p>The HTTP status of the request.</p>",
+        "ListFoldersForResourceResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListFoldersResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListGroupMembershipsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListGroupsResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -11244,6 +11340,8 @@
         "CreateTopicRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateTopicResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateVPCConnectionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "CustomerManagedKeyUnavailableException$Message": null,
+        "CustomerManagedKeyUnavailableException$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DashboardSearchFilter$Value": "<p>The value of the named item, in this case <code>QUICKSIGHT_USER</code>, that you want to use as a filter, for example, <code>\"Value\": \"arn:aws:quicksight:us-east-1:1:user/default/UserName1\"</code>. </p>",
         "DataSetConfiguration$Placeholder": "<p>Placeholder.</p>",
         "DataSetSearchFilter$Value": "<p>The value of the named item, in this case <code>QUICKSIGHT_OWNER</code>, that you want to use as a filter, for example, <code>\"Value\": \"arn:aws:quicksight:us-east-1:1:user/default/UserName1\"</code>.</p>",
@@ -11379,6 +11477,9 @@
         "ListFolderMembersRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListFolderMembersResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListFolderMembersResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListFoldersForResourceRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListFoldersForResourceResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListFoldersForResourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListFoldersRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListFoldersResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListFoldersResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",

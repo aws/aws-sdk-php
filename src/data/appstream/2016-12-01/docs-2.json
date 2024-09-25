@@ -20,6 +20,7 @@
     "CreateImageBuilderStreamingURL": "<p>Creates a URL to start an image builder streaming session.</p>",
     "CreateStack": "<p>Creates a stack to start streaming applications to users. A stack consists of an associated fleet, user access policies, and storage configurations. </p>",
     "CreateStreamingURL": "<p>Creates a temporary URL to start an AppStream 2.0 streaming session for the specified user. A streaming URL enables application streaming to be tested without user setup. </p>",
+    "CreateThemeForStack": "<p>Creates custom branding that customizes the appearance of the streaming application catalog page.</p>",
     "CreateUpdatedImage": "<p>Creates a new image with the latest Windows operating system updates, driver updates, and AppStream 2.0 agent software.</p> <p>For more information, see the \"Update an Image by Using Managed AppStream 2.0 Image Updates\" section in <a href=\"https://docs.aws.amazon.com/appstream2/latest/developerguide/administer-images.html\">Administer Your AppStream 2.0 Images</a>, in the <i>Amazon AppStream 2.0 Administration Guide</i>.</p>",
     "CreateUsageReportSubscription": "<p>Creates a usage report subscription. Usage reports are generated daily.</p>",
     "CreateUser": "<p>Creates a new user in the user pool.</p>",
@@ -33,6 +34,7 @@
     "DeleteImageBuilder": "<p>Deletes the specified image builder and releases the capacity.</p>",
     "DeleteImagePermissions": "<p>Deletes permissions for the specified private image. After you delete permissions for an image, AWS accounts to which you previously granted these permissions can no longer use the image.</p>",
     "DeleteStack": "<p>Deletes the specified stack. After the stack is deleted, the application streaming environment provided by the stack is no longer available to users. Also, any reservations made for application streaming sessions for the stack are released.</p>",
+    "DeleteThemeForStack": "<p>Deletes custom branding that customizes the appearance of the streaming application catalog page.</p>",
     "DeleteUsageReportSubscription": "<p>Disables usage report generation.</p>",
     "DeleteUser": "<p>Deletes a user from the user pool.</p>",
     "DescribeAppBlockBuilderAppBlockAssociations": "<p>Retrieves a list that describes one or more app block builder associations.</p>",
@@ -48,6 +50,7 @@
     "DescribeImages": "<p>Retrieves a list that describes one or more specified images, if the image names or image ARNs are provided. Otherwise, all images in the account are described.</p>",
     "DescribeSessions": "<p>Retrieves a list that describes the streaming sessions for a specified stack and fleet. If a UserId is provided for the stack and fleet, only streaming sessions for that user are described. If an authentication type is not provided, the default is to authenticate users using a streaming URL.</p>",
     "DescribeStacks": "<p>Retrieves a list that describes one or more specified stacks, if the stack names are provided. Otherwise, all stacks in the account are described.</p>",
+    "DescribeThemeForStack": "<p>Retrieves a list that describes the theme for a specified stack. A theme is custom branding that customizes the appearance of the streaming application catalog page.</p>",
     "DescribeUsageReportSubscriptions": "<p>Retrieves a list that describes one or more usage report subscriptions.</p>",
     "DescribeUserStackAssociations": "<p>Retrieves a list that describes the UserStackAssociation objects. You must specify either or both of the following:</p> <ul> <li> <p>The stack name</p> </li> <li> <p>The user name (email address of the user associated with the stack) and the authentication type for the user</p> </li> </ul>",
     "DescribeUsers": "<p>Retrieves a list that describes one or more specified users in the user pool.</p>",
@@ -76,7 +79,8 @@
     "UpdateEntitlement": "<p>Updates the specified entitlement.</p>",
     "UpdateFleet": "<p>Updates the specified fleet.</p> <p>If the fleet is in the <code>STOPPED</code> state, you can update any attribute except the fleet name.</p> <p>If the fleet is in the <code>RUNNING</code> state, you can update the following based on the fleet type:</p> <ul> <li> <p>Always-On and On-Demand fleet types</p> <p>You can update the <code>DisplayName</code>, <code>ComputeCapacity</code>, <code>ImageARN</code>, <code>ImageName</code>, <code>IdleDisconnectTimeoutInSeconds</code>, and <code>DisconnectTimeoutInSeconds</code> attributes.</p> </li> <li> <p>Elastic fleet type</p> <p>You can update the <code>DisplayName</code>, <code>IdleDisconnectTimeoutInSeconds</code>, <code>DisconnectTimeoutInSeconds</code>, <code>MaxConcurrentSessions</code>, <code>SessionScriptS3Location</code> and <code>UsbDeviceFilterStrings</code> attributes.</p> </li> </ul> <p>If the fleet is in the <code>STARTING</code> or <code>STOPPED</code> state, you can't update it.</p>",
     "UpdateImagePermissions": "<p>Adds or updates permissions for the specified private image. </p>",
-    "UpdateStack": "<p>Updates the specified fields for the specified stack.</p>"
+    "UpdateStack": "<p>Updates the specified fields for the specified stack.</p>",
+    "UpdateThemeForStack": "<p>Updates custom branding that customizes the appearance of the streaming application catalog page.</p>"
   },
   "shapes": {
     "AccessEndpoint": {
@@ -600,6 +604,16 @@
       "refs": {
       }
     },
+    "CreateThemeForStackRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateThemeForStackResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateUpdatedImageRequest": {
       "base": null,
       "refs": {
@@ -726,6 +740,16 @@
       }
     },
     "DeleteStackResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteThemeForStackRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteThemeForStackResult": {
       "base": null,
       "refs": {
       }
@@ -882,6 +906,16 @@
       }
     },
     "DescribeStacksResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeThemeForStackRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeThemeForStackResult": {
       "base": null,
       "refs": {
       }
@@ -1053,6 +1087,12 @@
       "base": null,
       "refs": {
         "StorageConnector$Domains": "<p>The names of the domains for the account.</p>"
+      }
+    },
+    "DynamicAppProvidersEnabled": {
+      "base": null,
+      "refs": {
+        "Image$DynamicAppProvidersEnabled": "<p>Indicates whether dynamic app providers are enabled within an AppStream 2.0 image or not.</p>"
       }
     },
     "EmbedHostDomain": {
@@ -1292,6 +1332,12 @@
         "UpdateImagePermissionsRequest$ImagePermissions": "<p>The permissions for the image.</p>"
       }
     },
+    "ImageSharedWithOthers": {
+      "base": null,
+      "refs": {
+        "Image$ImageSharedWithOthers": "<p>Indicates whether the image is shared with another account ID.</p>"
+      }
+    },
     "ImageState": {
       "base": null,
       "refs": {
@@ -1384,6 +1430,13 @@
       "base": null,
       "refs": {
         "UsageReportSubscription$SubscriptionErrors": "<p>The errors that were returned if usage reports couldn't be generated.</p>"
+      }
+    },
+    "LatestAppstreamAgentVersion": {
+      "base": null,
+      "refs": {
+        "Image$LatestAppstreamAgentVersion": "<p>Indicates whether the image is using the latest AppStream 2.0 agent version or not.</p>",
+        "ImageBuilder$LatestAppstreamAgentVersion": "<p>Indicates whether the image builder is using the latest AppStream 2.0 agent version or not.</p>"
       }
     },
     "LimitExceededException": {
@@ -1479,6 +1532,7 @@
         "CreateFleetRequest$ImageName": "<p>The name of the image used to create the fleet.</p>",
         "CreateImageBuilderRequest$Name": "<p>A unique name for the image builder.</p>",
         "CreateStackRequest$Name": "<p>The name of the stack.</p>",
+        "CreateThemeForStackRequest$StackName": "<p>The name of the stack for the theme.</p>",
         "CreateUpdatedImageRequest$existingImageName": "<p>The name of the image to update.</p>",
         "CreateUpdatedImageRequest$newImageName": "<p>The name of the new image. The name must be unique within the AWS account and Region.</p>",
         "DeleteAppBlockBuilderRequest$Name": "<p>The name of the app block builder.</p>",
@@ -1489,6 +1543,7 @@
         "DeleteImageBuilderRequest$Name": "<p>The name of the image builder.</p>",
         "DeleteImagePermissionsRequest$Name": "<p>The name of the private image.</p>",
         "DeleteImageRequest$Name": "<p>The name of the image.</p>",
+        "DeleteThemeForStackRequest$StackName": "<p>The name of the stack for the theme.</p>",
         "DescribeAppBlockBuilderAppBlockAssociationsRequest$AppBlockBuilderName": "<p>The name of the app block builder.</p>",
         "DescribeApplicationFleetAssociationsRequest$FleetName": "<p>The name of the fleet.</p>",
         "DescribeEntitlementsRequest$Name": "<p>The name of the entitlement.</p>",
@@ -1497,6 +1552,7 @@
         "DescribeImagePermissionsResult$Name": "<p>The name of the private image.</p>",
         "DescribeSessionsRequest$StackName": "<p>The name of the stack. This value is case-sensitive.</p>",
         "DescribeSessionsRequest$FleetName": "<p>The name of the fleet. This value is case-sensitive.</p>",
+        "DescribeThemeForStackRequest$StackName": "<p>The name of the stack for the theme.</p>",
         "DisassociateAppBlockBuilderAppBlockRequest$AppBlockBuilderName": "<p>The name of the app block builder.</p>",
         "DisassociateApplicationFleetRequest$FleetName": "<p>The name of the fleet.</p>",
         "DisassociateApplicationFromEntitlementRequest$StackName": "<p>The name of the stack with which the entitlement is associated.</p>",
@@ -1507,12 +1563,14 @@
         "ListEntitledApplicationsRequest$EntitlementName": "<p>The name of the entitlement.</p>",
         "StartAppBlockBuilderRequest$Name": "<p>The name of the app block builder.</p>",
         "StopAppBlockBuilderRequest$Name": "<p>The name of the app block builder.</p>",
+        "Theme$StackName": "<p>The stack that has the custom branding theme.</p>",
         "UpdateAppBlockBuilderRequest$Name": "<p>The unique name for the app block builder.</p>",
         "UpdateApplicationRequest$Name": "<p>The name of the application. This name is visible to users when display name is not specified.</p>",
         "UpdateEntitlementRequest$Name": "<p>The name of the entitlement.</p>",
         "UpdateEntitlementRequest$StackName": "<p>The name of the stack with which the entitlement is associated.</p>",
         "UpdateFleetRequest$Name": "<p>A unique name for the fleet.</p>",
-        "UpdateImagePermissionsRequest$Name": "<p>The name of the private image.</p>"
+        "UpdateImagePermissionsRequest$Name": "<p>The name of the private image.</p>",
+        "UpdateThemeForStackRequest$StackName": "<p>The name of the stack for the theme.</p>"
       }
     },
     "NetworkAccessConfiguration": {
@@ -1659,10 +1717,14 @@
         "CreateAppBlockRequest$SourceS3Location": "<p>The source S3 location of the app block.</p>",
         "CreateApplicationRequest$IconS3Location": "<p>The location in S3 of the application icon.</p>",
         "CreateFleetRequest$SessionScriptS3Location": "<p>The S3 location of the session scripts configuration zip file. This only applies to Elastic fleets.</p>",
+        "CreateThemeForStackRequest$OrganizationLogoS3Location": "<p>The organization logo that appears on the streaming application catalog page.</p>",
+        "CreateThemeForStackRequest$FaviconS3Location": "<p>The S3 location of the favicon. The favicon enables users to recognize their application streaming site in a browser full of tabs or bookmarks. It is displayed at the top of the browser tab for the application streaming site during users' streaming sessions.</p>",
         "Fleet$SessionScriptS3Location": "<p>The S3 location of the session scripts configuration zip file. This only applies to Elastic fleets.</p>",
         "ScriptDetails$ScriptS3Location": "<p>The S3 object location for the script.</p>",
         "UpdateApplicationRequest$IconS3Location": "<p>The icon S3 location of the application.</p>",
-        "UpdateFleetRequest$SessionScriptS3Location": "<p>The S3 location of the session scripts configuration zip file. This only applies to Elastic fleets. </p>"
+        "UpdateFleetRequest$SessionScriptS3Location": "<p>The S3 location of the session scripts configuration zip file. This only applies to Elastic fleets. </p>",
+        "UpdateThemeForStackRequest$OrganizationLogoS3Location": "<p>The organization logo that appears on the streaming application catalog page.</p>",
+        "UpdateThemeForStackRequest$FaviconS3Location": "<p>The S3 location of the favicon. The favicon enables users to recognize their application streaming site in a browser full of tabs or bookmarks. It is displayed at the top of the browser tab for the application streaming site during users' streaming sessions.</p>"
       }
     },
     "ScriptDetails": {
@@ -1906,7 +1968,7 @@
         "CreateApplicationRequest$LaunchPath": "<p>The launch path of the application.</p>",
         "CreateApplicationRequest$WorkingDirectory": "<p>The working directory of the application.</p>",
         "CreateApplicationRequest$LaunchParameters": "<p>The launch parameters of the application.</p>",
-        "CreateFleetRequest$InstanceType": "<p>The instance type to use when launching fleet instances. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.standard.xlarge</p> </li> <li> <p>stream.standard.2xlarge</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> </ul> <p>The following instance types are available for Elastic fleets:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.standard.xlarge</p> </li> <li> <p>stream.standard.2xlarge</p> </li> </ul>",
+        "CreateFleetRequest$InstanceType": "<p>The instance type to use when launching fleet instances. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.standard.xlarge</p> </li> <li> <p>stream.standard.2xlarge</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics.g5.xlarge</p> </li> <li> <p>stream.graphics.g5.2xlarge</p> </li> <li> <p>stream.graphics.g5.4xlarge</p> </li> <li> <p>stream.graphics.g5.8xlarge</p> </li> <li> <p>stream.graphics.g5.12xlarge</p> </li> <li> <p>stream.graphics.g5.16xlarge</p> </li> <li> <p>stream.graphics.g5.24xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> </ul> <p>The following instance types are available for Elastic fleets:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.standard.xlarge</p> </li> <li> <p>stream.standard.2xlarge</p> </li> </ul>",
         "CreateImageBuilderRequest$ImageName": "<p>The name of the image used to create the image builder.</p>",
         "CreateImageBuilderRequest$InstanceType": "<p>The instance type to use when launching the image builder. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> </ul>",
         "CreateImageBuilderStreamingURLRequest$Name": "<p>The name of the image builder.</p>",
@@ -2009,6 +2071,8 @@
         "StopImageBuilderRequest$Name": "<p>The name of the image builder.</p>",
         "StringList$member": null,
         "SubnetIdList$member": null,
+        "Theme$ThemeOrganizationLogoURL": "<p>The URL of the logo that displays in the catalog page header.</p>",
+        "Theme$ThemeFaviconURL": "<p>The URL of the icon that displays at the top of a user's browser tab during streaming sessions.</p>",
         "UpdateAppBlockBuilderRequest$InstanceType": "<p>The instance type to use when launching the app block builder. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.standard.xlarge</p> </li> <li> <p>stream.standard.2xlarge</p> </li> </ul>",
         "UpdateApplicationRequest$LaunchPath": "<p>The launch path of the application.</p>",
         "UpdateApplicationRequest$WorkingDirectory": "<p>The working directory of the application.</p>",
@@ -2032,6 +2096,7 @@
         "DescribeImageBuildersRequest$Names": "<p>The names of the image builders to describe.</p>",
         "DescribeImagesRequest$Names": "<p>The names of the public or private images to describe.</p>",
         "DescribeStacksRequest$Names": "<p>The names of the stacks to describe.</p>",
+        "Image$SupportedInstanceFamilies": "<p>The supported instances families that determine which image a customer can use when the customer launches a fleet or image builder. The following instances families are supported:</p> <ul> <li> <p>General Purpose</p> </li> <li> <p>Compute Optimized</p> </li> <li> <p>Memory Optimized</p> </li> <li> <p>Graphics</p> </li> <li> <p>Graphics Design</p> </li> <li> <p>Graphics Pro</p> </li> <li> <p>Graphics G4</p> </li> <li> <p>Graphics G5</p> </li> </ul>",
         "ListAssociatedFleetsResult$Names": "<p>The name of the fleet.</p>",
         "ListAssociatedStacksResult$Names": "<p>The name of the stack.</p>"
       }
@@ -2085,6 +2150,75 @@
         "TagResourceRequest$Tags": "<p>The tags to associate. A tag is a key-value pair, and the value is optional. For example, Environment=Test. If you do not specify a value, Environment=. </p> <p>If you do not specify a value, the value is set to an empty string.</p> <p>Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following special characters: </p> <p>_ . : / = + \\ - @</p>"
       }
     },
+    "Theme": {
+      "base": "<p>The custom branding theme, which might include a custom logo, website links, and other branding to display to users.</p>",
+      "refs": {
+        "CreateThemeForStackResult$Theme": "<p> The theme object that contains the metadata of the custom branding.</p>",
+        "DescribeThemeForStackResult$Theme": "<p> The theme object that contains the metadata of the custom branding.</p>",
+        "UpdateThemeForStackResult$Theme": "<p> The theme object that contains the metadata of the custom branding.</p>"
+      }
+    },
+    "ThemeAttribute": {
+      "base": null,
+      "refs": {
+        "ThemeAttributes$member": null
+      }
+    },
+    "ThemeAttributes": {
+      "base": null,
+      "refs": {
+        "UpdateThemeForStackRequest$AttributesToDelete": "<p>The attributes to delete.</p>"
+      }
+    },
+    "ThemeFooterLink": {
+      "base": "<p>The website links that display in the catalog page footer.</p>",
+      "refs": {
+        "ThemeFooterLinks$member": null
+      }
+    },
+    "ThemeFooterLinkDisplayName": {
+      "base": null,
+      "refs": {
+        "ThemeFooterLink$DisplayName": "<p>The name of the websites that display in the catalog page footer.</p>"
+      }
+    },
+    "ThemeFooterLinkURL": {
+      "base": null,
+      "refs": {
+        "ThemeFooterLink$FooterLinkURL": "<p>The URL of the websites that display in the catalog page footer.</p>"
+      }
+    },
+    "ThemeFooterLinks": {
+      "base": null,
+      "refs": {
+        "CreateThemeForStackRequest$FooterLinks": "<p>The links that are displayed in the footer of the streaming application catalog page. These links are helpful resources for users, such as the organization's IT support and product marketing sites.</p>",
+        "Theme$ThemeFooterLinks": "<p>The website links that display in the catalog page footer.</p>",
+        "UpdateThemeForStackRequest$FooterLinks": "<p>The links that are displayed in the footer of the streaming application catalog page. These links are helpful resources for users, such as the organization's IT support and product marketing sites.</p>"
+      }
+    },
+    "ThemeState": {
+      "base": null,
+      "refs": {
+        "Theme$State": "<p>The state of the theme.</p>",
+        "UpdateThemeForStackRequest$State": "<p>Specifies whether custom branding should be applied to catalog page or not.</p>"
+      }
+    },
+    "ThemeStyling": {
+      "base": null,
+      "refs": {
+        "CreateThemeForStackRequest$ThemeStyling": "<p>The color theme that is applied to website links, text, and buttons. These colors are also applied as accents in the background for the streaming application catalog page.</p>",
+        "Theme$ThemeStyling": "<p>The color that is used for the website links, text, buttons, and catalog page background.</p>",
+        "UpdateThemeForStackRequest$ThemeStyling": "<p>The color theme that is applied to website links, text, and buttons. These colors are also applied as accents in the background for the streaming application catalog page.</p>"
+      }
+    },
+    "ThemeTitleText": {
+      "base": null,
+      "refs": {
+        "CreateThemeForStackRequest$TitleText": "<p>The title that is displayed at the top of the browser tab during users' application streaming sessions.</p>",
+        "Theme$ThemeTitleText": "<p>The browser tab page title.</p>",
+        "UpdateThemeForStackRequest$TitleText": "<p>The title that is displayed at the top of the browser tab during users' application streaming sessions.</p>"
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
@@ -2105,6 +2239,7 @@
         "Session$StartTime": "<p>The time when a streaming instance is dedicated for the user.</p>",
         "Session$MaxExpirationTime": "<p>The time when the streaming session is set to expire. This time is based on the <code>MaxUserDurationinSeconds</code> value, which determines the maximum length of time that a streaming session can run. A streaming session might end earlier than the time specified in <code>SessionMaxExpirationTime</code>, when the <code>DisconnectTimeOutInSeconds</code> elapses or the user chooses to end his or her session. If the <code>DisconnectTimeOutInSeconds</code> elapses, or the user chooses to end his or her session, the streaming instance is terminated and the streaming session ends.</p>",
         "Stack$CreatedTime": "<p>The time the stack was created.</p>",
+        "Theme$CreatedTime": "<p>The time the theme was created.</p>",
         "UsageReportSubscription$LastGeneratedReportDate": "<p>The time when the last usage report was generated.</p>",
         "User$CreatedTime": "<p>The date and time the user was created in the user pool.</p>"
       }
@@ -2185,6 +2320,16 @@
       }
     },
     "UpdateStackResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateThemeForStackRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateThemeForStackResult": {
       "base": null,
       "refs": {
       }

@@ -7,7 +7,7 @@
     "InvokeAgent": "<note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeAgent</code>.</p> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response is returned in the <code>bytes</code> field of the <code>chunk</code> object.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul>",
     "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
     "Retrieve": "<p>Queries a knowledge base and retrieves information from it.</p>",
-    "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results. The response only cites sources that are relevant to the query.</p>"
+    "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results and using the specified foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>. The response only cites sources that are relevant to the query.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -39,6 +39,13 @@
       "base": null,
       "refs": {
         "ActionGroupInvocationOutput$text": "<p>The JSON-formatted string returned by the API invoked by the action group.</p>"
+      }
+    },
+    "ActionInvocationType": {
+      "base": null,
+      "refs": {
+        "ApiInvocationInput$actionInvocationType": "<p>Contains information about the API operation to invoke.</p>",
+        "FunctionInvocationInput$actionInvocationType": "<p>Contains information about the function to invoke,</p>"
       }
     },
     "AdditionalModelRequestFields": {
@@ -145,7 +152,7 @@
       "base": null,
       "refs": {
         "ExternalSourcesRetrieveAndGenerateConfiguration$modelArn": "<p>The modelArn used with the external source wrapper object in the retrieveAndGenerate function.</p>",
-        "KnowledgeBaseRetrieveAndGenerateConfiguration$modelArn": "<p>The ARN of the foundation model used to generate a response.</p>"
+        "KnowledgeBaseRetrieveAndGenerateConfiguration$modelArn": "<p>The ARN of the foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> used to generate a response.</p>"
       }
     },
     "Boolean": {
@@ -161,7 +168,7 @@
       "base": null,
       "refs": {
         "ByteContentDoc$data": "<p>The byte value of the file to upload, encoded as a Base-64 string.</p>",
-        "ByteContentFile$data": "<p>The byte value of the file to attach, encoded as Base-64 string. The maximum size of all files that is attached is 10MB. You can attach a maximum of 5 files. </p>"
+        "ByteContentFile$data": "<p>The raw bytes of the file to attach. The maximum size of all files that is attached is 10MB. You can attach a maximum of 5 files. </p>"
       }
     },
     "ByteContentDoc": {
@@ -199,6 +206,13 @@
       "base": "<p>Contains the JSON-formatted string returned by the API invoked by the code interpreter.</p>",
       "refs": {
         "Observation$codeInterpreterInvocationOutput": "<p>Contains the JSON-formatted string returned by the API invoked by the code interpreter.</p>"
+      }
+    },
+    "ConfirmationState": {
+      "base": null,
+      "refs": {
+        "ApiResult$confirmationState": "<p>Controls the API operations or functions to invoke based on the user confirmation.</p>",
+        "FunctionResult$confirmationState": "<p>Contains the user confirmation information about the function that was called.</p>"
       }
     },
     "ConflictException": {
@@ -833,7 +847,7 @@
       "base": null,
       "refs": {
         "KnowledgeBaseConfiguration$knowledgeBaseId": "<p>The unique identifier for a knowledge base attached to the agent.</p>",
-        "KnowledgeBaseRetrieveAndGenerateConfiguration$knowledgeBaseId": "<p>The unique identifier of the knowledge base that is queried and the foundation model used for generation.</p>",
+        "KnowledgeBaseRetrieveAndGenerateConfiguration$knowledgeBaseId": "<p>The unique identifier of the knowledge base that is queried.</p>",
         "RetrieveRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to query.</p>"
       }
     },

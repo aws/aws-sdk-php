@@ -405,6 +405,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopWorkflowRunAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result testConnection(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise testConnectionAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateBlueprint(array $args = [])

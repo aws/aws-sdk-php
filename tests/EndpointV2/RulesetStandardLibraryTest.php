@@ -69,9 +69,10 @@ class RulesetStandardLibraryTest extends TestCase
     public function getAttrProvider()
     {
         return [
-            ["Thing1", "foo"],
-            ["Thing2[0]", "index0"],
-            ["Thing3.SubThing", 42],
+            ['{"Thing1": "foo", "Thing2": ["index0", "index1"], "Thing3": {"SubThing": 42}}', "Thing1", "foo"],
+            ['{"Thing1": "foo", "Thing2": ["index0", "index1"], "Thing3": {"SubThing": 42}}', "Thing2[0]", "index0"],
+            ['{"Thing1": "foo", "Thing2": ["index0", "index1"], "Thing3": {"SubThing": 42}}', "Thing3.SubThing", 42],
+            ['["index0", "index1"]', "[0]", 'index0']
         ];
     }
 
@@ -81,9 +82,9 @@ class RulesetStandardLibraryTest extends TestCase
      * @param $path
      * @param $expected
      */
-    public function testGetAttr($path, $expected)
+    public function testGetAttr($from, $path, $expected)
     {
-        $from = json_decode('{"Thing1": "foo", "Thing2": ["index0", "index1"], "Thing3": {"SubThing": 42}}', true);
+        $from = json_decode($from, true);
         $this->assertSame($expected, $this->standardLibrary->getAttr($from, $path));
     }
 

@@ -54,6 +54,8 @@ use Generator;
  * @method \GuzzleHttp\Promise\Promise deleteSubscriptionFilterAsync(array $args = [])
  * @method \Aws\Result describeAccountPolicies(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAccountPoliciesAsync(array $args = [])
+ * @method \Aws\Result describeConfigurationTemplates(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeConfigurationTemplatesAsync(array $args = [])
  * @method \Aws\Result describeDeliveries(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeDeliveriesAsync(array $args = [])
  * @method \Aws\Result describeDeliveryDestinations(array $args = [])
@@ -154,6 +156,8 @@ use Generator;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateAnomaly(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAnomalyAsync(array $args = [])
+ * @method \Aws\Result updateDeliveryConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateDeliveryConfigurationAsync(array $args = [])
  * @method \Aws\Result updateLogAnomalyDetector(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLogAnomalyDetectorAsync(array $args = [])
  */

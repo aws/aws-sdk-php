@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Fault Injection Service is a managed service that enables you to perform fault injection experiments on your Amazon Web Services workloads. For more information, see the <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/\">Fault Injection Service User Guide</a>.</p>",
+  "service": "<p>Amazon Web Services Fault Injection Service is a managed service that enables you to perform fault injection experiments on your Amazon Web Services workloads. For more information, see the <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/\">Fault Injection Service User Guide</a>.</p>",
   "operations": {
     "CreateExperimentTemplate": "<p>Creates an experiment template. </p> <p>An experiment template includes the following components:</p> <ul> <li> <p> <b>Targets</b>: A target can be a specific resource in your Amazon Web Services environment, or one or more resources that match criteria that you specify, for example, resources that have specific tags.</p> </li> <li> <p> <b>Actions</b>: The actions to carry out on the target. You can specify multiple actions, the duration of each action, and when to start each action during an experiment.</p> </li> <li> <p> <b>Stop conditions</b>: If a stop condition is triggered while an experiment is running, the experiment is automatically stopped. You can define a stop condition as a CloudWatch alarm.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/experiment-templates.html\">experiment templates</a> in the <i>Fault Injection Service User Guide</i>.</p>",
     "CreateTargetAccountConfiguration": "<p>Creates a target account configuration for the experiment template. A target account configuration is required when <code>accountTargeting</code> of <code>experimentOptions</code> is set to <code>multi-account</code>. For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/experiment-options.html\">experiment options</a> in the <i>Fault Injection Service User Guide</i>. </p>",
@@ -10,6 +10,7 @@
     "GetExperiment": "<p>Gets information about the specified experiment.</p>",
     "GetExperimentTargetAccountConfiguration": "<p>Gets information about the specified target account configuration of the experiment.</p>",
     "GetExperimentTemplate": "<p>Gets information about the specified experiment template.</p>",
+    "GetSafetyLever": "<p> Gets information about the specified safety lever. </p>",
     "GetTargetAccountConfiguration": "<p>Gets information about the specified target account configuration of the experiment template.</p>",
     "GetTargetResourceType": "<p>Gets information about the specified resource type.</p>",
     "ListActions": "<p>Lists the available FIS actions.</p>",
@@ -25,6 +26,7 @@
     "TagResource": "<p>Applies the specified tags to the specified resource.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateExperimentTemplate": "<p>Updates the specified experiment template.</p>",
+    "UpdateSafetyLeverState": "<p> Updates the specified safety lever state. </p>",
     "UpdateTargetAccountConfiguration": "<p>Updates the target account configuration for the specified experiment template.</p>"
   },
   "shapes": {
@@ -379,6 +381,30 @@
       "base": null,
       "refs": {
         "Experiment$endTime": "<p>The time that the experiment ended.</p>"
+      }
+    },
+    "ExperimentError": {
+      "base": "<p>Describes the error when an experiment has <code>failed</code>.</p>",
+      "refs": {
+        "ExperimentState$error": "<p>The error information of the experiment when the action has <code>failed</code>.</p>"
+      }
+    },
+    "ExperimentErrorAccountId": {
+      "base": null,
+      "refs": {
+        "ExperimentError$accountId": "<p>The Amazon Web Services Account ID where the experiment failure occurred.</p>"
+      }
+    },
+    "ExperimentErrorCode": {
+      "base": null,
+      "refs": {
+        "ExperimentError$code": "<p>The error code for the failed experiment.</p>"
+      }
+    },
+    "ExperimentErrorLocation": {
+      "base": null,
+      "refs": {
+        "ExperimentError$location": "<p>Context for the section of the experiment template that failed.</p>"
       }
     },
     "ExperimentId": {
@@ -861,6 +887,16 @@
       "refs": {
       }
     },
+    "GetSafetyLeverRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSafetyLeverResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetTargetAccountConfigurationRequest": {
       "base": null,
       "refs": {
@@ -1055,6 +1091,7 @@
         "ExperimentTemplateSummary$arn": "<p>The Amazon Resource Name (ARN) of the experiment template.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "ResourceArnList$member": null,
+        "SafetyLever$arn": "<p> The Amazon Resource Name (ARN) of the safety lever. </p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
       }
@@ -1102,6 +1139,46 @@
         "ExperimentS3LogConfiguration$prefix": "<p>The bucket prefix.</p>",
         "ExperimentTemplateS3LogConfiguration$prefix": "<p>The bucket prefix.</p>",
         "ExperimentTemplateS3LogConfigurationInput$prefix": "<p>The bucket prefix.</p>"
+      }
+    },
+    "SafetyLever": {
+      "base": "<p> Describes a safety lever. </p>",
+      "refs": {
+        "GetSafetyLeverResponse$safetyLever": "<p> Information about the safety lever. </p>",
+        "UpdateSafetyLeverStateResponse$safetyLever": "<p> Information about the safety lever. </p>"
+      }
+    },
+    "SafetyLeverId": {
+      "base": null,
+      "refs": {
+        "GetSafetyLeverRequest$id": "<p> The ID of the safety lever. </p>",
+        "SafetyLever$id": "<p> The ID of the safety lever. </p>",
+        "UpdateSafetyLeverStateRequest$id": "<p> The ID of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverState": {
+      "base": "<p> Describes the state of the safety lever. </p>",
+      "refs": {
+        "SafetyLever$state": "<p> The state of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverStatus": {
+      "base": null,
+      "refs": {
+        "SafetyLeverState$status": "<p> The state of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverStatusInput": {
+      "base": null,
+      "refs": {
+        "UpdateSafetyLeverStateInput$status": "<p> The updated state of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverStatusReason": {
+      "base": null,
+      "refs": {
+        "SafetyLeverState$reason": "<p> The reason for the state of the safety lever. </p>",
+        "UpdateSafetyLeverStateInput$reason": "<p> The reason for updating the state of the safety lever. </p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -1414,6 +1491,22 @@
       "base": null,
       "refs": {
         "UpdateExperimentTemplateRequest$targets": "<p>The targets for the experiment.</p>"
+      }
+    },
+    "UpdateSafetyLeverStateInput": {
+      "base": "<p> Specifies a state for a safety lever. </p>",
+      "refs": {
+        "UpdateSafetyLeverStateRequest$state": "<p> The state of the safety lever. </p>"
+      }
+    },
+    "UpdateSafetyLeverStateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSafetyLeverStateResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "UpdateTargetAccountConfigurationRequest": {

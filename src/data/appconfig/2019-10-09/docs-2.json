@@ -8,16 +8,17 @@
     "CreateEnvironment": "<p>Creates an environment. For each application, you define one or more environments. An environment is a deployment group of AppConfig targets, such as applications in a <code>Beta</code> or <code>Production</code> environment. You can also define environments for application subcomponents such as the <code>Web</code>, <code>Mobile</code> and <code>Back-end</code> components for your application. You can configure Amazon CloudWatch alarms for each environment. The system monitors alarms during a configuration deployment. If an alarm is triggered, the system rolls back the configuration.</p>",
     "CreateExtension": "<p>Creates an AppConfig extension. An extension augments your ability to inject logic or behavior at different points during the AppConfig workflow of creating or deploying a configuration.</p> <p>You can create your own extensions or use the Amazon Web Services authored extensions provided by AppConfig. For an AppConfig extension that uses Lambda, you must create a Lambda function to perform any computation and processing defined in the extension. If you plan to create custom versions of the Amazon Web Services authored notification extensions, you only need to specify an Amazon Resource Name (ARN) in the <code>Uri</code> field for the new extension version.</p> <ul> <li> <p>For a custom EventBridge notification extension, enter the ARN of the EventBridge default events in the <code>Uri</code> field.</p> </li> <li> <p>For a custom Amazon SNS notification extension, enter the ARN of an Amazon SNS topic in the <code>Uri</code> field.</p> </li> <li> <p>For a custom Amazon SQS notification extension, enter the ARN of an Amazon SQS message queue in the <code>Uri</code> field. </p> </li> </ul> <p>For more information about extensions, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html\">Extending workflows</a> in the <i>AppConfig User Guide</i>.</p>",
     "CreateExtensionAssociation": "<p>When you create an extension or configure an Amazon Web Services authored extension, you associate the extension with an AppConfig application, environment, or configuration profile. For example, you can choose to run the <code>AppConfig deployment events to Amazon SNS</code> Amazon Web Services authored extension and receive notifications on an Amazon SNS topic anytime a configuration deployment is started for a specific application. Defining which extension to associate with an AppConfig resource is called an <i>extension association</i>. An extension association is a specified relationship between an extension and an AppConfig resource, such as an application or a configuration profile. For more information about extensions and associations, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html\">Extending workflows</a> in the <i>AppConfig User Guide</i>.</p>",
-    "CreateHostedConfigurationVersion": "<p>Creates a new configuration in the AppConfig hosted configuration store.</p>",
-    "DeleteApplication": "<p>Deletes an application. Deleting an application does not delete a configuration from a host.</p>",
-    "DeleteConfigurationProfile": "<p>Deletes a configuration profile. Deleting a configuration profile does not delete a configuration from a host.</p>",
-    "DeleteDeploymentStrategy": "<p>Deletes a deployment strategy. Deleting a deployment strategy does not delete a configuration from a host.</p>",
-    "DeleteEnvironment": "<p>Deletes an environment. Deleting an environment does not delete a configuration from a host.</p>",
+    "CreateHostedConfigurationVersion": "<p>Creates a new configuration in the AppConfig hosted configuration store. If you're creating a feature flag, we recommend you familiarize yourself with the JSON schema for feature flag data. For more information, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-configuration-and-profile-feature-flags.html#appconfig-type-reference-feature-flags\">Type reference for AWS.AppConfig.FeatureFlags</a> in the <i>AppConfig User Guide</i>.</p>",
+    "DeleteApplication": "<p>Deletes an application.</p>",
+    "DeleteConfigurationProfile": "<p>Deletes a configuration profile.</p> <p>To prevent users from unintentionally deleting actively-used configuration profiles, enable <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/deletion-protection.html\">deletion protection</a>.</p>",
+    "DeleteDeploymentStrategy": "<p>Deletes a deployment strategy.</p>",
+    "DeleteEnvironment": "<p>Deletes an environment.</p> <p>To prevent users from unintentionally deleting actively-used environments, enable <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/deletion-protection.html\">deletion protection</a>.</p>",
     "DeleteExtension": "<p>Deletes an AppConfig extension. You must delete all associations to an extension before you delete the extension.</p>",
     "DeleteExtensionAssociation": "<p>Deletes an extension association. This action doesn't delete extensions defined in the association.</p>",
     "DeleteHostedConfigurationVersion": "<p>Deletes a version of a configuration from the AppConfig hosted configuration store.</p>",
+    "GetAccountSettings": "<p>Returns information about the status of the <code>DeletionProtection</code> parameter.</p>",
     "GetApplication": "<p>Retrieves information about an application.</p>",
-    "GetConfiguration": "<p>(Deprecated) Retrieves the latest deployed configuration.</p> <important> <p>Note the following important information.</p> <ul> <li> <p>This API action is deprecated. Calls to receive configuration data should use the <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_StartConfigurationSession.html\">StartConfigurationSession</a> and <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> APIs instead. </p> </li> <li> <p> <code>GetConfiguration</code> is a priced call. For more information, see <a href=\"https://aws.amazon.com/systems-manager/pricing/\">Pricing</a>.</p> </li> </ul> </important>",
+    "GetConfiguration": "<p>(Deprecated) Retrieves the latest deployed configuration.</p> <important> <p>Note the following important information.</p> <ul> <li> <p>This API action is deprecated. Calls to receive configuration data should use the <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_StartConfigurationSession.html\">StartConfigurationSession</a> and <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> APIs instead. </p> </li> <li> <p> <a>GetConfiguration</a> is a priced call. For more information, see <a href=\"https://aws.amazon.com/systems-manager/pricing/\">Pricing</a>.</p> </li> </ul> </important>",
     "GetConfigurationProfile": "<p>Retrieves information about a configuration profile.</p>",
     "GetDeployment": "<p>Retrieves information about a configuration deployment.</p>",
     "GetDeploymentStrategy": "<p>Retrieves information about a deployment strategy. A deployment strategy defines important criteria for rolling out your configuration to the designated targets. A deployment strategy includes the overall duration required, a percentage of targets to receive the deployment during each interval, an algorithm that defines how percentage grows, and bake time.</p>",
@@ -38,6 +39,7 @@
     "StopDeployment": "<p>Stops a deployment. This API action works only on deployments that have a status of <code>DEPLOYING</code>. This action moves the deployment to a status of <code>ROLLED_BACK</code>.</p>",
     "TagResource": "<p>Assigns metadata to an AppConfig resource. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define. You can specify a maximum of 50 tags for a resource.</p>",
     "UntagResource": "<p>Deletes a tag key and value from an AppConfig resource.</p>",
+    "UpdateAccountSettings": "<p>Updates the value of the <code>DeletionProtection</code> parameter.</p>",
     "UpdateApplication": "<p>Updates an application.</p>",
     "UpdateConfigurationProfile": "<p>Updates a configuration profile.</p>",
     "UpdateDeploymentStrategy": "<p>Updates a deployment strategy.</p>",
@@ -47,6 +49,11 @@
     "ValidateConfiguration": "<p>Uses the validators in a configuration profile to validate a configuration.</p>"
   },
   "shapes": {
+    "AccountSettings": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Action": {
       "base": "<p>An action defines the tasks that the extension performs during the AppConfig workflow. Each action includes an action point such as <code>ON_CREATE_HOSTED_CONFIGURATION</code>, <code>PRE_DEPLOYMENT</code>, or <code>ON_DEPLOYMENT</code>. Each action also includes a name, a URI to an Lambda function, and an Amazon Resource Name (ARN) for an Identity and Access Management assume role. You specify the name, URI, and ARN for each <i>action point</i> defined in the extension. You can specify the following actions for an extension:</p> <ul> <li> <p> <code>PRE_CREATE_HOSTED_CONFIGURATION_VERSION</code> </p> </li> <li> <p> <code>PRE_START_DEPLOYMENT</code> </p> </li> <li> <p> <code>ON_DEPLOYMENT_START</code> </p> </li> <li> <p> <code>ON_DEPLOYMENT_STEP</code> </p> </li> <li> <p> <code>ON_DEPLOYMENT_BAKING</code> </p> </li> <li> <p> <code>ON_DEPLOYMENT_COMPLETE</code> </p> </li> <li> <p> <code>ON_DEPLOYMENT_ROLLED_BACK</code> </p> </li> </ul>",
       "refs": {
@@ -157,13 +164,14 @@
       "base": null,
       "refs": {
         "Configuration$Content": "<p>The content of the configuration or the configuration data.</p> <important> <p>The <code>Content</code> attribute only contains data if the system finds new or updated configuration data. If there is no new or updated data and <code>ClientConfigurationVersion</code> matches the version of the current configuration, AppConfig returns a <code>204 No Content</code> HTTP response code and the <code>Content</code> value will be empty.</p> </important>",
-        "CreateHostedConfigurationVersionRequest$Content": "<p>The content of the configuration or the configuration data.</p>",
+        "CreateHostedConfigurationVersionRequest$Content": "<p>The configuration data, as bytes.</p> <note> <p>AppConfig accepts any type of data, including text formats like JSON or TOML, or binary formats like protocol buffers or compressed data.</p> </note>",
         "HostedConfigurationVersion$Content": "<p>The content of the configuration or the configuration data.</p>"
       }
     },
     "Boolean": {
       "base": null,
       "refs": {
+        "DeletionProtectionSettings$Enabled": "<p>A parameter that indicates if deletion protection is enabled or not.</p>",
         "Parameter$Required": "<p>A parameter value must be specified in the extension association.</p>",
         "Parameter$Dynamic": "<p>Indicates whether this parameter's value can be supplied at the extension's action point instead of during extension association. Dynamic parameters can't be marked <code>Required</code>.</p>"
       }
@@ -283,6 +291,26 @@
     "DeleteHostedConfigurationVersionRequest": {
       "base": null,
       "refs": {
+      }
+    },
+    "DeletionProtectionCheck": {
+      "base": null,
+      "refs": {
+        "DeleteConfigurationProfileRequest$DeletionProtectionCheck": "<p>A parameter to configure deletion protection. If enabled, deletion protection prevents a user from deleting a configuration profile if your application has called either <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> or for the configuration profile during the specified interval. </p> <p>This parameter supports the following values:</p> <ul> <li> <p> <code>BYPASS</code>: Instructs AppConfig to bypass the deletion protection check and delete a configuration profile even if deletion protection would have otherwise prevented it. </p> </li> <li> <p> <code>APPLY</code>: Instructs the deletion protection check to run, even if deletion protection is disabled at the account level. <code>APPLY</code> also forces the deletion protection check to run against resources created in the past hour, which are normally excluded from deletion protection checks. </p> </li> <li> <p> <code>ACCOUNT_DEFAULT</code>: The default setting, which instructs AppConfig to implement the deletion protection value specified in the <code>UpdateAccountSettings</code> API.</p> </li> </ul>",
+        "DeleteEnvironmentRequest$DeletionProtectionCheck": "<p>A parameter to configure deletion protection. If enabled, deletion protection prevents a user from deleting an environment if your application called either <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> or in the environment during the specified interval. </p> <p>This parameter supports the following values:</p> <ul> <li> <p> <code>BYPASS</code>: Instructs AppConfig to bypass the deletion protection check and delete a configuration profile even if deletion protection would have otherwise prevented it. </p> </li> <li> <p> <code>APPLY</code>: Instructs the deletion protection check to run, even if deletion protection is disabled at the account level. <code>APPLY</code> also forces the deletion protection check to run against resources created in the past hour, which are normally excluded from deletion protection checks. </p> </li> <li> <p> <code>ACCOUNT_DEFAULT</code>: The default setting, which instructs AppConfig to implement the deletion protection value specified in the <code>UpdateAccountSettings</code> API.</p> </li> </ul>"
+      }
+    },
+    "DeletionProtectionDuration": {
+      "base": null,
+      "refs": {
+        "DeletionProtectionSettings$ProtectionPeriodInMinutes": "<p>The time interval during which AppConfig monitors for calls to <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> or for a configuration profile or from an environment. AppConfig returns an error if a user calls or for the designated configuration profile or environment. To bypass the error and delete a configuration profile or an environment, specify <code>BYPASS</code> for the <code>DeletionProtectionCheck</code> parameter for either or .</p>"
+      }
+    },
+    "DeletionProtectionSettings": {
+      "base": "<p>A parameter to configure deletion protection. If enabled, deletion protection prevents a user from deleting a configuration profile or an environment if AppConfig has called either <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> or for the configuration profile or from the environment during the specified interval.</p> <p>This setting uses the following default values:</p> <ul> <li> <p>Deletion protection is disabled by default. </p> </li> <li> <p>The default interval specified by <code>ProtectionPeriodInMinutes</code> is 60.</p> </li> <li> <p> <code>DeletionProtectionCheck</code> skips configuration profiles and environments that were created in the past hour.</p> </li> </ul>",
+      "refs": {
+        "AccountSettings$DeletionProtection": "<p>A parameter to configure deletion protection. If enabled, deletion protection prevents a user from deleting a configuration profile or an environment if AppConfig has called either <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> or for the configuration profile or from the environment during the specified interval. Deletion protection is disabled by default. The default interval for <code>ProtectionPeriodInMinutes</code> is 60.</p>",
+        "UpdateAccountSettingsRequest$DeletionProtection": "<p>A parameter to configure deletion protection. If enabled, deletion protection prevents a user from deleting a configuration profile or an environment if AppConfig has called either <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/API_appconfigdata_GetLatestConfiguration.html\">GetLatestConfiguration</a> or for the configuration profile or from the environment during the specified interval. Deletion protection is disabled by default. The default interval for <code>ProtectionPeriodInMinutes</code> is 60.</p>"
       }
     },
     "Deployment": {
@@ -583,8 +611,8 @@
         "DeleteApplicationRequest$ApplicationId": "<p>The ID of the application to delete.</p>",
         "DeleteConfigurationProfileRequest$ApplicationId": "<p>The application ID that includes the configuration profile you want to delete.</p>",
         "DeleteConfigurationProfileRequest$ConfigurationProfileId": "<p>The ID of the configuration profile you want to delete.</p>",
-        "DeleteEnvironmentRequest$ApplicationId": "<p>The application ID that includes the environment that you want to delete.</p>",
         "DeleteEnvironmentRequest$EnvironmentId": "<p>The ID of the environment that you want to delete.</p>",
+        "DeleteEnvironmentRequest$ApplicationId": "<p>The application ID that includes the environment that you want to delete.</p>",
         "DeleteExtensionAssociationRequest$ExtensionAssociationId": "<p>The ID of the extension association to delete.</p>",
         "DeleteHostedConfigurationVersionRequest$ApplicationId": "<p>The application ID.</p>",
         "DeleteHostedConfigurationVersionRequest$ConfigurationProfileId": "<p>The configuration profile ID.</p>",
@@ -762,7 +790,8 @@
       "refs": {
         "ConfigurationProfile$Name": "<p>The name of the configuration profile.</p>",
         "ConfigurationProfileSummary$Name": "<p>The name of the configuration profile.</p>",
-        "CreateConfigurationProfileRequest$Name": "<p>A name for the configuration profile.</p>"
+        "CreateConfigurationProfileRequest$Name": "<p>A name for the configuration profile.</p>",
+        "UpdateConfigurationProfileRequest$Name": "<p>The name of the configuration profile.</p>"
       }
     },
     "MaxResults": {
@@ -823,7 +852,6 @@
         "Extension$Name": "<p>The extension name.</p>",
         "ExtensionSummary$Name": "<p>The extension name.</p>",
         "UpdateApplicationRequest$Name": "<p>The name of the application.</p>",
-        "UpdateConfigurationProfileRequest$Name": "<p>The name of the configuration profile.</p>",
         "UpdateEnvironmentRequest$Name": "<p>The name of the environment.</p>"
       }
     },
@@ -1034,6 +1062,11 @@
       "refs": {
       }
     },
+    "UpdateAccountSettingsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateApplicationRequest": {
       "base": null,
       "refs": {
@@ -1081,7 +1114,7 @@
       }
     },
     "Validator": {
-      "base": "<p>A validator provides a syntactic or semantic check to ensure the configuration that you want to deploy functions as intended. To validate your application configuration data, you provide a schema or an Amazon Web Services Lambda function that runs against the configuration. The configuration deployment or update can only proceed when the configuration data is valid.</p>",
+      "base": "<p>A validator provides a syntactic or semantic check to ensure the configuration that you want to deploy functions as intended. To validate your application configuration data, you provide a schema or an Amazon Web Services Lambda function that runs against the configuration. The configuration deployment or update can only proceed when the configuration data is valid. For more information, see <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-configuration-profile.html#appconfig-creating-configuration-and-profile-validators\">About validators</a> in the <i>AppConfig User Guide</i>.</p>",
       "refs": {
         "ValidatorList$member": null
       }
@@ -1113,7 +1146,7 @@
         "Configuration$ConfigurationVersion": "<p>The configuration version.</p>",
         "Deployment$ConfigurationVersion": "<p>The configuration version that was deployed.</p>",
         "DeploymentSummary$ConfigurationVersion": "<p>The version of the configuration.</p>",
-        "GetConfigurationRequest$ClientConfigurationVersion": "<p>The configuration version returned in the most recent <code>GetConfiguration</code> response.</p> <important> <p>AppConfig uses the value of the <code>ClientConfigurationVersion</code> parameter to identify the configuration version on your clients. If you don’t send <code>ClientConfigurationVersion</code> with each call to <code>GetConfiguration</code>, your clients receive the current configuration. You are charged each time your clients receive a configuration.</p> <p>To avoid excess charges, we recommend you use the <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/StartConfigurationSession.html\">StartConfigurationSession</a> and <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/GetLatestConfiguration.html\">GetLatestConfiguration</a> APIs, which track the client configuration version on your behalf. If you choose to continue using <code>GetConfiguration</code>, we recommend that you include the <code>ClientConfigurationVersion</code> value with every call to <code>GetConfiguration</code>. The value to use for <code>ClientConfigurationVersion</code> comes from the <code>ConfigurationVersion</code> attribute returned by <code>GetConfiguration</code> when there is new or updated data, and should be saved for subsequent calls to <code>GetConfiguration</code>.</p> </important> <p>For more information about working with configurations, see <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-retrieving-the-configuration.html\">Retrieving the Configuration</a> in the <i>AppConfig User Guide</i>.</p>",
+        "GetConfigurationRequest$ClientConfigurationVersion": "<p>The configuration version returned in the most recent <a>GetConfiguration</a> response.</p> <important> <p>AppConfig uses the value of the <code>ClientConfigurationVersion</code> parameter to identify the configuration version on your clients. If you don’t send <code>ClientConfigurationVersion</code> with each call to <a>GetConfiguration</a>, your clients receive the current configuration. You are charged each time your clients receive a configuration.</p> <p>To avoid excess charges, we recommend you use the <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/StartConfigurationSession.html\">StartConfigurationSession</a> and <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/GetLatestConfiguration.html\">GetLatestConfiguration</a> APIs, which track the client configuration version on your behalf. If you choose to continue using <a>GetConfiguration</a>, we recommend that you include the <code>ClientConfigurationVersion</code> value with every call to <a>GetConfiguration</a>. The value to use for <code>ClientConfigurationVersion</code> comes from the <code>ConfigurationVersion</code> attribute returned by <a>GetConfiguration</a> when there is new or updated data, and should be saved for subsequent calls to <a>GetConfiguration</a>.</p> </important> <p>For more information about working with configurations, see <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-retrieving-the-configuration.html\">Retrieving the Configuration</a> in the <i>AppConfig User Guide</i>.</p>",
         "StartDeploymentRequest$ConfigurationVersion": "<p>The configuration version to deploy. If deploying an AppConfig hosted configuration version, you can specify either the version number or version label. For all other configurations, you must specify the version number.</p>",
         "ValidateConfigurationRequest$ConfigurationVersion": "<p>The version of the configuration to validate.</p>"
       }

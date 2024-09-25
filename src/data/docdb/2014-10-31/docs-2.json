@@ -38,6 +38,7 @@
     "DescribeOrderableDBInstanceOptions": "<p>Returns a list of orderable instance options for the specified engine.</p>",
     "DescribePendingMaintenanceActions": "<p>Returns a list of resources (for example, instances) that have at least one pending maintenance action.</p>",
     "FailoverDBCluster": "<p>Forces a failover for a cluster.</p> <p>A failover for a cluster promotes one of the Amazon DocumentDB replicas (read-only instances) in the cluster to be the primary instance (the cluster writer).</p> <p>If the primary instance fails, Amazon DocumentDB automatically fails over to an Amazon DocumentDB replica, if one exists. You can force a failover when you want to simulate a failure of a primary instance for testing.</p>",
+    "FailoverGlobalCluster": "<p>Promotes the specified secondary DB cluster to be the primary DB cluster in the global cluster when failing over a global cluster occurs.</p> <p>Use this operation to respond to an unplanned event, such as a regional disaster in the primary region. Failing over can result in a loss of write transaction data that wasn't replicated to the chosen secondary before the failover event occurred. However, the recovery process that promotes a DB instance on the chosen seconday DB cluster to be the primary writer DB instance guarantees that the data is in a transactionally consistent state.</p>",
     "ListTagsForResource": "<p>Lists all tags on an Amazon DocumentDB resource.</p>",
     "ModifyDBCluster": "<p>Modifies a setting for an Amazon DocumentDB cluster. You can change one or more database configuration parameters by specifying these parameters and the new values in the request. </p>",
     "ModifyDBClusterParameterGroup": "<p> Modifies the parameters of a cluster parameter group. To modify more than one parameter, submit a list of the following: <code>ParameterName</code>, <code>ParameterValue</code>, and <code>ApplyMethod</code>. A maximum of 20 parameters can be modified in a single request. </p> <note> <p>Changes to dynamic parameters are applied immediately. Changes to static parameters require a reboot or maintenance window before the change can take effect.</p> </note> <important> <p>After you create a cluster parameter group, you should wait at least 5 minutes before creating your first cluster that uses that cluster parameter group as the default parameter group. This allows Amazon DocumentDB to fully complete the create action before the parameter group is used as the default for a new cluster. This step is especially important for parameters that are critical when creating the default database for a cluster, such as the character set for the default database defined by the <code>character_set_database</code> parameter.</p> </important>",
@@ -172,6 +173,8 @@
         "DescribeDBEngineVersionsMessage$ListSupportedCharacterSets": "<p>If this parameter is specified and the requested engine supports the <code>CharacterSetName</code> parameter for <code>CreateDBInstance</code>, the response includes a list of supported character sets for each engine version. </p>",
         "DescribeDBEngineVersionsMessage$ListSupportedTimezones": "<p>If this parameter is specified and the requested engine supports the <code>TimeZone</code> parameter for <code>CreateDBInstance</code>, the response includes a list of supported time zones for each engine version. </p>",
         "DescribeOrderableDBInstanceOptionsMessage$Vpc": "<p>The virtual private cloud (VPC) filter value. Specify this parameter to show only the available VPC or non-VPC offerings.</p>",
+        "FailoverGlobalClusterMessage$AllowDataLoss": "<p>Specifies whether to allow data loss for this global cluster operation. Allowing data loss triggers a global failover operation.</p> <p>If you don't specify <code>AllowDataLoss</code>, the global cluster operation defaults to a switchover.</p> <p>Constraints:</p> <ul> <li> <p>Can't be specified together with the <code>Switchover</code> parameter.</p> </li> </ul>",
+        "FailoverGlobalClusterMessage$Switchover": "<p>Specifies whether to switch over this global database cluster.</p> <p>Constraints:</p> <ul> <li> <p>Can't be specified together with the <code>AllowDataLoss</code> parameter.</p> </li> </ul>",
         "GlobalCluster$StorageEncrypted": "<p>The storage encryption setting for the global cluster.</p>",
         "GlobalCluster$DeletionProtection": "<p>The deletion protection setting for the new global cluster.</p>",
         "ModifyDBClusterMessage$DeletionProtection": "<p>Specifies whether this cluster can be deleted. If <code>DeletionProtection</code> is enabled, the cluster cannot be deleted unless it is modified and <code>DeletionProtection</code> is disabled. <code>DeletionProtection</code> protects clusters from being accidentally deleted.</p>",
@@ -334,6 +337,13 @@
     "DBClusterAlreadyExistsFault": {
       "base": "<p>You already have a cluster with the given identifier.</p>",
       "refs": {
+      }
+    },
+    "DBClusterIdentifier": {
+      "base": null,
+      "refs": {
+        "FailoverGlobalClusterMessage$TargetDbClusterIdentifier": "<p>The identifier of the secondary Amazon DocumentDB cluster that you want to promote to the primary for the global cluster. Use the Amazon Resource Name (ARN) for the identifier so that Amazon DocumentDB can locate the cluster in its Amazon Web Services region.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing secondary cluster.</p> </li> <li> <p>Minimum length of 1. Maximum length of 255.</p> </li> </ul> <p>Pattern: <code>[A-Za-z][0-9A-Za-z-:._]*</code> </p>",
+        "SwitchoverGlobalClusterMessage$TargetDbClusterIdentifier": "<p>The identifier of the secondary Amazon DocumentDB cluster to promote to the new primary for the global database cluster. Use the Amazon Resource Name (ARN) for the identifier so that Amazon DocumentDB can locate the cluster in its Amazon Web Services region.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing secondary cluster.</p> </li> <li> <p>Minimum length of 1. Maximum length of 255.</p> </li> </ul> <p>Pattern: <code>[A-Za-z][0-9A-Za-z-:._]*</code> </p>"
       }
     },
     "DBClusterList": {
@@ -848,6 +858,16 @@
       "refs": {
       }
     },
+    "FailoverGlobalClusterMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "FailoverGlobalClusterResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Filter": {
       "base": "<p>A named set of filter values, used to return a more specific list of results. You can use a filter to match a set of resources by specific criteria, such as IDs.</p> <p>Wildcards are not supported in filters.</p>",
       "refs": {
@@ -886,6 +906,7 @@
       "refs": {
         "CreateGlobalClusterResult$GlobalCluster": null,
         "DeleteGlobalClusterResult$GlobalCluster": null,
+        "FailoverGlobalClusterResult$GlobalCluster": null,
         "GlobalClusterList$member": null,
         "ModifyGlobalClusterResult$GlobalCluster": null,
         "RemoveFromGlobalClusterResult$GlobalCluster": null,
@@ -904,6 +925,7 @@
         "CreateGlobalClusterMessage$GlobalClusterIdentifier": "<p>The cluster identifier of the new global cluster.</p>",
         "DeleteGlobalClusterMessage$GlobalClusterIdentifier": "<p>The cluster identifier of the global cluster being deleted.</p>",
         "DescribeGlobalClustersMessage$GlobalClusterIdentifier": "<p>The user-supplied cluster identifier. If this parameter is specified, information from only the specific cluster is returned. This parameter isn't case-sensitive.</p>",
+        "FailoverGlobalClusterMessage$GlobalClusterIdentifier": "<p>The identifier of the Amazon DocumentDB global cluster to apply this operation. The identifier is the unique key assigned by the user when the cluster is created. In other words, it's the name of the global cluster.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing global cluster.</p> </li> <li> <p>Minimum length of 1. Maximum length of 255.</p> </li> </ul> <p>Pattern: <code>[A-Za-z][0-9A-Za-z-:._]*</code> </p>",
         "GlobalCluster$GlobalClusterIdentifier": "<p>Contains a user-supplied global cluster identifier. This identifier is the unique key that identifies a global cluster. </p>",
         "ModifyGlobalClusterMessage$GlobalClusterIdentifier": "<p>The identifier for the global cluster being modified. This parameter isn't case-sensitive.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing global cluster.</p> </li> </ul>",
         "ModifyGlobalClusterMessage$NewGlobalClusterIdentifier": "<p>The new identifier for a global cluster when you modify a global cluster. This value is stored as a lowercase string.</p> <ul> <li> <p>Must contain from 1 to 63 letters, numbers, or hyphens</p> <p>The first character must be a letter</p> <p>Can't end with a hyphen or contain two consecutive hyphens</p> </li> </ul> <p>Example: <code>my-cluster2</code> </p>",
@@ -1685,7 +1707,6 @@
         "Subnet$SubnetIdentifier": "<p>Specifies the identifier of the subnet.</p>",
         "Subnet$SubnetStatus": "<p>Specifies the status of the subnet.</p>",
         "SubnetIdentifierList$member": null,
-        "SwitchoverGlobalClusterMessage$TargetDbClusterIdentifier": "<p>The identifier of the secondary Amazon DocumentDB cluster to promote to the new primary for the global database cluster. Use the Amazon Resource Name (ARN) for the identifier so that Amazon DocumentDB can locate the cluster in its Amazon Web Services region.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing secondary cluster.</p> </li> <li> <p>Minimum length of 1. Maximum length of 255.</p> </li> </ul> <p>Pattern: <code>[A-Za-z][0-9A-Za-z-:._]*</code> </p>",
         "Tag$Key": "<p>The required name of the tag. The string value can be from 1 to 128 Unicode characters in length and can't be prefixed with \"<code>aws:</code>\" or \"<code>rds:</code>\". The string can contain only the set of Unicode letters, digits, white space, '_', '.', '/', '=', '+', '-' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>",
         "Tag$Value": "<p>The optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and can't be prefixed with \"<code>aws:</code>\" or \"<code>rds:</code>\". The string can contain only the set of Unicode letters, digits, white space, '_', '.', '/', '=', '+', '-' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>",
         "UpgradeTarget$Engine": "<p>The name of the upgrade target database engine.</p>",

@@ -767,6 +767,17 @@ EOT
         $client->foo();
     }
 
+
+    public function testCallingEmitDeprecationWarningEmitsDeprecationWarning()
+    {
+        $this->expectDeprecation();
+        $this->expectDeprecationMessage(
+            "This method is deprecated. It will be removed in an upcoming release."
+        );
+        $client = $this->createClient();
+        $client::emitDeprecationWarning();
+    }
+
     /**
      * @dataProvider signingRegionSetProvider
      * @runInSeparateProcess
@@ -833,7 +844,6 @@ EOT
         }
 
         putenv('AWS_SIGV4A_SIGNING_REGION_SET=');
-
     }
 
     public function signingRegionSetProvider()

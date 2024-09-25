@@ -11,8 +11,8 @@
     "CreateApp": "<p>Creates a running app for the specified UserProfile. This operation is automatically invoked by Amazon SageMaker upon access to the associated Domain, and when new kernel configurations are selected by the user. A user may have multiple Apps active simultaneously.</p>",
     "CreateAppImageConfig": "<p>Creates a configuration for running a SageMaker image as a KernelGateway app. The configuration specifies the Amazon Elastic File System storage volume on the image, and a list of the kernels in the image.</p>",
     "CreateArtifact": "<p>Creates an <i>artifact</i>. An artifact is a lineage tracking entity that represents a URI addressable object or data. Some examples are the S3 URI of a dataset and the ECR registry path of an image. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/lineage-tracking.html\">Amazon SageMaker ML Lineage Tracking</a>.</p>",
-    "CreateAutoMLJob": "<p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job.</p> <note> <p>We recommend using the new versions <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a>, which offer backward compatibility.</p> <p> <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting, non-tabular problem types such as image or text classification, and text generation (LLMs fine-tuning).</p> <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to <code>CreateAutoMLJobV2</code> in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html#autopilot-create-experiment-api-migrate-v1-v2\">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p> </note> <p>You can find the best-performing model after you run an AutoML job by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a> (recommended) or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html\">DescribeAutoMLJob</a>.</p>",
-    "CreateAutoMLJobV2": "<p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job V2.</p> <note> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a> are new versions of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJob.html\">CreateAutoMLJob</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html\">DescribeAutoMLJob</a> which offer backward compatibility.</p> <p> <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting, non-tabular problem types such as image or text classification, and text generation (LLMs fine-tuning).</p> <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to <code>CreateAutoMLJobV2</code> in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html#autopilot-create-experiment-api-migrate-v1-v2\">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p> </note> <p>For the list of available problem types supported by <code>CreateAutoMLJobV2</code>, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AutoMLProblemTypeConfig.html\">AutoMLProblemTypeConfig</a>.</p> <p>You can find the best-performing model after you run an AutoML job V2 by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a>.</p>",
+    "CreateAutoMLJob": "<p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job.</p> <p>An AutoML job in SageMaker is a fully automated process that allows you to build machine learning models with minimal effort and machine learning expertise. When initiating an AutoML job, you provide your data and optionally specify parameters tailored to your use case. SageMaker then automates the entire model development lifecycle, including data preprocessing, model training, tuning, and evaluation. AutoML jobs are designed to simplify and accelerate the model building process by automating various tasks and exploring different combinations of machine learning algorithms, data preprocessing techniques, and hyperparameter values. The output of an AutoML job comprises one or more trained models ready for deployment and inference. Additionally, SageMaker AutoML jobs generate a candidate model leaderboard, allowing you to select the best-performing model for deployment.</p> <p>For more information about AutoML jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html\">https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html</a> in the SageMaker developer guide.</p> <note> <p>We recommend using the new versions <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a>, which offer backward compatibility.</p> <p> <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting, non-tabular problem types such as image or text classification, and text generation (LLMs fine-tuning).</p> <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to <code>CreateAutoMLJobV2</code> in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html#autopilot-create-experiment-api-migrate-v1-v2\">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p> </note> <p>You can find the best-performing model after you run an AutoML job by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a> (recommended) or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html\">DescribeAutoMLJob</a>.</p>",
+    "CreateAutoMLJobV2": "<p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job V2.</p> <p>An AutoML job in SageMaker is a fully automated process that allows you to build machine learning models with minimal effort and machine learning expertise. When initiating an AutoML job, you provide your data and optionally specify parameters tailored to your use case. SageMaker then automates the entire model development lifecycle, including data preprocessing, model training, tuning, and evaluation. AutoML jobs are designed to simplify and accelerate the model building process by automating various tasks and exploring different combinations of machine learning algorithms, data preprocessing techniques, and hyperparameter values. The output of an AutoML job comprises one or more trained models ready for deployment and inference. Additionally, SageMaker AutoML jobs generate a candidate model leaderboard, allowing you to select the best-performing model for deployment.</p> <p>For more information about AutoML jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html\">https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html</a> in the SageMaker developer guide.</p> <p>AutoML jobs V2 support various problem types such as regression, binary, and multiclass classification with tabular data, text and image classification, time-series forecasting, and fine-tuning of large language models (LLMs) for text generation.</p> <note> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a> are new versions of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJob.html\">CreateAutoMLJob</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html\">DescribeAutoMLJob</a> which offer backward compatibility.</p> <p> <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting, non-tabular problem types such as image or text classification, and text generation (LLMs fine-tuning).</p> <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to <code>CreateAutoMLJobV2</code> in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html#autopilot-create-experiment-api-migrate-v1-v2\">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p> </note> <p>For the list of available problem types supported by <code>CreateAutoMLJobV2</code>, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AutoMLProblemTypeConfig.html\">AutoMLProblemTypeConfig</a>.</p> <p>You can find the best-performing model after you run an AutoML job V2 by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a>.</p>",
     "CreateCluster": "<p>Creates a SageMaker HyperPod cluster. SageMaker HyperPod is a capability of SageMaker for creating and managing persistent clusters for developing large machine learning models, such as large language models (LLMs) and diffusion models. To learn more, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod.html\">Amazon SageMaker HyperPod</a> in the <i>Amazon SageMaker Developer Guide</i>.</p>",
     "CreateCodeRepository": "<p>Creates a Git repository as a resource in your SageMaker account. You can associate the repository with notebook instances so that you can use Git source control for the notebooks you create. The Git repository is a resource in your SageMaker account, so it can be associated with more than one notebook instance, and it persists independently from the lifecycle of any notebook instances it is associated with.</p> <p>The repository can be hosted either in <a href=\"https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html\">Amazon Web Services CodeCommit</a> or in any other Git repository.</p>",
     "CreateCompilationJob": "<p>Starts a model compilation job. After the model has been compiled, Amazon SageMaker saves the resulting model artifacts to an Amazon Simple Storage Service (Amazon S3) bucket that you specify. </p> <p>If you choose to host your model using Amazon SageMaker hosting services, you can use the resulting model artifacts as part of the model. You can also use the artifacts with Amazon Web Services IoT Greengrass. In that case, deploy them as an ML resource.</p> <p>In the request body, you provide the following:</p> <ul> <li> <p>A name for the compilation job</p> </li> <li> <p> Information about the input model artifacts </p> </li> <li> <p>The output location for the compiled model and the device (target) that the model runs on </p> </li> <li> <p>The Amazon Resource Name (ARN) of the IAM role that Amazon SageMaker assumes to perform the model compilation job. </p> </li> </ul> <p>You can also provide a <code>Tag</code> to track the model compilation job's resource use and costs. The response body contains the <code>CompilationJobArn</code> for the compiled job.</p> <p>To stop a model compilation job, use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_StopCompilationJob.html\">StopCompilationJob</a>. To get information about a particular model compilation job, use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeCompilationJob.html\">DescribeCompilationJob</a>. To get information about multiple model compilation jobs, use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListCompilationJobs.html\">ListCompilationJobs</a>.</p>",
@@ -671,7 +671,15 @@
     "AppInstanceType": {
       "base": null,
       "refs": {
+        "HiddenInstanceTypesList$member": null,
         "ResourceSpec$InstanceType": "<p>The instance type that the image version runs on.</p> <note> <p> <b>JupyterServer apps</b> only support the <code>system</code> value.</p> <p>For <b>KernelGateway apps</b>, the <code>system</code> value is translated to <code>ml.t3.medium</code>. KernelGateway apps also support all other values for available instance types.</p> </note>"
+      }
+    },
+    "AppLifecycleManagement": {
+      "base": "<p>Settings that are used to configure and manage the lifecycle of Amazon SageMaker Studio applications.</p>",
+      "refs": {
+        "CodeEditorAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of CodeEditor applications.</p>",
+        "JupyterLabAppSettings$AppLifecycleManagement": "<p>Indicates whether idle shutdown is activated for JupyterLab applications.</p>"
       }
     },
     "AppList": {
@@ -1091,6 +1099,13 @@
         "AutoMLJobChannel$ChannelType": "<p>The type of channel. Defines whether the data are used for training or validation. The default value is <code>training</code>. Channels for <code>training</code> and <code>validation</code> must share the same <code>ContentType</code> </p> <note> <p>The type of channel defaults to <code>training</code> for the time-series forecasting problem type.</p> </note>"
       }
     },
+    "AutoMLComputeConfig": {
+      "base": "<note> <p>This data type is intended for use exclusively by SageMaker Canvas and cannot be used in other contexts at the moment.</p> </note> <p>Specifies the compute configuration for an AutoML job V2.</p>",
+      "refs": {
+        "CreateAutoMLJobV2Request$AutoMLComputeConfig": "<p>Specifies the compute configuration for the AutoML job V2.</p>",
+        "DescribeAutoMLJobV2Response$AutoMLComputeConfig": "<p>The compute configuration used for the AutoML job V2.</p>"
+      }
+    },
     "AutoMLContainerDefinition": {
       "base": "<p>A list of container definitions that describe the different containers that make up an AutoML candidate. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ContainerDefinition.html\"> ContainerDefinition</a>.</p>",
       "refs": {
@@ -1390,6 +1405,12 @@
       "refs": {
         "ListAutoMLJobsRequest$SortOrder": "<p>The sort order for the results. The default is <code>Descending</code>.</p>",
         "ListCandidatesForAutoMLJobRequest$SortOrder": "<p>The sort order for the results. The default is <code>Ascending</code>.</p>"
+      }
+    },
+    "AutoMountHomeEFS": {
+      "base": null,
+      "refs": {
+        "UserSettings$AutoMountHomeEFS": "<p>Indicates whether auto-mounting of an EFS volume is supported for the user profile. The <code>DefaultAsDomain</code> value is only supported for user profiles. Do not use the <code>DefaultAsDomain</code> value when setting this parameter for a domain.</p>"
       }
     },
     "AutoParameter": {
@@ -2207,6 +2228,14 @@
         "DescribeClusterNodeRequest$NodeId": "<p>The ID of the SageMaker HyperPod cluster node.</p>"
       }
     },
+    "ClusterNodeRecovery": {
+      "base": null,
+      "refs": {
+        "CreateClusterRequest$NodeRecovery": "<p>The node recovery mode for the SageMaker HyperPod cluster. When set to <code>Automatic</code>, SageMaker HyperPod will automatically reboot or replace faulty nodes when issues are detected. When set to <code>None</code>, cluster administrators will need to manually manage any faulty cluster instances.</p>",
+        "DescribeClusterResponse$NodeRecovery": "<p>The node recovery mode configured for the SageMaker HyperPod cluster.</p>",
+        "UpdateClusterRequest$NodeRecovery": "<p>The node recovery mode to be applied to the SageMaker HyperPod cluster.</p>"
+      }
+    },
     "ClusterNodeSummaries": {
       "base": null,
       "refs": {
@@ -2223,6 +2252,19 @@
       "base": null,
       "refs": {
         "ClusterInstanceGroupDetails$CurrentCount": "<p>The number of instances that are currently in the instance group of a SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "ClusterOrchestrator": {
+      "base": "<p>The type of orchestrator used for the SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "CreateClusterRequest$Orchestrator": "<p>The type of orchestrator to use for the SageMaker HyperPod cluster. Currently, the only supported value is <code>\"eks\"</code>, which is to use an Amazon Elastic Kubernetes Service (EKS) cluster as the orchestrator.</p>",
+        "DescribeClusterResponse$Orchestrator": "<p>The type of orchestrator used for the SageMaker HyperPod cluster. </p>"
+      }
+    },
+    "ClusterOrchestratorEksConfig": {
+      "base": "<p>The configuration settings for the Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ClusterOrchestrator$Eks": "<p>The Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>"
       }
     },
     "ClusterPrivateDnsHostname": {
@@ -3594,6 +3636,12 @@
       "refs": {
         "DescribeTrainingJobResponse$DebugRuleEvaluationStatuses": "<p>Evaluation status of Amazon SageMaker Debugger rules for debugging on a training job.</p>",
         "TrainingJob$DebugRuleEvaluationStatuses": "<p>Information about the evaluation status of the rules for the training job.</p>"
+      }
+    },
+    "DeepHealthCheckType": {
+      "base": null,
+      "refs": {
+        "OnStartDeepHealthChecks$member": null
       }
     },
     "DefaultEbsStorageSettings": {
@@ -5310,6 +5358,24 @@
         "DescribeUserProfileResponse$HomeEfsFileSystemUid": "<p>The ID of the user's profile in the Amazon Elastic File System volume.</p>"
       }
     },
+    "EksClusterArn": {
+      "base": null,
+      "refs": {
+        "ClusterOrchestratorEksConfig$ClusterArn": "<p>The Amazon Resource Name (ARN) of the Amazon EKS cluster associated with the SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "EmrServerlessComputeConfig": {
+      "base": "<note> <p>This data type is intended for use exclusively by SageMaker Canvas and cannot be used in other contexts at the moment.</p> </note> <p>Specifies the compute configuration for the EMR Serverless job.</p>",
+      "refs": {
+        "AutoMLComputeConfig$EmrServerlessComputeConfig": "<p>The configuration for using <a href=\"https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/emr-serverless.html\"> EMR Serverless</a> to run the AutoML job V2.</p> <p>To allow your AutoML job V2 to automatically initiate a remote job on EMR Serverless when additional compute resources are needed to process large datasets, you need to provide an <code>EmrServerlessComputeConfig</code> object, which includes an <code>ExecutionRoleARN</code> attribute, to the <code>AutoMLComputeConfig</code> of the AutoML job V2 input request.</p> <p>By seamlessly transitioning to EMR Serverless when required, the AutoML job can handle datasets that would otherwise exceed the initially provisioned resources, without any manual intervention from you. </p> <p>EMR Serverless is available for the tabular and time series problem types. We recommend setting up this option for tabular datasets larger than 5 GB and time series datasets larger than 30 GB.</p>"
+      }
+    },
+    "EmrServerlessSettings": {
+      "base": "<p>The settings for running Amazon EMR Serverless jobs in SageMaker Canvas.</p>",
+      "refs": {
+        "CanvasAppSettings$EmrServerlessSettings": "<p>The settings for running Amazon EMR Serverless data processing jobs in SageMaker Canvas.</p>"
+      }
+    },
     "EmrSettings": {
       "base": "<p>The configuration parameters that specify the IAM roles assumed by the execution role of SageMaker (assumable roles) and the cluster instances or job execution environments (execution roles or runtime roles) to manage and access resources required for running Amazon EMR clusters or Amazon EMR Serverless applications.</p>",
       "refs": {
@@ -5379,6 +5445,7 @@
         "DescribeEndpointOutput$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
         "DescribeInferenceComponentOutput$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint that hosts the inference component.</p>",
         "Endpoint$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
+        "EndpointStepMetadata$Arn": "<p>The Amazon Resource Name (ARN) of the endpoint in the step.</p>",
         "EndpointSummary$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
         "InferenceComponentSummary$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint that hosts the inference component.</p>",
         "ModelDashboardEndpoint$EndpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
@@ -5391,6 +5458,7 @@
       "refs": {
         "CreateEndpointConfigOutput$EndpointConfigArn": "<p>The Amazon Resource Name (ARN) of the endpoint configuration. </p>",
         "DescribeEndpointConfigOutput$EndpointConfigArn": "<p>The Amazon Resource Name (ARN) of the endpoint configuration.</p>",
+        "EndpointConfigStepMetadata$Arn": "<p>The Amazon Resource Name (ARN) of the endpoint configuration used in the step.</p>",
         "EndpointConfigSummary$EndpointConfigArn": "<p>The Amazon Resource Name (ARN) of the endpoint configuration.</p>"
       }
     },
@@ -5420,6 +5488,12 @@
       "base": null,
       "refs": {
         "ListEndpointConfigsInput$SortBy": "<p>The field to sort results by. The default is <code>CreationTime</code>.</p>"
+      }
+    },
+    "EndpointConfigStepMetadata": {
+      "base": "<p>Metadata for an endpoint configuration step.</p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$EndpointConfig": "<p>The endpoint configuration used to create an endpoint during this step execution.</p>"
       }
     },
     "EndpointConfigSummary": {
@@ -5547,6 +5621,12 @@
         "EndpointSummary$EndpointStatus": "<p>The status of the endpoint.</p> <ul> <li> <p> <code>OutOfService</code>: Endpoint is not available to take incoming requests.</p> </li> <li> <p> <code>Creating</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html\">CreateEndpoint</a> is executing.</p> </li> <li> <p> <code>Updating</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpoint.html\">UpdateEndpoint</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> is executing.</p> </li> <li> <p> <code>SystemUpdating</code>: Endpoint is undergoing maintenance and cannot be updated or deleted or re-scaled until it has completed. This maintenance operation does not change any customer-specified values such as VPC config, KMS encryption, model, instance type, or instance count.</p> </li> <li> <p> <code>RollingBack</code>: Endpoint fails to scale up or down or change its variant weight and is in the process of rolling back to its previous configuration. Once the rollback completes, endpoint returns to an <code>InService</code> status. This transitional status only applies to an endpoint that has autoscaling enabled and is undergoing variant weight or capacity changes as part of an <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> call or when the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html\">UpdateEndpointWeightsAndCapacities</a> operation is called explicitly.</p> </li> <li> <p> <code>InService</code>: Endpoint is available to process incoming requests.</p> </li> <li> <p> <code>Deleting</code>: <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html\">DeleteEndpoint</a> is executing.</p> </li> <li> <p> <code>Failed</code>: Endpoint could not be created, updated, or re-scaled. Use <code>DescribeEndpointOutput$FailureReason</code> for information about the failure. <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html\">DeleteEndpoint</a> is the only operation that can be performed on a failed endpoint.</p> </li> </ul> <p>To get a list of endpoints with a specified status, use the <code>StatusEquals</code> filter with a call to <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListEndpoints.html\">ListEndpoints</a>.</p>",
         "ListEndpointsInput$StatusEquals": "<p> A filter that returns only endpoints with the specified status.</p>",
         "ModelDashboardEndpoint$EndpointStatus": "<p>The endpoint status.</p>"
+      }
+    },
+    "EndpointStepMetadata": {
+      "base": "<p>Metadata for an endpoint step.</p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$Endpoint": "<p>The endpoint that was invoked during this step execution.</p>"
       }
     },
     "EndpointSummary": {
@@ -5722,7 +5802,7 @@
       "base": null,
       "refs": {
         "AutoMLContainerDefinition$Environment": "<p>The environment variables to set in the container. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ContainerDefinition.html\"> ContainerDefinition</a>.</p>",
-        "ContainerDefinition$Environment": "<p>The environment variables to set in the Docker container.</p> <p>The maximum length of each key and value in the <code>Environment</code> map is 1024 bytes. The maximum length of all keys and values in the map, combined, is 32 KB. If you pass multiple containers to a <code>CreateModel</code> request, then the maximum length of all of their maps, combined, is also 32 KB.</p>",
+        "ContainerDefinition$Environment": "<p>The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables.</p> <p>The maximum length of each key and value in the <code>Environment</code> map is 1024 bytes. The maximum length of all keys and values in the map, combined, is 32 KB. If you pass multiple containers to a <code>CreateModel</code> request, then the maximum length of all of their maps, combined, is also 32 KB.</p>",
         "InferenceComponentContainerSpecification$Environment": "<p>The environment variables to set in the Docker container. Each key and value in the Environment string-to-string map can have length of up to 1024. We support up to 16 entries in the map.</p>",
         "InferenceComponentContainerSpecificationSummary$Environment": "<p>The environment variables to set in the Docker container.</p>",
         "ModelPackageContainerDefinition$Environment": "<p>The environment variables to set in the Docker container. Each key and value in the <code>Environment</code> string to string map can have length of up to 1024. We support up to 16 entries in the map.</p>",
@@ -6217,6 +6297,7 @@
         "AmazonQSettings$Status": "<p>Whether Amazon Q has been enabled within the domain.</p>",
         "DirectDeploySettings$Status": "<p>Describes whether model deployment permissions are enabled or disabled in the Canvas application.</p>",
         "DockerSettings$EnableDockerAccess": "<p>Indicates whether the domain can access Docker.</p>",
+        "EmrServerlessSettings$Status": "<p>Describes whether Amazon EMR Serverless job capabilities are enabled or disabled in the SageMaker Canvas application.</p>",
         "IdentityProviderOAuthSetting$Status": "<p>Describes whether OAuth for a data source is enabled or disabled in the Canvas application.</p>",
         "KendraSettings$Status": "<p>Describes whether the document querying feature is enabled or disabled in the Canvas application.</p>",
         "ModelRegisterSettings$Status": "<p>Describes whether the integration to the model registry is enabled or disabled in the Canvas application.</p>",
@@ -6607,10 +6688,28 @@
         "StudioWebPortalSettings$HiddenAppTypes": "<p>The <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-apps.html\">Applications supported in Studio</a> that are hidden from the Studio left navigation pane.</p>"
       }
     },
+    "HiddenInstanceTypesList": {
+      "base": null,
+      "refs": {
+        "StudioWebPortalSettings$HiddenInstanceTypes": "<p> The instance types you are hiding from the Studio user interface. </p>"
+      }
+    },
     "HiddenMlToolsList": {
       "base": null,
       "refs": {
         "StudioWebPortalSettings$HiddenMlTools": "<p>The machine learning tools that are hidden from the Studio left navigation pane.</p>"
+      }
+    },
+    "HiddenSageMakerImage": {
+      "base": "<p>The SageMaker images that are hidden from the Studio user interface. You must specify the SageMaker image name and version aliases.</p>",
+      "refs": {
+        "HiddenSageMakerImageVersionAliasesList$member": null
+      }
+    },
+    "HiddenSageMakerImageVersionAliasesList": {
+      "base": null,
+      "refs": {
+        "StudioWebPortalSettings$HiddenSageMakerImageVersionAliases": "<p> The version aliases you are hiding from the Studio user interface. </p>"
       }
     },
     "HolidayConfig": {
@@ -7273,6 +7372,21 @@
         "CanvasAppSettings$IdentityProviderOAuthSettings": "<p>The settings for connecting to an external data source with OAuth.</p>"
       }
     },
+    "IdleSettings": {
+      "base": "<p>Settings related to idle shutdown of Studio applications.</p>",
+      "refs": {
+        "AppLifecycleManagement$IdleSettings": "<p>Settings related to idle shutdown of Studio applications.</p>"
+      }
+    },
+    "IdleTimeoutInMinutes": {
+      "base": null,
+      "refs": {
+        "IdleSettings$IdleTimeoutInMinutes": "<p>The time that SageMaker waits after the application becomes idle before shutting it down.</p>",
+        "IdleSettings$MinIdleTimeoutInMinutes": "<p>The minimum value in minutes that custom idle shutdown can be set to by the user.</p>",
+        "IdleSettings$MaxIdleTimeoutInMinutes": "<p>The maximum value in minutes that custom idle shutdown can be set to by the user.</p>",
+        "SpaceIdleSettings$IdleTimeoutInMinutes": "<p>The time that SageMaker waits after the application becomes idle before shutting it down.</p>"
+      }
+    },
     "Image": {
       "base": "<p>A SageMaker image. A SageMaker image represents a set of container images that are derived from a common base container image. Each of these container images is represented by a SageMaker <code>ImageVersion</code>.</p>",
       "refs": {
@@ -7417,6 +7531,12 @@
       "base": null,
       "refs": {
         "ResourceSpec$SageMakerImageVersionAlias": "<p>The SageMakerImageVersionAlias of the image to launch with. This value is in SemVer 2.0.0 versioning format.</p>"
+      }
+    },
+    "ImageVersionAliasPattern": {
+      "base": null,
+      "refs": {
+        "VersionAliasesList$member": null
       }
     },
     "ImageVersionArn": {
@@ -8405,6 +8525,12 @@
         "JupyterLabAppSettings$LifecycleConfigArns": "<p>The Amazon Resource Name (ARN) of the lifecycle configurations attached to the user profile or domain. To remove a lifecycle config, you must set <code>LifecycleConfigArns</code> to an empty list.</p>",
         "JupyterServerAppSettings$LifecycleConfigArns": "<p> The Amazon Resource Name (ARN) of the Lifecycle Configurations attached to the JupyterServerApp. If you use this parameter, the <code>DefaultResourceSpec</code> parameter is also required.</p> <note> <p>To remove a Lifecycle Config, you must set <code>LifecycleConfigArns</code> to an empty list.</p> </note>",
         "KernelGatewayAppSettings$LifecycleConfigArns": "<p> The Amazon Resource Name (ARN) of the Lifecycle Configurations attached to the the user profile or domain.</p> <note> <p>To remove a Lifecycle Config, you must set <code>LifecycleConfigArns</code> to an empty list.</p> </note>"
+      }
+    },
+    "LifecycleManagement": {
+      "base": null,
+      "refs": {
+        "IdleSettings$LifecycleManagement": "<p>Indicates whether idle shutdown is activated for the application type.</p>"
       }
     },
     "LineageEntityParameters": {
@@ -11531,6 +11657,13 @@
         "MemberDefinition$OidcMemberDefinition": "<p>A list user groups that exist in your OIDC Identity Provider (IdP). One to ten groups can be used to create a single private work team. When you add a user group to the list of <code>Groups</code>, you can add that user group to one or more private work teams. If you add a user group to a private work team, all workers in that user group are added to the work team.</p>"
       }
     },
+    "OnStartDeepHealthChecks": {
+      "base": null,
+      "refs": {
+        "ClusterInstanceGroupDetails$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>",
+        "ClusterInstanceGroupSpecification$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>"
+      }
+    },
     "OnlineStoreConfig": {
       "base": "<p>Use this to specify the Amazon Web Services Key Management Service (KMS) Key ID, or <code>KMSKeyId</code>, for at rest data encryption. You can turn <code>OnlineStore</code> on or off by specifying the <code>EnableOnlineStore</code> flag at General Assembly.</p> <p>The default value is <code>False</code>.</p>",
       "refs": {
@@ -12475,7 +12608,7 @@
     "ProductionVariantInferenceAmiVersion": {
       "base": null,
       "refs": {
-        "ProductionVariant$InferenceAmiVersion": "<p>Specifies an option from a collection of preconfigured Amazon Machine Image (AMI) images. Each image is configured by Amazon Web Services with a set of software and driver versions. Amazon Web Services optimizes these configurations for different machine learning workloads.</p> <p>By selecting an AMI version, you can ensure that your inference environment is compatible with specific software requirements, such as CUDA driver versions, Linux kernel versions, or Amazon Web Services Neuron driver versions.</p>"
+        "ProductionVariant$InferenceAmiVersion": "<p>Specifies an option from a collection of preconfigured Amazon Machine Image (AMI) images. Each image is configured by Amazon Web Services with a set of software and driver versions. Amazon Web Services optimizes these configurations for different machine learning workloads.</p> <p>By selecting an AMI version, you can ensure that your inference environment is compatible with specific software requirements, such as CUDA driver versions, Linux kernel versions, or Amazon Web Services Neuron driver versions.</p> <p>The AMI version names, and their configurations, are the following:</p> <dl> <dt>al2-ami-sagemaker-inference-gpu-2</dt> <dd> <ul> <li> <p>Accelerator: GPU</p> </li> <li> <p>NVIDIA driver version: 535.54.03</p> </li> <li> <p>CUDA driver version: 12.2</p> </li> <li> <p>Supported instance types: ml.g4dn.*, ml.g5.*, ml.g6.*, ml.p3.*, ml.p4d.*, ml.p4de.*, ml.p5.*</p> </li> </ul> </dd> </dl>"
       }
     },
     "ProductionVariantInstanceType": {
@@ -13511,6 +13644,8 @@
         "DescribePipelineResponse$RoleArn": "<p>The Amazon Resource Name (ARN) that the pipeline uses to execute.</p>",
         "DescribeProcessingJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can assume to perform tasks on your behalf.</p>",
         "DescribeTrainingJobResponse$RoleArn": "<p>The Amazon Web Services Identity and Access Management (IAM) role configured for the training job. </p>",
+        "EmrServerlessComputeConfig$ExecutionRoleARN": "<p>The ARN of the IAM role granting the AutoML job V2 the necessary permissions access policies to list, connect to, or manage EMR Serverless jobs. For detailed information about the required permissions of this role, see \"How to configure AutoML to initiate a remote job on EMR Serverless for large datasets\" in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html\">Create a regression or classification job for tabular data using the AutoML API</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-create-experiment-timeseries-forecasting.html#timeseries-forecasting-api-optional-params\">Create an AutoML job for time-series forecasting using the API</a>.</p>",
+        "EmrServerlessSettings$ExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services IAM role that is assumed for running Amazon EMR Serverless jobs in SageMaker Canvas. This role should have the necessary permissions to read and write data attached and a trust relationship with EMR Serverless.</p>",
         "ExecutionRoleArns$member": null,
         "FeatureGroup$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM execution role used to create the feature group.</p>",
         "GenerativeAiSettings$AmazonBedrockRoleArn": "<p>The ARN of an Amazon Web Services IAM role that allows fine-tuning of large language models (LLMs) in Amazon Bedrock. The IAM role should have Amazon S3 read and write permissions, as well as a trust relationship that establishes <code>bedrock.amazonaws.com</code> as a service principal.</p>",
@@ -13615,7 +13750,8 @@
     "S3ModelUri": {
       "base": null,
       "refs": {
-        "S3ModelDataSource$S3Uri": "<p>Specifies the S3 path of ML model data to deploy.</p>"
+        "S3ModelDataSource$S3Uri": "<p>Specifies the S3 path of ML model data to deploy.</p>",
+        "S3ModelDataSource$ManifestS3Uri": "<p>The Amazon S3 URI of the manifest file. The manifest file is a CSV file that stores the artifact locations.</p>"
       }
     },
     "S3OutputPath": {
@@ -13642,7 +13778,7 @@
         "AdditionalS3DataSource$S3Uri": "<p>The uniform resource identifier (URI) used to identify an additional data source used in inference or training.</p>",
         "AthenaDatasetDefinition$OutputS3Uri": "<p>The location in Amazon S3 where Athena query results are stored.</p>",
         "AutoMLCandidateGenerationConfig$FeatureSpecificationS3Uri": "<p>A URL to the Amazon S3 data source containing selected features from the input data source to run an Autopilot job. You can input <code>FeatureAttributeNames</code> (optional) in JSON format as shown below: </p> <p> <code>{ \"FeatureAttributeNames\":[\"col1\", \"col2\", ...] }</code>.</p> <p>You can also specify the data type of the feature (optional) in the format shown below:</p> <p> <code>{ \"FeatureDataTypes\":{\"col1\":\"numeric\", \"col2\":\"categorical\" ... } }</code> </p> <note> <p>These column keys may not include the target column.</p> </note> <p>In ensembling mode, Autopilot only supports the following data types: <code>numeric</code>, <code>categorical</code>, <code>text</code>, and <code>datetime</code>. In HPO mode, Autopilot can support <code>numeric</code>, <code>categorical</code>, <code>text</code>, <code>datetime</code>, and <code>sequence</code>.</p> <p>If only <code>FeatureDataTypes</code> is provided, the column keys (<code>col1</code>, <code>col2</code>,..) should be a subset of the column names in the input data. </p> <p>If both <code>FeatureDataTypes</code> and <code>FeatureAttributeNames</code> are provided, then the column keys should be a subset of the column names provided in <code>FeatureAttributeNames</code>. </p> <p>The key name <code>FeatureAttributeNames</code> is fixed. The values listed in <code>[\"col1\", \"col2\", ...]</code> are case sensitive and should be a list of strings containing unique values that are a subset of the column names in the input data. The list of columns provided must not include the target column.</p>",
-        "AutoMLOutputDataConfig$S3OutputPath": "<p>The Amazon S3 output path. Must be 128 characters or less.</p>",
+        "AutoMLOutputDataConfig$S3OutputPath": "<p>The Amazon S3 output path. Must be 512 characters or less.</p>",
         "AutoMLS3DataSource$S3Uri": "<p>The URL to the Amazon S3 data source. The Uri refers to the Amazon S3 prefix or ManifestFile depending on the data type.</p>",
         "BatchDataCaptureConfig$DestinationS3Uri": "<p>The Amazon S3 location being used to capture the data.</p>",
         "CheckpointConfig$S3Uri": "<p>Identifies the S3 path where you want SageMaker to store checkpoints. For example, <code>s3://bucket-name/key-name-prefix</code>.</p>",
@@ -13701,6 +13837,12 @@
         "UiConfig$UiTemplateS3Uri": "<p>The Amazon S3 bucket location of the UI template, or worker task template. This is the template used to render the worker UI and tools for labeling job tasks. For more information about the contents of a UI template, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-custom-templates-step2.html\"> Creating Your Custom Labeling Task Template</a>.</p>",
         "UpdateMlflowTrackingServerRequest$ArtifactStoreUri": "<p>The new S3 URI for the general purpose bucket to use as the artifact store for the MLflow Tracking Server.</p>",
         "WorkspaceSettings$S3ArtifactPath": "<p>The Amazon S3 bucket used to store artifacts generated by Canvas. Updating the Amazon S3 location impacts existing configuration settings, and Canvas users no longer have access to their artifacts. Canvas users must log out and log back in to apply the new location.</p>"
+      }
+    },
+    "SageMakerImageName": {
+      "base": null,
+      "refs": {
+        "HiddenSageMakerImage$SageMakerImageName": "<p> The SageMaker image name that you are hiding from the Studio user interface. </p>"
       }
     },
     "SageMakerImageVersionAlias": {
@@ -14261,6 +14403,13 @@
         "ListContextsRequest$SourceUri": "<p>A filter that returns only contexts with the specified source URI.</p>"
       }
     },
+    "SpaceAppLifecycleManagement": {
+      "base": "<p>Settings that are used to configure and manage the lifecycle of Amazon SageMaker Studio applications in a space.</p>",
+      "refs": {
+        "SpaceCodeEditorAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of CodeEditor applications in a space.</p>",
+        "SpaceJupyterLabAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of JupyterLab applications in a space.</p>"
+      }
+    },
     "SpaceArn": {
       "base": null,
       "refs": {
@@ -14287,6 +14436,12 @@
         "DefaultEbsStorageSettings$DefaultEbsVolumeSizeInGb": "<p>The default size of the EBS storage volume for a space.</p>",
         "DefaultEbsStorageSettings$MaximumEbsVolumeSizeInGb": "<p>The maximum size of the EBS storage volume for a space.</p>",
         "EbsStorageSettings$EbsVolumeSizeInGb": "<p>The size of an EBS storage volume for a space.</p>"
+      }
+    },
+    "SpaceIdleSettings": {
+      "base": "<p>Settings related to idle shutdown of Studio applications in a space.</p>",
+      "refs": {
+        "SpaceAppLifecycleManagement$IdleSettings": "<p>Settings related to idle shutdown of Studio applications.</p>"
       }
     },
     "SpaceJupyterLabAppSettings": {
@@ -16048,7 +16203,7 @@
     "TransformEnvironmentMap": {
       "base": null,
       "refs": {
-        "CreateTransformJobRequest$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>",
+        "CreateTransformJobRequest$Environment": "<p>The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables. We support up to 16 key and values entries in the map.</p>",
         "DescribeTransformJobResponse$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>",
         "TransformJob$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>",
         "TransformJobDefinition$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>"
@@ -17045,6 +17200,12 @@
         "CreateImageVersionRequest$VendorGuidance": "<p>The stability of the image version, specified by the maintainer.</p> <ul> <li> <p> <code>NOT_PROVIDED</code>: The maintainers did not provide a status for image version stability.</p> </li> <li> <p> <code>STABLE</code>: The image version is stable.</p> </li> <li> <p> <code>TO_BE_ARCHIVED</code>: The image version is set to be archived. Custom image versions that are set to be archived are automatically archived after three months.</p> </li> <li> <p> <code>ARCHIVED</code>: The image version is archived. Archived image versions are not searchable and are no longer actively supported. </p> </li> </ul>",
         "DescribeImageVersionResponse$VendorGuidance": "<p>The stability of the image version specified by the maintainer.</p> <ul> <li> <p> <code>NOT_PROVIDED</code>: The maintainers did not provide a status for image version stability.</p> </li> <li> <p> <code>STABLE</code>: The image version is stable.</p> </li> <li> <p> <code>TO_BE_ARCHIVED</code>: The image version is set to be archived. Custom image versions that are set to be archived are automatically archived after three months.</p> </li> <li> <p> <code>ARCHIVED</code>: The image version is archived. Archived image versions are not searchable and are no longer actively supported. </p> </li> </ul>",
         "UpdateImageVersionRequest$VendorGuidance": "<p>The availability of the image version specified by the maintainer.</p> <ul> <li> <p> <code>NOT_PROVIDED</code>: The maintainers did not provide a status for image version stability.</p> </li> <li> <p> <code>STABLE</code>: The image version is stable.</p> </li> <li> <p> <code>TO_BE_ARCHIVED</code>: The image version is set to be archived. Custom image versions that are set to be archived are automatically archived after three months.</p> </li> <li> <p> <code>ARCHIVED</code>: The image version is archived. Archived image versions are not searchable and are no longer actively supported. </p> </li> </ul>"
+      }
+    },
+    "VersionAliasesList": {
+      "base": null,
+      "refs": {
+        "HiddenSageMakerImage$VersionAliases": "<p> The version aliases you are hiding from the Studio user interface. </p>"
       }
     },
     "VersionId": {

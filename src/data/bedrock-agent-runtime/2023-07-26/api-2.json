@@ -5,11 +5,13 @@
     "endpointPrefix":"bedrock-agent-runtime",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Agents for Amazon Bedrock Runtime",
     "serviceId":"Bedrock Agent Runtime",
     "signatureVersion":"v4",
     "signingName":"bedrock",
-    "uid":"bedrock-agent-runtime-2023-07-26"
+    "uid":"bedrock-agent-runtime-2023-07-26",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DeleteAgentMemory":{
@@ -179,6 +181,14 @@
       "type":"string",
       "sensitive":true
     },
+    "ActionInvocationType":{
+      "type":"string",
+      "enum":[
+        "RESULT",
+        "USER_CONFIRMATION",
+        "USER_CONFIRMATION_AND_RESULT"
+      ]
+    },
     "AdditionalModelRequestFields":{
       "type":"map",
       "key":{"shape":"AdditionalModelRequestFieldsKey"},
@@ -223,6 +233,7 @@
       "required":["actionGroup"],
       "members":{
         "actionGroup":{"shape":"String"},
+        "actionInvocationType":{"shape":"ActionInvocationType"},
         "apiPath":{"shape":"ApiPath"},
         "httpMethod":{"shape":"String"},
         "parameters":{"shape":"ApiParameters"},
@@ -257,6 +268,7 @@
       "members":{
         "actionGroup":{"shape":"String"},
         "apiPath":{"shape":"ApiPath"},
+        "confirmationState":{"shape":"ConfirmationState"},
         "httpMethod":{"shape":"String"},
         "httpStatusCode":{"shape":"Integer"},
         "responseBody":{"shape":"ResponseBody"},
@@ -281,9 +293,9 @@
     },
     "BedrockModelArn":{
       "type":"string",
-      "max":1011,
-      "min":20,
-      "pattern":"^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}))$"
+      "max":2048,
+      "min":1,
+      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))))|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):inference-profile/[a-zA-Z0-9-:.]+)|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)$"
     },
     "Boolean":{
       "type":"boolean",
@@ -345,6 +357,13 @@
         "executionTimeout":{"shape":"Boolean"},
         "files":{"shape":"Files"}
       }
+    },
+    "ConfirmationState":{
+      "type":"string",
+      "enum":[
+        "CONFIRM",
+        "DENY"
+      ]
     },
     "ConflictException":{
       "type":"structure",
@@ -668,6 +687,7 @@
       "required":["actionGroup"],
       "members":{
         "actionGroup":{"shape":"String"},
+        "actionInvocationType":{"shape":"ActionInvocationType"},
         "function":{"shape":"String"},
         "parameters":{"shape":"FunctionParameters"}
       }
@@ -689,6 +709,7 @@
       "required":["actionGroup"],
       "members":{
         "actionGroup":{"shape":"String"},
+        "confirmationState":{"shape":"ConfirmationState"},
         "function":{"shape":"String"},
         "responseBody":{"shape":"ResponseBody"},
         "responseState":{"shape":"ResponseState"}
@@ -1703,7 +1724,6 @@
     "RetrievalFilterList":{
       "type":"list",
       "member":{"shape":"RetrievalFilter"},
-      "max":5,
       "min":2
     },
     "RetrievalResultConfluenceLocation":{

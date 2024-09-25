@@ -5,6 +5,7 @@
     "endpointPrefix":"redshift-data",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Redshift Data API Service",
     "serviceId":"Redshift Data",
     "signatureVersion":"v4",
@@ -23,8 +24,10 @@
       "output":{"shape":"BatchExecuteStatementOutput"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"ActiveSessionsExceededException"},
         {"shape":"ActiveStatementsExceededException"},
-        {"shape":"BatchExecuteStatementException"}
+        {"shape":"BatchExecuteStatementException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "CancelStatement":{
@@ -66,6 +69,7 @@
       "output":{"shape":"DescribeTableResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"QueryTimeoutException"},
         {"shape":"InternalServerException"},
         {"shape":"DatabaseConnectionException"}
       ]
@@ -80,8 +84,10 @@
       "output":{"shape":"ExecuteStatementOutput"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"ActiveSessionsExceededException"},
         {"shape":"ExecuteStatementException"},
-        {"shape":"ActiveStatementsExceededException"}
+        {"shape":"ActiveStatementsExceededException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "GetStatementResult":{
@@ -108,6 +114,7 @@
       "output":{"shape":"ListDatabasesResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"QueryTimeoutException"},
         {"shape":"InternalServerException"},
         {"shape":"DatabaseConnectionException"}
       ]
@@ -122,6 +129,7 @@
       "output":{"shape":"ListSchemasResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"QueryTimeoutException"},
         {"shape":"InternalServerException"},
         {"shape":"DatabaseConnectionException"}
       ]
@@ -149,12 +157,20 @@
       "output":{"shape":"ListTablesResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"QueryTimeoutException"},
         {"shape":"InternalServerException"},
         {"shape":"DatabaseConnectionException"}
       ]
     }
   },
   "shapes":{
+    "ActiveSessionsExceededException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "ActiveStatementsExceededException":{
       "type":"structure",
       "members":{
@@ -177,19 +193,18 @@
     },
     "BatchExecuteStatementInput":{
       "type":"structure",
-      "required":[
-        "Database",
-        "Sqls"
-      ],
+      "required":["Sqls"],
       "members":{
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "ClusterIdentifier":{"shape":"Location"},
+        "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
         "SecretArn":{"shape":"SecretArn"},
+        "SessionId":{"shape":"UUID"},
+        "SessionKeepAliveSeconds":{"shape":"SessionAliveSeconds"},
         "Sqls":{"shape":"SqlList"},
         "StatementName":{"shape":"StatementNameString"},
         "WithEvent":{"shape":"Boolean"},
@@ -199,12 +214,14 @@
     "BatchExecuteStatementOutput":{
       "type":"structure",
       "members":{
-        "ClusterIdentifier":{"shape":"Location"},
+        "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
         "CreatedAt":{"shape":"Timestamp"},
         "Database":{"shape":"String"},
+        "DbGroups":{"shape":"DbGroupList"},
         "DbUser":{"shape":"String"},
-        "Id":{"shape":"StatementId"},
+        "Id":{"shape":"UUID"},
         "SecretArn":{"shape":"SecretArn"},
+        "SessionId":{"shape":"UUID"},
         "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
@@ -229,7 +246,7 @@
       "type":"structure",
       "required":["Id"],
       "members":{
-        "Id":{"shape":"StatementId"}
+        "Id":{"shape":"UUID"}
       }
     },
     "CancelStatementResponse":{
@@ -242,6 +259,12 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "ClusterIdentifierString":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"^[a-z]([a-z0-9]|-[a-z0-9])*$"
     },
     "ColumnList":{
       "type":"list",
@@ -282,11 +305,15 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "DbGroupList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "DescribeStatementRequest":{
       "type":"structure",
       "required":["Id"],
       "members":{
-        "Id":{"shape":"StatementId"}
+        "Id":{"shape":"UUID"}
       }
     },
     "DescribeStatementResponse":{
@@ -300,7 +327,7 @@
         "Duration":{"shape":"Long"},
         "Error":{"shape":"String"},
         "HasResultSet":{"shape":"Boolean"},
-        "Id":{"shape":"StatementId"},
+        "Id":{"shape":"UUID"},
         "QueryParameters":{"shape":"SqlParametersList"},
         "QueryString":{"shape":"StatementString"},
         "RedshiftPid":{"shape":"Long"},
@@ -308,6 +335,7 @@
         "ResultRows":{"shape":"Long"},
         "ResultSize":{"shape":"Long"},
         "SecretArn":{"shape":"SecretArn"},
+        "SessionId":{"shape":"String"},
         "Status":{"shape":"StatusString"},
         "SubStatements":{"shape":"SubStatementList"},
         "UpdatedAt":{"shape":"Timestamp"},
@@ -318,7 +346,7 @@
       "type":"structure",
       "required":["Database"],
       "members":{
-        "ClusterIdentifier":{"shape":"Location"},
+        "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
         "ConnectedDatabase":{"shape":"String"},
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
@@ -353,20 +381,19 @@
     },
     "ExecuteStatementInput":{
       "type":"structure",
-      "required":[
-        "Database",
-        "Sql"
-      ],
+      "required":["Sql"],
       "members":{
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "ClusterIdentifier":{"shape":"Location"},
+        "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
         "Parameters":{"shape":"SqlParametersList"},
         "SecretArn":{"shape":"SecretArn"},
+        "SessionId":{"shape":"UUID"},
+        "SessionKeepAliveSeconds":{"shape":"SessionAliveSeconds"},
         "Sql":{"shape":"StatementString"},
         "StatementName":{"shape":"StatementNameString"},
         "WithEvent":{"shape":"Boolean"},
@@ -376,12 +403,14 @@
     "ExecuteStatementOutput":{
       "type":"structure",
       "members":{
-        "ClusterIdentifier":{"shape":"Location"},
+        "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
         "CreatedAt":{"shape":"Timestamp"},
         "Database":{"shape":"String"},
+        "DbGroups":{"shape":"DbGroupList"},
         "DbUser":{"shape":"String"},
-        "Id":{"shape":"StatementId"},
+        "Id":{"shape":"UUID"},
         "SecretArn":{"shape":"SecretArn"},
+        "SessionId":{"shape":"UUID"},
         "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
@@ -405,7 +434,7 @@
       "type":"structure",
       "required":["Id"],
       "members":{
-        "Id":{"shape":"StatementId"},
+        "Id":{"shape":"UUID"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -433,7 +462,7 @@
       "type":"structure",
       "required":["Database"],
       "members":{
-        "ClusterIdentifier":{"shape":"Location"},
+        "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
         "MaxResults":{"shape":"PageSize"},
@@ -453,7 +482,7 @@
       "type":"structure",
       "required":["Database"],
       "members":{
-        "ClusterIdentifier":{"shape":"Location"},
+        "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
         "ConnectedDatabase":{"shape":"String"},
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
@@ -498,7 +527,7 @@
       "type":"structure",
       "required":["Database"],
       "members":{
-        "ClusterIdentifier":{"shape":"Location"},
+        "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
         "ConnectedDatabase":{"shape":"String"},
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
@@ -517,7 +546,6 @@
         "Tables":{"shape":"TableList"}
       }
     },
-    "Location":{"type":"string"},
     "Long":{"type":"long"},
     "PageSize":{
       "type":"integer",
@@ -531,6 +559,13 @@
     "ParameterValue":{
       "type":"string",
       "min":1
+    },
+    "QueryTimeoutException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -549,6 +584,12 @@
       "member":{"shape":"String"}
     },
     "SecretArn":{"type":"string"},
+    "SessionAliveSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":86400,
+      "min":0
+    },
     "SqlList":{
       "type":"list",
       "member":{"shape":"StatementString"},
@@ -580,20 +621,17 @@
       "required":["Id"],
       "members":{
         "CreatedAt":{"shape":"Timestamp"},
-        "Id":{"shape":"StatementId"},
+        "Id":{"shape":"UUID"},
         "IsBatchStatement":{"shape":"Boolean"},
         "QueryParameters":{"shape":"SqlParametersList"},
         "QueryString":{"shape":"StatementString"},
         "QueryStrings":{"shape":"StatementStringList"},
         "SecretArn":{"shape":"SecretArn"},
+        "SessionId":{"shape":"UUID"},
         "StatementName":{"shape":"StatementNameString"},
         "Status":{"shape":"StatusString"},
         "UpdatedAt":{"shape":"Timestamp"}
       }
-    },
-    "StatementId":{
-      "type":"string",
-      "pattern":"^[a-z0-9]{8}(-[a-z0-9]{4}){3}-[a-z0-9]{12}(:\\d+)?$"
     },
     "StatementList":{
       "type":"list",
@@ -641,7 +679,7 @@
         "Duration":{"shape":"Long"},
         "Error":{"shape":"String"},
         "HasResultSet":{"shape":"Boolean"},
-        "Id":{"shape":"StatementId"},
+        "Id":{"shape":"UUID"},
         "QueryString":{"shape":"StatementString"},
         "RedshiftQueryId":{"shape":"Long"},
         "ResultRows":{"shape":"Long"},
@@ -667,6 +705,10 @@
       }
     },
     "Timestamp":{"type":"timestamp"},
+    "UUID":{
+      "type":"string",
+      "pattern":"^[a-z0-9]{8}(-[a-z0-9]{4}){3}-[a-z0-9]{12}(:\\d+)?$"
+    },
     "ValidationException":{
       "type":"structure",
       "members":{

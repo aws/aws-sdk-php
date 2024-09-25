@@ -767,7 +767,8 @@
     "IdentityProviderToken":{
       "type":"string",
       "max":50000,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "IdentityProviders":{
       "type":"map",
@@ -944,7 +945,10 @@
       "type":"list",
       "member":{"shape":"ARNString"}
     },
-    "OIDCToken":{"type":"string"},
+    "OIDCToken":{
+      "type":"string",
+      "sensitive":true
+    },
     "PaginationKey":{
       "type":"string",
       "max":65535,
@@ -1031,7 +1035,10 @@
       "type":"list",
       "member":{"shape":"ARNString"}
     },
-    "SecretKeyString":{"type":"string"},
+    "SecretKeyString":{
+      "type":"string",
+      "sensitive":true
+    },
     "SessionTokenString":{"type":"string"},
     "SetIdentityPoolRolesInput":{
       "type":"structure",

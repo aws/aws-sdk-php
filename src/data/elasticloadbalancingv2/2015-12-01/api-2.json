@@ -323,6 +323,21 @@
         "resultWrapper":"DescribeAccountLimitsResult"
       }
     },
+    "DescribeListenerAttributes":{
+      "name":"DescribeListenerAttributes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeListenerAttributesInput"},
+      "output":{
+        "shape":"DescribeListenerAttributesOutput",
+        "resultWrapper":"DescribeListenerAttributesResult"
+      },
+      "errors":[
+        {"shape":"ListenerNotFoundException"}
+      ]
+    },
     "DescribeListenerCertificates":{
       "name":"DescribeListenerCertificates",
       "http":{
@@ -607,6 +622,22 @@
         {"shape":"ALPNPolicyNotSupportedException"},
         {"shape":"TrustStoreNotFoundException"},
         {"shape":"TrustStoreNotReadyException"}
+      ]
+    },
+    "ModifyListenerAttributes":{
+      "name":"ModifyListenerAttributes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyListenerAttributesInput"},
+      "output":{
+        "shape":"ModifyListenerAttributesOutput",
+        "resultWrapper":"ModifyListenerAttributesResult"
+      },
+      "errors":[
+        {"shape":"ListenerNotFoundException"},
+        {"shape":"InvalidConfigurationRequestException"}
       ]
     },
     "ModifyLoadBalancerAttributes":{
@@ -1370,6 +1401,19 @@
         "NextMarker":{"shape":"Marker"}
       }
     },
+    "DescribeListenerAttributesInput":{
+      "type":"structure",
+      "required":["ListenerArn"],
+      "members":{
+        "ListenerArn":{"shape":"ListenerArn"}
+      }
+    },
+    "DescribeListenerAttributesOutput":{
+      "type":"structure",
+      "members":{
+        "Attributes":{"shape":"ListenerAttributes"}
+      }
+    },
     "DescribeListenerCertificatesInput":{
       "type":"structure",
       "required":["ListenerArn"],
@@ -1925,6 +1969,23 @@
       "type":"list",
       "member":{"shape":"ListenerArn"}
     },
+    "ListenerAttribute":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"ListenerAttributeKey"},
+        "Value":{"shape":"ListenerAttributeValue"}
+      }
+    },
+    "ListenerAttributeKey":{
+      "type":"string",
+      "max":256,
+      "pattern":"^[a-zA-Z0-9._]+$"
+    },
+    "ListenerAttributeValue":{"type":"string"},
+    "ListenerAttributes":{
+      "type":"list",
+      "member":{"shape":"ListenerAttribute"}
+    },
     "ListenerNotFoundException":{
       "type":"structure",
       "members":{
@@ -2067,6 +2128,23 @@
       ]
     },
     "Mode":{"type":"string"},
+    "ModifyListenerAttributesInput":{
+      "type":"structure",
+      "required":[
+        "ListenerArn",
+        "Attributes"
+      ],
+      "members":{
+        "ListenerArn":{"shape":"ListenerArn"},
+        "Attributes":{"shape":"ListenerAttributes"}
+      }
+    },
+    "ModifyListenerAttributesOutput":{
+      "type":"structure",
+      "members":{
+        "Attributes":{"shape":"ListenerAttributes"}
+      }
+    },
     "ModifyListenerInput":{
       "type":"structure",
       "required":["ListenerArn"],

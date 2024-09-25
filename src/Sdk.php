@@ -166,8 +166,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCodeGuruSecurity(array $args = [])
  * @method \Aws\CodePipeline\CodePipelineClient createCodePipeline(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCodePipeline(array $args = [])
- * @method \Aws\CodeStar\CodeStarClient createCodeStar(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionCodeStar(array $args = [])
  * @method \Aws\CodeStarNotifications\CodeStarNotificationsClient createCodeStarNotifications(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCodeStarNotifications(array $args = [])
  * @method \Aws\CodeStarconnections\CodeStarconnectionsClient createCodeStarconnections(array $args = [])
@@ -236,6 +234,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionDirectConnect(array $args = [])
  * @method \Aws\DirectoryService\DirectoryServiceClient createDirectoryService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDirectoryService(array $args = [])
+ * @method \Aws\DirectoryServiceData\DirectoryServiceDataClient createDirectoryServiceData(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionDirectoryServiceData(array $args = [])
  * @method \Aws\DocDB\DocDBClient createDocDB(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDocDB(array $args = [])
  * @method \Aws\DocDBElastic\DocDBElasticClient createDocDBElastic(array $args = [])
@@ -528,6 +528,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionOrganizations(array $args = [])
  * @method \Aws\Outposts\OutpostsClient createOutposts(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOutposts(array $args = [])
+ * @method \Aws\PCS\PCSClient createPCS(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPCS(array $args = [])
  * @method \Aws\PI\PIClient createPI(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPI(array $args = [])
  * @method \Aws\Panorama\PanoramaClient createPanorama(array $args = [])
@@ -777,7 +779,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.319.1';
+    const VERSION = '3.322.4';
 
     /** @var array Arguments for creating clients */
     private $args;

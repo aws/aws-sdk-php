@@ -64,7 +64,7 @@
   },
   "shapes": {
     "AccessDeniedException": {
-      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "base": "<p>You do not have sufficient access to perform this action.</p> <p> For <code>Enable</code>, you receive this error if you attempt to use a feature in an unsupported Amazon Web Services Region. </p>",
       "refs": {
       }
     },
@@ -2474,8 +2474,12 @@
     "Long": {
       "base": null,
       "refs": {
+        "AccountAggregationResponse$exploitAvailableCount": "<p> The number of findings that have an exploit available. </p>",
+        "AccountAggregationResponse$fixAvailableCount": "<p> Details about the number of fixes. </p>",
         "AmiAggregationResponse$affectedInstances": "<p>The IDs of Amazon EC2 instances using this AMI.</p>",
         "Ec2InstanceAggregationResponse$networkFindings": "<p>The number of network findings for the Amazon EC2 instance.</p>",
+        "FindingTypeAggregationResponse$exploitAvailableCount": "<p>The number of findings that have an exploit available.</p>",
+        "FindingTypeAggregationResponse$fixAvailableCount": "<p> Details about the number of fixes. </p>",
         "ListCoverageStatisticsResponse$totalCounts": "<p>The total number for all groups.</p>",
         "RepositoryAggregationResponse$affectedImages": "<p>The number of container images impacted by the findings.</p>",
         "SeverityCounts$all": "<p>The total count of findings from all severities.</p>",
@@ -2697,7 +2701,6 @@
         "StringList$member": null,
         "TagFilter$key": "<p>The tag filter key.</p>",
         "TagFilter$value": "<p>The tag filter value.</p>",
-        "TargetResourceTags$key": null,
         "TitleAggregationResponse$title": "<p>The title that the findings were aggregated on.</p>",
         "UpdateEc2DeepInspectionConfigurationResponse$errorMessage": "<p>An error message explaining why new Amazon Inspector deep inspection custom paths could not be added.</p>",
         "Vulnerability$id": "<p>The ID for the specific vulnerability.</p>"
@@ -3462,7 +3465,6 @@
         "ServiceQuotaExceededException$message": null,
         "ServiceQuotaExceededException$resourceId": "<p>The ID of the resource that exceeds a service quota.</p>",
         "TagList$member": null,
-        "TagValueList$member": null,
         "ThrottlingException$message": null,
         "TitleAggregationResponse$vulnerabilityId": "<p>The vulnerability ID of the finding.</p>",
         "ValidationException$message": null,
@@ -3682,6 +3684,18 @@
         "CisTargets$targetResourceTags": "<p>The CIS target resource tags.</p>",
         "CreateCisTargets$targetResourceTags": "<p>The CIS target resource tags.</p>",
         "UpdateCisTargets$targetResourceTags": "<p>The target resource tags.</p>"
+      }
+    },
+    "TargetResourceTagsKey": {
+      "base": null,
+      "refs": {
+        "TargetResourceTags$key": null
+      }
+    },
+    "TargetResourceTagsValue": {
+      "base": null,
+      "refs": {
+        "TagValueList$member": null
       }
     },
     "TargetStatusFilterList": {

@@ -5,6 +5,7 @@
     "AcceptCertificateTransfer": "<p>Accepts a pending certificate transfer. The default state of the certificate is INACTIVE.</p> <p>To check for pending certificate transfers, call <a>ListCertificates</a> to enumerate your certificates.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AcceptCertificateTransfer</a> action.</p>",
     "AddThingToBillingGroup": "<p>Adds a thing to a billing group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AddThingToBillingGroup</a> action.</p>",
     "AddThingToThingGroup": "<p>Adds a thing to a thing group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AddThingToThingGroup</a> action.</p>",
+    "AssociateSbomWithPackageVersion": "<p>Associates a software bill of materials (SBOM) with a specific software package version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AssociateSbomWithPackageVersion</a> action.</p>",
     "AssociateTargetsWithJob": "<p>Associates a group with a continuous job. The following criteria must be met: </p> <ul> <li> <p>The job must have been created with the <code>targetSelection</code> field set to \"CONTINUOUS\".</p> </li> <li> <p>The job status must currently be \"IN_PROGRESS\".</p> </li> <li> <p>The total number of targets associated with a job must not exceed 100.</p> </li> </ul> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AssociateTargetsWithJob</a> action.</p>",
     "AttachPolicy": "<p>Attaches the specified policy to the specified principal (certificate or other credential).</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AttachPolicy</a> action.</p>",
     "AttachPrincipalPolicy": "<p>Attaches the specified policy to the specified principal (certificate or other credential).</p> <p> <b>Note:</b> This action is deprecated and works as expected for backward compatibility, but we won't add enhancements. Use <a>AttachPolicy</a> instead.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AttachPrincipalPolicy</a> action.</p>",
@@ -123,6 +124,7 @@
     "DetachSecurityProfile": "<p>Disassociates a Device Defender security profile from a thing group or from this account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DetachSecurityProfile</a> action.</p>",
     "DetachThingPrincipal": "<p>Detaches the specified principal from the specified thing. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities.</p> <note> <p>This call is asynchronous. It might take several seconds for the detachment to propagate.</p> </note> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DetachThingPrincipal</a> action.</p>",
     "DisableTopicRule": "<p>Disables the rule.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DisableTopicRule</a> action.</p>",
+    "DisassociateSbomFromPackageVersion": "<p>Disassociates a software bill of materials (SBOM) from a specific software package version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DisassociateSbomWithPackageVersion</a> action.</p>",
     "EnableTopicRule": "<p>Enables the rule.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">EnableTopicRule</a> action.</p>",
     "GetBehaviorModelTrainingSummaries": "<p> Returns a Device Defender's ML Detect Security Profile training model's status. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetBehaviorModelTrainingSummaries</a> action.</p>",
     "GetBucketsAggregation": "<p>Aggregates on indexed data with search queries pertaining to particular fields. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetBucketsAggregation</a> action.</p>",
@@ -183,6 +185,7 @@
     "ListProvisioningTemplates": "<p>Lists the provisioning templates in your Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListProvisioningTemplates</a> action.</p>",
     "ListRelatedResourcesForAuditFinding": "<p>The related resources of an Audit finding. The following resources can be returned from calling this API:</p> <ul> <li> <p>DEVICE_CERTIFICATE</p> </li> <li> <p>CA_CERTIFICATE</p> </li> <li> <p>IOT_POLICY</p> </li> <li> <p>COGNITO_IDENTITY_POOL</p> </li> <li> <p>CLIENT_ID</p> </li> <li> <p>ACCOUNT_SETTINGS</p> </li> <li> <p>ROLE_ALIAS</p> </li> <li> <p>IAM_ROLE</p> </li> <li> <p>ISSUER_CERTIFICATE</p> </li> </ul> <note> <p>This API is similar to DescribeAuditFinding's <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html\">RelatedResources</a> but provides pagination and is not limited to 10 resources. When calling <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html\">DescribeAuditFinding</a> for the intermediate CA revoked for active device certificates check, RelatedResources will not be populated. You must use this API, ListRelatedResourcesForAuditFinding, to list the certificates.</p> </note>",
     "ListRoleAliases": "<p>Lists the role aliases registered in your account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListRoleAliases</a> action.</p>",
+    "ListSbomValidationResults": "<p>The validation results for all software bill of materials (SBOM) attached to a specific software package version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListSbomValidationResults</a> action.</p>",
     "ListScheduledAudits": "<p>Lists all of your scheduled audits.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListScheduledAudits</a> action.</p>",
     "ListSecurityProfiles": "<p>Lists the Device Defender security profiles you've created. You can filter security profiles by dimension or custom metric.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListSecurityProfiles</a> action.</p> <note> <p> <code>dimensionName</code> and <code>metricName</code> cannot be used in the same request.</p> </note>",
     "ListSecurityProfilesForTarget": "<p>Lists the Device Defender security profiles attached to a target (thing group).</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListSecurityProfilesForTarget</a> action.</p>",
@@ -590,6 +593,16 @@
       "base": "<p>Contains an asset property value (of a single type).</p>",
       "refs": {
         "AssetPropertyValue$value": "<p>The value of the asset property.</p>"
+      }
+    },
+    "AssociateSbomWithPackageVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateSbomWithPackageVersionResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "AssociateTargetsWithJobRequest": {
@@ -1199,6 +1212,13 @@
         "IotEventsAction$batchMode": "<p>Whether to process the event actions as a batch. The default value is <code>false</code>.</p> <p>When <code>batchMode</code> is <code>true</code>, you can't specify a <code>messageId</code>. </p> <p>When <code>batchMode</code> is <code>true</code> and the rule SQL statement evaluates to an Array, each Array element is treated as a separate message when it's sent to IoT Events by calling <a href=\"https://docs.aws.amazon.com/iotevents/latest/apireference/API_iotevents-data_BatchPutMessage.html\"> <code>BatchPutMessage</code> </a>. The resulting array can't have more than 10 messages.</p>"
       }
     },
+    "BeforeSubstitutionFlag": {
+      "base": null,
+      "refs": {
+        "DescribeJobRequest$beforeSubstitution": "<p>A flag that provides a view of the job document before and after the substitution parameters have been resolved with their exact values.</p>",
+        "GetJobDocumentRequest$beforeSubstitution": "<p>A flag that provides a view of the job document before and after the substitution parameters have been resolved with their exact values.</p>"
+      }
+    },
     "Behavior": {
       "base": "<p>A Device Defender security profile behavior.</p>",
       "refs": {
@@ -1734,11 +1754,13 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "AssociateSbomWithPackageVersionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "CreateCertificateProviderRequest$clientToken": "<p>A string that you can optionally pass in the <code>CreateCertificateProvider</code> request to make sure the request is idempotent.</p>",
         "CreatePackageRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "CreatePackageVersionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeletePackageRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeletePackageVersionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
+        "DisassociateSbomFromPackageVersionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdatePackageConfigurationRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdatePackageRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdatePackageVersionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>"
@@ -3288,6 +3310,16 @@
       "refs": {
       }
     },
+    "DisassociateSbomFromPackageVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateSbomFromPackageVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisconnectReason": {
       "base": null,
       "refs": {
@@ -3461,7 +3493,7 @@
     "EnableOCSPCheck": {
       "base": null,
       "refs": {
-        "ServerCertificateConfig$enableOCSPCheck": "<p>A Boolean value that indicates whether Online Certificate Status Protocol (OCSP) server certificate check is enabled or not.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-domain-ocsp-config.html\">Configuring OCSP server-certificate stapling in domain configuration</a> from Amazon Web Services IoT Core Developer Guide.</p>"
+        "ServerCertificateConfig$enableOCSPCheck": "<p>A Boolean value that indicates whether Online Certificate Status Protocol (OCSP) server certificate check is enabled or not.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-endpoints-cert-config.html\">Configuring OCSP server-certificate stapling in domain configuration</a> from Amazon Web Services IoT Core Developer Guide.</p>"
       }
     },
     "EnableTopicRuleRequest": {
@@ -3673,7 +3705,8 @@
     "FileName": {
       "base": null,
       "refs": {
-        "OTAUpdateFile$fileName": "<p>The name of the file.</p>"
+        "OTAUpdateFile$fileName": "<p>The name of the file.</p>",
+        "SbomValidationResultSummary$fileName": "<p>The name of the SBOM file.</p>"
       }
     },
     "FileType": {
@@ -5079,6 +5112,16 @@
       "refs": {
       }
     },
+    "ListSbomValidationResultsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSbomValidationResultsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListScheduledAuditsRequest": {
       "base": null,
       "refs": {
@@ -5841,6 +5884,8 @@
         "ListProvisioningTemplatesResponse$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListRelatedResourcesForAuditFindingRequest$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
         "ListRelatedResourcesForAuditFindingResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> for the first API call.</p>",
+        "ListSbomValidationResultsRequest$nextToken": "<p>A token that can be used to retrieve the next set of results, or null if there are no additional results.</p>",
+        "ListSbomValidationResultsResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or null if there are no additional results.</p>",
         "ListScheduledAuditsRequest$nextToken": "<p>The token for the next set of results.</p>",
         "ListScheduledAuditsResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
         "ListSecurityProfilesForTargetRequest$nextToken": "<p>The token for the next set of results.</p>",
@@ -6076,23 +6121,28 @@
       "base": null,
       "refs": {
         "ListPackageVersionsRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
-        "ListPackagesRequest$maxResults": "<p>The maximum number of results returned at one time.</p>"
+        "ListPackagesRequest$maxResults": "<p>The maximum number of results returned at one time.</p>",
+        "ListSbomValidationResultsRequest$maxResults": "<p>The maximum number of results to return at one time.</p>"
       }
     },
     "PackageName": {
       "base": null,
       "refs": {
+        "AssociateSbomWithPackageVersionRequest$packageName": "<p>The name of the new software package.</p>",
+        "AssociateSbomWithPackageVersionResponse$packageName": "<p>The name of the new software package.</p>",
         "CreatePackageRequest$packageName": "<p>The name of the new software package.</p>",
         "CreatePackageResponse$packageName": "<p>The name of the software package.</p>",
         "CreatePackageVersionRequest$packageName": "<p>The name of the associated software package.</p>",
         "CreatePackageVersionResponse$packageName": "<p>The name of the associated software package.</p>",
         "DeletePackageRequest$packageName": "<p>The name of the target software package.</p>",
         "DeletePackageVersionRequest$packageName": "<p>The name of the associated software package.</p>",
+        "DisassociateSbomFromPackageVersionRequest$packageName": "<p>The name of the new software package.</p>",
         "GetPackageRequest$packageName": "<p>The name of the target software package.</p>",
         "GetPackageResponse$packageName": "<p>The name of the software package.</p>",
         "GetPackageVersionRequest$packageName": "<p>The name of the associated package.</p>",
         "GetPackageVersionResponse$packageName": "<p>The name of the software package.</p>",
         "ListPackageVersionsRequest$packageName": "<p>The name of the target software package.</p>",
+        "ListSbomValidationResultsRequest$packageName": "<p>The name of the new software package.</p>",
         "PackageSummary$packageName": "<p>The name for the target software package.</p>",
         "PackageVersionSummary$packageName": "<p>The name of the associated software package.</p>",
         "UpdatePackageRequest$packageName": "<p>The name of the target software package.</p>",
@@ -6125,11 +6175,27 @@
         "GetPackageVersionResponse$packageVersionArn": "<p>The ARN for the package version.</p>"
       }
     },
+    "PackageVersionArtifact": {
+      "base": "<p>The Amazon S3 location for the artifacts associated with a software package version.</p>",
+      "refs": {
+        "CreatePackageVersionRequest$artifact": "<p>The various build components created during the build process such as libraries and configuration files that make up a software package version.</p>",
+        "GetPackageVersionResponse$artifact": "<p>The various components that make up a software package version.</p>",
+        "UpdatePackageVersionRequest$artifact": "<p>The various components that make up a software package version.</p>"
+      }
+    },
     "PackageVersionErrorReason": {
       "base": null,
       "refs": {
         "CreatePackageVersionResponse$errorReason": "<p>Error reason for a package version failure during creation or update.</p>",
         "GetPackageVersionResponse$errorReason": "<p>Error reason for a package version failure during creation or update.</p>"
+      }
+    },
+    "PackageVersionRecipe": {
+      "base": null,
+      "refs": {
+        "CreatePackageVersionRequest$recipe": "<p>The inline job document associated with a software package version used for a quick job deployment via IoT Jobs.</p>",
+        "GetPackageVersionResponse$recipe": "<p>The inline job document associated with a software package version used for a quick job deployment via IoT Jobs.</p>",
+        "UpdatePackageVersionRequest$recipe": "<p>The inline job document associated with a software package version used for a quick job deployment via IoT Jobs.</p>"
       }
     },
     "PackageVersionStatus": {
@@ -7165,6 +7231,8 @@
       "base": "<p>The S3 location.</p>",
       "refs": {
         "FileLocation$s3Location": "<p>The location of the updated firmware in S3.</p>",
+        "PackageVersionArtifact$s3Location": null,
+        "Sbom$s3Location": null,
         "StreamFile$s3Location": "<p>The location of the file in S3.</p>"
       }
     },
@@ -7197,6 +7265,52 @@
       "base": null,
       "refs": {
         "SalesforceAction$token": "<p>The token used to authenticate access to the Salesforce IoT Cloud Input Stream. The token is available from the Salesforce IoT Cloud platform after creation of the Input Stream.</p>"
+      }
+    },
+    "Sbom": {
+      "base": "<p>The Amazon S3 location for the software bill of materials associated with a software package version.</p>",
+      "refs": {
+        "AssociateSbomWithPackageVersionRequest$sbom": null,
+        "AssociateSbomWithPackageVersionResponse$sbom": null,
+        "GetPackageVersionResponse$sbom": "<p>The software bill of materials for a software package version.</p>"
+      }
+    },
+    "SbomValidationErrorCode": {
+      "base": null,
+      "refs": {
+        "SbomValidationResultSummary$errorCode": "<p>The <code>errorCode</code> representing the validation failure error if the SBOM validation failed.</p>"
+      }
+    },
+    "SbomValidationErrorMessage": {
+      "base": null,
+      "refs": {
+        "SbomValidationResultSummary$errorMessage": "<p>The <code>errorMessage</code> representing the validation failure error if the SBOM validation failed.</p>"
+      }
+    },
+    "SbomValidationResult": {
+      "base": null,
+      "refs": {
+        "ListSbomValidationResultsRequest$validationResult": "<p>The end result of the </p>",
+        "SbomValidationResultSummary$validationResult": "<p>The end result of the SBOM validation.</p>"
+      }
+    },
+    "SbomValidationResultSummary": {
+      "base": "<p>A summary of the validation results for a specific software bill of materials (SBOM) attached to a software package version.</p>",
+      "refs": {
+        "SbomValidationResultSummaryList$member": null
+      }
+    },
+    "SbomValidationResultSummaryList": {
+      "base": null,
+      "refs": {
+        "ListSbomValidationResultsResponse$validationResultSummaries": "<p>A summary of the validation results for each software bill of materials attached to a software package version.</p>"
+      }
+    },
+    "SbomValidationStatus": {
+      "base": null,
+      "refs": {
+        "AssociateSbomWithPackageVersionResponse$sbomValidationStatus": "<p>The status of the initial validation for the SBOM against the Software Package Data Exchange (SPDX) and CycloneDX industry standard format.</p>",
+        "GetPackageVersionResponse$sbomValidationStatus": "<p>The status of the validation for a new software bill of materials added to a software package version.</p>"
       }
     },
     "ScheduledAuditArn": {
@@ -9199,12 +9313,16 @@
     "VersionName": {
       "base": null,
       "refs": {
+        "AssociateSbomWithPackageVersionRequest$versionName": "<p>The name of the new package version.</p>",
+        "AssociateSbomWithPackageVersionResponse$versionName": "<p>The name of the new package version.</p>",
         "CreatePackageVersionRequest$versionName": "<p>The name of the new package version.</p>",
         "CreatePackageVersionResponse$versionName": "<p>The name of the new package version.</p>",
         "DeletePackageVersionRequest$versionName": "<p>The name of the target package version.</p>",
+        "DisassociateSbomFromPackageVersionRequest$versionName": "<p>The name of the new package version.</p>",
         "GetPackageResponse$defaultVersionName": "<p>The name of the default package version.</p>",
         "GetPackageVersionRequest$versionName": "<p>The name of the target package version.</p>",
         "GetPackageVersionResponse$versionName": "<p>The name of the package version.</p>",
+        "ListSbomValidationResultsRequest$versionName": "<p>The name of the new package version.</p>",
         "PackageSummary$defaultVersionName": "<p>The name of the default package version.</p>",
         "PackageVersionSummary$versionName": "<p>The name of the target package version.</p>",
         "UpdatePackageRequest$defaultVersionName": "<p>The name of the default package version.</p> <p> <b>Note:</b> You cannot name a <code>defaultVersion</code> and set <code>unsetDefaultVersion</code> equal to <code>true</code> at the same time.</p>",
