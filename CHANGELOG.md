@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.322.5 - 2024-09-25
 
 * `Aws\S3` - Updates location constraint middleware to exclude directory buckets and retain original configuration.
 * `Aws\CloudTrail` - Doc-only update for CloudTrail network activity events release (in preview)
