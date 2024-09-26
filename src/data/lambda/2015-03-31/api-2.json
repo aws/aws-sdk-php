@@ -47,8 +47,7 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"PolicyLengthExceededException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"PreconditionFailedException"},
-        {"shape":"PublicPolicyException"}
+        {"shape":"PreconditionFailedException"}
       ]
     },
     "CreateAlias":{
@@ -293,23 +292,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ServiceException"}
-      ]
-    },
-    "DeleteResourcePolicy":{
-      "name":"DeleteResourcePolicy",
-      "http":{
-        "method":"DELETE",
-        "requestUri":"/2024-09-16/resource-policy/{ResourceArn}",
-        "responseCode":204
-      },
-      "input":{"shape":"DeleteResourcePolicyRequest"},
-      "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ResourceConflictException"},
-        {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"},
-        {"shape":"PreconditionFailedException"}
       ]
     },
     "GetAccountSettings":{
@@ -564,38 +546,6 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ServiceException"},
         {"shape":"ProvisionedConcurrencyConfigNotFoundException"}
-      ]
-    },
-    "GetPublicAccessBlockConfig":{
-      "name":"GetPublicAccessBlockConfig",
-      "http":{
-        "method":"GET",
-        "requestUri":"/2024-09-16/public-access-block/{ResourceArn}",
-        "responseCode":200
-      },
-      "input":{"shape":"GetPublicAccessBlockConfigRequest"},
-      "output":{"shape":"GetPublicAccessBlockConfigResponse"},
-      "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"TooManyRequestsException"},
-        {"shape":"InvalidParameterValueException"}
-      ]
-    },
-    "GetResourcePolicy":{
-      "name":"GetResourcePolicy",
-      "http":{
-        "method":"GET",
-        "requestUri":"/2024-09-16/resource-policy/{ResourceArn}",
-        "responseCode":200
-      },
-      "input":{"shape":"GetResourcePolicyRequest"},
-      "output":{"shape":"GetResourcePolicyResponse"},
-      "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"TooManyRequestsException"},
-        {"shape":"InvalidParameterValueException"}
       ]
     },
     "GetRuntimeManagementConfig":{
@@ -1022,43 +972,6 @@
         {"shape":"ServiceException"}
       ]
     },
-    "PutPublicAccessBlockConfig":{
-      "name":"PutPublicAccessBlockConfig",
-      "http":{
-        "method":"PUT",
-        "requestUri":"/2024-09-16/public-access-block/{ResourceArn}",
-        "responseCode":200
-      },
-      "input":{"shape":"PutPublicAccessBlockConfigRequest"},
-      "output":{"shape":"PutPublicAccessBlockConfigResponse"},
-      "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ResourceConflictException"},
-        {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
-      ]
-    },
-    "PutResourcePolicy":{
-      "name":"PutResourcePolicy",
-      "http":{
-        "method":"PUT",
-        "requestUri":"/2024-09-16/resource-policy/{ResourceArn}",
-        "responseCode":200
-      },
-      "input":{"shape":"PutResourcePolicyRequest"},
-      "output":{"shape":"PutResourcePolicyResponse"},
-      "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ResourceConflictException"},
-        {"shape":"InvalidParameterValueException"},
-        {"shape":"PolicyLengthExceededException"},
-        {"shape":"TooManyRequestsException"},
-        {"shape":"PreconditionFailedException"},
-        {"shape":"PublicPolicyException"}
-      ]
-    },
     "PutRuntimeManagementConfig":{
       "name":"PutRuntimeManagementConfig",
       "http":{
@@ -1105,8 +1018,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"PreconditionFailedException"},
-        {"shape":"PublicPolicyException"}
+        {"shape":"PreconditionFailedException"}
       ]
     },
     "TagResource":{
@@ -1882,22 +1794,6 @@
         }
       }
     },
-    "DeleteResourcePolicyRequest":{
-      "type":"structure",
-      "required":["ResourceArn"],
-      "members":{
-        "ResourceArn":{
-          "shape":"PolicyResourceArn",
-          "location":"uri",
-          "locationName":"ResourceArn"
-        },
-        "RevisionId":{
-          "shape":"RevisionId",
-          "location":"querystring",
-          "locationName":"RevisionId"
-        }
-      }
-    },
     "Description":{
       "type":"string",
       "max":256,
@@ -2666,41 +2562,6 @@
         "Status":{"shape":"ProvisionedConcurrencyStatusEnum"},
         "StatusReason":{"shape":"String"},
         "LastModified":{"shape":"Timestamp"}
-      }
-    },
-    "GetPublicAccessBlockConfigRequest":{
-      "type":"structure",
-      "required":["ResourceArn"],
-      "members":{
-        "ResourceArn":{
-          "shape":"PublicAccessBlockResourceArn",
-          "location":"uri",
-          "locationName":"ResourceArn"
-        }
-      }
-    },
-    "GetPublicAccessBlockConfigResponse":{
-      "type":"structure",
-      "members":{
-        "PublicAccessBlockConfig":{"shape":"PublicAccessBlockConfig"}
-      }
-    },
-    "GetResourcePolicyRequest":{
-      "type":"structure",
-      "required":["ResourceArn"],
-      "members":{
-        "ResourceArn":{
-          "shape":"PolicyResourceArn",
-          "location":"uri",
-          "locationName":"ResourceArn"
-        }
-      }
-    },
-    "GetResourcePolicyResponse":{
-      "type":"structure",
-      "members":{
-        "Policy":{"shape":"ResourcePolicy"},
-        "RevisionId":{"shape":"RevisionId"}
       }
     },
     "GetRuntimeManagementConfigRequest":{
@@ -3709,11 +3570,6 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
-    "PolicyResourceArn":{
-      "type":"string",
-      "max":256,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_])+)?"
-    },
     "PositiveInteger":{
       "type":"integer",
       "min":1
@@ -3769,27 +3625,6 @@
         "READY",
         "FAILED"
       ]
-    },
-    "PublicAccessBlockConfig":{
-      "type":"structure",
-      "members":{
-        "BlockPublicPolicy":{"shape":"NullableBoolean"},
-        "RestrictPublicResource":{"shape":"NullableBoolean"}
-      }
-    },
-    "PublicAccessBlockResourceArn":{
-      "type":"string",
-      "max":170,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+"
-    },
-    "PublicPolicyException":{
-      "type":"structure",
-      "members":{
-        "Type":{"shape":"String"},
-        "Message":{"shape":"String"}
-      },
-      "error":{"httpStatusCode":400},
-      "exception":true
     },
     "PublishLayerVersionRequest":{
       "type":"structure",
@@ -3949,50 +3784,6 @@
         "Status":{"shape":"ProvisionedConcurrencyStatusEnum"},
         "StatusReason":{"shape":"String"},
         "LastModified":{"shape":"Timestamp"}
-      }
-    },
-    "PutPublicAccessBlockConfigRequest":{
-      "type":"structure",
-      "required":[
-        "ResourceArn",
-        "PublicAccessBlockConfig"
-      ],
-      "members":{
-        "ResourceArn":{
-          "shape":"PublicAccessBlockResourceArn",
-          "location":"uri",
-          "locationName":"ResourceArn"
-        },
-        "PublicAccessBlockConfig":{"shape":"PublicAccessBlockConfig"}
-      }
-    },
-    "PutPublicAccessBlockConfigResponse":{
-      "type":"structure",
-      "members":{
-        "PublicAccessBlockConfig":{"shape":"PublicAccessBlockConfig"}
-      }
-    },
-    "PutResourcePolicyRequest":{
-      "type":"structure",
-      "required":[
-        "ResourceArn",
-        "Policy"
-      ],
-      "members":{
-        "ResourceArn":{
-          "shape":"PolicyResourceArn",
-          "location":"uri",
-          "locationName":"ResourceArn"
-        },
-        "Policy":{"shape":"ResourcePolicy"},
-        "RevisionId":{"shape":"RevisionId"}
-      }
-    },
-    "PutResourcePolicyResponse":{
-      "type":"structure",
-      "members":{
-        "Policy":{"shape":"ResourcePolicy"},
-        "RevisionId":{"shape":"RevisionId"}
       }
     },
     "PutRuntimeManagementConfigRequest":{
@@ -4174,24 +3965,12 @@
       "error":{"httpStatusCode":502},
       "exception":true
     },
-    "ResourcePolicy":{
-      "type":"string",
-      "max":20480,
-      "min":1,
-      "pattern":"[\\s\\S]+"
-    },
     "ResponseStreamingInvocationType":{
       "type":"string",
       "enum":[
         "RequestResponse",
         "DryRun"
       ]
-    },
-    "RevisionId":{
-      "type":"string",
-      "max":36,
-      "min":36,
-      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
     "RoleArn":{
       "type":"string",

@@ -6975,6 +6975,7 @@
         },
         "KmsKeyId":{"shape":"KmsKeyId"},
         "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
+        "TagPropagation":{"shape":"TagPropagation"},
         "DefaultSpaceSettings":{"shape":"DefaultSpaceSettings"}
       }
     },
@@ -9531,6 +9532,7 @@
         "VpcId":{"shape":"VpcId"},
         "KmsKeyId":{"shape":"KmsKeyId"},
         "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
+        "TagPropagation":{"shape":"TagPropagation"},
         "DefaultSpaceSettings":{"shape":"DefaultSpaceSettings"}
       }
     },
@@ -22195,6 +22197,13 @@
       "max":50,
       "min":0
     },
+    "TagPropagation":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "TagValue":{
       "type":"string",
       "max":256,
@@ -23674,7 +23683,8 @@
         "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
         "DefaultSpaceSettings":{"shape":"DefaultSpaceSettings"},
         "SubnetIds":{"shape":"Subnets"},
-        "AppNetworkAccessType":{"shape":"AppNetworkAccessType"}
+        "AppNetworkAccessType":{"shape":"AppNetworkAccessType"},
+        "TagPropagation":{"shape":"TagPropagation"}
       }
     },
     "UpdateDomainResponse":{

@@ -465,7 +465,9 @@
         "SnsTopicArns":{"shape":"SnsTopicArnList"},
         "ConfigurationName":{"shape":"ConfigurationName"},
         "LoggingLevel":{"shape":"CustomerCwLogLevel"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "State":{"shape":"ResourceState"},
+        "StateReason":{"shape":"String"}
       }
     },
     "ChimeWebhookConfigurationList":{
@@ -500,7 +502,9 @@
       "members":{
         "TenantId":{"shape":"UUID"},
         "TeamId":{"shape":"UUID"},
-        "TeamName":{"shape":"UUID"}
+        "TeamName":{"shape":"UUID"},
+        "State":{"shape":"ResourceState"},
+        "StateReason":{"shape":"String"}
       }
     },
     "ConfiguredTeamsList":{
@@ -1087,6 +1091,10 @@
       },
       "exception":true
     },
+    "ResourceState":{
+      "type":"string",
+      "pattern":"(ENABLED|DISABLED)"
+    },
     "ServiceUnavailableException":{
       "type":"structure",
       "members":{
@@ -1121,7 +1129,9 @@
         "LoggingLevel":{"shape":"CustomerCwLogLevel"},
         "GuardrailPolicyArns":{"shape":"GuardrailPolicyArnList"},
         "UserAuthorizationRequired":{"shape":"BooleanAccountPreference"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "State":{"shape":"ResourceState"},
+        "StateReason":{"shape":"String"}
       }
     },
     "SlackChannelConfigurationList":{
@@ -1185,7 +1195,9 @@
       ],
       "members":{
         "SlackTeamId":{"shape":"SlackTeamId"},
-        "SlackTeamName":{"shape":"SlackTeamName"}
+        "SlackTeamName":{"shape":"SlackTeamName"},
+        "State":{"shape":"ResourceState"},
+        "StateReason":{"shape":"String"}
       }
     },
     "SlackWorkspacesList":{
@@ -1196,6 +1208,7 @@
       "type":"list",
       "member":{"shape":"Arn"}
     },
+    "String":{"type":"string"},
     "Tag":{
       "type":"structure",
       "required":[
@@ -1283,7 +1296,9 @@
         "LoggingLevel":{"shape":"CustomerCwLogLevel"},
         "GuardrailPolicyArns":{"shape":"GuardrailPolicyArnList"},
         "UserAuthorizationRequired":{"shape":"BooleanAccountPreference"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "State":{"shape":"ResourceState"},
+        "StateReason":{"shape":"String"}
       }
     },
     "TeamsChannelId":{

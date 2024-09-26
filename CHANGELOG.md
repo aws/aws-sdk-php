@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Organizations` - Add support for policy operations on the CHATBOT_POLICY policy type.
+* `Aws\PCS` - AWS PCS API documentation - Edited the description of the iamInstanceProfileArn parameter of the CreateComputeNodeGroup and UpdateComputeNodeGroup actions; edited the description of the SlurmCustomSetting data type to list the supported parameters for clusters and compute node groups.
+* `Aws\RDSDataService` - Documentation update for RDS Data API to reflect support for Aurora MySQL Serverless v2 and Provisioned DB clusters.
+* `Aws\Chatbot` - Return State and StateReason fields for Chatbot Channel Configurations.
+* `Aws\Lambda` - Reverting Lambda resource-based policy and block public access APIs.
+* `Aws\SageMaker` - Adding `TagPropagation` attribute to Sagemaker API
+
 ## 3.322.5 - 2024-09-25
 
 * `Aws\S3` - Updates location constraint middleware to exclude directory buckets and retain original configuration.
