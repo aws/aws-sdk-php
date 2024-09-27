@@ -31,7 +31,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     /**
      * Constructs a new SsoTokenProvider object, which will fetch a token from an authenticated SSO profile
      * @param string $profileName The name of the profile that contains the sso_session key
-     * @param string|null $configFilePath Name of the config file to sso profile from
+     * @param string|null $configFilePath If provided, also load from a custom config file.
      * @param SSOOIDCClient|null $ssoOidcClient The sso client for generating a new token
      */
     public function __construct(
@@ -40,7 +40,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
         SSOOIDCClient $ssoOidcClient = null
     ) {
         $this->profileName = $this->resolveProfileName($profileName);
-        $this->configFilePath =  $this->resolveConfigFile($configFilePath);
+        $this->configFilePath =  $configFilePath;
         $this->ssoOidcClient = $ssoOidcClient;
     }
 
@@ -64,24 +64,6 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     }
 
     /**
-     * This method resolves the config file from where the profiles
-     * are going to be loaded from. If $argFileName is not empty then,
-     * it takes precedence over the default config file location.
-     *
-     * @param string|null $argConfigFilePath The config path provided as argument.
-     *
-     * @return string
-     */
-    private function resolveConfigFile($argConfigFilePath): string
-    {
-        if (empty($argConfigFilePath)) {
-            return self::getHomeDir() . '/.aws/config';
-        } else{
-            return $argConfigFilePath;
-        }
-    }
-
-    /**
      *  Loads cached sso credentials.
      *
      * @return Promise\PromiseInterface
@@ -89,19 +71,15 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
     public function __invoke()
     {
         return Promise\Coroutine::of(function () {
-            if (empty($this->configFilePath) || !is_readable($this->configFilePath)) {
-                throw new TokenException("Cannot read profiles from {$this->configFilePath}");
-            }
-
             $profiles = self::loadProfiles($this->configFilePath);
             if (!isset($profiles[$this->profileName])) {
-                throw new TokenException("Profile `{$this->profileName}` does not exist in {$this->configFilePath}.");
+                throw new TokenException("Profile `{$this->profileName}` does not exist in config or credentials files.");
             }
 
             $profile = $profiles[$this->profileName];
             if (empty($profile['sso_session'])) {
                 throw new TokenException(
-                    "Profile `{$this->profileName}` in {$this->configFilePath} must contain an sso_session."
+                    "Profile `{$this->profileName}` in config or credentials files must contain an sso_session."
                 );
             }
 
@@ -110,7 +88,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
             $profileSsoSession = 'sso-session ' . $ssoSessionName;
             if (empty($profiles[$profileSsoSession])) {
                 throw new TokenException(
-                    "Sso session `{$ssoSessionName}` does not exist in {$this->configFilePath}"
+                    "Sso session `{$ssoSessionName}` does not exist in config or credentials files"
                 );
             }
 
@@ -118,7 +96,7 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
             foreach (['sso_start_url', 'sso_region'] as $requiredProp) {
                 if (empty($sessionProfileData[$requiredProp])) {
                     throw new TokenException(
-                        "Sso session `{$ssoSessionName}` in {$this->configFilePath} is missing the required property `{$requiredProp}`"
+                        "Sso session `{$ssoSessionName}` in config or credentials files is missing the required property `{$requiredProp}`"
                     );
                 }
             }
