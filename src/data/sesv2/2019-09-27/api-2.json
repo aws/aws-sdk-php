@@ -3046,6 +3046,14 @@
         "OptimizedSharedDelivery":{"shape":"FeatureStatus"}
       }
     },
+    "HttpsPolicy":{
+      "type":"string",
+      "enum":[
+        "REQUIRE",
+        "REQUIRE_OPEN_ONLY",
+        "OPTIONAL"
+      ]
+    },
     "Identity":{
       "type":"string",
       "min":1
@@ -4009,7 +4017,8 @@
           "location":"uri",
           "locationName":"ConfigurationSetName"
         },
-        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"}
+        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"},
+        "HttpsPolicy":{"shape":"HttpsPolicy"}
       }
     },
     "PutConfigurationSetTrackingOptionsResponse":{
@@ -4653,7 +4662,8 @@
       "type":"structure",
       "required":["CustomRedirectDomain"],
       "members":{
-        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"}
+        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"},
+        "HttpsPolicy":{"shape":"HttpsPolicy"}
       }
     },
     "UnsubscribeAll":{"type":"boolean"},

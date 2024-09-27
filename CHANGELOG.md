@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Worklink` - Removes worklink client.
+* `Aws\CustomerProfiles` - Introduces optional RoleArn parameter for PutIntegration request and includes RoleArn in the response of PutIntegration, GetIntegration and ListIntegrations
+* `Aws\QuickSight` - Adding personalization in QuickSight data stories. Admins can enable or disable personalization through QuickSight settings.
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub
+* `Aws\SESv2` - This release adds support for engagement tracking over Https using custom domains.
+
 ## 3.322.6 - 2024-09-26
 
 * `Aws\Organizations` - Add support for policy operations on the CHATBOT_POLICY policy type.

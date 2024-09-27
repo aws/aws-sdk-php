@@ -1413,6 +1413,23 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "DescribeQPersonalizationConfiguration":{
+      "name":"DescribeQPersonalizationConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/q-personalization-configuration"
+      },
+      "input":{"shape":"DescribeQPersonalizationConfigurationRequest"},
+      "output":{"shape":"DescribeQPersonalizationConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeRefreshSchedule":{
       "name":"DescribeRefreshSchedule",
       "http":{
@@ -2907,6 +2924,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"UnsupportedPricingPlanException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateQPersonalizationConfiguration":{
+      "name":"UpdateQPersonalizationConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/q-personalization-configuration"
+      },
+      "input":{"shape":"UpdateQPersonalizationConfigurationRequest"},
+      "output":{"shape":"UpdateQPersonalizationConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
       ]
     },
     "UpdateRefreshSchedule":{
@@ -10083,6 +10118,28 @@
         }
       }
     },
+    "DescribeQPersonalizationConfigurationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeQPersonalizationConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "PersonalizationMode":{"shape":"PersonalizationMode"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "DescribeRefreshScheduleRequest":{
       "type":"structure",
       "required":[
@@ -15638,6 +15695,13 @@
       "max":1000,
       "min":1
     },
+    "PersonalizationMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "PhysicalTable":{
       "type":"structure",
       "members":{
@@ -20920,6 +20984,32 @@
     "UpdatePublicSharingSettingsResponse":{
       "type":"structure",
       "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateQPersonalizationConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "PersonalizationMode"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "PersonalizationMode":{"shape":"PersonalizationMode"}
+      }
+    },
+    "UpdateQPersonalizationConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "PersonalizationMode":{"shape":"PersonalizationMode"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
