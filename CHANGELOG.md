@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.322.7 - 2024-09-27
 
 * `Aws\Worklink` - Removes worklink client.
 * `Aws\CustomerProfiles` - Introduces optional RoleArn parameter for PutIntegration request and includes RoleArn in the response of PutIntegration, GetIntegration and ListIntegrations
