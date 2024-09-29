@@ -508,7 +508,7 @@ class SignatureV4 implements SignatureInterface
         CredentialsInterface $credentials,
         RequestInterface $request,
         $signingService,
-        SigningConfigAWS $signingConfig = null
+        SigningConfigAWS|null $signingConfig = null
     ){
         $this->verifyCRTLoaded();
         $signingConfig = $signingConfig ?? new SigningConfigAWS([

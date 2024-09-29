@@ -29,14 +29,14 @@ class JsonRpcSerializer
     private $contentType;
 
     /**
-     * @param Service  $api           Service description
-     * @param string   $endpoint      Endpoint to connect to
-     * @param JsonBody $jsonFormatter Optional JSON formatter to use
+     * @param Service       $api           Service description
+     * @param string        $endpoint      Endpoint to connect to
+     * @param JsonBody|null $jsonFormatter Optional JSON formatter to use
      */
     public function __construct(
         Service $api,
         $endpoint,
-        JsonBody $jsonFormatter = null
+        JsonBody|null $jsonFormatter = null
     ) {
         $this->endpoint = $endpoint;
         $this->api = $api;

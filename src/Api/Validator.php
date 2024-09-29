@@ -20,12 +20,12 @@ class Validator
     ];
 
     /**
-     * @param array $constraints Associative array of constraints to enforce.
-     *                           Accepts the following keys: "required", "min",
-     *                           "max", and "pattern". If a key is not
-     *                           provided, the constraint will assume false.
+     * @param array|null $constraints Associative array of constraints to enforce.
+     *                                Accepts the following keys: "required", "min",
+     *                                "max", and "pattern". If a key is not
+     *                                provided, the constraint will assume false.
      */
-    public function __construct(array $constraints = null)
+    public function __construct(array|null $constraints = null)
     {
         static $assumedFalseValues = [
             'required' => false,

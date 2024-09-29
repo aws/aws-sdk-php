@@ -37,7 +37,7 @@ class AuthSchemeResolver implements AuthSchemeResolverInterface
 
     public function __construct(
         callable $credentialProvider,
-        callable $tokenProvider = null,
+        callable|null $tokenProvider = null,
         array $authSchemeMap = []
     ){
         $this->credentialProvider = $credentialProvider;

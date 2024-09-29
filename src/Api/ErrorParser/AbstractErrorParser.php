@@ -21,7 +21,7 @@ abstract class AbstractErrorParser
     /**
      * @param Service $api
      */
-    public function __construct(Service $api = null)
+    public function __construct(Service|null $api = null)
     {
         $this->api = $api;
     }
@@ -47,7 +47,7 @@ abstract class AbstractErrorParser
     protected function populateShape(
         array &$data,
         ResponseInterface $response,
-        CommandInterface $command = null
+        CommandInterface|null $command = null
     ) {
         $data['body'] = [];
 

@@ -103,14 +103,14 @@ class StreamWrapper
     /**
      * Register the 's3://' stream wrapper
      *
-     * @param S3ClientInterface $client   Client to use with the stream wrapper
-     * @param string            $protocol Protocol to register as.
-     * @param CacheInterface    $cache    Default cache for the protocol.
+     * @param S3ClientInterface   $client   Client to use with the stream wrapper
+     * @param string              $protocol Protocol to register as.
+     * @param CacheInterface|null $cache    Default cache for the protocol.
      */
     public static function register(
         S3ClientInterface $client,
         $protocol = 's3',
-        CacheInterface $cache = null,
+        CacheInterface|null $cache = null,
         $v2Existence = false
     ) {
         self::$useV2Existence = $v2Existence;

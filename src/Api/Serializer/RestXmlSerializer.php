@@ -13,14 +13,14 @@ class RestXmlSerializer extends RestSerializer
     private $xmlBody;
 
     /**
-     * @param Service $api      Service API description
-     * @param string  $endpoint Endpoint to connect to
-     * @param XmlBody $xmlBody  Optional XML formatter to use
+     * @param Service      $api      Service API description
+     * @param string       $endpoint Endpoint to connect to
+     * @param XmlBody|null $xmlBody  Optional XML formatter to use
      */
     public function __construct(
         Service $api,
         $endpoint,
-        XmlBody $xmlBody = null
+        XmlBody|null $xmlBody = null
     ) {
         parent::__construct($api, $endpoint);
         $this->xmlBody = $xmlBody ?: new XmlBody($api);

@@ -59,16 +59,16 @@ trait UsesServiceTrait
      *
      * @param AwsClientInterface $client
      * @param Result[]|array[]   $results
-     * @param callable $onFulfilled Callback to invoke when the return value is fulfilled.
-     * @param callable $onRejected  Callback to invoke when the return value is rejected.
+     * @param callable|null      $onFulfilled Callback to invoke when the return value is fulfilled.
+     * @param callable|null      $onRejected  Callback to invoke when the return value is rejected.
      *
      * @return AwsClientInterface
      */
     private function addMockResults(
         AwsClientInterface $client,
         array $results,
-        callable $onFulfilled = null,
-        callable $onRejected = null
+        callable|null $onFulfilled = null,
+        callable|null $onRejected = null
     ) {
         foreach ($results as &$res) {
             if (is_array($res)) {

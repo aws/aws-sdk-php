@@ -17,10 +17,10 @@ class JsonRpcParser extends AbstractParser
     use PayloadParserTrait;
 
     /**
-     * @param Service    $api    Service description
-     * @param JsonParser $parser JSON body builder
+     * @param Service         $api    Service description
+     * @param JsonParser|null $parser JSON body builder
      */
-    public function __construct(Service $api, JsonParser $parser = null)
+    public function __construct(Service $api, JsonParser|null $parser = null)
     {
         parent::__construct($api);
         $this->parser = $parser ?: new JsonParser();

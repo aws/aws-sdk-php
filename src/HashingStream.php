@@ -23,13 +23,13 @@ class HashingStream implements StreamInterface
     /**
      * @param StreamInterface $stream     Stream that is being read.
      * @param HashInterface   $hash       Hash used to calculate checksum.
-     * @param callable        $onComplete Optional function invoked when the
+     * @param callable|null   $onComplete Optional function invoked when the
      *                                    hash calculation is completed.
      */
     public function __construct(
         StreamInterface $stream,
         HashInterface $hash,
-        callable $onComplete = null
+        callable|null $onComplete = null
     ) {
         $this->stream = $stream;
         $this->hash = $hash;

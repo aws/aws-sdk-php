@@ -22,11 +22,11 @@ class Command implements CommandInterface
      *
      * - @http: (array) Associative array of transfer options.
      *
-     * @param string      $name           Name of the command
-     * @param array       $args           Arguments to pass to the command
-     * @param HandlerList $list           Handler list
+     * @param string           $name           Name of the command
+     * @param array            $args           Arguments to pass to the command
+     * @param HandlerList|null $list           Handler list
      */
-    public function __construct($name, array $args = [], HandlerList $list = null)
+    public function __construct($name, array $args = [], HandlerList|null $list = null)
     {
         $this->name = $name;
         $this->data = $args;

@@ -251,7 +251,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
     public function testPutObjectValidatesCipher(
         $cipher,
         $exception = null,
-        callable $skipCheck = null
+        callable|null $skipCheck = null
     ) {
         if ($skipCheck && $skipCheck()) {
             $this->markTestSkipped(

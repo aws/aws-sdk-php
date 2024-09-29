@@ -42,13 +42,13 @@ class AwsException extends \RuntimeException implements
      * @param string           $message Exception message
      * @param CommandInterface $command
      * @param array            $context Exception context
-     * @param \Exception       $previous  Previous exception (if any)
+     * @param \Exception|null  $previous  Previous exception (if any)
      */
     public function __construct(
         $message,
         CommandInterface $command,
         array $context = [],
-        \Exception $previous = null
+        \Exception|null $previous = null
     ) {
         $this->data = isset($context['body']) ? $context['body'] : [];
         $this->command = $command;

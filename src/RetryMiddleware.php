@@ -87,7 +87,7 @@ class RetryMiddleware
             $retries,
             CommandInterface $command,
             RequestInterface $request,
-            ResultInterface $result = null,
+            ResultInterface|null $result = null,
             $error = null
         ) use ($maxRetries, $retryCurlErrors, $extraConfig) {
             // Allow command-level options to override this value
@@ -210,13 +210,13 @@ class RetryMiddleware
 
     /**
      * @param CommandInterface $command
-     * @param RequestInterface $request
+     * @param RequestInterface|null $request
      *
      * @return PromiseInterface
      */
     public function __invoke(
         CommandInterface $command,
-        RequestInterface $request = null
+        RequestInterface|null $request = null
     ) {
         $retries = 0;
         $requestStats = [];

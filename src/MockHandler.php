@@ -24,14 +24,14 @@ class MockHandler implements \Countable
      * {@see AwsException} objects that acts as a queue of results or
      * exceptions to return each time the handler is invoked.
      *
-     * @param array    $resultOrQueue
-     * @param callable $onFulfilled Callback to invoke when the return value is fulfilled.
-     * @param callable $onRejected  Callback to invoke when the return value is rejected.
+     * @param array         $resultOrQueue
+     * @param callable|null $onFulfilled Callback to invoke when the return value is fulfilled.
+     * @param callable|null $onRejected  Callback to invoke when the return value is rejected.
      */
     public function __construct(
         array $resultOrQueue = [],
-        callable $onFulfilled = null,
-        callable $onRejected = null
+        callable|null $onFulfilled = null,
+        callable|null $onRejected = null
     ) {
         $this->queue = [];
         $this->onFulfilled = $onFulfilled;
