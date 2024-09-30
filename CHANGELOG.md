@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ResourceGroups` - This update includes new APIs to support application groups and to allow users to manage resource tag-sync tasks in applications.
+* `Aws\CloudDirectory` - Add examples for API operations in model.
+* `Aws\Connect` - Amazon Connect introduces StartOutboundChatContact API allowing customers to initiate outbound chat contacts
+* `Aws\TimestreamInfluxDB` - Timestream for InfluxDB now supports port configuration and additional customer-modifiable InfluxDB v2 parameters. This release adds Port to the CreateDbInstance and UpdateDbInstance API, and additional InfluxDB v2 parameters to the CreateDbParameterGroup API.
+* `Aws\SupplyChain` - Release DataLakeDataset, DataIntegrationFlow and ResourceTagging APIs for AWS Supply Chain
+* `Aws\VerifiedPermissions` - Add examples for API operations in model.
+* `Aws\Pricing` - Add examples for API operations in model.
+* `Aws\Bedrock` - Add support for custom models via provisioned throughput for Bedrock Model Evaluation
+
 ## 3.322.7 - 2024-09-27
 
 * `Aws\Worklink` - Removes worklink client.

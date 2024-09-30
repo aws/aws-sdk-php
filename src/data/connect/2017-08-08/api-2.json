@@ -3186,6 +3186,24 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "StartOutboundChatContact":{
+      "name":"StartOutboundChatContact",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/outbound-chat"
+      },
+      "input":{"shape":"StartOutboundChatContactRequest"},
+      "output":{"shape":"StartOutboundChatContactResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StartOutboundVoiceContact":{
       "name":"StartOutboundVoiceContact",
       "http":{
@@ -8266,7 +8284,8 @@
       "enum":[
         "TELEPHONE_NUMBER",
         "VOIP",
-        "CONTACT_FLOW"
+        "CONTACT_FLOW",
+        "CONNECT_PHONENUMBER_ARN"
       ]
     },
     "ErrorCode":{"type":"string"},
@@ -14646,6 +14665,39 @@
       "required":["StreamingId"],
       "members":{
         "StreamingId":{"shape":"StreamingId"}
+      }
+    },
+    "StartOutboundChatContactRequest":{
+      "type":"structure",
+      "required":[
+        "SourceEndpoint",
+        "DestinationEndpoint",
+        "InstanceId",
+        "SegmentAttributes",
+        "ContactFlowId"
+      ],
+      "members":{
+        "SourceEndpoint":{"shape":"Endpoint"},
+        "DestinationEndpoint":{"shape":"Endpoint"},
+        "InstanceId":{"shape":"InstanceId"},
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "Attributes":{"shape":"Attributes"},
+        "ContactFlowId":{"shape":"ContactFlowId"},
+        "ChatDurationInMinutes":{"shape":"ChatDurationInMinutes"},
+        "ParticipantDetails":{"shape":"ParticipantDetails"},
+        "InitialSystemMessage":{"shape":"ChatMessage"},
+        "RelatedContactId":{"shape":"ContactId"},
+        "SupportedMessagingContentTypes":{"shape":"SupportedMessagingContentTypes"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartOutboundChatContactResponse":{
+      "type":"structure",
+      "members":{
+        "ContactId":{"shape":"ContactId"}
       }
     },
     "StartOutboundVoiceContactRequest":{
