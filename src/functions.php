@@ -279,11 +279,6 @@ function default_http_handler()
         return new \Aws\Handler\GuzzleV6\GuzzleHandler();
     }
 
-    // If Guzzle 5 installed
-    if ($version === 5) {
-        return new \Aws\Handler\GuzzleV5\GuzzleHandler();
-    }
-
     throw new \RuntimeException('Unknown Guzzle version: ' . $version);
 }
 
@@ -298,11 +293,6 @@ function default_user_agent()
     // If Guzzle 6 or 7 installed
     if ($version === 6 || $version === 7) {
         return \GuzzleHttp\default_user_agent();
-    }
-
-    // If Guzzle 5 installed
-    if ($version === 5) {
-        return \GuzzleHttp\Client::getDefaultUserAgent();
     }
 
     throw new \RuntimeException('Unknown Guzzle version: ' . $version);
@@ -326,9 +316,6 @@ function guzzle_major_version()
         $version = (string) ClientInterface::VERSION;
         if ($version[0] === '6') {
             return $cache = 6;
-        }
-        if ($version[0] === '5') {
-            return $cache = 5;
         }
     } elseif (defined('\GuzzleHttp\ClientInterface::MAJOR_VERSION')) {
         return $cache = ClientInterface::MAJOR_VERSION;
