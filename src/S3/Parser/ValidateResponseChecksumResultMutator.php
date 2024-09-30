@@ -37,8 +37,8 @@ final class ValidateResponseChecksumResultMutator implements S3ResultMutator
      */
     public function __invoke(
         ResultInterface $result,
-        CommandInterface|null $command = null,
-        ResponseInterface|null $response = null
+        ?CommandInterface $command = null,
+        ?ResponseInterface $response = null
     ): ResultInterface
     {
         $operation = $this->api->getOperation($command->getName());

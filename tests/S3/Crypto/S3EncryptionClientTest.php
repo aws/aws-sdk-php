@@ -254,7 +254,7 @@ class S3EncryptionClientTest extends TestCase
     public function testPutObjectValidatesCipher(
         $cipher,
         $exception = null,
-        callable|null $skipCheck = null
+        ?callable $skipCheck = null
     ) {
         if ($skipCheck && $skipCheck()) {
             $this->markTestSkipped(

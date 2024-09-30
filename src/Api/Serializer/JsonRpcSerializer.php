@@ -36,7 +36,7 @@ class JsonRpcSerializer
     public function __construct(
         Service $api,
         $endpoint,
-        JsonBody|null $jsonFormatter = null
+        ?JsonBody $jsonFormatter = null
     ) {
         $this->endpoint = $endpoint;
         $this->api = $api;

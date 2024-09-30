@@ -407,7 +407,7 @@ class TransferTest extends TestCase
         return function (callable $handler) use ($fn) {
             return function (
                 CommandInterface $command,
-                RequestInterface|null $request = null
+                ?RequestInterface $request = null
             ) use ($handler, $fn) {
                 return Promise\Create::promiseFor($fn($command, $request));
             };

@@ -44,7 +44,7 @@ class GuzzleHandler
     /**
      * @param ClientInterface $client
      */
-    public function __construct(ClientInterface|null $client = null)
+    public function __construct(?ClientInterface $client = null)
     {
         $this->client = $client ?: new Client();
     }

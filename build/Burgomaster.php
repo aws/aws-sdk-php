@@ -164,7 +164,7 @@ class Burgomaster
         $sourceDir,
         $destDir,
         $extensions = array('php', 'php.gz'),
-        Iterator|null $files = null
+        ?Iterator $files = null
     ) {
         if (!realpath($sourceDir)) {
             throw new \InvalidArgumentException("$sourceDir not found");

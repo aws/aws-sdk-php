@@ -26,7 +26,7 @@ class Command implements CommandInterface
      * @param array            $args           Arguments to pass to the command
      * @param HandlerList|null $list           Handler list
      */
-    public function __construct($name, array $args = [], HandlerList|null $list = null)
+    public function __construct($name, array $args = [], ?HandlerList $list = null)
     {
         $this->name = $name;
         $this->data = $args;
