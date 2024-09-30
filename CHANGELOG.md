@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.322.8 - 2024-09-30
 
 * `Aws\ResourceGroups` - This update includes new APIs to support application groups and to allow users to manage resource tag-sync tasks in applications.
 * `Aws\CloudDirectory` - Add examples for API operations in model.
