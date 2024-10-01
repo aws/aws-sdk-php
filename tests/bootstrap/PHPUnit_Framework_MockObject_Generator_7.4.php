@@ -544,7 +544,7 @@ class PHPUnit_Framework_MockObject_Generator
      *
      * @return array
      */
-    public function generate($type, array $methods = null, $mockClassName = '', $callOriginalClone = true, $callAutoload = true, $cloneArguments = true, $callOriginalMethods = false)
+    public function generate($type, ?array $methods = null, $mockClassName = '', $callOriginalClone = true, $callAutoload = true, $cloneArguments = true, $callOriginalMethods = false)
     {
         if (is_array($type)) {
             sort($type);

@@ -628,7 +628,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         return static function (callable $handler) {
             return function (
                 CommandInterface $command,
-                RequestInterface $request = null
+                ?RequestInterface $request = null
             ) use ($handler) {
                 if ($command->getName() === 'HeadObject'
                     && !isset($command['@http']['decode_content'])
@@ -729,7 +729,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         return function (callable $handler) {
             return function (
                 CommandInterface $command,
-                RequestInterface $request = null
+                ?RequestInterface $request = null
             ) use ($handler) {
                 if (!empty($command['@context']['signature_version'])
                     && $command['@context']['signature_version'] === 'v4-s3express'
