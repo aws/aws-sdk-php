@@ -10,7 +10,7 @@
     "CreateFlow": "<p>Creates a prompt flow that you can use to send an input through various steps to yield an output. Configure nodes, each of which corresponds to a step of the flow, and create connections between the nodes to create paths to different outputs. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-how-it-works.html\">How it works</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-create.html\">Create a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "CreateFlowAlias": "<p>Creates an alias of a flow for deployment. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "CreateFlowVersion": "<p>Creates a version of the flow that you can deploy. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
-    "CreateKnowledgeBase": "<p>Creates a knowledge base that contains data sources from which information can be queried and used by LLMs. To create a knowledge base, you must first set up your data sources and configure a supported vector store. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup.html\">Set up your data for ingestion</a>.</p> <note> <p>If you prefer to let Amazon Bedrock create and manage a vector store for you in Amazon OpenSearch Service, use the console. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-create\">Create a knowledge base</a>.</p> </note> <ul> <li> <p>Provide the <code>name</code> and an optional <code>description</code>.</p> </li> <li> <p>Provide the Amazon Resource Name (ARN) with permissions to create a knowledge base in the <code>roleArn</code> field.</p> </li> <li> <p>Provide the embedding model to use in the <code>embeddingModelArn</code> field in the <code>knowledgeBaseConfiguration</code> object.</p> </li> <li> <p>Provide the configuration for your vector store in the <code>storageConfiguration</code> object.</p> <ul> <li> <p>For an Amazon OpenSearch Service database, use the <code>opensearchServerlessConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-oss.html\">Create a vector store in Amazon OpenSearch Service</a>.</p> </li> <li> <p>For an Amazon Aurora database, use the <code>RdsConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-rds.html\">Create a vector store in Amazon Aurora</a>.</p> </li> <li> <p>For a Pinecone database, use the <code>pineconeConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-pinecone.html\">Create a vector store in Pinecone</a>.</p> </li> <li> <p>For a Redis Enterprise Cloud database, use the <code>redisEnterpriseCloudConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-redis.html\">Create a vector store in Redis Enterprise Cloud</a>.</p> </li> </ul> </li> </ul>",
+    "CreateKnowledgeBase": "<p>Creates a knowledge base. A knowledge base contains your data sources so that Large Language Models (LLMs) can use your data. To create a knowledge base, you must first set up your data sources and configure a supported vector store. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowlege-base-prereq.html\">Set up a knowledge base</a>.</p> <note> <p>If you prefer to let Amazon Bedrock create and manage a vector store for you in Amazon OpenSearch Service, use the console. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-create\">Create a knowledge base</a>.</p> </note> <ul> <li> <p>Provide the <code>name</code> and an optional <code>description</code>.</p> </li> <li> <p>Provide the Amazon Resource Name (ARN) with permissions to create a knowledge base in the <code>roleArn</code> field.</p> </li> <li> <p>Provide the embedding model to use in the <code>embeddingModelArn</code> field in the <code>knowledgeBaseConfiguration</code> object.</p> </li> <li> <p>Provide the configuration for your vector store in the <code>storageConfiguration</code> object.</p> <ul> <li> <p>For an Amazon OpenSearch Service database, use the <code>opensearchServerlessConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-oss.html\">Create a vector store in Amazon OpenSearch Service</a>.</p> </li> <li> <p>For an Amazon Aurora database, use the <code>RdsConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-rds.html\">Create a vector store in Amazon Aurora</a>.</p> </li> <li> <p>For a Pinecone database, use the <code>pineconeConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-pinecone.html\">Create a vector store in Pinecone</a>.</p> </li> <li> <p>For a Redis Enterprise Cloud database, use the <code>redisEnterpriseCloudConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-redis.html\">Create a vector store in Redis Enterprise Cloud</a>.</p> </li> </ul> </li> </ul>",
     "CreatePrompt": "<p>Creates a prompt in your prompt library that you can add to a flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html\">Prompt management in Amazon Bedrock</a>, <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows.html\">Prompt flows in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "CreatePromptVersion": "<p>Creates a static snapshot of your prompt that can be deployed to production. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html\">Deploy prompts using Prompt management by creating versions</a> in the Amazon Bedrock User Guide.</p>",
     "DeleteAgent": "<p>Deletes an agent.</p>",
@@ -33,7 +33,7 @@
     "GetFlow": "<p>Retrieves information about a flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-manage.html\">Manage a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "GetFlowAlias": "<p>Retrieves information about a flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "GetFlowVersion": "<p>Retrieves information about a version of a flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
-    "GetIngestionJob": "<p>Gets information about a ingestion job, in which a data source is added to a knowledge base.</p>",
+    "GetIngestionJob": "<p>Gets information about a data ingestion job. Data sources are ingested into your knowledge base so that Large Lanaguage Models (LLMs) can use your data.</p>",
     "GetKnowledgeBase": "<p>Gets information about a knoweldge base.</p>",
     "GetPrompt": "<p>Retrieves information about the working draft (<code>DRAFT</code> version) of a prompt or a version of it, depending on whether you include the <code>promptVersion</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-view.html\">View information about prompts using Prompt management</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-view.html\">View information about a version of your prompt</a> in the Amazon Bedrock User Guide.</p>",
     "ListAgentActionGroups": "<p>Lists the action groups for an agent and information about each one.</p>",
@@ -45,13 +45,14 @@
     "ListFlowAliases": "<p>Returns a list of aliases for a flow.</p>",
     "ListFlowVersions": "<p>Returns a list of information about each flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "ListFlows": "<p>Returns a list of flows and information about each flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-manage.html\">Manage a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
-    "ListIngestionJobs": "<p>Lists the ingestion jobs for a data source and information about each of them.</p>",
-    "ListKnowledgeBases": "<p>Lists the knowledge bases in an account and information about each of them.</p>",
+    "ListIngestionJobs": "<p>Lists the data ingestion jobs for a data source. The list also includes information about each job.</p>",
+    "ListKnowledgeBases": "<p>Lists the knowledge bases in an account. The list also includesinformation about each knowledge base.</p>",
     "ListPrompts": "<p>Returns either information about the working draft (<code>DRAFT</code> version) of each prompt in an account, or information about of all versions of a prompt, depending on whether you include the <code>promptIdentifier</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-view.html\">View information about prompts using Prompt management</a> in the Amazon Bedrock User Guide.</p>",
     "ListTagsForResource": "<p>List all the tags for the resource you specify.</p>",
     "PrepareAgent": "<p>Creates a <code>DRAFT</code> version of the agent that can be used for internal testing.</p>",
     "PrepareFlow": "<p>Prepares the <code>DRAFT</code> version of a flow so that it can be invoked. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
-    "StartIngestionJob": "<p>Begins an ingestion job, in which a data source is added to a knowledge base.</p>",
+    "StartIngestionJob": "<p>Begins a data ingestion job. Data sources are ingested into your knowledge base so that Large Language Models (LLMs) can use your data.</p>",
+    "StopIngestionJob": "<p>Stops a currently running data ingestion job. You can send a <code>StartIngestionJob</code> request again to ingest the rest of your data when you are ready.</p>",
     "TagResource": "<p>Associate tags with a resource. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the Amazon Bedrock User Guide.</p>",
     "UntagResource": "<p>Remove tags from a resource.</p>",
     "UpdateAgent": "<p>Updates the configuration of an agent.</p>",
@@ -663,13 +664,13 @@
         "GetFlowVersionResponse$createdAt": "<p>The time at which the flow was created.</p>",
         "GetPromptResponse$createdAt": "<p>The time at which the prompt was created.</p>",
         "GetPromptResponse$updatedAt": "<p>The time at which the prompt was last updated.</p>",
-        "IngestionJob$startedAt": "<p>The time at which the ingestion job started.</p>",
-        "IngestionJob$updatedAt": "<p>The time at which the ingestion job was last updated.</p>",
-        "IngestionJobSummary$startedAt": "<p>The time at which the ingestion job was started.</p>",
-        "IngestionJobSummary$updatedAt": "<p>The time at which the ingestion job was last updated.</p>",
-        "KnowledgeBase$createdAt": "<p>The time at which the knowledge base was created.</p>",
-        "KnowledgeBase$updatedAt": "<p>The time at which the knowledge base was last updated.</p>",
-        "KnowledgeBaseSummary$updatedAt": "<p>The time at which the knowledge base was last updated.</p>",
+        "IngestionJob$startedAt": "<p>The time the data ingestion job started.</p> <p>If you stop a data ingestion job, the <code>startedAt</code> time is the time the job was started before the job was stopped.</p>",
+        "IngestionJob$updatedAt": "<p>The time the data ingestion job was last updated.</p> <p>If you stop a data ingestion job, the <code>updatedAt</code> time is the time the job was stopped.</p>",
+        "IngestionJobSummary$startedAt": "<p>The time the data ingestion job started.</p>",
+        "IngestionJobSummary$updatedAt": "<p>The time the data ingestion job was last updated.</p>",
+        "KnowledgeBase$createdAt": "<p>The time the knowledge base was created.</p>",
+        "KnowledgeBase$updatedAt": "<p>The time the knowledge base was last updated.</p>",
+        "KnowledgeBaseSummary$updatedAt": "<p>The time the knowledge base was last updated.</p>",
         "PrepareAgentResponse$preparedAt": "<p>The time at which the <code>DRAFT</code> version of the agent was last prepared.</p>",
         "PromptSummary$createdAt": "<p>The time at which the prompt was created.</p>",
         "PromptSummary$updatedAt": "<p>The time at which the prompt was last updated.</p>",
@@ -806,11 +807,11 @@
         "DataSourceSummary$description": "<p>The description of the data source.</p>",
         "FlowAliasSummary$description": "<p>A description of the alias.</p>",
         "GetFlowAliasResponse$description": "<p>The description of the flow.</p>",
-        "IngestionJob$description": "<p>The description of the ingestion job.</p>",
-        "IngestionJobSummary$description": "<p>The description of the ingestion job.</p>",
+        "IngestionJob$description": "<p>The description of the data ingestion job.</p>",
+        "IngestionJobSummary$description": "<p>The description of the data ingestion job.</p>",
         "KnowledgeBase$description": "<p>The description of the knowledge base.</p>",
         "KnowledgeBaseSummary$description": "<p>The description of the knowledge base.</p>",
-        "StartIngestionJobRequest$description": "<p>A description of the ingestion job.</p>",
+        "StartIngestionJobRequest$description": "<p>A description of the data ingestion job.</p>",
         "UpdateAgentActionGroupRequest$description": "<p>Specifies a new name for the action group.</p>",
         "UpdateAgentAliasRequest$description": "<p>Specifies a new description for the alias.</p>",
         "UpdateAgentKnowledgeBaseRequest$description": "<p>Specifies a new description for the knowledge base associated with an agent.</p>",
@@ -878,7 +879,7 @@
         "AgentAlias$failureReasons": "<p>Information on the failure of Provisioned Throughput assigned to an agent alias.</p>",
         "AgentVersion$failureReasons": "<p>A list of reasons that the API operation on the version failed.</p>",
         "DataSource$failureReasons": "<p>The detailed reasons on the failure to delete a data source.</p>",
-        "IngestionJob$failureReasons": "<p>A list of reasons that the ingestion job failed.</p>",
+        "IngestionJob$failureReasons": "<p>A list of reasons that the data ingestion job failed.</p>",
         "KnowledgeBase$failureReasons": "<p>A list of reasons that the API operation on the knowledge base failed.</p>"
       }
     },
@@ -1552,17 +1553,17 @@
         "GetAgentRequest$agentId": "<p>The unique identifier of the agent.</p>",
         "GetAgentVersionRequest$agentId": "<p>The unique identifier of the agent.</p>",
         "GetDataSourceRequest$dataSourceId": "<p>The unique identifier of the data source.</p>",
-        "GetDataSourceRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base that the data source was added to.</p>",
-        "GetIngestionJobRequest$dataSourceId": "<p>The unique identifier of the data source in the ingestion job.</p>",
-        "GetIngestionJobRequest$ingestionJobId": "<p>The unique identifier of the ingestion job.</p>",
-        "GetIngestionJobRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for which the ingestion job applies.</p>",
-        "GetKnowledgeBaseRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for which to get information.</p>",
-        "IngestionJob$dataSourceId": "<p>The unique identifier of the ingested data source.</p>",
-        "IngestionJob$ingestionJobId": "<p>The unique identifier of the ingestion job.</p>",
-        "IngestionJob$knowledgeBaseId": "<p>The unique identifier of the knowledge base to which the data source is being added.</p>",
-        "IngestionJobSummary$dataSourceId": "<p>The unique identifier of the data source in the ingestion job.</p>",
-        "IngestionJobSummary$ingestionJobId": "<p>The unique identifier of the ingestion job.</p>",
-        "IngestionJobSummary$knowledgeBaseId": "<p>The unique identifier of the knowledge base to which the data source is added.</p>",
+        "GetDataSourceRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for the data source.</p>",
+        "GetIngestionJobRequest$dataSourceId": "<p>The unique identifier of the data source for the data ingestion job you want to get information on.</p>",
+        "GetIngestionJobRequest$ingestionJobId": "<p>The unique identifier of the data ingestion job you want to get information on.</p>",
+        "GetIngestionJobRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for the data ingestion job you want to get information on.</p>",
+        "GetKnowledgeBaseRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base you want to get information on.</p>",
+        "IngestionJob$dataSourceId": "<p>The unique identifier of the data source for the data ingestion job.</p>",
+        "IngestionJob$ingestionJobId": "<p>The unique identifier of the data ingestion job.</p>",
+        "IngestionJob$knowledgeBaseId": "<p>The unique identifier of the knowledge for the data ingestion job.</p>",
+        "IngestionJobSummary$dataSourceId": "<p>The unique identifier of the data source for the data ingestion job.</p>",
+        "IngestionJobSummary$ingestionJobId": "<p>The unique identifier of the data ingestion job.</p>",
+        "IngestionJobSummary$knowledgeBaseId": "<p>The unique identifier of the knowledge base for the data ingestion job.</p>",
         "KnowledgeBase$knowledgeBaseId": "<p>The unique identifier of the knowledge base.</p>",
         "KnowledgeBaseSummary$knowledgeBaseId": "<p>The unique identifier of the knowledge base.</p>",
         "ListAgentActionGroupsRequest$agentId": "<p>The unique identifier of the agent.</p>",
@@ -1570,12 +1571,15 @@
         "ListAgentKnowledgeBasesRequest$agentId": "<p>The unique identifier of the agent for which to return information about knowledge bases associated with it.</p>",
         "ListAgentVersionsRequest$agentId": "<p>The unique identifier of the agent.</p>",
         "ListDataSourcesRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for which to return a list of information.</p>",
-        "ListIngestionJobsRequest$dataSourceId": "<p>The unique identifier of the data source for which to return ingestion jobs.</p>",
-        "ListIngestionJobsRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for which to return ingestion jobs.</p>",
+        "ListIngestionJobsRequest$dataSourceId": "<p>The unique identifier of the data source for the list of data ingestion jobs.</p>",
+        "ListIngestionJobsRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for the list of data ingestion jobs.</p>",
         "PrepareAgentRequest$agentId": "<p>The unique identifier of the agent for which to create a <code>DRAFT</code> version.</p>",
         "PrepareAgentResponse$agentId": "<p>The unique identifier of the agent for which the <code>DRAFT</code> version was created.</p>",
-        "StartIngestionJobRequest$dataSourceId": "<p>The unique identifier of the data source to ingest.</p>",
-        "StartIngestionJobRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to which to add the data source.</p>",
+        "StartIngestionJobRequest$dataSourceId": "<p>The unique identifier of the data source you want to ingest into your knowledge base.</p>",
+        "StartIngestionJobRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for the data ingestion job.</p>",
+        "StopIngestionJobRequest$dataSourceId": "<p>The unique identifier of the data source for the data ingestion job you want to stop.</p>",
+        "StopIngestionJobRequest$ingestionJobId": "<p>The unique identifier of the data ingestion job you want to stop.</p>",
+        "StopIngestionJobRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for the data ingestion job you want to stop.</p>",
         "UpdateAgentActionGroupRequest$actionGroupId": "<p>The unique identifier of the action group.</p>",
         "UpdateAgentActionGroupRequest$agentId": "<p>The unique identifier of the agent for which to update the action group.</p>",
         "UpdateAgentAliasRequest$agentId": "<p>The unique identifier of the agent.</p>",
@@ -1594,14 +1598,15 @@
       }
     },
     "IngestionJob": {
-      "base": "<p>Contains details about an ingestion job, which converts a data source to embeddings for a vector store in knowledge base.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_StartIngestionJob.html#API_agent_StartIngestionJob_ResponseSyntax\">StartIngestionJob response</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_GetIngestionJob.html#API_agent_GetIngestionJob_ResponseSyntax\">GetIngestionJob response</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ListIngestionJobs.html#API_agent_ListIngestionJobs_ResponseSyntax\">ListIngestionJob response</a> </p> </li> </ul>",
+      "base": "<p>Contains details about a data ingestion job. Data sources are ingested into a knowledge base so that Large Language Models (LLMs) can use your data.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_StartIngestionJob.html#API_agent_StartIngestionJob_ResponseSyntax\">StartIngestionJob response</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_GetIngestionJob.html#API_agent_GetIngestionJob_ResponseSyntax\">GetIngestionJob response</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ListIngestionJobs.html#API_agent_ListIngestionJobs_ResponseSyntax\">ListIngestionJob response</a> </p> </li> </ul>",
       "refs": {
-        "GetIngestionJobResponse$ingestionJob": "<p>Contains details about the ingestion job.</p>",
-        "StartIngestionJobResponse$ingestionJob": "<p>An object containing information about the ingestion job.</p>"
+        "GetIngestionJobResponse$ingestionJob": "<p>Contains details about the data ingestion job.</p>",
+        "StartIngestionJobResponse$ingestionJob": "<p>Contains information about the data ingestion job.</p>",
+        "StopIngestionJobResponse$ingestionJob": "<p>Contains information about the stopped data ingestion job.</p>"
       }
     },
     "IngestionJobFilter": {
-      "base": "<p>Defines a filter by which to filter the results.</p>",
+      "base": "<p>The definition of a filter to filter the data.</p>",
       "refs": {
         "IngestionJobFilters$member": null
       }
@@ -1609,13 +1614,13 @@
     "IngestionJobFilterAttribute": {
       "base": null,
       "refs": {
-        "IngestionJobFilter$attribute": "<p>The attribute by which to filter the results.</p>"
+        "IngestionJobFilter$attribute": "<p>The name of field or attribute to apply the filter.</p>"
       }
     },
     "IngestionJobFilterOperator": {
       "base": null,
       "refs": {
-        "IngestionJobFilter$operator": "<p>The operation to carry out between the attribute and the values.</p>"
+        "IngestionJobFilter$operator": "<p>The operation to apply to the field or attribute.</p>"
       }
     },
     "IngestionJobFilterValue": {
@@ -1627,49 +1632,49 @@
     "IngestionJobFilterValues": {
       "base": null,
       "refs": {
-        "IngestionJobFilter$values": "<p>A list of values for the attribute.</p>"
+        "IngestionJobFilter$values": "<p>A list of values that belong to the field or attribute.</p>"
       }
     },
     "IngestionJobFilters": {
       "base": null,
       "refs": {
-        "ListIngestionJobsRequest$filters": "<p>Contains a definition of a filter for which to filter the results.</p>"
+        "ListIngestionJobsRequest$filters": "<p>Contains information about the filters for filtering the data.</p>"
       }
     },
     "IngestionJobSortBy": {
-      "base": "<p>Parameters by which to sort the results.</p>",
+      "base": "<p>The parameters of sorting the data.</p>",
       "refs": {
-        "ListIngestionJobsRequest$sortBy": "<p>Contains details about how to sort the results.</p>"
+        "ListIngestionJobsRequest$sortBy": "<p>Contains details about how to sort the data.</p>"
       }
     },
     "IngestionJobSortByAttribute": {
       "base": null,
       "refs": {
-        "IngestionJobSortBy$attribute": "<p>The attribute by which to sort the results.</p>"
+        "IngestionJobSortBy$attribute": "<p>The name of field or attribute to apply sorting of data.</p>"
       }
     },
     "IngestionJobStatistics": {
-      "base": "<p>Contains the statistics for the ingestion job.</p>",
+      "base": "<p>Contains the statistics for the data ingestion job.</p>",
       "refs": {
-        "IngestionJob$statistics": "<p>Contains statistics about the ingestion job.</p>",
-        "IngestionJobSummary$statistics": "<p>Contains statistics for the ingestion job.</p>"
+        "IngestionJob$statistics": "<p>Contains statistics about the data ingestion job.</p>",
+        "IngestionJobSummary$statistics": "<p>Contains statistics for the data ingestion job.</p>"
       }
     },
     "IngestionJobStatus": {
       "base": null,
       "refs": {
-        "IngestionJob$status": "<p>The status of the ingestion job.</p>",
-        "IngestionJobSummary$status": "<p>The status of the ingestion job.</p>"
+        "IngestionJob$status": "<p>The status of the data ingestion job.</p>",
+        "IngestionJobSummary$status": "<p>The status of the data ingestion job.</p>"
       }
     },
     "IngestionJobSummaries": {
       "base": null,
       "refs": {
-        "ListIngestionJobsResponse$ingestionJobSummaries": "<p>A list of objects, each of which contains information about an ingestion job.</p>"
+        "ListIngestionJobsResponse$ingestionJobSummaries": "<p>A list of data ingestion jobs with information about each job.</p>"
       }
     },
     "IngestionJobSummary": {
-      "base": "<p>Contains details about an ingestion job.</p>",
+      "base": "<p>Contains details about a data ingestion job.</p>",
       "refs": {
         "IngestionJobSummaries$member": null
       }
@@ -1744,7 +1749,7 @@
       }
     },
     "KnowledgeBaseConfiguration": {
-      "base": "<p>Contains details about the embeddings configuration of the knowledge base.</p>",
+      "base": "<p>Contains details about the vector embeddings configuration of the knowledge base.</p>",
       "refs": {
         "CreateKnowledgeBaseRequest$knowledgeBaseConfiguration": "<p>Contains details about the embeddings model used for the knowledge base.</p>",
         "KnowledgeBase$knowledgeBaseConfiguration": "<p>Contains details about the embeddings configuration of the knowledge base.</p>",
@@ -1803,7 +1808,7 @@
     "KnowledgeBaseSummaries": {
       "base": null,
       "refs": {
-        "ListKnowledgeBasesResponse$knowledgeBaseSummaries": "<p>A list of objects, each of which contains information about a knowledge base.</p>"
+        "ListKnowledgeBasesResponse$knowledgeBaseSummaries": "<p>A list of knowledge bases with information about each knowledge base.</p>"
       }
     },
     "KnowledgeBaseSummary": {
@@ -2316,7 +2321,7 @@
     "PrimitiveLong": {
       "base": null,
       "refs": {
-        "IngestionJobStatistics$numberOfDocumentsDeleted": "<p>The number of source documents that was deleted.</p>",
+        "IngestionJobStatistics$numberOfDocumentsDeleted": "<p>The number of source documents that were deleted.</p>",
         "IngestionJobStatistics$numberOfDocumentsFailed": "<p>The number of source documents that failed to be ingested.</p>",
         "IngestionJobStatistics$numberOfDocumentsScanned": "<p>The total number of source documents that were scanned. Includes new, updated, and unchanged documents.</p>",
         "IngestionJobStatistics$numberOfMetadataDocumentsModified": "<p>The number of metadata files that were updated or deleted.</p>",
@@ -2853,7 +2858,7 @@
     "SortOrder": {
       "base": null,
       "refs": {
-        "IngestionJobSortBy$order": "<p>The order by which to sort the results.</p>"
+        "IngestionJobSortBy$order": "<p>The order for sorting the data.</p>"
       }
     },
     "StartIngestionJobRequest": {
@@ -2870,6 +2875,16 @@
       "base": null,
       "refs": {
         "Transformation$stepToApply": "<p>When the service applies the transformation.</p>"
+      }
+    },
+    "StopIngestionJobRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopIngestionJobResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "StopSequences": {
@@ -3176,7 +3191,7 @@
     "VectorKnowledgeBaseConfiguration": {
       "base": "<p>Contains details about the model used to create vector embeddings for the knowledge base.</p>",
       "refs": {
-        "KnowledgeBaseConfiguration$vectorKnowledgeBaseConfiguration": "<p>Contains details about the embeddings model that'sused to convert the data source.</p>"
+        "KnowledgeBaseConfiguration$vectorKnowledgeBaseConfiguration": "<p>Contains details about the model that's used to convert the data source into vector embeddings.</p>"
       }
     },
     "Version": {

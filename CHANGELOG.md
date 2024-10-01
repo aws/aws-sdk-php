@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds nullable operator to implicit nullable type hints.
+* `Aws\RDS` - This release provides additional support for enabling Aurora Limitless Database DB clusters.
+* `Aws\CodeArtifact` - Add support for the dual stack endpoints.
+* `Aws\BedrockAgent` - This release adds support to stop an ongoing ingestion job using the StopIngestionJob API in Agents for Amazon Bedrock.
+
 ## 3.322.8 - 2024-09-30
 
 * `Aws\ResourceGroups` - This update includes new APIs to support application groups and to allow users to manage resource tag-sync tasks in applications.

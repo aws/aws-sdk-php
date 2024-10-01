@@ -529,7 +529,8 @@
         {"shape":"MaxDBShardGroupLimitReached"},
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"UnsupportedDBEngineVersionFault"},
-        {"shape":"InvalidVPCNetworkStateFault"}
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"NetworkTypeNotSupported"}
       ]
     },
     "CreateDBSnapshot":{
@@ -3325,6 +3326,13 @@
         "CertificateDetails":{"shape":"CertificateDetails"}
       }
     },
+    "ClusterScalabilityType":{
+      "type":"string",
+      "enum":[
+        "standard",
+        "limitless"
+      ]
+    },
     "ConnectionPoolConfiguration":{
       "type":"structure",
       "members":{
@@ -3589,6 +3597,7 @@
         "EnableLimitlessDatabase":{"shape":"BooleanOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "NetworkType":{"shape":"String"},
+        "ClusterScalabilityType":{"shape":"ClusterScalabilityType"},
         "DBSystemId":{"shape":"String"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"},
@@ -3879,7 +3888,8 @@
         "ComputeRedundancy":{"shape":"IntegerOptional"},
         "MaxACU":{"shape":"DoubleOptional"},
         "MinACU":{"shape":"DoubleOptional"},
-        "PubliclyAccessible":{"shape":"BooleanOptional"}
+        "PubliclyAccessible":{"shape":"BooleanOptional"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateDBSnapshotMessage":{
@@ -4184,6 +4194,7 @@
         "AwsBackupRecoveryPointArn":{"shape":"String"},
         "LimitlessDatabase":{"shape":"LimitlessDatabase"},
         "StorageThroughput":{"shape":"IntegerOptional"},
+        "ClusterScalabilityType":{"shape":"ClusterScalabilityType"},
         "CertificateDetails":{"shape":"CertificateDetails"},
         "EngineLifecycleSupport":{"shape":"String"}
       },
@@ -5435,7 +5446,8 @@
         "Status":{"shape":"String"},
         "PubliclyAccessible":{"shape":"BooleanOptional"},
         "Endpoint":{"shape":"String"},
-        "DBShardGroupArn":{"shape":"String"}
+        "DBShardGroupArn":{"shape":"String"},
+        "TagList":{"shape":"TagList"}
       }
     },
     "DBShardGroupAlreadyExistsFault":{

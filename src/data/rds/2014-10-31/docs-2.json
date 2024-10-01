@@ -810,6 +810,13 @@
         "DBCluster$PendingModifiedValues": "<p>Information about pending changes to the DB cluster. This information is returned only when there are pending changes. Specific changes are identified by subelements.</p>"
       }
     },
+    "ClusterScalabilityType": {
+      "base": null,
+      "refs": {
+        "CreateDBClusterMessage$ClusterScalabilityType": "<p>Specifies the scalability mode of the Aurora DB cluster. When set to <code>limitless</code>, the cluster operates as an Aurora Limitless Database. When set to <code>standard</code> (the default), the cluster uses normal DB instance creation.</p> <p>Valid for: Aurora DB clusters only</p> <note> <p>You can't modify this setting after you create the DB cluster.</p> </note>",
+        "DBCluster$ClusterScalabilityType": "<p>The scalability mode of the Aurora DB cluster. When set to <code>limitless</code>, the cluster operates as an Aurora Limitless Database. When set to <code>standard</code> (the default), the cluster uses normal DB instance creation.</p>"
+      }
+    },
     "ConnectionPoolConfiguration": {
       "base": "<p>Specifies the settings that control the size and behavior of the connection pool associated with a <code>DBProxyTargetGroup</code>.</p>",
       "refs": {
@@ -5966,6 +5973,7 @@
         "CreateDBProxyEndpointRequest$Tags": null,
         "CreateDBProxyRequest$Tags": "<p>An optional set of key-value pairs to associate arbitrary data of your choosing with the proxy.</p>",
         "CreateDBSecurityGroupMessage$Tags": "<p>Tags to assign to the DB security group.</p>",
+        "CreateDBShardGroupMessage$Tags": null,
         "CreateDBSnapshotMessage$Tags": null,
         "CreateDBSubnetGroupMessage$Tags": "<p>Tags to assign to the DB subnet group.</p>",
         "CreateEventSubscriptionMessage$Tags": null,
@@ -5977,6 +5985,7 @@
         "DBClusterSnapshot$TagList": null,
         "DBEngineVersion$TagList": null,
         "DBInstance$TagList": null,
+        "DBShardGroup$TagList": null,
         "DBSnapshot$TagList": null,
         "DBSnapshotTenantDatabase$TagList": null,
         "GlobalCluster$TagList": null,

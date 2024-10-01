@@ -916,6 +916,25 @@
       ],
       "idempotent":true
     },
+    "StopIngestionJob":{
+      "name":"StopIngestionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/ingestionjobs/{ingestionJobId}/stop",
+        "responseCode":202
+      },
+      "input":{"shape":"StopIngestionJobRequest"},
+      "output":{"shape":"StopIngestionJobResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -3521,7 +3540,9 @@
         "STARTING",
         "IN_PROGRESS",
         "COMPLETE",
-        "FAILED"
+        "FAILED",
+        "STOPPING",
+        "STOPPED"
       ]
     },
     "IngestionJobSummaries":{
@@ -4996,6 +5017,38 @@
     "StepType":{
       "type":"string",
       "enum":["POST_CHUNKING"]
+    },
+    "StopIngestionJobRequest":{
+      "type":"structure",
+      "required":[
+        "dataSourceId",
+        "ingestionJobId",
+        "knowledgeBaseId"
+      ],
+      "members":{
+        "dataSourceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"dataSourceId"
+        },
+        "ingestionJobId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"ingestionJobId"
+        },
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        }
+      }
+    },
+    "StopIngestionJobResponse":{
+      "type":"structure",
+      "required":["ingestionJob"],
+      "members":{
+        "ingestionJob":{"shape":"IngestionJob"}
+      }
     },
     "StopSequences":{
       "type":"list",
