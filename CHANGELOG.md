@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.322.9 - 2024-10-01
 
 * `Aws\` - Adds nullable operator to implicit nullable type hints.
 * `Aws\RDS` - This release provides additional support for enabling Aurora Limitless Database DB clusters.
