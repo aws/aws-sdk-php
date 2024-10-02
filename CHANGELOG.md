@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.322.10 - 2024-10-02
 
 * `Aws\AppStream` - Added support for Automatic Time Zone Redirection on Amazon AppStream 2.0
 * `Aws\BedrockAgentRuntime` - Added raw model response and usage metrics to PreProcessing and PostProcessing Trace
