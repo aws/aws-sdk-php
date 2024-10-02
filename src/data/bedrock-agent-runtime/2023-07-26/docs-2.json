@@ -151,7 +151,7 @@
     "BedrockModelArn": {
       "base": null,
       "refs": {
-        "ExternalSourcesRetrieveAndGenerateConfiguration$modelArn": "<p>The modelArn used with the external source wrapper object in the retrieveAndGenerate function.</p>",
+        "ExternalSourcesRetrieveAndGenerateConfiguration$modelArn": "<p>The model Amazon Resource Name (ARN) for the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>",
         "KnowledgeBaseRetrieveAndGenerateConfiguration$modelArn": "<p>The ARN of the foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> used to generate a response.</p>"
       }
     },
@@ -305,19 +305,19 @@
     "ExternalSources": {
       "base": null,
       "refs": {
-        "ExternalSourcesRetrieveAndGenerateConfiguration$sources": "<p>The document used with the external source wrapper object in the retrieveAndGenerate function.</p>"
+        "ExternalSourcesRetrieveAndGenerateConfiguration$sources": "<p>The document for the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>"
       }
     },
     "ExternalSourcesGenerationConfiguration": {
       "base": "<p>Contains the generation configuration of the external source wrapper object.</p>",
       "refs": {
-        "ExternalSourcesRetrieveAndGenerateConfiguration$generationConfiguration": "<p>The prompt used with the external source wrapper object with the retrieveAndGenerate function.</p>"
+        "ExternalSourcesRetrieveAndGenerateConfiguration$generationConfiguration": "<p>The prompt used with the external source wrapper object with the <code>retrieveAndGenerate</code> function.</p>"
       }
     },
     "ExternalSourcesRetrieveAndGenerateConfiguration": {
-      "base": "<p>The configurations of the external source wrapper object in the retrieveAndGenerate function.</p>",
+      "base": "<p>The configurations of the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>",
       "refs": {
-        "RetrieveAndGenerateConfiguration$externalSourcesConfiguration": "<p>The configuration used with the external source wrapper object in the retrieveAndGenerate function.</p>"
+        "RetrieveAndGenerateConfiguration$externalSourcesConfiguration": "<p>The configuration for the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>"
       }
     },
     "FailureReasonString": {
@@ -904,7 +904,7 @@
     "KnowledgeBaseRetrieveAndGenerateConfiguration": {
       "base": "<p>Contains details about the resource being queried.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax\">Retrieve request</a> – in the <code>knowledgeBaseConfiguration</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>knowledgeBaseConfiguration</code> field</p> </li> </ul>",
       "refs": {
-        "RetrieveAndGenerateConfiguration$knowledgeBaseConfiguration": "<p>Contains details about the resource being queried.</p>"
+        "RetrieveAndGenerateConfiguration$knowledgeBaseConfiguration": "<p>Contains details about the knowledge base for retrieving information and generating responses.</p>"
       }
     },
     "KnowledgeBaseVectorSearchConfiguration": {
@@ -980,7 +980,9 @@
     "Metadata": {
       "base": "<p>Provides details of the foundation model.</p>",
       "refs": {
-        "OrchestrationModelInvocationOutput$metadata": "<p>Contains information about the foundation model output.</p>"
+        "OrchestrationModelInvocationOutput$metadata": "<p>Contains information about the foundation model output.</p>",
+        "PostProcessingModelInvocationOutput$metadata": null,
+        "PreProcessingModelInvocationOutput$metadata": null
       }
     },
     "MimeType": {
@@ -1224,7 +1226,9 @@
     "RawResponse": {
       "base": "<p>Contains the raw output from the foundation model.</p>",
       "refs": {
-        "OrchestrationModelInvocationOutput$rawResponse": "<p>Contains details of the raw response from the foundation model output.</p>"
+        "OrchestrationModelInvocationOutput$rawResponse": "<p>Contains details of the raw response from the foundation model output.</p>",
+        "PostProcessingModelInvocationOutput$rawResponse": null,
+        "PreProcessingModelInvocationOutput$rawResponse": null
       }
     },
     "RepromptResponse": {
@@ -1392,7 +1396,7 @@
     "RetrieveAndGenerateType": {
       "base": null,
       "refs": {
-        "RetrieveAndGenerateConfiguration$type": "<p>The type of resource that is queried by the request.</p>"
+        "RetrieveAndGenerateConfiguration$type": "<p>The type of resource that contains your data for retrieving information and generating responses.</p> <p>If you choose ot use <code>EXTERNAL_SOURCES</code>, then currently only Claude 3 Sonnet models for knowledge bases are supported.</p>"
       }
     },
     "RetrieveRequest": {

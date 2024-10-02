@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Added support for Automatic Time Zone Redirection on Amazon AppStream 2.0
+* `Aws\BedrockAgentRuntime` - Added raw model response and usage metrics to PreProcessing and PostProcessing Trace
+* `Aws\WorkSpaces` - WSP is being rebranded to become DCV.
+* `Aws\IVSRealTime` - Adds new Stage Health EventErrorCodes applicable to RTMP(S) broadcasts. Bug Fix: Enforces that EncoderConfiguration Video height and width must be even-number values.
+* `Aws\S3` - This release introduces a header representing the minimum object size limit for Lifecycle transitions.
+* `Aws\BedrockRuntime` - Added new fields to Amazon Bedrock Guardrails trace
+* `Aws\IoTDeviceAdvisor` - Add clientToken attribute and implement idempotency for CreateSuiteDefinition.
+* `Aws\SageMaker` - releasing builtinlcc to public
+* `Aws\B2bi` - Added and updated APIs to support outbound EDI transformations
+
 ## 3.322.9 - 2024-10-01
 
 * `Aws\` - Adds nullable operator to implicit nullable type hints.
