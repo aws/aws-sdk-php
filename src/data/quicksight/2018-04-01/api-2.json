@@ -3691,7 +3691,8 @@
         "DataSets":{"shape":"AssetBundleExportJobDataSetOverridePropertiesList"},
         "Themes":{"shape":"AssetBundleExportJobThemeOverridePropertiesList"},
         "Analyses":{"shape":"AssetBundleExportJobAnalysisOverridePropertiesList"},
-        "Dashboards":{"shape":"AssetBundleExportJobDashboardOverridePropertiesList"}
+        "Dashboards":{"shape":"AssetBundleExportJobDashboardOverridePropertiesList"},
+        "Folders":{"shape":"AssetBundleExportJobFolderOverridePropertiesList"}
       }
     },
     "AssetBundleExportFormat":{
@@ -3839,6 +3840,36 @@
     "AssetBundleExportJobErrorList":{
       "type":"list",
       "member":{"shape":"AssetBundleExportJobError"}
+    },
+    "AssetBundleExportJobFolderOverrideProperties":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Properties"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "Properties":{"shape":"AssetBundleExportJobFolderPropertyToOverrideList"}
+      }
+    },
+    "AssetBundleExportJobFolderOverridePropertiesList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleExportJobFolderOverrideProperties"},
+      "max":50,
+      "min":1
+    },
+    "AssetBundleExportJobFolderPropertyToOverride":{
+      "type":"string",
+      "enum":[
+        "Name",
+        "ParentFolderArn"
+      ]
+    },
+    "AssetBundleExportJobFolderPropertyToOverrideList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleExportJobFolderPropertyToOverride"},
+      "max":10,
+      "min":1
     },
     "AssetBundleExportJobRefreshScheduleOverrideProperties":{
       "type":"structure",
@@ -4212,6 +4243,52 @@
       "type":"list",
       "member":{"shape":"AssetBundleImportJobError"}
     },
+    "AssetBundleImportJobFolderOverrideParameters":{
+      "type":"structure",
+      "required":["FolderId"],
+      "members":{
+        "FolderId":{"shape":"ResourceId"},
+        "Name":{"shape":"ResourceName"},
+        "ParentFolderArn":{"shape":"Arn"}
+      }
+    },
+    "AssetBundleImportJobFolderOverrideParametersList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobFolderOverrideParameters"},
+      "max":50,
+      "min":1
+    },
+    "AssetBundleImportJobFolderOverridePermissions":{
+      "type":"structure",
+      "required":["FolderIds"],
+      "members":{
+        "FolderIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Permissions":{"shape":"AssetBundleResourcePermissions"}
+      }
+    },
+    "AssetBundleImportJobFolderOverridePermissionsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobFolderOverridePermissions"},
+      "max":2,
+      "min":1
+    },
+    "AssetBundleImportJobFolderOverrideTags":{
+      "type":"structure",
+      "required":[
+        "FolderIds",
+        "Tags"
+      ],
+      "members":{
+        "FolderIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "AssetBundleImportJobFolderOverrideTagsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobFolderOverrideTags"},
+      "max":5,
+      "min":1
+    },
     "AssetBundleImportJobOverrideParameters":{
       "type":"structure",
       "members":{
@@ -4222,7 +4299,8 @@
         "DataSets":{"shape":"AssetBundleImportJobDataSetOverrideParametersList"},
         "Themes":{"shape":"AssetBundleImportJobThemeOverrideParametersList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverrideParametersList"},
-        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideParametersList"}
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideParametersList"},
+        "Folders":{"shape":"AssetBundleImportJobFolderOverrideParametersList"}
       }
     },
     "AssetBundleImportJobOverridePermissions":{
@@ -4232,7 +4310,8 @@
         "DataSets":{"shape":"AssetBundleImportJobDataSetOverridePermissionsList"},
         "Themes":{"shape":"AssetBundleImportJobThemeOverridePermissionsList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverridePermissionsList"},
-        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverridePermissionsList"}
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverridePermissionsList"},
+        "Folders":{"shape":"AssetBundleImportJobFolderOverridePermissionsList"}
       }
     },
     "AssetBundleImportJobOverrideTags":{
@@ -4243,7 +4322,8 @@
         "DataSets":{"shape":"AssetBundleImportJobDataSetOverrideTagsList"},
         "Themes":{"shape":"AssetBundleImportJobThemeOverrideTagsList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverrideTagsList"},
-        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideTagsList"}
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideTagsList"},
+        "Folders":{"shape":"AssetBundleImportJobFolderOverrideTagsList"}
       }
     },
     "AssetBundleImportJobOverrideValidationStrategy":{
@@ -9358,7 +9438,9 @@
         "IncludePermissions":{"shape":"Boolean"},
         "IncludeTags":{"shape":"Boolean"},
         "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"},
-        "Warnings":{"shape":"AssetBundleExportJobWarningList"}
+        "Warnings":{"shape":"AssetBundleExportJobWarningList"},
+        "IncludeFolderMemberships":{"shape":"Boolean"},
+        "IncludeFolderMembers":{"shape":"IncludeFolderMembers"}
       }
     },
     "DescribeAssetBundleImportJobRequest":{
@@ -12645,6 +12727,14 @@
       },
       "error":{"httpStatusCode":403},
       "exception":true
+    },
+    "IncludeFolderMembers":{
+      "type":"string",
+      "enum":[
+        "RECURSE",
+        "ONE_LEVEL",
+        "NONE"
+      ]
     },
     "IncrementalRefresh":{
       "type":"structure",
@@ -18360,7 +18450,9 @@
         "CloudFormationOverridePropertyConfiguration":{"shape":"AssetBundleCloudFormationOverridePropertyConfiguration"},
         "IncludePermissions":{"shape":"Boolean"},
         "IncludeTags":{"shape":"Boolean"},
-        "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"}
+        "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"},
+        "IncludeFolderMemberships":{"shape":"Boolean"},
+        "IncludeFolderMembers":{"shape":"IncludeFolderMembers"}
       }
     },
     "StartAssetBundleExportJobResponse":{
@@ -19622,6 +19714,12 @@
       "type":"list",
       "member":{"shape":"TopicColumn"}
     },
+    "TopicConfigOptions":{
+      "type":"structure",
+      "members":{
+        "QBusinessInsightsEnabled":{"shape":"NullableBoolean"}
+      }
+    },
     "TopicConstantValue":{
       "type":"structure",
       "members":{
@@ -19645,7 +19743,8 @@
         "Name":{"shape":"ResourceName"},
         "Description":{"shape":"LimitedString"},
         "UserExperienceVersion":{"shape":"TopicUserExperienceVersion"},
-        "DataSets":{"shape":"Datasets"}
+        "DataSets":{"shape":"Datasets"},
+        "ConfigOptions":{"shape":"TopicConfigOptions"}
       }
     },
     "TopicFilter":{

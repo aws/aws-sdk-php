@@ -4529,6 +4529,15 @@
       "input":{"shape":"ModifyInstanceCapacityReservationAttributesRequest"},
       "output":{"shape":"ModifyInstanceCapacityReservationAttributesResult"}
     },
+    "ModifyInstanceCpuOptions":{
+      "name":"ModifyInstanceCpuOptions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyInstanceCpuOptionsRequest"},
+      "output":{"shape":"ModifyInstanceCpuOptionsResult"}
+    },
     "ModifyInstanceCreditSpecification":{
       "name":"ModifyInstanceCreditSpecification",
       "http":{
@@ -33340,6 +33349,37 @@
         "Return":{
           "shape":"Boolean",
           "locationName":"return"
+        }
+      }
+    },
+    "ModifyInstanceCpuOptionsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "CoreCount",
+        "ThreadsPerCore"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "CoreCount":{"shape":"Integer"},
+        "ThreadsPerCore":{"shape":"Integer"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifyInstanceCpuOptionsResult":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "locationName":"instanceId"
+        },
+        "CoreCount":{
+          "shape":"Integer",
+          "locationName":"coreCount"
+        },
+        "ThreadsPerCore":{
+          "shape":"Integer",
+          "locationName":"threadsPerCore"
         }
       }
     },

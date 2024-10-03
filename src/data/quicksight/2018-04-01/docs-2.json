@@ -621,12 +621,14 @@
         "AssetBundleExportJobDataSetOverrideProperties$Arn": "<p>The ARN of the specific <code>DataSet</code> resource whose override properties are configured in this structure.</p>",
         "AssetBundleExportJobDataSourceOverrideProperties$Arn": "<p>The ARN of the specific <code>DataSource</code> resource whose override properties are configured in this structure.</p>",
         "AssetBundleExportJobError$Arn": "<p>The ARN of the resource whose processing caused an error.</p>",
+        "AssetBundleExportJobFolderOverrideProperties$Arn": "<p>The ARN of the specific <code>Folder</code> resource whose override properties are configured in this structure.</p>",
         "AssetBundleExportJobRefreshScheduleOverrideProperties$Arn": "<p>The ARN of the specific <code>RefreshSchedule</code> resource whose override properties are configured in this structure.</p>",
         "AssetBundleExportJobSummary$Arn": "<p>The ARN of the export job.</p>",
         "AssetBundleExportJobThemeOverrideProperties$Arn": "<p>The ARN of the specific <code>Theme</code> resource whose override properties are configured in this structure.</p>",
         "AssetBundleExportJobVPCConnectionOverrideProperties$Arn": "<p>The ARN of the specific <code>VPCConnection</code> resource whose override properties are configured in this structure.</p>",
         "AssetBundleExportJobWarning$Arn": "<p>The ARN of the resource whose processing caused a warning.</p>",
         "AssetBundleImportJobError$Arn": "<p>The ARN of the resource whose processing caused an error.</p>",
+        "AssetBundleImportJobFolderOverrideParameters$ParentFolderArn": "<p>A new parent folder arn. This change can only be applied if the import creates a brand new folder. Existing folders cannot be moved.</p>",
         "AssetBundleImportJobSummary$Arn": "<p>The ARN of the import job.</p>",
         "AssetBundleImportJobWarning$Arn": "<p>The ARN of the resource that the warning occurred for.</p>",
         "AssetBundleResourceArns$member": null,
@@ -925,6 +927,30 @@
       "base": null,
       "refs": {
         "DescribeAssetBundleExportJobResponse$Errors": "<p>An array of error records that describes any failures that occurred during the export job processing.</p> <p>Error records accumulate while the job runs. The complete set of error records is available after the job has completed and failed.</p>"
+      }
+    },
+    "AssetBundleExportJobFolderOverrideProperties": {
+      "base": "<p>Controls how a specific <code>Folder</code> resource is parameterized in the returned CloudFormation template.</p>",
+      "refs": {
+        "AssetBundleExportJobFolderOverridePropertiesList$member": null
+      }
+    },
+    "AssetBundleExportJobFolderOverridePropertiesList": {
+      "base": null,
+      "refs": {
+        "AssetBundleCloudFormationOverridePropertyConfiguration$Folders": "<p>An optional list of structures that controls how <code>Folder</code> resources are parameterized in the returned CloudFormation template.</p>"
+      }
+    },
+    "AssetBundleExportJobFolderPropertyToOverride": {
+      "base": null,
+      "refs": {
+        "AssetBundleExportJobFolderPropertyToOverrideList$member": null
+      }
+    },
+    "AssetBundleExportJobFolderPropertyToOverrideList": {
+      "base": null,
+      "refs": {
+        "AssetBundleExportJobFolderOverrideProperties$Properties": "<p>A list of <code>Folder</code> resource properties to generate variables for in the returned CloudFormation template.</p>"
       }
     },
     "AssetBundleExportJobRefreshScheduleOverrideProperties": {
@@ -1226,6 +1252,42 @@
         "DescribeAssetBundleImportJobResponse$RollbackErrors": "<p>An array of error records that describes any failures that occurred while an import job was attempting a rollback.</p> <p>Error records accumulate while the job is still running. The complete set of error records is available after the job has completed and failed.</p>"
       }
     },
+    "AssetBundleImportJobFolderOverrideParameters": {
+      "base": "<p>The override parameters for a single folder that is being imported.</p>",
+      "refs": {
+        "AssetBundleImportJobFolderOverrideParametersList$member": null
+      }
+    },
+    "AssetBundleImportJobFolderOverrideParametersList": {
+      "base": null,
+      "refs": {
+        "AssetBundleImportJobOverrideParameters$Folders": "<p>A list of overrides for any <code>Folder</code> resources that are present in the asset bundle that is imported.</p>"
+      }
+    },
+    "AssetBundleImportJobFolderOverridePermissions": {
+      "base": "<p>An object that contains a list of permissions to be applied to a list of folder IDs.</p>",
+      "refs": {
+        "AssetBundleImportJobFolderOverridePermissionsList$member": null
+      }
+    },
+    "AssetBundleImportJobFolderOverridePermissionsList": {
+      "base": null,
+      "refs": {
+        "AssetBundleImportJobOverridePermissions$Folders": "<p>A list of permissions for the folders that you want to apply overrides to.</p>"
+      }
+    },
+    "AssetBundleImportJobFolderOverrideTags": {
+      "base": "<p>An object that contains a list of tags to be assigned to a list of folder IDs.</p>",
+      "refs": {
+        "AssetBundleImportJobFolderOverrideTagsList$member": null
+      }
+    },
+    "AssetBundleImportJobFolderOverrideTagsList": {
+      "base": null,
+      "refs": {
+        "AssetBundleImportJobOverrideTags$Folders": "<p>A list of tag overrides for any <code>Folder</code> resources that are present in the asset bundle that is imported.</p>"
+      }
+    },
     "AssetBundleImportJobOverrideParameters": {
       "base": "<p>A list of overrides that modify the asset bundle resource configuration before the resource is imported.</p>",
       "refs": {
@@ -1401,6 +1463,7 @@
         "AssetBundleImportJobDashboardOverridePermissions$Permissions": "<p>A list of permissions for the dashboards that you want to apply overrides to.</p>",
         "AssetBundleImportJobDataSetOverridePermissions$Permissions": "<p>A list of permissions for the datasets that you want to apply overrides to.</p>",
         "AssetBundleImportJobDataSourceOverridePermissions$Permissions": "<p>A list of permissions for the data source that you want to apply overrides to.</p>",
+        "AssetBundleImportJobFolderOverridePermissions$Permissions": null,
         "AssetBundleImportJobThemeOverridePermissions$Permissions": "<p>A list of permissions for the themes that you want to apply overrides to.</p>",
         "AssetBundleResourceLinkSharingConfiguration$Permissions": "<p>A list of link sharing permissions for the dashboards that you want to apply overrides to.</p>"
       }
@@ -1422,6 +1485,8 @@
         "AssetBundleImportJobDataSetOverrideTags$DataSetIds": "<p>A list of dataset IDs that you want to apply overrides to. You can use <code>*</code> to override all datasets in this asset bundle.</p>",
         "AssetBundleImportJobDataSourceOverridePermissions$DataSourceIds": "<p>A list of data source IDs that you want to apply overrides to. You can use <code>*</code> to override all data sources in this asset bundle.</p>",
         "AssetBundleImportJobDataSourceOverrideTags$DataSourceIds": "<p>A list of data source IDs that you want to apply overrides to. You can use <code>*</code> to override all data sources in this asset bundle.</p>",
+        "AssetBundleImportJobFolderOverridePermissions$FolderIds": "<p>A list of folder IDs that you want to apply overrides to. You can use <code>*</code> to override all folders in this asset bundle.</p>",
+        "AssetBundleImportJobFolderOverrideTags$FolderIds": "<p>A list of folder IDs that you want to apply overrides to. You can use <code>*</code> to override all folders in this asset bundle.</p>",
         "AssetBundleImportJobThemeOverridePermissions$ThemeIds": "<p>A list of theme IDs that you want to apply overrides to. You can use <code>*</code> to override all themes in this asset bundle.</p>",
         "AssetBundleImportJobThemeOverrideTags$ThemeIds": "<p>A list of theme IDs that you want to apply overrides to. You can use <code>*</code> to override all themes in this asset bundle.</p>",
         "AssetBundleImportJobVPCConnectionOverrideTags$VPCConnectionIds": "<p>A list of VPC connection IDs that you want to apply overrides to. You can use <code>*</code> to override all VPC connections in this asset bundle.</p>"
@@ -2011,6 +2076,7 @@
         "DescribeAssetBundleExportJobResponse$IncludeAllDependencies": "<p>The include dependencies flag.</p>",
         "DescribeAssetBundleExportJobResponse$IncludePermissions": "<p>The include permissions flag.</p>",
         "DescribeAssetBundleExportJobResponse$IncludeTags": "<p>The include tags flag.</p>",
+        "DescribeAssetBundleExportJobResponse$IncludeFolderMemberships": "<p>The include folder memberships flag.</p>",
         "DescribeKeyRegistrationRequest$DefaultKeyOnly": "<p>Determines whether the request returns the default key only.</p>",
         "DisplayFormatOptions$UseBlankCellFormat": "<p>A Boolean value that indicates whether to use blank cell format.</p>",
         "DisplayFormatOptions$UseGrouping": "<p>A Boolean value that indicates whether to use grouping.</p>",
@@ -2033,6 +2099,7 @@
         "StartAssetBundleExportJobRequest$IncludeAllDependencies": "<p>A Boolean that determines whether all dependencies of each resource ARN are recursively exported with the job. For example, say you provided a Dashboard ARN to the <code>ResourceArns</code> parameter. If you set <code>IncludeAllDependencies</code> to <code>TRUE</code>, any theme, dataset, and data source resource that is a dependency of the dashboard is also exported.</p>",
         "StartAssetBundleExportJobRequest$IncludePermissions": "<p>A Boolean that determines whether all permissions for each resource ARN are exported with the job. If you set <code>IncludePermissions</code> to <code>TRUE</code>, any permissions associated with each resource are exported. </p>",
         "StartAssetBundleExportJobRequest$IncludeTags": "<p> A Boolean that determines whether all tags for each resource ARN are exported with the job. If you set <code>IncludeTags</code> to <code>TRUE</code>, any tags associated with each resource are exported.</p>",
+        "StartAssetBundleExportJobRequest$IncludeFolderMemberships": "<p>A Boolean that determines if the exported asset carries over information about the folders that the asset is a member of. </p>",
         "StatePersistenceConfigurations$Enabled": "<p>Determines if a Amazon QuickSight dashboard's state persistence settings are turned on or off.</p>",
         "TimeRangeFilter$IncludeMinimum": "<p>Determines whether the minimum value in the filter value range should be included in the filtered results.</p>",
         "TimeRangeFilter$IncludeMaximum": "<p>Determines whether the maximum value in the filter value range should be included in the filtered results.</p>",
@@ -6671,6 +6738,13 @@
       "refs": {
       }
     },
+    "IncludeFolderMembers": {
+      "base": null,
+      "refs": {
+        "DescribeAssetBundleExportJobResponse$IncludeFolderMembers": "<p>A setting that determines whether folder members are included.</p>",
+        "StartAssetBundleExportJobRequest$IncludeFolderMembers": "<p>A setting that indicates whether you want to include folder assets. You can also use this setting to recusrsively include all subfolders of an exported folder.</p>"
+      }
+    },
     "IncrementalRefresh": {
       "base": "<p>The incremental refresh configuration for a dataset.</p>",
       "refs": {
@@ -8218,6 +8292,7 @@
         "TopicCalculatedField$NonAdditive": "<p>The non additive for the table style target.</p>",
         "TopicColumn$DisableIndexing": "<p>A Boolean value that indicates whether the column shows in the autocomplete functionality.</p>",
         "TopicColumn$NonAdditive": "<p>The non additive value for the column.</p>",
+        "TopicConfigOptions$QBusinessInsightsEnabled": "<p>Enables Amazon Q Business Insights for a <code>Topic</code>.</p>",
         "TopicRefreshSchedule$IsEnabled": "<p>A Boolean value that controls whether to schedule is enabled.</p>",
         "UpdateIpRestrictionRequest$Enabled": "<p>A value that specifies whether IP rules are turned on.</p>"
       }
@@ -9474,6 +9549,7 @@
         "AssetBundleImportJobDashboardOverrideParameters$DashboardId": "<p>The ID of the dashboard that you want to apply overrides to.</p>",
         "AssetBundleImportJobDataSetOverrideParameters$DataSetId": "<p>The ID of the dataset to apply overrides to.</p>",
         "AssetBundleImportJobDataSourceOverrideParameters$DataSourceId": "<p>The ID of the data source to apply overrides to.</p>",
+        "AssetBundleImportJobFolderOverrideParameters$FolderId": "<p>The ID of the folder that you want to apply overrides to.</p>",
         "AssetBundleImportJobRefreshScheduleOverrideParameters$DataSetId": "<p>A partial identifier for the specific <code>RefreshSchedule</code> resource that is being overridden. This structure is used together with the <code>ScheduleID</code> structure.</p>",
         "AssetBundleImportJobThemeOverrideParameters$ThemeId": "<p>The ID of the theme to apply overrides to.</p>",
         "CreateDataSetRequest$DataSetId": "<p>An ID for the dataset that you want to create. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
@@ -9523,6 +9599,7 @@
         "AssetBundleImportJobDashboardOverrideParameters$Name": "<p>A new name for the dashboard.</p>",
         "AssetBundleImportJobDataSetOverrideParameters$Name": "<p>A new name for the dataset.</p>",
         "AssetBundleImportJobDataSourceOverrideParameters$Name": "<p>A new name for the data source.</p>",
+        "AssetBundleImportJobFolderOverrideParameters$Name": "<p>A new name for the folder.</p>",
         "AssetBundleImportJobThemeOverrideParameters$Name": "<p>A new name for the theme.</p>",
         "AssetBundleImportJobVPCConnectionOverrideParameters$Name": "<p>A new name for the VPC connection.</p>",
         "CreateDataSetRequest$Name": "<p>The display name for the dataset.</p>",
@@ -12149,6 +12226,7 @@
         "AssetBundleImportJobDashboardOverrideTags$Tags": "<p>A list of tags for the dashboards that you want to apply overrides to.</p>",
         "AssetBundleImportJobDataSetOverrideTags$Tags": "<p>A list of tags for the datasets that you want to apply overrides to.</p>",
         "AssetBundleImportJobDataSourceOverrideTags$Tags": "<p>A list of tags for the data source that you want to apply overrides to.</p>",
+        "AssetBundleImportJobFolderOverrideTags$Tags": "<p>A list of tags for the folders that you want to apply overrides to.</p>",
         "AssetBundleImportJobThemeOverrideTags$Tags": "<p>A list of tags for the themes that you want to apply overrides to.</p>",
         "AssetBundleImportJobVPCConnectionOverrideTags$Tags": "<p>A list of tags for the VPC connections that you want to apply overrides to.</p>",
         "CreateAccountCustomizationRequest$Tags": "<p>A list of the tags that you want to attach to this resource.</p>",
@@ -12710,6 +12788,12 @@
       "base": null,
       "refs": {
         "DatasetMetadata$Columns": "<p>The list of column definitions.</p>"
+      }
+    },
+    "TopicConfigOptions": {
+      "base": "<p>Configuration options for a <code>Topic</code>.</p>",
+      "refs": {
+        "TopicDetails$ConfigOptions": "<p>Configuration options for a <code>Topic</code>.</p>"
       }
     },
     "TopicConstantValue": {

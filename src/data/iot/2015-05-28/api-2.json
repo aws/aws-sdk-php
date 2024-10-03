@@ -4401,6 +4401,15 @@
         "policies":{"shape":"Policies"}
       }
     },
+    "ApplicationProtocol":{
+      "type":"string",
+      "enum":[
+        "SECURE_MQTT",
+        "MQTT_WSS",
+        "HTTPS",
+        "DEFAULT"
+      ]
+    },
     "ApproximateSecondsBeforeTimedOut":{"type":"long"},
     "AscendingOrder":{"type":"boolean"},
     "AssetId":{"type":"string"},
@@ -4890,6 +4899,16 @@
     "AuthResults":{
       "type":"list",
       "member":{"shape":"AuthResult"}
+    },
+    "AuthenticationType":{
+      "type":"string",
+      "enum":[
+        "CUSTOM_AUTH_X509",
+        "CUSTOM_AUTH",
+        "AWS_X509",
+        "AWS_SIGV4",
+        "DEFAULT"
+      ]
     },
     "AuthorizerArn":{
       "type":"string",
@@ -5511,6 +5530,17 @@
       "members":{
       }
     },
+    "ClientCertificateCallbackArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"[\\s\\S]*"
+    },
+    "ClientCertificateConfig":{
+      "type":"structure",
+      "members":{
+        "clientCertificateCallbackArn":{"shape":"ClientCertificateCallbackArn"}
+      }
+    },
     "ClientId":{"type":"string"},
     "ClientProperties":{
       "type":"map",
@@ -5889,7 +5919,10 @@
         "serviceType":{"shape":"ServiceType"},
         "tags":{"shape":"TagList"},
         "tlsConfig":{"shape":"TlsConfig"},
-        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"},
+        "authenticationType":{"shape":"AuthenticationType"},
+        "applicationProtocol":{"shape":"ApplicationProtocol"},
+        "clientCertificateConfig":{"shape":"ClientCertificateConfig"}
       }
     },
     "CreateDomainConfigurationResponse":{
@@ -7524,7 +7557,10 @@
         "domainType":{"shape":"DomainType"},
         "lastStatusChangeDate":{"shape":"DateType"},
         "tlsConfig":{"shape":"TlsConfig"},
-        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"},
+        "authenticationType":{"shape":"AuthenticationType"},
+        "applicationProtocol":{"shape":"ApplicationProtocol"},
+        "clientCertificateConfig":{"shape":"ClientCertificateConfig"}
       }
     },
     "DescribeEndpointRequest":{
@@ -14462,7 +14498,10 @@
         "domainConfigurationStatus":{"shape":"DomainConfigurationStatus"},
         "removeAuthorizerConfig":{"shape":"RemoveAuthorizerConfig"},
         "tlsConfig":{"shape":"TlsConfig"},
-        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"},
+        "authenticationType":{"shape":"AuthenticationType"},
+        "applicationProtocol":{"shape":"ApplicationProtocol"},
+        "clientCertificateConfig":{"shape":"ClientCertificateConfig"}
       }
     },
     "UpdateDomainConfigurationResponse":{

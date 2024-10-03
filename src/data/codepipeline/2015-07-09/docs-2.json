@@ -629,6 +629,18 @@
         "ErrorDetails$code": "<p>The system ID or number code of the error.</p>"
       }
     },
+    "Command": {
+      "base": null,
+      "refs": {
+        "CommandList$member": null
+      }
+    },
+    "CommandList": {
+      "base": null,
+      "refs": {
+        "ActionDeclaration$commands": "<p>The shell commands to run with your compute action in CodePipeline. All commands are supported except multi-line formats. While CodeBuild logs and permissions are used, you do not need to create any resources in CodeBuild.</p> <note> <p>Using compute time for this action will incur separate charges in CodeBuild.</p> </note>"
+      }
+    },
     "ConcurrentModificationException": {
       "base": "<p>Unable to modify the tag due to a simultaneous update request.</p>",
       "refs": {
@@ -917,6 +929,18 @@
       "base": null,
       "refs": {
         "FailureDetails$type": "<p>The type of the failure.</p>"
+      }
+    },
+    "FilePath": {
+      "base": null,
+      "refs": {
+        "FilePathList$member": null
+      }
+    },
+    "FilePathList": {
+      "base": null,
+      "refs": {
+        "OutputArtifact$files": "<p>The files that you want to associate with the output artifact that will be exported from the compute action.</p>"
       }
     },
     "GetActionTypeInput": {
@@ -1476,6 +1500,18 @@
       "base": null,
       "refs": {
         "ActionDeclaration$outputArtifacts": "<p>The name or ID of the result of the action declaration, such as a test or build artifact.</p>"
+      }
+    },
+    "OutputVariable": {
+      "base": null,
+      "refs": {
+        "OutputVariableList$member": null
+      }
+    },
+    "OutputVariableList": {
+      "base": null,
+      "refs": {
+        "ActionDeclaration$outputVariables": "<p>The list of variables that are to be exported from the compute action. This is specifically CodeBuild environment variables as used for that action.</p>"
       }
     },
     "OutputVariablesKey": {

@@ -464,6 +464,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceEntitlementService(array $args = [])
  * @method \Aws\MarketplaceMetering\MarketplaceMeteringClient createMarketplaceMetering(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceMetering(array $args = [])
+ * @method \Aws\MarketplaceReporting\MarketplaceReportingClient createMarketplaceReporting(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMarketplaceReporting(array $args = [])
  * @method \Aws\MediaConnect\MediaConnectClient createMediaConnect(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMediaConnect(array $args = [])
  * @method \Aws\MediaConvert\MediaConvertClient createMediaConvert(array $args = [])

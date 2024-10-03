@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoT` - This release adds support for Custom Authentication with X.509 Client Certificates, support for Custom Client Certificate validation, and support for selecting application protocol and authentication type without requiring TLS ALPN for customer's AWS IoT Domain Configurations.
+* `Aws\Connect` - Public GetMetricDataV2 Grouping increase from 3 to 4
+* `Aws\QuickSight` - QuickSight: Add support for exporting and importing folders in AssetBundle APIs
+* `Aws\MediaPackageV2` - Added support for ClipStartTime on the FilterConfiguration object on OriginEndpoint manifest settings objects. Added support for EXT-X-START tags on produced HLS child playlists.
+* `Aws\MarketplaceReporting` - The AWS Marketplace Reporting service introduces the GetBuyerDashboard API. This API returns a dashboard that provides visibility into your organization's AWS Marketplace agreements and associated spend across the AWS accounts in your organization.
+* `Aws\EC2` - This release includes a new API for modifying instance cpu-options after launch.
+* `Aws\CodePipeline` - AWS CodePipeline introduces Commands action that enables you to easily run shell commands as part of your pipeline execution.
+
 ## 3.322.10 - 2024-10-02
 
 * `Aws\AppStream` - Added support for Automatic Time Zone Redirection on Amazon AppStream 2.0
