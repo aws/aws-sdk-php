@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.323.0 - 2024-10-03
 
 * `Aws\IoT` - This release adds support for Custom Authentication with X.509 Client Certificates, support for Custom Client Certificate validation, and support for selecting application protocol and authentication type without requiring TLS ALPN for customer's AWS IoT Domain Configurations.
 * `Aws\Connect` - Public GetMetricDataV2 Grouping increase from 3 to 4
