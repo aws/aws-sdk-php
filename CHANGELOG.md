@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Documentation updates for Amazon EC2.
+* `Aws\IoTDataPlane` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+
 ## 3.323.0 - 2024-10-03
 
 * `Aws\IoT` - This release adds support for Custom Authentication with X.509 Client Certificates, support for Custom Client Certificate validation, and support for selecting application protocol and authentication type without requiring TLS ALPN for customer's AWS IoT Domain Configurations.
