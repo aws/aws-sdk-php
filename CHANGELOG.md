@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.323.1 - 2024-10-04
 
 * `Aws\EC2` - Documentation updates for Amazon EC2.
 * `Aws\IoTDataPlane` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
