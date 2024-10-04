@@ -84,6 +84,84 @@
 * `Aws\Bedrock` - Add support for Cross Region Inference in Bedrock Model Evaluations.
 * `Aws\Budgets` - Releasing minor partitional endpoint updates
 
+=======
+## 3.323.1 - 2024-10-04
+
+* `Aws\EC2` - Documentation updates for Amazon EC2.
+* `Aws\IoTDataPlane` - Add v2 smoke tests and smithy smokeTests trait for SDK testing.
+
+## 3.323.0 - 2024-10-03
+
+* `Aws\IoT` - This release adds support for Custom Authentication with X.509 Client Certificates, support for Custom Client Certificate validation, and support for selecting application protocol and authentication type without requiring TLS ALPN for customer's AWS IoT Domain Configurations.
+* `Aws\Connect` - Public GetMetricDataV2 Grouping increase from 3 to 4
+* `Aws\QuickSight` - QuickSight: Add support for exporting and importing folders in AssetBundle APIs
+* `Aws\MediaPackageV2` - Added support for ClipStartTime on the FilterConfiguration object on OriginEndpoint manifest settings objects. Added support for EXT-X-START tags on produced HLS child playlists.
+* `Aws\MarketplaceReporting` - The AWS Marketplace Reporting service introduces the GetBuyerDashboard API. This API returns a dashboard that provides visibility into your organization's AWS Marketplace agreements and associated spend across the AWS accounts in your organization.
+* `Aws\EC2` - This release includes a new API for modifying instance cpu-options after launch.
+* `Aws\CodePipeline` - AWS CodePipeline introduces Commands action that enables you to easily run shell commands as part of your pipeline execution.
+
+## 3.322.10 - 2024-10-02
+
+* `Aws\AppStream` - Added support for Automatic Time Zone Redirection on Amazon AppStream 2.0
+* `Aws\BedrockAgentRuntime` - Added raw model response and usage metrics to PreProcessing and PostProcessing Trace
+* `Aws\WorkSpaces` - WSP is being rebranded to become DCV.
+* `Aws\IVSRealTime` - Adds new Stage Health EventErrorCodes applicable to RTMP(S) broadcasts. Bug Fix: Enforces that EncoderConfiguration Video height and width must be even-number values.
+* `Aws\S3` - This release introduces a header representing the minimum object size limit for Lifecycle transitions.
+* `Aws\BedrockRuntime` - Added new fields to Amazon Bedrock Guardrails trace
+* `Aws\IoTDeviceAdvisor` - Add clientToken attribute and implement idempotency for CreateSuiteDefinition.
+* `Aws\SageMaker` - releasing builtinlcc to public
+* `Aws\B2bi` - Added and updated APIs to support outbound EDI transformations
+
+## 3.322.9 - 2024-10-01
+
+* `Aws\` - Adds nullable operator to implicit nullable type hints.
+* `Aws\RDS` - This release provides additional support for enabling Aurora Limitless Database DB clusters.
+* `Aws\CodeArtifact` - Add support for the dual stack endpoints.
+* `Aws\BedrockAgent` - This release adds support to stop an ongoing ingestion job using the StopIngestionJob API in Agents for Amazon Bedrock.
+
+## 3.322.8 - 2024-09-30
+
+* `Aws\ResourceGroups` - This update includes new APIs to support application groups and to allow users to manage resource tag-sync tasks in applications.
+* `Aws\CloudDirectory` - Add examples for API operations in model.
+* `Aws\Connect` - Amazon Connect introduces StartOutboundChatContact API allowing customers to initiate outbound chat contacts
+* `Aws\TimestreamInfluxDB` - Timestream for InfluxDB now supports port configuration and additional customer-modifiable InfluxDB v2 parameters. This release adds Port to the CreateDbInstance and UpdateDbInstance API, and additional InfluxDB v2 parameters to the CreateDbParameterGroup API.
+* `Aws\SupplyChain` - Release DataLakeDataset, DataIntegrationFlow and ResourceTagging APIs for AWS Supply Chain
+* `Aws\VerifiedPermissions` - Add examples for API operations in model.
+* `Aws\Pricing` - Add examples for API operations in model.
+* `Aws\Bedrock` - Add support for custom models via provisioned throughput for Bedrock Model Evaluation
+
+## 3.322.7 - 2024-09-27
+
+* `Aws\Worklink` - Removes worklink client.
+* `Aws\CustomerProfiles` - Introduces optional RoleArn parameter for PutIntegration request and includes RoleArn in the response of PutIntegration, GetIntegration and ListIntegrations
+* `Aws\QuickSight` - Adding personalization in QuickSight data stories. Admins can enable or disable personalization through QuickSight settings.
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub
+* `Aws\SESv2` - This release adds support for engagement tracking over Https using custom domains.
+
+## 3.322.6 - 2024-09-26
+
+* `Aws\Organizations` - Add support for policy operations on the CHATBOT_POLICY policy type.
+* `Aws\PCS` - AWS PCS API documentation - Edited the description of the iamInstanceProfileArn parameter of the CreateComputeNodeGroup and UpdateComputeNodeGroup actions; edited the description of the SlurmCustomSetting data type to list the supported parameters for clusters and compute node groups.
+* `Aws\RDSDataService` - Documentation update for RDS Data API to reflect support for Aurora MySQL Serverless v2 and Provisioned DB clusters.
+* `Aws\Chatbot` - Return State and StateReason fields for Chatbot Channel Configurations.
+* `Aws\Lambda` - Reverting Lambda resource-based policy and block public access APIs.
+* `Aws\SageMaker` - Adding `TagPropagation` attribute to Sagemaker API
+
+## 3.322.5 - 2024-09-25
+
+* `Aws\S3` - Updates location constraint middleware to exclude directory buckets and retain original configuration.
+* `Aws\CloudTrail` - Doc-only update for CloudTrail network activity events release (in preview)
+* `Aws\EC2` - Updates to documentation for the transit gateway security group referencing feature.
+* `Aws\FSx` - Doc-only update to address Lustre S3 hard-coded names.
+
+## 3.322.4 - 2024-09-24
+
+* `Aws\Kinesis` - This release includes support to add tags when creating a stream
+* `Aws\PinpointSMSVoiceV2` - AWS End User Messaging SMS-Voice V2 has added support for resource policies. Use the three new APIs to create, view, edit, and delete resource policies.
+* `Aws\SageMaker` - Adding `HiddenInstanceTypes` and `HiddenSageMakerImageVersionAliases` attribute to SageMaker API
+* `Aws\Bedrock` - Add support for Cross Region Inference in Bedrock Model Evaluations.
+* `Aws\Budgets` - Releasing minor partitional endpoint updates
+
 ## 3.322.3 - 2024-09-23
 
 * `Aws\EMRServerless` - This release adds support for job concurrency and queuing configuration at Application level.
@@ -4107,7 +4185,6 @@
 * `Aws\RDS` - This release enables new Aurora and RDS feature called Blue/Green Deployments that makes updates to databases safer, simpler and faster.
 * `Aws\Textract` - This release adds support for classifying and splitting lending documents by type, and extracting information by using the Analyze Lending APIs. This release also includes support for summarized information of the processed lending document package, in addition to per document results.
 * `Aws\TranscribeService` - This release adds support for 'inputType' for post-call and real-time (streaming) Call Analytics within Amazon Transcribe.
-* `Aws\TranscribeStreaming` - This release adds support for real-time (streaming) and post-call Call Analytics within Amazon Transcribe.
 * `Aws\drs` - Non breaking changes to existing APIs, and additional APIs added to support in-AWS failing back using AWS Elastic Disaster Recovery.
 * `Aws\kendra` - Amazon Kendra now supports preview of table information from HTML tables in the search results. The most relevant cells with their corresponding rows, columns are displayed as a preview in the search result. The most relevant table cell or cells are also highlighted in table preview.
 * `Aws\mgn` - This release adds support for Application and Wave management. We also now support custom post-launch actions.
@@ -4248,7 +4325,6 @@
 * `Aws\EC2` - Amazon EC2 Trn1 instances, powered by AWS Trainium chips, are purpose built for high-performance deep learning training. u-24tb1.112xlarge and u-18tb1.112xlarge High Memory instances are purpose-built to run large in-memory databases.
 * `Aws\GroundStation` - This release adds the preview of customer-provided ephemeris support for AWS Ground Station, allowing space vehicle owners to provide their own position and trajectory information for a satellite.
 * `Aws\MediaPackageVod` - This release adds "IncludeIframeOnlyStream" for Dash endpoints.
-* `Aws\TranscribeStreaming` - This will release hi-IN and th-TH
 
 ## 3.241.0 - 2022-11-08
 
@@ -5473,7 +5549,6 @@
 * `Aws\Lambda` - Adds PrincipalOrgID support to AddPermission API. Customers can use it to manage permissions to lambda functions at AWS Organizations level.
 * `Aws\Outposts` - This release adds address filters for listSites
 * `Aws\SecretsManager` - Documentation updates for Secrets Manager.
-* `Aws\TranscribeStreamingService` - Amazon Transcribe StartTranscription API now supports additional parameters for Language Identification feature: customVocabularies and customFilterVocabularies
 
 ## 3.212.6 - 2022-03-10
 
@@ -5996,7 +6071,6 @@
 * `Aws\RDS` - Adds local backup support to Amazon RDS on AWS Outposts.
 * `Aws\S3Control` - Added Amazon CloudWatch publishing option for S3 Storage Lens metrics.
 * `Aws\SSM` - Adds new parameter to CreateActivation API . This parameter is for "internal use only".
-* `Aws\TranscribeStreamingService` - This release adds language identification support for streaming transcription.
 
 ## 3.204.2 - 2021-11-19
 
@@ -6181,7 +6255,6 @@
 * `Aws\MediaPackageVod` - MediaPackage passes through digital video broadcasting (DVB) subtitles into the output.
 * `Aws\Panorama` - General availability for AWS Panorama. AWS SDK for Panorama includes APIs to manage your devices and nodes, and deploy computer vision applications to the edge. For more information, see the AWS Panorama documentation at http://docs.aws.amazon.com/panorama
 * `Aws\SecurityHub` - Added support for cross-Region finding aggregation, which replicates findings from linked Regions to a single aggregation Region. Added operations to view, enable, update, and delete the finding aggregation.
-* `Aws\TranscribeStreamingService` - This release adds custom language support for streaming transcription.
 
 ## 3.198.8 - 2021-10-19
 
@@ -6355,7 +6428,6 @@
 * `Aws\Comprehend` - Amazon Comprehend now allows you to train and run PDF and Word documents for custom entity recognition. With PDF and Word formats, you can extract information from documents containing headers, lists and tables.
 * `Aws\EC2` - This release adds support for vt1 3xlarge, 6xlarge and 24xlarge instances powered by Xilinx Alveo U30 Media Accelerators for video transcoding workloads
 * `Aws\SageMaker` - This release adds support for "Project Search"
-* `Aws\TranscribeStreamingService` - Amazon Transcribe now supports PII Identification and Redaction for streaming transcription.
 * `Aws\WAFV2` - This release adds support for including rate based rules in a rule group.
 
 ## 3.193.3 - 2021-09-13
@@ -7026,7 +7098,6 @@
 * `Aws\S3Control` - Documentation updates for Amazon S3-control
 * `Aws\SSMContacts` - AWS Systems Manager Incident Manager enables faster resolution of critical application availability and performance issues, management of contacts and post incident analysis
 * `Aws\SSMIncidents` - AWS Systems Manager Incident Manager enables faster resolution of critical application availability and performance issues, management of contacts and post-incident analysis
-* `Aws\TranscribeStreamingService` - Amazon Transcribe supports partial results stabilization for streaming transcription.
 
 ## 3.180.6 - 2021-05-10
 
@@ -7346,7 +7417,6 @@
 * `Aws\ECS` - This is for ecs exec feature release which includes two new APIs - execute-command and update-cluster and an AWS CLI customization for execute-command API
 * `Aws\EMR` - Amazon EMR customers can now specify Resource Group to target Capacity Reservations in their EMR clusters with instance fleets using allocation strategy.
 * `Aws\FIS` - Initial release of AWS Fault Injection Simulator, a managed service that enables you to perform fault injection experiments on your AWS workloads
-* `Aws\TranscribeStreamingService` - AWS Transcribe now supports real-time transcription for Chinese (zh-CN) and confidence scores in the transcription output.
 
 ## 3.173.28 - 2021-03-12
 
@@ -7593,7 +7663,6 @@
 * `Aws\LexModelsV2` - Fixed bug where incorrect Content-Type header was being sent to the LexModelsV2 service
 * `Aws\Macie2` - This release of the Amazon Macie API adds support for using object prefixes to refine the scope of a classification job.
 * `Aws\MediaLive` - "AWS Elemental MediaLive now supports output to a private VPC. When this property is specified, the output will egress from a user specified VPC."
-* `Aws\TranscribeStreamingService` - Amazon Transcribe Streaming Medical now supports Protected Health Information (PHI) identification which enables you to identify PHI entities based on HIPAA Privacy Rule.
 
 ## 3.172.3 - 2021-01-28
 
@@ -7912,7 +7981,6 @@
 * `Aws\QuickSight` - Support for embedding without user registration. New enum EmbeddingIdentityType. A potential breaking change. Affects code that refers IdentityType enum type directly instead of literal string value.
 * `Aws\SFN` - This release of the AWS Step Functions SDK introduces support for Synchronous Express Workflows
 * `Aws\TimestreamWrite` - Adds support of upserts for idempotent updates to Timestream.
-* `Aws\TranscribeStreamingService` - Amazon Transcribe Medical streaming added medical specialties and HTTP/2 support. Amazon Transcribe streaming supports additional languages. Both support OGG/OPUS and FLAC codecs for streaming.
 
 ## 3.163.3 - 2020-11-23
 
@@ -8075,7 +8143,6 @@
 * `Aws\MQ` - Amazon MQ introduces support for RabbitMQ, a popular message-broker with native support for AMQP 0.9.1. You can now create fully-managed RabbitMQ brokers in the cloud.
 * `Aws\MarketplaceMetering` - Adding Vendor Tagging Support in MeterUsage and BatchMeterUsage API.
 * `Aws\ServiceCatalog` - Service Catalog API ListPortfolioAccess can now support a maximum PageSize of 100.
-* `Aws\TranscribeStreamingService` - With this release, Amazon Transcribe now supports real-time transcription from audio sources in Italian (it-IT) and German(de-DE).
 * `Aws\XRay` - Releasing new APIs GetInsightSummaries, GetInsightEvents, GetInsight, GetInsightImpactGraph and updating GetTimeSeriesServiceStatistics API for AWS X-Ray Insights feature
 
 ## 3.158.19 - 2020-11-02
@@ -8331,7 +8398,6 @@
 * `Aws\CloudFront` - Documentation updates for CloudFront
 * `Aws\Comprehend` - Amazon Comprehend now supports detecting Personally Identifiable Information (PII) entities in a document.
 * `Aws\ElasticsearchService` - Adds support for data plane audit logging in Amazon Elasticsearch Service.
-* `Aws\TranscribeStreamingService` - Amazon Transcribe now supports channel identification in real-time streaming, which enables you to transcribe multi-channel streaming audio.
 * `Aws\kendra` - Amazon Kendra now supports additional file formats and metadata for FAQs.
 
 ## 3.154.4 - 2020-09-16
@@ -8463,7 +8529,6 @@
 * `Aws\Organizations` - Minor documentation updates for AWS Organizations
 * `Aws\ServiceCatalog` - Enhance SearchProvisionedProducts API to allow queries using productName and provisioningArtifactName. Added lastProvisioningRecordId and lastSuccessfulRecordId to Read ProvisionedProduct APIs
 * `Aws\StorageGateway` - Added WORM, tape retention lock, and custom pool features for virtual tapes.
-* `Aws\TranscribeStreamingService` - Amazon Transcribe and Amazon Transcribe Medical now enable you to identify different speakers in your real-time streams with speaker identification.
 
 ## 3.150.0 - 2020-08-18
 
@@ -8946,7 +9011,6 @@
 * `Aws\MediaLive` - AWS Elemental MediaLive now supports the ability to ingest the content that is streaming from an AWS Elemental Link device: https://aws.amazon.com/medialive/features/link/. This release also adds support for SMPTE-2038 and input state waiters.
 * `Aws\S3` - Fixes incorrect host for dualstack and accelerate endpoints in non-AWS partitions.
 * `Aws\SecurityHub` - For findings related to controls, the finding information now includes the reason behind the current status of the control. A new field for the findings original severity allows finding providers to use the severity values from the system they use to assign severity.
-* `Aws\TranscribeStreamingService` - This release adds support for vocabulary filtering in streaming with which you can filter unwanted words from the real-time transcription results. Visit https://docs.aws.amazon.com/transcribe/latest/dg/how-it-works.html to learn more.
 
 ## 3.138.4 - 2020-05-19
 
@@ -9088,7 +9152,6 @@
 * `Aws\ElasticsearchService` - This change adds a new field 'OptionalDeployment' to ServiceSoftwareOptions to indicate whether a service software update is optional or mandatory. If True, it indicates that the update is optional, and the service software is not automatically updated. If False, the service software is automatically updated after AutomatedUpdateDate.
 * `Aws\FMS` - This release is to support AWS Firewall Manager policy with Organizational Unit scope. 
 * `Aws\Redshift` - Amazon Redshift support for usage limits
-* `Aws\TranscribeStreamingService` - Adding ServiceUnavailableException as one of the expected exceptions
 
 ## 3.135.1 - 2020-04-21
 
